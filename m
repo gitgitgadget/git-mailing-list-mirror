@@ -1,75 +1,122 @@
-From: =?iso-8859-1?Q?PICCA_Fr=E9d=E9ric-Emmanuel?= 
-	<frederic-emmanuel.picca@synchrotron-soleil.fr>
-Subject: RE: Mercurial over Git no success
-Date: Mon, 14 Feb 2011 22:24:42 +0100
-Message-ID: <606CC410B038E34CB97646A32D0EC0BF03888300@venusbis.synchrotron-soleil.fr>
-References: <1297717305.19327@davidwbrown.name>
+From: Adam Monsen <haircut@gmail.com>
+Subject: Re: configuring cherry-pick to always use -x?
+Date: Mon, 14 Feb 2011 13:50:20 -0800
+Message-ID: <4D59A39C.9090402@gmail.com>
+References: <4D596435.9020605@gmail.com> <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: <david@davidwbrown.name>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 14 22:45:24 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig644B3721A7339BA3B07512AC"
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 14 22:52:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp6EV-0005ST-8c
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:45:23 +0100
+	id 1Pp6LS-0001mn-TF
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:52:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751280Ab1BNVpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 16:45:18 -0500
-Received: from dns.synchrotron-soleil.fr ([195.221.0.3]:53438 "EHLO
-	sucette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750882Ab1BNVpR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 16:45:17 -0500
-X-Greylist: delayed 1188 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Feb 2011 16:45:17 EST
-Received: from localhost (unknown [127.0.0.1])
-	by sucette.synchrotron-soleil.fr (Postfix) with ESMTP id 4CE3A2D094;
-	Mon, 14 Feb 2011 21:25:27 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
-Received: from sucette.synchrotron-soleil.fr ([127.0.0.1])
-	by localhost (sucette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id M2PKTuRDEk6T; Mon, 14 Feb 2011 22:25:26 +0100 (CET)
-Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
-	by sucette.synchrotron-soleil.fr (Postfix) with ESMTP id 7159A2D084;
-	Mon, 14 Feb 2011 22:25:26 +0100 (CET)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Mercurial over Git no success
-Thread-Index: AcvMjUL+C//N4Qr6TtWoOXhP2FctywAAFTwO
+	id S1751786Ab1BNVwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 16:52:30 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:51519 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751577Ab1BNVw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 16:52:29 -0500
+Received: by qyj19 with SMTP id 19so1837303qyj.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 13:52:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :subject:references:in-reply-to:x-enigmail-version:content-type;
+        bh=ue1B1xmUtSSd0iGXxHzki7lAQ7aySzun8MrlUOTAlkk=;
+        b=toEHwx+2E1a6fLTP8CDYVu/fZwPe4dgd5lHFTXd7jSca9XWPVI01vAJvBIIo0yCEJ+
+         Fj0pp1wNz+3gFLqrOMzCKVUh5orReZzK3jSDnj1f39A1ckB9lHyUSyoehBwHXeVA5bUH
+         +gdkX0ZnGhZ2U24OInNwBv+v51ELF0vU6DzlQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:x-enigmail-version:content-type;
+        b=hCFJJ4REFQrJYb8h54T0+tvK4ezxTk9ZLSvhZvDTtkucsEFUtSf9RKTQuU19BUEkiz
+         m1txRbzj8/tvwNPZFAHA124AxIPmifE+ff3hgcNcAJbrlAPVzRU91j92swHzYFSrolgu
+         Rr9ZwW95hykreCjvd3eP5sOVgckTYTiceNvGQ=
+Received: by 10.224.6.145 with SMTP id 17mr3691680qaz.386.1297720224402;
+        Mon, 14 Feb 2011 13:50:24 -0800 (PST)
+Received: from [192.168.13.8] (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
+        by mx.google.com with ESMTPS id y17sm2118608qci.9.2011.02.14.13.50.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 14 Feb 2011 13:50:23 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166776>
 
-apt-get install git-core git-gui gitk
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig644B3721A7339BA3B07512AC
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-would be a good starting point
+Junio C Hamano wrote:
+> could you please justify in what workflow it would make sense to use
+> -x most of the time?
 
-See you
+Sure. Summary: two long-lived publicly visible branches.
 
-Frederic
+Details:
+Mifos is what I'm usually working on lately. We have branches "master"
+and "f-release" both present in our public git repository called "head"
+(hosted at sf.net). master is the bleeding edge of development,
+f-release is a release maintenance branch recently created off the tip
+of master. I expect both to live on forever (even though commits to
+f-release will eventually cease).
+
+Right after f-release was cut, we merged f-release to master every day
+or so to make sure bugfixes for f-release were also propagated to future
+releases. After a while, merging resulted in too many conflicts and we
+started cherry picking instead.
+
+This process is described generally at
+http://mifosforge.jira.com/wiki/display/MIFOS/Release+Branch+Merging+Poli=
+cy
+=2E
+
+If the source commit is present in the log message of the new (cherry
+picked) commit, it's easy to (1) find the source commit (gitweb creates
+a hyperlink, for instance) and (2) know that, when viewing the log of
+master, a particular commit is also present on another branch. Right now
+I just keep reminding folks to use -x.
+
+For (2), I generally assume that branch is a release branch, but come to
+think of it, it would be nice to know what branch a commit was cherry
+picked from. For example: "(cherry picked from BRANCHNAME commit
+c6e08938e352f3ec99a29a67dd192945d2bcf00d)" would be better than the
+current message generated by -x.
+
+See also:
+http://mifosforge.jira.com/wiki/display/MIFOS/Mifos+Version+Control+Guide=
 
 
------Original Message-----
-From: git-owner@vger.kernel.org on behalf of david@davidwbrown.name
-Sent: Mon 2/14/2011 10:01 PM
-To: git@vger.kernel.org
-Subject: Mercurial over Git no success
- 
-Hello Gitters, long ago when first starting the project I'm currently running at my company I looked around for a VCS/SCM that would be anywhere better than: CVS/SVN. At first I looked at Git but could not get a version to run on my Ubuntu box. So, I had to settle for Hg. Now, that I'm several months into the web app dev I'm responsible for the hired help has convinced me to switch to Git. Now, I'm back at the same old problem I had months ago that forced me to give up on using Git. Unlike a lot of Unix/Linux based software the usual:
 
-./configure
-make
-make install
+--------------enig644B3721A7339BA3B07512AC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Does not work for building Git on my local Ubuntu box (10.10 BTW). Some non-innocuous error condition as follows:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-cannot find zlib.h
+iQEcBAEBAgAGBQJNWaOcAAoJEJtdmT+DbynAUiYIAL5tKkEzIyYPpxeYPJ0FWh3m
+wQ03GIa3B3OG0YjgTbEEZRJoXBVLOHNlmed5KMuU8Gr/vOgO9/PwNVb05shzacpT
+Raf/g621AcHPpxJaNtASzeXC2Nfalzp7szUqhLSBISJF8Dc4UJn1NDhYoR1fgy7V
+ZkobxGQrZKd5zgLAMptaCFYRQ16qD8tNrAZ8Ufl0geIu4PSPYDclw8XWyRWvkdN3
+SGrgWM2jeia5U8nX+6cXPmEwwbXMlIubW4GZoqxeRmkPufGWq2gjXqGrCQ56cxe1
+V9ot1vv1aQnVzdmusdkydIBnMYy6DY78W8gzl8/5SecZDnSO3/EjR+ZmHNc3Rk0=
+=qxrR
+-----END PGP SIGNATURE-----
 
-Pls advise. David.
+--------------enig644B3721A7339BA3B07512AC--
