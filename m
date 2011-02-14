@@ -1,130 +1,110 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Re: Re: Re: Updating a submodule with a compatible version
-	from another submodule version using the parent meta-repository
-Date: Mon, 14 Feb 2011 22:13:18 +0100
-Message-ID: <20110214211317.GA50815@book.hvoigt.net>
-References: <7v7hdrl7nw.fsf@alter.siamese.dyndns.org> <AANLkTik8VrhbBSLwRq9gd39hofnmifk15zSqXVTsSzAp@mail.gmail.com> <7v1v3zjp6w.fsf@alter.siamese.dyndns.org> <20110129110807.GA21864@book.hvoigt.net> <AANLkTimBCeSnR270eWMcrgCVj6rmiRkJizOxQPAPOAnn@mail.gmail.com> <AANLkTim2G0kF+omPZ1_fk0P6oGDaKDWd79XNR5GXUkWG@mail.gmail.com> <20110209193610.GA67890@book.hvoigt.net> <AANLkTimist_GXgRGdUW1PpxpRO=poYgD4HkDC5CsyLra@mail.gmail.com> <20110213133019.GB31986@book.hvoigt.net> <AANLkTikHS95BVV4FUjR6TjZxHOGXsje2iDxEwbt9zckh@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [1.8.0 RFC] push: start warning upcoming default change for
+ push.default
+Date: Mon, 14 Feb 2011 15:21:31 -0600
+Message-ID: <20110214212131.GA23806@elie>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102140036.42197.johan@herland.net>
+ <7vfwrrukzq.fsf@alter.siamese.dyndns.org>
+ <201102141018.46527.johan@herland.net>
+ <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
+ <AANLkTincKapKgcWEE1Z+vQesSjZBFAnfH0uL+a7GhQ6b@mail.gmail.com>
+ <AANLkTi=Fpey7e+E1eKOiSaS1hjW2d8eOy9PVLR34Sc5J@mail.gmail.com>
+ <AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Julian Ibarz <julian.ibarz@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 22:13:26 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 22:21:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp5jZ-0001fC-T5
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:13:26 +0100
+	id 1Pp5rd-000741-1f
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:21:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748Ab1BNVNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 16:13:21 -0500
-Received: from darksea.de ([83.133.111.250]:45906 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752692Ab1BNVNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 16:13:20 -0500
-Received: (qmail 18160 invoked from network); 14 Feb 2011 22:13:18 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 14 Feb 2011 22:13:18 +0100
+	id S1753127Ab1BNVVl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 16:21:41 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:58462 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752015Ab1BNVVj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 16:21:39 -0500
+Received: by qyj19 with SMTP id 19so1815031qyj.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 13:21:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=1gu+3LrzaBSX7rQrAkZSl1dCLktvAmcXUMdZwLTdpBM=;
+        b=C7mmOracU7DeUk86YQQKmQ1+8GlcfyNRhi3N5TQKu5cNvLaH/4aFJOGKNyRQjzor03
+         nfU7k3kDl3ob4IYpRrjQnloEsFQabCuFj5HI36nJo5cvLGPIbay21pzIVoo6vLtmalB/
+         vs31WKlMlqEcMB95n+G3MPC49R8YXkWa654Is=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=GIUTVNT6b/XJsjHHp+AOSgE3PWblhGPo8wH+ENOLkC7E2zEC9z0BxbFMNbRZd/SokK
+         7HoiGi15Oz9D2TqnX7lfhShYbG7iNETumVYxUXrDiP+YLEggEmwxNVHEGMTyYPicF7Hf
+         6mQNXSSLfjD0Rp0+FsvYm1Dnl0o83oqW1XnQg=
+Received: by 10.229.89.208 with SMTP id f16mr3396878qcm.43.1297718499044;
+        Mon, 14 Feb 2011 13:21:39 -0800 (PST)
+Received: from elie (adsl-69-209-51-217.dsl.chcgil.ameritech.net [69.209.51.217])
+        by mx.google.com with ESMTPS id nb15sm2093315qcb.14.2011.02.14.13.21.35
+        (version=SSLv3 cipher=OTHER);
+        Mon, 14 Feb 2011 13:21:37 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <AANLkTikHS95BVV4FUjR6TjZxHOGXsje2iDxEwbt9zckh@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166769>
 
-Hi,
+Jay Soffian wrote:
+> On Mon, Feb 14, 2011 at 2:44 PM, Sverre Rabbelier <srabbelier@gmail.c=
+om> wrote:
+>> On Mon, Feb 14, 2011 at 19:53, Jay Soffian <jaysoffian@gmail.com> wr=
+ote:
+>>> Junio C Hamano wrote:
 
-On Sun, Feb 13, 2011 at 01:59:09PM -0500, Julian Ibarz wrote:
-> On Sun, Feb 13, 2011 at 8:30 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > Ok lets not be so hard:
-> >
-> > git checkout v1.7.2.3.msysgit.0
-> > cd ..
-> > git submodulecheckout --find-versions git > git-versions.txt
-> > cd git
-> > git submodulecheckout --find-closest < ../git-versions.txt
-> >> 820fd48475eb72cdd4f2
-> >
-> > Close but not quite the right commit. See the output of git log:
-> > 820fd48 Chomp CRLF before feeding to tar when building netinstaller.
-> > 83e164c Avoid quoting environment variable values.
-> > daafc61 (tag: Git-1.7.2.3-preview20100911) Updated git and git documents and ReleaseNotes to v1.7.2.3
-> >
-> > Whats strange is that this commit did not even change the submodule.
-> 
-> Well because it is _exactly_ the commit that point to the current
-> submodule version you have checked out :) So it _is_ the good version.
-> Which version were you thinking was good?
+>>>> +	warning("You do not have an explicit 'matching' setting for push=
+=2Edefault");
+>>>> +	warning("Your workflow will be broken at 1.8.0 unless you do so =
+now");
+[...]
+>>> =C2=A0push.default is unset; its implicit value is changing in 1.8.=
+0. To squelch
+>>> =C2=A0this message, set push.default. See push.default in 'git help=
+ config'.
+>>
+>> This is worse than what Junio suggested because it does not tell you
+>> what to set it to.
+>
+> Which was intentional on my part. If the message says what to set it
+> to, the beginner will just go 'okay' and set it to that, in which
+> case, what is the point of changing the default?
 
-Well I think the interface was/is still confusing me. Once you change to
-one where I can specify the hash I want to search for I will give it
-another try.
+Wait, why isn't that a good thing?  The beginner only has to learn one
+set of semantics.  My only complaint is that the warning does not
+explain how to specify "squelch this warning and give me the future
+semantics instead".
 
-> > I think currently it does not make sense to implement the scripting
-> > since the interface is not yet cleaned up enough. It should be possible
-> > to specify a commit as parameter and the path should probably go after
-> > that like the other commands do as well.
-> >
-> > The other issue is that we need to change the working directory. IMO,
-> > everything should be possible to do from superproject. Have a look at
-> > add_submodule_odb() in submodule.c it lets you load the database of a
-> > submodule. This way you can run the --find-closest from the superproject.
-> 
-> I don't think we want to do that. The usual scenario is:
-> 
-> * you are in a submodule
-> * you checkout a specific version
-> * you want the meta-repo and side submodules to be updated accordingly
-> 
-> And in this scenario at the beginning you are at the submodule
-> directory, not the meta repository so... What do you think? Also even
-> if in these low-level commands you need to change directory, if it is
-> hided in an integration in the sh submodule script, it doesn't matter
-> right?
+So maybe:
 
-Well I think the interface should be useable by hand also. Lots of tools
-in git were invented by plugging the tools together differently than the
-original developer even had in his mind. So a nice "do only one thing
-but that very good" kind of interface makes sense.
-
-I think a nice thing would be if you could stay in one directory and it
-should not be too hard since we have add_submodule_odb(). Implementation
-would be easier if we started this command from the supermodule since
-searching for a supermodule from a submodule is still missing.
-
-> > So what I would be looking for is something like this:
-> >
-> > # This looks up all commits of <submodule> ever registered in this
-> > # project
-> > git submodulecheckout --find-versions <submodule> > out.tmp
-> >
-> > # This reads the previous list and outputs a list of of all the commits
-> > # that contain <treeish>. Function in_merge_bases(treeish, i&commit, 1)
-> > # can be of help here. Afterwards you have to prune all later commits
-> > # that contain earlier ones. I did this in find_first_merges(). I
-> > # suggest to refactor that code into a function so that you can use it.
-> > git submodulecheckout --find-closest <treeish> -- <submodule> < out.tmp > out2.tmp
-> >
-> > # And now we can search for the commit in the other submodule C
-> > git submodulecheckout --list-commits <other submodule> < out2.tmp > out3.tmp
-> >
-> > And if out3.tmp just contained one line we could checkout that one. I am
-> > still not sure in which command these options could go. Junio do you
-> > maybe have a suggestion? Since its all about submodules it would make
-> > sense to put it in 'git submodule' but thats already the script.
-> >
-> > Maybe a new 'git-submodule-tool' ?
-> 
-> Before I wanted to name it submodule-checkout but I think I hade a
-> naming conflict issue with submodule... not sure if submodule-tool
-> will work...
-
-Since the submodule script might be obsoleted partly and get rewritten
-in C at some point I was thinking of this as a kind of intermediate
-internal submodule helper tool.
-
-Cheers Heiko
+warning: You do not have an explicit 'matching' setting for push.defaul=
+t.
+warning: Your workflow will be broken at 1.8.0 unless you do so now.
+hint: See /usr/share/doc/git/RelNotes/1.7.5.txt for details.
