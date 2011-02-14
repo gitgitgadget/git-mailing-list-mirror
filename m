@@ -1,93 +1,65 @@
-From: Michael Meeks <michael.meeks@novell.com>
-Subject: libreoffice merge issue ...
-Date: Mon, 14 Feb 2011 16:07:15 +0000
-Organization: Novell, Inc.
-Message-ID: <1297699635.31477.253.camel@lenovo-w500>
-Reply-To: michael.meeks@novell.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Norbert Thiebaud <nthiebaud@gmail.com>, kendy <kendy@novell.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] pull: do not display fetch usage on --help-all
+Date: Mon, 14 Feb 2011 17:48:08 +0100
+Message-ID: <c98bbd60ccdbe059811280e09951100611487ccf.1297702066.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 14 17:28:00 2011
+X-From: git-owner@vger.kernel.org Mon Feb 14 17:51:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp1HM-0003Rj-AI
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 17:28:00 +0100
+	id 1Pp1dx-0001Xt-T6
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 17:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756045Ab1BNQ1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 11:27:48 -0500
-Received: from charybdis-ext.suse.de ([195.135.221.2]:44673 "EHLO
-	nat.nue.novell.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755917Ab1BNQ1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 11:27:47 -0500
-X-Greylist: delayed 1201 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Feb 2011 11:27:46 EST
-Received: from [192.168.0.5] (mmeeks.gotadsl.co.uk [213.208.123.138])
-	by nat.nue.novell.com with ESMTP; Mon, 14 Feb 2011 17:07:43 +0100
-X-Mailer: Evolution 2.32.2 
+	id S1756135Ab1BNQvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 11:51:14 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37706 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756051Ab1BNQvN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 11:51:13 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id E57CB208D8;
+	Mon, 14 Feb 2011 11:51:12 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 14 Feb 2011 11:51:12 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=AMMKHSHGyp3WoC3UFnrYUdaENkw=; b=Jbcm/wH2cABgqyDlmzmO35KSovhOttHFkXNH1NtGkcsHdsAlM8uiYm2O9rIbYL3Wzd6bhrHjE+zn+J+2o4OIppYv2Yw+cGRz6WBfRQ5s0S2TR1mXl2PKg+HZX+BFEb/UIUacYWKvQk1KeldhiO5H40XTFmwlxTGm4aGARLVxf3s=
+X-Sasl-enc: w2+UkkxmO7acmMv4pFOV/3u/X/9U1as9s8Hr7kL4FaZV 1297702272
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6F81444254E;
+	Mon, 14 Feb 2011 11:51:12 -0500 (EST)
+X-Mailer: git-send-email 1.7.4.1.74.gf39475.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166734>
 
-Hi guys,
+Currently, "git pull --help-all" displays the fetch usage info.
 
-We are having quite some fun merging git branches with LibreOffice, and
-I stumbled over this just now with master git with hash:
-00e6ee724640701b32aca27cc930fd6409c87ae2
+Make it equivalent to "git pull -h" instead since "--help-all" is
+documented in gitcli(7).
 
-Setup (some large repos):
+Do not try to sanitize the pull option parser (aka last hair puller).
 
-	git clone git://anongit.freedesktop.org/libreoffice/libs-core
-	git checkout integration/dev300_m98
-	git remote add stage git://anongit.freedesktop.org/libreoffice/staging/@REPO@
-	git fetch stage
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ git-pull.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-	Test[1]:
-
-	git merge stage/premerge/dev300_m98
-	git diff idl/source/cmptools/lex.cxx
-
-	yields:
-
-@@@ -147,11 -147,7 +147,15 @@@ SvToken & SvToken::operator = ( const S
-  *************************************************************************/
-  void SvTokenStream::InitCtor()
-  {
-++<<<<<<< HEAD
- +#ifdef DOS
- +    SetCharSet( CHARSET_ANSI );
- +#else
-      SetCharSet( gsl_getSystemTextEncoding() );
- +#endif
-++=======
-++    SetCharSet( gsl_getSystemTextEncoding() );
-++>>>>>>> stage/premerge/dev300_m98
-      aStrTrue  = "TRUE";
-      aStrFalse = "FALSE";
-      nLine       = nColumn = 0;
-
-	With the above master hash; whereas with v1.7.3.4 it yields nothing (as
-it should IMHO) - we havn't edited things around that chunk in master.
-
-	That is slightly concerning; thoughts much appreciated. Incidentally,
-the whole 'make install' installs into ~/bin was extremely unexpected
-and yielded 30minutes of pain trying to work out what was installed
-where and why, and the interaction with --prefix, and ... now it seems I
-should always run rehash; git --version before any command, and sanity
-check things ;-)
-
-	Thanks,
-
-		Michael.
-
-[1] - potentially you need:
-[merge]
-    renamelimit = 20000
-in your ~/.gitconfig
+diff --git a/git-pull.sh b/git-pull.sh
+index eb87f49..f6b7b84 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -114,7 +114,7 @@ do
+ 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
+ 		dry_run=--dry-run
+ 		;;
+-	-h|--h|--he|--hel|--help)
++	-h|--h|--he|--hel|--help|--help-|--help-a|--help-al|--help-all)
+ 		usage
+ 		;;
+ 	*)
 -- 
- michael.meeks@novell.com  <><, Pseudo Engineer, itinerant idiot
+1.7.4.1.74.gf39475.dirty
