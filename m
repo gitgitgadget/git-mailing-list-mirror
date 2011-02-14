@@ -1,76 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-gui: document the gui.maxfilesdisplayed variable
-Date: Sun, 13 Feb 2011 23:51:04 -0800
-Message-ID: <7v39nruk9j.fsf@alter.siamese.dyndns.org>
-References: <20110213125324.GA31986@book.hvoigt.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 18/31] rebase: extract merge code to new source file
+Date: Mon, 14 Feb 2011 09:02:04 +0100
+Message-ID: <4D58E17C.9090001@viscovery.net>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-19-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pat Thoyts <patthoyts@googlemail.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Feb 14 08:51:22 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 09:02:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PotDN-0003Yy-Vs
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 08:51:22 +0100
+	id 1PotNx-0007KQ-6S
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 09:02:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671Ab1BNHvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 02:51:16 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43074 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751369Ab1BNHvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 02:51:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ECC092740;
-	Mon, 14 Feb 2011 02:52:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=SzYpYELTHH54Iq+8e8jwxpPis3I=; b=BRTvxV6cN5Hk5Be8MjRwN0c
-	rQO/IMMmizJgCe6eGHEXra3Q8iHNXfo9AcOk1E2tASgFl4mw+9X1wZI1oc0qtXTR
-	GxawQayGRfDXOTXtB894BxbBS2q0LPhI0K8VcFdquiWxKHZFppwC1F++1jAF9rzI
-	qDhSqMbD/OKnCHWGuzzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=GG6VxlXzHvVZpx3RaH0ITTEc9OOLsvRIMTaQScYTd8AewMfx5
-	nrnm5B39ShA+CNCHsQoI12Rsg9Bg9R+DcjA2NapHzJxMvfkAEO1Vz4Y0HhLOy/Hd
-	G84xXgyeHsmhN9EbIYEPjtpqr8e45GOmqQ8v7zeVhou+PdV+5IfClEWFNE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BCBD7273C;
-	Mon, 14 Feb 2011 02:52:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8ADA7273B; Mon, 14 Feb 2011
- 02:52:09 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 55DD1E6C-380F-11E0-AF5F-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752190Ab1BNICL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 03:02:11 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:62246 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751411Ab1BNICK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 03:02:10 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PotNk-0005lY-Ot; Mon, 14 Feb 2011 09:02:05 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 7AA561660F;
+	Mon, 14 Feb 2011 09:02:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <1297017841-20678-19-git-send-email-martin.von.zweigbergk@gmail.com>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166696>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Am 2/6/2011 19:43, schrieb Martin von Zweigbergk:
+> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+> new file mode 100644
+> index 0000000..c04ce8a
+> --- /dev/null
+> +++ b/git-rebase--merge.sh
 
-> I am not sure how we should go about this patch. Should I split it in
-> two since it removes the TODO line in git-gui and adds the
-> documentation in git?
+This should be mode 100755. (Ditto for git-rebase--am.sh in 19/31)
 
-Two opposing thoughts.
-
- 1. We can keep git-gui and git proper separate projects, move git-gui
-    documentation out of git to git-gui, and with clever Makefile trick
-    include and build git-gui related documentation conditionally only
-    when git-gui appears part of the git project tree (this anticipates a
-    future where git-gui is bound to git not with the subtree merge
-    strategy as we currently do, but as a submodule).
-
- 2. Just like the Linux kernel project, we can make each subsystem with
-    separate maintainers just different repositories of the same git
-    project with their own focus.  We already do this for git-svn (which I
-    delegate to Eric Wong by pulling from him) and some parts of contrib/
-    tree; we have already been halfway there for gitweb/ (which I don't
-    regularly "pull from", but I mainly act as a patch monkey without
-    actively managing that part myself).  I don't see why we cannot extend
-    that model to git-gui and gitk.
+-- Hannes
