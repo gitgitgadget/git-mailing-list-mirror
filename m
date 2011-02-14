@@ -1,70 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/7] merge,tag: describe -m just like commit
-Date: Mon, 14 Feb 2011 12:08:09 -0800
-Message-ID: <7v4o86s7km.fsf@alter.siamese.dyndns.org>
-References: <cover.1297695910.git.git@drmicha.warpmail.net>
- <5d55b72b16f3d2def5fa955862fe5be6ff9f82f7.1297695910.git.git@drmicha.warpmail.net>
+From: Emeric Fermas <emeric.fermas@gmail.com>
+Subject: What's the definition of a valid Git symbolic reference?
+Date: Mon, 14 Feb 2011 21:58:14 +0100
+Message-ID: <AANLkTinsJkzYggMtNrLRv-qNxRncrXSe6A46Z=d8xkw7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Feb 14 21:08:23 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Vicent Marti <tanoku@gmail.com>, libgit2@librelist.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 14 21:58:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp4ic-0001lm-D2
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 21:08:22 +0100
+	id 1Pp5VJ-00006U-1a
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 21:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569Ab1BNUIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 15:08:18 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59578 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751398Ab1BNUIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 15:08:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 35FA04746;
-	Mon, 14 Feb 2011 15:09:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Eoi5w6eEmaY4vUbhn7YQtU+bUdA=; b=SK2cbD
-	gta2kWYrs/t5mQKcNeD3FYD/4lyYqd/NPq1Jam5VTXbC9BPmA9yNERKnp8bBAALL
-	ZgHdGhs3zlQ8ZpkbvPaXPS6VSM+hrnLcFPxWLR8GvPgbVuMo9tEOW2+FMZka5BLT
-	AZjJyx+Q+fKpsSGnKN2c4BfYOzlhhJbkWl8pM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RidSmk+0n/Dk/vdokn3n1dWx2NAvbtcA
-	R/c826ehQWaLIPSwqMJ/XpdQRSLZ0FrUMxz16rM4T2xaDt3VtOSktfuwG4ZIYdLg
-	FgJqzyAzxYpLcTZtDJihP9Oy1ilz8o8aEqOCFDxZdZNWGmFg4vEGp9sLhZBSYeP+
-	WolhsigT7Bs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 147714743;
-	Mon, 14 Feb 2011 15:09:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2A7504742; Mon, 14 Feb 2011
- 15:09:15 -0500 (EST)
-In-Reply-To: <5d55b72b16f3d2def5fa955862fe5be6ff9f82f7.1297695910.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Mon\, 14 Feb 2011 16\:10\:32 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4E341DF2-3876-11E0-8296-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751832Ab1BNU6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 15:58:36 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:43253 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751485Ab1BNU6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 15:58:34 -0500
+Received: by pva4 with SMTP id 4so892665pva.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 12:58:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=sBji/lw+46AlnEPh8SkKXDNP36G9Uv7qi0/Xvs5Q2j4=;
+        b=PHgKNlWnW7gwUiiEnOnFcxyuW1/RQTb7IkL4tM49XG27MdGb0FmvydiSc8hqrFwASG
+         8k00n1HqznYTHeQl52ACtHL59XkG8NjN0X8l6k2eM7CLkXyFRMXkaa13MUEQNFdKcdmY
+         MSQRX9c82vt47r37wxzjblsuWMJikPwfhNIH8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=uqAYKBaeideEINiuJPtSTArL8djaHW8kn+hZek0F1R/9J/eiD3bU4QHRh48VF5aHU7
+         psEWub84n7q1QXAjJvPO9w3S3Oe7Q1Z7vZpRpABCn69qjG3aj9wXNh5PNRnCvGfNeLE/
+         La2aeCHrXNm6G47pdI1Mc6uOJ/0JHemWwikOc=
+Received: by 10.142.174.7 with SMTP id w7mr3471140wfe.415.1297717114482; Mon,
+ 14 Feb 2011 12:58:34 -0800 (PST)
+Received: by 10.142.195.18 with HTTP; Mon, 14 Feb 2011 12:58:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166765>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hello,
 
-> This also removes the misleading "if any" which sounds as if omitting
-> "-m" would omit the commmit message. (It meant to mean "if a merge
-> commit is created at all".)
+I'm one of the contributors of libgit2 (http://libgit2.github.com/).
+I'm currently working on the handling of refs and I'd like to get a
+better understanding of git symbolic references.
 
-Hmph, then don't we want to keep that in your clearer form, i.e.
+In order to avoid polluting this list with an easy to answer noob
+question, I firsty asked this question on stackoverflow
+(http://stackoverflow.com/q/4986000). However, I do not have the
+feeling that I'm getting some definite "carved-in-stone" answers.
+This explains why I'm posting it here today.
 
-	specify merge commit message (if a merge is created at all)
+The following shell code correctly creates a chain of symbolic references
 
-An option is by definition to _specify_ something, "specify" is a waste of
-space in a description of an option.  E.g. in patch 3/7, --template option
-is described as "directory from which templates will be used", and not
-"specify the directory from which...".
+  git symbolic-ref "first" "refs/heads/master"
+  git symbolic-ref "second" "first"
+  git symbolic-ref "nested/third" "second"
+  git symbolic-ref "refs/heads/fourth" "nested/third"
+
+And the following shell code correctly resolves the latest created
+symbolic reference to the tip of master.
+
+  git show-ref "refs/heads/fourth"
+
+
+None of these use cases are described in the official documentation
+(git-symbolic-ref doc, git-show-ref doc).
+
+However, the following doesn't work
+
+  git check-ref-format --print "first"
+
+
+So, my questions are:
+
+ - Is it ok to store a symbolic reference within the refs/heads directory ?
+ - Is it ok to chain symbolic references ?
+ - As check-ref-format fails when being passed "first", does this mean
+that it's not recommended to create a symbolic reference at the same
+level than "HEAD"? Or maybe this command is not intended to deal with
+symbolic links ?
+
+My intent is to get a clear understanding of what is being supported
+and that I'm not working around anything or benefiting from a bug.
+
+
+Thanks in advance for any help you could provide me with.
+
+Cheers,
+Em.
+
+
+Em.
