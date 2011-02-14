@@ -1,105 +1,81 @@
-From: xzer <xiaozhu@gmail.com>
-Subject: [PATCH] generate a valid rfc2047 mail header for multi-line subject.
-Date: Mon, 14 Feb 2011 08:09:28 +0000
-Message-ID: <1297670968-28130-1-git-send-email-xiaozhu@gmail.com>
-Cc: xzer <xiaozhu@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 14 09:09:45 2011
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: [PATCH] Obey p4 views when using client spec
+Date: Mon, 14 Feb 2011 10:16:10 +0100
+Message-ID: <AANLkTinVp3EYFX3Ow2G8dO6Zn5BEWxuYjwO8vW2yOjcF@mail.gmail.com>
+References: <4D55D56C.6050207@vmware.com>
+	<20110212215133.GA21494@mew.padd.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Ian Wienand <ianw@vmware.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 10:16:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PotV9-0001kc-BV
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 09:09:43 +0100
+	id 1PouXa-0003W4-4s
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 10:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220Ab1BNIJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 03:09:39 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:35839 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752058Ab1BNIJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 03:09:37 -0500
-Received: by vxb37 with SMTP id 37so2457964vxb.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 00:09:36 -0800 (PST)
+	id S1751452Ab1BNJQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 04:16:12 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:49319 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079Ab1BNJQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 04:16:11 -0500
+Received: by ywo7 with SMTP id 7so1955851ywo.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 01:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=mTimFEb43H8qTwNal8z/FlwguLUs7Qhs/7z+Bp6GLJM=;
-        b=Ifkcj3kgF5eagrkNxdz/hV50L8O6QhIJkwZvSK8NB8YPAOYToEyXUwwuYYep3V5kDK
-         r9HExomBMZQe1vfi7Ap4qGftB5pSbxeIXT0RGevWZFLqU5ZKBSmCKUdTNCnDfadAIxzv
-         kVgp9lSZA9o7kiIYcju8mxDS3rpgkecEBPUeY=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=CHUcz3x7UdGJrnYvDe5KitYbtl1f0ihGj0zv83qGWVE=;
+        b=MZZhX9ZTHbeDh2LD/Po+M/IdxCmJG2Yuq6k/xvomgljD46xDLKMA9suSeBjKGA7A26
+         L0DXoOdYv1GBm5JbpCGUkD3KJBV8sdksWwEn98kfqAg/9J0+LcXVA6XbkuQpPiWJ7Lwu
+         +YaMelwovShOZQaAiHtUsJghTZoZltfikZWLI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=oQ7y9yZ+8EHmgGLePqT73DXUlP7VGE1V8TN5nD8S64fJtKaex3CMKJ4SkFjTRyK6X7
-         My90O23hB9JVZbLXH+EQSTDPsad4oL4loZBsgjiJH4lGHGZ8J8dWe5LdPlRhg4bVDIlM
-         YOh8K3AXZo7wXaBRIJXSRLImfNH6JT81EHXtk=
-Received: by 10.220.94.83 with SMTP id y19mr508543vcm.263.1297670976688;
-        Mon, 14 Feb 2011 00:09:36 -0800 (PST)
-Received: from serv.liurui.net ([96.9.152.142])
-        by mx.google.com with ESMTPS id g17sm1717013vbv.12.2011.02.14.00.09.35
-        (version=SSLv3 cipher=OTHER);
-        Mon, 14 Feb 2011 00:09:36 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.52.g00e6e.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Om/nF1D/eUAMEU9O8rUG4N+/fNV2/FQ4lGSCHOqOPtEboC+3gZwqeW3zkOEzA/954n
+         FbYnO8eV+KRap7rzhSeAtiKhOlwMf8Yfz40FPPaVvsHgT4HEWF/Sx+Ql+yu4wsyzfmgZ
+         ePIXUhdpCvfQsaKUvlXJZkHBtKn9JFuvgqL2E=
+Received: by 10.101.13.2 with SMTP id q2mr1522384ani.148.1297674970185; Mon,
+ 14 Feb 2011 01:16:10 -0800 (PST)
+Received: by 10.101.1.19 with HTTP; Mon, 14 Feb 2011 01:16:10 -0800 (PST)
+In-Reply-To: <20110212215133.GA21494@mew.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166698>
 
-There is still a problem that git-am will lost the line break.
-It's not easy to retain it, but as the first step, we can generate
-a valid rfc2047 header now.
----
- pretty.c |   29 ++++++++++++++++++++++++++++-
- 1 files changed, 28 insertions(+), 1 deletions(-)
+On Sat, Feb 12, 2011 at 10:51 PM, Pete Wyckoff <pw@padd.com> wrote:
+> ianw@vmware.com wrote on Fri, 11 Feb 2011 16:33 -0800:
+>> When using the p4 client spec, this attempts to obey the client's
+>> output preferences.
+>>
+>> For example, a view like
+>>
+>> //depot/foo/branch/... //client/branch/foo/...
+>> //depot/bar/branch/... //client/branch/bar/...
+>>
+>> will result in a directory layout in the git tree of
+>>
+>> branch/
+>> branch/foo
+>> branch/bar
+>>
+>> p4 can do various other reordering that this change doesn't support,
+>> but we should detect it and at least fail nicely.
+>>
+>> Signed-off-by: Ian Wienand <ianw@vmware.com>
+>
+> Nice, thanks for making the changes.
+>
+> Acked-by: Pete Wyckoff <pw@padd.com>
 
-diff --git a/pretty.c b/pretty.c
-index 8549934..f18a38d 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -249,6 +249,33 @@ needquote:
- 	strbuf_addstr(sb, "?=");
- }
- 
-+static void add_rfc2047_multiline(struct strbuf *sb, const char *line, int len,
-+                       const char *encoding)
-+{
-+	int first = 1;
-+	char *mline = xmemdupz(line, len);
-+	const char *cline = mline;
-+	int offset = 0, linelen = 0;
-+        for (;;) {
-+                linelen = get_one_line(cline);
-+
-+                cline += linelen;
-+
-+                if (!linelen)
-+                        break;
-+		
-+		if (!first)
-+			strbuf_addf(sb, "\n ");
-+
-+		offset = *(cline -1) == '\n'; 
-+
-+		add_rfc2047(sb, cline-linelen, linelen-offset, encoding);
-+		first = 0;
-+
-+        }
-+	free(mline);
-+}
-+
- void pp_user_info(const char *what, enum cmit_fmt fmt, struct strbuf *sb,
- 		  const char *line, enum date_mode dmode,
- 		  const char *encoding)
-@@ -1115,7 +1142,7 @@ void pp_title_line(enum cmit_fmt fmt,
- 	strbuf_grow(sb, title.len + 1024);
- 	if (subject) {
- 		strbuf_addstr(sb, subject);
--		add_rfc2047(sb, title.buf, title.len, encoding);
-+		add_rfc2047_multiline(sb, title.buf, title.len, encoding);
- 	} else {
- 		strbuf_addbuf(sb, &title);
- 	}
--- 
-1.7.4.52.g00e6e.dirty
+Good work, Ian! Thanks.
+
+Acked-by: Tor Arvid Lund <torarvid@gmail.com>
