@@ -1,112 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Consistent terminology: cached/staged/index
-Date: Mon, 14 Feb 2011 17:19:20 -0600
-Message-ID: <20110214231920.GA24814@elie>
-References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
- <20110213193738.GA26868@elie>
- <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
- <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Mercurial over Git no success
+Date: Tue, 15 Feb 2011 10:19:59 +1100
+Message-ID: <AANLkTimi8MU3VYug6orouHS7GmBJ-Pf27_zj_KO0Sj6c@mail.gmail.com>
+References: <1297717305.19327@davidwbrown.name>
+	<AANLkTinro_sSV52aZATAPFAm1SLRq8i4Q1kA2W+wqqH3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 00:19:34 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Manuel Doninger <manuel.doninger@googlemail.com>
+To: david@davidwbrown.name
+X-From: git-owner@vger.kernel.org Tue Feb 15 00:20:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp7hd-0003qF-Iu
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 00:19:33 +0100
+	id 1Pp7iC-0004Am-Hx
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 00:20:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147Ab1BNXT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 18:19:29 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:51787 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751934Ab1BNXT2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 18:19:28 -0500
-Received: by qwa26 with SMTP id 26so3526175qwa.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 15:19:27 -0800 (PST)
+	id S1753262Ab1BNXUE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 18:20:04 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49586 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751799Ab1BNXUB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 18:20:01 -0500
+Received: by wwa36 with SMTP id 36so5489655wwa.1
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 15:20:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=bV4D5t3gxjlc4BzfB4FMY0pxC+MoayZw8GaBPwMQLko=;
-        b=KokQR7uz1yMnihuw4HoM98Q6XfhBeCKcOkLyu69KeBwIMx2UZEX823UpkcG8poB7KR
-         tENodSd8SWo1/S2UU6IQ9knmXAQwsK4J1SOJpC459+DLSByTN2Qsbxn1hP4AwFJHfgJs
-         CO7OqDkIGl2JrlcP3CapTSq5QbM8ifcA4/q3o=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GwQtkcxIMqkq84BMPSkQ7gIKojQVqgI8kOd385ublCY=;
+        b=pYj6z9Ruj2lG13U993ejaFzJEUP6HGalmua937jyTmKBInWzhGdVZw35OgEYuAUhCQ
+         PUYeynqX1aDVSNJN7leeatwC1N4n+eieBrO0GIS6PfrMjdB/z4MkKYlS4Jj1WHZ4Wr9o
+         LHY97gaFw6JRM2R3nSmHnf7bjx/nFw9r2Hu2c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=MnLVBoSyrcm5e2riRvv2Kaw7eiiy4rs6Jtg97+F8d24emd03RgpDyJI9f5Nz6tFsL3
-         Wc4KBqrGYz2/gTz+SBF5uD1j5imXSOyc9zR4nojsBsG/APXkGI5HEpuBnPVXoG1rYepB
-         dA4yYYaBywc7dHsgvZefPXYvGNSuBjc6OI7rg=
-Received: by 10.229.86.7 with SMTP id q7mr3372256qcl.262.1297725567232;
-        Mon, 14 Feb 2011 15:19:27 -0800 (PST)
-Received: from elie (adsl-69-209-51-217.dsl.chcgil.sbcglobal.net [69.209.51.217])
-        by mx.google.com with ESMTPS id p13sm2156069qcu.41.2011.02.14.15.19.24
-        (version=SSLv3 cipher=OTHER);
-        Mon, 14 Feb 2011 15:19:25 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UEOQ+JZbT1ghXhcJzeHzEsfgjJUwFP2faUMA8Q8PaaJPJxJ6iUmDFhOW5DKENns0uq
+         whM9nLWQKaKY5LqV2YIMbEKQP2J1nwMdFZckdY7eGKIZNojcUar1JDOPdWNWJOZrtN52
+         zZT97T01pghzyZTFqR42cf9KNbYBg5Z7QjGKE=
+Received: by 10.227.128.70 with SMTP id j6mr3128275wbs.16.1297725599765; Mon,
+ 14 Feb 2011 15:19:59 -0800 (PST)
+Received: by 10.227.60.14 with HTTP; Mon, 14 Feb 2011 15:19:59 -0800 (PST)
+In-Reply-To: <AANLkTinro_sSV52aZATAPFAm1SLRq8i4Q1kA2W+wqqH3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166794>
 
-Hi again,
+=46rom the INSTALL file:
 
-Piotr Krukowiecki wrote:
+ - Git is reasonably self-sufficient, but does depend on a few external
+   programs and libraries.  Git can be used without most of them by add=
+ing
+   the approriate "NO_<LIBRARY>=3DYesPlease" to the make command line o=
+r
+   config.mak file.
 
-> In other places "index" is called "staging area" and act of updating the index
-> is called "staging in the index".
+        - "zlib", the compression library. Git won't build without it.
+
+       ...
+
+Per suggestions already made, on ubuntu apt-cache search and apt-cache
+get are your friends.
+
+jon.
+
+On Tue, Feb 15, 2011 at 8:50 AM, Manuel Doninger
+<manuel.doninger@googlemail.com> wrote:
+> According to the Install-section in the Pro Git book, you have to
+> install some other libraries. See http://progit.org/book/ch1-4.html
 >
-> I ask: why do we need the "index" term at all?
+> Manuel
 >
->    - instead of "index" use "staging" and "staging area"
->    - instead of "listed in index" use "staged" or "tracked"
-
-Unlike "staging area", the word "index" is unfamiliar and opaque.  So
-there is a sense that there is something to learn.
-
-When people talk about the staging area I tend to get confused.  I
-think there's an idea that because it sounds more concrete, there is
-less to explain --- or maybe I am just wired the wrong way.
-
-There is a .git/index file, with a well defined file format.  And
-there is an in-core copy of the index, too.  It contains:
-
- - mode and blob name for paths as requested by the user with
-   "git add"
-
- - competing versions for paths whose proposed content is
-   uncertain during a merge
-
- - stat(2) information to speed up comparison with the worktree
-
-There are some other pieces, too --- "intent-to-add" entries added
-with "git add -N", cached tree names for unmodified subtrees to
-speed up "git commit", and so on.  But the 3 pieces listed above are
-the main thing.
-
-"Staging area" only describes the first.
-
-All that said, I am not against formulations like "content of the next
-commit" that might be more concrete from a user's point of view.
-
-[...]
->  --refresh::
->  	Don't add the file(s), but only refresh their stat()
-> -	information in the index.
-> +	information in the staging area.
-
-git add/update-index --refresh are precisely meant for _not_ changing
-the content of the next commit, so this particular change seems
-confusing.
-
-Hoping that is clearer.  Thanks for caring.
-Jonathan
+> On Mon, Feb 14, 2011 at 22:01, =C2=A0<david@davidwbrown.name> wrote:
+>> Hello Gitters, long ago when first starting the project I'm currentl=
+y running at my company I looked around for a VCS/SCM that would be any=
+where better than: CVS/SVN. At first I looked at Git but could not get =
+a version to run on my Ubuntu box. So, I had to settle for Hg. Now, tha=
+t I'm several months into the web app dev I'm responsible for the hired=
+ help has convinced me to switch to Git. Now, I'm back at the same old =
+problem I had months ago that forced me to give up on using Git. Unlike=
+ a lot of Unix/Linux based software the usual:
+>>
+>> ./configure
+>> make
+>> make install
+>>
+>> Does not work for building Git on my local Ubuntu box (10.10 BTW). S=
+ome non-innocuous error condition as follows:
+>>
+>> cannot find zlib.h
+>>
+>> Pls advise. David.
+>>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
