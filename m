@@ -1,196 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: The future of gitweb (long term goals)
-Date: Mon, 14 Feb 2011 20:39:54 +0100
-Message-ID: <201102142039.59416.jnareb@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/7] push: describe --porcelain just like commit and status
+Date: Mon, 14 Feb 2011 20:42:31 +0100
+Message-ID: <201102142042.31887.j6t@kdbg.org>
+References: <cover.1297695910.git.git@drmicha.warpmail.net> <3b6a87b585eea1722bd31bc9cf5ba2c80e37aefa.1297695910.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Hawley <warthog9@kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 14 20:40:23 2011
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Feb 14 20:42:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp4HT-0001CP-Tn
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 20:40:20 +0100
+	id 1Pp4Ju-0002s7-IN
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 20:42:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398Ab1BNTkP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 14:40:15 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:50793 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934Ab1BNTkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 14:40:13 -0500
-Received: by eye27 with SMTP id 27so2521288eye.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 11:40:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        bh=fLtgDRg4Sp7nbVvvvYObK0yBI980n3qKznDouB43dow=;
-        b=WoF4aAFCPsXOQUjUWm9a31f3uCGOKzry653dcsptOZkURNA5OXoSwyK0r7wBPye5Qu
-         aGMRRNZVDJRFv+xR3MIGjcpgcZGAOqVAENzVj8GivF22YxdG0iA3hlJwCwziwGoEjJGD
-         wyBYhUPW6VaeD2b7426cSxW9WQmvPS0zYeCUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=bNYf9OSuvvmgEVIW60G/r0vDE16OzF4iEeWwVWvMWwdvhqjEfivIfVSzuGhiLvoJbJ
-         HtQGFnFfrxglZA1sW/V/h00qLSFs2ZEpp/7VG50q6u5x18F7CP2hjAcPCFWK4wtUuyPx
-         wTYupNzsORh1VjRYRWXdj4GT0AWX1+3oa5G4E=
-Received: by 10.103.219.18 with SMTP id w18mr1025482muq.119.1297712412037;
-        Mon, 14 Feb 2011 11:40:12 -0800 (PST)
-Received: from [192.168.1.13] (abvu55.neoplus.adsl.tpnet.pl [83.8.218.55])
-        by mx.google.com with ESMTPS id a6sm1110908fak.1.2011.02.14.11.40.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Feb 2011 11:40:10 -0800 (PST)
-User-Agent: KMail/1.9.3
+	id S1751934Ab1BNTmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 14:42:36 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:5512 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751153Ab1BNTmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 14:42:35 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 30D8CA7EBD;
+	Mon, 14 Feb 2011 20:41:29 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 58B6A19F5AF;
+	Mon, 14 Feb 2011 20:42:32 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <3b6a87b585eea1722bd31bc9cf5ba2c80e37aefa.1297695910.git.git@drmicha.warpmail.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166754>
 
-Now that we are talking about future of git, including breaking some
-of backwards compatibility bugs / misdesigns for 1.8.0, perhaps it is
-the time to discuss long term goals and the future of gitweb.
+On Montag, 14. Februar 2011, Michael J Gruber wrote:
+> -		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output",... 
+TRANSPORT_PUSH_PORCELAIN),
+> +		OPT_BIT( 0,  "porcelain", &flags, "show porcelain output format",...
 
-Gitweb was created by Kay Sievers in 2005[1][2], and was initially
-developed in a separate repository, as a separate tool.  Since 0a8f4f0
-(Merge git://git.kernel.org/pub/scm/git/gitweb, 2006-06-10) it got
-merged into git (so git 1.4.0 included gitweb)... and gitweb didn't
-really have a maintainer since (at least not official one).
+IMO, this is a step in the wrong direction. It is not at all clear 
+that "--porcelain" means "output _for_ porcelain"; it is much more likely to 
+be understood as "output _is_ the porcelain". Your new text even supports 
+this latter understanding. The original description "machine-readable output" 
+is unambiguous and cannot be misunderstood.
 
-[1] http://kerneltrap.org/node/5026
-[2] http://kerneltrap.org/node/5059
-
-The code got cleaned up since original version, static files got
-separated out of gitweb script, gitweb acquired its Makefile... still
-gitweb doesn't really have clear long-term plans for the future, nor
-does it have a mission statement.
-
-I think that we should discuss what we want gitweb to be.
-
-
-Current requirements are:
-- Perl 5.8.x (for proper Unicode / UTF-8 support)
-- core Perl modules: CGI, Encode, Fcntl, File::Find, File::Basename,...
-- non-core Perl modules optional, needed for some of extra features
-- backward compatibility (query params and path_info URLs)
-- easy installation even without admin rights
-- scanning for repositories (as an option)
-- lightweight
-
-Which of those requirements should be preserved, and which can be
-safely abandoned?
-
-
-Lack of backward compatibility with respect to gitweb links was, if I
-remember it correctly, one of reasons why http://git.kernel.org didn't
-move to other web interface like cgit.  So abandoning this requirement
-is a bit no.
-
-Another feature that made cgit unsuitable for git.kernel.org was IIRC
-the fact that cgit doesn't support (or didn't support then; I don't
-know the current feature set of cgit) scanning for repositories,
-without need for list of repositories to be generated by separate tool
-or script.  So the mode where gitweb scans for repositories (where
-$projects_list is a directory) is here to stay.
-
-
-The most restrictive requirement is to use only core Perl modules (in
-core as of Perl version 5.8.3 or something) for main functionality;
-non-core Perl modules are currently allowed only as optional modules
-required for extra (not compulsory) features.
-
-This means that we are not able to use web (micro)framework, or use
-templating engine to create HTML instead of combination of CGI.pm
-methods and handcrafted HTML (worrying about proper escaping), or just
-use CGI::Cache or Plack::Middleware::Cache for adding output caching
-to gitweb.  Though if one wants web interface in Perl that uses web
-framework (and is supposedly backwards-compatible with gitweb URLs),
-there is always Gitalist which uses Catalyst web framework.
-
-On the other hand requiring non-core Perl modules means that gitweb
-installation would be harder.  We can work around this issue if there
-are a few small such modules (e.g. using Exception::Class or
-HTTP::Exception as base class for gitweb error handling) by putting
-them in 'inc/' and installing local version if they are not present,
-like Git.pm does with local Error.pm module.  But for microframework,
-or templating engine, or e.g. Plack (if we go the route to make gitweb
-PSGI application) this would be rather out of question.  Anyway, in
-any case gitweb would probably require more complicated build system
-than current one... but moving to e.g. ExtUtils::MakeMaker shouldn't
-be that hard (see how Git.pm does it, only we can require Perl 5.8.3
-which has new enough EU::MM that supports DESTDIR).
-
-
-There are also few "1.7.5" things, i.e. issues that needs to be done
-but does not affect backwards compatibility, and doesn't change
-current gitweb requirements any.  They are about making gitweb easier
-to maintain and more perl-ish.
-
-1. Splitting gitweb into modules (packages), for better maintainability=
-=2E
-
-   As I wrote earlier in "[PATCH 0/2] gitweb: Begin splitting gitweb"[3=
-]
-   gitweb with 25K lines and 220K bytes begins to be a bit unwieldy to
-   maintain.  Therefore the proposal to split it into modules=20
-(packages).
-
-   The difficult part is deciding on how gitweb would search for those
-   modules (see [3] for discussion), and what the modules should be:
-   how to group subroutines and variables, and how to name packages.
-
-   There is also a question whether to split gitweb all at once (like
-   in original attempt by Pavan during GSoC2010), or just split-off
-   modules piece by piece, in incremental way.  I think the second one
-   (evolutionary) has a better chance for success.
-
-   [3] http://thread.gmane.org/gmane.comp.version-control.git/165824
-
-2. Default installation directories, installation configurability.
-
-   This issue is somewhat connected to the previous one; the ability
-   to install gitweb modules in arbitrary directory doesn't make sense
-   if you can't configure to be installed gitweb to find them.
-
-   There is also a question whether gitweb modules should be installed
-   by default alongside gitweb, or together with other Perl modules
-   i.e. like Git.pm from 'perl/'.
-
-3. Gitweb documentation: move away from gitweb/README
-
-   Currently gitweb documentation can be found in gitweb/README,
-   gitweb/INSTALL and in comments in gitweb script.  While
-   gitweb/README is not largest (on my system largest is
-   sendmail-cf/README), and not even largest in git repository
-   (t/README is larger), it is nevertheless one of larger READMEs.
-
-   Perhaps it would be good idea to generate gitweb(1) manpage,
-   either from gitweb/gitweb.txt, Documentation/gitweb.txt (in
-   AsciiDoc), or like for Git.pm from gitweb/gitweb.perl (in POD),
-   (after splitting both gitweb.perl and Gitweb.pm would get separate
-   manpages), or from gitweb/gitweb.pod (also POD, but separate)?
-   What do you think?
-
-4. Build procedure - move to using ExtUtils::MakeMaker, like Git.pm
-
-   Some of proposed changes, both those preserving and those not
-   preserving backward compatibility, would need more sophisticated
-   build system.  I am talking here about depending on non-core Perl
-   modules (with or without bundling some version of them in 'inc/'),
-   and building manpages and HTML gitweb documentation out of POD.
-
-   I think it would be much easier to do that using EU::MM, like
-   Git.pm does... only because gitweb requires at least Perl 5.8.0,
-   we can assume that EU::MM is new enough that it support DESTDIR
-   mechanism.
-
---=20
-Jakub Nar=C4=99bski
-ShadeHawk on #git
+-- Hannes
