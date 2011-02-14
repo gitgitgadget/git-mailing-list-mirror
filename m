@@ -1,83 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [1.8.0 RFC] push: start warning upcoming default change for
- push.default
-Date: Mon, 14 Feb 2011 15:55:29 -0600
-Message-ID: <20110214215529.GB24030@elie>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 14 Feb 2011 22:57:24 +0100
+Message-ID: <vpqr5bath2z.fsf@bauges.imag.fr>
 References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102140036.42197.johan@herland.net>
- <7vfwrrukzq.fsf@alter.siamese.dyndns.org>
- <201102141018.46527.johan@herland.net>
- <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
- <AANLkTincKapKgcWEE1Z+vQesSjZBFAnfH0uL+a7GhQ6b@mail.gmail.com>
- <AANLkTi=Fpey7e+E1eKOiSaS1hjW2d8eOy9PVLR34Sc5J@mail.gmail.com>
- <AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com>
- <20110214212131.GA23806@elie>
- <AANLkTi=_TVB9cUhLa66_om+c_wptDh+kaJH-idp1=s6O@mail.gmail.com>
+	<201102140036.42197.johan@herland.net>
+	<7vfwrrukzq.fsf@alter.siamese.dyndns.org>
+	<201102141018.46527.johan@herland.net>
+	<7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
+	<AANLkTincKapKgcWEE1Z+vQesSjZBFAnfH0uL+a7GhQ6b@mail.gmail.com>
+	<AANLkTi=Fpey7e+E1eKOiSaS1hjW2d8eOy9PVLR34Sc5J@mail.gmail.com>
+	<AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Johan Herland <johan@herland.net>,
 	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Dmitry Potapov <dpotapov@gmail.com>,
+	Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Nicolas Pitre <nico@fluxnic.net>
 To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 22:55:46 2011
+X-From: git-owner@vger.kernel.org Mon Feb 14 23:01:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp6OV-0003sA-1b
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:55:43 +0100
+	id 1Pp6Tp-0007B2-Sb
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 23:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751680Ab1BNVzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 16:55:38 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:40355 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751079Ab1BNVzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 16:55:36 -0500
-Received: by wwa36 with SMTP id 36so5411792wwa.1
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 13:55:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=LeVljSbDmdBmZ+SvtiNKL/dJQpWwdhJRxGJPGxU32fE=;
-        b=SZpmY3hvZHCz9/FaOYjIDT3cGog2jCVfUq0ejnUrsxxV0SLcxUdwfrw8WxhvnHtEjO
-         ZdHmJLeDJLkRVQjGKD5VTuMI9fXBne9drik3RY6eL2RrHz8VDc/0w0KUeFqTo9NpyBam
-         l+a9sOIfUdlAyOIYtd8mEDoAX2aTaa5pv5Ids=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Fmx2yz7yHLeLm+Hxs2Fe/njtS7al3PdahIMS8DIzC4lh90XDHuhGIvTSqNGFJKMokW
-         hmIgSyJjfqekddQWiD49KIXD72T81o6w3DBSSCgj6bWlD4ZUIAOl3VI6sdGv5VeF87LR
-         UaijrvClhY4TxWeHlQF4EmTf2toJtxld/N4UE=
-Received: by 10.227.146.213 with SMTP id i21mr3018579wbv.15.1297720535503;
-        Mon, 14 Feb 2011 13:55:35 -0800 (PST)
-Received: from elie (adsl-69-209-51-217.dsl.chcgil.sbcglobal.net [69.209.51.217])
-        by mx.google.com with ESMTPS id r80sm1051907wei.15.2011.02.14.13.55.32
-        (version=SSLv3 cipher=OTHER);
-        Mon, 14 Feb 2011 13:55:34 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=_TVB9cUhLa66_om+c_wptDh+kaJH-idp1=s6O@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751680Ab1BNWBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 17:01:08 -0500
+Received: from imag.imag.fr ([129.88.30.1]:39194 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751079Ab1BNWBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 17:01:07 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p1ELvPaI021530
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 14 Feb 2011 22:57:25 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Pp6Q9-0006gF-4C; Mon, 14 Feb 2011 22:57:25 +0100
+In-Reply-To: <AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com> (Jay Soffian's message of "Mon\, 14 Feb 2011 14\:50\:17 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 14 Feb 2011 22:57:25 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166780>
 
-Jay Soffian wrote:
+First, I'd be really glad if push.default changed to "current", that's
+what I want 99% of cases, if not more.
 
-> If everyone
-> sets push.default to 'matching' because that's what the message
-> advises, what's the point of changing the implicit default to
-> 'current'?
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-That new installations after v1.8.0 would use the more sensible behavior?
+> Alternately, you could take the wall of text approach, which I was
+> trying to avoid:
+>
+>   push.default is unset; its implicit value is changing in 1.8.0 from
+>   'matching' to 'current'. To squelch this message and maintain the current
+>   behavior post-1.8.0, use 'git config [--global] push.default matching'. To
+>   squelch this message and adopt the 1.8.0 behavior now, use
+>   'git config [--global] push.default current'. See 'git help config' and
+>   search for 'push.default' for further information.
+
+I actually like this, although it's a bit verbose: I think telling the
+user "something will change" without telling what is very frustrating,
+so the "from 'matching' to 'current'" part seems really good.
+
+I'd remove the [] around the --global, to make the command
+cut-and-paste ready. Advanced users know whether to remove the
+--global, and newbies don't want to remove it.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
