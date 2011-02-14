@@ -1,95 +1,68 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
-Date: Mon, 14 Feb 2011 14:50:17 -0500
-Message-ID: <AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102140036.42197.johan@herland.net> <7vfwrrukzq.fsf@alter.siamese.dyndns.org>
- <201102141018.46527.johan@herland.net> <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
- <AANLkTincKapKgcWEE1Z+vQesSjZBFAnfH0uL+a7GhQ6b@mail.gmail.com> <AANLkTi=Fpey7e+E1eKOiSaS1hjW2d8eOy9PVLR34Sc5J@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/7] push: describe --porcelain just like commit and
+ status
+Date: Mon, 14 Feb 2011 11:53:02 -0800
+Message-ID: <7vmxlys89t.fsf@alter.siamese.dyndns.org>
+References: <cover.1297695910.git.git@drmicha.warpmail.net>
+ <3b6a87b585eea1722bd31bc9cf5ba2c80e37aefa.1297695910.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 20:50:54 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Feb 14 20:53:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp4Rh-0007mc-Tm
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 20:50:54 +0100
+	id 1Pp4U1-00016e-Jl
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 20:53:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751680Ab1BNTuu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 14:50:50 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:45997 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751153Ab1BNTus convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 14:50:48 -0500
-Received: by yib18 with SMTP id 18so2225465yib.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 11:50:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=EMgBHKXenYhJV1t/hOPQpQf9YMDFXfc259hAenC64kU=;
-        b=OvIT8XB099J2vI+slr/g7yAnkKW4ayCCEXnCRg00kl90PbkuwUonE6q+slmKH+rrK+
-         ZK09SdVLFuvc3rXJjfvBuVVFDbBrgk0wYg/8kLnC1EIJ5BKQXoFyLIY80W4denSh9F4r
-         9Al/d/cR2MAie/5C+r0QUigKH9CZz/W759Rdk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BWDzTqQe2ACe17b0DYlx/e4huWN1ygom7V/5lOYhfDNgKTZ0GxqEwQft9byaFpwVKF
-         ErBSx+D5KZUF84X9puHoCIurDm7K8ZGTKV1Wo2/DKrZay5lh2f42qYq26TzPU+WSjs24
-         IRpIyKudFkjdC/48OKGMv3IaA6Te3RcJ8JgNA=
-Received: by 10.42.230.74 with SMTP id jl10mr5564699icb.177.1297713047875;
- Mon, 14 Feb 2011 11:50:47 -0800 (PST)
-Received: by 10.231.40.2 with HTTP; Mon, 14 Feb 2011 11:50:17 -0800 (PST)
-In-Reply-To: <AANLkTi=Fpey7e+E1eKOiSaS1hjW2d8eOy9PVLR34Sc5J@mail.gmail.com>
+	id S1752015Ab1BNTxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 14:53:12 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44379 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022Ab1BNTxL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 14:53:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D0CFB45AB;
+	Mon, 14 Feb 2011 14:54:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QtSevo9exP40KSwG5fdb3PR5I0c=; b=La5rPe
+	7eHZ0IXpQ94eyaKJY6PN7JjruQRqeHHT8WuzaE8kwt6xbkwu1ZECCpHJm/vdYtp/
+	9GoaPnq2JwIPcBTz0QyR8qInYVSmaOAHi6jojjB3Lj4jSPwWddTIwMksghSrTicZ
+	KG3XvxyJkXgjLHkmdbfEinQbmPlxD7X1mElO0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qC+pCuuLVc7TPXCEBkaKMo3n9YWK3O5g
+	bCpXuvxpZBQmdMPQozlodtgLZEo/MxlX8fM7pWQW8pl/x1OveRLml16JH4IfIX5c
+	rwq1wEGznHWGVq4HYpQDQGchHu9d4W0Yo8FmhWR/bGdojnh9SlqqDFUpRINTWKSE
+	7UbG6VssoEc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AEEFF45A8;
+	Mon, 14 Feb 2011 14:54:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 35C3245A4; Mon, 14 Feb 2011
+ 14:54:08 -0500 (EST)
+In-Reply-To: <3b6a87b585eea1722bd31bc9cf5ba2c80e37aefa.1297695910.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Mon\, 14 Feb 2011 16\:10\:30 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 31F73216-3874-11E0-8E2A-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166760>
 
-On Mon, Feb 14, 2011 at 2:44 PM, Sverre Rabbelier <srabbelier@gmail.com=
-> wrote:
-> Heya,
->
-> On Mon, Feb 14, 2011 at 19:53, Jay Soffian <jaysoffian@gmail.com> wro=
-te:
->> =C2=A0push.default is unset; its implicit value is changing in 1.8.0=
-=2E To squelch
->> =C2=A0this message, set push.default. See push.default in 'git help =
-config'.
->
-> This is worse than what Junio suggested because it does not tell you
-> what to set it to.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Which was intentional on my part. If the message says what to set it
-to, the beginner will just go 'okay' and set it to that, in which
-case, what is the point of changing the default? Hence pointing to the
-man page.
+> -		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPORT_PUSH_PORCELAIN),
+> +		OPT_BIT( 0,  "porcelain", &flags, "show porcelain output format", TRANSPORT_PUSH_PORCELAIN),
 
-Alternately, you could take the wall of text approach, which I was
-trying to avoid:
+Thanks, but I wonder if machine-readable is more descriptive than
+"porcelain output format", iow, updating commit/status may be better.
 
-  push.default is unset; its implicit value is changing in 1.8.0 from
-  'matching' to 'current'. To squelch this message and maintain the cur=
-rent
-  behavior post-1.8.0, use 'git config [--global] push.default matching=
-'. To
-  squelch this message and adopt the 1.8.0 behavior now, use
-  'git config [--global] push.default current'. See 'git help config' a=
-nd
-  search for 'push.default' for further information.
-
-j.
+The option was meant to mean "output format for Porcelain script writers
+to stay machine readable" but it can be misunderstood as "output format
+a Porcelain command would produce with chromes and glitters".
