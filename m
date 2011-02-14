@@ -1,80 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
-Date: Mon, 14 Feb 2011 15:45:17 -0800
-Message-ID: <7vfwrqqiya.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102140036.42197.johan@herland.net>
- <7vfwrrukzq.fsf@alter.siamese.dyndns.org>
- <201102141018.46527.johan@herland.net>
- <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
- <AANLkTincKapKgcWEE1Z+vQesSjZBFAnfH0uL+a7GhQ6b@mail.gmail.com>
- <AANLkTi=Fpey7e+E1eKOiSaS1hjW2d8eOy9PVLR34Sc5J@mail.gmail.com>
- <AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com>
- <vpqr5bath2z.fsf@bauges.imag.fr>
- <20110214223557.GA13070@sigill.intra.peff.net>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Tue, 15 Feb 2011 08:47:00 +0900
+Message-ID: <AANLkTikyc5QEou8Em-3HkLSHWHQyx+MnYMQ9OSN33_QS@mail.gmail.com>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <87k4h34bhj.fsf@catnip.gol.com> <7vr5bbupj4.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=PDhVgpTeFjTxFuVJGbAKTHzHhsNVcquqSD3Qq@mail.gmail.com>
+ <4D58D2DF.1050205@viscovery.net> <AANLkTikTfyHBOvQmjhT8yTziL4R67+AAk0O-Nk1tBSaL@mail.gmail.com>
+ <4D5906FD.7030502@drmicha.warpmail.net> <buod3muswq7.fsf@dhlpc061.dev.necel.com>
+ <7vtyg6tu9e.fsf@alter.siamese.dyndns.org> <AANLkTinnCLVDEZpNPVYZ2fq1BY=257BTxkzNj44-Yz3O@mail.gmail.com>
+ <7vzkpyql2r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 15 00:45:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 15 00:47:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp874-0001WA-RQ
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 00:45:51 +0100
+	id 1Pp88y-0002eb-Jd
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 00:47:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819Ab1BNXpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 18:45:47 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38247 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753443Ab1BNXpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 18:45:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C65F42A2;
-	Mon, 14 Feb 2011 18:46:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LGeCeHre9OTA5ZxWH5hJmKvgxts=; b=dUnig5
-	GjRoD/VwPl0z9FfwGIdyIVIHmf1FtArYtCrdXA++azvJ+5x7egDxX3qkDsm37T4V
-	4j5AaZXuaW9Rvwjs22e3F2KTAjd84aH4507dCxUUjB9rX7R4jRaxAgUqAHh+VbFA
-	IKQaVxU5xSojhlDP2Y2TCebPI7pY/9eHXxF3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o82F7YTLPKpA7O0G8m51Tz9AwKZy5FUz
-	XRKRHv4PI93BmQXHycp8mp9ALMKxom38MT2HFsMR8qQN+xLn4fN0ajcsofp5tXbw
-	flKwK+PHCmmeho0nLC5COpIjQgE5AFLWbzili5db1DGtwlGwZfQyKeSrdIh5rVxa
-	iiAhGsywqbA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B91544292;
-	Mon, 14 Feb 2011 18:46:36 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CA2294286; Mon, 14 Feb 2011
- 18:46:22 -0500 (EST)
-In-Reply-To: <20110214223557.GA13070@sigill.intra.peff.net> (Jeff King's
- message of "Mon\, 14 Feb 2011 17\:35\:57 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A942AF06-3894-11E0-B999-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1753818Ab1BNXrp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 18:47:45 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46591 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753443Ab1BNXrn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 18:47:43 -0500
+Received: by bwz15 with SMTP id 15so6043063bwz.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 15:47:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7E1hPDrsy1tZIFMOPLk8Jf1N8IIHLLbOqPTlzIqinsI=;
+        b=aUMzRhNhSVYEY4p8IA4hdwpEUtHjRv86QtjUzOypOoKsI61CFL7M0oMzbTuZOAhFP4
+         dQtIHCEXFP8N7rzMaS1pt4qqIjuj3kAFM1NcFhKHVPBWXfMV3JN0CePcyXXcZxjjpp0j
+         J7bztpoSGTp3SBEZcl+hflYU0oNmWvxSf/2WE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=R2F2cTmb/PQz90YyKYyqd/VRM7zTxRVnZBDDcNz6vmxXqgq4A48Ar4fKWsus0G63ZY
+         sBo6V6B/kCTkmU6Ph/mq6uUlfKoeBpjtJf9onLpsFHIck9F+96uGvRrAqPz6FC4ptBKJ
+         i+Ply3gOQmiL+blZcABF+8NqK85GKmfXP0eyU=
+Received: by 10.204.99.145 with SMTP id u17mr3937774bkn.1.1297727262144; Mon,
+ 14 Feb 2011 15:47:42 -0800 (PST)
+Received: by 10.204.119.130 with HTTP; Mon, 14 Feb 2011 15:47:00 -0800 (PST)
+In-Reply-To: <7vzkpyql2r.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: PQU2OU7HdCsjodb7slLTdM2eQuc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166798>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Feb 15, 2011 at 7:59 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> I actually was hoping that it was obvious that -s is a no-starter fro=
+m the
+> messages so far in this thread, as neither --cached nor its more
+> descriptive spelling --index-only has character 's' anywhere in it, a=
+nd we
+> have been keeping --staged as a low-key synonym for a reason.
 
-> I like this one, too. It lays out what is happening and what the
-> possible choices are....
+It was not at all obvious.  Even if you like --cached more than
+--staged, there's a difference between advocating "--staged", and
+using "-s" as a short-option for the operation which --cached /
+--staged invoke.
 
-Heh, I see others sorted this out while I was looking the other way ;-)
-Care to roll an appliable patch?
+Short option names are often a compromise, because clearly there are
+often conflicts.  That _doesn't_ mean that one should simply not have
+a short option, when a "perfect" choice cannot be found.  If a
+"perfect" short-option isn't available, then usually one turns to
+somewhat less perfect choices, trying to at least find some heuristic
+that can make them easier to memorize -- because in the end, short
+options must be memorized (and if they are truly common operations,
+this isn't generally difficult; it's memorizing _rarely_ used short
+options that's hard).
+
+Of the various choices, "-s" does at least have such a heuristic
+connection to an appropriate long option ("-i" is arguably worse than
+-s, because it doesn't have any such connection...).  Can you suggest
+something better?
+
+[BTW, isn't the name "--index-only" something of a misnomer?  If
+something is called "--XXX-only", that implies that the default
+operation uses "XXX + something else" instead of XXX, but that
+otherwise they are the same.  However in fact the difference in
+behavior resulting from --cached is more subtle: it changes _both_
+sides of the diff (default: worktree<->index; --cached: index<->HEAD).
+ The names --cached and --staged actually capture this well -- they
+basically say "the default is worktree changes, and --cached/--staged
+diffs cached/staged changes instead" -- but the name "--index-only"
+does not.]
+
+-Miles
+
+--=20
+Cat is power. =A0Cat is peace.
