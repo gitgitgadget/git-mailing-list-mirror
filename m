@@ -1,84 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Demonstrate breakage: checkout overwrites untracked symlink
- with directory
-Date: Tue, 15 Feb 2011 08:24:36 +0100
-Message-ID: <4D5A2A34.7090008@viscovery.net>
-References: <201102022025.06140.j6t@kdbg.org> <7v7hdixkys.fsf@alter.siamese.dyndns.org> <201102022324.22123.j6t@kdbg.org> <201102051918.44848.j6t@kdbg.org>
+From: Rolf Wester <rolf.wester@ilt.fraunhofer.de>
+Subject: How to safely remove a blob
+Date: Tue, 15 Feb 2011 09:13:03 +0100
+Message-ID: <4D5A358F.2050906@ilt.fraunhofer.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 08:24:48 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 15 09:27:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpFHD-0006NJ-NU
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 08:24:48 +0100
+	id 1PpGFb-0003T7-3B
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 09:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753993Ab1BOHYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 02:24:43 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:62083 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751758Ab1BOHYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 02:24:41 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PpFH2-0005Ny-Vj; Tue, 15 Feb 2011 08:24:37 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 885861660F;
-	Tue, 15 Feb 2011 08:24:36 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <201102051918.44848.j6t@kdbg.org>
-X-Spam-Score: -1.4 (-)
+	id S1754476Ab1BOI1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 03:27:05 -0500
+Received: from relay01-haj2.antispameurope.com ([83.246.65.51]:44622 "EHLO
+	relay01-haj2.antispameurope.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754462Ab1BOI1E (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 03:27:04 -0500
+X-Greylist: delayed 835 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Feb 2011 03:27:04 EST
+Received: by relay01-haj2.antispameurope.com (ASE-Secure-MTA, from userid 1000)
+	id B7D9A941DF; Tue, 15 Feb 2011 09:13:03 +0100 (CET)
+Received: from kso.ilt.fraunhofer.de (eeltc2.llt.RWTH-Aachen.DE [137.226.44.2])
+	by relay01-haj2.antispameurope.com (ASE-Secure-MTA) with SMTP id 443A9941C5
+	for <git@vger.kernel.org>; Tue, 15 Feb 2011 09:13:03 +0100 (CET)
+Received: from ksi.ilt.fraunhofer.de (ksi.ilt.fraunhofer.de [153.96.180.2])
+	by kso.ilt.fraunhofer.de (8.13.5+/8.13.5) with ESMTP id p1F8D3Ir010984
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Tue, 15 Feb 2011 09:13:03 +0100 (CET)
+X-Received: ilt.fraunhofer.de-policy  from ksi.ilt.fraunhofer.de (localhost [127.0.0.1])
+	by ksi.ilt.fraunhofer.de (8.13.5+/8.13.5) with ESMTP id p1F8D3jo024681
+	for <git@vger.kernel.org>; Tue, 15 Feb 2011 09:13:03 +0100 (CET)
+Received: from [10.60.122.222] (suse895.fhg-ilt1.ilt.fraunhofer.de [10.60.122.222])
+	by ksi.ilt.fraunhofer.de (8.13.5+/8.13.5) with ESMTP id p1F8D3vI024678
+	for <git@vger.kernel.org>; Tue, 15 Feb 2011 09:13:03 +0100 (CET)
+X-Authentication-Warning: ksi.ilt.fraunhofer.de: Host suse895.fhg-ilt1.ilt.fraunhofer.de [10.60.122.222] claimed to be [10.60.122.222]
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.4) Gecko/20100608 Lightning/1.0b2 Thunderbird/3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166823>
 
-I forgot to test the patch on Windows.. Would you please squash this
-into js/checkout-untracked-symlink~1 ?
+Hello,
 
-Thanks a lot!
+in one of my git repos I found an 102 MB object that probably came in there more or less occasionally.
+Its a blob and I would like to remove it safely. I tried to figure out how to do it but I was
+not very successful. I guess simply deleting the file could corrupt my repo or at least the clones of
+that repo.
 
---- 8< ---
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] fixup! Make test case number unique, mark tests with SYMLINKS prerequisite
+I would be very appreciative for any help.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- ...ut-overwrite.sh => t2021-checkout-overwrite.sh} |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
- rename t/{t2019-checkout-overwrite.sh => t2021-checkout-overwrite.sh} (83%)
+With kind regards
+Rolf
 
-diff --git a/t/t2019-checkout-overwrite.sh b/t/t2021-checkout-overwrite.sh
-similarity index 83%
-rename from t/t2019-checkout-overwrite.sh
-rename to t/t2021-checkout-overwrite.sh
-index e4e529d..27db2ad 100755
---- a/t/t2019-checkout-overwrite.sh
-+++ b/t/t2021-checkout-overwrite.sh
-@@ -29,7 +29,7 @@ test_expect_success 'checkout commit with dir must not remove untracked a/b' '
- 	test -f a/b
- '
- 
--test_expect_success 'create a commit where dir a/b changed to symlink' '
-+test_expect_success SYMLINKS 'create a commit where dir a/b changed to symlink' '
- 
- 	rm -rf a/b &&	# cleanup if previous test failed
- 	git checkout -f -b symlink start &&
-@@ -39,7 +39,7 @@ test_expect_success 'create a commit where dir a/b changed to symlink' '
- 	git commit -m "dir to symlink"
- '
- 
--test_expect_failure 'checkout commit with dir must not remove untracked a/b' '
-+test_expect_failure SYMLINKS 'checkout commit with dir must not remove untracked a/b' '
- 
- 	git rm --cached a/b &&
- 	git commit -m "un-track the symlink" &&
 -- 
-1.7.4.2.gb816c.dirty
+------------------------------------
+# Dr. Rolf Wester
+# Fraunhofer Institut f. Lasertechnik
+# Steinbachstrasse 15, D-52074 Aachen, Germany.
+# Tel: + 49 (0) 241 8906 401, Fax: +49 (0) 241 8906 121
+# EMail: rolf.wester@ilt.fraunhofer.de
+# WWW:   http://www.ilt.fraunhofer.de
