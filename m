@@ -1,104 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: be cleverer with rebased upstream branches
-Date: Tue, 15 Feb 2011 12:30:53 -0800
-Message-ID: <7vzkpxm45e.fsf@alter.siamese.dyndns.org>
-References: <1297691481-3308-1-git-send-email-martin.von.zweigbergk@gmail.com>
+From: Adam Monsen <haircut@gmail.com>
+Subject: release maintenance vs. release engineering (was: configuring cherry-pick
+ to always use -x?)
+Date: Tue, 15 Feb 2011 13:03:43 -0800
+Message-ID: <4D5AEA2F.9000606@gmail.com>
+References: <4D596435.9020605@gmail.com> <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com> <4D59A39C.9090402@gmail.com> <4D5A401B.1050103@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, <santi@agolina.net>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 21:31:12 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Feb 15 22:03:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpRYF-0003Yf-Cs
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 21:31:11 +0100
+	id 1PpS3u-0000oQ-KH
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 22:03:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544Ab1BOUbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 15:31:06 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64927 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755528Ab1BOUbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 15:31:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BFE323BF3;
-	Tue, 15 Feb 2011 15:32:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cwISLr3Z7RuyrtYtPSIbh0UngFo=; b=X9Uj/Y
-	dZbnMGapjF0XWiYfVNEZm9FyFdLH3DYeS7KAhhBHvle1+eKxRDUTkzGRZbk+v3mZ
-	lvIdoXIC6dJH0KEwRhWdXkMpa33VA3FF0C+VRZD4zS26GXXexBql/1WahqX5TcJA
-	t0G+qqQ5V3xVAlwG+LXMFviThH/2WzPjCAjyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=piqCZHx4KBFhbFGETnzjhnSrdd28YVmf
-	9BxnnGQEXZbxGPYYDmSRWnGR3hdPD17a6o/BPT4snb215bJAa7+Z1nkb7208GEUH
-	c+tvcL4ZzfdSggsj+nSr7pP+GRR2DmcSPmsVXjmS5ViyH2Sl8e6c6bH/o2RQZGZ9
-	roLHCCYklaU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8E3F63BF0;
-	Tue, 15 Feb 2011 15:32:06 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4CEA63BEF; Tue, 15 Feb 2011
- 15:32:02 -0500 (EST)
-In-Reply-To: <1297691481-3308-1-git-send-email-martin.von.zweigbergk@gmail.com> (Martin
- von Zweigbergk's message of "Mon\, 14 Feb 2011 08\:51\:21 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A7B57412-3942-11E0-BC86-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1754263Ab1BOVDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 16:03:50 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:48523 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751241Ab1BOVDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 16:03:48 -0500
+Received: by pva4 with SMTP id 4so86955pva.19
+        for <git@vger.kernel.org>; Tue, 15 Feb 2011 13:03:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=QbsGnl9VpzYgT0f1x3vfOTuysLh17+pxRhiHYDVIlGg=;
+        b=HHqd0pM/XzsQXPIuFxLTDcwHJcSLMUzlR6f+eKU3CQ1Rexry9NSZ4L0YAHp9edSnxn
+         qt1zDJ6ka5yMN7QbLqqSbCFoEeGGaWe9wfkDxHKlZjn9bZpi2iaU73BH/7y0rCrEnqxb
+         j7dwSuIarAhc3gmULdipiocNBXa1A0oJeOnkc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=c7JWKy0niQ++xGi8JgImWlY8BCIVi9Jwm6QDqLpex+lF3XBEKdd4iag1Gx94XcGPyB
+         MIpxZx8AOTNDC3zK6ZI7Hf5h8RrY6SXWmIdaWWPLfBJQdl/tibL1oEf6v/xFpudIVRCt
+         l6hZqriDk2s4kFbjqNE94kVKHu9tSyDTzlQgQ=
+Received: by 10.142.147.13 with SMTP id u13mr4613474wfd.108.1297803828226;
+        Tue, 15 Feb 2011 13:03:48 -0800 (PST)
+Received: from [192.168.13.8] (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
+        by mx.google.com with ESMTPS id v19sm6187975wfh.12.2011.02.15.13.03.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Feb 2011 13:03:47 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <4D5A401B.1050103@drmicha.warpmail.net>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166876>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+Michael J Gruber wrote:
+> I don't quite understand how cherry picks could conflict less then
+> merges if the release branch contains fixes only.
 
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 5abfeac..1bc0c29 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -466,6 +466,19 @@ esac
->  
->  require_clean_work_tree "rebase" "Please commit or stash them."
->  
-> +test -n "$upstream_name" && for reflog in \
-> +	$(git rev-list -g $upstream_name 2>/dev/null)
+The last time I experienced a painful merge from f-release to master, it
+was because some files had been culled from master but left extant on
+f-release. Not too hard to resolve, actually. But I really only needed
+one change pulled into master, and when I cherry picked instead of
+merging the whole branch, there were no conflicts, and master ended up
+containing exactly what I wanted.
 
-Ugly.
+> My impression is that "f-release" actually
+> mixes release engineering and maintenance. Two possible remedies:
+> 
+> - Separate release engineering from maintenance and merge only the
+> latter to master
 
-	test -n "$upstream_name" &&
-        for reflog in $(git rev-list ...)
-        do
-        	...
-	done
+Ah, thank you! This is invaluable advice. I think I'll go with this
+option since mixing release engineering and maintenance is exactly what
+I'm doing. Hopefully it's worth the added complexity of having another
+public branch.
 
-Don't you need to make sure $upstream_name is a branch (or a ref in
-general that can have a reflog), or does it not matter because the
-"rev-list -g" will die without producing anything and you are discarding
-the error message?
+I pushed an example to https://github.com/meonkeys/releaseBranchDemo
+that I'll share with my developers.
 
-Now, a handful of random questions, none of them rhetorical, as I don't
-know the answers to any of them.
-
-Would it help if the code is made just as clever as the patch attempts to
-be, when the user says
-
-	git rebase origin/next~4
-
-IOW, use the reflog of origin/next even in such a case?
-
-> +do
-> +	if test $reflog = $(git merge-base $reflog $orig_head)
-> +	then
-> +		if test $reflog != $(git merge-base $onto $reflog)
-> +		then
-> +			upstream=$reflog
-> +		fi
-> +		break
-> +	fi
-
-Do we always traverse down to the beginning of the reflog in the worst
-case?  Would bisection help to avoid the cost?
+"git merge -sours" will definitely be something useful to add to the
+quiver too.
