@@ -1,122 +1,101 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH] git-gui: give more advice when detaching HEAD
-Date: Tue, 15 Feb 2011 20:16:21 +0100
-Message-ID: <20110215191620.GA56397@book.hvoigt.net>
-References: <20110212070538.GA2459@sigill.intra.peff.net> <20110213123151.GA31375@book.hvoigt.net> <20110215063903.GA28634@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] smart-http: Don't use Expect: 100-Continue
+Date: Tue, 15 Feb 2011 11:42:00 -0800
+Message-ID: <7vr5b9nkzb.fsf@alter.siamese.dyndns.org>
+References: <1297789044-17978-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Pat Thoyts <patthoyts@googlemail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 15 20:16:31 2011
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 15 20:42:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpQNx-0001wZ-Qc
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 20:16:30 +0100
+	id 1PpQn5-0003rl-Uj
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 20:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382Ab1BOTQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 14:16:25 -0500
-Received: from darksea.de ([83.133.111.250]:33671 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755313Ab1BOTQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 14:16:23 -0500
-Received: (qmail 21404 invoked from network); 15 Feb 2011 20:16:21 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 15 Feb 2011 20:16:21 +0100
-Content-Disposition: inline
-In-Reply-To: <20110215063903.GA28634@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1756147Ab1BOTmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 14:42:15 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34286 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755768Ab1BOTmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 14:42:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EDAA93556;
+	Tue, 15 Feb 2011 14:43:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KRvqXvZh2aow/zYuaLV2DobDe+Y=; b=iJWw52
+	y/6epqn1qLYTvcvmZ8v2lYmjBiilsIHPqrn7fJieMSE6zDLGFf+vVbgk8JQ3zC4U
+	oFfcoyWxiJ15BSaFZgX8jAzkndeOccpL6SuFe06IrGP3fzT/zoxi/Lu8Z37Z16f5
+	CHGom3TRvHNt4bapKCNvvGxEmuLstkqoCKtz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P66jozHChCd1ewGdlqgw19cO4mlsuWEF
+	Z6li14ytDmJzL53eGCnSWIKZswmNFngSUMSC/KDRfzQ/E9L6wRsos3cuvanhGCzd
+	+ORwJPy13j3V+UPzjlN1+4PHt28mzsIMHOtFh9q3r6vpquK0zut/ewXXw7tr/+g4
+	0Ld1X9wkQdI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BCFA73555;
+	Tue, 15 Feb 2011 14:43:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9755A3554; Tue, 15 Feb 2011
+ 14:43:08 -0500 (EST)
+In-Reply-To: <1297789044-17978-1-git-send-email-spearce@spearce.org> (Shawn
+ O. Pearce's message of "Tue\, 15 Feb 2011 08\:57\:24 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D305F850-393B-11E0-891D-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166869>
 
-Hi,
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-On Tue, Feb 15, 2011 at 01:39:03AM -0500, Jeff King wrote:
-> On Sun, Feb 13, 2011 at 01:31:52PM +0100, Heiko Voigt wrote:
-> 
-> > On Sat, Feb 12, 2011 at 02:05:38AM -0500, Jeff King wrote:
-> > >   1. Give some indication or warning during commit that you're in a
-> > >      detached state. The CLI template says "You are not on any branch"
-> > >      when editing the commit message, and mentions "detached HEAD" as
-> > >      the branch in the post-commit summary. As far as I can tell,
-> > >      git-gui says nothing at all.
-> > 
-> > How about something like this:
-> > [...]
-> > Subject: [PATCH] git-gui: warn when trying to commit on a detached head
-> > 
-> > The commandline is already warning when checking out a detached head.
-> > Since the only thing thats potentially dangerous is to create commits
-> > on a detached head lets warn in case the user is about to do that.
-> 
-> It seems a little heavy-handed to have a dialog pop up for each commit.
-> It's not actually dangerous to create a commit on a detached HEAD; it's
-> just dangerous to _leave_ without referencing your new commits.
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 04d4813..3d82dc2 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -356,14 +356,59 @@ static size_t rpc_in(const void *ptr, size_t eltsize,
+> ...
+> +static int probe_rpc(struct rpc_state *rpc)
+> +{
+> +...
+> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
+> +	curl_easy_setopt(slot->curl, CURLOPT_FILE, buf);
+> +
+> +	err = run_slot(slot);
+> +
+> +	curl_slist_free_all(headers);
+> +	strbuf_release(&buf);
+> +	return err;
+> +}
 
-Hmm, how about adding a checkbox:
+Hmm, I am getting
 
-  [ ] Do not ask again
+    remote-curl.c:403: error: call to '_curl_easy_setopt_err_cb_data' declared
+    with attribute warning: curl_easy_setopt expects a private data pointer as
+    argument for this option
 
-In my experience anything other than a popup will be overseen so I would
-suggest doing it at least once to prepare the user for the possible
-consequences.
+Shouldn't the above be giving a pointer to buf anyway?
 
-IMO such a message is a good thing for the GUI regardless whether we
-implement the leaving detached HEAD state warning. First I think a
-typical GUI user does not commit on a detached head that often since
-there is currently no way to use these commits from the GUI (e.g.
-format-patch, rebase, ...). Second because a detached head is very
-practical for testing work on a remote branch the message box would
-remind most users to switch to their development branch first. If they
-only get that message after a series of commits it might become a hassle
-for them to get these commits onto another branch (remember no
-format-patch or rebase currently).
+ remote-curl.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> So I think for making commits, something informational that doesn't
-> require a click-through would be the more appropriate level (similar to
-> what the CLI does; it just mentions it in the commit template). I guess
-> there isn't a commit template in the same way for git gui; instead, it
-> is always showing you the current state. And indeed, it does switch from
-> "Current Branch: master" to "Current Branch: HEAD" when you are on a
-> detached head. Maybe we should beef that up a bit to "You are not on any
-> branch." or something that is more self-explanatory. I dunno. I am just
-> guessing here about what users would want.
-> 
-> I do think a pop-up is appropriate when you try to check something else
-> out, and commits you have made on the detached HEAD are about to become
-> unreferenced. But this is something even the CLI doesn't do, so it would
-> make sense to see how the check is implemented there first before doing
-> anything in git-gui.
-
->From what I read in this thread it currently seems to be not so easy to
-precisely find out whether some commit is referenced. (If we care about
-stuff outside of remotes, heads and tags). But maybe we do not need
-that for the GUI.
-
-If a commit is referenced from non typical refs the worst we do is issue
-a false warning. Meaning we warn the user even though the commit is
-referenced. For a GUI I think being a little more restrictive is the
-right thing to do since it should guide the user much more into a safe
-workflow. If he wants to do special things than there still is the CLI
-to fall back on. And its just a warning so we are not preventing
-anything.
-
-Now it depends on what we would want for the CLI if we are going to
-implement a thorough check over everything in refs/ than there is no
-reason for not applying the same thing to git-gui. In case the current
-behavior is deemed sufficient we should go with the check mention
-
-Just to give you a practical example:
-
-At $dayjob we are currently even more restrictive and completely forbid
-commits on a detached head by a pre-commit hook. This was mainly done
-due to the lack of warnings but I do not recall a single incident where a
-user actually complained about this restriction (~90% GUI users).
-
-Cheers Heiko
+diff --git a/remote-curl.c b/remote-curl.c
+index 297ecf7..256326a 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -400,7 +400,7 @@ static int probe_rpc(struct rpc_state *rpc)
+ 	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4);
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
+ 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
+-	curl_easy_setopt(slot->curl, CURLOPT_FILE, buf);
++	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buf);
+ 
+ 	err = run_slot(slot);
+ 
