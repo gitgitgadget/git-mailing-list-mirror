@@ -1,66 +1,146 @@
-From: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-Subject: Corrupted git repository?
-Date: Tue, 15 Feb 2011 15:57:20 +0100
-Message-ID: <AANLkTimMon7ztbyT26YhotiZ=jd=QpNTvOkPCKwHg+e_@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
+Date: Tue, 15 Feb 2011 16:06:20 +0100
+Message-ID: <201102151606.21040.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <201102141018.46527.johan@herland.net> <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 15 15:57:30 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 15 16:09:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpMLG-0006A0-L7
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 15:57:26 +0100
+	id 1PpMXO-0006cb-9L
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 16:09:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986Ab1BOO5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 09:57:22 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:55374 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751201Ab1BOO5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 09:57:21 -0500
-Received: by vxb37 with SMTP id 37so155953vxb.19
-        for <git@vger.kernel.org>; Tue, 15 Feb 2011 06:57:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
-         :message-id:subject:from:to:content-type;
-        bh=b2Kg6zDdtISxWR+W2BvPVvmp93Z8n/Iy18cKqiHjLnE=;
-        b=a29CALON948UPOLLphts4M1GakyCnhAIwEypbF9TLMboMwKMBYAsy6fwpFlfZ3clsW
-         IDkXWUEGQfzJxJUdbSN0d3MzIUWbrcafjRSzMKcnq3AoAT7DBX9IOCXr/EJymIe9rM0x
-         ychshwhAxf33F2afKQq3SnuUW5RYjtgbyAEdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=rYuHaz2aQzp8fsuvz/TExBWxRogjtpBuhtjhgjiN4nlK/LrY9MmQteCpFZB8hBvSL9
-         IVFDphqe8trpoDR2W8LqtcDBjpnHJbzRgm9EHBUusNBIryxv9mXBvCYVcN+AUr+D6i3n
-         gRiwHrzQOdXbeuX+rl9xVy5bcs22EveK36CXA=
-Received: by 10.220.159.67 with SMTP id i3mr1015101vcx.246.1297781840246; Tue,
- 15 Feb 2011 06:57:20 -0800 (PST)
-Received: by 10.220.195.132 with HTTP; Tue, 15 Feb 2011 06:57:20 -0800 (PST)
-X-Google-Sender-Auth: IlaMVuK4AyLiAT8OBFtNZVTJxk4
+	id S1755083Ab1BOPJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 10:09:54 -0500
+Received: from smtp.opera.com ([213.236.208.81]:33078 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752027Ab1BOPJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 10:09:52 -0500
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p1FF6LUE013303
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 15 Feb 2011 15:06:21 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166855>
 
-Hi,
+On Monday 14 February 2011, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > So if nobody disagree, I would have no problem with dropping the
+> > leading "~" from the refspec, thus disabling auto-following
+> > (tracking all tags explicitly instead).
+>
+> I am not sure what you mean by this.  I think we agree that it would
+> be Ok if you cannot add "~" in front to cause automatic following
+> when tracking tags in separate namespaces using
+> "refs/tags/*:refs/remotes/origin/tags/*".
+>
+> But are you saying:
+>
+>  (1) There is no other change than that; or
+>
+>  (2) Even when not using such a refspec i.e. using the traditional
+> "tags live in a single global namespace", automatic following feature
+> will be disabled;
+>
+> I would be moderately unhappy if the latter.
 
-it looks like my git repository got corrupted today.
+No, I'm saying the former.
 
-git status shows no changes,
-git cherry-pick says "error: Your local changes to the following files
-would be overwritten by merge:",
-git fsck starts checking objects but hangs on one "Checking tree"
+For the foreseeable future (i.e. long after v1.8.0 is out) we will still 
+have to understand and support the traditional "tags are implicitly 
+auto-followed" and "tags live in a single global namespace" concepts 
+(aka. (a) below). For new-style remotes I propose that all refspecs be 
+explicit, and that auto-follow is disabled (aka. (b) below).
 
-Other commands (gc, checkout, reset) seem to work correctly.
+But if you try to specify a new-style remote with all tags in a single 
+global namespace, you will NOT get tag autofollowing (aka. (c) below)
 
-I've tried hard resetting to HEAD, didn't help.
 
-What can I do? Cloning is very expensive operation here.
+(a): The current default config, also supported for the foreseeable 
+future (tag refspec is implicit, auto-following is enabled):
+
+    [remote "origin"]
+        url = ...
+        fetch = +refs/heads/*:refs/remotes/origin/*
+
+(b): The proposed default config, using separate per-remote namespaces 
+for tags (tag refspec is explicit, auto-following is disabled):
+
+    [remote "origin"]
+        url = ...
+        fetch = +refs/heads/*:refs/remotes/origin/heads/*
+        fetch = +refs/tags/*:refs/remotes/origin/tags/*
+
+(c): A customized version of the proposed config, using a single global 
+namespace for tags (tag refspec is explicit, auto-following is 
+disabled):
+
+    [remote "origin"]
+        url = ...
+        fetch = +refs/heads/*:refs/remotes/origin/(heads/)*
+        fetch = refs/tags/*:refs/tags/*
+
+
+(Note that if we cannot reliably detect the difference between old-style 
+(implicit) and new-style (explicit) remotes, we will likely have to add 
+a boolean flag, e.g. "remote.origin.implicitTagFollowing".)
+
+
+> > ... However, what I've seen at $dayjob is
+> > that more inexperienced users will often push right after
+> > committing, and at that time they're still very much in the
+> > "working-on-one-branch" state of mind (as opposed to the
+> > "administering-multiple-branches" state of mind),...
+>
+> Then "current" mode is a good setting for them, I would presume.
+
+Arguably in some workflows, 'tracking' may be a more suitable default 
+(i.e. safer for newbies) than 'current', but in practice this shouldn't 
+matter much (local branch names usually correspond to remote branch 
+names). Also, 'tracking' is more complicated when the branch originates 
+locally, and must be created on the server ("git push -u origin 
+<branch>" vs. "git push"). So I agree that 'current' is the best 
+default.
+
+
+...Johan
+
+
+Offtopic PS: Given that we're leaning towards using 'tracking' to 
+describe the relationship between remote-tracking branches 
+(refs/remotes/*) and remote branches, and 'upstream' to describe the 
+relationship between a local branch and the remote branch it 
+follows/merges (on 'git pull'), wouldn't
+
+  push.default == "upstream"
+
+be more descriptive than
+
+  push.default == "tracking"
+
+?
 
 -- 
-Piotrek
+Johan Herland, <johan@herland.net>
+www.herland.net
