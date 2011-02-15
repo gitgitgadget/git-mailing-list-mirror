@@ -1,60 +1,115 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: How to safely remove a blob
-Date: Tue, 15 Feb 2011 09:40:59 +0100
-Message-ID: <4D5A3C1B.2030600@drmicha.warpmail.net>
-References: <4D5A358F.2050906@ilt.fraunhofer.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Tue, 15 Feb 2011 03:00:09 -0600
+Message-ID: <20110215090009.GA22498@elie>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie>
+ <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
+ <20110214231920.GA24814@elie>
+ <4D5A3964.9090209@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Rolf Wester <rolf.wester@ilt.fraunhofer.de>
-X-From: git-owner@vger.kernel.org Tue Feb 15 09:44:13 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Tue Feb 15 10:00:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpGW3-0003yh-J3
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 09:44:11 +0100
+	id 1PpGll-0004Eb-Rx
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 10:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090Ab1BOIoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 03:44:05 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53872 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751268Ab1BOIoE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 03:44:04 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 456E3207DE;
-	Tue, 15 Feb 2011 03:44:04 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 15 Feb 2011 03:44:04 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=czzyV093vms2QrJoj+bIxXPxTy4=; b=tujPmEbagLB+NrnEwHla8dYIwvvWwR9MTtvs1xfOIuZ12wRxYcaxE7LOQXYvlDh9oUiN6WgKAIs/MRjOIeWeiTz1E8V+XMryNXR9+me8X4foexjwZnVKpVNxKyi2SYhogIbY7FsvZV1QzSTXV3CmXlrKAjbuoB4ryxApuYLMJ2Q=
-X-Sasl-enc: zs8xNCLwec13YxNyIhAnam4QiRo2vDl0sWgBI4siig9M 1297759443
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4C21644333B;
-	Tue, 15 Feb 2011 03:44:03 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <4D5A358F.2050906@ilt.fraunhofer.de>
+	id S1752651Ab1BOJAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 04:00:20 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:54072 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751268Ab1BOJAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 04:00:18 -0500
+Received: by ywo7 with SMTP id 7so2446839ywo.19
+        for <git@vger.kernel.org>; Tue, 15 Feb 2011 01:00:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=R6jdAGtksBhvugj53fdmkzNM1DCovcREAoldIn91hkY=;
+        b=KWn3C3XRuom7ReIVr/1CXsXgQYMzgzvxxtWmLhKklGHPDlwdilzCaJfSh0apcHnRcd
+         knhrsPMjlDIAW2tPCXTq9vozzzv43t04O4Dh1/xJhvNQxLlLgfOcjORpDI27MZrU5mgY
+         kgNZct0MbgRJl/PlymVWPzR6Bmz1dDPI0hj1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=UC0V+w/UjcslT5h3cpglf4rBvtK+NyAsQ5yGg6730kZckXF9fMRJUxeJcvlPEXJRdO
+         tBylDkdR3KIpDpcVtZNyVkYwCPdotJkiiJhxxVWxNp4pguzK+LW5BCzmbH6DCLQ6MKHz
+         kuzcinQseTMhBXtRy9qnWfHQ+5zHQT/Im1O8Y=
+Received: by 10.90.74.17 with SMTP id w17mr5803454aga.166.1297760416840;
+        Tue, 15 Feb 2011 01:00:16 -0800 (PST)
+Received: from elie (adsl-69-209-51-217.dsl.chcgil.ameritech.net [69.209.51.217])
+        by mx.google.com with ESMTPS id a50sm2207563yhd.0.2011.02.15.01.00.14
+        (version=SSLv3 cipher=OTHER);
+        Tue, 15 Feb 2011 01:00:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4D5A3964.9090209@pcharlan.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166828>
 
-Rolf Wester venit, vidit, dixit 15.02.2011 09:13:
-> Hello,
-> 
-> in one of my git repos I found an 102 MB object that probably came in there more or less occasionally.
-> Its a blob and I would like to remove it safely. I tried to figure out how to do it but I was
-> not very successful. I guess simply deleting the file could corrupt my repo or at least the clones of
-> that repo.
-> 
-> I would be very appreciative for any help.
+Hi Pete,
 
-If nothing references that blob then it will go away eventually. The
-last section of git-filter-branch's manpage (checklist for shrinking a
-repo) details the steps you can take to get rid of it now. (You should
-be already in the situation after applying filter-branch and removing
-refs/original/*.) If the blob still persists then it is referenced.
+Pete Harlan wrote:
 
-Michael
+> Part of the issue could be that one intimately familiar with Git's
+> internals may find a process oriented interface irritating ("Why must
+> it say 'staging area' when it's just updating the index?")
+
+No, no.  I agree there's a problem to solve here.  The current
+documentation for git (e.g., the user manual) has a nice, coherent,
+user-oriented narrative about trees, commits, and blobs, and meanwhile
+it is hard to find a clear story about the index.
+
+Such a story would have to describe the conflict resolution process.
+When you encounter a merge conflict, how do you resolve it?  The best
+I can do for now is to point to the user manual[1].
+
+http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#conflict-resolution
+
+I even think it is okay to say "The index is a sort of staging area
+for your next commit".  Because that is true.  But it is not the full
+story, so if one wants to give the index a new name --- which is a
+costly thing to do, anyway --- then I do not think "the staging area"
+works.
+
+I feel bad to only be presenting complications instead of an alternate
+solution.  I do consider workflow oriented explanations very useful.
+I've been giving technical explanations in this thread as background
+for future storytelling, in the hope that someone more talented than I
+am can digest it into a good narrative.
+
+Jonathan
+
+[1] Maybe the process is overdesigned.  After all, what would we lose
+by saying
+
+ - an unmerged path justs gets an "unmerged" flag set, meaning that
+   flag is not ready for commit yet
+ - to get the copy from the common ancestor, use
+	git show $(git merge-base HEAD MERGE_HEAD):path/to/file
+ - to get the copy from HEAD, use
+	git show HEAD:path/to/file
+ - likewise to get the copy from MERGE_HEAD
+
+And while I can give answers about why that is a bad interface
+(recomputing the merge base is a waste of time; in a recursive merge
+the merge base is not a real commit; if there were renames, the copy
+from HEAD could be HEAD:other/path and it is hard to find what
+other/path is), are those answers enough to justify learning this new
+trick?
+
+So we need a better story.
