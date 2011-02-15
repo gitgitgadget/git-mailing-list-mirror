@@ -1,101 +1,77 @@
-From: Emeric Fermas <emeric.fermas@gmail.com>
-Subject: Re: What's the definition of a valid Git symbolic reference?
-Date: Tue, 15 Feb 2011 07:32:11 +0100
-Message-ID: <AANLkTimaYFbDsAooSuP+BBMA8mJYwupPCgJUj8UGqrQx@mail.gmail.com>
-References: <AANLkTinsJkzYggMtNrLRv-qNxRncrXSe6A46Z=d8xkw7@mail.gmail.com>
- <F624322D-359A-48ED-A241-622042F77CDA@sb.org> <AANLkTi=FKXqu_psoT+gvyq2c_o8Mej+DgpccecOpQd8H@mail.gmail.com>
- <7vsjvpq0jk.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-gui: give more advice when detaching HEAD
+Date: Tue, 15 Feb 2011 01:39:03 -0500
+Message-ID: <20110215063903.GA28634@sigill.intra.peff.net>
+References: <20110212070538.GA2459@sigill.intra.peff.net>
+ <20110213123151.GA31375@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org,
-	Vicent Marti <tanoku@gmail.com>, libgit2@librelist.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 07:32:38 2011
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Pat Thoyts <patthoyts@googlemail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Feb 15 07:39:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpESj-0008AK-Dc
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 07:32:37 +0100
+	id 1PpEZ8-0002mq-UA
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 07:39:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753242Ab1BOGcd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Feb 2011 01:32:33 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:62140 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752230Ab1BOGcc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 01:32:32 -0500
-Received: by pzk35 with SMTP id 35so953765pzk.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 22:32:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=5fgPFfS2uCQtHG5kUyFVk0oqqgZV7s0NxUtp/KpgjLE=;
-        b=liqA+Do7hOSXGnXCgNx7gjWq+xhNLigdTeOAq8tV+/Q0MxumPXLWAtiMzokY94Nx1o
-         o7Dfx2wcd3e+lXe+4G+dFRAOHS28Su3/QrkHsNyy0EZIZUv/vFLbTgRVD3JPPKdDOyAN
-         cjL1hVzBOfU8BVmJhoTvpO0DhmQ7YUiEdKuKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=lBAJo2/FhKNQi6g7KW6OJF5Im4R+TpgjRO2JP93Fw2pjiG6wPq42nNIJhEqVR/FYj8
-         vVOJ8ZmT4bwY5SWwKzgfhINvL3Dkpxxuo4quivTXpASl+Uay5f9Rf2pwPE26A+zA/dTf
-         aUuGNlUjIbssBXNJL5G1Nm+yp9czrsQjqlCu8=
-Received: by 10.142.144.2 with SMTP id r2mr3881940wfd.244.1297751551737; Mon,
- 14 Feb 2011 22:32:31 -0800 (PST)
-Received: by 10.142.195.18 with HTTP; Mon, 14 Feb 2011 22:32:11 -0800 (PST)
-In-Reply-To: <7vsjvpq0jk.fsf@alter.siamese.dyndns.org>
+	id S1752230Ab1BOGjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 01:39:09 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:51974 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751406Ab1BOGjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 01:39:08 -0500
+Received: (qmail 28587 invoked by uid 111); 15 Feb 2011 06:39:07 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 15 Feb 2011 06:39:06 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Feb 2011 01:39:03 -0500
+Content-Disposition: inline
+In-Reply-To: <20110213123151.GA31375@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166814>
 
-Thanks a lot for this very clear explanation. All my questions have
-found an answer.
+On Sun, Feb 13, 2011 at 01:31:52PM +0100, Heiko Voigt wrote:
 
-Cheers,
-Em.
+> On Sat, Feb 12, 2011 at 02:05:38AM -0500, Jeff King wrote:
+> >   1. Give some indication or warning during commit that you're in a
+> >      detached state. The CLI template says "You are not on any branch"
+> >      when editing the commit message, and mentions "detached HEAD" as
+> >      the branch in the post-commit summary. As far as I can tell,
+> >      git-gui says nothing at all.
+> 
+> How about something like this:
+> [...]
+> Subject: [PATCH] git-gui: warn when trying to commit on a detached head
+> 
+> The commandline is already warning when checking out a detached head.
+> Since the only thing thats potentially dangerous is to create commits
+> on a detached head lets warn in case the user is about to do that.
 
+It seems a little heavy-handed to have a dialog pop up for each commit.
+It's not actually dangerous to create a commit on a detached HEAD; it's
+just dangerous to _leave_ without referencing your new commits.
 
+So I think for making commits, something informational that doesn't
+require a click-through would be the more appropriate level (similar to
+what the CLI does; it just mentions it in the commit template). I guess
+there isn't a commit template in the same way for git gui; instead, it
+is always showing you the current state. And indeed, it does switch from
+"Current Branch: master" to "Current Branch: HEAD" when you are on a
+detached head. Maybe we should beef that up a bit to "You are not on any
+branch." or something that is more self-explanatory. I dunno. I am just
+guessing here about what users would want.
 
-On Tue, Feb 15, 2011 at 7:22 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Emeric Fermas <emeric.fermas@gmail.com> writes:
->
->> Once again, by reading at the code I can understand how those comman=
-ds
->> currently work. What I'm trying to achieve is to understand what
->> should be their recommended usage.
->
-> There are only two valid kinds of symrefs right now:
->
-> =C2=A0- .git/HEAD, pointing at somewhere under refs/heads/ hierarchy;
->
-> =C2=A0- .git/refs/remotes/<some remote name>/HEAD, pointing at somewh=
-ere under
-> =C2=A0 refs/remotes/<the same remote name>/ hierarchy.
->
-> The code may be prepared to resolve recursive symrefs, symrefs other =
-than
-> the above two kinds, symrefs that point at elsewhere, but all of them=
- are
-> outside of the design scope of what the mechanism was intended to sup=
-port.
-> What the code do to them (without crashing) is not the design, but si=
-mply
-> an undefined behaviour.
->
-> This won't change very much if we decide to reorganize the remote tra=
-cking
-> hierarchies in 1.8.0. =C2=A0The former won't change at all, and the l=
-atter will
-> start pointing at refs/remotes/<the same remote name>/heads hierarchy
-> instead.
->
-> I vaguely recall tg abused the symref mechanism to point .git/HEAD at
-> funny locations; it may still be doing so, and if that is the case we
-> should extend the above list to cover that usage.
->
+I do think a pop-up is appropriate when you try to check something else
+out, and commits you have made on the detached HEAD are about to become
+unreferenced. But this is something even the CLI doesn't do, so it would
+make sense to see how the check is implemented there first before doing
+anything in git-gui.
+
+-Peff
