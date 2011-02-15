@@ -1,75 +1,319 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Regarding GIT API
-Date: Tue, 15 Feb 2011 14:49:39 +0300
-Message-ID: <AANLkTim4ucYtoyNEM2+=-dJTmpBtqy1zJOEX3k3Wk+XU@mail.gmail.com>
-References: <loom.20110215T120434-373@post.gmane.org>
+From: Rafael Kitover <rkitover@io.com>
+Subject: Re: [PATCH] fixes for ActiveState Perl
+Date: Tue, 15 Feb 2011 06:49:27 -0500
+Organization: CPAN
+Message-ID: <4D5A6847.90804@io.com>
+References: <4D5914C1.9050008@io.com> <AANLkTimCXEbzZnR1k32u942hjB37nThN_RDBL5N7owHa@mail.gmail.com> <4D5984DD.1030004@io.com> <AANLkTimb2puTjj=DDqJcshwSVgqebhS9__jHoY1KdO_7@mail.gmail.com>
+Reply-To: rkitover@io.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Abhinav Goyal <honeykool23@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 12:49:50 2011
+Content-Transfer-Encoding: 7bit
+Cc: kusmabite@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 15 12:50:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpJPf-0004vV-NJ
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 12:49:48 +0100
+	id 1PpJPq-00051t-MJ
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 12:49:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754624Ab1BOLtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 06:49:43 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:38233 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754524Ab1BOLtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 06:49:41 -0500
-Received: by qyj19 with SMTP id 19so2256353qyj.19
-        for <git@vger.kernel.org>; Tue, 15 Feb 2011 03:49:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=IhiQ2w/3ejQ7xawvx9xri7KAU77CUn6NJJPK7PGcBhg=;
-        b=JzRts/agMUc25A5xp6Tgv2USzVnbckwOC9lf8QwIA21oWMRKWrGq6ihH09dlvjVQHy
-         dxw63K5Qrakb8evVCi72GWJodSrSrex6CKybNSGCyk3/J4s0L6m0BOhTOvtbTwWZ4ycb
-         gYOfLAliqlUTOcwAus3Y4gYiYvZU7FEFzMNIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Fn7Le02/6xOXXceURlaT7Ov4wkNG+CVrfOhLTYKBjmme6Ea0AsaBPkILkNt5SrRbRw
-         hl7N5zsutEkPFaVloDPVn1DaMHjgUjKhLeA4RCkgGBEqG3PmMq+A3ajpDZFtEnay26T/
-         y9IjPVtFtWJFM/q6PovrKaZpBsn0o8RpCSGZ0=
-Received: by 10.229.220.133 with SMTP id hy5mr3754552qcb.269.1297770579478;
- Tue, 15 Feb 2011 03:49:39 -0800 (PST)
-Received: by 10.229.213.4 with HTTP; Tue, 15 Feb 2011 03:49:39 -0800 (PST)
-In-Reply-To: <loom.20110215T120434-373@post.gmane.org>
+	id S1754638Ab1BOLts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 06:49:48 -0500
+Received: from smtp.prismnet.com ([209.198.128.91]:51135 "EHLO
+	smtp.prismnet.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754524Ab1BOLtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 06:49:47 -0500
+Received: from [127.0.0.1] (c-76-98-235-160.hsd1.pa.comcast.net [76.98.235.160])
+	(authenticated bits=0)
+	by smtp.prismnet.com (8.14.4/8.14.4) with ESMTP id p1FBnipG073465
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NOT);
+	Tue, 15 Feb 2011 05:49:45 -0600 (CST)
+	(envelope-from rkitover@io.com)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <AANLkTimb2puTjj=DDqJcshwSVgqebhS9__jHoY1KdO_7@mail.gmail.com>
+X-Spam-Status: No, score=0.1 required=10.0 tests=RDNS_DYNAMIC
+	autolearn=disabled version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp.prismnet.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166841>
 
-On Tue, Feb 15, 2011 at 11:08:14AM +0000, Abhinav Goyal wrote:
-> I just need the git command
-> support for my C++ application. I have my own reason for not using command
-> prompt system call.
+The make for perl is now retrieved from Perl's config. The make fragment in
+perl/Makefile.PL added in MY::postamble is disabled on Win32, as it relies on
+GNU make syntax, and Win32 users are not likely to have an ancient EU::MM
+version.
 
-If you need full git functionality, currently the only proper way is to
-use git porcelain command, i.e. run commands using system() and parse
-their output. Git porcelain commands are designed to be used in this way,
-so their output is easy to parse. Also, their output should not change
-between different versions, in contrast to front-end git commands, which
-provide more human oriented output.
+A Windows path for PERL_PATH is now supported as well, e.g.:
+make PERL_PATH=C:\\Perl\\bin\\perl
+or from cmd.exe:
+make PERL_PATH=C:\Perl\bin\perl
+.
 
-NOTE: There are libraries for some other languages such as Java and Ruby
-(jGit and Grit correspondingly), but they contain re-implementation of
-most git functionality. No one has bothered to write anything like that
-in C. So, libgit2 provides only low-level and very limited functionality.
+t9700-perl-git.sh now passes on ActiveState Perl. Some tweaks were necessary in
+Git.pm: a more correct check for absolute directory, exit code check on closing
+the "pipe", and always closing the cat_blob bidirectional pipe (with errors
+ ignored) so as not to leave zombie processes. The waitpid call on closing the
+bidirectional pipe is now timed and the process is killed if necessary. Also
+added some binmode calls to t/t9700/test.pl to make the blob tests pass.
 
-More information about git interfaces to different languages, you can
-find here:
+Signed-off-by: Rafael Kitover <rkitover@cpan.org>
+---
 
-https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Interfaces_to_other_programming_languages
+Resending patch with offending changes removed.
 
+ Makefile         |    4 ++--
+ perl/Git.pm      |   39 +++++++++++++++++++++++++++++++--------
+ perl/Makefile    |   13 +++++++++++--
+ perl/Makefile.PL |    7 ++++++-
+ t/t9700/test.pl  |   15 ++++++++++++++-
+ 5 files changed, 64 insertions(+), 14 deletions(-)
 
-Dmitry
+diff --git a/Makefile b/Makefile
+index d3dcfb1..692fb2e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -175,7 +175,7 @@ all::
+ # will work.
+ #
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+-# MakeMaker (e.g. using ActiveState under Cygwin).
++# MakeMaker.
+ #
+ # Define NO_PERL if you do not want Perl scripts or libraries at all.
+ #
+@@ -1652,7 +1652,7 @@ perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
+ 
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
++	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir | sed -e 's/\\\\/\\\\\\\\/g' -e "s/'//g"` && \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e '	h' \
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 6cb0dd1..11239da 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -101,6 +101,7 @@ use Error qw(:try);
+ use Cwd qw(abs_path);
+ use IPC::Open2 qw(open2);
+ use Fcntl qw(SEEK_SET SEEK_CUR);
++use File::Spec ();
+ }
+ 
+ 
+@@ -184,7 +185,8 @@ sub repository {
+ 		};
+ 
+ 		if ($dir) {
+-			$dir =~ m#^/# or $dir = $opts{Directory} . '/' . $dir;
++                        File::Spec->file_name_is_absolute($dir)
++				or $dir = $opts{Directory} . '/' . $dir;
+ 			$opts{Repository} = abs_path($dir);
+ 
+ 			# If --git-dir went ok, this shouldn't die either.
+@@ -420,7 +422,15 @@ have more complicated structure.
+ 
+ sub command_close_bidi_pipe {
+ 	local $?;
+-	my ($pid, $in, $out, $ctx) = @_;
++	my ($pid, $in, $out, $ctx, $ignore_errors) = @_;
++
++	if ($ignore_errors) {
++		close $in;
++		close $out;
++		kill -9, $pid;
++		return;
++	}
++
+ 	foreach my $fh ($in, $out) {
+ 		unless (close $fh) {
+ 			if ($!) {
+@@ -431,7 +441,14 @@ sub command_close_bidi_pipe {
+ 		}
+ 	}
+ 
+-	waitpid $pid, 0;
++	{
++		local $SIG{ALRM} = sub {
++			kill -9, $pid;
++		};
++		alarm 1;
++		waitpid $pid, 0;
++		alarm 0;
++	}
+ 
+ 	if ($? >> 8) {
+ 		throw Git::Error::Command($ctx, $? >>8);
+@@ -876,11 +893,13 @@ sub cat_blob {
+ 
+ 	my $description = <$in>;
+ 	if ($description =~ / missing$/) {
++		$self->_close_cat_blob();
+ 		carp "$sha1 doesn't exist in the repository";
+ 		return -1;
+ 	}
+ 
+ 	if ($description !~ /^[0-9a-fA-F]{40} \S+ (\d+)$/) {
++		$self->_close_cat_blob();
+ 		carp "Unexpected result returned from git cat-file";
+ 		return -1;
+ 	}
+@@ -921,6 +940,8 @@ sub cat_blob {
+ 		throw Error::Simple("couldn't write to passed in filehandle");
+ 	}
+ 
++	$self->_close_cat_blob;
++
+ 	return $size;
+ }
+ 
+@@ -941,7 +962,7 @@ sub _close_cat_blob {
+ 
+ 	my @vars = map { 'cat_blob_' . $_ } qw(pid in out ctx);
+ 
+-	command_close_bidi_pipe(@$self{@vars});
++	command_close_bidi_pipe(@$self{@vars}, 1);
+ 	delete @$self{@vars};
+ }
+ 
+@@ -1300,13 +1321,14 @@ sub _cmd_close {
+ 		if ($!) {
+ 			# It's just close, no point in fatalities
+ 			carp "error closing pipe: $!";
+-		} elsif ($? >> 8) {
+-			# The caller should pepper this.
+-			throw Git::Error::Command($ctx, $? >> 8);
+-		}
++                }
+ 		# else we might e.g. closed a live stream; the command
+ 		# dying of SIGPIPE would drive us here.
+ 	}
++	if ($? >> 8) {
++		# The caller should pepper this.
++		throw Git::Error::Command($ctx, $? >> 8);
++	}
+ }
+ 
+ 
+@@ -1360,3 +1382,4 @@ sub EOF {
+ 
+ 
+ 1; # Famous last words
++# vim:noet ts=8 sw=8 sts=8:
+diff --git a/perl/Makefile b/perl/Makefile
+index a2ffb64..4739a21 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -3,7 +3,16 @@
+ #
+ makfile:=perl.mak
+ 
++# support PERL_PATH=C:\\Perl\\bin\\perl
++PERL_PATH := $(subst \,\\,$(PERL_PATH))
++
+ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
++PERL_MAKE := MAKEFLAGS="" $(subst \,\\,$(shell $(subst \,\\,$(PERL_PATH)) -MConfig -le "print ((\%Config)->{make})"))
++
++ifneq (,$(findstring nmake,$(PERL_MAKE)))
++	PERL_MAKE := $(PERL_MAKE) -nologo
++endif
++
+ prefix_SQ = $(subst ','\'',$(prefix))
+ 
+ ifndef V
+@@ -11,10 +20,10 @@ ifndef V
+ endif
+ 
+ all install instlibdir: $(makfile)
+-	$(QUIET)$(MAKE) -f $(makfile) $@
++	$(QUIET)$(PERL_MAKE) -f $(makfile) $@
+ 
+ clean:
+-	$(QUIET)test -f $(makfile) && $(MAKE) -f $(makfile) $@ || exit 0
++	$(QUIET)test -f $(makfile) && ($(PERL_MAKE) -f $(makfile) $@) || exit 0
+ 	$(RM) ppport.h
+ 	$(RM) $(makfile)
+ 	$(RM) $(makfile).old
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 0b9deca..7ceec50 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -1,10 +1,13 @@
+ use ExtUtils::MakeMaker;
+ 
+ sub MY::postamble {
+-	return <<'MAKE_FRAG';
++	my $make_frag = <<'MAKE_FRAG';
+ instlibdir:
+ 	@echo '$(INSTALLSITELIB)'
+ 
++MAKE_FRAG
++
++	$make_frag .= <<'MAKE_FRAG' if $^O ne 'MSWin32';
+ ifneq (,$(DESTDIR))
+ ifeq (0,$(shell expr '$(MM_VERSION)' '>' 6.10))
+ $(error ExtUtils::MakeMaker version "$(MM_VERSION)" is older than 6.11 and so \
+@@ -14,6 +17,8 @@ endif
+ endif
+ 
+ MAKE_FRAG
++
++	return $make_frag;
+ }
+ 
+ my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index 671f38d..d5328a3 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -1,4 +1,12 @@
+ #!/usr/bin/perl
++
++BEGIN {
++	use Cwd 'abs_path';
++	my $perl_dir = abs_path('../../perl');
++	eval "use lib '${perl_dir}/blib/lib';";
++	eval "use lib '${perl_dir}/blib/arch/auto/Git';";
++}
++
+ use lib (split(/:/, $ENV{GITPERLLIB}));
+ 
+ use 5.006002;
+@@ -74,6 +82,7 @@ is($r->ident_person("Name", "email", "123 +0000"), "Name <email>",
+ ok(our $file1hash = $r->command_oneline('rev-parse', "HEAD:file1"), "(get file hash)");
+ my $tmpfile = "file.tmp";
+ open TEMPFILE, "+>$tmpfile" or die "Can't open $tmpfile: $!";
++binmode TEMPFILE;
+ is($r->cat_blob($file1hash, \*TEMPFILE), 15, "cat_blob: size");
+ our $blobcontents;
+ { local $/; seek TEMPFILE, 0, 0; $blobcontents = <TEMPFILE>; }
+@@ -81,11 +90,13 @@ is($blobcontents, "changed file 1\n", "cat_blob: data");
+ close TEMPFILE or die "Failed writing to $tmpfile: $!";
+ is(Git::hash_object("blob", $tmpfile), $file1hash, "hash_object: roundtrip");
+ open TEMPFILE, ">$tmpfile" or die "Can't open $tmpfile: $!";
++binmode TEMPFILE;
+ print TEMPFILE my $test_text = "test blob, to be inserted\n";
+ close TEMPFILE or die "Failed writing to $tmpfile: $!";
+ like(our $newhash = $r->hash_and_insert_object($tmpfile), qr/[0-9a-fA-F]{40}/,
+      "hash_and_insert_object: returns hash");
+ open TEMPFILE, "+>$tmpfile" or die "Can't open $tmpfile: $!";
++binmode TEMPFILE;
+ is($r->cat_blob($newhash, \*TEMPFILE), length $test_text, "cat_blob: roundtrip size");
+ { local $/; seek TEMPFILE, 0, 0; $blobcontents = <TEMPFILE>; }
+ is($blobcontents, $test_text, "cat_blob: roundtrip data");
+@@ -115,5 +126,7 @@ isnt($last_commit, $dir_commit, 'log . does not show last commit');
+ 
+ printf "1..%d\n", Test::More->builder->current_test;
+ 
+-my $is_passing = eval { Test::More->is_passing };
++my $is_passing = eval { Test::More->builder->is_passing }
++	|| eval { Test::More->is_passing };
+ exit($is_passing ? 0 : 1) unless $@ =~ /Can't locate object method/;
++# vim:noet ts=8 sw=8 sts=8:
+-- 
+1.7.3.1
