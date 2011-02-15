@@ -1,81 +1,95 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH v2 1/2] mergetool: don't skip modify/remove conflicts
-Date: Mon, 14 Feb 2011 22:30:55 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102142204240.7843@debian>
-References: <1297134518-4387-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297570198-21103-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297570198-21103-2-git-send-email-martin.von.zweigbergk@gmail.com> <7v1v3aqfqm.fsf@alter.siamese.dyndns.org>
+From: Emeric Fermas <emeric.fermas@gmail.com>
+Subject: Re: What's the definition of a valid Git symbolic reference?
+Date: Tue, 15 Feb 2011 04:49:31 +0100
+Message-ID: <AANLkTi=FKXqu_psoT+gvyq2c_o8Mej+DgpccecOpQd8H@mail.gmail.com>
+References: <AANLkTinsJkzYggMtNrLRv-qNxRncrXSe6A46Z=d8xkw7@mail.gmail.com> <F624322D-359A-48ED-A241-622042F77CDA@sb.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 04:31:22 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Vicent Marti <tanoku@gmail.com>,
+	libgit2@librelist.com
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Tue Feb 15 04:49:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpBdJ-0001t5-Dv
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 04:31:21 +0100
+	id 1PpBvJ-0000uj-3S
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 04:49:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435Ab1BODbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 22:31:05 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:44045 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196Ab1BODbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 22:31:03 -0500
-Received: by vxb37 with SMTP id 37so3146560vxb.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 19:31:02 -0800 (PST)
+	id S1752333Ab1BODtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 22:49:53 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:35041 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751231Ab1BODtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 22:49:51 -0500
+Received: by pxi15 with SMTP id 15so935814pxi.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 19:49:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=WzYrVbPnB7ZRPaIF2tAwCNmn6KbgDoHMVcmeiktgHRE=;
-        b=G2YIsN9VScgAUTwrflWMhaRZgnNMNAFHzFplFFG+iYsWCLbH3DYUdCUmwSorGrPeOW
-         ZQGGvMDgH4YGbgjDGWNHtBiM1CqMHgU7zbkf+SKa8m5qNmUOjbIOOnthMz1imS9fLhgG
-         MQrqPmLbdEnsjJzYzOnFo77viNdwjSNWO34SU=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=NJhWkD0r1Vvpz+SiHP65uk+vmm6TiV61ShYgp+HQ0RU=;
+        b=HMoyFhD8ylmTRduc/bfr3xsWwNReAxu1SyfOnqGmwH8Mwv5l7+ViG+lzK7AZYuNsZl
+         ibNfmeCodEQzQJ6J/hZqjERbx95E9HYiQS5skNxXpMR4DQ9IFg0Bd0V3zWe2kWJKgMXC
+         elHMJaKVUkqJYr1FKbDNQQmM+O05mRNcZoWUI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=CPJTteT3DkoSVcShtgKl6bhtU/OKgoZM6NPo3rJh/sF1Fo/vzmN1k4axyuTm+SYc1f
-         QrcDVuOPhU0mp/haqJrOe292FFRNTgprFz2DHTjN9S+bsLNVoFSwrfx/uR5fHXXvgqBg
-         iZtxfDTFIyRWv9eKae4LPhyYVDrsWgUkHwBWY=
-Received: by 10.220.192.135 with SMTP id dq7mr168283vcb.233.1297740662527;
-        Mon, 14 Feb 2011 19:31:02 -0800 (PST)
-Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id n13sm1086068vcr.17.2011.02.14.19.31.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Feb 2011 19:31:01 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <7v1v3aqfqm.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=bTsvKopwpSEAxBgn2TCZ6xmZlHpRnkx9c6eN3WI5mis1kQpX2iL7DM24msK/Age4jm
+         14Wtpxeu3xqB8rbbTMaPEncsrE2J2SvPoski8BNg7Qk3dDOfbM3055Ccp7CzQaSCwDNY
+         xpuOe9qeRFbvn8UGQ5Z0axXa1QO3Um+MGmmgc=
+Received: by 10.142.234.21 with SMTP id g21mr3761993wfh.301.1297741791487;
+ Mon, 14 Feb 2011 19:49:51 -0800 (PST)
+Received: by 10.142.195.18 with HTTP; Mon, 14 Feb 2011 19:49:31 -0800 (PST)
+In-Reply-To: <F624322D-359A-48ED-A241-622042F77CDA@sb.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166810>
 
-On Mon, 14 Feb 2011, Junio C Hamano wrote:
+Thanks a lot for this answer.
 
-> But shouldn't you also revert the parts of my patch to do_plain_rerere()
-> and rerere_forget() that have similar special cases?
+I've also read the man page of check-ref-format. However, there may be
+some not up-to-date documentation or some "non guarded against"
+command usage in git.
 
-Yep, done in patch 2/2.
+This explains the second part of my question ("Or maybe this command
+(ie. check-ref-format) is not intended to deal with symbolic links
+?").
 
-Your changes in find_conflicts() are still there after patch 1/2 and
-since do_plain_rerere() and rerere_forget() call find_conflicts(), I
-think they need to check for the punted paths. Only the callers of
-setup_rerere() no longer need to care.
+Another possibility would be that only git internal symbolic
+references are allowed to live under the ".git" dir (HEAD, FETCH_HEAD,
+...) and that user defined symrefs should live under refs/. In this
+case, maybe "git symbolic-ref" should also prevent the user from
+creating a reference which doesn't contains a forward slash.
 
-In patch 2/2, I refactored a bit more, so that find_conflicts()
-behaves the way it did before your first patch, and then the checks
-for punted paths are removed from the callers.
+Once again, by reading at the code I can understand how those commands
+currently work. What I'm trying to achieve is to understand what
+should be their recommended usage.
 
-If you think the second one is good, it could easily be squashed with
-the first one.  I left it separate because I wasn't quite sure. For
-example, could the interface to check_one_conflict() be improved? As
-you said, part of the changes from your patch are now undone, so I
-guess all three patches could even be squashed.
+Of course, I'll be glad to contribute any code/doc patch once the
+"voice of the git community" has spoken :-)
 
 
-/Martin
+Em.
+
+
+
+On Tue, Feb 15, 2011 at 4:19 AM, Kevin Ballard <kevin@sb.org> wrote:
+> On Feb 14, 2011, at 12:58 PM, Emeric Fermas wrote:
+>
+>> - As check-ref-format fails when being passed "first", does this mean
+>> that it's not recommended to create a symbolic reference at the same
+>> level than "HEAD"? Or maybe this command is not intended to deal with
+>> symbolic links ?
+>
+> I don't know about the rest of your question, but check-ref-format
+> explicitly states in the manpage that the refname must have at least
+> one /, to enforce the presence of a category (such as heads/) in the
+> refname.
+>
+> -Kevin Ballard
+>
