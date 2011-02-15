@@ -1,87 +1,94 @@
-From: Adam Monsen <haircut@gmail.com>
-Subject: release maintenance vs. release engineering (was: configuring cherry-pick
- to always use -x?)
-Date: Tue, 15 Feb 2011 13:03:43 -0800
-Message-ID: <4D5AEA2F.9000606@gmail.com>
-References: <4D596435.9020605@gmail.com> <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com> <4D59A39C.9090402@gmail.com> <4D5A401B.1050103@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] parse_tag_buffer(): do not prefixcmp() out of range
+Date: Tue, 15 Feb 2011 13:18:50 -0800
+Message-ID: <7vsjvpm1xh.fsf@alter.siamese.dyndns.org>
+References: <20110212144706.GA25124@do>
+ <1297688571-1962-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 15 22:03:56 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 15 22:19:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpS3u-0000oQ-KH
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 22:03:55 +0100
+	id 1PpSIg-0003M3-6K
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 22:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754263Ab1BOVDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 16:03:50 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:48523 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751241Ab1BOVDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 16:03:48 -0500
-Received: by pva4 with SMTP id 4so86955pva.19
-        for <git@vger.kernel.org>; Tue, 15 Feb 2011 13:03:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=QbsGnl9VpzYgT0f1x3vfOTuysLh17+pxRhiHYDVIlGg=;
-        b=HHqd0pM/XzsQXPIuFxLTDcwHJcSLMUzlR6f+eKU3CQ1Rexry9NSZ4L0YAHp9edSnxn
-         qt1zDJ6ka5yMN7QbLqqSbCFoEeGGaWe9wfkDxHKlZjn9bZpi2iaU73BH/7y0rCrEnqxb
-         j7dwSuIarAhc3gmULdipiocNBXa1A0oJeOnkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=c7JWKy0niQ++xGi8JgImWlY8BCIVi9Jwm6QDqLpex+lF3XBEKdd4iag1Gx94XcGPyB
-         MIpxZx8AOTNDC3zK6ZI7Hf5h8RrY6SXWmIdaWWPLfBJQdl/tibL1oEf6v/xFpudIVRCt
-         l6hZqriDk2s4kFbjqNE94kVKHu9tSyDTzlQgQ=
-Received: by 10.142.147.13 with SMTP id u13mr4613474wfd.108.1297803828226;
-        Tue, 15 Feb 2011 13:03:48 -0800 (PST)
-Received: from [192.168.13.8] (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
-        by mx.google.com with ESMTPS id v19sm6187975wfh.12.2011.02.15.13.03.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 15 Feb 2011 13:03:47 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <4D5A401B.1050103@drmicha.warpmail.net>
-X-Enigmail-Version: 1.1.1
+	id S1755487Ab1BOVTE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Feb 2011 16:19:04 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49788 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab1BOVTD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 16:19:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4625C4257;
+	Tue, 15 Feb 2011 16:20:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=0Cc0oK/qWowa
+	pNQeWqb9Y2Evc+Y=; b=p2bwBE0uhg0Cc6wIsIFwMVpC/n9SnxgIEpsKROAL4b1q
+	o2Lra/9CwD8EsgU8jFGb8vqfd36in5FItnqrPY9K3tFqh4l0GIen41dGtPXyY49Z
+	/wu4KuAGYmE1dayWYk9w1swU3w83J4R1vpb6W5BizPrcXy3E33B8xmLM7pKPuLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LjE3BI
+	x/go5sl8eADXXQ6pgpapbkye6RZ2eW1C/UsaZP1nC9i1Xx2L5f5EgyFPDBwjb6UL
+	JdGuIYHcSHMKZP5rH2OGpUDsZ9sIgqTLzfYZgYlodZIgxhBdzagz24H3gwzRYLhX
+	NFlhLImOf7F/8RDXfqclk8tHW8o+3mc2P04os=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 134AB4256;
+	Tue, 15 Feb 2011 16:20:04 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 943EC4253; Tue, 15 Feb 2011
+ 16:19:58 -0500 (EST)
+In-Reply-To: <1297688571-1962-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Mon\, 14 Feb
+ 2011 20\:02\:51 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5AD4B250-3949-11E0-A77D-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166877>
 
-Michael J Gruber wrote:
-> I don't quite understand how cherry picks could conflict less then
-> merges if the release branch contains fixes only.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-The last time I experienced a painful merge from f-release to master, it
-was because some files had been culled from master but left extant on
-f-release. Not too hard to resolve, actually. But I really only needed
-one change pulled into master, and when I cherry picked instead of
-merging the whole branch, there were no conflicts, and master ended up
-containing exactly what I wanted.
+> There is a check (size < 64) at the beginning of the function, but
+> that only covers object+type lines.
+>
+> Strictly speaking the current code is still correct even if it
+> accesses outside 'data' because 'tail' is used right after
+> prefixcmp() calls.
 
-> My impression is that "f-release" actually
-> mixes release engineering and maintenance. Two possible remedies:
-> 
-> - Separate release engineering from maintenance and merge only the
-> latter to master
+What do you mean by this?  I don't get it.
 
-Ah, thank you! This is invaluable advice. I think I'll go with this
-option since mixing release engineering and maintenance is exactly what
-I'm doing. Hopefully it's worth the added complexity of having another
-public branch.
+> diff --git a/tag.c b/tag.c
+> index ecf7c1e..9318ae5 100644
+> --- a/tag.c
+> +++ b/tag.c
+> @@ -97,7 +97,9 @@ int parse_tag_buffer(struct tag *item, const void *=
+data, unsigned long size)
+>  		item->tagged =3D NULL;
+>  	}
+> =20
+> -	if (prefixcmp(bufptr, "tag "))
+> +	if (bufptr + 4 < tail && !prefixcmp(bufptr, "tag "))
+> +		; 		/* good */
+> +	else
+>  		return -1;
+>  	bufptr +=3D 4;
+>  	nl =3D memchr(bufptr, '\n', tail - bufptr);
 
-I pushed an example to https://github.com/meonkeys/releaseBranchDemo
-that I'll share with my developers.
-
-"git merge -sours" will definitely be something useful to add to the
-quiver too.
+If there weren't enough bytes between bufptr and tail, prefixcmp may st=
+ill
+match with "tag " while later part of the matched string might be comin=
+g
+from trailing garbage outside our memory.  Unless we correctly fail the
+prefixcmp() part, memchr() would be fed negative value, no?
