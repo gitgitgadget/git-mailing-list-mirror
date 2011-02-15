@@ -1,65 +1,111 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Regarding GIT API
-Date: Tue, 15 Feb 2011 20:09:40 +0300
-Message-ID: <AANLkTimtiXN5EpejfCSVERCHhc1F7bKQiRNuf7GxbvaR@mail.gmail.com>
-References: <loom.20110215T120434-373@post.gmane.org>
-	<AANLkTim4ucYtoyNEM2+=-dJTmpBtqy1zJOEX3k3Wk+XU@mail.gmail.com>
-	<4D5A744F.5000208@drmicha.warpmail.net>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: Challenges for an octopus merge
+Date: Tue, 15 Feb 2011 18:29:26 +0100
+Message-ID: <4D5AB7F6.8040508@web.de>
+References: <4D53F694.1060105@web.de> <7v8vxn6fdv.fsf@alter.siamese.dyndns.org> <4D55627F.30305@web.de> <7vd3my1leq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Abhinav Goyal <honeykool23@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 15 18:09:49 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 15 18:31:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpOPL-0000mP-Vb
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 18:09:48 +0100
+	id 1PpOkC-0008K7-RY
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 18:31:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754587Ab1BORJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 12:09:44 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:36102 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752716Ab1BORJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 12:09:42 -0500
-Received: by qyj19 with SMTP id 19so2536125qyj.19
-        for <git@vger.kernel.org>; Tue, 15 Feb 2011 09:09:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=mgG2MURXQI/JWsZD+lXZX2JX0ZAd9YeJpP/VbHx3hsI=;
-        b=IxkQex8SaoBeBef3EkzFjR2xtNbNnwREuk5thTb0Wso6qRcz9Vu2nFXTwHOnfFGWdl
-         xrLg2PqkOtbtDD+a6JQq3p5K4X6ZFRq/sGEypPxKv3aL8/7QxIrR0MzwWu/ACjFcNqHA
-         /UL+B28S+Dxh+uRVJy8VC5L4+iGordsrK2njM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=H+BC+dOBxxRZIx4M8WNhp+AjFItoY1xh/45bPUjK7JonpxSRBd7yY7QOPe+gl/7yaJ
-         dcpohxEWCZnPH72WD9w+n82pmlyGruxlMhNCZjgB7ykrQ3q1QViYzt7/mk9WcjnfMs9Y
-         qNIwHUyLzY/+1p/h/5CJNX6UA8wwHFFIqyydQ=
-Received: by 10.229.220.133 with SMTP id hy5mr4116699qcb.269.1297789780739;
- Tue, 15 Feb 2011 09:09:40 -0800 (PST)
-Received: by 10.229.213.4 with HTTP; Tue, 15 Feb 2011 09:09:40 -0800 (PST)
-In-Reply-To: <4D5A744F.5000208@drmicha.warpmail.net>
+	id S1755370Ab1BORbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 12:31:14 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:46984 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892Ab1BORbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 12:31:14 -0500
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 3C395197C3B9C;
+	Tue, 15 Feb 2011 18:30:52 +0100 (CET)
+Received: from [78.49.32.112] (helo=[192.168.1.46])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PpOjk-0003HO-00; Tue, 15 Feb 2011 18:30:52 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.13) Gecko/20101206 SUSE/3.1.7 Thunderbird/3.1.7
+In-Reply-To: <7vd3my1leq.fsf@alter.siamese.dyndns.org>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX18MNQN5oTrQrjMdO46+aaEg1thJi9eQm5SpTNIZ
+	jvUd+DCditVEakGVFM6fQcE76M2ARtcSkz1d2VE/Xh2cg2NCfA
+	L/w2pW97i4rraW4oiTbg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166859>
 
-On Tue, Feb 15, 2011 at 3:40 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
->
-> You mean "plumbing" for the commands with robust interface.
->
-> The front-end commands are "porcelain": they may break when used for
-> heavy (scripting) work...
+> The user needs to decide what to do next; the user may choose to do "git merge A C ; git merge B" instead,
+> but *after* inspecting the situation.
 
-Thank you for correction...
+I find a few of the applied conflict markers strange after my inspection.
+
+1. They suggest to choose one of the involved changes. But how do you think 
+about the situation if I found that the right resolution is to delete the 
+conflict section completely?
+
+    Why was the merging process not able to come to the same conclusion 
+automatically?
 
 
-Dmitry
+2. My tenth patch would like to delete six consecutive lines in a source file in 
+a way similar to the following example.
+
+-drop 1 ...;
+-drop 2 ...;
+-drop 3 ...;
+-drop 4 ...;
+-
+-
+  void make_parser()
+
+elfring@Sonne:~/Projekte/BtYacc/lokal2> git merge --stat --verbose -m 'Deletion 
+of duplicated function declarations' double_declaration_deletion 
+
+Auto-merging
+mkpar.c 
+ 
+
+CONFLICT (content): Merge conflict in mkpar.c 
+ 
+
+Automatic merge failed; fix conflicts and then commit the result.
+
+
+But the Git GUI displays this conflict like the following.
+
+   <<<<<<< HEAD
+  +drop 1 ...;
+  +drop 2 ...;
+  +drop 3 ...;
+  +drop 4 ...;
+  +
+  +static void find_final_state(void)
+   =======
++ void make_parser()
++ {
+...
++ }
++
++ void find_final_state()
+   >>>>>>> double_declaration_deletion
+
+
+I find three details suspicious here.
+- Why are these lines marked for addition again?
+- Why is the function "find_final_state" referenced? (Does this indicate an 
+off-by-one error in the first block?)
+- Why are those parts like make_parser() not omitted that were moved to 
+different places in this source file by a previous patch?
+
+
+I would appreciate your advices.
+
+Regards,
+Markus
