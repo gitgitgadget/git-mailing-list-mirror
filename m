@@ -1,88 +1,132 @@
-From: Johan Herland <johan@herland.net>
-Subject: checkout/branch needs some extra safety around the --track option
-Date: Tue, 15 Feb 2011 18:52:03 +0100
-Message-ID: <201102151852.03881.johan@herland.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
+Date: Tue, 15 Feb 2011 10:06:32 -0800
+Message-ID: <7vipwlp3yv.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102141018.46527.johan@herland.net>
+ <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
+ <201102151606.21040.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 15 18:52:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Feb 15 19:07:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpP4P-00073n-Je
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 18:52:13 +0100
+	id 1PpPIs-0001Ph-TH
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 19:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308Ab1BORwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 12:52:07 -0500
-Received: from smtp.opera.com ([213.236.208.81]:48491 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754073Ab1BORwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 12:52:06 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p1FHq42g013873
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 15 Feb 2011 17:52:04 GMT
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
+	id S1755546Ab1BOSHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 13:07:05 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36594 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754885Ab1BOSHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 13:07:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C2A72921;
+	Tue, 15 Feb 2011 13:08:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zeP6iBvTM/BgI4j+Aor8ROV40jM=; b=SC6+ZZ
+	5q0ddq5ggysRe9CXW9Qm+ylRkq+Wk6AlwCcueWda3jwjaIgij0enhmVNFbLBR8bz
+	WB6fHPE29hjWisfq9rEp4qN14ZCkpMtXAy681xyqIh2MrCov3uAXY/K+HXJoGzp/
+	MFzXxm6lVh2OYGmOJDhA9MH1hw4YOTYr2KR34=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P98AZ+uVXOns8yre4ZCX6gVwdMwY2T/2
+	AKgm/AibzPlid0VCvk8Bm8hgJiAspnRRxZc2MTmrTZ2EfEzqwrs95oTKqRm9s5ru
+	dy00l0Rgx+FDPvcCO3Sl8x728fpOfQdur53TxOZN9pqcDx1u8Dpve9KxC7UDoaco
+	Kgl9Dm5llG8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 30A3D2914;
+	Tue, 15 Feb 2011 13:07:55 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1BEF7290D; Tue, 15 Feb 2011
+ 13:07:41 -0500 (EST)
+In-Reply-To: <201102151606.21040.johan@herland.net> (Johan Herland's message
+ of "Tue\, 15 Feb 2011 16\:06\:20 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 831356C4-392E-11E0-A390-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166861>
 
-Hi,
+Johan Herland <johan@herland.net> writes:
 
-I just got a problem report from a Git user a $dayjob, who was confused 
-about the following output from 'git push' (without arguments, in a 
-repo with push.default == 'tracking'):
+> On Monday 14 February 2011, Junio C Hamano wrote:
+> ...
+> For the foreseeable future (i.e. long after v1.8.0 is out) we will still 
+> have to understand and support the traditional "tags are implicitly 
+> auto-followed" and "tags live in a single global namespace" concepts 
+> (aka. (a) below). For new-style remotes I propose that all refspecs be 
+> explicit, and that auto-follow is disabled (aka. (b) below).
+>
+> But if you try to specify a new-style remote with all tags in a single 
+> global namespace, you will NOT get tag autofollowing (aka. (c) below)
 
-> ----------------------------------------------------------------
-> $ git push
-> Total 0 (delta 0), reused 0 (delta 0)
-> To .
->     c9e7b5a..1bf9fed  mybranch -> v0.99
-> ----------------------------------------------------------------
+Ok.
 
-After some investigations, I could reproduce his problem with the 
-following commands:
+> (Note that if we cannot reliably detect the difference between old-style 
+> (implicit) and new-style (explicit) remotes, we will likely have to add 
+> a boolean flag, e.g. "remote.origin.implicitTagFollowing".)
 
-$ git checkout -b mybranch --track v0.99
-# Do work on mybranch
-$ git push
+Ok.
 
-In other words. The branch was erroneously created with the --track 
-option, setting up a bogus branch.mybranch config section. When 
-pushing, this caused the v0.99 tag to be (unexpectedly, to him) updated 
-in the local repo.
+>> > ... However, what I've seen at $dayjob is
+>> > that more inexperienced users will often push right after
+>> > committing, and at that time they're still very much in the
+>> > "working-on-one-branch" state of mind (as opposed to the
+>> > "administering-multiple-branches" state of mind),...
+>>
+>> Then "current" mode is a good setting for them, I would presume.
+>
+> Arguably in some workflows, 'tracking' may be a more suitable default 
+> (i.e. safer for newbies) than 'current', but in practice this shouldn't 
+> matter much (local branch names usually correspond to remote branch 
+> names).
 
-Obviously, this is rooted in user error, but it occurs to me that Git 
-should be more helpful in this situation. I propose:
+Of course you are right.  The "this pulls from there, and pushes back
+to the same place" model was what I had in mind when I wrote the patch; 
+I just was confused between the "tracking" vs "current" labels.
 
-1. When given "--track", branch/checkout should verify that the tracked 
-branch is indeed a branch (preferably a remote branch, although I guess 
-tracking a local branch can make sense in some situations). At least, 
-it should deny tracking a _tag_. Tracking a tag simply does not make 
-sense at all (unless you expect the tag to move, in which case it 
-should be a branch and not a tag).
+> Offtopic PS: Given that we're leaning towards using 'tracking' to 
+> describe the relationship between remote-tracking branches 
+> (refs/remotes/*) and remote branches, and 'upstream' to describe the 
+> relationship between a local branch and the remote branch it 
+> follows/merges (on 'git pull'), wouldn't
+>
+>   push.default == "upstream"
+>
+> be more descriptive than
+>
+>   push.default == "tracking"
 
-2. 'git push' should not move tags by default (not even in your local 
-repo). Moving tags might be ok if given the -f option (still a remote 
-repo should be able to object). With the current version of Git, the 
-following commands will transform an annotated tag into a lightweight 
-tag with no warning:
+"Local Branch" and "Remote Tracking Branch", both of which physically
+reside on the local end of the communication and are tied by their
+"merge/rebase" relationship, are much more distinct than "Remote Branch"
+and "Remote Tracking Branch" that are tied by their "fetch" relationship.
+A remote tracking branch is a mere (time-lagged) mirror of the remote
+branch it tracks, and mental distance between them is much smaller than
+that of between a local branch and its @{upstream} that is a remote
+tracking branch.  Conceptually the _true_ upstream of a local branch is
+the remote branch from which its @{upstream} remote tracking branch copies
+from.
 
-$ git config push.default tracking
-$ git checkout -b foo --track $annotated_tag
-$ git push
+So in that sense, I agree "pushing my change to the upstream" would match
+the mental model of an end user somewhat better than "pushing my change
+back to what I track".
 
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Perhaps leave "tracking" as a deprecated synonym and add "upstream" as the
+official name of the mode?
