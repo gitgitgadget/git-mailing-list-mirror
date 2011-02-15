@@ -1,116 +1,162 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] mergetool: don't skip modify/remove conflicts
-Date: Mon, 14 Feb 2011 16:54:41 -0800
-Message-ID: <7v1v3aqfqm.fsf@alter.siamese.dyndns.org>
-References: <1297134518-4387-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1297570198-21103-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1297570198-21103-2-git-send-email-martin.von.zweigbergk@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 01:55:12 2011
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] merge: honor prepare-commit-msg hook
+Date: Mon, 14 Feb 2011 20:07:50 -0500
+Message-ID: <1297732070-32704-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 15 02:08:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp9CA-0003yw-Up
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 01:55:11 +0100
+	id 1Pp9Oq-0001Zw-ML
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 02:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752324Ab1BOAyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 19:54:52 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52527 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751253Ab1BOAyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 19:54:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 709D5494D;
-	Mon, 14 Feb 2011 19:55:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aGktpyF2HKEfoxkZyfEFJXJl3Oc=; b=BafI8b
-	uvT5A8WbaE1Gtstnv3JrJ52Z/8H9ug7LfXdBo/UVmpekr6W5FawDrPX+CJGZhDA5
-	B3jxWKfS4UO+VOroE8durvc+LVJp6bW7oR19G+VMtPvQn6L2DYo+bNmUlGhizqAq
-	Any60l3n7163ROyZ2dG+3w3crY1pfVsZjEu7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U8wU07XSu48mrc1zx5VWlBgjQygV5W/b
-	HatEFPdnD0lbXmOFDOuZMf69+dnDsjLztwxwJRlM2ZOz8C0RjAyyURgB+T4poRQC
-	YtD5SwWEGdUHLd3e0Ye5avIrpQj/dCeVoTJDw/V8r4Kkp7psmGznpegWIJGlidHl
-	LO+UWuwNLIM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3F4DF494C;
-	Mon, 14 Feb 2011 19:55:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 013F2494B; Mon, 14 Feb 2011
- 19:55:46 -0500 (EST)
-In-Reply-To: <1297570198-21103-2-git-send-email-martin.von.zweigbergk@gmail.com> (Martin
- von Zweigbergk's message of "Sat\, 12 Feb 2011 23\:09\:57 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5589B29C-389E-11E0-9276-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751769Ab1BOBII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 20:08:08 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:42711 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426Ab1BOBIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 20:08:06 -0500
+Received: by vws16 with SMTP id 16so3490550vws.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 17:08:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=DIDgRpkasA0lPq8iH5S4DnHVU7TLVdk1IdvSaVQtrTs=;
+        b=MKTi4bvP0WL3k0qBbiuhOF2a9Vw3YeKI15BOkUCR/sx74G5D1BfL39dLYcXLUcFC28
+         COpEX6Zqb4+4UcoQ1GexEuAaOSJ4sDpKmlbI5XzHMr8lQqxiV4CDCdVyaB/iCKgdbP3n
+         aNABDFWzxaD+IZbBsnNFFCxVA3OKdl2NoH8ak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=JCmxSBdwgJzV6Aq7VON/EXmroI0DpTTKP6YRWJ69yJOGRxgwLAKjZBJasKT0PNrqzd
+         CR4K12Ia1+ru3s/WUq+VN69fxB6f/C3PFxQVkn4aBL6zAMqNrgmh2GUkihPlPInmiQmp
+         YTx0ZAeMZ6R0j4M4FzEnaep2ceNTGqh9Y+iRc=
+Received: by 10.220.199.74 with SMTP id er10mr55374vcb.12.1297732085499;
+        Mon, 14 Feb 2011 17:08:05 -0800 (PST)
+Received: from localhost (cpe-071-077-014-091.nc.res.rr.com [71.77.14.91])
+        by mx.google.com with ESMTPS id u14sm1022114vcr.25.2011.02.14.17.08.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 14 Feb 2011 17:08:04 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.5.g9affb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166805>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+When a merge is stopped due to conflicts or --no-commit, the
+subsequent commit calls the prepare-commit-msg hook. However,
+it is not called after a clean merge. Fix this inconsistency
+by invoking the hook after clean merges as well.
 
-> diff --git a/builtin/rerere.c b/builtin/rerere.c
-> index 081fccc..7b9fe18 100644
-> --- a/builtin/rerere.c
-> +++ b/builtin/rerere.c
-> @@ -147,8 +147,6 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
->  	if (!strcmp(argv[0], "clear")) {
->  		for (i = 0; i < merge_rr.nr; i++) {
->  			const char *name = (const char *)merge_rr.items[i].util;
-> -			if (!name)
-> -				continue;
->  			if (!has_rerere_resolution(name))
->  				unlink_rr_item(name);
->  		}
-> @@ -157,19 +155,22 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
->  		garbage_collect(&merge_rr);
->  	else if (!strcmp(argv[0], "status"))
->  		for (i = 0; i < merge_rr.nr; i++) {
-> -			if (!merge_rr.items[i].util)
-> -				continue;
->  			printf("%s\n", merge_rr.items[i].string);
->  		}
-> -	else if (!strcmp(argv[0], "remaining"))
-> -		for (i = 0; i < merge_rr.nr; i++)
-> -			printf("%s\n", merge_rr.items[i].string);
-> -	else if (!strcmp(argv[0], "diff"))
-> +	else if (!strcmp(argv[0], "remaining")) {
-> +		rerere_remaining(&merge_rr);
-> +		for (i = 0; i < merge_rr.nr; i++) {
-> +			if (merge_rr.items[i].util != RERERE_RESOLVED)
-> +				printf("%s\n", merge_rr.items[i].string);
-> +			else
-> +				/* prepare for later call to
-> +				 * string_list_clear() */
-> +				merge_rr.items[i].util = NULL;
-> +		}
-> +	} else if (!strcmp(argv[0], "diff"))
->  		for (i = 0; i < merge_rr.nr; i++) {
->  			const char *path = merge_rr.items[i].string;
->  			const char *name = (const char *)merge_rr.items[i].util;
-> -			if (!name)
-> -				continue;
->  			diff_two(rerere_path(name, "preimage"), path, path, path);
->  		}
->  	else
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+I sent this out previously as an RFC:
 
-By looking at the diff between the parent of f322b35 (my earlier "rerere
-remaining" patch) and the result of applying this patch on top of the
-patch, I think the basic idea of this is to correct my stupid mistake of
-contaminating merge_rr unconditionally, and instead adding the "remaining"
-entries only when handling the "rerere remaining" command (hence many
-removal of special cases "if (!name) continue" introduced by my patch.
-The result looks _much_ cleaner than the above patch shows and I am happy
-with it.
+  http://thread.gmane.org/gmane.comp.version-control.git/151297
 
-But shouldn't you also revert the parts of my patch to do_plain_rerere()
-and rerere_forget() that have similar special cases?
+But never prepared a proper patch. Here it is.
+
+ builtin/merge.c                    |   38 ++++++++++++++++++++++++++++-------
+ t/t7505-prepare-commit-msg-hook.sh |   12 +++++++++++
+ 2 files changed, 42 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 42fff38..83389ed 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -795,6 +795,33 @@ static void add_strategies(const char *string, unsigned attr)
+ 
+ }
+ 
++static void write_merge_msg(void)
++{
++	int fd = open(git_path("MERGE_MSG"), O_WRONLY | O_CREAT, 0666);
++	if (fd < 0)
++		die_errno("Could not open '%s' for writing",
++			  git_path("MERGE_MSG"));
++	if (write_in_full(fd, merge_msg.buf, merge_msg.len) !=
++		merge_msg.len)
++		die_errno("Could not write to '%s'", git_path("MERGE_MSG"));
++	close(fd);
++}
++
++static void read_merge_msg(void)
++{
++	strbuf_reset(&merge_msg);
++	if (strbuf_read_file(&merge_msg, git_path("MERGE_MSG"), 0) < 0)
++		die_errno("Could not read from '%s'", git_path("MERGE_MSG"));
++}
++
++static void run_prepare_commit_msg(void)
++{
++	write_merge_msg();
++	run_hook(get_index_file(), "prepare-commit-msg",
++		 git_path("MERGE_MSG"), "merge", NULL, NULL);
++	read_merge_msg();
++}
++
+ static int merge_trivial(void)
+ {
+ 	unsigned char result_tree[20], result_commit[20];
+@@ -806,6 +833,7 @@ static int merge_trivial(void)
+ 	parent->next = xmalloc(sizeof(*parent->next));
+ 	parent->next->item = remoteheads->item;
+ 	parent->next->next = NULL;
++	run_prepare_commit_msg();
+ 	commit_tree(merge_msg.buf, result_tree, parent, result_commit, NULL);
+ 	finish(result_commit, "In-index merge");
+ 	drop_save();
+@@ -835,6 +863,7 @@ static int finish_automerge(struct commit_list *common,
+ 	}
+ 	free_commit_list(remoteheads);
+ 	strbuf_addch(&merge_msg, '\n');
++	run_prepare_commit_msg();
+ 	commit_tree(merge_msg.buf, result_tree, parents, result_commit, NULL);
+ 	strbuf_addf(&buf, "Merge made by %s.", wt_strategy);
+ 	finish(result_commit, buf.buf);
+@@ -1316,14 +1345,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			die_errno("Could not write to '%s'", git_path("MERGE_HEAD"));
+ 		close(fd);
+ 		strbuf_addch(&merge_msg, '\n');
+-		fd = open(git_path("MERGE_MSG"), O_WRONLY | O_CREAT, 0666);
+-		if (fd < 0)
+-			die_errno("Could not open '%s' for writing",
+-				  git_path("MERGE_MSG"));
+-		if (write_in_full(fd, merge_msg.buf, merge_msg.len) !=
+-			merge_msg.len)
+-			die_errno("Could not write to '%s'", git_path("MERGE_MSG"));
+-		close(fd);
++		write_merge_msg();
+ 		fd = open(git_path("MERGE_MODE"), O_WRONLY | O_CREAT | O_TRUNC, 0666);
+ 		if (fd < 0)
+ 			die_errno("Could not open '%s' for writing",
+diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
+index ff18962..5b4b694 100755
+--- a/t/t7505-prepare-commit-msg-hook.sh
++++ b/t/t7505-prepare-commit-msg-hook.sh
+@@ -132,6 +132,18 @@ test_expect_success 'with hook (-c)' '
+ 
+ '
+ 
++test_expect_success 'with hook (merge)' '
++
++	head=`git rev-parse HEAD` &&
++	git checkout -b other HEAD@{1} &&
++	echo "more" >> file &&
++	git add file &&
++	git commit -m other &&
++	git checkout - &&
++	git merge other &&
++	test "`git log -1 --pretty=format:%s`" = merge
++'
++
+ cat > "$HOOK" <<'EOF'
+ #!/bin/sh
+ exit 1
+-- 
+1.7.4.5.g9affb
