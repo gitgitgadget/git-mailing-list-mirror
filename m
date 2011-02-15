@@ -1,110 +1,112 @@
-From: Miles Bader <miles@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Consistent terminology: cached/staged/index
-Date: Tue, 15 Feb 2011 08:47:00 +0900
-Message-ID: <AANLkTikyc5QEou8Em-3HkLSHWHQyx+MnYMQ9OSN33_QS@mail.gmail.com>
+Date: Mon, 14 Feb 2011 16:12:36 -0800
+Message-ID: <7vaahyqhor.fsf@alter.siamese.dyndns.org>
 References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
  <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
  <87k4h34bhj.fsf@catnip.gol.com> <7vr5bbupj4.fsf@alter.siamese.dyndns.org>
  <AANLkTi=PDhVgpTeFjTxFuVJGbAKTHzHhsNVcquqSD3Qq@mail.gmail.com>
- <4D58D2DF.1050205@viscovery.net> <AANLkTikTfyHBOvQmjhT8yTziL4R67+AAk0O-Nk1tBSaL@mail.gmail.com>
- <4D5906FD.7030502@drmicha.warpmail.net> <buod3muswq7.fsf@dhlpc061.dev.necel.com>
- <7vtyg6tu9e.fsf@alter.siamese.dyndns.org> <AANLkTinnCLVDEZpNPVYZ2fq1BY=257BTxkzNj44-Yz3O@mail.gmail.com>
+ <4D58D2DF.1050205@viscovery.net>
+ <AANLkTikTfyHBOvQmjhT8yTziL4R67+AAk0O-Nk1tBSaL@mail.gmail.com>
+ <4D5906FD.7030502@drmicha.warpmail.net>
+ <buod3muswq7.fsf@dhlpc061.dev.necel.com>
+ <7vtyg6tu9e.fsf@alter.siamese.dyndns.org>
+ <AANLkTinnCLVDEZpNPVYZ2fq1BY=257BTxkzNj44-Yz3O@mail.gmail.com>
  <7vzkpyql2r.fsf@alter.siamese.dyndns.org>
+ <AANLkTikyc5QEou8Em-3HkLSHWHQyx+MnYMQ9OSN33_QS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Michael J Gruber <git@drmicha.warpmail.net>,
 	Johannes Sixt <j.sixt@viscovery.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 00:47:49 2011
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 15 01:13:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp88y-0002eb-Jd
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 00:47:48 +0100
+	id 1Pp8XN-0007fB-HB
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 01:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753818Ab1BNXrp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 18:47:45 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46591 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753443Ab1BNXrn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 18:47:43 -0500
-Received: by bwz15 with SMTP id 15so6043063bwz.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 15:47:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7E1hPDrsy1tZIFMOPLk8Jf1N8IIHLLbOqPTlzIqinsI=;
-        b=aUMzRhNhSVYEY4p8IA4hdwpEUtHjRv86QtjUzOypOoKsI61CFL7M0oMzbTuZOAhFP4
-         dQtIHCEXFP8N7rzMaS1pt4qqIjuj3kAFM1NcFhKHVPBWXfMV3JN0CePcyXXcZxjjpp0j
-         J7bztpoSGTp3SBEZcl+hflYU0oNmWvxSf/2WE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=R2F2cTmb/PQz90YyKYyqd/VRM7zTxRVnZBDDcNz6vmxXqgq4A48Ar4fKWsus0G63ZY
-         sBo6V6B/kCTkmU6Ph/mq6uUlfKoeBpjtJf9onLpsFHIck9F+96uGvRrAqPz6FC4ptBKJ
-         i+Ply3gOQmiL+blZcABF+8NqK85GKmfXP0eyU=
-Received: by 10.204.99.145 with SMTP id u17mr3937774bkn.1.1297727262144; Mon,
- 14 Feb 2011 15:47:42 -0800 (PST)
-Received: by 10.204.119.130 with HTTP; Mon, 14 Feb 2011 15:47:00 -0800 (PST)
-In-Reply-To: <7vzkpyql2r.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: PQU2OU7HdCsjodb7slLTdM2eQuc
+	id S1751577Ab1BOAM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 19:12:57 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39977 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398Ab1BOAMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 19:12:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5990B451B;
+	Mon, 14 Feb 2011 19:13:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sIGhAvOBmPVvpbDE0jWUekfANLY=; b=DesScH
+	7xPDrv6/KbNy72Mim+LDpv1c1s8G9o3jRxPe+QFSyPhAwN0zVJajzv0f9ORcw4ob
+	RwQH+S+YRSZ1+erwLsRIEaX0Uj0qacLi82HAMpYwh4BxSpbHOcSH/RGACG+jiyg+
+	2hdpW+NHVOr32gp7OM5sdKYcaNvWOU32L+4o4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HOINH0YSaq1iU8V9jRwYTQNSB8w5ei6j
+	SdNti1I7Nn/zO3oP+SWkUUO81FlaHU6wP4avIXvA/A0ligcw5lKAKYLbYdP7okIK
+	QYQA/zRjLFhCZ3q50TsUPOCYbvxxxKV9wZGenKnd2kvd69usVm/Mk6hFdEOXRCvd
+	73pkfFsrU+U=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EE752450F;
+	Mon, 14 Feb 2011 19:13:49 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1211A450A; Mon, 14 Feb 2011
+ 19:13:41 -0500 (EST)
+In-Reply-To: <AANLkTikyc5QEou8Em-3HkLSHWHQyx+MnYMQ9OSN33_QS@mail.gmail.com>
+ (Miles Bader's message of "Tue\, 15 Feb 2011 08\:47\:00 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 76BC7A5E-3898-11E0-A25D-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166799>
 
-On Tue, Feb 15, 2011 at 7:59 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> I actually was hoping that it was obvious that -s is a no-starter fro=
-m the
-> messages so far in this thread, as neither --cached nor its more
-> descriptive spelling --index-only has character 's' anywhere in it, a=
-nd we
-> have been keeping --staged as a low-key synonym for a reason.
+Miles Bader <miles@gnu.org> writes:
 
-It was not at all obvious.  Even if you like --cached more than
---staged, there's a difference between advocating "--staged", and
-using "-s" as a short-option for the operation which --cached /
---staged invoke.
+> [BTW, isn't the name "--index-only" something of a misnomer?  If
+> something is called "--XXX-only", that implies that the default
+> operation uses "XXX + something else" instead of XXX, but that
+> otherwise they are the same.  However in fact the difference in
+> behavior resulting from --cached is more subtle: it changes _both_
+> sides of the diff (default: worktree<->index; --cached: index<->HEAD).
 
-Short option names are often a compromise, because clearly there are
-often conflicts.  That _doesn't_ mean that one should simply not have
-a short option, when a "perfect" choice cannot be found.  If a
-"perfect" short-option isn't available, then usually one turns to
-somewhat less perfect choices, trying to at least find some heuristic
-that can make them easier to memorize -- because in the end, short
-options must be memorized (and if they are truly common operations,
-this isn't generally difficult; it's memorizing _rarely_ used short
-options that's hard).
+Not really.
 
-Of the various choices, "-s" does at least have such a heuristic
-connection to an appropriate long option ("-i" is arguably worse than
--s, because it doesn't have any such connection...).  Can you suggest
-something better?
+There are three entities involved: a tree-ish, the index, and the working
+tree.  Because the index is a singleton, when you say "compare the index
+with...", you only have two choices, either compare it against a tree-ish,
+or compare it with the working tree.  If you want to do the latter, you
+just use the command without --cached nor tree-ish.
 
-[BTW, isn't the name "--index-only" something of a misnomer?  If
-something is called "--XXX-only", that implies that the default
-operation uses "XXX + something else" instead of XXX, but that
-otherwise they are the same.  However in fact the difference in
-behavior resulting from --cached is more subtle: it changes _both_
-sides of the diff (default: worktree<->index; --cached: index<->HEAD).
- The names --cached and --staged actually capture this well -- they
-basically say "the default is worktree changes, and --cached/--staged
-diffs cached/staged changes instead" -- but the name "--index-only"
-does not.]
+The --cached form defaults to HEAD only because --cached mode is about
+comparing the index against a tree-ish (think about "diff --cached HEAD^").
 
--Miles
+The same thing for --index-only.  The moment you said "compare the index
+with...", there are only two other things to compare it against and that
+is the only reason why you do not have to write HEAD.
 
---=20
-Cat is power. =A0Cat is peace.
+This is a tangent, but the natural patch-flow is for you to prepare your
+change in the working tree, add the changes to the index, and then build a
+tree out of the index into a commit.
+
+That is why "diff" shows changes in the working tree relative to what is
+in the index, "diff --cached [<tree-ish>]" shows changes in the index
+relative to the tree-ish (defaulting to HEAD).  The natural flow of the
+development determines the natural direction of comparison between these
+entities.
+
+It does not make sense to compare in the other direction (i.e. how is the
+index different compared to the working tree) _unless_ you are
+contemplating to revert some changes you have made, and -R is there
+exactly for that reason (here I am responding to the idea some people had
+in an earlier incarnation of this thread of saying "diff INDEX HEAD",
+"diff HEAD WORKTREE" etc., using pseudo <ref> syntax, and explaining why
+it is not such a good idea---and why this is a tangent).
