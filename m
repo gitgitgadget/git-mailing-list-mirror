@@ -1,72 +1,115 @@
-From: Michael J Gruber <drmicha@warpmail.net>
-Subject: Re: [PATCH 6/7] commit,status: describe -u likewise
-Date: Tue, 15 Feb 2011 07:53:07 +0100
-Message-ID: <4D5A22D3.2080605@warpmail.net>
-References: <cover.1297695910.git.git@drmicha.warpmail.net> <959cfaee441413401ddb7ad7fd29f4a98f668bec.1297695910.git.git@drmicha.warpmail.net> <7vei7as82n.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: [PATCH] command-list.txt: mark git-archive plumbing
+Date: Tue, 15 Feb 2011 14:04:26 +0700
+Message-ID: <20110215070426.GA6118@duynguyen-vnpc>
+References: <4D4EF7E4.7050303@hartwork.org>
+ <vpq1v3kopn3.fsf@bauges.imag.fr>
+ <7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
+ <20110207055314.GA5511@sigill.intra.peff.net>
+ <7vhbcguytf.fsf@alter.siamese.dyndns.org>
+ <20110207195035.GA13461@sigill.intra.peff.net>
+ <20110208100518.GA9505@neumann>
+ <20110209210312.GB2083@sigill.intra.peff.net>
+ <7vipwsomq8.fsf@alter.siamese.dyndns.org>
+ <20110209234621.GA12575@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 07:56:19 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 15 08:05:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpEpe-0001vh-6z
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 07:56:18 +0100
+	id 1PpEyR-0005rZ-UZ
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 08:05:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023Ab1BOG4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 01:56:13 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:51130 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751681Ab1BOG4M (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 01:56:12 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C202E206DA;
-	Tue, 15 Feb 2011 01:56:11 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 15 Feb 2011 01:56:11 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=EU25OyuCKIDVF+JpSMgMoAMeGvU=; b=WOKoGgExuQtjAanOZGaWU9w8ChQf63Al5/XGcCT+I2i6izRAd8QgLcVWw/C8dr7ZwoIvPv8OEb8Yh3BjafYJYm2Ddb4B2ibMaJ/lm7NsB7AOK9CIHcDQ7UTiFYiDlJqHigEOUT+JWVa4OpZ4jMJMwG9BWyvtV+E3GjukSfiszt8=
-X-Sasl-enc: 0KlTsTApRZr0mBiV5ZDwV6jh01sCbYOpxSniPk46NYze 1297752971
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 566A6402327;
-	Tue, 15 Feb 2011 01:56:11 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <7vei7as82n.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.2
+	id S1752041Ab1BOHFT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Feb 2011 02:05:19 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:46860 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751931Ab1BOHFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 02:05:17 -0500
+Received: by ywo7 with SMTP id 7so2418184ywo.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 23:05:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ETjrVJKJ/X94bQqimZOR8CrWITmmPheExR2ZtDwxXlU=;
+        b=obr07PhtnkvC5ynL/GBOmRUi8zB9XCBtwSZmW0jtbb8RNG9pefl8H07lHS2j8I8Jep
+         nmGSf11XIXBrydhG1LoLe1bVYrA3j8vQNfcfn+q+rzz/BMsMkfoE2MGkNh9ouPuhLM8a
+         Bf/O8PDbJqvq1JX7bO2dlrObqwV3jtTj8+OEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=UWgepqIAjGPGBE2uxcgXrm22H6TDt9hkCA/wkLnKKMDsRegeq7FP05IqgYRGzusJbc
+         ABISB7hsEVkNnaWMn6B9ACtau0nA4s9fRTbyt9oRXpaawW7PFMvPsu3nAlDdjJxm1ZXI
+         DMOzcAeQwGJfo+2Q4QLYDivlfeELMqGmSRRbI=
+Received: by 10.90.90.18 with SMTP id n18mr5708438agb.101.1297753516223;
+        Mon, 14 Feb 2011 23:05:16 -0800 (PST)
+Received: from pclouds@gmail.com ([118.69.34.31])
+        by mx.google.com with ESMTPS id f10sm4627099anh.25.2011.02.14.23.05.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 14 Feb 2011 23:05:15 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 15 Feb 2011 14:04:26 +0700
+Content-Disposition: inline
+In-Reply-To: <20110209234621.GA12575@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166817>
 
-Junio C Hamano venit, vidit, dixit 14.02.2011 20:57:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> They differ by one character only. Being exactly equal should help
->> translations.
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 8a534de..ef2114b 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -150,7 +150,7 @@ static struct option builtin_commit_options[] = {
->> ...
->> -	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal, no (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
->> +	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal, no. (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
-> 
-> Makes sense; thanks.
-> 
-> I however wonder if we have an opportunity for even more unifying these
-> two arrays, typing the same thing only once.
-> 
+The command's official status is porcelain. However by the nature of th=
+e
+command it is frequently used in scripting and therefore its interface
+must be strictly backward compatible.
 
-I was surprised we have two arrays at all, "status" being "commit
---dry-run". I'll check whether we can remove redundancy without too much
-effort.
+Mark it plumbing to make it clear.
 
-Michael
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+  On Wed, Feb 09, 2011 at 06:46:21PM -0500, Jeff King wrote:
+  > Obviously add and grep are the two that people have talked about. T=
+he
+  > archive behavior surprised me, and I would think it should be full-=
+tree
+  > by default. But it is sort of plumbing-ish, in that people have pro=
+bably
+  > scripted around and people _don't_ tend to create archives a lot. S=
+o it
+  > may fall into the same category as ls-files/ls-tree.
+ =20
+  Perhaps a patch like this for the record?
+
+ command-list.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/command-list.txt b/command-list.txt
+index 95bf18c..7888121 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -5,7 +5,7 @@ git-am                                  mainporcelain
+ git-annotate                            ancillaryinterrogators
+ git-apply                               plumbingmanipulators
+ git-archimport                          foreignscminterface
+-git-archive                             mainporcelain
++git-archive                             mainporcelain plumbinginterrog=
+ators
+ git-bisect                              mainporcelain common
+ git-blame                               ancillaryinterrogators
+ git-branch                              mainporcelain common
+--=20
+1.7.3.1.256.g2539c.dirty
