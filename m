@@ -1,74 +1,69 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFC/PATCH 0/2] CHERRY_HEAD
-Date: Tue, 15 Feb 2011 17:13:30 -0500
-Message-ID: <AANLkTin-9g9Ux=_oKBMuB+Yp-bOtBCTjqMWU7ENctXdM@mail.gmail.com>
-References: <1297805034-3512-1-git-send-email-jaysoffian@gmail.com>
- <AANLkTik2NM+mxKgZy_9dCwydz+An4sFM_a4U9mdrJBq3@mail.gmail.com> <7vk4h1lzjj.fsf@alter.siamese.dyndns.org>
+Subject: Re: [RFC/PATCH 2/2] Teach commit to handle CHERRY_HEAD automatically
+Date: Tue, 15 Feb 2011 17:16:28 -0500
+Message-ID: <AANLkTim63v+jh1KROgVwwEyBDjVdge7MOq+DUnpw0c-e@mail.gmail.com>
+References: <1297805034-3512-1-git-send-email-jaysoffian@gmail.com> <1297805034-3512-3-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 23:14:12 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 15 23:17:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpT9s-0006eL-Mh
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 23:14:09 +0100
+	id 1PpTCj-0008Vu-JL
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 23:17:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756194Ab1BOWOD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Feb 2011 17:14:03 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51801 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755865Ab1BOWOB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 17:14:01 -0500
-Received: by iwn9 with SMTP id 9so658111iwn.19
-        for <git@vger.kernel.org>; Tue, 15 Feb 2011 14:14:00 -0800 (PST)
+	id S1756229Ab1BOWRA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Feb 2011 17:17:00 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42300 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756206Ab1BOWQ7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 17:16:59 -0500
+Received: by iyj8 with SMTP id 8so556344iyj.19
+        for <git@vger.kernel.org>; Tue, 15 Feb 2011 14:16:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=bzcFkbVEWZGRJBSP9TwCJVh8SKheTSTye6U5WHlMLfw=;
-        b=UeQYxT2IxNRr/sJhnu53/NTv7xpUZ+FI8WUk9GDi2037lKrbDjKQlBp39l/5FVaF9U
-         uC7UuOF6ErF799AIdqwRZUtlVvKUT/L7WAbOFhxOiWbXqC3tGhaxJ7MkiTY+pGF9s805
-         gYk8MfDF0WCJmQVJtDsgjcmn2uvh+tl4XBYAc=
+         :message-id:subject:to:content-type:content-transfer-encoding;
+        bh=rgCs120KHsQRZe4H0l9jHEFPRBJza8JJEvXVPJ7ct3c=;
+        b=VkzXC9HPFA1EIYg8/HI5xaFf0Y4ppjqzUInnTxUcyM1EsP3F0mfOMSJ6+2DFZe98QB
+         biN3jZp0omRaRjQINZhTrlSJCFMj9dHWupRSlGv6ByAjCsO+Nlk3EvEQQ8VpZPm4617r
+         I2dKCUvquF9/lbkSAqsWhXyvb7YC1axTrpNCg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=vwDQcHi0f1B60dPFFCsrkLlE6XIufdyuJFyGOqEUW+3BfCRcx+LDHmFejh0nYxc2Sp
-         2wAmJMLnmRhwVf1oCPpNoJ7qN771KijqKs3oYzhEuAgy0FLaPPZ8qAY14t9uuVFkUrqr
-         dhJdsO5R1Brq/VQie5URd1f3ZBGQM3WA1gS6k=
-Received: by 10.42.230.74 with SMTP id jl10mr7478399icb.177.1297808040658;
- Tue, 15 Feb 2011 14:14:00 -0800 (PST)
-Received: by 10.231.40.2 with HTTP; Tue, 15 Feb 2011 14:13:30 -0800 (PST)
-In-Reply-To: <7vk4h1lzjj.fsf@alter.siamese.dyndns.org>
+         :content-type:content-transfer-encoding;
+        b=u6AFU8Go57Ov8HlRkzxRr15Mxyj4Xp7h27MoxTlJDSayM7KGUoutcCiKkI1/FdgFXk
+         JVwg3uf6yrZ9bKPOW7URLMWvFJ1cuDggXutSU8qzRjooPrvBINEZNTef74nSJaM36bXO
+         SQPfygICJcJ2rU+GLdDsSGueWZypKdhlsOIvw=
+Received: by 10.42.218.66 with SMTP id hp2mr7481200icb.244.1297808218867; Tue,
+ 15 Feb 2011 14:16:58 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Tue, 15 Feb 2011 14:16:28 -0800 (PST)
+In-Reply-To: <1297805034-3512-3-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166887>
 
-On Tue, Feb 15, 2011 at 5:10 PM, Junio C Hamano <gitster@pobox.com> wro=
+On Tue, Feb 15, 2011 at 4:23 PM, Jay Soffian <jaysoffian@gmail.com> wro=
 te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -284,11 +284,10 @@ static void print_advice(void)
 >
->> I've read this over, haven't run it, but I really like the idea. It
->> sucks that you have to save away the commit sha1 somwhere after a
->> failed cherry-pick to use it again. It should just behave like `git
->> rebase --continue`, which this implements.
->
-> I don't understand. =C2=A0What do you think rebase does to be able to=
- continue?
-> Doesn't it have to save the commit object name away somewhere?
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0advise("after resolving the conflicts, mar=
+k the corrected paths");
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0advise("with 'git add <paths>' or 'git rm =
+<paths>'");
+> + =C2=A0 =C2=A0 =C2=A0 advice("and commit the result with 'git commit=
+'");
 
-I took it to mean that the behavior after a conflict should be 'add'
-followed by 'cherry-pick --continue', not 'add' followed by 'commit'.
-Not that I disagree, but that's a lot more work, see my reply to =C3=86=
-var
-just before this.
+Obvious typo, I amended it but apparently ran format-patch before the
+amend. Assuming the series is otherwise okay it'll be fixed in the
+re-roll with tests and SoB.
 
 j.
