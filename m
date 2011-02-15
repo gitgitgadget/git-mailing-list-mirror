@@ -1,146 +1,69 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
-Date: Tue, 15 Feb 2011 16:06:20 +0100
-Message-ID: <201102151606.21040.johan@herland.net>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <201102141018.46527.johan@herland.net> <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: configuring cherry-pick to always use -x?
+Date: Tue, 15 Feb 2011 11:16:03 -0500
+Message-ID: <AANLkTinMBBKwtkQKgyqaN+oH4-k1Ks_6SbnU7thzuuYs@mail.gmail.com>
+References: <4D596435.9020605@gmail.com> <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com>
+ <4D59A39C.9090402@gmail.com> <4D5A401B.1050103@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 15 16:09:59 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Adam Monsen <haircut@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Feb 15 17:16:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpMXO-0006cb-9L
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 16:09:58 +0100
+	id 1PpNZw-0004w9-Rj
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 17:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755083Ab1BOPJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 10:09:54 -0500
-Received: from smtp.opera.com ([213.236.208.81]:33078 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752027Ab1BOPJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 10:09:52 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p1FF6LUE013303
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 15 Feb 2011 15:06:21 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752276Ab1BOQQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 11:16:35 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:42191 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751064Ab1BOQQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 11:16:34 -0500
+Received: by gxk9 with SMTP id 9so147371gxk.19
+        for <git@vger.kernel.org>; Tue, 15 Feb 2011 08:16:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=8/iXULGeqrgjUHShB+RJjpaAiRZvdJq5HEieJpTA0DA=;
+        b=B5Nr9dJ8ibZg8ivs3N5d2mgDoSLdLnDqqaVUfZa5qVZuuknUDX641e02k/IhHihe1c
+         ExGJx44qFyb8jm3w8KfE6pOsygJeon37yf9rD+vImGAVuSATemYrfjrIKOW9GyiVJHzi
+         TrDYAcD9+rJX9yjsZC/Iiu2SVEl4Wv6ao5jY0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Sqrm4ZB6pyGYgCMWx3DOfPp3gKbPsOtN4lIQvO/lwHHywj99k5K4vEL/jgiiwCT3pv
+         1/lREJO244QxTS4pQzmZGm+mDUdOZnKYQIcnuR75hpUgMwUjQiKpSzL1IuQIfefXYVgQ
+         JyWMQyMmESvQdcAQOns/bX7B90cDsqRRd4ISE=
+Received: by 10.42.218.66 with SMTP id hp2mr6970095icb.244.1297786593589; Tue,
+ 15 Feb 2011 08:16:33 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Tue, 15 Feb 2011 08:16:03 -0800 (PST)
+In-Reply-To: <4D5A401B.1050103@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166856>
 
-On Monday 14 February 2011, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > So if nobody disagree, I would have no problem with dropping the
-> > leading "~" from the refspec, thus disabling auto-following
-> > (tracking all tags explicitly instead).
->
-> I am not sure what you mean by this.  I think we agree that it would
-> be Ok if you cannot add "~" in front to cause automatic following
-> when tracking tags in separate namespaces using
-> "refs/tags/*:refs/remotes/origin/tags/*".
->
-> But are you saying:
->
->  (1) There is no other change than that; or
->
->  (2) Even when not using such a refspec i.e. using the traditional
-> "tags live in a single global namespace", automatic following feature
-> will be disabled;
->
-> I would be moderately unhappy if the latter.
+On Tue, Feb 15, 2011 at 3:58 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> - If you do want them on the same branch "f-release", you probably know
+> beforehand which commits you don't want on master. You can fake-merge
+> these ("merge -Xours") to master and merge the others, which is somewhat
+> ugly but still better than cherry-picking everything. In some sense this
+> is "manual rerere" whose results are shared (pushed) easily.(*)
 
-No, I'm saying the former.
+I personally prefer cherry-pick, as the fake merge clutters mainline's
+history with the superseded commits.
 
-For the foreseeable future (i.e. long after v1.8.0 is out) we will still 
-have to understand and support the traditional "tags are implicitly 
-auto-followed" and "tags live in a single global namespace" concepts 
-(aka. (a) below). For new-style remotes I propose that all refspecs be 
-explicit, and that auto-follow is disabled (aka. (b) below).
+It would be interesting to have a history simplification that given a
+merge M of parents A and B, ignored commits $(merge-base A B)..B where
+M is TREESAME to A. Hmm, that's effectively "git rev-list ." isn't it?
 
-But if you try to specify a new-style remote with all tags in a single 
-global namespace, you will NOT get tag autofollowing (aka. (c) below)
-
-
-(a): The current default config, also supported for the foreseeable 
-future (tag refspec is implicit, auto-following is enabled):
-
-    [remote "origin"]
-        url = ...
-        fetch = +refs/heads/*:refs/remotes/origin/*
-
-(b): The proposed default config, using separate per-remote namespaces 
-for tags (tag refspec is explicit, auto-following is disabled):
-
-    [remote "origin"]
-        url = ...
-        fetch = +refs/heads/*:refs/remotes/origin/heads/*
-        fetch = +refs/tags/*:refs/remotes/origin/tags/*
-
-(c): A customized version of the proposed config, using a single global 
-namespace for tags (tag refspec is explicit, auto-following is 
-disabled):
-
-    [remote "origin"]
-        url = ...
-        fetch = +refs/heads/*:refs/remotes/origin/(heads/)*
-        fetch = refs/tags/*:refs/tags/*
-
-
-(Note that if we cannot reliably detect the difference between old-style 
-(implicit) and new-style (explicit) remotes, we will likely have to add 
-a boolean flag, e.g. "remote.origin.implicitTagFollowing".)
-
-
-> > ... However, what I've seen at $dayjob is
-> > that more inexperienced users will often push right after
-> > committing, and at that time they're still very much in the
-> > "working-on-one-branch" state of mind (as opposed to the
-> > "administering-multiple-branches" state of mind),...
->
-> Then "current" mode is a good setting for them, I would presume.
-
-Arguably in some workflows, 'tracking' may be a more suitable default 
-(i.e. safer for newbies) than 'current', but in practice this shouldn't 
-matter much (local branch names usually correspond to remote branch 
-names). Also, 'tracking' is more complicated when the branch originates 
-locally, and must be created on the server ("git push -u origin 
-<branch>" vs. "git push"). So I agree that 'current' is the best 
-default.
-
-
-...Johan
-
-
-Offtopic PS: Given that we're leaning towards using 'tracking' to 
-describe the relationship between remote-tracking branches 
-(refs/remotes/*) and remote branches, and 'upstream' to describe the 
-relationship between a local branch and the remote branch it 
-follows/merges (on 'git pull'), wouldn't
-
-  push.default == "upstream"
-
-be more descriptive than
-
-  push.default == "tracking"
-
-?
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+j.
