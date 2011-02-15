@@ -1,205 +1,83 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: give more advice when detaching HEAD
-Date: Tue, 15 Feb 2011 19:48:33 +0000
-Message-ID: <87pqqtaxke.fsf@fox.patthoyts.tk>
-References: <20110212070538.GA2459@sigill.intra.peff.net>
-	<20110213123151.GA31375@book.hvoigt.net>
-	<20110215063903.GA28634@sigill.intra.peff.net>
-	<20110215191620.GA56397@book.hvoigt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Corrupted git repository?
+Date: Tue, 15 Feb 2011 12:00:50 -0800
+Message-ID: <7vk4h1nk3x.fsf@alter.siamese.dyndns.org>
+References: <AANLkTimMon7ztbyT26YhotiZ=jd=QpNTvOkPCKwHg+e_@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org, Pat Thoyts <patthoyts@googlemail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 15 20:49:07 2011
+Cc: git@vger.kernel.org
+To: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 15 21:01:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpQtW-00008Y-8L
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 20:49:06 +0100
+	id 1PpR5C-0008Mf-Ke
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 21:01:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756152Ab1BOTsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 14:48:52 -0500
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:46353 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755908Ab1BOTsv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 14:48:51 -0500
-Received: from [172.23.170.142] (helo=anti-virus02-09)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1PpQtD-0005tH-Tp; Tue, 15 Feb 2011 19:48:48 +0000
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by asmtp-out2.blueyonder.co.uk with esmtpa (Exim 4.72)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1PpQt0-0007JJ-CS; Tue, 15 Feb 2011 19:48:34 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 8600823984; Tue, 15 Feb 2011 19:48:33 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <20110215191620.GA56397@book.hvoigt.net> (Heiko Voigt's message
-	of "Tue, 15 Feb 2011 20:16:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1755424Ab1BOUBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 15:01:03 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65502 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755353Ab1BOUBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 15:01:02 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1F6D037F5;
+	Tue, 15 Feb 2011 15:02:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KveIoNAzyewVmKYYv62YMpblN5s=; b=GakzXV
+	8Ifsj7IsjQcs0J2W4QfdaRxdsBmswJ0Y7pPTTnnH+6UGD0P6X9y3N6rR2dwURWBF
+	eI7MkRNZ6+89WCkpv9O8Z/432gaMiqEWTHtsxJmOZlQ/r/Hs80dGqQCvEQg/YYXP
+	sH41ImE7vgrqf+6gtFIWIryFM4tV0Xi/7IOS0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AkkItFb/BJaUOjSLSD5lW2AT8xnQb4HM
+	WwZoAoaZFrNQE3JYnkj0LOzrQ28sU1/1UFGS2NzC1gk7KMQ4eVs6/NoEIvoE0UiZ
+	l/GQrc2X8Vl1xhqMoRp0DAN+pxzeLr24Z1ymS1vujqQY51T8DBOpkwz7mdm1fkx+
+	WByz5CeGzS0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F000637EF;
+	Tue, 15 Feb 2011 15:02:03 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E1AE537E9; Tue, 15 Feb 2011
+ 15:01:58 -0500 (EST)
+In-Reply-To: <AANLkTimMon7ztbyT26YhotiZ=jd=QpNTvOkPCKwHg+e_@mail.gmail.com>
+ (Piotr Krukowiecki's message of "Tue\, 15 Feb 2011 15\:57\:20 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 75468E7A-393E-11E0-81E7-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166871>
 
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Date: Tue, 15 Feb 2011 19:43:54 +0000
-Subject: [PATCH] git-gui: warn when trying to commit on a detached head
+Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com> writes:
 
-The commandline is already warning when checking out a detached head.
-Since the only thing thats potentially dangerous is to create commits
-on a detached head lets warn in case the user is about to do that.
+> it looks like my git repository got corrupted today.
+>
+> git status shows no changes,
+> git cherry-pick says "error: Your local changes to the following files
+> would be overwritten by merge:",
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
+with some paths, or without naming any path?
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
->Hi,
->
->On Tue, Feb 15, 2011 at 01:39:03AM -0500, Jeff King wrote:
->> On Sun, Feb 13, 2011 at 01:31:52PM +0100, Heiko Voigt wrote:
->> 
->> > On Sat, Feb 12, 2011 at 02:05:38AM -0500, Jeff King wrote:
->> > >   1. Give some indication or warning during commit that you're in a
->> > >      detached state. The CLI template says "You are not on any branch"
->> > >      when editing the commit message, and mentions "detached HEAD" as
->> > >      the branch in the post-commit summary. As far as I can tell,
->> > >      git-gui says nothing at all.
->> > 
->> > How about something like this:
->> > [...]
->> > Subject: [PATCH] git-gui: warn when trying to commit on a detached head
->> > 
->> > The commandline is already warning when checking out a detached head.
->> > Since the only thing thats potentially dangerous is to create commits
->> > on a detached head lets warn in case the user is about to do that.
->> 
->> It seems a little heavy-handed to have a dialog pop up for each commit.
->> It's not actually dangerous to create a commit on a detached HEAD; it's
->> just dangerous to _leave_ without referencing your new commits.
->
->Hmm, how about adding a checkbox:
->
->  [ ] Do not ask again
->
->In my experience anything other than a popup will be overseen so I would
->suggest doing it at least once to prepare the user for the possible
->consequences.
->
->IMO such a message is a good thing for the GUI regardless whether we
->implement the leaving detached HEAD state warning. First I think a
->typical GUI user does not commit on a detached head that often since
->there is currently no way to use these commits from the GUI (e.g.
->format-patch, rebase, ...). Second because a detached head is very
->practical for testing work on a remote branch the message box would
->remind most users to switch to their development branch first. If they
->only get that message after a series of commits it might become a hassle
->for them to get these commits onto another branch (remember no
->format-patch or rebase currently).
->
->> So I think for making commits, something informational that doesn't
->> require a click-through would be the more appropriate level (similar to
->> what the CLI does; it just mentions it in the commit template). I guess
->> there isn't a commit template in the same way for git gui; instead, it
->> is always showing you the current state. And indeed, it does switch from
->> "Current Branch: master" to "Current Branch: HEAD" when you are on a
->> detached head. Maybe we should beef that up a bit to "You are not on any
->> branch." or something that is more self-explanatory. I dunno. I am just
->> guessing here about what users would want.
->> 
->> I do think a pop-up is appropriate when you try to check something else
->> out, and commits you have made on the detached HEAD are about to become
->> unreferenced. But this is something even the CLI doesn't do, so it would
->> make sense to see how the check is implemented there first before doing
->> anything in git-gui.
->
->From what I read in this thread it currently seems to be not so easy to
->precisely find out whether some commit is referenced. (If we care about
->stuff outside of remotes, heads and tags). But maybe we do not need
->that for the GUI.
->
->If a commit is referenced from non typical refs the worst we do is issue
->a false warning. Meaning we warn the user even though the commit is
->referenced. For a GUI I think being a little more restrictive is the
->right thing to do since it should guide the user much more into a safe
->workflow. If he wants to do special things than there still is the CLI
->to fall back on. And its just a warning so we are not preventing
->anything.
->
->Now it depends on what we would want for the CLI if we are going to
->implement a thorough check over everything in refs/ than there is no
->reason for not applying the same thing to git-gui. In case the current
->behavior is deemed sufficient we should go with the check mention
->
->Just to give you a practical example:
->
->At $dayjob we are currently even more restrictive and completely forbid
->commits on a detached head by a pre-commit hook. This was mainly done
->due to the lack of warnings but I do not recall a single incident where a
->user actually complained about this restriction (~90% GUI users).
->
->Cheers Heiko
+> git fsck starts checking objects but hangs on one "Checking tree"
 
-My feeling is that the user should be making a branch to hold his
-commits. So I suggest adding some text to suggest that a branch be
-created and keep annoying the user every time they commit to a detached
-head. This errs on the side of not dropping commits into the reflog
-which seems the most useful strategy to me.
+I take it that you are talking about "git fsck -v".  Is it really "hangs",
+or just "takes a long time"?  You mentioned that a clone is expensive so I
+am guessing that your repository has some huge trees or objects in
+general.
 
-So here is a modded version of Heiko's patch.
+The details you gave in your message are a bit sketchy to give you an
+exact diagnosis, but if "cherry-pick" stops with the above message and
+tells you the names of files that are not tracked in your current branch,
+I don't see there is anything unusual going on.  You have these files with
+random contents that git does not know about, and git is refusing to
+lose their contents by overwriting them during the cherry-pick.
 
- git-gui.sh     |    1 +
- lib/commit.tcl |   15 +++++++++++++++
- 2 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index d96df63..9f2e9ae 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -835,6 +835,7 @@ set default_config(gui.fontdiff) [font configure font_diff]
- # TODO: this option should be added to the git-config documentation
- set default_config(gui.maxfilesdisplayed) 5000
- set default_config(gui.usettk) 1
-+set default_config(gui.warndetachedcommit) 1
- set font_descs {
- 	{fontui   font_ui   {mc "Main Font"}}
- 	{fontdiff font_diff {mc "Diff/Console Font"}}
-diff --git a/lib/commit.tcl b/lib/commit.tcl
-index 5ce4687..372bed9 100644
---- a/lib/commit.tcl
-+++ b/lib/commit.tcl
-@@ -260,8 +260,23 @@ proc commit_prehook_wait {fd_ph curHEAD msg_p} {
- }
- 
- proc commit_commitmsg {curHEAD msg_p} {
-+	global is_detached repo_config
- 	global pch_error
- 
-+	if {$is_detached && $repo_config(gui.warndetachedcommit)} {
-+		set msg [mc "You are about to commit on a detached head.\
-+This is a potentially dangerous thing to do because if you switch\
-+to another branch you will loose your changes and it can be difficult\
-+to retrieve them later from the reflog. You should probably cancel this\
-+commit and create a new branch to continue.\n\
-+\n\
-+Do you really want to proceed with your commit?"]
-+		if {[ask_popup $msg] ne yes} {
-+			unlock_index
-+			return
-+		}
-+	}
-+
- 	# -- Run the commit-msg hook.
- 	#
- 	set fd_ph [githook_read commit-msg $msg_p]
--- 
-1.7.4.1
+After making sure that they are indeed untracked paths, if you think you
+can remove them (or move them away), first do so and retry cherry-pick,
+and then everything should be Ok.
