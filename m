@@ -1,64 +1,60 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: How to safely remove a blob
-Date: Tue, 15 Feb 2011 09:42:03 +0100
-Message-ID: <AANLkTi=N15_2aDbw=x_m6rPWYdgwcBkn0LvmtZVt2W48@mail.gmail.com>
+Date: Tue, 15 Feb 2011 09:40:59 +0100
+Message-ID: <4D5A3C1B.2030600@drmicha.warpmail.net>
 References: <4D5A358F.2050906@ilt.fraunhofer.de>
-	<AANLkTinrV3hKEva5qnaLniP+VoO2trrTVsWcc6YoBQ=t@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Rolf Wester <rolf.wester@ilt.fraunhofer.de>
-X-From: git-owner@vger.kernel.org Tue Feb 15 09:42:17 2011
+X-From: git-owner@vger.kernel.org Tue Feb 15 09:44:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpGU8-0002pa-7w
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 09:42:12 +0100
+	id 1PpGW3-0003yh-J3
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Feb 2011 09:44:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754538Ab1BOImH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 03:42:07 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62306 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752020Ab1BOImF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 03:42:05 -0500
-Received: by bwz15 with SMTP id 15so214257bwz.19
-        for <git@vger.kernel.org>; Tue, 15 Feb 2011 00:42:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=JrqFE7sCUeWIDStSV82GM369lHyLlP3nBlM2PSDRabQ=;
-        b=AMQmFNeym+++J5JO3CwHR6aYcVbE5Q0+tDGIGmxxkkZnvI4ydK9iBMI54Kmv9yYv0i
-         eQhQKG75pshNp1sDomhP2ucaMILv3i7BZNZ2iktKNDR+gFQi/SBR6HATEaFHlT3pwRKt
-         gNaqIZ+R2ozK9W5IbnfXxvCzk+VeOq/7WercY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=sEc3KahSJMjoOG7gt8fnrxK7YmmOI+zljPQ7xyBajSxoYo/TJuO4H7pSd5GCeY0853
-         f2EsXnZ/ZcKjw10u3oJXLheE+dCJiaG2kmyzyqyhMO65K6iQTpu1O+Pj/hUB+3kdXz0f
-         4ddYQQOf5/QJYukG+kTXuRwqErbTxoNSV+XRA=
-Received: by 10.204.70.142 with SMTP id d14mr4327723bkj.13.1297759323850; Tue,
- 15 Feb 2011 00:42:03 -0800 (PST)
-Received: by 10.204.102.14 with HTTP; Tue, 15 Feb 2011 00:42:03 -0800 (PST)
-In-Reply-To: <AANLkTinrV3hKEva5qnaLniP+VoO2trrTVsWcc6YoBQ=t@mail.gmail.com>
+	id S1752090Ab1BOIoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 03:44:05 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53872 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751268Ab1BOIoE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 03:44:04 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 456E3207DE;
+	Tue, 15 Feb 2011 03:44:04 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 15 Feb 2011 03:44:04 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=czzyV093vms2QrJoj+bIxXPxTy4=; b=tujPmEbagLB+NrnEwHla8dYIwvvWwR9MTtvs1xfOIuZ12wRxYcaxE7LOQXYvlDh9oUiN6WgKAIs/MRjOIeWeiTz1E8V+XMryNXR9+me8X4foexjwZnVKpVNxKyi2SYhogIbY7FsvZV1QzSTXV3CmXlrKAjbuoB4ryxApuYLMJ2Q=
+X-Sasl-enc: zs8xNCLwec13YxNyIhAnam4QiRo2vDl0sWgBI4siig9M 1297759443
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4C21644333B;
+	Tue, 15 Feb 2011 03:44:03 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <4D5A358F.2050906@ilt.fraunhofer.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166827>
 
-On Tue, Feb 15, 2011 at 09:40, Alex Riesen <raa.lkml@gmail.com> wrote:
-> On Tue, Feb 15, 2011 at 09:13, Rolf Wester
-> <rolf.wester@ilt.fraunhofer.de> wrote:
->> in one of my git repos I found an 102 MB object that probably came in there
->> more or less occasionally.
->> Its a blob and I would like to remove it safely. I tried to figure out how
->> to do it but I was not very successful.
->
-> Take a look at "git filter-branch". There is even an example which
-> does exactly this (search for "git filter-branch --tree-filter").
+Rolf Wester venit, vidit, dixit 15.02.2011 09:13:
+> Hello,
+> 
+> in one of my git repos I found an 102 MB object that probably came in there more or less occasionally.
+> Its a blob and I would like to remove it safely. I tried to figure out how to do it but I was
+> not very successful. I guess simply deleting the file could corrupt my repo or at least the clones of
+> that repo.
+> 
+> I would be very appreciative for any help.
 
-... search in the manpage of filter-branch. Sorry.
+If nothing references that blob then it will go away eventually. The
+last section of git-filter-branch's manpage (checklist for shrinking a
+repo) details the steps you can take to get rid of it now. (You should
+be already in the situation after applying filter-branch and removing
+refs/original/*.) If the blob still persists then it is referenced.
+
+Michael
