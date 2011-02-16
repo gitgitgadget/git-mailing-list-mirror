@@ -1,64 +1,73 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Corrupted git repository?
-Date: Wed, 16 Feb 2011 19:54:26 +0100
-Message-ID: <201102161954.26766.j6t@kdbg.org>
-References: <AANLkTimMon7ztbyT26YhotiZ=jd=QpNTvOkPCKwHg+e_@mail.gmail.com> <7vk4h1nk3x.fsf@alter.siamese.dyndns.org> <AANLkTimZgpWUAncLgO=y5CvKsYGdYWTHNUzncjrC5UO6@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] smart-http: Don't use Expect: 100-Continue
+Date: Wed, 16 Feb 2011 10:54:34 -0800
+Message-ID: <7vlj1fkdxx.fsf@alter.siamese.dyndns.org>
+References: <1297789044-17978-1-git-send-email-spearce@spearce.org>
+ <7vr5b9nkzb.fsf@alter.siamese.dyndns.org>
+ <AANLkTikVp0xC3OciJ7eN=P4+5_Pu=KPeO5X_+b_Nv30N@mail.gmail.com>
+ <alpine.DEB.2.00.1102160836360.20870@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 19:54:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Wed Feb 16 19:54:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpmWK-0008Sh-GH
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 19:54:36 +0100
+	id 1PpmWc-0000EC-Va
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 19:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537Ab1BPSyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 13:54:32 -0500
-Received: from bsmtp5.bon.at ([195.3.86.187]:22722 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750857Ab1BPSya (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 13:54:30 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 2A969A7EB5;
-	Wed, 16 Feb 2011 19:54:25 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id ED25819F5AA;
-	Wed, 16 Feb 2011 19:54:26 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <AANLkTimZgpWUAncLgO=y5CvKsYGdYWTHNUzncjrC5UO6@mail.gmail.com>
-Content-Disposition: inline
+	id S1753670Ab1BPSyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 13:54:50 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54025 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752969Ab1BPSyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 13:54:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 91903302E;
+	Wed, 16 Feb 2011 13:55:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kXqr+A8TaTLwHKiTGN3F3UOI3lU=; b=OCf7ls
+	Xsb8+0AyT2Xc6nnh6ybINyTgipy8dy+05+61FPSh3DiGA6L+d38HwYWHXV32nYie
+	iu36crUeWEFDEs+pZ1CnEil8vPWTYVtc8Yg6M2itJ3iWgZFhm2pIcNzbLugknH91
+	MHQQG/3GqXJMErAhEgXOqOmg3ulBLatZZm26s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WUbrCZZTs1VCPVwsHFFiTJ+Qdw9wIgr4
+	h112KFePkK/bW5FQWwWLh8YNKbNXL5aX6M5Zx7xRbKu0YIMwgQGqCFDorV/nsD0K
+	mynAaxpRf758ZDR1Jd5DeNFDbXR7ygqstCep7WbdLHTT+YzaUdmgzQrfn1ZI6wET
+	K8pKcR+ksjY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4E94E3029;
+	Wed, 16 Feb 2011 13:55:50 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0896A3024; Wed, 16 Feb 2011
+ 13:55:42 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.00.1102160836360.20870@tvnag.unkk.fr> (Daniel
+ Stenberg's message of "Wed\, 16 Feb 2011 08\:38\:50 +0100 \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5F32BD96-39FE-11E0-8470-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166987>
 
-On Mittwoch, 16. Februar 2011, Piotr Krukowiecki wrote:
-> I have deleted the whole top-level directory in which the file was and run:
->
-> $ git status | grep  <<PATH>>
-> #	deleted:    <<PATH>>
->
-> $ git checkout -- <<top dir>>
->
-> $ git status
-> # On branch master
-> nothing to commit (working directory clean)
->
-> $ git cherry-pick 7d193bb0c1f14908361d9d9d5e30f0c12d5f2c2f
-> error: Your local changes to the following files would be overwritten by
-> merge: <<PATH>>
-> Please, commit your changes or stash them before you can merge.
-> Aborting
+Daniel Stenberg <daniel@haxx.se> writes:
 
-A wild guess: You are on Windows or OS/X, and the file exists in your worktree 
-with different uppercase/lowercase name? Rename the file so that its case is 
-the same as it is recorded in the repository.
+> On Tue, 15 Feb 2011, Shawn Pearce wrote:
+>> I'm surprised my build doesn't have sufficient warning flags enabled
+>> when I built this. :-(
+>
+> Those are warnings generated by the macro magic in curl's
+> typecheck-gcc.h header file, and they require gcc 4.3 or later...
 
--- Hannes
+Yes, and thanks for putting them in.  I wouldn't have caught this myself
+by a mere code inspection, as I tend to skim over patches from people with
+skills known to be above a certain threshold.
