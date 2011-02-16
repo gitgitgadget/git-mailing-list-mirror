@@ -1,67 +1,41 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1.5/2] bash: teach __git_ps1 about CHERRY_PICK_HEAD
-Date: Wed, 16 Feb 2011 14:49:23 -0800
-Message-ID: <7vpqqrh9xo.fsf@alter.siamese.dyndns.org>
-References: <1297850903-65038-1-git-send-email-jaysoffian@gmail.com>
- <1297850903-65038-3-git-send-email-jaysoffian@gmail.com>
- <20110216215541.GD2615@elie>
-Mime-Version: 1.0
+From: Liam Clarke <liam.clarke-hutchinson@adscale.co.nz>
+Subject: git merge auto-commit doesn't fire pre-commit hook
+Date: Thu, 17 Feb 2011 11:49:43 +1300
+Message-ID: <1F3B7FF9-6348-4197-A6B7-23C4DA144920@adscale.co.nz>
+Mime-Version: 1.0 (Apple Message framework v1081)
 Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 23:49:57 2011
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 16 23:59:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpqC4-00060K-2F
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 23:49:56 +0100
+	id 1PpqLP-0003qo-8m
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 23:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755434Ab1BPWtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 17:49:41 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55275 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755426Ab1BPWtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 17:49:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 511A14CC7;
-	Wed, 16 Feb 2011 17:50:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RocsjH1aNHPbIRjUIvnhp537GGU=; b=gdz87D
-	eTn3ciOo4T+tqe2luwAP46zwwT8kVQZIJY/rSwtUeQKKYdBsmkDooVujnPH+bshR
-	m3P3fzMVBWgUV5AfA7z50JhAQ93VHKGnTpitt8JRUk0SkTQPDFgDHpGHvPB4BTJ3
-	1nAQs0Cir8XBLeBuDRxZPhSUsn8/bSpsOmbCI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FftUcJyVLorVVKsvtK+Av62nKIHlaDnh
-	Ip7vC5uCjkjNjY5mnHPGOMj5TBMJvSNv1y8oyCA9gAGQRyPfeElfgmsHf5DG3qgr
-	JaYnCQ7bIJ+QzvPT/HOOsM/SGvYBb1iGL56tJPgENRTIlWekzDseIq1LWvuntTOE
-	ULM1UIxr0CM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F36EA4CC6;
-	Wed, 16 Feb 2011 17:50:40 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D21984CC0; Wed, 16 Feb 2011
- 17:50:32 -0500 (EST)
-In-Reply-To: <20110216215541.GD2615@elie> (Jonathan Nieder's message of
- "Wed\, 16 Feb 2011 15\:55\:41 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2DE5530E-3A1F-11E0-B1F2-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751556Ab1BPW7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 17:59:30 -0500
+Received: from 85.25.69.111.dynamic.snap.net.nz ([111.69.25.85]:60966 "EHLO
+	mail.toc.org.nz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751005Ab1BPW73 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 17:59:29 -0500
+X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Feb 2011 17:59:29 EST
+Received: from imac24.toc.org.nz (imac24.toc.org.nz [10.13.11.74])
+	by mail.toc.org.nz (Postfix) with ESMTP id DF2E22829688
+	for <git@vger.kernel.org>; Thu, 17 Feb 2011 11:49:43 +1300 (NZDT)
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167017>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi all, 
 
-> Hmm, it seems I don't like this "while at it". :)
+How exactly does git merge execute the commit? Does it use --no-verify at all? I've got a pre-commit hook to filter out testing data when merging into master, and if you merge with --no-commit, and then manually commit, the hook fires fine, but when merge autocommits, the hook doesn't get executed at all. Is there any other way to catch this event? I can add --no-commit to the branch.master.mergeoptions I suppose, but I don't want to add too much hassle for our Git users (if they're not checking in test data, of course).
 
-I don't either.  The series will be re-rolled so I don't have to pick this
-up myself, yes?
+Regards, 
+
+Liam Clarke
