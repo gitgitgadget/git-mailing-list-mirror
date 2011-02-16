@@ -1,78 +1,50 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push.default: Rename 'tracking' to 'upstream'
-Date: Tue, 15 Feb 2011 22:35:20 -0800
-Message-ID: <7vd3mslc5z.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102151606.21040.johan@herland.net>
- <7vipwlp3yv.fsf@alter.siamese.dyndns.org>
- <201102160154.24744.johan@herland.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [BUG] Replacing dir with submodule causes weird issues with cherry-pick
+Date: Wed, 16 Feb 2011 08:05:40 +0100
+Message-ID: <4D5B7744.7040409@viscovery.net>
+References: <22F69B3E-600C-41AC-911D-B9808A3705E6@inkling.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Feb 16 07:36:43 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Kevin Ballard <kevin@inkling.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 08:05:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ppb0E-0006Hc-Pb
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 07:36:43 +0100
+	id 1PpbST-00023q-65
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 08:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756568Ab1BPGfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 01:35:50 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37748 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756233Ab1BPGfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 01:35:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8E5EB488F;
-	Wed, 16 Feb 2011 01:36:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tVJfiLKGXjt/PQ/xe2NjkPdi1ZQ=; b=Ncht21
-	RIXAtzhyoS/WI39/RBLxMkBi7VZzo/7k0tk/mj6Sows82blcAv54fL6X0OupOWUB
-	rG0SbqmY6/E8heqTzXzwyOIenUXdyOg11gPCFMKDfzCk5w+ZMqIykmxWgJND+MxO
-	z5yBENRmlyOKqS57koVxier89xlkWgOut51ig=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EeRKfPx0YYtsEsaWJM95IBtEKzvN6c10
-	n+vkVbQdrpf1zv+/slWO4zZ2onHXJKNpi9HE5B6/hrTm3R9LTPJvWr5F9iXQAIkD
-	UFC8nr/ZJ+OeblNYr9v/gL5kFoz41o6lr5BirSQc9+N2W0NJkAQpYf+39g1/Mo3p
-	s26PRWPnqg4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F27BD488B;
-	Wed, 16 Feb 2011 01:36:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A8FFA488A; Wed, 16 Feb 2011
- 01:36:27 -0500 (EST)
-In-Reply-To: <201102160154.24744.johan@herland.net> (Johan Herland's message
- of "Wed\, 16 Feb 2011 01\:54\:24 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1BBF9A6E-3997-11E0-AD3F-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1755424Ab1BPHFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 02:05:45 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:50117 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751430Ab1BPHFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 02:05:44 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PpbSG-0004xX-TH; Wed, 16 Feb 2011 08:05:41 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 8C5691660F;
+	Wed, 16 Feb 2011 08:05:40 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <22F69B3E-600C-41AC-911D-B9808A3705E6@inkling.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166926>
 
-Johan Herland <johan@herland.net> writes:
+Am 2/16/2011 0:19, schrieb Kevin Ballard:
+> If I replace a directory in my project with a submodule, then later attempt to
+> cherry-pick a commit that predates this change (but does not touch the directory),
+> git always marks the submodule path as containing an created/deleted merge conflict.
 
-> I took the liberty of renaming the setup_push_tracking() function as
-> well, and rephrasing its error messages. Although this may be
-> considered code churn, I think it's worth keeping the function naming
-> closer to the phrasing in the documentation.
+Known breakage; t3030 tests for it. 7d82b06d talks about a file/directory
+conflict, though.
 
-I don't have any problem with that kind of internal naming clean-up,
-especially when there is no other change in flight that would interfere or
-cause conflict with it.
-
-Will hold for a few days to see if we see any reasonable objection, and
-then queue if not.  Thanks.
+-- Hannes
