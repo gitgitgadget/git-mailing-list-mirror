@@ -1,83 +1,74 @@
-From: Christian Jaeger <chrjae@gmail.com>
-Subject: Re: remote branches
-Date: Wed, 16 Feb 2011 13:00:20 -0500
-Message-ID: <AANLkTi=FYvgY-N2krTh3pdocJRXXVA5jqtBKgXj6OVEw@mail.gmail.com>
-References: <4D578B6D.9090803@inria.fr> <AANLkTi=WPAYXg1NCyO+XDw8Jk5v=QBH3nM78CEHytuVQ@mail.gmail.com>
- <20110213103156.GB4202@atjola.homenet> <7vmxlzuouj.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] push.default: Rename 'tracking' to 'upstream'
+Date: Wed, 16 Feb 2011 18:08:31 +0000
+Message-ID: <AANLkTim9zxsQVMXuuccNH-g=Ueiau=Hp8dJto2Sbw-8U@mail.gmail.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <vpqy65gs6hs.fsf@bauges.imag.fr> <alpine.DEB.2.00.1102160421300.14950@debian>
+ <201102161108.26637.jnareb@gmail.com> <vpqhbc4mg1c.fsf@bauges.imag.fr>
+ <AANLkTikq67jQnM555nHKeyk5t0Ln+Hp97WSztTaej_CW@mail.gmail.com> <7v8vxflv7p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Matthieu Imbert <matthieu.imbert@inria.fr>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 19:00:47 2011
+X-From: git-owner@vger.kernel.org Wed Feb 16 19:09:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PplgF-00012z-5c
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 19:00:47 +0100
+	id 1PploW-00079K-Hs
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 19:09:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054Ab1BPSAm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 13:00:42 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:46585 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753234Ab1BPSAl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 13:00:41 -0500
-Received: by qwa26 with SMTP id 26so1548554qwa.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 10:00:40 -0800 (PST)
+	id S1754091Ab1BPSJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 13:09:13 -0500
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:65371 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754063Ab1BPSJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 13:09:11 -0500
+Received: by yib18 with SMTP id 18so729432yib.19
+        for <git@vger.kernel.org>; Wed, 16 Feb 2011 10:09:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=nVezGQ9ya/tWWkqZ1q2C6MVsBk9H7ss+hl7995rVdoQ=;
-        b=YlaJ+qPDSrwpGoO8MDuE+B/4QITa+c972Er1vomAMlMDfmMPXF4SSWcE7pGWD+kB+O
-         ar1vkBOE871RvH1tQnU+CGtJXGOCf11qtQ6L1oieDpq8ALlttslZVYsdENI8gXimh/F/
-         A3CVe44ORi6/KUh8tUrwN46idUv4g+dI+kLUY=
+         :message-id:subject:to:cc:content-type;
+        bh=pccKmO8ArUXF0mYM50YPEMzfEMJQqTW98kP1VlFwGMQ=;
+        b=NDZOlcm6GAqdhwf1ax88b+PFXk5GSuOWkwNXDfDOTG8IZPDQ/dy8XUUv3Rl2jfc96C
+         OpnVl5Klav7jlDkOLoIEDpGVrKdL/RFcktLKVJWHPqhin7Hiiyzy2wbfNeAXzBvh0Pa1
+         KJMKVVXfadCyXE7t5hOd3AdA1u75ttJHqWNvs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=hqIr4bvQyq6nPA7WAXwr+of88bw5i1zWeenlNDFVWBBIZbS4V1W1qLQXgjezDnnKr5
-         rRumpBBOH7oItTx99ZIrZsfYi3LBmJy3iMZ9UIrGtYJ4K+l8J9sSYg/gOeoykKcZW0mE
-         SfKNxB4yGaOG2UTGtMX4FqA7qFayLs4vaiw6k=
-Received: by 10.229.235.142 with SMTP id kg14mr1056036qcb.133.1297879240403;
- Wed, 16 Feb 2011 10:00:40 -0800 (PST)
-Received: by 10.229.224.78 with HTTP; Wed, 16 Feb 2011 10:00:20 -0800 (PST)
-In-Reply-To: <7vmxlzuouj.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        b=sD71sMOd8qkV1dGeKgch95q9YLK8WgSWfKqtcg12UYZtzzeS9zcPGyHjVSBp61u2r2
+         8JamxAT0Txh/EYu6oMEcFa0pUunhnqKOT29le4MEN0O2Sc7ziqvG46Dt2F97yCmEKs7e
+         D5VbPEOEDFkeydjHg3TC0rl8vSyhXgI/FpA/8=
+Received: by 10.151.79.13 with SMTP id g13mr1140318ybl.51.1297879751172; Wed,
+ 16 Feb 2011 10:09:11 -0800 (PST)
+Received: by 10.151.158.19 with HTTP; Wed, 16 Feb 2011 10:08:31 -0800 (PST)
+In-Reply-To: <7v8vxflv7p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166982>
 
-2011/2/14 Junio C Hamano <gitster@pobox.com>:
-> The description in config.txt for --tags also cites another purpose,
-> namely, to fetch tags otherwise totally unrelated to the branches you=
- are
-> following, but in reality there is no sensible use case to require su=
-ch a
-> feature. =A0Yes, you may have many unrelated lines of development wit=
-h
-> separate set of tags on them, but then --tags to fetch _all_ tags fro=
-m
-> all of these unrelated lines of development is a too coarse-grained t=
-ool
-> to be useful.
->
+Heya,
 
-=46WIW, here's my use case: I'm doing development on two separate
-computers, and I'm synchronizing my work between those by fetching
-from each other computer directly (not pushing through a common repo),
-i.e. "git remote add other b:/home/me/foo/.git" in ~/foo/.git on
-computer a and "git remote add other a:/home/me/foo/.git" on computer
-b. Now I often drop partial work, rebase it etc., and make tags before
-the dropping, and sometimes I want to revisit those tagged (but not
-otherwise reachable) commits, and for that I want them to be available
-on both computers. I too searched the config docs, tried "tagopts =3D
---tags" and then wondered why it wouldn't sync my branches anymore,
-then moved to "fetch =3D +refs/tags/*:refs/tags/*".
+On Wed, Feb 16, 2011 at 17:56, Junio C Hamano <gitster@pobox.com> wrote:
+> That pretty much comes from the days back when 'merge' was the only method
+> of integrating with what the other party did.
 
-Christian.
+<snip>
+
+Cool, thanks for the history.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
