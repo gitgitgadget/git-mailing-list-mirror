@@ -1,77 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: non-empty index with git commit -a
-Date: Wed, 16 Feb 2011 14:48:55 -0500
-Message-ID: <20110216194855.GC22045@sigill.intra.peff.net>
-References: <AANLkTi=5E8D0mwMDNuMdgZS69kOnKCfs=Q8X5bpcjnYF@mail.gmail.com>
- <20110216023645.GA7085@sigill.intra.peff.net>
- <20110216032047.GA2858@elie>
- <AANLkTinbcHW+ja7T=PiCEorNdnK6W2DvA_c9F8JTEMKB@mail.gmail.com>
- <20110216085114.GA9413@sigill.intra.peff.net>
- <AANLkTik_F=d1CjNVfj35wgv0pL1LefOMnttXjs=s2wCQ@mail.gmail.com>
- <20110216095415.GA12578@sigill.intra.peff.net>
- <vpqbp2cmfy6.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule: no [--merge|--rebase] when newly cloned
+Date: Wed, 16 Feb 2011 11:51:13 -0800
+Message-ID: <7v62sjkbbi.fsf@alter.siamese.dyndns.org>
+References: <1297860417-21895-1-git-send-email-olsonse@umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 16 20:49:07 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Spencer E. Olson" <olsonse@umich.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 16 20:51:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpnN5-0006YM-5H
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 20:49:07 +0100
+	id 1PpnPO-0008Ad-Ut
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 20:51:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135Ab1BPTtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 14:49:01 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49695 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750844Ab1BPTtA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 14:49:00 -0500
-Received: (qmail 13360 invoked by uid 111); 16 Feb 2011 19:48:57 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 16 Feb 2011 19:48:57 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Feb 2011 14:48:55 -0500
-Content-Disposition: inline
-In-Reply-To: <vpqbp2cmfy6.fsf@bauges.imag.fr>
+	id S1753627Ab1BPTv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 14:51:27 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64510 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753422Ab1BPTvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 14:51:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BF0D43783;
+	Wed, 16 Feb 2011 14:52:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3ob00UHedZM11IqaAIyUKkrbBFw=; b=COSMPf
+	UcRr8wNNqOSCG/dC+x038Di3WFsxBtS8qmZnblpq4dimBfWltxldNaa68kUoNnkF
+	PSqHO57v9iWyWkdaf8IBJblB7JOBIWI44gG5AwyKC42qkdK/93BQwOIFzUVCIyci
+	Su2iFWRF2aFsGud4opcl+2HnY7ncEbK1b1LdA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lKwDmeHnM7DpC4GHp6J2wA1+azRdHBw9
+	ZaPTyJqNIertIjBqYNk1Ld6RUMm5iEI4/sagySe01Depyj7uXKqcl5mng4sMwgj8
+	ECTV8kdAPXVquC3mluqE9zFFKaRdRGqlWcMHHa1XpQQczfp4oZouOz5CSTq7+c0A
+	hbfwjT3v6P4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9B7A83780;
+	Wed, 16 Feb 2011 14:52:25 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 53349377D; Wed, 16 Feb 2011
+ 14:52:20 -0500 (EST)
+In-Reply-To: <1297860417-21895-1-git-send-email-olsonse@umich.edu> (Spencer
+ E. Olson's message of "Wed\, 16 Feb 2011 05\:46\:57 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 46F6E178-3A06-11E0-92D6-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166994>
 
-On Wed, Feb 16, 2011 at 11:28:17AM +0100, Matthieu Moy wrote:
+"Spencer E. Olson" <olsonse@umich.edu> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So? Your question was whether index state is precious. If it's precious,
-> > shouldn't we be keeping a history of it?
-> 
-> If it's really precious, it probably means you should be commit
-> --amend instead. You'd get the reflog, and essentially the same
-> functionalities.
+> Previously, when a submodule was cloned in the same command execution, --rebase
+> or --merge would attempt to run (instead of and) before a checkout, resulting in
+> an empty working directory.  This patch ignores --rebase or --merge for a
+> particular submodule when that submodule is newly cloned and instead simply
+> checks out the appropriate revision.
 
-Yeah, that is good advice, and I do actually end up doing a lot of
-intermediate commits and then either amending or sorting them out at the
-end. And that helps with sorting out big changes.
+Sorry, but I cannot parse the problem description, "(instead of and)" part.
 
-But it does sort of feel like saying "we don't need a safety valve. You
-just need to back up your work before doing anything dangerous". I have
-to remember to do it. Which is fine if my workflow is
-add-amend-add-amend. But maybe I have some half-saved index state and I
-am about to try doing a merge checkout or stash apply.
+Why is it a better thing to do to ignore these options, instead of
+detecting the situation and error it out, saying "you are initially
+cloning, don't say --rebase"?
 
-Anyway, I'm not convinced it is all that precious (at least not enough
-to merit working on the reflog). Yes, there have been times I've wished
-I could go back to the index state of a minute ago, and had to re-sort
-changes. But it usually doesn't take all that much time (thanks to "git
-add -p"). My main objection is that I just don't see those cases as
-different from "git commit -a". Either it is worth protecting, or it
-isn't.
+> +# Test whether an element of the $3(=IFS) separated list $2 matches $1
+> +#
+> +str_contains()
+> +{
+> +	if test -n "$3"
+> +	then
+> +		local IFS="$3"
+> +	fi
+> +	for i in $2
+> +	do
+> +		if test "$i" = "$1"
+> +		then
+> +			echo "yes"
+> +			return
+> +		fi
+> +	done
+> +	echo "no"
+> +	return
+> +}
 
--Peff
+We don't allow bash-ism outside POSIX shell in our primary Porcelain set
+(the rule is looser for stuff in contrib/), so "local" is out.
+
+Here is how to write the above more concisely, efficiently and portably.
+
+	case "$2;" in
+        *";$1;"*)
+        	echo yes ;;
+        *)
+        	echo no ;;
+	esac
+
+The trailing ';' takes care of the case where cloned_modules has only one
+element, in which case you have ";name" in "$2".  No need for a loop.
+
+> +	cloned_modules=
+> ...
+>  	while read mode sha1 stage path
+>  	do
+> @@ -442,6 +464,7 @@ cmd_update()
+>  		if ! test -d "$path"/.git -o -f "$path"/.git
+>  		then
+>  			module_clone "$path" "$url" "$reference"|| exit
+> +			cloned_modules="$cloned_modules;$name"
+>  			subsha1=
