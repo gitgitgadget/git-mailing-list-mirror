@@ -1,90 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] parse_tag_buffer(): do not prefixcmp() out of range
-Date: Wed, 16 Feb 2011 10:39:24 +0700
-Message-ID: <AANLkTin+zR81H0aahveMMOwKyxVV_wRoab=pqk51joop@mail.gmail.com>
-References: <20110212144706.GA25124@do> <1297688571-1962-1-git-send-email-pclouds@gmail.com>
- <7vsjvpm1xh.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Re: [PATCH] git-gui: give more advice when detaching HEAD
+Date: Tue, 15 Feb 2011 22:46:06 -0500
+Message-ID: <20110216034606.GA2414@sigill.intra.peff.net>
+References: <20110212070538.GA2459@sigill.intra.peff.net>
+ <20110213123151.GA31375@book.hvoigt.net>
+ <20110215063903.GA28634@sigill.intra.peff.net>
+ <20110215191620.GA56397@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 04:40:02 2011
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Pat Thoyts <patthoyts@googlemail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Feb 16 04:46:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpYFG-0006Y3-CX
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 04:40:02 +0100
+	id 1PpYLJ-000141-5j
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 04:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969Ab1BPDj5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Feb 2011 22:39:57 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:51399 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751261Ab1BPDj4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Feb 2011 22:39:56 -0500
-Received: by wyb28 with SMTP id 28so912793wyb.19
-        for <git@vger.kernel.org>; Tue, 15 Feb 2011 19:39:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=xPyFXMwlovpzZGeejmT9Y4Qn9TB96eCbB3+e9CDAB+I=;
-        b=nlT+90s/JygGT6//sV/6AxAwq5ZksYFx9KQEXsiAwiTqonVsVHJJItr8wmCL8YFGCr
-         fNiO1EOEIe6+tmmW8w8zOHcevbHXaE4bRt+37PFuVvOoFTSYlXWPO7EWZhx8h5XWIp4o
-         goIwoK+yIWYb0OAh6H1jzJdRKvRsPwqjsqdTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=GtsP1A8CO0uMWU3WrBAFZlAwGEK7FuzhJcgWpC0EaQln9SkfUU/eJeWr4OdbgPr1lh
-         VSiLRwUnBvvIcTcq+EY5gDnnw2exNbd2QxKgayCwc3HqxcXay52h1oj88L9qOiOnbPdn
-         Ru4vbaFMjMfkRjfOAf+MBQyZQMi/VLB4qKKR0=
-Received: by 10.216.87.130 with SMTP id y2mr51402wee.58.1297827594672; Tue, 15
- Feb 2011 19:39:54 -0800 (PST)
-Received: by 10.216.66.144 with HTTP; Tue, 15 Feb 2011 19:39:24 -0800 (PST)
-In-Reply-To: <7vsjvpm1xh.fsf@alter.siamese.dyndns.org>
+	id S1755954Ab1BPDqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 22:46:10 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:56539 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754866Ab1BPDqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 22:46:09 -0500
+Received: (qmail 3306 invoked by uid 111); 16 Feb 2011 03:46:08 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 16 Feb 2011 03:46:08 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Feb 2011 22:46:06 -0500
+Content-Disposition: inline
+In-Reply-To: <20110215191620.GA56397@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166922>
 
-2011/2/16 Junio C Hamano <gitster@pobox.com>:
->> - =C2=A0 =C2=A0 if (prefixcmp(bufptr, "tag "))
->> + =C2=A0 =C2=A0 if (bufptr + 4 < tail && !prefixcmp(bufptr, "tag "))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ; =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 /* good */
->> + =C2=A0 =C2=A0 else
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
->> =C2=A0 =C2=A0 =C2=A0 bufptr +=3D 4;
->> =C2=A0 =C2=A0 =C2=A0 nl =3D memchr(bufptr, '\n', tail - bufptr);
->
-> If there weren't enough bytes between bufptr and tail, prefixcmp may =
-still
-> match with "tag " while later part of the matched string might be com=
-ing
-> from trailing garbage outside our memory. =C2=A0Unless we correctly f=
-ail the
-> prefixcmp() part, memchr() would be fed negative value, no?
+On Tue, Feb 15, 2011 at 08:16:21PM +0100, Heiko Voigt wrote:
 
-Yes, memchr() would be fed negative, but prefixcmp() already steps
-outside allocated memory. I believe that caused valgrind error Thomas
-reported (although I couldn't reproduce it).
+> > It seems a little heavy-handed to have a dialog pop up for each commit.
+> > It's not actually dangerous to create a commit on a detached HEAD; it's
+> > just dangerous to _leave_ without referencing your new commits.
+> 
+> Hmm, how about adding a checkbox:
+> 
+>   [ ] Do not ask again
+> 
+> In my experience anything other than a popup will be overseen so I would
+> suggest doing it at least once to prepare the user for the possible
+> consequences.
 
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
->
->> There is a check (size < 64) at the beginning of the function, but
->> that only covers object+type lines.
->>
->> Strictly speaking the current code is still correct even if it
->> accesses outside 'data' because 'tail' is used right after
->> prefixcmp() calls.
->
-> What do you mean by this?  I don't get it.
+Yeah, that's much better IMHO because at least clueful people can
+dismiss it after the first time.
 
-Because memchr() would be fed negative, memchr() would fail so the
-code is still correct.
---=20
-Duy
+> IMO such a message is a good thing for the GUI regardless whether we
+> implement the leaving detached HEAD state warning. First I think a
+> typical GUI user does not commit on a detached head that often since
+> there is currently no way to use these commits from the GUI (e.g.
+> format-patch, rebase, ...).
+
+Fair enough. I really have no idea what sorts of things gui users do, or
+how they perceive the system.
+
+> Second because a detached head is very practical for testing work on a
+> remote branch the message box would remind most users to switch to
+> their development branch first. If they only get that message after a
+> series of commits it might become a hassle for them to get these
+> commits onto another branch (remember no format-patch or rebase
+> currently).
+
+Good point.
+
+> > I do think a pop-up is appropriate when you try to check something else
+> > out, and commits you have made on the detached HEAD are about to become
+> > unreferenced. But this is something even the CLI doesn't do, so it would
+> > make sense to see how the check is implemented there first before doing
+> > anything in git-gui.
+> 
+> From what I read in this thread it currently seems to be not so easy to
+> precisely find out whether some commit is referenced. (If we care about
+> stuff outside of remotes, heads and tags). But maybe we do not need
+> that for the GUI.
+
+Yeah, I think there is still some question about how it should happen,
+and any check in the gui should probably be the same as in the cli.  But
+from the rest of what you say, that shouldn't impact whether a
+per-commit warning is worth doing.
+
+-Peff
