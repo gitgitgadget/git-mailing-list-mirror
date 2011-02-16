@@ -1,66 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: non-empty index with git commit -a
-Date: Wed, 16 Feb 2011 05:06:34 -0500
-Message-ID: <20110216100622.GA12971@sigill.intra.peff.net>
-References: <AANLkTi=5E8D0mwMDNuMdgZS69kOnKCfs=Q8X5bpcjnYF@mail.gmail.com>
- <20110216023645.GA7085@sigill.intra.peff.net>
- <20110216032047.GA2858@elie>
- <AANLkTinbcHW+ja7T=PiCEorNdnK6W2DvA_c9F8JTEMKB@mail.gmail.com>
- <20110216085114.GA9413@sigill.intra.peff.net>
- <AANLkTik_F=d1CjNVfj35wgv0pL1LefOMnttXjs=s2wCQ@mail.gmail.com>
- <20110216095415.GA12578@sigill.intra.peff.net>
- <AANLkTimj9NCR2Kkiz82WW1qx1NY-ptS4Qn2yzPqoLGP0@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] push.default: Rename 'tracking' to 'upstream'
+Date: Wed, 16 Feb 2011 11:08:22 +0100
+Message-ID: <201102161108.26637.jnareb@gmail.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <vpqy65gs6hs.fsf@bauges.imag.fr> <alpine.DEB.2.00.1102160421300.14950@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 11:06:49 2011
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 11:08:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpeHY-00019d-RS
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 11:06:49 +0100
+	id 1PpeJS-0002NM-AW
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 11:08:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758884Ab1BPKGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 05:06:42 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57736 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758746Ab1BPKGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 05:06:40 -0500
-Received: (qmail 8547 invoked by uid 111); 16 Feb 2011 10:06:39 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 16 Feb 2011 10:06:39 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Feb 2011 05:06:34 -0500
+	id S1755741Ab1BPKIm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 05:08:42 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51691 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752402Ab1BPKIk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 05:08:40 -0500
+Received: by gyb11 with SMTP id 11so515199gyb.19
+        for <git@vger.kernel.org>; Wed, 16 Feb 2011 02:08:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=JBAFdJFPyZIj0BFJvmLGkQY7Y3+HoSTarFKTBM2cLZM=;
+        b=a5jG16oSgwa8zfYvYec2BlDPUFGvhBktIBxLR746pSFSMYFp7o+47mSzpm+U45x3Gd
+         XUO55FGsEai2n/9lf6JAson+OZ0lXR0wxtg0Ewi55umUO/Ci44IszDd76fSrOca2WXra
+         hdVbneQsUNrmqW3lSvygkPH8Jpi0Zh6H4QGzs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=fNrrLBd0J9EllufHyWSPFWKf/kleHovWsmTJtCfr14SledZExGCVXRa2X9LRGUBYox
+         hTXe5Bn9VoOCl3cdp6NydBR2/gw6HYYJv4lpwxmpWLVgjSGIxaJ/pB/5TKxu+oYZRjgg
+         7pp69XDUiPkArO6muE/392tUHki4skcVPLO6Y=
+Received: by 10.236.109.14 with SMTP id r14mr581919yhg.80.1297850919331;
+        Wed, 16 Feb 2011 02:08:39 -0800 (PST)
+Received: from [192.168.1.13] (abvl215.neoplus.adsl.tpnet.pl [83.8.209.215])
+        by mx.google.com with ESMTPS id 1sm3026706yhl.11.2011.02.16.02.08.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 Feb 2011 02:08:38 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.2.00.1102160421300.14950@debian>
 Content-Disposition: inline
-In-Reply-To: <AANLkTimj9NCR2Kkiz82WW1qx1NY-ptS4Qn2yzPqoLGP0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166944>
 
-On Wed, Feb 16, 2011 at 09:58:52AM +0000, Sverre Rabbelier wrote:
+Dnia =B6roda 16. lutego 2011 10:42, Martin von Zweigbergk napisa=B3:
+> On Wed, 16 Feb 2011, Matthieu Moy wrote:
+>=20
+> > Johan Herland <johan@herland.net> writes:
+> >=20
+> > > In order to make this more understandable to the user, we rename =
+the
+> > > push.default =3D=3D 'tracking' option to push.default =3D=3D 'ups=
+tream'.
+> >=20
+> > While we're there, shouldn't we also rename 'branch.<remote>.merge'=
+ to
+> > 'branch.<remote>.upstream'?
+>=20
+> I have a draft proposal not exactly to rename it, but to replace it b=
+y
+> a new branch.<name>.upstream which would point to local ref rather
+> than a ref on the remote, so one would have e.g.
+> branch.topic.upstream =3D refs/remotes/origin/master. Maybe I should
+> clean up that proposal and send it soon. The topic comes up quite
+> frequently.
 
-> On Wed, Feb 16, 2011 at 09:54, Jeff King <peff@peff.net> wrote:
-> > So? Your question was whether index state is precious. If it's precious,
-> > shouldn't we be keeping a history of it?
-> 
-> I don't think it's quite _that_ precious, but the only operation that
-> I regularly use that can blow away my carefully constructed index as
-> side effect of doing something else is `git commit -a`.
+Actually while I think that it makes more sense to use local ref for
+'branch.<name>.merge' because it is what is merged, i.e.:
 
-OK, so how precious is it? :)
+  branch.topic.merge =3D refs/remotes/origin/master
 
-If you want to have an option that specifically prevents the "git commit
--a" muscle memory thing, then go for it. I'm guessing it is the most
-common "oops" one. Even with an index reflog, you might want it on top.
+or in case of tracking local branch
 
-But it just seems silly to me to not protect at the same time against
-the other ways you can lose state from the index.
+  branch.topic.remote =3D .
+  branch.topic.merge  =3D refs/heads/master
 
--Peff
+I think that for 'branch.<name>.upstream' it would make more sense to
+use the name that *upstream* uses, i.e.
+
+  branch.topic.upstream =3D refs/heads/master
+
+--=20
+Jakub Narebski
+Poland
