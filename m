@@ -1,61 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 00/31] refactor rebase
-Date: Wed, 16 Feb 2011 15:52:13 +0100
-Message-ID: <4D5BE49D.1040402@viscovery.net>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Why does git-patch-id(1) sometimes print two lines, one of which has
+ commit = 0000000000000000000000000000000000000000
+Date: Wed, 16 Feb 2011 15:56:32 +0100
+Message-ID: <AANLkTimHvA_LsU4YaiDHDKoXnsk5WgGCXgbuSJ99emXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 15:52:28 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 16 15:56:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ppik0-0008TT-3L
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 15:52:28 +0100
+	id 1PpioK-0004SL-Ot
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 15:56:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054Ab1BPOwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 09:52:23 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:37223 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750921Ab1BPOwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 09:52:22 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Ppijo-00055H-7F; Wed, 16 Feb 2011 15:52:16 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id DD9111660F;
-	Wed, 16 Feb 2011 15:52:13 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1751306Ab1BPO4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 09:56:52 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56148 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071Ab1BPO4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 09:56:51 -0500
+Received: by fxm20 with SMTP id 20so1464283fxm.19
+        for <git@vger.kernel.org>; Wed, 16 Feb 2011 06:56:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=TxBoZ3FyLF73ojiPmzxbTwrTRY4ES9ljI8RtyVvNDfc=;
+        b=nuAJgi6hqdBLZFXxqtmR4+ZPKQPibJ7/MODFWgb+25+Fp72P42N62Nt0zJsTTkv69i
+         Y6V8icUknh4NxcWWudJ1z8v5Xykq7KkSQ+E3CloLi7ULG9JEVRcFC1S2CWTLFpt4LCFg
+         CMBMzYWG2zq6qJEdne01LgFZ59UalzL9OQtl8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=EeilTUGAvX8dUipUFPPbfL+1BtMAvyXolL8MvCWK4SpgFB/Th0txMZWeLyWJrsECzm
+         CpdsfMQRvLP9c/ilh6RQfzPva2zXR+OjX6+A3z5MPqoORpZzixPRyp6NhPeXl6UiJSB0
+         41BtoelnElP3SWxa6nNI6hchwZuHPpgnXmu8w=
+Received: by 10.223.54.132 with SMTP id q4mr850428fag.117.1297868192121; Wed,
+ 16 Feb 2011 06:56:32 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Wed, 16 Feb 2011 06:56:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166969>
 
-There's one annoying regression with this series: It does not accept
-abbreviated options anymore. In particular, 'git rebase --cont' is now an
-error. I use this a lot since I don't have command completion. This used
-to work (only) with interactive rebase.
+This behaves as I'd expect on git.git, i.e. shows a patch id and the commit id:
 
-And a side note: the error message is -- during a rebase that stopped at
-an 'edit' instruction:
+    $ git show 24231e063f0f003f8ffd7b64c7ba6a0baaaa5283 | git patch-id
+    f10c69e0e5b33da206f37bd93639875555ac9b79
+24231e063f0f003f8ffd7b64c7ba6a0baaaa5283
 
-$ git rebase --cont
-Usage: git rebase [--interactive | -i] [-v] [--force-rebase | -f]
-[--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]
+But what does this mean, also on git.git:
 
-It nowhere mentions --continue, --skip, --abort etc. That's perhaps worth
-fixing.
+    $ git show 7d48e9e6f77d336376c1a554eeff0590f77e1ee1 | git patch-id
+    4ba8a248731c5fcbd09cacb248d3128e742d1c90
+7d48e9e6f77d336376c1a554eeff0590f77e1ee1
+    d019b35e0b859cdd6907ee170927de1124c0ed6e
+0000000000000000000000000000000000000000
 
--- Hannes
+7d48e9e6f77d336376c1a554eeff0590f77e1ee1 is just one of the commits
+that results in this output:
+
+    $ git log --pretty=format:%H -p | git patch-id | grep
+0000000000000000000000000000000000000000
+    d019b35e0b859cdd6907ee170927de1124c0ed6e
+0000000000000000000000000000000000000000
+    3b23a2a11055aef557369971e825010879a8c4d7
+0000000000000000000000000000000000000000
+    d498fbbad6f1374d952925df699da237c3e8f2df
+0000000000000000000000000000000000000000
+    b0c930dc1926ffae9cca022797856762fa908be6
+0000000000000000000000000000000000000000
+
+And on another repository where I'm dealing with this I have a bunch
+more of them.
+
+Why are they there and what do they mean? Maybe it's a bug, or
+something I can explain in the manual page.
