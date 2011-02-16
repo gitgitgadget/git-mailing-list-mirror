@@ -1,76 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: non-empty index with git commit -a
-Date: Wed, 16 Feb 2011 13:46:01 -0800
-Message-ID: <7v39nnirfq.fsf@alter.siamese.dyndns.org>
-References: <20110216032047.GA2858@elie>
- <7v1v37kb3p.fsf@alter.siamese.dyndns.org>
- <20110216195931.GA22884@sigill.intra.peff.net>
- <201102162203.40480.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 1.5/2] bash: teach __git_ps1 about CHERRY_PICK_HEAD
+Date: Wed, 16 Feb 2011 15:55:41 -0600
+Message-ID: <20110216215541.GD2615@elie>
+References: <1297850903-65038-1-git-send-email-jaysoffian@gmail.com>
+ <1297850903-65038-3-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 22:46:24 2011
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 22:55:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PppCZ-00057y-7n
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 22:46:23 +0100
+	id 1PppLn-0003SI-Sd
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 22:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696Ab1BPVqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 16:46:18 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44642 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752151Ab1BPVqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 16:46:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5CE6C45D8;
-	Wed, 16 Feb 2011 16:47:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/AzlCrOVY0rWPU+tmJ44UiofR3g=; b=NGXtLN
-	nmkfnIvUcqkULWZLLMvLcjB1oSCrwhlhCPILjdhNYT3UKcJmnidLX4VUD6YLVw3U
-	E7VUGNCwjyBcsEPtgC94j+oj/I5PN0bTWaNjFflxmI3SpLzSyDCpzCOZ7z3ReL8L
-	knCs3xrQ5KWFpE/2wqfP0opyIogYEZ7FkCJ/M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=slTORUPslqmB0jj5V3mGdGF1eCUv8jCR
-	7qEPidaBeQlMuvMQbJyIwwqttnhiNz2/XpuI4MAvGkna+jJRjN1jCqkmVJBriA+3
-	213xr4jApOTNktmvkJt5IViivxSPoIuU1eF0C/4k2r8x+Z4pBipKqejamxb+ZJQs
-	XaPny5NLylM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0B53F45D3;
-	Wed, 16 Feb 2011 16:47:17 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B9D1D45D1; Wed, 16 Feb 2011
- 16:47:08 -0500 (EST)
-In-Reply-To: <201102162203.40480.jnareb@gmail.com> (Jakub Narebski's message
- of "Wed\, 16 Feb 2011 22\:03\:31 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5281C0C0-3A16-11E0-8A15-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752937Ab1BPVzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 16:55:51 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:36615 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752004Ab1BPVzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 16:55:50 -0500
+Received: by qyk12 with SMTP id 12so1961246qyk.19
+        for <git@vger.kernel.org>; Wed, 16 Feb 2011 13:55:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=n0Bog/I2WAWAx4YMjKYhlPQlVKxx4H/T3v6zvf61Q5c=;
+        b=X2MRTSXn7QbxO/Uicof9+VqulHZZTj4ZFj+bd17qHAKwKOJN/fRKJ9bdGODmy75Hne
+         zuwLTp0mqCTsI6kzO5RYJ9BKT2HLJU4vsk5E0EklAJGF0UUwjB7Ig4oeXGxpHkoumAbu
+         x1VNU+9U5eJaIhLWdxWWY5M+pcOcq+4ifpDpI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xregtbFYv1oTH/3BMJ1d0Sd0edRVOgA2BChkH5fCZXZ3J560xa3eW4u9wmuQiX41az
+         gLwNI/oYEqlOVgdTV+vJjGh7hhyECqR7IV/z0uLQLsrRHrx+tA8tGR7aU+q3A551SFNU
+         3u7leq1d0hwSChgzr0I3zvwmKtueMAZI8wib0=
+Received: by 10.224.45.74 with SMTP id d10mr1490159qaf.304.1297893349042;
+        Wed, 16 Feb 2011 13:55:49 -0800 (PST)
+Received: from elie (adsl-69-209-51-217.dsl.chcgil.ameritech.net [69.209.51.217])
+        by mx.google.com with ESMTPS id p13sm165617qcu.29.2011.02.16.13.55.46
+        (version=SSLv3 cipher=OTHER);
+        Wed, 16 Feb 2011 13:55:47 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1297850903-65038-3-git-send-email-jaysoffian@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167009>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+From: Jay Soffian <jaysoffian@gmail.com>
 
->> So I think we are really on the same page. :)
->
-> Also it would be not as easy as reflogs - you would have either to save
-> copy of index, or create a tree out of it and save reference in reflog.
+Make the git prompt (when enabled) show a CHERRY-PICKING indicator
+when we are in the middle of a conflicted cherry-pick, analogous
+to the existing MERGING and BISECTING flags.
 
-Also note that "Create a tree out of it" is not always a useful way to
-save the state of the index.  The "stash" shares the same issue, but you
-would need an equivalent of a tarball that consists of the index file
-(with conflicted state) and the files in the working tree that corresponds
-to index entries with conflicted states if you want to be useful for
-storing a state away in case you botch the conflict resolution you are
-attempting.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+> * While we're at it, we update git-completion.bash to be
+>   CHERRY_PICK_HEAD aware.
+
+Hmm, it seems I don't like this "while at it". :)
+
+ contrib/completion/git-completion.bash |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 893b771..0b0b913 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -246,6 +246,8 @@ __git_ps1 ()
+ 				fi
+ 			elif [ -f "$g/MERGE_HEAD" ]; then
+ 				r="|MERGING"
++			elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
++				r="|CHERRY-PICKING"
+ 			elif [ -f "$g/BISECT_LOG" ]; then
+ 				r="|BISECTING"
+ 			fi
+-- 
+1.7.4.1
