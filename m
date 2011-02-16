@@ -1,70 +1,63 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [RFC/PATCH 0/2] CHERRY_HEAD
-Date: Wed, 16 Feb 2011 10:48:28 +0900
-Message-ID: <87oc6czr4j.fsf@catnip.gol.com>
-References: <1297805034-3512-1-git-send-email-jaysoffian@gmail.com>
-	<AANLkTik2NM+mxKgZy_9dCwydz+An4sFM_a4U9mdrJBq3@mail.gmail.com>
-	<AANLkTinV+cY-fND2bemDGdShnfqQGMG3eUmZPXrpKayt@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: non-empty index with git commit -a
+Date: Tue, 15 Feb 2011 21:36:46 -0500
+Message-ID: <20110216023645.GA7085@sigill.intra.peff.net>
+References: <AANLkTi=5E8D0mwMDNuMdgZS69kOnKCfs=Q8X5bpcjnYF@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 02:48:48 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 03:37:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpWVa-0004Nc-BG
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 02:48:46 +0100
+	id 1PpXGK-000370-GV
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 03:37:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756763Ab1BPBsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Feb 2011 20:48:41 -0500
-Received: from smtp12.dentaku.gol.com ([203.216.5.74]:59566 "EHLO
-	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756478Ab1BPBsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Feb 2011 20:48:35 -0500
-Received: from 218.33.195.219.eo.eaccess.ne.jp ([218.33.195.219] helo=catnip.gol.com)
-	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
-	(envelope-from <miles@gnu.org>)
-	id 1PpWVJ-0004Hc-1Y; Wed, 16 Feb 2011 10:48:29 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 0C6E3E065; Wed, 16 Feb 2011 10:48:28 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <AANLkTinV+cY-fND2bemDGdShnfqQGMG3eUmZPXrpKayt@mail.gmail.com>
-	(Jay Soffian's message of "Tue, 15 Feb 2011 17:11:36 -0500")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1754201Ab1BPCgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Feb 2011 21:36:50 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49925 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752706Ab1BPCgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Feb 2011 21:36:48 -0500
+Received: (qmail 2558 invoked by uid 111); 16 Feb 2011 02:36:47 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 16 Feb 2011 02:36:47 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Feb 2011 21:36:46 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=5E8D0mwMDNuMdgZS69kOnKCfs=Q8X5bpcjnYF@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166914>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
-> 2. Given a rev-list. This is relatively recent addition to cherry-pick
-> (7e2bfd3 revert: allow cherry-picking more than one commit,
-> 2010-06-02). Here's where I'd expect to have a more rebase-like
-> behavior, using --continue/abort to work through the sequence. But
-> frankly, I consider 7e2bfd3 a mistake. I think a better implementation
-> would be to make cherry-pick be plumbing, and re-use rebase's logic
-> for walking through the series of commit.
+On Tue, Feb 15, 2011 at 10:43:53PM +0000, Sverre Rabbelier wrote:
 
-I'd also love this functionality ... 
+> Can we please fix this?
+> 
+> $ hack hack hack
+> $ git add -p # carefully add my changes
+> $ git commit -am "Add feature foo"
+> $ DAAAMN YOUUU FINGERS!!
+> 
+> I remember bringing this up before, but I can't remember what the
+> discussion ended up coming to.
 
-Can basically do it with:
+How do you differentiate this from:
 
-  # remember current branch name CHERRY_PICK_TARGET
-  git checkout REV_LIST_END
-  git rebase --onto CHERRY_PICK_TARGET  REV_LIST_START
-  [+ git rebase --continue etc]
+  $ hack hack hack
+  $ git add -p ;# carefully add my changes
+  $ hack hack hack
+  $ git diff ;# ok, everything looks good
+  $ git commit -am "Add feature foo"
 
-but man, is that confusing to remember...
+? IOW, I don't think git can know that you are making a mistake in your
+case, since from its perspectives those same actions might be
+reasonable. The real problem is that your intermediate index state is
+never saved. Do we need an index reflog? :)
 
-I wonder if a wrapper would be robust enough.
-
--Miles
-
--- 
-Cannon, n. An instrument employed in the rectification of national boundaries.
+-Peff
