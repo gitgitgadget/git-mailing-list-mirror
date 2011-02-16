@@ -1,87 +1,78 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] git-patch-id.txt: show that you can pipe in git-log
-Date: Wed, 16 Feb 2011 10:53:06 +0000
-Message-ID: <1297853586-812-1-git-send-email-avarab@gmail.com>
+From: "Bernhard R. Link" 
+	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
+Subject: Re: [PATCH] push.default: Rename 'tracking' to 'upstream'
+Date: Wed, 16 Feb 2011 11:54:27 +0100
+Message-ID: <20110216105427.GA27909@pcpool00.mathematik.uni-freiburg.de>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <201102151606.21040.johan@herland.net> <7vipwlp3yv.fsf@alter.siamese.dyndns.org> <201102160154.24744.johan@herland.net> <vpqy65gs6hs.fsf@bauges.imag.fr> <alpine.DEB.2.00.1102160421300.14950@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 16 11:53:31 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 11:54:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ppf0e-0004eH-Um
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 11:53:25 +0100
+	id 1Ppf1n-0005M7-9p
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 11:54:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752313Ab1BPKxU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 05:53:20 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:34045 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107Ab1BPKxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 05:53:19 -0500
-Received: by wyb28 with SMTP id 28so1180544wyb.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 02:53:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=pIk91SRtapV6kL4McU41W+DrcJvhgZfDN7dRP3aUBoY=;
-        b=p/a5HfOLIPsqmvIXQX2eSF8H8lJMOCM36OtD0FYn4mBGxF/tXBqDoc9CoE6FCUl/jh
-         De74/LUXP3trGxEWGYNfrSy30jgaJh+CCQ1CzSf96+Kp+zMyxfxOYLkQSF6F0nt/ZOET
-         0PEnIurg3mLCyPyL8E7+v+RkMRoanaCgxNMFA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=a32fXKdm8MS5Vv5mmh6SVBcV7oH4PcPbM+nKluU7lEw7jDRHa1jdhpbGnTbuMuVRtW
-         frJtthD9xgUtzrrrgI0iOWu9PyyyFltOSRqqKAb286+GAYJkWERG9KV4WvjlM1SYu88W
-         q1++GXQJ/rgWAWXwbKo+Smw53qHfThWtasygE=
-Received: by 10.227.146.144 with SMTP id h16mr341800wbv.221.1297853597918;
-        Wed, 16 Feb 2011 02:53:17 -0800 (PST)
-Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id r80sm7444wei.15.2011.02.16.02.53.14
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Feb 2011 02:53:15 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.3
+	id S1755730Ab1BPKyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 05:54:31 -0500
+Received: from pcpool00.mathematik.uni-freiburg.de ([132.230.30.150]:53147
+	"EHLO pcpool00.mathematik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752983Ab1BPKya (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 05:54:30 -0500
+Received: from pcpool09.mathematik.uni-freiburg.de ([132.230.30.159])
+	by pcpool00.mathematik.uni-freiburg.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1Ppf1f-0002dd-GI; Wed, 16 Feb 2011 11:54:27 +0100
+Received: from brl by pcpool09.mathematik.uni-freiburg.de with local (Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1Ppf1f-0007HZ-ER; Wed, 16 Feb 2011 11:54:27 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.1102160421300.14950@debian>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166958>
 
-Change the manual page for git-patch-id(1) to mention in the SYNOPSIS
-that you can pipe in the git-log(1) output.
-
-The manual page only mentioned that you could pipe in `< patch`, I had
-to grep the test suite to find that you could do things like `git log
--p -1 | git patch-id`.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+* Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> [110216 10:43]:
+> On Wed, 16 Feb 2011, Matthieu Moy wrote:
 >
----
- Documentation/git-patch-id.txt |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+> > Johan Herland <johan@herland.net> writes:
+> >
+> > > In order to make this more understandable to the user, we rename the
+> > > push.default == 'tracking' option to push.default == 'upstream'.
+> >
+> > While we're there, shouldn't we also rename 'branch.<remote>.merge' to
+> > 'branch.<remote>.upstream'?
+>
+> I have a draft proposal not exactly to rename it, but to replace it by
+> a new branch.<name>.upstream which would point to local ref rather
+> than a ref on the remote, so one would have e.g.
+> branch.topic.upstream = refs/remotes/origin/master.
 
-diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-i=
-d.txt
-index 4dae139..fec2cf3 100644
---- a/Documentation/git-patch-id.txt
-+++ b/Documentation/git-patch-id.txt
-@@ -9,6 +9,8 @@ SYNOPSIS
- --------
- 'git patch-id' < <patch>
-=20
-+'git log --pretty=3Dformat:%H -p | git patch-id'
-+
- DESCRIPTION
- -----------
- A "patch ID" is nothing but a SHA1 of the diff associated with a patch=
-, with
---=20
-1.7.2.3
+Making it name a local ref name would also make it easier to add support
+for listing multiple references.
+
+The use case I miss support for (please hint me if this is already
+possible somehow), is having multiple remotes where other people (or
+more importantly I at other computers for projects without central
+repository) add commits.
+
+Currently one needs to fetch all the remotes and then manually do a
+merge remote1/branchname remote2/branchname remote3/branchname and so
+on. It would be nice if a single git pull could do that.
+
+	Bernhard R. Link
