@@ -1,99 +1,87 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Aborting cherry-pick
-Date: Wed, 16 Feb 2011 10:16:28 +0100
-Message-ID: <AANLkTingcnvm6rLnWdweAKdeOWAVjh+F+6BMWzfJxhKi@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH] rebase: be cleverer with rebased upstream branches
+Date: Wed, 16 Feb 2011 09:26:17 +0000
+Message-ID: <AANLkTim_0omhFW-jVRqC8TgrG7vux2-X3k1o6RFaRf0b@mail.gmail.com>
+References: <1297691481-3308-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <AANLkTi=1WkZXBtQu71mELTBc6F7XrfBi+NWNWy-AxS79@mail.gmail.com> <alpine.DEB.2.00.1102151940140.7843@debian>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 16 10:16:37 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 10:26:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpdUy-0004TA-OL
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 10:16:37 +0100
+	id 1Ppdep-0001xq-E0
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 10:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758754Ab1BPJQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 04:16:31 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:38134 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754167Ab1BPJQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 04:16:29 -0500
-Received: by qyk12 with SMTP id 12so1180380qyk.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 01:16:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=8rwAk7mzu1uWiY1KL+gWQGZeB5AE2VAGUvTItpXkkHM=;
-        b=OWXsaHKwLitoC2W82gXkca20PPSudpzR1L9lHHmJhgIar+UJ8kdS9tzSZS9tA4hLnU
-         fkbdoz5vpnvAGMRFwILenyW+r53eJPBZEwwKG56UX0KQLniPvGgUYDbm6Q0QTu7Y2UN2
-         H/sZ+Zu0CjBEZGR2wbQqQiIGY2I7M84eflpzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=aS/YWWy2JXAxTF+wBAZJLb6fKF+rn/Ff07DW87hvYK5o7NuRj57Xwp99QBwp4gOVJ/
-         CadE8U2WdTcdHUKarE/v43Ab6oYJ+2xxOrdwVf55htF8T/XKQGgMbD7h5vcj2yOD6PQD
-         BiTX4p1ufAqwd5rp7JOLwTzOSMuOheOchSFSA=
-Received: by 10.224.74.10 with SMTP id s10mr423850qaj.291.1297847788578; Wed,
- 16 Feb 2011 01:16:28 -0800 (PST)
-Received: by 10.220.195.132 with HTTP; Wed, 16 Feb 2011 01:16:28 -0800 (PST)
+	id S1758814Ab1BPJ0k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 04:26:40 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:34545 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755081Ab1BPJ0i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 04:26:38 -0500
+Received: by ywo7 with SMTP id 7so503469ywo.19
+        for <git@vger.kernel.org>; Wed, 16 Feb 2011 01:26:38 -0800 (PST)
+Received: by 10.100.34.15 with SMTP id h15mr149838anh.254.1297848397962; Wed,
+ 16 Feb 2011 01:26:37 -0800 (PST)
+Received: by 10.101.48.19 with HTTP; Wed, 16 Feb 2011 01:26:17 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.00.1102151940140.7843@debian>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166936>
 
-Hi,
+On Wed, Feb 16, 2011 at 1:37 AM, Martin von Zweigbergk
+<martin.von.zweigbergk@gmail.com> wrote:
+> On Tue, 15 Feb 2011, Santi B?jar wrote:
+>
+>> On Mon, Feb 14, 2011 at 1:51 PM, Martin von Zweigbergk
+>> <martin.von.zweigbergk@gmail.com> wrote:
+>> > It might seem like most of the related code in git-pull.sh can be
+>> > removed once git-rebase.sh supports reflog walking. Unfortunately,=
+ not
+>> > much of it can be removed, though. The reason is that git-pull.sh
+>> > simulates one step of "reflog walking" by keeping track of the
+>> > position of the remote-tracking branch before and after the fetch
+>> > operation. This does not rely on reflogs. There are at least two c=
+ases
+>> > where the reflog is not used: a) when it is disabled, b) when the
+>> > remote branch was specified on the command line (as in 'git pull
+>> > --rebase origin master'). =A0In both of these cases, git-pull.sh
+>> > remembers the position of the reference before the fetch and uses =
+that
+>> > as a kind of '$upstream@{1}'.
+>>
+>> I don't agree with point b). In line 190:
+>>
+>> =A0 =A0 =A0 remoteref=3D"$(get_remote_merge_branch "$@" 2>/dev/null)=
+" &&
+>>
+>> It returns the local tracking branch for repo=3Dorigin and branch=3D=
+master
+>> and uses its reflog.
+>
+> Yes, but the local tracking branch is not updated when the
+> two-argument version of 'git pull' is used [1].
 
-I'd like to suggest improving cherry-pick messages/documentation
-in case of conflicts.
+Yes, but the reflog is used nevertheless and it can use the local
+tracking branch as the old-remote-hash.
 
-Example of cherry-pick conflict:
+>
+>> The end result is the same, there is one case where you need the old
+>> value of the tracking branch, so it should be done in git-pull.
+>
+> True, case a) is still there. I was just trying to explain why I
+> didn't just move the code from git-pull.sh to git-rebase.sh, but mayb=
+e
+> it confused more than it clarified...
 
-   $ git cherry-pick  c64e8caa56fd76577bbaea37592f4a9df10ab1b8
-   error: could not apply c64e8ca... <<commit message>>
-   hint: after resolving the conflicts, mark the corrected paths
-   hint: with 'git add <paths>' or 'git rm <paths>'
+Yes, with only case a) is sufficient (and complete).
 
-   $ git status
-   # On branch master
-   # Unmerged paths:
-   #   (use "git reset HEAD <file>..." to unstage)
-   #   (use "git add/rm <file>..." as appropriate to mark resolution)
-   #
-   #	both modified:      <<file>>
-   #
-   no changes added to commit (use "git add" and/or "git commit -a")
-
-I see following possibilities:
-
-1. add hint to cherry-pick how to abort merge, for example:
-   hint: use 'git reset --merge ORIG_HEAD' to abort merge
-
-2. add hint to status how to abort merge, for example:
-   #   (use 'git reset --merge ORIG_HEAD' to abort merge)
-
-3. add "--abort" to cherry-pick (same option as for git-merge)
-
-The ORIG_HEAD is specified in man page example. There is also
-a possibility of omitting ORIG_HEAD in which case local changes
-are retained. Maybe this is a better suggesting for the user?
-Or maybe describe both cases somewhere and point user to this
-documentation in status/cherry-pick output?
-
-git-cherry-pick uses word "cancel" in man page (in example) and
-git-merge uses word "abort" for (as I understand) the same action.
-
-I would suggest using either same word for both cases, or using both
-words in both cases. Otherwise it's confusing if you read about "aborting"
-merges and when you want to abort cherry-pick you don't find it - because
-it's called "canceling".
-
-
-What is your opinion on this?
-
-
--- 
-Piotrek
+HTH,
+Santi
