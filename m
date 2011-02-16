@@ -1,77 +1,94 @@
-From: Victor Engmark <victor.engmark@terreactive.ch>
-Subject: Re: [PATCH] git-gui: give more advice when detaching HEAD
-Date: Wed, 16 Feb 2011 17:11:01 +0100
-Organization: terreActive AG
-Message-ID: <4D5BF715.40502@terreactive.ch>
-References: <20110212070538.GA2459@sigill.intra.peff.net> <20110213123151.GA31375@book.hvoigt.net> <20110215063903.GA28634@sigill.intra.peff.net> <5828845.77740.1297797387140.JavaMail.trustmail@mail1.terreactive.ch>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Why does git-patch-id(1) sometimes print two lines, one of which
+ has commit = 0000000000000000000000000000000000000000
+Date: Wed, 16 Feb 2011 17:11:42 +0100
+Message-ID: <4D5BF73E.50002@drmicha.warpmail.net>
+References: <AANLkTimHvA_LsU4YaiDHDKoXnsk5WgGCXgbuSJ99emXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 16 17:11:24 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 17:14:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpjyM-0001O4-RS
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 17:11:23 +0100
+	id 1Ppk1n-00043Y-Cw
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 17:14:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752663Ab1BPQLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 11:11:16 -0500
-Received: from gate.terreactive.ch ([212.90.202.121]:34846 "EHLO
-	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752606Ab1BPQLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 11:11:14 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-Followup-To: git@vger.kernel.org
-In-Reply-To: <5828845.77740.1297797387140.JavaMail.trustmail@mail1.terreactive.ch>
-X-terreActive-From: victor.engmark@terreactive.ch
-X-Spam-Status: No
+	id S1752710Ab1BPQOu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 11:14:50 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:45204 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752669Ab1BPQOt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 11:14:49 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 8314520950;
+	Wed, 16 Feb 2011 11:14:48 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 16 Feb 2011 11:14:48 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=WUwvH/379oE5lCjUUIXBufPcN08=; b=eBbofhqH1G0EmF8y+KoLROR7vi8lavL9HZrhAJyUuEdoegu2E1F0Hxj5a80hZntAgdoYWItUJSdRpQs3r2+ALk43AMEcoFGizlq9bqkkD+iwKhzppcER5cbuwr+QhZ9HxU+uUmuCVWXWTcTYp0yJRVDv+XpG+4DP0iv2z+O6Qqk=
+X-Sasl-enc: OODNzGAcJb8le/Drnyu9Jf0KW90k6sOislMKkM1IiVzA 1297872888
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0364F402A6D;
+	Wed, 16 Feb 2011 11:14:47 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <AANLkTimHvA_LsU4YaiDHDKoXnsk5WgGCXgbuSJ99emXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166972>
 
-On 02/15/2011 08:16 PM, Heiko Voigt wrote:
-> Hi,
-> 
-> On Tue, Feb 15, 2011 at 01:39:03AM -0500, Jeff King wrote:
->> On Sun, Feb 13, 2011 at 01:31:52PM +0100, Heiko Voigt wrote:
->>
->>> On Sat, Feb 12, 2011 at 02:05:38AM -0500, Jeff King wrote:
->>>>   1. Give some indication or warning during commit that you're in a
->>>>      detached state. The CLI template says "You are not on any branch"
->>>>      when editing the commit message, and mentions "detached HEAD" as
->>>>      the branch in the post-commit summary. As far as I can tell,
->>>>      git-gui says nothing at all.
->>>
->>> How about something like this:
->>> [...]
->>> Subject: [PATCH] git-gui: warn when trying to commit on a detached head
->>>
->>> The commandline is already warning when checking out a detached head.
->>> Since the only thing thats potentially dangerous is to create commits
->>> on a detached head lets warn in case the user is about to do that.
->>
->> It seems a little heavy-handed to have a dialog pop up for each commit.
->> It's not actually dangerous to create a commit on a detached HEAD; it's
->> just dangerous to _leave_ without referencing your new commits.
-> 
-> Hmm, how about adding a checkbox:
-> 
->   [ ] Do not ask again
-> 
-> In my experience anything other than a popup will be overseen so I would
-> suggest doing it at least once to prepare the user for the possible
-> consequences.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 16.02.2011 1=
+5:56:
+> This behaves as I'd expect on git.git, i.e. shows a patch id and the =
+commit id:
+>=20
+>     $ git show 24231e063f0f003f8ffd7b64c7ba6a0baaaa5283 | git patch-i=
+d
+>     f10c69e0e5b33da206f37bd93639875555ac9b79
+> 24231e063f0f003f8ffd7b64c7ba6a0baaaa5283
+>=20
+> But what does this mean, also on git.git:
+>=20
+>     $ git show 7d48e9e6f77d336376c1a554eeff0590f77e1ee1 | git patch-i=
+d
+>     4ba8a248731c5fcbd09cacb248d3128e742d1c90
+> 7d48e9e6f77d336376c1a554eeff0590f77e1ee1
+>     d019b35e0b859cdd6907ee170927de1124c0ed6e
+> 0000000000000000000000000000000000000000
+>=20
+> 7d48e9e6f77d336376c1a554eeff0590f77e1ee1 is just one of the commits
+> that results in this output:
+>=20
+>     $ git log --pretty=3Dformat:%H -p | git patch-id | grep
+> 0000000000000000000000000000000000000000
+>     d019b35e0b859cdd6907ee170927de1124c0ed6e
+> 0000000000000000000000000000000000000000
+>     3b23a2a11055aef557369971e825010879a8c4d7
+> 0000000000000000000000000000000000000000
+>     d498fbbad6f1374d952925df699da237c3e8f2df
+> 0000000000000000000000000000000000000000
+>     b0c930dc1926ffae9cca022797856762fa908be6
+> 0000000000000000000000000000000000000000
 
-That would be useful. However, there is only so much space in a dialog
-box (and only so much users will read in one), so to make sure users
-understand what is going on (and perhaps advocate some self-learning)
-there should be a link to more information.
+You're telling us that patch-ids, not the sha1's of affected commits he=
+re.
 
-2c,
--- 
-Victor
+>=20
+> And on another repository where I'm dealing with this I have a bunch
+> more of them.
+>=20
+> Why are they there and what do they mean? Maybe it's a bug, or
+> something I can explain in the manual page.
+
+You would have to explain that git-patch-id trips over "\ Now
+newline..." lines in our diffs. Alternatively, wait a few minutes for m=
+y
+patch (done) with a test (the boring part...).
+
+Cheers,
+Michael
