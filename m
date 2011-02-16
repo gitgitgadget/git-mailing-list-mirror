@@ -1,90 +1,108 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: non-empty index with git commit -a
-Date: Wed, 16 Feb 2011 22:03:31 +0100
-Message-ID: <201102162203.40480.jnareb@gmail.com>
-References: <20110216032047.GA2858@elie> <7v1v37kb3p.fsf@alter.siamese.dyndns.org> <20110216195931.GA22884@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Teach commit about CHERRY_PICK_HEAD
+Date: Wed, 16 Feb 2011 13:07:00 -0800
+Message-ID: <7vpqqrit8r.fsf@alter.siamese.dyndns.org>
+References: <1297850903-65038-1-git-send-email-jaysoffian@gmail.com>
+ <1297850903-65038-3-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 16 22:04:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 22:07:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpoXb-00005R-HH
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 22:04:03 +0100
+	id 1Ppoan-0002dt-OU
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 22:07:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754047Ab1BPVD6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 16:03:58 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63481 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005Ab1BPVD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 16:03:56 -0500
-Received: by fxm20 with SMTP id 20so1851417fxm.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 13:03:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=1cg7D8U1Fw5Q0maKwr7O3JSUdlhJZG84u+GAaOF0fIc=;
-        b=l2Mc6/zmuCGsoEKnlom0wtz0AXVSdS/6YYw8xsrgQiqwnAo5YVI2M9erfrizGD7RH+
-         Ll9Zu+7dsH5xjl4pT+rUQC2Gy0f+hqIollyQK21wiUjNfsJ/46tkYpnbxOGX9TD8BpRz
-         hDbYsjl+viQkrqu3FX3ygdcl9HVzZkEv2udog=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=D04nnLKDvSZmahad2cXIWDmH56JaE8fyjF2HLCInVxVs0BSXMe1FAqvoEjghywJvEK
-         4kd6XIPSA+93iQVEGxYb2CKQk9gYzs0jpI5cFAOvV8RkWHVU3fqTFC+zN1yEu9PhKAro
-         4jBL5/L1HomTw037Th5s3L1Yy9s1lSQR7BPJQ=
-Received: by 10.223.72.197 with SMTP id n5mr1355507faj.8.1297890235261;
-        Wed, 16 Feb 2011 13:03:55 -0800 (PST)
-Received: from [192.168.1.13] (abvl215.neoplus.adsl.tpnet.pl [83.8.209.215])
-        by mx.google.com with ESMTPS id c11sm118756fav.2.2011.02.16.13.03.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Feb 2011 13:03:53 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110216195931.GA22884@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1754709Ab1BPVHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 16:07:17 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64337 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754696Ab1BPVHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 16:07:15 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5584D4144;
+	Wed, 16 Feb 2011 16:08:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ga9eYHxTqkG+6UDtp9trrQ/vCLA=; b=HexTyY
+	g5s1Fnkc49dQ7pX7LWv36he9W6pML6Qol4lutZYGx4KY713Y2q742gqYSUDkdecy
+	K+j1C8a48Xxy4s1TKuGtMm9WiNL01pOYSvZDJKQmhO6Xt7aC+BbCJVYnL0z2FNmo
+	d2uislq/oX9E+Bb3utFZ9+Db2Cu2iSr8D9yxY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MjxGJoM9u/bkvSw1NIYAsbXTG+pG3vk4
+	x8CvJe2qqq1Uz/zjBrgSLe1OdPIOTYLo+85kdRVqhsrtFNDgBVlZrNtLniM2NoGM
+	ziTsocMotDsp4ZsUEK1gY8gzrLjhiduuYmLxe5MCyQhFrJQJOD8JCDHGELKZkfjy
+	I8v9ScnRYrg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 148274142;
+	Wed, 16 Feb 2011 16:08:14 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1BE08413E; Wed, 16 Feb 2011
+ 16:08:07 -0500 (EST)
+In-Reply-To: <1297850903-65038-3-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Wed\, 16 Feb 2011 05\:08\:23 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DE0C41F2-3A10-11E0-83E3-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167000>
 
-Dnia =C5=9Broda 16. lutego 2011 20:59, Jeff King napisa=C5=82:
-> On Wed, Feb 16, 2011 at 11:55:54AM -0800, Junio C Hamano wrote:
->=20
-> > Jeff King <peff@peff.net> writes:
-> >=20
-> > > But as I said, I am not against a config option if it is such a c=
-ommon
-> > > problem. I certainly would not turn it on. And I don't think it s=
-hould
-> > > be on by default.
-> >=20
-> > I think we are pretty much on the same page, except that I am not v=
-ery
-> > interested in the index-log either.
->=20
-> To be fair, I am not sure I am that interested in the index-log eithe=
-r.
-> I just see it as a superior solution to the same problem, but I don't
-> consider it a very important problem.
->=20
-> So I think we are really on the same page. :)
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Also it would be not as easy as reflogs - you would have either to save
-copy of index, or create a tree out of it and save reference in reflog.
+> If the user wishes to reset authorship, that must now be done explicitly
+> via --reset-author.
 
---=20
-Jakub Narebski
-Poland
+This is not a new requirement, is it?  Even "commit -c $that_commit"
+before the previous "commit -c CHERRY_PICK_HEAD" does use the original,
+no?
+
+
+I think the changed code is _MUCH_ easier to follow compared to the
+previous round; the only thing the reader needs to keep in mind is that
+the most of the change essentially is "s/in_merge/whence != FROM_COMMIT/"
+and making that work.
+
+> * We remove a unused import from revert.c
+
+Micronit: s/import/include/.
+
+
+> @@ -766,7 +802,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  
+>  	fclose(fp);
+>  
+> -	if (!commitable && !in_merge && !allow_empty &&
+> +	if (!commitable && whence != FROM_MERGE && !allow_empty &&
+>  	    !(amend && is_a_merge(head_sha1))) {
+>  		run_status(stdout, index_file, prefix, 0, s);
+>  		if (amend)
+
+The original says that we reject an attempt to record a no-change commit
+when the user is making his own commit without an explicit --allow-empty
+request.  Should cherry-pick change this?
+
+"git cherry-pick $a_no_change_commit" does not cause conflicts but it does
+fail with "nothing added to commit".  If you said "whence == FROM_COMMIT"
+here, you would end up allowing "git commit" following such a failure to
+commit without --allow-empty, and that inconsistency is to be avoided
+(note that I didn't check if you leave CHERRY_PICK_HEAD behind to trigger
+this codepath when this happens).
+
+On the other hand, when the earlier cherry-pick did fail with conflict,
+but the resolution ended up to be a no-change commit, you would not
+blindly want to record the result as a no-change commit, either.
+
+So I think the above is the right thing to do, but we probably need a bit
+of in-code comment to describe why we say "whence != FROM_MERGE" here.
+
+Thanks.
