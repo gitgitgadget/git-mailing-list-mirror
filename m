@@ -1,101 +1,210 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] Introduce CHERRY_PICK_HEAD
-Date: Wed, 16 Feb 2011 17:02:50 -0600
-Message-ID: <20110216230250.GF2615@elie>
-References: <1297850903-65038-2-git-send-email-jaysoffian@gmail.com>
- <1297876835-70613-1-git-send-email-jaysoffian@gmail.com>
- <20110216214236.GC2615@elie>
- <AANLkTimBExej1mF=4UuTszcSoKy_xnj7bB3BaT5ze2vH@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH v2] branch/checkout --track: Ensure that upstream branch is
+ indeed a branch
+Date: Thu, 17 Feb 2011 00:12:20 +0100
+Message-ID: <201102170012.20964.johan@herland.net>
+References: <201102151852.03881.johan@herland.net>
+ <201102161146.23749.johan@herland.net>
+ <7vwrkzhc7x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 00:03:07 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 17 00:12:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpqOn-0006Uv-Es
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 00:03:05 +0100
+	id 1PpqXz-0004FR-9H
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 00:12:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753260Ab1BPXDA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 18:03:00 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:51824 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005Ab1BPXC7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 18:02:59 -0500
-Received: by qwa26 with SMTP id 26so1816420qwa.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 15:02:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=qzE5Jb6qL7K9EuUUdbB4HHwzbDkxLSibJUhNRFg+7K0=;
-        b=hmuT0C1UJgn2yi4VLalfSPw6BR0Hu//S70hUZd3NK9llETZu0FzP/jRxH1HpccjZ2N
-         pYZG6ASWHWCEOWEIrhPj9OBE4bJSvmIgL63dbBvaXqY9ZXWKaEIa2CQL7Zl929B5znio
-         FfqXFrl0PLYZFDRCGiE52ojd8FtZgBm0R7YXE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=WOAZdZUBKHpULLaLGqcJq7ehrH48DzFRe2NHLOeKZbjqHTghJRgMc/fYFC8tnTV4DN
-         9lbOXquD38pCMgm7X11jAr6gtXwP0oZYvUjZds5hHHg2I1dRG0yOJ5cBQyCtyTSxmhnQ
-         95874yK7MdV2sj9X4eJCtZ15UxQOPiIlxfM1M=
-Received: by 10.224.19.198 with SMTP id c6mr1550221qab.197.1297897378165;
-        Wed, 16 Feb 2011 15:02:58 -0800 (PST)
-Received: from elie ([69.209.51.217])
-        by mx.google.com with ESMTPS id g28sm207235qck.37.2011.02.16.15.02.55
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Feb 2011 15:02:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimBExej1mF=4UuTszcSoKy_xnj7bB3BaT5ze2vH@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752705Ab1BPXM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 18:12:29 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:55874 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751063Ab1BPXM2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 18:12:28 -0500
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LGQ003YDGGPB890@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 17 Feb 2011 00:12:25 +0100 (MET)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 9F5DA1EA5787_D5C59D9B	for <git@vger.kernel.org>; Wed,
+ 16 Feb 2011 23:12:25 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id D6E411EA2B16_D5C59D8F	for <git@vger.kernel.org>; Wed,
+ 16 Feb 2011 23:12:24 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LGQ00ATCGGLV820@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 17 Feb 2011 00:12:24 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <7vwrkzhc7x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167019>
 
-Jay Soffian wrote:
-> On Wed, Feb 16, 2011 at 4:42 PM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
+When creating a new branch using the --track option, we must make sure that
+we don't try to set an upstream that does not make sense to follow (using
+'git pull') or update (using 'git push'). The current code checks against
+using HEAD as upstream (since tracking a symref doesn't make sense). However,
+tracking a tag doesn't make sense either. Indeed, tracking _any_ ref that is
+not a (local or remote) branch doesn't make sense, and should be disallowed.
 
->> Nit: GIT_CHERRY_PICK_HELP is not just for rebase --interactive but
->> for arbitrary porcelain that wants to take care of the commit itself
->> (see v1.5.4-rc0~106^2~1, revert/cherry-pick: Allow overriding the
->> help text by the calling Porcelain, 2007-11-28).
->
-> What is the arbitrary porcelain you have in mind? :-)
+This patch achieves this by checking that the ref we're trying to --track
+resides within refs/heads/* or refs/remotes/*. This new check replaces the
+previous check against HEAD.
 
-git sequencer, for example.  Or any out-of-tree tool that is using
-cherry-pick to move around commits and wants to know where they end
-up.
+A couple of testcases are also added, verifying that we cannot create
+branches with tags as upstreams.
 
->> The conservative thing to do is indeed to remove CHERRY_PICK_HEAD in
->> this case, I suppose. =C2=A0But I'd like to have the CHERRY_PICK_HEA=
-D to
->> get the --amend safety when rebasing. =C2=A0I can send a separate pa=
-tch
->> for it if you'd like.
->
-> Please do, since I'm not really sure what you have in mind. If
-> CHERRY_PICK_HEAD is left-behind, it interferes with the eventually
-> commit done by rebase --continue.
+Finally, some selftests relying on using a non-branch as an upstream have
+been reworked or removed:
 
-Wait, does this mean that -c/-C/--amend/CHERRY_PICK_HEAD overrides
-GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE?
+- t6040: Reverse the meaning of two tests that depend on the ability to
+use (lightweight and annotated) tags as upstreams. These two tests were
+originally added in commits 1be570f and 57ffc5f, and this patch reverts the
+intention of those two commits.
 
-*checks*
+- t7201: Remove part of a test (introduced in 9188ed8) relying on a
+non-branch as upstream.
 
-Yes, it does.  The behavior is carried over from v0.99~185
-(git-commit-script: get commit message from an existing one,
-2005-06-25), but imho it is wrong.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-Does this seem worth fixing?
-Jonathan
+On Wednesday 16 February 2011, Junio C Hamano wrote:
+> Thomas's "HEAD" patch 84c1a89 (branch: do not attempt to track HEAD
+> implicitly, 2010-12-14) has an extra action to reset real_ref to NULL
+> when not asking for "explicit_tracking" in the same codepath.
+> 
+> ...
+> 
+> Don't we need something similar here?
+
+Indeed. Here is v2, rebased on top of 84c1a89.
+
+...Johan
+
+ branch.c                 |    5 +++--
+ t/t3200-branch.sh        |    5 +++++
+ t/t6040-tracking-info.sh |   16 ++++++++--------
+ t/t7201-co.sh            |   16 +++++++++-------
+ 4 files changed, 25 insertions(+), 17 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 19310e4..da5c03e 100644
+--- a/branch.c
++++ b/branch.c
+@@ -175,8 +175,9 @@ void create_branch(const char *head,
+ 			die("Cannot setup tracking information; starting point is not a branch.");
+ 		break;
+ 	case 1:
+-		/* Unique completion -- good, only if it is a real ref */
+-		if (!strcmp(real_ref, "HEAD")) {
++		/* Unique completion -- good, only if it is a real branch */
++		if (prefixcmp(real_ref, "refs/heads/") &&
++		    prefixcmp(real_ref, "refs/remotes/")) {
+ 			if (explicit_tracking)
+ 				die("Cannot setup tracking information; starting point is not a branch.");
+ 			else
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index dce90de..55af032 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -212,6 +212,11 @@ test_expect_success \
+     'branch from non-branch HEAD w/--track causes failure' \
+     'test_must_fail git branch --track my10 HEAD^'
+ 
++test_expect_success \
++    'branch from tag w/--track causes failure' \
++    'git tag foobar &&
++     test_must_fail git branch --track my11 foobar'
++
+ # Keep this test last, as it changes the current branch
+ cat >expect <<EOF
+ 0000000000000000000000000000000000000000 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 
+1117150200 +0000	branch: Created from master
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 1785e17..10bf3de 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -74,20 +74,20 @@ test_expect_success 'status' '
+ 	grep "have 1 and 1 different" actual
+ '
+ 
+-test_expect_success 'status when tracking lightweight tags' '
++test_expect_success 'fail to track lightweight tags' '
+ 	git checkout master &&
+ 	git tag light &&
+-	git branch --track lighttrack light >actual &&
+-	grep "set up to track" actual &&
+-	git checkout lighttrack
++	test_must_fail git branch --track lighttrack light >actual &&
++	test_must_fail grep "set up to track" actual &&
++	test_must_fail git checkout lighttrack
+ '
+ 
+-test_expect_success 'status when tracking annotated tags' '
++test_expect_success 'fail to track annotated tags' '
+ 	git checkout master &&
+ 	git tag -m heavy heavy &&
+-	git branch --track heavytrack heavy >actual &&
+-	grep "set up to track" actual &&
+-	git checkout heavytrack
++	test_must_fail git branch --track heavytrack heavy >actual &&
++	test_must_fail grep "set up to track" actual &&
++	test_must_fail git checkout heavytrack
+ '
+ 
+ test_expect_success 'setup tracking with branch --set-upstream on existing branch' '
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 1337fa5..0c002ab 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -408,6 +408,15 @@ test_expect_success 'checkout w/--track from non-branch HEAD fails' '
+     test "z$(git rev-parse master^0)" = "z$(git rev-parse HEAD)"
+ '
+ 
++test_expect_success 'checkout w/--track from tag fails' '
++    git checkout master^0 &&
++    test_must_fail git symbolic-ref HEAD &&
++    test_must_fail git checkout --track -b track frotz &&
++    test_must_fail git rev-parse --verify track &&
++    test_must_fail git symbolic-ref HEAD &&
++    test "z$(git rev-parse master^0)" = "z$(git rev-parse HEAD)"
++'
++
+ test_expect_success 'detach a symbolic link HEAD' '
+     git checkout master &&
+     git config --bool core.prefersymlinkrefs yes &&
+@@ -423,7 +432,6 @@ test_expect_success 'detach a symbolic link HEAD' '
+ test_expect_success \
+     'checkout with --track fakes a sensible -b <name>' '
+     git update-ref refs/remotes/origin/koala/bear renamer &&
+-    git update-ref refs/new/koala/bear renamer &&
+ 
+     git checkout --track origin/koala/bear &&
+     test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
+@@ -439,12 +447,6 @@ test_expect_success \
+ 
+     git checkout --track remotes/origin/koala/bear &&
+     test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
+-    test "$(git rev-parse HEAD)" = "$(git rev-parse renamer)" &&
+-
+-    git checkout master && git branch -D koala/bear &&
+-
+-    git checkout --track refs/new/koala/bear &&
+-    test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
+     test "$(git rev-parse HEAD)" = "$(git rev-parse renamer)"
+ '
+ 
+-- 
+1.7.4
