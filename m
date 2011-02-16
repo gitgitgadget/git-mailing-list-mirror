@@ -1,143 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATHC/RFC] revlist.c: introduce --cherry for unsymmetric picking
-Date: Wed, 16 Feb 2011 11:59:33 +0100
-Message-ID: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1297853883.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 16 12:02:46 2011
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] Introduce CHERRY_PICK_HEAD
+Date: Wed, 16 Feb 2011 18:13:45 +0700
+Message-ID: <AANLkTim8m4uBjn_FJ-SWnARkv8rTiM1SrBTBFeg2R_hd@mail.gmail.com>
+References: <1297850903-65038-1-git-send-email-jaysoffian@gmail.com> <1297850903-65038-2-git-send-email-jaysoffian@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 12:14:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ppf9h-0001tt-Mt
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 12:02:46 +0100
+	id 1PpfLC-0001DU-BY
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 12:14:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755241Ab1BPLCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 06:02:40 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56127 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752983Ab1BPLCi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 06:02:38 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 2BA3320CB3
-	for <git@vger.kernel.org>; Wed, 16 Feb 2011 06:02:38 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 16 Feb 2011 06:02:38 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id; s=smtpout; bh=83nG7Ewz/DCpFDIyYyWhRu3sSk0=; b=cLdJmopGkUcHdeOCtJ6ubZvEcqxIKBZ15nxwsRgUUTe6o62I2f6Ukk9sYBTKAYbb4Sh0eJoKJtQv/VnSVRMAPdUbPyF4szpdOufkBJcWKFnnhOrHzTUjoGyY7DTTKz7cLI5rELYUAY8irWg6JHhyV1rZUS6T0abO+9YmeI4teKM=
-X-Sasl-enc: 0dzH4fWYo2TK43SC8oENFO02cspLb2U+NE3+pBPBY81r 1297854157
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 84C49441EB2;
-	Wed, 16 Feb 2011 06:02:37 -0500 (EST)
-X-Mailer: git-send-email 1.7.4.1.74.gf39475.dirty
+	id S1758746Ab1BPLOT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 06:14:19 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:38790 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756808Ab1BPLOR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 06:14:17 -0500
+Received: by wwa36 with SMTP id 36so1246740wwa.1
+        for <git@vger.kernel.org>; Wed, 16 Feb 2011 03:14:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=iXrw/oUi5Q0iHWOWr7L68orQxCvlqPEnYddxU0lFTxc=;
+        b=wLx7XvDNz/j9LoP5Wv7a0ygCpngpPM/mT9nvxR4znZK4VjOpm/OGRtHlQTCk+prVZT
+         2o+ZfGyn7J0cCqkznKSj6cSO85DrgzDJqVvR3irg2nnBrf/9Mokoo5/NOEUym7S1+Wx+
+         wsFJA4MEABdLlqMqUyrYMhpuZ7CNDFkBd3VAQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=laCNjSAWexeL8d4TtggPYnR87HUZIsVLQfunBDd9QfqdJyd+LrNYep74kcOJVNQ6Jx
+         DYWpjPG1TqPYyzvq4X3RqSxlmeeYAdiO0Bu9QgHFeMvD85M/yNw1yOMTA8kWTeUGqqe1
+         5W+0vZyCKFW1oUYAps0hvXpUBAY5ZqDuP9TUU=
+Received: by 10.216.163.69 with SMTP id z47mr362246wek.43.1297854855757; Wed,
+ 16 Feb 2011 03:14:15 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Wed, 16 Feb 2011 03:13:45 -0800 (PST)
+In-Reply-To: <1297850903-65038-2-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166960>
 
-The existing "--cherry-pick" does not work with unsymmetric ranges
-(A..B) for obvious reasons.
+On Wed, Feb 16, 2011 at 5:08 PM, Jay Soffian <jaysoffian@gmail.com> wro=
+te:
+> When a cherry-pick conflicts git advises to use:
+>
+> =C2=A0$ git commit -c <original commit id>
+>
+> to preserve the original commit message and authorship. Instead, let'=
+s
+> record the original commit id in CHERRY_PICK_HEAD and advise to use:
+>
+> =C2=A0$ git commit -c CHERRY_PICK_HEAD
 
-Introduce "--cherry" which works more like "git-cherry", i.e.: Ignore
-commits in B which are patch-equivalent to patches in A, i.e. list only
-those which "git cherry B A" would list with a "-". This is especially
-useful for things like
-
-git log --cherry @{u}..
-
-which is a much more descriptive than
-
-git cherry @{u}
-
-and potentially more useful than
-
-git log --cherry-pick @{u}...
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-RFC for lack of doc and tests, and also:
-
-I first considered "--cherry-pick A..B" to automatically invoke this mode.
-Here are a few reasons why I didn't:
-
-- I haven't found a better way to propagate "we have a fake symmetric
-range" from handle_revision_arg() to cherry_pick_list(). Flags like
-SHOWN or TMP_MARK are reset somewhere in between! A global wouldn't do a
-better (more fine grained) job than the rev flag.
-
-- In the case of multiple revision args, it's probably less confusing to
-have one overall mode (think "--cherry-pick A...B C..D") than the added
-flexibility.
-
-- I don't like the name "--cherry-pick" for an option which is like "git
-cherry" and unlike "git cherry-pick".
-
-- We could still activate this mode as soon as one A..B range apears.
-
- revision.c |   17 +++++++++++++++--
- revision.h |    1 +
- 2 files changed, 16 insertions(+), 2 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 86d2470..91d27ea 100644
---- a/revision.c
-+++ b/revision.c
-@@ -611,6 +611,16 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 	}
- 
- 	free_patch_ids(&ids);
-+
-+	if (!revs->cherry)
-+		return;
-+	/* Remove auxiliary commits */
-+	for (p = list; p; p = p->next) {
-+		struct commit *commit = p->item;
-+
-+		if (commit->object.flags & SYMMETRIC_LEFT)
-+			commit->object.flags |= SHOWN;
-+	}
- }
- 
- /* How many extra uninteresting commits we want to see.. */
-@@ -781,7 +791,7 @@ static int limit_list(struct rev_info *revs)
- 		show(revs, newlist);
- 		show_early_output = NULL;
- 	}
--	if (revs->cherry_pick)
-+	if (revs->cherry || revs->cherry_pick)
- 		cherry_pick_list(newlist, revs);
- 
- 	if (bottom) {
-@@ -1028,7 +1038,7 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
- 				verify_non_filename(revs->prefix, arg);
- 			}
- 
--			if (symmetric) {
-+			if (symmetric || revs->cherry) {
- 				exclude = get_merge_bases(a, b, 1);
- 				add_pending_commit_list(revs, exclude,
- 							flags_exclude);
-@@ -1265,6 +1275,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--cherry-pick")) {
- 		revs->cherry_pick = 1;
- 		revs->limited = 1;
-+	} else if (!strcmp(arg, "--cherry")) {
-+		revs->cherry = 1;
-+		revs->limited = 1;
- 	} else if (!strcmp(arg, "--objects")) {
- 		revs->tag_objects = 1;
- 		revs->tree_objects = 1;
-diff --git a/revision.h b/revision.h
-index 82509dd..9a01050 100644
---- a/revision.h
-+++ b/revision.h
-@@ -65,6 +65,7 @@ struct rev_info {
- 			show_decorations:1,
- 			reverse:1,
- 			reverse_output_stage:1,
-+			cherry:1,
- 			cherry_pick:1,
- 			bisect:1,
- 			ancestry_path:1,
--- 
-1.7.4.1.74.gf39475.dirty
+Wouldn't it be more convenient to do "git cherry-pick --continue"
+instead of "git commit -c CHERRY_PICK_HEAD"?
+--=20
+Duy
