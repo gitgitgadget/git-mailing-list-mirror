@@ -1,64 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: non-empty index with git commit -a
-Date: Wed, 16 Feb 2011 03:51:14 -0500
-Message-ID: <20110216085114.GA9413@sigill.intra.peff.net>
-References: <AANLkTi=5E8D0mwMDNuMdgZS69kOnKCfs=Q8X5bpcjnYF@mail.gmail.com>
- <20110216023645.GA7085@sigill.intra.peff.net>
- <20110216032047.GA2858@elie>
- <AANLkTinbcHW+ja7T=PiCEorNdnK6W2DvA_c9F8JTEMKB@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] push.default: Rename 'tracking' to 'upstream'
+Date: Wed, 16 Feb 2011 09:55:59 +0100
+Message-ID: <vpqy65gs6hs.fsf@bauges.imag.fr>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+	<201102151606.21040.johan@herland.net>
+	<7vipwlp3yv.fsf@alter.siamese.dyndns.org>
+	<201102160154.24744.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 09:51:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Feb 16 09:56:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ppd6v-0006kK-Do
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 09:51:45 +0100
+	id 1PpdBv-0001el-O3
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 09:56:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758416Ab1BPIvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 03:51:21 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:34725 "EHLO peff.net"
+	id S1758724Ab1BPI4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 03:56:47 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:44533 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757400Ab1BPIvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 03:51:19 -0500
-Received: (qmail 5969 invoked by uid 111); 16 Feb 2011 08:51:18 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 16 Feb 2011 08:51:18 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Feb 2011 03:51:14 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTinbcHW+ja7T=PiCEorNdnK6W2DvA_c9F8JTEMKB@mail.gmail.com>
+	id S1753828Ab1BPI4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 03:56:45 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p1G8txj1029446
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 16 Feb 2011 09:55:59 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PpdB2-0003PZ-IO; Wed, 16 Feb 2011 09:56:00 +0100
+In-Reply-To: <201102160154.24744.johan@herland.net> (Johan Herland's message of "Wed\, 16 Feb 2011 01\:54\:24 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 16 Feb 2011 09:56:00 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p1G8txj1029446
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1298451362.23524@vHh3uv1jMLA9IpcCIKSKJg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166933>
 
-On Wed, Feb 16, 2011 at 08:18:18AM +0000, Sverre Rabbelier wrote:
+Johan Herland <johan@herland.net> writes:
 
-> On Wed, Feb 16, 2011 at 03:20, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> > If I remember the discussion[1] correctly, by requiring a separate
-> > add -u step (or commit -f -a) if the "I don't trust my fingers"
-> > configuration is enabled.
-> 
-> That would definitely work for me. The question then is, should git
-> consider the index precious by default, or not? That is, should that
-> value default to true in 1.8?
+> In order to make this more understandable to the user, we rename the
+> push.default == 'tracking' option to push.default == 'upstream'.
 
-If we do not consider the index precious, then no, it should not be the
-default. If we do consider it precious, then isn't this option fixing
-one small case and leaving all of the others untouched?
+While we're there, shouldn't we also rename 'branch.<remote>.merge' to
+'branch.<remote>.upstream'?
 
-I can just as easily run "git add -u", or "git add -p" on top of some
-changes and then realize afterwards that I actually wanted the previous
-index state.
+It has a bit more consequences, since external porcelains/scripts are
+likely to call "git config branch.foo.merge", and would be broken by
+such change. But maybe 1.8.0 is the time for this kind of things.
 
-The solution for that would be an index reflog.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
