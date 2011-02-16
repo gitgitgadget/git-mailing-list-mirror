@@ -1,88 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push.default: Rename 'tracking' to 'upstream'
-Date: Wed, 16 Feb 2011 10:37:10 -0800
-Message-ID: <7vy65fkeqx.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <vpqy65gs6hs.fsf@bauges.imag.fr> <alpine.DEB.2.00.1102160421300.14950@debian>
- <201102161108.26637.jnareb@gmail.com> <vpqhbc4mg1c.fsf@bauges.imag.fr>
- <AANLkTikq67jQnM555nHKeyk5t0Ln+Hp97WSztTaej_CW@mail.gmail.com>
- <7v8vxflv7p.fsf@alter.siamese.dyndns.org>
+Subject: Re: non-empty index with git commit -a
+Date: Wed, 16 Feb 2011 10:47:33 -0800
+Message-ID: <7vtyg3ke9m.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=5E8D0mwMDNuMdgZS69kOnKCfs=Q8X5bpcjnYF@mail.gmail.com>
+ <20110216023645.GA7085@sigill.intra.peff.net> <20110216032047.GA2858@elie>
+ <AANLkTinbcHW+ja7T=PiCEorNdnK6W2DvA_c9F8JTEMKB@mail.gmail.com>
+ <20110216085114.GA9413@sigill.intra.peff.net>
+ <AANLkTik_F=d1CjNVfj35wgv0pL1LefOMnttXjs=s2wCQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 19:37:50 2011
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 19:48:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpmG2-0003G2-Nb
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 19:37:47 +0100
+	id 1PpmQ5-0003XQ-JJ
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 19:48:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751376Ab1BPShm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 13:37:42 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34209 "EHLO
+	id S1753785Ab1BPSrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 13:47:53 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45976 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751314Ab1BPShk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 13:37:40 -0500
+	with ESMTP id S1753686Ab1BPSrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 13:47:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EE91A4DBD;
-	Wed, 16 Feb 2011 13:38:43 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2519B4F18;
+	Wed, 16 Feb 2011 13:48:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yUcHpTiEDZSv1jYx+JVdEXF/b2k=; b=JrY2ch
-	RYYyKFvGYcTz9ZGIiYgZrMsUH+A85Kkrm6mE1NXcIU9sN8OdzRmZuJ4VBBgsHxKN
-	nfxEiF7260MAxopAu2egl8Z5xu41EpeRHrS5jKVeksOKtPb/WgwC9mFIjoNMrQPk
-	fyx7bG0JThedZSxgKzAmxiR+MrGHPvzsyM2kE=
+	:content-type; s=sasl; bh=Yz8L3CnOANbwHPkU8reZTVdY074=; b=rO0U9A
+	yV/hf+nNQaRfZ0pt4lJitmOvJOgrX2M5Lfj6VcELXoBqxqwZg+0bf+sBX6U4CMGW
+	rpI4Bm0YGM/24JYDKub+S9Jwp8jyvZ6Tihvwi/nSKOpC0X7UiINBm0mqIw4il8Wp
+	Nhhiu2LzKpYqtwf1GMzn6/Uvv/+l3f2Vm4fO0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S+E/0jfZKgZtS6r6mOIKK3GMa3O2TUq9
-	JUVkZWqKKw1OY7MqiWIrmTDE+V+Jwl0Zx+XhBFQ9YrHFf5ixfFz930NVySrEoFjC
-	FqtU1uPT45umJ3fWeErAc9+pCmrPKhEQetivjhJvgTxCfPaVGYPY7vhJNFNOf1Bt
-	bROj4Uv7ueU=
+	:content-type; q=dns; s=sasl; b=berHXyD2lJMz3Stnaln2oc15XwIPFCTB
+	iXUjrabZyHmezSPEmc/0P5VCVtPqWAKx7K/m6RfbgNHGU0BlbmDpzBpEF5nT5/sr
+	fyN6MffbyxsbCEIEIvsAm4I3ap47SDEnsYF8NZnXXLQUwsciRlbXXOBGK8oEn7p8
+	6UQcw/LSMe8=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5158D4DB5;
-	Wed, 16 Feb 2011 13:38:33 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C911E4F16;
+	Wed, 16 Feb 2011 13:48:50 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 908304DA6; Wed, 16 Feb 2011
- 13:38:18 -0500 (EST)
-In-Reply-To: <7v8vxflv7p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 16 Feb 2011 09\:56\:10 -0800")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 82D5B4F12; Wed, 16 Feb 2011
+ 13:48:43 -0500 (EST)
+In-Reply-To: <AANLkTik_F=d1CjNVfj35wgv0pL1LefOMnttXjs=s2wCQ@mail.gmail.com>
+ (Sverre Rabbelier's message of "Wed\, 16 Feb 2011 09\:52\:23 +0000")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F51AF380-39FB-11E0-9B17-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 6528A1DA-39FD-11E0-A186-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166984>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> IOW, I consider --set-upstream that takes refs/remotes without bothering
-> to go through the remotes.<name>.fetch mapping is a design bug (it may
-> have come from sloppy initial coding---it certainly is easier to store
-> what you get without computing anything).  That may be something we might
-> want to fix in 1.8.0.
+> On Wed, Feb 16, 2011 at 08:51, Jeff King <peff@peff.net> wrote:
+>> I can just as easily run "git add -u", or "git add -p" on top of some
+>> changes and then realize afterwards that I actually wanted the previous
+>> index state.
+>
+> I disagree, those are all index manipulation tools, `git commit -a` is not.
 
-Please scratch this paragraph; this was a sloppy thinking on my part.
-The option, and its cousin --track, do call into setup_tracking() to look
-up the mapping.
+"git commmit" is not an index-manipulation tool.  Giving "-a" or pathspec
+to the command however is.
 
-The --set-upstream option needs to set both which remote's what branch,
-and refs/remotes/origin/master is a way to say "origin's master" and it
-was inevitable to expose refs/remotes/ to the UI level if you wanted to
-implement it as an option with a single argument.  So in that sense there
-is nothing to fix.
-
-Conceptually, "git branch --set-upstream=master --set-remote=origin" is
-what it really wants to say, even though that is probably longer to type.
-There still might be a room for UI improvement.
+Having said that, exactly because "commit" _feels_ more like a
+point-of-no-return than a mistaken second "add" to the end user (even
+though it is not technically different), I think it is Ok to add a
+configuration that makes the command bail out when "-a" is given and there
+are changes to the index.  I don't think it is sane to trigger the same
+safety when a pathspec is given, though.
