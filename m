@@ -1,155 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-patch-id.txt: show that you can pipe in git-log
-Date: Wed, 16 Feb 2011 11:35:31 -0800
-Message-ID: <7vaahvkc1o.fsf@alter.siamese.dyndns.org>
-References: <1297853586-812-1-git-send-email-avarab@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: non-empty index with git commit -a
+Date: Wed, 16 Feb 2011 14:36:43 -0500
+Message-ID: <20110216193643.GB22045@sigill.intra.peff.net>
+References: <AANLkTi=5E8D0mwMDNuMdgZS69kOnKCfs=Q8X5bpcjnYF@mail.gmail.com>
+ <20110216023645.GA7085@sigill.intra.peff.net>
+ <20110216032047.GA2858@elie>
+ <AANLkTinbcHW+ja7T=PiCEorNdnK6W2DvA_c9F8JTEMKB@mail.gmail.com>
+ <20110216085114.GA9413@sigill.intra.peff.net>
+ <AANLkTik_F=d1CjNVfj35wgv0pL1LefOMnttXjs=s2wCQ@mail.gmail.com>
+ <20110216095415.GA12578@sigill.intra.peff.net>
+ <AANLkTimj9NCR2Kkiz82WW1qx1NY-ptS4Qn2yzPqoLGP0@mail.gmail.com>
+ <20110216100622.GA12971@sigill.intra.peff.net>
+ <7vpqqrke30.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 16 20:35:48 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 16 20:36:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpnAC-0004zX-8u
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 20:35:48 +0100
+	id 1PpnBE-0005kA-BU
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Feb 2011 20:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194Ab1BPTfn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Feb 2011 14:35:43 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40155 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751581Ab1BPTfl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Feb 2011 14:35:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DB4EC35C8;
-	Wed, 16 Feb 2011 14:36:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aP0QwDXWgIr0
-	V/pZe/hdNZlpuHo=; b=D7V28T+ZtINm5aLduY7fF4DB0EMw/PLDgV0LscY7ClhS
-	LgVFblPnn25M4QQX5f1JhteltfJ9/tV8v1UnFleCjwZIZh4zQiVP94IRpkMV96Ck
-	LGYViTirrFiZ7IX+jDFcAUPRI8JcdAcVyLX5EGa3d05CDOposcR5x04hvOwhBV8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JjR4lO
-	uqwz/Xj+F6PmnKCP95b4YBcBV/+yQpzRlsVK0Flvt2WWVu5dtIB3piEr0ouQxf5a
-	3SFTXU6P4ZBqAz63+q5MdmiJoob3nSJZ1zkcBJpmctJ0oMJYb0tbE9wg0bQsfU3U
-	R2LaklnuPNSBeZg29jCjZhDv5gFI/l9mFfw48=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B406A35C4;
-	Wed, 16 Feb 2011 14:36:42 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5E69635C2; Wed, 16 Feb 2011
- 14:36:39 -0500 (EST)
-In-Reply-To: <1297853586-812-1-git-send-email-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed\, 16 Feb
- 2011 10\:53\:06 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 14F2D88C-3A04-11E0-8BA1-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752602Ab1BPTgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 14:36:47 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44122 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751712Ab1BPTgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 14:36:46 -0500
+Received: (qmail 13227 invoked by uid 111); 16 Feb 2011 19:36:45 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 16 Feb 2011 19:36:45 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Feb 2011 14:36:43 -0500
+Content-Disposition: inline
+In-Reply-To: <7vpqqrke30.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166992>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Wed, Feb 16, 2011 at 10:51:31AM -0800, Junio C Hamano wrote:
 
-> Change the manual page for git-patch-id(1) to mention in the SYNOPSIS
-> that you can pipe in the git-log(1) output.
->
-> The manual page only mentioned that you could pipe in `< patch`, I ha=
-d
-> to grep the test suite to find that you could do things like `git log
-> -p -1 | git patch-id`.
+> > OK, so how precious is it? :)
+> 
+> The world is not that black-and-white, but is full of different shades of
+> gray.
+> 
+> If you made mistakes with a second "git add", you can "reset --mixed"
+> everything away and restart from scratch.  The same thing can be said for
+> a mistaken "git commit -a" that can be "reset HEAD^" (or --amend).  So
+> there is not much difference at the technical level.
 
-I tend to try to keep a command line example in the commit message from
-getting split by rewording.
+Sure. The problem there is that "scratch" may involve losing some work
+you did picking apart changes.
 
-    The manual page only mentioned that you can redirect from a file
-    with `<patch`; I found by grepping the test suite that you can
-    feed the command from a pipe, e.g. `git log -p -1 | git patch-id`.
+> I don't think this is primarily about "protecting the index".  It is more
+> about making the user feel better.  Compared to a mistaken second "add", a
+> mistaken "commit -a" feels like a lot heavier point-of-no-return.
 
-It sounds silly to say "pipe in" and "<" in the same sentence, so I'd f=
-ix
-that while I am at it.
+I guess. I have very occasionally run into the second-add problem and
+wanted to be able to return to an earlier index state, but I admit it
+doesn't come up that much. I just see them as the same problem.
 
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
-om>
-> ---
->  Documentation/git-patch-id.txt |    2 ++
->  1 files changed, 2 insertions(+), 0 deletions(-)
->
-> diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch=
--id.txt
-> index 4dae139..fec2cf3 100644
-> --- a/Documentation/git-patch-id.txt
-> +++ b/Documentation/git-patch-id.txt
-> @@ -9,6 +9,8 @@ SYNOPSIS
->  --------
->  'git patch-id' < <patch>
-> =20
-> +'git log --pretty=3Dformat:%H -p | git patch-id'
-> +
+I think I am also a little turned off by the config option solution
+because it seems very un-git to me. Our usual approach is to give the
+user a lot of flexibility, let them shoot their own foot off, and then
+let them know that their intact foot is waiting in the reflog, ready to
+be sewn back on.
 
-The notation "< <patch>" is used as a way to say "this command reads fr=
-om
-its standard input and acts on it".  Anybody who understands what the
-redirection is knows that a normal command would not mind getting fed f=
-rom
-a pipe instead of a regular file (they _could_ tell the kind of file
-descriptors, and there indeed are commands that change their behaviour
-depending on the kind of file descriptor they are being fed from, but t=
-hey
-are exceptions).  So I don't think the new information should live here=
-=2E
+Yes, we try to limit uselessly destructive actions before they happen.
+But this is not one of those cases. The exact command set that is being
+listed as dangerous is also part of a very reasonable workflow. It just
+depends on what the user's intention was.
 
-In a sense, I do not think the original is a material for SYNOPSIS
-section, either.  The first paragraph of DESCRIPTION section is also ba=
-d
-as a manual page; it doesn't say _what the command does_.
+But as I said, I am not against a config option if it is such a common
+problem. I certainly would not turn it on. And I don't think it should
+be on by default.
 
->  DESCRIPTION
->  -----------
->  A "patch ID" is nothing but a SHA1 of the diff associated with a pat=
-ch, with
-
-How about rewriting the whole thing, along these lines...
-
-	SYNOPSIS
-	--------
-        'git patch-id'
-
-        DESCRIPTION
-        -----------
-	Reads a patch from the standard input, and outputs the unique ID
-        for it.  When fed a series of patches that records which commit
-        they come from (e.g. output from 'git format-patch --stdout' or
-        'git log -p'), reads them and outputs the unique IDs for them, =
-one
-        per line.
-
-	A line in its output consists of two 40-byte hexadecimal values;
-
-            1. the unique ID for the change;
-            2. a SP; and
-            3. the commit object name for the change if known, or
-               40 "0" letters.
-
-	A "patch ID" is nothing but a SHA-1 of ... (original text, but
-	needs to rewrite "When dealing with..." paragraph not to mention
-	diff-tree because that is not a user-facing command anymore).
-
-        EXAMPLES
-        --------
-
-	git patch-id <patch.txt::
-
-            ... (describe what this does) ...
-
-	git log -3 -p | git patch-id::
-
-            ... (describe what this does) ...
+-Peff
