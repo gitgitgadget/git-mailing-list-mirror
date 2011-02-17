@@ -1,74 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Introduce CHERRY_PICK_HEAD
-Date: Thu, 17 Feb 2011 11:58:44 -0800
-Message-ID: <7vpqqqbfgr.fsf@alter.siamese.dyndns.org>
-References: <1297850903-65038-2-git-send-email-jaysoffian@gmail.com>
- <1297876835-70613-1-git-send-email-jaysoffian@gmail.com>
- <20110216214236.GC2615@elie>
- <AANLkTimBExej1mF=4UuTszcSoKy_xnj7bB3BaT5ze2vH@mail.gmail.com>
- <20110216230250.GF2615@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 20:59:04 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+From: Miklos Szeredi <miklos@szeredi.hu>
+Subject: Re: [sshfs] inode problem when using git on a sshfs filesystem
+Date: Thu, 17 Feb 2011 20:59:59 +0100
+Message-ID: <E1PqA19-00080P-Dy@pomaz-ex.szeredi.hu>
+References: <1297893854.4097.43.camel@dworkin.quest-ce.net>
+	<E1Pq1LW-0005rc-Qy@pomaz-ex.szeredi.hu>
+	<7f02c4cb5ca13dae6de7caa1b6f90cfe.squirrel@webmail.ocsa-data.net>
+	<E1Pq3aa-0006Nn-Cv@pomaz-ex.szeredi.hu> <ac00e83c1b57e2eeda1c6631ec611e75.squirrel@webmail.ocsa-data.net>
+Cc: miklos@szeredi.hu, miklos@szeredi.hu,
+	fuse-devel@lists.sourceforge.net, linux-kernel@vger.kernel.org,
+	fuse-sshfs@lists.sourceforge.net, git@vger.kernel.org
+To: "Yann Droneaud" <yann@droneaud.fr>
+X-From: linux-kernel-owner@vger.kernel.org Thu Feb 17 21:00:18 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqA0F-0003i0-BV
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 20:59:03 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1PqA1O-0004RN-Nj
+	for glk-linux-kernel-3@lo.gmane.org; Thu, 17 Feb 2011 21:00:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757875Ab1BQT67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 14:58:59 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41602 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753869Ab1BQT65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 14:58:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 749E231F7;
-	Thu, 17 Feb 2011 15:00:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=q0HHnRjx07OKB7ZRToBH3zHwVcY=; b=GuD+fLnACIWIJZA0ipyD4RK
-	tkt4CEWIvsXxp8ZLcrv2mhCgQAG23irnF/wp3eMKTFiigauxCxxrUytLiKdIj0W7
-	cTbWRWPZMdYDidq41VplE9YedM2e2tIct8ARAUUBXmBcTHJ/ACOLvgdIS1nA6gdV
-	gB9UcbvZHOCnwdeAiXjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=ZopR8cxLRK6x+Ub2lOMTAvtGPTPEgpYnb7qDfMOFlzP8PCkuP
-	JVrHfEDFg1BrfrYhnccyL+c7jTmtlp402KL3lgf5oZyemSn8Uz4B7xX2tnuhoRl7
-	1fmOQeYmxH6HEHzQSA7ig6pdGIziqye+myyuraoYLjfPrShLxnvw9uUV+M=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D5FD631EF;
-	Thu, 17 Feb 2011 14:59:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9118431EE; Thu, 17 Feb 2011
- 14:59:53 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7F880C68-3AD0-11E0-87A3-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
-Sender: git-owner@vger.kernel.org
+	id S1757914Ab1BQUAG (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 17 Feb 2011 15:00:06 -0500
+Received: from fxip-0047f.externet.hu ([88.209.222.127]:58256 "EHLO
+	pomaz-ex.szeredi.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752333Ab1BQUAD (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 17 Feb 2011 15:00:03 -0500
+Received: from miko by pomaz-ex.szeredi.hu with local (Exim 4.69)
+	(envelope-from <miklos@szeredi.hu>)
+	id 1PqA19-00080P-Dy; Thu, 17 Feb 2011 20:59:59 +0100
+In-reply-to: <ac00e83c1b57e2eeda1c6631ec611e75.squirrel@webmail.ocsa-data.net>
+	(yann@droneaud.fr)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167107>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167108>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Thu, 17 Feb 2011, Yann Droneaud wrote:
+> > The VFS (part of the linux kernel that implements the generic
+> > filesystem logic) clears the directory entry from the cache prior to
+> > actually trying to remove the directory.  This has the effect that any
+> > children of the directory are also cleared from the cache, hence the
+> > behavior you see in rmdir.
+> >
+> 
+> I tried to check that behavor: if the VFS is dropping dentry before doing
+> a rmdir(), them lookup files under this directory should be slower than
+> before rmdir().
+> 
+> On a ext4 filesystem, directory with 338 sub directories and 1992 files, 
+> i've tried the following commands:
+> 
+> /* drop all */
+> # echo 3 > /proc/sys/vm/drop_caches
+> # time ls -alR directory > /dev/null
+> real	0m0.140s
+> user	0m0.000s
+> sys	0m0.080s
+> 
+> /* drop cache */
+> # echo 1 > /proc/sys/vm/drop_caches
+> # time ls -alR directory > /dev/null
+> real	0m0.119s
+> user	0m0.000s
+> sys	0m0.072s
+> 
+> /* drop dentry and inode */
+> # echo 2 > /proc/sys/vm/drop_caches
+> # time ls -alR directory > /dev/null
+> real	0m0.089s
+> user	0m0.016s
+> sys	0m0.040s
+> 
+> /* read from cache */
+> # time ls -alR directory > /dev/null
+> real	0m0.063s
+> user	0m0.004s
+> sys	0m0.036s
+> 
+> $ rmdir directory
+> rmdir: failed to remove `directory': Directory not empty
+> 
+> /* re read from cache */
+> $ time ls -alR directory > /dev/null
+> real	0m0.065s
+> user	0m0.012s
+> sys	0m0.036s
+> 
+> As you can see, after doing rmdir(), the time taken to walk trough the
+> directories is the same than before calling it, so the dentry seems not
+> flushed out of the cache after the rmdir().
 
-> Wait, does this mean that -c/-C/--amend/CHERRY_PICK_HEAD overrides
-> GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE?
->
-> *checks*
->
-> Yes, it does.  The behavior is carried over from v0.99~185
-> (git-commit-script: get commit message from an existing one,
-> 2005-06-25), but imho it is wrong.
+tucsk:~ # time find /usr -ls > /dev/null
 
-Hmph, -c/-C/--amend is like giving the identity with --author from the
-command line so overriding the values from the environment variables
-sounds like the right thing to do.
+real    0m1.922s
+user    0m1.104s
+sys     0m0.800s
+tucsk:~ # rmdir /usr
+rmdir: failed to remove `/usr': Directory not empty
+tucsk:~ # time find /usr -ls > /dev/null
 
-Where am I confused?
+real    0m2.637s
+user    0m1.172s
+sys     0m1.448s
+tucsk:~ # time find /usr -ls > /dev/null
+
+real    0m1.943s
+user    0m1.068s
+sys     0m0.848s
+tucsk:~ # 
+
+As you can see it does get significantly slower after the rmdir.
+
+> I really prefer this behavior. The one you explained would be a real pain:
+> if one user call rmdir on / inside a loop, the full dentry cache will be
+> dropped each time: this would affect performance for the whole system.
+
+Yes.  But in practice this doesn't really matter, removing non-empty
+directories happens rarely.
+
+Thanks,
+Miklos
