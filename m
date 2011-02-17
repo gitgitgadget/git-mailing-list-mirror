@@ -1,101 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2 1/2] git-patch-id: test for "no newline" markers
-Date: Thu, 17 Feb 2011 03:55:46 -0800 (PST)
-Message-ID: <m3ei7698qf.fsf@localhost.localdomain>
-References: <7vwrkziw2i.fsf@alter.siamese.dyndns.org>
-	<d27aa07556df763b34b980d3706320216094d592.1297928549.git.git@drmicha.warpmail.net>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: use case: keep the output of a markup (TeX) file under revision
+ control
+Date: Thu, 17 Feb 2011 13:03:46 +0100
+Organization: ATLAS Elektronik GmbH
+Message-ID: <4D5D0EA2.4000805@atlas-elektronik.com>
+References: <1297939020.3959.12.camel@mattotaupa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 17 12:55:56 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Paul Menzel <paulepanter@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Feb 17 13:03:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq2Sh-0007pV-Ux
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 12:55:56 +0100
+	id 1Pq2aP-0003wy-7P
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 13:03:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755953Ab1BQLzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 06:55:51 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:33953 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753152Ab1BQLzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 06:55:50 -0500
-Received: by eye27 with SMTP id 27so1302333eye.19
-        for <git@vger.kernel.org>; Thu, 17 Feb 2011 03:55:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=HD0nm7+Er/LuAbhUun1OaqCW0xb3N2692OTO0y1huAg=;
-        b=OHUdTMB/TenWwTKk853fkTk9dAQwQ51WrosCvFrSZbe5SVotW+opcc4eivLgQuBATm
-         lmN1sTo3pMDS1qa3o+r+C6nFWUEBp2HXvYYC003kDULElRu1dhv+PUAb3Bd97a0LsQbR
-         Lp67oK4TXLqQMFWY9lZ+dYSOaMD5lmbmQKXc4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=AOYvccUGjk/TK74ROV/xlliV23NqyP4xFrLcUUTFzqWDgDVejQRGNo5kmap/mIVhNZ
-         puAtFI7l6W8JUBjZQeXqkGvP2ck7KXb8mMCcgwG3IbNxRXMDr9xXx4JUGXe02rFx+ViH
-         SXcRf74eQQ6ovwSa+MjsGNMgSXjbouGTmf70g=
-Received: by 10.14.119.16 with SMTP id m16mr1996279eeh.8.1297943748547;
-        Thu, 17 Feb 2011 03:55:48 -0800 (PST)
-Received: from localhost.localdomain (abwj70.neoplus.adsl.tpnet.pl [83.8.233.70])
-        by mx.google.com with ESMTPS id x54sm785561eeh.23.2011.02.17.03.55.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 17 Feb 2011 03:55:46 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p1HBt7Y7022773;
-	Thu, 17 Feb 2011 12:55:18 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p1HBsnMr022769;
-	Thu, 17 Feb 2011 12:54:49 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <d27aa07556df763b34b980d3706320216094d592.1297928549.git.git@drmicha.warpmail.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753619Ab1BQMDs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Feb 2011 07:03:48 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:24330 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752020Ab1BQMDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 07:03:47 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 2736E10075;
+	Thu, 17 Feb 2011 13:03:46 +0100 (CET)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id tnVd6XUCXl2l; Thu, 17 Feb 2011 13:03:45 +0100 (CET)
+Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Thu, 17 Feb 2011 13:03:45 +0100 (CET)
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 8A0D82716A;
+	Thu, 17 Feb 2011 13:03:45 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+In-Reply-To: <1297939020.3959.12.camel@mattotaupa>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167069>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On 2/17/2011 11:37 AM, Paul Menzel wrote:
+> Dear Git folks,
+>=20
+>=20
+> (Please CC me when replying since I am not subscribed.)
+>=20
+> I have the following use case and need an advise from you professiona=
+ls.
+>=20
+> A friend and I are writing a paper using TeX=C2=B9 and keep the files=
+ under
+> revision control using Git. This works fine so far. But I want to als=
+o
+> have the output (PDF) of the markup file under revision control to be
+> able to access the PDF files even if for example no TeX installation =
+is
+> available on a system.
+>=20
+> The problem now is, since the output is no plain text file, that
+> merging/rebasing always shows conflicts which Git, of course, cannot
+> solve.
+>=20
+> Is there a way to set that up so that there are no conflicts? Would a
+> pre-commit hook work which generates the PDF file prior to committing=
+?
+> And if no TeX installation is available it would just ignore the PDF
+> files?
+>=20
+> I could not find anything on the Web because having PDF as search str=
+ing
+> would just show up how to generate documentation about Git.
 
-> Currently, patch-id trips over our very own diff extension for marking
-> the absence of newline at EOF.
+Why don't you keep the PDF files in a separate branch ? Look at git's
+git repository (http://git.kernel.org/?p=3Dgit/git.git) in the html=20
+and man branches.
 
-This is not *our* diff extension; it is either GNU diff extension, or
-it is defined in diff/patch format standard.
-
-diff.info states in chapter "Incomplete Lines":
-
-     When an input file ends in a non-newline character, its last line is
-  called an "incomplete line" because its last character is not a
-  newline.  All other lines are called "full lines" and end in a newline
-  character.  Incomplete lines do not match full lines unless differences
-  in white space are ignored (*note White Space::).
-
-     An incomplete line is normally distinguished on output from a full
-  line by a following line that starts with `\'. [...]
-
-     For example, suppose `F' and `G' are one-byte files that contain
-  just `f' and `g', respectively.  Then `diff F G' outputs
-
-       1c1
-       < f
-       \ No newline at end of file
-       ---
-       > g
-       \ No newline at end of file
-
-  (The exact message may differ in non-English locales.)
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Regards,
+  Stefan
+--=20
+----------------------------------------------------------------
+/dev/random says: If at first you don't succeed, work for Microsoft.
