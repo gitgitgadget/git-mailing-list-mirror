@@ -1,118 +1,143 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 0/2] CHERRY_HEAD
-Date: Thu, 17 Feb 2011 15:09:40 +0100
-Message-ID: <AANLkTikWX-Pzok6MZofMD_=pPSvC5iANbzKbs0wgrZ4Q@mail.gmail.com>
-References: <1297805034-3512-1-git-send-email-jaysoffian@gmail.com>
-	<AANLkTik2NM+mxKgZy_9dCwydz+An4sFM_a4U9mdrJBq3@mail.gmail.com>
-	<AANLkTinV+cY-fND2bemDGdShnfqQGMG3eUmZPXrpKayt@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [RFD] Alternative to git-based wiki: wiki as foreign VCS
+Date: Thu, 17 Feb 2011 17:07:55 +0100
+Message-ID: <vpqoc6a8x0k.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 15:10:28 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Sylvain Boulme <Sylvain.Boulme@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 17 17:08:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq4Yt-0001Es-VB
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 15:10:28 +0100
+	id 1Pq6Or-0004tN-TX
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 17:08:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752001Ab1BQOKX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Feb 2011 09:10:23 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:44476 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750733Ab1BQOKW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 09:10:22 -0500
-Received: by wyb28 with SMTP id 28so2558965wyb.19
-        for <git@vger.kernel.org>; Thu, 17 Feb 2011 06:10:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tMy8Fc7GObnl8il3ylZSmZA5lJMp46A00WcNzSO0rZg=;
-        b=H9syLk7TBl5M1RpgkQxE7LxAMY+gVCIUgtRNR0Nc/05tuDzqRw59/IyI7OZOgxhNrU
-         k5KpT+lGdMgVCKfuMiGWdcwKF6f9VjxWQ0/+Ubg2A0swArcTSSxkpEgzNp6txP88Fez6
-         NPjgkdbfl7bB2WSTSD/ERr7yfhPPKJ4d+ulWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fBu5ouKuPRA8AqILLTiWM40PlumD7yg51wodstDqbe6+XGxggWPXWsgHR1dLAHDhxR
-         aNcfg+QSRocKOtkoP0ANWbezSwX3WsHubx8KxojK9lkhsz6xgdnLOAG+2EnLsDgGvD2g
-         b11RcRCRUew56cipSbL/VMV+0veo9xZZfJarU=
-Received: by 10.216.157.129 with SMTP id o1mr385636wek.59.1297951780988; Thu,
- 17 Feb 2011 06:09:40 -0800 (PST)
-Received: by 10.216.241.78 with HTTP; Thu, 17 Feb 2011 06:09:40 -0800 (PST)
-In-Reply-To: <AANLkTinV+cY-fND2bemDGdShnfqQGMG3eUmZPXrpKayt@mail.gmail.com>
+	id S1756814Ab1BQQIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 11:08:05 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:38701 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756608Ab1BQQID (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 11:08:03 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p1HG7rhJ005259
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 17 Feb 2011 17:07:53 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Pq6OZ-0007ww-Ds; Thu, 17 Feb 2011 17:07:55 +0100
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 17 Feb 2011 17:07:54 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p1HG7rhJ005259
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1298563678.2035@l5U0CSqmpvW26GpS5M/Ftw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167089>
 
 Hi,
 
-On Tue, Feb 15, 2011 at 11:11 PM, Jay Soffian <jaysoffian@gmail.com> wr=
-ote:
-> On Tue, Feb 15, 2011 at 4:51 PM, =C6var Arnfj=F6r=F0 Bjarmason
-> <avarab@gmail.com> wrote:
->> I've read this over, haven't run it, but I really like the idea. It
->> sucks that you have to save away the commit sha1 somwhere after a
->> failed cherry-pick to use it again. It should just behave like `git
->> rebase --continue`, which this implements.
->
-> I agree and I said as much. The problem is that cherry-pick has two
-> modes of behavior:
->
-> 1. Given a single commit. Historically this was the only way to use
-> it. In this case, the behavior after a conflict should be the same as
-> after a merge conflict. You resolve the conflicts then use git commit=
-=2E
->
-> 2. Given a rev-list. This is relatively recent addition to cherry-pic=
-k
-> (7e2bfd3 revert: allow cherry-picking more than one commit,
-> 2010-06-02). Here's where I'd expect to have a more rebase-like
-> behavior, using --continue/abort to work through the sequence. But
-> frankly, I consider 7e2bfd3 a mistake. I think a better implementatio=
-n
-> would be to make cherry-pick be plumbing, and re-use rebase's logic
-> for walking through the series of commit.
+I think most people on this list already faced the issue: wikis are
+cool, easy to contribute, ... but it's hard to force yourself to use a
+purely web-based tool to interact with something which really looks
+like a version-control system.
 
-Many people wanted to be able to cherry pick many commits, so it seems
-logical to make cherry-pick accept a range of commits.
+One solution is to use a git-based wiki, like ikiwiki [1], golum
+[2], ... but in many contexts, this is not applicable: because one
+has an existing wiki and doesn't want to migrate, because the
+git-based wiki lacks features XYZ that you rely on, or because one is
+a small contributor to a large project (say, wikipedia) and cannot
+force the project to change.
 
-About the implementation, it's better if it's in C. And it's true that
-it would be better if rebase and cherry-pick could use the same logic
-and even share the same code, but that's exactly what the goal of the
-sequencer project has been.
+I'm thinking of an alternative to this: implement a foreign VCS
+interface for a wiki engine. Today, one can interact with, say, SVN,
+using Git (via git-svn [3]). This way, we can get most of the Git
+goodness locally, and just "publish" the changes on an SVN repository.
 
-I started to implement cherry-pick --continue and posted some RFC WIP
-patches last november:
+I think that should be feasible to implement the same kind of things
+to interact with, say, MediaWiki. Typical scenarios would be:
 
-http://thread.gmane.org/gmane.comp.version-control.git/162183/focus=3D1=
-62197
+1) Work locally, possibly collaboratively on a set of pages, and then
+   publish them on a wiki (let's call this "git mw set-tree" by
+   analogy with "git svn set-tree").
 
-the goal is to have something that in the end can be reused by rebase,
-am and perhaps other commands.
+2) Wait for user contributions on the wiki, and fetch them to the Git
+   repository with one command (let's call this "git mw fetch" by
+   analogy with "git svn fetch").
 
-I did some work on it after that, but I got stalled and had not much
-time during the last months to move it further. I will see if I can
-find time to work on it during the next weeks and/or publish/post the
-current state.
+3) Allow one to easily download a set of files, and later get updates
+   (i.e. "git clone/git pull" is far better than downloading from a
+   browser)
 
-> I'd like to do (2) eventually[*] but I think in the mean time this is
-> a nice incremental improvement.
->
-> [*] is the sequencer project dead?
+I'm personnaly interested in this in a teaching context, since I love
+Git, and I use a wiki [4] to publish some documents to my students.
+Scenario 1) corresponds to teachers preparing stuffs (without
+necessarily publishing drafts), and 2) corresponds to two cases:
+coworker unwilling to use Git, but willing to use a wiki, and students
+contributing some content. Senario 3) corresponds to the case where we
+distribute a set of files (say, example pieces of code), and reference
+these files from a wiki documentation. See [5] for an example.
 
-If you are interested, perhaps you can have a look at what I posted
-last november. And if you want to work on it you can ask me to publish
-the current state, and eventually base some of your work on that.
+I've already got half a solution where I publish content on GitHub,
+and include them on a wiki with the "Include" extension [6]. It solves
+scenario 1) partially and 3) nicely, but not 2).
 
-Thanks,
-Christian.
+Together with Sylvain Boulme (in Cc), we plan to propose a project to
+students to develop a git-svn-like interface to interact with
+mediawiki. Students have a bit less than a month in May-June and work
+in teams of 2 to 4 students (last year, we got the textconv
+functionality in "git blame" and "git gui blame", and some better
+error messages with the same project).
+
+It sounds feasible to write a usable prototype, probably re-using code
+from tools interacting with mediawiki (like wikipediafs [7]), and
+basing the work on git remote helpers [8]. We should be able to make
+this a free software.
+
+Among the design goals:
+
+* No restriction on the Git workflow. Unlike "git-svn" which promotes
+  a flow with SVN as the central repository, we should target a
+  workflow where people merge freely using Git, and then publish/fetch
+  changes from the wiki (i.e. a merge-based workflow, as opposed to a
+  rebase-based one).
+
+* Ability to import only a subset of the wiki (nobody want to "git
+  clone" the whole wikipedia ;-) ). At least a manually-specified list
+  of pages, and better, the content of one category.
+
+* Ability to work interact with several wikis (e.g. a test, private
+  instance, and a public instance).
+
+And then, fancy extensions can be imagined:
+
+* Manage non-text files as Media files uploaded to the wiki.
+
+* Manage directories in Git as subcategories in the wiki.
+
+Any opinions? Advices? Does this sounds like a good idea? Any pitfall
+to avoid?
+
+Thanks in advance,
+
+Footnotes:
+[1] http://ikiwiki.info/
+[2] https://github.com/github/gollum
+[3] http://www.kernel.org/pub/software/scm/git/docs/git-svn.html
+[4] http://ensiwiki.ensimag.fr/index.php/Accueil (French)
+[5] http://ensiwiki.ensimag.fr/index.php/LdB_-_Modes_d%27adressages#Mode_d.27adressage_.C2.AB.C2.A0Indirect_Registre.C2.A0.C2.BB
+[6] http://www.mediawiki.org/wiki/Extension:Include
+[7] http://wikipediafs.sourceforge.net/
+[8] http://www.kernel.org/pub/software/scm/git/docs/git-remote-helpers.html
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
