@@ -1,85 +1,77 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH v2 00/31] refactor rebase
-Date: Wed, 16 Feb 2011 22:41:55 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102162212360.14950@debian>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com> <4D5BE49D.1040402@viscovery.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Feb 17 04:42:08 2011
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH v3 0/4] CHERRY_PICK_HEAD
+Date: Wed, 16 Feb 2011 23:18:41 -0500
+Message-ID: <1297916325-89688-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 17 05:19:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ppukp-0000gp-8I
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 04:42:07 +0100
+	id 1PpvKj-0007jo-9J
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 05:19:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754394Ab1BQDmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 22:42:01 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:62171 "EHLO
+	id S1753687Ab1BQETE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Feb 2011 23:19:04 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:41140 "EHLO
 	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752621Ab1BQDmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 22:42:00 -0500
-Received: by qyk12 with SMTP id 12so2295415qyk.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 19:42:00 -0800 (PST)
+	with ESMTP id S1753523Ab1BQETC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Feb 2011 23:19:02 -0500
+Received: by qyk12 with SMTP id 12so2315930qyk.19
+        for <git@vger.kernel.org>; Wed, 16 Feb 2011 20:19:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=OEDgNayh2nZIMEnL0JrRpZ9/K7gJ4gpbGXumgZuxfT0=;
-        b=ZQM07UqLe/PUtrAQ5VT+RvFoxiUqjMpq2Nek+vYFmfOvb4xTPQ319Bo4iOINIclxQ9
-         w9kc7WJD5724S+8GPCgVb+15kqpOZziXm0Q7cBI6iRTuKYgy7VZya76ISEADfxy4V6/S
-         TolgtQrvDDL8wY3gwLt1d8yuea4OXPCd3dq3c=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=ZSqWZwIoBbHkPulOREBPOdUOjZsxOmNYVCv/aBaHXzM=;
+        b=Zhvkd1L14vDZN4qjVvFd5WMKfb96PV74NvwO3VJb09p0XGPuz6AMG7sw42rQJiQJwh
+         WgU2r/qhdDJkq+BTIcSxrqGHrkpaMaOoBNXfFS0O81cs1IoIHvr7Grldq4JblpTvz0mJ
+         Tktc4frztxvJaN9U0JlTxE7nnVB/SuJ8OFldA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=BuZglK2ilV8pUAIgUTtggtScYHD6M0NhDAlSAiZ0iPIq17FpEsvAKgjGx7IOPLDSRl
-         HsCwJrqDSE+6awyDmWOmMvaKEB5muDN/aKtGpuQ5a/1Ys5fggZ6J3v/H6OOzovP9ZFGz
-         VqzSXk6cM8Dw/d6AV+/BoZwezG5m1i+Ku3PjA=
-Received: by 10.224.6.75 with SMTP id 11mr1839337qay.333.1297914119137;
-        Wed, 16 Feb 2011 19:41:59 -0800 (PST)
-Received: from [192.168.1.100] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id g32sm384554qck.22.2011.02.16.19.41.56
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=dYzbq6nseqgopjHehlbNnLQVt4ZFOQRR2saXiWdMRX8+mEBPIXHdo1tZNgFPm0+WYL
+         s05rzVzPn3z7X5dGIkU0m0KjAdN6/E/40WG/DPuEHUT+oDqpECTeGmTfPw5U+zsWiJRw
+         a5ba9UJnIIXOf+ZT1IjEUmVpPqtiT9MS6iEJE=
+Received: by 10.224.20.65 with SMTP id e1mr1876187qab.371.1297916341531;
+        Wed, 16 Feb 2011 20:19:01 -0800 (PST)
+Received: from localhost (cpe-071-077-014-091.nc.res.rr.com [71.77.14.91])
+        by mx.google.com with ESMTPS id l17sm410289qck.20.2011.02.16.20.19.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Feb 2011 19:41:57 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <4D5BE49D.1040402@viscovery.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        Wed, 16 Feb 2011 20:19:01 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.1.30.g7fe09
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167031>
 
-On Wed, 16 Feb 2011, Johannes Sixt wrote:
+Incorporating feedback from http://thread.gmane.org/gmane.comp.version-control.git/166945
 
-> There's one annoying regression with this series: It does not accept
-> abbreviated options anymore. In particular, 'git rebase --cont' is now an
-> error. I use this a lot since I don't have command completion. This used
-> to work (only) with interactive rebase.
+Jay Soffian (4):
+  Introduce CHERRY_PICK_HEAD
+  bash: teach __git_ps1 about CHERRY_PICK_HEAD
+  commit.c: replace some literal strings with constants
+  Teach commit about CHERRY_PICK_HEAD
 
-Sorry about that :-(. That must of course be because I removed the
-OPTIONS_SPEC from git-rebase--interactive.sh. Sounds like I should add
-it back in git-rebase.sh. Can someone explain what the
-OPTIONS_KEEPDASHDASH is for? Should I add that as well?
+ Documentation/git-cherry-pick.txt      |   19 +++
+ Documentation/git-commit.txt           |    7 +-
+ Documentation/revisions.txt            |    5 +-
+ branch.c                               |    1 +
+ builtin/commit.c                       |  196 ++++++++++++++++++++++----------
+ builtin/merge.c                        |    7 +
+ builtin/revert.c                       |   74 ++++---------
+ contrib/completion/git-completion.bash |    2 +
+ t/t3507-cherry-pick-conflict.sh        |  138 ++++++++++++++++++++++-
+ t/t7509-commit.sh                      |   29 +++++
+ wt-status.c                            |    4 +-
+ wt-status.h                            |    9 ++-
+ 12 files changed, 371 insertions(+), 120 deletions(-)
 
-> And a side note: the error message is -- during a rebase that stopped at
-> an 'edit' instruction:
-> 
-> $ git rebase --cont
-> Usage: git rebase [--interactive | -i] [-v] [--force-rebase | -f]
-> [--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]
-> 
-> It nowhere mentions --continue, --skip, --abort etc. That's perhaps worth
-> fixing.
-
-Makes sense. If others agree, I will add that as well.
-
-/Martin
+-- 
+1.7.4.1.30.g7fe09
