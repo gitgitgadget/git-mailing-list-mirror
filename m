@@ -1,68 +1,75 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: git clone NonExistentLocation
-Date: Thu, 17 Feb 2011 13:52:20 +0100
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4D5D1A04.4090107@atlas-elektronik.com>
-References: <4D5CE3E7.5030101@atlas-elektronik.com> <4D5D1715.5020707@drmicha.warpmail.net>
+Date: Thu, 17 Feb 2011 13:59:55 +0100
+Message-ID: <4D5D1BCB.3010003@drmicha.warpmail.net>
+References: <4D5CE3E7.5030101@atlas-elektronik.com> <4D5D1715.5020707@drmicha.warpmail.net> <4D5D1A04.4090107@atlas-elektronik.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 17 13:52:22 2011
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+X-From: git-owner@vger.kernel.org Thu Feb 17 14:03:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq3LI-0001EB-Ab
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 13:52:20 +0100
+	id 1Pq3Vo-0007YM-2M
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 14:03:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532Ab1BQMwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 07:52:16 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:14707 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753448Ab1BQMwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 07:52:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id E814510072;
-	Thu, 17 Feb 2011 13:52:13 +0100 (CET)
-X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
-	with ESMTP id hpl9k-2WvFIL; Thu, 17 Feb 2011 13:52:13 +0100 (CET)
-Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Thu, 17 Feb 2011 13:52:13 +0100 (CET)
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 698062716A;
-	Thu, 17 Feb 2011 13:52:13 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <4D5D1715.5020707@drmicha.warpmail.net>
-X-Enigmail-Version: 1.1.1
+	id S1755425Ab1BQNDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 08:03:06 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50651 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751759Ab1BQNDE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 08:03:04 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3B0FD20958;
+	Thu, 17 Feb 2011 08:03:04 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 17 Feb 2011 08:03:04 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=1rl5h6YgO4/Z7OfEZ7hOUO5j3SE=; b=EFxUblxvyHIBd1G2rpCJ8tMAuqz5fgXqNdnH0Yk0/bo3VHZxBHnNoBU1oNEIhmngG/keRkvXzkXh8K/dGvLr5XHJJntKIOMuuDpoXZ3prRGzuxcR6xtZP/ohn65CH/unD3W3OwjHeD5nYY9Ms9wayFNUMqqyno1D56WabWhivUM=
+X-Sasl-enc: 5DlruZkm/SY95S5XAi55sps2pM+n7kDvv4f1nXNr0A4c 1297947783
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9D44A409B8C;
+	Thu, 17 Feb 2011 08:03:03 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <4D5D1A04.4090107@atlas-elektronik.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167082>
 
-On 2/17/2011 1:39 PM, Michael J Gruber wrote:
+Stefan Naewe venit, vidit, dixit 17.02.2011 13:52:
+> On 2/17/2011 1:39 PM, Michael J Gruber wrote:
+>>
+>> It is useful, and it even gives you a warning that it still might not be
+>> what you intended. Would be funny if it were accidental. Indeed, a git
+>> "log -S" on that warning reveals that it was introduced intentionally in
+>>
+>> 86ac751 (Allow cloning an empty repository, 2009-01-23)
 > 
-> It is useful, and it even gives you a warning that it still might not be
-> what you intended. Would be funny if it were accidental. Indeed, a git
-> "log -S" on that warning reveals that it was introduced intentionally in
+> OK. But that's about 'cloning an empty repository'.
+> 'NonExistentLocation' is not empty initially - it simply does
+> not exist.
 > 
-> 86ac751 (Allow cloning an empty repository, 2009-01-23)
+> Contrast that to 'git clone http://url.does.not.exist'. You don't
+> get an empty repository in 'url.does.not.exist' after running that.
 
-OK. But that's about 'cloning an empty repository'.
-'NonExistentLocation' is not empty initially - it simply does
-not exist.
+OK, the transport layer errors out in that case.
 
-Contrast that to 'git clone http://url.does.not.exist'. You don't
-get an empty repository in 'url.does.not.exist' after running that.
+Rereading Sverre's commit message, I'm still not sure whether this case
+was intended or not. The test case covers existing empty repos only. So
+I'm cc'ing him and holding back by documentation patch.
 
-Regards,
-  Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: ==/==/==/==Police tagline==/==/==Do not cross ==/==/==/==
+Sverre, with your 86ac751, the following two are equivalent (modulo a
+warning) on a nonexisting dir:
+
+git clone dir
+git init dir
+
+Is that intentional?
+
+Michael
