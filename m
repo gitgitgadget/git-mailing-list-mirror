@@ -1,69 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to git checkout a orgin(unstage) version file in another
- directoy?
-Date: Thu, 17 Feb 2011 10:33:24 -0800
-Message-ID: <7vpqqqcxzf.fsf@alter.siamese.dyndns.org>
-References: <loom.20110217T074533-358@post.gmane.org>
- <4D5CDBAD.4050700@drmicha.warpmail.net>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH 2/2] git-p4: Improve branch support
+Date: Thu, 17 Feb 2011 10:42:34 -0800
+Message-ID: <20110217184234.GB20627@honk.padd.com>
+References: <1297813789-3831-1-git-send-email-vitor.hda@gmail.com>
+ <1297813789-3831-3-git-send-email-vitor.hda@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Chunlin Zhang <zhangchunlin@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 17 19:33:52 2011
+Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 17 19:42:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq8fd-00069Y-L7
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 19:33:41 +0100
+	id 1Pq8oL-00050U-07
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 19:42:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754579Ab1BQSdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 13:33:37 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52425 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753658Ab1BQSdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 13:33:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B376237A6;
-	Thu, 17 Feb 2011 13:34:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XKil2JqQyzxCf14ru3g3YKizi9c=; b=kK3acA
-	rxxtfDw2QwQvpPfbEESXcepn5fZe8Yk2FByZjFL3j7w7EXX0cUDWy3F92WRu+YsN
-	og1sLaoQrccjouvESnIpj4obG3Mdj3g4ogldRE7vIJhWBjsIBG+SBxacBgY6bb2y
-	UqY6f3ofEzrPPoznC9VBn9QKfLb1eCLkbUHVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uWAZF1knbd6pglqvbOiOpvqLl8ljR2xz
-	uMpWzEJmFS1pg+wFdQiV6dgL6Ds+mcS+gteoxAXuie2i1u+yF/7eSeiTFnsZ9z4Y
-	hDj3yExFuw7veryebsxcqKkXL8R2AX6wnhW1oYLBNFS3B71LJNBcPVn1RC/Uz9WQ
-	wqykzWFlJak=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 821B737A5;
-	Thu, 17 Feb 2011 13:34:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6FE1437A4; Thu, 17 Feb 2011
- 13:34:33 -0500 (EST)
-In-Reply-To: <4D5CDBAD.4050700@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Thu\, 17 Feb 2011 09\:26\:21 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 92F98C1A-3AC4-11E0-AA61-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752519Ab1BQSmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 13:42:36 -0500
+Received: from honk.padd.com ([74.3.171.149]:34589 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750699Ab1BQSmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 13:42:35 -0500
+Received: by honk.padd.com (Postfix, from userid 7770)
+	id 7A5A820AB; Thu, 17 Feb 2011 10:42:34 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1297813789-3831-3-git-send-email-vitor.hda@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167100>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+vitor.hda@gmail.com wrote on Tue, 15 Feb 2011 23:49 +0000:
+> Add new config option branchUser to allow filtering P4 branch list by user.
+> Allow defining the branch list through branchList config option.
+> Correct base branch directory detection to use '/' as the split character.
 
-> I'm not sure what you mean by "origin" version, but if you mean the
-> version from the current revision (before making and staging changes),
-> you would check out from HEAD instead of from the index:
->
-> git --work-tree=. --git-dir="/media/linux/t/kernel/.git" checkout HEAD
-> -- README
+I've only been avoiding reading this one because I don't use
+branches, and am having a hard time following what the point
+of the change is.  Maybe someone else will notice that this is
+a good change straightaway, and save you the bother of explaining
+it to me.
 
-Wouldn't that still affect the index in /media/linux/t/kernel/.git/index,
-making /media/linux/t/kernel/README and the index entry out-of-sync?
+The whole detectBranches option seems a bit spotty, given its
+lack of documentation and numerous shady "## HACK" and "## FIXME"
+comments.  So it certainly does appreciate your attention.
+
+As far as I can tell, a branch is just a mapping between two
+areas of the repo, and all you can do with one is to feed it
+to "p4 integrate" instead of giving a single explicit src/dest.
+
+> @@ -1272,7 +1277,13 @@ class P4Sync(Command):
+>      def getBranchMapping(self):
+>          lostAndFoundBranches = set()
+>  
+> -        for info in p4CmdList("branches"):
+> +        user = gitConfig("git-p4.branchUser")
+> +        if len(user) > 0:
+> +            command = "branches -u %s" % user
+> +        else:
+> +            command = "branches"
+> +
+> +        for info in p4CmdList(command):
+
+This part is for branches -u, to limit the auto-detected braches
+to just those created by a given user.
+
+> @@ -1305,6 +1316,12 @@ class P4Sync(Command):
+>          for branch in lostAndFoundBranches:
+>              self.knownBranches[branch] = branch
+>  
+> +        configBranches = gitConfigList("git-p4.branchList")
+> +        for branch in configBranches:
+> +            if branch:
+> +                (source, destination) = branch.split(":")
+> +                self.knownBranches[destination] = source
+> +
+
+This bit adds more branches, if you have put them in .git/config
+separated by a :.  Presumably things that are directories in the
+depot but do _not_ have a branch?  I don't get it.  What does
+your depot look like and what do you stick in branchList?
+
+>          branches = p4BranchesInGit(self.importIntoRemotes)
+>          for branch in branches.keys():
+> @@ -1626,12 +1643,14 @@ class P4Sync(Command):
+>                      else:
+>                          paths = []
+>                          for (prev, cur) in zip(self.previousDepotPaths, depotPaths):
+> -                            for i in range(0, min(len(cur), len(prev))):
+> -                                if cur[i] <> prev[i]:
+> +                            prev_list = prev.split("/")
+> +                            cur_list = cur.split("/")
+> +                            for i in range(0, min(len(cur_list), len(prev_list))):
+> +                                if cur_list[i] <> prev_list[i]:
+>                                      i = i - 1
+>                                      break
+>  
+> -                            paths.append (cur[:i + 1])
+> +                            paths.append ("/".join(cur_list[:i + 1]))
+
+This was a bug?  I guess somehow this is adapting the existing
+depot paths to include new ones that you discovered with "p4
+branches".  And now you are comparing the path elements instead
+of going a character at a time.  Maybe to catch //depot/ab vs
+//depot/ac ?
+
+In other words, add some comments or add something to the commit
+text.  It is encouraged to split up a patch into the smallest
+logical chenk if the changes are all independent.  Maybe these
+three are related through the theme of auto-branch detection.
+
+		-- Pete
