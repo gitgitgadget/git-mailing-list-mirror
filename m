@@ -1,59 +1,47 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Liam Clarke <liam.clarke-hutchinson@adscale.co.nz>
 Subject: Re: git merge auto-commit doesn't fire pre-commit hook
-Date: Wed, 16 Feb 2011 23:52:47 -0500
-Message-ID: <AANLkTim+_s5S46QwhHLquMLsoqCwLASdyeW1Lu6md=TB@mail.gmail.com>
-References: <1F3B7FF9-6348-4197-A6B7-23C4DA144920@adscale.co.nz>
- <AANLkTimCdQL879kBZiktB49eSvoAGT0pX5DKX0SHFOVB@mail.gmail.com> <6F190320-19AF-4F4A-9AE9-0DDA0839C5FD@adscale.co.nz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Date: Thu, 17 Feb 2011 18:05:25 +1300
+Message-ID: <542F1586-F49F-4CD4-A15A-0C7002EB8CE1@adscale.co.nz>
+References: <1F3B7FF9-6348-4197-A6B7-23C4DA144920@adscale.co.nz> <AANLkTimCdQL879kBZiktB49eSvoAGT0pX5DKX0SHFOVB@mail.gmail.com> <6F190320-19AF-4F4A-9AE9-0DDA0839C5FD@adscale.co.nz> <AANLkTim+_s5S46QwhHLquMLsoqCwLASdyeW1Lu6md=TB@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
-To: Liam Clarke <liam.clarke-hutchinson@adscale.co.nz>
-X-From: git-owner@vger.kernel.org Thu Feb 17 05:53:24 2011
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 17 06:05:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ppvrn-0005J9-8i
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 05:53:23 +0100
+	id 1Ppw3k-0001rg-1z
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 06:05:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754747Ab1BQExT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Feb 2011 23:53:19 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48089 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752651Ab1BQExS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Feb 2011 23:53:18 -0500
-Received: by iwn9 with SMTP id 9so2089292iwn.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 20:53:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=KaTqT5XNYhuxPnuiJ5Xl7wMJWmWbOTS0Lz8XH1Hz1yQ=;
-        b=MCOl++83R3q/64wdlR3GJGoxXIFKCu9EFu6RRhP0HI/vvArffBtYOcprtEn3UdC0Vu
-         t3XCdqf5PMVWZoxOFWvjzHySzXSCgIN08MMM6SAg8rKOOBQXHre8wbWWXEeNObTRkeKK
-         FR3H9VnwoKNZIEGQmTRe7N5spE+mazw4o3HKM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=i5YJiz9ag84GCHw8szhsHHgZHNXIFQ/w/MsxX7LkgC4GHFOw1Y1+3Jwjn8WHgQteUJ
-         w98VTlNokzlhP6MyAcDnizrkgkXilylDqNIJfjYG7+HPoGizGUfN+QmR6FfGUZLEtAvy
-         tWBOSyeiiC/QGnBUK58R7FC8L0YTAvCapl8Wo=
-Received: by 10.231.38.2 with SMTP id z2mr1188532ibd.142.1297918397770; Wed,
- 16 Feb 2011 20:53:17 -0800 (PST)
-Received: by 10.231.40.2 with HTTP; Wed, 16 Feb 2011 20:52:47 -0800 (PST)
-In-Reply-To: <6F190320-19AF-4F4A-9AE9-0DDA0839C5FD@adscale.co.nz>
+	id S1752186Ab1BQFF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 00:05:28 -0500
+Received: from 85.25.69.111.dynamic.snap.net.nz ([111.69.25.85]:54290 "EHLO
+	mail.toc.org.nz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751780Ab1BQFF0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 00:05:26 -0500
+Received: from imac24.toc.org.nz (imac24.toc.org.nz [10.13.11.74])
+	by mail.toc.org.nz (Postfix) with ESMTP id 6A1C2282EEF4;
+	Thu, 17 Feb 2011 18:05:25 +1300 (NZDT)
+In-Reply-To: <AANLkTim+_s5S46QwhHLquMLsoqCwLASdyeW1Lu6md=TB@mail.gmail.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167040>
 
-On Wed, Feb 16, 2011 at 11:44 PM, Liam Clarke
-<liam.clarke-hutchinson@adscale.co.nz> wrote:
-> What about when I'm merging my own feature branches into master? Also, past performance indicates that yelling about bad stuff in merges works quite well when they're in the same office as you...
+It can't affect the merge, but I could check for the data's existence, rm it, commit the deletion, and then scold the naughty developer... Yeah, not a bad idea actually. :) Cheers Jay.
 
-BTW, why not just use the post-merge hook to amend the merge after the fact?
+On 17/02/2011, at 5:52 PM, Jay Soffian wrote:
 
-j.
+> On Wed, Feb 16, 2011 at 11:44 PM, Liam Clarke
+> <liam.clarke-hutchinson@adscale.co.nz> wrote:
+>> What about when I'm merging my own feature branches into master? Also, past performance indicates that yelling about bad stuff in merges works quite well when they're in the same office as you...
+> 
+> BTW, why not just use the post-merge hook to amend the merge after the fact?
+> 
+> j.
