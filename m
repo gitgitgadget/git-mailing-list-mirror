@@ -1,129 +1,74 @@
-From: Paul Menzel <paulepanter@users.sourceforge.net>
-Subject: Re: use case: keep the output of a markup (TeX) file under
- revision control
-Date: Thu, 17 Feb 2011 20:51:59 +0100
-Message-ID: <1297972319.3944.30.camel@mattotaupa>
-References: <1297939020.3959.12.camel@mattotaupa>
-	 <4D5D0EA2.4000805@atlas-elektronik.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Introduce CHERRY_PICK_HEAD
+Date: Thu, 17 Feb 2011 11:58:44 -0800
+Message-ID: <7vpqqqbfgr.fsf@alter.siamese.dyndns.org>
+References: <1297850903-65038-2-git-send-email-jaysoffian@gmail.com>
+ <1297876835-70613-1-git-send-email-jaysoffian@gmail.com>
+ <20110216214236.GC2615@elie>
+ <AANLkTimBExej1mF=4UuTszcSoKy_xnj7bB3BaT5ze2vH@mail.gmail.com>
+ <20110216230250.GF2615@elie>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-HeFLPNqY2m0MgVUBeLwB"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 20:52:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 17 20:59:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq9tb-0006bE-5m
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 20:52:11 +0100
+	id 1PqA0F-0003i0-BV
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 20:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756689Ab1BQTwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 14:52:05 -0500
-Received: from mail.gw90.de ([188.40.100.199]:40093 "EHLO mail.gw90.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753541Ab1BQTwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 14:52:04 -0500
-Received: from f053032084.adsl.alicedsl.de ([78.53.32.84] helo=[192.168.178.21])
-	by mail.gw90.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <paulepanter@users.sourceforge.net>)
-	id 1Pq9tQ-0007gY-Cl; Thu, 17 Feb 2011 19:52:00 +0000
-In-Reply-To: <4D5D0EA2.4000805@atlas-elektronik.com>
-X-Mailer: Evolution 2.30.3 
+	id S1757875Ab1BQT67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 14:58:59 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41602 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753869Ab1BQT65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 14:58:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 749E231F7;
+	Thu, 17 Feb 2011 15:00:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=q0HHnRjx07OKB7ZRToBH3zHwVcY=; b=GuD+fLnACIWIJZA0ipyD4RK
+	tkt4CEWIvsXxp8ZLcrv2mhCgQAG23irnF/wp3eMKTFiigauxCxxrUytLiKdIj0W7
+	cTbWRWPZMdYDidq41VplE9YedM2e2tIct8ARAUUBXmBcTHJ/ACOLvgdIS1nA6gdV
+	gB9UcbvZHOCnwdeAiXjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=ZopR8cxLRK6x+Ub2lOMTAvtGPTPEgpYnb7qDfMOFlzP8PCkuP
+	JVrHfEDFg1BrfrYhnccyL+c7jTmtlp402KL3lgf5oZyemSn8Uz4B7xX2tnuhoRl7
+	1fmOQeYmxH6HEHzQSA7ig6pdGIziqye+myyuraoYLjfPrShLxnvw9uUV+M=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D5FD631EF;
+	Thu, 17 Feb 2011 14:59:58 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9118431EE; Thu, 17 Feb 2011
+ 14:59:53 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7F880C68-3AD0-11E0-87A3-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167107>
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
---=-HeFLPNqY2m0MgVUBeLwB
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Wait, does this mean that -c/-C/--amend/CHERRY_PICK_HEAD overrides
+> GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE?
+>
+> *checks*
+>
+> Yes, it does.  The behavior is carried over from v0.99~185
+> (git-commit-script: get commit message from an existing one,
+> 2005-06-25), but imho it is wrong.
 
-Am Donnerstag, den 17.02.2011, 13:03 +0100 schrieb Stefan Naewe:
-> On 2/17/2011 11:37 AM, Paul Menzel wrote:
+Hmph, -c/-C/--amend is like giving the identity with --author from the
+command line so overriding the values from the environment variables
+sounds like the right thing to do.
 
-> > (Please CC me when replying since I am not subscribed.)
-> >=20
-> > I have the following use case and need an advise from you professionals=
-.
-> >=20
-> > A friend and I are writing a paper using TeX=C2=B9 and keep the files u=
-nder
-> > revision control using Git. This works fine so far. But I want to also
-> > have the output (PDF) of the markup file under revision control to be
-> > able to access the PDF files even if for example no TeX installation is
-> > available on a system.
-> >=20
-> > The problem now is, since the output is no plain text file, that
-> > merging/rebasing always shows conflicts which Git, of course, cannot
-> > solve.
-> >=20
-> > Is there a way to set that up so that there are no conflicts? Would a
-> > pre-commit hook work which generates the PDF file prior to committing?
-> > And if no TeX installation is available it would just ignore the PDF
-> > files?
-> >=20
-> > I could not find anything on the Web because having PDF as search strin=
-g
-> > would just show up how to generate documentation about Git.
->=20
-> Why don't you keep the PDF files in a separate branch ? Look at git's
-> git repository (http://git.kernel.org/?p=3Dgit/git.git) in the html=20
-> and man branches.
-
-Very interesting. Thank you very much for this hint.
-
-Is the used solution in git=E2=80=99s git repository a result of the proble=
-m
-with maintaining generated output from source files or does it have
-other other advantages too?
-
-When creating TeX documents =E2=80=93 at least in my work flow =E2=80=93 I =
-always have
-the PDF file open in parallel. Would that be a problem when having it in
-a separate branch?
-
-Also I guess that this is done automatically too (saying autogenerated
-in `git log origin/man`). I could not find the script though.
-
-        $ git grep Autogen
-        git-gui/Makefile:        echo '# Autogenerated by git-gui Makefile'=
- >$@ && \
-        git-gui/git-gui.sh:if {[gets $fd] eq {# Autogenerated by git-gui Ma=
-kefile}} {
-
-and searching for =C2=BBgit "Autogenerated manpages for"=C2=AB did not retu=
-rn
-anything useful for me.
-
-Additionally I am confused where the SHA id g43f9f in =C2=BBAutogenerated
-manpages for v1.7.4.1-42-g43f9f=C2=AB comes from. I could not find that
-commit in `origin/master` or `git log v1.7.4.1`.
-
-The last thing is that in git=E2=80=99s git repository the autogeneration o=
-f the
-manual pages does not seem to happen every commit (Is it a cron job?).
-In my use case the PDF file should be generated after every commit. Is a
-separate branch the way to go here?
-
-
-Thanks,
-
-Paul
-
---=-HeFLPNqY2m0MgVUBeLwB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEABECAAYFAk1dfF8ACgkQPX1aK2wOHVi7BgCfYpMTREH6PFiVkN4k0+pomTFD
-LBQAn3AAV+f3PyN9DE0Twtd6gnMEiYSH
-=rmDX
------END PGP SIGNATURE-----
-
---=-HeFLPNqY2m0MgVUBeLwB--
+Where am I confused?
