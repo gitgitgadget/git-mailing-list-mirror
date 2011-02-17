@@ -1,100 +1,85 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: git clone NonExistentLocation
-Date: Thu, 17 Feb 2011 10:01:27 +0100
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4D5CE3E7.5030101@atlas-elektronik.com>
+From: knittl <knittl89@googlemail.com>
+Subject: Re: set-upstream for existing branch...?
+Date: Thu, 17 Feb 2011 10:25:32 +0100
+Message-ID: <AANLkTimPYkEczv=suCr02rVb3OSg_h9o88_5CEmonPTR@mail.gmail.com>
+References: <buoei77xmpc.fsf@dhlpc061.dev.necel.com> <AANLkTikqj8NjLwR647E1tHUuDO=OitUJ1dm5Fs7gtXXt@mail.gmail.com>
+ <buo8vxfxhhy.fsf@dhlpc061.dev.necel.com> <AANLkTim6HDCaeTDuEtK+3niKKoz6A3KA=m=UCr4DaY-V@mail.gmail.com>
+ <4D5CDB01.9070502@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 17 10:10:22 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Miles Bader <miles@gnu.org>, Jay Soffian <jaysoffian@gmail.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 17 10:26:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpzsT-0001SH-7Q
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 10:10:22 +0100
+	id 1Pq07e-00024k-Ll
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 10:26:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767Ab1BQJKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 04:10:14 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:12875 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752312Ab1BQJKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 04:10:12 -0500
-X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Feb 2011 04:10:12 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 9A26610069
-	for <git@vger.kernel.org>; Thu, 17 Feb 2011 10:01:27 +0100 (CET)
-X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
-	with ESMTP id MPnoTHGDHOP5 for <git@vger.kernel.org>;
-	Thu, 17 Feb 2011 10:01:27 +0100 (CET)
-Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP
-	for <git@vger.kernel.org>; Thu, 17 Feb 2011 10:01:27 +0100 (CET)
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 1701A27177
-	for <git@vger.kernel.org>; Thu, 17 Feb 2011 10:01:27 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-X-Enigmail-Version: 1.1.1
+	id S1752877Ab1BQJZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 04:25:58 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:48551 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179Ab1BQJZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 04:25:54 -0500
+Received: by pzk35 with SMTP id 35so336013pzk.19
+        for <git@vger.kernel.org>; Thu, 17 Feb 2011 01:25:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=D/en43/RJUkE88tRn2L1rFRbp23Jb1rxla2Zl8mWdbk=;
+        b=TB+Gsa6ln2sX5zDXirAWUFe1z8O6Gaj26ue2Qg98gADChBSCw/fxl5Io9l6YL2kJLr
+         9ij+HQ6DLuAsucSya2/S3IWHfpJKb5AyBUVV7es0x7R0nwxWKEsOwPGUAnbklnEysLxd
+         iioErhd76AEn0kwrNpMKumdcMxyFj5Zz2CoT8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=FJLm8me9A3cmk6+KcdNj3BbDrZXTXCicYIg7mv7JllYJW9ljWv7MKaUAvsGEIEo+TW
+         uyBynIg+GImJsIwvJqMjU1ccGBZtpoKWcrV0k5LPMmlOTrp4SUl06do+a+Z+HtQDiFKj
+         r+0LWEDamGbCsIFewTB3REYh5q7Y8SVOE1uco=
+Received: by 10.142.241.13 with SMTP id o13mr1292055wfh.9.1297934753448; Thu,
+ 17 Feb 2011 01:25:53 -0800 (PST)
+Received: by 10.143.4.16 with HTTP; Thu, 17 Feb 2011 01:25:32 -0800 (PST)
+In-Reply-To: <4D5CDB01.9070502@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167059>
 
-Hi.
+On Thu, Feb 17, 2011 at 9:23 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Miles Bader venit, vidit, dixit 17.02.2011 08:24:
+>> Hmm, on a related note, is there an obvious way to _show_ the current
+>> branch's upstream...?
+>>
+>> [I mean, which just prints out "origin/master" or whatever...]
+>>
+>> Thanks,
+>>
+>> -miles
+>>
+>
+> git for-each-ref --format="%(upstream)" $(git symbolic-ref HEAD)
+>
+> I can't come up with a better way of expanding @{u} without resolving
+> the resulting refname to a SHA1. You could do
 
-If I do:
+what about
 
- $ uname -a
-Linux as100897 2.6.26-2-686 #1 SMP Thu Nov 25 01:53:57 UTC 2010 i686 GNU/Linux
- $ git version
-git version 1.7.4.1
- $ ls -l NonExistentLocation
-ls: cannot access NonExistentLocation: No such file or directory
- $ git clone NonExistentLocation
-Cloning into NonExistentLocation...
-warning: You appear to have cloned an empty repository.
- $
+    git branch -vv
 
-I get a new (empty) git repository in 'NonExistentLocation':
+it will show all local branches with their upstream plus behind/ahead numbers
 
- $ tree -a NonExistentLocation
-NonExistentLocation
-`-- .git
-    |-- HEAD
-    |-- branches
-    |-- config
-    |-- description
-    |-- hooks
-    |   |-- applypatch-msg.sample
-    |   |-- commit-msg.sample
-    |   |-- post-commit.sample
-    |   |-- post-receive.sample
-    |   |-- post-update.sample
-    |   |-- pre-applypatch.sample
-    |   |-- pre-commit.sample
-    |   |-- pre-rebase.sample
-    |   |-- prepare-commit-msg.sample
-    |   `-- update.sample
-    |-- info
-    |   `-- exclude
-    |-- objects
-    |   |-- info
-    |   `-- pack
-    `-- refs
-        |-- heads
-        `-- tags
+cheers,
+daniel
 
-10 directories, 14 files
 
-Is this the intended behaviour ?
-
-Thanks,
-  Stefan
 -- 
-----------------------------------------------------------------
-/dev/random says: An ounce of application is worth a ton of abstraction.
+typed with http://neo-layout.org
+myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
