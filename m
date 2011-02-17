@@ -1,90 +1,83 @@
-From: Paul Menzel <paulepanter@users.sourceforge.net>
-Subject: use case: keep the output of a markup (TeX) file under revision
- control
-Date: Thu, 17 Feb 2011 11:37:00 +0100
-Message-ID: <1297939020.3959.12.camel@mattotaupa>
+From: "Yann Droneaud" <yann@droneaud.fr>
+Subject: Re: [sshfs] inode problem when using git on a sshfs filesystem
+Date: Thu, 17 Feb 2011 12:54:43 +0100
+Message-ID: <7f02c4cb5ca13dae6de7caa1b6f90cfe.squirrel@webmail.ocsa-data.net>
+References: <1297893854.4097.43.camel@dworkin.quest-ce.net>
+    <E1Pq1LW-0005rc-Qy@pomaz-ex.szeredi.hu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-v73ozNXEDLakaCITIgYo"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 17 12:48:20 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Yann Droneaud" <yann@droneaud.fr>,
+	fuse-sshfs@lists.sourceforge.net, fuse-devel@lists.sourceforge.net,
+	git@vger.kernel.org
+To: "Miklos Szeredi" <miklos@szeredi.hu>
+X-From: git-owner@vger.kernel.org Thu Feb 17 12:54:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq2LL-00039e-NZ
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 12:48:20 +0100
+	id 1Pq2RT-00073n-N4
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 12:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755061Ab1BQLsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 06:48:15 -0500
-Received: from mail.gw90.de ([188.40.100.199]:37424 "EHLO mail.gw90.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753515Ab1BQLsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 06:48:14 -0500
-X-Greylist: delayed 4267 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Feb 2011 06:48:14 EST
-Received: from f053032084.adsl.alicedsl.de ([78.53.32.84] helo=[192.168.178.21])
-	by mail.gw90.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <paulepanter@users.sourceforge.net>)
-	id 1Pq1EM-000753-Kv
-	for git@vger.kernel.org; Thu, 17 Feb 2011 10:37:02 +0000
-X-Mailer: Evolution 2.30.3 
+	id S1755912Ab1BQLyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 06:54:35 -0500
+Received: from mx-out.ocsa-data.net ([194.36.166.37]:49709 "EHLO
+	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753515Ab1BQLye (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 06:54:34 -0500
+Received: from [192.168.111.12] (helo=webmail.ocsa-data.net)
+	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
+	id 1Pq2RK-00049U-7z; Thu, 17 Feb 2011 12:54:32 +0100
+Received: from 80.12.80.40
+        (SquirrelMail authenticated user meuh@meuh.org)
+        by webmail.ocsa-data.net with HTTP;
+        Thu, 17 Feb 2011 12:54:43 +0100
+In-Reply-To: <E1Pq1LW-0005rc-Qy@pomaz-ex.szeredi.hu>
+User-Agent: SquirrelMail/1.4.21
+X-Priority: 3 (Normal)
+Importance: Normal
+X-abuse-contact: abuse@ocsa-data.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167067>
 
+> On Wed, 16 Feb 2011, Yann Droneaud wrote:
+>> Hi,
+>>
+>> For some days, my usage of git is not as seamless as before.
+>>
+>> I'm using git along sshfs/fuse (don't blame me for that), and
+>> each time I try to rebase one of my branch, I have a conflict when
+>> applying
+>> the third commit. Doing the same operation on a local filesystem works
+>> without any problem.
+>
+> Yann, thanks for looking into this.
+>
+> Your findings are not surprising: unlike NFS, sshfs doesn't provide
+> inode numbers and the fuse library also doesn't guarantee stable inode
+> numbers by default.
+>
 
---=-v73ozNXEDLakaCITIgYo
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+But why does it have such behavior when trying to rmdir() a non empty
+directory ?
 
-Dear Git folks,
+> Fuse version 2.8.x has a "noforget" option that should provide stable
+> inode numbers, at the cost of unbounded memory use.  Could you please
+> try if this option fixes these issues?
+>
 
+Yes, this option seems to fix the problem.
 
-(Please CC me when replying since I am not subscribed.)
+I will try it for a while to see if this is stable enough for a full day
+of git working. (How can I check memory usage ?)
 
-I have the following use case and need an advise from you professionals.
+BTW, the [no]forget option did not appears in sshfs --help output.
 
-A friend and I are writing a paper using TeX=C2=B9 and keep the files under
-revision control using Git. This works fine so far. But I want to also
-have the output (PDF) of the markup file under revision control to be
-able to access the PDF files even if for example no TeX installation is
-available on a system.
+Regards.
 
-The problem now is, since the output is no plain text file, that
-merging/rebasing always shows conflicts which Git, of course, cannot
-solve.
-
-Is there a way to set that up so that there are no conflicts? Would a
-pre-commit hook work which generates the PDF file prior to committing?
-And if no TeX installation is available it would just ignore the PDF
-files?
-
-I could not find anything on the Web because having PDF as search string
-would just show up how to generate documentation about Git.
-
-
-Thanks,
-
-Paul
-
-
-=C2=B9 Actually it is ConTeXt [1].
-
-[1] http://wiki.contextgarden.net/Main_Page
-
---=-v73ozNXEDLakaCITIgYo
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEABECAAYFAk1c+kwACgkQPX1aK2wOHVg66QCdGi96bPCZSXrR3P94i6ac9e9T
-LzAAn2HeyjGWpFxK983hCy5VxW0vyHFe
-=GE1H
------END PGP SIGNATURE-----
-
---=-v73ozNXEDLakaCITIgYo--
+-- 
+Yann Droneaud
