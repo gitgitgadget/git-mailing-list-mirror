@@ -1,126 +1,139 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/4] Introduce CHERRY_PICK_HEAD
-Date: Thu, 17 Feb 2011 12:01:30 -0800
-Message-ID: <7vipwibfc5.fsf@alter.siamese.dyndns.org>
-References: <1297916325-89688-1-git-send-email-jaysoffian@gmail.com>
- <1297916325-89688-2-git-send-email-jaysoffian@gmail.com>
+Subject: Re: [PATCH 1/2 (v2)] submodule: no [--merge|--rebase] when newly
+ cloned
+Date: Thu, 17 Feb 2011 12:02:13 -0800
+Message-ID: <7vbp2abfay.fsf@alter.siamese.dyndns.org>
+References: <1297959526-8089-1-git-send-email-olsonse@umich.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 21:01:50 2011
+Cc: git@vger.kernel.org
+To: "Spencer E. Olson" <olsonse@umich.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 17 21:02:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqA2v-0005bC-62
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 21:01:49 +0100
+	id 1PqA3d-00067s-8p
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 21:02:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939Ab1BQUBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 15:01:45 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43867 "EHLO
+	id S1757928Ab1BQUCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 15:02:22 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44545 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753159Ab1BQUBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 15:01:43 -0500
+	with ESMTP id S1753002Ab1BQUCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 15:02:21 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 622C3325B;
-	Thu, 17 Feb 2011 15:02:49 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AEA40327A;
+	Thu, 17 Feb 2011 15:03:27 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=AxE8jzsQD8TJMtdcacObiPwqPXM=; b=Rg4hkDiqTMk1vWMyrvQMukV
-	1RpO4f07qp3yFVbCbY8AB5f2Qg0A/R4QBJnCLF7ig2umucQP0cNGLmAe4MY/cNmJ
-	nq7NTungROpSGWzZVF0N2GZR5kx06PDvlZS7QrMTGYoniqC8DWdEEqu+jnbRGBHI
-	SH51cLzBZL5BRWWG1dGg=
+	sasl; bh=3tnJc+s3o3GK/JMT44WgtRzfNGA=; b=x2qR32+5YryvO7f/H/SBZYM
+	LPeIT6c0EYZ6EAtuuXnhDE3xZneYQmbqxqFXdUZsdzeiVzvBNR+5o4Rge3Q0QX5n
+	jLtdIgPizfPnId4zE/rHNavY4hAT6ygobxM7qlcnWKb8RLzHBmD43My2xHeFFrR0
+	iRzbBjvJI6nvAdV4MZPo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=ZE/ZAi4dVet440Og9BI+QMVbL3GyF2glpDKuQQ8M3xX/iEO48
-	mtJN5SuQJYpCq2KczIHVF13M5SM2QWSMz/MKFlJ4lqFA60LAPK2hkDq29J1KtDTQ
-	55BFZLp3H0SH3fBo7WI8UYuRa+E4xRKaFqZl1V02pl2s1cXqoTgV0GL0lQ=
+	dns; s=sasl; b=cg1Qx4sYEwWW5mw0GrUQxzLtwjxnrvph55yBMbM3Seui4Wrf5
+	6jbmsYwrR7OzTGn5KMRRgct7hI7+DpZOM3oMkcDP3ibIdotyz/Z9EvUZ7xEXs2Yn
+	JaWuOOAG5PBX+xNzqaN77hM7RojrB7ohhYbQV6JPwaNZUdFrJOBtl+gbpY=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1D62A325A;
-	Thu, 17 Feb 2011 15:02:45 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8D8543279;
+	Thu, 17 Feb 2011 15:03:25 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B55313255; Thu, 17 Feb 2011
- 15:02:39 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EE6753278; Thu, 17 Feb 2011
+ 15:03:21 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E29EECE0-3AD0-11E0-87A3-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: FABB104C-3AD0-11E0-B5C6-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167110>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+"Spencer E. Olson" <olsonse@umich.edu> writes:
 
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 9403747..454dad2 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -971,6 +971,13 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		else
->  			die("You have not concluded your merge (MERGE_HEAD exists).");
->  	}
-> +	if (file_exists(git_path("CHERRY_PICK_HEAD"))) {
-> +		if (advice_resolve_conflict)
-> +			die("You have not concluded your cherry-pick (CHERRY_PICK_HEAD exists).\n"
-> +			    "Please, commit your changes before you can merge.");
-> +		else
-> +			die("You have not concluded your cherry-pick (CHERRY_PICK_HEAD exists).");
-> +	}
-
-Micronit: "Please, commit your changes before you can merge."
-
- - We are not merging in this codepath to begin with;
-
- - I'd suggest rephrasing this (together with "MERGE_HEAD" codepath) to
-   something like:
-
-	"Commit your changes first before retrying."
-
-> +test_expect_success 'cherry-pick --no-commit sets CHERRY_PICK_HEAD' '
+> @@ -469,6 +484,12 @@ cmd_update()
+>  				die "Unable to fetch in submodule path '$path'"
+>  			fi
+>  
+> +			list_contains "$name" "$cloned_modules"
+> +			if test "$?" = 0
+> +			then
+> +				update_module=
+> +			fi
 > +
-> +	git checkout -f initial^0 &&
-> +	git read-tree -u --reset HEAD &&
-> +	git clean -d -f -f -q -x &&
-> +
-> +	git update-index --refresh &&
-> +	git diff-index --exit-code HEAD &&
 
-Getting tired of seeing these five lines repeated over and over.  Perhaps
-it is time to introduce:
+It would be a lot easier to read if you said this:
 
-	pristine_detach () {
-        	git checkout -f "$1^0" &&
-                git read-tree -u --reset HEAD &&
-                git clean -d -f -f -q -x
-	}
+	if list_contains "$name" "$cloned_modules"
+        then
+		update_module=
+	fi
 
-I don't think "diff-index --exit-code HEAD" is necessary as the point of
-this testsuite is not about testing "read-tree --reset", and the index
-refresh is just a prerequisite for diff-index that can go together with
-it.
+or just open code the idiom:
 
-> +	git cherry-pick --no-commit base &&
-> +
-> +	test_cmp_rev base CHERRY_PICK_HEAD
+	case ";list-of-stuff-with-delimiter;" in
+        *";i-want-to-see-this;"*) : happy ;;
+	esac
 
-If the next "git commit" would notice and use this information, that would
-introduce an unpleasant regression to one use case in my workflow, which
-is to pick and consolidate one or more small pieces made on a private
-"misc" branch, possibly with a bit of further work, into a new commit with
-a readable explanation that is unrelated to any of the original commits:
+without introducing "list_contains" that is called only once.
 
-	git cherry-pick --no-commit $some_commit
-	git cherry-pick --no-commit $another_commit ;# optional
-	edit ;# optional
-        git commit
+But otherwise the patch looks good.
 
-I'd prefer to see a way to tell cherry-pick not to leave CHERRY_PICK_HEAD
-behind when "cherry-pick --no-commit" results in a successful cherry-pick
-to avoid a backward incompatibility surprise.  Otherwise people need to
-retrain their fingers to say --reset-author when they run "git commit".
+Thanks.
 
-Other then the above three points, this patch looks good.  Thanks.
+-- >8 --
+From: Spencer E. Olson <olsonse@umich.edu>
+Date: Thu, 17 Feb 2011 09:18:45 -0700
+Subject: [PATCH] submodule: no [--merge|--rebase] when newly cloned
+
+Previously, when a new submodule is cloned by running "git submodule update
+[--merge|--rebase]", the newly cloned submodule does not get checked out and a
+rebase or merge is incorrectly attempted against an empty working directory.
+This patch ignores --rebase or --merge for new submodules and instead simply
+checks out the appropriate revision.
+
+Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-submodule.sh |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 8b90589..5e989b7 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -423,6 +423,7 @@ cmd_update()
+ 		cmd_init "--" "$@" || return
+ 	fi
+ 
++	cloned_modules=
+ 	module_list "$@" |
+ 	while read mode sha1 stage path
+ 	do
+@@ -442,6 +443,7 @@ cmd_update()
+ 		if ! test -d "$path"/.git -o -f "$path"/.git
+ 		then
+ 			module_clone "$path" "$url" "$reference"|| exit
++			cloned_modules="$cloned_modules;$name"
+ 			subsha1=
+ 		else
+ 			subsha1=$(clear_local_git_env; cd "$path" &&
+@@ -469,6 +471,13 @@ cmd_update()
+ 				die "Unable to fetch in submodule path '$path'"
+ 			fi
+ 
++			# Is this something we just cloned?
++			case ";$cloned_modules;" in
++			*";$name;"*)
++				# then there is no local change to integrate
++				update_module= ;;
++			esac
++
+ 			case "$update_module" in
+ 			rebase)
+ 				command="git rebase"
+-- 
+1.7.4.1.107.ga7184
