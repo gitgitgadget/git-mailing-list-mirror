@@ -1,116 +1,61 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 2/2] git-p4: Improve branch support
-Date: Thu, 17 Feb 2011 10:42:34 -0800
-Message-ID: <20110217184234.GB20627@honk.padd.com>
-References: <1297813789-3831-1-git-send-email-vitor.hda@gmail.com>
- <1297813789-3831-3-git-send-email-vitor.hda@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 1/2 (v2)] submodule: no [--merge|--rebase] when newly
+ cloned
+Date: Thu, 17 Feb 2011 20:41:58 +0100
+Message-ID: <4D5D7A06.6050700@web.de>
+References: <1297959526-8089-1-git-send-email-olsonse@umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 19:42:43 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Spencer E. Olson" <olsonse@umich.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 17 20:42:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq8oL-00050U-07
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 19:42:41 +0100
+	id 1Pq9ju-0007UW-6I
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 20:42:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752519Ab1BQSmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 13:42:36 -0500
-Received: from honk.padd.com ([74.3.171.149]:34589 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750699Ab1BQSmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 13:42:35 -0500
-Received: by honk.padd.com (Postfix, from userid 7770)
-	id 7A5A820AB; Thu, 17 Feb 2011 10:42:34 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1297813789-3831-3-git-send-email-vitor.hda@gmail.com>
+	id S1757849Ab1BQTmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 14:42:03 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:47400 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753431Ab1BQTl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 14:41:59 -0500
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 77EBC188B2450;
+	Thu, 17 Feb 2011 20:41:58 +0100 (CET)
+Received: from [93.246.40.171] (helo=[192.168.178.43])
+	by smtp02.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Pq9ji-0002PJ-00; Thu, 17 Feb 2011 20:41:58 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <1297959526-8089-1-git-send-email-olsonse@umich.edu>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+3lSBSeuxq1Z6bQVsKmZzpzC0YsubnsJntDcAp
+	zKedV+HH+xxNyeqMJTbDOh41tvzdSvGKQO5ov8cVr7MctvO3qv
+	qGO3h8xz1+33pq3LZQHg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167101>
 
-vitor.hda@gmail.com wrote on Tue, 15 Feb 2011 23:49 +0000:
-> Add new config option branchUser to allow filtering P4 branch list by user.
-> Allow defining the branch list through branchList config option.
-> Correct base branch directory detection to use '/' as the split character.
+Am 17.02.2011 17:18, schrieb Spencer E. Olson:
+> Previously, when a new submodule is cloned by running "git submodule update
+> [--merge|--rebase]", the newly cloned submodule does not get checked out and a
+> rebase or merge is incorrectly attempted against an empty working directory.
+> This patch ignores --rebase or --merge for new submodules and instead simply
+> checks out the appropriate revision.
 
-I've only been avoiding reading this one because I don't use
-branches, and am having a hard time following what the point
-of the change is.  Maybe someone else will notice that this is
-a good change straightaway, and save you the bother of explaining
-it to me.
+Nice work, thanks!
 
-The whole detectBranches option seems a bit spotty, given its
-lack of documentation and numerous shady "## HACK" and "## FIXME"
-comments.  So it certainly does appreciate your attention.
+Just a small thing: This problem also happens when the configuration
+"submodule.<name>.update" is set to either "rebase" or "merge", not only
+when using the command line options. So perhaps you could reword the topic
+to something like "submodule: don't merge or rebase when newly cloned" and
+adjust both commit messages a bit?
 
-As far as I can tell, a branch is just a mapping between two
-areas of the repo, and all you can do with one is to feed it
-to "p4 integrate" instead of giving a single explicit src/dest.
-
-> @@ -1272,7 +1277,13 @@ class P4Sync(Command):
->      def getBranchMapping(self):
->          lostAndFoundBranches = set()
->  
-> -        for info in p4CmdList("branches"):
-> +        user = gitConfig("git-p4.branchUser")
-> +        if len(user) > 0:
-> +            command = "branches -u %s" % user
-> +        else:
-> +            command = "branches"
-> +
-> +        for info in p4CmdList(command):
-
-This part is for branches -u, to limit the auto-detected braches
-to just those created by a given user.
-
-> @@ -1305,6 +1316,12 @@ class P4Sync(Command):
->          for branch in lostAndFoundBranches:
->              self.knownBranches[branch] = branch
->  
-> +        configBranches = gitConfigList("git-p4.branchList")
-> +        for branch in configBranches:
-> +            if branch:
-> +                (source, destination) = branch.split(":")
-> +                self.knownBranches[destination] = source
-> +
-
-This bit adds more branches, if you have put them in .git/config
-separated by a :.  Presumably things that are directories in the
-depot but do _not_ have a branch?  I don't get it.  What does
-your depot look like and what do you stick in branchList?
-
->          branches = p4BranchesInGit(self.importIntoRemotes)
->          for branch in branches.keys():
-> @@ -1626,12 +1643,14 @@ class P4Sync(Command):
->                      else:
->                          paths = []
->                          for (prev, cur) in zip(self.previousDepotPaths, depotPaths):
-> -                            for i in range(0, min(len(cur), len(prev))):
-> -                                if cur[i] <> prev[i]:
-> +                            prev_list = prev.split("/")
-> +                            cur_list = cur.split("/")
-> +                            for i in range(0, min(len(cur_list), len(prev_list))):
-> +                                if cur_list[i] <> prev_list[i]:
->                                      i = i - 1
->                                      break
->  
-> -                            paths.append (cur[:i + 1])
-> +                            paths.append ("/".join(cur_list[:i + 1]))
-
-This was a bug?  I guess somehow this is adapting the existing
-depot paths to include new ones that you discovered with "p4
-branches".  And now you are comparing the path elements instead
-of going a character at a time.  Maybe to catch //depot/ab vs
-//depot/ac ?
-
-In other words, add some comments or add something to the commit
-text.  It is encouraged to split up a patch into the smallest
-logical chenk if the changes are all independent.  Maybe these
-three are related through the theme of auto-branch detection.
-
-		-- Pete
+Apart from that:
+Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
