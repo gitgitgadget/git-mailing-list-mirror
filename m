@@ -1,92 +1,43 @@
 From: Ferry Huberts <mailings@hupie.com>
-Subject: [CGit] [PATCH 6/6] about_filter: also communicate the repo name to the filter
-Date: Thu, 17 Feb 2011 22:11:09 +0100
-Message-ID: <1297977069-21884-7-git-send-email-mailings@hupie.com>
+Subject: Re: [CGit] [PATCH 0/6] Communicate the repo name to the filter scripts
+Date: Thu, 17 Feb 2011 22:23:29 +0100
+Message-ID: <4D5D91D1.3070802@hupie.com>
 References: <1297977069-21884-1-git-send-email-mailings@hupie.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: hjemli@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 17 22:11:42 2011
+X-From: git-owner@vger.kernel.org Thu Feb 17 22:23:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqB8S-0007Wi-AW
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 22:11:36 +0100
+	id 1PqBK5-00089O-6R
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 22:23:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757979Ab1BQVL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 16:11:28 -0500
-Received: from 82-197-206-98.dsl.cambrium.nl ([82.197.206.98]:57507 "EHLO
+	id S1754632Ab1BQVXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 16:23:32 -0500
+Received: from 82-197-206-98.dsl.cambrium.nl ([82.197.206.98]:58720 "EHLO
 	mail.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757977Ab1BQVLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 16:11:12 -0500
+	with ESMTP id S1751169Ab1BQVXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 16:23:31 -0500
 Received: from paul.internal.hupie.com (paul.internal.Hupie.com [192.168.180.1])
-	by mail.internal.Hupie.com (Postfix) with ESMTP id C63B058C99D;
-	Thu, 17 Feb 2011 22:11:09 +0100 (CET)
-X-Mailer: git-send-email 1.7.4
+	by mail.internal.Hupie.com (Postfix) with ESMTP id 898BE58C997;
+	Thu, 17 Feb 2011 22:23:29 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7
 In-Reply-To: <1297977069-21884-1-git-send-email-mailings@hupie.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167123>
 
-From: Ferry Huberts <ferry.huberts@pelagic.nl>
+PS. this patch series is (re)based on the current master
+17596459fe9a43428a261e66f65b227d15bf7ee5
 
-Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
----
- cgit.c        |    3 ---
- ui-repolist.c |    5 ++++-
- ui-summary.c  |    5 ++++-
- 3 files changed, 8 insertions(+), 5 deletions(-)
+grtz
 
-diff --git a/cgit.c b/cgit.c
-index 9e8c4c4..653b099 100644
---- a/cgit.c
-+++ b/cgit.c
-@@ -41,9 +41,6 @@ struct cgit_filter *new_filter(const char *cmd, filter_type filtertype)
- 
- 	switch (filtertype) {
- 		case about:
--			extra_args = 0;
--			break;
--
- 		case commit:
- 			extra_args = 1;
- 			break;
-diff --git a/ui-repolist.c b/ui-repolist.c
-index 2c98668..a0c2235 100644
---- a/ui-repolist.c
-+++ b/ui-repolist.c
-@@ -290,8 +290,11 @@ void cgit_print_site_readme()
- {
- 	if (!ctx.cfg.root_readme)
- 		return;
--	if (ctx.cfg.about_filter)
-+	if (ctx.cfg.about_filter) {
-+		if (!ctx.repo->about_filter->argv[1])
-+			ctx.repo->about_filter->argv[1] = xstrdup(ctx.repo->name);
- 		cgit_open_filter(ctx.cfg.about_filter);
-+	}
- 	html_include(ctx.cfg.root_readme);
- 	if (ctx.cfg.about_filter)
- 		cgit_close_filter(ctx.cfg.about_filter);
-diff --git a/ui-summary.c b/ui-summary.c
-index b203bcc..f8c85a2 100644
---- a/ui-summary.c
-+++ b/ui-summary.c
-@@ -112,8 +112,11 @@ void cgit_print_repo_readme(char *path)
- 	 * filesystem, while applying the about-filter.
- 	 */
- 	html("<div id='summary'>");
--	if (ctx.repo->about_filter)
-+	if (ctx.repo->about_filter) {
-+		if (!ctx.repo->about_filter->argv[1])
-+			ctx.repo->about_filter->argv[1] = xstrdup(ctx.repo->name);
- 		cgit_open_filter(ctx.repo->about_filter);
-+	}
- 	if (ref)
- 		cgit_print_file(tmp, ref);
- 	else
 -- 
-1.7.4
+Ferry Huberts
