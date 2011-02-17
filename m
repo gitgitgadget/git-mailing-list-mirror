@@ -1,71 +1,137 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH] git-gui: give more advice when detaching HEAD
-Date: Thu, 17 Feb 2011 18:38:51 +0100
-Message-ID: <20110217173851.GB91738@book.hvoigt.net>
-References: <20110212070538.GA2459@sigill.intra.peff.net> <20110213123151.GA31375@book.hvoigt.net> <20110215063903.GA28634@sigill.intra.peff.net> <20110215191620.GA56397@book.hvoigt.net> <87pqqtaxke.fsf@fox.patthoyts.tk>
+From: "Yann Droneaud" <yann@droneaud.fr>
+Subject: Re: [sshfs] inode problem when using git on a sshfs filesystem
+Date: Thu, 17 Feb 2011 19:11:14 +0100
+Message-ID: <ac00e83c1b57e2eeda1c6631ec611e75.squirrel@webmail.ocsa-data.net>
+References: <1297893854.4097.43.camel@dworkin.quest-ce.net>
+    <E1Pq1LW-0005rc-Qy@pomaz-ex.szeredi.hu>
+    <7f02c4cb5ca13dae6de7caa1b6f90cfe.squirrel@webmail.ocsa-data.net>
+    <E1Pq3aa-0006Nn-Cv@pomaz-ex.szeredi.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org, Pat Thoyts <patthoyts@googlemail.com>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Feb 17 18:39:00 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Yann Droneaud" <yann@droneaud.fr>, miklos@szeredi.hu,
+	fuse-sshfs@lists.sourceforge.net, fuse-devel@lists.sourceforge.net,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: "Miklos Szeredi" <miklos@szeredi.hu>
+X-From: linux-kernel-owner@vger.kernel.org Thu Feb 17 19:11:21 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq7oh-0003sz-Lw
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 18:39:00 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Pq8Jw-0005Ea-BL
+	for glk-linux-kernel-3@lo.gmane.org; Thu, 17 Feb 2011 19:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348Ab1BQRiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 12:38:55 -0500
-Received: from darksea.de ([83.133.111.250]:39312 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750963Ab1BQRix (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 12:38:53 -0500
-Received: (qmail 28066 invoked from network); 17 Feb 2011 18:38:51 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 17 Feb 2011 18:38:51 +0100
-Content-Disposition: inline
-In-Reply-To: <87pqqtaxke.fsf@fox.patthoyts.tk>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-Sender: git-owner@vger.kernel.org
+	id S1757532Ab1BQSLI (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 17 Feb 2011 13:11:08 -0500
+Received: from mx-out.ocsa-data.net ([194.36.166.37]:60716 "EHLO
+	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754879Ab1BQSLD (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 17 Feb 2011 13:11:03 -0500
+Received: from [192.168.111.12] (helo=webmail.ocsa-data.net)
+	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
+	id 1Pq8Jh-000DQv-7c; Thu, 17 Feb 2011 19:11:03 +0100
+Received: from 80.12.80.40
+        (SquirrelMail authenticated user meuh@meuh.org)
+        by webmail.ocsa-data.net with HTTP;
+        Thu, 17 Feb 2011 19:11:14 +0100
+In-Reply-To: <E1Pq3aa-0006Nn-Cv@pomaz-ex.szeredi.hu>
+User-Agent: SquirrelMail/1.4.21
+X-Priority: 3 (Normal)
+Importance: Normal
+X-abuse-contact: abuse@ocsa-data.net
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167096>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167097>
 
-Hi,
+> On Thu, 17 Feb 2011, Yann Droneaud wrote:
+>> > On Wed, 16 Feb 2011, Yann Droneaud wrote:
+>> >> Hi,
+>> >>
+>> >> For some days, my usage of git is not as seamless as before.
+>> >>
+>> >> I'm using git along sshfs/fuse (don't blame me for that), and
+>> >> each time I try to rebase one of my branch, I have a conflict when
+>> >> applying
+>> >> the third commit. Doing the same operation on a local filesystem
+>> works
+>> >> without any problem.
+>> >
+>> > Yann, thanks for looking into this.
+>> >
+>> > Your findings are not surprising: unlike NFS, sshfs doesn't provide
+>> > inode numbers and the fuse library also doesn't guarantee stable inode
+>> > numbers by default.
+>> >
+>>
+>> But why does it have such behavior when trying to rmdir() a non empty
+>> directory ?
+>
+> The VFS (part of the linux kernel that implements the generic
+> filesystem logic) clears the directory entry from the cache prior to
+> actually trying to remove the directory.  This has the effect that any
+> children of the directory are also cleared from the cache, hence the
+> behavior you see in rmdir.
+>
 
-On Tue, Feb 15, 2011 at 07:48:33PM +0000, Pat Thoyts wrote:
-> From: Heiko Voigt <hvoigt@hvoigt.net>
-> Date: Tue, 15 Feb 2011 19:43:54 +0000
-> Subject: [PATCH] git-gui: warn when trying to commit on a detached head
-> 
-> The commandline is already warning when checking out a detached head.
-> Since the only thing thats potentially dangerous is to create commits
-> on a detached head lets warn in case the user is about to do that.
-> 
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-> ---
-[...]
-> My feeling is that the user should be making a branch to hold his
-> commits. So I suggest adding some text to suggest that a branch be
-> created and keep annoying the user every time they commit to a detached
-> head. This errs on the side of not dropping commits into the reflog
-> which seems the most useful strategy to me.
-> 
-> So here is a modded version of Heiko's patch.
+I tried to check that behavor: if the VFS is dropping dentry before doing
+a rmdir(), them lookup files under this directory should be slower than
+before rmdir().
 
-Thanks for cleaning up my wording. I would be fine with this patch.
-I played with creating a dialog including a checkbox yesterday. Please
-see my other answer to this thread whether we work on this further.
-Otherwise I would be fine with just issuing the warning every time. Its
-better than not warning at all and using the configuration option a
-clueful person can still disable the warning.
+On a ext4 filesystem, directory with 338 sub directories and 1992 files, 
+i've tried the following commands:
 
-Cheers Heiko
+/* drop all */
+# echo 3 > /proc/sys/vm/drop_caches
+# time ls -alR directory > /dev/null
+real	0m0.140s
+user	0m0.000s
+sys	0m0.080s
 
-P.S.: Should I prepare a separate patch to document the variable for
-      Junio once he pulls again from you?
+/* drop cache */
+# echo 1 > /proc/sys/vm/drop_caches
+# time ls -alR directory > /dev/null
+real	0m0.119s
+user	0m0.000s
+sys	0m0.072s
+
+/* drop dentry and inode */
+# echo 2 > /proc/sys/vm/drop_caches
+# time ls -alR directory > /dev/null
+real	0m0.089s
+user	0m0.016s
+sys	0m0.040s
+
+/* read from cache */
+# time ls -alR directory > /dev/null
+real	0m0.063s
+user	0m0.004s
+sys	0m0.036s
+
+$ rmdir directory
+rmdir: failed to remove `directory': Directory not empty
+
+/* re read from cache */
+$ time ls -alR directory > /dev/null
+real	0m0.065s
+user	0m0.012s
+sys	0m0.036s
+
+As you can see, after doing rmdir(), the time taken to walk trough the
+directories is the same than before calling it, so the dentry seems not
+flushed out of the cache after the rmdir().
+
+I really prefer this behavior. The one you explained would be a real pain:
+if one user call rmdir on / inside a loop, the full dentry cache will be
+dropped each time: this would affect performance for the whole system.
+
+But perhaps I doesn't understand how the VFS is working, which is the most
+probable solution. Please correct me.
+
+Regards.
+
+-- 
+Yann Droneaud
