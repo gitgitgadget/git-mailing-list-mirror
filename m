@@ -1,74 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git clone NonExistentLocation
-Date: Thu, 17 Feb 2011 17:53:09 +0100
-Message-ID: <4D5D5275.5070501@drmicha.warpmail.net>
-References: <4D5CE3E7.5030101@atlas-elektronik.com> <4D5D1715.5020707@drmicha.warpmail.net> <4D5D1A04.4090107@atlas-elektronik.com> <4D5D1BCB.3010003@drmicha.warpmail.net> <AANLkTin3Pf4XD_gbwxPzW4uff9SbDWJdGug6jM_SHDo+@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: How to git checkout a orgin(unstage) version file in another directoy?
+Date: Thu, 17 Feb 2011 18:17:20 +0100
+Message-ID: <m2r5b6y40v.fsf@igel.home>
+References: <loom.20110217T074533-358@post.gmane.org>
+	<20110217103431.GA8308@elie> <loom.20110217T130405-970@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 17:56:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Chunlin Zhang <zhangchunlin@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 17 18:17:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq79V-0002b9-BX
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 17:56:25 +0100
+	id 1Pq7UF-0002zk-Cz
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 18:17:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756893Ab1BQQ4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 11:56:20 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60096 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752856Ab1BQQ4T (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 11:56:19 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A52AB20AE3;
-	Thu, 17 Feb 2011 11:56:18 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 17 Feb 2011 11:56:18 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=QZL2W6iag5WH9QNAAzdRHldgb60=; b=kdO6RiLdeqRFkKeBIRYEI95v0D1u/+z7ZsfFLWKJXY6UNN5U7MndoZJ5aU3LPOlj1eOcr7pSET5BFoL6l49a6aQMujGtiZ4kdcm1/Jxt4XLQgZ23zGIIQqvg2Mnt/4R4PeuP0h2NILtPlYx54gYE+lgXa8LvenJr8I3nkCNGrho=
-X-Sasl-enc: 62jBeT+SOdXSqfHrm8dTPP5g2MRUd7sHdE062Oqn0As1 1297961778
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0F079400F4A;
-	Thu, 17 Feb 2011 11:56:17 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <AANLkTin3Pf4XD_gbwxPzW4uff9SbDWJdGug6jM_SHDo+@mail.gmail.com>
+	id S1753837Ab1BQRR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 12:17:28 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:46191 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755357Ab1BQRRY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 12:17:24 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id F1CBF188B596;
+	Thu, 17 Feb 2011 18:17:21 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 3DB861C00164;
+	Thu, 17 Feb 2011 18:17:22 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id n0+GX+8M5vp8; Thu, 17 Feb 2011 18:17:21 +0100 (CET)
+Received: from igel.home (ppp-93-104-144-34.dynamic.mnet-online.de [93.104.144.34])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Thu, 17 Feb 2011 18:17:21 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id C716CCA2A0; Thu, 17 Feb 2011 18:17:20 +0100 (CET)
+X-Yow: Can I have an IMPULSE ITEM instead?
+In-Reply-To: <loom.20110217T130405-970@post.gmane.org> (Chunlin Zhang's
+	message of "Thu, 17 Feb 2011 12:06:33 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.94 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167094>
 
-Sverre Rabbelier venit, vidit, dixit 17.02.2011 15:03:
-> Heya,
-> 
-> [Thanks for summarizing.]
-> 
-> On Thu, Feb 17, 2011 at 12:59, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Sverre, with your 86ac751, the following two are equivalent (modulo a
->> warning) on a nonexisting dir:
->>
->> git clone dir
->> git init dir
->>
->> Is that intentional?
-> 
-> No, that was not intentional. The former should still be an error if
-> 'dir' is an empy directory.
-> 
+Chunlin Zhang <zhangchunlin@gmail.com> writes:
 
-Digging a little further: since a nonexisting directory is neither a dir
-nor a file, clone thinks it is not local (is_local=is_bundle=0). None of
-the transport_* commands error out since the relevant one is guarded by
-86ac751...
+> use this command for example:
+> git --work-tree=. --git-dir="/media/linux/t/kernel/.git" cat-file blob 
+> HEAD:Android.mk>Android.mk
 
-Reverting that or forcing is_local=1 both help, but how to detect "local
-nonexisting" reliably?
+You won't need --work-tree any more, since cat-file only looks at the
+object database.
 
-In fact, I don't have a problem with the current state if we document it :)
+Andreas.
 
-Michael
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
