@@ -1,86 +1,100 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: How you can translate things now, and a plan for the i18n series
- going forward
-Date: Thu, 17 Feb 2011 09:47:07 +0100
-Message-ID: <AANLkTikij+hp7Q2Brfnp7ZiQgaZvhNcQBSijQozMtiH4@mail.gmail.com>
-References: <AANLkTim+_zRisVRfnv_Xe69xof3e8rL_BAXxmAsCwins@mail.gmail.com>
-	<7vipwpxbam.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=E0LYWp7ag8SD8LNCKkKopGczJL0QnuOiH2UEu@mail.gmail.com>
-	<7v8vxfh4j7.fsf@alter.siamese.dyndns.org>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: git clone NonExistentLocation
+Date: Thu, 17 Feb 2011 10:01:27 +0100
+Organization: ATLAS Elektronik GmbH
+Message-ID: <4D5CE3E7.5030101@atlas-elektronik.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, kev <kev@riseup.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 09:47:39 2011
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 17 10:10:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpzWT-0005nV-EO
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 09:47:37 +0100
+	id 1PpzsT-0001SH-7Q
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 10:10:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755Ab1BQIrJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Feb 2011 03:47:09 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:54100 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832Ab1BQIrI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 03:47:08 -0500
-Received: by fxm20 with SMTP id 20so2346050fxm.19
-        for <git@vger.kernel.org>; Thu, 17 Feb 2011 00:47:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=10lX/YxzP7BF/0rxHihhbTUfKl2dghALJ91czytXjxU=;
-        b=ts1icSct5bD1C0EDo0278XJpL2u6a4PlPvcnPVqempiwqrM/J+52nJK3uxen2e4lp3
-         VzVlT0XdGbTLedMtuMAwNcZS3LWOits/8PBVZnYPKUswFxqFst1JxgbtmCZjrFF2Vav0
-         Nky4vi0Z4JTj2QwaGk4cFzS3rU4U6mJj6m3a4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xHbX8o1lgcXBhIwXpX53wXhqRiSoOUVu6le0wwkzkltScv9xLbzpEykeIqEDvX6UAP
-         p39bc19Bwr5fuGc25GXtC7ajHMdrIgziHijJ+Rlx882lO3mmQGAl/7oU6LLpQSCecZCr
-         t4eKmsT/R1snCosfRQRg8CYomw2lhTMR3dPVE=
-Received: by 10.223.96.12 with SMTP id f12mr2045628fan.79.1297932427246; Thu,
- 17 Feb 2011 00:47:07 -0800 (PST)
-Received: by 10.223.2.201 with HTTP; Thu, 17 Feb 2011 00:47:07 -0800 (PST)
-In-Reply-To: <7v8vxfh4j7.fsf@alter.siamese.dyndns.org>
+	id S1752767Ab1BQJKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 04:10:14 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:12875 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752312Ab1BQJKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 04:10:12 -0500
+X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Feb 2011 04:10:12 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 9A26610069
+	for <git@vger.kernel.org>; Thu, 17 Feb 2011 10:01:27 +0100 (CET)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id MPnoTHGDHOP5 for <git@vger.kernel.org>;
+	Thu, 17 Feb 2011 10:01:27 +0100 (CET)
+Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Thu, 17 Feb 2011 10:01:27 +0100 (CET)
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 1701A27177
+	for <git@vger.kernel.org>; Thu, 17 Feb 2011 10:01:27 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167058>
 
-On Thu, Feb 17, 2011 at 01:46, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> Here's a work-in-progress version of this:
->> https://github.com/avar/git/compare/master...ab/i18n-c-_-only
->>
->> I still have to:
->>
->> =C2=A0* Add NO_GETTEXT_POISON to more tests, some things have broken=
- due to
->> =C2=A0 =C2=A0new strings / changed tests.
->>
->> =C2=A0* Squash the !fixup patches in appropriately.
->>
->> But otherwise does this seem good? I.e. having just those stub macro=
-s,
->> a lot of *.c patches, including gettext.h in cache.h.
->
-> I only gave a cursory look to "git diff master..ab/i18n-c-_-only" out=
-put,
-> and things looked fine for a yet-to-be-completed WIP (I didn't see th=
-e
-> definition of shell version of gettext and gettext_eval, for example)=
-=2E
+Hi.
 
-I'm going to submit the C ones first, and do the shell and Perl ones
-later if that's OK with you.
+If I do:
+
+ $ uname -a
+Linux as100897 2.6.26-2-686 #1 SMP Thu Nov 25 01:53:57 UTC 2010 i686 GNU/Linux
+ $ git version
+git version 1.7.4.1
+ $ ls -l NonExistentLocation
+ls: cannot access NonExistentLocation: No such file or directory
+ $ git clone NonExistentLocation
+Cloning into NonExistentLocation...
+warning: You appear to have cloned an empty repository.
+ $
+
+I get a new (empty) git repository in 'NonExistentLocation':
+
+ $ tree -a NonExistentLocation
+NonExistentLocation
+`-- .git
+    |-- HEAD
+    |-- branches
+    |-- config
+    |-- description
+    |-- hooks
+    |   |-- applypatch-msg.sample
+    |   |-- commit-msg.sample
+    |   |-- post-commit.sample
+    |   |-- post-receive.sample
+    |   |-- post-update.sample
+    |   |-- pre-applypatch.sample
+    |   |-- pre-commit.sample
+    |   |-- pre-rebase.sample
+    |   |-- prepare-commit-msg.sample
+    |   `-- update.sample
+    |-- info
+    |   `-- exclude
+    |-- objects
+    |   |-- info
+    |   `-- pack
+    `-- refs
+        |-- heads
+        `-- tags
+
+10 directories, 14 files
+
+Is this the intended behaviour ?
+
+Thanks,
+  Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: An ounce of application is worth a ton of abstraction.
