@@ -1,61 +1,98 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: set-upstream for existing branch...?
-Date: Thu, 17 Feb 2011 02:45:07 -0500
-Message-ID: <AANLkTi=GPeo9Xr2taF6bsTF554SguDKGHo_S4P62xyxX@mail.gmail.com>
-References: <buoei77xmpc.fsf@dhlpc061.dev.necel.com> <AANLkTikqj8NjLwR647E1tHUuDO=OitUJ1dm5Fs7gtXXt@mail.gmail.com>
- <buo8vxfxhhy.fsf@dhlpc061.dev.necel.com> <AANLkTim6HDCaeTDuEtK+3niKKoz6A3KA=m=UCr4DaY-V@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Feb 17 08:45:45 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 1/2] git-patch-id: test for "no newline" markers
+Date: Thu, 17 Feb 2011 08:44:41 +0100
+Message-ID: <d27aa07556df763b34b980d3706320216094d592.1297928549.git.git@drmicha.warpmail.net>
+References: <7vwrkziw2i.fsf@alter.siamese.dyndns.org>
+Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 17 08:47:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PpyYa-0006JX-Qe
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 08:45:45 +0100
+	id 1Ppyaj-0007Fv-VX
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 08:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752743Ab1BQHpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 02:45:39 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50797 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750877Ab1BQHpi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 02:45:38 -0500
-Received: by iyj8 with SMTP id 8so2081192iyj.19
-        for <git@vger.kernel.org>; Wed, 16 Feb 2011 23:45:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=dPILuYwY2iVuV3WYqT8+SiH6ShykvEke/QGvlCwn0pQ=;
-        b=ofZ1aEw2wJ5L+wyRwJfuUYqqAHIqfS2Ngj/+pWBi2aEw3tfLfvwUjWJVdcMpZ6x/dx
-         sCknVeUdTvp9PmUWeJKFCYYXObOPlvASGqeAWJh+Md1gTtU41bR1Z4H00Dv5jaOOplBL
-         qN514OgXbRYCVMchEK8g0bLxGaoEj+4cIBDaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=w+V/rDrJz+JoSQY3S9G+QefiOlaDARQZwradw6vrskUxRsO5JYN0TOy1894AIrcgN9
-         X0+4XJQIBaCPcZo/L7wN98295RQcjmmwx4WpIS61RG1VPWWVJE4ZioE8ShgATO2NTJNs
-         JT465tVc+6JllyVrLnOuoRHBq+o9ips4606gw=
-Received: by 10.231.36.69 with SMTP id s5mr1283173ibd.167.1297928737569; Wed,
- 16 Feb 2011 23:45:37 -0800 (PST)
-Received: by 10.231.40.2 with HTTP; Wed, 16 Feb 2011 23:45:07 -0800 (PST)
-In-Reply-To: <AANLkTim6HDCaeTDuEtK+3niKKoz6A3KA=m=UCr4DaY-V@mail.gmail.com>
+	id S1752695Ab1BQHrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 02:47:51 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42597 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752603Ab1BQHru (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 02:47:50 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 08BCB20772;
+	Thu, 17 Feb 2011 02:47:49 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 17 Feb 2011 02:47:49 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=GA1K3hO6UNWwAG8OPQs4/P1fr/U=; b=VSeEFz8eqQVCfcpIQIQBFqPsmPR+wyj9TpX6XQoUA5H5uJlqGxPxilzk8bq0FCkdyiwpsBaXimumqWAPZYiTIHaDzuhzwn4YJFjIYF9KnIX8LlExMfi8VsrrV74BXw+B8a8lkMuqBFtQVv9NPYsfx0PM2Zeylkiqc+f4Wh+K7As=
+X-Sasl-enc: XWWHcFYsuUJ26oZVxmG+Q0QcDh7ZyjEv/W1MY2k9bzTq 1297928868
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9A18244D4C5;
+	Thu, 17 Feb 2011 02:47:48 -0500 (EST)
+X-Mailer: git-send-email 1.7.4.1.74.gf39475.dirty
+In-Reply-To: <7vwrkziw2i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167051>
 
-On Thu, Feb 17, 2011 at 2:24 AM, Miles Bader <miles@gnu.org> wrote:
-> Hmm, on a related note, is there an obvious way to _show_ the current
-> branch's upstream...?
->
-> [I mean, which just prints out "origin/master" or whatever...]
+Currently, patch-id trips over our very own diff extension for marking
+the absence of newline at EOF.
 
-git rev-parse --abbrev-ref @{u}
+Expose this in a test.
 
-j.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ t/t4204-patch-id.sh |   36 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 36 insertions(+), 0 deletions(-)
+
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index 68e2652..db96064 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -63,4 +63,40 @@ test_expect_success 'patch-id supports git-format-patch MIME output' '
+ 	test_cmp patch-id_master patch-id_same
+ '
+ 
++cat >nonl <<\EOF
++diff --git i/a w/a
++index e69de29..2e65efe 100644
++--- i/a
+++++ w/a
++@@ -0,0 +1 @@
+++a
++\ No newline at end of file
++diff --git i/b w/b
++index e69de29..6178079 100644
++--- i/b
+++++ w/b
++@@ -0,0 +1 @@
+++b
++EOF
++
++cat >withnl <<\EOF
++diff --git i/a w/a
++index e69de29..7898192 100644
++--- i/a
+++++ w/a
++@@ -0,0 +1 @@
+++a
++diff --git i/b w/b
++index e69de29..6178079 100644
++--- i/b
+++++ w/b
++@@ -0,0 +1 @@
+++b
++EOF
++
++test_expect_failure 'patch-id handles no-nl-at-eof markers' '
++	cat nonl | calc_patch_id nonl &&
++	cat withnl | calc_patch_id withnl &&
++	test_cmp patch-id_nonl patch-id_withnl
++'
+ test_done
+-- 
+1.7.4.1.74.gf39475.dirty
