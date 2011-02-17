@@ -1,77 +1,231 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: How to git checkout a orgin(unstage) version file in another
- directoy?
-Date: Thu, 17 Feb 2011 04:34:31 -0600
-Message-ID: <20110217103431.GA8308@elie>
-References: <loom.20110217T074533-358@post.gmane.org>
+From: Miklos Szeredi <miklos-sUDqSbJrdHQHWmgEVkV9KA@public.gmane.org>
+Subject: Re: [sshfs] inode problem when using git on a sshfs
+	filesystem
+Date: Thu, 17 Feb 2011 11:44:26 +0100
+Message-ID: <E1Pq1LW-0005rc-Qy@pomaz-ex.szeredi.hu>
+References: <1297893854.4097.43.camel@dworkin.quest-ce.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Chunlin Zhang <zhangchunlin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 11:34:49 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: fuse-devel-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org, fuse-sshfs-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org,
+	git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: Yann Droneaud <yann-WYdEh2jsUj5Wj0EZb7rXcA@public.gmane.org>
+X-From: fuse-devel-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org Thu Feb 17 11:45:04 2011
+Return-path: <fuse-devel-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
+Envelope-to: gcffd-fuse-devel@m.gmane.org
+Received: from lists.sourceforge.net ([216.34.181.88])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq1CC-0001RA-Lk
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 11:34:49 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755Ab1BQKeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 05:34:44 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42865 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751865Ab1BQKem (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 05:34:42 -0500
-Received: by iyj8 with SMTP id 8so2206987iyj.19
-        for <git@vger.kernel.org>; Thu, 17 Feb 2011 02:34:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=8ZFAti35NH9D+N//EtBSk79XT/PooSE6cc2vzVrYDf4=;
-        b=qQ0cOnxY3fJCdoVAJyMLkeYmhk0fvvX7NYxzCkmAXAVn7vUJkAkS1DyJJHb9omE7Zk
-         xxTii0KlGVjkj3ZRCqmrQCF9dqiUkZ03JTB+NETKv2hAPsKEHI8PKd00vW64h1PPUPQq
-         8WEGYHaryYRJZCgtnBOG+W3qZ9VAoOJgv1iNM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=o7ITBtNCqpDrfHJkJUSWGd5juNNg5dAhHqok4P1ScJvUL1xoA523lfWbFncjHnQca/
-         CV9ms1klvqBqWJ2xM7eWj25s3R4kQ68GDU3ZTb1xicfb/1zgXc4aVMExndgP8nKJJS0Z
-         Jc+mo1VhpUhvMoQruKzWxx9YJ7WPXqSdtxdd8=
-Received: by 10.42.221.68 with SMTP id ib4mr2352212icb.386.1297938882086;
-        Thu, 17 Feb 2011 02:34:42 -0800 (PST)
-Received: from elie (adsl-69-209-51-217.dsl.chcgil.ameritech.net [69.209.51.217])
-        by mx.google.com with ESMTPS id z4sm657288ibg.7.2011.02.17.02.34.39
-        (version=SSLv3 cipher=OTHER);
-        Thu, 17 Feb 2011 02:34:40 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <loom.20110217T074533-358@post.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167064>
+	(envelope-from <fuse-devel-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>)
+	id 1Pq1M6-0007Dz-QT
+	for gcffd-fuse-devel@m.gmane.org; Thu, 17 Feb 2011 11:45:03 +0100
+Received: from localhost ([127.0.0.1] helo=sfs-ml-2.v29.ch3.sourceforge.com)
+	by sfs-ml-2.v29.ch3.sourceforge.com with esmtp (Exim 4.74)
+	(envelope-from <fuse-devel-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>)
+	id 1Pq1Lk-0006Wp-5i; Thu, 17 Feb 2011 10:44:40 +0000
+Received: from sog-mx-2.v43.ch3.sourceforge.com ([172.29.43.192]
+	helo=mx.sourceforge.net)
+	by sfs-ml-2.v29.ch3.sourceforge.com with esmtp (Exim 4.74)
+	(envelope-from <miklos-sUDqSbJrdHQHWmgEVkV9KA@public.gmane.org>)
+	id 1Pq1Li-0006WV-Lx; Thu, 17 Feb 2011 10:44:38 +0000
+Received-SPF: pass (sog-mx-2.v43.ch3.sourceforge.com: domain of szeredi.hu
+	designates 88.209.222.127 as permitted sender)
+	client-ip=88.209.222.127; envelope-from=miklos-sUDqSbJrdHQHWmgEVkV9KA@public.gmane.org;
+	helo=pomaz-ex.szeredi.hu; 
+Received: from fxip-0047f.externet.hu ([88.209.222.127]
+	helo=pomaz-ex.szeredi.hu)
+	by sog-mx-2.v43.ch3.sourceforge.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.74) id 1Pq1Lg-0003f0-Lb; Thu, 17 Feb 2011 10:44:38 +0000
+Received: from miko by pomaz-ex.szeredi.hu with local (Exim 4.69)
+	(envelope-from <miklos-sUDqSbJrdHQHWmgEVkV9KA@public.gmane.org>)
+	id 1Pq1LW-0005rc-Qy; Thu, 17 Feb 2011 11:44:26 +0100
+In-reply-to: <1297893854.4097.43.camel-vNW8ozRvgWupuGC+iAP0z+TW4wlIGRCZ@public.gmane.org> (message from
+	Yann Droneaud on Wed, 16 Feb 2011 23:04:14 +0100)
+X-Spam-Score: -1.5 (-)
+X-Spam-Report: Spam Filtering performed by mx.sourceforge.net.
+	See http://spamassassin.org/tag/ for more details.
+	-1.5 SPF_CHECK_PASS SPF reports sender host as permitted sender for
+	sender-domain
+	-0.0 SPF_HELO_PASS          SPF: HELO matches SPF record
+	-0.0 SPF_PASS               SPF: sender matches SPF record
+X-Headers-End: 1Pq1Lg-0003f0-Lb
+X-BeenThere: fuse-devel-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: <fuse-devel.lists.sourceforge.net>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/fuse-devel>,
+	<mailto:fuse-devel-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=fuse-devel>
+List-Post: <mailto:fuse-devel-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
+List-Help: <mailto:fuse-devel-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/fuse-devel>,
+	<mailto:fuse-devel-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=subscribe>
+Errors-To: fuse-devel-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167065>
 
-Chunlin Zhang wrote:
+On Wed, 16 Feb 2011, Yann Droneaud wrote:
+> Hi,
+> 
+> For some days, my usage of git is not as seamless as before.
+> 
+> I'm using git along sshfs/fuse (don't blame me for that), and 
+> each time I try to rebase one of my branch, I have a conflict when applying
+> the third commit. Doing the same operation on a local filesystem works without any problem.
 
-> I am writing a script for git-gui's "Tools" menu to diff a file.
-> I want to checkout an origin file in a tmp directory and use the diff tool.
+Yann, thanks for looking into this.
 
-Because you are writing a script, I'd suggest using one of the
-"low-level commands (plumbing)" listed in git(1).  Because you are
-retrieving a file, it would be one of the "interrogation commands".
-And because it is a single file, I suppose this should be git
-cat-file, git unpack-file, or git archive.
+Your findings are not surprising: unlike NFS, sshfs doesn't provide
+inode numbers and the fuse library also doesn't guarantee stable inode
+numbers by default.
 
-For example,
+Fuse version 2.8.x has a "noforget" option that should provide stable
+inode numbers, at the cost of unbounded memory use.  Could you please
+try if this option fixes these issues?
 
-	git cat-file blob HEAD:README
+Thanks,
+Miklos
 
-will print the contents of README in the HEAD commit.
+> 
+> ===== Part one: git =====
+> 
+> When I try to rebase one specific branch, git rebase failed when applying the third commit,
+> telling me about uncommited 
+> 
+> I've tried to do it from scratch, using git format-patch / git am
+> but git am also abort on the third patch with the error message:
+> 
+> error: <path>/<filename>: does not match index
+> 
+> So I've tried to diagnose the problem using :
+> 
+>  - git diff / git status : doesn't return anything.
+> 
+>  - git ls-tree HEAD -l <path>/<filename> : returns the correct mode and file size.
+> 
+>  - git log --raw --all --full-history -- <path>/<filename> : 
+>    returns valid information matching the one retrieved above.
+> 
+>  - git hash-object <path>/<filename> :
+>    gives the correct sha1 for the file, as recorded in the patch extracted using git format-patch 
+>    and reported by git ls-tree or git log (see before)
+> 
+>  - git diff-files : it shows a lot a file, all of them in same directory
+> 
+>    :100644 100644 <sha1> 0000000000000000000000000000000000000000 M <path>/<filename0>
+>    :100644 100644 <sha1> 0000000000000000000000000000000000000000 M <path>/<filename1>
+>    :100644 100644 <sha1> 0000000000000000000000000000000000000000 M <path>/<filename2>
+>    :100644 100644 <sha1> 0000000000000000000000000000000000000000 M <path>/<filename3>
+>    :100644 100644 <sha1> 0000000000000000000000000000000000000000 M <path>/<filename>
+> 
+> BTW, there's no conflict when applying the patch manually with patch: the patch itself is fine
+> Using git apply --index also work, but only if it's applied alone:
+> apply each patches in series and git apply fails in the same third patch.
+> 
+> After diving into git source code and some debugging session, I've found
+> that the inode number recorded in the active_cache doesn't match the one
+> on the filesystem for <pach>/<filename> : that's why git apply --index refuse to apply the patch.
+> 
+> Then I tried to monitor stat() information for the file in <path> during
+> git operations.
+> 1) After applying the first patch, files in <path> were affected different inode number
+> 2) Using strace, I checked that git apply didn't make anything specials to thoses files.
+> The only thing strange git did, was trying to unlink(<path>), but this failed since the <path>
+> directory wasn't empty.
+> 
+> Note: the first patch remove, change and add some files in <path> directory, while 
+> the third patch changes another file in <path> directory
+> 
+> As a workaround: running git diff / git diff --cached / git status between each
+> git apply --index command seems to update the cache and allows me to apply all the patches
+> without problem. But it's not an easy path to follow when rebasing branches.
+> 
+> Surprisingly, when looking at strace output, it seems that git apply, once work done, is calling lstat() 
+> for all the files under <path>, and it sees the new inodes allocated to those files, but I don't know what 
+> it is doing with those information, if it's not stored in the index.
+> 
+> To conclude, it was a bit hard to diagnose from git point of view.
+> 
+> ====== Part two: sshfs / fuse ======
+> 
+> At this time sshfs seems to be guilty of bad behavior, breaking somes POSIX rules.
+> 
+> So I tried the following testcase on another computer to reproduce the
+> problem outside of git.
+> 
+> Here the results:
+> 
+> $ mkdir dir
+> $ touch dir/a dir/b
+> $ stat -t dir/*
+> dir/a 0 0 81b4 500 500 15 3 1 0 0 1297882724 1297882724 1297882724 4096
+> dir/b 0 0 81b4 500 500 15 4 1 0 0 1297882726 1297882726 1297882726 4096
+> $ rmdir dir
+> rmdir: failed to remove `dir1': Operation not permitted
+> $ stat -t dir/*
+> dir/a 0 0 81b4 500 500 15 6 1 0 0 1297882724 1297882724 1297882724 4096
+> dir/b 0 0 81b4 500 500 15 7 1 0 0 1297882726 1297882726 1297882726 4096
+> 
+> One can see that inode 3 became inode 6 and inode 4 became inode 7 after the failed
+> unlink operation on dir. Which seems to be a bit uncommon for me.
+> 
+> Note: on a local filesystem, rmdir failed with message rmdir: failed to remove `dir1': Directory not empty
+> 
+> I try to add some debug support to fuse / sshfs in order to locate more precisely the problem:
+> (lines beginning by -/+ where added by me in libfuse, line beginning with --/++ in sshfs)
+> 
+> $ sshfs localhost:<export> <mount> -o sshfs_debug,debug,cache=no -d -f -s
+> 
+> unique: 22, opcode: FORGET (2), nodeid: 4, insize: 48, pid: 0
+> - forget 4
+> FORGET 4/1
+> DELETE: 4
+> + forget 4
+> unique: 23, opcode: FORGET (2), nodeid: 3, insize: 48, pid: 0
+> - forget 3
+> FORGET 3/1
+> DELETE: 3
+> + forget 3
+> unique: 24, opcode: RMDIR (11), nodeid: 1, insize: 44, pid: 9044
+> - rmdir 1 dir
+> rmdir /dir
+> -- rmdir(/dir)
+> [00020] RMDIR
+>   [00020]         STATUS       28bytes (0ms)
+> ++ rmdir(/dir) = -1
+>    unique: 24, error: -1 (Operation not permitted), outsize: 16
+> + rmdir 1 dir
+> unique: 25, opcode: FORGET (2), nodeid: 2, insize: 48, pid: 0
+> - forget 2
+> FORGET 2/1
+> DELETE: 2
+> + forget 2
+> 
+> One can see that the reference to files under the directory are asked by
+> the kernel to be forgotten, even if the directory is not yet removed.
+> 
+> This seems a bit illogical since a directory with files under it can't
+> be removed (but FORGET could apply to file deleted but still referenced
+> by a process).
+> 
+> Note: if the file is opened, the inode associated to the file name
+> didn't change. Hopefully.
+> 
+> I've tried to reproduce the problem with other virtual filesystem like
+> shm / tmpfs / devtmpfs / ramfs : no problem.
+> 
+> I've also tried with NFS (local), and there's no problem too (the inode
+> numbers reported from NFS client side are the same than the server
+> side).
+> 
+> So it seems this a FUSE only problem, and I haven't found exactly why.
+> 
+> Regards.
+> 
+> -- 
+> Yann Droneaud
 
-Because I am curious: what exactly would your script be used to do?
-Can the git diff-tree or git diff-files command help?
+------------------------------------------------------------------------------
+The ultimate all-in-one performance toolkit: Intel(R) Parallel Studio XE:
+Pinpoint memory and threading errors before they happen.
+Find and fix more than 250 security defects in the development cycle.
+Locate bottlenecks in serial and parallel code that limit performance.
+http://p.sf.net/sfu/intel-dev2devfeb
