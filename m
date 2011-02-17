@@ -1,60 +1,113 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 1/2] git-patch-id: test for "no newline" markers
-Date: Thu, 17 Feb 2011 13:11:59 +0100
-Message-ID: <4D5D108F.7060606@drmicha.warpmail.net>
-References: <7vwrkziw2i.fsf@alter.siamese.dyndns.org>	<d27aa07556df763b34b980d3706320216094d592.1297928549.git.git@drmicha.warpmail.net> <m3ei7698qf.fsf@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: use case: keep the output of a markup (TeX) file under revision control
+Date: Thu, 17 Feb 2011 04:19:12 -0800 (PST)
+Message-ID: <m362si97n4.fsf@localhost.localdomain>
+References: <1297939020.3959.12.camel@mattotaupa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 17 13:15:15 2011
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Paul Menzel <paulepanter@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Feb 17 13:21:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pq2lO-0002SJ-9w
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 13:15:14 +0100
+	id 1Pq2ro-0006nr-TN
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Feb 2011 13:21:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753760Ab1BQMPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 07:15:09 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37781 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753621Ab1BQMPI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 07:15:08 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 66212207F8;
-	Thu, 17 Feb 2011 07:15:07 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 17 Feb 2011 07:15:07 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=g4zPFgPSseMQoxH2YgPQm86R7yA=; b=BTSbJ9zDvhQL+p0CDrYCuN5JM3FhLplwhwpIyBXtnN/URLwU3PbWfGoFrAWlDV4i457X5LmSqfFVacRMdqau7AK6NlAwTYygIbDtCTqbJxGv6ZnOzWPPwjRFRCFUxlD61nQneDQJiyZ1yQL+yxx7DXJV8LUtDr0YtgzLbEqfECk=
-X-Sasl-enc: GhXDan50Wx9hQJeWrcofwQRTPU2/etRsLgwPK0H87tB8 1297944907
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id AB5C6409762;
-	Thu, 17 Feb 2011 07:15:06 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <m3ei7698qf.fsf@localhost.localdomain>
+	id S1753676Ab1BQMVt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Feb 2011 07:21:49 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:49032 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752020Ab1BQMVr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 07:21:47 -0500
+Received: by fxm20 with SMTP id 20so2522283fxm.19
+        for <git@vger.kernel.org>; Thu, 17 Feb 2011 04:21:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=fPDw3IsrYW1Y/Vzi2DJulS1KTkGh3NSrVBLMYUYtsUA=;
+        b=ry7vN4XvGnTrsI3nj60ZJ1CselIvq3fDFQBqZD0bsE/4Lq36btKF1By8lM2qPSd+EL
+         NUbQDtyXxU2DH5rbwwaG/6gH8aTolIYHIAXR8yhFj+Tg2VsZnb9wUHoNXx6+uwkYCTEO
+         6nZG0t7tbn4xPaSSX2FwVSJ7CWD6c0wnBF2x0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=N+3VDiY42qT/stQUJnynqoeQeXRJWkN/xONvFtL3o54Cy5uRkOB02ocRjJq21I+1M3
+         L8ejN6P9mq1uUqZcY+EmLcha8qBQRHYluwsQeg4vEB+MvKcPZhtXOVHT8chrcbtkCn2K
+         k9Ni+Pd2iEN2HeLcPqXDhB7ro6bGz5+QTSE6c=
+Received: by 10.223.98.197 with SMTP id r5mr2265692fan.68.1297945153386;
+        Thu, 17 Feb 2011 04:19:13 -0800 (PST)
+Received: from localhost.localdomain (abwj70.neoplus.adsl.tpnet.pl [83.8.233.70])
+        by mx.google.com with ESMTPS id 11sm396388faw.44.2011.02.17.04.19.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Feb 2011 04:19:12 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p1HCIdZn022914;
+	Thu, 17 Feb 2011 13:18:49 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p1HCINhg022910;
+	Thu, 17 Feb 2011 13:18:23 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1297939020.3959.12.camel@mattotaupa>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167074>
 
-Jakub Narebski venit, vidit, dixit 17.02.2011 12:55:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Currently, patch-id trips over our very own diff extension for marking
->> the absence of newline at EOF.
-> 
-> This is not *our* diff extension; it is either GNU diff extension, or
-> it is defined in diff/patch format standard.
+Paul Menzel <paulepanter@users.sourceforge.net> writes:
 
-So, which one is it?
+> I have the following use case and need an advise from you professiona=
+ls.
+>=20
+> A friend and I are writing a paper using TeX=B9 and keep the files un=
+der
+> revision control using Git. This works fine so far. But I want to als=
+o
+> have the output (PDF) of the markup file under revision control to be
+> able to access the PDF files even if for example no TeX installation =
+is
+> available on a system.
+>=20
+> The problem now is, since the output is no plain text file, that
+> merging/rebasing always shows conflicts which Git, of course, cannot
+> solve.
+>=20
+> Is there a way to set that up so that there are no conflicts? Would a
+> pre-commit hook work which generates the PDF file prior to committing=
+?
+> And if no TeX installation is available it would just ignore the PDF
+> files?
+>=20
+> I could not find anything on the Web because having PDF as search str=
+ing
+> would just show up how to generate documentation about Git.
 
-The point is that our very own code produces that extension, so we'd
-better support what our "diff" and "log -p" produce.
+As an alternative to Stefan Naewe solution of using separate "orphan"
+(unrelated) branch to store PDF files, like Git project does with
+generated documentation (manpages in 'man' branch, HTML version in
+'html' branch), you can try the following:
 
-Michael
+1. Mark PDF files as binary, if they are not already considered binary.
+
+2. Create custom merge driver for PDF files, which would compile
+   source *.tex file to PDF, provided that TeX is installed, and that
+   source file itself is not in merge conflict
+
+3. Creating pre-commit hook would ensure that you have refershed PDF
+   files during ordinary commit.  Note that this hook is not always ran
+   (you can force running it with --verify option to git-commit).
+
+HTH
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
