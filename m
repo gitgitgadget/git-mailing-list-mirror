@@ -1,87 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] branch/checkout --track: Ensure that upstream branch
- is indeed a branch
-Date: Thu, 17 Feb 2011 20:32:28 -0800
-Message-ID: <7vk4gy55er.fsf@alter.siamese.dyndns.org>
-References: <201102151852.03881.johan@herland.net>
- <201102161146.23749.johan@herland.net>
- <7vwrkzhc7x.fsf@alter.siamese.dyndns.org>
- <201102170012.20964.johan@herland.net>
- <alpine.DEB.2.00.1102171937460.14950@debian>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 5/3] block-sha1: do not use relative path for
+ git-compat-util.h
+Date: Thu, 17 Feb 2011 22:34:14 -0600
+Message-ID: <20110218043413.GE15643@elie>
+References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
+ <1297304069-14764-1-git-send-email-pclouds@gmail.com>
+ <20110218022701.GA23435@elie>
+ <20110218023750.GD23435@elie>
+ <AANLkTi=VhJi4eDrtRPHukckQKo9TYCcnh1_u0_tnv24z@mail.gmail.com>
+ <20110218042916.GC15643@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 18 05:32:54 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 18 05:34:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqI1U-0000rV-SW
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 05:32:53 +0100
+	id 1PqI2y-0001bp-JJ
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 05:34:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755134Ab1BREcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 23:32:43 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63401 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268Ab1BREcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 23:32:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4CE5A49AF;
-	Thu, 17 Feb 2011 23:33:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=6LpcYshiImv2VQx+HmxG3KOhwUs=; b=UO8+yMweaYiCa/dAfJHAu0r
-	B4SRfyIvzNBik+4HQTjEE+EbYXGDuKlyJ9loQfylO1guFqpxxxWCp5pzED2fNZPd
-	u1tUayXGJlOMkGnmj5PTLHMbpJmIZdCHY8IskW8oCLKCLgGlh+tcZZ+FCXh5kjMC
-	elBLx75O4QZ8oMN1gYB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=TuhskvgliwkAKeGoqd2/d3ScHSv7EMbw/FiY6moUA3nhAgPZU
-	V4HaCKwoLy7gTbSLxRO9Tzj26Efm8MOsEMIGHyDSShFq4BbEJ0OqMPx3HcuwajCd
-	OL/0qPcQxfwQhR+B9WPQWlj3xu4dt9ImfnLO04kzEXgYArefvycn7zmRiE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1C4C849AA;
-	Thu, 17 Feb 2011 23:33:43 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 020B249A6; Thu, 17 Feb 2011
- 23:33:38 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 44363584-3B18-11E0-81B1-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752283Ab1BREeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 23:34:20 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61503 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751973Ab1BREeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 23:34:18 -0500
+Received: by iyj8 with SMTP id 8so3118230iyj.19
+        for <git@vger.kernel.org>; Thu, 17 Feb 2011 20:34:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=rzTdMKE1pfpfBB8p4+f4EBt70m2S2kU7cvuIoQp0Ngs=;
+        b=ecFId0UsT+XVfLysDOkoDu6P9T5QjzpyPD9xftfKdOesokEVVtBjBBrXbE1gX1H76p
+         cZAK8FttxT5Nx+aEJtDHIwMS+0Q0TWhUnYgGo9EgRe+iRyZj3xIINp3CjK9rcu3l9Wf2
+         HC623VNk9Zp3JboJXmzD3tp0H8Ardkyq0xu9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=P+jxdE2TuVnaTlAc7n+8wWRGXxIpD9HaeWD9HACFV361M+4RrdlWaOQs4lEX5DYSDj
+         e5UdB8qLKoYX/JY4IbL0+lKlB5quVa86pFjysbAu6bN0Sr0IclCxxMS3J/L6vLym41MZ
+         V/bQyuMdyi59Lw47pUCP3SeBrCeGuo/4grtSA=
+Received: by 10.42.178.135 with SMTP id bm7mr347368icb.101.1298003658317;
+        Thu, 17 Feb 2011 20:34:18 -0800 (PST)
+Received: from elie (adsl-69-209-72-148.dsl.chcgil.ameritech.net [69.209.72.148])
+        by mx.google.com with ESMTPS id u9sm1341861ibe.2.2011.02.17.20.34.16
+        (version=SSLv3 cipher=OTHER);
+        Thu, 17 Feb 2011 20:34:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110218042916.GC15643@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167169>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+Rely on the includepath instead of specifying a path to
+git-compat-util.h explicitly.  This way, git-compat-util.h can move
+more easily.
 
-> In some workflows (e.g. Linux kernel, IIRC), it is recommended to base
-> your work on a tag.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ block-sha1/sha1.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-But the thing is, "base your work on some known point" is a rule invented
-exactly to discourage casual and frequent rebasing.
-
-If you started your work on v2.6.36 and need to rebase to a more recent
-version, you won't be using "rebase @{upstream}" notation _anyway_, as the
-old base you forked your work from that you would refer to as @{upstream}
-will not be moving.  You will instead rebasing on top of a _different_
-commit, perhaps v2.6.38 or something.
-
-So the workflow would look more like: 
-
-	$ git checkout -b frotz-2.6.36 v2.6.36
-        ... develop "frotz" feature on top of 2.6.36
-
-        ... time passes ...
-
-	$ git checkout -b frotz-2.6.38 frotz-2.6.36
-        $ git rebase --onto v2.6.38 v2.6.36
-	... inspect the result and it looks good.
-        ... if  you don't want frotz in 2.6.36 then...
-        $ git branch -D frotz-2.6.36
-
-There is not much point in using @{upstream} when your branch management
-is as disciplined as that recommended practice you cited.
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index c0054a0..71464fa 100644
+--- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -7,7 +7,7 @@
+  */
+ 
+ /* this is only to get definitions for memcpy(), ntohl() and htonl() */
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ #include "sha1.h"
+ 
+-- 
+1.7.4.1
