@@ -1,113 +1,67 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: Re: use case: keep the output of a markup (TeX) file under revision
- control
-Date: Fri, 18 Feb 2011 07:59:36 +0100
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4D5E18D8.8030106@atlas-elektronik.com>
-References: <1297939020.3959.12.camel@mattotaupa>	 <4D5D0EA2.4000805@atlas-elektronik.com> <1297972319.3944.30.camel@mattotaupa>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Re: My git-gui difftool script
+Date: Fri, 18 Feb 2011 08:36:51 +0100
+Message-ID: <4D5E2193.1050103@fastmail.fm>
+References: <loom.20110217T141642-685@post.gmane.org> <4D5D4CA0.8040301@fastmail.fm> <loom.20110218T020325-431@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Paul Menzel <paulepanter@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Feb 18 07:59:49 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Chunlin Zhang <zhangchunlin@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 18 08:40:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqKJg-0003fb-CP
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 07:59:48 +0100
+	id 1PqKwm-00073j-Ex
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 08:40:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991Ab1BRG7l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Feb 2011 01:59:41 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:21367 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752519Ab1BRG7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 01:59:40 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id B136F10069;
-	Fri, 18 Feb 2011 07:59:35 +0100 (CET)
-X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
-	with ESMTP id BLg0SWogL6SF; Fri, 18 Feb 2011 07:59:35 +0100 (CET)
-Received: from mgsrv01.atlas.de (mailrelay-atlas.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Fri, 18 Feb 2011 07:59:35 +0100 (CET)
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id DF2272716A;
-	Fri, 18 Feb 2011 07:59:34 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <1297972319.3944.30.camel@mattotaupa>
-X-Enigmail-Version: 1.1.1
+	id S1754117Ab1BRHkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 02:40:04 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:59115 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753352Ab1BRHkB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 02:40:01 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3394520BDC;
+	Fri, 18 Feb 2011 02:40:01 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 18 Feb 2011 02:40:01 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=QT5WIy7LIF3NXENSNx5w2UzZX48=; b=LH/YzHCd4RbxbNWurIRFBdmIqgFgjEvyoBepN6JwRemIkKQvpR/N7Dk0iMUPG7/DHvDKLFQOUXQ4qh9f0Q5v+5mflnWW3qPuvZhoga5e/EIXPxTNuMpRThk7hbLHb3xscPU3QFNlxtsscordLbCbcytzXaONX2DgBTEHUS031a0=
+X-Sasl-enc: x7zycVQjtOr1EsluVoLUwtmUls6prYdyhhtqFlYvZ/Iw 1298014800
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id AD714407DEE;
+	Fri, 18 Feb 2011 02:40:00 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <loom.20110218T020325-431@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167180>
 
-On 2/17/2011 8:51 PM, Paul Menzel wrote:
->> Why don't you keep the PDF files in a separate branch ? Look at git'=
-s
->> git repository (http://git.kernel.org/?p=3Dgit/git.git) in the html=20
->> and man branches.
->=20
-> Very interesting. Thank you very much for this hint.
->=20
-> Is the used solution in git=E2=80=99s git repository a result of the =
-problem
-> with maintaining generated output from source files or does it have
-> other other advantages too?
->=20
-> When creating TeX documents =E2=80=93 at least in my work flow =E2=80=
-=93 I always have
-> the PDF file open in parallel. Would that be a problem when having it=
- in
-> a separate branch?
+Chunlin Zhang venit, vidit, dixit 18.02.2011 02:12:
+> Michael J Gruber <michaeljgruber+gmane <at> fastmail.fm> writes:
+> 
+>>
+>>
+>> I don't want to spoil the party, but how is this different from using
+>> "git difftool -y $FILENAME" for the command?
+> 
+> Because in git-gui I can know which files are modified and which file are staged
+> more clearly and directly,and I can examine the diff over and over again if I
+>  like.
 
-I'd create a second clone and checkout the 'PDF' (or whatever you might=
- call
-it) branch there.
+Well, of course, but in git-gui's Tools menu you can use
 
-> Also I guess that this is done automatically too (saying autogenerate=
-d
-> in `git log origin/man`). I could not find the script though.
->=20
->         $ git grep Autogen
->         git-gui/Makefile:        echo '# Autogenerated by git-gui Mak=
-efile' >$@ && \
->         git-gui/git-gui.sh:if {[gets $fd] eq {# Autogenerated by git-=
-gui Makefile}} {
->=20
-> and searching for =C2=BBgit "Autogenerated manpages for"=C2=AB did no=
-t return
-> anything useful for me.
+"git difftool -y $FILENAME"
 
-Try: git grep "Autogenerated " origin/todo
-It's in 'dodoc.sh' on branch 'todo'
+instead of
 
-> Additionally I am confused where the SHA id g43f9f in =C2=BBAutogener=
-ated
-> manpages for v1.7.4.1-42-g43f9f=C2=AB comes from. I could not find th=
-at
-> commit in `origin/master` or `git log v1.7.4.1`.
+"YOUR_PATH_TO_git_gui_difftool.py $FILENAME"
 
-Try: git show 43f9f  (and 'git help describe')
-=20
-> The last thing is that in git=E2=80=99s git repository the autogenera=
-tion of the
-> manual pages does not seem to happen every commit (Is it a cron job?)=
-=2E
-> In my use case the PDF file should be generated after every commit. I=
-s a
-> separate branch the way to go here?
+for the command. So I'm just wondering what your new difftool.py does
+differently from the existing git-difftool.
 
-I guess the autogeneration takes place on every push to 'master'. That
-should work for you, too. Your decision...
-
-HTH,
-  Stefan
---=20
-----------------------------------------------------------------
-/dev/random says: I was going to procrastinate, but I put it off....
+Michael
