@@ -1,99 +1,137 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: Commit/merge messages for binary files
-Date: Fri, 18 Feb 2011 22:42:42 +0100
-Message-ID: <4D5EE7D2.5060703@gmail.com>
-References: <AANLkTikXMi92iUd-1bEfs5WfawyHp4G7=Ynd+eaq_wsR@mail.gmail.com>	<vpq39nlsb3r.fsf@bauges.imag.fr> <4D5ED6F2.8030008@gmail.com> <vpqwrkx9h2z.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: Merging limitations after directory renames -- interesting test
+ repo
+Date: Fri, 18 Feb 2011 17:21:51 -0500
+Message-ID: <20110218222151.GB4258@sigill.intra.peff.net>
+References: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 18 22:43:07 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 18 23:22:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqY6T-0006iT-DN
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 22:43:05 +0100
+	id 1PqYi8-0004TY-W2
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 23:22:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468Ab1BRVmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 16:42:53 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55430 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752321Ab1BRVmw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 16:42:52 -0500
-Received: by fxm20 with SMTP id 20so4261361fxm.19
-        for <git@vger.kernel.org>; Fri, 18 Feb 2011 13:42:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=XeKkJngiqtKOU//iNd5sF4Uczta+tvvweqJR7THwYTg=;
-        b=BznG+TEHf6zzTCG+7OAAdxdW1fZYBlAoRx3W+nVIMQWc4xGZRbWmiVMVKKg5yJdiAR
-         ZrEbi9+Q7D0XGiP3FrNYCtaUHHI4LsEB8GZZw/Pbi6FKw9hkWJYOsw4jzAQ1WF9FWYW0
-         swy9vfZimA7/IpHIVXGiW2+cUmqwh9yl/xzhA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=Jp04aCu5HXNX48PwzXTcMWZQdq6+bny8rGQmwvzaR0qyhmtr1oR2A2tDsl+ZRITHzh
-         MpqbtOOWXG+m6dh7Bvbm4OcTKuQ19Z8aXX3inAR87YcH5Phg4vWV0YZdbrSU0PGfFgBp
-         wQNPT8KdRoiclOdDWEo0sGlo/HZ+rfovBGMgE=
-Received: by 10.223.72.197 with SMTP id n5mr1628597faj.8.1298065370820;
-        Fri, 18 Feb 2011 13:42:50 -0800 (PST)
-Received: from [192.168.1.101] (akw69.neoplus.adsl.tpnet.pl [83.26.26.69])
-        by mx.google.com with ESMTPS id n7sm1318180fam.35.2011.02.18.13.42.49
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Feb 2011 13:42:49 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <vpqwrkx9h2z.fsf@bauges.imag.fr>
+	id S1758631Ab1BRWVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 17:21:55 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54176 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753589Ab1BRWVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Feb 2011 17:21:54 -0500
+Received: (qmail 3480 invoked by uid 111); 18 Feb 2011 22:21:53 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 18 Feb 2011 22:21:53 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Feb 2011 17:21:51 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167232>
 
-W dniu 18.02.2011 22:19, Matthieu Moy pisze:
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
-> 
->> W dniu 18.02.2011 14:53, Matthieu Moy pisze:
->>> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
->>>
->>>> Hi,
->>>>
->>>> there's a different output when committing change and when merging
->>>> change for a binary file.
->>>> Do the insertions/deletions have any meaning for binary files?
->>>
->>> No. They're inserted/deleted *lines*, and that wouldn't make sense for
->>> binary files.
->>
->> So it's a bug?
-> 
-> I don't see any bug. There were no insertion/deletion in text files,
-> hence you see 0 for both.
+[cc'ing Linus, who is usually interested in deep rename issues]
 
-Maybe I wasn't clear. Both the commit and the merge was for the same binary
-file.
+On Fri, Feb 18, 2011 at 01:58:48PM -0500, Martin Langhoff wrote:
 
-In case of commit there were non-zero insertions/deletions. 
-See example below - notice both update binary file blob.o:
+> Fetch git://dev.laptop.org/git/users/martin/etherpad and try to merge
+> pg and master. A ton of work is left to do by hand, and you don't even
 
-$ git commit -m Updated
-[topic 5da30ce] Updated
- 1 files changed, 8 insertions(+), 103 deletions(-)
- rewrite blob.o (100%)
+s{git/}{} in your url.
 
-$ git merge topic
-Updating 75ab259..5da30ce
-Fast-forward
- blob.o |  Bin 25920 -> 4364 bytes
- 1 files changed, 0 insertions(+), 0 deletions(-)
+>  - Many paths that shoud succeed don't seem to succeed.
 
+Hmm. Two questions:
 
-Hope that helps,
+  1. Did you bump up your merge.renamelimit? It's hard to see because it
+     scrolls off the screen amidst the many conflicts, but the first
+     message is:
 
--- 
-Piotr Krukowiecki
+       warning: too many files (created: 425 deleted: 1093), skipping
+       inexact rename detection
+
+     which you want to use. Try "git config merge.renamelimit
+     10000". Which runs pretty snappily on my machine; I wonder if we
+     should up the default limit.
+
+  2. Which version of git are you using? Commit 83c9031 produces some
+     funky results on merges. It's not in any released version of git,
+     but it is in master.
+
+> After using git merge, tell me if this file doesn't look like at least
+> git should have _attempted_ a diff3 on it:
+>
+>    gitk --all  -- etherpad/bin/rebuildjar.sh
+>    trunk/etherpad/bin/rebuildjar.sh
+>    trunk/trunk/etherpad/bin/rebuildjar.sh
+
+So assuming the two issues above are not a problem, merge says:
+
+  CONFLICT (rename/delete): Rename
+  trunk/etherpad/bin/rebuildjar.sh->etherpad/bin/rebuildjar.sh in
+  origin/pg and deleted in HEAD
+
+about this and many other files. But that doesn't seem right. Both sides
+did the same rename. But we don't seem to detect it on "master":
+
+  $ base=`git merge-base master origin/pg`
+  $ git diff -M --summary $base master | grep rebuildjar
+   create mode 100755 etherpad/bin/rebuildjar.sh
+   delete mode 100755 trunk/etherpad/bin/rebuildjar.sh
+
+Hmm. That is probably because it was substantially rewritten:
+
+  $ wc -l etherpad/bin/rebuildjar.sh
+  161
+
+  $ git diff --stat \
+      $base:trunk/etherpad/bin/rebuildjar.sh \
+      master:etherpad/bin/rebuildjar.sh
+   .../etherpad => master:etherpad}/bin/rebuildjar.sh |   92 +++++++++++++-
+   1 files changed, 89 insertions(+), 3 deletions(-)
+
+You can ignore the rename-looking bit in the diffstat; it's an artifact
+of the way single-blob diffs are done. But the important thing to note
+is that it was mostly rewritten on the master branch, and that's why the
+rename isn't found.
+
+This seems like an interesting case with respect to git's philosophy of
+automatic rename detection. Usually the notion of "if it is so far apart
+that we can't do rename detection, a 3-way merge is not likely to be
+interesting" works.
+
+But in this case, that may not hold. We have identical renames on either
+side, but one side has been modified a lot. The 3-way merge may very
+well be useful, but we never get there, because we don't even consider
+that the two endpoints may be related.
+
+You can simulate the 3-way merge that would happen with:
+
+  $ git show origin/pg:etherpad/bin/rebuildjar.sh >pg
+  $ git show master:etherpad/bin/rebuildjar.sh >master
+  $ git show $base:trunk/etherpad/bin/rebuildjar.sh >base
+  $ git merge-file master base pg
+  $ $EDITOR master
+
+It's an ugly merge, but way more useful than dumping with a
+rename/delete conflict.
+
+I'm not sure of the right solution. I guess if there was some way to say
+"no really, these are renames" it would make your merge easier. But I
+wonder if we can somehow be more clever.
+
+>  - Git diff seems confused, says "path needs merge" instead of giving
+> me a diff. May be related to the first problem
+>     git diff -- etherpad/bin/rebuildjar.sh
+
+I think this is a side effect of the rename/delete conflict. There is
+nothing to diff against on one side.
+
+-Peff
