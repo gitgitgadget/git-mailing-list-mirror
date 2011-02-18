@@ -1,67 +1,143 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
-Date: Fri, 18 Feb 2011 10:56:37 +0700
-Message-ID: <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
-References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org> <1297304069-14764-1-git-send-email-pclouds@gmail.com>
- <20110218022701.GA23435@elie>
+From: Jeff King <peff@peff.net>
+Subject: Re: git clone NonExistentLocation
+Date: Thu, 17 Feb 2011 23:01:52 -0500
+Message-ID: <20110218040152.GA25466@sigill.intra.peff.net>
+References: <4D5CE3E7.5030101@atlas-elektronik.com>
+ <4D5D1715.5020707@drmicha.warpmail.net>
+ <4D5D1A04.4090107@atlas-elektronik.com>
+ <4D5D1BCB.3010003@drmicha.warpmail.net>
+ <AANLkTin3Pf4XD_gbwxPzW4uff9SbDWJdGug6jM_SHDo+@mail.gmail.com>
+ <4D5D5275.5070501@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 18 04:58:20 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Feb 18 05:02:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqHU4-0001Y6-5T
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 04:58:20 +0100
+	id 1PqHXf-0003Ho-4W
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 05:02:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756063Ab1BRD6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 22:58:13 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38799 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755997Ab1BRD6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 22:58:13 -0500
-Received: by wyb28 with SMTP id 28so3272459wyb.19
-        for <git@vger.kernel.org>; Thu, 17 Feb 2011 19:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=rC1Zun9YHkrVCBJfUt40Zdm68k5IKIA44Vtu7buiLuA=;
-        b=dCBzmFOThG3R0QfxOLAYY9bQlIfwqABPvKdV03q6TM4dPf4YbQegHtKg6XXqeW8/B6
-         H/2owuXiqn3mGWV5XR7R5u3R55h6KXE9pHq6NtITwX2HV1vHWnXPMQ5ju7tOCmMZXJz1
-         KOGrWexeB0ZK1MQhayDw0CZVkQddMxV/US/c4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ptHqOaLXa9I18pI3GkXfCC6KlfwK/IqhHuICe9h7A2zXKAg59K17qroMuFWxVRNKDW
-         ++SzFp3Qb8bsg3kJzLhNSN1hBgSeTxEJpLOJo0mfPJeR0DffrMH+IcXdTuIbFJXHR3dG
-         NZV6orchBWEsYaABdTvEvYjAef6EEwSXbp0MA=
-Received: by 10.216.89.71 with SMTP id b49mr191283wef.28.1298001427381; Thu,
- 17 Feb 2011 19:57:07 -0800 (PST)
-Received: by 10.216.66.144 with HTTP; Thu, 17 Feb 2011 19:56:37 -0800 (PST)
-In-Reply-To: <20110218022701.GA23435@elie>
+	id S1754765Ab1BREB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 23:01:58 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33822 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752111Ab1BREB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 23:01:56 -0500
+Received: (qmail 26718 invoked by uid 111); 18 Feb 2011 04:01:55 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 18 Feb 2011 04:01:55 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Feb 2011 23:01:52 -0500
+Content-Disposition: inline
+In-Reply-To: <4D5D5275.5070501@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167161>
 
-MjAxMS8yLzE4IEpvbmF0aGFuIE5pZWRlciA8anJuaWVkZXJAZ21haWwuY29tPjoKPiBIaSwKPgo+
-IE5ndXnhu4VuIFRow6FpIE5n4buNYyBEdXkgd3JvdGU6Cj4KPj4gwqAuZ2l0aWdub3JlIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHwg
-wqAgMTkgLS0tLS0tLS0tLS0tCj4+IMKgTWFrZWZpbGUgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfCDCoCAzMCArKysrKysrKysr
-LS0tLS0tLS0tLQo+PiDCoHQvaGVscGVyLy5naXRpZ25vcmUgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8IMKgIDE5ICsrKysrKysrKysrKwo+IFsuLi5dCj4+
-IMKgMjQgZmlsZXMgY2hhbmdlZCwgMzggaW5zZXJ0aW9ucygrKSwgMzggZGVsZXRpb25zKC0pCj4K
-PiBIZXJlJ3MgYSB2YXJpYXRpb24gb24gdGhlIHRoZW1lIHRoYXQganVzdCBtb3ZlcyBzb3VyY2Ug
-YW5kIC5vIGZpbGVzCj4gKGxlYXZpbmcgcXVlc3Rpb25zIGFib3V0IGhvdyB0byBjb3BlIHdpdGgg
-YnJlYWtpbmcgbXVzY2xlIG1lbW9yeSBmb3IKPiB0aGUgcmVzdWx0aW5nIGV4ZWN1dGFibGVzIGZv
-ciBsYXRlcikuIMKgV2hhdCBkbyB5b3UgdGhpbms/CgpFeHRlcm5hbCBjb21tYW5kcyBhcmUgbm93
-IG1vcmUgdmlzaWJsZS4gTmljZS4KLS0gCkR1eQo=
+On Thu, Feb 17, 2011 at 05:53:09PM +0100, Michael J Gruber wrote:
+
+> Digging a little further: since a nonexisting directory is neither a dir
+> nor a file, clone thinks it is not local (is_local=is_bundle=0). None of
+> the transport_* commands error out since the relevant one is guarded by
+> 86ac751...
+> 
+> Reverting that or forcing is_local=1 both help, but how to detect "local
+> nonexisting" reliably?
+> 
+> In fact, I don't have a problem with the current state if we document it :)
+
+Hmm, the current behavior is even weirder. This clones an empty
+repository:
+
+  git clone does-not-exist
+
+but this causes an error:
+
+  git clone does-not-exist new-dir
+
+Regardless, I think we should catch this error, as it is likely not
+what the user intended. Yes, there's a warning, but I just don't see in
+what circumstance this behavior would be useful, and the downside is
+that you may have failed to actually create a copy of your data, which
+could lead to data loss.
+
+I think the patch below is the right fix.
+
+-- >8 --
+Subject: [PATCH] clone: die when trying to clone missing local path
+
+Since 86ac751 (Allow cloning an empty repository,
+2009-01-23), doing:
+
+  git clone does-not-exist
+
+has created does-not-exist as an empty repository. This was
+an unintentional side effect of 86ac751. Even weirder,
+doing:
+
+  git clone does-not-exist new-dir
+
+_does_ fail, making this "feature" (if you want to consider
+it such) broken. Let's detect this situation and explicitly
+die. It's almost certainly not what the user intended.
+
+This patch also adds two tests. One for the missing path
+case, and one to confirm that a similar case, cloning a
+non-repository directory, fails.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/clone.c        |    5 ++++-
+ t/t5701-clone-local.sh |   13 +++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 60d9a64..55785d0 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -412,8 +412,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	path = get_repo_path(repo_name, &is_bundle);
+ 	if (path)
+ 		repo = xstrdup(make_nonrelative_path(repo_name));
+-	else if (!strchr(repo_name, ':'))
++	else if (!strchr(repo_name, ':')) {
++		if (!file_exists(repo_name))
++			die("repository '%s' does not exist", repo_name);
+ 		repo = xstrdup(make_absolute_path(repo_name));
++	}
+ 	else
+ 		repo = repo_name;
+ 	is_local = path && !is_bundle;
+diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
+index 0f4d487..6972258 100755
+--- a/t/t5701-clone-local.sh
++++ b/t/t5701-clone-local.sh
+@@ -144,4 +144,17 @@ test_expect_success 'clone empty repository, and then push should not segfault.'
+ 	test_must_fail git push)
+ '
+ 
++test_expect_success 'cloning non-existent directory fails' '
++	cd "$D" &&
++	rm -rf does-not-exist &&
++	test_must_fail git clone does-not-exist
++'
++
++test_expect_success 'cloning non-git directory fails' '
++	cd "$D" &&
++	rm -rf not-a-git-repo not-a-git-repo-clone &&
++	mkdir not-a-git-repo &&
++	test_must_fail git clone not-a-git-repo not-a-git-repo-clone
++'
++
+ test_done
+-- 
+1.7.4.1.3.g720b9
