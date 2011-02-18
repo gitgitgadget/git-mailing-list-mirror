@@ -1,96 +1,112 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] push.default: Rename 'tracking' to 'upstream'
-Date: Thu, 17 Feb 2011 19:57:10 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102171951240.14950@debian>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <vpqy65gs6hs.fsf@bauges.imag.fr> <alpine.DEB.2.00.1102160421300.14950@debian> <201102161108.26637.jnareb@gmail.com> <vpqhbc4mg1c.fsf@bauges.imag.fr> <AANLkTikq67jQnM555nHKeyk5t0Ln+Hp97WSztTaej_CW@mail.gmail.com>
- <7v8vxflv7p.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102171947230.14950@debian>
+Subject: Re: [PATCH] submodule: no [--merge|--rebase] when newly cloned
+Date: Thu, 17 Feb 2011 19:59:02 -0500 (EST)
+Message-ID: <alpine.DEB.2.00.1102171957350.14950@debian>
+References: <1297860417-21895-1-git-send-email-olsonse@umich.edu> <4D5CC9C9.60705@viscovery.net> <alpine.DEB.2.00.1102171929200.14950@debian> <201102171748.15516.olsonse@umich.edu>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 18 01:57:23 2011
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Spencer E. Olson" <olsonse@umich.edu>
+X-From: git-owner@vger.kernel.org Fri Feb 18 01:59:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqEev-0007Q0-RW
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 01:57:22 +0100
+	id 1PqEgl-0008Mr-AB
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 01:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756002Ab1BRA5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 19:57:15 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:37917 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752108Ab1BRA5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 19:57:14 -0500
-Received: by qyk12 with SMTP id 12so3279215qyk.19
-        for <git@vger.kernel.org>; Thu, 17 Feb 2011 16:57:13 -0800 (PST)
+	id S1758146Ab1BRA7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 19:59:11 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:58854 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756236Ab1BRA7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 19:59:06 -0500
+Received: by vws16 with SMTP id 16so1565898vws.19
+        for <git@vger.kernel.org>; Thu, 17 Feb 2011 16:59:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
          :message-id:references:user-agent:mime-version:content-type;
-        bh=BbbJ2kjjQYQ8l+wovVijlUZtx4sAuW+KaDoFqB4nkWM=;
-        b=PlEJxQWMyrm5CrGgS13a2mjaUp99BVcWb0usimLIZMJ6ShZ5/v3OenC6DylAIAAi7B
-         e+gxVLh8Tm8Y8e2obP3GtA8YRg/Loug62zxorRblHsKFOWKpcp0l6rVXk8+ubiM+tBwl
-         n42RDzPdMQnHTBXHO2/d/CF1HOa+rdX259y5c=
+        bh=8S53WTLKVB7E3Hees0u72XXQM/j90vuVB8Nzr8AEygU=;
+        b=wcunt8V1Gtzxd78JXncsy/B0rFASl4e8oQaeXW3n6wEOohdnfJqGCmidO45vxJMmu0
+         ZvhCBTLaBo4UyLcTyY7pjazawT/DTUqRWpORAkR7shm4av0o+Sp51yY0kS6gmWhxEyAZ
+         uhUJGrWljeHtbsa7jHys69nuw9RmL5OkNSrq0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
          :references:user-agent:mime-version:content-type;
-        b=vnEypf0AjwWF7Myjv/PJE9ceu1lSrcEuYlgBjCyJsO0xIB75Ojyi1QQ14m4U3HF5MZ
-         IQCJhkFGB1pfBiZWT/LDy03GH11j+9kqcW/yTzrkYKc0EQpfLNeCvgefvRKYTYWEqCrK
-         ceVKNp23+j8jcaFTlqtYsu1+C4qtOT+WDLasc=
-Received: by 10.229.235.147 with SMTP id kg19mr78758qcb.61.1297990633616;
-        Thu, 17 Feb 2011 16:57:13 -0800 (PST)
+        b=RL8QFqNayAB/gh/OjKtuXk1CoC/xPDS7bYRU5BFgk8mqHHoFm5SCiy8Df7kupU189E
+         jgjTeifrnwj3dK/zLcATiov8ftzJ4MwY2JvjzWrsF4aSOEau94Uu+FHhn/PzZSMGizhB
+         uHPnSRBAp7O39d/8BW6MPjeu5WB5gNNqBNglg=
+Received: by 10.52.156.233 with SMTP id wh9mr148968vdb.180.1297990745581;
+        Thu, 17 Feb 2011 16:59:05 -0800 (PST)
 Received: from [192.168.1.100] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id g32sm1141319qck.34.2011.02.17.16.57.11
+        by mx.google.com with ESMTPS id y15sm769625vch.29.2011.02.17.16.59.03
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 17 Feb 2011 16:57:12 -0800 (PST)
+        Thu, 17 Feb 2011 16:59:04 -0800 (PST)
 X-X-Sender: martin@debian
-In-Reply-To: <alpine.DEB.2.00.1102171947230.14950@debian>
+In-Reply-To: <201102171748.15516.olsonse@umich.edu>
 User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167148>
 
-On Thu, 17 Feb 2011, Martin von Zweigbergk wrote:
+On Thu, 17 Feb 2011, Spencer E. Olson wrote:
 
-Sorry, sent by mistake (wrong key).
-
-> On Wed, 16 Feb 2011, Junio C Hamano wrote:
+> We are not actually using the yes utility (think y\ny\ny\ny\ny\ny\n...)
 > 
-> > As to its value being what the other end calls the source, I think it is
-> > not a good idea to change it, and it is even a worse idea to add a new
-> > configuration variable that points into the tracking branches on our side.
-> > @{upstream} is a short-hand notation to call the tracking branch of the
-> > "upstream" we have been discussing, and has to point at refs/remotes/
-> > hierarchy, but the entire point of the notation is that the users do not
-> > have to see/type "refs/remotes/" when they say
-> > 
-> >     $ git merge @{upstream}
+> As far as I understand, in this particular use, "yes" and "no" are just 
+> comments.  We could also write
+> : I like banannas ;;
+> and
+> ! : I do not like anchovies ;;
 
-What I meant to say was that I'm not sure I agree that the point of
-the @{upstream} notation is to hide the refs/remotes hierarchy. At
-least to me. I think more important is having a single way to refer to
-the upstream, whatever its value may be.
+Ah, I'm sure you're right. Need to read up on that colon operator. Thanks.
 
-> > 
-> > but at the level of an end-user's world-view, his branch that was forked
-> > from origin's "master" integrates with origin's "master", and the use of
-> > an intermediary, the refs/remotes/origin/master remote tracking branch
-> > that is kept on the local side, is a mere implementation detail.
-
-Anyway, I agree with with this part. And I'm happy Johan adding the
-"upstream" alias.
-
-
-/Martin
+> 
+> On Thursday 17 February 2011 17:34, Martin von Zweigbergk wrote:
+> > On Thu, 17 Feb 2011, Johannes Sixt wrote:
+> > > Am 2/16/2011 20:51, schrieb Junio C Hamano:
+> > > > Here is how to write the above more concisely, efficiently and
+> > > > portably.
+> > > >
+> > > > 	case "$2;" in
+> > > >         *";$1;"*)
+> > > >         	echo yes ;;
+> > > >         *)
+> > > >         	echo no ;;
+> > > > 	esac
+> > > >
+> > > > The trailing ';' takes care of the case where cloned_modules has only
+> > > > one element, in which case you have ";name" in "$2".  No need for a
+> > > > loop.
+> > >
+> > > And while you are here, you could make this:
+> > >
+> > > list_contains()
+> > > {
+> > > 	case "$2;" in
+> > > 	*";$1;"*)
+> > >
+> > > 		: yes ;;
+> > >
+> > > 	*)
+> > > 		! : no ;;
+> > > 	esac
+> > > }
+> > >
+> > > and test for the exit code of this function rather than its output at the
+> > > call site.
+> >
+> > According to Brandon Casey: "Some platforms (IRIX 6.5, Solaris 7) do
+> > not provide the 'yes' utility." See 8648732 (t/test-lib.sh: provide a
+> > shell implementation of the 'yes' utility, 2009-08-28).
+> >
+> >
+> > /Martin
+> 
