@@ -1,143 +1,158 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git clone NonExistentLocation
-Date: Thu, 17 Feb 2011 23:01:52 -0500
-Message-ID: <20110218040152.GA25466@sigill.intra.peff.net>
-References: <4D5CE3E7.5030101@atlas-elektronik.com>
- <4D5D1715.5020707@drmicha.warpmail.net>
- <4D5D1A04.4090107@atlas-elektronik.com>
- <4D5D1BCB.3010003@drmicha.warpmail.net>
- <AANLkTin3Pf4XD_gbwxPzW4uff9SbDWJdGug6jM_SHDo+@mail.gmail.com>
- <4D5D5275.5070501@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] Move libgit.a sources into a libgit/ subdirectory
+Date: Thu, 17 Feb 2011 22:14:05 -0600
+Message-ID: <20110218041358.GB15643@elie>
+References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
+ <1297304069-14764-1-git-send-email-pclouds@gmail.com>
+ <20110218022701.GA23435@elie>
+ <20110218023126.GB23435@elie>
+ <AANLkTikFLkXKKhZoDGAgh+i8H2fv+QNEVj7vEVABxee2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Feb 18 05:02:04 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 18 05:14:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqHXf-0003Ho-4W
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 05:02:03 +0100
+	id 1PqHje-0000jC-Kl
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 05:14:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754765Ab1BREB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 23:01:58 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33822 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752111Ab1BREB4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 23:01:56 -0500
-Received: (qmail 26718 invoked by uid 111); 18 Feb 2011 04:01:55 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 18 Feb 2011 04:01:55 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Feb 2011 23:01:52 -0500
+	id S1751977Ab1BREON convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Feb 2011 23:14:13 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42511 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751683Ab1BREOL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Feb 2011 23:14:11 -0500
+Received: by gyb11 with SMTP id 11so1434890gyb.19
+        for <git@vger.kernel.org>; Thu, 17 Feb 2011 20:14:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=hL0pVvr1Snp2NsarMn2hUOLjOpOquwtnkfO4jeuknYo=;
+        b=vB2Yhy87mo4SteM1UVT8ImHjMWmq+9q1hT3X829H+hsuj7rhUCpM0+PDVivy5q8bRR
+         V/xEvCr6KpVnMUnw/4YVhH+ORajAetgs2HWG16Fw7i60QCM4jl4dAoATU9NoWiPeiJry
+         3uIWbpRdUmseKl6I+oqJ89ZofhUn5t+Ci4F7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=KYVuXgvjMaCT+hKKqaeRN7Fp+2PaR8HsQv5Vod4z06JzAzq5NXHYDatKet/q2I/8pb
+         09kti4OfbQkgMfNQrjtLpCyac+Wi1rABKj3NapnHEO6sFhZe7RX+ScTg5UXeQAPu4Hiq
+         ZC1CxiZioCMecdcfkCZDlE231aXUYAVY3BmZQ=
+Received: by 10.90.87.9 with SMTP id k9mr439733agb.194.1298002451339;
+        Thu, 17 Feb 2011 20:14:11 -0800 (PST)
+Received: from elie (adsl-69-209-72-148.dsl.chcgil.ameritech.net [69.209.72.148])
+        by mx.google.com with ESMTPS id d15sm2025194ana.35.2011.02.17.20.14.09
+        (version=SSLv3 cipher=OTHER);
+        Thu, 17 Feb 2011 20:14:10 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <4D5D5275.5070501@drmicha.warpmail.net>
+In-Reply-To: <AANLkTikFLkXKKhZoDGAgh+i8H2fv+QNEVj7vEVABxee2@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167162>
 
-On Thu, Feb 17, 2011 at 05:53:09PM +0100, Michael J Gruber wrote:
+Nguyen Thai Ngoc Duy wrote:
+> 2011/2/18 Jonathan Nieder <jrnieder@gmail.com>:
 
-> Digging a little further: since a nonexisting directory is neither a dir
-> nor a file, clone thinks it is not local (is_local=is_bundle=0). None of
-> the transport_* commands error out since the relevant one is guarded by
-> 86ac751...
-> 
-> Reverting that or forcing is_local=1 both help, but how to detect "local
-> nonexisting" reliably?
-> 
-> In fact, I don't have a problem with the current state if we document it :)
+>> Move sources for libgit.a to a libgit/ subdirectory. =C2=A0This way,=
+ a
+>> person wanting to tackle the reusable part of git will know where to
+>> look, and those looking to work on individual commands know to look
+>> elsewhere.
+>
+> You missed a few (on purpose?): block-sha1, ppc and compat.
 
-Hmm, the current behavior is even weirder. This clones an empty
-repository:
+Yes, on purpose.  They're separately reusable.
 
-  git clone does-not-exist
+> libgit.a is produced at toplevel so I need a few more keystrokes to
+> reach files inside libgit. Maybe move libgit.a to libgit too?
 
-but this causes an error:
+Mm, good idea.
 
-  git clone does-not-exist new-dir
+> With die() all over the place in libgit.a, I doubt it would become an
+> independent project. Although this certainly makes it easier to
+> reimplement libgit as a thin wrapper around libgit2.
 
-Regardless, I think we should catch this error, as it is likely not
-what the user intended. Yes, there's a warning, but I just don't see in
-what circumstance this behavior would be useful, and the downside is
-that you may have failed to actually create a copy of your data, which
-could lead to data loss.
+I think it's more realistic to replace functions in libgit one by one
+with reentrant versions.
 
-I think the patch below is the right fix.
+Jonathan
 
--- >8 --
-Subject: [PATCH] clone: die when trying to clone missing local path
+-- 8< --
+Subject: Rename libgit.a to libgit/lib.a
 
-Since 86ac751 (Allow cloning an empty repository,
-2009-01-23), doing:
+This makes the libgit files easier to reach through tab completion.
 
-  git clone does-not-exist
+cgit uses "make -C git libgit.a" in its build process.  Make sure
+that continues to work by installing a symlink libgit.a -> libgit/lib.a
+on request.
 
-has created does-not-exist as an empty repository. This was
-an unintentional side effect of 86ac751. Even weirder,
-doing:
-
-  git clone does-not-exist new-dir
-
-_does_ fail, making this "feature" (if you want to consider
-it such) broken. Let's detect this situation and explicitly
-die. It's almost certainly not what the user intended.
-
-This patch also adds two tests. One for the missing path
-case, and one to confirm that a similar case, cloning a
-non-repository directory, fails.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Requested-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/clone.c        |    5 ++++-
- t/t5701-clone-local.sh |   13 +++++++++++++
- 2 files changed, 17 insertions(+), 1 deletions(-)
+ Makefile                |    5 ++++-
+ contrib/svn-fe/Makefile |    6 +++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 60d9a64..55785d0 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -412,8 +412,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	path = get_repo_path(repo_name, &is_bundle);
- 	if (path)
- 		repo = xstrdup(make_nonrelative_path(repo_name));
--	else if (!strchr(repo_name, ':'))
-+	else if (!strchr(repo_name, ':')) {
-+		if (!file_exists(repo_name))
-+			die("repository '%s' does not exist", repo_name);
- 		repo = xstrdup(make_absolute_path(repo_name));
-+	}
- 	else
- 		repo = repo_name;
- 	is_local = path && !is_bundle;
-diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
-index 0f4d487..6972258 100755
---- a/t/t5701-clone-local.sh
-+++ b/t/t5701-clone-local.sh
-@@ -144,4 +144,17 @@ test_expect_success 'clone empty repository, and then push should not segfault.'
- 	test_must_fail git push)
- '
- 
-+test_expect_success 'cloning non-existent directory fails' '
-+	cd "$D" &&
-+	rm -rf does-not-exist &&
-+	test_must_fail git clone does-not-exist
-+'
+diff --git a/Makefile b/Makefile
+index b812c1e..3d701d2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -487,7 +487,7 @@ endif
+ export PERL_PATH
+ export PYTHON_PATH
+=20
+-LIB_FILE=3Dlibgit.a
++LIB_FILE=3Dlibgit/lib.a
+ XDIFF_LIB=3Dxdiff/lib.a
+ VCSSVN_LIB=3Dvcs-svn/lib.a
+=20
+@@ -2029,6 +2029,9 @@ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http=
+-walker.o $(GITLIBS)
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(LIB_OBJS)
+=20
++libgit.a: $(LIB_FILE)
++	ln -sf $(LIB_FILE) $@
 +
-+test_expect_success 'cloning non-git directory fails' '
-+	cd "$D" &&
-+	rm -rf not-a-git-repo not-a-git-repo-clone &&
-+	mkdir not-a-git-repo &&
-+	test_must_fail git clone not-a-git-repo not-a-git-repo-clone
-+'
-+
- test_done
--- 
-1.7.4.1.3.g720b9
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(XDIFF_OBJS)
+=20
+diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
+index 360d8da..9dcad63 100644
+--- a/contrib/svn-fe/Makefile
++++ b/contrib/svn-fe/Makefile
+@@ -10,7 +10,7 @@ ALL_CFLAGS =3D $(CFLAGS)
+ ALL_LDFLAGS =3D $(LDFLAGS)
+ EXTLIBS =3D
+=20
+-GIT_LIB =3D ../../libgit.a
++GIT_LIB =3D ../../libgit/lib.a
+ VCSSVN_LIB =3D ../../vcs-svn/lib.a
+ LIBS =3D $(VCSSVN_LIB) $(GIT_LIB) $(EXTLIBS)
+=20
+@@ -54,8 +54,8 @@ svn-fe.1: svn-fe.txt
+ ../../vcs-svn/lib.a: FORCE
+ 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) vcs-svn/lib.a
+=20
+-../../libgit.a: FORCE
+-	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
++../../libgit/lib.a: FORCE
++	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit/lib.a
+=20
+ clean:
+ 	$(RM) svn-fe$X svn-fe.o svn-fe.html svn-fe.xml svn-fe.1
+--=20
+1.7.4.1
