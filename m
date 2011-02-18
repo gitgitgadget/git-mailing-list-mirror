@@ -1,110 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
-Date: Fri, 18 Feb 2011 10:55:04 -0800
-Message-ID: <7vei75p3zr.fsf@alter.siamese.dyndns.org>
-References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
- <1297304069-14764-1-git-send-email-pclouds@gmail.com>
- <20110218022701.GA23435@elie>
- <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
- <20110218092518.GB30648@elie>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Merging limitations after directory renames -- interesting test repo
+Date: Fri, 18 Feb 2011 13:58:48 -0500
+Message-ID: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 18 19:55:30 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 18 19:59:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqVUE-0005Iw-Tm
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 19:55:27 +0100
+	id 1PqVXv-0007hq-Hb
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 19:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756032Ab1BRSzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 13:55:22 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50645 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753810Ab1BRSzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 13:55:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 346084F60;
-	Fri, 18 Feb 2011 13:56:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1Qh+hCqv368/nrTzxd837+GYE8Y=; b=M+VR3J
-	48L6lbOb9wcI2EyhhRJWDuuozR6BMjGKuYHIV15zACwMuala7zyY57HTvcpb+yC+
-	NUXin3QjwypZwaak/sdRFsalF//sWa/HOXHrddnbAGuVo9+WbzZk0VtBg+eQz1wx
-	wrObRkJMa7IB4ATqVX1dZ69+WXk9k4ptltUR0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r91VxJdKzdtiHeyiMV2V5yHaieWxtylY
-	2LHR6o3m21itCCWW3/m1KvkMFqQqZMuqUkAxq430DW5V/a0jBQoVFul44sHmMslY
-	qvanLGHB3+rYSRrZbzxlxnJpVB+cXeqS1yhtSOpNumtwFod2k2lYqs1t2JxdR2jB
-	hCdZwRa3T5M=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D74634F59;
-	Fri, 18 Feb 2011 13:56:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 29CB24F4D; Fri, 18 Feb 2011
- 13:56:14 -0500 (EST)
-In-Reply-To: <20110218092518.GB30648@elie> (Jonathan Nieder's message of
- "Fri\, 18 Feb 2011 03\:25\:18 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C6D70DC4-3B90-11E0-837D-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752729Ab1BRS7K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Feb 2011 13:59:10 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:61024 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751999Ab1BRS7J convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 13:59:09 -0500
+Received: by ywo7 with SMTP id 7so1726101ywo.19
+        for <git@vger.kernel.org>; Fri, 18 Feb 2011 10:59:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=loADecbzAP9bMNUBSu74e6E9IdshG9clzvoYhjmxujs=;
+        b=IF8ecw4Z7gPUGpE3y/5cOKEwWpB7Dmi8R1IVSCVlVCRDXg2E4vDTwJbgxXNa6AGeGB
+         BWovRbPufl1ox2f2/lFTYY5xdnOg63pfvvluq4uazhvkbETycQ/O1dBRWIzidgKU3pUX
+         hR4lfqPvnuErYaiG4MrYT0ogPIr+4QuOqACNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=llO3ZhGr97ZI0uJstLW3O/roAha/ESSqLwgtnnPB2dlmrCNz3LmI5p2M8TL5UD09eU
+         HCtRYgisXLZyCuQ/KXsAvKhgKr5xGaFdmXPjlfkEAv5KoTBKH3axNQQ4e2z7JpPTVwwx
+         DiwNkvbQwm9rjD6RvNqK3KRDX3OiWUkCYXn6M=
+Received: by 10.90.75.18 with SMTP id x18mr1585608aga.5.1298055548157; Fri, 18
+ Feb 2011 10:59:08 -0800 (PST)
+Received: by 10.90.53.7 with HTTP; Fri, 18 Feb 2011 10:58:48 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167225>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Briefly,
 
-> Thanks again for both of your help.  I've put up an updated series at
->
->  git://repo.or.cz/git/jrn.git flatten-source
+=46etch git://dev.laptop.org/git/users/martin/etherpad and try to merge
+pg and master. A ton of work is left to do by hand, and you don't even
+get useful conflicts.
 
-Huh?  Did you mean deepen or unflatten?
+ - Many paths that shoud succeed don't seem to succeed. After using
+git merge, tell me if this file doesn't look like at least git should
+have _attempted_ a diff3 on it:
+   gitk --all  -- etherpad/bin/rebuildjar.sh
+trunk/etherpad/bin/rebuildjar.sh
+trunk/trunk/etherpad/bin/rebuildjar.sh
 
-> Changes since the series sent to the list:
->
->  - put headers in libgit/ with the source files.  I don't
->    know what I was thinking before.
+ - Git diff seems confused, says "path needs merge" instead of giving
+me a diff. May be related to the first problem
+    git diff -- etherpad/bin/rebuildjar.sh
 
-Nicer; I liked Jeff's "lib/" even better, though.
+   However I can
+   git diff master -- etherpad/bin/rebuildjar.sh
+   git diff pg -- etherpad/bin/rebuildjar.sh
 
->  - renamed nonbuiltin/ to commands/.  Names like
->    commands/add--interactive.perl even seem to make a kind of sense.
+Note note! The "pg" branch you see has been artificially rebuilt so I
+may have made a mistake. However, I've reviewed all the commits and it
+seems correct. Original repo comes from SVN via hg -- see
+git://github.com/ether/pad.git
 
-Yes. "nonbuiltin/" made me stop reading the patches ;-).
+Most importantly, even if I misfired here or there, the resulting
+history of the paths reads like something git _can_ make sense of if
+it traces the history of the paths carefully.
 
->  - moved the http support mini-library to http/.
+cheers,
 
-I don't understand the motivation behind this---wouldn't it belong to
-"libgit/" and if not why not?
 
->  - renamed git_remote_helpers to python/, though I'm not very happy
->    about that.
 
-I am not fond of naming a directory after a language _unless_ the contents
-of the directory is _all_ about laying the foundation of something else
-that happens to be implemented in that language.  Existing "perl/" is all
-about providing the Git.pm module to be used by Perl scripts that live
-outside the directory and is a very good example of naming the directory
-after the language.  Does the contents of the new "python/" directory
-satisfy that criteria?  If so, then it is fine.  If we plan to add more
-remote-helpers and if we plan to allow these helpers written in other
-languages, you might need to resurrect a separate "remote-helpers/"
-directory, move some parts of the files you placed in "python/" that are
-not "foundations for talking to git from Python" but are about "being a
-remote-helper" to a subdirectory of it, so that new helper implementations
-written in other languages can live next to that subdirectory.
-
-For exactly the same reason "scripts/" is a name I am not entirely happy
-about in your tree.  "test-programs/" is a very good name, but "scripts/"
-only tells us that the contents _happen to be_ done as scripts, and does
-not tell us _what they are for_; perhaps "build-helpers/" might be more
-understandable.
-
-Thanks.
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
