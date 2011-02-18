@@ -1,142 +1,146 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 3/3] rev-list: documentation and test for --cherry
-Date: Fri, 18 Feb 2011 13:34:20 +0100
-Message-ID: <c61e49d0955c6fbb8d5334e2f90aec2bde43bba9.1298032360.git.git@drmicha.warpmail.net>
+Subject: [PATCH 2/3] t6007: Make sure we test --cherry-pick
+Date: Fri, 18 Feb 2011 13:34:19 +0100
+Message-ID: <396d51a65165db5025dc70965cff9955af7b4b68.1298032360.git.git@drmicha.warpmail.net>
 References: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1298032360.git.git@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 18 13:37:42 2011
+X-From: git-owner@vger.kernel.org Fri Feb 18 13:37:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqPae-0003mw-M7
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 13:37:41 +0100
+	id 1PqPae-0003mw-5q
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 13:37:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755830Ab1BRMhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 07:37:38 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60613 "EHLO
+	id S1755110Ab1BRMhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 07:37:36 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34334 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755122Ab1BRMhg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 07:37:36 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 15BF920D75;
-	Fri, 18 Feb 2011 07:37:36 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Fri, 18 Feb 2011 07:37:36 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=/ephA/vEe5AvUuMPEj+8V6zRqfc=; b=O8HsiD6PpoUlFL7gZxXcnbtJoQYVZ5+huqGc5uE2xydvQRFsGbcZZ7rbTfeHQyEPCHyEjakYZIyTn8xz0A62vOIYDBnmUp8Ya5bBFQw1FrpMnsJDCF9rXkeuG3pWrL+SVPODLV/6yrQ5lrU+FYMs+mLDdK5Cp5cb/0obUW5dz9s=
-X-Sasl-enc: fx4nemGykVqVKTWpy3bVx6BC2UTzNsBLunVwXr1ABWJN 1298032655
+	by vger.kernel.org with ESMTP id S1753426Ab1BRMhe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 07:37:34 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 13DF420D78;
+	Fri, 18 Feb 2011 07:37:34 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 18 Feb 2011 07:37:34 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=8eO4zMgBOQ+zGm8QYrZghzc7IHo=; b=A+rznUuKrdu0jxu011DoS/8TuRHUtakLtQz6r/MGUxOWtUto4gFf5UgCYImhhviZfzlp7zALd21DtKw4MrWQOWVfll/Kw/iScqQwJU+EHTJOEw8jnQnyBLIleujxHmgTQZQ0k9bITsHTDZgEydeVz/9E5pSK5IhQPueRxoQOk9s=
+X-Sasl-enc: x6+9OYI4IEo8kktrXM1Ynh3lny8JgeVMpSISXi4DB4da 1298032653
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6646B44A077;
-	Fri, 18 Feb 2011 07:37:35 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6672840B145;
+	Fri, 18 Feb 2011 07:37:33 -0500 (EST)
 X-Mailer: git-send-email 1.7.4.1.74.gf39475.dirty
 In-Reply-To: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1298032360.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167204>
+
+Test 5 wants to test --cherry-pick but limits by pathspec in such a way
+that there are no commits on the left side of the range.
+
+Add a test without "--cherry-pick" which displays this, and add two
+more commits and another test which tests what we're after. This also
+shortens the last test.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/git-rev-list.txt       |    1 +
- Documentation/rev-list-options.txt   |   10 ++++++++++
- t/t6007-rev-list-cherry-pick-file.sh |   25 +++++++++++++++++++++----
- 3 files changed, 32 insertions(+), 4 deletions(-)
+ t/t6007-rev-list-cherry-pick-file.sh |   49 ++++++++++++++++++++++++++++-----
+ 1 files changed, 41 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 8e1e329..a74fb97 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -32,6 +32,7 @@ SYNOPSIS
- 	     [ \--timestamp ]
- 	     [ \--left-right ]
- 	     [ \--cherry-pick ]
-+	     [ \--cherry ]
- 	     [ \--encoding[=<encoding>] ]
- 	     [ \--(author|committer|grep)=<pattern> ]
- 	     [ \--regexp-ignore-case | -i ]
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 44a2ef1..3a68629 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -319,6 +319,16 @@ from the other branch (for example, "3rd on b" may be cherry-picked
- from branch A).  With this option, such pairs of commits are
- excluded from the output.
- 
-+--cherry::
-+
-+	Omit any commit that instroduces the same change as
-+	another commit on the left side of a symmetric or asymmetric
-+	range (they are treated the same).
-++
-+For example, `git rev-list --cherry A..B` omits those commits from
-+`B` which are in `A` or are patch-equivalent to a commit in `A`.
-+In other words, this lists the `{plus}` commits from `git cherry A B`.
-+
- -g::
- --walk-reflogs::
- 
 diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
-index 64b72a3..56efdd0 100755
+index b565638..64b72a3 100755
 --- a/t/t6007-rev-list-cherry-pick-file.sh
 +++ b/t/t6007-rev-list-cherry-pick-file.sh
-@@ -4,14 +4,14 @@ test_description='test git rev-list --cherry-pick -- file'
+@@ -4,13 +4,14 @@ test_description='test git rev-list --cherry-pick -- file'
  
  . ./test-lib.sh
  
--# A---B---D
-+# A---B---D---F
+-# A---B
++# A---B---D
  #  \
  #   \
- #    C---E
+-#    C
++#    C---E
  #
  # B changes a file foo.c, adding a line of text.  C changes foo.c as
  # well as bar.c, but the change in foo.c was identical to change B.
--# D and C change bar in the same way, E differently.
-+# D and C change bar in the same way, E and F differently.
++# D and C change bar in the same way, E differently.
  
  test_expect_success setup '
  	echo Hallo > foo &&
-@@ -40,7 +40,12 @@ test_expect_success setup '
- 	git add bar &&
+@@ -25,11 +26,21 @@ test_expect_success setup '
  	test_tick &&
- 	git commit -m "D" &&
--	git tag D
-+	git tag D &&
-+	echo Nello > bar &&
+ 	git commit -m "C" &&
+ 	git tag C &&
++	echo Dello > bar &&
 +	git add bar &&
 +	test_tick &&
-+	git commit -m "F" &&
-+	git tag F
++	git commit -m "E" &&
++	git tag E &&
+ 	git checkout master &&
+ 	git checkout branch foo &&
+ 	test_tick &&
+ 	git commit -m "B" &&
+-	git tag B
++	git tag B &&
++	echo Cello > bar &&
++	git add bar &&
++	test_tick &&
++	git commit -m "D" &&
++	git tag D
  '
  
  cat >expect <<EOF
-@@ -83,11 +88,23 @@ test_expect_success 'bar does not come up empty' '
+@@ -53,8 +64,33 @@ test_expect_success '--cherry-pick foo comes up empty' '
+ 	test -z "$(git rev-list --left-right --cherry-pick B...C -- foo)"
  '
  
- cat >expect <<EOF
-+<tags/F
- >tags/E
- EOF
- 
- test_expect_success '--cherry-pick bar does not come up empty (II)' '
--	git rev-list --left-right --cherry-pick D...E -- bar > actual &&
-+	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
++cat >expect <<EOF
++>tags/C
++EOF
++
+ test_expect_success '--cherry-pick bar does not come up empty' '
+-	! test -z "$(git rev-list --left-right --cherry-pick B...C -- bar)"
++	git rev-list --left-right --cherry-pick B...C -- bar > actual &&
++	git name-rev --stdin --name-only --refs="*tags/*" \
++		< actual > actual.named &&
++	test_cmp actual.named expect
++'
++
++test_expect_success 'bar does not come up empty' '
++	git rev-list --left-right B...C -- bar > actual &&
 +	git name-rev --stdin --name-only --refs="*tags/*" \
 +		< actual > actual.named &&
 +	test_cmp actual.named expect
 +'
 +
 +cat >expect <<EOF
-+tags/E
++>tags/E
 +EOF
 +
-+test_expect_success '--cherry bar does not come up empty' '
-+	git rev-list --cherry F..E -- bar > actual &&
- 	git name-rev --stdin --name-only --refs="*tags/*" \
- 		< actual > actual.named &&
- 	test_cmp actual.named expect
++test_expect_success '--cherry-pick bar does not come up empty (II)' '
++	git rev-list --left-right --cherry-pick D...E -- bar > actual &&
++	git name-rev --stdin --name-only --refs="*tags/*" \
++		< actual > actual.named &&
++	test_cmp actual.named expect
+ '
+ 
+ test_expect_success '--cherry-pick with independent, but identical branches' '
+@@ -75,11 +111,8 @@ cat >expect <<EOF
+ 1	2
+ EOF
+ 
+-# Insert an extra commit to break the symmetry
+ test_expect_success '--count --left-right' '
+-	git checkout branch &&
+-	test_commit D &&
+-	git rev-list --count --left-right B...D > actual &&
++	git rev-list --count --left-right C...D > actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 1.7.4.1.74.gf39475.dirty
