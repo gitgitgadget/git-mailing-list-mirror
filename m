@@ -1,146 +1,110 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/3] t6007: Make sure we test --cherry-pick
-Date: Fri, 18 Feb 2011 13:34:19 +0100
-Message-ID: <396d51a65165db5025dc70965cff9955af7b4b68.1298032360.git.git@drmicha.warpmail.net>
-References: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1298032360.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 18 13:37:43 2011
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] parse_tag_buffer(): avoid out of bound access
+Date: Fri, 18 Feb 2011 19:49:32 +0700
+Message-ID: <1298033372-29069-1-git-send-email-pclouds@gmail.com>
+References: <4D5D17F7.4010003@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 18 13:46:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqPae-0003mw-5q
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 13:37:40 +0100
+	id 1PqPiz-0000hE-EL
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 13:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110Ab1BRMhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 07:37:36 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34334 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753426Ab1BRMhe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 07:37:34 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 13DF420D78;
-	Fri, 18 Feb 2011 07:37:34 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 18 Feb 2011 07:37:34 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=8eO4zMgBOQ+zGm8QYrZghzc7IHo=; b=A+rznUuKrdu0jxu011DoS/8TuRHUtakLtQz6r/MGUxOWtUto4gFf5UgCYImhhviZfzlp7zALd21DtKw4MrWQOWVfll/Kw/iScqQwJU+EHTJOEw8jnQnyBLIleujxHmgTQZQ0k9bITsHTDZgEydeVz/9E5pSK5IhQPueRxoQOk9s=
-X-Sasl-enc: x6+9OYI4IEo8kktrXM1Ynh3lny8JgeVMpSISXi4DB4da 1298032653
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6672840B145;
-	Fri, 18 Feb 2011 07:37:33 -0500 (EST)
-X-Mailer: git-send-email 1.7.4.1.74.gf39475.dirty
-In-Reply-To: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1298032360.git.git@drmicha.warpmail.net>
+	id S1754230Ab1BRMqN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Feb 2011 07:46:13 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:61313 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752856Ab1BRMqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Feb 2011 07:46:11 -0500
+Received: by pzk35 with SMTP id 35so529828pzk.19
+        for <git@vger.kernel.org>; Fri, 18 Feb 2011 04:46:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=fluri3xFdkuL4JGWOc4H7ygA9ZYIdO4t8pJAWc5skyU=;
+        b=EOe/XEZC5yQ0KILs0YtythjlccHc9XwlaX/2539TJPSxyvLzQTL6aEgSrf4x1m76ht
+         jBAwEU+pHMpGQACvLzjq+7Zk/SBBBZN7JgAEskLEeNruU1wN49ow5zKD/MFjAwKudp3D
+         OdiYHtShQri9oTTaqn5kTkYLHiH7EvW1jsL9U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=lw91QKRJpIunWq6qYyAC18q50k5ZwqCcPlAI7slTue1+29o6dazSoXu43lkIDbUJRG
+         ZIevSlq+HPTFv5cUKmTZ0gORL4zyea8/KS1+UNV5MwyyKE3SB252AEKjtjGoRywepdUA
+         t0A4Z++tWzffCMa1xBoNwcuiLogzQfeErUfV8=
+Received: by 10.142.142.5 with SMTP id p5mr511164wfd.257.1298033170483;
+        Fri, 18 Feb 2011 04:46:10 -0800 (PST)
+Received: from tre ([115.73.232.10])
+        by mx.google.com with ESMTPS id e14sm2739398wfg.8.2011.02.18.04.46.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 18 Feb 2011 04:46:09 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Fri, 18 Feb 2011 19:49:33 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
+In-Reply-To: <4D5D17F7.4010003@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167205>
 
-Test 5 wants to test --cherry-pick but limits by pathspec in such a way
-that there are no commits on the left side of the range.
+There is a check (size < 64) at the beginning of the function, but
+that only covers object+type lines. Code for parsing "tag" and
+"tagger" may access outside buffer. Fix it.
 
-Add a test without "--cherry-pick" which displays this, and add two
-more commits and another test which tests what we're after. This also
-shortens the last test.
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- t/t6007-rev-list-cherry-pick-file.sh |   49 ++++++++++++++++++++++++++++-----
- 1 files changed, 41 insertions(+), 8 deletions(-)
+ On Thu, Feb 17, 2011 at 7:43 PM, Ren=C3=A9 Scharfe <rene.scharfe@lsrfi=
+re.ath.cx> wrote:
+ > memchr() won't notice if a negative value has been passed as third p=
+arameter
+ > because its type is size_t, which is unsigned.  Negative values are
+ > converted to big positive ones..
 
-diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
-index b565638..64b72a3 100755
---- a/t/t6007-rev-list-cherry-pick-file.sh
-+++ b/t/t6007-rev-list-cherry-pick-file.sh
-@@ -4,13 +4,14 @@ test_description='test git rev-list --cherry-pick -- file'
- 
- . ./test-lib.sh
- 
--# A---B
-+# A---B---D
- #  \
- #   \
--#    C
-+#    C---E
- #
- # B changes a file foo.c, adding a line of text.  C changes foo.c as
- # well as bar.c, but the change in foo.c was identical to change B.
-+# D and C change bar in the same way, E differently.
- 
- test_expect_success setup '
- 	echo Hallo > foo &&
-@@ -25,11 +26,21 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m "C" &&
- 	git tag C &&
-+	echo Dello > bar &&
-+	git add bar &&
-+	test_tick &&
-+	git commit -m "E" &&
-+	git tag E &&
- 	git checkout master &&
- 	git checkout branch foo &&
- 	test_tick &&
- 	git commit -m "B" &&
--	git tag B
-+	git tag B &&
-+	echo Cello > bar &&
-+	git add bar &&
-+	test_tick &&
-+	git commit -m "D" &&
-+	git tag D
- '
- 
- cat >expect <<EOF
-@@ -53,8 +64,33 @@ test_expect_success '--cherry-pick foo comes up empty' '
- 	test -z "$(git rev-list --left-right --cherry-pick B...C -- foo)"
- '
- 
-+cat >expect <<EOF
-+>tags/C
-+EOF
-+
- test_expect_success '--cherry-pick bar does not come up empty' '
--	! test -z "$(git rev-list --left-right --cherry-pick B...C -- bar)"
-+	git rev-list --left-right --cherry-pick B...C -- bar > actual &&
-+	git name-rev --stdin --name-only --refs="*tags/*" \
-+		< actual > actual.named &&
-+	test_cmp actual.named expect
-+'
-+
-+test_expect_success 'bar does not come up empty' '
-+	git rev-list --left-right B...C -- bar > actual &&
-+	git name-rev --stdin --name-only --refs="*tags/*" \
-+		< actual > actual.named &&
-+	test_cmp actual.named expect
-+'
-+
-+cat >expect <<EOF
-+>tags/E
-+EOF
-+
-+test_expect_success '--cherry-pick bar does not come up empty (II)' '
-+	git rev-list --left-right --cherry-pick D...E -- bar > actual &&
-+	git name-rev --stdin --name-only --refs="*tags/*" \
-+		< actual > actual.named &&
-+	test_cmp actual.named expect
- '
- 
- test_expect_success '--cherry-pick with independent, but identical branches' '
-@@ -75,11 +111,8 @@ cat >expect <<EOF
- 1	2
- EOF
- 
--# Insert an extra commit to break the symmetry
- test_expect_success '--count --left-right' '
--	git checkout branch &&
--	test_commit D &&
--	git rev-list --count --left-right B...D > actual &&
-+	git rev-list --count --left-right C...D > actual &&
- 	test_cmp expect actual
- '
- 
--- 
-1.7.4.1.74.gf39475.dirty
+ I did not notice that. Fixed commit message.
+
+ tag.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/tag.c b/tag.c
+index ecf7c1e..7d38cc0 100644
+--- a/tag.c
++++ b/tag.c
+@@ -97,7 +97,9 @@ int parse_tag_buffer(struct tag *item, const void *da=
+ta, unsigned long size)
+ 		item->tagged =3D NULL;
+ 	}
+=20
+-	if (prefixcmp(bufptr, "tag "))
++	if (bufptr + 4 < tail && !prefixcmp(bufptr, "tag "))
++		; 		/* good */
++	else
+ 		return -1;
+ 	bufptr +=3D 4;
+ 	nl =3D memchr(bufptr, '\n', tail - bufptr);
+@@ -106,7 +108,7 @@ int parse_tag_buffer(struct tag *item, const void *=
+data, unsigned long size)
+ 	item->tag =3D xmemdupz(bufptr, nl - bufptr);
+ 	bufptr =3D nl + 1;
+=20
+-	if (!prefixcmp(bufptr, "tagger "))
++	if (bufptr + 7 < tail && !prefixcmp(bufptr, "tagger "))
+ 		item->date =3D parse_tag_date(bufptr, tail);
+ 	else
+ 		item->date =3D 0;
+--=20
+1.7.4.74.g639db
