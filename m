@@ -1,351 +1,175 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] Documentation: cherry-pick does not set ORIG_HEAD
-Date: Fri, 18 Feb 2011 17:17:48 -0600
-Message-ID: <20110218231748.GA17836@elie>
-References: <AANLkTingcnvm6rLnWdweAKdeOWAVjh+F+6BMWzfJxhKi@mail.gmail.com>
- <20110218012435.GA16893@elie>
- <4D5EE6BB.9070507@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Merging limitations after directory renames -- interesting test repo
+Date: Fri, 18 Feb 2011 15:27:36 -0800
+Message-ID: <AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com>
+References: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com> <20110218222151.GB4258@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 19 00:18:04 2011
+Content-Type: multipart/mixed; boundary=90e6ba4fc23c25bb68049c96ddb9
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 19 00:28:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqZaN-0001QV-La
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 00:18:04 +0100
+	id 1PqZk3-0006jb-Qy
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 00:28:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758351Ab1BRXR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 18:17:58 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:37478 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753984Ab1BRXR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 18:17:56 -0500
-Received: by qyk7 with SMTP id 7so521857qyk.19
-        for <git@vger.kernel.org>; Fri, 18 Feb 2011 15:17:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=fg8s0lI3LzIORZK1CE+62Uq46teyovLJP/v8CawWEXo=;
-        b=omrGu3aeaCibu0elyvOQz9KddUhMmkWQpQlTc5Ibzb79aHup2vScj9a0NLyKidGX/e
-         YS7EwP0N9TYH/qTqDGD5WqPl+t8QQLc+FCP/wuwlozVJIh1gX2nSwri/1zyNaq/tIBo7
-         zNmZFNpEdKeodwdDm3TJoh5G/I8JZN9hybIL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jCoJLOYlY2NNcOmCk0sxOE0d7FxbL2F/yDwCAAqcs86KixMkRgCRTXaR2Jb1GeMvb6
-         QW4h4HZPIcBPN5qaz1ItbGU9Suc0R28tsqgBOfv7gmr84VK9KD1uLIVu9qxbzZm5hL1l
-         sceH12oaXTS6tAUS9sF827zarOlDS5GtMUQ1A=
-Received: by 10.229.226.8 with SMTP id iu8mr1050662qcb.126.1298071075753;
-        Fri, 18 Feb 2011 15:17:55 -0800 (PST)
-Received: from elie (adsl-69-209-72-148.dsl.chcgil.sbcglobal.net [69.209.72.148])
-        by mx.google.com with ESMTPS id g28sm1889084qck.13.2011.02.18.15.17.53
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Feb 2011 15:17:54 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D5EE6BB.9070507@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755334Ab1BRX17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 18:27:59 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35935 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751791Ab1BRX15 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 18:27:57 -0500
+Received: from mail-iy0-f174.google.com (mail-iy0-f174.google.com [209.85.210.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p1INRum7005563
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 18 Feb 2011 15:27:56 -0800
+Received: by iyj8 with SMTP id 8so4023621iyj.19
+        for <git@vger.kernel.org>; Fri, 18 Feb 2011 15:27:56 -0800 (PST)
+Received: by 10.231.206.131 with SMTP id fu3mr952901ibb.98.1298071676107; Fri,
+ 18 Feb 2011 15:27:56 -0800 (PST)
+Received: by 10.231.16.129 with HTTP; Fri, 18 Feb 2011 15:27:36 -0800 (PST)
+In-Reply-To: <20110218222151.GB4258@sigill.intra.peff.net>
+X-Spam-Status: No, hits=-102.962 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167234>
 
-The example that uses "reset --merge" to bail out from a failed
-cherry-pick is dangerously wrong.  For example,
+--90e6ba4fc23c25bb68049c96ddb9
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-	git reset --keep master
-	git cherry-pick HEAD@{1};	# conflicts!
-	git reset --merge ORIG_HEAD;	# let's try that again
-	git cherry-pick --strategy=more-careful HEAD@{1}
-
-would not reset the topic to the pre cherry-pick state (master) but to
-whatever branch we were on before then.
-
-The example used ORIG_HEAD by habit from aborting merges.  "git reset
---merge HEAD" is more appropriate here.
-
-Noticed-by: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Piotr Krukowiecki wrote:
-
-> I took it from Documentation/git-cherry-pick.txt, which seem
-> to be wrong:
-
-Good catch.  The manpage I was looking at was stale.
-
->> "git reset --merge" will remove local changes marked with "git add",
->> under the assumption that they were part of the conflict resolution
->> and thus should be cleared away.
+On Fri, Feb 18, 2011 at 2:21 PM, Jeff King <peff@peff.net> wrote:
 >
-> Didn't know that (one probably shouldn't merge with uncommitted/local
-> changes anyway). git-reset.txt mentions it, but there's no explicit
-> warning.
+> =A01. Did you bump up your merge.renamelimit? It's hard to see because it
+> =A0 =A0 scrolls off the screen amidst the many conflicts, but the first
+> =A0 =A0 message is:
+>
+> =A0 =A0 =A0 warning: too many files (created: 425 deleted: 1093), skippin=
+g
+> =A0 =A0 =A0 inexact rename detection
+>
+> =A0 =A0 which you want to use. Try "git config merge.renamelimit
+> =A0 =A0 10000". Which runs pretty snappily on my machine; I wonder if we
+> =A0 =A0 should up the default limit.
 
-Care to write a patch?
+Yeah, for the kernel, I have
 
->> This leaves me afraid of the following scenario:
->>
-[...]
->> 	# ... two days later ...
->> 	... hack hack hack ...
->> 	... add add add ...
->> 	git commit;	# fails because of unmerged files
->> 
->> 	# whoops, forgot about that merge.
->> 	# Let's do what it says to do:
->> 	git reset --merge ORIG_HEAD
-[...]
-> Is it possible to recognize that you have something more than what
-> was cause by the merge/cherry-pick?
+	[diff]
+		renamelimit=3D0
 
-I suppose it depends what you mean.  I see at least two distinct
-problems to solve:
+to disable the limit entirely, because the default limit is very low
+indeed. Git is quite good at the rename detection.
 
- A. "undo" facility to recover from an ugly cherry-pick
+However, the reason for the low default is not because it's not snappy
+enough - it's because it can end up using a lot of memory (and if
+you're low on memory, the swapping will mean that it goes from "quite
+snappy" to "slow as molasses" - but it still will not be CPU limited,
+it's just paging like crazy).
 
-This one is what reset --merge is for.  The idea is that after
-spending a little while trying to make something good out of a
-mess, you say, "oh, bother, let me get back to where I started".
+That said, having the error message scroll by and not even be noticed
+by somebody doing a merge is really not good. It's an important hint,
+and if you miss that hint you can easily have a totally trivial merge
+turn into a totally unacceptable one.
 
-So in this case it really does make sense to back out any changes
-you marked with "git add" after the cherry-pick, since they were
-part of the messy resolution process.  If there had been any
-changes registered before the cherry-pick, the cherry-pick would
-have just failed without making a mess.
+So I do think we could try to lift the default a bit, but it might be
+even more important to just make the message much more noticeable and
+avoid scrolling past it. For example, setting a flag, and not printing
+out the message immediately, but instead print it out only if it turns
+into trouble at the end.
 
-A patch in flight makes "git cherry-pick" print advice for this case
-when it encounters conflicts (thanks!).
+I dunno.
 
- B. clearing away a forgotten merge from long ago
+> =A02. Which version of git are you using? Commit 83c9031 produces some
+> =A0 =A0 funky results on merges. It's not in any released version of git,
+> =A0 =A0 but it is in master.
 
-If you had been doing work without remembering that there was
-a merge in progress, the best way to recover is probably a plain
-"git reset HEAD -- .".
+Ouch. I thought that commit wasn't _supposed_ to make any difference.
+If it does, then that sounds like a bad bug. Junio?
 
-This is a case people might be looking for advice about when reading
-"git status" ("where was I?") output.
+> Hmm. That is probably because it was substantially rewritten:
 
-Thanks.
+Damn. We suck.
 
- Documentation/git-cherry-pick.txt |    6 +-
- t/t3404-rebase-interactive.sh     |    6 --
- t/t3510-cherry-pick-doc.sh        |  137 +++++++++++++++++++++++++++++++++++++
- t/test-lib.sh                     |    9 +++
- 4 files changed, 149 insertions(+), 9 deletions(-)
- create mode 100755 t/t3510-cherry-pick-doc.sh
+Lookie here, here's the problem (well, at least part of it):
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 749d68a..abedcb7 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -137,7 +137,7 @@ again, this time exercising more care about matching up context lines.
- ------------
- $ git cherry-pick topic^             <1>
- $ git diff                           <2>
--$ git reset --merge ORIG_HEAD        <3>
-+$ git reset --merge HEAD             <3>
- $ git cherry-pick -Xpatience topic^  <4>
- ------------
- <1> apply the change that would be shown by `git show topic^`.
-@@ -146,8 +146,8 @@ information about the conflict is written to the index and
- working tree and no new commit results.
- <2> summarize changes to be reconciled
- <3> cancel the cherry-pick.  In other words, return to the
--pre-cherry-pick state, preserving any local modifications you had in
--the working tree.
-+pre-cherry-pick state, preserving any local modifications you have
-+in the working tree.
- <4> try to apply the change introduced by `topic^` again,
- spending extra time to avoid mistakes based on incorrectly matching
- context lines.
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 7d8147b..88f1192 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -29,12 +29,6 @@ Initial setup:
- 
- . "$TEST_DIRECTORY"/lib-rebase.sh
- 
--test_cmp_rev () {
--	git rev-parse --verify "$1" >expect.rev &&
--	git rev-parse --verify "$2" >actual.rev &&
--	test_cmp expect.rev actual.rev
--}
--
- set_fake_editor
- 
- # WARNING: Modifications to the initial repository can change the SHA ID used
-diff --git a/t/t3510-cherry-pick-doc.sh b/t/t3510-cherry-pick-doc.sh
-new file mode 100755
-index 0000000..e645caa
---- /dev/null
-+++ b/t/t3510-cherry-pick-doc.sh
-@@ -0,0 +1,137 @@
-+#!/bin/sh
-+
-+test_description='examples from git-cherry-pick(1)
-+
-+Check that what the manual claims is still true.
-+
-+  -
-+  + seven [next]
-+  + six
-+  + five [master]
-+  + four
-+  + three
-+  + two (modifies one.t)
-+  + one
-+  + initial
-+'
-+. ./test-lib.sh
-+
-+check_log () {
-+	git rev-list "$2" |
-+	git diff-tree -r --root --stdin |
-+	sed -e "s/$_x40/OBJID/g" >actual.log &&
-+	test_cmp "$1" actual.log
-+}
-+
-+test_expect_success setup '
-+	GIT_EDITOR=false &&
-+	export GIT_EDITOR &&
-+
-+	test_commit initial &&
-+	test_commit one &&
-+	test_commit two one.t &&
-+	test_commit three &&
-+	test_commit four &&
-+	test_commit five &&
-+	git checkout -b next &&
-+	test_commit six &&
-+	test_commit seven &&
-+	git checkout -b topic initial
-+'
-+
-+test_expect_success 'cherry-pick tip of branch' '
-+	cat >expect.log <<-\EOF &&
-+	OBJID
-+	:000000 100644 OBJID OBJID A	five.t
-+	EOF
-+	git reset --hard initial &&
-+	git cherry-pick master &&
-+	check_log expect.log initial..topic
-+'
-+
-+test_expect_success 'cherry-pick to catch up' '
-+	cat >expect.log <<-\EOF &&
-+	OBJID
-+	:000000 100644 OBJID OBJID A	five.t
-+	OBJID
-+	:000000 100644 OBJID OBJID A	four.t
-+	OBJID
-+	:000000 100644 OBJID OBJID A	three.t
-+	OBJID
-+	:100644 100644 OBJID OBJID M	one.t
-+	OBJID
-+	:000000 100644 OBJID OBJID A	one.t
-+	EOF
-+	git reset --hard initial &&
-+	git cherry-pick ..master &&
-+	check_log expect.log initial..topic &&
-+
-+	git reset --hard initial &&
-+	git cherry-pick ^HEAD master &&
-+	check_log expect.log initial..topic
-+'
-+
-+test_expect_success 'cherry-pick selected changes' '
-+	cat >expect.log <<-\EOF &&
-+	OBJID
-+	:000000 100644 OBJID OBJID A	three.t
-+	OBJID
-+	:000000 100644 OBJID OBJID A	one.t
-+	EOF
-+	git reset --hard initial &&
-+	git cherry-pick master~4 master~2 &&
-+	check_log expect.log initial..topic
-+'
-+
-+test_expect_success 'cherry-pick --no-commit' '
-+	>expect.log &&
-+	cat >expect.after-commit <<-\EOF &&
-+	OBJID
-+	:000000 100644 OBJID OBJID A	four.t
-+	:000000 100644 OBJID OBJID A	seven.t
-+	EOF
-+	git reset --hard initial &&
-+	git cherry-pick -n master~1 next &&
-+	check_log expect.log initial..topic &&
-+	test_must_fail git commit &&
-+	git commit -m "squashed patches" &&
-+	check_log expect.after-commit initial..topic
-+'
-+
-+test_expect_success 'cherry-pick --ff' '
-+	git reset --hard initial &&
-+	git cherry-pick --ff ..next &&
-+	test_cmp_rev next topic
-+'
-+
-+test_expect_success 'cherry-pick --no-commit --stdin' '
-+	git reset --hard initial &&
-+	git rev-list --reverse master -- one.t |
-+	git cherry-pick -n --stdin &&
-+
-+	test_cmp_rev initial topic &&
-+	git diff-index --cached --exit-code master -- one.t &&
-+	git rm -f one.t &&
-+	git diff-index --cached --exit-code initial
-+'
-+
-+test_expect_success 'cherry-pick -Xignore-all-space' '
-+	git reset --hard one &&
-+	test_commit one-with-whitespace one.t "   one   " &&
-+
-+	test_must_fail git cherry-pick three^ &&
-+	git diff >conflict-desc &&
-+	grep "[+][+]<<<" conflict-desc &&
-+
-+	echo modified >initial.t &&
-+	git reset --merge HEAD &&
-+	test_cmp_rev one-with-whitespace topic &&
-+	test_must_fail git diff --exit-code HEAD &&
-+	echo initial >initial.t &&
-+	git diff --exit-code HEAD &&
-+
-+	git cherry-pick -Xignore-all-space three^ &&
-+	git diff --exit-code two topic
-+'
-+
-+test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0fdc541..0c053b3 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -673,6 +673,15 @@ test_line_count () {
- 	fi
- }
- 
-+# test_cmp_rev checks that two revision specifiers refer to the
-+# same object.  Uses expect.rev and actual.rev files in the
-+# current directory as scratch space.
-+test_cmp_rev () {
-+	git rev-parse --verify "$1" >expect.rev &&
-+	git rev-parse --verify "$2" >actual.rev &&
-+	test_cmp expect.rev actual.rev
-+}
-+
- # This is not among top-level (test_expect_success | test_expect_failure)
- # but is a prefix that can be used in the test script, like:
- #
--- 
-1.7.4.1
+  [torvalds@i5 etherpad]$ git diff --summary -M10 master...origin/pg |
+grep rebuildjar
+   rename {trunk/etherpad =3D> etherpad}/bin/rebuildjar.sh (89%)
+
+That looks fine. But how about doing it the other way around:
+
+  [torvalds@i5 etherpad]$ git diff --summary -M10 origin/pg...master |
+grep rebuildjar
+   copy trunk/infrastructure/bin/comp.sh =3D> etherpad/bin/rebuildjar.sh (1=
+3%)
+   delete mode 100755 trunk/etherpad/bin/rebuildjar.sh
+
+Yeah, not such a good match. And it's total crap too: that rename is
+much worse than the real one. So we've actually done something
+actively wrong. Because we have:
+
+   .../etherpad =3D> master:etherpad}/bin/rebuildjar.sh |   92
++++++++++++++++++++-
+   1 files changed, 89 insertions(+), 3 deletions(-)
+
+and
+
+   .../comp.sh =3D> master:etherpad/bin/rebuildjar.sh   |  296
++++++++++-----------
+   1 files changed, 129 insertions(+), 167 deletions(-)
+
+so that choice of comp.sh was total and utter crap, and the 13%
+similarity comes from that.
+
+So we did something wrong in picking that comp.sh file. And I bet it's
+because on a very superficial level it looks better: despite the diff
+being *obviously* bigger for the crazy comp.sh choice, I think it
+decided that they had more lines in common.
+
+We've had stupid bugs in the "diffcore_count_changes()" logic before.
+It's just that they're _usually_ hidden by overwhelming common code.
+
+In fact, the attached patch improves things a bit. At a huge added CPU
+cost in rename detection. Then I get
+
+  [torvalds@i5 etherpad]$ git diff --summary -M10 origin/pg...master |
+grep rebuildjar
+   rename {trunk/etherpad =3D> etherpad}/bin/rebuildjar.sh (32%)
+
+which is at least the sane choice for rename detection. It won't fix
+really the merge-from-hell issue, though, since we won't consider "32%
+similar" to be a rename.
+
+We might want to have a way to force rename detection for certain
+patterns for cases like this.
+
+                                    Linus
+
+--90e6ba4fc23c25bb68049c96ddb9
+Content-Type: text/x-patch; charset=US-ASCII; name="patch.diff"
+Content-Disposition: attachment; filename="patch.diff"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gkbq9l7i0
+
+IGRpZmZjb3JlLXJlbmFtZS5jIHwgICAgMiArLQogMSBmaWxlcyBjaGFuZ2VkLCAxIGluc2VydGlv
+bnMoKyksIDEgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZGlmZmNvcmUtcmVuYW1lLmMgYi9k
+aWZmY29yZS1yZW5hbWUuYwppbmRleCBkZjQxYmU1Li4xOTk1N2NkIDEwMDY0NAotLS0gYS9kaWZm
+Y29yZS1yZW5hbWUuYworKysgYi9kaWZmY29yZS1yZW5hbWUuYwpAQCAtMTcwLDcgKzE3MCw3IEBA
+IHN0YXRpYyBpbnQgZXN0aW1hdGVfc2ltaWxhcml0eShzdHJ1Y3QgZGlmZl9maWxlc3BlYyAqc3Jj
+LAogCSAqIGFuZCB0aGUgZmluYWwgc2NvcmUgY29tcHV0YXRpb24gYmVsb3cgd291bGQgbm90IGhh
+dmUgYQogCSAqIGRpdmlkZS1ieS16ZXJvIGlzc3VlLgogCSAqLwotCWlmIChiYXNlX3NpemUgKiAo
+TUFYX1NDT1JFLW1pbmltdW1fc2NvcmUpIDwgZGVsdGFfc2l6ZSAqIE1BWF9TQ09SRSkKKwlpZiAo
+bWF4X3NpemUgKiAoTUFYX1NDT1JFLW1pbmltdW1fc2NvcmUpIDwgZGVsdGFfc2l6ZSAqIE1BWF9T
+Q09SRSkKIAkJcmV0dXJuIDA7CiAKIAlpZiAoIXNyYy0+Y250X2RhdGEgJiYgZGlmZl9wb3B1bGF0
+ZV9maWxlc3BlYyhzcmMsIDApKQo=
+--90e6ba4fc23c25bb68049c96ddb9--
