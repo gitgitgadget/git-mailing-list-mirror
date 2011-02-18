@@ -1,110 +1,71 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] parse_tag_buffer(): avoid out of bound access
-Date: Fri, 18 Feb 2011 19:49:32 +0700
-Message-ID: <1298033372-29069-1-git-send-email-pclouds@gmail.com>
-References: <4D5D17F7.4010003@lsrfire.ath.cx>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: git svn clone failing
+Date: Fri, 18 Feb 2011 07:56:52 -0500
+Message-ID: <1298033812.10893.23.camel@drew-northup.unet.maine.edu>
+References: <AANLkTi=Y64ohHnduBqxs--aLW3AYKCxrag2YoAFt58NC@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 18 13:46:22 2011
+Cc: git@vger.kernel.org
+To: Vampire <Vampire@Masters-of-Disaster.de>
+X-From: git-owner@vger.kernel.org Fri Feb 18 13:59:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqPiz-0000hE-EL
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 13:46:17 +0100
+	id 1PqPvK-0008IG-9L
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 13:59:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754230Ab1BRMqN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Feb 2011 07:46:13 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:61313 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752856Ab1BRMqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 07:46:11 -0500
-Received: by pzk35 with SMTP id 35so529828pzk.19
-        for <git@vger.kernel.org>; Fri, 18 Feb 2011 04:46:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=fluri3xFdkuL4JGWOc4H7ygA9ZYIdO4t8pJAWc5skyU=;
-        b=EOe/XEZC5yQ0KILs0YtythjlccHc9XwlaX/2539TJPSxyvLzQTL6aEgSrf4x1m76ht
-         jBAwEU+pHMpGQACvLzjq+7Zk/SBBBZN7JgAEskLEeNruU1wN49ow5zKD/MFjAwKudp3D
-         OdiYHtShQri9oTTaqn5kTkYLHiH7EvW1jsL9U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=lw91QKRJpIunWq6qYyAC18q50k5ZwqCcPlAI7slTue1+29o6dazSoXu43lkIDbUJRG
-         ZIevSlq+HPTFv5cUKmTZ0gORL4zyea8/KS1+UNV5MwyyKE3SB252AEKjtjGoRywepdUA
-         t0A4Z++tWzffCMa1xBoNwcuiLogzQfeErUfV8=
-Received: by 10.142.142.5 with SMTP id p5mr511164wfd.257.1298033170483;
-        Fri, 18 Feb 2011 04:46:10 -0800 (PST)
-Received: from tre ([115.73.232.10])
-        by mx.google.com with ESMTPS id e14sm2739398wfg.8.2011.02.18.04.46.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 18 Feb 2011 04:46:09 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Fri, 18 Feb 2011 19:49:33 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <4D5D17F7.4010003@lsrfire.ath.cx>
+	id S1755010Ab1BRM6z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Feb 2011 07:58:55 -0500
+Received: from basalt.its.maine.edu ([130.111.32.66]:46840 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752292Ab1BRM6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Feb 2011 07:58:54 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p1ICuthV031573
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 18 Feb 2011 07:57:00 -0500
+In-Reply-To: <AANLkTi=Y64ohHnduBqxs--aLW3AYKCxrag2YoAFt58NC@mail.gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
+	Fuz1=2 Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p1ICuthV031573
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1298638676.32304@/0nTsm2WRg4H059cvXIKJQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167206>
 
-There is a check (size < 64) at the beginning of the function, but
-that only covers object+type lines. Code for parsing "tag" and
-"tagger" may access outside buffer. Fix it.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Thu, Feb 17, 2011 at 7:43 PM, Ren=C3=A9 Scharfe <rene.scharfe@lsrfi=
-re.ath.cx> wrote:
- > memchr() won't notice if a negative value has been passed as third p=
-arameter
- > because its type is size_t, which is unsigned.  Negative values are
- > converted to big positive ones..
+On Mon, 2011-02-14 at 18:24 +0100, Vampire wrote:
+> Hi,
+>=20
+> I'm trying to issue the following command:
+>=20
+> git svn clone --stdlayout http://svn.apache.org/repos/asf/ant/core/ .
+>=20
+> But unfortunately this fails after some time with the message:
+>=20
+> RA layer request failed: Server sent unexpected return value (403
+> Forbidden) in response to REPORT request for
+> '/repos/asf/!svn/vcc/default' at /usr/lib/git-core/git-svn line 4354
+>=20
+> Regards
+> Bj=C3=B6rn
 
- I did not notice that. Fixed commit message.
+Bj=C3=B6rn,
+Have you made sure your subversion client is up-to-date? Does this work
+as a plain svn clone? Have you contacted the server admin?
+Without context we cannot act on this.
 
- tag.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/tag.c b/tag.c
-index ecf7c1e..7d38cc0 100644
---- a/tag.c
-+++ b/tag.c
-@@ -97,7 +97,9 @@ int parse_tag_buffer(struct tag *item, const void *da=
-ta, unsigned long size)
- 		item->tagged =3D NULL;
- 	}
-=20
--	if (prefixcmp(bufptr, "tag "))
-+	if (bufptr + 4 < tail && !prefixcmp(bufptr, "tag "))
-+		; 		/* good */
-+	else
- 		return -1;
- 	bufptr +=3D 4;
- 	nl =3D memchr(bufptr, '\n', tail - bufptr);
-@@ -106,7 +108,7 @@ int parse_tag_buffer(struct tag *item, const void *=
-data, unsigned long size)
- 	item->tag =3D xmemdupz(bufptr, nl - bufptr);
- 	bufptr =3D nl + 1;
-=20
--	if (!prefixcmp(bufptr, "tagger "))
-+	if (bufptr + 7 < tail && !prefixcmp(bufptr, "tagger "))
- 		item->date =3D parse_tag_date(bufptr, tail);
- 	else
- 		item->date =3D 0;
 --=20
-1.7.4.74.g639db
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
