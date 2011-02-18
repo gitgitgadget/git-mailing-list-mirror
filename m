@@ -1,71 +1,61 @@
-From: Goswin von Brederlow <goswin-v-b@web.de>
-Subject: Re: [fuse-devel] [sshfs] inode problem when using git on a sshfs filesystem
-Date: Fri, 18 Feb 2011 08:41:16 +0100
-Message-ID: <87ei75ssbn.fsf@frosties.localnet>
-References: <1297893854.4097.43.camel@dworkin.quest-ce.net>
-	<E1Pq1LW-0005rc-Qy@pomaz-ex.szeredi.hu>
-	<7f02c4cb5ca13dae6de7caa1b6f90cfe.squirrel@webmail.ocsa-data.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to git checkout a orgin(unstage) version file in another
+ directoy?
+Date: Fri, 18 Feb 2011 08:41:50 +0100
+Message-ID: <4D5E22BE.301@drmicha.warpmail.net>
+References: <loom.20110217T074533-358@post.gmane.org> <4D5CDBAD.4050700@drmicha.warpmail.net> <7vpqqqcxzf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Miklos Szeredi" <miklos@szeredi.hu>,
-	fuse-devel@lists.sourceforge.net, fuse-sshfs@lists.sourceforge.net,
-	git@vger.kernel.org
-To: "Yann Droneaud" <yann@droneaud.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 18 08:41:26 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Chunlin Zhang <zhangchunlin@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 18 08:45:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqKxw-0007bX-Eb
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 08:41:24 +0100
+	id 1PqL1d-000128-DF
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 08:45:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755826Ab1BRHlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 02:41:20 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:52174 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752991Ab1BRHlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 02:41:19 -0500
-Received: from smtp02.web.de  ( [172.20.0.184])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 9BB8B1890DC2C;
-	Fri, 18 Feb 2011 08:41:17 +0100 (CET)
-Received: from [78.43.204.177] (helo=frosties.localnet)
-	by smtp02.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #2)
-	id 1PqKxp-0004Zr-00; Fri, 18 Feb 2011 08:41:17 +0100
-Received: from mrvn by frosties.localnet with local (Exim 4.72)
-	(envelope-from <goswin-v-b@web.de>)
-	id 1PqKxp-0003FT-0P; Fri, 18 Feb 2011 08:41:17 +0100
-In-Reply-To: <7f02c4cb5ca13dae6de7caa1b6f90cfe.squirrel@webmail.ocsa-data.net>
-	(Yann Droneaud's message of "Thu, 17 Feb 2011 12:54:43 +0100")
-User-Agent: Gnus/5.110009 (No Gnus v0.9) XEmacs/21.4.22 (linux, no MULE)
-X-Sender: goswin-v-b@web.de
-X-Provags-ID: V01U2FsdGVkX1+2o58iRxNzYUASvPtDeZXJ/eNTxDQ5OWzbZ76k
-	DWhJ4CarCgHVlPqxPlwqe2kBpGHLwnBSLK8m66BZGwmPnMnNQ5
-	QWbTnTtH0=
+	id S1755999Ab1BRHpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 02:45:04 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:39610 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755853Ab1BRHpC (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 02:45:02 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B020B20BAE;
+	Fri, 18 Feb 2011 02:45:00 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 18 Feb 2011 02:45:00 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=wjVOQq5WQjiSqInYZjtsveFk350=; b=BH6wM0SOCDfZLkKjizkdIjNqLLC09Dki8SrTIbe565XdbBbZOuapYk5jOzKQz9maCJyvmBhCrbgM5HnG8KLtXh0OxaPcREGyBQj9twocZ8u36yeKuiTw28Pl9OdCDjYBpf2LOOhCIEl2V4wYy7Pa1SmqjHLHU7mkTLuxNgdOU/w=
+X-Sasl-enc: WKltI6HAGdvRFxW5bymY5XbPP23O9iFJB/RP20XjHESf 1298015100
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1CE6B449F80;
+	Fri, 18 Feb 2011 02:44:59 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <7vpqqqcxzf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167182>
 
-"Yann Droneaud" <yann@droneaud.fr> writes:
-
->> On Wed, 16 Feb 2011, Yann Droneaud wrote:
->> Fuse version 2.8.x has a "noforget" option that should provide stable
->> inode numbers, at the cost of unbounded memory use.  Could you please
->> try if this option fixes these issues?
+Junio C Hamano venit, vidit, dixit 17.02.2011 19:33:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> I'm not sure what you mean by "origin" version, but if you mean the
+>> version from the current revision (before making and staging changes),
+>> you would check out from HEAD instead of from the index:
 >>
->
-> Yes, this option seems to fix the problem.
->
-> I will try it for a while to see if this is stable enough for a full day
-> of git working. (How can I check memory usage ?)
+>> git --work-tree=. --git-dir="/media/linux/t/kernel/.git" checkout HEAD
+>> -- README
+> 
+> Wouldn't that still affect the index in /media/linux/t/kernel/.git/index,
+> making /media/linux/t/kernel/README and the index entry out-of-sync?
 
-The memory usage comes from the inodes. Fuse will never forget an inode
-(unless you delete the dile/dir) that was once visited (thereby giving
-allways the same inode number). As long as you don't have a billion
-files that generally doesn't matter.
+Yes. I guess you overlooked the two posts where Chunlin and I realised
+that I took his request for "checkout" too giterally.
 
-MfG
-        Goswin
+Michael
