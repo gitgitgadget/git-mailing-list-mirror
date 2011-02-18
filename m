@@ -1,110 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git clone NonExistentLocation
-Date: Fri, 18 Feb 2011 01:11:33 -0500
-Message-ID: <20110218061133.GA25847@sigill.intra.peff.net>
-References: <4D5CE3E7.5030101@atlas-elektronik.com>
- <4D5D1715.5020707@drmicha.warpmail.net>
- <4D5D1A04.4090107@atlas-elektronik.com>
- <4D5D1BCB.3010003@drmicha.warpmail.net>
- <AANLkTin3Pf4XD_gbwxPzW4uff9SbDWJdGug6jM_SHDo+@mail.gmail.com>
- <4D5D5275.5070501@drmicha.warpmail.net>
- <20110218040152.GA25466@sigill.intra.peff.net>
- <7vd3mp6ftp.fsf@alter.siamese.dyndns.org>
+From: Guy Rouillier <guyr@burntmail.com>
+Subject: Re: cvsimport still not working with cvsnt
+Date: Fri, 18 Feb 2011 01:26:30 -0500
+Message-ID: <4D5E1116.7040501@burntmail.com>
+References: <4D0ED5EC.9020402@burntmail.com> <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com> <4D119015.6020207@burntmail.com> <4D2AB63D.7040803@burntmail.com> <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com> <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino> <7v8vynnokt.fsf@alter.siamese.dyndns.org> <4D450655.5090501@burntmail.com> <AANLkTik0Mp=Ww_+ZN_jw6t4gsFwLo1UTw5JOpho8bCd=@mail.gmail.com> <7vhbcb35xk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin@laptop.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Emil Medve <Emilian.Medve@freescale.com>,
+	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
+	Clemens Buchacher <drizzd@aon.at>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 18 07:11:54 2011
+X-From: git-owner@vger.kernel.org Fri Feb 18 07:27:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqJZJ-0004oA-8j
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 07:11:53 +0100
+	id 1PqJoJ-0003xy-4r
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 07:27:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649Ab1BRGLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 01:11:40 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:32991 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752295Ab1BRGLi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 01:11:38 -0500
-Received: (qmail 28961 invoked by uid 111); 18 Feb 2011 06:11:37 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 18 Feb 2011 06:11:37 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Feb 2011 01:11:33 -0500
-Content-Disposition: inline
-In-Reply-To: <7vd3mp6ftp.fsf@alter.siamese.dyndns.org>
+	id S1752881Ab1BRG1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 01:27:18 -0500
+Received: from mx02.burntmail.com ([70.87.63.122]:56277 "EHLO
+	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752682Ab1BRG1R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Feb 2011 01:27:17 -0500
+Received: from [173.79.61.50] (helo=[192.168.1.60])
+	by mx02.burntmail.com with esmtpa (Exim 4.72)
+	(envelope-from <guyr@burntmail.com>)
+	id 1PqJnR-0000zi-N6; Fri, 18 Feb 2011 00:26:29 -0600
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <7vhbcb35xk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167178>
 
-On Thu, Feb 17, 2011 at 10:02:10PM -0800, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On 2/10/2011 5:01 PM, Junio C Hamano wrote:
+> Martin Langhoff <martin@laptop.org> writes:
 > 
-> > I think the patch below is the right fix.
-> > ...
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> >  builtin/clone.c        |    5 ++++-
-> >  t/t5701-clone-local.sh |   13 +++++++++++++
-> >  2 files changed, 17 insertions(+), 1 deletions(-)
-> >
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 60d9a64..55785d0 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -412,8 +412,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
-> >  	path = get_repo_path(repo_name, &is_bundle);
-> >  	if (path)
-> >  		repo = xstrdup(make_nonrelative_path(repo_name));
-> > -	else if (!strchr(repo_name, ':'))
-> > +	else if (!strchr(repo_name, ':')) {
-> > +		if (!file_exists(repo_name))
-> > +			die("repository '%s' does not exist", repo_name);
-> >  		repo = xstrdup(make_absolute_path(repo_name));
-> > +	}
-> >  	else
-> >  		repo = repo_name;
-> >  	is_local = path && !is_bundle;
+>> On Sat, Jan 29, 2011 at 11:33 PM, Guy Rouillier<guyr@burntmail.com>  wrote:
+>>> That was my original inclination.  As no other opinions have been posted
+>>> since your message, here is my amended patch, incorporating Martin's
+>>> ideas and dieing if the script finds both CVS and CVSNT password files.
+>>
+>> ACK! Thanks!
 > 
-> Thanks, but I am confused.
+> Can somebody resubmit an appliable patch with a proper commit message that
+> describes the problem and the solution please.
 > 
-> The stuff goes through make_absolute_path() so we must be certain that
-> this has to be a local filesystem entity _if_ it is a repository.
-> 
-> But when will we see a file at repo_name in this new codepath?  In what
-> situation would get_repo_path(repo_name, &is_bundle) return NULL but the
-> added file_exists(repo_name) would yield true to bypess your die()?
+> Thanks.
 
-Hmm, good point. I didn't look carefully enough into get_repo_path. It
-is not really about finding a repo, but rather about finding a directory
-or filename. Plus, my file_exists() isn't quite right, anyway. We really
-want to make sure $repo_name.git, $repo_name.bundle, etc don't exist.
-But get_repo_path has already done that for us, so we should just trust
-its output.
+Junio, sorry for the delay in response.  I'm new to all this and I thought 
+perhaps one of the listed committers had to submit the official patch.  
+Perhaps they do.  I followed the directions in SubmittingPatches.  The result 
+is below.  Please let me know if I need to do something differently.  I 
+didn't simply send the result of format-match because that would have started 
+a different message thread.  Thanks.
 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 60d9a64..2ee1fa9 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -413,7 +413,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	if (path)
->  		repo = xstrdup(make_nonrelative_path(repo_name));
->  	else if (!strchr(repo_name, ':'))
-> -		repo = xstrdup(make_absolute_path(repo_name));
-> +		die("repository '%s' does not exist", repo_name);
->  	else
->  		repo = repo_name;
->  	is_local = path && !is_bundle;
+>From d3ae7d304ee2b89740225b0433bf7d7e07248f59 Mon Sep 17 00:00:00 2001
+From: Guy Rouillier <guyr@burntmail.com>
+Date: Fri, 18 Feb 2011 00:53:10 -0500
+Subject: [PATCH] Look for password in both CVS and CVSNT password files.
 
-Yeah, I think that is a better fix.
+The existing code looks for the CVS reposity password only in
+the CVS password file in HOME/.cvspass. Accommodate the CVS
+alternative CVSNT by also looking in HOME/.cvs/cvspass.  Die
+if both files are found, and ask the user to remove one.
 
--Peff
+Signed-off-by: Guy Rouillier <guyr@burntmail.com>
+---
+ git-cvsimport.perl |   32 ++++++++++++++++++++------------
+ 1 files changed, 20 insertions(+), 12 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 8e683e5..76b4765 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -259,19 +259,27 @@ sub conn {
+ 		if ($pass) {
+ 			$pass = $self->_scramble($pass);
+ 		} else {
+-			open(H,$ENV{'HOME'}."/.cvspass") and do {
+-				# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
+-				while (<H>) {
+-					chomp;
+-					s/^\/\d+\s+//;
+-					my ($w,$p) = split(/\s/,$_,2);
+-					if ($w eq $rr or $w eq $rr2) {
+-						$pass = $p;
+-						last;
++			my @cvspasslocations = ($ENV{'HOME'}."/.cvspass", $ENV{'HOME'}."/.cvs/cvspass");
++			my $filecount = 0;
++			foreach my $cvspass (@cvspasslocations) {
++
++				open(H, $cvspass) and do {
++					# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
++					$filecount++;
++					while (<H>) {
++						chomp;
++						s/^\/\d+\s+//;
++						my ($w,$p) = split(/[\s=]/,$_,2);
++						if ($w eq $rr or $w eq $rr2) {
++							$pass = $p;
++							last;
++						}
+ 					}
+-				}
+-			};
+-			$pass = "A" unless $pass;
++				};
++			}
++
++			die("Two CVS password files found: @cvspasslocations, please remove one") if $filecount > 1;
++			die("Password not found for CVSROOT: $opt_d\n") unless $pass;
+ 		}
+
+ 		my ($s, $rep);
+--
+1.7.3.4
+
+
+
+-- 
+Guy Rouillier
