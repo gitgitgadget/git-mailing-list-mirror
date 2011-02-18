@@ -1,68 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2 (v2)] submodule: no [--merge|--rebase] when newly
- cloned
-Date: Thu, 17 Feb 2011 15:37:27 -0800
-Message-ID: <7vr5b68c7c.fsf@alter.siamese.dyndns.org>
-References: <1297959526-8089-1-git-send-email-olsonse@umich.edu>
- <4D5D7A06.6050700@web.de> <7vzkpu9zo0.fsf@alter.siamese.dyndns.org>
- <201102171517.15906.olsonse@umich.edu>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] git-checkout.txt: improve detached HEAD documentation
+Date: Thu, 17 Feb 2011 19:14:25 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102171909412.14920@xanadu.home>
+References: <1297971966-58500-1-git-send-email-jaysoffian@gmail.com>
+ <7v7hcy9vrk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: "Spencer E. Olson" <olsonse@umich.edu>
-X-From: git-owner@vger.kernel.org Fri Feb 18 00:37:45 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 18 01:14:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqDPs-0001BB-IM
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 00:37:45 +0100
+	id 1PqDzd-0007hH-Qt
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 01:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846Ab1BQXhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 18:37:40 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33764 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752250Ab1BQXhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 18:37:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5B8FB4BC4;
-	Thu, 17 Feb 2011 18:38:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AlzKxnA0hbWK80MvvJU883j+lOc=; b=TGxSiL
-	+nuYvBVW79+I/IRNyHtOLNa4rb9q9HLatA6PruKADJ8437cTpWcsiBgxKiEFCqgT
-	aRLxPSgk8iknnZDnJkRjMzNJhiYnMkpxDLV/3D6ogvyAkDJv1L5w81q84vnGtzZ2
-	st1cHunzY6uQ2PdFdTUC2Iyo/Llz7M54PBZvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r8AZjqMEBb1DU9bQ6QZ9YUvyu7UW9jsF
-	JRUCHXCa2dKTNdhs4tFyY2NeVtOAFVKPgpBegIAWjgwI5brsN645YG+91Ll65Vqb
-	Q7mpMIsbVSbqFeYzjKCNJHI99lR7IGby7h4s9DMHYFDzyDwK6NF6LDNyNV1gMFRr
-	FtG4mKI5heU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2B9AF4BC3;
-	Thu, 17 Feb 2011 18:38:41 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DFB4C4BC2; Thu, 17 Feb 2011
- 18:38:35 -0500 (EST)
-In-Reply-To: <201102171517.15906.olsonse@umich.edu> (Spencer E. Olson's
- message of "Thu\, 17 Feb 2011 15\:17\:15 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0D08C938-3AEF-11E0-B96A-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1757010Ab1BRAOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 19:14:36 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:40244 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756628Ab1BRAOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 19:14:34 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ22.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LGS0051LE01DE30@VL-MR-MRZ22.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 17 Feb 2011 19:14:25 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v7hcy9vrk.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167136>
 
-"Spencer E. Olson" <olsonse@umich.edu> writes:
+On Thu, 17 Feb 2011, Junio C Hamano wrote:
 
-> This looks fine by me.
->
-> What about the testing patch?  It'll be a few hours before I can resubmit 
-> with "git submodule status submodule" changed to "git status -s submodule".
+> Jay Soffian <jaysoffian@gmail.com> writes:
+> 
+> > +It is sometimes useful to be able to checkout a commit that is not at
+> > +the tip of any named branch, or even to create a new commit that is not
+> > +referenced by a named branch. Let's look at what happens when we
+> > +checkout commit b:
+> 
+> I think it is a regression from the original text to omit mention of tags
+> and replace the first example of the section with a more advanced use case
+> of jumping to the middle of a branch; it is far more likely that a user
+> would want to detach at a specific release point.
+> 
+> You can rectify it by tagging 'c' as a release point and detaching the
+> HEAD at that tag without losing the clarity of the following description.
+> While doing so, it would be better to update the labels in the
+> illustration with s/master/master branch/ and s/[abcde]/commit &/ as well,
+> e.g.
+> 
+> 
+>                    HEAD (refers to branch 'master')
+>                     |
+>                     V
+>   a---b---c---d  branch 'master' (refers to commit 'd')
+>           ^
+>           |
+>      tag 'v2.0' (refers to commit 'c')
 
-I just squashed the patch from Jens in, with Ack from him.
+While I agree with the above, I think this is still a good idea to keep 
+this example using a non-tagged commit as well.  Perhaps not the first 
+one as you say.
+
+
+Nicolas
