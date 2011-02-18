@@ -1,74 +1,99 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] git-checkout.txt: improve detached HEAD documentation
-Date: Thu, 17 Feb 2011 19:14:25 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1102171909412.14920@xanadu.home>
-References: <1297971966-58500-1-git-send-email-jaysoffian@gmail.com>
- <7v7hcy9vrk.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 18 01:14:43 2011
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: [PATCH] git-p4: Add copy detection support
+Date: Fri, 18 Feb 2011 00:20:12 +0000
+Message-ID: <1297988412-6754-1-git-send-email-vitor.hda@gmail.com>
+Cc: Vitor Antunes <vitor.hda@gmail.com>, Pete Wyckoff <pw@padd.com>,
+	Tor Arvid Lund <torarvid@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 18 01:21:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqDzd-0007hH-Qt
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 01:14:42 +0100
+	id 1PqE5j-00032M-8Y
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Feb 2011 01:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757010Ab1BRAOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Feb 2011 19:14:36 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:40244 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756628Ab1BRAOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Feb 2011 19:14:34 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ22.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LGS0051LE01DE30@VL-MR-MRZ22.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 17 Feb 2011 19:14:25 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7v7hcy9vrk.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1757729Ab1BRAU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Feb 2011 19:20:29 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50580 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757677Ab1BRAU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Feb 2011 19:20:27 -0500
+Received: by fxm20 with SMTP id 20so3236838fxm.19
+        for <git@vger.kernel.org>; Thu, 17 Feb 2011 16:20:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=08C5Hq3hjeVYqOziKRodCEmeJcEL0bgLoVaRJk0BVPk=;
+        b=eYbpDWYVEssIwbH4l4kWUtD69W4O6m8W7l5Tswsvug3+ZhYJw2aY1VEAUtSJl2C5y4
+         qAwrG/sYWXFCi4G8z/BAty5Z/jlOV8rWBET0nGMNr9ykjBCQqmk7IM7KKqd0by4fTjAd
+         WVmF9ccwudVC09P8cGw5Q3M0UOSjxPTcfl3fM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=bU7c/E+qFCoxGXjpHs1jGuqUH2IOQtVrDqEHC/DrsF0A2zbsnPJY8eeX8fUGNBwaSI
+         HPiHiCbB4poysTP1QdeeYifvEfLCuuSUvtx/4o4JAG3FZkYgjy0RLjl8F370nGiwJXpl
+         asm6VQm8XyvGtUxpsP1VveDUQBPaUUogn/iCY=
+Received: by 10.223.72.14 with SMTP id k14mr66903faj.45.1297988426000;
+        Thu, 17 Feb 2011 16:20:26 -0800 (PST)
+Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt [77.54.216.111])
+        by mx.google.com with ESMTPS id n1sm799766fam.16.2011.02.17.16.20.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Feb 2011 16:20:24 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167137>
 
-On Thu, 17 Feb 2011, Junio C Hamano wrote:
+Add new config options:
+    git-p4.detectCopies         - Enable copy detection.
+    git-p4.detectCopiesHarder   - Find copies harder.
+The detectCopies option should be set to a true/false value.
+The detectCopiesHarder option should be set to true/false value.
+P4Submit can now process diff-tree C status and integrate files accordingly.
 
-> Jay Soffian <jaysoffian@gmail.com> writes:
-> 
-> > +It is sometimes useful to be able to checkout a commit that is not at
-> > +the tip of any named branch, or even to create a new commit that is not
-> > +referenced by a named branch. Let's look at what happens when we
-> > +checkout commit b:
-> 
-> I think it is a regression from the original text to omit mention of tags
-> and replace the first example of the section with a more advanced use case
-> of jumping to the middle of a branch; it is far more likely that a user
-> would want to detach at a specific release point.
-> 
-> You can rectify it by tagging 'c' as a release point and detaching the
-> HEAD at that tag without losing the clarity of the following description.
-> While doing so, it would be better to update the labels in the
-> illustration with s/master/master branch/ and s/[abcde]/commit &/ as well,
-> e.g.
-> 
-> 
->                    HEAD (refers to branch 'master')
->                     |
->                     V
->   a---b---c---d  branch 'master' (refers to commit 'd')
->           ^
->           |
->      tag 'v2.0' (refers to commit 'c')
+Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
+Acked-by: Pete Wyckoff <pw@padd.com>
+---
+ contrib/fast-import/git-p4 |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-While I agree with the above, I think this is still a good idea to keep 
-this example using a non-tagged commit as well.  Perhaps not the first 
-one as you say.
-
-
-Nicolas
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index b0da28a..1b1fc76 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -623,6 +623,12 @@ class P4Submit(Command):
+         else:
+             diffOpts = ""
+ 
++        if gitConfig("git-p4.detectCopies").lower() == "true":
++            diffOpts += " -C"
++
++        if gitConfig("git-p4.detectCopiesHarder").lower() == "true":
++            diffOpts += " --find-copies-harder"
++
+         diff = read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (diffOpts, id, id))
+         filesToAdd = set()
+         filesToDelete = set()
+@@ -646,6 +652,16 @@ class P4Submit(Command):
+                 filesToDelete.add(path)
+                 if path in filesToAdd:
+                     filesToAdd.remove(path)
++            elif modifier == "C":
++                src, dest = diff['src'], diff['dst']
++                p4_system("integrate -Dt \"%s\" \"%s\"" % (src, dest))
++                if diff['src_sha1'] != diff['dst_sha1']:
++                    p4_system("edit \"%s\"" % (dest))
++                if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
++                    p4_system("edit \"%s\"" % (dest))
++                    filesToChangeExecBit[dest] = diff['dst_mode']
++                os.unlink(dest)
++                editedFiles.add(dest)
+             elif modifier == "R":
+                 src, dest = diff['src'], diff['dst']
+                 p4_system("integrate -Dt \"%s\" \"%s\"" % (src, dest))
+-- 
+1.7.2.3
