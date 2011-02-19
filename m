@@ -1,89 +1,116 @@
-From: Ferry Huberts <mailings@hupie.com>
-Subject: Re: [CGit] [PATCH 0/6] Communicate the repo name to the filter scripts
-Date: Sat, 19 Feb 2011 14:54:51 +0100
-Message-ID: <4D5FCBAB.6060009@hupie.com>
-References: <1297977069-21884-1-git-send-email-mailings@hupie.com> <AANLkTimASPjeHor3R6c=i1xpjftxrg4NnFaLJfReuZ-X@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] gitweb/gitweb.perl: remove use of qw(...) as parentheses
+Date: Sat, 19 Feb 2011 14:10:54 +0000
+Message-ID: <1298124654-12051-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 19 14:55:03 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 19 15:11:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqnH4-0002J4-4N
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 14:55:02 +0100
+	id 1PqnWo-0001Bv-HL
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 15:11:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754556Ab1BSNy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Feb 2011 08:54:57 -0500
-Received: from 82-197-206-98.dsl.cambrium.nl ([82.197.206.98]:50857 "EHLO
-	mail.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752694Ab1BSNy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 08:54:56 -0500
-Received: from stinkpad.internal.hupie.com (82-197-206-98.dsl.cambrium.nl [82.197.206.98])
-	by mail.internal.Hupie.com (Postfix) with ESMTP id 41CC658C993;
-	Sat, 19 Feb 2011 14:54:52 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7
-In-Reply-To: <AANLkTimASPjeHor3R6c=i1xpjftxrg4NnFaLJfReuZ-X@mail.gmail.com>
+	id S1754628Ab1BSOLN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 09:11:13 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:38734 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754368Ab1BSOLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 09:11:12 -0500
+Received: by eye27 with SMTP id 27so2286758eye.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 06:11:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=yxWGNPj0uP6nVgu7lbIP9PjdXc6pzsfPNpnbEosvAb8=;
+        b=xfCbb440WEj4xzRsuQfLUc6kTEAYKKPHakdSe18BJYSmQHymp6+D3dbFMhnXod4jTk
+         SG9y4rULmgQKhU1e9AUYrv3ii8qIVcuYHqhherqd6TE454DPzL4fij75s4z5zuT/qem3
+         KGcpMjY3Wi5cwF5OSn+UXGHew1o8sKdr2Lj64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=bYLa3chiZyN40j8jPQGeKzUi8ojMADIgmIXGVnKG5jrd/F7LYhRcSim6cURzeOBJkV
+         rWORpFxhxX7tQG/zh7VP+elF6g61Tq3sGQXwREpXCTyOkbOZLT98Ni7RwA9zD4uYdO3Z
+         J3EFB/L1SFIh1qy3QHsaaktvU0MLVTueu/Y+o=
+Received: by 10.213.27.204 with SMTP id j12mr1673662ebc.85.1298124671562;
+        Sat, 19 Feb 2011 06:11:11 -0800 (PST)
+Received: from w.nix.is (w.nix.is [188.40.98.140])
+        by mx.google.com with ESMTPS id t5sm2944287eeh.8.2011.02.19.06.11.10
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Feb 2011 06:11:10 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167283>
 
-On 02/19/2011 09:46 AM, Lars Hjemli wrote:
-> On Thu, Feb 17, 2011 at 22:11, Ferry Huberts <mailings@hupie.com> wrote:
->> This patch series fixes two bugs and communicates the repo name
->> to the filter scripts.
-> 
-> Thanks, but I think the current filter invocations with unnamed,
-> positional command arguments was a mistake. We should probably fix it
-> instead of extending it, taking care not to break backwards
-> compatibility.
-> 
-> The easiest fix would be to add some environment variables:
-> * GIT_DIR
-> * CGIT_REPO_NAME
-> * CGIT_REPO_REL_URL
-> * CGIT_REPO_ABS_URL
-> * CGIT_BRANCH_NAME
-> * CGIT_COMMIT_ID
-> * CGIT_PATH_FILTER
-> 
-> What do you think?
-> 
-> --
-> larsh
+Using the qw(...) construct as implicit parentheses was deprecated in
+perl 5.13.5. Change the relevant code in gitweb to not use the
+deprecated construct. The offending code was introduced in 3562198b by
+Jakub Narebski.
 
-I've been thinking about this too and did think about this solution but
-also about a solution in which these settings are written to a temporary
-file. I have no preference as long as the repo settings are communicated
-to the filter script. Writing to a file is probably bad for performance
-though.
+The issue is that perl will now warn about this:
 
-The patches I sent just plainly solve my own problem and I was hoping a
-bit for this discussion :-)
+    $ perl -wE 'for my $i qw(a b) { say $i }'
+    Use of qw(...) as parentheses is deprecated at -e line 1.
+    a
+    b
 
-Your proposal sounds reasonable and a good approach.
+This caused gitweb.perl to warn on perl 5.13.5 and above, and these
+tests to fail on those perl versions:
 
-I'm a bit worried about the GIT_DIR env var, about it conflicting with
-the real git env var. It's probably best to rename that one to CGIT_GIT_DIR.
+    ./t9501-gitweb-standalone-http-status.sh           (Wstat: 256 Test=
+s: 11 Failed: 10)
+      Failed tests:  2-11
+      Non-zero exit status: 1
+    ./t9502-gitweb-standalone-parse-output.sh          (Wstat: 256 Test=
+s: 10 Failed: 9)
+      Failed tests:  2-10
+      Non-zero exit status: 1
+    ./t9500-gitweb-standalone-no-errors.sh             (Wstat: 256 Test=
+s: 90 Failed: 84)
+      Failed tests:  1-8, 10-36, 38-45, 47-48, 50-88
+      Non-zero exit status: 1
 
-Also, we'd have to be sure that when we set these env vars that they're
-only propagated to the filter script we're going to run and not to other
-envs: running filter scripts in parallel must not be prevented.
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-
-Have you looked at the first 2 patches?
-These solve bugs and can be applied regardless of this discussion.
-
-
-please let me know what you think.
-
-
-grtz
--- 
-Ferry Huberts
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0779f12..b02372c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3501,7 +3501,7 @@ sub print_feed_meta {
+ 			$href_params{'-title'} =3D 'log';
+ 		}
+=20
+-		foreach my $format qw(RSS Atom) {
++		foreach my $format (qw(RSS Atom)) {
+ 			my $type =3D lc($format);
+ 			my %link_attr =3D (
+ 				'-rel' =3D> 'alternate',
+@@ -3682,7 +3682,7 @@ sub git_footer_html {
+ 		}
+ 		$href_params{'-title'} ||=3D 'log';
+=20
+-		foreach my $format qw(RSS Atom) {
++		foreach my $format (qw(RSS Atom)) {
+ 			$href_params{'action'} =3D lc($format);
+ 			print $cgi->a({-href =3D> href(%href_params),
+ 			              -title =3D> "$href_params{'-title'} $format feed",
+--=20
+1.7.2.3
