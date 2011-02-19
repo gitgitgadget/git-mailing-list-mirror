@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 19/72] gettextize: git-checkout basic messages
-Date: Sat, 19 Feb 2011 19:24:02 +0000
-Message-ID: <1298143495-3681-20-git-send-email-avarab@gmail.com>
+Subject: [PATCH 37/72] gettextize: git-log basic messages
+Date: Sat, 19 Feb 2011 19:24:20 +0000
+Message-ID: <1298143495-3681-38-git-send-email-avarab@gmail.com>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,362 +11,334 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 19 20:30:53 2011
+X-From: git-owner@vger.kernel.org Sat Feb 19 20:30:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqsW4-0004Tk-L1
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:30:53 +0100
+	id 1PqsW0-0004Tk-94
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:30:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756437Ab1BSTap convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:30:45 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:56673 "EHLO
+	id S1756464Ab1BSTaM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:30:12 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:60199 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755892Ab1BST1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 14:27:37 -0500
-Received: by mail-ew0-f46.google.com with SMTP id 5so1970368ewy.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:27:36 -0800 (PST)
+	with ESMTP id S1756036Ab1BST16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 14:27:58 -0500
+Received: by ewy5 with SMTP id 5so1970492ewy.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:27:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=OJHRCuMTGDKbsjqVMOhCId+FDYiE4bPfTTuuBDDYfJ0=;
-        b=Xna7RIRumzIRUrUJORVZXohXgsooxWHHlI4/WIr09YqLpgtw3W/BiYey6Q+qcNlmnl
-         QbmyARCnLAm1vGEa5iMLSDtdK05C31pjx9Vk+71lUsdRaPFtXiTEE/Dbq6OJl42ppnrK
-         mHPJ80mpgcyVUdLTFnwdR2hoEfDda3/ECFqb4=
+        bh=q6EVibSfiLZo2CBJv4XLwvHwBhVYHtsG0HaDQ9WKcv4=;
+        b=js6IiHeKZ4GlsxAFplK1VUhGKiSa1QsKvVkOqzW8dvJs0XsLm80l5PO/01ADQSk+M8
+         +YgHqkz0UD5/ViEywUQZjpmawHm4bAiEEp9m76pEuJJbZgE/Qv3UJot+/DZeD1XX0T7Z
+         Ql9b/UJGWmYa/V6eM6/XiCaaynBrUMPtEXlaI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=A339mYWTORk/OX9A6fUkVgw0Hfood4hrKwhhat1jqyvB+GDvEO9GvJHNhbtdfDsXdW
-         rb+waZ5xqB6mOpwjL1NRftb77oUDyDKTufUsuW9cLVbMWUhwMu0Bnw1wRncrlYmON3nt
-         WtQuavY2gBgNaZ1WC4YKvXSHoQyi9ov5VLPbo=
-Received: by 10.213.28.199 with SMTP id n7mr2574849ebc.36.1298143656021;
-        Sat, 19 Feb 2011 11:27:36 -0800 (PST)
+        b=gh4oYZoLCDHFrgx7jHCWcIUuUAC+M3ZuvkwigJ3OG0iyJ+HJUQP/ncnyapr4IJOwL+
+         P6QqzlvqgGPBED26ycVSDyc+lGbswAjrhZv1FVdbZhWK4TH9YyufZ46RxqPhEE2VJcl8
+         VCFLbBFV/dq0DFjbfYccFDQiTINGAFBReJn64=
+Received: by 10.213.16.79 with SMTP id n15mr2534772eba.69.1298143677131;
+        Sat, 19 Feb 2011 11:27:57 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.27.35
+        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.27.56
         (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 11:27:35 -0800 (PST)
+        Sat, 19 Feb 2011 11:27:56 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167377>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/checkout.c |   68 ++++++++++++++++++++++++++------------------=
---------
- 1 files changed, 34 insertions(+), 34 deletions(-)
+ builtin/log.c |   62 ++++++++++++++++++++++++++++---------------------=
+-------
+ 1 files changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index cd7f56e..b5060ab 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -116,7 +116,7 @@ static int check_all_stages(struct cache_entry *ce,=
- int pos)
- 	    ce_stage(active_cache[pos+1]) !=3D 2 ||
- 	    strcmp(active_cache[pos+2]->name, ce->name) ||
- 	    ce_stage(active_cache[pos+2]) !=3D 3)
--		return error("path '%s' does not have all three versions",
-+		return error(_("path '%s' does not have all three versions"),
- 			     ce->name);
+diff --git a/builtin/log.c b/builtin/log.c
+index d8c6c28..b36a01e 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -101,7 +101,7 @@ static void cmd_log_init(int argc, const char **arg=
+v, const char *prefix,
+ 			const char *v =3D skip_prefix(arg, "--decorate=3D");
+ 			decoration_style =3D parse_decoration_style(arg, v);
+ 			if (decoration_style < 0)
+-				die("invalid --decorate option: %s", arg);
++				die(_("invalid --decorate option: %s"), arg);
+ 			decoration_given =3D 1;
+ 		} else if (!strcmp(arg, "--no-decorate")) {
+ 			decoration_style =3D 0;
+@@ -110,7 +110,7 @@ static void cmd_log_init(int argc, const char **arg=
+v, const char *prefix,
+ 		} else if (!strcmp(arg, "-h")) {
+ 			usage(builtin_log_usage);
+ 		} else
+-			die("unrecognized argument: %s", arg);
++			die(_("unrecognized argument: %s"), arg);
+ 	}
+=20
+ 	/*
+@@ -153,7 +153,7 @@ static void show_early_header(struct rev_info *rev,=
+ const char *stage, int nr)
+ 		if (rev->commit_format !=3D CMIT_FMT_ONELINE)
+ 			putchar(rev->diffopt.line_termination);
+ 	}
+-	printf("Final output: %d %s\n", nr, stage);
++	printf(_("Final output: %d %s\n"), nr, stage);
+ }
+=20
+ static struct itimerval early_output_timer;
+@@ -252,7 +252,7 @@ static int cmd_log_walk(struct rev_info *rev)
+ 		setup_early_output(rev);
+=20
+ 	if (prepare_revision_walk(rev))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+=20
+ 	if (rev->early_output)
+ 		finish_early_output(rev);
+@@ -343,7 +343,7 @@ static int show_object(const unsigned char *sha1, i=
+nt show_tag_object,
+ 	int offset =3D 0;
+=20
+ 	if (!buf)
+-		return error("Could not read object %s", sha1_to_hex(sha1));
++		return error(_("Could not read object %s"), sha1_to_hex(sha1));
+=20
+ 	if (show_tag_object)
+ 		while (offset < size && buf[offset] !=3D '\n') {
+@@ -430,7 +430,7 @@ int cmd_show(int argc, const char **argv, const cha=
+r *prefix)
+ 				break;
+ 			o =3D parse_object(t->tagged->sha1);
+ 			if (!o)
+-				ret =3D error("Could not read object %s",
++				ret =3D error(_("Could not read object %s"),
+ 					    sha1_to_hex(t->tagged->sha1));
+ 			objects[i].item =3D o;
+ 			i--;
+@@ -454,7 +454,7 @@ int cmd_show(int argc, const char **argv, const cha=
+r *prefix)
+ 			ret =3D cmd_log_walk(&rev);
+ 			break;
+ 		default:
+-			ret =3D error("Unknown type: %d", o->type);
++			ret =3D error(_("Unknown type: %d"), o->type);
+ 		}
+ 	}
+ 	free(objects);
+@@ -554,7 +554,7 @@ static int git_format_config(const char *var, const=
+ char *value, void *cb)
+ {
+ 	if (!strcmp(var, "format.headers")) {
+ 		if (!value)
+-			die("format.headers without value");
++			die(_("format.headers without value"));
+ 		add_header(value);
+ 		return 0;
+ 	}
+@@ -626,7 +626,7 @@ static int reopen_stdout(struct commit *commit, str=
+uct rev_info *rev)
+ 		strbuf_addstr(&filename, output_directory);
+ 		if (filename.len >=3D
+ 		    PATH_MAX - FORMAT_PATCH_NAME_MAX - suffix_len)
+-			return error("name of output directory is too long");
++			return error(_("name of output directory is too long"));
+ 		if (filename.buf[filename.len - 1] !=3D '/')
+ 			strbuf_addch(&filename, '/');
+ 	}
+@@ -637,7 +637,7 @@ static int reopen_stdout(struct commit *commit, str=
+uct rev_info *rev)
+ 		fprintf(realstdout, "%s\n", filename.buf + outdir_offset);
+=20
+ 	if (freopen(filename.buf, "w", stdout) =3D=3D NULL)
+-		return error("Cannot open patch file %s", filename.buf);
++		return error(_("Cannot open patch file %s"), filename.buf);
+=20
+ 	strbuf_release(&filename);
+ 	return 0;
+@@ -651,7 +651,7 @@ static void get_patch_ids(struct rev_info *rev, str=
+uct patch_ids *ids, const cha
+ 	unsigned flags1, flags2;
+=20
+ 	if (rev->pending.nr !=3D 2)
+-		die("Need exactly one range.");
++		die(_("Need exactly one range."));
+=20
+ 	o1 =3D rev->pending.objects[0].item;
+ 	flags1 =3D o1->flags;
+@@ -659,7 +659,7 @@ static void get_patch_ids(struct rev_info *rev, str=
+uct patch_ids *ids, const cha
+ 	flags2 =3D o2->flags;
+=20
+ 	if ((flags1 & UNINTERESTING) =3D=3D (flags2 & UNINTERESTING))
+-		die("Not a range.");
++		die(_("Not a range."));
+=20
+ 	init_patch_ids(ids);
+=20
+@@ -670,7 +670,7 @@ static void get_patch_ids(struct rev_info *rev, str=
+uct patch_ids *ids, const cha
+ 	add_pending_object(&check_rev, o1, "o1");
+ 	add_pending_object(&check_rev, o2, "o2");
+ 	if (prepare_revision_walk(&check_rev))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+=20
+ 	while ((commit =3D get_revision(&check_rev)) !=3D NULL) {
+ 		/* ignore merges */
+@@ -696,7 +696,7 @@ static void gen_message_id(struct rev_info *info, c=
+har *base)
+ 	const char *email_end =3D strrchr(committer, '>');
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	if (!email_start || !email_end || email_start > email_end - 1)
+-		die("Could not extract email from committer identity.");
++		die(_("Could not extract email from committer identity."));
+ 	strbuf_addf(&buf, "%s.%lu.git.%.*s", base,
+ 		    (unsigned long) time(NULL),
+ 		    (int)(email_end - email_start - 1), email_start + 1);
+@@ -728,7 +728,7 @@ static void make_cover_letter(struct rev_info *rev,=
+ int use_stdout,
+ 	struct commit *commit =3D NULL;
+=20
+ 	if (rev->commit_format !=3D CMIT_FMT_EMAIL)
+-		die("Cover letter needs email format");
++		die(_("Cover letter needs email format"));
+=20
+ 	committer =3D git_committer_info(0);
+=20
+@@ -821,7 +821,7 @@ static const char *clean_message_id(const char *msg=
+_id)
+ 		m++;
+ 	}
+ 	if (!z)
+-		die("insane in-reply-to: %s", msg_id);
++		die(_("insane in-reply-to: %s"), msg_id);
+ 	if (++z =3D=3D m)
+ 		return a;
+ 	return xmemdupz(a, z - a);
+@@ -894,7 +894,7 @@ static int output_directory_callback(const struct o=
+ption *opt, const char *arg,
+ {
+ 	const char **dir =3D (const char **)opt->value;
+ 	if (*dir)
+-		die("Two output directories?");
++		die(_("Two output directories?"));
+ 	*dir =3D arg;
  	return 0;
  }
-@@ -150,7 +150,7 @@ static int checkout_merged(int pos, struct checkout=
- *state)
- 	    ce_stage(active_cache[pos+1]) !=3D 2 ||
- 	    strcmp(active_cache[pos+2]->name, path) ||
- 	    ce_stage(active_cache[pos+2]) !=3D 3)
--		return error("path '%s' does not have all 3 versions", path);
-+		return error(_("path '%s' does not have all 3 versions"), path);
-=20
- 	read_mmblob(&ancestor, active_cache[pos]->sha1);
- 	read_mmblob(&ours, active_cache[pos+1]->sha1);
-@@ -167,7 +167,7 @@ static int checkout_merged(int pos, struct checkout=
- *state)
- 	free(theirs.ptr);
- 	if (status < 0 || !result_buf.ptr) {
- 		free(result_buf.ptr);
--		return error("path '%s': cannot merge", path);
-+		return error(_("path '%s': cannot merge"), path);
+@@ -1082,7 +1082,7 @@ int cmd_format_patch(int argc, const char **argv,=
+ const char *prefix)
+ 		committer =3D git_committer_info(IDENT_ERROR_ON_NO_NAME);
+ 		endpos =3D strchr(committer, '>');
+ 		if (!endpos)
+-			die("bogus committer info %s", committer);
++			die(_("bogus committer info %s"), committer);
+ 		add_signoff =3D xmemdupz(committer, endpos - committer + 1);
  	}
 =20
- 	/*
-@@ -184,12 +184,12 @@ static int checkout_merged(int pos, struct checko=
-ut *state)
- 	 */
- 	if (write_sha1_file(result_buf.ptr, result_buf.size,
- 			    blob_type, sha1))
--		die("Unable to add merge result for '%s'", path);
-+		die(_("Unable to add merge result for '%s'"), path);
- 	ce =3D make_cache_entry(create_ce_mode(active_cache[pos+1]->ce_mode),
- 			      sha1,
- 			      path, 2, 0);
- 	if (!ce)
--		die("make_cache_entry failed for path '%s'", path);
-+		die(_("make_cache_entry failed for path '%s'"), path);
- 	status =3D checkout_entry(ce, state, NULL);
- 	return status;
- }
-@@ -211,7 +211,7 @@ static int checkout_paths(struct tree *source_tree,=
- const char **pathspec,
+@@ -1127,13 +1127,13 @@ int cmd_format_patch(int argc, const char **arg=
+v, const char *prefix)
+ 		numbered =3D 0;
 =20
- 	newfd =3D hold_locked_index(lock_file, 1);
- 	if (read_cache_preload(pathspec) < 0)
--		return error("corrupt index file");
-+		return error(_("corrupt index file"));
+ 	if (numbered && keep_subject)
+-		die ("-n and -k are mutually exclusive.");
++		die (_("-n and -k are mutually exclusive."));
+ 	if (keep_subject && subject_prefix)
+-		die ("--subject-prefix and -k are mutually exclusive.");
++		die (_("--subject-prefix and -k are mutually exclusive."));
 =20
- 	if (source_tree)
- 		read_tree_some(source_tree, pathspec);
-@@ -239,14 +239,14 @@ static int checkout_paths(struct tree *source_tre=
-e, const char **pathspec,
- 			if (!ce_stage(ce))
- 				continue;
- 			if (opts->force) {
--				warning("path '%s' is unmerged", ce->name);
-+				warning(_("path '%s' is unmerged"), ce->name);
- 			} else if (stage) {
- 				errs |=3D check_stage(stage, ce, pos);
- 			} else if (opts->merge) {
- 				errs |=3D check_all_stages(ce, pos);
- 			} else {
- 				errs =3D 1;
--				error("path '%s' is unmerged", ce->name);
-+				error(_("path '%s' is unmerged"), ce->name);
- 			}
- 			pos =3D skip_same_name(ce, pos) - 1;
- 		}
-@@ -275,7 +275,7 @@ static int checkout_paths(struct tree *source_tree,=
- const char **pathspec,
+ 	argc =3D setup_revisions(argc, argv, &rev, &s_r_opt);
+ 	if (argc > 1)
+-		die ("unrecognized argument: %s", argv[1]);
++		die (_("unrecognized argument: %s"), argv[1]);
 =20
- 	if (write_cache(newfd, active_cache, active_nr) ||
- 	    commit_locked_index(lock_file))
--		die("unable to write new index file");
-+		die(_("unable to write new index file"));
+ 	if (rev.diffopt.output_format & DIFF_FORMAT_NAME)
+ 		die("--name-only does not make sense");
+@@ -1163,9 +1163,9 @@ int cmd_format_patch(int argc, const char **argv,=
+ const char *prefix)
 =20
- 	resolve_ref("HEAD", rev, 0, &flag);
- 	head =3D lookup_commit_reference_gently(rev, 1);
-@@ -292,7 +292,7 @@ static void show_local_changes(struct object *head,=
- struct diff_options *opts)
- 	rev.diffopt.flags =3D opts->flags;
- 	rev.diffopt.output_format |=3D DIFF_FORMAT_NAME_STATUS;
- 	if (diff_setup_done(&rev.diffopt) < 0)
--		die("diff_setup_done failed");
-+		die(_("diff_setup_done failed"));
- 	add_pending_object(&rev, head, NULL);
- 	run_diff_index(&rev, 0);
- }
-@@ -366,7 +366,7 @@ static int merge_working_tree(struct checkout_opts =
-*opts,
- 	int newfd =3D hold_locked_index(lock_file, 1);
-=20
- 	if (read_cache_preload(NULL) < 0)
--		return error("corrupt index file");
-+		return error(_("corrupt index file"));
-=20
- 	resolve_undo_clear();
- 	if (opts->force) {
-@@ -388,7 +388,7 @@ static int merge_working_tree(struct checkout_opts =
-*opts,
- 		refresh_cache(REFRESH_QUIET);
-=20
- 		if (unmerged_cache()) {
--			error("you need to resolve your current index first");
-+			error(_("you need to resolve your current index first"));
- 			return 1;
- 		}
-=20
-@@ -470,7 +470,7 @@ static int merge_working_tree(struct checkout_opts =
-*opts,
-=20
- 	if (write_cache(newfd, active_cache, active_nr) ||
- 	    commit_locked_index(lock_file))
--		die("unable to write new index file");
-+		die(_("unable to write new index file"));
-=20
- 	if (!opts->force && !opts->quiet)
- 		show_local_changes(&new->commit->object, &opts->diff_options);
-@@ -519,7 +519,7 @@ static void update_refs_for_switch(struct checkout_=
-opts *opts,
- 				temp =3D log_all_ref_updates;
- 				log_all_ref_updates =3D 1;
- 				if (log_ref_setup(ref_name, log_file, sizeof(log_file))) {
--					fprintf(stderr, "Can not do reflog for '%s'\n",
-+					fprintf(stderr, _("Can not do reflog for '%s'\n"),
- 					    opts->new_orphan_branch);
- 					log_all_ref_updates =3D temp;
- 					return;
-@@ -545,14 +545,14 @@ static void update_refs_for_switch(struct checkou=
-t_opts *opts,
- 		create_symref("HEAD", new->path, msg.buf);
- 		if (!opts->quiet) {
- 			if (old->path && !strcmp(new->path, old->path))
--				fprintf(stderr, "Already on '%s'\n",
-+				fprintf(stderr, _("Already on '%s'\n"),
- 					new->name);
- 			else if (opts->new_branch)
- 				fprintf(stderr, "Switched to%s branch '%s'\n",
- 					opts->branch_exists ? " and reset" : " a new",
- 					new->name);
- 			else
--				fprintf(stderr, "Switched to branch '%s'\n",
-+				fprintf(stderr, _("Switched to branch '%s'\n"),
- 					new->name);
- 		}
- 		if (old->path && old->name) {
-@@ -597,7 +597,7 @@ static int switch_branches(struct checkout_opts *op=
-ts, struct branch_info *new)
- 		new->name =3D "HEAD";
- 		new->commit =3D old.commit;
- 		if (!new->commit)
--			die("You are on a branch yet to be born");
-+			die(_("You are on a branch yet to be born"));
- 		parse_commit(new->commit);
+ 	if (output_directory) {
+ 		if (use_stdout)
+-			die("standard output, or directory, which one?");
++			die(_("standard output, or directory, which one?"));
+ 		if (mkdir(output_directory, 0777) < 0 && errno !=3D EEXIST)
+-			die_errno("Could not create directory '%s'",
++			die_errno(_("Could not create directory '%s'"),
+ 				  output_directory);
  	}
 =20
-@@ -724,7 +724,7 @@ int cmd_checkout(int argc, const char **argv, const=
+@@ -1219,7 +1219,7 @@ int cmd_format_patch(int argc, const char **argv,=
+ const char *prefix)
+ 		realstdout =3D xfdopen(xdup(1), "w");
+=20
+ 	if (prepare_revision_walk(&rev))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+ 	rev.boundary =3D 1;
+ 	while ((commit =3D get_revision(&rev)) !=3D NULL) {
+ 		if (commit->object.flags & BOUNDARY) {
+@@ -1300,7 +1300,7 @@ int cmd_format_patch(int argc, const char **argv,=
+ const char *prefix)
+=20
+ 		if (!use_stdout && reopen_stdout(numbered_files ? NULL : commit,
+ 						 &rev))
+-			die("Failed to create output files");
++			die(_("Failed to create output files"));
+ 		shown =3D log_tree_commit(&rev, commit);
+ 		free(commit->buffer);
+ 		commit->buffer =3D NULL;
+@@ -1387,9 +1387,9 @@ int cmd_cherry(int argc, const char **argv, const=
  char *prefix)
+ 		if (!current_branch || !current_branch->merge
+ 					|| !current_branch->merge[0]
+ 					|| !current_branch->merge[0]->dst) {
+-			fprintf(stderr, "Could not find a tracked"
++			fprintf(stderr, _("Could not find a tracked"
+ 					" remote branch, please"
+-					" specify <upstream> manually.\n");
++					" specify <upstream> manually.\n"));
+ 			usage_with_options(cherry_usage, options);
+ 		}
 =20
- 	/* we can assume from now on new_branch =3D !new_branch_force */
- 	if (opts.new_branch && opts.new_branch_force)
--		die("-B cannot be used with -b");
-+		die(_("-B cannot be used with -b"));
+@@ -1403,9 +1403,9 @@ int cmd_cherry(int argc, const char **argv, const=
+ char *prefix)
+ 	DIFF_OPT_SET(&revs.diffopt, RECURSIVE);
 =20
- 	/* copy -B over to -b, so that we can just check the latter */
- 	if (opts.new_branch_force)
-@@ -732,28 +732,28 @@ int cmd_checkout(int argc, const char **argv, con=
+ 	if (add_pending_commit(head, &revs, 0))
+-		die("Unknown commit %s", head);
++		die(_("Unknown commit %s"), head);
+ 	if (add_pending_commit(upstream, &revs, UNINTERESTING))
+-		die("Unknown commit %s", upstream);
++		die(_("Unknown commit %s"), upstream);
+=20
+ 	/* Don't say anything if head and upstream are the same. */
+ 	if (revs.pending.nr =3D=3D 2) {
+@@ -1417,11 +1417,11 @@ int cmd_cherry(int argc, const char **argv, con=
 st char *prefix)
+ 	get_patch_ids(&revs, &ids, prefix);
 =20
- 	if (patch_mode && (opts.track > 0 || opts.new_branch
- 			   || opts.new_branch_log || opts.merge || opts.force))
--		die ("--patch is incompatible with all other options");
-+		die (_("--patch is incompatible with all other options"));
+ 	if (limit && add_pending_commit(limit, &revs, UNINTERESTING))
+-		die("Unknown commit %s", limit);
++		die(_("Unknown commit %s"), limit);
 =20
- 	/* --track without -b should DWIM */
- 	if (0 < opts.track && !opts.new_branch) {
- 		const char *argv0 =3D argv[0];
- 		if (!argc || !strcmp(argv0, "--"))
--			die ("--track needs a branch name");
-+			die (_("--track needs a branch name"));
- 		if (!prefixcmp(argv0, "refs/"))
- 			argv0 +=3D 5;
- 		if (!prefixcmp(argv0, "remotes/"))
- 			argv0 +=3D 8;
- 		argv0 =3D strchr(argv0, '/');
- 		if (!argv0 || !argv0[1])
--			die ("Missing branch name; try -b");
-+			die (_("Missing branch name; try -b"));
- 		opts.new_branch =3D argv0 + 1;
- 	}
-=20
- 	if (opts.new_orphan_branch) {
- 		if (opts.new_branch)
--			die("--orphan and -b|-B are mutually exclusive");
-+			die(_("--orphan and -b|-B are mutually exclusive"));
- 		if (opts.track > 0)
--			die("--orphan cannot be used with -t");
-+			die(_("--orphan cannot be used with -t"));
- 		opts.new_branch =3D opts.new_orphan_branch;
- 	}
-=20
-@@ -763,7 +763,7 @@ int cmd_checkout(int argc, const char **argv, const=
- char *prefix)
- 	}
-=20
- 	if (opts.force && opts.merge)
--		die("git checkout: -f and -m are incompatible");
-+		die(_("git checkout: -f and -m are incompatible"));
-=20
- 	/*
- 	 * case 1: git checkout <ref> -- [<paths>]
-@@ -809,7 +809,7 @@ int cmd_checkout(int argc, const char **argv, const=
- char *prefix)
-=20
- 		if (get_sha1_mb(arg, rev)) {
- 			if (has_dash_dash)          /* case (1) */
--				die("invalid reference: %s", arg);
-+				die(_("invalid reference: %s"), arg);
- 			if (!patch_mode &&
- 			    dwim_new_local_branch &&
- 			    opts.track =3D=3D BRANCH_TRACK_UNSPECIFIED &&
-@@ -846,7 +846,7 @@ int cmd_checkout(int argc, const char **argv, const=
- char *prefix)
- 			source_tree =3D parse_tree_indirect(rev);
-=20
- 		if (!source_tree)                   /* case (1): want a tree */
--			die("reference is not a tree: %s", arg);
-+			die(_("reference is not a tree: %s"), arg);
- 		if (!has_dash_dash) {/* case (3 -> 1) */
- 			/*
- 			 * Do not complain the most common case
-@@ -872,7 +872,7 @@ no_reference:
- 		const char **pathspec =3D get_pathspec(prefix, argv);
-=20
- 		if (!pathspec)
--			die("invalid path specification");
-+			die(_("invalid path specification"));
-=20
- 		if (patch_mode)
- 			return interactive_checkout(new.name, pathspec, &opts);
-@@ -880,14 +880,14 @@ no_reference:
- 		/* Checkout paths */
- 		if (opts.new_branch) {
- 			if (argc =3D=3D 1) {
--				die("git checkout: updating paths is incompatible with switching b=
-ranches.\nDid you intend to checkout '%s' which can not be resolved as =
-commit?", argv[0]);
-+				die(_("git checkout: updating paths is incompatible with switching=
- branches.\nDid you intend to checkout '%s' which can not be resolved a=
-s commit?"), argv[0]);
- 			} else {
--				die("git checkout: updating paths is incompatible with switching b=
-ranches.");
-+				die(_("git checkout: updating paths is incompatible with switching=
- branches."));
- 			}
- 		}
-=20
- 		if (1 < !!opts.writeout_stage + !!opts.force + !!opts.merge)
--			die("git checkout: --ours/--theirs, --force and --merge are incompa=
-tible when\nchecking out of the index.");
-+			die(_("git checkout: --ours/--theirs, --force and --merge are incom=
-patible when\nchecking out of the index."));
-=20
- 		return checkout_paths(source_tree, pathspec, &opts);
- 	}
-@@ -898,22 +898,22 @@ no_reference:
- 	if (opts.new_branch) {
- 		struct strbuf buf =3D STRBUF_INIT;
- 		if (strbuf_check_branch_ref(&buf, opts.new_branch))
--			die("git checkout: we do not like '%s' as a branch name.",
-+			die(_("git checkout: we do not like '%s' as a branch name."),
- 			    opts.new_branch);
- 		if (!get_sha1(buf.buf, rev)) {
- 			opts.branch_exists =3D 1;
- 			if (!opts.new_branch_force)
--				die("git checkout: branch %s already exists",
-+				die(_("git checkout: branch %s already exists"),
- 				    opts.new_branch);
- 		}
- 		strbuf_release(&buf);
- 	}
-=20
- 	if (new.name && !new.commit) {
--		die("Cannot switch branch to a non-commit.");
-+		die(_("Cannot switch branch to a non-commit."));
- 	}
- 	if (opts.writeout_stage)
--		die("--ours/--theirs is incompatible with switching branches.");
-+		die(_("--ours/--theirs is incompatible with switching branches."));
-=20
- 	return switch_branches(&opts, &new);
- }
+ 	/* reverse the list of commits */
+ 	if (prepare_revision_walk(&revs))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+ 	while ((commit =3D get_revision(&revs)) !=3D NULL) {
+ 		/* ignore merges */
+ 		if (commit->parents && commit->parents->next)
 --=20
 1.7.2.3
