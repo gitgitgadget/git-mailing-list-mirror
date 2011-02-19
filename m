@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v2 3/3] gitweb/gitweb.perl: don't call S_ISREG() with undef
-Date: Sat, 19 Feb 2011 15:27:42 +0000
-Message-ID: <1298129262-10468-4-git-send-email-avarab@gmail.com>
+Subject: [PATCH v2 2/3] gitweb/gitweb.perl: remove use of qw(...) as parentheses
+Date: Sat, 19 Feb 2011 15:27:41 +0000
+Message-ID: <1298129262-10468-3-git-send-email-avarab@gmail.com>
 References: <1298124654-12051-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -18,39 +18,39 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqojE-0006EQ-Nj
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 16:28:13 +0100
+	id 1PqojE-0006EQ-5z
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 16:28:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755607Ab1BSP2H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 10:28:07 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:34998 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755577Ab1BSP2C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 10:28:02 -0500
-Received: by mail-ew0-f46.google.com with SMTP id 5so1925810ewy.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 07:28:02 -0800 (PST)
+	id S1755600Ab1BSP2E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 10:28:04 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:50583 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755587Ab1BSP2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 10:28:01 -0500
+Received: by eye27 with SMTP id 27so2301216eye.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 07:28:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=xcmu/5L/93YiIBmkQXxGB5b9UtQR08nhpD30YirPNG8=;
-        b=hJC2OcwwIk7DoYlIXOV/gNlFE3RMgwzTcUq6rV+OAHnd6se+ChQgh8uDktRL+ZFuTw
-         7Y1lxE6Jycl4QMlgFtV7uOB49ck7Bo/WSCi1ACLE4684N/hIz+4r8zPhu9lyNVLFEg2J
-         fCCs2eBdB2QCbGO10uUESHxuFxd0jyBac4Sqs=
+        bh=JVahtft6zJAh/o6//RfrCKXsJAK48Xt/fYtflksdnXc=;
+        b=Ks7iv3IDouYVjdJNK/YjSJER2DaWuS531gQCQh7ZlQar8DssmB+CWs9WBbw74nK8b5
+         S0VuTzIF+XrlvP8eEDKRCMyTdAfB+FGQWQyy6L3nzB+Ij+7llNbWkXmAM50+7JLNf+15
+         stuExEckHHbk4HokYLwbIg/psIIerho++jSI0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=RUuA+XM0QUHhi6uE42e4hY6YZxXy3Wy6GWZ19/vSv//r5zcdyuFsHjSfA+5pDNCzJx
-         U2owHX6d+QynKpw1dg1S8rTwNy0DNZzli8YsRopXNKtV2loSJZybA5huFYt5hcTkz5xT
-         eGMcis7sQDZUlmAbJ+6GobsOlFLieH8tdIdcc=
-Received: by 10.14.22.80 with SMTP id s56mr2234642ees.6.1298129282227;
-        Sat, 19 Feb 2011 07:28:02 -0800 (PST)
+        b=q+LFpFgmsezTDOfTW09zqRCanEnNadlsufxIpCHRuEcAql28hyIEnVMTZuiMstpons
+         OHDiNQhhSNr/iYGNRofZ/+pYhHwAxCPv8TAJoMMaondhSITQuWInuuevXROVP9A3IcQR
+         rlDIbkhPsR7hSH9rJYqhgIrS7ERDi6/3yv794=
+Received: by 10.14.127.200 with SMTP id d48mr2258569eei.4.1298129280196;
+        Sat, 19 Feb 2011 07:28:00 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id q52sm3006362eei.15.2011.02.19.07.28.01
+        by mx.google.com with ESMTPS id q52sm3006362eei.15.2011.02.19.07.27.59
         (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 07:28:01 -0800 (PST)
+        Sat, 19 Feb 2011 07:27:59 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1298124654-12051-1-git-send-email-avarab@gmail.com>
 In-Reply-To: <1298124654-12051-1-git-send-email-avarab@gmail.com>
@@ -59,47 +59,59 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167289>
 
-Change S_ISREG($to_mode_oct) to S_ISREG($from_mode_oct) in the branch
-that handles from modes, not to modes. This logic appears to have been
-caused by copy/paste programming by Jakub Narebski in e8e41a93. It
-would be better to rewrite this code not to be duplicated, but I
-haven't done so.
+Using the qw(...) construct as implicit parentheses was deprecated in
+perl 5.13.5. Change the relevant code in gitweb to not use the
+deprecated construct. The offending code was introduced in 3562198b by
+Jakub Narebski.
 
-This issue caused a failing test on perl 5.13.9, which has a warning
-that turned this up:
+The issue is that perl will now warn about this:
 
-     gitweb.perl: Use of uninitialized value in subroutine entry at /ho=
-me/avar/g/git/t/../gitweb/gitweb.perl line 4415.
+    $ perl -wE 'for my $i qw(a b) { say $i }'
+    Use of qw(...) as parentheses is deprecated at -e line 1.
+    a
+    b
 
-Which caused the Git test suite to fail on this test:
+This caused gitweb.perl to warn on perl 5.13.5 and above, and these
+tests to fail on those perl versions:
 
-    ./t9500-gitweb-standalone-no-errors.sh             (Wstat: 256 Test=
-s: 90 Failed: 84)
-      Failed tests:  1-8, 10-36, 38-45, 47-48, 50-88
+    ./t9501-gitweb-standalone-http-status.sh           (Wstat: 256 Test=
+s: 11 Failed: 10)
+      Failed tests:  2-11
+      Non-zero exit status: 1
+    ./t9502-gitweb-standalone-parse-output.sh          (Wstat: 256 Test=
+s: 10 Failed: 9)
+      Failed tests:  2-10
       Non-zero exit status: 1
 
-Reported-by: perl 5.13.9
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b02372c..1b9369d 100755
+index 0779f12..b02372c 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -4412,7 +4412,7 @@ sub git_difftree_body {
+@@ -3501,7 +3501,7 @@ sub print_feed_meta {
+ 			$href_params{'-title'} =3D 'log';
  		}
- 		if ($diff->{'from_mode'} ne ('0' x 6)) {
- 			$from_mode_oct =3D oct $diff->{'from_mode'};
--			if (S_ISREG($to_mode_oct)) { # only for regular file
-+			if (S_ISREG($from_mode_oct)) { # only for regular file
- 				$from_mode_str =3D sprintf("%04o", $from_mode_oct & 0777); # permi=
-ssion bits
- 			}
- 			$from_file_type =3D file_type($diff->{'from_mode'});
+=20
+-		foreach my $format qw(RSS Atom) {
++		foreach my $format (qw(RSS Atom)) {
+ 			my $type =3D lc($format);
+ 			my %link_attr =3D (
+ 				'-rel' =3D> 'alternate',
+@@ -3682,7 +3682,7 @@ sub git_footer_html {
+ 		}
+ 		$href_params{'-title'} ||=3D 'log';
+=20
+-		foreach my $format qw(RSS Atom) {
++		foreach my $format (qw(RSS Atom)) {
+ 			$href_params{'action'} =3D lc($format);
+ 			print $cgi->a({-href =3D> href(%href_params),
+ 			              -title =3D> "$href_params{'-title'} $format feed",
 --=20
 1.7.2.3
