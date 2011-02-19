@@ -1,107 +1,77 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Merging limitations after directory renames -- interesting test repo
-Date: Sat, 19 Feb 2011 10:22:29 -0500
-Message-ID: <AANLkTimiZo8yiwnqzbOTg1FmM4rZn7ypSdZ3-zukLees@mail.gmail.com>
-References: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com>
- <20110218222151.GB4258@sigill.intra.peff.net> <AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com>
- <20110219101936.GB20577@sigill.intra.peff.net>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v2 0/3] Fix failure-causing warnings in Gitweb + improve gitweb-lib.sh
+Date: Sat, 19 Feb 2011 15:27:39 +0000
+Message-ID: <1298129262-10468-1-git-send-email-avarab@gmail.com>
+References: <1298124654-12051-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 19 16:23:00 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 19 16:28:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqoeA-0003nJ-6R
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 16:22:58 +0100
+	id 1Pqoj4-0006AV-J5
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 16:28:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755524Ab1BSPWu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 10:22:50 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50182 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755470Ab1BSPWt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Feb 2011 10:22:49 -0500
-Received: by ywj3 with SMTP id 3so252430ywj.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 07:22:49 -0800 (PST)
+	id S1755574Ab1BSP16 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 10:27:58 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:34998 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755470Ab1BSP15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 10:27:57 -0500
+Received: by ewy5 with SMTP id 5so1925810ewy.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 07:27:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=oqWbjegJSm53r0CJmxAXCo0MQGwWST2OHHH4Mmm6sxU=;
-        b=fgGVSxDzSa9QuCN6R0uVR4uuNSN9SSCjYPWd0eek+ffzg/QtXGO+oVczq7pKDPdZqZ
-         DDu1oupDBPqOMzGi6xEA03bQadTBydu1oYZMHdusWAmsDPJZ3cpvBmt5sldbKRqz/8eW
-         bYVj51x8HG5DZx9x2a+H04hBT/R12OEuA4QSI=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=C5tMHIkgtt8y90oLCJaKsUiGbH8vgnIPlvIc0mjAFRk=;
+        b=Kqc2k4eoJG651S1/ZSKER1CUNhFALGlizniWs5am5OaYGVmj4qvCApUfVcmNBShFTh
+         aoFJk7a2syxqPekXcpxF0v4qUe2q3XRvcR3fKrh/TnXNNgZLFX8Da2Nlx8L6JXFD5Co5
+         LI2QUUfAycR/JC89pn1jJ8W6Bkr4+RxUkKSIQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=sw7G7xXwwjg02J7iCw+KJeWNn/ZjGWOYcK4mbAbBdVMkFT/OueNZL1CH+k3yXG7/xF
-         K3GL6S9Ytx4T9BqVJioYA3XFg/PZs4T1g/p35H0RU5jr7X8w+aDfN8A9Ehc1Hr5zxtU0
-         Bgx2UIr2cISSlkFOW6+jJH8VP+C5MWMg3eiCo=
-Received: by 10.90.224.6 with SMTP id w6mr2715772agg.167.1298128969178; Sat,
- 19 Feb 2011 07:22:49 -0800 (PST)
-Received: by 10.90.53.7 with HTTP; Sat, 19 Feb 2011 07:22:29 -0800 (PST)
-In-Reply-To: <20110219101936.GB20577@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=W/DS2rni9jIrCHtPXCJV+SXEdUDJ+wfT8eq6/PwyJ2J4A1fkocRPR1UzA12a8ht9gb
+         WXD81EY5INgK1Tddc6FOnmoPHAHLJmCwY6jg2W+hRCY90mJebiifb/Ec5msV9y4y0cn2
+         xvSKuLuHsFzJy8dCApZJ5MSvyiGmsJRf+6B2E=
+Received: by 10.213.14.148 with SMTP id g20mr2341210eba.43.1298129276110;
+        Sat, 19 Feb 2011 07:27:56 -0800 (PST)
+Received: from w.nix.is (w.nix.is [188.40.98.140])
+        by mx.google.com with ESMTPS id q52sm3006362eei.15.2011.02.19.07.27.55
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Feb 2011 07:27:55 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1298124654-12051-1-git-send-email-avarab@gmail.com>
+In-Reply-To: <1298124654-12051-1-git-send-email-avarab@gmail.com>
+References: <1298124654-12051-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167286>
 
-On Sat, Feb 19, 2011 at 5:19 AM, Jeff King <peff@peff.net> wrote:
-> So here's a patch series. It's built on your other 3 patches (all of
-> which I thought looked good, btw).
+Ignore the previous patch series to fix the qw(...) warning. I missed
+some spots.
 
-Right, this is looking better! Applied Linus and Jeff's patches, and
-things are much more civilized.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
+  t/gitweb-lib.sh: print to stderr when gitweb_run has errors
+  gitweb/gitweb.perl: remove use of qw(...) as parentheses
+  gitweb/gitweb.perl: don't call S_ISREG() with undef
 
-Now, I still have a ton of cases where the 2 branches renamed it just
-slightly different. In those cases, what I want to do is have a merge
-helper script that does...
+ gitweb/gitweb.perl |    6 +++---
+ t/gitweb-lib.sh    |    7 ++++++-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
- git merge-helper --prefer-path foo/orig/README foo/preferred/README
-foo/other/README
-
-if git could keep the rename trios that it recognizes during the merge
-operation in a "merge notes" file, we could just name
-
- git merge-helper --prefer-path foo/preferred/README
-
-and have it infer the "non-preferred" paths.
-
-The result of the operation should be the same as if git had magically
-known what I wanted to do during merge: git attempts a git-smart diff3
-type merge, and stores the results accordingly in the index.
-
-Even for a large messy merge like this, it means I can say
-
- git merge
- git merge-helper --prefer-path src/templates/themes/default/* other/di=
-r/foo/*
-
-and that will clear out 99% of the stupid work with minimal fuss;
-leaving the interesting merge work to be cleared up by hand.
-
-I suspect that teaching git merge to accept about 'preferred paths',
-and perhaps "cache/learn" about them, is also desirable. Harder
-though.
-
-Thoughts?
-
-cheers,
-
-
-
-m
 --=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- Software Architect - OLPC
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
+1.7.2.3
