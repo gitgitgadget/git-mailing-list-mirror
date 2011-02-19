@@ -1,64 +1,89 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH v2 6/8] git-p4: better message for "git-p4 sync" when not cloned
-Date: Sat, 19 Feb 2011 08:17:59 -0500
-Message-ID: <1298121481-7005-7-git-send-email-pw@padd.com>
-References: <1298121481-7005-1-git-send-email-pw@padd.com>
-Cc: Tor Arvid Lund <torarvid@gmail.com>,
-	Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 19 14:19:03 2011
+From: Ferry Huberts <mailings@hupie.com>
+Subject: Re: [CGit] [PATCH 0/6] Communicate the repo name to the filter scripts
+Date: Sat, 19 Feb 2011 14:54:51 +0100
+Message-ID: <4D5FCBAB.6060009@hupie.com>
+References: <1297977069-21884-1-git-send-email-mailings@hupie.com> <AANLkTimASPjeHor3R6c=i1xpjftxrg4NnFaLJfReuZ-X@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 19 14:55:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqmiC-0001ch-2q
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 14:19:00 +0100
+	id 1PqnH4-0002J4-4N
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 14:55:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754667Ab1BSNSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Feb 2011 08:18:43 -0500
-Received: from honk.padd.com ([74.3.171.149]:51194 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754251Ab1BSNST (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 08:18:19 -0500
-Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
-	by honk.padd.com (Postfix) with ESMTPSA id 293FE20CA;
-	Sat, 19 Feb 2011 05:18:18 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id EEE9631AE6; Sat, 19 Feb 2011 08:18:06 -0500 (EST)
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1298121481-7005-1-git-send-email-pw@padd.com>
+	id S1754556Ab1BSNy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Feb 2011 08:54:57 -0500
+Received: from 82-197-206-98.dsl.cambrium.nl ([82.197.206.98]:50857 "EHLO
+	mail.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752694Ab1BSNy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 08:54:56 -0500
+Received: from stinkpad.internal.hupie.com (82-197-206-98.dsl.cambrium.nl [82.197.206.98])
+	by mail.internal.Hupie.com (Postfix) with ESMTP id 41CC658C993;
+	Sat, 19 Feb 2011 14:54:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7
+In-Reply-To: <AANLkTimASPjeHor3R6c=i1xpjftxrg4NnFaLJfReuZ-X@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167282>
 
-A common error is to do "git-p4 sync" in a repository that
-was not initialized by "git-p4 clone".  There will be no
-p4 refs.  The error message in this case is a traceback
-for an assertion, which is confusing.
+On 02/19/2011 09:46 AM, Lars Hjemli wrote:
+> On Thu, Feb 17, 2011 at 22:11, Ferry Huberts <mailings@hupie.com> wrote:
+>> This patch series fixes two bugs and communicates the repo name
+>> to the filter scripts.
+> 
+> Thanks, but I think the current filter invocations with unnamed,
+> positional command arguments was a mistake. We should probably fix it
+> instead of extending it, taking care not to break backwards
+> compatibility.
+> 
+> The easiest fix would be to add some environment variables:
+> * GIT_DIR
+> * CGIT_REPO_NAME
+> * CGIT_REPO_REL_URL
+> * CGIT_REPO_ABS_URL
+> * CGIT_BRANCH_NAME
+> * CGIT_COMMIT_ID
+> * CGIT_PATH_FILTER
+> 
+> What do you think?
+> 
+> --
+> larsh
 
-Change it instead to explain the likely problem.
+I've been thinking about this too and did think about this solution but
+also about a solution in which these settings are written to a temporary
+file. I have no preference as long as the repo settings are communicated
+to the filter script. Writing to a file is probably bad for performance
+though.
 
-Signed-off-by: Pete Wyckoff <pw@padd.com>
-Acked-By: Tor Arvid Lund <torarvid@gmail.com>
----
- contrib/fast-import/git-p4 |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+The patches I sent just plainly solve my own problem and I was hoping a
+bit for this discussion :-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 6b847c4..04e6c3d 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1676,6 +1676,8 @@ class P4Sync(Command):
- 
-                 changes.sort()
-             else:
-+                if not self.p4BranchesInGit:
-+                    die("No remote p4 branches.  Perhaps you never did \"git p4 clone\" in here.");
-                 if self.verbose:
-                     print "Getting p4 changes for %s...%s" % (', '.join(self.depotPaths),
-                                                               self.changeRange)
+Your proposal sounds reasonable and a good approach.
+
+I'm a bit worried about the GIT_DIR env var, about it conflicting with
+the real git env var. It's probably best to rename that one to CGIT_GIT_DIR.
+
+Also, we'd have to be sure that when we set these env vars that they're
+only propagated to the filter script we're going to run and not to other
+envs: running filter scripts in parallel must not be prevented.
+
+
+Have you looked at the first 2 patches?
+These solve bugs and can be applied regardless of this discussion.
+
+
+please let me know what you think.
+
+
+grtz
 -- 
-1.7.4.1
+Ferry Huberts
