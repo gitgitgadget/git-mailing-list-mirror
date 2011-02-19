@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 55/72] gettextize: git-status shortstatus messages
-Date: Sat, 19 Feb 2011 19:24:38 +0000
-Message-ID: <1298143495-3681-56-git-send-email-avarab@gmail.com>
+Subject: [PATCH 54/72] gettextize: git-status "nothing to commit" messages
+Date: Sat, 19 Feb 2011 19:24:37 +0000
+Message-ID: <1298143495-3681-55-git-send-email-avarab@gmail.com>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,104 +11,124 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 19 20:30:07 2011
+X-From: git-owner@vger.kernel.org Sat Feb 19 20:30:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqsVH-00042j-Ir
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:30:03 +0100
+	id 1PqsVI-00042j-4j
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:30:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932082Ab1BST3b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:29:31 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:39339 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756135Ab1BST2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 14:28:14 -0500
-Received: by mail-ey0-f174.google.com with SMTP id 27so2347149eye.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:28:13 -0800 (PST)
+	id S932092Ab1BST3h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:29:37 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:60199 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756118Ab1BST2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 14:28:12 -0500
+Received: by mail-ew0-f46.google.com with SMTP id 5so1970492ewy.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:28:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=lYMRuenqFIqgcMkCeF4IXVFANCNxdkApV/XDDMCMu5I=;
-        b=kD2brUm11fXFb91WNcuj25H6lbqLiCQ2Jz0AlvBILD43nponHHCcKS2qEHXLqRK53E
-         FrT9NKSuAFZ9tn1xZsLW8LSfy4ll4gGDEy4qsOjYrSBQW0d9aVtHzPx6F+YOjQY2FvX1
-         qceoCCjGSjxCg6n0IsNmIrVPiGyXCMh/zsRFE=
+        bh=zHF8MTAOE5UA1VxoJ0LDI/pVXP3cVEfqiMG1TnBXjyQ=;
+        b=rzWvTSgzLQXqIMgkNB2LaT7FNYT0MViAudqm5tkasZUxCAq77Onk2SwchMte/73Atq
+         whounNgPVyUWYnQyx2/WL+e0jl1qY3zwYKOSBUw7b7APOkMPBjsXgeE2cQVxfSz4JDSg
+         /j7+t8GEodzVsrFNASpsVOXhXYlfK24QeoYQk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=ktI8F2gz/fhsVs2WX3/j740jC/1lwzyOWT3i++0tnNfXAhG2SiGZDzImmHq85VnSz0
-         TXpa66MS9AaPoDu+IS8zEvqRAelVyAzy1MSCUpW01uBziN3SFvxT5kBefuvQnNNE+rzc
-         MN5WvXeo+wdUjsVoN+BBFbMj2GiPIh4mOVhaU=
-Received: by 10.213.108.204 with SMTP id g12mr2521479ebp.99.1298143692954;
+        b=J2tyc5AMxcR/DQtATD95zAa0ZvdCu2C4Q8miW49k3ewAUkxnW6iJjm8cIjXFvNocL3
+         EsWBanOheaoWCSoSH+RqDfKwulVzui13UaargZPUE0ayFmK6sLBhXivsVMc99iYcPQqp
+         6zDJuRUA+vZ9m5nHGiebvnGZ9JiWjGuKtRPrk=
+Received: by 10.14.123.14 with SMTP id u14mr2436034eeh.39.1298143692194;
         Sat, 19 Feb 2011 11:28:12 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.28.12
+        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.28.11
         (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 11:28:12 -0800 (PST)
+        Sat, 19 Feb 2011 11:28:11 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167363>
 
-Make the messages added in v1.7.2-rc0~54^2~1 translatable. Some of
-these could use the to be implemented plural support in the gettext
-library.
+Gettextize the "nothing to commit" messages. Many tests explicitly
+checked for this message. Change them to skip under
+GETTEXT_POISON=3DYesPlease.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- wt-status.c |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+ t/t7506-status-submodule.sh |    8 ++++----
+ wt-status.c                 |   12 ++++++------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
+diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+index 74e0f6f..2347451 100755
+--- a/t/t7506-status-submodule.sh
++++ b/t/t7506-status-submodule.sh
+@@ -20,12 +20,12 @@ test_expect_success 'setup' '
+ 	git commit -m "Add submodule sub"
+ '
+=20
+-test_expect_success 'status clean' '
++test_expect_success NO_GETTEXT_POISON 'status clean' '
+ 	git status >output &&
+ 	grep "nothing to commit" output
+ '
+=20
+-test_expect_success 'commit --dry-run -a clean' '
++test_expect_success NO_GETTEXT_POISON 'commit --dry-run -a clean' '
+ 	test_must_fail git commit --dry-run -a >output &&
+ 	grep "nothing to commit" output
+ '
+@@ -177,12 +177,12 @@ test_expect_success 'rm submodule contents' '
+ 	rm -rf sub/* sub/.git
+ '
+=20
+-test_expect_success 'status clean (empty submodule dir)' '
++test_expect_success NO_GETTEXT_POISON 'status clean (empty submodule d=
+ir)' '
+ 	git status >output &&
+ 	grep "nothing to commit" output
+ '
+=20
+-test_expect_success 'status -a clean (empty submodule dir)' '
++test_expect_success NO_GETTEXT_POISON 'status -a clean (empty submodul=
+e dir)' '
+ 	test_must_fail git commit --dry-run -a >output &&
+ 	grep "nothing to commit" output
+ '
 diff --git a/wt-status.c b/wt-status.c
-index a975d07..fc38ac2 100644
+index f369eba..a975d07 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -804,13 +804,13 @@ static void wt_shortstatus_print_tracking(struct =
-wt_status *s)
- 	if (!prefixcmp(branch_name, "refs/heads/"))
- 		branch_name +=3D 11;
- 	else if (!strcmp(branch_name, "HEAD")) {
--		branch_name =3D "HEAD (no branch)";
-+		branch_name =3D _("HEAD (no branch)");
- 		branch_color_local =3D color(WT_STATUS_NOBRANCH, s);
+@@ -689,14 +689,14 @@ void wt_status_print(struct wt_status *s)
+ 				advice_status_hints
+ 				? _(" (use \"git add\" to track)") : "");
+ 		else if (s->is_initial)
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (create/copy files and use \"git add\" to track)" : "");
++			printf(_("nothing to commit%s\n"), advice_status_hints
++				? _(" (create/copy files and use \"git add\" to track)") : "");
+ 		else if (!s->show_untracked_files)
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (use -u to show untracked files)" : "");
++			printf(_("nothing to commit%s\n"), advice_status_hints
++				? _(" (use -u to show untracked files)") : "");
+ 		else
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (working directory clean)" : "");
++			printf(_("nothing to commit%s\n"), advice_status_hints
++				? _(" (working directory clean)") : "");
  	}
-=20
- 	branch =3D branch_get(s->branch + 11);
- 	if (s->is_initial)
--		color_fprintf(s->fp, header_color, "Initial commit on ");
-+		color_fprintf(s->fp, header_color, _("Initial commit on "));
- 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
- 		color_fprintf_ln(s->fp, branch_color_local,
- 			"%s", branch_name);
-@@ -825,15 +825,15 @@ static void wt_shortstatus_print_tracking(struct =
-wt_status *s)
-=20
- 	color_fprintf(s->fp, header_color, " [");
- 	if (!num_ours) {
--		color_fprintf(s->fp, header_color, "behind ");
-+		color_fprintf(s->fp, header_color, _("behind "));
- 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
- 	} else if (!num_theirs) {
--		color_fprintf(s->fp, header_color, "ahead ");
-+		color_fprintf(s->fp, header_color, _("ahead "));
- 		color_fprintf(s->fp, branch_color_local, "%d", num_ours);
- 	} else {
--		color_fprintf(s->fp, header_color, "ahead ");
-+		color_fprintf(s->fp, header_color, _("ahead "));
- 		color_fprintf(s->fp, branch_color_local, "%d", num_ours);
--		color_fprintf(s->fp, header_color, ", behind ");
-+		color_fprintf(s->fp, header_color, _(", behind "));
- 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
- 	}
+ }
 =20
 --=20
 1.7.2.3
