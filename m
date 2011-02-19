@@ -1,176 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Merging limitations after directory renames -- interesting test repo
-Date: Fri, 18 Feb 2011 17:03:33 -0800
-Message-ID: <AANLkTimK0K=khbPk22Fpo99i02y1gdsSgMqWcRgXWe4w@mail.gmail.com>
-References: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com>
- <20110218222151.GB4258@sigill.intra.peff.net> <AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com>
- <AANLkTimuU4A7sUqo-dpW3ch4H_WJg+G2ynNmagx=C9t8@mail.gmail.com> <7vsjvkn8vh.fsf@alter.siamese.dyndns.org>
+From: Jesse Wilson <jessewilson@google.com>
+Subject: Gitweb complains "404 - No such project" when following links from Gmail
+Date: Fri, 18 Feb 2011 17:12:25 -0800
+Message-ID: <AANLkTinuPsWnaSAhmL3b0Bf3FWUEByRE50j+qD_ov0Qi@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=90e6ba4fc23c4a9942049c983495
-Cc: Jeff King <peff@peff.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 19 02:04:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 19 02:12:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqbEv-0007il-HN
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 02:04:02 +0100
+	id 1PqbNY-0002sS-GJ
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 02:12:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754071Ab1BSBD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 20:03:57 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:45351 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753578Ab1BSBDz (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 20:03:55 -0500
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p1J13rdQ013430
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 18 Feb 2011 17:03:53 -0800
-Received: by iwn8 with SMTP id 8so15300iwn.19
-        for <git@vger.kernel.org>; Fri, 18 Feb 2011 17:03:53 -0800 (PST)
-Received: by 10.231.206.131 with SMTP id fu3mr1006593ibb.98.1298077433107;
- Fri, 18 Feb 2011 17:03:53 -0800 (PST)
-Received: by 10.231.16.129 with HTTP; Fri, 18 Feb 2011 17:03:33 -0800 (PST)
-In-Reply-To: <7vsjvkn8vh.fsf@alter.siamese.dyndns.org>
-X-Spam-Status: No, hits=-102.962 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753591Ab1BSBMu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Feb 2011 20:12:50 -0500
+Received: from smtp-out.google.com ([74.125.121.67]:37616 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753966Ab1BSBMt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 20:12:49 -0500
+Received: from wpaz1.hot.corp.google.com (wpaz1.hot.corp.google.com [172.24.198.65])
+	by smtp-out.google.com with ESMTP id p1J1Clwv000366
+	for <git@vger.kernel.org>; Fri, 18 Feb 2011 17:12:47 -0800
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1298077967; bh=stO7WX7G2z9PAjcH26iBNm9H5P4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type:
+	 Content-Transfer-Encoding;
+	b=mWz4fgnTUK6vKLwHXZFH1LDvfllzuB/CUMiu6BUHDagG2zoAYpLzu/Q7WY4bZaG7U
+	 mDc1qpxxtIwEyoNWgY+Mw==
+Received: from pwi10 (pwi10.prod.google.com [10.241.219.10])
+	by wpaz1.hot.corp.google.com with ESMTP id p1J1CVnh006792
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 18 Feb 2011 17:12:45 -0800
+Received: by pwi10 with SMTP id 10so140272pwi.0
+        for <git@vger.kernel.org>; Fri, 18 Feb 2011 17:12:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=beta;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=AN7NcUsw7vYWlvlSKHr81Zz3/pcmTIjJqB7Hbam9VVg=;
+        b=jvk4bsI1btIDWpAxnWOSgUdTgjD0wZS6WhBECzmXEmUq522k/6x+5VYg9aXoOPT8ST
+         e69zpt2Bu2C9esK/Rz/g==
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=google.com; s=beta;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=DNT+bsOksUke7MejXbaArB+tdPcz65QlgPEcZI7aXNPuuG33XM59xaveboPUTzYXAO
+         2vSD6+LVuKQ83Nd4FF6g==
+Received: by 10.142.173.3 with SMTP id v3mr1020095wfe.62.1298077965104; Fri,
+ 18 Feb 2011 17:12:45 -0800 (PST)
+Received: by 10.142.245.1 with HTTP; Fri, 18 Feb 2011 17:12:25 -0800 (PST)
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167244>
 
---90e6ba4fc23c4a9942049c983495
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Gitweb experts,
 
-On Fri, Feb 18, 2011 at 4:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Yeah, I think it is probably a good idea to really limit the rename
-> detection only to renames at least inside merge-recursive. =A0The static
-> variable does look ugly but it shouldn't be a rocket surgery to pass it
-> down if we want to.
+I've seen the following error on all git web deployments I've tried,
+including the Linux Kernel and Android:
 
-Here's a slight update. It still has the "too ugly to live"
-if-statment without proper indentation, but it now changes
-"for_each_hash()" to pass in a flag value and uses that.
+    /android/git=C2=A0/
+   404 - No such project
 
-It also fixes one of the tests that depended on the "find copies"
-behavior for its result to actually ask for copies now that we don't
-give them unless you do.
+Reproduce this by following this this link from the=C2=A0Gmail web app:
+http://android.git.kernel.org/?p=3Dplatform/frameworks/base.git;a=3Dblo=
+b;f=3Dcore/java/android/hardware/SensorManager.java
 
-                                 Linus
+Pasting the same link into a browser's address bar yields a valid
+page. Even reloading it yields a valid page.
 
---90e6ba4fc23c4a9942049c983495
-Content-Type: text/x-patch; charset=US-ASCII; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gkbtrb1t0
+Any ideas? I couldn't find the bug tracker for gitweb.
 
-IGJ1aWx0aW4vZGVzY3JpYmUuYyAgICAgICAgICAgIHwgICAgNCArKy0tCiBkaWZmY29yZS1yZW5h
-bWUuYyAgICAgICAgICAgICB8ICAgMTcgKysrKysrKysrKy0tLS0tLS0KIGhhc2guYyAgICAgICAg
-ICAgICAgICAgICAgICAgIHwgICAgNCArKy0tCiBoYXNoLmggICAgICAgICAgICAgICAgICAgICAg
-ICB8ICAgIDIgKy0KIHQvdDQwMDgtZGlmZi1icmVhay1yZXdyaXRlLnNoIHwgICAgNCArKy0tCiA1
-IGZpbGVzIGNoYW5nZWQsIDE3IGluc2VydGlvbnMoKyksIDE0IGRlbGV0aW9ucygtKQoKZGlmZiAt
-LWdpdCBhL2J1aWx0aW4vZGVzY3JpYmUuYyBiL2J1aWx0aW4vZGVzY3JpYmUuYwppbmRleCAzNDIx
-MjlmLi40ZjRmZTNlIDEwMDY0NAotLS0gYS9idWlsdGluL2Rlc2NyaWJlLmMKKysrIGIvYnVpbHRp
-bi9kZXNjcmliZS5jCkBAIC02Myw3ICs2Myw3IEBAIHN0YXRpYyBpbmxpbmUgc3RydWN0IGNvbW1p
-dF9uYW1lICpmaW5kX2NvbW1pdF9uYW1lKGNvbnN0IHVuc2lnbmVkIGNoYXIgKnBlZWxlZCkKIAly
-ZXR1cm4gbjsKIH0KIAotc3RhdGljIGludCBzZXRfdXRpbCh2b2lkICpjaGFpbikKK3N0YXRpYyBp
-bnQgc2V0X3V0aWwodm9pZCAqY2hhaW4sIGludCBmbGFnKQogewogCXN0cnVjdCBjb21taXRfbmFt
-ZSAqbjsKIAlmb3IgKG4gPSBjaGFpbjsgbjsgbiA9IG4tPm5leHQpIHsKQEAgLTI4OSw3ICsyODks
-NyBAQCBzdGF0aWMgdm9pZCBkZXNjcmliZShjb25zdCBjaGFyICphcmcsIGludCBsYXN0X29uZSkK
-IAkJZnByaW50ZihzdGRlcnIsICJzZWFyY2hpbmcgdG8gZGVzY3JpYmUgJXNcbiIsIGFyZyk7CiAK
-IAlpZiAoIWhhdmVfdXRpbCkgewotCQlmb3JfZWFjaF9oYXNoKCZuYW1lcywgc2V0X3V0aWwpOwor
-CQlmb3JfZWFjaF9oYXNoKCZuYW1lcywgc2V0X3V0aWwsIDApOwogCQloYXZlX3V0aWwgPSAxOwog
-CX0KIApkaWZmIC0tZ2l0IGEvZGlmZmNvcmUtcmVuYW1lLmMgYi9kaWZmY29yZS1yZW5hbWUuYwpp
-bmRleCBkZjQxYmU1Li4zYTkzN2FjIDEwMDY0NAotLS0gYS9kaWZmY29yZS1yZW5hbWUuYworKysg
-Yi9kaWZmY29yZS1yZW5hbWUuYwpAQCAtMTcwLDcgKzE3MCw3IEBAIHN0YXRpYyBpbnQgZXN0aW1h
-dGVfc2ltaWxhcml0eShzdHJ1Y3QgZGlmZl9maWxlc3BlYyAqc3JjLAogCSAqIGFuZCB0aGUgZmlu
-YWwgc2NvcmUgY29tcHV0YXRpb24gYmVsb3cgd291bGQgbm90IGhhdmUgYQogCSAqIGRpdmlkZS1i
-eS16ZXJvIGlzc3VlLgogCSAqLwotCWlmIChiYXNlX3NpemUgKiAoTUFYX1NDT1JFLW1pbmltdW1f
-c2NvcmUpIDwgZGVsdGFfc2l6ZSAqIE1BWF9TQ09SRSkKKwlpZiAobWF4X3NpemUgKiAoTUFYX1ND
-T1JFLW1pbmltdW1fc2NvcmUpIDwgZGVsdGFfc2l6ZSAqIE1BWF9TQ09SRSkKIAkJcmV0dXJuIDA7
-CiAKIAlpZiAoIXNyYy0+Y250X2RhdGEgJiYgZGlmZl9wb3B1bGF0ZV9maWxlc3BlYyhzcmMsIDAp
-KQpAQCAtMjQ3LDcgKzI0Nyw3IEBAIHN0cnVjdCBmaWxlX3NpbWlsYXJpdHkgewogfTsKIAogc3Rh
-dGljIGludCBmaW5kX2lkZW50aWNhbF9maWxlcyhzdHJ1Y3QgZmlsZV9zaW1pbGFyaXR5ICpzcmMs
-Ci0JCQkJc3RydWN0IGZpbGVfc2ltaWxhcml0eSAqZHN0KQorCQkJCXN0cnVjdCBmaWxlX3NpbWls
-YXJpdHkgKmRzdCwgaW50IGNvcGllcykKIHsKIAlpbnQgcmVuYW1lcyA9IDA7CiAKQEAgLTI3Nyw2
-ICsyNzcsOCBAQCBzdGF0aWMgaW50IGZpbmRfaWRlbnRpY2FsX2ZpbGVzKHN0cnVjdCBmaWxlX3Np
-bWlsYXJpdHkgKnNyYywKIAkJCX0KIAkJCS8qIEdpdmUgaGlnaGVyIHNjb3JlcyB0byBzb3VyY2Vz
-IHRoYXQgaGF2ZW4ndCBiZWVuIHVzZWQgYWxyZWFkeSAqLwogCQkJc2NvcmUgPSAhc291cmNlLT5y
-ZW5hbWVfdXNlZDsKKwkJCWlmIChzb3VyY2UtPnJlbmFtZV91c2VkICYmICFjb3BpZXMpCisJCQkJ
-Y29udGludWU7CiAJCQlzY29yZSArPSBiYXNlbmFtZV9zYW1lKHNvdXJjZSwgdGFyZ2V0KTsKIAkJ
-CWlmIChzY29yZSA+IGJlc3Rfc2NvcmUpIHsKIAkJCQliZXN0ID0gcDsKQEAgLTMwNiw3ICszMDgs
-NyBAQCBzdGF0aWMgdm9pZCBmcmVlX3NpbWlsYXJpdHlfbGlzdChzdHJ1Y3QgZmlsZV9zaW1pbGFy
-aXR5ICpwKQogCX0KIH0KIAotc3RhdGljIGludCBmaW5kX3NhbWVfZmlsZXModm9pZCAqcHRyKQor
-c3RhdGljIGludCBmaW5kX3NhbWVfZmlsZXModm9pZCAqcHRyLCBpbnQgY29waWVzKQogewogCWlu
-dCByZXQ7CiAJc3RydWN0IGZpbGVfc2ltaWxhcml0eSAqcCA9IHB0cjsKQEAgLTMyOSw3ICszMzEs
-NyBAQCBzdGF0aWMgaW50IGZpbmRfc2FtZV9maWxlcyh2b2lkICpwdHIpCiAJICogSWYgd2UgaGF2
-ZSBib3RoIHNvdXJjZXMgKmFuZCogZGVzdGluYXRpb25zLCBzZWUgaWYKIAkgKiB3ZSBjYW4gbWF0
-Y2ggdGhlbSB1cAogCSAqLwotCXJldCA9IChzcmMgJiYgZHN0KSA/IGZpbmRfaWRlbnRpY2FsX2Zp
-bGVzKHNyYywgZHN0KSA6IDA7CisJcmV0ID0gKHNyYyAmJiBkc3QpID8gZmluZF9pZGVudGljYWxf
-ZmlsZXMoc3JjLCBkc3QsIGNvcGllcykgOiAwOwogCiAJLyogRnJlZSB0aGUgaGFzaGVzIGFuZCBy
-ZXR1cm4gdGhlIG51bWJlciBvZiByZW5hbWVzIGZvdW5kICovCiAJZnJlZV9zaW1pbGFyaXR5X2xp
-c3Qoc3JjKTsKQEAgLTM3Nyw3ICszNzksNyBAQCBzdGF0aWMgdm9pZCBpbnNlcnRfZmlsZV90YWJs
-ZShzdHJ1Y3QgaGFzaF90YWJsZSAqdGFibGUsIGludCBzcmNfZHN0LCBpbnQgaW5kZXgsCiAgKiBh
-bmQgdGhlbiBkdXJpbmcgdGhlIHNlY29uZCByb3VuZCB3ZSB0cnkgdG8gbWF0Y2gKICAqIGNhY2hl
-LWRpcnR5IGVudHJpZXMgYXMgd2VsbC4KICAqLwotc3RhdGljIGludCBmaW5kX2V4YWN0X3JlbmFt
-ZXModm9pZCkKK3N0YXRpYyBpbnQgZmluZF9leGFjdF9yZW5hbWVzKGludCBjb3BpZXMpCiB7CiAJ
-aW50IGk7CiAJc3RydWN0IGhhc2hfdGFibGUgZmlsZV90YWJsZTsKQEAgLTM5MCw3ICszOTIsNyBA
-QCBzdGF0aWMgaW50IGZpbmRfZXhhY3RfcmVuYW1lcyh2b2lkKQogCQlpbnNlcnRfZmlsZV90YWJs
-ZSgmZmlsZV90YWJsZSwgMSwgaSwgcmVuYW1lX2RzdFtpXS50d28pOwogCiAJLyogRmluZCB0aGUg
-cmVuYW1lcyAqLwotCWkgPSBmb3JfZWFjaF9oYXNoKCZmaWxlX3RhYmxlLCBmaW5kX3NhbWVfZmls
-ZXMpOworCWkgPSBmb3JfZWFjaF9oYXNoKCZmaWxlX3RhYmxlLCBmaW5kX3NhbWVfZmlsZXMsIGNv
-cGllcyk7CiAKIAkvKiAuLiBhbmQgZnJlZSB0aGUgaGFzaCBkYXRhIHN0cnVjdHVyZSAqLwogCWZy
-ZWVfaGFzaCgmZmlsZV90YWJsZSk7CkBAIC00NjcsNyArNDY5LDcgQEAgdm9pZCBkaWZmY29yZV9y
-ZW5hbWUoc3RydWN0IGRpZmZfb3B0aW9ucyAqb3B0aW9ucykKIAkgKiBXZSByZWFsbHkgd2FudCB0
-byBjdWxsIHRoZSBjYW5kaWRhdGVzIGxpc3QgZWFybHkKIAkgKiB3aXRoIGNoZWFwIHRlc3RzIGlu
-IG9yZGVyIHRvIGF2b2lkIGRvaW5nIGRlbHRhcy4KIAkgKi8KLQlyZW5hbWVfY291bnQgPSBmaW5k
-X2V4YWN0X3JlbmFtZXMoKTsKKwlyZW5hbWVfY291bnQgPSBmaW5kX2V4YWN0X3JlbmFtZXMoZGV0
-ZWN0X3JlbmFtZSA9PSBESUZGX0RFVEVDVF9DT1BZKTsKIAogCS8qIERpZCB3ZSBvbmx5IHdhbnQg
-ZXhhY3QgcmVuYW1lcz8gKi8KIAlpZiAobWluaW11bV9zY29yZSA9PSBNQVhfU0NPUkUpCkBAIC01
-NTEsNiArNTUzLDcgQEAgdm9pZCBkaWZmY29yZV9yZW5hbWUoc3RydWN0IGRpZmZfb3B0aW9ucyAq
-b3B0aW9ucykKIAkJcmVuYW1lX2NvdW50Kys7CiAJfQogCisJaWYgKGRldGVjdF9yZW5hbWUgPT0g
-RElGRl9ERVRFQ1RfQ09QWSkKIAlmb3IgKGkgPSAwOyBpIDwgZHN0X2NudCAqIE5VTV9DQU5ESURB
-VEVfUEVSX0RTVDsgaSsrKSB7CiAJCXN0cnVjdCBkaWZmX3JlbmFtZV9kc3QgKmRzdDsKIApkaWZm
-IC0tZ2l0IGEvaGFzaC5jIGIvaGFzaC5jCmluZGV4IDFjZDRjOWQuLmM1ZGQwMDIgMTAwNjQ0Ci0t
-LSBhL2hhc2guYworKysgYi9oYXNoLmMKQEAgLTgxLDcgKzgxLDcgQEAgdm9pZCAqKmluc2VydF9o
-YXNoKHVuc2lnbmVkIGludCBoYXNoLCB2b2lkICpwdHIsIHN0cnVjdCBoYXNoX3RhYmxlICp0YWJs
-ZSkKIAlyZXR1cm4gaW5zZXJ0X2hhc2hfZW50cnkoaGFzaCwgcHRyLCB0YWJsZSk7CiB9CiAKLWlu
-dCBmb3JfZWFjaF9oYXNoKGNvbnN0IHN0cnVjdCBoYXNoX3RhYmxlICp0YWJsZSwgaW50ICgqZm4p
-KHZvaWQgKikpCitpbnQgZm9yX2VhY2hfaGFzaChjb25zdCBzdHJ1Y3QgaGFzaF90YWJsZSAqdGFi
-bGUsIGludCAoKmZuKSh2b2lkICosIGludCksIGludCBmbGFnKQogewogCWludCBzdW0gPSAwOwog
-CXVuc2lnbmVkIGludCBpOwpAQCAtOTIsNyArOTIsNyBAQCBpbnQgZm9yX2VhY2hfaGFzaChjb25z
-dCBzdHJ1Y3QgaGFzaF90YWJsZSAqdGFibGUsIGludCAoKmZuKSh2b2lkICopKQogCQl2b2lkICpw
-dHIgPSBhcnJheS0+cHRyOwogCQlhcnJheSsrOwogCQlpZiAocHRyKSB7Ci0JCQlpbnQgdmFsID0g
-Zm4ocHRyKTsKKwkJCWludCB2YWwgPSBmbihwdHIsIGZsYWcpOwogCQkJaWYgKHZhbCA8IDApCiAJ
-CQkJcmV0dXJuIHZhbDsKIAkJCXN1bSArPSB2YWw7CmRpZmYgLS1naXQgYS9oYXNoLmggYi9oYXNo
-LmgKaW5kZXggNjllMzNhNC4uMWUyZGU1NSAxMDA2NDQKLS0tIGEvaGFzaC5oCisrKyBiL2hhc2gu
-aApAQCAtMzAsNyArMzAsNyBAQCBzdHJ1Y3QgaGFzaF90YWJsZSB7CiAKIGV4dGVybiB2b2lkICps
-b29rdXBfaGFzaCh1bnNpZ25lZCBpbnQgaGFzaCwgY29uc3Qgc3RydWN0IGhhc2hfdGFibGUgKnRh
-YmxlKTsKIGV4dGVybiB2b2lkICoqaW5zZXJ0X2hhc2godW5zaWduZWQgaW50IGhhc2gsIHZvaWQg
-KnB0ciwgc3RydWN0IGhhc2hfdGFibGUgKnRhYmxlKTsKLWV4dGVybiBpbnQgZm9yX2VhY2hfaGFz
-aChjb25zdCBzdHJ1Y3QgaGFzaF90YWJsZSAqdGFibGUsIGludCAoKmZuKSh2b2lkICopKTsKK2V4
-dGVybiBpbnQgZm9yX2VhY2hfaGFzaChjb25zdCBzdHJ1Y3QgaGFzaF90YWJsZSAqdGFibGUsIGlu
-dCAoKmZuKSh2b2lkICosIGludCksIGludCBmbGFnKTsKIGV4dGVybiB2b2lkIGZyZWVfaGFzaChz
-dHJ1Y3QgaGFzaF90YWJsZSAqdGFibGUpOwogCiBzdGF0aWMgaW5saW5lIHZvaWQgaW5pdF9oYXNo
-KHN0cnVjdCBoYXNoX3RhYmxlICp0YWJsZSkKZGlmZiAtLWdpdCBhL3QvdDQwMDgtZGlmZi1icmVh
-ay1yZXdyaXRlLnNoIGIvdC90NDAwOC1kaWZmLWJyZWFrLXJld3JpdGUuc2gKaW5kZXggZDc5ZDll
-MWUuLjczYjRhMjQgMTAwNzU1Ci0tLSBhL3QvdDQwMDgtZGlmZi1icmVhay1yZXdyaXRlLnNoCisr
-KyBiL3QvdDQwMDgtZGlmZi1icmVhay1yZXdyaXRlLnNoCkBAIC0xNzMsOCArMTczLDggQEAgdGVz
-dF9leHBlY3Rfc3VjY2VzcyBcCiAgICAgJ2NvbXBhcmVfZGlmZl9yYXcgZXhwZWN0ZWQgY3VycmVu
-dCcKIAogdGVzdF9leHBlY3Rfc3VjY2VzcyBcCi0gICAgJ3J1biBkaWZmIHdpdGggLUIgLU0nIFwK
-LSAgICAnZ2l0IGRpZmYtaW5kZXggLUIgLU0gIiR0cmVlIiA+Y3VycmVudCcKKyAgICAncnVuIGRp
-ZmYgd2l0aCAtQiAtQycgXAorICAgICdnaXQgZGlmZi1pbmRleCAtQiAtQyAiJHRyZWUiID5jdXJy
-ZW50JwogCiBjYXQgPmV4cGVjdGVkIDw8XEVPRgogOjEwMDY0NCAxMDA2NDQgZjVkZWFjN2JlNTll
-N2VlYWI4NjU3ZmQ5YWU3MDZmZDZhNTdkYWVkMiAwOGJiMmZiNjcxZGVmZjRjMDNhNGQ0YTBhMTMx
-NWRmZjk4ZDU3MzJjIEMwOTUJZmlsZTAJZmlsZTEK
---90e6ba4fc23c4a9942049c983495--
+Thanks,
+Jesse
