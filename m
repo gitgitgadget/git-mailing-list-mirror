@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 06/72] gettextize: git-clone basic messages
-Date: Sat, 19 Feb 2011 19:23:49 +0000
-Message-ID: <1298143495-3681-7-git-send-email-avarab@gmail.com>
+Subject: [PATCH 07/72] gettextize: git-clone "Cloning into" message
+Date: Sat, 19 Feb 2011 19:23:50 +0000
+Message-ID: <1298143495-3681-8-git-send-email-avarab@gmail.com>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,270 +11,97 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 19 20:25:43 2011
+X-From: git-owner@vger.kernel.org Sat Feb 19 20:26:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqsR4-0001pR-R9
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:25:43 +0100
+	id 1PqsRL-00021o-8g
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:25:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755850Ab1BSTZj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:25:39 -0500
+	id S1755853Ab1BSTZy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:25:54 -0500
 Received: from mail-ey0-f174.google.com ([209.85.215.174]:41634 "EHLO
 	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755484Ab1BSTZe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 14:25:34 -0500
+	with ESMTP id S1755484Ab1BSTZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 14:25:54 -0500
 Received: by mail-ey0-f174.google.com with SMTP id 27so2346667eye.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:25:34 -0800 (PST)
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:25:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=JeJv6kB8wEzYPg7OFos4Mnb2/cBwn9m5ffZq147EGoI=;
-        b=rwUXY2VXxZvQzQm3uVLUM8DNeFemsVSrMak0FCH+HKmJkrPPahYOm1JnYyWUL/FSwl
-         kbpc2T/EdsUeGOhe7ELHuYEZUBPRESDAKDNFQq6JLYprT3jihCxnrq+pQ8VJfwKFPiZa
-         pOAg+liJJB+F/vqOpk02SgR9fhMVeosFwZh48=
+        bh=/9mTW/Fw+UMgxQaSdgcM5gYC6LCoScAQI1tnCOksVIQ=;
+        b=HsybVhUNjecKNt0l98M6aj3das1D8RF897zA06+8uGRYAEY3AQb2uC+jnPi3it72qJ
+         JQcKZRsVwf92x38d9Ck9BfYXAXrOTZm2g/2Q4KYSOjQXpGa0tVKPsoypX8blX6abm0jx
+         RubjZsbmjTca6N+FhjQzrXnSwlSSQrZkU0SOY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=xZuoxZhuGIwrqj1rv8PTroi/PS3OG/mQ+h8RURzFzybNKxXxHb4vo63v+aLPsLfRiz
-         sxGNpmOXeBI90x/smuq4dSrp5PK5hDTIvhl4r/KZB5+PGrEaAm/mtiXj0lqLCZZo07uJ
-         QG0wWGzfvBJ3FwJOcHdPdWp08FUHeL5gj4gkU=
-Received: by 10.213.13.10 with SMTP id z10mr2527670ebz.30.1298143534073;
-        Sat, 19 Feb 2011 11:25:34 -0800 (PST)
+        b=TyvQpVFDuflcgqXfx4IUBdRH4aRG6TKPs74IdtS7/eixQ/hEpdVFCkTJ7BSgG0Dezo
+         QZyWlaKPBk/l4paxFfrKvyITk/McWbv1UE9dDwXJjNEBTj7uJFJ9rlFgdl5vCD7B+Io6
+         SLMCt3SuH1D/vadDgIfoEIMjL4L5pickP7MJU=
+Received: by 10.14.120.142 with SMTP id p14mr2426351eeh.13.1298143553363;
+        Sat, 19 Feb 2011 11:25:53 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.25.32
+        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.25.52
         (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 11:25:32 -0800 (PST)
+        Sat, 19 Feb 2011 11:25:52 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167314>
+
+Split up the "Cloning into %s" and "Cloning into bare repository %s"
+messages to make them easier to translate.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/clone.c |   54 +++++++++++++++++++++++++++--------------------=
--------
- 1 files changed, 27 insertions(+), 27 deletions(-)
+ builtin/clone.c  |    9 ++++++---
+ t/t5601-clone.sh |    2 +-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 60d9a64..f46d09b 100644
+index f46d09b..dffcf80 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -208,7 +208,7 @@ static void setup_reference(const char *repo)
- 	if (is_directory(mkpath("%s/.git/objects", ref_git)))
- 		ref_git =3D mkpath("%s/.git", ref_git);
- 	else if (!is_directory(mkpath("%s/objects", ref_git)))
--		die("reference repository '%s' is not a local directory.",
-+		die(_("reference repository '%s' is not a local directory."),
- 		    option_reference);
-=20
- 	ref_git_copy =3D xstrdup(ref_git);
-@@ -235,15 +235,15 @@ static void copy_or_link_directory(struct strbuf =
-*src, struct strbuf *dest)
-=20
- 	dir =3D opendir(src->buf);
- 	if (!dir)
--		die_errno("failed to open '%s'", src->buf);
-+		die_errno(_("failed to open '%s'"), src->buf);
-=20
- 	if (mkdir(dest->buf, 0777)) {
- 		if (errno !=3D EEXIST)
--			die_errno("failed to create directory '%s'", dest->buf);
-+			die_errno(_("failed to create directory '%s'"), dest->buf);
- 		else if (stat(dest->buf, &buf))
--			die_errno("failed to stat '%s'", dest->buf);
-+			die_errno(_("failed to stat '%s'"), dest->buf);
- 		else if (!S_ISDIR(buf.st_mode))
--			die("%s exists and is not a directory", dest->buf);
-+			die(_("%s exists and is not a directory"), dest->buf);
- 	}
-=20
- 	strbuf_addch(src, '/');
-@@ -257,7 +257,7 @@ static void copy_or_link_directory(struct strbuf *s=
-rc, struct strbuf *dest)
- 		strbuf_setlen(dest, dest_len);
- 		strbuf_addstr(dest, de->d_name);
- 		if (stat(src->buf, &buf)) {
--			warning ("failed to stat %s\n", src->buf);
-+			warning (_("failed to stat %s\n"), src->buf);
- 			continue;
- 		}
- 		if (S_ISDIR(buf.st_mode)) {
-@@ -267,16 +267,16 @@ static void copy_or_link_directory(struct strbuf =
-*src, struct strbuf *dest)
- 		}
-=20
- 		if (unlink(dest->buf) && errno !=3D ENOENT)
--			die_errno("failed to unlink '%s'", dest->buf);
-+			die_errno(_("failed to unlink '%s'"), dest->buf);
- 		if (!option_no_hardlinks) {
- 			if (!link(src->buf, dest->buf))
- 				continue;
- 			if (option_local)
--				die_errno("failed to create link '%s'", dest->buf);
-+				die_errno(_("failed to create link '%s'"), dest->buf);
- 			option_no_hardlinks =3D 1;
- 		}
- 		if (copy_file_with_time(dest->buf, src->buf, 0666))
--			die_errno("failed to copy file to '%s'", dest->buf);
-+			die_errno(_("failed to copy file to '%s'"), dest->buf);
- 	}
- 	closedir(dir);
- }
-@@ -305,7 +305,7 @@ static const struct ref *clone_local(const char *sr=
-c_repo,
- 	ret =3D transport_get_remote_refs(transport);
- 	transport_disconnect(transport);
- 	if (0 <=3D option_verbosity)
--		printf("done.\n");
-+		printf(_("done.\n"));
- 	return ret;
- }
-=20
-@@ -387,11 +387,11 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
- 			     builtin_clone_usage, 0);
-=20
- 	if (argc > 2)
--		usage_msg_opt("Too many arguments.",
-+		usage_msg_opt(_("Too many arguments."),
- 			builtin_clone_usage, builtin_clone_options);
-=20
- 	if (argc =3D=3D 0)
--		usage_msg_opt("You must specify a repository to clone.",
-+		usage_msg_opt(_("You must specify a repository to clone."),
- 			builtin_clone_usage, builtin_clone_options);
-=20
- 	if (option_mirror)
-@@ -399,7 +399,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
-=20
- 	if (option_bare) {
- 		if (option_origin)
--			die("--bare and --origin %s options are incompatible.",
-+			die(_("--bare and --origin %s options are incompatible."),
- 			    option_origin);
- 		option_no_checkout =3D 1;
- 	}
-@@ -418,7 +418,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 		repo =3D repo_name;
- 	is_local =3D path && !is_bundle;
- 	if (is_local && option_depth)
--		warning("--depth is ignored in local clones; use file:// instead.");
-+		warning(_("--depth is ignored in local clones; use file:// instead."=
-));
-=20
- 	if (argc =3D=3D 2)
- 		dir =3D xstrdup(argv[1]);
-@@ -428,8 +428,8 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
-=20
- 	dest_exists =3D !stat(dir, &buf);
- 	if (dest_exists && !is_empty_dir(dir))
--		die("destination path '%s' already exists and is not "
--			"an empty directory.", dir);
-+		die(_("destination path '%s' already exists and is not "
-+			"an empty directory."), dir);
-=20
- 	strbuf_addf(&reflog_msg, "clone: from %s", repo);
-=20
-@@ -438,7 +438,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 	else {
- 		work_tree =3D getenv("GIT_WORK_TREE");
- 		if (work_tree && !stat(work_tree, &buf))
--			die("working tree '%s' already exists.", work_tree);
-+			die(_("working tree '%s' already exists."), work_tree);
- 	}
-=20
- 	if (option_bare || work_tree)
-@@ -451,10 +451,10 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
- 	if (!option_bare) {
- 		junk_work_tree =3D work_tree;
- 		if (safe_create_leading_directories_const(work_tree) < 0)
--			die_errno("could not create leading directories of '%s'",
-+			die_errno(_("could not create leading directories of '%s'"),
- 				  work_tree);
- 		if (!dest_exists && mkdir(work_tree, 0755))
--			die_errno("could not create work tree dir '%s'.",
-+			die_errno(_("could not create work tree dir '%s'."),
- 				  work_tree);
- 		set_git_work_tree(work_tree);
- 	}
-@@ -465,7 +465,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 	setenv(CONFIG_ENVIRONMENT, mkpath("%s/config", git_dir), 1);
-=20
- 	if (safe_create_leading_directories_const(git_dir) < 0)
--		die("could not create leading directories of '%s'", git_dir);
-+		die(_("could not create leading directories of '%s'"), git_dir);
+@@ -468,9 +468,12 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 		die(_("could not create leading directories of '%s'"), git_dir);
  	set_git_dir(make_absolute_path(git_dir));
 =20
- 	if (0 <=3D option_verbosity)
-@@ -527,7 +527,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 		transport =3D transport_get(remote, remote->url[0]);
+-	if (0 <=3D option_verbosity)
+-		printf("Cloning into %s%s...\n",
+-		       option_bare ? "bare repository " : "", dir);
++	if (0 <=3D option_verbosity) {
++		if (option_bare)
++			printf(_("Cloning into bare repository %s\n"), dir);
++		else
++			printf(_("Cloning into %s\n"), dir);
++	}
+ 	init_db(option_template, INIT_DB_QUIET);
 =20
- 		if (!transport->get_refs_list || !transport->fetch)
--			die("Don't know how to clone %s", transport->url);
-+			die(_("Don't know how to clone %s"), transport->url);
+ 	/*
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 987e0c8..ecb499d 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -31,7 +31,7 @@ test_expect_success 'clone with excess parameters (2)=
+' '
 =20
- 		transport_set_option(transport, TRANS_OPT_KEEP, "yes");
+ '
 =20
-@@ -566,8 +566,8 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 			strbuf_release(&head);
-=20
- 			if (!our_head_points_at) {
--				warning("Remote branch %s not found in "
--					"upstream %s, using HEAD instead",
-+				warning(_("Remote branch %s not found in "
-+					"upstream %s, using HEAD instead"),
- 					option_branch, option_origin);
- 				our_head_points_at =3D remote_head_points_at;
- 			}
-@@ -576,7 +576,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 			our_head_points_at =3D remote_head_points_at;
- 	}
- 	else {
--		warning("You appear to have cloned an empty repository.");
-+		warning(_("You appear to have cloned an empty repository."));
- 		our_head_points_at =3D NULL;
- 		remote_head_points_at =3D NULL;
- 		remote_head =3D NULL;
-@@ -618,8 +618,8 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 	} else {
- 		/* Nothing to checkout out */
- 		if (!option_no_checkout)
--			warning("remote HEAD refers to nonexistent ref, "
--				"unable to checkout.\n");
-+			warning(_("remote HEAD refers to nonexistent ref, "
-+				"unable to checkout.\n"));
- 		option_no_checkout =3D 1;
- 	}
-=20
-@@ -655,7 +655,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
-=20
- 		if (write_cache(fd, active_cache, active_nr) ||
- 		    commit_locked_index(lock_file))
--			die("unable to write new index file");
-+			die(_("unable to write new index file"));
-=20
- 		err |=3D run_hook(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 				sha1_to_hex(our_head_points_at->old_sha1), "1",
+-test_expect_success 'output from clone' '
++test_expect_success NO_GETTEXT_POISON 'output from clone' '
+ 	rm -fr dst &&
+ 	git clone -n "file://$(pwd)/src" dst >output &&
+ 	test $(grep Clon output | wc -l) =3D 1
 --=20
 1.7.2.3
