@@ -1,84 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
-Date: Fri, 18 Feb 2011 18:50:30 -0600
-Message-ID: <20110219005030.GB27316@elie>
-References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
- <1297304069-14764-1-git-send-email-pclouds@gmail.com>
- <20110218022701.GA23435@elie>
- <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
- <20110218092518.GB30648@elie>
- <4D5F0A7C.1080507@gmail.com>
- <7v39nkooem.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merging limitations after directory renames -- interesting test
+ repo
+Date: Fri, 18 Feb 2011 16:52:34 -0800
+Message-ID: <7vsjvkn8vh.fsf@alter.siamese.dyndns.org>
+References: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com>
+ <20110218222151.GB4258@sigill.intra.peff.net>
+ <AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com>
+ <AANLkTimuU4A7sUqo-dpW3ch4H_WJg+G2ynNmagx=C9t8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 19 01:50:44 2011
+Cc: Jeff King <peff@peff.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Feb 19 01:52:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pqb22-0002Qo-8l
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 01:50:42 +0100
+	id 1Pqb47-0003R4-97
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 01:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199Ab1BSAui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 19:50:38 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38744 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752942Ab1BSAug (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 19:50:36 -0500
-Received: by iwn8 with SMTP id 8so8457iwn.19
-        for <git@vger.kernel.org>; Fri, 18 Feb 2011 16:50:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=bXNNbUNP/ykhQ8iojSt8LFA6uESkF129h2wq2CqJOF0=;
-        b=Ki8PNuYYlEurtX4HAQV8Mf1Ia6wqXHKSE5RGkruZQWy5Dr9az2W/bdm9n+BmCMriCL
-         8ygDaKc3xnAfTnUE4zfoRUuWBgZmbnsXnaobyYDlrvWgUjkk5iQ6CpozSgWWRhaQeTJz
-         708cAIPM3fkEESZ80rpm5mfOq4R1LgT/u/1Ew=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=j6dlSN9/wfEbqhigAQBbuo9t2fJFq0Ok5iE1xwK6iXU4igRGHtkLY9zIzKmGVuPnt9
-         ZaZPAPFdfuxW9fQdZEk/iq/evpHePrqEJ2z/6KF61omuyN6CoW5eplv32HPuMn/XK+Zi
-         hngCyFWI/TcOUQ+dWPA1H5Wex9ZL81lR4Rlfw=
-Received: by 10.231.11.68 with SMTP id s4mr1001324ibs.14.1298076636370;
-        Fri, 18 Feb 2011 16:50:36 -0800 (PST)
-Received: from elie (adsl-69-209-72-148.dsl.chcgil.ameritech.net [69.209.72.148])
-        by mx.google.com with ESMTPS id 8sm2202434iba.22.2011.02.18.16.50.34
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Feb 2011 16:50:35 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v39nkooem.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752931Ab1BSAwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 19:52:47 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52365 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751118Ab1BSAwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Feb 2011 19:52:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D87DA3760;
+	Fri, 18 Feb 2011 19:53:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Swvo8XZ3BTtRoYXgzixxXeZh2Vs=; b=mj/jdY
+	9lKykFFbyJnAWcaZy3MEx2IaRlDojPTma/rLeO5xizyWnWj9MVG/hroJOYBbFz3K
+	hS1V0BttxN6jsL2+iUk+X4BLUtINud8jUL6SkUvnhnTciJOvpIUBqVnEsZKPoSeD
+	WcpPXPJhPo4XEbICS+8qTHi8vgXprzkk+/tP4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b2l/1/WsVZ4S8dpcaacdYzPntpWsGcFq
+	TLJV6vTMJRoc8pIK74lw0sdWEx6Lzb5uMDsEtUTgs3lqaK7SL+Z0rTrlm2CH0nZj
+	T0O+c4E2MgLnqCTvD1ueV80uv2DRgn2tbrIfif3S25q0PjALF644Gg6TzJJ541dU
+	+fPeFpS8rlw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 91113375F;
+	Fri, 18 Feb 2011 19:53:49 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 51F44375E; Fri, 18 Feb 2011
+ 19:53:44 -0500 (EST)
+In-Reply-To: <AANLkTimuU4A7sUqo-dpW3ch4H_WJg+G2ynNmagx=C9t8@mail.gmail.com>
+ (Linus Torvalds's message of "Fri\, 18 Feb 2011 16\:26\:14 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B6A8F778-3BC2-11E0-9218-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167241>
 
-Junio C Hamano wrote:
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->> - build result - objects, final binaries, generated documentation etc 
->>   The advantage besides unclutterting is possibility to have sources on
->>   read-only medium.
->
-> This is somewhere between a meh to mild nak.  "git grep" knows to ignore
-> untracked cruft, so this does not help nor hinder "finding" at all. Even
-> though I personally tend to value seeing frotz.o sitting immediately next
-> to frotz.c, some people may value read-only source tree more than that.
+> And the bug is that we didn't even ask for copy detection! This just
+> confuses merging more.
 
-At the risk of becoming repetitive: it is quite possible for make to
-take an O=elsewhere/ parameter to support both types.
-
-I am also in the camp of preferring to see frotz.o next to frotz.c.
-After editing frotz.c, I can do "make frotz.o" to make sure it still
-compiles.
+Yeah, I think it is probably a good idea to really limit the rename
+detection only to renames at least inside merge-recursive.  The static
+variable does look ugly but it shouldn't be a rocket surgery to pass it
+down if we want to.
