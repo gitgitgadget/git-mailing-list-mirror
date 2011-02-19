@@ -1,82 +1,113 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 2/3] gitweb/gitweb.perl: remove use of qw(...) as parentheses
-Date: Sat, 19 Feb 2011 17:02:29 +0100
-Message-ID: <201102191702.29648.jnareb@gmail.com>
-References: <1298124654-12051-1-git-send-email-avarab@gmail.com> <1298129262-10468-3-git-send-email-avarab@gmail.com> <201102191654.41601.jnareb@gmail.com>
+Subject: Re: [PATCH v2 3/3] gitweb/gitweb.perl: don't call S_ISREG() with undef
+Date: Sat, 19 Feb 2011 16:57:02 +0100
+Message-ID: <201102191657.02431.jnareb@gmail.com>
+References: <1298124654-12051-1-git-send-email-avarab@gmail.com> <1298129262-10468-4-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
 	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 19 17:02:43 2011
+X-From: git-owner@vger.kernel.org Sat Feb 19 17:05:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqpGc-0007Xg-Qt
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 17:02:43 +0100
+	id 1PqpJM-0000Zr-75
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 17:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751590Ab1BSQCi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 11:02:38 -0500
-Received: from mail-bw0-f52.google.com ([209.85.214.52]:47063 "EHLO
+	id S1753824Ab1BSQFM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 11:05:12 -0500
+Received: from mail-bw0-f52.google.com ([209.85.214.52]:38947 "EHLO
 	mail-bw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750977Ab1BSQCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 11:02:38 -0500
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Feb 2011 11:02:37 EST
-Received: by bwz4 with SMTP id 4so4404338bwz.11
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 08:02:37 -0800 (PST)
+	with ESMTP id S1753322Ab1BSQFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 11:05:09 -0500
+Received: by bwz4 with SMTP id 4so4406484bwz.11
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 08:05:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:subject:date:user-agent:cc:references
          :in-reply-to:mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        bh=UE5EfFQE+G4MttdEgEmurrB5jcMSFLqv33bDkTlaKCE=;
-        b=l8yr/rzuUX2TtygaACHiUekV51AaHJFGCqYOaS2W1rZrinXEiBbIJ+Vjgr0J5MHrty
-         aTYC7xY/ISKrG31Kiyl6Yu7BUmCShCexHfDGZVGtJekjrYzcKWpnQUtxhLmQJQH/eEd/
-         UV6QtyG8ePVmoZ5Htvdco7EjPOrjWW0WzxKgk=
+        bh=iwyvGUcJ5/q6fu0JEQaDTKqSgauiBbu5Ekk6CdN3HbU=;
+        b=eUhpm6Xi8Cr+T7HFY9LqURNyEDud/c765iBlTNB0pcnqukOfaeaYLo9108FIClJX18
+         HRBSC3llVt8cKCo58Z9TUpLBjpT1NcHEB5ZSz7vrW/dmRAgiybAppB7BKsQoHq+U+G+Y
+         5Fh7fdFE28V5gm5+BkfYg3mqxunUdmJdAZgXE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=JJrra+1rmRKhClxdlLLOz8JgoPpu7TYkjDO2G1nc8ECnt7mhZAwUOH8cboyoE/ae2J
-         sTzNQLWBkPRiRPP9IjcW48zpQTwdXjB12lfGi6/+i6E8R96hDdSaLVZolAbVXgAgEDB6
-         rJojzcyAotWXBUGXeFVogQCvf25j2obW/ggO8=
-Received: by 10.204.71.141 with SMTP id h13mr1780208bkj.180.1298131356918;
-        Sat, 19 Feb 2011 08:02:36 -0800 (PST)
+        b=FHzla7Dkv1GWO/8YuJ9ir+iviMPFfRl5MxVZxsTxasWtn7fWj9+cYA3RFROjOX/VBO
+         XnlawMCU+VOzS5pxwTnUuimv0fyQu9GuQxI7LmHeWqlR2JTXafu3qIeOR4NblNpqUlu5
+         ZT2Qum/DXLkHgX6pSaRK2ipjseXJwIfeI/y7Q=
+Received: by 10.204.76.65 with SMTP id b1mr1758055bkk.29.1298131029395;
+        Sat, 19 Feb 2011 07:57:09 -0800 (PST)
 Received: from [192.168.1.13] (abwm176.neoplus.adsl.tpnet.pl [83.8.236.176])
-        by mx.google.com with ESMTPS id v25sm2325907bkt.18.2011.02.19.08.02.35
+        by mx.google.com with ESMTPS id v25sm2326857bkt.6.2011.02.19.07.57.07
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 08:02:36 -0800 (PST)
+        Sat, 19 Feb 2011 07:57:08 -0800 (PST)
 User-Agent: KMail/1.9.3
-In-Reply-To: <201102191654.41601.jnareb@gmail.com>
+In-Reply-To: <1298129262-10468-4-git-send-email-avarab@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167296>
 
-Jakub Narebski wrote:
-> On Sat, 19 Feb 2011, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Sat, 19 Feb 2011, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> [...]
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -3501,7 +3501,7 @@ sub print_feed_meta {
-> >  			$href_params{'-title'} =3D 'log';
-> >  		}
-> > =20
-> > -		foreach my $format qw(RSS Atom) {
-> > +		foreach my $format (qw(RSS Atom)) {
-> >  			my $type =3D lc($format);
-> >  			my %link_attr =3D (
-> >  				'-rel' =3D> 'alternate',
+> Change S_ISREG($to_mode_oct) to S_ISREG($from_mode_oct) in the branch
+> that handles from modes, not to modes. This logic appears to have bee=
+n
+> caused by copy/paste programming by Jakub Narebski in e8e41a93. It
+> would be better to rewrite this code not to be duplicated, but I
+> haven't done so.
+>=20
+> This issue caused a failing test on perl 5.13.9, which has a warning
+> that turned this up:
+>=20
+>      gitweb.perl: Use of uninitialized value in subroutine entry at /=
+home/avar/g/git/t/../gitweb/gitweb.perl line 4415.
 
-Ah, sorry, if Perl reqyures to use 'foreach (@array)', then
-of course one should use 'forach (qw(A B))'.
+[...]
+> Reported-by: perl 5.13.9
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+
+Thanks for catching this.  I wonder why we didn't caught this earlier..=
+=2E
+
+
+=46or what it is worth it:
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+> ---
+>  gitweb/gitweb.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index b02372c..1b9369d 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -4412,7 +4412,7 @@ sub git_difftree_body {
+>  		}
+>  		if ($diff->{'from_mode'} ne ('0' x 6)) {
+>  			$from_mode_oct =3D oct $diff->{'from_mode'};
+> -			if (S_ISREG($to_mode_oct)) { # only for regular file
+> +			if (S_ISREG($from_mode_oct)) { # only for regular file
+>  				$from_mode_str =3D sprintf("%04o", $from_mode_oct & 0777); # per=
+mission bits
+>  			}
+>  			$from_file_type =3D file_type($diff->{'from_mode'});
+> --=20
+> 1.7.2.3
+>=20
+>=20
 
 --=20
 Jakub Narebski
