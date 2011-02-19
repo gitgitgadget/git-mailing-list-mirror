@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 63/72] gettextize: git-describe basic messages
-Date: Sat, 19 Feb 2011 19:24:46 +0000
-Message-ID: <1298143495-3681-64-git-send-email-avarab@gmail.com>
+Subject: [PATCH 49/72] gettextize: git-tag basic messages
+Date: Sat, 19 Feb 2011 19:24:32 +0000
+Message-ID: <1298143495-3681-50-git-send-email-avarab@gmail.com>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,186 +17,292 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqsTs-0003Eb-6u
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:28:36 +0100
+	id 1PqsTq-0003Eb-HJ
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:28:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756210Ab1BST22 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:28:28 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:41519 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756162Ab1BST2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 14:28:23 -0500
-Received: by ewy5 with SMTP id 5so1970574ewy.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:28:21 -0800 (PST)
+	id S1756159Ab1BST2S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:28:18 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:46654 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756110Ab1BST2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 14:28:08 -0500
+Received: by mail-ey0-f174.google.com with SMTP id 27so2347171eye.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:28:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=8Y084cNTgf0iYJlGmc8vzESRoSOWPb6u3cpT1a3P+ec=;
-        b=NJlTQS4hpVvKsz61rWrPoXSuRNmgbeuGfh2cztqUFDKgUspqHx2/2QksQ1ZSjKEHnS
-         3ZFmVfezd6qPlPksXCq7hjQ+QN8R4XLr9bbUd0rVsNyORCTzkFsMXwpHV6pfFLaP+Hty
-         nBOBJlvve2IL1rUimfz2yaY+ZGUnsfD1ryPJ4=
+        bh=8JwDvMRNtwaWOSnSOL2o1vEeha0Myiz8TpUuKrxn8Uw=;
+        b=SKUasWgTHNlHrzb+/5dXdAEGl1JZst1ATuJOosDn+Sp+g0Nd+pRBvutZOCStjTRhot
+         8S3jeeVB8H1IMvKrRXGhCoV8gP61v+FQIpvI8OOvnv74m8AXS5/SNJuW39/5zoKDMFD1
+         BKDaGqsVV/qfRo5Clky8SBMbXH8goTvnn4wmQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=eBbCxbtkvo3VIgz8u5jDT61Qcgl2dQsOm0YG92S8FidZfUe0l1iHAspr87jITC7xKB
-         Qu2nF6O1CexpZvRzc6YqDX/t26oItSBY5rC8rKTUnI6j8iGLtnHZd4kocCI/pynddPOv
-         kZy4nNlOrjfY1LkkVz3hcNz1bAIY3xWdPiQx0=
-Received: by 10.14.45.15 with SMTP id o15mr2417946eeb.46.1298143699845;
-        Sat, 19 Feb 2011 11:28:19 -0800 (PST)
+        b=Aed0as9Q/vpvngthj3sqH2A92bJsiDoYVhV7gim3ov4TYBmghThMI3C5Ol6zX4sCMS
+         KFmv6w+0i5xmHClMzuGYUwGLgMbwZOhhDFyeyXSmF8KCp3VVMFHd1xqMcm3VVVaNyN37
+         mTr7vViNhbz7xZKT0RHFpQoW9QW5Wv3zQU3qM=
+Received: by 10.213.10.207 with SMTP id q15mr2526137ebq.90.1298143687940;
+        Sat, 19 Feb 2011 11:28:07 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.28.19
+        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.28.07
         (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 11:28:19 -0800 (PST)
+        Sat, 19 Feb 2011 11:28:07 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167341>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/describe.c  |   36 ++++++++++++++++++------------------
- t/t6120-describe.sh |    2 +-
- 2 files changed, 19 insertions(+), 19 deletions(-)
+ builtin/tag.c |   60 ++++++++++++++++++++++++++++---------------------=
+-------
+ 1 files changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 342129f..037691e 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -231,13 +231,13 @@ static void display_name(struct commit_name *n)
- 	if (n->prio =3D=3D 2 && !n->tag) {
- 		n->tag =3D lookup_tag(n->sha1);
- 		if (!n->tag || parse_tag(n->tag))
--			die("annotated tag %s not available", n->path);
-+			die(_("annotated tag %s not available"), n->path);
- 	}
- 	if (n->tag && !n->name_checked) {
- 		if (!n->tag->tag)
--			die("annotated tag %s has no embedded name", n->path);
-+			die(_("annotated tag %s has no embedded name"), n->path);
- 		if (strcmp(n->tag->tag, all ? n->path + 5 : n->path))
--			warning("tag '%s' is really '%s' here", n->tag->tag, n->path);
-+			warning(_("tag '%s' is really '%s' here"), n->tag->tag, n->path);
- 		n->name_checked =3D 1;
- 	}
-=20
-@@ -264,10 +264,10 @@ static void describe(const char *arg, int last_on=
-e)
- 	unsigned int unannotated_cnt =3D 0;
-=20
- 	if (get_sha1(arg, sha1))
--		die("Not a valid object name %s", arg);
-+		die(_("Not a valid object name %s"), arg);
- 	cmit =3D lookup_commit_reference(sha1);
- 	if (!cmit)
--		die("%s is not a valid '%s' object", arg, commit_type);
-+		die(_("%s is not a valid '%s' object"), arg, commit_type);
-=20
- 	n =3D find_commit_name(cmit->object.sha1);
- 	if (n && (tags || all || n->prio =3D=3D 2)) {
-@@ -284,9 +284,9 @@ static void describe(const char *arg, int last_one)
- 	}
-=20
- 	if (!max_candidates)
--		die("no tag exactly matches '%s'", sha1_to_hex(cmit->object.sha1));
-+		die(_("no tag exactly matches '%s'"), sha1_to_hex(cmit->object.sha1)=
-);
- 	if (debug)
--		fprintf(stderr, "searching to describe %s\n", arg);
-+		fprintf(stderr, _("searching to describe %s\n"), arg);
-=20
- 	if (!have_util) {
- 		for_each_hash(&names, set_util);
-@@ -326,7 +326,7 @@ static void describe(const char *arg, int last_one)
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 246a2bc..4bed7c2 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -118,12 +118,12 @@ static int for_each_tag_name(const char **argv, e=
+ach_tag_name_fn fn)
+ 	for (p =3D argv; *p; p++) {
+ 		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
+ 					>=3D sizeof(ref)) {
+-			error("tag name too long: %.*s...", 50, *p);
++			error(_("tag name too long: %.*s..."), 50, *p);
+ 			had_error =3D 1;
+ 			continue;
  		}
- 		if (annotated_cnt && !list) {
- 			if (debug)
--				fprintf(stderr, "finished search at %s\n",
-+				fprintf(stderr, _("finished search at %s\n"),
- 					sha1_to_hex(c->object.sha1));
- 			break;
+ 		if (!resolve_ref(ref, sha1, 1, NULL)) {
+-			error("tag '%s' not found.", *p);
++			error(_("tag '%s' not found."), *p);
+ 			had_error =3D 1;
+ 			continue;
  		}
-@@ -350,12 +350,12 @@ static void describe(const char *arg, int last_on=
-e)
- 			return;
- 		}
- 		if (unannotated_cnt)
--			die("No annotated tags can describe '%s'.\n"
--			    "However, there were unannotated tags: try --tags.",
-+			die(_("No annotated tags can describe '%s'.\n"
-+			    "However, there were unannotated tags: try --tags."),
- 			    sha1_to_hex(sha1));
- 		else
--			die("No tags can describe '%s'.\n"
--			    "Try --always, or create some tags.",
-+			die(_("No tags can describe '%s'.\n"
-+			    "Try --always, or create some tags."),
- 			    sha1_to_hex(sha1));
- 	}
+@@ -138,7 +138,7 @@ static int delete_tag(const char *name, const char =
+*ref,
+ {
+ 	if (delete_ref(ref, sha1, 0))
+ 		return 1;
+-	printf("Deleted tag '%s' (was %s)\n", name, find_unique_abbrev(sha1, =
+DEFAULT_ABBREV));
++	printf(_("Deleted tag '%s' (was %s)\n"), name, find_unique_abbrev(sha=
+1, DEFAULT_ABBREV));
+ 	return 0;
+ }
 =20
-@@ -375,11 +375,11 @@ static void describe(const char *arg, int last_on=
-e)
- 				prio_names[t->name->prio],
- 				t->depth, t->name->path);
- 		}
--		fprintf(stderr, "traversed %lu commits\n", seen_commits);
-+		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
- 		if (gave_up_on) {
+@@ -150,7 +150,7 @@ static int verify_tag(const char *name, const char =
+*ref,
+ 	argv_verify_tag[2] =3D sha1_to_hex(sha1);
+=20
+ 	if (run_command_v_opt(argv_verify_tag, RUN_GIT_CMD))
+-		return error("could not verify the tag '%s'", name);
++		return error(_("could not verify the tag '%s'"), name);
+ 	return 0;
+ }
+=20
+@@ -165,7 +165,7 @@ static int do_sign(struct strbuf *buffer)
+ 	if (!*signingkey) {
+ 		if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
+ 				sizeof(signingkey)) > sizeof(signingkey) - 1)
+-			return error("committer info too long.");
++			return error(_("committer info too long."));
+ 		bracket =3D strchr(signingkey, '>');
+ 		if (bracket)
+ 			bracket[1] =3D '\0';
+@@ -185,20 +185,20 @@ static int do_sign(struct strbuf *buffer)
+ 	args[3] =3D NULL;
+=20
+ 	if (start_command(&gpg))
+-		return error("could not run gpg.");
++		return error(_("could not run gpg."));
+=20
+ 	if (write_in_full(gpg.in, buffer->buf, buffer->len) !=3D buffer->len)=
+ {
+ 		close(gpg.in);
+ 		close(gpg.out);
+ 		finish_command(&gpg);
+-		return error("gpg did not accept the tag data");
++		return error(_("gpg did not accept the tag data"));
+ 	}
+ 	close(gpg.in);
+ 	len =3D strbuf_read(buffer, gpg.out, 1024);
+ 	close(gpg.out);
+=20
+ 	if (finish_command(&gpg) || !len || len < 0)
+-		return error("gpg failed to sign the tag");
++		return error(_("gpg failed to sign the tag"));
+=20
+ 	/* Strip CR from the line endings, in case we are on Windows. */
+ 	for (i =3D j =3D 0; i < buffer->len; i++)
+@@ -221,7 +221,7 @@ static const char tag_template[] =3D
+ static void set_signingkey(const char *value)
+ {
+ 	if (strlcpy(signingkey, value, sizeof(signingkey)) >=3D sizeof(signin=
+gkey))
+-		die("signing key value too long (%.10s...)", value);
++		die(_("signing key value too long (%.10s...)"), value);
+ }
+=20
+ static int git_tag_config(const char *var, const char *value, void *cb=
+)
+@@ -261,9 +261,9 @@ static void write_tag_body(int fd, const unsigned c=
+har *sha1)
+ static int build_tag_object(struct strbuf *buf, int sign, unsigned cha=
+r *result)
+ {
+ 	if (sign && do_sign(buf) < 0)
+-		return error("unable to sign the tag");
++		return error(_("unable to sign the tag"));
+ 	if (write_sha1_file(buf->buf, buf->len, tag_type, result) < 0)
+-		return error("unable to write tag file");
++		return error(_("unable to write tag file"));
+ 	return 0;
+ }
+=20
+@@ -278,7 +278,7 @@ static void create_tag(const unsigned char *object,=
+ const char *tag,
+=20
+ 	type =3D sha1_object_info(object, NULL);
+ 	if (type <=3D OBJ_NONE)
+-	    die("bad object type.");
++	    die(_("bad object type."));
+=20
+ 	header_len =3D snprintf(header_buf, sizeof(header_buf),
+ 			  "object %s\n"
+@@ -291,7 +291,7 @@ static void create_tag(const unsigned char *object,=
+ const char *tag,
+ 			  git_committer_info(IDENT_ERROR_ON_NO_NAME));
+=20
+ 	if (header_len > sizeof(header_buf) - 1)
+-		die("tag header too big.");
++		die(_("tag header too big."));
+=20
+ 	if (!message) {
+ 		int fd;
+@@ -300,7 +300,7 @@ static void create_tag(const unsigned char *object,=
+ const char *tag,
+ 		path =3D git_pathdup("TAG_EDITMSG");
+ 		fd =3D open(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+ 		if (fd < 0)
+-			die_errno("could not create file '%s'", path);
++			die_errno(_("could not create file '%s'"), path);
+=20
+ 		if (!is_null_sha1(prev))
+ 			write_tag_body(fd, prev);
+@@ -310,7 +310,7 @@ static void create_tag(const unsigned char *object,=
+ const char *tag,
+=20
+ 		if (launch_editor(path, buf, NULL)) {
  			fprintf(stderr,
--				"more than %i tags found; listed %i most recent\n"
--				"gave up search at %s\n",
-+				_("more than %i tags found; listed %i most recent\n"
-+				"gave up search at %s\n"),
- 				max_candidates, max_candidates,
- 				sha1_to_hex(gave_up_on->object.sha1));
+-			"Please supply the message using either -m or -F option.\n");
++			_("Please supply the message using either -m or -F option.\n"));
+ 			exit(1);
  		}
-@@ -429,7 +429,7 @@ int cmd_describe(int argc, const char **argv, const=
- char *prefix)
- 	save_commit_buffer =3D 0;
+ 	}
+@@ -318,13 +318,13 @@ static void create_tag(const unsigned char *objec=
+t, const char *tag,
+ 	stripspace(buf, 1);
 =20
- 	if (longformat && abbrev =3D=3D 0)
--		die("--long is incompatible with --abbrev=3D0");
-+		die(_("--long is incompatible with --abbrev=3D0"));
+ 	if (!message && !buf->len)
+-		die("no tag message?");
++		die(_("no tag message?"));
 =20
- 	if (contains) {
- 		const char **args =3D xmalloc((7 + argc) * sizeof(char *));
-@@ -455,14 +455,14 @@ int cmd_describe(int argc, const char **argv, con=
-st char *prefix)
- 	init_hash(&names);
- 	for_each_rawref(get_name, NULL);
- 	if (!names.nr && !always)
--		die("No names found, cannot describe anything.");
-+		die(_("No names found, cannot describe anything."));
+ 	strbuf_insert(buf, 0, header_buf, header_len);
 =20
- 	if (argc =3D=3D 0) {
- 		if (dirty && !cmd_diff_index(ARRAY_SIZE(diff_index_args) - 1, diff_i=
-ndex_args, prefix))
- 			dirty =3D NULL;
- 		describe("HEAD", 1);
- 	} else if (dirty) {
--		die("--dirty is incompatible with committishes");
-+		die(_("--dirty is incompatible with committishes"));
- 	} else {
- 		while (argc-- > 0) {
- 			describe(*argv++, argc =3D=3D 0);
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 876d1ab..210b9a2 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -123,7 +123,7 @@ cat - >err.expect <<EOF
- warning: tag 'A' is really 'Q' here
- EOF
- check_describe A-* HEAD
--test_expect_success 'warning was displayed for Q' '
-+test_expect_success NO_GETTEXT_POISON 'warning was displayed for Q' '
- 	test_cmp err.expect err.actual
- '
- test_expect_success 'rename tag Q back to A' '
+ 	if (build_tag_object(buf, sign, result) < 0) {
+ 		if (path)
+-			fprintf(stderr, "The tag message has been left in %s\n",
++			fprintf(stderr, _("The tag message has been left in %s\n"),
+ 				path);
+ 		exit(128);
+ 	}
+@@ -417,9 +417,9 @@ int cmd_tag(int argc, const char **argv, const char=
+ *prefix)
+ 		return list_tags(argv[0], lines =3D=3D -1 ? 0 : lines,
+ 				 with_commit);
+ 	if (lines !=3D -1)
+-		die("-n option is only allowed with -l.");
++		die(_("-n option is only allowed with -l."));
+ 	if (with_commit)
+-		die("--contains option is only allowed with -l.");
++		die(_("--contains option is only allowed with -l."));
+ 	if (delete)
+ 		return for_each_tag_name(argv, delete_tag);
+ 	if (verify)
+@@ -427,17 +427,17 @@ int cmd_tag(int argc, const char **argv, const ch=
+ar *prefix)
+=20
+ 	if (msg.given || msgfile) {
+ 		if (msg.given && msgfile)
+-			die("only one -F or -m option is allowed.");
++			die(_("only one -F or -m option is allowed."));
+ 		annotate =3D 1;
+ 		if (msg.given)
+ 			strbuf_addbuf(&buf, &(msg.buf));
+ 		else {
+ 			if (!strcmp(msgfile, "-")) {
+ 				if (strbuf_read(&buf, 0, 1024) < 0)
+-					die_errno("cannot read '%s'", msgfile);
++					die_errno(_("cannot read '%s'"), msgfile);
+ 			} else {
+ 				if (strbuf_read_file(&buf, msgfile, 1024) < 0)
+-					die_errno("could not open or read '%s'",
++					die_errno(_("could not open or read '%s'"),
+ 						msgfile);
+ 			}
+ 		}
+@@ -447,20 +447,20 @@ int cmd_tag(int argc, const char **argv, const ch=
+ar *prefix)
+=20
+ 	object_ref =3D argc =3D=3D 2 ? argv[1] : "HEAD";
+ 	if (argc > 2)
+-		die("too many params");
++		die(_("too many params"));
+=20
+ 	if (get_sha1(object_ref, object))
+-		die("Failed to resolve '%s' as a valid ref.", object_ref);
++		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
+=20
+ 	if (snprintf(ref, sizeof(ref), "refs/tags/%s", tag) > sizeof(ref) - 1=
+)
+-		die("tag name too long: %.*s...", 50, tag);
++		die(_("tag name too long: %.*s..."), 50, tag);
+ 	if (check_ref_format(ref))
+-		die("'%s' is not a valid tag name.", tag);
++		die(_("'%s' is not a valid tag name."), tag);
+=20
+ 	if (!resolve_ref(ref, prev, 1, NULL))
+ 		hashclr(prev);
+ 	else if (!force)
+-		die("tag '%s' already exists", tag);
++		die(_("tag '%s' already exists"), tag);
+=20
+ 	if (annotate)
+ 		create_tag(object, tag, &buf, msg.given || msgfile,
+@@ -468,11 +468,11 @@ int cmd_tag(int argc, const char **argv, const ch=
+ar *prefix)
+=20
+ 	lock =3D lock_any_ref_for_update(ref, prev, 0);
+ 	if (!lock)
+-		die("%s: cannot lock the ref", ref);
++		die(_("%s: cannot lock the ref"), ref);
+ 	if (write_ref_sha1(lock, object, NULL) < 0)
+-		die("%s: cannot update the ref", ref);
++		die(_("%s: cannot update the ref"), ref);
+ 	if (force && hashcmp(prev, object))
+-		printf("Updated tag '%s' (was %s)\n", tag, find_unique_abbrev(prev, =
+DEFAULT_ABBREV));
++		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(pre=
+v, DEFAULT_ABBREV));
+=20
+ 	strbuf_release(&buf);
+ 	return 0;
 --=20
 1.7.2.3
