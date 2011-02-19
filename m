@@ -1,69 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC/PATCH 4/4] inexact rename detection eye candy
-Date: Sat, 19 Feb 2011 07:57:57 -0800
-Message-ID: <AANLkTik=pd3vVMERz=H3sp835Ft8OvrOzBE4PUS7vrO7@mail.gmail.com>
-References: <20110219101936.GB20577@sigill.intra.peff.net> <20110219102533.GD22508@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 2/3] gitweb/gitweb.perl: remove use of qw(...) as parentheses
+Date: Sat, 19 Feb 2011 17:02:29 +0100
+Message-ID: <201102191702.29648.jnareb@gmail.com>
+References: <1298124654-12051-1-git-send-email-avarab@gmail.com> <1298129262-10468-3-git-send-email-avarab@gmail.com> <201102191654.41601.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 19 16:58:53 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 19 17:02:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqpCt-0005j9-Te
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 16:58:52 +0100
+	id 1PqpGc-0007Xg-Qt
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 17:02:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458Ab1BSP6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Feb 2011 10:58:47 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38027 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750952Ab1BSP6r (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Feb 2011 10:58:47 -0500
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p1JFwHHb004206
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Sat, 19 Feb 2011 07:58:17 -0800
-Received: by iwn8 with SMTP id 8so442881iwn.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 07:58:17 -0800 (PST)
-Received: by 10.231.19.136 with SMTP id a8mr1489988ibb.73.1298131097080; Sat,
- 19 Feb 2011 07:58:17 -0800 (PST)
-Received: by 10.231.16.129 with HTTP; Sat, 19 Feb 2011 07:57:57 -0800 (PST)
-In-Reply-To: <20110219102533.GD22508@sigill.intra.peff.net>
-X-Spam-Status: No, hits=-103.461 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751590Ab1BSQCi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 11:02:38 -0500
+Received: from mail-bw0-f52.google.com ([209.85.214.52]:47063 "EHLO
+	mail-bw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750977Ab1BSQCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 11:02:38 -0500
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Feb 2011 11:02:37 EST
+Received: by bwz4 with SMTP id 4so4404338bwz.11
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 08:02:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=UE5EfFQE+G4MttdEgEmurrB5jcMSFLqv33bDkTlaKCE=;
+        b=l8yr/rzuUX2TtygaACHiUekV51AaHJFGCqYOaS2W1rZrinXEiBbIJ+Vjgr0J5MHrty
+         aTYC7xY/ISKrG31Kiyl6Yu7BUmCShCexHfDGZVGtJekjrYzcKWpnQUtxhLmQJQH/eEd/
+         UV6QtyG8ePVmoZ5Htvdco7EjPOrjWW0WzxKgk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=JJrra+1rmRKhClxdlLLOz8JgoPpu7TYkjDO2G1nc8ECnt7mhZAwUOH8cboyoE/ae2J
+         sTzNQLWBkPRiRPP9IjcW48zpQTwdXjB12lfGi6/+i6E8R96hDdSaLVZolAbVXgAgEDB6
+         rJojzcyAotWXBUGXeFVogQCvf25j2obW/ggO8=
+Received: by 10.204.71.141 with SMTP id h13mr1780208bkj.180.1298131356918;
+        Sat, 19 Feb 2011 08:02:36 -0800 (PST)
+Received: from [192.168.1.13] (abwm176.neoplus.adsl.tpnet.pl [83.8.236.176])
+        by mx.google.com with ESMTPS id v25sm2325907bkt.18.2011.02.19.08.02.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 19 Feb 2011 08:02:36 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201102191654.41601.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167295>
 
-On Sat, Feb 19, 2011 at 2:25 AM, Jeff King <peff@peff.net> wrote:
->
-> This feels wrong because it's in such a deep library function. At the
-> very least we probably need some way to turn it off, so callers can pass
-> along any --quiet or --no-progress indicators.
+Jakub Narebski wrote:
+> On Sat, 19 Feb 2011, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Yeah.
+> [...]
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -3501,7 +3501,7 @@ sub print_feed_meta {
+> >  			$href_params{'-title'} =3D 'log';
+> >  		}
+> > =20
+> > -		foreach my $format qw(RSS Atom) {
+> > +		foreach my $format (qw(RSS Atom)) {
+> >  			my $type =3D lc($format);
+> >  			my %link_attr =3D (
+> >  				'-rel' =3D> 'alternate',
 
-> I made it update progress for each of the rename_src * rename_dst
-> similarity estimates. We could just as easily count rename_dst items we
-> look at, but hey, it's eye candy, and obviously bigger numbers are
-> better.
+Ah, sorry, if Perl reqyures to use 'foreach (@array)', then
+of course one should use 'forach (qw(A B))'.
 
-Uhh. My only big reaction to your patch was literally "why don't you
-just do it on the 'dst' items". I really don't think bigger numbers
-are better, and if you have _so_ many sources that each dst takes so
-long that you'd want updates at that granularity, you're too screwed
-anyway.
-
-Don't make the "update progress" be part of the O(n^2) problem.
-
-                  Linus
+--=20
+Jakub Narebski
+Poland
