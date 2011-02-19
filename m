@@ -1,116 +1,86 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] gitweb/gitweb.perl: remove use of qw(...) as parentheses
-Date: Sat, 19 Feb 2011 14:10:54 +0000
-Message-ID: <1298124654-12051-1-git-send-email-avarab@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 1/3] revlist.c: introduce --cherry for unsymmetric picking
+Date: Sat, 19 Feb 2011 09:47:48 -0500
+Message-ID: <AANLkTinGkT0AJ6qeGi_z7Ck8wWM-jriUTqjDPvumjRwB@mail.gmail.com>
+References: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1298032360.git.git@drmicha.warpmail.net>
+ <7vzkptnn7x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 19 15:11:19 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 19 15:48:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqnWo-0001Bv-HL
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 15:11:18 +0100
+	id 1Pqo6s-0002Wq-44
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 15:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754628Ab1BSOLN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 09:11:13 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:38734 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754368Ab1BSOLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 09:11:12 -0500
-Received: by eye27 with SMTP id 27so2286758eye.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 06:11:11 -0800 (PST)
+	id S1755390Ab1BSOsT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 09:48:19 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:63046 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754541Ab1BSOsS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Feb 2011 09:48:18 -0500
+Received: by iyj8 with SMTP id 8so4468085iyj.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 06:48:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=yxWGNPj0uP6nVgu7lbIP9PjdXc6pzsfPNpnbEosvAb8=;
-        b=xfCbb440WEj4xzRsuQfLUc6kTEAYKKPHakdSe18BJYSmQHymp6+D3dbFMhnXod4jTk
-         SG9y4rULmgQKhU1e9AUYrv3ii8qIVcuYHqhherqd6TE454DPzL4fij75s4z5zuT/qem3
-         KGcpMjY3Wi5cwF5OSn+UXGHew1o8sKdr2Lj64=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=qcug0+5WhQZ26RszQ6/zQERZP69daBwI91SvQydRUAE=;
+        b=SoFnAZkpwJd7ydtMbj1JLqVgXZDVDZ8wQqg47BoQyXWgTdoCf5gKvObpIs9+5tdZX6
+         0VxV9cccFUz+QM2lr3v9RbTxFOiij3CD+astMOlzdlw8XSMX8mJKta9LX48s+qptsXY1
+         dW0bwk4TIEO0Mi4yF60PObiUNjRziVwA2vkcg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=bYLa3chiZyN40j8jPQGeKzUi8ojMADIgmIXGVnKG5jrd/F7LYhRcSim6cURzeOBJkV
-         rWORpFxhxX7tQG/zh7VP+elF6g61Tq3sGQXwREpXCTyOkbOZLT98Ni7RwA9zD4uYdO3Z
-         J3EFB/L1SFIh1qy3QHsaaktvU0MLVTueu/Y+o=
-Received: by 10.213.27.204 with SMTP id j12mr1673662ebc.85.1298124671562;
-        Sat, 19 Feb 2011 06:11:11 -0800 (PST)
-Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id t5sm2944287eeh.8.2011.02.19.06.11.10
-        (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 06:11:10 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.3
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=R8u+Rg2h0QT6VNb3z1BhvQ6xbY0apoKJ85cQELtaKAJ9LU5RV2Tu26rItfDvZuXcei
+         XC3pUPTypgxAy1yB37jeXr/MzXGuvYI32uehaE1FFbTp2aeWer525zStmpWg6D2oAdn4
+         sbp6PSWmcmcBkLRAOk304I5gzU9IeA1z8g7UU=
+Received: by 10.231.36.69 with SMTP id s5mr1398178ibd.167.1298126898129; Sat,
+ 19 Feb 2011 06:48:18 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Sat, 19 Feb 2011 06:47:48 -0800 (PST)
+In-Reply-To: <7vzkptnn7x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167284>
 
-Using the qw(...) construct as implicit parentheses was deprecated in
-perl 5.13.5. Change the relevant code in gitweb to not use the
-deprecated construct. The offending code was introduced in 3562198b by
-Jakub Narebski.
+On Fri, Feb 18, 2011 at 2:42 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> By the way, when this feature is properly implemented internally at t=
+he
+> revision traversal level, we should be able to lose quite a lot of co=
+de
+> from builtin/log.c, as format-patch in it was the original implementa=
+tion
+> of the whole thing, and it was done outside the revision walking mach=
+inery
+> to implement patch equivalence filtering of the traversal result. =C2=
+=A0We
+> would essentially feed the symmetric upstream...HEAD range with the
+> cherry-pick flag, ask it to give only the right hand side (i.e. what =
+are
+> left after the patch equivalence filter), and emit the result.
 
-The issue is that perl will now warn about this:
+Tangent: it occurred to me it would be useful to give the user some
+say in how the patch-id is computed. Currently, the patch-id is the
+hash of the diff hunks, which is very strict.
 
-    $ perl -wE 'for my $i qw(a b) { say $i }'
-    Use of qw(...) as parentheses is deprecated at -e line 1.
-    a
-    b
+I think it would be useful to have a "loose" mode of computing the
+patch-id. What I was thinking was to use the hash of certain commit
+metadata that is likely to be unique: say, the commit authorship
+(name, email, timestamp) + commit subject and/or body.
 
-This caused gitweb.perl to warn on perl 5.13.5 and above, and these
-tests to fail on those perl versions:
+This would allow rev-list to (optionally) filter out commits that,
+modulo conflict resolution, introduce the "same" change. IOW, give the
+user of rev-list some say about what a "same" commit is.
 
-    ./t9501-gitweb-standalone-http-status.sh           (Wstat: 256 Test=
-s: 11 Failed: 10)
-      Failed tests:  2-11
-      Non-zero exit status: 1
-    ./t9502-gitweb-standalone-parse-output.sh          (Wstat: 256 Test=
-s: 10 Failed: 9)
-      Failed tests:  2-10
-      Non-zero exit status: 1
-    ./t9500-gitweb-standalone-no-errors.sh             (Wstat: 256 Test=
-s: 90 Failed: 84)
-      Failed tests:  1-8, 10-36, 38-45, 47-48, 50-88
-      Non-zero exit status: 1
+(I suppose this is my itch to scratch.) :-)
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
- gitweb/gitweb.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0779f12..b02372c 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3501,7 +3501,7 @@ sub print_feed_meta {
- 			$href_params{'-title'} =3D 'log';
- 		}
-=20
--		foreach my $format qw(RSS Atom) {
-+		foreach my $format (qw(RSS Atom)) {
- 			my $type =3D lc($format);
- 			my %link_attr =3D (
- 				'-rel' =3D> 'alternate',
-@@ -3682,7 +3682,7 @@ sub git_footer_html {
- 		}
- 		$href_params{'-title'} ||=3D 'log';
-=20
--		foreach my $format qw(RSS Atom) {
-+		foreach my $format (qw(RSS Atom)) {
- 			$href_params{'action'} =3D lc($format);
- 			print $cgi->a({-href =3D> href(%href_params),
- 			              -title =3D> "$href_params{'-title'} $format feed",
---=20
-1.7.2.3
+j.
