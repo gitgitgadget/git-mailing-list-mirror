@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 36/72] gettextize: git-grep "--open-files-in-pager" message
-Date: Sat, 19 Feb 2011 19:24:19 +0000
-Message-ID: <1298143495-3681-37-git-send-email-avarab@gmail.com>
+Subject: [PATCH 35/72] gettextize: git-grep basic messages
+Date: Sat, 19 Feb 2011 19:24:18 +0000
+Message-ID: <1298143495-3681-36-git-send-email-avarab@gmail.com>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,84 +17,200 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqsTn-0003Eb-6L
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:28:31 +0100
+	id 1PqsTn-0003Eb-OF
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 20:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756082Ab1BST2D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:28:03 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:60431 "EHLO
+	id S1756105Ab1BST2G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 14:28:06 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:56673 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755983Ab1BST15 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1756045Ab1BST15 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 19 Feb 2011 14:27:57 -0500
-Received: by mail-ew0-f46.google.com with SMTP id 5so1970440ewy.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:27:57 -0800 (PST)
+Received: by mail-ew0-f46.google.com with SMTP id 5so1970368ewy.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 11:27:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=yZ7B279ryHwYcDKhFTCg5JQlT6p1ZM3ciIdwfVDArR4=;
-        b=wrjAlLclTkcQf3E69tl57bYAEwrvsHApTDtFktwPX3PMd0fcyPLd36asmoJyQ/A/Sx
-         j8GVj10de79m0dldK5/4FCpARcAeMyEDVRtpVDqk/W/ClJYGAJg+RqupSoCqH08/HkU0
-         +ywhBHvtck1ahRkRMhN7Uu3mT5jQqQLMQTNKw=
+        bh=NiGlZJXy5YzEXXPkLjZojqjSkPlOabqX2i5lgLawGfQ=;
+        b=OgWsmDCqw8YEWFgGFzKU4Nbg7y9+xasnnS9z8lSe23mhoLAj992alCB0vLZJ9rrO1B
+         5Aozim2RKJB8ZW1bKFXxGTf1G6tHPXoHepY61W3Brz6EeTCOU012HeoXoXJQZYS74xvH
+         iJMOmGzOjde+Kfsk90oF3Z4ff9AJVIFBYpvvg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=BkvEM88cY1XTlGxfQQy+IYPi6CkGlIiON0N2ml9xCyTSxas6SB4FPg2Pk5sgDhF1XS
-         wpxtgWhuQRocziyaGoj/uuS8tOOk2TDePb9dUFOid3tfUAqyAvN8UylNBTGAEpOxf5oq
-         vp2dk9+9fxy8IVvarMPtK+B8F1oAjWTPFmfVU=
-Received: by 10.213.96.203 with SMTP id i11mr190773ebn.66.1298143676171;
-        Sat, 19 Feb 2011 11:27:56 -0800 (PST)
+        b=v6PmlcgxNKkWsVp97ePPfCmbcFC0kqiYr8UB2FthpjtIOOVHU9JEKk0iWCn95VA+Om
+         GmXxumtEkyIYDV3BHcnOcEpLfBByj/pNX5ncV6tFvp33wrS/ks1b24IbBlLgeFPMPhmB
+         brqbGrA9yyr+Jc9kj03asBWjBRg4D6wpNmvWI=
+Received: by 10.213.0.212 with SMTP id 20mr2541291ebc.64.1298143674938;
+        Sat, 19 Feb 2011 11:27:54 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.27.55
+        by mx.google.com with ESMTPS id b52sm3205790eei.7.2011.02.19.11.27.54
         (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 11:27:55 -0800 (PST)
+        Sat, 19 Feb 2011 11:27:54 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1298143495-3681-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167343>
-
-Gettextize the "--open-files-in-pager only works on the worktree"
-message. A test in t7811-grep-open.sh explicitly checked for this
-message. Change it to skip under GETTEXT_POISON=3DYesPlease.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167344>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/grep.c       |    2 +-
- t/t7811-grep-open.sh |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/grep.c |   32 ++++++++++++++++----------------
+ 1 files changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index d35b76c..dfc32fb 100644
+index fdf7131..d35b76c 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -1061,7 +1061,7 @@ int cmd_grep(int argc, const char **argv, const c=
+@@ -245,7 +245,7 @@ static void start_threads(struct grep_opt *opt)
+ 		err =3D pthread_create(&threads[i], NULL, run, o);
+=20
+ 		if (err)
+-			die("grep: failed to create thread: %s",
++			die(_("grep: failed to create thread: %s"),
+ 			    strerror(err));
+ 	}
+ }
+@@ -450,7 +450,7 @@ static void *load_sha1(const unsigned char *sha1, u=
+nsigned long *size,
+ 	void *data =3D lock_and_read_sha1_file(sha1, &type, size);
+=20
+ 	if (!data)
+-		error("'%s': unable to read %s", name, sha1_to_hex(sha1));
++		error(_("'%s': unable to read %s"), name, sha1_to_hex(sha1));
+=20
+ 	return data;
+ }
+@@ -501,7 +501,7 @@ static void *load_file(const char *filename, size_t=
+ *sz)
+ 	if (lstat(filename, &st) < 0) {
+ 	err_ret:
+ 		if (errno !=3D ENOENT)
+-			error("'%s': %s", filename, strerror(errno));
++			error(_("'%s': %s"), filename, strerror(errno));
+ 		return 0;
+ 	}
+ 	if (!S_ISREG(st.st_mode))
+@@ -512,7 +512,7 @@ static void *load_file(const char *filename, size_t=
+ *sz)
+ 		goto err_ret;
+ 	data =3D xmalloc(*sz + 1);
+ 	if (st.st_size !=3D read_in_full(i, data, *sz)) {
+-		error("'%s': short read %s", filename, strerror(errno));
++		error(_("'%s': short read %s"), filename, strerror(errno));
+ 		close(i);
+ 		free(data);
+ 		return 0;
+@@ -574,7 +574,7 @@ static void run_pager(struct grep_opt *opt, const c=
 har *prefix)
+ 	argv[path_list->nr] =3D NULL;
+=20
+ 	if (prefix && chdir(prefix))
+-		die("Failed to chdir: %s", prefix);
++		die(_("Failed to chdir: %s"), prefix);
+ 	status =3D run_command_v_opt(argv, RUN_USING_SHELL);
+ 	if (status)
+ 		exit(status);
+@@ -664,7 +664,7 @@ static int grep_tree(struct grep_opt *opt, const ch=
+ar **paths,
+=20
+ 			data =3D lock_and_read_sha1_file(entry.sha1, &type, &size);
+ 			if (!data)
+-				die("unable to read tree (%s)",
++				die(_("unable to read tree (%s)"),
+ 				    sha1_to_hex(entry.sha1));
+ 			init_tree_desc(&sub, data, size);
+ 			hit |=3D grep_tree(opt, paths, &sub, tree_name, down);
+@@ -690,13 +690,13 @@ static int grep_object(struct grep_opt *opt, cons=
+t char **paths,
+ 		data =3D read_object_with_reference(obj->sha1, tree_type,
+ 						  &size, NULL);
+ 		if (!data)
+-			die("unable to read tree (%s)", sha1_to_hex(obj->sha1));
++			die(_("unable to read tree (%s)"), sha1_to_hex(obj->sha1));
+ 		init_tree_desc(&tree, data, size);
+ 		hit =3D grep_tree(opt, paths, &tree, name, "");
+ 		free(data);
+ 		return hit;
+ 	}
+-	die("unable to grep from object of type %s", typename(obj->type));
++	die(_("unable to grep from object of type %s"), typename(obj->type));
+ }
+=20
+ static int grep_objects(struct grep_opt *opt, const char **paths,
+@@ -748,7 +748,7 @@ static int context_callback(const struct option *op=
+t, const char *arg,
+ 	}
+ 	value =3D strtol(arg, (char **)&endp, 10);
+ 	if (*endp) {
+-		return error("switch `%c' expects a numerical value",
++		return error(_("switch `%c' expects a numerical value"),
+ 			     opt->short_name);
+ 	}
+ 	grep_opt->pre_context =3D grep_opt->post_context =3D value;
+@@ -764,7 +764,7 @@ static int file_callback(const struct option *opt, =
+const char *arg, int unset)
+=20
+ 	patterns =3D fopen(arg, "r");
+ 	if (!patterns)
+-		die_errno("cannot open '%s'", arg);
++		die_errno(_("cannot open '%s'"), arg);
+ 	while (strbuf_getline(&sb, patterns, '\n') =3D=3D 0) {
+ 		char *s;
+ 		size_t len;
+@@ -1005,11 +1005,11 @@ int cmd_grep(int argc, const char **argv, const=
+ char *prefix)
  	}
 =20
- 	if (show_in_pager && (cached || list.nr))
--		die("--open-files-in-pager only works on the worktree");
-+		die(_("--open-files-in-pager only works on the worktree"));
+ 	if (!opt.pattern_list)
+-		die("no pattern given.");
++		die(_("no pattern given."));
+ 	if (!opt.fixed && opt.ignore_case)
+ 		opt.regflags |=3D REG_ICASE;
+ 	if ((opt.regflags !=3D REG_NEWLINE) && opt.fixed)
+-		die("cannot mix --fixed-strings and regexp");
++		die(_("cannot mix --fixed-strings and regexp"));
 =20
- 	if (show_in_pager && opt.pattern_list && !opt.pattern_list->next) {
- 		const char *pager =3D path_list.items[0].string;
-diff --git a/t/t7811-grep-open.sh b/t/t7811-grep-open.sh
-index 568a6f2..3aa544c 100755
---- a/t/t7811-grep-open.sh
-+++ b/t/t7811-grep-open.sh
-@@ -61,7 +61,7 @@ test_expect_success SIMPLEPAGER 'git grep -O' '
- 	test_cmp empty out
- '
+ #ifndef NO_PTHREADS
+ 	if (online_cpus() =3D=3D 1 || !grep_threads_ok(&opt))
+@@ -1034,7 +1034,7 @@ int cmd_grep(int argc, const char **argv, const c=
+har *prefix)
+ 		if (!get_sha1(arg, sha1)) {
+ 			struct object *object =3D parse_object(sha1);
+ 			if (!object)
+-				die("bad object %s", arg);
++				die(_("bad object %s"), arg);
+ 			add_object_array(object, arg, &list);
+ 			continue;
+ 		}
+@@ -1086,9 +1086,9 @@ int cmd_grep(int argc, const char **argv, const c=
+har *prefix)
 =20
--test_expect_success 'git grep -O --cached' '
-+test_expect_success NO_GETTEXT_POISON 'git grep -O --cached' '
- 	test_must_fail git grep --cached -O GREP_PATTERN >out 2>msg &&
- 	grep open-files-in-pager msg
- '
+ 	if (!use_index) {
+ 		if (cached)
+-			die("--cached cannot be used with --no-index.");
++			die(_("--cached cannot be used with --no-index."));
+ 		if (list.nr)
+-			die("--no-index cannot be used with revs.");
++			die(_("--no-index cannot be used with revs."));
+ 		hit =3D grep_directory(&opt, paths);
+ 	} else if (!list.nr) {
+ 		if (!cached)
+@@ -1097,7 +1097,7 @@ int cmd_grep(int argc, const char **argv, const c=
+har *prefix)
+ 		hit =3D grep_cache(&opt, paths, cached);
+ 	} else {
+ 		if (cached)
+-			die("both --cached and trees are given.");
++			die(_("both --cached and trees are given."));
+ 		hit =3D grep_objects(&opt, paths, &list);
+ 	}
+=20
 --=20
 1.7.2.3
