@@ -1,71 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Merging limitations after directory renames -- interesting test
- repo
-Date: Fri, 18 Feb 2011 16:52:34 -0800
-Message-ID: <7vsjvkn8vh.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Merging limitations after directory renames -- interesting test repo
+Date: Fri, 18 Feb 2011 16:55:35 -0800
+Message-ID: <AANLkTikORqg_BUUbBtUQTYTVO3nttKpMDtCbxm4ikJCU@mail.gmail.com>
 References: <AANLkTimsQmOLDENX27YqpicBeFFZrfgEAsLvFiJqoV7w@mail.gmail.com>
- <20110218222151.GB4258@sigill.intra.peff.net>
- <AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com>
+ <20110218222151.GB4258@sigill.intra.peff.net> <AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com>
  <AANLkTimuU4A7sUqo-dpW3ch4H_WJg+G2ynNmagx=C9t8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Feb 19 01:52:51 2011
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 19 01:56:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pqb47-0003R4-97
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 01:52:51 +0100
+	id 1Pqb7e-0004pk-TS
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 01:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752931Ab1BSAwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Feb 2011 19:52:47 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52365 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751118Ab1BSAwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Feb 2011 19:52:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D87DA3760;
-	Fri, 18 Feb 2011 19:53:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Swvo8XZ3BTtRoYXgzixxXeZh2Vs=; b=mj/jdY
-	9lKykFFbyJnAWcaZy3MEx2IaRlDojPTma/rLeO5xizyWnWj9MVG/hroJOYBbFz3K
-	hS1V0BttxN6jsL2+iUk+X4BLUtINud8jUL6SkUvnhnTciJOvpIUBqVnEsZKPoSeD
-	WcpPXPJhPo4XEbICS+8qTHi8vgXprzkk+/tP4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b2l/1/WsVZ4S8dpcaacdYzPntpWsGcFq
-	TLJV6vTMJRoc8pIK74lw0sdWEx6Lzb5uMDsEtUTgs3lqaK7SL+Z0rTrlm2CH0nZj
-	T0O+c4E2MgLnqCTvD1ueV80uv2DRgn2tbrIfif3S25q0PjALF644Gg6TzJJ541dU
-	+fPeFpS8rlw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 91113375F;
-	Fri, 18 Feb 2011 19:53:49 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 51F44375E; Fri, 18 Feb 2011
- 19:53:44 -0500 (EST)
+	id S1754113Ab1BSA40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Feb 2011 19:56:26 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:45329 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753966Ab1BSA4Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Feb 2011 19:56:24 -0500
+Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p1J0tuNV012844
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 18 Feb 2011 16:55:57 -0800
+Received: by iwn8 with SMTP id 8so11219iwn.19
+        for <git@vger.kernel.org>; Fri, 18 Feb 2011 16:55:55 -0800 (PST)
+Received: by 10.42.223.73 with SMTP id ij9mr1636581icb.442.1298076955062; Fri,
+ 18 Feb 2011 16:55:55 -0800 (PST)
+Received: by 10.231.16.129 with HTTP; Fri, 18 Feb 2011 16:55:35 -0800 (PST)
 In-Reply-To: <AANLkTimuU4A7sUqo-dpW3ch4H_WJg+G2ynNmagx=C9t8@mail.gmail.com>
- (Linus Torvalds's message of "Fri\, 18 Feb 2011 16\:26\:14 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B6A8F778-3BC2-11E0-9218-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Spam-Status: No, hits=-102.962 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167242>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Fri, Feb 18, 2011 at 4:26 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> So please consider the attached patch just a "look, guys, this is
+> wrong, and here's the ugliest hack you've ever seen to fix it".
 
-> And the bug is that we didn't even ask for copy detection! This just
-> confuses merging more.
+Btw, the more I think about it, the more I suspect that the
+"estimate_similarity()" part of the patch is correct, or at least
+better than what we used to have.
 
-Yeah, I think it is probably a good idea to really limit the rename
-detection only to renames at least inside merge-recursive.  The static
-variable does look ugly but it shouldn't be a rocket surgery to pass it
-down if we want to.
+If we have a file that expanded from 100 lines to 200 lines, and all
+of the old contents are there, then I think that logically people
+would expect it to be a "50% similarity".
+
+But the thing is, with the old code, we would look at the old smaller
+size (100 lines), and take 50% of that. And then when the delta (also
+100 lines) is bigger than that 50%, then we'd totally dismiss that
+thing from similarity analysis, because it obviously isn't similar
+enough.
+
+So using the bigger size as the basis (and taking 50% of _that_ and
+comparing it to the delta) is probably the sane thing to do.
+
+The rest of the patch I still think is total crap. The _intention_ is
+good, but the patch was written to be small rather than the right way
+of doing things.
+
+                          Linus
