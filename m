@@ -1,61 +1,70 @@
-From: Lyle <webmaster@cosmicperl.com>
-Subject: x permission lost on Windows merge
-Date: Sat, 19 Feb 2011 20:29:37 +0000
-Message-ID: <4D602831.8060200@cosmicperl.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] doc: technical details about the index file format
+Date: Sat, 19 Feb 2011 23:16:03 +0100
+Message-ID: <AANLkTi=YJkk6KHChCrrazij_ziyG-Ru7kGLWc7JnUGoN@mail.gmail.com>
+References: <AANLkTi=iFe=MmUiXzC_HMwueZxLJDCea+zp_-SNWvSup@mail.gmail.com> <1283769430-9263-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 19 21:56:14 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, kusmabite@gmail.com, raa.lkml@gmail.com,
+	jjuran@gmail.com, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 19 23:25:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pqtqf-0005Py-4F
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 21:56:13 +0100
+	id 1PqvEj-0003yU-AV
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 23:25:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753994Ab1BSU4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Feb 2011 15:56:07 -0500
-Received: from ns.cosmichost.co.uk ([213.133.65.196]:51495 "EHLO
-	cosmichost.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753821Ab1BSU4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 15:56:06 -0500
-X-Greylist: delayed 1575 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Feb 2011 15:56:06 EST
-Received: from [127.0.0.1] (unknown [78.86.207.240])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: cosmicperl)
-	by cosmichost.co.uk (Postfix) with ESMTP id 658DC10082A
-	for <git@vger.kernel.org>; Sat, 19 Feb 2011 20:29:46 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-X-Antivirus: avast! (VPS 110219-0, 19/02/2011), Outbound message
-X-Antivirus-Status: Clean
+	id S1752540Ab1BSWZC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 17:25:02 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:34944 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752437Ab1BSWZB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Feb 2011 17:25:01 -0500
+Received: by yxn22 with SMTP id 22so117535yxn.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 14:25:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=C3eb38R5l6QpbHKVn/Ac8oNzEmYoVPibJJGGgMJbrRs=;
+        b=epXujhocICPlWPxFPdRwXsZR+v7YIvI1uN3WWcNbyjNXvN/XdKgdPoJAJvradiDeBZ
+         g349saS+/S+3oxxFC6durU4X/R1cntLnmjzlLPsxsC09myNhy835vjJtwqlFEZlCGWub
+         VJHhUOUlaeikW5t6xvnFvopTtC24zzHivAntQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=nbDve/0QkWJ3+YVQhuwVQAlAdP7zE8+oiausNQaY5tKHgreTTWmC8XMhs3WauRd/e5
+         WpSqcICrrG6PP2GFHXY2l8UpL+FwXqN3RlBCydEFhAItD3i2ZRUG64c2Zrpbs9ztuW5a
+         aKi/0hnC3uJhy8eG48ZQ2af/BXjl/xTwbOwbM=
+Received: by 10.150.96.21 with SMTP id t21mr2805402ybb.20.1298153804126; Sat,
+ 19 Feb 2011 14:16:44 -0800 (PST)
+Received: by 10.151.158.19 with HTTP; Sat, 19 Feb 2011 14:16:03 -0800 (PST)
+In-Reply-To: <1283769430-9263-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167383>
 
-Hi All,
-   I was just on IRC chatting about this issue. What I'm finding is that 
-if a merge happens on a Windows git repo the x permission is lost, 
-example (filename changed):
+Heya,
 
-filename.pl
+2010/9/6 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>:
+> This bases on the original work by Robin Rosenberg.
 
------------------------------ filename.pl -----------------------------
-index 0388de4,94d7e76..9c31830
-mode 100755,100755..100644
+Junio, in the "what's cooking" you mention that you might jump in to
+improve this? Duy, are you still interested in carrying this forward?
+This patch [0] would be helpful to the hgit people as well :).
 
-As you can see, both of the modified files are 0755 but the merged file 
-is 0644. I know windows files don't have the x permission, which 
-explains why the newly created merged file would be missing the x, but 
-surely with filemode = false the behaviour should be to carry over the x 
-from the two modified files?
+http://git.kernel.org/?p=3Dgit/git.git;a=3Dcommit;h=3D673f3d9d4e019a15c=
+6d3770e9f8d9b07059f16cc
 
-This is causing me problems when the merged file gets pulled back onto 
-Linux systems where it needs the x permission.
+--=20
+Cheers,
 
-
-Lyle
+Sverre Rabbelier
