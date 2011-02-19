@@ -1,74 +1,105 @@
-From: "Kevin P. Fleming" <kpfleming@digium.com>
-Subject: Re: What's the definition of a valid Git symbolic reference?
-Date: Sat, 19 Feb 2011 07:10:50 -0600
-Organization: Digium, Inc.
-Message-ID: <4D5FC15A.30309@digium.com>
-References: <AANLkTinsJkzYggMtNrLRv-qNxRncrXSe6A46Z=d8xkw7@mail.gmail.com> <F624322D-359A-48ED-A241-622042F77CDA@sb.org> <AANLkTi=FKXqu_psoT+gvyq2c_o8Mej+DgpccecOpQd8H@mail.gmail.com> <4D5A0901.7080202@dbservice.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Emeric Fermas <emeric.fermas@gmail.com>,
-	Kevin Ballard <kevin@sb.org>, git@vger.kernel.org,
-	Vicent Marti <tanoku@gmail.com>, libgit2@librelist.com
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Sat Feb 19 14:11:05 2011
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH v2 1/8] git-p4: test script
+Date: Sat, 19 Feb 2011 08:17:54 -0500
+Message-ID: <1298121481-7005-2-git-send-email-pw@padd.com>
+References: <1298121481-7005-1-git-send-email-pw@padd.com>
+Cc: Tor Arvid Lund <torarvid@gmail.com>,
+	Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 19 14:18:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqmaX-0005yQ-AM
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 14:11:05 +0100
+	id 1Pqmhn-0001Jr-Oj
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Feb 2011 14:18:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752283Ab1BSNLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Feb 2011 08:11:00 -0500
-Received: from mail.digium.com ([216.207.245.2]:60685 "EHLO mail.digium.com"
+	id S1754058Ab1BSNSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Feb 2011 08:18:18 -0500
+Received: from honk.padd.com ([74.3.171.149]:51173 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750908Ab1BSNK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 08:10:59 -0500
-Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
-	by mail.digium.com with esmtp (Exim 4.69)
-	(envelope-from <kpfleming@digium.com>)
-	id 1PqmaK-0005Rp-No; Sat, 19 Feb 2011 07:10:52 -0600
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.hsv.digium.com (Postfix) with ESMTP id AE831D82A1;
-	Sat, 19 Feb 2011 07:10:52 -0600 (CST)
-Received: from zimbra.hsv.digium.com ([127.0.0.1])
-	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SVVhz+TBkidX; Sat, 19 Feb 2011 07:10:52 -0600 (CST)
-Received: from [192.168.1.6] (173-24-207-63.client.mchsi.com [173.24.207.63])
-	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id 9DE54D82A0;
-	Sat, 19 Feb 2011 07:10:51 -0600 (CST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <4D5A0901.7080202@dbservice.com>
+	id S1752301Ab1BSNSR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Feb 2011 08:18:17 -0500
+Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
+	by honk.padd.com (Postfix) with ESMTPSA id EE03EE77;
+	Sat, 19 Feb 2011 05:18:15 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id E35E93197C; Sat, 19 Feb 2011 08:18:06 -0500 (EST)
+X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <1298121481-7005-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167273>
 
-On 02/14/2011 11:02 PM, Tomas Carnecky wrote:
-> On 2/15/11 4:49 AM, Emeric Fermas wrote:
->> Another possibility would be that only git internal symbolic
->> references are allowed to live under the ".git" dir (HEAD, FETCH_HEAD,
->> ...) and that user defined symrefs should live under refs/. In this
->
-> All refs should live under refs/ (except the special ones like HEAD
-> etc). It's usually a mistake if someone manages to create one outside of
-> refs/. The plumbing commands allow you to do that, but users usually
-> shouldn't use those.
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
+ t/t9800-git-p4.sh |   55 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 55 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9800-git-p4.sh
 
-Being able to manually point HEAD at a ref is actually useful; when I've 
-created repos that start out with a 'vendor branch', I want to do the 
-initial import into a branch called 'upstream', not 'master'. Using 'git 
-symbolic-ref HEAD refs/heads/upstream' in a brand-new repo allows that 
-to happen, and works quite well.
-
-Please don't take it away :-)
-
+diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
+new file mode 100755
+index 0000000..2d354f8
+--- /dev/null
++++ b/t/t9800-git-p4.sh
+@@ -0,0 +1,55 @@
++#!/bin/sh
++
++test_description='git-p4 tests'
++
++. ./test-lib.sh
++
++( p4 -h && p4d -h ) >/dev/null 2>&1 || {
++	skip_all='skipping git-p4 tests; no p4 or p4d'
++	test_done
++}
++
++GITP4=$GIT_BUILD_DIR/contrib/fast-import/git-p4
++P4DPORT=10669
++
++db="$TRASH_DIRECTORY/db"
++cli="$TRASH_DIRECTORY/cli"
++git="$TRASH_DIRECTORY/git"
++
++test_debug 'echo p4d -q -d -r "$db" -p $P4DPORT'
++test_expect_success setup '
++	mkdir -p "$db" &&
++	p4d -q -d -r "$db" -p $P4DPORT &&
++	mkdir -p "$cli" &&
++	mkdir -p "$git" &&
++	export P4PORT=localhost:$P4DPORT
++'
++
++test_expect_success 'add p4 files' '
++	cd "$cli" &&
++	p4 client -i <<-EOF &&
++	Client: client
++	Description: client
++	Root: $cli
++	View: //depot/... //client/...
++	EOF
++	export P4CLIENT=client &&
++	echo file1 >file1 &&
++	p4 add file1 &&
++	p4 submit -d "file1" &&
++	cd "$TRASH_DIRECTORY"
++'
++
++test_expect_success 'basic git-p4 clone' '
++	"$GITP4" clone --dest="$git" //depot &&
++	rm -rf "$git" && mkdir "$git"
++'
++
++test_expect_success 'shutdown' '
++	pid=`pgrep -f p4d` &&
++	test -n "$pid" &&
++	test_debug "ps wl `echo $pid`" &&
++	kill $pid
++'
++
++test_done
 -- 
-Kevin P. Fleming
-Digium, Inc. | Director of Software Technologies
-445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
-skype: kpfleming | jabber: kfleming@digium.com
-Check us out at www.digium.com & www.asterisk.org
+1.7.4.1
