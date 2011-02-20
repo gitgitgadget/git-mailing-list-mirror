@@ -1,117 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 2/3] gitweb/gitweb.perl: remove use of qw(...) as parentheses
-Date: Sun, 20 Feb 2011 15:42:46 +0100
-Message-ID: <201102201542.47590.jnareb@gmail.com>
-References: <1298124654-12051-1-git-send-email-avarab@gmail.com> <201102191654.41601.jnareb@gmail.com> <AANLkTi==3c4ZLckUPE6NUt-sqWBsywQh3Gu+4B5vOBpj@mail.gmail.com>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
+Subject: Re: an error when using 'git send-email'
+Date: Sun, 20 Feb 2011 17:44:27 +0100
+Message-ID: <20110220164427.GA1439@jpl.local>
+References: <AANLkTiktO_f9+g4+wSS989a=pFZBgWGcORd_kg4pji-x@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 15:43:11 2011
+Cc: git@vger.kernel.org
+To: Yongqiang Yang <xiaoqiangnk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 17:44:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrAVB-0007xi-G2
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 15:43:09 +0100
+	id 1PrCOw-0004Gl-1S
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 17:44:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753650Ab1BTOnE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 09:43:04 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47213 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752910Ab1BTOnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Feb 2011 09:43:02 -0500
-Received: by fxm17 with SMTP id 17so717679fxm.19
-        for <git@vger.kernel.org>; Sun, 20 Feb 2011 06:43:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=CoOgAJv806B9chUrnye548mmJ4jhHXhq2Ypmnke0WM0=;
-        b=DAB88am+OFOTBHPdB6bwmdZLxFjcs9DO/Opi3/ASvlL6zKZlxAalRQxjXDiDSAHQ6H
-         BWPzrBiekBPWYOZINnCkuSqyAZjOxVw2mX3TngoiAdq+BEOpmJNum/VF9nXDN0YCLfk/
-         uk9RpAy6uZqK1ptxq22gJIq2l+g058ZrmNnBw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=WxQOF/D5os+5aT2EiZOHGCuC0ru78KzsCaabDHQinNGc+Z1UUa7RsEWuPm4BzsEjPZ
-         DTSDmW1L2lo1zX/ZgIYe+LlY5Yi9MzZzZ3mnK2QBtjljZIi7HvdfE9eIIORGGrpCTWOe
-         CvcbG6BFq8RB+1yYt3jk43tuvk5kt1/zT3uRo=
-Received: by 10.223.72.207 with SMTP id n15mr539314faj.49.1298212980666;
-        Sun, 20 Feb 2011 06:43:00 -0800 (PST)
-Received: from [192.168.1.13] (abvz77.neoplus.adsl.tpnet.pl [83.8.223.77])
-        by mx.google.com with ESMTPS id 17sm1974414far.43.2011.02.20.06.42.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 20 Feb 2011 06:42:58 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTi==3c4ZLckUPE6NUt-sqWBsywQh3Gu+4B5vOBpj@mail.gmail.com>
+	id S1753997Ab1BTQof convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 11:44:35 -0500
+Received: from smtprelay-h31.telenor.se ([213.150.131.4]:33232 "EHLO
+	smtprelay-h31.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753849Ab1BTQof (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Feb 2011 11:44:35 -0500
+Received: from ipb2.telenor.se (ipb2.telenor.se [195.54.127.165])
+	by smtprelay-h31.telenor.se (Postfix) with ESMTP id 91C11EBDAE
+	for <git@vger.kernel.org>; Sun, 20 Feb 2011 17:44:29 +0100 (CET)
+X-SMTPAUTH-B2: [b627879]
+X-SENDER-IP: [83.227.167.132]
+X-LISTENER: [smtp.bredband.net]
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AuUQAG/TYE1T46eEPGdsb2JhbACIaY5+jkkMAQEBATUvuR+DHYJBBJJe
+X-IronPort-AV: E=Sophos;i="4.62,195,1297033200"; 
+   d="scan'208";a="174279494"
+Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
+  by ipb2.telenor.se with ESMTP; 20 Feb 2011 17:44:29 +0100
+Received: by elwood.jpl.local (Postfix, from userid 1000)
+	id D9031422AF; Sun, 20 Feb 2011 17:44:27 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <AANLkTiktO_f9+g4+wSS989a=pFZBgWGcORd_kg4pji-x@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167426>
 
-Dnia sobota 19. lutego 2011 17:06, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on napisa=C5=82:
-> On Sat, Feb 19, 2011 at 16:54, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
->> On Sat, 19 Feb 2011, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->>> Using the qw(...) construct as implicit parentheses was deprecated =
-in
->>> perl 5.13.5. Change the relevant code in gitweb to not use the
->>> deprecated construct. The offending code was introduced in 3562198b=
- by
->>> Jakub Narebski.
->>
->> It is strange that Perl introduces such backwards incompatibile chan=
-ge
->> (well, actually will introduce, as 5.13.x is development branch lead=
-ing
->> to future Perl version 5.14).
->>
->> qw{} is described in perlop(1) as "word list" operator, so one would
->> suppose that it generates a list.
->=20
-> It does, but it wasn't supposed to generate parens for you.
+On Friday, February 18, 2011 at 12:45 CET,
+     Yongqiang Yang <xiaoqiangnk@gmail.com> wrote:
 
-[...]
->> Hmmm... does it affect only foreach loop, or dows it affect also oth=
-er
->> places, like
->>
->> =C2=A0 =C2=A0 =C2=A0use POSIX qw( setlocale localeconv )
->> =C2=A0 =C2=A0 =C2=A0@EXPORT =3D qw( foo bar baz );
+> When I use git 'send-email', I get an error "Command unknown:  'AUTH'
+> at /usr/bin/git-send-email line 775, <STDIN> line 1".
+> Is there anyone meet the same error?
 
-[...]
-> No. This is being deprecated because qw(foo bar) is supposed to mean
-> "foo, "bar", not ("foo", "bar"). I.e. this doesn't compile:
->=20
->     for my $i "a", "b", "c" { }
->=20
-> So neither should this:
->=20
->     for my $i qw(a b c) {}
->=20
-> But these both work:
->=20
->     for my $i ("a", "b", "c") { }
->     for my $i (qw(a b c)) {}
->=20
-> All of your other examples could have used a list without implicit
-> parens. So this is the only change that's needed in gitweb.
+You seem to have configured a username and password for SMTP
+authentication, yet the server Git connects to doesn't support
+authentication.
 
-Thanks for the explanation.  It makes sense.  So:
+Make sure the SMTP server you've configured Git to use
+(sendemail.smtpserver configuration variable) is the right one.
+If so, clear the smtpemail.smtpuser and smtpemail.smtppass
+variables as you obviously can't use them with the server.
 
-Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+=46or testing purposes there are options to "git send-email" to
+override the values set in the configuration files. Those might
+be more convenient to use when testing out new configurations.
 
 --=20
-Jakub Narebski
-Poland
+Magnus B=E4ck                      Opinions are my own and do not neces=
+sarily
+SW Configuration Manager         represent the ones of my employer, etc=
+=2E
+Sony Ericsson
