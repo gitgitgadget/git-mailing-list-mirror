@@ -1,74 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/4] bump rename limit defaults (again)
-Date: Sun, 20 Feb 2011 05:12:47 -0500
-Message-ID: <20110220101247.GD988@sigill.intra.peff.net>
-References: <20110219101936.GB20577@sigill.intra.peff.net>
- <20110219102128.GB22508@sigill.intra.peff.net>
- <AANLkTi=aWC_sXK1VBspsiVAwhkC4pP8Z+uq7QceLMopS@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 01/72] gettext.h: add no-op _() and N_() wrappers
+Date: Sun, 20 Feb 2011 11:13:52 +0100
+Message-ID: <AANLkTikkTUD=ih_KHxZ-F2gm_rNTfJ0E3Z6WXSLHBCnd@mail.gmail.com>
+References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
+ <1298143495-3681-2-git-send-email-avarab@gmail.com> <20110220020130.GA17225@elie>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 11:12:55 2011
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 11:14:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pr6He-0004fE-Pu
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 11:12:55 +0100
+	id 1Pr6J0-000578-FZ
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 11:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888Ab1BTKMu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 05:12:50 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44527 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752643Ab1BTKMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Feb 2011 05:12:49 -0500
-Received: (qmail 16679 invoked by uid 111); 20 Feb 2011 10:12:49 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 20 Feb 2011 10:12:49 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Feb 2011 05:12:47 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=aWC_sXK1VBspsiVAwhkC4pP8Z+uq7QceLMopS@mail.gmail.com>
+	id S1753079Ab1BTKOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 05:14:14 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56567 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753065Ab1BTKON convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 05:14:13 -0500
+Received: by fxm17 with SMTP id 17so601949fxm.19
+        for <git@vger.kernel.org>; Sun, 20 Feb 2011 02:14:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=V/jGtY+tbwk1ZaCytZpEjU5iavIdsFWG3qG+pHaXd5Y=;
+        b=G/NoukTs1FXFzdGteHe1uOKLeyGX256mLZ6rNbGyJG06eC9qizNj3gF8uplCjCL7ZU
+         PSSFp0goXdu0iT2mDXD0MAnhiSMAXFt28XI/PeKehWV7ajBdrPceReY7bAS9NIB0pL1R
+         qBl6RDlvVWH/M60ZjHy4u96wLVyqsSt7pml+0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=ATQ/j0XERU0mFVChCwsMV+3FRIJDrCRroXZPB4TrR6t3JqJRum/o0k4YfvaCEFOx5p
+         JGOE9JY2ctKYmKP4LtQb1sXgWHJ++buyOeXRdHD1Cw0Er4YqoQ1oB0NP3MOgtG4A2Xlb
+         aJpUj38XaTDixLRNqUDV+3o9Sacuk2gaW0cP4=
+Received: by 10.223.71.200 with SMTP id i8mr266814faj.142.1298196852083; Sun,
+ 20 Feb 2011 02:14:12 -0800 (PST)
+Received: by 10.223.95.206 with HTTP; Sun, 20 Feb 2011 02:13:52 -0800 (PST)
+In-Reply-To: <20110220020130.GA17225@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167414>
 
-On Sat, Feb 19, 2011 at 09:12:49PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+On Sun, Feb 20, 2011 at 3:01 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> =C6var Arnfj=F6r=F0 Bjarmason wrote:
+>> +#define N_(s) (s)
+>
+> Might be nice to make this an inline function, for type safety.
+>
+>> +#define _(s) (s)
+>
+> This one can't be a function, though, since it needs to transform
+> literals to literals.
+>
+=2E..
+> -#define N_(s) (s)
+> -#define _(s) (s)
+> +
+> +static inline const char *_(const char *msgid)
+> +{
+> + =A0 =A0 =A0 return msgid;
+> +}
+> +
+> +/* Mark msgid for translation but do not translate it. */
+> +#define N_(msgid) (msgid)
 
-> On Sat, Feb 19, 2011 at 11:21, Jeff King <peff@peff.net> wrote:
->=20
-> > Let's bump the diff/merge default limits from 200/500 to
-> > 400/1000. Those are 2 seconds and 10 seconds respectively on
-> > my modern hardware.
->=20
-> This is somewhat outside the scope of your patch, but rather than
-> making these decisions for the user and compiling them into Git
-> wouldn't it be better to expose it somehow?
-
-What do you mean by expose it? We already have config options; this is
-just for the defaults.
-
-Or do you mean allowing setting merge.renamelimits to "30s" and cutting
-off detection after 30 seconds? I think that would be a reasonable idea=
-,
-though part of me doesn't like non-deterministic answers based on how
-loaded the system is.
-
-> E.g. when you do a git-merge show a progress bar (similar to
-> git-clone) showing that we're trying to do rename detection, show tha=
-t
-> we stopped, and when we fail point out that the user could run
-> git-merge with some switch that would make Git try harder.
-
-Er, isn't that exactly what patches 1/4 and 4/4 in my series do?
-
--Peff
+Isn't this the opposite of what you suggested above?
