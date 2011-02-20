@@ -1,115 +1,142 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/72] gettextize: git-init basic messages
-Date: Sat, 19 Feb 2011 20:21:24 -0600
-Message-ID: <20110220022124.GA17547@elie>
-References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
- <1298143495-3681-5-git-send-email-avarab@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH v3 1/4] Introduce CHERRY_PICK_HEAD
+Date: Sat, 19 Feb 2011 21:29:28 -0500
+Message-ID: <AANLkTik7cfihdu5-0pvgkq1u7kVShEqnjzh07T+5pU16@mail.gmail.com>
+References: <1297916325-89688-1-git-send-email-jaysoffian@gmail.com>
+ <1297916325-89688-2-git-send-email-jaysoffian@gmail.com> <7vipwibfc5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 03:21:36 2011
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 03:30:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqyvY-0001j2-3R
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 03:21:36 +0100
+	id 1Pqz3j-0004GP-Nq
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 03:30:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039Ab1BTCVb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 21:21:31 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61646 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753244Ab1BTCVa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Feb 2011 21:21:30 -0500
-Received: by iwn8 with SMTP id 8so739333iwn.19
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 18:21:29 -0800 (PST)
+	id S1754724Ab1BTC37 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 21:29:59 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61766 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752923Ab1BTC36 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Feb 2011 21:29:58 -0500
+Received: by iyj8 with SMTP id 8so4807553iyj.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 18:29:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=WogJEtH6xKkRCdCsIF6s1bE/tgCIKWP0dkQ6Wm0rTio=;
-        b=VOKVjAfbMV+PV5lXWSnI+9Xl1zi2RSqRQzvvh/AQOaAaVV2oYDytvEntrR/aE+5hNU
-         gf3EQVxUbSY9HH8HSxQWzwUZCBgYT7ZPiEohCw1UE9dj29eZtsX3vEFyFBFF3CxF165H
-         4sEwkCIvJYdPMnLtM+Bm0qmtE+xEmhuJ6dp1k=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=TIrjZTab26Y7/mOA4VmsjFnp5ENGGGKaqxjZpj0fMm0=;
+        b=esY2LIyTRA7NKPUvITWaFDNAXEmLO3x6dMBlVT7+xLCtAFlr8BM3MHFyUNj6TUEVW9
+         8XcU8r5HAq+5ZSH/Y49DlSbEA9YmifCCns6pne2JJJCpxdEvAlhGdXNCHju4dMhggEtf
+         1KaGtz6PerFTfePH3gBCNqaRvRSieKG0oi1pQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=u8o6Blgu8EQOiFNIFi2GbuSLSKU0TlkDDBTNlxoAEtQbV7i/HNPo0Qubk6IbvEM/jM
-         5OWmOqT3XpxODvee6yk6k3YdMV9JdOrTTyafHc8CAMlALsqDL2hfcBz4fAyLrN800pmD
-         9lru4j/fI+uDUVMxBOxWSuHtt66cvjr+Sjtuk=
-Received: by 10.231.200.195 with SMTP id ex3mr1832588ibb.46.1298168489880;
-        Sat, 19 Feb 2011 18:21:29 -0800 (PST)
-Received: from elie ([69.209.79.88])
-        by mx.google.com with ESMTPS id u9sm3460955ibe.14.2011.02.19.18.21.28
-        (version=SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 18:21:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1298143495-3681-5-git-send-email-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=CV6Bpd+5rZPGBsBlszE90qAH6uGcmegPVTYeUCVeXtyiDXILuIVkkxT72E9yP1Mtdm
+         S1dgft+xf5C9Mc2Ma2lrVUTmex6Vi3CsPiYmmfcniLeWZ5cV6g5AqhVY7sma2MxF0yup
+         CJQKMIfSIkpqTD2VtjIKfXIySPP5wq55gmZjY=
+Received: by 10.42.226.69 with SMTP id iv5mr3120146icb.43.1298168998103; Sat,
+ 19 Feb 2011 18:29:58 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Sat, 19 Feb 2011 18:29:28 -0800 (PST)
+In-Reply-To: <7vipwibfc5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167393>
 
-One more comment.  (The gettextization so far looks good to me.)
+On Thu, Feb 17, 2011 at 3:01 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> diff --git a/builtin/merge.c b/builtin/merge.c
+>> index 9403747..454dad2 100644
+>> --- a/builtin/merge.c
+>> +++ b/builtin/merge.c
+>> @@ -971,6 +971,13 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 die("You have not concluded your merge (MERGE_HEAD exists).");
+>> =C2=A0 =C2=A0 =C2=A0 }
+>> + =C2=A0 =C2=A0 if (file_exists(git_path("CHERRY_PICK_HEAD"))) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (advice_resolve_confl=
+ict)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 die("You have not concluded your cherry-pick (CHERRY_PICK_HEAD exis=
+ts).\n"
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 "Please, commit your changes before you can merge.");
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 die("You have not concluded your cherry-pick (CHERRY_PICK_HEAD exis=
+ts).");
+>> + =C2=A0 =C2=A0 }
+>
+> Micronit: "Please, commit your changes before you can merge."
+>
+> =C2=A0- We are not merging in this codepath to begin with;
+>
+> =C2=A0- I'd suggest rephrasing this (together with "MERGE_HEAD" codep=
+ath) to
+> =C2=A0 something like:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0"Commit your changes first before retrying=
+=2E"
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+This hunk is from Jonathan, so I'd like him to address your comment as
+well, but I think the current message is correct. This hunk is inside
+cmd_merge and the user is about to start a merge. IOW:
 
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -31,7 +31,7 @@ static void safe_create_dir(const char *dir, int sh=
-are)
->  		}
->  	}
->  	else if (share && adjust_shared_perm(dir))
-> -		die("Could not make %s writable by group", dir);
-> +		die(_("Could not make %s writable by group"), dir);
+$ git cherry-pick   # fails, leave behinds CHERRY_PICK_HEAD
+ [... time passes ...]
+$ git merge
+You have not concluded your cherry-pick (CHERRY_PICK_HEAD exists).
+Please, commit your changes before you can merge.
 
-Hmm, forgot to include something like the following in the reply to
-patch 1.
+> Getting tired of seeing these five lines repeated over and over. =C2=A0=
+Perhaps
+> it is time to introduce:
 
-> @@ -346,7 +346,7 @@ int init_db(const char *template_dir, unsigned in=
-t flags)
->  		else if (shared_repository =3D=3D PERM_EVERYBODY)
->  			sprintf(buf, "%d", OLD_PERM_EVERYBODY);
->  		else
-> -			die("oops");
-> +			die(_("oops"));
+Okay. (Will roll in from Jonathan's later email.)
 
-(Not related to this series, but that seems like a pretty unhelpful
-error message.)
----
- gettext.h |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+>> + =C2=A0 =C2=A0 git cherry-pick --no-commit base &&
+>> +
+>> + =C2=A0 =C2=A0 test_cmp_rev base CHERRY_PICK_HEAD
+>
+> If the next "git commit" would notice and use this information, that =
+would
+> introduce an unpleasant regression to one use case in my workflow, wh=
+ich
+> is to pick and consolidate one or more small pieces made on a private
+> "misc" branch, possibly with a bit of further work, into a new commit=
+ with
+> a readable explanation that is unrelated to any of the original commi=
+ts:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git cherry-pick --no-commit $some_commit
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git cherry-pick --no-commit $another_commi=
+t ;# optional
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0edit ;# optional
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit
+>
+> I'd prefer to see a way to tell cherry-pick not to leave CHERRY_PICK_=
+HEAD
+> behind when "cherry-pick --no-commit" results in a successful cherry-=
+pick
+> to avoid a backward incompatibility surprise. =C2=A0Otherwise people =
+need to
+> retrain their fingers to say --reset-author when they run "git commit=
+".
 
-diff --git a/gettext.h b/gettext.h
-index 2f806cb..2bd70d4 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -5,6 +5,8 @@
- #error "namespace conflict: _ is pre-defined?"
- #endif
-=20
-+#define FORMAT_PRESERVING(n) __attribute__((format_arg(n)))
-+
- /*
-  * Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-  *
-@@ -13,7 +15,7 @@
-  * a future patch series.
-  */
-=20
--static inline const char *_(const char *msgid)
-+static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
- {
- 	return msgid;
- }
---=20
-1.7.4.1
+Okay. In that case, I think when using --no-commit, we shouldn't write
+CHERRY_PICK_HEAD regardless of whether there is a conflict or not.
+
+j.
