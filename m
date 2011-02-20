@@ -1,92 +1,117 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: Creating remote branch called HEAD corrupts remote clones
-Date: Sun, 20 Feb 2011 14:17:50 +0100
-Message-ID: <AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
-References: <ih1449$ul6$1@dough.gmane.org>
-	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
-	<20110120203840.GA11468@sigill.intra.peff.net>
-	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
-	<20110120215456.GB11468@sigill.intra.peff.net>
-	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
-	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
-	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 2/3] gitweb/gitweb.perl: remove use of qw(...) as parentheses
+Date: Sun, 20 Feb 2011 15:42:46 +0100
+Message-ID: <201102201542.47590.jnareb@gmail.com>
+References: <1298124654-12051-1-git-send-email-avarab@gmail.com> <201102191654.41601.jnareb@gmail.com> <AANLkTi==3c4ZLckUPE6NUt-sqWBsywQh3Gu+4B5vOBpj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 14:17:57 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 15:43:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pr9Ai-0003qB-GU
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 14:17:56 +0100
+	id 1PrAVB-0007xi-G2
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 15:43:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430Ab1BTNRw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 08:17:52 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:34793 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752425Ab1BTNRw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 08:17:52 -0500
-Received: by qwd7 with SMTP id 7so1424952qwd.19
-        for <git@vger.kernel.org>; Sun, 20 Feb 2011 05:17:51 -0800 (PST)
+	id S1753650Ab1BTOnE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 09:43:04 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47213 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752910Ab1BTOnC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Feb 2011 09:43:02 -0500
+Received: by fxm17 with SMTP id 17so717679fxm.19
+        for <git@vger.kernel.org>; Sun, 20 Feb 2011 06:43:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IXVr2x1DHhzFzUgaY6BJa1ZgNzPQtzfBRK7Rodl4i9Q=;
-        b=RD+4kdiv0oPuWMYIuOhvGSd4xVi34QZ0sjA6oQ1QK+CEJzuswhd+hAShz2ZgI9P+T3
-         tPsfjkS+fNqNhxvNRw0wp1ghAnf2D+A/JCgGfYdWLSgGyvTQNBdwKarkS91ssndgpBWV
-         gB8T7jBi8QyN2nZl2SrjaGAR3WzYei79x4h/c=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=CoOgAJv806B9chUrnye548mmJ4jhHXhq2Ypmnke0WM0=;
+        b=DAB88am+OFOTBHPdB6bwmdZLxFjcs9DO/Opi3/ASvlL6zKZlxAalRQxjXDiDSAHQ6H
+         BWPzrBiekBPWYOZINnCkuSqyAZjOxVw2mX3TngoiAdq+BEOpmJNum/VF9nXDN0YCLfk/
+         uk9RpAy6uZqK1ptxq22gJIq2l+g058ZrmNnBw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Go91my5cuXWLXnNo10IcDIJ7k+rDvcQBIyeYfxSxc6s+PMBolY+qfCA7ZGRZuVjjEV
-         YckRYtDv4TkiUwNZpoZ0QeUeG1MH/iUTKM3kTANOlQKy0dr9c5gtY1Gp/5VRJHJr4/4a
-         u8GfYBzX4uwpAQfbznUzGPIjuLtkkPWbIrpaY=
-Received: by 10.229.220.83 with SMTP id hx19mr227118qcb.52.1298207870417; Sun,
- 20 Feb 2011 05:17:50 -0800 (PST)
-Received: by 10.229.236.148 with HTTP; Sun, 20 Feb 2011 05:17:50 -0800 (PST)
-In-Reply-To: <AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=WxQOF/D5os+5aT2EiZOHGCuC0ru78KzsCaabDHQinNGc+Z1UUa7RsEWuPm4BzsEjPZ
+         DTSDmW1L2lo1zX/ZgIYe+LlY5Yi9MzZzZ3mnK2QBtjljZIi7HvdfE9eIIORGGrpCTWOe
+         CvcbG6BFq8RB+1yYt3jk43tuvk5kt1/zT3uRo=
+Received: by 10.223.72.207 with SMTP id n15mr539314faj.49.1298212980666;
+        Sun, 20 Feb 2011 06:43:00 -0800 (PST)
+Received: from [192.168.1.13] (abvz77.neoplus.adsl.tpnet.pl [83.8.223.77])
+        by mx.google.com with ESMTPS id 17sm1974414far.43.2011.02.20.06.42.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 20 Feb 2011 06:42:58 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTi==3c4ZLckUPE6NUt-sqWBsywQh3Gu+4B5vOBpj@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167425>
 
-bump.
-
-I don't think this issue was fixed, was it?
-
-(no need to put kdepim back in the cc list)
-
-On Sat, Jan 22, 2011 at 1:46 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Fri, Jan 21, 2011 at 7:37 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Dnia sobota 19. lutego 2011 17:06, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on napisa=C5=82:
+> On Sat, Feb 19, 2011 at 16:54, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+>> On Sat, 19 Feb 2011, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >>
->>> I don't fully understand the issue, so excuse me if this is totally
->>> wrong, but wouldn't a rule like 'you can't create a branch for whic=
-h
->>> there's already a symbolic ref' do the trick?
+>>> Using the qw(...) construct as implicit parentheses was deprecated =
+in
+>>> perl 5.13.5. Change the relevant code in gitweb to not use the
+>>> deprecated construct. The offending code was introduced in 3562198b=
+ by
+>>> Jakub Narebski.
 >>
->> But whose symbolic ref are you checking against? =A0Your own, or one=
-s in
->> somebody else's repository that you haven't recently updated from?
->
-> The local ones. That means that somebody can't create a 'HEAD' branch
-> locally, and can't push a 'HEAD' branch either, as the remote server
-> would already have a 'HEAD' symbolic link. And actually, if for some
-> reason I have a FOO_HEAD, and I fetch a branch called bob/FOO_HEAD,
-> obviously the local symbolic ref without namespace should take
-> precedence.
->
-> --
-> Felipe Contreras
->
+>> It is strange that Perl introduces such backwards incompatibile chan=
+ge
+>> (well, actually will introduce, as 5.13.x is development branch lead=
+ing
+>> to future Perl version 5.14).
+>>
+>> qw{} is described in perlop(1) as "word list" operator, so one would
+>> suppose that it generates a list.
+>=20
+> It does, but it wasn't supposed to generate parens for you.
+
+[...]
+>> Hmmm... does it affect only foreach loop, or dows it affect also oth=
+er
+>> places, like
+>>
+>> =C2=A0 =C2=A0 =C2=A0use POSIX qw( setlocale localeconv )
+>> =C2=A0 =C2=A0 =C2=A0@EXPORT =3D qw( foo bar baz );
+
+[...]
+> No. This is being deprecated because qw(foo bar) is supposed to mean
+> "foo, "bar", not ("foo", "bar"). I.e. this doesn't compile:
+>=20
+>     for my $i "a", "b", "c" { }
+>=20
+> So neither should this:
+>=20
+>     for my $i qw(a b c) {}
+>=20
+> But these both work:
+>=20
+>     for my $i ("a", "b", "c") { }
+>     for my $i (qw(a b c)) {}
+>=20
+> All of your other examples could have used a list without implicit
+> parens. So this is the only change that's needed in gitweb.
+
+Thanks for the explanation.  It makes sense.  So:
+
+Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+
+--=20
+Jakub Narebski
+Poland
