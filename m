@@ -1,118 +1,137 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH v2 1/2] git-p4: Improve rename detection support
-Date: Sun, 20 Feb 2011 01:18:24 +0000
-Message-ID: <1298164705-5366-2-git-send-email-vitor.hda@gmail.com>
-References: <1298164705-5366-1-git-send-email-vitor.hda@gmail.com>
-Cc: Vitor Antunes <vitor.hda@gmail.com>, Pete Wyckoff <pw@padd.com>,
-	Tor Arvid Lund <torarvid@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 02:19:18 2011
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 01/72] gettext.h: add no-op _() and N_() wrappers
+Date: Sat, 19 Feb 2011 20:01:30 -0600
+Message-ID: <20110220020130.GA17225@elie>
+References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
+ <1298143495-3681-2-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 03:01:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PqxxF-0005rP-Fn
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 02:19:17 +0100
+	id 1PqycR-0003VO-8K
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 03:01:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039Ab1BTBTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Feb 2011 20:19:03 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:44941 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753507Ab1BTBTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Feb 2011 20:19:00 -0500
-Received: by mail-ww0-f44.google.com with SMTP id 36so5016609wwa.1
-        for <git@vger.kernel.org>; Sat, 19 Feb 2011 17:19:00 -0800 (PST)
+	id S1752238Ab1BTCBh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Feb 2011 21:01:37 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37408 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832Ab1BTCBg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Feb 2011 21:01:36 -0500
+Received: by iwn8 with SMTP id 8so731278iwn.19
+        for <git@vger.kernel.org>; Sat, 19 Feb 2011 18:01:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=swVUe1BDKovAZqIuqFSrr/qs8Qj2E46xYSWsPuynads=;
-        b=xUcH1NA/W0rRwAkhOKNEzOxTz6sTrsjuCIpWRaW320Y4M2K2pX9gtB3vy7ZXvZRZog
-         PCybQkYW7owRa4WF3XKzSgevqrgDy1kAA9MnZ4ZGM94pYV+5v9/EXNNSIvTQZUeduVxO
-         LzhxVWI5opgBGo3JJZoQZscrARZsfw4SuDXa0=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=jyO0jXfrNYMiZ10/1H/bD4rSzYEi6uALgD+gBKz9UzA=;
+        b=XIvfFBzVL4dKkSdv4i9hK8Z+K58MR05MiHdfMEsUm+zR9+wFsmgMzRg3wwhRf4p11W
+         5yoCpo+jr3B98AVrgrbQm7brwjj7OI/IPV5bgJiZGJ4PdbMExdFrlxOA9bX8eGvC5P99
+         mYJhn1tF10Z/LPo83JP1EIR+3pNIX9SpPrNTY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=H6Jcae4+u7KAK0i3sU3I1fBtmH1EHFFu35wZAD4ln2xPeo+gAcyfQd1k/DkjtXGe+u
-         7/1WDNz7Ai7e5cdtlCjr4S4te1/NZmZYgSvaxXx8Fsck0IPTDNrUR03LowpCMaa/rlB8
-         hrTOb2ZURAdY40XdaDVROfAXwxE3RL4g12uEE=
-Received: by 10.227.155.15 with SMTP id q15mr2035908wbw.133.1298164740187;
-        Sat, 19 Feb 2011 17:19:00 -0800 (PST)
-Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt [77.54.216.111])
-        by mx.google.com with ESMTPS id u9sm2909192wbg.12.2011.02.19.17.18.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 Feb 2011 17:18:59 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1298164705-5366-1-git-send-email-vitor.hda@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=jDJNTV/kcNV1RKdLzGkHX5h5dyXjKnoamNSitJ3bGsdPiZlQuw48zaht5qHDZ8dMsV
+         A5tVHahCxi+YIZPKpnzlYtVI6hkuv/PFs+YPDN662Mx81zHMvrgwvMjr5f6p40mAi/9/
+         AKsPEuqK3uYVsPKLBk/uHi/DFmNjlIWDls0ko=
+Received: by 10.231.30.76 with SMTP id t12mr1766782ibc.163.1298167296307;
+        Sat, 19 Feb 2011 18:01:36 -0800 (PST)
+Received: from elie ([69.209.79.88])
+        by mx.google.com with ESMTPS id i16sm3446644ibl.18.2011.02.19.18.01.34
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Feb 2011 18:01:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1298143495-3681-2-git-send-email-avarab@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167390>
 
-Only open files for edit after integrating if the SHA1 of source and destination
-differ from each other.
-Add git config option detectRenames to allow permanent rename detection. This
-options should be set to a true/false value.
-Rename "detectRename" variable to "detectRenames" to make it more coherent with
-the description in git man pages, which always use plural.
+Hi =C3=86var,
 
-Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
-Acked-by: Pete Wyckoff <pw@padd.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> Add a new header called gettext.h which is currently a no-op.
+
+Thanks.  I'd suggest squashing this with patch #2 (#including
+gettext.h in cache.h).
+
+> --- /dev/null
+> +++ b/gettext.h
+> @@ -0,0 +1,9 @@
+> +/*
+> + * Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+
+Is such a simple header file copyrightable?  But I don't mind.
+
+> + *
+> + * This is a skeleton no-op implementation of gettext for Git. It'll
+> + * be replaced by something that uses libintl.h and wraps gettext() =
+in
+> + * a future patch series.
+> + */
+> +#define N_(s) (s)
+
+Might be nice to make this an inline function, for type safety.
+
+> +#define _(s) (s)
+
+This one can't be a function, though, since it needs to transform
+literals to literals.
+
+Some possible tweaks:
+
+ - protect against double inclusion
+ - make _ into a function
+ - add a comment vaguely explaining N_
+ - avoid confusing errors if some other header has pre-defined _.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- contrib/fast-import/git-p4 |   19 +++++++++++++++----
- 1 files changed, 15 insertions(+), 4 deletions(-)
+ gettext.h |   19 +++++++++++++++++--
+ 1 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index a92beb6..b0da28a 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -543,13 +543,13 @@ class P4Submit(Command):
-         self.options = [
-                 optparse.make_option("--verbose", dest="verbose", action="store_true"),
-                 optparse.make_option("--origin", dest="origin"),
--                optparse.make_option("-M", dest="detectRename", action="store_true"),
-+                optparse.make_option("-M", dest="detectRenames", action="store_true"),
-         ]
-         self.description = "Submit changes from git to the perforce depot."
-         self.usage += " [name of git branch to submit into perforce depot]"
-         self.interactive = True
-         self.origin = ""
--        self.detectRename = False
-+        self.detectRenames = False
-         self.verbose = False
-         self.isWindows = (platform.system() == "Windows")
- 
-@@ -613,7 +613,16 @@ class P4Submit(Command):
- 
-     def applyCommit(self, id):
-         print "Applying %s" % (read_pipe("git log --max-count=1 --pretty=oneline %s" % id))
--        diffOpts = ("", "-M")[self.detectRename]
+diff --git a/gettext.h b/gettext.h
+index c68bbe9..2f806cb 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -1,3 +1,10 @@
++#ifndef GETTEXT_H
++#define GETTEXT_H
 +
-+        if not self.detectRenames:
-+            # If not explicitly set check the config variable
-+            self.detectRenames = gitConfig("git-p4.detectRenames").lower() == "true"
++#ifdef _
++#error "namespace conflict: '_' is pre-defined?"
++#endif
 +
-+        if self.detectRenames:
-+            diffOpts = "-M"
-+        else:
-+            diffOpts = ""
+ /*
+  * Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+  *
+@@ -5,5 +12,13 @@
+  * be replaced by something that uses libintl.h and wraps gettext() in
+  * a future patch series.
+  */
+-#define N_(s) (s)
+-#define _(s) (s)
 +
-         diff = read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (diffOpts, id, id))
-         filesToAdd = set()
-         filesToDelete = set()
-@@ -640,8 +649,10 @@ class P4Submit(Command):
-             elif modifier == "R":
-                 src, dest = diff['src'], diff['dst']
-                 p4_system("integrate -Dt \"%s\" \"%s\"" % (src, dest))
--                p4_system("edit \"%s\"" % (dest))
-+                if diff['src_sha1'] != diff['dst_sha1']:
-+                    p4_system("edit \"%s\"" % (dest))
-                 if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
-+                    p4_system("edit \"%s\"" % (dest))
-                     filesToChangeExecBit[dest] = diff['dst_mode']
-                 os.unlink(dest)
-                 editedFiles.add(dest)
--- 
++static inline const char *_(const char *msgid)
++{
++	return msgid;
++}
++
++/* Mark msgid for translation but do not translate it. */
++#define N_(msgid) (msgid)
++
++#endif
+--=20
 1.7.4.1
