@@ -1,100 +1,83 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 03/72] t/test-lib.sh: add always-set NO_GETTEXT_POISON prerequisite
-Date: Sun, 20 Feb 2011 23:31:10 +0100
-Message-ID: <AANLkTikRv9BGWXrf5u7xptgZ9hajeju-QU7WS9Zj3sYP@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 03/72] t/test-lib.sh: add always-set NO_GETTEXT_POISON
+ prerequisite
+Date: Sun, 20 Feb 2011 16:36:00 -0600
+Message-ID: <20110220223600.GB32455@elie>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
-	<1298143495-3681-4-git-send-email-avarab@gmail.com>
-	<20110220021031.GB17305@elie>
-	<AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
-	<20110220215533.GB32142@elie>
-	<AANLkTikJbwp+-=sgX2RLo-aXA_gmmO2gLsC=+MxEYxXg@mail.gmail.com>
-	<20110220221033.GD32142@elie>
+ <1298143495-3681-4-git-send-email-avarab@gmail.com>
+ <20110220021031.GB17305@elie>
+ <AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
+ <20110220215533.GB32142@elie>
+ <AANLkTikJbwp+-=sgX2RLo-aXA_gmmO2gLsC=+MxEYxXg@mail.gmail.com>
+ <20110220221033.GD32142@elie>
+ <AANLkTikRv9BGWXrf5u7xptgZ9hajeju-QU7WS9Zj3sYP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 23:31:19 2011
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 23:36:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrHoD-0001eC-4n
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 23:31:17 +0100
+	id 1PrHsx-0003kI-28
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 23:36:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755224Ab1BTWbM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 17:31:12 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:49469 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754719Ab1BTWbL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 17:31:11 -0500
-Received: by fxm17 with SMTP id 17so932593fxm.19
-        for <git@vger.kernel.org>; Sun, 20 Feb 2011 14:31:10 -0800 (PST)
+	id S1755282Ab1BTWgG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 17:36:06 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:54377 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755246Ab1BTWgE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 17:36:04 -0500
+Received: by iwn8 with SMTP id 8so1304195iwn.19
+        for <git@vger.kernel.org>; Sun, 20 Feb 2011 14:36:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2nj07HMRBJ+TgFYpwqTusgIxC5l4vx/ts07PF7njSko=;
-        b=bvUFpr/4pOVDaqTqDfd7fPii3PQ6Gk0wqZxhMatkV/gwZLTHFxrZjIg8nW/mcOW8qt
-         5K8G6ydt6Z7oBoRMRMKY+B42CbtIXvMLbgSF8WWMlB9KZ2P6KAHpoFltONGmgxXby7c7
-         nQwbGTMHIFlUPBTyg1dco5OA3JtL4wFUQCCyE=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=nbDzdEZiMOniz+miowrERfFViFrYS33QWeDPRX7bgmg=;
+        b=apkTgJJMzgGmJDHIIQ6UUIMSfaY5bkLgRT/ijm3Us8XAxnCNMudnN+fNwnwa69yVGn
+         s7CLJcwI7BMzLf5ZDliqD2L+Rx1DAqzftyyzZoTFP0+XelLip+F3f2aLN0ey2JuNvN+W
+         G2AtRmeAB0NyI6ba1pRL8ZJyYBOhM97+QlmH0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QXU/1xcfjMGGJuecoYXDCbDzLZroDOaADyex+fbePJrs6DwaANZr4xueYygHPeX6jA
-         FSBU8vTgnMj4eacxWLGaJSHwM+zL2Fz4VOKS1kKfw8Q2vgXmK3+GdlFqunlM1Ju3zK/S
-         d1GtNAkROUHLpP7SpphixoLfoErOGDAxsSjG8=
-Received: by 10.223.95.203 with SMTP id e11mr965796fan.60.1298241070363; Sun,
- 20 Feb 2011 14:31:10 -0800 (PST)
-Received: by 10.223.2.201 with HTTP; Sun, 20 Feb 2011 14:31:10 -0800 (PST)
-In-Reply-To: <20110220221033.GD32142@elie>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=QrM5OcFBR056NXyZxtTa6APk5tahLAaYq9Ko4wu2cYyyMyB3apOlV6iAhV2v9/LMrC
+         ubKLTY3qIJTF3QE00svPYjBgIbHaRogDnqnapN9zKn8xODXJF1Eexgl7eJGFe/wuRhCB
+         qdiRvGmYXdDl1l4iD7KmxFS5umhTuuoPCgpn0=
+Received: by 10.231.11.139 with SMTP id t11mr603752ibt.189.1298241364384;
+        Sun, 20 Feb 2011 14:36:04 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
+        by mx.google.com with ESMTPS id u9sm4491811ibe.2.2011.02.20.14.36.02
+        (version=SSLv3 cipher=OTHER);
+        Sun, 20 Feb 2011 14:36:03 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikRv9BGWXrf5u7xptgZ9hajeju-QU7WS9Zj3sYP@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167434>
 
-On Sun, Feb 20, 2011 at 23:10, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> The only reason I can think of to have it is to make sure that
+> messages like the "enter the commit message" ones have the correct
+> newlines in all languages, but msgfmt --check catches that anyway, or
+> to somehow test Git's output in different languages, but I'd rather d=
+o
+> that differently (not test output, but behavior).
 >
->> Well, the feature I have is to inject garbage into the gettext strin=
-gs
->> in an effort to smoke out when I break the plumbing. So I think give=
-n
->> that functionality calling it NO_GETTEXT_POISON makes sense.
->>
->> But I plan to add something to smoke other languages etc. later. The=
-n
->> I might name that other prerequisite something else.
->
-> On second thought, another possibility would be _two_ prerequisites,
-> one NO_GETTEXT_POISON one and one ENGLISH one. =C2=A0The weird edge c=
-ases
-> could require NO_GETTEXT_POISON, causing the reader to look to
-> t/README to figure out what is going on. =C2=A0The others would just =
-use
-> ENGLISH.
->
-> Does that sound reasonable?
+> So given all of the above I might never get around to implementing it=
+=2E
 
-Yes, I suggested implementing that in the "enter the commit message"
-patch, but since we don't have a 100% translation yet I was going to
-wait until then.
-
-It's also a very low priority, the point of these tests is to make
-sure I don't make a plumbing message translatable. The things that
-start failing under a testing mode like ENGLISH are by definition a
-subset of the things that'll start failing under NO_GETTEXT_POISON. So
-there's not a lot of incentive for me to implement that.
-
-The only reason I can think of to have it is to make sure that
-messages like the "enter the commit message" ones have the correct
-newlines in all languages, but msgfmt --check catches that anyway, or
-to somehow test Git's output in different languages, but I'd rather do
-that differently (not test output, but behavior).
-
-So given all of the above I might never get around to implementing it.
+I guess I'm confused.  I've been saying (repeatedly, and probably
+annoyingly) that anyone seeing the NO_GETTEXT_POISON prereq for the
+first time isn't going to have any clue what it means.  I think that's
+a problem.  Do you not think so?
