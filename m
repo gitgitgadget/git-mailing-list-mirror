@@ -1,65 +1,74 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/4] bump rename limit defaults (again)
-Date: Sun, 20 Feb 2011 05:10:24 -0500
-Message-ID: <20110220101024.GC988@sigill.intra.peff.net>
+Date: Sun, 20 Feb 2011 05:12:47 -0500
+Message-ID: <20110220101247.GD988@sigill.intra.peff.net>
 References: <20110219101936.GB20577@sigill.intra.peff.net>
  <20110219102128.GB22508@sigill.intra.peff.net>
- <AANLkTim2ETC0T8=8D5pWstZRZ95eo5V0+Pr62mNXRBH1@mail.gmail.com>
+ <AANLkTi=aWC_sXK1VBspsiVAwhkC4pP8Z+uq7QceLMopS@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Martin Langhoff <martin.langhoff@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 11:10:32 2011
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 11:12:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pr6FL-0003nR-S6
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 11:10:32 +0100
+	id 1Pr6He-0004fE-Pu
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 11:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752733Ab1BTKK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Feb 2011 05:10:27 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44521 "EHLO peff.net"
+	id S1752888Ab1BTKMu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 05:12:50 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44527 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752643Ab1BTKK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Feb 2011 05:10:26 -0500
-Received: (qmail 16649 invoked by uid 111); 20 Feb 2011 10:10:26 -0000
+	id S1752643Ab1BTKMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Feb 2011 05:12:49 -0500
+Received: (qmail 16679 invoked by uid 111); 20 Feb 2011 10:12:49 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 20 Feb 2011 10:10:26 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Feb 2011 05:10:24 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 20 Feb 2011 10:12:49 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Feb 2011 05:12:47 -0500
 Content-Disposition: inline
-In-Reply-To: <AANLkTim2ETC0T8=8D5pWstZRZ95eo5V0+Pr62mNXRBH1@mail.gmail.com>
+In-Reply-To: <AANLkTi=aWC_sXK1VBspsiVAwhkC4pP8Z+uq7QceLMopS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167413>
 
-On Sat, Feb 19, 2011 at 06:54:47PM +0100, Piotr Krukowiecki wrote:
+On Sat, Feb 19, 2011 at 09:12:49PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> On Sat, Feb 19, 2011 at 11:21 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Feb 19, 2011 at 11:21, Jeff King <peff@peff.net> wrote:
+>=20
 > > Let's bump the diff/merge default limits from 200/500 to
 > > 400/1000. Those are 2 seconds and 10 seconds respectively on
 > > my modern hardware.
-> 
-> Just curious - what is your modern hardware?
+>=20
+> This is somewhat outside the scope of your patch, but rather than
+> making these decisions for the user and compiling them into Git
+> wouldn't it be better to expose it somehow?
 
-It's a Core i7 840QM. So it's a measly 1.8GHz, but it turboboosts up to
-3.2GHz on a single-threaded process.  The multiple cores are irrelevant
-for this timing, as it's very single-threaded[1].
+What do you mean by expose it? We already have config options; this is
+just for the defaults.
 
-The process used in the tens of megabytes of memory, so I think memory
-size is irrelevant. It was very CPU bound in my tests.
+Or do you mean allowing setting merge.renamelimits to "30s" and cutting
+off detection after 30 seconds? I think that would be a reasonable idea=
+,
+though part of me doesn't like non-deterministic answers based on how
+loaded the system is.
+
+> E.g. when you do a git-merge show a progress bar (similar to
+> git-clone) showing that we're trying to do rename detection, show tha=
+t
+> we stopped, and when we fail point out that the user could run
+> git-merge with some switch that would make Git try harder.
+
+Er, isn't that exactly what patches 1/4 and 4/4 in my series do?
 
 -Peff
-
-[1] Actually, this is one place where multi-threading the algorithm
-would be very easy. It's literally an m*n double-loop, seeing which of
-each "n" sources matches each "m" destination best, and the expensive
-bit is comparing a source and dest. So you could parallelize score
-calculation up to m*n ways, then just sort the result for each dest.
