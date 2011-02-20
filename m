@@ -1,82 +1,77 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] pull: propagate --progress to merge
-Date: Sun, 20 Feb 2011 04:56:56 -0500
-Message-ID: <20110220095655.GC1082@sigill.intra.peff.net>
-References: <20110220094803.GA988@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH 4/4] inexact rename detection eye candy
+Date: Sun, 20 Feb 2011 05:04:24 -0500
+Message-ID: <20110220100424.GB988@sigill.intra.peff.net>
+References: <20110219101936.GB20577@sigill.intra.peff.net>
+ <20110219102533.GD22508@sigill.intra.peff.net>
+ <AANLkTi=s6FxnYVv3UinV4Q+4C_9dX9rCLQQoCFD7kG9S@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 20 10:57:04 2011
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 11:04:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pr62J-0007fB-Qv
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 10:57:04 +0100
+	id 1Pr69i-0001or-CX
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 11:04:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753065Ab1BTJ47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Feb 2011 04:56:59 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:42946 "EHLO peff.net"
+	id S1753005Ab1BTKE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Feb 2011 05:04:28 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60318 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753032Ab1BTJ46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Feb 2011 04:56:58 -0500
-Received: (qmail 16567 invoked by uid 111); 20 Feb 2011 09:56:58 -0000
+	id S1752654Ab1BTKE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Feb 2011 05:04:27 -0500
+Received: (qmail 16598 invoked by uid 111); 20 Feb 2011 10:04:26 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 20 Feb 2011 09:56:58 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Feb 2011 04:56:56 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 20 Feb 2011 10:04:26 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Feb 2011 05:04:24 -0500
 Content-Disposition: inline
-In-Reply-To: <20110220094803.GA988@sigill.intra.peff.net>
+In-Reply-To: <AANLkTi=s6FxnYVv3UinV4Q+4C_9dX9rCLQQoCFD7kG9S@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167411>
 
-Now that merge understands progress, we should pass it
-along. While we're at it, pass along --no-progress, too.
+On Sat, Feb 19, 2011 at 11:29:33AM -0500, Martin Langhoff wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Probably not a big deal, but good for people who do "git pull
---no-progress" from a cronjob (which should be !isatty(2), but ISTR some
-complaints by people with weird setups).
+> On Sat, Feb 19, 2011 at 5:25 AM, Jeff King <peff@peff.net> wrote:
+> > During a merge, we might spend many seconds doing inexact
+> > rename detection. It's nice to let the user know that
+> > something is actually happening.
+> 
+> Given that we're doing costly work, could the results of rename
+> matching be recorded in a .git/MERGE_RENAMES file?
+> 
+> If that file's available, the simple merge-helper script I've
+> described is possible...
 
-Fetch respects --no-progress, but I don't think it actually works right.
-The transport code seems to only understand "want progress" or "don't
-know, guess on isatty". But it's not really related to this topic, so I
-didn't investigate too far tonight.
+Yeah we can if it's useful, but I'd rather see a prototype merge helper
+first. In particular, your merge helper seems like it would help in two
+situations:
 
- git-pull.sh |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+  1. In a rename/rename conflict, you have X becoming Y on one branch
+     and Z on the other. You want to say "X should have become Y", and
+     then have it 3-way merge X, Y, and Z, storing the result under the
+     name Y.
 
-diff --git a/git-pull.sh b/git-pull.sh
-index f6b7b84..63b063a 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -53,6 +53,8 @@ do
- 		verbosity="$verbosity -v" ;;
- 	--progress)
- 		progress=--progress ;;
-+	--no-progress)
-+		progress=--no-progress ;;
- 	-n|--no-stat|--no-summary)
- 		diffstat=--no-stat ;;
- 	--stat|--summary)
-@@ -293,8 +295,8 @@ true)
- 	;;
- *)
- 	eval="git-merge $diffstat $no_commit $squash $no_ff $ff_only"
--	eval="$eval  $log_arg $strategy_args $merge_args"
--	eval="$eval \"\$merge_name\" HEAD $merge_head $verbosity"
-+	eval="$eval  $log_arg $strategy_args $merge_args $verbosity $progress"
-+	eval="$eval \"\$merge_name\" HEAD $merge_head"
- 	;;
- esac
- eval "exec $eval"
--- 
-1.7.4.1.26.g5e991
+     For that do we actually want the rename list, or just the list of
+     rename/rename conflicts?
+
+  2. If git misses a rename, then by definition won't that rename not be
+     in the MERGE_RENAMES list? I guess it may have picked up the rename
+     on one half of history, and you could use that?
+
+     I'm not quite clear on the exact usage.
+
+So it makes sense to me to get a working merge helper that just uses
+"git diff" as appropriate to look up old renames, and then we'll know
+what information is required.
+
+-Peff
