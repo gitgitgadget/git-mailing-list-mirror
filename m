@@ -1,74 +1,81 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: an error when using 'git send-email'
-Date: Sun, 20 Feb 2011 17:44:27 +0100
-Message-ID: <20110220164427.GA1439@jpl.local>
-References: <AANLkTiktO_f9+g4+wSS989a=pFZBgWGcORd_kg4pji-x@mail.gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Using Origin hashes to improve rebase behavior
+Date: Sun, 20 Feb 2011 18:49:14 +0100
+Message-ID: <20110220174914.GA23366@nibiru.local>
+References: <m21v3fvbix.fsf@hermes.luannocracy.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Yongqiang Yang <xiaoqiangnk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 17:44:50 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 20 18:59:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrCOw-0004Gl-1S
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 17:44:50 +0100
+	id 1PrDZE-00032T-Rl
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 18:59:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997Ab1BTQof convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 11:44:35 -0500
-Received: from smtprelay-h31.telenor.se ([213.150.131.4]:33232 "EHLO
-	smtprelay-h31.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849Ab1BTQof (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Feb 2011 11:44:35 -0500
-Received: from ipb2.telenor.se (ipb2.telenor.se [195.54.127.165])
-	by smtprelay-h31.telenor.se (Postfix) with ESMTP id 91C11EBDAE
-	for <git@vger.kernel.org>; Sun, 20 Feb 2011 17:44:29 +0100 (CET)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuUQAG/TYE1T46eEPGdsb2JhbACIaY5+jkkMAQEBATUvuR+DHYJBBJJe
-X-IronPort-AV: E=Sophos;i="4.62,195,1297033200"; 
-   d="scan'208";a="174279494"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb2.telenor.se with ESMTP; 20 Feb 2011 17:44:29 +0100
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id D9031422AF; Sun, 20 Feb 2011 17:44:27 +0100 (CET)
+	id S1754656Ab1BTR7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Feb 2011 12:59:24 -0500
+Received: from caprica.metux.de ([82.165.128.25]:44416 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754634Ab1BTR7X (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 12:59:23 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p1KHu6S0010656
+	for <git@vger.kernel.org>; Sun, 20 Feb 2011 18:56:24 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p1KHtbKV010579
+	for git@vger.kernel.org; Sun, 20 Feb 2011 18:55:37 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p1KHnErd012921
+	for git@vger.kernel.org; Sun, 20 Feb 2011 18:49:14 +0100
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <AANLkTiktO_f9+g4+wSS989a=pFZBgWGcORd_kg4pji-x@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <m21v3fvbix.fsf@hermes.luannocracy.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167427>
 
-On Friday, February 18, 2011 at 12:45 CET,
-     Yongqiang Yang <xiaoqiangnk@gmail.com> wrote:
+* John Wiegley <johnw@boostpro.com> wrote:
 
-> When I use git 'send-email', I get an error "Command unknown:  'AUTH'
-> at /usr/bin/git-send-email line 775, <STDIN> line 1".
-> Is there anyone meet the same error?
+<snip>
 
-You seem to have configured a username and password for SMTP
-authentication, yet the server Git connects to doesn't support
-authentication.
+> Later, there is work on master which changes the same lines of code that 3'
+> has changed.  The commit which changes 3' is e*
+> 
+>     a   b   c   3'  d   e*  f
+>     o---o---o---o---o---o---o
+>              \
+>               o---o---o---o
+>               1   2   3   4
+> 
+> At a later date, I want to rebase the private branch onto master.  What will
+> happen is that the changes in 3 will conflict with the rewritten changes in
+> e*.  However, I'd like Git to know that 3 was already incorporated at some
+> earlier time, and *not consider it during the rebase*, since it doesn't need
+> to.
 
-Make sure the SMTP server you've configured Git to use
-(sendemail.smtpserver configuration variable) is the right one.
-If so, clear the smtpemail.smtpuser and smtpemail.smtppass
-variables as you obviously can't use them with the server.
+I'm solving these situations by incremental rebase (rebasing onto earlier
+commits than the head, iteratively). A command for that would be nice.
 
-=46or testing purposes there are options to "git send-email" to
-override the values set in the configuration files. Those might
-be more convenient to use when testing out new configurations.
 
---=20
-Magnus B=E4ck                      Opinions are my own and do not neces=
-sarily
-SW Configuration Manager         represent the ones of my employer, etc=
-=2E
-Sony Ericsson
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
