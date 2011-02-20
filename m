@@ -1,158 +1,94 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 01/72] gettext.h: add no-op _() and N_() wrappers
-Date: Sun, 20 Feb 2011 22:11:51 +0100
-Message-ID: <AANLkTinZSpz=H9dt6kRDhOtght_YB4qVpw5WENEYmaQZ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 03/72] t/test-lib.sh: add always-set NO_GETTEXT_POISON
+ prerequisite
+Date: Sun, 20 Feb 2011 15:55:33 -0600
+Message-ID: <20110220215533.GB32142@elie>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
-	<1298143495-3681-2-git-send-email-avarab@gmail.com>
-	<20110220020130.GA17225@elie>
+ <1298143495-3681-4-git-send-email-avarab@gmail.com>
+ <20110220021031.GB17305@elie>
+ <AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 20 22:12:02 2011
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 20 22:55:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrGZS-0006XX-Gn
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 22:11:58 +0100
+	id 1PrHFn-0002TY-HV
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Feb 2011 22:55:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754719Ab1BTVLy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 16:11:54 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:52152 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754480Ab1BTVLx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 16:11:53 -0500
-Received: by fxm17 with SMTP id 17so895827fxm.19
-        for <git@vger.kernel.org>; Sun, 20 Feb 2011 13:11:52 -0800 (PST)
+	id S1754922Ab1BTVzj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 16:55:39 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:54005 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754363Ab1BTVzi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 16:55:38 -0500
+Received: by iwn8 with SMTP id 8so1283192iwn.19
+        for <git@vger.kernel.org>; Sun, 20 Feb 2011 13:55:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bKSQfsYayyfoWVLHVOO6uUUg1K2B2U3R135nksJNQkQ=;
-        b=P65qpEMhSrZge5k8YdGmCJTxoIXM8KNewV+YG9p62FT3n/J13WBno54zcOYfn5Sa2K
-         D9OSRiNUZgMQXuYx6W3235lnebfLDXSvnFArbxT/WIis1d6Dsa3RMwE48sLc1zQgUsGH
-         2+CWkXSWwxfnMtAkqINWA9CevHqDFJ32Efq0o=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=+fX0Q8SX7P4f1VZ0Zu0oL6rIhn2htLK7wdUtHM6oOak=;
+        b=h+XYn3LaGDCo1tahwQULMLhxcVII4wvzaSRLCMjArWcTIAhu9aXAohGZSOSYjGwU0h
+         38PCPpcIjXF7R378qAkKUclmjBDDBTI2GF5heX6IHxqx8uiZ/EOw65NX9qgfaqNMceft
+         6B5dhtbxcGcwqLZwzSSNrUrxxD5vKCaThbRrU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hqjzRPkaXY3IpGpNdR6gXFWLxJk4xLy9lagPniV7uLsj6EZlU5v2gQ+KH6bqxF0c/Z
-         kzYEb3yP4j9FnaV3j5UiXM5/YMHU0F92cUjDb6/fbGtf52xU/iQy5Tl/LJAKRBlUdQY0
-         eA77Gp2wZu65VOtgQrmf1fhQubtnYx/XXRx8E=
-Received: by 10.223.70.136 with SMTP id d8mr907617faj.3.1298236311981; Sun, 20
- Feb 2011 13:11:51 -0800 (PST)
-Received: by 10.223.2.201 with HTTP; Sun, 20 Feb 2011 13:11:51 -0800 (PST)
-In-Reply-To: <20110220020130.GA17225@elie>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=r5vytVFuRkGNfjtsB6OW63WxlyTUmZeQjSP5xdL2f58PVmjFkFPjvn16Gk2eLJhhxA
+         p/hLw57pAwJ3CFa93lAlhDZRp8N+N+tpAeoHGk+e1yH7tCZgOIbsQsc49XV8RnmOsapU
+         2819MEwsY0bCDnv6AmpNROQgyR2E6o+970epI=
+Received: by 10.231.129.68 with SMTP id n4mr605746ibs.67.1298238937608;
+        Sun, 20 Feb 2011 13:55:37 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
+        by mx.google.com with ESMTPS id i16sm4460167ibl.6.2011.02.20.13.55.35
+        (version=SSLv3 cipher=OTHER);
+        Sun, 20 Feb 2011 13:55:36 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167429>
 
-On Sun, Feb 20, 2011 at 03:01, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> It's explicitly about tests that can't deal with poison, not
+> non-English. See this comment in patch  28/72:
 >
->> Add a new header called gettext.h which is currently a no-op.
+>     gettextize: git-commit "enter the commit message" message
 >
-> Thanks. =C2=A0I'd suggest squashing this with patch #2 (#including
-> gettext.h in cache.h).
->
->> --- /dev/null
->> +++ b/gettext.h
->> @@ -0,0 +1,9 @@
->> +/*
->> + * Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->
-> Is such a simple header file copyrightable? =C2=A0But I don't mind.
->
->> + *
->> + * This is a skeleton no-op implementation of gettext for Git. It'l=
-l
->> + * be replaced by something that uses libintl.h and wraps gettext()=
- in
->> + * a future patch series.
->> + */
->> +#define N_(s) (s)
->
-> Might be nice to make this an inline function, for type safety.
->
->> +#define _(s) (s)
->
-> This one can't be a function, though, since it needs to transform
-> literals to literals.
->
-> Some possible tweaks:
->
-> =C2=A0- protect against double inclusion
-> =C2=A0- make _ into a function
-> =C2=A0- add a comment vaguely explaining N_
-> =C2=A0- avoid confusing errors if some other header has pre-defined _=
-=2E
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> =C2=A0gettext.h | =C2=A0 19 +++++++++++++++++--
-> =C2=A01 files changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/gettext.h b/gettext.h
-> index c68bbe9..2f806cb 100644
-> --- a/gettext.h
-> +++ b/gettext.h
-> @@ -1,3 +1,10 @@
-> +#ifndef GETTEXT_H
-> +#define GETTEXT_H
-> +
-> +#ifdef _
-> +#error "namespace conflict: '_' is pre-defined?"
-> +#endif
-> +
-> =C2=A0/*
-> =C2=A0* Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> =C2=A0*
-> @@ -5,5 +12,13 @@
-> =C2=A0* be replaced by something that uses libintl.h and wraps gettex=
-t() in
-> =C2=A0* a future patch series.
-> =C2=A0*/
-> -#define N_(s) (s)
-> -#define _(s) (s)
-> +
-> +static inline const char *_(const char *msgid)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 return msgid;
-> +}
-> +
-> +/* Mark msgid for translation but do not translate it. */
-> +#define N_(msgid) (msgid)
-> +
-> +#endif
+>     Gettextize the "# Please enter the commit message for your change=
+s."
+>     message. Several tests in t7500-commit.sh and t7502-commit.sh ass=
+ume
+>     that this message starts with a newline. Change the tests to to s=
+kip
+>     under GETTEXT_POISON=3DYesPlease.
 
-Thanks for this. This was raised earlier in the discussion for this
-series (by you, IIRC). I've considered it, and while I see your point
-(type safety =3D good) I think I like my way of doing it better.
+Shouldn't the functional part (the starting newline, opening # marks)
+be untranslatable then, to avoid making a trap for translators?  Such
+a fix could happen at any time, and until then, we could skip those
+tests in the non-English case.
 
-The _() macro/function is usually a macro and not a function. The good
-thing about this is that I can prove that it's a no-op on all
-compilers, whereas if it's an inline function (stupid) compilers will
-actually make it into a function, which'll result in overhead,
-which'll mean I can't advertise this series as a "no-op" anymore.
+Since that codepath requires human intervention anyway (which is
+generally slow), I can't imagine doing that would hurt runtime
+performance enough to matter.
 
-Check out some of the recent work in perl.git for reference. There's
-now a probe in perl which check is the compiler can *really* handle
-inline functions, and if not perl will fall back on using macros.
+But I do get your point --- perhaps in some other circumstance we have
+to rely on some intelligence by the translator for correct behavior.
+So maybe it means something along the lines of
 
-I'd rather not use inline functions for every string in Git without
-such a probe, especially since it's for a very marginal gain. Using
-_() for non-strings isn't going to make it past the list, and if it's
-used with e.g. multiple arguments compilers will already whine about
-it.
+	test_set_prereq SANE_TRANSLATION
 
-So that's why I didn't do it. But if everyone else feels strongly
-about it I'll change my mind, I don't care *that* much about it, but
-I'd prefer a macro.
+?
