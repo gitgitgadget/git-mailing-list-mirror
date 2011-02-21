@@ -1,100 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: default -u<mode> is 'normal'
-Date: Mon, 21 Feb 2011 10:46:47 -0800
-Message-ID: <7vei71jkdk.fsf@alter.siamese.dyndns.org>
-References: <20110219163008.GA16117@localhost>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] do not overwrite untracked symlinks
+Date: Mon, 21 Feb 2011 20:46:23 +0100
+Message-ID: <20110221194623.GA31181@localhost>
+References: <201102022025.06140.j6t@kdbg.org>
+ <7v7hdixkys.fsf@alter.siamese.dyndns.org>
+ <201102022324.22123.j6t@kdbg.org>
+ <201102051918.44848.j6t@kdbg.org>
+ <20110205183351.GA25717@localhost>
+ <20110220121343.GA21514@localhost>
+ <7vaahpluy9.fsf@alter.siamese.dyndns.org>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Feb 21 19:47:02 2011
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 20:44:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pramj-0005Kq-IO
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 19:47:01 +0100
+	id 1Prbge-0001UW-P4
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 20:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752730Ab1BUSq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 13:46:57 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37024 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751518Ab1BUSq4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 13:46:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 41FF33DDE;
-	Mon, 21 Feb 2011 13:48:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xPYFGkSAvBetJuTLpSrXDh6Xitw=; b=wARFyV
-	pJGSOU1kVyFH5sVPzZ7WML/pL/bGlYGxdaKvEtYgE2Ucogq2X9QI0PPMctDe4JD3
-	anGjzXzIm7MIk4lqtdCbCDJEM1UbGZpet5wc7zbm1Bvth3O89QuSb9oQfS2zws7j
-	lz6F6evrbHp2z75l2VxxxlnOQH0k4KvGI5dz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lsa7NToIJ/iCHVacQ7vUrtlYt4kfkA/Z
-	+9CviBXjWNYtsYsxISEXAN98nL4srjerqaugKOotVamgf3UCDrqPeKOlvXu/lKHa
-	eBrd/s7aDOxvXeSkOZAcQv+MwnKQiGV/RABMWK9asfvP+5MkVP8NVxfRPuyUKzhc
-	3rR6g+2Syks=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0E9AB3DDA;
-	Mon, 21 Feb 2011 13:48:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0F5333DD9; Mon, 21 Feb 2011
- 13:48:00 -0500 (EST)
-In-Reply-To: <20110219163008.GA16117@localhost> (Clemens Buchacher's message
- of "Sat\, 19 Feb 2011 17\:30\:08 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D5AA85C-3DEB-11E0-84C6-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751651Ab1BUTon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 14:44:43 -0500
+Received: from mail-bw0-f42.google.com ([209.85.214.42]:65357 "EHLO
+	mail-bw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750906Ab1BUTon (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 14:44:43 -0500
+Received: by bwz13 with SMTP id 13so2976816bwz.1
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 11:44:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:sender:date:from:to:cc:subject:message-id
+         :reply-to:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=IncBcwIW+74K+punE/ECFjDTR1AHO6ae9CltAQEgOQ8=;
+        b=jOgOWwsgHAf0mC/ZZf/yFU+zTrvQBYPOCN+tTrgA9p42uURKFzL0pAw0sLAwhFuOYV
+         68DoDjytKYNbpeTTcfTK9HgwqxPe8H0439fdi0/ekHH0BfNnksI8cGLbz9tXAXyY3Rc3
+         RkfJHpHEbEVk90GdC+pNQXl/Gv/0kOsG6dbTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=bo8EmXiF5cC/l0ylYbNPmS6GUaQXLvFGDyRoXyJTxuUmbfG6sPETOQk/PErYQWoK8k
+         wMkeiMJUWv7aBdj2Oy4RnttTP1Ch3bzd0+82/DaumSEtdZ7H09cnM8+msgYBcYD8MTmd
+         u/9hsB01yNgCnpS3iL185eZf17vloPgIYdcuo=
+Received: by 10.204.121.138 with SMTP id h10mr1699531bkr.40.1298317473891;
+        Mon, 21 Feb 2011 11:44:33 -0800 (PST)
+Received: from darc.lan (p5B22C930.dip.t-dialin.net [91.34.201.48])
+        by mx.google.com with ESMTPS id j11sm3973079bka.0.2011.02.21.11.44.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 21 Feb 2011 11:44:32 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1PrbiB-0008Cu-CB; Mon, 21 Feb 2011 20:46:23 +0100
+Content-Disposition: inline
+In-Reply-To: <7vaahpluy9.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167501>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Hi Junio,
 
-> git-commit's and git-status' default untracked status mode is
-> 'normal', not 'all'.
->
-> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+On Sun, Feb 20, 2011 at 11:15:26PM -0800, Junio C Hamano wrote:
+> 
+> The title of the test says that checkout must keep a/b-2/c/d; if "git
+> checkout" without "-f" doesn't do so and you had to change it to "git
+> checkout -f", it would mean one of two things: (1) you broke "checkout",
+> or (2) the behaviour the test wanted to keep working turned out to be
+> unwanted (iow, "git checkout" without "-f" should fail under the initial
+> condition this test sets up).
 
-I wouldn't say there is no problem in this part of the documentation, but
-I think the "default" you are touching is not entirely incorrect.  It is
-talking about what happens when you give only -u without saying <mode>,
-and I think <mode> _does_ default to 'all'.
+I didn't write the test, but to me it looks like the test wants to
+make sure that while the symlink is removed, the tree it's pointing
+to is not removed. I am not sure why that was ever a concern. But
+by adding -f the test stays the same, except for the fact that it
+is now forcefully overwriting a symlink, which could be done
+silently before.
 
-When the command is _not_ given any "-u" option, the behaviour of it does
-default to "handle untracked files in the 'normal'" mode.
+But I am fine with removing the test if you think it's meaningless.
+And Hannes posted a number of tests for "symlink preservation"
+earlier in this thread:
 
-> ...
->  -u[<mode>]::
->  --untracked-files[=<mode>]::
-> -	Show untracked files (Default: 'all').
-> +	Show untracked files (Default: 'normal').
->  +
->  The mode parameter is optional, and is used to specify
->  the handling of untracked files.
+ http://mid.gmane.org/201102051918.44848.j6t@kdbg.org
 
-So either
+We should rename the test to 2020, since 2019 is by now already
+taken.  But otherwise I think the tests are fine as-is. I also used
+them to test my patch.
 
-	Show untracked files (<mode> defaults to 'all')
-
-        The mode parameter is optional, and is used to specify the
-        handling of untracked files; when -u is not used, the default is
-        'normal', i.e. _show x and y and z_
-
-(I'm too lazy to look x/y/z up, so please fill in the blanks).
-
-or
-
-	Show untracked files.
-
-        The mode parameter is optional (defaults to 'all'), and is used to
-        specify the handling of untracked files; when -u is not used, the
-        default is 'normal', i.e. _show x and y and z_
-
-I don't have a strong preference either way, but if I had to choose I
-probably would go with the latter.
+Clemens
