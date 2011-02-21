@@ -1,117 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] revlist.c: introduce --cherry for unsymmetric
- picking
-Date: Mon, 21 Feb 2011 11:49:58 -0800
-Message-ID: <7vmxlpi2vt.fsf@alter.siamese.dyndns.org>
-References: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1298032360.git.git@drmicha.warpmail.net> <7vzkptnn7x.fsf@alter.siamese.dyndns.org> <4D625972.4090500@drmicha.warpmail.net>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [1.8.0] Recursively checkout, merge and reset populated submodules
+Date: Mon, 21 Feb 2011 14:56:53 -0500
+Message-ID: <4D62C385.90204@xiplink.com>
+References: <7vwrky5f48.fsf@alter.siamese.dyndns.org> <4D5FF6E7.8090104@web.de> <4D628F21.3050808@xiplink.com> <4D62AF46.8030508@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Feb 21 20:50:14 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Feb 21 20:57:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Prblu-000442-83
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 20:50:14 +0100
+	id 1PrbsP-0007zC-OJ
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 20:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039Ab1BUTuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 14:50:08 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44723 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922Ab1BUTuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 14:50:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 258AC44A8;
-	Mon, 21 Feb 2011 14:51:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cF6t80QMeXp2a6WiM80xSJ5RAYg=; b=ttIfsl
-	7raCCN0h+Cgi5du5u77KBzroytaJQ2nVm7KimX+H4sYiFBzSHF8x2VWdhtYyNWgs
-	HELLXhCBA51bktt3cDSQ9gp7oRSMcCxqOadqOMYzxc30BTSrdeBRwOpFpcci++tZ
-	bfZl8KOW4HFBiDqZocNtZ75ZBuljqgkDjJUC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iYpkNfxMTrTc99aVIo3smS7uG7zycWNO
-	xdkogSBEY4/+Bm9NtuhKXmzHyzHDNvdWus9Ne1OR1Hf1sbv1VIf51nybZTYCFYZr
-	0sK/PrzO1oX7K7sFVLVuFeCe+hrc27Y/wjYraPF3YEcguGqEEs0VjerlJuFvWb77
-	L70CnW4CT18=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 02D6E44A7;
-	Mon, 21 Feb 2011 14:51:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CA2EF44A4; Mon, 21 Feb 2011
- 14:51:11 -0500 (EST)
-In-Reply-To: <4D625972.4090500@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Mon\, 21 Feb 2011 13\:24\:18 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F0EEE072-3DF3-11E0-9981-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751629Ab1BUT4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 14:56:53 -0500
+Received: from smtp142.iad.emailsrvr.com ([207.97.245.142]:52614 "EHLO
+	smtp142.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751296Ab1BUT4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 14:56:52 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp34.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id A350D380534;
+	Mon, 21 Feb 2011 14:56:51 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp34.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5EBDB380519;
+	Mon, 21 Feb 2011 14:56:51 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <4D62AF46.8030508@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167504>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On 11-02-21 01:30 PM, Jens Lehmann wrote:
+> Am 21.02.2011 17:13, schrieb Marc Branchaud:
+>> On 11-02-19 11:59 AM, Jens Lehmann wrote:
+>> Could you clarify the proposal a bit?  A few questions occurred to me as I
+>> read it:
+>>
+>> * How is the initial set of populated submodules set up during a clone
+>> operation?  Specifically, how would the origin repo specify which submodules
+>> to recursively clone?  (My understanding is that the origin's .gitmodules
+>> file, as it exists in whatever branch is being cloned, would specify
+>> submodule.<name>.update values, and those would drive the recursion.)
+> 
+> That is what I have in mind. I tend towards updating all populated
+> submodules on local operations (like switching branches, merging and so
+> on) unless configured otherwise, while for cloning me thinks an explicit
+> "submodule.<name>.update=checkout" or such should be necessary.
+> 
+> (But please note that cloning was not part of my proposal, I was only
+> talking about the local operations for now ;-)
 
->> At the plumbing level (which 'git-cherry' was designed to be),
->> we should be able to ask for either (or both).  Adding a "we are only
->> interested in the right hand side" as a rev-list option is somewhat
->> distasteful and short-sighted.
->
-> I don't understand this remark - isn't that exactly what you suggest
-> below ("--right-only")? Then what is distasteful and short-sighted?
+Ooops, sorry for jumping the gun!  I figured that since clone normally does a
+checkout that this would have to be worked out as part of the proposal.
 
-It does not give people an option to ask for only left side if you give
-only "--cherry" and nothing else.  Don't you find that a bad taste?
+>> * Which values of submodule.<name>.update would enable/disable recursion
+>> during a clone?  Would just "checkout" enable it, or should "merge" and
+>> "rebase" also trigger recursion when cloning?
+> 
+> "merge" and "rebase" could do that too, but wait: That would make it
+> impossible to say "I want his submodule merged/rebased but *not* cloned"
+> ... Hmm, good point, I'll have to think about that some more ...
+> 
+>> * What happens when a clone's user manually populates one of the other
+>> submodules that wasn't part of the initial set?  Automatic recursion into
+>> this newly-populated submodule is controlled by the setting of the global
+>> recurse-submodules option, right?
+> 
+> There will be a global and a per-submodule configuration. But yes, if the
+> .git/config or .gitmodules don't specify anything for this submodule the
+> global config will kick in. And if that isn't set I imagine that porcelain
+> by default will recurse into populated submodules while plumbing won't.
+> 
+>> * What are the possible values of the global recurse-submodules option?
+>> Here's what I came up with:
+>>
+>>   all       -- Always recurse
+>>   populated -- Only recurse into *all* currently-populated submodules
+>>   respect   -- Respect each submodule's "update" option (better name?)
+>>   none      -- Never recurse
+> 
+> For porcelain I tend to unify "all", "populated" and "respect": recurse
+> into all populated submodules unless configured otherwise ("all" seems
+> kind of superfluous, as I would respect the users choice not to populate
+> a submodule after the initial clone).
 
-Compare that with being explicit and supporting both --right/left-only.
-The point is to avoid making the internal implementation and plumbing
-interface needlessly limited to one use case, and instead keeping them
-flexible.
+A lot of what I'm confused about is how git would distinguish between 2 things:
 
-> Could you explain in what way the current implementation is not done
-> "properly"?
+ - How the user specifies submodule recursion within a local repo.
 
-Your "cherry" implementation limits its utility unnecessarily by assuming
-a few things it does not have to assume:
+ - How a repo specifies initial submodule recursion for clones.
 
- - It only needs to discard left hand side, but not right hand side.
- - It only needs to work when patch-id equivalence filtering is on.
+I'm happy to wait for your follow-up work to discuss this.  Cloning aside,
+what you're proposing looks good to me.
 
-The former is easy to rectify, I think.
+> But for plumbing a "respect" option
+> makes sense, using it could tell it to use the same defaults and config
+> that porcelain uses to make writing scripts easier.
 
-Right now, there is only one thing (cherry-pick) that works on a symmetric
-difference set and filter, so it may _appear_ that the latter does not
-matter, but by not tying the two unrelated concepts together and keeping
-the "right-side-only output" logic and "filter the symmetric difference
-set" logic orthogonal, you will leave the door open for others to add
-different filtering mode easier.
+I haven't thought enough about plumbing to tell if it makes sense to
+configure plumbing behavior explicitly.  But at first glance it seems odd...
 
-> So I think the plan is:
->
-> - use a "right-only" flag rather than "cherry"
+>> * What will happen when I start checked out at commit A, with a populated
+>> submodule, then check out commit B where that submodule doesn't exist, then
+>> return to commit A?  How will whatever recursion settings I had at the start
+>> be preserved?
+> 
+> I think the same option that controls the cloning of submodules should
+> control whether a new submodule will be populated or not. For submodules
+> that already existed despite that it might be nice to remember and respect
+> the users choice and restore it if it existed before.
 
-And perhaps left-only for symmetry.
+So, .gitmodules initially controls recursion.  When a submodule gets
+populated, it gets an entry in .git/config which then determines the
+recursion behavior from then on.  Changing branches might change .gitmodules,
+but anything in .git/config will persist so any customizations the user makes
+will also persist.
 
-> - make "--cherry" do "--cherry-pick --right-only" (with or without
-> ".."->"...")
+Sounds good to me!
 
-Yes.
-
-> - simplify cmd_format_patch
-
-As long as the internal machinery to run the right/left-only filtering of
-the result of cherry-pick filtering is done (i.e. step 1) and then the
-syntactic sugar --cherry synonym is implemented in terms of it (step 2),
-cmd_format_patch simplification would come as a natural consequence, I
-think.
-
-The simplification does not have to be done as part of this series,
-though.  I only mentioned it as a reason why we would want to get the
-internal for this topic (step 1) right, not tied too strongly to step 2.
-
-Thanks.
+		M.
