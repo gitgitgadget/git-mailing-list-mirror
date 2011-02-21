@@ -1,54 +1,71 @@
-From: Steven Scott <steven@codemettle.com>
-Subject: Re: [BUG] git-svn fails to rename files with %20 in filename
-Date: Mon, 21 Feb 2011 10:26:46 -0500
-Message-ID: <AANLkTi=kemr2dPGeE6Z+RDUgrrB8wHE1nM4Zte0EvYMO@mail.gmail.com>
-References: <1298283144.2772.7.camel@wpalmer.simply-domain>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: How to recovery a corrupted git repo
+Date: Mon, 21 Feb 2011 16:31:02 +0100
+Message-ID: <vpqipwds8uh.fsf@bauges.imag.fr>
+References: <AANLkTi=W3RckA=e-YwDJzELaEOAa+7P74V-G0G=bQhex@mail.gmail.com>
+	<20110221100454.GM22168@axel> <vpqpqql1lw6.fsf@bauges.imag.fr>
+	<AANLkTim-O+LR_r=N6y7Dcip8xQGcBVP2FiVhu22Zhysf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 16:27:22 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git mailing list <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 16:31:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrXfT-0003CW-SG
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 16:27:20 +0100
+	id 1PrXjH-0005Ox-DT
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 16:31:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751739Ab1BUP1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 10:27:07 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48477 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751226Ab1BUP1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 10:27:07 -0500
-Received: by iyb26 with SMTP id 26so829914iyb.19
-        for <git@vger.kernel.org>; Mon, 21 Feb 2011 07:27:06 -0800 (PST)
-Received: by 10.231.34.201 with SMTP id m9mr1270229ibd.81.1298302026238; Mon,
- 21 Feb 2011 07:27:06 -0800 (PST)
-Received: by 10.231.11.133 with HTTP; Mon, 21 Feb 2011 07:26:46 -0800 (PST)
-X-Originating-IP: [173.160.92.129]
-In-Reply-To: <1298283144.2772.7.camel@wpalmer.simply-domain>
+	id S1755469Ab1BUPbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 10:31:09 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:39735 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754335Ab1BUPbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 10:31:08 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p1LFV0WM013742
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 21 Feb 2011 16:31:00 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PrXj4-0001cj-Ae; Mon, 21 Feb 2011 16:31:02 +0100
+In-Reply-To: <AANLkTim-O+LR_r=N6y7Dcip8xQGcBVP2FiVhu22Zhysf@mail.gmail.com> (Ping Yin's message of "Mon\, 21 Feb 2011 23\:03\:55 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 21 Feb 2011 16:31:00 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p1LFV0WM013742
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1298907064.23846@VVXs2NXVMoiAsJQ7Qy4KTw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167488>
 
-On Mon, Feb 21, 2011 at 5:12 AM, Will Palmer <wmpalmer@gmail.com> wrote:
-> Someone accidentally checked some files containing "%20" in their names
-> into our svn repository, which is accessed with either svn or git-svn
-> depending on the developer.
-> When I attempted to correct this by renaming the file, I received (on
-> dcommit):
-> Filesystem has no item: File not found: revision 1, path
-> '/theBeginningOfTheOriginalFileName theRestOfTheOriginalFilename'
-> at /home/wpalmer/libexec/git-core/git-svn line 576
+Ping Yin <pkufranky@gmail.com> writes:
 
-This is the same issue I've been seeing (except that the %20 is in a
-parent directory on the SVN server). It makes using git-svn fraught
-with danger, since I never know when I'm going to be unable to checkin
-days' worth of git commits.
+> Thanks. This should be an applicable method. However, before rsyncing,
+> the pack should be unpacked first.
+
+No need. Just copying the pack files works too, and is way faster:
+
+/tmp/corrupted$ git fsck
+missing commit 4815c2955d5863005edc4ff61c0de42e9609a920
+dangling tree c8b826f673e1f1edb0fb5dc58294148be06cd6cb
+/tmp/corrupted$ cp ../cloned/.git/objects/pack/pack-e34444a471a9cd3e6f2656b609ffa0d66cce1f9c.* .git/objects/pack/
+/tmp/corrupted$ git fsck                                                                                         
+/tmp/corrupted$ git gc
+Counting objects: 12, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (12/12), done.
+Total 12 (delta 0), reused 12 (delta 0)
 
 -- 
-Steven Scott
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
