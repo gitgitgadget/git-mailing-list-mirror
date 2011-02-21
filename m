@@ -1,63 +1,74 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: Issue with GitGUI losing file permissions on merge
-Date: Mon, 21 Feb 2011 08:25:24 +0100
-Message-ID: <1jx15l9.1taq59z1rcvgbxM%lists@haller-berlin.de>
-References: <79ec6c5b-eb2e-4f19-90c6-00e3af72797e@q14g2000vbf.googlegroups.com>
-Cc: git@vger.kernel.org
-To: lion.hopkins@gmail.com (Lyle), msysgit@googlegroups.com (msysGit)
-X-From: git-owner@vger.kernel.org Mon Feb 21 08:25:33 2011
+From: Ping Yin <pkufranky@gmail.com>
+Subject: How to recovery a corrupted git repo
+Date: Mon, 21 Feb 2011 15:50:09 +0800
+Message-ID: <AANLkTi=W3RckA=e-YwDJzELaEOAa+7P74V-G0G=bQhex@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 21 08:50:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrQ9E-0007fK-3N
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 08:25:32 +0100
+	id 1PrQXK-0000A8-RR
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 08:50:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442Ab1BUHZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 02:25:27 -0500
-Received: from mail.ableton.net ([62.96.12.117]:37374 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751922Ab1BUHZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 02:25:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=y9b3Hu7hxb5zfjzIeMEz6HQ29NdGjEhUXhz7KVEGgQQ=;
-	b=ZZg7P6bkwm0dXcr1Ybtypzx5NWlb/vsCB93OLBfFUIFJpzAJ84nR524M6jxMOrrISfWedfjKK5cwUc7/Z+W6kptj30u0VGifxm3wuvKfUYuXa9k5t22Xmzr0/BJ/0pTDEETjlk4oSH99GYFbLozEFHcw/0XcCZJP07oiRKes0fY=;
-Received: from dslb-088-074-017-003.pools.arcor-ip.net ([88.74.17.3] helo=[192.168.42.92])
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1PrQ96-0000Zx-OZ; Mon, 21 Feb 2011 08:25:24 +0100
-In-Reply-To: <79ec6c5b-eb2e-4f19-90c6-00e3af72797e@q14g2000vbf.googlegroups.com>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.6 (x86))
+	id S1754378Ab1BUHuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 02:50:11 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:36787 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751486Ab1BUHuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 02:50:10 -0500
+Received: by gyb11 with SMTP id 11so140779gyb.19
+        for <git@vger.kernel.org>; Sun, 20 Feb 2011 23:50:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=2AxbM9F7lwdZss+wC9n9JKqA4A9Yb9sonXH9+8rPAkE=;
+        b=KZYfmPwtG0T8rT3a/ZUqAOcLMfh3DBg+v2/q9qZiqaYlXI2VHH2AFUqv5R4YcqsreQ
+         SBoSnzfT84hQUy9I9WGl7GTvddZ3KPWqw7CRgztXhn6KlUoVErCuDxpKWJ+HQlmnibuV
+         OBq6HU3ZBKmf5983kwp4jBBJTXqQtWNe3rbG8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=DwZfKqtzZdeETADIoqjwnJrIXF4Yj9rOp4fN/Z5YEJZ6S2SrLH42ylzowugpK9txP2
+         73a+I0gVHMKsi+B9R9Lx81XdczvoorLj+F+geRmHCEI1awYMExYx2Z+L1w7zO7CRl/nF
+         mUxBadJCnfiawcbgraO2S3q91dxMySBBxoFQM=
+Received: by 10.150.198.11 with SMTP id v11mr1312863ybf.388.1298274609129;
+ Sun, 20 Feb 2011 23:50:09 -0800 (PST)
+Received: by 10.146.168.17 with HTTP; Sun, 20 Feb 2011 23:50:09 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167447>
 
-Lyle <lion.hopkins@gmail.com> wrote:
+I have a corrupted git repo, with "git fsck", it shows
 
->   I've had an odd issue pop up a few times. After chatting with some
-> people on #git and doing some further testing I finally managed to
-> narrow down what's causing the issue. The git command line behaves
-> properly, but GitGUI changes the file permission on the merge, losing
-> the execute permission. So 0755 files become 0644, causing problems
-> when pushed back to origin and pulled down to a Linux repo.
+missing blob b71eb55f2dbc97dafd4a769fc61f346e69a5e0af
+missing blob 282035f3ae964e1e288f352c370be8edd11d3078
+missing tree 3c20f556eecc476e3542cc522d46a62a4461fec6
+missing blob f321b578edeb452358497e832815d6cae6b36886
+missing commit 6d23f5084c975be637f7d748db82116bf84d3872
 
-I've run into this too.  It has little to do with git gui though, and
-nothing with msysgit.
+And i also have a good backup repo. How can i recover the corrupted
+repo with the backup repo?
 
-It's a bug in git-update-index (which git gui happens to call when you
-stage a file).  Here's some more information about it:
+I can do a rsync or fresh "git clone", however, is there any git
+related commands to incrementally do this?
 
-   <http://thread.gmane.org/gmane.comp.version-control.git/159716/focus=159888>
+btw, "git remote add and then git fetch" doesn't work, it reports
 
-It is still on my to-do list to try and fix the problem, but I have
-never gotten around to it yet.
-
-
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+error: refs/heads/bringup does not point to a valid object!
+error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
+error: refs/heads/bringup does not point to a valid object!
+error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
+error: refs/heads/bringup does not point to a valid object!
+error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
+error: refs/heads/bringup does not point to a valid object!
+error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
+error: missing object referenced by 'refs/tags/v2.6.32'
+error: missing object referenced by 'refs/tags/v2.6.32-rc1'
+error: missing object referenced by 'refs/tags/v2.6.32-rc2'
