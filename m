@@ -1,93 +1,81 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [1.8.0] Recursively checkout, merge and reset populated submodules
-Date: Mon, 21 Feb 2011 11:13:21 -0500
-Message-ID: <4D628F21.3050808@xiplink.com>
-References: <7vwrky5f48.fsf@alter.siamese.dyndns.org> <4D5FF6E7.8090104@web.de>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: gitk error: can't read "pending_select": no such variable
+Date: Mon, 21 Feb 2011 17:32:08 +0100
+Message-ID: <20110221163208.GA9086@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 21 17:13:29 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 21 17:32:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrYO8-0004JT-Nw
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 17:13:29 +0100
+	id 1PrYgJ-0005tv-US
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 17:32:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755694Ab1BUQNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 11:13:23 -0500
-Received: from smtp112.iad.emailsrvr.com ([207.97.245.112]:43325 "EHLO
-	smtp112.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752568Ab1BUQNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 11:13:22 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp51.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id C815F202DC;
-	Mon, 21 Feb 2011 11:13:21 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp51.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id E78E6206C5;
-	Mon, 21 Feb 2011 11:13:20 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <4D5FF6E7.8090104@web.de>
+	id S1752708Ab1BUQcJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 11:32:09 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:55442 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800Ab1BUQcI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 11:32:08 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1PrYgC-0006LJ-1u
+	for git@vger.kernel.org; Mon, 21 Feb 2011 17:32:08 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1PrYgC-0002SJ-0j
+	for git@vger.kernel.org; Mon, 21 Feb 2011 17:32:08 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167493>
 
-On 11-02-19 11:59 AM, Jens Lehmann wrote:
-> Proposal:
-> When switching branches, merging or resetting the work tree of
-> populated submodules should be checked out too according to the
-> commit recorded in the superproject. Make this the default for
-> porcelain and optional for plumbing.
-> 
-> The same safety precautions that are used for files in the
-> superproject apply to the changes present in the submodules,
-> no local modifications may be overwritten unless -f is used.
-> When the "update" config option is set to "merge" or "rebase"
-> the submodule will be left unchanged.
-> 
-> The "update" config option will learn a new value "none" to let
-> the user turn off this behavior for single submodules. A global
-> config option and the command line parameter "--recurse-submodules"
-> will also be added. This change will remove the need to call "git
-> submodule update" for all populated submodules (except those who
-> use the "update=merge" or "update=rebase" configuration settings).
+Hello,
 
-A big +1 from me for all the submodule work -- thanks Jens!
+I have no reliable reproduction recipe for this message, but it seems t=
+o
+happen after Ctrl+F5 with changes.
 
-Could you clarify the proposal a bit?  A few questions occurred to me as I
-read it:
+Details are:
 
-* How is the initial set of populated submodules set up during a clone
-operation?  Specifically, how would the origin repo specify which submodules
-to recursively clone?  (My understanding is that the origin's .gitmodules
-file, as it exists in whatever branch is being cloned, would specify
-submodule.<name>.update values, and those would drive the recursion.)
+	can't read "pending_select": no such variable
+	can't read "pending_select": no such variable
+	    while executing
+	"rowofcommit $pending_select"
+	    (procedure "layoutmore" line 13)
+	    invoked from within
+	"layoutmore"
+	    (procedure "chewcommits" line 5)
+	    invoked from within
+	"chewcommits"
+	    ("eval" body line 1)
+	    invoked from within
+	"eval $script"
+	    (procedure "dorunq" line 11)
+	    invoked from within
+	"dorunq"
+	    ("after" script)
 
-* Which values of submodule.<name>.update would enable/disable recursion
-during a clone?  Would just "checkout" enable it, or should "merge" and
-"rebase" also trigger recursion when cloning?
+and that happens with Debian's gitk 1:1.7.2.3-2.2
 
-* What happens when a clone's user manually populates one of the other
-submodules that wasn't part of the initial set?  Automatic recursion into
-this newly-populated submodule is controlled by the setting of the global
-recurse-submodules option, right?
+Best regards
+Uwe
 
-* What are the possible values of the global recurse-submodules option?
-Here's what I came up with:
-
-  all       -- Always recurse
-  populated -- Only recurse into *all* currently-populated submodules
-  respect   -- Respect each submodule's "update" option (better name?)
-  none      -- Never recurse
-
-* What will happen when I start checked out at commit A, with a populated
-submodule, then check out commit B where that submodule doesn't exist, then
-return to commit A?  How will whatever recursion settings I had at the start
-be preserved?
-
-		M.
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
