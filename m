@@ -1,147 +1,76 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/3] revlist.c: introduce --cherry for unsymmetric picking
-Date: Mon, 21 Feb 2011 13:24:18 +0100
-Message-ID: <4D625972.4090500@drmicha.warpmail.net>
-References: <15a90a6606cff7d823fe4afbedd580aadf7b1d1e.1298032360.git.git@drmicha.warpmail.net> <7vzkptnn7x.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] git-svn fails to rename files with %20 in filename
+Date: Mon, 21 Feb 2011 07:31:16 -0500
+Message-ID: <20110221123115.GB23033@sigill.intra.peff.net>
+References: <1298283144.2772.7.camel@wpalmer.simply-domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 13:27:41 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Wong <normalperson@yhbt.net>, git <git@vger.kernel.org>
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 13:31:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrUrZ-0006KM-Ln
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 13:27:38 +0100
+	id 1PrUvF-00084K-23
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 13:31:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871Ab1BUM1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 07:27:32 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37161 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753865Ab1BUM1c (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 07:27:32 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8366D20444;
-	Mon, 21 Feb 2011 07:27:31 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 21 Feb 2011 07:27:31 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=WuhEvXsMLeEcXuycQGbv6Beg7uA=; b=o7KTdZWDOS9HYjZmrACoxHxoR4uXOSZ/fApDG7o02Um6BHoQW+fDFY4Mcmkkqp12idXVJPLsw7PqeOdMoe559BibnRvBScx8emtP0tEY5dk4hV2SBmdbiqNXwEYyrl7MmWjriViO7xhnz4NeZawoWiVdbUPW208U2jwxstNF5IU=
-X-Sasl-enc: MkQKDU4QQy/AJgRhvsMfeHppygqYdhLGls2qoZsdICt5 1298291251
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E035844A115;
-	Mon, 21 Feb 2011 07:27:30 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <7vzkptnn7x.fsf@alter.siamese.dyndns.org>
+	id S1755926Ab1BUMbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 07:31:19 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57190 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755899Ab1BUMbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 07:31:18 -0500
+Received: (qmail 24251 invoked by uid 111); 21 Feb 2011 12:31:17 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 21 Feb 2011 12:31:17 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Feb 2011 07:31:16 -0500
+Content-Disposition: inline
+In-Reply-To: <1298283144.2772.7.camel@wpalmer.simply-domain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167475>
 
-Junio C Hamano venit, vidit, dixit 18.02.2011 20:42:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Mon, Feb 21, 2011 at 10:12:24AM +0000, Will Palmer wrote:
+
+> Someone accidentally checked some files containing "%20" in their names
+> into our svn repository, which is accessed with either svn or git-svn
+> depending on the developer.
+> When I attempted to correct this by renaming the file, I received (on
+> dcommit):
+> Filesystem has no item: File not found: revision 1, path
+> '/theBeginningOfTheOriginalFileName theRestOfTheOriginalFilename'
+> at /home/wpalmer/libexec/git-core/git-svn line 576
 > 
->> The existing "--cherry-pick" does not work with unsymmetric ranges
->> (A..B) for obvious reasons.
->>
->> Introduce "--cherry" which works more like "git-cherry", i.e.: Ignore
->> commits in B which are patch-equivalent to patches in A, i.e. list only
->> those which "git cherry B A" would list with a "-". This is especially
->> useful for things like
->>
->> git log --cherry @{u}..
->>
->> which is a much more descriptive than
->>
->> git cherry @{u}
->>
->> and potentially more useful than
->>
->> git log --cherry-pick @{u}...
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> 
-> A few comments.
-> 
-> As a Porcelain tool, "log --cherry @{u}.." may very well be useful; what
-> do I have that I still need to send.  It is the moral equivalent of what
-> format-patch does internally.
-> 
-> However I don't find it "works more like 'git-cherry'" at all.  The point
-> of the command is to show _both_ what are still left to be sent, and what
-> are already accepted.  So it is very much inherently a symmetric-range
-> operation. 
+> A recipe for reproducing this bug is as follows:
+> [...]
 
-Maybe I should have said "works more like I use git-cherry"... Whenever
-I use it, I'm interested in one side only.
+Thanks for the thorough test case. It seems to pass for me if with this
+applied:
 
-> At the plumbing level (which 'git-cherry' was designed to be),
-> we should be able to ask for either (or both).  Adding a "we are only
-> interested in the right hand side" as a rev-list option is somewhat
-> distasteful and short-sighted.
+diff --git a/git-svn.perl b/git-svn.perl
+index 177dd25..7daf63c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4556,9 +4556,7 @@ sub repo_path {
+ 
+ sub url_path {
+ 	my ($self, $path) = @_;
+-	if ($self->{url} =~ m#^https?://#) {
+-		$path =~ s!([^~a-zA-Z0-9_./-])!uc sprintf("%%%02x",ord($1))!eg;
+-	}
++	$path =~ s!([^~a-zA-Z0-9_./-])!uc sprintf("%%%02x",ord($1))!eg;
+ 	$self->{url} . '/' . $self->repo_path($path);
+ }
+ 
 
-I don't understand this remark - isn't that exactly what you suggest
-below ("--right-only")? Then what is distasteful and short-sighted?
+IOW, it looks like the path we hand to svn needs url-encoding even for
+the local case (which make sense, as it is a file:// url). But I know
+nothing about svn, so probably I am breaking some other weird non-url
+local case. :)
 
-I don't propose changing any current functionality of "git cherry" not
-"git rev-list --cherry-pick".
-
-> I wonder if you can instead extend the revision walking machinery by just
-> adding a filter that says "show me only the left/right hand side" [*1*]?
-> I.e.
-> 
->     git rev-list --right-only --oneline --cherry-pick @{u}...
-> 
-
-I think that is basically what I have done, just that I only implemented
-the shortcut option you describe in the next paragraphs:
-
-> If that is done, we could ask for "--left-only" when we wanted to.
-> 
-> As there are by definition more contributors than integrators, naturally
-> we can expect that "--right-only" would be a lot more often used mode of
-> operation than "--left-only", and I don't mind to have "--cherry" as a
-> synonym to trigger "--cherry-pick --right-only" (and perhaps internally
-> turn a two-dot automatically into three-dot), so that you can say
-> 
->     git log --cherry @{u}..
-> 
-> from the command line to get the same effect.
-> 
-> By the way, when this feature is properly implemented internally at the
-> revision traversal level, we should be able to lose quite a lot of code
-
-Could you explain in what way the current implementation is not done
-"properly"? I introduced a flag for the walker and act on the flag. I
-don't see a way to cut down the walk further since we need the other
-side for the patch-id comparisons.
-
-> from builtin/log.c, as format-patch in it was the original implementation
-> of the whole thing, and it was done outside the revision walking machinery
-> to implement patch equivalence filtering of the traversal result.  We
-> would essentially feed the symmetric upstream...HEAD range with the
-> cherry-pick flag, ask it to give only the right hand side (i.e. what are
-> left after the patch equivalence filter), and emit the result.
-> 
-> The get_patch_ids() function itself can go, and its caller and the
-> codepaths that use has_commit_patch_id() would be vastly simplified, no?
-
-I have not looked at format-patch at all. Also, I tend to forget
---ignore-if-in-upstream. In fact, git-format-patch(1) carefully avoids
-any mentioning of "cherry" to the extent that it's difficult to
-recognize as the same concept at all. I would suggest renaming it
-"--cherry" or "--cherry-pick" in 1.8.0.
-
-So I think the plan is:
-
-- use a "right-only" flag rather than "cherry"
-- make "--cherry" do "--cherry-pick --right-only" (with or without
-".."->"...")
-- simplify cmd_format_patch
-
-Please stop me if I misunderstood you ;)
-
-Michael
+-Peff
