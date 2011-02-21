@@ -1,81 +1,58 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: gitk error: can't read "pending_select": no such variable
-Date: Mon, 21 Feb 2011 17:32:08 +0100
-Message-ID: <20110221163208.GA9086@pengutronix.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: how a patch can be accepted?
+Date: Mon, 21 Feb 2011 17:23:39 +0100
+Message-ID: <AANLkTin1hNwKfgRrukKvEMDXCSHnU=EfPFJLQ2cYci9L@mail.gmail.com>
+References: <AANLkTikPtYy9_4WjvSqdiFG8pjv5KH5e16=4HoeAzoWb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 21 17:32:17 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: xzer <xiaozhu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 17:35:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrYgJ-0005tv-US
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 17:32:16 +0100
+	id 1PrYjZ-0007VK-0Q
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 17:35:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708Ab1BUQcJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 11:32:09 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:55442 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751800Ab1BUQcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 11:32:08 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PrYgC-0006LJ-1u
-	for git@vger.kernel.org; Mon, 21 Feb 2011 17:32:08 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PrYgC-0002SJ-0j
-	for git@vger.kernel.org; Mon, 21 Feb 2011 17:32:08 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754684Ab1BUQfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 11:35:11 -0500
+Received: from mail-bw0-f42.google.com ([209.85.214.42]:60131 "EHLO
+	mail-bw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752224Ab1BUQfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 11:35:05 -0500
+Received: by mail-bw0-f42.google.com with SMTP id 13so2726339bwz.1
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 08:35:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=FI+PhtsbhwMXglZu2cLvNirkWrkzPrRtpXiuhtFd5A8=;
+        b=XT7+W0LjcNrK9DKOEqayANsX7BxoXWW2EVujtYbq5D1w/zOUQE2RWEPXnsBKtk+uD5
+         1l5k0aK5/sEFkL046h/gN4lsunsbwtkVbi5y3QdrsXWHR7omACwl+F0n9g+Q7kSuxiNW
+         4XJP82wPLsP62yCO9Ff+ltRpp0CewoDcJFloA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=jceXoMTdDH2T+65BmD6awxu5RjN2zk8onkJ0Gv7/gA2KnF1Uh/D6BqQEGmj/DdW0B7
+         jJI4W2vsT7aFn9qY4j92fG9GHIARifVLv6700N9cvymtIVhsuYA3VAU9fZhDpRWInnDi
+         IiVwZjhlu0RJPIp05JKVTF3HtLTgbUaW/aSZ0=
+Received: by 10.204.7.213 with SMTP id e21mr1510954bke.47.1298305419631; Mon,
+ 21 Feb 2011 08:23:39 -0800 (PST)
+Received: by 10.204.71.7 with HTTP; Mon, 21 Feb 2011 08:23:39 -0800 (PST)
+In-Reply-To: <AANLkTikPtYy9_4WjvSqdiFG8pjv5KH5e16=4HoeAzoWb@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167494>
 
-Hello,
+On Mon, Feb 21, 2011 at 15:48, xzer <xiaozhu@gmail.com> wrote:
+> I submitted a patch recently by sending a mail to this mail list, but
+> I don't know how it can be accepted or rejected? Is that enough just
+> send a mail to here? Because the patch is a very important fix to my
+> usage and I don't want to apply it every time by myself.
 
-I have no reliable reproduction recipe for this message, but it seems t=
-o
-happen after Ctrl+F5 with changes.
-
-Details are:
-
-	can't read "pending_select": no such variable
-	can't read "pending_select": no such variable
-	    while executing
-	"rowofcommit $pending_select"
-	    (procedure "layoutmore" line 13)
-	    invoked from within
-	"layoutmore"
-	    (procedure "chewcommits" line 5)
-	    invoked from within
-	"chewcommits"
-	    ("eval" body line 1)
-	    invoked from within
-	"eval $script"
-	    (procedure "dorunq" line 11)
-	    invoked from within
-	"dorunq"
-	    ("after" script)
-
-and that happens with Debian's gitk 1:1.7.2.3-2.2
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Did you read Documentation/SubmittingPatches?
