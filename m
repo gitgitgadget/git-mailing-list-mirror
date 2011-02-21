@@ -1,76 +1,74 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [1.7.5] Let fetch and pull recurse into submodules when new commits
- are recorded
-Date: Mon, 21 Feb 2011 18:38:35 +0100
-Message-ID: <4D62A31B.7060900@web.de>
-References: <7vwrky5f48.fsf@alter.siamese.dyndns.org> <4D5FF264.5050002@web.de> <4D6280F2.5000409@xiplink.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: How to create tags outside of refs/tags?
+Date: Mon, 21 Feb 2011 12:48:51 -0500
+Message-ID: <AANLkTi=CseZLobCoq+Li0AexHR+eaZpe84DG5hGzWHzR@mail.gmail.com>
+References: <AANLkTimxAhMfPsqEJVyteuTzXLr+QnhcxpJLgaE=y12_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 18:39:26 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Christian Halstrick <christian.halstrick@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 18:49:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrZjK-0002aN-01
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 18:39:26 +0100
+	id 1PrZt1-000069-DE
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 18:49:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755597Ab1BURjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 12:39:11 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:51074 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755570Ab1BURjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 12:39:09 -0500
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 7439718978557;
-	Mon, 21 Feb 2011 18:38:38 +0100 (CET)
-Received: from [93.246.44.148] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1PrZiY-0004v6-00; Mon, 21 Feb 2011 18:38:38 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <4D6280F2.5000409@xiplink.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18e2A0dbCSghKjHC+LJ8xuDbeE3k2LasaIfV/2B
-	7+3uCrjdHPiByLaWD6MRLzexWZtWZOW98TM+ZzGtukY63hFt8t
-	ZofkkvkFYi5CSxuEPF0w==
+	id S1753243Ab1BURtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 12:49:22 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41500 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752497Ab1BURtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 12:49:21 -0500
+Received: by iyb26 with SMTP id 26so965339iyb.19
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 09:49:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=oKwRKgdXjN8BPn1bYqfbGz8jrGv1EFkWMkkVC3Putiw=;
+        b=WG31Oaveu7NHpJSSq7MCWYdYU7WkcdFTGSEZGTcB2cNALuUEcB/eMEgCK1OKU5I9ES
+         tQNBr2N7qH3JZX6rW9O3XPjY2Zxuspkg6qmCl1J84Pv4Qz+4tsSiqb72P7r9tn8ggBeL
+         YpcTpaoLWNV1LnPXc4dVd9vA46j+Nyd3Dw/94=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ob70ABE7LosPIWfW9VYbIt+sp1J6Ltz3ssAq+SyHv9Z1l3QcGH4FCOOd/urDVe+8MJ
+         LMPSITrLjHEUVE6RIK0cjbsCC1+qmHObufbv/XsHMtmBtbe6zf+zU0hpG/FryQxZvomN
+         r7UWEYK3TVxG6ZvmEo44svliHfuuTvmebh+jI=
+Received: by 10.231.14.8 with SMTP id e8mr1347733iba.117.1298310561219; Mon,
+ 21 Feb 2011 09:49:21 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Mon, 21 Feb 2011 09:48:51 -0800 (PST)
+In-Reply-To: <AANLkTimxAhMfPsqEJVyteuTzXLr+QnhcxpJLgaE=y12_@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167498>
 
-Am 21.02.2011 16:12, schrieb Marc Branchaud:
-> On 11-02-19 11:40 AM, Jens Lehmann wrote:
->> Proposal:
->> Add a new "on-demand" mode to fetch and pull and make it the default.
->>
->> When using the new "on-demand" mode every time new commits are fetched
->> in the superproject they will be parsed for submodule commits. If these
->> commits aren't present in a populated submodule, run "git fetch" inside
->> that submodule. (Also see this thread for an in depth discussion:
->> http://article.gmane.org/gmane.comp.version-control.git/158979/ )
->>
->> Additionally change "git submodule update" to only then run fetch in a
->> submodule when the commit it wants to check out is not already present
->> there.
->>
->> This behavior can be configured per submodule, per repo and globally.
->>
->> Advantages:
->> * Disconnected operation. Right now it is really easy to forget to fetch
->>   all submodules before you get on a plane, possibly leaving you unable
->>   to check out certain revisions.
-> 
-> I support the proposal, but just to be clear I'd rephrase that advantage as:
-> 
-> Disconnected operation. Right now it is really easy to forget to update
-> populated submodules before you get on a plane, possibly leaving you unable
-> to check out certain revisions.
-> 
-> (Obviously, I think the only-works-on-already-populated-submodules part is
-> very important.)
+On Mon, Feb 21, 2011 at 12:21 PM, Christian Halstrick
+<christian.halstrick@gmail.com> wrote:
+> I would like to create a tag which full name is not starting with
+> refs/tags. Is that possible with 'git tag'?
 
-Thanks and yes, that is exactly what this proposal is about.
+Nope.
+
+> If not, is there any other command to create such tags?
+
+If it's just a light-weight tag, you can use the low-level (plumbing)
+command update-ref to create an arbitrary ref:
+
+$ git update-ref refs/blargh HEAD
+
+If it's an annotated/signed tag you want, you'll have to first create
+the tag object with 'git mktag', then use update-ref to create a ref
+to that tag.
+
+See git-tag.sh in the contrib directory of git.git.
+
+HTH,
+
+j.
