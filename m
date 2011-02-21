@@ -1,71 +1,105 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: How to recovery a corrupted git repo
-Date: Mon, 21 Feb 2011 10:27:48 +0100
-Message-ID: <AANLkTimt1oR7nrhXmHugGooOAc3KTiDE6kQ3vGTznS9+@mail.gmail.com>
-References: <AANLkTi=W3RckA=e-YwDJzELaEOAa+7P74V-G0G=bQhex@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [1.8.0] perl/Git.pm: moving away from using Error.pm module
+Date: Mon, 21 Feb 2011 10:31:09 +0100
+Message-ID: <201102211031.11308.jnareb@gmail.com>
+References: <201102202346.36410.jnareb@gmail.com> <7v4o7xluph.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git mailing list <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 10:28:08 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 10:31:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrS3p-0003vc-2s
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 10:28:05 +0100
+	id 1PrS78-0005MX-8V
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 10:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131Ab1BUJ1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 04:27:51 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:36946 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751949Ab1BUJ1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 04:27:50 -0500
-Received: by wwa36 with SMTP id 36so5850857wwa.1
-        for <git@vger.kernel.org>; Mon, 21 Feb 2011 01:27:49 -0800 (PST)
+	id S1753186Ab1BUJbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 04:31:25 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64239 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751949Ab1BUJbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 04:31:24 -0500
+Received: by fxm17 with SMTP id 17so1262905fxm.19
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 01:31:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=C0d7ge9VKtt1KpmT5L2D3jul2Hmv+YoZxunQN54g6Og=;
-        b=N1cpiisuHHrAEFTL53ciPmxqpuQfC3ril9XXEBDMFii8yuuhGcNiWEl4pT1rnFPIHW
-         x523qXVSERnqSMbn8Oet5tnvuB42ppF1h9wwtP1mtrp9MsxebvI2ceg3Puym5CoL6xy6
-         20C/yAVGaznEzELgIhR/+hwMBxZu1W3MIHhQU=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=ARPO4Y4rCZwkPpOBcmcgYtPcgnqGttvBLmBYhLGFixY=;
+        b=fqL5Aoe7BvHpKBSeMapBH2UTjyNxbgVigvqHrNzROuv8YhffjEFOkwhDLkQOPIWHjZ
+         vxNGzhvwnkF3/GpEt+ohMaetG4/4gsJYIDFNGh0vut6kKV6wOITy5TY0f9uQAHL+DUQm
+         Zn2lsRjrDULosRDUZzR8hGegy4q68nnABHwCw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=vdsN0nfAtEWOGU3MCvrVcBCbgA+i98bYT+u5SLdsq6vDp+ns3tdOqq9tuEUcDtOIF0
-         YyuI9MvySycAzpKApsDvKQB155yclSJYMZXGzCNAnk2ocAJP4IIhT5W5J4c9EVjB0neU
-         Rh+UYuAe+xXxmxf4kZUPH1qgmjPMxAWS8m0QA=
-Received: by 10.216.25.202 with SMTP id z52mr1877266wez.14.1298280468815; Mon,
- 21 Feb 2011 01:27:48 -0800 (PST)
-Received: by 10.216.241.78 with HTTP; Mon, 21 Feb 2011 01:27:48 -0800 (PST)
-In-Reply-To: <AANLkTi=W3RckA=e-YwDJzELaEOAa+7P74V-G0G=bQhex@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=NlnDNFK1jTJsTquNXH3zsVfl9uNoCl+zjgp+OGguBJL+5rYAA0otd9xSYboaEFqt17
+         elcA1xVT7aKXXlKjJ1tETjoRiU3BaYUSf9MhXFrQmFRZ0YRhnqGrb4bOtkxVh17MMk8S
+         U3Q3PLd4oqJDOA+yXPGBi5qIdipKOzzoX0SfE=
+Received: by 10.223.107.66 with SMTP id a2mr1522841fap.92.1298280682921;
+        Mon, 21 Feb 2011 01:31:22 -0800 (PST)
+Received: from [192.168.1.13] (abwh41.neoplus.adsl.tpnet.pl [83.8.231.41])
+        by mx.google.com with ESMTPS id b7sm2307634faa.42.2011.02.21.01.31.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 21 Feb 2011 01:31:21 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v4o7xluph.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167450>
 
-On Mon, Feb 21, 2011 at 8:50 AM, Ping Yin <pkufranky@gmail.com> wrote:
-> I have a corrupted git repo, with "git fsck", it shows
->
-> missing blob b71eb55f2dbc97dafd4a769fc61f346e69a5e0af
-> missing blob 282035f3ae964e1e288f352c370be8edd11d3078
-> missing tree 3c20f556eecc476e3542cc522d46a62a4461fec6
-> missing blob f321b578edeb452358497e832815d6cae6b36886
-> missing commit 6d23f5084c975be637f7d748db82116bf84d3872
->
-> And i also have a good backup repo. How can i recover the corrupted
-> repo with the backup repo?
+On Mon, 21 Feb 2011, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Proposal:
+> >
+> > Replace use of Error.pm module in Git.pm with either Exception::Class
+> > based error class, or using 'carp'/'croak' from Carp, or both by adding 
+> > an option to set error handler in 'Git' class (like e.g. in 'CHI' 
+> > module on CPAN).
+> 
+> Personally, I was never a big fan of the syntax magic with Error.pm, but I
+> refrained from commenting on it as I am not heavily involved in that part
+> of the system.  If we are going to change things so that everybody uses a
+> more traditional "eval {}; if ($@) { ... }", it would be a welcome change
+> from my point of view.
 
-Please, have a look this FAQ entry:
+Structured exceptions are usually better than 'die <string>' if
+you need to examine error in more detail and act on this detail:
+  http://www.modernperlbooks.com/mt/2010/10/structured-data-and-knowing-versus-guessing.html
+  http://www.modernperlbooks.com/mt/2010/08/the-stringceptional-difficulty-of-changing-error-messages.html
+  http://www.modernperlbooks.com/mt/2010/07/dont-parse-that-string.html
 
-https://git.wiki.kernel.org/index.php/GitFaq#How_to_fix_a_broken_repository.3F
+I think that is why Git.pm uses Error module (which seemed like a good
+choice in 2006), and it is why I propose using Exception::Class, perhaps
+as an option. 
 
-And tell us what you did according to it.
+> > Migration plan:
+> 
+> Do we even need one?
+> 
+> As far as an external caller is concerned, it would have been expecting us
+> to throw an exception by dying, and it wouldn't have mattered if it used
+> Error.pm or "eval { $call_to_Git_pm }; if ($@) {...}", I think.
 
-Thanks,
-Christian.
+Well, it depends if external scripts use try_git_cmd sugar... and whether
+they try to act on details of caught exception.
+
+Also if Git->repository would return 'undef' on failure instead of throwing
+an exception, this would require changes to external scripts.
+
+-- 
+Jakub Narebski
+Poland
