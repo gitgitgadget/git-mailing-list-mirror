@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 05/15] init: mark basic messages for translation
-Date: Mon, 21 Feb 2011 04:16:00 -0600
-Message-ID: <20110221101600.GF32137@elie>
+Subject: [PATCH 02/15] tests: add GETTEXT_POISON to simulate unfriendly
+ translator
+Date: Mon, 21 Feb 2011 04:13:52 -0600
+Message-ID: <20110221101352.GC32137@elie>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
  <20110221040012.GB26968@elie>
  <20110221101229.GA32137@elie>
@@ -10,46 +11,46 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 11:16:14 2011
+X-From: git-owner@vger.kernel.org Mon Feb 21 11:17:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrSoP-0001K2-Vv
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 11:16:14 +0100
+	id 1PrSpI-0001gf-4P
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 11:17:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753777Ab1BUKQJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 05:16:09 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:63246 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750840Ab1BUKQG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 05:16:06 -0500
-Received: by iwn8 with SMTP id 8so1727330iwn.19
-        for <git@vger.kernel.org>; Mon, 21 Feb 2011 02:16:06 -0800 (PST)
+	id S1754871Ab1BUKRD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 05:17:03 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:51832 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753889Ab1BUKRA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 05:17:00 -0500
+Received: by iyb26 with SMTP id 26so556307iyb.19
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 02:17:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=snUJshckAHepgQS1oVoyJQqKbUIevFVa+zdTZwjBqX0=;
-        b=tQUSk1gJvGxCy0WQ1xdGlF7adhzf2bqRstTsDB/YLd23g0euAkR9Va5qCFCxJSl88s
-         ttH8dtsteghnKLnnOwFM35nqe5NFJHLWfA+CDbOghXanm95mTMTjORNbrQ68U0NS6fa7
-         cvMBzsKopKIt/8+RGR8kKj/N98Q8aDTKRF7es=
+        bh=bI7Ih1KM3FGPIbrBzXxwZIInEm8N+zTwoH6bn/Q5uwM=;
+        b=oRWwKQRGTivV5NWVdku1gZRD8HnNLpJphp4jtDat9rppvPxLbvea27auGlXn/cDfdH
+         mA6WALU3SBuK/N177qWf34rJLRShz2ZAI7IAv3UlzPF6HcpwR3fBme3A7xLkI3gemmNm
+         ujKgX07E6SqRPlqMQVpYI9VpBrewVtCYk93H4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=OoxG/wGg4xQcSXLm2QP+k9mOgGcd9mAuc5KSXgNS2bWgcQxPA7yPx4HKhXMFLcorfp
-         oY/f9UE9oYslUccpE+mttopDJB7YbDgmrYDUpJyEaNYUPmMsqatJfHAI0+0yP2OEW8oa
-         IY9xsJOJT8Kv8W3EyD3Lv1H3zP8QghcmtD2NY=
-Received: by 10.42.175.6 with SMTP id ay6mr1713567icb.185.1298283365994;
-        Mon, 21 Feb 2011 02:16:05 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id 8sm2428235iba.4.2011.02.21.02.16.03
+        b=OIbqsHOzU6i7da7RgUOQ11MoVG1ZF+pR2LtL8tOreNNtBMJtf9MwC2ecSHS7ot7JZ5
+         UQcvNsmtACtbjH5U89bXn8SP8PRLSoY8FjU+UXGrD+XsKwbU5AyHExoiS0FiUQR//a2C
+         B0eIvow2ALm2LLyOfAoDEwQk9HReB3xP5nMAc=
+Received: by 10.42.223.198 with SMTP id il6mr1699468icb.284.1298283237855;
+        Mon, 21 Feb 2011 02:13:57 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
+        by mx.google.com with ESMTPS id gy41sm970684ibb.11.2011.02.21.02.13.56
         (version=SSLv3 cipher=OTHER);
-        Mon, 21 Feb 2011 02:16:04 -0800 (PST)
+        Mon, 21 Feb 2011 02:13:57 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110221101229.GA32137@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -57,203 +58,109 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167458>
 
 =46rom: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Date: Sat, 28 Aug 2010 15:04:43 +0000
 
-Change the user visible strings in init-db.c to use gettext
-localizations. This only converts messages which needed to be changed
-from "foo" to _("foo"), and didn't need any TRANSLATORS comments.
+Add a new GETTEXT_POISON compile-time parameter to make _(msg) always
+return gibberish.  So now you can run
 
-I haven't marked the messages in init_db_usage or init_db_options for
-translation, since that would require additional changes in
-parse-options.c. Those can be done later.
+	make GETTEXT_POISON=3DYesPlease
+
+to get a copy of git that functions correctly (one hopes) but produces
+output that is in nobody's native language at all.
+
+This is a debugging aid for people who are working on the i18n part of
+the system, to make sure that they are not marking plumbing messages
+that should never be translated with _().
+
+As new strings get marked for translation, naturally a number of tests
+will be broken in this mode.  Tests that depend on output from
+Porcelain will need to be marked with the new C_LOCALE_OUTPUT test
+prerequisite.  Newly failing tests that do not depend on output from
+Porcelain would be bugs due to messages that should not have been
+marked for translation.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/init-db.c |   46 +++++++++++++++++++++++----------------------=
--
- 1 files changed, 23 insertions(+), 23 deletions(-)
+ Makefile      |    7 +++++++
+ gettext.h     |    8 +++++++-
+ t/test-lib.sh |    3 +++
+ 3 files changed, 17 insertions(+), 1 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 4f5348e..f7ddf5b 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -31,7 +31,7 @@ static void safe_create_dir(const char *dir, int shar=
-e)
- 		}
- 	}
- 	else if (share && adjust_shared_perm(dir))
--		die("Could not make %s writable by group", dir);
-+		die(_("Could not make %s writable by group"), dir);
+diff --git a/Makefile b/Makefile
+index c153f45..c348bb7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -216,6 +216,9 @@ all::
+ #
+ # Define NO_REGEX if you have no or inferior regex support in your C l=
+ibrary.
+ #
++# Define GETTEXT_POISON if you are debugging the choice of strings mar=
+ked
++# for translation.  This will turn all strings that use gettext into g=
+ibberish.
++#
+ # Define JSMIN to point to JavaScript minifier that functions as
+ # a filter to have gitweb.js minified.
+ #
+@@ -1370,6 +1373,9 @@ endif
+ ifdef NO_SYMLINK_HEAD
+ 	BASIC_CFLAGS +=3D -DNO_SYMLINK_HEAD
+ endif
++ifdef GETTEXT_POISON
++	BASIC_CFLAGS +=3D -DGETTEXT_POISON
++endif
+ ifdef NO_STRCASESTR
+ 	COMPAT_CFLAGS +=3D -DNO_STRCASESTR
+ 	COMPAT_OBJS +=3D compat/strcasestr.o
+@@ -2089,6 +2095,7 @@ endif
+ ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
+ 	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=3DYesPlease >>$@
+ endif
++	@echo GETTEXT_POISON=3D\''$(subst ','\'',$(subst ','\'',$(GETTEXT_POI=
+SON)))'\' >>$@
+=20
+ ### Detect Tck/Tk interpreter path changes
+ ifndef NO_TCLTK
+diff --git a/gettext.h b/gettext.h
+index dc44825..68e3a19 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -15,9 +15,15 @@
+=20
+ #define FORMAT_PRESERVING(n) __attribute__((format_arg(n)))
+=20
++#ifdef GETTEXT_POISON
++#define use_poison() 1
++#else
++#define use_poison() 0
++#endif
++
+ static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
+ {
+-	return msgid;
++	return use_poison() ? "Malkovich" : msgid;
  }
 =20
- static void copy_templates_1(char *path, int baselen,
-@@ -58,25 +58,25 @@ static void copy_templates_1(char *path, int basele=
-n,
- 		namelen =3D strlen(de->d_name);
- 		if ((PATH_MAX <=3D baselen + namelen) ||
- 		    (PATH_MAX <=3D template_baselen + namelen))
--			die("insanely long template name %s", de->d_name);
-+			die(_("insanely long template name %s"), de->d_name);
- 		memcpy(path + baselen, de->d_name, namelen+1);
- 		memcpy(template + template_baselen, de->d_name, namelen+1);
- 		if (lstat(path, &st_git)) {
- 			if (errno !=3D ENOENT)
--				die_errno("cannot stat '%s'", path);
-+				die_errno(_("cannot stat '%s'"), path);
- 		}
- 		else
- 			exists =3D 1;
+ /* Mark msgid for translation but do not translate it. */
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 0fdc541..0840e4a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1079,6 +1079,9 @@ esac
+ test -z "$NO_PERL" && test_set_prereq PERL
+ test -z "$NO_PYTHON" && test_set_prereq PYTHON
 =20
- 		if (lstat(template, &st_template))
--			die_errno("cannot stat template '%s'", template);
-+			die_errno(_("cannot stat template '%s'"), template);
-=20
- 		if (S_ISDIR(st_template.st_mode)) {
- 			DIR *subdir =3D opendir(template);
- 			int baselen_sub =3D baselen + namelen;
- 			int template_baselen_sub =3D template_baselen + namelen;
- 			if (!subdir)
--				die_errno("cannot opendir '%s'", template);
-+				die_errno(_("cannot opendir '%s'"), template);
- 			path[baselen_sub++] =3D
- 				template[template_baselen_sub++] =3D '/';
- 			path[baselen_sub] =3D
-@@ -93,20 +93,20 @@ static void copy_templates_1(char *path, int basele=
-n,
- 			int len;
- 			len =3D readlink(template, lnk, sizeof(lnk));
- 			if (len < 0)
--				die_errno("cannot readlink '%s'", template);
-+				die_errno(_("cannot readlink '%s'"), template);
- 			if (sizeof(lnk) <=3D len)
--				die("insanely long symlink %s", template);
-+				die(_("insanely long symlink %s"), template);
- 			lnk[len] =3D 0;
- 			if (symlink(lnk, path))
--				die_errno("cannot symlink '%s' '%s'", lnk, path);
-+				die_errno(_("cannot symlink '%s' '%s'"), lnk, path);
- 		}
- 		else if (S_ISREG(st_template.st_mode)) {
- 			if (copy_file(path, template, st_template.st_mode))
--				die_errno("cannot copy '%s' to '%s'", template,
-+				die_errno(_("cannot copy '%s' to '%s'"), template,
- 					  path);
- 		}
- 		else
--			error("ignoring template %s", template);
-+			error(_("ignoring template %s"), template);
- 	}
- }
-=20
-@@ -129,7 +129,7 @@ static void copy_templates(const char *template_dir=
-)
- 		return;
- 	template_len =3D strlen(template_dir);
- 	if (PATH_MAX <=3D (template_len+strlen("/config")))
--		die("insanely long template path %s", template_dir);
-+		die(_("insanely long template path %s"), template_dir);
- 	strcpy(template_path, template_dir);
- 	if (template_path[template_len-1] !=3D '/') {
- 		template_path[template_len++] =3D '/';
-@@ -137,7 +137,7 @@ static void copy_templates(const char *template_dir=
-)
- 	}
- 	dir =3D opendir(template_path);
- 	if (!dir) {
--		warning("templates not found %s", template_dir);
-+		warning(_("templates not found %s"), template_dir);
- 		return;
- 	}
-=20
-@@ -150,8 +150,8 @@ static void copy_templates(const char *template_dir=
-)
-=20
- 	if (repository_format_version &&
- 	    repository_format_version !=3D GIT_REPO_VERSION) {
--		warning("not copying templates of "
--			"a wrong format version %d from '%s'",
-+		warning(_("not copying templates of "
-+			"a wrong format version %d from '%s'"),
- 			repository_format_version,
- 			template_dir);
- 		closedir(dir);
-@@ -188,7 +188,7 @@ static int create_default_files(const char *templat=
-e_path)
- 	int filemode;
-=20
- 	if (len > sizeof(path)-50)
--		die("insane git directory %s", git_dir);
-+		die(_("insane git directory %s"), git_dir);
- 	memcpy(path, git_dir, len);
-=20
- 	if (len && path[len-1] !=3D '/')
-@@ -375,7 +375,7 @@ static int guess_repository_type(const char *git_di=
-r)
- 	if (!strcmp(".", git_dir))
- 		return 1;
- 	if (!getcwd(cwd, sizeof(cwd)))
--		die_errno("cannot tell cwd");
-+		die_errno(_("cannot tell cwd"));
- 	if (!strcmp(git_dir, cwd))
- 		return 1;
- 	/*
-@@ -450,18 +450,18 @@ int cmd_init_db(int argc, const char **argv, cons=
-t char *prefix)
- 					errno =3D EEXIST;
- 					/* fallthru */
- 				case -1:
--					die_errno("cannot mkdir %s", argv[0]);
-+					die_errno(_("cannot mkdir %s"), argv[0]);
- 					break;
- 				default:
- 					break;
- 				}
- 				shared_repository =3D saved;
- 				if (mkdir(argv[0], 0777) < 0)
--					die_errno("cannot mkdir %s", argv[0]);
-+					die_errno(_("cannot mkdir %s"), argv[0]);
- 				mkdir_tried =3D 1;
- 				goto retry;
- 			}
--			die_errno("cannot chdir to %s", argv[0]);
-+			die_errno(_("cannot chdir to %s"), argv[0]);
- 		}
- 	} else if (0 < argc) {
- 		usage(init_db_usage[0]);
-@@ -483,8 +483,8 @@ int cmd_init_db(int argc, const char **argv, const =
-char *prefix)
- 	git_dir =3D getenv(GIT_DIR_ENVIRONMENT);
- 	work_tree =3D getenv(GIT_WORK_TREE_ENVIRONMENT);
- 	if ((!git_dir || is_bare_repository_cfg =3D=3D 1) && work_tree)
--		die("%s (or --work-tree=3D<directory>) not allowed without "
--		    "specifying %s (or --git-dir=3D<directory>)",
-+		die(_("%s (or --work-tree=3D<directory>) not allowed without "
-+			  "specifying %s (or --git-dir=3D<directory>)"),
- 		    GIT_WORK_TREE_ENVIRONMENT,
- 		    GIT_DIR_ENVIRONMENT);
-=20
-@@ -509,14 +509,14 @@ int cmd_init_db(int argc, const char **argv, cons=
-t char *prefix)
- 		if (!git_work_tree_cfg) {
- 			git_work_tree_cfg =3D xcalloc(PATH_MAX, 1);
- 			if (!getcwd(git_work_tree_cfg, PATH_MAX))
--				die_errno ("Cannot access current working directory");
-+				die_errno (_("Cannot access current working directory"));
- 		}
- 		if (work_tree)
- 			set_git_work_tree(make_absolute_path(work_tree));
- 		else
- 			set_git_work_tree(git_work_tree_cfg);
- 		if (access(get_git_work_tree(), X_OK))
--			die_errno ("Cannot access work tree '%s'",
-+			die_errno (_("Cannot access work tree '%s'"),
- 				   get_git_work_tree());
- 	}
- 	else {
++# Can we rely on git's output in the C locale?
++test -z "$GETTEXT_POISON" && test_set_prereq C_LOCALE_OUTPUT
++
+ # test whether the filesystem supports symbolic links
+ ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYML=
+INKS
+ rm -f y
 --=20
 1.7.4.1
