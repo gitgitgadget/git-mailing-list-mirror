@@ -1,74 +1,81 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: How to recovery a corrupted git repo
-Date: Mon, 21 Feb 2011 15:50:09 +0800
-Message-ID: <AANLkTi=W3RckA=e-YwDJzELaEOAa+7P74V-G0G=bQhex@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 07/72] gettextize: git-clone "Cloning into" message
+Date: Mon, 21 Feb 2011 03:19:35 -0600
+Message-ID: <20110221091921.GB23238@elie>
+References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
+ <1298143495-3681-8-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 21 08:50:27 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 10:19:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrQXK-0000A8-RR
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 08:50:27 +0100
+	id 1PrRvo-0008N1-Ve
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 10:19:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754378Ab1BUHuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 02:50:11 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36787 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486Ab1BUHuK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 02:50:10 -0500
-Received: by gyb11 with SMTP id 11so140779gyb.19
-        for <git@vger.kernel.org>; Sun, 20 Feb 2011 23:50:09 -0800 (PST)
+	id S1753759Ab1BUJTn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 04:19:43 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57714 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754810Ab1BUJTn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 04:19:43 -0500
+Received: by iwn8 with SMTP id 8so1681097iwn.19
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 01:19:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=2AxbM9F7lwdZss+wC9n9JKqA4A9Yb9sonXH9+8rPAkE=;
-        b=KZYfmPwtG0T8rT3a/ZUqAOcLMfh3DBg+v2/q9qZiqaYlXI2VHH2AFUqv5R4YcqsreQ
-         SBoSnzfT84hQUy9I9WGl7GTvddZ3KPWqw7CRgztXhn6KlUoVErCuDxpKWJ+HQlmnibuV
-         OBq6HU3ZBKmf5983kwp4jBBJTXqQtWNe3rbG8=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=RBDyd50XKEMkmcVDfjfuZ+nmCoFAzJjn8LPTPohNYz4=;
+        b=tFOeJzDGR2TmX/u71VNm5blVMGyVhm9baPPmOKHeiD7gKz3pHwlLE0Wt+gVtqoHjfJ
+         spBLma3/ox92RB76UswG1Syc2kMsTpjVwEkySrdpNCA/Dd0vDDbeO2kDgq9YheABeRWx
+         f3wJ6VRzi3fex5GKfESZ5tewtWUAX/ckHS9hg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=DwZfKqtzZdeETADIoqjwnJrIXF4Yj9rOp4fN/Z5YEJZ6S2SrLH42ylzowugpK9txP2
-         73a+I0gVHMKsi+B9R9Lx81XdczvoorLj+F+geRmHCEI1awYMExYx2Z+L1w7zO7CRl/nF
-         mUxBadJCnfiawcbgraO2S3q91dxMySBBxoFQM=
-Received: by 10.150.198.11 with SMTP id v11mr1312863ybf.388.1298274609129;
- Sun, 20 Feb 2011 23:50:09 -0800 (PST)
-Received: by 10.146.168.17 with HTTP; Sun, 20 Feb 2011 23:50:09 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=xJq+mmoG6mmLuExQCl5Ad1D6j0jPX8oM/MgEfTSN/86sx/m/jEbgJAY3c949qdQ/2T
+         Wn/gR6BesWbFRNZrkuz+VjkX+WLg4kJTQywbWabu2DY48+bY2sX2D6EkYiHyeyFuV+Oe
+         EMHQiUZ2Zj8sNEvZe2IXxQRmZHWazuNG5UcWE=
+Received: by 10.231.153.195 with SMTP id l3mr986948ibw.150.1298279982367;
+        Mon, 21 Feb 2011 01:19:42 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
+        by mx.google.com with ESMTPS id i16sm4985667ibl.12.2011.02.21.01.19.40
+        (version=SSLv3 cipher=OTHER);
+        Mon, 21 Feb 2011 01:19:41 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1298143495-3681-8-git-send-email-avarab@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167448>
 
-I have a corrupted git repo, with "git fsck", it shows
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-missing blob b71eb55f2dbc97dafd4a769fc61f346e69a5e0af
-missing blob 282035f3ae964e1e288f352c370be8edd11d3078
-missing tree 3c20f556eecc476e3542cc522d46a62a4461fec6
-missing blob f321b578edeb452358497e832815d6cae6b36886
-missing commit 6d23f5084c975be637f7d748db82116bf84d3872
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -468,9 +468,12 @@ int cmd_clone(int argc, const char **argv, const=
+ char *prefix)
+>  		die(_("could not create leading directories of '%s'"), git_dir);
+>  	set_git_dir(make_absolute_path(git_dir));
+> =20
+> -	if (0 <=3D option_verbosity)
+> -		printf("Cloning into %s%s...\n",
+> -		       option_bare ? "bare repository " : "", dir);
+> +	if (0 <=3D option_verbosity) {
+> +		if (option_bare)
+> +			printf(_("Cloning into bare repository %s\n"), dir);
+> +		else
+> +			printf(_("Cloning into %s\n"), dir);
+> +	}
 
-And i also have a good backup repo. How can i recover the corrupted
-repo with the backup repo?
-
-I can do a rsync or fresh "git clone", however, is there any git
-related commands to incrementally do this?
-
-btw, "git remote add and then git fetch" doesn't work, it reports
-
-error: refs/heads/bringup does not point to a valid object!
-error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
-error: refs/heads/bringup does not point to a valid object!
-error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
-error: refs/heads/bringup does not point to a valid object!
-error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
-error: refs/heads/bringup does not point to a valid object!
-error: refs/heads/fsl_imx_r9.3 does not point to a valid object!
-error: missing object referenced by 'refs/tags/v2.6.32'
-error: missing object referenced by 'refs/tags/v2.6.32-rc1'
-error: missing object referenced by 'refs/tags/v2.6.32-rc2'
+An ellipsis seems to have been lost.  I wonder if there is some easy
+(automated, ideally) way to check these patches.
