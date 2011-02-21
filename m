@@ -1,91 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cvsimport still not working with cvsnt
-Date: Mon, 21 Feb 2011 15:33:21 -0800
-Message-ID: <7vtyfxgdz2.fsf@alter.siamese.dyndns.org>
-References: <4D0ED5EC.9020402@burntmail.com>
- <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com>
- <4D119015.6020207@burntmail.com> <4D2AB63D.7040803@burntmail.com>
- <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com>
- <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino>
- <7v8vynnokt.fsf@alter.siamese.dyndns.org> <4D450655.5090501@burntmail.com>
- <AANLkTik0Mp=Ww_+ZN_jw6t4gsFwLo1UTw5JOpho8bCd=@mail.gmail.com>
- <7vhbcb35xk.fsf@alter.siamese.dyndns.org> <4D5E1116.7040501@burntmail.com>
- <7voc69p4xu.fsf@alter.siamese.dyndns.org> <4D5F6E97.4000402@burntmail.com>
- <7vy65bkw72.fsf@alter.siamese.dyndns.org> <4D61EA4B.3020708@burntmail.com>
+From: Dave Abrahams <dave@boostpro.com>
+Subject: Re: Using Origin hashes to improve rebase behavior
+Date: Mon, 21 Feb 2011 23:49:37 +0000 (UTC)
+Message-ID: <loom.20110222T004926-60@post.gmane.org>
+References: <m21v3fvbix.fsf@hermes.luannocracy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin@laptop.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Emil Medve <Emilian.Medve@freescale.com>,
-	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Guy Rouillier <guyr@burntmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 00:33:46 2011
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 22 00:50:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrfGD-0002gO-6A
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 00:33:45 +0100
+	id 1PrfW5-0000sf-03
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 00:50:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580Ab1BUXdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 18:33:40 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50224 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780Ab1BUXdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 18:33:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D15123FD0;
-	Mon, 21 Feb 2011 18:34:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=Mau6lNcQNvMGnRDHGCDGMgEAy6k=; b=JjrRufWJhVUAq00zHJe+HGs
-	bmzLgwxmbbouwudQxyoK1bBaGpZU0r+C94bM0FAiPWlnt9tt3aY+hgYOPbAwRNUU
-	uq9riGvb1PxxjzYqUpXbn/Q8ZcRUkJQ9tFbIUAjBSQJSjgUQLRk8Az6pmVzvi46d
-	be5w9IciRaLDzmsbPKqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=GFCy90Y6KKNikV6kjNSKjEUCVY3vh08jc/9HDdjmOF6NePXX8
-	WNoI3JhEqOquZBacBcdoM65R5bpax6YVLyH7lE8y51WtODoYjawQYDQ0m61vQXIu
-	M1S52CyKf9EBloZsdpQne7TYl185dNkLRXVNnw4w3yo4xl2B+o7/jFnyzA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6372B3FCA;
-	Mon, 21 Feb 2011 18:34:43 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1013D3FC5; Mon, 21 Feb 2011
- 18:34:33 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 28F5E6B8-3E13-11E0-BDDF-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751351Ab1BUXt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 18:49:56 -0500
+Received: from lo.gmane.org ([80.91.229.12]:51717 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751250Ab1BUXty (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 18:49:54 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PrfVn-0000jR-Jr
+	for git@vger.kernel.org; Tue, 22 Feb 2011 00:49:51 +0100
+Received: from 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com ([207.172.223.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 00:49:51 +0100
+Received: from dave by 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 00:49:51 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 207.172.223.249 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-us) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167514>
 
-Guy Rouillier <guyr@burntmail.com> writes:
+Johan Herland <johan <at> herland.net> writes:
 
-> On 2/20/2011 2:21 AM, Junio C Hamano wrote:
-> ...
->> In practice, I would imagine that the cvsroot part wouldn't contain an
->> equal sign, so this looser regexp would not hurt in the real life, but it
->> does feel yucky.
+> 
+> On Friday 11 February 2011, skillzero <at> gmail.com wrote:
+> > On Thu, Feb 10, 2011 at 1:13 PM, John Wiegley
+> > <johnw <at> boostpro.com> wrote:
 >
-> Well, this is the important point. I did think of these aspects when
-> writing the code.  Sure, writing more precise code is possible, but the
-> results are the same in either case.
+> > I don't know very much about how git really works so what I'm saying
+> > may be dumb, but rather than record where a commit came from, would it
+> > be reasonable for rebase to look at the patch-id for each change on
+> > the topic branch after the merge base and automatically remove topic
+> > branch commits that match that patch-id? So in your example, rebase
+> > would check each topic branch commit against 3', d, e*, and f and see
+> > that the 3' patch-id is the same as the topic branch 3 and remove
+> > topic branch 3 before it gets to e*?
+> 
+> I believe "git rebase" already does exactly what you describe [1].
 
-It is probably unlikely to see a SP in the pathname, but I do not think it
-is reasonable to introduce a regression to forbid '=' in the pathname to
-the repository, which we have been supporting since August 2009, when we
-know the patch as-is will regress the use case, and especially when we
-already know a way to code not to regress is not too complex.
+I can imagine that we could make merges do something similar:
 
-The "substitute with 'A' when missing" comes from e481b1d (cvs: initialize
-empty password, 2009-09-17); it makes me worried that the patch is
-removing the support, _unless_ that commit by Clemens was addressing a
-problem that does not exist (and if so, I'd like to see a sentence or two in
-the commit log to explain why it is a sane thing to do to remove it).
+git merge <sources> :=
 
-Thanks.
+   Attempt the merge as it works today
+   If there are conflicts
+       for s in <sources>
+            rebase s onto HEAD
+       if there are no conflicts
+            use the current tree as the result of
+                the merge (with the merge's heritage)
+            commit
+       else
+            reset to the conflicted merge state
