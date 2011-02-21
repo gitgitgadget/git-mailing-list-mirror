@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 03/15] i18n: do not poison translations unless
- GIT_GETTEXT_POISON envvar is set
-Date: Mon, 21 Feb 2011 04:14:17 -0600
-Message-ID: <20110221101417.GD32137@elie>
+Subject: [PATCH 06/15] init: mark "Initialized [...] repository" for
+ translation
+Date: Mon, 21 Feb 2011 04:17:54 -0600
+Message-ID: <20110221101754.GG32137@elie>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
  <20110221040012.GB26968@elie>
  <20110221101229.GA32137@elie>
@@ -11,46 +11,46 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 11:17:51 2011
+X-From: git-owner@vger.kernel.org Mon Feb 21 11:18:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrSpy-0001yu-MO
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 11:17:51 +0100
+	id 1PrSqD-00024k-TC
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 11:18:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754873Ab1BUKRq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 05:17:46 -0500
+	id S1754973Ab1BUKSA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 05:18:00 -0500
 Received: from mail-iy0-f174.google.com ([209.85.210.174]:45892 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753884Ab1BUKRp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 05:17:45 -0500
-Received: by iyb26 with SMTP id 26so556870iyb.19
-        for <git@vger.kernel.org>; Mon, 21 Feb 2011 02:17:45 -0800 (PST)
+	with ESMTP id S1753884Ab1BUKR7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 05:17:59 -0500
+Received: by mail-iy0-f174.google.com with SMTP id 26so556870iyb.19
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 02:17:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=IBcQcpZ8lEOTN3bua/OD1dsYYwxlMAlUQziWQnkZNCk=;
-        b=YvnwfvMtgUkPRABMeFDyk8Jwvs35/5IziylH+A2QTlePwIAS3v4z1eBSGEQPPCmPKY
-         KsQLpoZ1L8BPUx8kWEfYCnBN4lJSzrjz7AZ/JSO/YETbjVdSm0qauZDd47JaFlwrbJel
-         FNk93abuvkXQlWabG7LZ9SlHSWXwfLpg0/t1E=
+        bh=BMDsbj7o+EMs018nzaFkzFeiLBdYJ3LymkMeu8i49Ag=;
+        b=UCcZpcvwP5xVVLTYvglHAZjodHLFI/HfBK9lTvnq4roVJdnxquoIeMWpW6NDsmrqRz
+         8FdMdjJPi8ZS8E+O/MdYjx6u2TQxtO0xHGifYRkQpd3qpgeiG1U5rQ4n8Z7nAcr/4wDv
+         tSyeiJQ7BrcfVgvcKMF+k5MWd7IMo+gs0+v1E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=yDOclN5llw5tUPtw+vyCv07aaeAEwXQvQgGXP12NpBbl55ZyNRXRw/KOzvFhSOE9jk
-         kH3ZhdeVgXyI+ERR0o02EteTRQ30EdpLK5ZWQmk3MetK5h8C5NeqLIVseqzCJytbFfmW
-         n8P165ysu4Vv9FnENw5YQvI0m2nbzuRFXdPq4=
-Received: by 10.42.137.74 with SMTP id x10mr1675589ict.452.1298283261948;
-        Mon, 21 Feb 2011 02:14:21 -0800 (PST)
+        b=A8nZJb1FFbZ8OIj35PyMyknzkU24bTXo0sJa2w50/M8T0sP+YavHKCfotmA67VHlWq
+         V8crdhPgvCwgKLzT5T28xppCH9KtkZ+P6oYIwHpxtZNOGZlEItBFEXNPqBkuXoT0c0xs
+         kc7u6SGgXItsNBlqDSNZxpqHxbZsngTNnmaKU=
+Received: by 10.42.170.200 with SMTP id g8mr1690398icz.436.1298283479296;
+        Mon, 21 Feb 2011 02:17:59 -0800 (PST)
 Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
-        by mx.google.com with ESMTPS id 8sm5059191iba.22.2011.02.21.02.14.20
+        by mx.google.com with ESMTPS id gy41sm5074199ibb.23.2011.02.21.02.17.57
         (version=SSLv3 cipher=OTHER);
-        Mon, 21 Feb 2011 02:14:21 -0800 (PST)
+        Mon, 21 Feb 2011 02:17:58 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110221101229.GA32137@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -58,110 +58,77 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167460>
 
-Tweak the GETTEXT_POISON facility so it is activated at run time
-instead of compile time.  If the GIT_GETTEXT_POISON environment
-variable is set, _(msg) will result in gibberish as before; but if the
-GIT_GETTEXT_POISON variable is not set, it will return the message for
-human-readable output.  So the behavior of mistranslated and
-untranslated git can be compared without rebuilding git in between.
+=46rom: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Date: Sat, 28 Aug 2010 15:32:15 +0000
 
-=46or simplicity we always set the GIT_GETTEXT_POISON variable in tests=
-=2E
+These messages could benefit from splitting up.  An earlier version of
+this patch began like this:
 
-This does not affect builds without the GETTEXT_POISON compile-time
-option set, so non-i18n git will not be slowed down.
+    const char *reinit_shared   =3D _("Reinitialized existing shared Gi=
+t repository in %s\n");
+    const char *init_shared     =3D _("Initialized empty shared Git rep=
+ository in %s\n");
+    const char *reinit_noshared =3D _("Reinitialized existing Git repos=
+itory in %s\n");
+    const char *init_noshared   =3D _("Initialized empty Git repository=
+ in %s\n");
 
+But in the first round of gettextization I'm aiming to keep code
+changes to a minimum for ease of review.  So just add a comment
+explaining to translators how the sprintf format gets used so they
+can cope for now if the language's grammar allows.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile      |    5 ++++-
- gettext.c     |   14 ++++++++++++++
- gettext.h     |    2 +-
- t/test-lib.sh |    8 +++++++-
- 4 files changed, 26 insertions(+), 3 deletions(-)
- create mode 100644 gettext.c
+I heard a rumor that this style of TRANSLATORS comment doesn't pass
+unscathed through xgettext, but when I tried it with "make pot" it
+worked okay.  Ideas?
 
-diff --git a/Makefile b/Makefile
-index c348bb7..4e9d935 100644
---- a/Makefile
-+++ b/Makefile
-@@ -217,7 +217,9 @@ all::
- # Define NO_REGEX if you have no or inferior regex support in your C l=
-ibrary.
- #
- # Define GETTEXT_POISON if you are debugging the choice of strings mar=
-ked
--# for translation.  This will turn all strings that use gettext into g=
-ibberish.
-+# for translation.  In a GETTEXT_POISON build, you can turn all string=
-s marked
-+# for translation into gibberish by setting the GIT_GETTEXT_POISON var=
-iable
-+# (to any value) in your environment.
- #
- # Define JSMIN to point to JavaScript minifier that functions as
- # a filter to have gitweb.js minified.
-@@ -1374,6 +1376,7 @@ ifdef NO_SYMLINK_HEAD
- 	BASIC_CFLAGS +=3D -DNO_SYMLINK_HEAD
- endif
- ifdef GETTEXT_POISON
-+	LIB_OBJS +=3D gettext.o
- 	BASIC_CFLAGS +=3D -DGETTEXT_POISON
- endif
- ifdef NO_STRCASESTR
-diff --git a/gettext.c b/gettext.c
-new file mode 100644
-index 0000000..9688c8b
---- /dev/null
-+++ b/gettext.c
-@@ -0,0 +1,14 @@
-+/*
-+ * Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-+ */
+ builtin/init-db.c |   12 +++++++++---
+ t/t0001-init.sh   |    2 +-
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index f7ddf5b..e0e5ce3 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -354,9 +354,15 @@ int init_db(const char *template_dir, unsigned int=
+ flags)
+ 	if (!(flags & INIT_DB_QUIET)) {
+ 		const char *git_dir =3D get_git_dir();
+ 		int len =3D strlen(git_dir);
+-		printf("%s%s Git repository in %s%s\n",
+-		       reinit ? "Reinitialized existing" : "Initialized empty",
+-		       shared_repository ? " shared" : "",
 +
-+#include "git-compat-util.h"
-+#include "gettext.h"
-+
-+int use_poison(void)
-+{
-+	static int poison_requested =3D -1;
-+	if (poison_requested =3D=3D -1)
-+		poison_requested =3D getenv("GIT_GETTEXT_POISON") ? 1 : 0;
-+	return poison_requested;
-+}
-diff --git a/gettext.h b/gettext.h
-index 68e3a19..4d2338b 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -16,7 +16,7 @@
- #define FORMAT_PRESERVING(n) __attribute__((format_arg(n)))
++		/*
++		 * TRANSLATORS: The first '%s' is either "Reinitialized
++		 * existing" or "Initialized empty", the second " shared" or
++		 * "", and the last '%s%s' is the verbatim directory name.
++		 */
++		printf(_("%s%s Git repository in %s%s\n"),
++		       reinit ? _("Reinitialized existing") : _("Initialized empty")=
+,
++		       shared_repository ? _(" shared") : "",
+ 		       git_dir, len && git_dir[len-1] !=3D '/' ? "/" : "");
+ 	}
 =20
- #ifdef GETTEXT_POISON
--#define use_poison() 1
-+extern int use_poison(void);
- #else
- #define use_poison() 0
- #endif
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0840e4a..f4c1e04 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1080,7 +1080,13 @@ test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PYTHON" && test_set_prereq PYTHON
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index f684993..dd4c00d 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -180,7 +180,7 @@ test_expect_success 'GIT_DIR & GIT_WORK_TREE (2)' '
+ 	fi
+ '
 =20
- # Can we rely on git's output in the C locale?
--test -z "$GETTEXT_POISON" && test_set_prereq C_LOCALE_OUTPUT
-+if test -n "$GETTEXT_POISON"
-+then
-+	GIT_GETTEXT_POISON=3DYesPlease
-+	export GIT_GETTEXT_POISON
-+else
-+	test_set_prereq C_LOCALE_OUTPUT
-+fi
+-test_expect_success 'reinit' '
++test_expect_success C_LOCALE_OUTPUT 'reinit' '
 =20
- # test whether the filesystem supports symbolic links
- ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYML=
-INKS
+ 	(
+ 		sane_unset GIT_CONFIG GIT_WORK_TREE GIT_CONFIG &&
 --=20
 1.7.4.1
