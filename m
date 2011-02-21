@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/3] i18n: add no-op _() and N_() wrappers
-Date: Sun, 20 Feb 2011 22:02:05 -0600
-Message-ID: <20110221040205.GC26968@elie>
+Subject: [PATCH 2/3] tests: add GETTEXT_POISON to simulate unfriendly
+ translator
+Date: Sun, 20 Feb 2011 22:03:13 -0600
+Message-ID: <20110221040313.GD26968@elie>
 References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
  <20110221040012.GB26968@elie>
 Mime-Version: 1.0
@@ -9,46 +10,46 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 05:02:17 2011
+X-From: git-owner@vger.kernel.org Mon Feb 21 05:03:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrMyW-0006Z8-Je
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 05:02:17 +0100
+	id 1PrMzc-0006xW-BB
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 05:03:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932166Ab1BUECM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 23:02:12 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:50490 "EHLO
+	id S932182Ab1BUEDT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Feb 2011 23:03:19 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:62712 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755768Ab1BUECJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 23:02:09 -0500
-Received: by iwn8 with SMTP id 8so1482580iwn.19
-        for <git@vger.kernel.org>; Sun, 20 Feb 2011 20:02:09 -0800 (PST)
+	with ESMTP id S932152Ab1BUEDS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Feb 2011 23:03:18 -0500
+Received: by iwn8 with SMTP id 8so1483209iwn.19
+        for <git@vger.kernel.org>; Sun, 20 Feb 2011 20:03:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Br3RQHGJ2UbaX2yrK8u6wP7w0JQijPas/+X5omhgwFE=;
-        b=X3SzKryZbN06ezPddWoD4Q8nnFqlJ5SZZ6kHAvWDUD+UIDF+AMxwJfC57SfpqmjG0J
-         9u/fi97a7ChxPP4JQBmb4alQjfvbuvabuI/NhwkV79b9zoAJ7uNJPQASiQde2wKyTdaq
-         SCGZMZ9k6zyzNKwmutLtsKT0+/C678xBEAWkI=
+        bh=d5FhuzKqb7mPPvoWESJdedU1G4BBjg1svhhin4k4rC0=;
+        b=d7L7QsDCS3TZW6JHg51Gk7woyCRivGo1wGkSC7dM0KkpsOhMp2TJuV5r+NknzOnQ48
+         3k0YzhKwU285uYboZadlfpaBe2ccIKPEZIvgQZuK9NxGmFzRc6O00gWksPN1H9x8mRVn
+         6ITjhwIXDUlEhKrEv14LVm1RCYg+abRQsjHzo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=C9QbS2IQiIVJXKAfYSBt19fNmylgXh6xE/K1vOSz6trxVe8EiiBdI10g2Qn33ccw0k
-         QIjcqOJLQjXc2wguUPCCAU/mIBNJna2/MIzNwILSn5+O4ht+lgmhk2/EPpHWuUP1wUkX
-         qHLZ4qNY0Z/R6y+KZfPSgcnTWk4CtGiSxgJD4=
-Received: by 10.231.85.137 with SMTP id o9mr829510ibl.27.1298260929263;
-        Sun, 20 Feb 2011 20:02:09 -0800 (PST)
+        b=cjddlKOko62SDQyYT6GxfHKXqRGkRz4ncYgfJS8xgg55ss+DRwM10q1DQAWlkTdB0P
+         SCd8/s9CE2Y28VnmpJ0YTWGG3SqN0E4+xFsWU5uUStFuJeGcc2IT7Xlel8SzF3NnEZ4y
+         pL++hzw9rlMnUj4hAtDUOR/9CXOSEflO7kQRo=
+Received: by 10.42.224.136 with SMTP id io8mr1353483icb.202.1298260998316;
+        Sun, 20 Feb 2011 20:03:18 -0800 (PST)
 Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id i16sm4726698ibl.12.2011.02.20.20.02.07
+        by mx.google.com with ESMTPS id u9sm4731379ibe.8.2011.02.20.20.03.16
         (version=SSLv3 cipher=OTHER);
-        Sun, 20 Feb 2011 20:02:08 -0800 (PST)
+        Sun, 20 Feb 2011 20:03:17 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110221040012.GB26968@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -56,98 +57,107 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167438>
 
 =46rom: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-The _ function is meant to be used to translate strings into the
-user's chosen language.
+Add a new GETTEXT_POISON Makefile parameter.  When it is set, every
+invocation of _(s) will return a nonsense string instead of 's' or an
+actual translation of 's'.  By setting this parameter, we can make
+sure that none of the strings marked for translation are functionally
+important.
 
-The N_ macro is a marker for xgettext to find translatable strings
-in contexts where a function call cannot be used directly, like so:
+When tests are checking specific (US English) output from Git, they
+should add a C_LOCALE_OUTPUT prerequisite.  Running through tests in
+this way can help to find messages that should not be translated
+because they are part of the git plumbing.
 
-	const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] =3D {
-		/* ERROR_WOULD_OVERWRITE */
-		N_("Entry '%s' would be overwritten by merge. Cannot merge."),
-	[...]
-
-Its result is still untranslated and should be fed to _ before it
-is printed.
-
-Making _ a function and N_ a macro avoids the temptation to use
-_("foo") instead of N_("foo") as a string literal.
-
-Define these in a new gettext.h and include it in cache.h, so they can
-be used everywhere.  They just return their argument for now.  To
-split up the gettext series I'm first submitting patches to gettextize
-the source tree before I add any of the Makefile and C changes needed
-to actually use translations.
+The poison string is "# GETTEXT POISON #", so it is still a valid
+comment that is safe to put at the end of the message shown by 'git
+commit --amend' and so on.  That simplifies life until git can learn
+to add the "# " comment markers itself instead of relying on
+translators to remember them.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile  |    1 +
- cache.h   |    1 +
- gettext.h |   26 ++++++++++++++++++++++++++
- 3 files changed, 28 insertions(+), 0 deletions(-)
- create mode 100644 gettext.h
+ Makefile      |    7 +++++++
+ gettext.h     |    8 +++++++-
+ t/test-lib.sh |    3 +++
+ 3 files changed, 17 insertions(+), 1 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index ade7923..c153f45 100644
+index c153f45..c348bb7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -515,6 +515,7 @@ LIB_H +=3D diff.h
- LIB_H +=3D dir.h
- LIB_H +=3D exec_cmd.h
- LIB_H +=3D fsck.h
-+LIB_H +=3D gettext.h
- LIB_H +=3D git-compat-util.h
- LIB_H +=3D graph.h
- LIB_H +=3D grep.h
-diff --git a/cache.h b/cache.h
-index 3abf895..a465f38 100644
---- a/cache.h
-+++ b/cache.h
-@@ -5,6 +5,7 @@
- #include "strbuf.h"
- #include "hash.h"
- #include "advice.h"
-+#include "gettext.h"
+@@ -216,6 +216,9 @@ all::
+ #
+ # Define NO_REGEX if you have no or inferior regex support in your C l=
+ibrary.
+ #
++# Define GETTEXT_POISON if you are debugging the choice of strings mar=
+ked
++# for translation.  This will turn all strings that use gettext into g=
+ibberish.
++#
+ # Define JSMIN to point to JavaScript minifier that functions as
+ # a filter to have gitweb.js minified.
+ #
+@@ -1370,6 +1373,9 @@ endif
+ ifdef NO_SYMLINK_HEAD
+ 	BASIC_CFLAGS +=3D -DNO_SYMLINK_HEAD
+ endif
++ifdef GETTEXT_POISON
++	BASIC_CFLAGS +=3D -DGETTEXT_POISON
++endif
+ ifdef NO_STRCASESTR
+ 	COMPAT_CFLAGS +=3D -DNO_STRCASESTR
+ 	COMPAT_OBJS +=3D compat/strcasestr.o
+@@ -2089,6 +2095,7 @@ endif
+ ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
+ 	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=3DYesPlease >>$@
+ endif
++	@echo GETTEXT_POISON=3D\''$(subst ','\'',$(subst ','\'',$(GETTEXT_POI=
+SON)))'\' >>$@
 =20
- #include SHA1_HEADER
- #ifndef git_SHA_CTX
+ ### Detect Tck/Tk interpreter path changes
+ ifndef NO_TCLTK
 diff --git a/gettext.h b/gettext.h
-new file mode 100644
-index 0000000..dc44825
---- /dev/null
+index dc44825..6daa57c 100644
+--- a/gettext.h
 +++ b/gettext.h
-@@ -0,0 +1,26 @@
-+#ifndef GETTEXT_H
-+#define GETTEXT_H
-+
-+/*
-+ * Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-+ *
-+ * This is a skeleton no-op implementation of gettext for Git.
-+ * You can replace it with something that uses libintl.h and wraps
-+ * gettext() to try out the translations.
-+ */
-+
-+#ifdef _
-+#error "namespace conflict: '_' is pre-defined?"
+@@ -15,9 +15,15 @@
+=20
+ #define FORMAT_PRESERVING(n) __attribute__((format_arg(n)))
+=20
++#ifdef GETTEXT_POISON
++#define use_poison() 1
++#else
++#define use_poison() 0
 +#endif
 +
-+#define FORMAT_PRESERVING(n) __attribute__((format_arg(n)))
+ static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
+ {
+-	return msgid;
++	return use_poison() ? "# GETTEXT POISON #" : msgid;
+ }
+=20
+ /* Mark msgid for translation but do not translate it. */
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 0fdc541..0840e4a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1079,6 +1079,9 @@ esac
+ test -z "$NO_PERL" && test_set_prereq PERL
+ test -z "$NO_PYTHON" && test_set_prereq PYTHON
+=20
++# Can we rely on git's output in the C locale?
++test -z "$GETTEXT_POISON" && test_set_prereq C_LOCALE_OUTPUT
 +
-+static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
-+{
-+	return msgid;
-+}
-+
-+/* Mark msgid for translation but do not translate it. */
-+#define N_(msgid) (msgid)
-+
-+#endif
+ # test whether the filesystem supports symbolic links
+ ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYML=
+INKS
+ rm -f y
 --=20
 1.7.4.1
