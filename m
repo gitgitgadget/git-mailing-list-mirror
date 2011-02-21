@@ -1,100 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/3] t/gitweb-lib.sh: print to stderr when gitweb_run
- has errors
-Date: Sun, 20 Feb 2011 22:40:50 -0800
-Message-ID: <7vmxlplwjx.fsf@alter.siamese.dyndns.org>
-References: <1298124654-12051-1-git-send-email-avarab@gmail.com>
- <201102191646.02543.jnareb@gmail.com>
- <AANLkTimFyue2F6aRg7KdqOJZw9dOHY+B0XWCiVBYNOeg@mail.gmail.com>
- <201102191916.21164.jnareb@gmail.com>
+Subject: Re: [PATCH 03/72] t/test-lib.sh: add always-set NO_GETTEXT_POISON
+ prerequisite
+Date: Sun, 20 Feb 2011 22:56:30 -0800
+Message-ID: <7vipwdlvtt.fsf@alter.siamese.dyndns.org>
+References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
+ <1298143495-3681-4-git-send-email-avarab@gmail.com>
+ <20110220021031.GB17305@elie>
+ <AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 07:41:20 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 21 07:56:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrPSR-0006w9-3W
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 07:41:19 +0100
+	id 1PrPhS-0004oZ-DF
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 07:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969Ab1BUGlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 01:41:04 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38225 "EHLO
+	id S1752698Ab1BUG4m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 01:56:42 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51855 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778Ab1BUGlC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 01:41:02 -0500
+	with ESMTP id S1752000Ab1BUG4m convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 01:56:42 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 291974759;
-	Mon, 21 Feb 2011 01:42:10 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 31A264821;
+	Mon, 21 Feb 2011 01:57:51 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fPhL12WlxSnANh1SA5IN6P4OuLQ=; b=uej+ML
-	dgGIZLrSzRsfOc1ijxlJ4pcw26jFNoqm1cZQROOkq2IyEr7QqWWfMykwjKRyOpTN
-	H5sglpCK7OxIzxrHN3mTjwbuwBBMZG9U9gjMkVHSlJ2BhWGJpTS6LQaTHs+s+8rz
-	Diwghs9hAmbEXV51gH3S8d07zTyYhyoJ5cS2I=
+	:content-type:content-transfer-encoding; s=sasl; bh=HwOiKdppdqeL
+	7rpxHIs5oXDmKZw=; b=fN+Swz37jMAlQ+wxY06j73zdGGPlOCTroUTko8Ajy606
+	I/i7bePaq9Wam3YveXnrKxanHv3pN/vqt99n6fvLqNEDXzweFesA/V85GXzAtaiF
+	ZfHqFU+2R6sEHbubijCnp5/e6V8rszW0DUXXZKjWEqjyyBCYmQJR6pvN+so6GvI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qNJ2MU77lhRZb92YFmjsd1dFble9EFKH
-	fZblysFn9vrwn7dE2HPDWdouDiNR8mcfqPMuCX5GuLTQ0Z6rwF/GHPtsasW3q26V
-	3MsXvo4e2I3eSb48FTasUQrMgp7neZUuCGnvuMTqnrUOLIQB9UySIhO5ul6eWUVG
-	6uvznIlkV0g=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=D/+cYN
+	FZzYCih9w3EL/hl0hhjJBcLBE92V+xqYINNWCRy3ZcPFGgW+hfdy3Y6FxCYmCLDJ
+	pFMpUoYvUrhl8X7zmNfnZrDcRNFajuP01Ibvcl6/7OJiyh2whtRGzQoYf/3/FH49
+	xplnkybDrFpLPUK0aOlDOr0czGOgVqJ1F2h+I=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EB6DB4758;
-	Mon, 21 Feb 2011 01:42:06 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 014C14820;
+	Mon, 21 Feb 2011 01:57:47 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C457E4757; Mon, 21 Feb 2011
- 01:42:02 -0500 (EST)
-In-Reply-To: <201102191916.21164.jnareb@gmail.com> (Jakub Narebski's message
- of "Sat\, 19 Feb 2011 19\:16\:19 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B38FA481F; Mon, 21 Feb 2011
+ 01:57:43 -0500 (EST)
+In-Reply-To: <AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun\, 20 Feb
+ 2011 13\:42\:20 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B34D4DEE-3D85-11E0-9885-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: E434E65E-3D87-11E0-9885-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167443>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Because '--immediate' stops test suite after first error, therefore in
-> this mode
+> You shouldn't worry about it for now. FWIW NO_GETTEXT_POISON is
+> documented in po/README in a patch that I plan to submit later.
 >
->   test_debug 'cat gitweb.log'
->
-> was never ran, thus in effect negating effect of '--debug' option.
-> This made finidng the cause of errors in gitweb test sute difficult.
+> NO_GETTEXT_POISON is only relevant to people such as myself who are
+> adding new translations to the source. I.e. changing "foo" to
+> _("foo"). It's a sanity check to make sure that by doing so you're no=
+t
+> changing some plumbing test, or at least have to realize what it is
+> that you're changing.
 
-I think the patch itself makes sense, but I actually don't agree with the
-above reasoning.
+I also had the same reaction to NO_GETTEXT_POISON as Jonathan, and your
+above argument is not quite right.
 
-The point of --immediate is not just it stops where we find a failure, but
-also it leaves the trash directory intact, so that _you_ who started the
-test with --immediate can run the "cat gitweb.log" yourself.
+GETTEXT_POISON _is_ relevant to people like you who are working on the
+i18n part of the system.  It is a debugging aid to make sure that you a=
+re
+not marking plumbing messages that should never be translated.
 
-In other words, I think test_debug is overused.  In the current setting, I
-think a sane way to debug the test script itself would probably be
+But you cannot say NO_GETTEXT_POISON is not relevant to others; everybo=
+dy
+else who is not actively working on i18n needs to be aware of it, and
+needs to be careful when writing his tests.  When your test depends on
+output from Porcelain (which is not something we should encourage, but
+that is a separate matter), you need to mark that test as "this test wi=
+ll
+be broken under GETTEXT_POISON build".
 
-	sh -x tXXXX-xxxx.sh -i -v -d
+"This test requires NO_GETTEXT_POISON pre-requisite, which is only true
+when git is built without GETTEXT_POISON" makes logical sense as a
+statement, but it feels somewhat a roundabout way to explain it.
 
-so that:
-
- (1) with -x I can see what commands are being run;
- (2) with -i I can stop the test immediately upon the first failure;
- (3) with -v I can see the output from the commands that we usually do not
-     show; and
- (4) with -d I can be sure that trash directory does not go away.
-
-Notice that I do not count "I can see test_debug executed" as a benefit
-from (4) above?
-
-My preference, although I do not care too deeply, would be to gradually
-remove test_debug calls that were casually sprinkled and left in the test
-scripts while they were initially developed, and have the regular test
-sequence run them just like your patch does.  Another change I would
-welcome would be to make the "-d" option automatically trigger shell
-tracing, to make it unnecessary to say "sh -x".
+This is somewhat a tangent, but I've been wondering if it might be a
+better design to make GETTEXT_POISON a runtime thing.  When git is run
+with GIT_LOCALE=3DPOISON, "_(msg)" will all result in gibberish or rot1=
+3,
+and instead of building a special test-only binary, always compile i18n
+version of git that way.
