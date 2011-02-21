@@ -1,56 +1,83 @@
-From: xzer <xiaozhu@gmail.com>
-Subject: how a patch can be accepted?
-Date: Mon, 21 Feb 2011 23:48:41 +0900
-Message-ID: <AANLkTikPtYy9_4WjvSqdiFG8pjv5KH5e16=4HoeAzoWb@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: How to recovery a corrupted git repo
+Date: Mon, 21 Feb 2011 15:51:21 +0100
+Message-ID: <vpqpqql1lw6.fsf@bauges.imag.fr>
+References: <AANLkTi=W3RckA=e-YwDJzELaEOAa+7P74V-G0G=bQhex@mail.gmail.com>
+	<20110221100454.GM22168@axel>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 21 15:48:53 2011
+Content-Type: text/plain; charset=us-ascii
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 21 15:54:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrX4B-0004t1-An
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 15:48:47 +0100
+	id 1PrX9s-0000EK-TR
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 15:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756001Ab1BUOsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 09:48:42 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45686 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755814Ab1BUOsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 09:48:42 -0500
-Received: by iwn8 with SMTP id 8so1961391iwn.19
-        for <git@vger.kernel.org>; Mon, 21 Feb 2011 06:48:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=DCNGQQRHtx0HIZTgSnBanuDLnKGri0dBrptTg+0hTB4=;
-        b=xZ4CVNS1jYGnmfv2b6/0rhydewlJxGkuoGtFuDCQ6Pqt4d8VA1Ku5xbUfqRMaY0uAI
-         1Z7Rhl0ekAcfiKWBPRaulshbPaOUiKX+yikM98mi8LG7zO3vOFR0Ened9cQvk7ib8rau
-         b4dEzlgQlnDC4vU1gSIcmglHsN5WucxLz0OWc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=tZBpymZ/dpwWPpZv2Q2EnW55nnCw1aURfqGz1HnjKmxGYb5hGYFM6qBwxDFJqNazSC
-         8drFUndZMcf0t1lktO/aYIvfZHf0cjMWZYDGhth3IuJPWidfG41EkuKEXhhxNIYWeE7u
-         tqnwb59OOsvkYrneg+mrl6Jnlf13ZbHABt6os=
-Received: by 10.42.153.133 with SMTP id m5mr1117158icw.332.1298299721391; Mon,
- 21 Feb 2011 06:48:41 -0800 (PST)
-Received: by 10.231.35.3 with HTTP; Mon, 21 Feb 2011 06:48:41 -0800 (PST)
+	id S1753516Ab1BUOyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 09:54:35 -0500
+Received: from imag.imag.fr ([129.88.30.1]:65491 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752813Ab1BUOye (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 09:54:34 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p1LEpLmV020190
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 21 Feb 2011 15:51:21 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PrX6f-0000Ho-Hc; Mon, 21 Feb 2011 15:51:21 +0100
+In-Reply-To: <20110221100454.GM22168@axel> (Axel Freyn's message of "Mon\, 21 Feb 2011 11\:04\:54 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 21 Feb 2011 15:51:21 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167484>
 
-Hi,
+Axel Freyn <axel-freyn@gmx.de> writes:
 
-I submitted a patch recently by sending a mail to this mail list, but
-I don't know how it can be accepted or rejected? Is that enough just
-send a mail to here? Because the patch is a very important fix to my
-usage and I don't want to apply it every time by myself.
+> I don't know whether there is a single git command to do it, but you can
+> copy those 5 objects "by hand": in your backup, you should have a
+> directory .git/objects, where you have the files
+>    b7/1eb55f2dbc97dafd4a769fc61f346e69a5e0af
+>    28/2035f3ae964e1e288f352c370be8edd11d3078
+>    3c/20f556eecc476e3542cc522d46a62a4461fec6
+>    f3/21b578edeb452358497e832815d6cae6b36886
+>    6d/23f5084c975be637f7d748db82116bf84d3872
+>
+> It should be sufficient to just copy those files into the corrupted
+> repo.
+>
+> However if you packed the git-files in the backup (e.g. by running "git
+> gc"), those objects might be found in a pack in .git/objects/pack.
+> The easiest ist probably to use git-unpack-objects to unpack the
+> objects, and then copy the 5 missing objects.
 
-Best Regards
-yours xzer
+There's also the brute-force approach
+
+rsync $good_repo/.git/objects/ $bad_repo/.git/objects/
+cd $bad_repo
+git gc
+
+Notice the absence of --delete in the rsync command: I'm just adding
+new files in the $bad_repo, not deleting any (since files with
+identical names must have identical content).
+
+This will result in a lot of duplicates (objects found in several
+packs), but "git gc" should be able to remove them.
+
+(the notice about doing backups before also applies to my
+proposal ;-) )
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
