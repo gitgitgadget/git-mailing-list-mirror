@@ -1,101 +1,162 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/72] t/test-lib.sh: add always-set NO_GETTEXT_POISON
- prerequisite
-Date: Sun, 20 Feb 2011 22:56:30 -0800
-Message-ID: <7vipwdlvtt.fsf@alter.siamese.dyndns.org>
-References: <1298143495-3681-1-git-send-email-avarab@gmail.com>
- <1298143495-3681-4-git-send-email-avarab@gmail.com>
- <20110220021031.GB17305@elie>
- <AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
+Subject: Re: [PATCH] do not overwrite untracked symlinks
+Date: Sun, 20 Feb 2011 23:15:26 -0800
+Message-ID: <7vaahpluy9.fsf@alter.siamese.dyndns.org>
+References: <201102022025.06140.j6t@kdbg.org>
+ <7v7hdixkys.fsf@alter.siamese.dyndns.org> <201102022324.22123.j6t@kdbg.org>
+ <201102051918.44848.j6t@kdbg.org> <20110205183351.GA25717@localhost>
+ <20110220121343.GA21514@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 21 07:56:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Feb 21 08:15:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrPhS-0004oZ-DF
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 07:56:50 +0100
+	id 1PrPzu-000468-MV
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Feb 2011 08:15:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752698Ab1BUG4m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 01:56:42 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51855 "EHLO
+	id S1752154Ab1BUHPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 02:15:42 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40112 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752000Ab1BUG4m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 01:56:42 -0500
+	with ESMTP id S1751852Ab1BUHPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 02:15:41 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 31A264821;
-	Mon, 21 Feb 2011 01:57:51 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DDCB14939;
+	Mon, 21 Feb 2011 02:16:46 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=HwOiKdppdqeL
-	7rpxHIs5oXDmKZw=; b=fN+Swz37jMAlQ+wxY06j73zdGGPlOCTroUTko8Ajy606
-	I/i7bePaq9Wam3YveXnrKxanHv3pN/vqt99n6fvLqNEDXzweFesA/V85GXzAtaiF
-	ZfHqFU+2R6sEHbubijCnp5/e6V8rszW0DUXXZKjWEqjyyBCYmQJR6pvN+so6GvI=
+	:content-type; s=sasl; bh=erBj8sjA1bykD65cGgVwWcd1QQM=; b=TpvAeh
+	gK13Z30uqSn+359Z0URFl60qRMvfRDpFTzfE+iaKRbAv6QLCFNf5Iuj/YiI3Hdlo
+	Ozo3c/hYwCwHA4Tna/4AB7vNUd6LgNnbmML8q1jQe6fOV4iwbimtzwQxbyG67J40
+	8VcPczK51Fnkb8fA7QiYxt2VvLBsBHsoFMxb4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=D/+cYN
-	FZzYCih9w3EL/hl0hhjJBcLBE92V+xqYINNWCRy3ZcPFGgW+hfdy3Y6FxCYmCLDJ
-	pFMpUoYvUrhl8X7zmNfnZrDcRNFajuP01Ibvcl6/7OJiyh2whtRGzQoYf/3/FH49
-	xplnkybDrFpLPUK0aOlDOr0czGOgVqJ1F2h+I=
+	:content-type; q=dns; s=sasl; b=vcUdmffNLDoJxDaOjO7KkpF4sk1wIeel
+	zP4zn8YLGvETtt5Jj4cWhJUJ+6Qb0puW8ewxC7RSzFcfsz2RihJ7gvabRKUegxOg
+	1ravbF+mrx4y0ciHfDEHIAhet5sKktKjLm7+R7LRngZf8EC7OGgqFunLrvy5fllA
+	M02SiASwtIQ=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 014C14820;
-	Mon, 21 Feb 2011 01:57:47 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A9E654938;
+	Mon, 21 Feb 2011 02:16:43 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B38FA481F; Mon, 21 Feb 2011
- 01:57:43 -0500 (EST)
-In-Reply-To: <AANLkTik9ieR=pWLQ9JEabNm2trSsyfFuYgfKMojnbzfb@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun\, 20 Feb
- 2011 13\:42\:20 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 68E904937; Mon, 21 Feb 2011
+ 02:16:39 -0500 (EST)
+In-Reply-To: <20110220121343.GA21514@localhost> (Clemens Buchacher's message
+ of "Sun\, 20 Feb 2011 13\:13\:43 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E434E65E-3D87-11E0-9885-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 8921728E-3D8A-11E0-B82E-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167444>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> You shouldn't worry about it for now. FWIW NO_GETTEXT_POISON is
-> documented in po/README in a patch that I plan to submit later.
+> Git traditionally overwrites untracked symlinks silently. This will
+> generally not cause massive data loss, but it is inconsistent with
+> the behavior for regular files, which are not silently overwritten.
 >
-> NO_GETTEXT_POISON is only relevant to people such as myself who are
-> adding new translations to the source. I.e. changing "foo" to
-> _("foo"). It's a sanity check to make sure that by doing so you're no=
-t
-> changing some plumbing test, or at least have to realize what it is
-> that you're changing.
+> With this change, git refuses to overwrite untracked symlinks by
+> default. If the user really wants to overwrite the untracked
+> symlink, he has git-clean and git-checkout -f at his disposal.
+>
+> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+> ---
+>
+> I checked and there are no undesireable side-effects. One test had
+> to be modified slightly because it does overwrite an untracked
+> symlink.
+>
+>  symlinks.c                      |    2 +-
+>  t/t6035-merge-dir-to-symlink.sh |    2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/symlinks.c b/symlinks.c
+> index 3cacebd..034943b 100644
+> --- a/symlinks.c
+> +++ b/symlinks.c
+> @@ -223,7 +223,7 @@ int check_leading_path(const char *name, int len)
+>  	int flags;
+>  	int match_len = lstat_cache_matchlen(cache, name, len, &flags,
+>  			   FL_SYMLINK|FL_NOENT|FL_DIR, USE_ONLY_LSTAT);
+> -	if (flags & (FL_SYMLINK|FL_NOENT))
+> +	if (flags & FL_NOENT)
+>  		return 0;
+>  	else if (flags & FL_DIR)
+>  		return -1;
 
-I also had the same reaction to NO_GETTEXT_POISON as Jonathan, and your
-above argument is not quite right.
+> diff --git a/t/t6035-merge-dir-to-symlink.sh b/t/t6035-merge-dir-to-symlink.sh
+> index 92e02d5..1de285b 100755
+> --- a/t/t6035-merge-dir-to-symlink.sh
+> +++ b/t/t6035-merge-dir-to-symlink.sh
+> @@ -22,7 +22,7 @@ test_expect_success SYMLINKS 'keep a/b-2/c/d across checkout' '
+>  	git reset --hard master &&
+>  	git rm --cached a/b &&
+>  	git commit -m "untracked symlink remains" &&
+> -	 git checkout start^0 &&
+> +	 git checkout -f start^0 &&
+>  	 test -f a/b-2/c/d
+>  '
 
-GETTEXT_POISON _is_ relevant to people like you who are working on the
-i18n part of the system.  It is a debugging aid to make sure that you a=
-re
-not marking plumbing messages that should never be translated.
+The title of the test says that checkout must keep a/b-2/c/d; if "git
+checkout" without "-f" doesn't do so and you had to change it to "git
+checkout -f", it would mean one of two things: (1) you broke "checkout",
+or (2) the behaviour the test wanted to keep working turned out to be
+unwanted (iow, "git checkout" without "-f" should fail under the initial
+condition this test sets up).
 
-But you cannot say NO_GETTEXT_POISON is not relevant to others; everybo=
-dy
-else who is not actively working on i18n needs to be aware of it, and
-needs to be careful when writing his tests.  When your test depends on
-output from Porcelain (which is not something we should encourage, but
-that is a separate matter), you need to mark that test as "this test wi=
-ll
-be broken under GETTEXT_POISON build".
+I suspect the situation is the latter.
 
-"This test requires NO_GETTEXT_POISON pre-requisite, which is only true
-when git is built without GETTEXT_POISON" makes logical sense as a
-statement, but it feels somewhat a roundabout way to explain it.
+What this test in 6035 does before your patch is:
 
-This is somewhat a tangent, but I've been wondering if it might be a
-better design to make GETTEXT_POISON a runtime thing.  When git is run
-with GIT_LOCALE=3DPOISON, "_(msg)" will all result in gibberish or rot1=
-3,
-and instead of building a special test-only binary, always compile i18n
-version of git that way.
+ 0. Prepare a tree with the following path (no intermediate symlinks)
+
+	a/b/c/d
+        a/b-2/c/d
+        a/x
+
+    and call that "start";
+
+    prepare another tree with the following path
+
+	a/b -> b-2 (symlink)
+        a/b-2/c/d
+        a/x
+
+    make it a child of the "start".
+
+ 1. Detach the head at the second commit (i.e. a/b symlink pointing at
+    b-2), and then remove a/b symlink from the index.  Make a commit with
+    that index.
+
+    The index at that point has:
+
+	a/b-2/c/d
+        a/x
+
+    and in the working tree there is an untracked a/b symlink that point
+    at b-2.
+
+ 2. Try to switch to "start"'s tree.  To be able to check it out, a
+    directory needs to be created at a/b (as we need c/d underneath it),
+    but untracked symbolic link in the working tree a/b interferes with
+    it, and it _should_ fail.
+
+
+So instead of testing "with -f, the untracked path is nuked" and still
+calling the test to "preserve a/b-2/c/d", shouldn't you rename the test to
+make sure the untracked symlink is preserved, and make sure checkout
+without "-f" fails?
+
+Of course, in addition to the above, it would be a good idea to add
+another test that makes sure that with "checkout -f" the user can get rid
+of the untracked symlink and check out what he wanted to check out.
+
+Hmm?
