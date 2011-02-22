@@ -1,65 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH (n+1)/n] t6007: test rev-list --cherry
-Date: Tue, 22 Feb 2011 14:36:19 +0100
-Message-ID: <679a1a3a57bd6b5f4138a1e0500ec8f97f224578.1298381698.git.git@drmicha.warpmail.net>
-References: <7vlj18g92x.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 22 14:39:44 2011
+From: xiaozhu <xiaozhu@gmail.com>
+Subject: Re: how a patch can be accepted?
+Date: Tue, 22 Feb 2011 22:56:37 +0900
+Message-ID: <4D63C095.8020206@gmail.com>
+References: <AANLkTikPtYy9_4WjvSqdiFG8pjv5KH5e16=4HoeAzoWb@mail.gmail.com> <AANLkTin1hNwKfgRrukKvEMDXCSHnU=EfPFJLQ2cYci9L@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 14:56:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrsSr-0005d9-Lf
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 14:39:42 +0100
+	id 1PrsjR-0005Sz-7Y
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 14:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566Ab1BVNjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 08:39:37 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57501 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752342Ab1BVNjg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 08:39:36 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 564C82078C;
-	Tue, 22 Feb 2011 08:39:35 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 22 Feb 2011 08:39:35 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=mBFmn2OEIl5Y90rDKXsUmswFHLA=; b=Qg9TAXTz9+JxVxLmR+jVIkpV4JJVo6TNLnMkHORhu2zwwTpXL8CFoyI8mXmqMJPeYdxjxDxUNSQTQy87mcof0SVq77782Yv14s2y0mwRiTAHAI4ejGPW8xLGgPlt1Oa08Cg/IjvfZ7t5FS8rajoAlTzd6kA4d6m+Jz7sF7yA0R4=
-X-Sasl-enc: rzD4g0y7JCkSAMLDnrKlITcN23zMhJ9n+ile4+261E0I 1298381974
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D058E443A81;
-	Tue, 22 Feb 2011 08:39:34 -0500 (EST)
-X-Mailer: git-send-email 1.7.4.1.74.gf39475.dirty
-In-Reply-To: <7vlj18g92x.fsf@alter.siamese.dyndns.org>
+	id S1752329Ab1BVN4m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 08:56:42 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:33984 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751467Ab1BVN4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 08:56:41 -0500
+Received: by iyb26 with SMTP id 26so1809816iyb.19
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 05:56:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=kWbZfj1sjdNISSqmykHFGAtypAUUFLcDjZO2+DDZSYw=;
+        b=ZJoSI0z1hbLYarGXZlUzKUeaUfnMD5gaJChsfS9N/7zG4Xdbw8LIomCgBDIxIc5bUb
+         Z9jcFfVT5U75ARrIwU/mbQkg9BTAqGnaYhV0XPEb37DPL55YvA4GkF6xyf/SQWn24opr
+         jNDWlVxp3AJ5ZPHVzzGX86YVdFnPknQt6B7MU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=yAdEVeDfgdFeZizg3i/6clX/vWssHXMMXISKSkO3r4bTdGQPPAd998adC6QYFXg9Dd
+         eA4+b2qKJ60Pk+u50WUS+MJT2UNmmY5h6Q3UdVEEY7YBl+8BS9vM06opLjXsvFYGDSwY
+         JJsHSrOl8PLrK0yR/8CfJTZc5K7t4ZP9ZRGJg=
+Received: by 10.42.171.8 with SMTP id h8mr3490148icz.475.1298383001110;
+        Tue, 22 Feb 2011 05:56:41 -0800 (PST)
+Received: from [192.168.11.57] (softbank126036243176.bbtec.net [126.36.243.176])
+        by mx.google.com with ESMTPS id u9sm6279739ibe.14.2011.02.22.05.56.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 Feb 2011 05:56:40 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <AANLkTin1hNwKfgRrukKvEMDXCSHnU=EfPFJLQ2cYci9L@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167544>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t6007-rev-list-cherry-pick-file.sh |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+On 2011/02/22 1:23, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Mon, Feb 21, 2011 at 15:48, xzer<xiaozhu@gmail.com>  wrote:
+>> I submitted a patch recently by sending a mail to this mail list, bu=
+t
+>> I don't know how it can be accepted or rejected? Is that enough just
+>> send a mail to here? Because the patch is a very important fix to my
+>> usage and I don't want to apply it every time by myself.
+>
+> Did you read Documentation/SubmittingPatches?
 
-diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
-index cd089a9..5373541 100755
---- a/t/t6007-rev-list-cherry-pick-file.sh
-+++ b/t/t6007-rev-list-cherry-pick-file.sh
-@@ -110,6 +110,13 @@ test_expect_success '--cherry-pick --right-only' '
- 	test_cmp actual.named expect
- '
- 
-+test_expect_success '--cherry' '
-+	git rev-list --cherry F...E -- bar > actual &&
-+	git name-rev --stdin --name-only --refs="*tags/*" \
-+		< actual > actual.named &&
-+	test_cmp actual.named expect
-+'
-+
- test_expect_success '--cherry-pick --left-only' '
- 	git rev-list --cherry-pick --left-only E...F -- bar > actual &&
- 	git name-rev --stdin --name-only --refs="*tags/*" \
--- 
-1.7.4.1.74.gf39475.dirty
+Where is the Documentation/SubmittingPatches? I didn't see anything
+about submitting a patch on the site of git, and I also tried to find
+something about it on git wiki, but I got nothing.
