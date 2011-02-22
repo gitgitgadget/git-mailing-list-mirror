@@ -1,102 +1,75 @@
-From: Michael Meeks <michael.meeks@novell.com>
-Subject: libreoffice merge(tool?) issue #3 ...
-Date: Tue, 22 Feb 2011 15:34:37 +0000
-Organization: Novell, Inc.
-Message-ID: <1298388877.32648.171.camel@lenovo-w500>
-Reply-To: michael.meeks@novell.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] diff: don't retrieve binary blobs for diffstat
+Date: Tue, 22 Feb 2011 10:37:29 -0500
+Message-ID: <20110222153729.GA27178@sigill.intra.peff.net>
+References: <20110219080307.GA18039@sigill.intra.peff.net>
+ <20110219081631.GB18056@sigill.intra.peff.net>
+ <7v62sdhsjy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: kendy@novell.com, Norbert Thiebaud <nthiebaud@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 22 16:35:28 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 16:37:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PruGs-0006xk-8M
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 16:35:26 +0100
+	id 1PruIz-00082D-Ck
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 16:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754424Ab1BVPfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 10:35:21 -0500
-Received: from charybdis-ext.suse.de ([195.135.221.2]:51282 "EHLO
-	nat.nue.novell.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754212Ab1BVPfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 10:35:21 -0500
-Received: from [192.168.1.4] (host81-145-110-95.range81-145.btcentralplus.com [81.145.110.95])
-	by nat.nue.novell.com with ESMTP; Tue, 22 Feb 2011 16:35:19 +0100
-X-Mailer: Evolution 2.32.2 
+	id S1754448Ab1BVPhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 10:37:32 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33668 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754079Ab1BVPhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 10:37:32 -0500
+Received: (qmail 2095 invoked by uid 111); 22 Feb 2011 15:37:31 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 22 Feb 2011 15:37:31 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Feb 2011 10:37:29 -0500
+Content-Disposition: inline
+In-Reply-To: <7v62sdhsjy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167555>
 
-Hi there,
+On Mon, Feb 21, 2011 at 03:33:05PM -0800, Junio C Hamano wrote:
 
-        So - yet again, I'm still a completely clueless git user :-)
-basically the same setup and reproduction issue as last time, still
-using a stable git: version 1.7.3.4
+> Jeff King <peff@peff.net> writes:
+> 
+> > We only need the size, which is much cheaper to get,
+> > especially if it is a big binary file.
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> 
+> Nice ;-)  Do we want a test or two for 1/2 by the way?
 
-Setup:
-        git clone git://anongit.freedesktop.org/libreoffice/libs-core
-        git checkout integration/dev300_m98
-        git remote add stage git://anongit.freedesktop.org/libreoffice/staging/libs-core
-        git fetch stage
+Yeah, it's probably a good idea. Can you squash this in, or should I
+resend?
 
-Reproduce:
-	rm -Rf *
-	git reset --hard # ie. totally clean tree.
-        git merge stage/dev300
-
-	I get this output from the merge:
-
-error: refusing to lose untracked file at 'ucb/source/ucp/ext/makefile.mk'
-
-	Then when I run:
-
-$ git mergetool ucb/source/ucp/ext/makefile.mk
-..
-
-Deleted merge conflict for 'ucb/source/ucp/ext/makefile.mk':
-  {local}: created
-  {remote}: deleted
-Use (c)reated or (d)eleted file, or (a)bort?
-
-	It seems to suggest that the file is deleted somewhere (in the branch I
-am trying to merge in) it seems.
-
-	Interestingly, though - the file is present in both
-integration/dev300_m98:
-
-	git log -n1 ucb/source/ucp/ext/makefile.mk | tee
-commit 80b61d9c6762b4f195edd1246b903b11ad3f2252
-Author: Thomas Arnhold <thomas@arnhold.org>
-Date:   Fri Jan 21 14:11:55 2011 +0100
-
-    Remove old RCS lines.
-
-	And also present in the branch I'm merging: stage/dev300:
-
-commit 0c87cb97cf3790fa98bcbb0eef9d174140a4e847
-Author: sb <sb@openoffice.org>
-Date:   Fri Sep 10 13:10:07 2010 +0200
-
-    sb129: #i113189# change UNO components to use passive registration
-
-
-	Which makes me wonder - why the deleted / untracked file message ?
-probably something obvious, but I found it rather confusing, and again
-I've seen a number of examples of this.
-
-	Thanks,
-
-		Michael.
-
-PS. of course, perhaps this is 'just me' - for space / time /
-simplicty / certainty reasons, I do a lot of "cp -lR foo/.git baa/" to
-duplicate trees - but AFAIK all git operations are atomic and use
-renames rather than in-place re-writing: right ?
--- 
- michael.meeks@novell.com  <><, Pseudo Engineer, itinerant idiot
+---
+diff --git a/t/t4031-diff-rewrite-binary.sh b/t/t4031-diff-rewrite-binary.sh
+index 7e7b307..7d7470f 100755
+--- a/t/t4031-diff-rewrite-binary.sh
++++ b/t/t4031-diff-rewrite-binary.sh
+@@ -44,6 +44,13 @@ test_expect_success 'rewrite diff can show binary patch' '
+ 	grep "GIT binary patch" diff
+ '
+ 
++test_expect_success 'rewrite diff --stat shows binary changes' '
++	git diff -B --stat --summary >diff &&
++	grep "Bin" diff &&
++	grep "0 insertions.*0 deletions" diff &&
++	grep " rewrite file" diff
++'
++
+ {
+ 	echo "#!$SHELL_PATH"
+ 	cat <<'EOF'
