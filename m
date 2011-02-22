@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v4 47/73] gettextize: git-reset basic messages
-Date: Tue, 22 Feb 2011 23:42:06 +0000
-Message-ID: <1298418152-27789-48-git-send-email-avarab@gmail.com>
+Subject: [PATCH v4 60/73] gettextize: git-archive basic messages
+Date: Tue, 22 Feb 2011 23:42:19 +0000
+Message-ID: <1298418152-27789-61-git-send-email-avarab@gmail.com>
 References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,45 +12,45 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 23 00:44:48 2011
+X-From: git-owner@vger.kernel.org Wed Feb 23 00:45:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ps1uM-0008HI-JL
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:44:42 +0100
+	id 1Ps1vE-0000K1-8V
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755573Ab1BVXoc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:44:32 -0500
-Received: from mail-bw0-f51.google.com ([209.85.214.51]:39209 "EHLO
+	id S1755599Ab1BVXol convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:44:41 -0500
+Received: from mail-bw0-f51.google.com ([209.85.214.51]:51284 "EHLO
 	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755360Ab1BVXoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 18:44:20 -0500
-Received: by mail-bw0-f51.google.com with SMTP id 10so3866615bwz.10
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:19 -0800 (PST)
+	with ESMTP id S1755228Ab1BVXod (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 18:44:33 -0500
+Received: by mail-bw0-f51.google.com with SMTP id 10so3867040bwz.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=FTAsLBi2xziLIgWSy/e1IUGMe2aIdI+7YKOiuXcqPJQ=;
-        b=GQujsuCFIYhCp9eAikKZpZSfmpInFyiheaiIT+oyeN6VPR0rbEoU8tqLBc31oXXDv8
-         4k7CGUYF9KaXDecLfkwgMobSlybvpf+ecn9QoRp5ImDzBiL/F4bib7gGs0g1ErZr5p57
-         Zs1Hxq2cTZQIDMW2NrkInzMfZPoHb/gWpfj7c=
+        bh=iqbxuuzRkHHMU3OeW/48yiVflh/ruRGUuVPLDy8snik=;
+        b=ETzrn6ppPUTTyP0UeVB75D8opDyC2XzeRnua8+26d716ODrjS/kZrSqoNCsheQf3R9
+         ZFmKgumeyp19iqAeBke9t0B8q0ZBJ6lEX6dPH7fOZycYyHg0GFlUK3btNK+ChCKd9ho/
+         O5/NMOFhdhb34E19elRGwQlG3n9lUBn2Qt/9U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=lwGzMO64VMvaiKrYwcPKgg/JqxH+0N7URcWYJLOUKUZ5L2KWzSxiC+EOIZxnDjPplD
-         QonGfdbWiS3nli3cmkp3EOnwKp0Y6DHw5BYuIWnc2KSo+uqcVLQHDC2x5uWb8EDkOUNL
-         lxRu1CVAudGabhv2lRHSsBUZA5eRtMG2FYrDg=
-Received: by 10.204.62.132 with SMTP id x4mr3080874bkh.30.1298418259520;
-        Tue, 22 Feb 2011 15:44:19 -0800 (PST)
+        b=hEwj4YkOd0aea8uZlxtKmzk+4dO6hSa8aJyV/yibiD2uucQ2lXXm7lE3HUW/X8ZtbJ
+         vI3KFxT+tw3QNLvUB1l491umMx1QHkR/uhSnABlsSsScyL1ufzIFQfsytZSa9ikQAdCt
+         Tv45n1sdnIliHdQ/P7P9FbAqlcVxuysCt5QQY=
+Received: by 10.204.49.87 with SMTP id u23mr3063848bkf.50.1298418272332;
+        Tue, 22 Feb 2011 15:44:32 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.18
+        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.30
         (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 15:44:19 -0800 (PST)
+        Tue, 22 Feb 2011 15:44:31 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
@@ -59,126 +59,66 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167610>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/reset.c |   26 +++++++++++++-------------
- 1 files changed, 13 insertions(+), 13 deletions(-)
+ builtin/archive.c |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 5de2bce..0823955 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -92,20 +92,20 @@ static int reset_index_file(const unsigned char *sh=
-a1, int reset_type, int quiet
- 	if (reset_type =3D=3D KEEP) {
- 		unsigned char head_sha1[20];
- 		if (get_sha1("HEAD", head_sha1))
--			return error("You do not have a valid HEAD.");
-+			return error(_("You do not have a valid HEAD."));
- 		if (!fill_tree_descriptor(desc, head_sha1))
--			return error("Failed to find tree of HEAD.");
-+			return error(_("Failed to find tree of HEAD."));
- 		nr++;
- 		opts.fn =3D twoway_merge;
+diff --git a/builtin/archive.c b/builtin/archive.c
+index 6a887f5..b14eaba 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -14,10 +14,10 @@ static void create_output_file(const char *output_f=
+ile)
+ {
+ 	int output_fd =3D open(output_file, O_CREAT | O_WRONLY | O_TRUNC, 066=
+6);
+ 	if (output_fd < 0)
+-		die_errno("could not create archive file '%s'", output_file);
++		die_errno(_("could not create archive file '%s'"), output_file);
+ 	if (output_fd !=3D 1) {
+ 		if (dup2(output_fd, 1) < 0)
+-			die_errno("could not redirect output");
++			die_errno(_("could not redirect output"));
+ 		else
+ 			close(output_fd);
+ 	}
+@@ -33,7 +33,7 @@ static int run_remote_archiver(int argc, const char *=
+*argv,
+=20
+ 	_remote =3D remote_get(remote);
+ 	if (!_remote->url[0])
+-		die("git archive: Remote with no URL");
++		die(_("git archive: Remote with no URL"));
+ 	transport =3D transport_get(_remote, _remote->url[0]);
+ 	transport_connect(transport, "git-upload-archive", exec, fd);
+=20
+@@ -43,18 +43,18 @@ static int run_remote_archiver(int argc, const char=
+ **argv,
+=20
+ 	len =3D packet_read_line(fd[0], buf, sizeof(buf));
+ 	if (!len)
+-		die("git archive: expected ACK/NAK, got EOF");
++		die(_("git archive: expected ACK/NAK, got EOF"));
+ 	if (buf[len-1] =3D=3D '\n')
+ 		buf[--len] =3D 0;
+ 	if (strcmp(buf, "ACK")) {
+ 		if (len > 5 && !prefixcmp(buf, "NACK "))
+-			die("git archive: NACK %s", buf + 5);
+-		die("git archive: protocol error");
++			die(_("git archive: NACK %s"), buf + 5);
++		die(_("git archive: protocol error"));
  	}
 =20
- 	if (!fill_tree_descriptor(desc + nr - 1, sha1))
--		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
-+		return error(_("Failed to find tree of %s."), sha1_to_hex(sha1));
- 	if (unpack_trees(nr, desc, &opts))
- 		return -1;
- 	if (write_cache(newfd, active_cache, active_nr) ||
- 	    commit_locked_index(lock))
--		return error("Could not write new index file.");
-+		return error(_("Could not write new index file."));
+ 	len =3D packet_read_line(fd[0], buf, sizeof(buf));
+ 	if (len)
+-		die("git archive: expected a flush");
++		die(_("git archive: expected a flush"));
 =20
- 	return 0;
- }
-@@ -115,7 +115,7 @@ static void print_new_head_line(struct commit *comm=
-it)
- 	const char *hex, *body;
-=20
- 	hex =3D find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
--	printf("HEAD is now at %s", hex);
-+	printf(_("HEAD is now at %s"), hex);
- 	body =3D strstr(commit->buffer, "\n\n");
- 	if (body) {
- 		const char *eol;
-@@ -139,7 +139,7 @@ static int update_index_refresh(int fd, struct lock=
-_file *index_lock, int flags)
- 	}
-=20
- 	if (read_cache() < 0)
--		return error("Could not read index");
-+		return error(_("Could not read index"));
-=20
- 	result =3D refresh_index(&the_index, (flags), NULL, NULL,
- 			       "Unstaged changes after reset:") ? 1 : 0;
-@@ -167,7 +167,7 @@ static void update_index_from_diff(struct diff_queu=
-e_struct *q,
- 			ce =3D make_cache_entry(one->mode, one->sha1, one->path,
- 				0, 0);
- 			if (!ce)
--				die("make_cache_entry failed for path '%s'",
-+				die(_("make_cache_entry failed for path '%s'"),
- 				    one->path);
- 			add_cache_entry(ce, ADD_CACHE_OK_TO_ADD |
- 				ADD_CACHE_OK_TO_REPLACE);
-@@ -222,7 +222,7 @@ static void prepend_reflog_action(const char *actio=
-n, char *buf, size_t size)
- 	if (!rla)
- 		rla =3D sep =3D "";
- 	if (snprintf(buf, size, "%s%s%s", rla, sep, action) >=3D size)
--		warning("Reflog action message too long: %.*s...", 50, buf);
-+		warning(_("Reflog action message too long: %.*s..."), 50, buf);
- }
-=20
- static void die_if_unmerged_cache(int reset_type)
-@@ -300,16 +300,16 @@ int cmd_reset(int argc, const char **argv, const =
-char *prefix)
- 	}
-=20
- 	if (get_sha1(rev, sha1))
--		die("Failed to resolve '%s' as a valid ref.", rev);
-+		die(_("Failed to resolve '%s' as a valid ref."), rev);
-=20
- 	commit =3D lookup_commit_reference(sha1);
- 	if (!commit)
--		die("Could not parse object '%s'.", rev);
-+		die(_("Could not parse object '%s'."), rev);
- 	hashcpy(sha1, commit->object.sha1);
-=20
- 	if (patch_mode) {
- 		if (reset_type !=3D NONE)
--			die("--patch is incompatible with --{hard,mixed,soft}");
-+			die(_("--patch is incompatible with --{hard,mixed,soft}"));
- 		return interactive_reset(rev, argv + i, prefix);
- 	}
-=20
-@@ -318,7 +318,7 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
- 	 * affecting the working tree nor HEAD. */
- 	if (i < argc) {
- 		if (reset_type =3D=3D MIXED)
--			warning("--mixed with paths is deprecated; use 'git reset -- <paths=
->' instead.");
-+			warning(_("--mixed with paths is deprecated; use 'git reset -- <pat=
-hs>' instead."));
- 		else if (reset_type !=3D NONE)
- 			die("Cannot do %s reset with paths.",
- 					reset_type_names[reset_type]);
-@@ -348,7 +348,7 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
- 		if (reset_type =3D=3D KEEP)
- 			err =3D err || reset_index_file(sha1, MIXED, quiet);
- 		if (err)
--			die("Could not reset index file to revision '%s'.", rev);
-+			die(_("Could not reset index file to revision '%s'."), rev);
- 	}
-=20
- 	/* Any resets update HEAD to the head being switched to,
+ 	/* Now, start reading from fd[0] and spit it out to stdout */
+ 	rv =3D recv_sideband("archive", fd[0], 1);
 --=20
 1.7.2.3
