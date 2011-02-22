@@ -1,83 +1,93 @@
-From: Tabi Timur-B04825 <B04825@freescale.com>
-Subject: Re: How do I make git-format-patch reject 8-bit encodings?
-Date: Tue, 22 Feb 2011 00:27:19 +0000
-Message-ID: <4D6302E6.1070602@freescale.com>
-References: <4D62E315.7040506@freescale.com>
- <7vbp24hqez.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 1/2] revlist.c: introduce --left/right-only for
+ unsymmetric picking
+Date: Mon, 21 Feb 2011 16:48:43 -0800
+Message-ID: <7vvd0cgahg.fsf@alter.siamese.dyndns.org>
+References: <4D625972.4090500@drmicha.warpmail.net>
+ <a3224c4269b26c366bb5b5df691f22f17b767f83.1298304396.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 01:42:39 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Feb 22 01:49:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrgKt-0003ft-BK
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 01:42:39 +0100
+	id 1PrgRA-00061D-4F
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 01:49:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751999Ab1BVAmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 19:42:25 -0500
-Received: from ch1outboundpool.messaging.microsoft.com ([216.32.181.182]:28261
-	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751881Ab1BVAmZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 19:42:25 -0500
-X-Greylist: delayed 904 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Feb 2011 19:42:25 EST
-Received: from mail50-ch1-R.bigfish.com (216.32.181.169) by
- CH1EHSOBE001.bigfish.com (10.43.70.51) with Microsoft SMTP Server id
- 14.1.225.8; Tue, 22 Feb 2011 00:27:20 +0000
-Received: from mail50-ch1 (localhost.localdomain [127.0.0.1])	by
- mail50-ch1-R.bigfish.com (Postfix) with ESMTP id 887D8E080B1;	Tue, 22 Feb
- 2011 00:27:20 +0000 (UTC)
-X-SpamScore: -9
-X-BigFish: VS-9(zz146fK98dNzz1202hzzz2dh2a8h637h668h62h)
-X-Spam-TCS-SCL: 1:0
-X-Forefront-Antispam-Report: KIP:(null);UIP:(null);IPVD:NLI;H:mail.freescale.net;RD:none;EFVD:NLI
-Received: from mail50-ch1 (localhost.localdomain [127.0.0.1]) by mail50-ch1
- (MessageSwitch) id 1298334440417857_21778; Tue, 22 Feb 2011 00:27:20 +0000
- (UTC)
-Received: from CH1EHSMHS031.bigfish.com (snatpool1.int.messaging.microsoft.com
- [10.43.68.253])	by mail50-ch1.bigfish.com (Postfix) with ESMTP id
- 61D40328050;	Tue, 22 Feb 2011 00:27:20 +0000 (UTC)
-Received: from mail.freescale.net (70.37.183.190) by CH1EHSMHS031.bigfish.com
- (10.43.70.31) with Microsoft SMTP Server (TLS) id 14.1.225.8; Tue, 22 Feb
- 2011 00:27:20 +0000
-Received: from 039-SN1MPN1-005.039d.mgd.msft.net ([169.254.7.102]) by
- 039-SN1MMR1-003.039d.mgd.msft.net ([10.84.1.16]) with mapi id 14.01.0270.002;
- Mon, 21 Feb 2011 18:27:19 -0600
-Thread-Topic: How do I make git-format-patch reject 8-bit encodings?
-Thread-Index: AcvSFEz0K44fu7yxS6KVc6Qp/xb/LQAEdxTaAAzZFgA=
-In-Reply-To: <7vbp24hqez.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US;
- rv:1.9.1.16) Gecko/20101123 SeaMonkey/2.0.11
-x-originating-ip: [68.203.10.197]
-Content-ID: <AC6457F3F7A70345973596465EFDA743@freescale.net>
-X-OriginatorOrg: freescale.com
+	id S1752442Ab1BVAsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 19:48:53 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50386 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881Ab1BVAsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 19:48:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 514E047B6;
+	Mon, 21 Feb 2011 19:50:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Hj+smWbf6iSDovGwCFdwqSkihgo=; b=TDBzfV
+	4DOQFCEW01zKGPL62F0ijgA97BVWM7868Dc78sWzcX0ayWDbtNQ/0+PghCq3NeVm
+	MrfFJg9DFR6lZ/VK15DklE4Upx5oqQ+QCF0tOyyYd3Ya6Ol8PzqH1vb0NJaZRrnS
+	P33N8VsgMKmITnQCjkThmZeaAMC38pQAoIlXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Eb2gjS1qCkwIHUvcSzkz5KbPOlY5LMXN
+	V1Fr4rO+tGiD8+xsysnx9iMGj2Dye+b6EgaWEEu4D6frsq1QVfgMkRs1w4ibMBo7
+	YdofsGHQ2FsDJrZy2HOsB0k3bk67ANDwoEeJ6rFEKGviUXwDmqW+mkjhZ/DnwtRX
+	FNntweZ31ME=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 16C1F47B3;
+	Mon, 21 Feb 2011 19:49:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1B82B47B2; Mon, 21 Feb 2011
+ 19:49:55 -0500 (EST)
+In-Reply-To: <a3224c4269b26c366bb5b5df691f22f17b767f83.1298304396.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Mon\, 21 Feb 2011 17\:09\:11 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AC8462F2-3E1D-11E0-AC89-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167519>
 
-Junio C Hamano wrote:
-> Feels like an X-Y problem, but wouldn't it be an option to let
-> format-patch write into individual files, check these files and reject
-> ones that are not 8-bit clean, and then send the result out via
-> send-email?  You should be proofreading the format-patch output to catch
-> and fix typos before hading them to send-email anyway, so the above would
-> be the natural thing to do.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-The problem is that it appears that git-send-email is taking normal-looking patches and encoding them as base64, and I don't know about it until after the email is sent.  It also appears to be inconsistent.  I've seen some utf-8 patches emailed as normal text, and other patches emailed as base64.
+> The existing "--cherry-pick" does not work with unsymmetric ranges
+> (A..B) for obvious reasons.
 
-I don't have any real problem with utf-8, but I want to prevent git-send-email from doing base64 encodings on its own.
+The implementation of this round looks a lot simpler and cleaner.  We
+might want to make sure that l/r only are mutually exclusive at the
+command parser, though.
 
--- 
-Timur Tabi
-Linux kernel developer
+diff --git a/revision.c b/revision.c
+index 0681c7c..02aa788 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1906,6 +1906,9 @@ int prepare_revision_walk(struct rev_info *revs)
+ 	int nr = revs->pending.nr;
+ 	struct object_array_entry *e, *list;
+ 
++	if (revs->left_only && revs->right_only)
++		die("left-only and right-only are mutually exclusive");
++
+ 	e = list = revs->pending.objects;
+ 	revs->pending.nr = 0;
+ 	revs->pending.alloc = 0;
+
+
+Also, I wonder if we want to enhance cherry_pick_list() a bit to give it
+an option to show only the commits that have equivalent commits on the
+other side (i.e. "the ones that I can now discard"); it obviously is a
+separate topic.
+
+>     It could be followed up by introducing --cherry as equivalent to
+>     --cherry-pick --right-only --no-merges.
+
+Yeah, I think that is a good idea.
+
+Thanks.
