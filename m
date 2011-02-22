@@ -1,69 +1,105 @@
 From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: Make "terminator behavior" the default with --pretty=format: ?
-Date: Tue, 22 Feb 2011 16:43:59 +0000
-Message-ID: <1298393039.2286.14.camel@wpalmer.simply-domain>
-References: <AANLkTimFYsG3x0uGX32Ozo6C_shHd4k8jnXNhYmy7Q80@mail.gmail.com>
+Subject: Re: [BUG] git-svn fails to rename files with %20 in filename
+Date: Tue, 22 Feb 2011 16:50:15 +0000
+Message-ID: <1298393415.2286.18.camel@wpalmer.simply-domain>
+References: <1298283144.2772.7.camel@wpalmer.simply-domain>
+	 <20110221123115.GB23033@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Hrvoje =?UTF-8?Q?Nik=C5=A1i=C4=87?= <hniksic@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 17:44:14 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 22 17:50:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrvLQ-0004iL-S8
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 17:44:13 +0100
+	id 1PrvRR-0008GC-IL
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 17:50:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754431Ab1BVQoF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 11:44:05 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:53343 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753725Ab1BVQoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 11:44:04 -0500
-Received: by wwb39 with SMTP id 39so413307wwb.1
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 08:44:03 -0800 (PST)
+	id S1754619Ab1BVQuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 11:50:21 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:33598 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754509Ab1BVQuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 11:50:20 -0500
+Received: by wyb38 with SMTP id 38so2454524wyb.19
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 08:50:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:subject:from:to:cc:in-reply-to:references
          :content-type:date:message-id:mime-version:x-mailer
          :content-transfer-encoding;
-        bh=00hu26xjm6P6XTnnv4maL6BPeSe+ygajj/51ZUTw3v4=;
-        b=hwKb57WBIkQtQ9tVMZpt7cQELbhlOvwetrYqrqQj87jpk1CWhunDjWDM/ypVZB07SB
-         BA8xdD+GXCFLRyyzPZxBkKpkZgDSUr/VJJZ1MKRmYTSWS3vH95eWZkalvoHPt8MTZD8e
-         pJKqIEposrjQYWD7ULX6+fWr4JAF9iJ0tAdqk=
+        bh=NQatv36OkZ2zlr+8ljtP9243X9syx2KcyYQF/OJEwWc=;
+        b=ZK085TON+wic1A7YF4ZR1k3cW86/qG+3jJqlB7x8z7o+C0Zdx0Q1Gqa1KfGA+ha3tm
+         vX1vqdcTTxDXCPhkPri0BUQG5znv95FaDu/+AOpBuNCk+a9XgWl2aKYd1Buo+QfSfZr3
+         U7ELf3HHrMVFHdHkFUaBiXSqS3ZM6zrX4gYTA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=subject:from:to:cc:in-reply-to:references:content-type:date
          :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=ibsVr01iuYVOwNhyb59qvCuSSAoXNzKclqtEtiDColtu075Blfp1fV4VF8ncjE//wN
-         sTZgexTgkXI9I1DUCYCKQnSolXXTXh2onsIP7Lsr4k7AxdB85Edij3GmIklxK6654SPK
-         +9vPJ1yOVmN8fDGUDkN+OCBxBOBoqKg7Wvh3M=
-Received: by 10.216.179.144 with SMTP id h16mr2441628wem.64.1298393043109;
-        Tue, 22 Feb 2011 08:44:03 -0800 (PST)
+        b=R3zeRadO9JBPSyfiJ6OFLQxojxYImyfab8dqcUTNXqvN86MkzYCVsJBCeFg/CyV3Yq
+         0oPu5hJhurz9uj7In0FITdSdV4cPzNIpdaakUucbllpk8tBC3ymZYpWnzSAkTCUtbrjk
+         uYOYAU+6sCJPGb8UQkymu13TUxoTp4/lEGgl4=
+Received: by 10.227.156.79 with SMTP id v15mr2615981wbw.132.1298393418952;
+        Tue, 22 Feb 2011 08:50:18 -0800 (PST)
 Received: from [192.168.2.64] (tontine65c.demon.co.uk [80.176.141.31])
-        by mx.google.com with ESMTPS id r6sm2687134weq.20.2011.02.22.08.44.01
+        by mx.google.com with ESMTPS id y29sm3220535wbd.4.2011.02.22.08.50.16
         (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 08:44:01 -0800 (PST)
-In-Reply-To: <AANLkTimFYsG3x0uGX32Ozo6C_shHd4k8jnXNhYmy7Q80@mail.gmail.com>
+        Tue, 22 Feb 2011 08:50:17 -0800 (PST)
+In-Reply-To: <20110221123115.GB23033@sigill.intra.peff.net>
 X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167563>
 
-On Tue, 2011-02-22 at 16:43 +0100, Hrvoje Nik=C5=A1i=C4=87 wrote:
-> Is there a reason, other than backward compatibility, for
-> "--prety=3Dformat:" to have separator rather than terminator semantic=
-s?
->=20
+On Mon, 2011-02-21 at 07:31 -0500, Jeff King wrote:
+> On Mon, Feb 21, 2011 at 10:12:24AM +0000, Will Palmer wrote:
+> 
+> > Someone accidentally checked some files containing "%20" in their names
+> > into our svn repository, which is accessed with either svn or git-svn
+> > depending on the developer.
+> > When I attempted to correct this by renaming the file, I received (on
+> > dcommit):
+> > Filesystem has no item: File not found: revision 1, path
+> > '/theBeginningOfTheOriginalFileName theRestOfTheOriginalFilename'
+> > at /home/wpalmer/libexec/git-core/git-svn line 576
+> > 
+> > A recipe for reproducing this bug is as follows:
+> > [...]
+> 
+> Thanks for the thorough test case. It seems to pass for me if with this
+> applied:
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 177dd25..7daf63c 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -4556,9 +4556,7 @@ sub repo_path {
+>  
+>  sub url_path {
+>  	my ($self, $path) = @_;
+> -	if ($self->{url} =~ m#^https?://#) {
+> -		$path =~ s!([^~a-zA-Z0-9_./-])!uc sprintf("%%%02x",ord($1))!eg;
+> -	}
+> +	$path =~ s!([^~a-zA-Z0-9_./-])!uc sprintf("%%%02x",ord($1))!eg;
+>  	$self->{url} . '/' . $self->repo_path($path);
+>  }
+>  
+> 
+> IOW, it looks like the path we hand to svn needs url-encoding even for
+> the local case (which make sense, as it is a file:// url). But I know
+> nothing about svn, so probably I am breaking some other weird non-url
+> local case. :)
+> 
+> -Peff
 
-The "default behaviour" is the behaviour which occurs when one /doesn't=
-/
-specify something. For example: --pretty=3D"%H %an" uses terminator
-semantics.
+Unless I've got my line-numbers mixed up, the commit which introduced
+the https-specific encoding behaviour,
+29633bb91c git-svn: fix commiting renames over DAV with funky file names
 
-I agree that --pretty=3Dsformat: might be less ambiguous, though.
+seems to be of the opinion that the bug did not effect file:// and
+svn:// URLs. Has something changed?
