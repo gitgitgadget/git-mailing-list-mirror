@@ -1,66 +1,78 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: How to recovery a corrupted git repo
-Date: Tue, 22 Feb 2011 11:16:23 +0800
-Message-ID: <AANLkTi=_nn84FcvvkhiKUJgVG4EkyYWoUYLctarh7a9L@mail.gmail.com>
-References: <AANLkTi=W3RckA=e-YwDJzELaEOAa+7P74V-G0G=bQhex@mail.gmail.com>
-	<20110221100454.GM22168@axel>
-	<vpqpqql1lw6.fsf@bauges.imag.fr>
-	<AANLkTim-O+LR_r=N6y7Dcip8xQGcBVP2FiVhu22Zhysf@mail.gmail.com>
-	<vpqipwds8uh.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-checkout.txt: improve detached HEAD documentation
+Date: Mon, 21 Feb 2011 21:56:15 -0800
+Message-ID: <7vd3mkfw8w.fsf@alter.siamese.dyndns.org>
+References: <7v7hcy9vrk.fsf@alter.siamese.dyndns.org>
+ <1298179310-46207-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git mailing list <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Feb 22 04:16:30 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 06:56:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Prijk-0002vv-PI
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 04:16:29 +0100
+	id 1PrlEd-00040e-T7
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 06:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402Ab1BVDQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 22:16:24 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:49403 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753025Ab1BVDQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 22:16:23 -0500
-Received: by gyh20 with SMTP id 20so160945gyh.19
-        for <git@vger.kernel.org>; Mon, 21 Feb 2011 19:16:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=dq49YBiLKK+dA0oqs19GCNINTbEoDwq6SKPCRMsJJhE=;
-        b=WDpVLmtWDq1AaaP2V0huBHjwiGlCkS51T7ccTshIJdUSBHjAfywYFQxoFFN2z3PwrO
-         ubCFHKrzdEWnz9UQKgWyuJovy5YUXqnnELQGyRXwYms2IHnUQAXXU8j9ZIBKA2FNmcXr
-         p0Sga/qppcvAYaBk0U+G3NwZeD/0Ib4n3ts9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=jHfhTe1u8E2z40l4edhsA08mptrtnFG8bgtUNDv43F+HnzgsiNKE4tz3/eU5qt1iL0
-         sO4FyQc2PvRfraB4Z7jFRSx/Vx82rf4okAigCsi/2eTKuaEO2cOhaZtnQn74YKkKhQPP
-         MhGiTqQ6VvwrbnPik0OvsuBYljrrFyW6hTet0=
-Received: by 10.150.198.11 with SMTP id v11mr2667172ybf.388.1298344583129;
- Mon, 21 Feb 2011 19:16:23 -0800 (PST)
-Received: by 10.146.168.17 with HTTP; Mon, 21 Feb 2011 19:16:23 -0800 (PST)
-In-Reply-To: <vpqipwds8uh.fsf@bauges.imag.fr>
+	id S1752329Ab1BVF42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 00:56:28 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62383 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752264Ab1BVF41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 00:56:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 96FE42430;
+	Tue, 22 Feb 2011 00:57:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0rB1+PVBcZkllG/j1JUiTZghynQ=; b=lzz1W3
+	QC3jkKaG8fRQCSgpT1/mNyGtEH6gcRppi0W5rmC8zTvY4PSzQaNoe+vWrq3lGbEk
+	buL6AiD3EnOGLG5VcDT7Y3vVaPULkU5Q/pxx/S/p1SKWOjFi/cpghVmDa8ISFYNL
+	otRuAUPhj/kZjr5Fcr8zw2Tpp9PLUHArZzb5Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JelI6rzhjKAshiIfy2xQr9yZutJhNmWy
+	6JZPasEIvzryF8Id2ZhqV/XjmyknJEw3xzQYOWZU1qnVDp1HQsB6aCu0zbpjOHJ9
+	tK3wKDmo0xdRWH0vOWhT1zuOc0SryCif1axGk8EJsB+BJBWTz7EeTmjbU2ECh8hZ
+	kJIHmdsRsgs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50AA6242E;
+	Tue, 22 Feb 2011 00:57:32 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 383D4242D; Tue, 22 Feb 2011
+ 00:57:27 -0500 (EST)
+In-Reply-To: <1298179310-46207-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Sun\, 20 Feb 2011 00\:21\:50 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A3828028-3E48-11E0-BAD3-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167526>
 
-On Mon, Feb 21, 2011 at 11:31 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Ping Yin <pkufranky@gmail.com> writes:
->
->> Thanks. This should be an applicable method. However, before rsyncing,
->> the pack should be unpacked first.
->
-> No need. Just copying the pack files works too, and is way faster:
->
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Great, thanks.
+> +It is sometimes useful to be able to checkout a commit that is not at
+> +the tip of any named branch, or even to create a new commit that is not
+> +referenced by a named branch. Let's look at what happens when we
+> +checkout commit 'b' (here we show three ways this may be done):
+>  
+> +------------
+> +$ git checkout v2.0  # or
+> +$ git checkout b     # or
+> +$ git checkout master^^
+
+I'd drop the second one, as "b" is not something the end user would type
+from the command line (you could say "b's commit ID" but the string 'b' is
+not it, unless it is a tag or something, in which case the first one that
+uses 'v2.0' already illustrates it), and adjust "three" accordingly.
+
+Other than that, I think this version is a vast improvement over what we
+have.
+
+Thanks.
