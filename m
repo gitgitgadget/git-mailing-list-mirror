@@ -1,66 +1,107 @@
-From: Luka Kac <luka.kac@sis.si>
-Subject: Problem with git shell on mac
-Date: Tue, 22 Feb 2011 15:39:06 +0100
-Message-ID: <60BD7CF3-7781-4BEC-9545-8B653F62F32E@sis.si>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Michael Meeks <michael.meeks@novell.com>
+Subject: libreoffice merge issue #2 ...
+Date: Tue, 22 Feb 2011 14:20:33 +0000
+Organization: Novell, Inc.
+Message-ID: <1298384433.32648.161.camel@lenovo-w500>
+Reply-To: michael.meeks@novell.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: kendy@novell.com, Norbert Thiebaud <nthiebaud@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 22 16:10:04 2011
+X-From: git-owner@vger.kernel.org Tue Feb 22 16:16:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrtsI-0001gO-OY
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 16:10:03 +0100
+	id 1PrtyQ-0005WB-Df
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 16:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402Ab1BVPJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 10:09:57 -0500
-Received: from sis-gw.amis.net ([212.18.35.94]:50492 "EHLO
-	sishost.gostovanje.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752967Ab1BVPJ5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 10:09:57 -0500
-X-Greylist: delayed 1847 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Feb 2011 10:09:56 EST
-Received: from localhost ([127.0.0.1] helo=sishost.gostovanje.com)
-	by sishost.gostovanje.com with esmtpa (Exim 4.69)
-	(envelope-from <luka.kac@sis.si>)
-	id 1PrtLE-0007ul-SN
-	for git@vger.kernel.org; Tue, 22 Feb 2011 15:35:52 +0100
-Received: from [192.168.1.141] ([127.0.0.2] helo=[192.168.1.141]) with
-	IPv4:26 by sishost.gostovanje.com; 22 Feb 2011 15:35:52 +0100
-X-Mailer: Apple Mail (2.1082)
-X-Assp-Whitelisted: Yes
-X-Assp-Envelope-From: luka.kac@sis.si
-X-Assp-Intended-For: git@vger.kernel.org
-X-Assp-ID: sishost.gostovanje.com ()
-X-Assp-Version: 1.7.1.3(1.0.1)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - sishost.gostovanje.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - sis.si
+	id S1753966Ab1BVPQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 10:16:18 -0500
+Received: from charybdis-ext.suse.de ([195.135.221.2]:45220 "EHLO
+	nat.nue.novell.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753871Ab1BVPQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 10:16:17 -0500
+Received: from [192.168.1.4] (host81-145-110-95.range81-145.btcentralplus.com [81.145.110.95])
+	by nat.nue.novell.com with ESMTP; Tue, 22 Feb 2011 16:16:15 +0100
+X-Mailer: Evolution 2.32.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167551>
 
-Hi guys.
+Hi guys,
 
-I have a problem with git on a Mac os server.
-a program is trying to run git shell with this command :
+	So - again, I'm a clueless git user :-) basically the same setup and
+reproduction issue as last time, except I'm now purely using (hopefully)
+a stable git: version 1.7.3.4
 
-git shell -c git-upload-pack '/path/to/repo.git'
+Setup:
+        git clone git://anongit.freedesktop.org/libreoffice/libs-core
+        git checkout integration/dev300_m98
+	git remote add stage git://anongit.freedesktop.org/libreoffice/staging/libs-core
+        git fetch stage
 
-the process dies on an assert in exec_cmd.c :
+Reproduce:
+	git merge stage/dev300
 
-Assertion failed: (argv0_path), function system_path, file exec_cmd.c, line 27.
-error: git-shell died of signal 6
+	Then have a look at:
 
+	ucb/qa/complex/tdoc/CheckTransientDocumentsDocumentContent.java
 
-what could be wrong ? is the argv0_path path to the git-upload-pack executable ? I'm pretty sure that it is in path because ssh git@server \echo $PATH contains the path to git.
+	a file that (AFAICS) we have made no change on in our master branch,
+but has had a couple of changes in dev300; I see sections like this:
 
-What else should I do ?
+import com.sun.star.ucb.XContent;
+<<<<<<< HEAD
+import com.sun.star.ucb.XContentAccess;
+import com.sun.star.ucb.XContentIdentifier;
+import com.sun.star.ucb.XContentIdentifierFactory;
+import com.sun.star.ucb.XContentProvider;
+=======
+>>>>>>> stage/ooo/dev300
 
-Thanks for your help.
+	I would expect no conflicts. These conflicts seem to come from a later
+commit on the ooo/dev300 branch:
+
+commit 01ed463f7e1ea8b5d290273203386c0a76378c08
+Author: Lars Langhans <lla@openoffice.org>
+Date:   Tue Jun 8 08:35:09 2010 +0200
+
+    sb123:#i111449# cleanups in ucb qa/complex tests
+
+	yet, this was based on the previous commit:
+
+commit 89f7530c91745d16ab2cb59014c7b1543967e0b4
+Author: Jens-Heiner Rechtien <hr@openoffice.org>
+Date:   Fri Feb 12 15:01:35 2010 +0100
+
+    changefileheader2: #i109125#: change source file copyright notice
+from Sun Microsystems to Oracle; remove CVS style keywords (RCSfile,
+Revision)
+
+	That is present (although clearly with a different hash) in both
+repositories.
+
+	So if I have a branch with commits A -> F and master has commits A -> D
+- (and nothing else) I would expect merging that branch to yield state
+'F' without conflicts; but most likely I'm missing something, and
+perhaps there is some subtle (whitespace related?) difference that I do
+not see.
+
+	Of course, this is not the only instance I see of this sort of thing,
+but hopefully it is a reasonably simple one, for a file with only a
+handful of commits.
+
+	Kendy - do you think this could be caused by the application of the
+de-tab-ification logic ? or do you apply that for every change ?
+
+	Thanks,
+
+		Michael.
+
+-- 
+ michael.meeks@novell.com  <><, Pseudo Engineer, itinerant idiot
