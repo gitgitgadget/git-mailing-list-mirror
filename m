@@ -1,99 +1,88 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH 2/2] update-index --refresh --porcelain: add missing const
-Date: Tue, 22 Feb 2011 22:43:23 +0000
-Message-ID: <1298414603-22338-3-git-send-email-avarab@gmail.com>
-References: <1298414603-22338-1-git-send-email-avarab@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 22 23:44:22 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: cvsimport still not working with cvsnt
+Date: Tue, 22 Feb 2011 15:08:03 -0800
+Message-ID: <7vipwbbrcc.fsf@alter.siamese.dyndns.org>
+References: <4D0ED5EC.9020402@burntmail.com>
+ <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com>
+ <4D119015.6020207@burntmail.com> <4D2AB63D.7040803@burntmail.com>
+ <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com>
+ <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino>
+ <7v8vynnokt.fsf@alter.siamese.dyndns.org> <4D450655.5090501@burntmail.com>
+ <AANLkTik0Mp=Ww_+ZN_jw6t4gsFwLo1UTw5JOpho8bCd=@mail.gmail.com>
+ <7vhbcb35xk.fsf@alter.siamese.dyndns.org> <4D5E1116.7040501@burntmail.com>
+ <7voc69p4xu.fsf@alter.siamese.dyndns.org> <4D5F6E97.4000402@burntmail.com>
+ <7vy65bkw72.fsf@alter.siamese.dyndns.org> <4D61EA4B.3020708@burntmail.com>
+ <7vtyfxgdz2.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin@laptop.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Emil Medve <Emilian.Medve@freescale.com>,
+	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Guy Rouillier <guyr@burntmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 23 00:08:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ps0xx-000460-8R
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 23:44:21 +0100
+	id 1Ps1LI-0008V3-Ny
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443Ab1BVWoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 17:44:18 -0500
-Received: from mail-bw0-f51.google.com ([209.85.214.51]:56536 "EHLO
-	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753083Ab1BVWoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 17:44:16 -0500
-Received: by mail-bw0-f51.google.com with SMTP id 10so3819163bwz.10
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 14:44:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=iskwBVR1fo3cNzuHbMgKiSHnfdqQJVkKxTYNfpH3nt0=;
-        b=dBs2S/0Rq3hlncbW8beICCwHeCof8ZrRrRQFuaLdxV/jYFW93PtZwhVOjwLcvJCuHi
-         OYoLfXgfyO0nbcsi+PK8wVH3MA237JmhR5gvwYqn5CYYO+aj4GPe6+dnfiLc8Kd76g30
-         2x9VGnLDi+2iKn0693wAKZ+/Tbmx0lIy0zNdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=UDm7UzesOwPGGb7MjefoYiKJVIlBjW+7UpFhqZsTgVejJtVU4LwvjsaRqec7hjKMwK
-         0i/Ba3cBxabpJVKopuSuIU/xabNKNXTe9hLYsw6Bwo5WH2xo2JE4ecTN5Kq+q2a/3KdY
-         yvC4t18Svd+vFa3VlB2u2JtvWFuKsjO9flU58=
-Received: by 10.204.24.78 with SMTP id u14mr3053634bkb.171.1298414655871;
-        Tue, 22 Feb 2011 14:44:15 -0800 (PST)
-Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id a17sm4883767bku.11.2011.02.22.14.44.15
-        (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 14:44:15 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1298414603-22338-1-git-send-email-avarab@gmail.com>
+	id S1752207Ab1BVXIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 18:08:24 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60307 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375Ab1BVXIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 18:08:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0CDDC4E15;
+	Tue, 22 Feb 2011 18:09:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GqDZsBlA7sugPjJL+aORuEZl3bU=; b=RWAIaq
+	7XRDkv5chRfMLEgLhx2Dorio5ki51nAN1DjpDcBZaLu2CqGMNGWnT0it0inheYZ/
+	/I8pcda6lERlE+n3dSHa8ddAsrQ8rzG41mJOx4qh6yLD5kGXDea0PjTB1LNqx0UF
+	2An0vegDKqJLACoW4J4m9bcKO1pjNxoAEVP2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DtW+moxGunoAukMGsk8JcdfIoF+lWjdj
+	1nL+Do4wEuhAEjd4B79/cMmvebmSFghUrKOgnbA7Dunsu0sN6CKygMVyT0hTd4tv
+	TerFtxf3+B2VeTPAH0nU7YnyuOZAXMLSsFjEDwh7KiJlcyGLotARshHVjbzE9eCw
+	nIagFgWFWgI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 91DA64E10;
+	Tue, 22 Feb 2011 18:09:26 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9A5CE4DFF; Tue, 22 Feb 2011
+ 18:09:17 -0500 (EST)
+In-Reply-To: <7vtyfxgdz2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon\, 21 Feb 2011 15\:33\:21 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CB49C45A-3ED8-11E0-A4A5-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167589>
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- cache.h      |    2 +-
- read-cache.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+> It is probably unlikely to see a SP in the pathname, but I do not think it
+> is reasonable to introduce a regression to forbid '=' in the pathname to
+> the repository, which we have been supporting since August 2009, when we
+> know the patch as-is will regress the use case, and especially when we
+> already know a way to code not to regress is not too complex.
 
-diff --git a/cache.h b/cache.h
-index 3abf895..4a758ba 100644
---- a/cache.h
-+++ b/cache.h
-@@ -511,7 +511,7 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
- #define REFRESH_IGNORE_MISSING	0x0008	/* ignore non-existent */
- #define REFRESH_IGNORE_SUBMODULES	0x0010	/* ignore submodules */
- #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs update" */
--extern int refresh_index(struct index_state *, unsigned int flags, const char **pathspec, char *seen, char *header_msg);
-+extern int refresh_index(struct index_state *, unsigned int flags, const char **pathspec, char *seen, const char *header_msg);
- 
- struct lock_file {
- 	struct lock_file *next;
-diff --git a/read-cache.c b/read-cache.c
-index 4f2e890..15b0a73 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1104,7 +1104,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- }
- 
- static void show_file(const char * fmt, const char * name, int in_porcelain,
--		      int * first, char *header_msg)
-+		      int * first, const char *header_msg)
- {
- 	if (in_porcelain && *first && header_msg) {
- 		printf("%s\n", header_msg);
-@@ -1114,7 +1114,7 @@ static void show_file(const char * fmt, const char * name, int in_porcelain,
- }
- 
- int refresh_index(struct index_state *istate, unsigned int flags, const char **pathspec,
--		  char *seen, char *header_msg)
-+		  char *seen, const char *header_msg)
- {
- 	int i;
- 	int has_errors = 0;
--- 
-1.7.2.3
+Even though I don't deeply care about what CVSNT does, but I am somewhat
+curious why this "change SP to =" was done when CVSNT writes out its
+$HOME/.cvs/cvspass file.
+
+Does anybody know why?  Only to make things incompatible, perhaps? ;-)
+
+  http://www.selenic.com/pipermail/mercurial/2009-April/025095.html
+
+seems to indicate that somebody next door had a similar experience on
+exactly the same issue.
