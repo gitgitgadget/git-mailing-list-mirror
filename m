@@ -1,73 +1,97 @@
-From: =?UTF-8?B?SHJ2b2plIE5pa8WhacSH?= <hniksic@gmail.com>
-Subject: Re: Make "terminator behavior" the default with --pretty=format: ?
-Date: Tue, 22 Feb 2011 17:51:11 +0100
-Message-ID: <AANLkTikGYOdJNGNXR1egPyMBhKpT=bby5fmr8MR9QTXt@mail.gmail.com>
-References: <AANLkTimFYsG3x0uGX32Ozo6C_shHd4k8jnXNhYmy7Q80@mail.gmail.com>
-	<1298393039.2286.14.camel@wpalmer.simply-domain>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: The future of gitweb (long term goals)
+Date: Tue, 22 Feb 2011 18:02:09 +0100
+Message-ID: <AANLkTin9dWXkaxqLdiosx-=jA9gbEqoJ8aAFoZMU94ih@mail.gmail.com>
+References: <201102142039.59416.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Feb 22 17:51:23 2011
+Cc: git@vger.kernel.org, John Hawley <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 18:02:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrvSH-0000Pi-0M
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 17:51:17 +0100
+	id 1PrvdY-0007Sy-Uj
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 18:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754540Ab1BVQvN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 11:51:13 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:60294 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754187Ab1BVQvM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 11:51:12 -0500
-Received: by yib18 with SMTP id 18so3087242yib.19
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 08:51:11 -0800 (PST)
+	id S1751183Ab1BVRCw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 12:02:52 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63406 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750828Ab1BVRCv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 12:02:51 -0500
+Received: by fxm17 with SMTP id 17so2956076fxm.19
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 09:02:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:cc:content-type:content-transfer-encoding;
-        bh=IiK8Ig1p1U+RCkp5X2K1h2gZntvHGB6xr5vmLYAH6IQ=;
-        b=aHbf21gA3El8cEMsP+N3YO8wCBSky4z69di5QSlVYT6qJJVw5WNRaOHfflKj+gQ5ya
-         RtUT8JXtT7ctQkUeZC9+Jyp9S9rck4FlhSZKqHFR3Jn3aW1jVEc5rz9qqStw2muRFf9N
-         9ss9RWyF3DJ54ECY477b+37xJqftrRruIH1DA=
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nxVUwKgDFABJepAs5oszHAQkTYHEt4y4l+RHycp0Pd8=;
+        b=hXmN6khMtAMT592kOmbwd+bpvh/RFDPH/evFhdpFsjY857xXHDImpsexLfAZMHEsPo
+         LkclvnobPUKLxWwUacwTHA4IflhLUk9UeiqbKMGl+055pRuAQS7pMzEQhHcQhLTGX2WR
+         gkQIty2OUmVdBpdfgMK0hpTdrbRgo9Fb5O35s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:cc
-         :content-type:content-transfer-encoding;
-        b=kSonWy9cmRYvM/js9WVWOLwBsPJXwtc4aj9QFb3IA11Bi6SlZTwuy6iAlhIcvMwKyC
-         t7XnGaExb2AvE8fetXgGYXyr//gbTHMFY4nmigK0tBB+/gEYxj7egf02i38HeyYHydNB
-         gV1Lc9Ig60rOp5WOsk/QKYqq9+t4TFmImsgZM=
-Received: by 10.90.88.17 with SMTP id l17mr3787385agb.191.1298393471380; Tue,
- 22 Feb 2011 08:51:11 -0800 (PST)
-Received: by 10.90.25.6 with HTTP; Tue, 22 Feb 2011 08:51:11 -0800 (PST)
-In-Reply-To: <1298393039.2286.14.camel@wpalmer.simply-domain>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=E76R10pHSddCxYAiDruFVPKWIuPFORPoY6jlyGt/CLSe891if8vpNnFoHlGxIy0FU9
+         RGPQFzQub/T7aw6qwxZsYu8zzRMdC13pq32LxnkKqN50WQTjSkojKtreHhfYnOno6J6+
+         hohpbY0Gy4oHSJn73xP1OQzfLt978c+tkxEG4=
+Received: by 10.223.113.73 with SMTP id z9mr3692335fap.41.1298394129337; Tue,
+ 22 Feb 2011 09:02:09 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Tue, 22 Feb 2011 09:02:09 -0800 (PST)
+In-Reply-To: <201102142039.59416.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167565>
 
-On Tue, Feb 22, 2011 at 5:43 PM, Will Palmer <wmpalmer@gmail.com> wrote=
-:
-> On Tue, 2011-02-22 at 16:43 +0100, Hrvoje Nik=C5=A1i=C4=87 wrote:
->> Is there a reason, other than backward compatibility, for
->> "--prety=3Dformat:" to have separator rather than terminator semanti=
-cs?
+On Mon, Feb 14, 2011 at 20:39, Jakub Narebski <jnareb@gmail.com> wrote:
+> This means that we are not able to use web (micro)framework, or use
+> templating engine to create HTML instead of combination of CGI.pm
+> methods and handcrafted HTML (worrying about proper escaping), or jus=
+t
+> use CGI::Cache or Plack::Middleware::Cache for adding output caching
+> to gitweb. =C2=A0Though if one wants web interface in Perl that uses =
+web
+> framework (and is supposedly backwards-compatible with gitweb URLs),
+> there is always Gitalist which uses Catalyst web framework.
 >
-> The "default behaviour" is the behaviour which occurs when one /doesn=
-'t/
-> specify something. For example: --pretty=3D"%H %an" uses terminator
-> semantics.
+> On the other hand requiring non-core Perl modules means that gitweb
+> installation would be harder. =C2=A0We can work around this issue if =
+there
+> are a few small such modules (e.g. using Exception::Class or
+> HTTP::Exception as base class for gitweb error handling) by putting
+> them in 'inc/' and installing local version if they are not present,
+> like Git.pm does with local Error.pm module. =C2=A0But for microframe=
+work,
+> or templating engine, or e.g. Plack (if we go the route to make gitwe=
+b
+> PSGI application) this would be rather out of question. =C2=A0Anyway,=
+ in
+> any case gitweb would probably require more complicated build system
+> than current one... but moving to e.g. ExtUtils::MakeMaker shouldn't
+> be that hard (see how Git.pm does it, only we can require Perl 5.8.3
+> which has new enough EU::MM that supports DESTDIR).
 
-I didn't know that you could simply omit the "format:". Is it
-documented anywhere? The docs say:
+Why do you think that if we use larger modules these things would get
+harder?
 
-       --pretty[=3D<format>], --format[=3D<format>]
-           Pretty-print the contents of the commit logs in a given
-format, where <format> can be one of oneline, short,
-           medium, full, fuller, email, raw and format:<string>. When
-omitted, the format defaults to medium.
+There's already applications on the CPAN which can do "fat
+packing". I.e. you could use Plack, Catalyst, Template and whatever
+else but run some make target to pack gitweb and all its dependencies
+into a single file.
+
+Obviously it would be really big, and probably slow unless you ran it
+as a fastcgi script. But that would be a tradeoff for making the
+source easier to maintain.
+
+But packing things like these is not a technical challange at all, and
+probably way easier than reinventing the wheel each time you need some
+small thing that's not in core, but is in a popular & well tested CPAN
+module.
