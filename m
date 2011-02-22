@@ -1,248 +1,205 @@
-From: Justin Mattock <justinmattock@gmail.com>
-Subject: gitk with the latest branch makes the system unusable for some time
-Date: Tue, 22 Feb 2011 15:53:08 -0800
-Message-ID: <AANLkTim3MW0PmD5_tra4nmRapfgHJ9K_usJWGVK3AOUC@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v4 64/73] gettextize: git-describe basic messages
+Date: Tue, 22 Feb 2011 23:42:23 +0000
+Message-ID: <1298418152-27789-65-git-send-email-avarab@gmail.com>
+References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: linux-kernel-owner@vger.kernel.org Wed Feb 23 00:53:22 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 23 01:00:01 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Ps22i-0003xf-HF
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 23 Feb 2011 00:53:21 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Ps298-0007by-NG
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755390Ab1BVXxN (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 22 Feb 2011 18:53:13 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:65018 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752629Ab1BVXxK (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 22 Feb 2011 18:53:10 -0500
-Received: by wyg36 with SMTP id 36so340494wyg.19
-        for <multiple recipients>; Tue, 22 Feb 2011 15:53:09 -0800 (PST)
+	id S1751834Ab1BVX7x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:59:53 -0500
+Received: from mail-bw0-f51.google.com ([209.85.214.51]:62101 "EHLO
+	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751525Ab1BVX7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 18:59:52 -0500
+Received: by bwz10 with SMTP id 10so3878147bwz.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=WJUR8HeJpkudIcRLteFLh3wJfsP7Wb1aI8J01VEWTww=;
-        b=HjcXv9M+3pI7ppVebEdKv1fzZWCYRi6xkFubabhruW8ubtgzjCK6PbA3ImT8I3zNjg
-         iKf9SBsHiIzliUZlra2I462c8DsHFPqQaLnMpITDVb1sxTF9eHcXOhtvycpA43A9KVxV
-         hFZuhEjflPz5latQXpU/7Q1LFwVnl0eF4aOco=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=QEyPULyV8fqS2g8TVzLzWShaQhalIimPesBN2d09VyU=;
+        b=wqoOuPArVHnlgM3mJKgBJf1p4zq4xy7QOoFHOIrtNSDUiR20NEX4bIybdEZNpu8XLb
+         TXjROZZusODL2J76bixStmHML7qk7kSA2L5kVZtdEBZX2sY3gG8RxBk6bvfdE+zsAziZ
+         nXrHbtXB6teTsBbSQfKMdFKsj2oIKagucLP8k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=bJtpTO2GIuxUFcpx1jo9X5ENrbkpErCjCNhdypYdwMTQo28O/wQoYFYQpftAHUuGpI
-         OSS9xMgBHAN3XOnvjWEvoFgt87kHCVtC6K6XD4/YNKN+qaqHxolgkQvlMV7zKZPcpR5Y
-         Ug9U7sBY7yH979sb7DIxOxVDgqR/GSCC76gFk=
-Received: by 10.216.183.195 with SMTP id q45mr2883982wem.94.1298418788946;
- Tue, 22 Feb 2011 15:53:08 -0800 (PST)
-Received: by 10.216.9.69 with HTTP; Tue, 22 Feb 2011 15:53:08 -0800 (PST)
-Sender: linux-kernel-owner@vger.kernel.org
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=HlE/grblSHKfKyf9hFuPCDvhWBYdHMBwZXioob3ddmCbeSGLpBdaPLrxqcbA+EdifN
+         t4nYgL8YUUaG/9m3ndI3AvdgvVB6YY67QRaOLA4zzBQVQcRf3d1kVuMmbujKm5yqLq9a
+         KvIcUNrmqqxuRmPcEqMkF7nu7xCy5SAqngCYE=
+Received: by 10.204.72.71 with SMTP id l7mr3005058bkj.55.1298418276171;
+        Tue, 22 Feb 2011 15:44:36 -0800 (PST)
+Received: from w.nix.is (w.nix.is [188.40.98.140])
+        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.35
+        (version=SSLv3 cipher=OTHER);
+        Tue, 22 Feb 2011 15:44:35 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
+References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167664>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167665>
 
-not sure if there is any reports of this or not, basically using gitk
-on my macbookpro2,2 makes the system extremely slow and unusable
-(after a while can finally use the system)
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ builtin/describe.c  |   36 ++++++++++++++++++------------------
+ t/t6120-describe.sh |    2 +-
+ 2 files changed, 19 insertions(+), 19 deletions(-)
 
-in dmesg I am seeing this:
-
-[ 6089.363045] NetworkManager invoked oom-killer: gfp_mask=0x84d0,
-order=0, oom_adj=0, oom_score_adj=0
-[ 6089.363050] Pid: 2107, comm: NetworkManager Not tainted
-2.6.38-rc5-00101-gebad2c2 #2
-[ 6089.363052] Call Trace:
-[ 6089.363062]  [<ffffffff810c563c>] ? T.547+0x6a/0x180
-[ 6089.363066]  [<ffffffff810c5799>] ? T.544+0x47/0x24c
-[ 6089.363070]  [<ffffffff810c5beb>] ? out_of_memory+0x24d/0x2f8
-[ 6089.363074]  [<ffffffff810c9142>] ? __alloc_pages_nodemask+0x55c/0x696
-[ 6089.363079]  [<ffffffff810dc985>] ? handle_pte_fault+0x2cd/0x73f
-[ 6089.363084]  [<ffffffff8104e522>] ? pte_alloc_one+0x1e/0x3c
-[ 6089.363088]  [<ffffffff810c8406>] ? __free_pages+0x1b/0x24
-[ 6089.363091]  [<ffffffff810ddfc1>] ? __pte_alloc+0x1d/0xcd
-[ 6089.363094]  [<ffffffff810de185>] ? handle_mm_fault+0x114/0x164
-[ 6089.363099]  [<ffffffff8144973d>] ? do_page_fault+0x3dc/0x401
-[ 6089.363104]  [<ffffffff81112eef>] ? mntput_no_expire+0x8d/0x13f
-[ 6089.363108]  [<ffffffff81112fc2>] ? mntput+0x21/0x23
-[ 6089.363112]  [<ffffffff810fb8dc>] ? fput+0x20e/0x21d
-[ 6089.363116]  [<ffffffff81446a25>] ? page_fault+0x25/0x30
-[ 6089.363118] Mem-Info:
-[ 6089.363120] DMA per-cpu:
-[ 6089.363123] CPU    0: hi:    0, btch:   1 usd:   0
-[ 6089.363125] CPU    1: hi:    0, btch:   1 usd:   0
-[ 6089.363127] DMA32 per-cpu:
-[ 6089.363129] CPU    0: hi:  186, btch:  31 usd:  61
-[ 6089.363131] CPU    1: hi:  186, btch:  31 usd: 184
-[ 6089.363137] active_anon:109412 inactive_anon:109516 isolated_anon:0
-[ 6089.363138]  active_file:305 inactive_file:345 isolated_file:0
-[ 6089.363139]  unevictable:5 dirty:0 writeback:0 unstable:0
-[ 6089.363140]  free:1985 slab_reclaimable:2193 slab_unreclaimable:22201
-[ 6089.363141]  mapped:451 shmem:130 pagetables:2902 bounce:0
-[ 6089.363148] DMA free:3980kB min:60kB low:72kB high:88kB
-active_anon:5728kB inactive_anon:5892kB active_file:64kB
-inactive_file:156kB unevictable:0kB isolated(anon):0kB
-isolated(file):0kB present:15684kB mlocked:0kB dirty:0kB writeback:0kB
-mapped:88kB shmem:0kB slab_reclaimable:16kB slab_unreclaimable:40kB
-kernel_stack:8kB pagetables:24kB unstable:0kB bounce:0kB
-writeback_tmp:0kB pages_scanned:331 all_unreclaimable? yes
-[ 6089.363154] lowmem_reserve[]: 0 978 978 978
-[ 6089.363164] DMA32 free:3960kB min:3972kB low:4964kB high:5956kB
-active_anon:431920kB inactive_anon:432172kB active_file:1156kB
-inactive_file:1224kB unevictable:20kB isolated(anon):0kB
-isolated(file):0kB present:1002436kB mlocked:20kB dirty:0kB
-writeback:0kB mapped:1716kB shmem:520kB slab_reclaimable:8756kB
-slab_unreclaimable:88764kB kernel_stack:1704kB pagetables:11584kB
-unstable:0kB bounce:0kB writeback_tmp:0kB pages_scanned:3694
-all_unreclaimable? yes
-[ 6089.363169] lowmem_reserve[]: 0 0 0 0
-[ 6089.363174] DMA: 3*4kB 2*8kB 3*16kB 2*32kB 2*64kB 1*128kB 2*256kB
-0*512kB 1*1024kB 1*2048kB 0*4096kB = 3980kB
-[ 6089.363184] DMA32: 593*4kB 5*8kB 2*16kB 1*32kB 0*64kB 0*128kB
-0*256kB 1*512kB 1*1024kB 0*2048kB 0*4096kB = 4012kB
-[ 6089.363193] 4369 total pagecache pages
-[ 6089.363195] 3566 pages in swap cache
-[ 6089.363198] Swap cache stats: add 107816, delete 104250, find 2345/3361
-[ 6089.363200] Free swap  = 0kB
-[ 6089.363201] Total swap = 390620kB
-[ 6089.367161] 258163 pages RAM
-[ 6089.367164] 6164 pages reserved
-[ 6089.367165] 2023 pages shared
-[ 6089.367167] 248975 pages non-shared
-[ 6089.367169] [ pid ]   uid  tgid total_vm      rss cpu oom_adj
-oom_score_adj name
-[ 6089.367181] [ 1111]     0  1111     4188        0   1     -17
-  -1000 udevd
-[ 6089.367186] [ 1944]     0  1944    60148        1   1       0
-      0 gdm-binary
-[ 6089.367190] [ 1963]     0  1963    37584        9   0       0
-      0 nscd
-[ 6089.367195] [ 1979]     0  1979    30571       90   0       0
-      0 rsyslogd
-[ 6089.367199] [ 1991]     0  1991     1015        0   1       0
-      0 acpid
-[ 6089.367203] [ 2030]     0  2030    68036        1   0       0
-      0 gdm-binary
-[ 6089.367208] [ 2034]     0  2034    60586      953   1       0             0 X
-[ 6089.367212] [ 2052]  1000  2052     8162      213   1       0
-      0 dbus-daemon
-[ 6089.367216] [ 2061]     0  2061     5129        1   1       0
-      0 bluetoothd
-[ 6089.367221] [ 2081]     0  2081     8289       96   0       0
-      0 pommed
-[ 6089.367225] [ 2094]     0  2094     4758        0   1       0
-      0 saslauthd
-[ 6089.367230] [ 2096]     0  2096     4758        0   1       0
-      0 saslauthd
-[ 6089.367234] [ 2097]     0  2097     4758        0   1       0
-      0 saslauthd
-[ 6089.367238] [ 2098]     0  2098     4758        0   1       0
-      0 saslauthd
-[ 6089.367242] [ 2099]     0  2099     4758        0   1       0
-      0 saslauthd
-[ 6089.367246] [ 2107]     0  2107    36073      227   0       0
-      0 NetworkManager
-[ 6089.367251] [ 2117]     0  2117    29681        1   1       0
-      0 polkitd
-[ 6089.367255] [ 2282]     0  2282     4881        5   0       0
-      0 fcron
-[ 6089.367259] [ 2284]     0  2284     1016        1   1       0
-      0 agetty
-[ 6089.367263] [ 2285]     0  2285     1016        1   1       0
-      0 agetty
-[ 6089.367267] [ 2286]     0  2286     1016        1   0       0
-      0 agetty
-[ 6089.367271] [ 2287]     0  2287     1016        1   1       0
-      0 agetty
-[ 6089.367275] [ 2288]     0  2288     1016        1   0       0
-      0 agetty
-[ 6089.367279] [ 2289]     0  2289     1016        1   0       0
-      0 agetty
-[ 6089.367284] [ 2302]     0  2302     4752       81   0       0
-      0 wpa_supplicant
-[ 6089.367288] [ 2311]     0  2311     4187        1   1     -17
-  -1000 udevd
-[ 6089.367292] [ 2312]     0  2312     4187        1   1     -17
-  -1000 udevd
-[ 6089.367297] [ 2331]  1000  2331    15192        3   1       0
-      0 gnome-keyring-d
-[ 6089.367302] [ 2335]     0  2335    30630      111   0       0
-      0 console-kit-dae
-[ 6089.367306] [ 2400]  1000  2400     5587        1   1       0
-      0 ck-launch-sessi
-[ 6089.367310] [ 2421]  1000  2421     6620        0   1       0
-      0 dbus-launch
-[ 6089.367315] [ 2422]  1000  2422     8130      127   1       0
-      0 dbus-daemon
-[ 6089.367319] [ 2428]  1000  2428     5143       10   0       0
-      0 ssh-agent
-[ 6089.367323] [ 2433]  1000  2433    39977      126   0       0
-      0 fluxbox
-[ 6089.367327] [ 2435]  1000  2435    26496        0   0       0
-      0 sh
-[ 6089.367332] [ 2436]  1000  2436    88159      332   0       0
-      0 gnome-power-man
-[ 6089.367336] [ 2438]  1000  2438    87739      489   1       0
-      0 nm-applet
-[ 6089.367340] [ 2439]  1000  2439    62885        1   1       0
-      0 bluetooth-apple
-[ 6089.367344] [ 2440]  1000  2440    60223        1   0       0
-      0 volumeicon
-[ 6089.367349] [ 2441]  1000  2441   102547      228   0       0
-      0 nautilus
-[ 6089.367353] [ 2443]  1000  2443    37483        1   0       0
-      0 bonobo-activati
-[ 6089.367358] [ 2444]  1000  2444    64510        1   1       0
-      0 gdu-notificatio
-[ 6089.367362] [ 2445]  1000  2445    58787        1   1       0
-      0 gpomme
-[ 6089.367366] [ 2452]  1000  2452    34508      184   0       0
-      0 gconfd-2
-[ 6089.367370] [ 2485]  1000  2485    57853      176   0       0
-      0 tint2
-[ 6089.367374] [ 2487]     0  2487    29193       39   0       0
-      0 udisks-daemon
-[ 6089.367379] [ 2491]     0  2491    10659       41   0       0
-      0 udisks-daemon
-[ 6089.367383] [ 2495]  1000  2495    67536       72   0       0
-      0 notify-osd
-[ 6089.367387] [ 2498]     0  2498    30367      221   0       0
-      0 upowerd
-[ 6089.367391] [ 2501]  1000  2501    80849      113   0       0
-      0 gnome-screensav
-[ 6089.367396] [ 2515]  1000  2515    35044        1   1       0
-      0 gnome-keyring-d
-[ 6089.367400] [ 2549]  1000  2549    37880       74   0       0
-      0 xterm
-[ 6089.367404] [ 2550]  1000  2550    26617        1   1       0
-      0 bash
-[ 6089.367408] [ 2576]     0  2576     3140        1   0       0
-      0 dhclient
-[ 6089.367412] [ 2584]  1000  2584    70265      420   0       0
-      0 mplayer
-[ 6089.367417] [ 2589]  1000  2589    70068      130   1       0
-      0 mplayer
-[ 6089.367421] [ 2590]  1000  2590   103253      723   0       0
-      0 pidgin
-[ 6089.367426] [ 2592]  1000  2592    39233       46   0       0
-      0 xterm
-[ 6089.367430] [ 2593]  1000  2593    26616        1   1       0
-      0 bash
-[ 6089.367435] [ 2717]  1000  2717   326078   204267   0       0
-      0 wish
-[ 6089.367439] [ 2729]  1000  2729   141207     7349   0       0
-      0 git
-[ 6089.367444] Out of memory: Kill process 2717 (wish) score 802 or
-sacrifice child
-
-maybe I need to get a more updated system with more memory or something...
-full dmesg is here:
-http://fpaste.org/6yDn/
-
--- 
-Justin P. Mattock
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 342129f..037691e 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -231,13 +231,13 @@ static void display_name(struct commit_name *n)
+ 	if (n->prio =3D=3D 2 && !n->tag) {
+ 		n->tag =3D lookup_tag(n->sha1);
+ 		if (!n->tag || parse_tag(n->tag))
+-			die("annotated tag %s not available", n->path);
++			die(_("annotated tag %s not available"), n->path);
+ 	}
+ 	if (n->tag && !n->name_checked) {
+ 		if (!n->tag->tag)
+-			die("annotated tag %s has no embedded name", n->path);
++			die(_("annotated tag %s has no embedded name"), n->path);
+ 		if (strcmp(n->tag->tag, all ? n->path + 5 : n->path))
+-			warning("tag '%s' is really '%s' here", n->tag->tag, n->path);
++			warning(_("tag '%s' is really '%s' here"), n->tag->tag, n->path);
+ 		n->name_checked =3D 1;
+ 	}
+=20
+@@ -264,10 +264,10 @@ static void describe(const char *arg, int last_on=
+e)
+ 	unsigned int unannotated_cnt =3D 0;
+=20
+ 	if (get_sha1(arg, sha1))
+-		die("Not a valid object name %s", arg);
++		die(_("Not a valid object name %s"), arg);
+ 	cmit =3D lookup_commit_reference(sha1);
+ 	if (!cmit)
+-		die("%s is not a valid '%s' object", arg, commit_type);
++		die(_("%s is not a valid '%s' object"), arg, commit_type);
+=20
+ 	n =3D find_commit_name(cmit->object.sha1);
+ 	if (n && (tags || all || n->prio =3D=3D 2)) {
+@@ -284,9 +284,9 @@ static void describe(const char *arg, int last_one)
+ 	}
+=20
+ 	if (!max_candidates)
+-		die("no tag exactly matches '%s'", sha1_to_hex(cmit->object.sha1));
++		die(_("no tag exactly matches '%s'"), sha1_to_hex(cmit->object.sha1)=
+);
+ 	if (debug)
+-		fprintf(stderr, "searching to describe %s\n", arg);
++		fprintf(stderr, _("searching to describe %s\n"), arg);
+=20
+ 	if (!have_util) {
+ 		for_each_hash(&names, set_util);
+@@ -326,7 +326,7 @@ static void describe(const char *arg, int last_one)
+ 		}
+ 		if (annotated_cnt && !list) {
+ 			if (debug)
+-				fprintf(stderr, "finished search at %s\n",
++				fprintf(stderr, _("finished search at %s\n"),
+ 					sha1_to_hex(c->object.sha1));
+ 			break;
+ 		}
+@@ -350,12 +350,12 @@ static void describe(const char *arg, int last_on=
+e)
+ 			return;
+ 		}
+ 		if (unannotated_cnt)
+-			die("No annotated tags can describe '%s'.\n"
+-			    "However, there were unannotated tags: try --tags.",
++			die(_("No annotated tags can describe '%s'.\n"
++			    "However, there were unannotated tags: try --tags."),
+ 			    sha1_to_hex(sha1));
+ 		else
+-			die("No tags can describe '%s'.\n"
+-			    "Try --always, or create some tags.",
++			die(_("No tags can describe '%s'.\n"
++			    "Try --always, or create some tags."),
+ 			    sha1_to_hex(sha1));
+ 	}
+=20
+@@ -375,11 +375,11 @@ static void describe(const char *arg, int last_on=
+e)
+ 				prio_names[t->name->prio],
+ 				t->depth, t->name->path);
+ 		}
+-		fprintf(stderr, "traversed %lu commits\n", seen_commits);
++		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
+ 		if (gave_up_on) {
+ 			fprintf(stderr,
+-				"more than %i tags found; listed %i most recent\n"
+-				"gave up search at %s\n",
++				_("more than %i tags found; listed %i most recent\n"
++				"gave up search at %s\n"),
+ 				max_candidates, max_candidates,
+ 				sha1_to_hex(gave_up_on->object.sha1));
+ 		}
+@@ -429,7 +429,7 @@ int cmd_describe(int argc, const char **argv, const=
+ char *prefix)
+ 	save_commit_buffer =3D 0;
+=20
+ 	if (longformat && abbrev =3D=3D 0)
+-		die("--long is incompatible with --abbrev=3D0");
++		die(_("--long is incompatible with --abbrev=3D0"));
+=20
+ 	if (contains) {
+ 		const char **args =3D xmalloc((7 + argc) * sizeof(char *));
+@@ -455,14 +455,14 @@ int cmd_describe(int argc, const char **argv, con=
+st char *prefix)
+ 	init_hash(&names);
+ 	for_each_rawref(get_name, NULL);
+ 	if (!names.nr && !always)
+-		die("No names found, cannot describe anything.");
++		die(_("No names found, cannot describe anything."));
+=20
+ 	if (argc =3D=3D 0) {
+ 		if (dirty && !cmd_diff_index(ARRAY_SIZE(diff_index_args) - 1, diff_i=
+ndex_args, prefix))
+ 			dirty =3D NULL;
+ 		describe("HEAD", 1);
+ 	} else if (dirty) {
+-		die("--dirty is incompatible with committishes");
++		die(_("--dirty is incompatible with committishes"));
+ 	} else {
+ 		while (argc-- > 0) {
+ 			describe(*argv++, argc =3D=3D 0);
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 876d1ab..1826996 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -123,7 +123,7 @@ cat - >err.expect <<EOF
+ warning: tag 'A' is really 'Q' here
+ EOF
+ check_describe A-* HEAD
+-test_expect_success 'warning was displayed for Q' '
++test_expect_success C_LOCALE_OUTPUT 'warning was displayed for Q' '
+ 	test_cmp err.expect err.actual
+ '
+ test_expect_success 'rename tag Q back to A' '
+--=20
+1.7.2.3
