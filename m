@@ -1,83 +1,98 @@
-From: xiaozhu <xiaozhu@gmail.com>
-Subject: Re: how a patch can be accepted?
-Date: Tue, 22 Feb 2011 23:28:13 +0900
-Message-ID: <4D63C7FD.4040304@gmail.com>
-References: <AANLkTikPtYy9_4WjvSqdiFG8pjv5KH5e16=4HoeAzoWb@mail.gmail.com> <AANLkTin1hNwKfgRrukKvEMDXCSHnU=EfPFJLQ2cYci9L@mail.gmail.com> <4D63C095.8020206@gmail.com> <AANLkTinU14O--V5BFBibrVa_quEUeVF-vS0waLhdzn2s@mail.gmail.com>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: How do I make git-format-patch reject 8-bit encodings?
+Date: Tue, 22 Feb 2011 08:49:03 -0600
+Organization: Freescale
+Message-ID: <4D63CCDF.50803@freescale.com>
+References: <4D62E315.7040506@freescale.com> <7vbp24hqez.fsf@alter.siamese.dyndns.org> <4D6302E6.1070602@freescale.com> <20110222073330.GA8626@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue Feb 22 15:28:24 2011
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 22 15:49:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrtDz-0005Bv-Qp
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 15:28:24 +0100
+	id 1PrtYA-0007U4-W3
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 15:49:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab1BVO2T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 09:28:19 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54961 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752781Ab1BVO2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 09:28:18 -0500
-Received: by iwn34 with SMTP id 34so599044iwn.19
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 06:28:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=NQvynMHPlGWaH/fi95LKO8AsY2NW6nbxr+APx33hyg0=;
-        b=Bhedk8J1r2Dacc1VEu22uO3TdP+hdJOhogzzc0FyEU8dySOWkjgtO59WFQDfoR9Uls
-         DjJsIRlWiakzICZbYfD0TN5Qxw2Q6ydpnv99YHH4SAjyX6ae/yd1L8D/m18RP6swppdV
-         z4zkO2ILxzTdOks3iv+x1UN4L/vHAwXNz/Ox4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=bnBm9diiVhzT3Gs+Mkpw2QopQwyJydU26rcRmSCcPs5dvUN+DNJ2kFapJIJ/53DqZv
-         Xn9JigC+R0kISsNrPytqXDys18WOX4sIuIHuS3LVl/7tpiYUAHtMFnS/irBwafpVF1ec
-         QRn5+KNgDbrXIlETDSK675LcwKfnbz6WcUZAo=
-Received: by 10.42.221.68 with SMTP id ib4mr3470247icb.386.1298384897959;
-        Tue, 22 Feb 2011 06:28:17 -0800 (PST)
-Received: from [192.168.11.57] (softbank126036243176.bbtec.net [126.36.243.176])
-        by mx.google.com with ESMTPS id z4sm6295791ibg.7.2011.02.22.06.28.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 06:28:16 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <AANLkTinU14O--V5BFBibrVa_quEUeVF-vS0waLhdzn2s@mail.gmail.com>
+	id S1754041Ab1BVOtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 09:49:08 -0500
+Received: from tx2ehsobe001.messaging.microsoft.com ([65.55.88.11]:57431 "EHLO
+	TX2EHSOBE001.bigfish.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753728Ab1BVOtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 09:49:07 -0500
+Received: from mail87-tx2-R.bigfish.com (10.9.14.246) by
+ TX2EHSOBE001.bigfish.com (10.9.40.21) with Microsoft SMTP Server id
+ 14.1.225.8; Tue, 22 Feb 2011 14:49:06 +0000
+Received: from mail87-tx2 (localhost.localdomain [127.0.0.1])	by
+ mail87-tx2-R.bigfish.com (Postfix) with ESMTP id 4616C6B8188;	Tue, 22 Feb
+ 2011 14:49:06 +0000 (UTC)
+X-SpamScore: -6
+X-BigFish: VS-6(zz98dNzz1202hzzz2dh2a8h637h668h61h)
+X-Spam-TCS-SCL: 0:0
+X-Forefront-Antispam-Report: KIP:(null);UIP:(null);IPVD:NLI;H:de01egw01.freescale.net;RD:de01egw01.freescale.net;EFVD:NLI
+Received: from mail87-tx2 (localhost.localdomain [127.0.0.1]) by mail87-tx2
+ (MessageSwitch) id 129838614689450_26931; Tue, 22 Feb 2011 14:49:06 +0000
+ (UTC)
+Received: from TX2EHSMHS009.bigfish.com (unknown [10.9.14.252])	by
+ mail87-tx2.bigfish.com (Postfix) with ESMTP id 1320F13E0051;	Tue, 22 Feb 2011
+ 14:49:06 +0000 (UTC)
+Received: from de01egw01.freescale.net (192.88.165.102) by
+ TX2EHSMHS009.bigfish.com (10.9.99.109) with Microsoft SMTP Server (TLS) id
+ 14.1.225.8; Tue, 22 Feb 2011 14:49:05 +0000
+Received: from az33smr01.freescale.net (az33smr01.freescale.net
+ [10.64.34.199])	by de01egw01.freescale.net (8.14.3/8.14.3) with ESMTP id
+ p1MEn4mD003769;	Tue, 22 Feb 2011 07:49:04 -0700 (MST)
+Received: from [10.82.123.3] (efes.am.freescale.net [10.82.123.3])	by
+ az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id p1MEn3gV029020;	Tue, 22
+ Feb 2011 08:49:03 -0600 (CST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20101213 Fedora/2.0.11-1.fc13 SeaMonkey/2.0.11
+In-Reply-To: <20110222073330.GA8626@sigill.intra.peff.net>
+X-OriginatorOrg: freescale.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167548>
 
-On 2011/02/22 23:08, Erik Faye-Lund wrote:
-> On Tue, Feb 22, 2011 at 2:56 PM, xiaozhu<xiaozhu@gmail.com>  wrote:
->> On 2011/02/22 1:23, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>
->>> On Mon, Feb 21, 2011 at 15:48, xzer<xiaozhu@gmail.com>    wrote:
->>>>
->>>> I submitted a patch recently by sending a mail to this mail list, =
-but
->>>> I don't know how it can be accepted or rejected? Is that enough ju=
-st
->>>> send a mail to here? Because the patch is a very important fix to =
-my
->>>> usage and I don't want to apply it every time by myself.
->>>
->>> Did you read Documentation/SubmittingPatches?
->>
->> Where is the Documentation/SubmittingPatches? I didn't see anything
->> about submitting a patch on the site of git, and I also tried to fin=
-d
->> something about it on git wiki, but I got nothing.
->
-> It's in the Git source tree.
+Jeff King wrote:
+> Can you provide an example of a message that is base64-encoded? I didn't
+> think we base64-encoded anything in send-email (we do rfc2047-encode
+> 8-bit header lines, but using quoted-printable). And looking through it,
+> I don't see any code to do so.
 
-Thank you very much, I got it.
+I can forward to you the original email that is base64-encoded, but I cannot
+reproduce the problem.  Even when I take that patch, apply it with git-am and
+recreate it with git-format-patch, when I sent that recreate patch with
+git-send-email, it is not base64 encoded.
+
+> It's possible that I'm missing the code. Or that one of the underlying
+> modules is doing it for us. Or it's possible that one of the SMTP
+> servers in your route is doing it.
+
+It is possible that our mail server is doing it.  We recently migrated to the
+"Microsoft cloud" email service, and we've experienced all sorts of odd problems
+with mailing patches.
+
+> If you can send an example of original format-patch output that you fed
+> to git-send-email, and the resulting mail that was delivered, then we
+> can know more.
+
+I don't know if I can still get the original patch that was encoded.
+
+> I have a suspicion it is the last one (some MTA doing it), because git
+> tends to generate messages with an 8bit transfer encoding. If we hit a
+> server that doesn't advertise support for 8BIT SMTP extensions, I
+> believe the sending MTA is required to encode (or bounce). That would
+> also account for the inconsistency you noted. It depends on the
+> recipient and the exact route of SMTP servers in the delivery.
+
+Ah, this might be a clue.  I will do more research and get back to you.
+
+-- 
+Timur Tabi
+Linux kernel developer at Freescale
