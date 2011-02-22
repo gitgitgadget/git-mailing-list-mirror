@@ -1,97 +1,83 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: The future of gitweb (long term goals)
-Date: Tue, 22 Feb 2011 18:02:09 +0100
-Message-ID: <AANLkTin9dWXkaxqLdiosx-=jA9gbEqoJ8aAFoZMU94ih@mail.gmail.com>
-References: <201102142039.59416.jnareb@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: libreoffice merge(tool?) issue #3 ...
+Date: Tue, 22 Feb 2011 18:30:45 +0100
+Message-ID: <4D63F2C5.2080505@drmicha.warpmail.net>
+References: <1298388877.32648.171.camel@lenovo-w500>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, John Hawley <warthog9@kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 18:02:57 2011
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, kendy@novell.com,
+	Norbert Thiebaud <nthiebaud@gmail.com>
+To: michael.meeks@novell.com
+X-From: git-owner@vger.kernel.org Tue Feb 22 18:34:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrvdY-0007Sy-Uj
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 18:02:57 +0100
+	id 1Prw7o-0000LH-OI
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 18:34:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183Ab1BVRCw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 12:02:52 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63406 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750828Ab1BVRCv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 12:02:51 -0500
-Received: by fxm17 with SMTP id 17so2956076fxm.19
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 09:02:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nxVUwKgDFABJepAs5oszHAQkTYHEt4y4l+RHycp0Pd8=;
-        b=hXmN6khMtAMT592kOmbwd+bpvh/RFDPH/evFhdpFsjY857xXHDImpsexLfAZMHEsPo
-         LkclvnobPUKLxWwUacwTHA4IflhLUk9UeiqbKMGl+055pRuAQS7pMzEQhHcQhLTGX2WR
-         gkQIty2OUmVdBpdfgMK0hpTdrbRgo9Fb5O35s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=E76R10pHSddCxYAiDruFVPKWIuPFORPoY6jlyGt/CLSe891if8vpNnFoHlGxIy0FU9
-         RGPQFzQub/T7aw6qwxZsYu8zzRMdC13pq32LxnkKqN50WQTjSkojKtreHhfYnOno6J6+
-         hohpbY0Gy4oHSJn73xP1OQzfLt978c+tkxEG4=
-Received: by 10.223.113.73 with SMTP id z9mr3692335fap.41.1298394129337; Tue,
- 22 Feb 2011 09:02:09 -0800 (PST)
-Received: by 10.223.2.201 with HTTP; Tue, 22 Feb 2011 09:02:09 -0800 (PST)
-In-Reply-To: <201102142039.59416.jnareb@gmail.com>
+	id S1754750Ab1BVReE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 12:34:04 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44260 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750784Ab1BVReC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 12:34:02 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 23CD1203C9;
+	Tue, 22 Feb 2011 12:34:01 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 22 Feb 2011 12:34:01 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=02KAQ7l8I7voEvhZulaZpfXMOg4=; b=atZVk6XHdVLMkXoYp9VbPmpAKy/zWIYD5G/bh5BfXdcePahjvEfEBoG3Puk7Gq1Bs0RRwGJ9nWW+rzpVurQos6VU/dre+2zMJHC8beT+724cdMRJYlpbrs2Mra6O0Mxxm4V0u+P5PdNCXN8IJ7qqAJ4LxWOQeD0/wk4WnxXScsg=
+X-Sasl-enc: IcphsL6INm6QxqzAp9MRz7JTE8vIAdBJAAxNSgxj+9Ry 1298396040
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6FDE0447AAC;
+	Tue, 22 Feb 2011 12:34:00 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <1298388877.32648.171.camel@lenovo-w500>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167566>
 
-On Mon, Feb 14, 2011 at 20:39, Jakub Narebski <jnareb@gmail.com> wrote:
-> This means that we are not able to use web (micro)framework, or use
-> templating engine to create HTML instead of combination of CGI.pm
-> methods and handcrafted HTML (worrying about proper escaping), or jus=
-t
-> use CGI::Cache or Plack::Middleware::Cache for adding output caching
-> to gitweb. =C2=A0Though if one wants web interface in Perl that uses =
-web
-> framework (and is supposedly backwards-compatible with gitweb URLs),
-> there is always Gitalist which uses Catalyst web framework.
->
-> On the other hand requiring non-core Perl modules means that gitweb
-> installation would be harder. =C2=A0We can work around this issue if =
-there
-> are a few small such modules (e.g. using Exception::Class or
-> HTTP::Exception as base class for gitweb error handling) by putting
-> them in 'inc/' and installing local version if they are not present,
-> like Git.pm does with local Error.pm module. =C2=A0But for microframe=
-work,
-> or templating engine, or e.g. Plack (if we go the route to make gitwe=
-b
-> PSGI application) this would be rather out of question. =C2=A0Anyway,=
- in
-> any case gitweb would probably require more complicated build system
-> than current one... but moving to e.g. ExtUtils::MakeMaker shouldn't
-> be that hard (see how Git.pm does it, only we can require Perl 5.8.3
-> which has new enough EU::MM that supports DESTDIR).
+Michael Meeks venit, vidit, dixit 22.02.2011 16:34:
+> Hi there,
+> 
+>         So - yet again, I'm still a completely clueless git user :-)
+> basically the same setup and reproduction issue as last time, still
+> using a stable git: version 1.7.3.4
+<PG>
+I'm sorry you're having reproduction issues. At least your git is stable.
+</PG>
+> 
+> Setup:
+>         git clone git://anongit.freedesktop.org/libreoffice/libs-core
+cd libs-core # I assume
+>         git checkout integration/dev300_m98
+>         git remote add stage git://anongit.freedesktop.org/libreoffice/staging/libs-core
+>         git fetch stage
+> 
+> Reproduce:
+> 	rm -Rf *
+> 	git reset --hard # ie. totally clean tree.
+# Those two should be no-ops after following the above.
+>         git merge stage/dev300
+Is that stage/ooo/dev300?
+> 
+> 	I get this output from the merge:
 
-Why do you think that if we use larger modules these things would get
-harder?
+I get thousands of conflicts. Have the branches moved since your post?
+It may be better to give us sha1 or stable tags.
 
-There's already applications on the CPAN which can do "fat
-packing". I.e. you could use Plack, Catalyst, Template and whatever
-else but run some make target to pack gitweb and all its dependencies
-into a single file.
+Are you doing any builds before merging?
 
-Obviously it would be really big, and probably slow unless you ran it
-as a fastcgi script. But that would be a tradeoff for making the
-source easier to maintain.
+> PS. of course, perhaps this is 'just me' - for space / time /
+> simplicty / certainty reasons, I do a lot of "cp -lR foo/.git baa/" to
+> duplicate trees - but AFAIK all git operations are atomic and use
+> renames rather than in-place re-writing: right ?
 
-But packing things like these is not a technical challange at all, and
-probably way easier than reinventing the wheel each time you need some
-small thing that's not in core, but is in a popular & well tested CPAN
-module.
+Ouch. See Brian's post :)
+
+Michael
