@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v4 49/73] gettextize: git-reset "Unstaged changes after reset" message
-Date: Tue, 22 Feb 2011 23:42:08 +0000
-Message-ID: <1298418152-27789-50-git-send-email-avarab@gmail.com>
+Subject: [PATCH v4 47/73] gettextize: git-reset basic messages
+Date: Tue, 22 Feb 2011 23:42:06 +0000
+Message-ID: <1298418152-27789-48-git-send-email-avarab@gmail.com>
 References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,45 +12,45 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 23 00:44:46 2011
+X-From: git-owner@vger.kernel.org Wed Feb 23 00:44:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ps1uK-0008HI-UA
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:44:41 +0100
+	id 1Ps1uM-0008HI-JL
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:44:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755558Ab1BVXo2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:44:28 -0500
-Received: from mail-bw0-f51.google.com ([209.85.214.51]:39375 "EHLO
+	id S1755573Ab1BVXoc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:44:32 -0500
+Received: from mail-bw0-f51.google.com ([209.85.214.51]:39209 "EHLO
 	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755544Ab1BVXoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 18:44:22 -0500
-Received: by mail-bw0-f51.google.com with SMTP id 10so3866600bwz.10
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:21 -0800 (PST)
+	with ESMTP id S1755360Ab1BVXoU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 18:44:20 -0500
+Received: by mail-bw0-f51.google.com with SMTP id 10so3866615bwz.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=GX53SZBixH5TmKAJYNesoyTmzNiBO8oNmzFeO151OaE=;
-        b=l58HIldhhTAAr9+UATIf7/tNve0goeuKIOBlfZQiWQigRz7CVD1UiJxxYDKr8v1dbq
-         7cVRbGyhPMTW92MxnbfMoyo/AlS+u+SpbBzn8GG42o8H5wOADKxa+BgXCTbawOsGpYnd
-         9sFavQEzZaCDdMBiLuEmgAJzfhksIqT2bhIrY=
+        bh=FTAsLBi2xziLIgWSy/e1IUGMe2aIdI+7YKOiuXcqPJQ=;
+        b=GQujsuCFIYhCp9eAikKZpZSfmpInFyiheaiIT+oyeN6VPR0rbEoU8tqLBc31oXXDv8
+         4k7CGUYF9KaXDecLfkwgMobSlybvpf+ecn9QoRp5ImDzBiL/F4bib7gGs0g1ErZr5p57
+         Zs1Hxq2cTZQIDMW2NrkInzMfZPoHb/gWpfj7c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=km7fwvwQ9/2vO3n7kO1SN6uOEEhuCRr5jku5FIxW+O+p6Q7Bw6FBsyQUMdmo4PqYFz
-         cLc459ZX9bH49Fjvxom0i8bJYri5el4PBSvhDVT2HivhxAx++pnvGjcW5yiAQfnnJCwf
-         XRJ7cOAcwRBGreve47Yn09PEAnfNSdA//eazI=
-Received: by 10.204.123.7 with SMTP id n7mr3064407bkr.33.1298418261347;
-        Tue, 22 Feb 2011 15:44:21 -0800 (PST)
+        b=lwGzMO64VMvaiKrYwcPKgg/JqxH+0N7URcWYJLOUKUZ5L2KWzSxiC+EOIZxnDjPplD
+         QonGfdbWiS3nli3cmkp3EOnwKp0Y6DHw5BYuIWnc2KSo+uqcVLQHDC2x5uWb8EDkOUNL
+         lxRu1CVAudGabhv2lRHSsBUZA5eRtMG2FYrDg=
+Received: by 10.204.62.132 with SMTP id x4mr3080874bkh.30.1298418259520;
+        Tue, 22 Feb 2011 15:44:19 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.20
+        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.18
         (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 15:44:20 -0800 (PST)
+        Tue, 22 Feb 2011 15:44:19 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
@@ -59,45 +59,126 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167608>
-
-Gettextize the ""Unstaged changes after reset:" message. A test in
-t7102-reset.sh explicitly checked for this message. Change it to skip
-under GETTEXT_POISON=3DYesPlease.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167609>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/reset.c  |    2 +-
- t/t7102-reset.sh |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/reset.c |   26 +++++++++++++-------------
+ 1 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/reset.c b/builtin/reset.c
-index 1465174..1fe5b0f 100644
+index 5de2bce..0823955 100644
 --- a/builtin/reset.c
 +++ b/builtin/reset.c
-@@ -142,7 +142,7 @@ static int update_index_refresh(int fd, struct lock=
+@@ -92,20 +92,20 @@ static int reset_index_file(const unsigned char *sh=
+a1, int reset_type, int quiet
+ 	if (reset_type =3D=3D KEEP) {
+ 		unsigned char head_sha1[20];
+ 		if (get_sha1("HEAD", head_sha1))
+-			return error("You do not have a valid HEAD.");
++			return error(_("You do not have a valid HEAD."));
+ 		if (!fill_tree_descriptor(desc, head_sha1))
+-			return error("Failed to find tree of HEAD.");
++			return error(_("Failed to find tree of HEAD."));
+ 		nr++;
+ 		opts.fn =3D twoway_merge;
+ 	}
+=20
+ 	if (!fill_tree_descriptor(desc + nr - 1, sha1))
+-		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
++		return error(_("Failed to find tree of %s."), sha1_to_hex(sha1));
+ 	if (unpack_trees(nr, desc, &opts))
+ 		return -1;
+ 	if (write_cache(newfd, active_cache, active_nr) ||
+ 	    commit_locked_index(lock))
+-		return error("Could not write new index file.");
++		return error(_("Could not write new index file."));
+=20
+ 	return 0;
+ }
+@@ -115,7 +115,7 @@ static void print_new_head_line(struct commit *comm=
+it)
+ 	const char *hex, *body;
+=20
+ 	hex =3D find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
+-	printf("HEAD is now at %s", hex);
++	printf(_("HEAD is now at %s"), hex);
+ 	body =3D strstr(commit->buffer, "\n\n");
+ 	if (body) {
+ 		const char *eol;
+@@ -139,7 +139,7 @@ static int update_index_refresh(int fd, struct lock=
 _file *index_lock, int flags)
- 		return error(_("Could not read index"));
+ 	}
+=20
+ 	if (read_cache() < 0)
+-		return error("Could not read index");
++		return error(_("Could not read index"));
 =20
  	result =3D refresh_index(&the_index, (flags), NULL, NULL,
--			       "Unstaged changes after reset:") ? 1 : 0;
-+			       _("Unstaged changes after reset:")) ? 1 : 0;
- 	if (write_cache(fd, active_cache, active_nr) ||
- 			commit_locked_index(index_lock))
- 		return error ("Could not refresh index");
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index b8cf260..7be2ff3 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -423,7 +423,7 @@ Unstaged changes after reset:
- M	file2
- EOF
+ 			       "Unstaged changes after reset:") ? 1 : 0;
+@@ -167,7 +167,7 @@ static void update_index_from_diff(struct diff_queu=
+e_struct *q,
+ 			ce =3D make_cache_entry(one->mode, one->sha1, one->path,
+ 				0, 0);
+ 			if (!ce)
+-				die("make_cache_entry failed for path '%s'",
++				die(_("make_cache_entry failed for path '%s'"),
+ 				    one->path);
+ 			add_cache_entry(ce, ADD_CACHE_OK_TO_ADD |
+ 				ADD_CACHE_OK_TO_REPLACE);
+@@ -222,7 +222,7 @@ static void prepend_reflog_action(const char *actio=
+n, char *buf, size_t size)
+ 	if (!rla)
+ 		rla =3D sep =3D "";
+ 	if (snprintf(buf, size, "%s%s%s", rla, sep, action) >=3D size)
+-		warning("Reflog action message too long: %.*s...", 50, buf);
++		warning(_("Reflog action message too long: %.*s..."), 50, buf);
+ }
 =20
--test_expect_success '--mixed refreshes the index' '
-+test_expect_success C_LOCALE_OUTPUT '--mixed refreshes the index' '
- 	echo 123 >> file2 &&
- 	git reset --mixed HEAD > output &&
- 	test_cmp expect output
+ static void die_if_unmerged_cache(int reset_type)
+@@ -300,16 +300,16 @@ int cmd_reset(int argc, const char **argv, const =
+char *prefix)
+ 	}
+=20
+ 	if (get_sha1(rev, sha1))
+-		die("Failed to resolve '%s' as a valid ref.", rev);
++		die(_("Failed to resolve '%s' as a valid ref."), rev);
+=20
+ 	commit =3D lookup_commit_reference(sha1);
+ 	if (!commit)
+-		die("Could not parse object '%s'.", rev);
++		die(_("Could not parse object '%s'."), rev);
+ 	hashcpy(sha1, commit->object.sha1);
+=20
+ 	if (patch_mode) {
+ 		if (reset_type !=3D NONE)
+-			die("--patch is incompatible with --{hard,mixed,soft}");
++			die(_("--patch is incompatible with --{hard,mixed,soft}"));
+ 		return interactive_reset(rev, argv + i, prefix);
+ 	}
+=20
+@@ -318,7 +318,7 @@ int cmd_reset(int argc, const char **argv, const ch=
+ar *prefix)
+ 	 * affecting the working tree nor HEAD. */
+ 	if (i < argc) {
+ 		if (reset_type =3D=3D MIXED)
+-			warning("--mixed with paths is deprecated; use 'git reset -- <paths=
+>' instead.");
++			warning(_("--mixed with paths is deprecated; use 'git reset -- <pat=
+hs>' instead."));
+ 		else if (reset_type !=3D NONE)
+ 			die("Cannot do %s reset with paths.",
+ 					reset_type_names[reset_type]);
+@@ -348,7 +348,7 @@ int cmd_reset(int argc, const char **argv, const ch=
+ar *prefix)
+ 		if (reset_type =3D=3D KEEP)
+ 			err =3D err || reset_index_file(sha1, MIXED, quiet);
+ 		if (err)
+-			die("Could not reset index file to revision '%s'.", rev);
++			die(_("Could not reset index file to revision '%s'."), rev);
+ 	}
+=20
+ 	/* Any resets update HEAD to the head being switched to,
 --=20
 1.7.2.3
