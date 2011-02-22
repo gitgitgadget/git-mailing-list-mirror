@@ -1,93 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 1/2] revlist.c: introduce --left/right-only for
- unsymmetric picking
-Date: Mon, 21 Feb 2011 16:48:43 -0800
-Message-ID: <7vvd0cgahg.fsf@alter.siamese.dyndns.org>
-References: <4D625972.4090500@drmicha.warpmail.net>
- <a3224c4269b26c366bb5b5df691f22f17b767f83.1298304396.git.git@drmicha.warpmail.net>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [1.8.0] Recursively checkout, merge and reset populated submodules
+Date: Tue, 22 Feb 2011 09:51:42 +0900
+Message-ID: <87ei70riw1.fsf@catnip.gol.com>
+References: <7vwrky5f48.fsf@alter.siamese.dyndns.org>
+	<4D5FF6E7.8090104@web.de> <4D628F21.3050808@xiplink.com>
+	<4D62AF46.8030508@web.de> <4D62C385.90204@xiplink.com>
+	<4D62ED38.7070408@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 22 01:49:08 2011
+Content-Type: text/plain
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Feb 22 01:51:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrgRA-00061D-4F
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 01:49:08 +0100
+	id 1PrgTt-0006zS-GJ
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 01:51:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442Ab1BVAsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 19:48:53 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50386 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751881Ab1BVAsw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 19:48:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 514E047B6;
-	Mon, 21 Feb 2011 19:50:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Hj+smWbf6iSDovGwCFdwqSkihgo=; b=TDBzfV
-	4DOQFCEW01zKGPL62F0ijgA97BVWM7868Dc78sWzcX0ayWDbtNQ/0+PghCq3NeVm
-	MrfFJg9DFR6lZ/VK15DklE4Upx5oqQ+QCF0tOyyYd3Ya6Ol8PzqH1vb0NJaZRrnS
-	P33N8VsgMKmITnQCjkThmZeaAMC38pQAoIlXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Eb2gjS1qCkwIHUvcSzkz5KbPOlY5LMXN
-	V1Fr4rO+tGiD8+xsysnx9iMGj2Dye+b6EgaWEEu4D6frsq1QVfgMkRs1w4ibMBo7
-	YdofsGHQ2FsDJrZy2HOsB0k3bk67ANDwoEeJ6rFEKGviUXwDmqW+mkjhZ/DnwtRX
-	FNntweZ31ME=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 16C1F47B3;
-	Mon, 21 Feb 2011 19:49:59 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1B82B47B2; Mon, 21 Feb 2011
- 19:49:55 -0500 (EST)
-In-Reply-To: <a3224c4269b26c366bb5b5df691f22f17b767f83.1298304396.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Mon\, 21 Feb 2011 17\:09\:11 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AC8462F2-3E1D-11E0-AC89-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752656Ab1BVAvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Feb 2011 19:51:53 -0500
+Received: from smtp12.dentaku.gol.com ([203.216.5.74]:44755 "EHLO
+	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751920Ab1BVAvw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Feb 2011 19:51:52 -0500
+Received: from 218.231.234.87.eo.eaccess.ne.jp ([218.231.234.87] helo=catnip.gol.com)
+	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
+	(envelope-from <miles@gnu.org>)
+	id 1PrgTf-0007hO-8r; Tue, 22 Feb 2011 09:51:43 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id 95E3EDFA0; Tue, 22 Feb 2011 09:51:42 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+In-Reply-To: <4D62ED38.7070408@web.de> (Jens Lehmann's message of "Mon, 21 Feb
+	2011 23:54:48 +0100")
+X-Virus-Scanned: ClamAV GOL (outbound)
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167520>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
+>> So, .gitmodules initially controls recursion.  When a submodule gets
+>> populated, it gets an entry in .git/config which then determines the
+>> recursion behavior from then on.  Changing branches might change .gitmodules,
+>> but anything in .git/config will persist so any customizations the user makes
+>> will also persist.
+>
+> Yes. Upstream can give sane defaults but the user has the last word.
 
-> The existing "--cherry-pick" does not work with unsymmetric ranges
-> (A..B) for obvious reasons.
+If .git/config entries are created _automatically_ based on the initial
+.gitmodules, doesn't that means it will cease to respect the upstream
+defaults in the case where .gitmodules changes, even if the user didn't
+actually change anything himself...?
 
-The implementation of this round looks a lot simpler and cleaner.  We
-might want to make sure that l/r only are mutually exclusive at the
-command parser, though.
+-Miles
 
-diff --git a/revision.c b/revision.c
-index 0681c7c..02aa788 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1906,6 +1906,9 @@ int prepare_revision_walk(struct rev_info *revs)
- 	int nr = revs->pending.nr;
- 	struct object_array_entry *e, *list;
- 
-+	if (revs->left_only && revs->right_only)
-+		die("left-only and right-only are mutually exclusive");
-+
- 	e = list = revs->pending.objects;
- 	revs->pending.nr = 0;
- 	revs->pending.alloc = 0;
-
-
-Also, I wonder if we want to enhance cherry_pick_list() a bit to give it
-an option to show only the commits that have equivalent commits on the
-other side (i.e. "the ones that I can now discard"); it obviously is a
-separate topic.
-
->     It could be followed up by introducing --cherry as equivalent to
->     --cherry-pick --right-only --no-merges.
-
-Yeah, I think that is a good idea.
-
-Thanks.
+-- 
+`The suburb is an obsolete and contradictory form of human settlement'
