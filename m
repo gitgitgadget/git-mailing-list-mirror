@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v4 71/73] gettextize: git-revert literal "me" messages
-Date: Tue, 22 Feb 2011 23:42:30 +0000
-Message-ID: <1298418152-27789-72-git-send-email-avarab@gmail.com>
+Subject: [PATCH v4 73/73] gettextize: git-shortlog basic messages
+Date: Tue, 22 Feb 2011 23:42:32 +0000
+Message-ID: <1298418152-27789-74-git-send-email-avarab@gmail.com>
 References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,45 +12,45 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 23 00:45:39 2011
+X-From: git-owner@vger.kernel.org Wed Feb 23 00:45:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ps1vH-0000K1-7V
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:45:39 +0100
+	id 1Ps1vI-0000K1-Ew
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:45:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755631Ab1BVXov convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:44:51 -0500
-Received: from mail-bw0-f51.google.com ([209.85.214.51]:51284 "EHLO
+	id S1755643Ab1BVXoy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:44:54 -0500
+Received: from mail-bw0-f51.google.com ([209.85.214.51]:39209 "EHLO
 	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755624Ab1BVXot (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 18:44:49 -0500
-Received: by mail-bw0-f51.google.com with SMTP id 10so3867040bwz.10
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:48 -0800 (PST)
+	with ESMTP id S1755624Ab1BVXow (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 18:44:52 -0500
+Received: by mail-bw0-f51.google.com with SMTP id 10so3866615bwz.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=BWVewWnQJgp1yNayP49tNWl0vcmgoqQVm57ZwYQKNII=;
-        b=SL2x9oDwAyGSyuQqfvFRkoqYLsp8fpZ04xBs0B1aMUt1/6G87kDW6XouE2iseb0pmm
-         B3seasctoBX4Rs1ejTm9usuojEb3SI7o7KGASgnqiq2CxAoWSLhkRM1pqVyPiaiL/8VP
-         oUgZvCJeLjts1hlELvXZ/9m4Qeit16VPwlC2Y=
+        bh=W1LkcN7g4vHrn8EFRbf/2tC+H2QaZCpMCCG5z2RuvLU=;
+        b=TWBs6G6dD/TX5dxo/2x0smMazbcpHArMDFCkwaci3G4mX3Sfhb32omxjmRE9V8crU5
+         02yTYgxIe52YL5rctgivXns9gKJFNmsUp8bja4pFJ5NUmn74RE2hzVxSyBvJvSVoQcHI
+         b7DH6/DEOrQiy9fRGTR7SKnjqyn80Tv8MGVqs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=xQH/iA4YEJtIWECAWne2jxAoUm3tvJMaaT86WsR0rZFKeWA9Pom2zG1rCjx5n2DbqA
-         OUQJUqwx2zy29iB0mpDWTnqu5UBhiDcGSDABndkU6BTpe+ipl6/GYKvMcHdmamNDcbZk
-         fIDS1MUJctQ2vEEyNgag8IUyYi7++k5eHTumE=
-Received: by 10.204.57.18 with SMTP id a18mr3056612bkh.64.1298418288696;
-        Tue, 22 Feb 2011 15:44:48 -0800 (PST)
+        b=o64lkIjxPG69+9zMBv/uzmUnRgIbmn+EsAk/jhJUXygCdjSEu4Ysw+x83YyB8+z4st
+         c2I5JaBCIw8/EscrP8bUyi6+OpHEQ2tWLDXS6lTPoG5f0bQAifcGDlf/rngkHIhjH3B5
+         IiKQ2LAAUTLMU/6nacQHlS+6YLKL5zAyrPiAM=
+Received: by 10.204.31.69 with SMTP id x5mr423385bkc.66.1298418290806;
+        Tue, 22 Feb 2011 15:44:50 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.47
+        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.50
         (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 15:44:48 -0800 (PST)
+        Tue, 22 Feb 2011 15:44:50 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
@@ -59,44 +59,55 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167617>
 
-Translate messages that use the `me' variable. These are all error
-messages referencing the command name, so the name shouldn't be
-translated.
-
-Reported-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/revert.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+ builtin/shortlog.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 02c23c9..b0a5ffb 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -362,7 +362,8 @@ static int do_recursive_merge(struct commit *base, =
-struct commit *next,
- 	if (active_cache_changed &&
- 	    (write_cache(index_fd, active_cache, active_nr) ||
- 	     commit_locked_index(&index_lock)))
--		die("%s: Unable to write new index file", me);
-+		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
-+		die(_("%s: Unable to write new index file"), me);
- 	rollback_lock_file(&index_lock);
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 1a21e4b..f5efc67 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -158,7 +158,7 @@ void shortlog_add_commit(struct shortlog *log, stru=
+ct commit *commit)
+ 		buffer =3D eol;
+ 	}
+ 	if (!author)
+-		die("Missing author: %s",
++		die(_("Missing author: %s"),
+ 		    sha1_to_hex(commit->object.sha1));
+ 	if (log->user_format) {
+ 		struct pretty_print_context ctx =3D {0};
+@@ -181,7 +181,7 @@ static void get_from_rev(struct rev_info *rev, stru=
+ct shortlog *log)
+ 	struct commit *commit;
 =20
- 	if (!clean) {
-@@ -469,7 +470,9 @@ static int do_pick_commit(void)
- 		return fast_forward_to(commit->object.sha1, head);
+ 	if (prepare_revision_walk(rev))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+ 	while ((commit =3D get_revision(rev)) !=3D NULL)
+ 		shortlog_add_commit(log, commit);
+ }
+@@ -284,7 +284,7 @@ parse_done:
+ 	argc =3D parse_options_end(&ctx);
 =20
- 	if (parent && parse_commit(parent) < 0)
--		die("%s: cannot parse parent commit %s",
-+		/* TRANSLATORS: The first %s will be "revert" or
-+		   "cherry-pick", the second %s a SHA1 */
-+		die(_("%s: cannot parse parent commit %s"),
- 		    me, sha1_to_hex(parent->object.sha1));
+ 	if (setup_revisions(argc, argv, &rev, NULL) !=3D 1) {
+-		error("unrecognized argument: %s", argv[1]);
++		error(_("unrecognized argument: %s"), argv[1]);
+ 		usage_with_options(shortlog_usage, options);
+ 	}
 =20
- 	if (get_message(commit->buffer, &msg) !=3D 0)
+@@ -296,7 +296,7 @@ parse_done:
+ 		add_head_to_pending(&rev);
+ 	if (rev.pending.nr =3D=3D 0) {
+ 		if (isatty(0))
+-			fprintf(stderr, "(reading log message from standard input)\n");
++			fprintf(stderr, _("(reading log message from standard input)\n"));
+ 		read_from_stdin(&log);
+ 	}
+ 	else
 --=20
 1.7.2.3
