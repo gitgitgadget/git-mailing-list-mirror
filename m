@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v4 53/73] gettextize: git-push "prevent you from losing" message
-Date: Tue, 22 Feb 2011 23:42:12 +0000
-Message-ID: <1298418152-27789-54-git-send-email-avarab@gmail.com>
+Subject: [PATCH v4 34/73] gettextize: git-fetch update_local_ref messages
+Date: Tue, 22 Feb 2011 23:41:53 +0000
+Message-ID: <1298418152-27789-35-git-send-email-avarab@gmail.com>
 References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -18,39 +18,39 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ps1w6-0000rs-29
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:46:30 +0100
+	id 1Ps1w8-0000rs-D1
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:46:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713Ab1BVXpy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:45:54 -0500
-Received: from mail-bw0-f51.google.com ([209.85.214.51]:33701 "EHLO
+	id S1755251Ab1BVXq1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:46:27 -0500
+Received: from mail-bw0-f51.google.com ([209.85.214.51]:39375 "EHLO
 	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755550Ab1BVXoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 18:44:25 -0500
-Received: by mail-bw0-f51.google.com with SMTP id 10so3866742bwz.10
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:25 -0800 (PST)
+	with ESMTP id S1755276Ab1BVXoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 18:44:06 -0500
+Received: by mail-bw0-f51.google.com with SMTP id 10so3866600bwz.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=pdS+JpsCxH4PWs2fCWjPpb7VgSR7md5AIuvsc7lorhg=;
-        b=HZ6ojXHrxOLLwTP+5+NCWW7+Yium7PxfdkwlFfwCuluzed3vGduF9MIo5XEBZ8Rj36
-         U4GGH4Vu7Ar0YbxY2wgm4CWrzQYNX6GBW9MVrRA/4TjPlvqxn6cspU3HgiXnsmQ3J6lz
-         03HI5EHn7GlXx6aELFm0zxLs55EBnmgkmXZmU=
+        bh=j6SU6QZS+0fMEzOh7DVKUspJyI2ydjaiTMnmExVdEM8=;
+        b=ARrmD1d1ziAn7wQXml0dfUbuiL76tnNZzjpOQp3Nr02RGY+pVIJJEqaI9rtHEaJu8Z
+         Zs7UTQZ/yJ2Cw9cU1sTn9fnglpCuKxMG+2KwtrW9jpOdXAP7rcBTLJm3WZ9SOR/oTQWf
+         X19JX57F+cTf1PtGCBP5S9ca20vhndhDw/fsM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=SF80OhXW6RlxGl3auHj/BS5sjUZV/8k/Qryi2HPyPRZ/CHzPs0l9pSEyGo4oMH3uqL
-         knOMLPaJBOmub7soMGhoseaAzqq1BAUdTQ0U8o571SnzoBna+T1qJnIdLM0fW8BsHUuC
-         2NBsHylGFfcl3zm6qjWmExnk0647fG5pFkYXs=
-Received: by 10.204.121.138 with SMTP id h10mr388759bkr.40.1298418265031;
-        Tue, 22 Feb 2011 15:44:25 -0800 (PST)
+        b=UvtQInajw4QTvV5C0ID3cMMBokHPCGgqmC7B6Esk8xCKCmwJGSmfi+SAbYfLZZ5D7n
+         zsrg2lDrjh5PqFn1xP9Jx+SsB4V7OluATvbRsP+Labz8BolGFh+Vl9XjfLrgmQiL9qxV
+         GvR59Hka66h+6x5VxRRhV90H1C8Xwk16zTato=
+Received: by 10.204.117.10 with SMTP id o10mr3060078bkq.10.1298418245128;
+        Tue, 22 Feb 2011 15:44:05 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.24
+        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.04
         (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 15:44:24 -0800 (PST)
+        Tue, 22 Feb 2011 15:44:04 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
@@ -59,86 +59,60 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167632>
 
-Gettextize the "To prevent you from losing history" message. A test in
-lib-httpd.sh and another in t5541-http-push.sh explicitly checked for
-this message. Change them to skip under GETTEXT_POISON=3DYesPlease.
+Translate a "[rejected]" message spotted by Jeff King, and other
+things in update_local_ref along with it.
 
+Reported-by: Jeff King <peff@peff.net>
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/push.c       |    4 ++--
- t/lib-httpd.sh       |    2 +-
- t/t5541-http-push.sh |    7 +++++--
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ builtin/fetch.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 513bc57..8c8d8c7 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -129,9 +129,9 @@ static int push_with_options(struct transport *tran=
-sport, int flags)
- 		return 0;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 0a73dff..4f622fd 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -279,17 +279,17 @@ static int update_local_ref(struct ref *ref,
+ 		int r;
+ 		if (!strncmp(ref->name, "refs/tags/", 10)) {
+ 			msg =3D "storing tag";
+-			what =3D "[new tag]";
++			what =3D _("[new tag]");
+ 		}
+ 		else {
+ 			msg =3D "storing head";
+-			what =3D "[new branch]";
++			what =3D _("[new branch]");
+ 		}
 =20
- 	if (nonfastforward && advice_push_nonfastforward) {
--		fprintf(stderr, "To prevent you from losing history, non-fast-forwar=
-d updates were rejected\n"
-+		fprintf(stderr, _("To prevent you from losing history, non-fast-forw=
-ard updates were rejected\n"
- 				"Merge the remote changes (e.g. 'git pull') before pushing again. =
- See the\n"
--				"'Note about fast-forwards' section of 'git push --help' for detai=
-ls.\n");
-+				"'Note about fast-forwards' section of 'git push --help' for detai=
-ls.\n"));
+ 		r =3D s_update_ref(msg, ref, 0);
+ 		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : '*',
+ 			TRANSPORT_SUMMARY_WIDTH, what, REFCOL_WIDTH, remote, pretty_ref,
+-			r ? "  (unable to update local ref)" : "");
++			r ? _("  (unable to update local ref)") : "");
+ 		return r;
  	}
 =20
- 	return 1;
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 3f24384..d3829b8 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -157,7 +157,7 @@ test_http_push_nonff() {
- 		grep "^ ! \[rejected\][ ]*$BRANCH -> $BRANCH (non-fast-forward)$" ou=
-tput
- 	'
-=20
--	test_expect_success 'non-fast-forward push shows help message' '
-+	test_expect_success C_LOCALE_OUTPUT 'non-fast-forward push shows help=
- message' '
- 		grep "To prevent you from losing history, non-fast-forward updates w=
-ere rejected" \
- 			output
- 	'
-diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
-index b0c2a2c..0492877 100755
---- a/t/t5541-http-push.sh
-+++ b/t/t5541-http-push.sh
-@@ -128,11 +128,14 @@ test_expect_success 'push fails for non-fast-forw=
-ard refs unmatched by remote he
-=20
- 	# push master too; this ensures there is at least one '"'push'"' comm=
-and to
- 	# the remote helper and triggers interaction with the helper.
--	test_must_fail git push -v origin +master master:retsam >output 2>&1 =
-&&
-+	test_must_fail git push -v origin +master master:retsam >output 2>&1'
-=20
-+test_expect_success 'push fails for non-fast-forward refs unmatched by=
- remote helper: remote output' '
- 	grep "^ + [a-f0-9]*\.\.\.[a-f0-9]* *master -> master (forced update)$=
-" output &&
--	grep "^ ! \[rejected\] *master -> retsam (non-fast-forward)$" output =
-&&
-+	grep "^ ! \[rejected\] *master -> retsam (non-fast-forward)$" output
-+'
-=20
-+test_expect_success C_LOCALE_OUTPUT 'push fails for non-fast-forward r=
-efs unmatched by remote helper: our output' '
- 	grep "To prevent you from losing history, non-fast-forward updates we=
-re rejected" \
- 		output
- '
+@@ -302,7 +302,7 @@ static int update_local_ref(struct ref *ref,
+ 		r =3D s_update_ref("fast-forward", ref, 1);
+ 		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : ' ',
+ 			TRANSPORT_SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
+-			pretty_ref, r ? "  (unable to update local ref)" : "");
++			pretty_ref, r ? _("  (unable to update local ref)") : "");
+ 		return r;
+ 	} else if (force || ref->force) {
+ 		char quickref[84];
+@@ -314,7 +314,7 @@ static int update_local_ref(struct ref *ref,
+ 		sprintf(display, "%c %-*s %-*s -> %s  (%s)", r ? '!' : '+',
+ 			TRANSPORT_SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
+ 			pretty_ref,
+-			r ? "unable to update local ref" : "forced update");
++			r ? _("unable to update local ref") : _("forced update"));
+ 		return r;
+ 	} else {
+ 		sprintf(display, "! %-*s %-*s -> %s  (non-fast-forward)",
 --=20
 1.7.2.3
