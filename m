@@ -1,69 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] diff: don't retrieve binary blobs for diffstat
-Date: Tue, 22 Feb 2011 11:00:20 -0800
-Message-ID: <7voc63dhdn.fsf@alter.siamese.dyndns.org>
-References: <20110219080307.GA18039@sigill.intra.peff.net>
- <20110219081631.GB18056@sigill.intra.peff.net>
- <7v62sdhsjy.fsf@alter.siamese.dyndns.org>
- <20110222153729.GA27178@sigill.intra.peff.net>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
+Subject: Re: an error when using 'git send-email'
+Date: Tue, 22 Feb 2011 19:48:45 +0100
+Message-ID: <20110222184845.GA17440@jpl.local>
+References: <AANLkTiktO_f9+g4+wSS989a=pFZBgWGcORd_kg4pji-x@mail.gmail.com>
+ <20110220164427.GA1439@jpl.local>
+ <AANLkTinssKFSqjk5ZCqzjZQWU_vFMDewY+3FSfR+_xMb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 22 20:00:41 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Yongqiang Yang <xiaoqiangnk@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 20:11:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrxTU-0007pN-KF
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 20:00:40 +0100
+	id 1Prxe7-0005Nx-K8
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 20:11:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753212Ab1BVTAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 14:00:36 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50629 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085Ab1BVTAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 14:00:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 748314F60;
-	Tue, 22 Feb 2011 14:01:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zrsMr+GJHk2L8dKiOVUO3Vu28LY=; b=lcyCo0
-	m500OoTSdc7EQKX2l9igpbfg4Sbm83hIzWahtYAQKIkW+vJbl1s66p9GQ/Sf/Hr2
-	Et+boDegWr54r7Nn2KJCLiindTB6BJuXobQpdY0WaqYf3scIH48ZNxQNkjlTEqna
-	A84ZYEDSt1bIJfG0rZMq1D4ULP73hIHgEs4Ig=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RN1CU1qlY/8gCQy1YO7m/7H2up53C/pK
-	MwLgmbIkF5/ojSwbLe2BKQpbwMl0Wd7TPvYMnJ0lV3W9ji7g+MGlQwKqIBfA1FRH
-	bECEPWHrpkyJ6yNlqNXPN7Y6eXnbpb5prjMD1vfRMHx/1v70DiZoaW/QadZRgdo0
-	j6oRmQrZ64w=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3411B4F5F;
-	Tue, 22 Feb 2011 14:01:41 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5DFDC4F55; Tue, 22 Feb 2011
- 14:01:33 -0500 (EST)
-In-Reply-To: <20110222153729.GA27178@sigill.intra.peff.net> (Jeff King's
- message of "Tue\, 22 Feb 2011 10\:37\:29 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2ED288E0-3EB6-11E0-A2A7-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752102Ab1BVTLd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 14:11:33 -0500
+Received: from smtprelay-b11.telenor.se ([62.127.194.20]:58535 "EHLO
+	smtprelay-b11.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751863Ab1BVTLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 14:11:33 -0500
+X-Greylist: delayed 1364 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Feb 2011 14:11:32 EST
+Received: from ipb4.telenor.se (ipb4.telenor.se [195.54.127.167])
+	by smtprelay-b11.telenor.se (Postfix) with ESMTP id 53797EBC49
+	for <git@vger.kernel.org>; Tue, 22 Feb 2011 19:48:47 +0100 (CET)
+X-SMTPAUTH-B2: [b627879]
+X-SENDER-IP: [83.227.167.132]
+X-LISTENER: [smtp.bredband.net]
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArMPAOqTY01T46eEPGdsb2JhbACIaY5njkoMAQEBATUvvh6DHYJBBJJe
+X-IronPort-AV: E=Sophos;i="4.62,207,1297033200"; 
+   d="scan'208";a="1716434222"
+Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
+  by ipb4.telenor.se with ESMTP; 22 Feb 2011 19:48:46 +0100
+Received: by elwood.jpl.local (Postfix, from userid 1000)
+	id D145B422AF; Tue, 22 Feb 2011 19:48:45 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinssKFSqjk5ZCqzjZQWU_vFMDewY+3FSfR+_xMb@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167574>
 
-Jeff King <peff@peff.net> writes:
+On Tuesday, February 22, 2011 at 14:30 CET,
+     Yongqiang Yang <xiaoqiangnk@gmail.com> wrote:
 
->> Nice ;-)  Do we want a test or two for 1/2 by the way?
+> On Mon, Feb 21, 2011 at 12:44 AM, Magnus B=E4ck
+> <magnus.back@sonyericsson.com> wrote:
 >
-> Yeah, it's probably a good idea. Can you squash this in,...
+> > You seem to have configured a username and password for SMTP
+> > authentication, yet the server Git connects to doesn't support
+> > authentication.
+> >
+> > Make sure the SMTP server you've configured Git to use
+> > (sendemail.smtpserver configuration variable) is the right one.
+> > If so, clear the smtpemail.smtpuser and smtpemail.smtppass
+> > variables as you obviously can't use them with the server.
+>
+> Contents in my .gitconfig file are as follows.
+> [sendemail]
+>     smtpencryption =3D tls
+>     smtpserver =3D smtp.gmail.com
+>     smtpuser =3D xxxxxxx
+>     smtpserverport =3D 587
+>=20
+> When I remove the line smtpuser.  Git said my config file is not
+> correct.
 
-Done; thanks.
+According to your previous email you're running Git 1.5.6.5. That
+version doesn't support STARTTLS in send-email, only SSL wrappermode.
+Unless Gmail supports the latter on port 465 (which I seriously doubt)
+you must either upgrade Git to 1.6.0 or later or have send-email submit
+the messages to another SMTP host that can relay the message directly t=
+o
+the final destination or is capable of STARTTLS-based SMTP and thus abl=
+e
+to connect to Gmail on your behalf. Your Git is ancient so I strongly
+suggest the upgrade approach.
+
+--=20
+Magnus B=E4ck                      Opinions are my own and do not neces=
+sarily
+SW Configuration Manager         represent the ones of my employer, etc=
+=2E
+Sony Ericsson
