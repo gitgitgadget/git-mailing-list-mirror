@@ -1,93 +1,102 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: an error when using 'git send-email'
-Date: Tue, 22 Feb 2011 19:48:45 +0100
-Message-ID: <20110222184845.GA17440@jpl.local>
-References: <AANLkTiktO_f9+g4+wSS989a=pFZBgWGcORd_kg4pji-x@mail.gmail.com>
- <20110220164427.GA1439@jpl.local>
- <AANLkTinssKFSqjk5ZCqzjZQWU_vFMDewY+3FSfR+_xMb@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/31] refactor rebase
+Date: Tue, 22 Feb 2011 11:21:42 -0800
+Message-ID: <7vd3mjdge1.fsf@alter.siamese.dyndns.org>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <7vd3mz33xb.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.1102111811300.26684@debian>
+ <alpine.DEB.2.00.1102132047500.4253@debian>
+ <alpine.DEB.2.00.1102220847500.5290@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Yongqiang Yang <xiaoqiangnk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 20:11:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 20:22:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Prxe7-0005Nx-K8
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 20:11:39 +0100
+	id 1PrxoG-0003Ck-Kh
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 20:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752102Ab1BVTLd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 14:11:33 -0500
-Received: from smtprelay-b11.telenor.se ([62.127.194.20]:58535 "EHLO
-	smtprelay-b11.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751863Ab1BVTLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 14:11:33 -0500
-X-Greylist: delayed 1364 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Feb 2011 14:11:32 EST
-Received: from ipb4.telenor.se (ipb4.telenor.se [195.54.127.167])
-	by smtprelay-b11.telenor.se (Postfix) with ESMTP id 53797EBC49
-	for <git@vger.kernel.org>; Tue, 22 Feb 2011 19:48:47 +0100 (CET)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArMPAOqTY01T46eEPGdsb2JhbACIaY5njkoMAQEBATUvvh6DHYJBBJJe
-X-IronPort-AV: E=Sophos;i="4.62,207,1297033200"; 
-   d="scan'208";a="1716434222"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb4.telenor.se with ESMTP; 22 Feb 2011 19:48:46 +0100
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id D145B422AF; Tue, 22 Feb 2011 19:48:45 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinssKFSqjk5ZCqzjZQWU_vFMDewY+3FSfR+_xMb@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755111Ab1BVTWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 14:22:03 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49780 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755026Ab1BVTWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 14:22:02 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8A43732E1;
+	Tue, 22 Feb 2011 14:23:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ed7DwSvW6Y3rvCqSuJth/pK4V/Q=; b=kwW03q
+	OvbycDmWSPxQElobxWWhfzWlCvwmkvyQUrciaASarJOYVAomaY22vP+kFOJw0xwd
+	gE8l4c9v2+2DHLg5WWVKpBDClVvAmacxBb8+BmMqqg1ZsAYdi2heYRExaD89IiLT
+	r1AxrIYxynJv1RKocYj8lqcaJZLnZxllWKQuU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JmT8RB7cMnnVmJ9zOJDFECcN4k4v2Rnt
+	wLIWCzxbL6eSPuMe9N8k1qMJEwsDS1GyBsyukJ1KlAdWTcDb/oavOBT7DE3ynQ76
+	fmzA1sKrSYulMlujqNdVLf1Y0vArJqxq2VJd++jkuI/4n8hWuj6LJ58yM6ZatU01
+	1UqNLWdhc8w=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 271B632E0;
+	Tue, 22 Feb 2011 14:23:04 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3DEE332CC; Tue, 22 Feb 2011
+ 14:22:54 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.00.1102220847500.5290@debian> (Martin von
+ Zweigbergk's message of "Tue\, 22 Feb 2011 08\:58\:09 -0500 \(EST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B846D4A-3EB9-11E0-8582-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167575>
 
-On Tuesday, February 22, 2011 at 14:30 CET,
-     Yongqiang Yang <xiaoqiangnk@gmail.com> wrote:
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-> On Mon, Feb 21, 2011 at 12:44 AM, Magnus B=E4ck
-> <magnus.back@sonyericsson.com> wrote:
+> On Sun, 13 Feb 2011, Martin von Zweigbergk wrote:
+> ...
+>> This would apply on top of mz/rebase after dropping 95135b0 (rebase:
+>> stricter check of standalone sub command, 2011-02-06). If you agree
+>> with it, I will include it in a future re-roll.
 >
-> > You seem to have configured a username and password for SMTP
-> > authentication, yet the server Git connects to doesn't support
-> > authentication.
-> >
-> > Make sure the SMTP server you've configured Git to use
-> > (sendemail.smtpserver configuration variable) is the right one.
-> > If so, clear the smtpemail.smtpuser and smtpemail.smtppass
-> > variables as you obviously can't use them with the server.
->
-> Contents in my .gitconfig file are as follows.
-> [sendemail]
->     smtpencryption =3D tls
->     smtpserver =3D smtp.gmail.com
->     smtpuser =3D xxxxxxx
->     smtpserverport =3D 587
->=20
-> When I remove the line smtpuser.  Git said my config file is not
-> correct.
+> Any opinions about this, anyone? I have one example: I was rebasing
+> some things the other day where I thought there would be no conflicts.
+> After applying a number of patches, it turned out there were
+> conflicts. I think allowing 'git rebase --continue -sours' would have
+> been useful in that case. It's rare enough that I don't care much,
+> though.
 
-According to your previous email you're running Git 1.5.6.5. That
-version doesn't support STARTTLS in send-email, only SSL wrappermode.
-Unless Gmail supports the latter on port 465 (which I seriously doubt)
-you must either upgrade Git to 1.6.0 or later or have send-email submit
-the messages to another SMTP host that can relay the message directly t=
-o
-the final destination or is capable of STARTTLS-based SMTP and thus abl=
-e
-to connect to Gmail on your behalf. Your Git is ancient so I strongly
-suggest the upgrade approach.
+Hmm, do you think applying -sours throughout to the rest of the series
+would have been a safe thing, or do you think you would rather wanted to
+see -sours applied only to that particular one?
 
---=20
-Magnus B=E4ck                      Opinions are my own and do not neces=
-sarily
-SW Configuration Manager         represent the ones of my employer, etc=
-=2E
-Sony Ericsson
+> The reason I'm asking is that I have a patch that fixes the problems
+> with the command line parsing that Johannes Sixt pointed out in
+> another mail on this thread and would like to know if I should make it
+> apply on top of this patch or not.
+
+It is a good idea to build a change you are more certain of first,
+excluding the ones you have doubts about.
+
+Besides, this part of the patch would need fixing anyway ;-)
+
+@@ -288,6 +314,7 @@ test $# -gt 2 && usage
+ 
+ if test -n "$action"
+ then
++	test -n "$resume_incompatible" && "--$action used with incompatible option"
+ 	test -z "$in_progress" && die "No rebase in progress?"
+ 	# Only interactive rebase uses detailed reflog messages
+ 	if test "$type" = interactive && test "$GIT_REFLOG_ACTION" = rebase
