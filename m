@@ -1,194 +1,91 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: How to create tags outside of refs/tags?
-Date: Tue, 22 Feb 2011 03:03:05 -0500
-Message-ID: <20110222080305.GA11177@sigill.intra.peff.net>
+Date: Tue, 22 Feb 2011 00:09:37 -0800
+Message-ID: <7vvd0cebi6.fsf@alter.siamese.dyndns.org>
 References: <AANLkTimxAhMfPsqEJVyteuTzXLr+QnhcxpJLgaE=y12_@mail.gmail.com>
  <AANLkTi=7yUh9J9S5LdpNY0SwCv008ih2LEd3KNvy46sL@mail.gmail.com>
+ <20110222080305.GA11177@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Christian Halstrick <christian.halstrick@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 09:03:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Halstrick <christian.halstrick@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 22 09:09:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrnDH-0003Y0-2f
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 09:03:15 +0100
+	id 1PrnJg-0005lz-79
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 09:09:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517Ab1BVIDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 03:03:09 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:55264 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751095Ab1BVIDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 03:03:08 -0500
-Received: (qmail 30945 invoked by uid 111); 22 Feb 2011 08:03:07 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 22 Feb 2011 08:03:07 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Feb 2011 03:03:05 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=7yUh9J9S5LdpNY0SwCv008ih2LEd3KNvy46sL@mail.gmail.com>
+	id S1751654Ab1BVIJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 03:09:49 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52692 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951Ab1BVIJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 03:09:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E3CBB2DDC;
+	Tue, 22 Feb 2011 03:10:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=EfP1bnGGu30MumNOFEIDfOAvOzs=; b=t2/kMD
+	n/DJ2eXBUC7jCOHsgcT1m6HktjtIOWRG1T/rYlzF4mgu8kgD/6jTnX2PAa4DsWWU
+	bgWqHt9xkxSwxXE36BQpe8WY9lYA8BZZf2BAcqp6EIAXWfpabdy8hd0e1rG85lwe
+	Nk9syIl8iC52r0GX56drxFkMWA2fAJv2gR9es=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dfMC1KIEXQnmdBD6ApTJIm7hyU5UC4Gu
+	ncJy+mTKoIqRH5SCy12vlR6rjLNYkzFP1NCJawa099pvB2lovohkyRT8dscckChR
+	Vh3d65idSiRzOHyZUFbie22mu82g8hfykqllXwfjcpy/yZAv41wnFLs0aTjDy/CP
+	NkGQ2QVLB7Q=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A6E712DDA;
+	Tue, 22 Feb 2011 03:10:55 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 64D4F2DD9; Tue, 22 Feb 2011
+ 03:10:51 -0500 (EST)
+In-Reply-To: <20110222080305.GA11177@sigill.intra.peff.net> (Jeff King's
+ message of "Tue\, 22 Feb 2011 03\:03\:05 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 45E118B8-3E5B-11E0-841B-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167533>
 
-On Tue, Feb 22, 2011 at 07:17:20AM +0100, Christian Halstrick wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Feb 21, 2011 at 18:21, Christian Halstrick
-> <christian.halstrick@gmail.com> wrote:
-> > I would like to create such tags to mark released states of my sources
-> > which should never be garbage collected in case no branch is pointing
-> > them anymore. On the other hand these tags should not pollute the
-> > namespace of normal tags, means: don't want a 'git tag' command to
-> > list those technical tags.
-> 
-> Is there any better way to achieve that certain commits are not
-> garbage collected than to create such tags. I love my foot and don't
-> want to "shoot if off" but I want to make sure the the
-> "release-process-machinery" in our company can be sure that certain
-> source states are never gc'ed. I can also live with creating normal
-> tags 'refs/tags/release/1.20' but would prefer a solution where 'git
-> tags' shows only developer created tags.
+> It sounds a lot saner to me to fix "git tag", then, to ignore certain
+> uninteresting bits of the tag namespace. We already do allow pattern
+> matching the tags shown, but:
+>
+>   1. It's an fnmatch, so I don't think there is a way to do a negative
+>      match like "ignore everything that matches release/*".
+>
+>   2. It can only be specified on the command-line, whereas obviously you
+>      would want this as the default for a repo when you type "git tag".
+>
+> So I think we could do something like the patch below, which allows:
+>
+>   # set up some boring and interesting tags
+>   for i in boring more-boring interesting; do
+>     for j in one two three; do
+>       git tag $i/$j
+>     done
+>   done
+>
+>   # tell git to ignore boring stuff
+>   git config tag.ignore 'boring/*'
+>   git config --add tag.ignore 'more-boring/*'
 
-It sounds a lot saner to me to fix "git tag", then, to ignore certain
-uninteresting bits of the tag namespace. We already do allow pattern
-matching the tags shown, but:
+Hmph, isn't that what "grep -v" was invented for?
 
-  1. It's an fnmatch, so I don't think there is a way to do a negative
-     match like "ignore everything that matches release/*".
-
-  2. It can only be specified on the command-line, whereas obviously you
-     would want this as the default for a repo when you type "git tag".
-
-So I think we could do something like the patch below, which allows:
-
-  # set up some boring and interesting tags
-  for i in boring more-boring interesting; do
-    for j in one two three; do
-      git tag $i/$j
-    done
-  done
-
-  # tell git to ignore boring stuff
-  git config tag.ignore 'boring/*'
-  git config --add tag.ignore 'more-boring/*'
-
-  # only interesting tags are shown
-  git tag
-
-  # only interesting tags are checked for --contains
-  git tag --contains HEAD
-
-  # all tags are shown
-  git tag --no-ignore
-
-One alternative would be to allow specifying a default pattern in the
-config, and then some way of marking it as a regex instead of fnmatch.
-Then you could (in theory) construct a regex that negatively matches
-your boring refs. Although without perl-compatibile negative look-ahead,
-such regexes can get pretty hard to write.
-
-Anyway, here's what the patch looks like. Obviously missing docs and
-tests.
-
----
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 46f7138..629dfa3 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -12,6 +12,7 @@
- #include "tag.h"
- #include "run-command.h"
- #include "parse-options.h"
-+#include "string-list.h"
- 
- static const char * const git_tag_usage[] = {
- 	"git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<head>]",
-@@ -27,8 +28,11 @@ struct tag_filter {
- 	const char *pattern;
- 	int lines;
- 	struct commit_list *with_commit;
-+	const struct string_list *ignore;
- };
- 
-+static struct string_list ignore_tags = STRING_LIST_INIT_DUP;
-+
- static int show_reference(const char *refname, const unsigned char *sha1,
- 			  int flag, void *cb_data)
- {
-@@ -41,6 +45,13 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- 		char *buf, *sp, *eol;
- 		size_t len;
- 
-+		if (filter->ignore) {
-+			for (i = 0; i < filter->ignore->nr; i++)
-+				if (!fnmatch(filter->ignore->items[i].string,
-+					     refname, 0))
-+					return 0;
-+		}
-+
- 		if (filter->with_commit) {
- 			struct commit *commit;
- 
-@@ -89,7 +100,8 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- }
- 
- static int list_tags(const char *pattern, int lines,
--			struct commit_list *with_commit)
-+			struct commit_list *with_commit,
-+			const struct string_list *ignore)
- {
- 	struct tag_filter filter;
- 
-@@ -99,6 +111,7 @@ static int list_tags(const char *pattern, int lines,
- 	filter.pattern = pattern;
- 	filter.lines = lines;
- 	filter.with_commit = with_commit;
-+	filter.ignore = ignore;
- 
- 	for_each_tag_ref(show_reference, (void *) &filter);
- 
-@@ -233,6 +246,13 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "tag.ignore")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		string_list_append(&ignore_tags, value);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -365,6 +385,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	const char *msgfile = NULL, *keyid = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct commit_list *with_commit = NULL;
-+	int ignore = 1;
- 	struct option options[] = {
- 		OPT_BOOLEAN('l', NULL, &list, "list tag names"),
- 		{ OPTION_INTEGER, 'n', NULL, &lines, "n",
-@@ -391,6 +412,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			PARSE_OPT_LASTARG_DEFAULT,
- 			parse_opt_with_commit, (intptr_t)"HEAD",
- 		},
-+		OPT_BOOLEAN(0, "ignore", &ignore, "respect tag.ignore config"),
- 		OPT_END()
- 	};
- 
-@@ -415,7 +437,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_tag_usage, options);
- 	if (list)
- 		return list_tags(argv[0], lines == -1 ? 0 : lines,
--				 with_commit);
-+				 with_commit,
-+				 ignore ? &ignore_tags : NULL);
- 	if (lines != -1)
- 		die("-n option is only allowed with -l.");
- 	if (with_commit)
+Also it is unclear if the boring tags will or will not be propagated (or
+should or should not be, for that matter) to outer world when you do "git
+push --tags" with your "ignore".  Most likely some people do want to see
+them hidden (e.g. when publishing), and some others do want to be pushed
+(e.g. when backing the repository up).
