@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v4 72/73] gettextize: git-revert split up "could not revert/apply" message
-Date: Tue, 22 Feb 2011 23:42:31 +0000
-Message-ID: <1298418152-27789-73-git-send-email-avarab@gmail.com>
+Subject: [PATCH v4 69/73] gettextize: git-revert basic messages
+Date: Tue, 22 Feb 2011 23:42:28 +0000
+Message-ID: <1298418152-27789-70-git-send-email-avarab@gmail.com>
 References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,45 +12,45 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 23 00:45:45 2011
+X-From: git-owner@vger.kernel.org Wed Feb 23 00:45:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ps1vJ-0000K1-0e
+	id 1Ps1vJ-0000K1-Id
 	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 00:45:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755652Ab1BVXpB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:45:01 -0500
-Received: from mail-bw0-f51.google.com ([209.85.214.51]:52041 "EHLO
+	id S1755660Ab1BVXpI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 18:45:08 -0500
+Received: from mail-bw0-f51.google.com ([209.85.214.51]:33701 "EHLO
 	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755626Ab1BVXou (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 18:44:50 -0500
-Received: by mail-bw0-f51.google.com with SMTP id 10so3867035bwz.10
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:50 -0800 (PST)
+	with ESMTP id S1755612Ab1BVXor (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 18:44:47 -0500
+Received: by mail-bw0-f51.google.com with SMTP id 10so3866742bwz.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 15:44:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=wiLpeDzK1VqwJMvEJqRLeR25cu78fmT9Yf+LjsaXqok=;
-        b=BBkf7vcvrq2JQVXTKebkVeKXQbXcBHhvFLuTe+7g9554xptR2zfMZiMITHyCA/r6AU
-         GIgi6nqiTwxvn27NPpIlDlM8RD/kn4JsMVcDvuSNenVezykQecBhlH0ksXZA9xIuosVS
-         7lZ/39Rb8/oPlhXOYzv/rfJVlTMHEAXvi+bcM=
+        bh=WTfefPwEjsDSswBXMOdfVJJnw0vfAlaa/b4oKqkXMsM=;
+        b=FCNwTZicCQ+n1UNKt1t0GT7zCijAVv6fFYRl+1daMAoHV/C0923HVPV1WwJG3M67Eg
+         k8aCSYTxjx007/KbXA3gY03E9WVVRo/cByDjLsFmzALnAaGLl7PGnm9Vse+Od/ZGegUV
+         hWIdwoLVC+qLceLeqrh6RCVZ0uMCxLT5MhPiQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=m4KMoxkYfTd/X6n7pN93SIMNKP62GXEZQFMyHQqvwI51BigAGVK0bbiRZAHT5j+rfX
-         xZBJ7qq7u0/uLWHauX1SoDcjQcWX62rC8Nz3LcVhNgwu846YxOBBslguRS7w4OqIa70c
-         TEs4Y5IJjyndhyutEdq4T8pPO9R/3wATcSXz0=
-Received: by 10.204.116.206 with SMTP id n14mr2989644bkq.65.1298418289928;
-        Tue, 22 Feb 2011 15:44:49 -0800 (PST)
+        b=EDlo1wxOPZyUQIpxF+GrFJoO3B3ZidT6ihDlaP6VkP+v3OW5Y/dC+hw+PISW1xQt38
+         sdGLmHJsESJ27ShO3YrDrOsF4D/pnnAA+Ur3UzFks5t2XztHkRlRKIDdupDQf393aDSV
+         ZDmlRi5ASTEJUOGYkV5lwDav4Frckuz6rTTeU=
+Received: by 10.204.45.166 with SMTP id e38mr3064705bkf.61.1298418286302;
+        Tue, 22 Feb 2011 15:44:46 -0800 (PST)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.48
+        by mx.google.com with ESMTPS id z18sm4913415bkf.8.2011.02.22.15.44.44
         (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 15:44:49 -0800 (PST)
+        Tue, 22 Feb 2011 15:44:45 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
 In-Reply-To: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
@@ -59,49 +59,192 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167622>
-
-Split up the "could not %s %s... %s" message into "could not revert
-%s... %s" and "could not apply %s... %s". This makes it easier for
-translators to understand the message.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167623>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/revert.c                |    5 +++--
- t/t3507-cherry-pick-conflict.sh |    2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ builtin/revert.c |   46 +++++++++++++++++++++++-----------------------
+ 1 files changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index b0a5ffb..98dfd4d 100644
+index dc1b702..1ca08da 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -536,8 +536,9 @@ static int do_pick_commit(void)
+@@ -96,7 +96,7 @@ static void parse_args(int argc, const char **argv)
+ 			OPT_END(),
+ 		};
+ 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
+-			die("program error");
++			die(_("program error"));
  	}
 =20
- 	if (res) {
--		error("could not %s %s... %s",
--		      action =3D=3D REVERT ? "revert" : "apply",
-+		error(action =3D=3D REVERT
-+		      ? _("could not revert %s... %s")
-+		      : _("could not apply %s... %s"),
- 		      find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
- 		      msg.subject);
- 		print_advice();
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conf=
-lict.sh
-index 607bf25..f7e4072 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -38,7 +38,7 @@ test_expect_success 'failed cherry-pick does not adva=
-nce HEAD' '
- 	test "$head" =3D "$newhead"
- '
+ 	commit_argc =3D parse_options(argc, argv, NULL, options, usage_str,
+@@ -168,7 +168,7 @@ static char *get_encoding(const char *message)
+ 	const char *p =3D message, *eol;
 =20
--test_expect_success 'advice from failed cherry-pick' "
-+test_expect_success C_LOCALE_OUTPUT 'advice from failed cherry-pick' "
- 	git checkout -f initial^0 &&
- 	git read-tree -u --reset HEAD &&
- 	git clean -d -f -f -q -x &&
+ 	if (!p)
+-		die ("Could not read commit message of %s",
++		die (_("Could not read commit message of %s"),
+ 				sha1_to_hex(commit->object.sha1));
+ 	while (*p && *p !=3D '\n') {
+ 		for (eol =3D p + 1; *eol && *eol !=3D '\n'; eol++)
+@@ -202,7 +202,7 @@ static void set_author_ident_env(const char *messag=
+e)
+ {
+ 	const char *p =3D message;
+ 	if (!p)
+-		die ("Could not read commit message of %s",
++		die (_("Could not read commit message of %s"),
+ 				sha1_to_hex(commit->object.sha1));
+ 	while (*p && *p !=3D '\n') {
+ 		const char *eol;
+@@ -216,7 +216,7 @@ static void set_author_ident_env(const char *messag=
+e)
+ 			line =3D xmemdupz(p, eol - p);
+ 			email =3D strchr(line, '<');
+ 			if (!email)
+-				die ("Could not extract author email from %s",
++				die (_("Could not extract author email from %s"),
+ 					sha1_to_hex(commit->object.sha1));
+ 			if (email =3D=3D line)
+ 				pend =3D line;
+@@ -228,7 +228,7 @@ static void set_author_ident_env(const char *messag=
+e)
+ 			email++;
+ 			timestamp =3D strchr(email, '>');
+ 			if (!timestamp)
+-				die ("Could not extract author time from %s",
++				die (_("Could not extract author time from %s"),
+ 					sha1_to_hex(commit->object.sha1));
+ 			*timestamp =3D '\0';
+ 			for (timestamp++; *timestamp && isspace(*timestamp);
+@@ -244,7 +244,7 @@ static void set_author_ident_env(const char *messag=
+e)
+ 		if (*p =3D=3D '\n')
+ 			p++;
+ 	}
+-	die ("No author information found in %s",
++	die (_("No author information found in %s"),
+ 			sha1_to_hex(commit->object.sha1));
+ }
+=20
+@@ -281,10 +281,10 @@ static void write_message(struct strbuf *msgbuf, =
+const char *filename)
+ 	int msg_fd =3D hold_lock_file_for_update(&msg_file, filename,
+ 					       LOCK_DIE_ON_ERROR);
+ 	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+-		die_errno("Could not write to %s.", filename);
++		die_errno(_("Could not write to %s."), filename);
+ 	strbuf_release(msgbuf);
+ 	if (commit_lock_file(&msg_file) < 0)
+-		die("Error wrapping up %s", filename);
++		die(_("Error wrapping up %s"), filename);
+ }
+=20
+ static struct tree *empty_tree(void)
+@@ -420,10 +420,10 @@ static int do_pick_commit(void)
+ 		 * to work on.
+ 		 */
+ 		if (write_cache_as_tree(head, 0, NULL))
+-			die ("Your index file is unmerged.");
++			die (_("Your index file is unmerged."));
+ 	} else {
+ 		if (get_sha1("HEAD", head))
+-			die ("You do not have a valid HEAD");
++			die (_("You do not have a valid HEAD"));
+ 		if (index_differs_from("HEAD", 0))
+ 			die_dirty_index(me);
+ 	}
+@@ -431,7 +431,7 @@ static int do_pick_commit(void)
+=20
+ 	if (!commit->parents) {
+ 		if (action =3D=3D REVERT)
+-			die ("Cannot revert a root commit");
++			die (_("Cannot revert a root commit"));
+ 		parent =3D NULL;
+ 	}
+ 	else if (commit->parents->next) {
+@@ -440,7 +440,7 @@ static int do_pick_commit(void)
+ 		struct commit_list *p;
+=20
+ 		if (!mainline)
+-			die("Commit %s is a merge but no -m option was given.",
++			die(_("Commit %s is a merge but no -m option was given."),
+ 			    sha1_to_hex(commit->object.sha1));
+=20
+ 		for (cnt =3D 1, p =3D commit->parents;
+@@ -448,11 +448,11 @@ static int do_pick_commit(void)
+ 		     cnt++)
+ 			p =3D p->next;
+ 		if (cnt !=3D mainline || !p)
+-			die("Commit %s does not have parent %d",
++			die(_("Commit %s does not have parent %d"),
+ 			    sha1_to_hex(commit->object.sha1), mainline);
+ 		parent =3D p->item;
+ 	} else if (0 < mainline)
+-		die("Mainline was specified but commit %s is not a merge.",
++		die(_("Mainline was specified but commit %s is not a merge."),
+ 		    sha1_to_hex(commit->object.sha1));
+ 	else
+ 		parent =3D commit->parents->item;
+@@ -465,7 +465,7 @@ static int do_pick_commit(void)
+ 		    me, sha1_to_hex(parent->object.sha1));
+=20
+ 	if (get_message(commit->buffer, &msg) !=3D 0)
+-		die("Cannot get commit message for %s",
++		die(_("Cannot get commit message for %s"),
+ 				sha1_to_hex(commit->object.sha1));
+=20
+ 	/*
+@@ -556,10 +556,10 @@ static void prepare_revs(struct rev_info *revs)
+ 		usage(*revert_or_cherry_pick_usage());
+=20
+ 	if (prepare_revision_walk(revs))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+=20
+ 	if (!revs->commits)
+-		die("empty commit set passed");
++		die(_("empty commit set passed"));
+ }
+=20
+ static void read_and_refresh_cache(const char *me)
+@@ -567,12 +567,12 @@ static void read_and_refresh_cache(const char *me=
+)
+ 	static struct lock_file index_lock;
+ 	int index_fd =3D hold_locked_index(&index_lock, 0);
+ 	if (read_index_preload(&the_index, NULL) < 0)
+-		die("git %s: failed to read the index", me);
++		die(_("git %s: failed to read the index"), me);
+ 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL,=
+ NULL);
+ 	if (the_index.cache_changed) {
+ 		if (write_index(&the_index, index_fd) ||
+ 		    commit_locked_index(&index_lock))
+-			die("git %s: failed to refresh the index", me);
++			die(_("git %s: failed to refresh the index"), me);
+ 	}
+ 	rollback_lock_file(&index_lock);
+ }
+@@ -588,13 +588,13 @@ static int revert_or_cherry_pick(int argc, const =
+char **argv)
+=20
+ 	if (allow_ff) {
+ 		if (signoff)
+-			die("cherry-pick --ff cannot be used with --signoff");
++			die(_("cherry-pick --ff cannot be used with --signoff"));
+ 		if (no_commit)
+-			die("cherry-pick --ff cannot be used with --no-commit");
++			die(_("cherry-pick --ff cannot be used with --no-commit"));
+ 		if (no_replay)
+-			die("cherry-pick --ff cannot be used with -x");
++			die(_("cherry-pick --ff cannot be used with -x"));
+ 		if (edit)
+-			die("cherry-pick --ff cannot be used with --edit");
++			die(_("cherry-pick --ff cannot be used with --edit"));
+ 	}
+=20
+ 	read_and_refresh_cache(me);
 --=20
 1.7.2.3
