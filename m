@@ -1,70 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4] fast-import: add 'ls' command
-Date: Tue, 22 Feb 2011 03:12:43 -0600
-Message-ID: <20110222091243.GA20420@elie>
-References: <20110222090431.GA24337@elie>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to create tags outside of refs/tags?
+Date: Tue, 22 Feb 2011 02:09:14 -0800 (PST)
+Message-ID: <m3wrks756a.fsf@localhost.localdomain>
+References: <AANLkTimxAhMfPsqEJVyteuTzXLr+QnhcxpJLgaE=y12_@mail.gmail.com>
+	<AANLkTi=7yUh9J9S5LdpNY0SwCv008ih2LEd3KNvy46sL@mail.gmail.com>
+	<20110222080305.GA11177@sigill.intra.peff.net>
+	<7vvd0cebi6.fsf@alter.siamese.dyndns.org>
+	<20110222081458.GA11825@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sam Vilain <sam@vilain.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 22 10:13:00 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Halstrick <christian.halstrick@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 22 11:09:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ProIl-0005fc-Hh
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 10:12:59 +0100
+	id 1PrpBN-0004NS-GS
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 11:09:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752779Ab1BVJMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 04:12:54 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:55289 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752282Ab1BVJMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 04:12:52 -0500
-Received: by qyg14 with SMTP id 14so1689379qyg.19
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 01:12:52 -0800 (PST)
+	id S1753840Ab1BVKJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 05:09:19 -0500
+Received: from mail-bw0-f51.google.com ([209.85.214.51]:39517 "EHLO
+	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753798Ab1BVKJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 05:09:18 -0500
+Received: by bwz10 with SMTP id 10so3038719bwz.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 02:09:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=eK2YGWNpkKSiLAbMfZcYbEVNQU/EZZIoF8/ZPs0EhVo=;
-        b=j3YSejKuSLdzBlqhGfNWCVxZw0iuBNX5KO4B+Q3K5hLCWdqeLw18r/W1xAH+8PTDSt
-         q7WgBrtR2VowGX2twHHLMWefwm/VwM511SaKL0vN5EA9HFGCRkDLCSbtms7CJ04T70O/
-         T2CrwM9QJxjuXPbdu1eloF/ZT87FlUYWK5dYE=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=tQn2mLaG9OPrKADqkPI5GmroeG3fVqj3y3t9NiNzTZo=;
+        b=pxesTPe3lTek+chSLhjas0pRisTtsC2wVEq22y6GCdtTVc74mTGM2HBXUfic66tRMK
+         5xidY3VSP6jvNsA8L3s47tTDYcsRYFvhgSNT6oyiGi9wO6sHifd0xdQdQKG0xBuXtc0u
+         v88C0tQLXW+hjsxTZpdTYjCWxQEynZYkRSbzI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=fdFr5vzBiO6kqp8qKT/pSFFDItevsTkUc2MgE0ncZHBGJcQllQwfWkDaXI6205xqW4
-         1fkX/xU3R3bqil2jjJFXpLXasz57tNMOzDKxBia2+hTkBnNyedrZ5G9DReLFJomnFDwy
-         R99DXNTxQLil7VobTms/Nq5JwLS6BmWPs0S8I=
-Received: by 10.229.214.10 with SMTP id gy10mr1796713qcb.130.1298365971706;
-        Tue, 22 Feb 2011 01:12:51 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
-        by mx.google.com with ESMTPS id g32sm4445084qck.22.2011.02.22.01.12.49
-        (version=SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 01:12:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110222090431.GA24337@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=J75+dRIhrw8KEnU3xYZRiSX898f0AFlW3rSQ0OIhZkbDrlgGJ9zdG8MNc1kwhRq97t
+         9LQVFpU9yZlZpgILL/QXeu9Wf3oF/edXcKehfgBFNsAQ3qPD/td19B4G/EwoxSQCn4VJ
+         OB8v5duSfNOoxIwaUiTW2pp63WcGoqc7JuxME=
+Received: by 10.204.102.146 with SMTP id g18mr2318967bko.163.1298369356597;
+        Tue, 22 Feb 2011 02:09:16 -0800 (PST)
+Received: from localhost.localdomain (abwn36.neoplus.adsl.tpnet.pl [83.8.237.36])
+        by mx.google.com with ESMTPS id v25sm4376695bkt.18.2011.02.22.02.09.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 Feb 2011 02:09:14 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p1MA8Z46032192;
+	Tue, 22 Feb 2011 11:08:46 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p1MA8DFv032187;
+	Tue, 22 Feb 2011 11:08:13 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20110222081458.GA11825@sigill.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167538>
 
-Jonathan Nieder wrote:
+Jeff King <peff@peff.net> writes:
 
-> [Subject: [PATCH v4] fast-import: add 'ls' command]
+> On Tue, Feb 22, 2011 at 12:09:37AM -0800, Junio C Hamano wrote:
+> 
+> > >   # tell git to ignore boring stuff
+> > >   git config tag.ignore 'boring/*'
+> > >   git config --add tag.ignore 'more-boring/*'
+> > 
+> > Hmph, isn't that what "grep -v" was invented for?
+> 
+> Heh. Yeah, but I think the point is that you will want to do this _every
+> time_, so it saves typing. I guess you could make an alias. Or even more
+> hack-ish, a custom tag.pager that filters the results. ;)
 
-Forgot to mention: v3 is at
-http://thread.gmane.org/gmane.comp.version-control.git/166575
-for those who like context.
+[...]
+> > Also it is unclear if the boring tags will or will not be propagated (or
+> > should or should not be, for that matter) to outer world when you do "git
+> > push --tags" with your "ignore".  Most likely some people do want to see
+> > them hidden (e.g. when publishing), and some others do want to be pushed
+> > (e.g. when backing the repository up).
+> 
+> I think changing the config name to tag.list-ignore would make it more
+> obvious what is going on. If you don't want to push certain tags, I
+> think refspecs are the way to do that, and this should be a purely local
+> display thing.
 
-Sorry for the noise.
+You meant `tag.listIgnore`, weren't you?  No hyphens in config
+variable names.
+
+About refspecs: we currently do not support negative refspecs, do we?
+(IIRC there was proposal to use '!' or '-' as prefix for them).  So we
+can't currently exclude refs/tags/private/* while including
+refs/tags/v*?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
