@@ -1,93 +1,76 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH v2 00/31] refactor rebase
-Date: Tue, 22 Feb 2011 08:58:09 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102220847500.5290@debian>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vd3mz33xb.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102111811300.26684@debian>
- <alpine.DEB.2.00.1102132047500.4253@debian>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: how a patch can be accepted?
+Date: Tue, 22 Feb 2011 15:08:49 +0100
+Message-ID: <AANLkTinU14O--V5BFBibrVa_quEUeVF-vS0waLhdzn2s@mail.gmail.com>
+References: <AANLkTikPtYy9_4WjvSqdiFG8pjv5KH5e16=4HoeAzoWb@mail.gmail.com>
+ <AANLkTin1hNwKfgRrukKvEMDXCSHnU=EfPFJLQ2cYci9L@mail.gmail.com> <4D63C095.8020206@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 22 14:58:21 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: xiaozhu <xiaozhu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 15:10:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Prskv-000649-4w
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 14:58:21 +0100
+	id 1PrswN-0003wK-S5
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 15:10:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424Ab1BVN6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 08:58:17 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:40718 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751693Ab1BVN6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 08:58:16 -0500
-Received: by qyg14 with SMTP id 14so1887009qyg.19
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 05:58:15 -0800 (PST)
+	id S1753123Ab1BVOKF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 09:10:05 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43677 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752815Ab1BVOKE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 09:10:04 -0500
+Received: by fxm17 with SMTP id 17so2783623fxm.19
+        for <git@vger.kernel.org>; Tue, 22 Feb 2011 06:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=GSoF7Qju4/i+vYrlnsnyCTci1VlEYkAcjn/qeiF6nMU=;
-        b=aa6u/AXxaGPNDkNhaCiMl6sIXrfahJ+kIYnEebXUTvMbe4nV8xYChdrRhUjJgJA49i
-         HGjrN5DvDSt7CnMltW6N4IbNCwgICvYjrKRBX3bbGmtz28CCX6D2wGKVgf6lmBNRN/kk
-         JTWWsZXInbNE7cTTKDGev0tVnq+WQoUOFkpmc=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kFD6URk6khAPRpe54Hg+bo1VXU5uXFg+72Sd2jrz5jQ=;
+        b=Qc1+kgh/DV3+v6q3kOwp0eJDOXPyWIVhKoWHy9RH0reIDEA4CT+6iRARpQE243KtwA
+         U45uMRG+cA6XJBG5VD8lOBRPFJldhT+bboKCbRHFENqbeiVro23hIOyopa+H4nRW2NhM
+         vwOxx79ZJoagL/cHwFZAgPAdIHGflulv3sAxY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=ioOU7wpcYeUBbNK0+85zq/e1bPFtxmPSjSjUcvGaLGP7hjq/v/gKmzXvKn8KAMsf2V
-         bYERR3JFpAQntw+GhqnR5r184HQwliTNU+XrqtZxmXKNKxh8Ede+e03adf4Rvgyk7dOI
-         NytDYBLcipRPIrtWEmYQ7wJwT3VExXC1y1+Ws=
-Received: by 10.224.19.142 with SMTP id a14mr2212092qab.194.1298383095739;
-        Tue, 22 Feb 2011 05:58:15 -0800 (PST)
-Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id t7sm4634094qcs.28.2011.02.22.05.58.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 05:58:14 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <alpine.DEB.2.00.1102132047500.4253@debian>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=fzV7FKhkEDlRExP4HVFsm9m9sVyfIXD2iNTZ4W3H2DM7Kqo3JdrgbhqhszyTcPpxX+
+         cPCuBq4ccnijBx+hGvveQh/aRGa4ThbgBY8jSavouMYrNrSpvOHRtNCRBaBfto5gXR8H
+         v5k/2UblJMYGSH1+t5slRtR6L2Vs4+tPUm1IY=
+Received: by 10.223.62.12 with SMTP id v12mr1607356fah.9.1298383802376; Tue,
+ 22 Feb 2011 06:10:02 -0800 (PST)
+Received: by 10.223.95.206 with HTTP; Tue, 22 Feb 2011 06:08:49 -0800 (PST)
+In-Reply-To: <4D63C095.8020206@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167546>
 
-On Sun, 13 Feb 2011, Martin von Zweigbergk wrote:
+On Tue, Feb 22, 2011 at 2:56 PM, xiaozhu <xiaozhu@gmail.com> wrote:
+> On 2011/02/22 1:23, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+>>
+>> On Mon, Feb 21, 2011 at 15:48, xzer<xiaozhu@gmail.com> =A0wrote:
+>>>
+>>> I submitted a patch recently by sending a mail to this mail list, b=
+ut
+>>> I don't know how it can be accepted or rejected? Is that enough jus=
+t
+>>> send a mail to here? Because the patch is a very important fix to m=
+y
+>>> usage and I don't want to apply it every time by myself.
+>>
+>> Did you read Documentation/SubmittingPatches?
+>
+> Where is the Documentation/SubmittingPatches? I didn't see anything
+> about submitting a patch on the site of git, and I also tried to find
+> something about it on git wiki, but I got nothing.
 
-> On Fri, 11 Feb 2011, Martin von Zweigbergk wrote:
-> 
-> > On Thu, 10 Feb 2011, Junio C Hamano wrote:
-> > 
-> > > I am not sure if forbidding "-v --continue" adds any value; would it be
-> > > too much effort to allow "--continue -v" instead to achieve the same
-> > > degree of consistency between the two?
-> > 
-> > I'll have a look at it when
-> > I get some time.
-> 
-> This would apply on top of mz/rebase after dropping 95135b0 (rebase:
-> stricter check of standalone sub command, 2011-02-06). If you agree
-> with it, I will include it in a future re-roll.
-
-Any opinions about this, anyone? I have one example: I was rebasing
-some things the other day where I thought there would be no conflicts.
-After applying a number of patches, it turned out there were
-conflicts. I think allowing 'git rebase --continue -sours' would have
-been useful in that case. It's rare enough that I don't care much,
-though.
-
-The reason I'm asking is that I have a patch that fixes the problems
-with the command line parsing that Johannes Sixt pointed out in
-another mail on this thread and would like to know if I should make it
-apply on top of this patch or not.
-
-
-/Martin
+It's in the Git source tree.
