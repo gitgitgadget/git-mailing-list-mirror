@@ -1,107 +1,151 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to create tags outside of refs/tags?
-Date: Tue, 22 Feb 2011 02:09:14 -0800 (PST)
-Message-ID: <m3wrks756a.fsf@localhost.localdomain>
-References: <AANLkTimxAhMfPsqEJVyteuTzXLr+QnhcxpJLgaE=y12_@mail.gmail.com>
-	<AANLkTi=7yUh9J9S5LdpNY0SwCv008ih2LEd3KNvy46sL@mail.gmail.com>
-	<20110222080305.GA11177@sigill.intra.peff.net>
-	<7vvd0cebi6.fsf@alter.siamese.dyndns.org>
-	<20110222081458.GA11825@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFD] Alternative to git-based wiki: wiki as foreign VCS
+Date: Tue, 22 Feb 2011 11:33:19 +0100
+Message-ID: <vpq7hcsmk9c.fsf@bauges.imag.fr>
+References: <vpqoc6a8x0k.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 22 11:09:26 2011
+Cc: Sylvain Boulme <Sylvain.Boulme@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 22 11:33:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrpBN-0004NS-GS
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 11:09:25 +0100
+	id 1PrpYf-00072R-1L
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 11:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753840Ab1BVKJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 05:09:19 -0500
-Received: from mail-bw0-f51.google.com ([209.85.214.51]:39517 "EHLO
-	mail-bw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798Ab1BVKJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 05:09:18 -0500
-Received: by bwz10 with SMTP id 10so3038719bwz.10
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 02:09:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=tQn2mLaG9OPrKADqkPI5GmroeG3fVqj3y3t9NiNzTZo=;
-        b=pxesTPe3lTek+chSLhjas0pRisTtsC2wVEq22y6GCdtTVc74mTGM2HBXUfic66tRMK
-         5xidY3VSP6jvNsA8L3s47tTDYcsRYFvhgSNT6oyiGi9wO6sHifd0xdQdQKG0xBuXtc0u
-         v88C0tQLXW+hjsxTZpdTYjCWxQEynZYkRSbzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=J75+dRIhrw8KEnU3xYZRiSX898f0AFlW3rSQ0OIhZkbDrlgGJ9zdG8MNc1kwhRq97t
-         9LQVFpU9yZlZpgILL/QXeu9Wf3oF/edXcKehfgBFNsAQ3qPD/td19B4G/EwoxSQCn4VJ
-         OB8v5duSfNOoxIwaUiTW2pp63WcGoqc7JuxME=
-Received: by 10.204.102.146 with SMTP id g18mr2318967bko.163.1298369356597;
-        Tue, 22 Feb 2011 02:09:16 -0800 (PST)
-Received: from localhost.localdomain (abwn36.neoplus.adsl.tpnet.pl [83.8.237.36])
-        by mx.google.com with ESMTPS id v25sm4376695bkt.18.2011.02.22.02.09.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Feb 2011 02:09:14 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p1MA8Z46032192;
-	Tue, 22 Feb 2011 11:08:46 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p1MA8DFv032187;
-	Tue, 22 Feb 2011 11:08:13 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20110222081458.GA11825@sigill.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753835Ab1BVKdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 05:33:24 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:57798 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752932Ab1BVKdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 05:33:22 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p1MAXItr030325
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 22 Feb 2011 11:33:18 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PrpYV-0001oP-Eu; Tue, 22 Feb 2011 11:33:19 +0100
+In-Reply-To: <vpqoc6a8x0k.fsf@bauges.imag.fr> (Matthieu Moy's message of "Thu\, 17 Feb 2011 17\:07\:55 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 22 Feb 2011 11:33:18 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p1MAXItr030325
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1298975599.25055@4xa5p+mJKNRp50Vnt1CYEA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167539>
 
-Jeff King <peff@peff.net> writes:
+Hi again,
 
-> On Tue, Feb 22, 2011 at 12:09:37AM -0800, Junio C Hamano wrote:
-> 
-> > >   # tell git to ignore boring stuff
-> > >   git config tag.ignore 'boring/*'
-> > >   git config --add tag.ignore 'more-boring/*'
-> > 
-> > Hmph, isn't that what "grep -v" was invented for?
-> 
-> Heh. Yeah, but I think the point is that you will want to do this _every
-> time_, so it saves typing. I guess you could make an alias. Or even more
-> hack-ish, a custom tag.pager that filters the results. ;)
+So, nobody's more inspired to comment on this proposal? ;-)
 
-[...]
-> > Also it is unclear if the boring tags will or will not be propagated (or
-> > should or should not be, for that matter) to outer world when you do "git
-> > push --tags" with your "ignore".  Most likely some people do want to see
-> > them hidden (e.g. when publishing), and some others do want to be pushed
-> > (e.g. when backing the repository up).
-> 
-> I think changing the config name to tag.list-ignore would make it more
-> obvious what is going on. If you don't want to push certain tags, I
-> think refspecs are the way to do that, and this should be a purely local
-> display thing.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-You meant `tag.listIgnore`, weren't you?  No hyphens in config
-variable names.
-
-About refspecs: we currently do not support negative refspecs, do we?
-(IIRC there was proposal to use '!' or '-' as prefix for them).  So we
-can't currently exclude refs/tags/private/* while including
-refs/tags/v*?
+> Hi,
+>
+> I think most people on this list already faced the issue: wikis are
+> cool, easy to contribute, ... but it's hard to force yourself to use a
+> purely web-based tool to interact with something which really looks
+> like a version-control system.
+>
+> One solution is to use a git-based wiki, like ikiwiki [1], golum
+> [2], ... but in many contexts, this is not applicable: because one
+> has an existing wiki and doesn't want to migrate, because the
+> git-based wiki lacks features XYZ that you rely on, or because one is
+> a small contributor to a large project (say, wikipedia) and cannot
+> force the project to change.
+>
+> I'm thinking of an alternative to this: implement a foreign VCS
+> interface for a wiki engine. Today, one can interact with, say, SVN,
+> using Git (via git-svn [3]). This way, we can get most of the Git
+> goodness locally, and just "publish" the changes on an SVN repository.
+>
+> I think that should be feasible to implement the same kind of things
+> to interact with, say, MediaWiki. Typical scenarios would be:
+>
+> 1) Work locally, possibly collaboratively on a set of pages, and then
+>    publish them on a wiki (let's call this "git mw set-tree" by
+>    analogy with "git svn set-tree").
+>
+> 2) Wait for user contributions on the wiki, and fetch them to the Git
+>    repository with one command (let's call this "git mw fetch" by
+>    analogy with "git svn fetch").
+>
+> 3) Allow one to easily download a set of files, and later get updates
+>    (i.e. "git clone/git pull" is far better than downloading from a
+>    browser)
+>
+> I'm personnaly interested in this in a teaching context, since I love
+> Git, and I use a wiki [4] to publish some documents to my students.
+> Scenario 1) corresponds to teachers preparing stuffs (without
+> necessarily publishing drafts), and 2) corresponds to two cases:
+> coworker unwilling to use Git, but willing to use a wiki, and students
+> contributing some content. Senario 3) corresponds to the case where we
+> distribute a set of files (say, example pieces of code), and reference
+> these files from a wiki documentation. See [5] for an example.
+>
+> I've already got half a solution where I publish content on GitHub,
+> and include them on a wiki with the "Include" extension [6]. It solves
+> scenario 1) partially and 3) nicely, but not 2).
+>
+> Together with Sylvain Boulme (in Cc), we plan to propose a project to
+> students to develop a git-svn-like interface to interact with
+> mediawiki. Students have a bit less than a month in May-June and work
+> in teams of 2 to 4 students (last year, we got the textconv
+> functionality in "git blame" and "git gui blame", and some better
+> error messages with the same project).
+>
+> It sounds feasible to write a usable prototype, probably re-using code
+> from tools interacting with mediawiki (like wikipediafs [7]), and
+> basing the work on git remote helpers [8]. We should be able to make
+> this a free software.
+>
+> Among the design goals:
+>
+> * No restriction on the Git workflow. Unlike "git-svn" which promotes
+>   a flow with SVN as the central repository, we should target a
+>   workflow where people merge freely using Git, and then publish/fetch
+>   changes from the wiki (i.e. a merge-based workflow, as opposed to a
+>   rebase-based one).
+>
+> * Ability to import only a subset of the wiki (nobody want to "git
+>   clone" the whole wikipedia ;-) ). At least a manually-specified list
+>   of pages, and better, the content of one category.
+>
+> * Ability to work interact with several wikis (e.g. a test, private
+>   instance, and a public instance).
+>
+> And then, fancy extensions can be imagined:
+>
+> * Manage non-text files as Media files uploaded to the wiki.
+>
+> * Manage directories in Git as subcategories in the wiki.
+>
+> Any opinions? Advices? Does this sounds like a good idea? Any pitfall
+> to avoid?
+>
+> Thanks in advance,
+>
+> Footnotes:
+> [1] http://ikiwiki.info/
+> [2] https://github.com/github/gollum
+> [3] http://www.kernel.org/pub/software/scm/git/docs/git-svn.html
+> [4] http://ensiwiki.ensimag.fr/index.php/Accueil (French)
+> [5] http://ensiwiki.ensimag.fr/index.php/LdB_-_Modes_d%27adressages#Mode_d.27adressage_.C2.AB.C2.A0Indirect_Registre.C2.A0.C2.BB
+> [6] http://www.mediawiki.org/wiki/Extension:Include
+> [7] http://wikipediafs.sourceforge.net/
+> [8] http://www.kernel.org/pub/software/scm/git/docs/git-remote-helpers.html
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
