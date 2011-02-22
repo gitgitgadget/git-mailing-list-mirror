@@ -1,78 +1,156 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [1.8.0] Recursively checkout, merge and reset populated submodules
-Date: Mon, 21 Feb 2011 21:32:09 -0500
-Message-ID: <4D632029.7040501@cisco.com>
-References: <7vwrky5f48.fsf@alter.siamese.dyndns.org>	<4D5FF6E7.8090104@web.de> <4D628F21.3050808@xiplink.com>	<4D62AF46.8030508@web.de> <4D62C385.90204@xiplink.com>	<4D62ED38.7070408@web.de> <87ei70riw1.fsf@catnip.gol.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC/PATCH] rev-list: new --cherry-pick=loose option
+Date: Mon, 21 Feb 2011 21:54:55 -0500
+Message-ID: <AANLkTi=dvkf3_Bkn0tCruDmYSnqYSGLQ55-NhCEuysnF@mail.gmail.com>
+References: <1298317769-65830-1-git-send-email-jaysoffian@gmail.com> <7vfwrghqjp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Feb 22 03:32:19 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 22 03:55:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pri30-0006OX-K0
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 03:32:18 +0100
+	id 1PriPT-00054F-D1
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 03:55:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040Ab1BVCcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Feb 2011 21:32:13 -0500
-Received: from rtp-iport-1.cisco.com ([64.102.122.148]:9190 "EHLO
-	rtp-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751816Ab1BVCcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Feb 2011 21:32:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1108; q=dns/txt;
-  s=iport; t=1298341932; x=1299551532;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=V3nI11q86+kzAIW/rADQMYh/x9IpSuDFqh3Djbn3+wY=;
-  b=JNKwhBKeumqRuCD7SyAqS/yJ1L6eYEAJl6NwplbdDHJL8FTYedYD6kJV
-   0u2mKYXjHcpMNIXItwACi0WdxrbpbDpvBEyh/onwIX9T2083zMqsUlEx/
-   6KaUhfJbm+DfMZSg9SalMpZDt9fJg1iSzwiDoqOKaBicjRQ0kOL6PXtUD
-   I=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEACuvYk2tJXG//2dsb2JhbACmQnOfUptqhV4EhQ2HBoM7
-X-IronPort-AV: E=Sophos;i="4.62,204,1297036800"; 
-   d="scan'208";a="218020967"
-Received: from rcdn-core2-4.cisco.com ([173.37.113.191])
-  by rtp-iport-1.cisco.com with ESMTP; 22 Feb 2011 02:32:11 +0000
-Received: from [64.100.104.120] (dhcp-64-100-104-120.cisco.com [64.100.104.120])
-	by rcdn-core2-4.cisco.com (8.14.3/8.14.3) with ESMTP id p1M2WAm7015557;
-	Tue, 22 Feb 2011 02:32:11 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <87ei70riw1.fsf@catnip.gol.com>
-X-Enigmail-Version: 1.1.2
+	id S1750985Ab1BVCz0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Feb 2011 21:55:26 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:51970 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750836Ab1BVCzZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Feb 2011 21:55:25 -0500
+Received: by iwn34 with SMTP id 34so120922iwn.19
+        for <git@vger.kernel.org>; Mon, 21 Feb 2011 18:55:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=d+dRu/9k3yvq1g6yiPfPfhCFygYls0vJE0fduiGgqRs=;
+        b=mvZnjGkefDUtXamrsPywpV3Ty0UwfHDJtcLKswBhrS3c0bimYAFoDhYWTrNyJEu0XN
+         kFRwDiA6SXxHAiRzkvQswmtELQKUNjaBtkQq976o8K9NgtYKl4oTUAjOlx+bb3XmAjz2
+         O7QkD1zktelH0u134C7Jyi0mfOMLFFDu01hbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=kSRt1XDjCWjqvJ5L2Rmm2jOPdHu6D7UaGjjUlumh/zRXjSSsxR7kEn+j+wyx1G5/h5
+         xS9omxFVl78eF89yNuOi9cG9aJIdKEsCMuWJpTu03s/EJD34xoEq/pCbP8t2PawfSxi/
+         RJ5iLOLOVcB5em+ojt9OVm2bbGMfXmaRQEdcY=
+Received: by 10.42.225.4 with SMTP id iq4mr2912120icb.110.1298343325172; Mon,
+ 21 Feb 2011 18:55:25 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Mon, 21 Feb 2011 18:54:55 -0800 (PST)
+In-Reply-To: <7vfwrghqjp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167524>
 
-On 02/21/2011 07:51 PM, Miles Bader wrote:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>> >> So, .gitmodules initially controls recursion.  When a submodule gets
->>> >> populated, it gets an entry in .git/config which then determines the
->>> >> recursion behavior from then on.  Changing branches might change .gitmodules,
->>> >> but anything in .git/config will persist so any customizations the user makes
->>> >> will also persist.
->> >
->> > Yes. Upstream can give sane defaults but the user has the last word.
-> If .git/config entries are created _automatically_ based on the initial
-> .gitmodules, doesn't that means it will cease to respect the upstream
-> defaults in the case where .gitmodules changes, even if the user didn't
-> actually change anything himself...?
+On Mon, Feb 21, 2011 at 7:16 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> Thoughts?
+>
+> I am personally not very interested in this particular "author, times=
+tamp,
+> title and nothing else" implementation, as that is probably too loose=
+ (in
+> many projects, title by itself is not descriptive enough) to be safe.
 
-Also consider that the .gitmodules'  "upstream defaults" may have many
-changes
-within the existing repository.  So, $(git checkout foo) will load some
-"defaults" and
-$(git checkout bar) may load different "defaults".  I guess the defaults
-can be migrated
-into .git/config using $(git submodule init)...?
+Well, right, it's not title by itself, it's title + authorship. I am
+scratching my head at a project that would have commits identical in
+author, timestamp, and title.
 
-Phil
+> Also people would probably want other loose modes with varying degree
+
+Initially I thought this too and was going to let it take pretty-print
+specifiers (--cherry-pick=3Dformat:...), but I can't see which other
+metadata would be useful. Maybe the commit body, but if there were
+conflicts, that's something that would have very likely been changed
+to add a Conflicts: section.
+
+> (e.g. throwing in the list of touched paths to your mix might make it=
+ a
+> bit safer), so "loose" feels a bit too broad a word to give to this
+> particular implementation (iow, it does not say in what way it is loo=
+se).
+
+Throwing in touched paths does make it safer, but for my use case is
+too strict for some commits (I sometimes have to account for file
+renames when I cherry-pick).
+
+>> @@ -65,8 +79,13 @@ static struct patch_id *add_commit(struct commit =
+*commit,
+>> =C2=A0 =C2=A0 =C2=A0 unsigned char sha1[20];
+>> =C2=A0 =C2=A0 =C2=A0 int pos;
+>>
+>> - =C2=A0 =C2=A0 if (commit_patch_id(commit, &ids->diffopts, sha1))
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;
+>> + =C2=A0 =C2=A0 if (ids->loose) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (commit_patch_id_loos=
+e(commit, sha1))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return NULL;
+>> + =C2=A0 =C2=A0 } else {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (commit_patch_id(comm=
+it, &ids->diffopts, sha1))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return NULL;
+>> + =C2=A0 =C2=A0 }
+>
+> If the purpose of the patch is to stir the discussion, it is fine to =
+have
+> any crappy "here is a strawman" algorithm as an example of an alterna=
+tive
+> patch ID computation, but one thing it _should_ do well is to show wh=
+ere
+> the necessary change should be hooked into, and I think the above "if=
+"
+> statement is placed in a wrong function. =C2=A0If you change commit_p=
+atch_id()
+> to take a pointer to the whole ids instead of just &ids->diffopts, it=
+ can
+> decide how the "commit patch ID" is computed without affecting the
+> callers, no?
+
+Good idea.
+
+> And then we could instead introduce patch-id-algo=3D<foo>, and instea=
+d of
+> "loose" call this particular algorithm "authorship-subject" or someth=
+ing.
+> Coming up with a pluggable interface to let the end user compute patc=
+h
+> equivalence might be a plus.
+
+I think it's premature to make it pluggable. I was hoping that with
+this mode (loose) and the existing mode (strict), the extremes would
+be covered. And then we'd wait and see what latent demand might exist
+for other modes. :-)
+
+I just don't feel like I know enough about what "the end user" wants
+to come up with a reasonably general scheme.
+
+(The best I can come up with that's pluggable and not horribly
+expensive is something like open bi-directional pipes to an external
+process that gets fed diffs and returns patch-ids.)
+
+> Certain patch equivalence might not be easy to define by "do they has=
+h to
+> the same small value" but by "here are two patches---compare them and=
+ tell
+> me if they are equivalent". =C2=A0If we can update the code to suppor=
+t that
+> kind of patch equivalence it would be great, but it is not within the
+> reach/scope of this patch (not a complaint, but something you may wan=
+t to
+> tackle next).
+
+More than I can bite off at the moment.
+
+j.
