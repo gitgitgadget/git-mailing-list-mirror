@@ -1,101 +1,65 @@
-From: Yongqiang Yang <xiaoqiangnk@gmail.com>
-Subject: Re: an error when using 'git send-email'
-Date: Tue, 22 Feb 2011 21:30:17 +0800
-Message-ID: <AANLkTinssKFSqjk5ZCqzjZQWU_vFMDewY+3FSfR+_xMb@mail.gmail.com>
-References: <AANLkTiktO_f9+g4+wSS989a=pFZBgWGcORd_kg4pji-x@mail.gmail.com>
-	<20110220164427.GA1439@jpl.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Magnus_B=E4ck?= <magnus.back@sonyericsson.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 14:30:28 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH (n+1)/n] t6007: test rev-list --cherry
+Date: Tue, 22 Feb 2011 14:36:19 +0100
+Message-ID: <679a1a3a57bd6b5f4138a1e0500ec8f97f224578.1298381698.git.git@drmicha.warpmail.net>
+References: <7vlj18g92x.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 22 14:39:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrsJu-00013T-Fj
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 14:30:26 +0100
+	id 1PrsSr-0005d9-Lf
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 14:39:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752474Ab1BVNaU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 08:30:20 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:43363 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085Ab1BVNaT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 08:30:19 -0500
-Received: by eyx24 with SMTP id 24so669451eyx.19
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 05:30:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KZti9oDiV3MeYIruIAGzbVWvxq0Zk/Tk8Rx2PsbEEZ8=;
-        b=Zd56Ox9bsdhiPLw7Tj8WBf9NsiukRZSO4pR4ocBA/Cu8VYe51TbVpQp5+QOD7I43pj
-         UgMJy1MlR0TF9LNA4hsjvR0YI/Vvwj9cu4ZBxcNr11HS84p0dvp1ZzwAI8l0ha+KNiHx
-         bHqMIKiMIwYV9TvH000Cdn6xHHWqvpZ3MVoeI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gxCp9O3GzcvSfY5F4zyk0ZJv2B+yRPUL3czUYhwGjBnhKDR/Newx+5YFiCdUWikyii
-         20JkssNN+RHn+ukpaOTlFaUNYczv8NjfRmpF43Czh+4XUrifzndtXbUUl48BaKfc3KX/
-         B3fpbg+8f9ttm9CnIqGmIwBFcEmLyc3S3LkpI=
-Received: by 10.14.120.142 with SMTP id p14mr2955587eeh.13.1298381417962; Tue,
- 22 Feb 2011 05:30:17 -0800 (PST)
-Received: by 10.14.53.80 with HTTP; Tue, 22 Feb 2011 05:30:17 -0800 (PST)
-In-Reply-To: <20110220164427.GA1439@jpl.local>
+	id S1752566Ab1BVNjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 08:39:37 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57501 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752342Ab1BVNjg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 08:39:36 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 564C82078C;
+	Tue, 22 Feb 2011 08:39:35 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 22 Feb 2011 08:39:35 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=mBFmn2OEIl5Y90rDKXsUmswFHLA=; b=Qg9TAXTz9+JxVxLmR+jVIkpV4JJVo6TNLnMkHORhu2zwwTpXL8CFoyI8mXmqMJPeYdxjxDxUNSQTQy87mcof0SVq77782Yv14s2y0mwRiTAHAI4ejGPW8xLGgPlt1Oa08Cg/IjvfZ7t5FS8rajoAlTzd6kA4d6m+Jz7sF7yA0R4=
+X-Sasl-enc: rzD4g0y7JCkSAMLDnrKlITcN23zMhJ9n+ile4+261E0I 1298381974
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D058E443A81;
+	Tue, 22 Feb 2011 08:39:34 -0500 (EST)
+X-Mailer: git-send-email 1.7.4.1.74.gf39475.dirty
+In-Reply-To: <7vlj18g92x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167543>
 
-On Mon, Feb 21, 2011 at 12:44 AM, Magnus B=E4ck
-<magnus.back@sonyericsson.com> wrote:
-> On Friday, February 18, 2011 at 12:45 CET,
-> =A0 =A0 Yongqiang Yang <xiaoqiangnk@gmail.com> wrote:
->
->> When I use git 'send-email', I get an error "Command unknown: =A0'AU=
-TH'
->> at /usr/bin/git-send-email line 775, <STDIN> line 1".
->> Is there anyone meet the same error?
->
-> You seem to have configured a username and password for SMTP
-> authentication, yet the server Git connects to doesn't support
-> authentication.
->
-> Make sure the SMTP server you've configured Git to use
-> (sendemail.smtpserver configuration variable) is the right one.
-> If so, clear the smtpemail.smtpuser and smtpemail.smtppass
-> variables as you obviously can't use them with the server.
-Contents in my .gitconfig file are as follows.
-[sendemail]
-    smtpencryption =3D tls
-    smtpserver =3D smtp.gmail.com
-    smtpuser =3D xxxxxxx
-    smtpserverport =3D 587
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ t/t6007-rev-list-cherry-pick-file.sh |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-When I remove the line smtpuser.  Git said my config file is not correc=
-t.
-
-Thank you.
->
-> For testing purposes there are options to "git send-email" to
-> override the values set in the configuration files. Those might
-> be more convenient to use when testing out new configurations.
->
-> --
-> Magnus B=E4ck =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0Opinions are=
- my own and do not necessarily
-> SW Configuration Manager =A0 =A0 =A0 =A0 represent the ones of my emp=
-loyer, etc.
-> Sony Ericsson
->
-
-
-
---=20
-Best Wishes
-Yongqiang Yang
+diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
+index cd089a9..5373541 100755
+--- a/t/t6007-rev-list-cherry-pick-file.sh
++++ b/t/t6007-rev-list-cherry-pick-file.sh
+@@ -110,6 +110,13 @@ test_expect_success '--cherry-pick --right-only' '
+ 	test_cmp actual.named expect
+ '
+ 
++test_expect_success '--cherry' '
++	git rev-list --cherry F...E -- bar > actual &&
++	git name-rev --stdin --name-only --refs="*tags/*" \
++		< actual > actual.named &&
++	test_cmp actual.named expect
++'
++
+ test_expect_success '--cherry-pick --left-only' '
+ 	git rev-list --cherry-pick --left-only E...F -- bar > actual &&
+ 	git name-rev --stdin --name-only --refs="*tags/*" \
+-- 
+1.7.4.1.74.gf39475.dirty
