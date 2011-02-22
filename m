@@ -1,69 +1,83 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
-Date: Tue, 22 Feb 2011 20:32:20 +0100
-Message-ID: <AANLkTint8HXdoHJqEozASemU5g2gssPbGPefQWqd_4hu@mail.gmail.com>
-References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org> <1297304069-14764-1-git-send-email-pclouds@gmail.com>
- <20110218022701.GA23435@elie> <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
- <20110218092518.GB30648@elie> <7vei75p3zr.fsf@alter.siamese.dyndns.org>
- <20110219111103.GA1841@elie> <20110222155637.GC27178@sigill.intra.peff.net> <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] do not overwrite untracked symlinks
+Date: Tue, 22 Feb 2011 12:01:48 -0800
+Message-ID: <7vzkpnbzyr.fsf@alter.siamese.dyndns.org>
+References: <201102022025.06140.j6t@kdbg.org>
+ <7v7hdixkys.fsf@alter.siamese.dyndns.org> <201102022324.22123.j6t@kdbg.org>
+ <201102051918.44848.j6t@kdbg.org> <20110205183351.GA25717@localhost>
+ <20110220121343.GA21514@localhost> <7vaahpluy9.fsf@alter.siamese.dyndns.org>
+ <20110221194623.GA31181@localhost> <7v62scftjl.fsf@alter.siamese.dyndns.org>
+ <20110222192632.GB4881@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 22 20:33:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Tue Feb 22 21:02:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Prxyu-0000rz-OD
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 20:33:09 +0100
+	id 1PryR5-0008HW-8T
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 21:02:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755200Ab1BVTdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 14:33:03 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48354 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754863Ab1BVTdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 14:33:01 -0500
-Received: by ywj3 with SMTP id 3so1399719ywj.19
-        for <git@vger.kernel.org>; Tue, 22 Feb 2011 11:33:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=6h6c2gnKCnSLb9qthG1pcMtAqhs2Ws3U/qYFkFht+V4=;
-        b=IQwPZPSM9Wcu7qQ85Ck8/HRr6lC9GviomwcQaq0Fv0TQikCjG/CEL+QFdJufdUZi4m
-         Kxw0g305h35SdQQ/Dlhm4LPQVOOjHHVOtRIxbd5eDECBBzsUbF1XyKpRSA8aCHCHVLXc
-         giS/s6JszB6BssBbQwobpz9hXuxpzll3nxPtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=pAupqsNGSqY/ari8VTnqqz2moaNlU+TY2Nq9aUji0xf4yqSSmMA+B82168mT9SFzcF
-         Ak/ezo95Jxd8gDAzRfCAnTDHR+DXJj5Yn+FvgOxwjTAUbaTHfmGN/KyghWxG/ZtXjSIH
-         gzIikAt533eg6LN0SNvc/BnB1FuDutKzMh49U=
-Received: by 10.150.96.21 with SMTP id t21mr3856785ybb.20.1298403180112; Tue,
- 22 Feb 2011 11:33:00 -0800 (PST)
-Received: by 10.151.158.19 with HTTP; Tue, 22 Feb 2011 11:32:20 -0800 (PST)
-In-Reply-To: <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
+	id S1754724Ab1BVUCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 15:02:00 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64876 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755399Ab1BVUB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 15:01:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2EC9C376B;
+	Tue, 22 Feb 2011 15:03:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z4TUYSYic1HlEpePuLrvK8BTtQ8=; b=NHIOkE
+	5c75mhNDNN964yy6xMwq1vTK8Znd1wUG+K1A36wrDdKqDr7FlyLo2kzNWE6vu0vV
+	op4+sY3GVzCNb1Gh17wXW5BQi0i1hwVNa42/UjZNMhUV9AbAP+SaZ5pqgAbA9Gd6
+	NK5O4l+vR2NlV172RNtP4yaqbo9msQ9EE+Wys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZoW9+RnW8Gdm0QdMrNOivx8BK3LWCWXe
+	aNLG9N60e7Oiy6beHjzhOFp4HvUYadXC9VZy0QYpOsJ1EKPbeAJNgNCPLuC3Fw/K
+	hNRUC/nujF/f2qjOI37e6ueUz0xkuaPAy7wYxmr/eWV8cRloaWoECJ/6WBhXExWF
+	y4bl+GRKfcg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D9AA7376A;
+	Tue, 22 Feb 2011 15:03:05 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5FD513764; Tue, 22 Feb 2011
+ 15:03:00 -0500 (EST)
+In-Reply-To: <20110222192632.GB4881@localhost> (Clemens Buchacher's message
+ of "Tue\, 22 Feb 2011 20\:26\:32 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C31087DE-3EBE-11E0-9263-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167581>
 
-Heya,
+Clemens Buchacher <drizzd@aon.at> writes:
 
-On Tue, Feb 22, 2011 at 20:30, Junio C Hamano <gitster@pobox.com> wrote:
-> Not that libgit.a in its current shape is very useful outside the context
-> of the git.git proper, though.
+> I strongly feel that we should separate the merge process into two
+> steps.
+>
+>  - First, do everything in the index, ignoring the work tree.
+>
+>  - Second, checkout the index to the work tree while making sure no
+>    changes or untracked files get overwritten.
 
-Which is where libgit2 comes in right? ;)
+Yes, I think most people who are familiar with the internals agreed on
+this long time ago.
 
--- 
-Cheers,
+> ... But I can't
+> get myself to feel good about fixing the function name, but not the
+> function.
 
-Sverre Rabbelier
+I think I said what I wanted to say badly.
+
+I agree that the code structure is suboptimal; the badly named function is
+just a manifestation of the fact that the abstraction used in the
+codepaths involved is not a good one, I think.
