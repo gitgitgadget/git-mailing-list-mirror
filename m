@@ -1,71 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
-Date: Tue, 22 Feb 2011 10:56:37 -0500
-Message-ID: <20110222155637.GC27178@sigill.intra.peff.net>
-References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
- <1297304069-14764-1-git-send-email-pclouds@gmail.com>
- <20110218022701.GA23435@elie>
- <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
- <20110218092518.GB30648@elie>
- <7vei75p3zr.fsf@alter.siamese.dyndns.org>
- <20110219111103.GA1841@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 22 16:56:47 2011
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: libreoffice merge(tool?) issue #3 ...
+Date: Tue, 22 Feb 2011 10:55:17 -0500
+Message-ID: <993F66D7-7659-4AA5-9931-1EB66CAA01DB@silverinsanity.com>
+References: <1298388877.32648.171.camel@lenovo-w500>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, kendy@novell.com,
+	Norbert Thiebaud <nthiebaud@gmail.com>
+To: michael.meeks@novell.com
+X-From: git-owner@vger.kernel.org Tue Feb 22 17:01:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PrubV-0002XH-PH
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 16:56:46 +0100
+	id 1PrugK-0005GA-HF
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Feb 2011 17:01:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345Ab1BVP4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Feb 2011 10:56:41 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:51963 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753942Ab1BVP4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Feb 2011 10:56:40 -0500
-Received: (qmail 2323 invoked by uid 111); 22 Feb 2011 15:56:39 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 22 Feb 2011 15:56:39 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Feb 2011 10:56:37 -0500
-Content-Disposition: inline
-In-Reply-To: <20110219111103.GA1841@elie>
+	id S1754409Ab1BVQBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 11:01:38 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:45045 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753557Ab1BVQBi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 11:01:38 -0500
+X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Feb 2011 11:01:38 EST
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 987A31FFC157; Tue, 22 Feb 2011 15:55:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=3.5 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [129.21.210.223] (bcg2784.student.rit.edu [129.21.210.223])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 8F96D1FFC114;
+	Tue, 22 Feb 2011 15:55:15 +0000 (UTC)
+In-Reply-To: <1298388877.32648.171.camel@lenovo-w500>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167559>
 
-On Sat, Feb 19, 2011 at 05:11:03AM -0600, Jonathan Nieder wrote:
 
->  - merge builtins/ with commands/.  It never was clear to me why
->    making a command builtin should require changing its filename.
+On Feb 22, 2011, at 10:34 AM, Michael Meeks wrote:
 
-This may be a bit too radical, but maybe the Makefile should use this
-structure to save maintenance effort. In other words, is there any
-reason not to just have:
+> PS. of course, perhaps this is 'just me' - for space / time /
+> simplicty / certainty reasons, I do a lot of "cp -lR foo/.git baa/" to
+> duplicate trees - but AFAIK all git operations are atomic and use
+> renames rather than in-place re-writing: right ?
 
-  BUILTIN_SOURCES = $(wildcard builtin/*.c)
-  BUILTIN_OBJS = $(patsubst builtin/%.c, builtin/%.o, $(BUILTIN_SOURCES))
+FYI: `git clone foo bar` will use hard-links to copy the object files and is both very fast and space efficient.  (See the description of `--local` in git-clone(1), which is used by default for local repositories since git 1.5.3.)  It's also guaranteed to work while the correctness of `cp -lR` depends on implementation details of git.
 
-and similar for LIB_OBJS and LIB_H?
-
-It is one less thing to need to do when writing new code, and one less
-thing to have silly textual conflicts on. It probably doesn't matter
-that much, though; we don't actually add new files or commands all that
-often.
-
-Speaking of Makefiles, one downside to all of this directory
-segmentation is that you can't run "make" from the subdirectories. I
-don't know how much we care. Certainly we could put a dummy Makefile
-in each subdir that just goes to the toplevel and runs make.
-
--Peff
+~~ Brian
