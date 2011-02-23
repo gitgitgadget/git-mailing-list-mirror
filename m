@@ -1,90 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/73] No-op gettextize core Git C programs
-Date: Tue, 22 Feb 2011 17:37:36 -0800
-Message-ID: <7vwrkra5un.fsf@alter.siamese.dyndns.org>
-References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
- <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
- <1298418152-27789-1-git-send-email-avarab@gmail.com>
- <7v1v2zbmn9.fsf@alter.siamese.dyndns.org>
+From: Guy Rouillier <guyr@burntmail.com>
+Subject: Re: cvsimport still not working with cvsnt
+Date: Tue, 22 Feb 2011 21:33:12 -0500
+Message-ID: <4D6471E8.4060001@burntmail.com>
+References: <4D0ED5EC.9020402@burntmail.com> <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com> <4D119015.6020207@burntmail.com> <4D2AB63D.7040803@burntmail.com> <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com> <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino> <7v8vynnokt.fsf@alter.siamese.dyndns.org> <4D450655.5090501@burntmail.com> <AANLkTik0Mp=Ww_+ZN_jw6t4gsFwLo1UTw5JOpho8bCd=@mail.gmail.com> <7vhbcb35xk.fsf@alter.siamese.dyndns.org> <4D5E1116.7040501@burntmail.com> <7voc69p4xu.fsf@alter.siamese.dyndns.org> <4D5F6E97.4000402@burntmail.com> <7vy65bkw72.fsf@alter.siamese.dyndns.org> <4D61EA4B.3020708@burntmail.com> <7vtyfxgdz2.fsf@alter.siamese.dyndns.org> <7vipwbbrcc.fsf@alter.siamese.dyndns.org> <AANLkTinUtUNGO3NK=JPTqnwcTtPMYjmLw82wJZ5nC
+ -32@mail.gmail.com> <4D644FEE.5030004@burntmail.com> <7vaahnbmu2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 23 02:37:53 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin@laptop.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Emil Medve <Emilian.Medve@freescale.com>,
+	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 23 03:33:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ps3fs-0005By-9a
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 02:37:52 +0100
+	id 1Ps4Xw-0007st-2q
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 03:33:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755815Ab1BWBhr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Feb 2011 20:37:47 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34906 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755814Ab1BWBhq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Feb 2011 20:37:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B99944E0E;
-	Tue, 22 Feb 2011 20:38:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jJdnoN565+gU
-	2FqsKCA244dqbOM=; b=Wv3JNQanDRwPnUq8axOsWfBjPUZUIYeZ6dVHWh7kFwGr
-	SDUj92heLHwaXDaz+yXR2BgAkmTt3HwLQmsLZ6bAdTqLz2baeuRHmN4QQG7EjXt/
-	QQckG8HNeoYfyFRoBqIOGXwc3R1eDiwJcasOfK9Rw1yC44g/e2yYAkJToKu9GuY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nU+jvv
-	ZX+wJRjot/Pld2BupRv9a4Sv1LiIM+D1gfbs28ONLFPJf3P/JABquomkRWsPQCls
-	guByb8b3lvoo7AY2ZyiXMbiVAmNYVgiFhN2r2GJypobASyFt34YVC8WuoaEvLJGA
-	JV1P/bHLIor3jOc3ClOAo9noQPFSGR9QZAT+0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 875BA4E0B;
-	Tue, 22 Feb 2011 20:38:54 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 677434E09; Tue, 22 Feb 2011
- 20:38:50 -0500 (EST)
-In-Reply-To: <7v1v2zbmn9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue\, 22 Feb 2011 16\:49\:30 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AC9B749E-3EED-11E0-9613-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1755855Ab1BWCd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Feb 2011 21:33:29 -0500
+Received: from mx02.burntmail.com ([70.87.63.122]:48295 "EHLO
+	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755675Ab1BWCd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Feb 2011 21:33:28 -0500
+Received: from [173.79.61.50] (helo=[192.168.1.60])
+	by mx02.burntmail.com with esmtpa (Exim 4.72)
+	(envelope-from <guyr@burntmail.com>)
+	id 1Ps4XU-0005NZ-Jd; Tue, 22 Feb 2011 20:33:16 -0600
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <7vaahnbmu2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167672>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 2/22/2011 7:45 PM, Junio C Hamano wrote:
+> Guy Rouillier<guyr@burntmail.com>  writes:
 >
->>   * Reverted back to using the "gettextize" patch subjects I
->>     originally used. I'm using these consistetly so I can later git
->>     log --grep=3Dgettextize: to find them. I'd like to preserve that
->>     attributed.
+>> To answer Junio's question, I'm looking at the CVSNT code now
+>> (GlobalSettings.cpp, if anyone is interested.)  The password is stored
+>> in a general fashion like any other user-specified value.  So, the
+>> authors elected to use a properties file format of key=value.  That is
+>> as valid a format as any other.
 >
-> Can we make that shorter, perhaps just "i18n:"?  In this series, your
-> first three and Jonathan's are oddballs that do not have "gettexize:"
-> anyway.
+> As you dug that far, could you find out what happens when cvsroot contains
+> an equal-sign character in its path component?
 >
-> Will give it a whirl.  Thanks.
+> I am starting to suspect that we do need two separate codepaths, and we
+> would need to split out the logic to find matching password entry given a
+> cvsroot value into a separate function to keep our sanity after all.
+>
 
-It was a slightly unpleasant experience to merge this round to 'pu' (af=
-ter
-excluding the earlier round from it, of course), as a few topics in fli=
-ght
-that reorganized existing functions into smaller helpers had to conflic=
-t
-with this patch.  I tried to be careful but please double check the res=
-ult,
-perhaps with:
+I'll take a look.  I spent a short amount of time with Google looking 
+for "cvsroot valid characters" but didn't find anything authoritative. 
+Note that this issue is not unique to CVSNT.  What does CVS do with 
+CVSROOT containing a space character?
 
-    $ git show --first-parent origin/pu
-
-when it is propagated to mirrors.
-
-Thanks.
+-- 
+Guy Rouillier
