@@ -1,68 +1,88 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: [RFD] Alternative to git-based wiki: wiki as foreign VCS
-Date: Wed, 23 Feb 2011 17:42:00 +0100
-Message-ID: <20110223164200.GB16569@nibiru.local>
-References: <vpqoc6a8x0k.fsf@bauges.imag.fr> <vpq7hcsmk9c.fsf@bauges.imag.fr>
-Reply-To: weigelt@metux.de
+From: Johan Herland <johan@herland.net>
+Subject: RFD: Handling case-colliding filenames on case-insensitive filesystems
+Date: Wed, 23 Feb 2011 18:11:45 +0100
+Message-ID: <201102231811.45948.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 23 17:52:03 2011
+X-From: git-owner@vger.kernel.org Wed Feb 23 18:11:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsHwX-0002pA-J9
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 17:52:01 +0100
+	id 1PsIFm-0000Og-N6
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 18:11:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184Ab1BWQv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 11:51:56 -0500
-Received: from caprica.metux.de ([82.165.128.25]:42569 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755152Ab1BWQvz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 11:51:55 -0500
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p1NGn1Dv003293
-	for <git@vger.kernel.org>; Wed, 23 Feb 2011 17:49:01 +0100
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p1NGmrs2003287
-	for git@vger.kernel.org; Wed, 23 Feb 2011 17:48:53 +0100
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id p1NGg0qx029319
-	for git@vger.kernel.org; Wed, 23 Feb 2011 17:42:00 +0100
-Mail-Followup-To: git@vger.kernel.org
+	id S932331Ab1BWRLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 12:11:49 -0500
+Received: from smtp.opera.com ([213.236.208.81]:37309 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755264Ab1BWRLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 12:11:48 -0500
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p1NHBk0f031131
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 23 Feb 2011 17:11:46 GMT
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-In-Reply-To: <vpq7hcsmk9c.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167704>
 
-* Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
-> Hi again,
-> 
-> So, nobody's more inspired to comment on this proposal? ;-)
+Hi,
 
-Wow.
+At $dayjob we recently had a problem where a developer pushed a commit 
+that added new files, two of which were named "foobar.TXT" 
+and "FOOBAR.txt". When this commit (or anything based on it) is checked 
+out by one of our Windows developers, Git maps two files in its index 
+to a single file on the filesystem, and ends up reporting a diff on one 
+of those files. The diff won't go away unless one (or both) of the 
+case-colliding files is removed from the repo. Obivously, the 
+persisting diff prevents the developer from easily rebasing, switching 
+branches, merging, bisecting and a number of other useful tasks.
 
-Where can I get a "git rules the world"-tshirt ? ;-)
+The root of the problem is that the case-colliding files were added in 
+the first place, and this should obviously be prevented in projects 
+that aim to be compatible with case-insensitive filesystems. To that 
+end, I'm currently writing an update hook which will prevent 
+case-colliding files from being pushed to our central repo.
+
+However, given that this has already happened, how can we design Git to 
+handle this situation more gracefully. In other words, how can we 
+better handle checking out filenames that collide on case-insensitive 
+filesystems?
+
+My first idea was to simply refuse checking out trees with 
+case-colliding filenames. I.e. when core.ignoreCase is enabled, we 
+check whether any of the files we're about to checkout map to the same 
+filesystem representation, and if they do, we abort the checkout and 
+complain loudly to the user. However, that doesn't really help the user 
+at all. Failure to checkout would only make it much harder to fix the 
+issue.
+
+A colleague suggested instead that Git should notice that the collision 
+will occur, and work around the failure to represent the repository 
+objects in the file system with a one-to-one match. Either by checking 
+out only _one_ of the colliding files, or by using a non-colliding name 
+for the second file. After all, Git already has functionality for 
+manipulating the file contents on checkout (CRLF conversion). Doesn't 
+it make sense to add functionality for manipulating the _directory_ 
+contents on checkout as well? Even if that makes sense, I'm not sure 
+that implementing it will be straightforward.
+
+Are there better suggestions on how to deal with this?
 
 
-cu
+Thanks,
+
+...Johan
+
 -- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+Johan Herland, <johan@herland.net>
+www.herland.net
