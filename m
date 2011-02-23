@@ -1,66 +1,54 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: RFD: Handling case-colliding filenames on case-insensitive filesystems
-Date: Wed, 23 Feb 2011 20:17:23 +0100
-Message-ID: <vpq62sa36ik.fsf@bauges.imag.fr>
-References: <201102231811.45948.johan@herland.net>
-	<AANLkTi=MyqXYi=zNZ+MFcUW2p-_icwg0m_aMQpVioT8J@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] git-gui: fetch/prune all entry appears last
+Date: Wed, 23 Feb 2011 20:19:36 +0100
+Message-ID: <4D655DC8.50109@web.de>
+References: <20110212164344.GA19433@book.hvoigt.net> <AANLkTi=hY1XpBNfhNDfM8kwgnitQXN-97mM-dkhCpTac@mail.gmail.com> <20110213134753.GC31986@book.hvoigt.net> <20110213135714.GE31986@book.hvoigt.net> <4D640227.9090206@web.de> <20110222193021.GB28519@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 23 20:17:44 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Pat Thoyts <patthoyts@gmail.com>,
+	Pat Thoyts <patthoyts@googlemail.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Feb 23 20:19:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsKDQ-00063b-UW
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 20:17:37 +0100
+	id 1PsKFh-0007QB-Pv
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 20:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932461Ab1BWTRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 14:17:31 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:36464 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932241Ab1BWTRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 14:17:31 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p1NJHLH2025013
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 23 Feb 2011 20:17:21 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PsKDD-0006CJ-8K; Wed, 23 Feb 2011 20:17:23 +0100
-In-Reply-To: <AANLkTi=MyqXYi=zNZ+MFcUW2p-_icwg0m_aMQpVioT8J@mail.gmail.com>
-	(Jay Soffian's message of "Wed, 23 Feb 2011 14:07:35 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 23 Feb 2011 20:17:21 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p1NJHLH2025013
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1299093444.99071@wG7+Jr+US/0WSStJH4tGrA
+	id S1755087Ab1BWTTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 14:19:53 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:35960 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751153Ab1BWTTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 14:19:52 -0500
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 9F79B189BE4ED;
+	Wed, 23 Feb 2011 20:19:39 +0100 (CET)
+Received: from [93.240.119.189] (helo=[192.168.178.43])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PsKFP-0008WR-00; Wed, 23 Feb 2011 20:19:39 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <20110222193021.GB28519@book.hvoigt.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/IcFVNqMK6kHPyRzzhRCbkfPoIYUkkQT9OcWDS
+	yvt2UMCZJ9jHhneZmERXYg9xH+rbSRXH9H7EK5Z8JseIuervc9
+	uVMs2lhMhOM3uVtnQI5w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167715>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Am 22.02.2011 20:30, schrieb Heiko Voigt:
+> The user might have got used to the order the remotes appeared previously.
+> Lets add the all entry last so the all entry does not confuse previous
+> users.
+> 
+> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 
-> The checkout can't be compiled correctly, so what's the point of even
-> allowing it?
+I tested both patches under Linux, looks great now.
 
-There's at least one: allow the user to fix it.
-
-I'm not a user of case-insensitive filesystem, but I guess it must be
-terribly frustrating for a user to have the tool say "your repo is so
-broken that I'm not even going to show you what's it in".
-
-Now, it doesn't solve the problem of people having case-colliding
-filenames on purpose ...
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Tested-by: Jens Lehmann <Jens.Lehmann@web.de>
