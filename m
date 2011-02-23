@@ -1,88 +1,86 @@
-From: Johan Herland <johan@herland.net>
-Subject: RFD: Handling case-colliding filenames on case-insensitive filesystems
-Date: Wed, 23 Feb 2011 18:11:45 +0100
-Message-ID: <201102231811.45948.johan@herland.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
+Date: Wed, 23 Feb 2011 12:18:06 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102231213280.26358@xanadu.home>
+References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
+ <1297304069-14764-1-git-send-email-pclouds@gmail.com>
+ <20110218022701.GA23435@elie>
+ <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
+ <20110218092518.GB30648@elie> <7vei75p3zr.fsf@alter.siamese.dyndns.org>
+ <20110219111103.GA1841@elie> <20110222155637.GC27178@sigill.intra.peff.net>
+ <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
+ <20110223045143.GA11846@sigill.intra.peff.net>
+ <7vlj16aeih.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 23 18:11:55 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 23 18:18:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsIFm-0000Og-N6
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 18:11:55 +0100
+	id 1PsILu-0004tf-Br
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 18:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932331Ab1BWRLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 12:11:49 -0500
-Received: from smtp.opera.com ([213.236.208.81]:37309 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755264Ab1BWRLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 12:11:48 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p1NHBk0f031131
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 23 Feb 2011 17:11:46 GMT
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
+	id S1755331Ab1BWRSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 12:18:08 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:30101 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755210Ab1BWRSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 12:18:07 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mo-mrz23.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LH20074AYPFNM10@vl-mo-mrz23.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 23 Feb 2011 12:17:39 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vlj16aeih.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167705>
 
-Hi,
+On Wed, 23 Feb 2011, Junio C Hamano wrote:
 
-At $dayjob we recently had a problem where a developer pushed a commit 
-that added new files, two of which were named "foobar.TXT" 
-and "FOOBAR.txt". When this commit (or anything based on it) is checked 
-out by one of our Windows developers, Git maps two files in its index 
-to a single file on the filesystem, and ends up reporting a diff on one 
-of those files. The diff won't go away unless one (or both) of the 
-case-colliding files is removed from the repo. Obivously, the 
-persisting diff prevents the developer from easily rebasing, switching 
-branches, merging, bisecting and a number of other useful tasks.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Feb 22, 2011 at 11:30:41AM -0800, Junio C Hamano wrote:
+> >
+> >> > Speaking of Makefiles, one downside to all of this directory
+> >> > segmentation is that you can't run "make" from the subdirectories.
+> >> 
+> >> I had an impression that "make -C lib/" would be one of the goals, iow,
+> >> when we split the directory structure, the next step would be to split the
+> >> top-level Makefile so that each directory is covered by its own Makefile,
+> >> just like Documentation/ is already usable that way.
+> >
+> > Ugh. I am not thrilled at the prospect of more recursive make.
+> 
+> Likewise. Notice that I have consistently been unthrilled when people
+> started talking about splitting the source code tree?
 
-The root of the problem is that the case-colliding files were added in 
-the first place, and this should obviously be prevented in projects 
-that aim to be compatible with case-insensitive filesystems. To that 
-end, I'm currently writing an update hook which will prevent 
-case-colliding files from being pushed to our central repo.
-
-However, given that this has already happened, how can we design Git to 
-handle this situation more gracefully. In other words, how can we 
-better handle checking out filenames that collide on case-insensitive 
-filesystems?
-
-My first idea was to simply refuse checking out trees with 
-case-colliding filenames. I.e. when core.ignoreCase is enabled, we 
-check whether any of the files we're about to checkout map to the same 
-filesystem representation, and if they do, we abort the checkout and 
-complain loudly to the user. However, that doesn't really help the user 
-at all. Failure to checkout would only make it much harder to fix the 
-issue.
-
-A colleague suggested instead that Git should notice that the collision 
-will occur, and work around the failure to represent the repository 
-objects in the file system with a one-to-one match. Either by checking 
-out only _one_ of the colliding files, or by using a non-colliding name 
-for the second file. After all, Git already has functionality for 
-manipulating the file contents on checkout (CRLF conversion). Doesn't 
-it make sense to add functionality for manipulating the _directory_ 
-contents on checkout as well? Even if that makes sense, I'm not sure 
-that implementing it will be straightforward.
-
-Are there better suggestions on how to deal with this?
+Maybe that would be wiser to consider an initial set of patches as those 
+which were proposed to only do the simple file move first, then wait for 
+the dust to settle before doing more changes.  Doing too much in one go 
+is inevitably going to bounce against the human tendency to resist any 
+kind of change, good or bad.
 
 
-Thanks,
+Nicolas
 
-...Johan
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+
+
+
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
