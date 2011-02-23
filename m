@@ -1,116 +1,131 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: The future of gitweb (long term goals)
-Date: Wed, 23 Feb 2011 11:54:18 +0100
-Message-ID: <4D64E75A.3050506@drmicha.warpmail.net>
-References: <201102142039.59416.jnareb@gmail.com> <4D5A42B2.3090603@drmicha.warpmail.net> <201102212306.39084.jnareb@gmail.com>
+Subject: Re: libreoffice merge(tool?) issue #3 ...
+Date: Wed, 23 Feb 2011 12:18:42 +0100
+Message-ID: <4D64ED12.5050802@drmicha.warpmail.net>
+References: <1298388877.32648.171.camel@lenovo-w500>	 <4D63F2C5.2080505@drmicha.warpmail.net> <1298398479.32648.184.camel@lenovo-w500>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, John Hawley <warthog9@kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 23 11:57:44 2011
+Cc: git@vger.kernel.org, kendy@novell.com,
+	Norbert Thiebaud <nthiebaud@gmail.com>
+To: michael.meeks@novell.com
+X-From: git-owner@vger.kernel.org Wed Feb 23 12:22:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsCPf-0003nS-1W
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 11:57:43 +0100
+	id 1PsCnE-000694-45
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 12:22:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753814Ab1BWK5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 05:57:37 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:59705 "EHLO
+	id S1752141Ab1BWLV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 06:21:59 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33809 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753755Ab1BWK5g (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 05:57:36 -0500
+	by vger.kernel.org with ESMTP id S1751173Ab1BWLV6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 06:21:58 -0500
 Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DC76C20BB3;
-	Wed, 23 Feb 2011 05:57:33 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 23 Feb 2011 05:57:33 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=4yw+SEcEVc3Y5f6usP/KZjFT2w4=; b=rtKPgwdwpgLf50c73QoVRh9vSpF7A74Ahg5FaTcSVm990qWm7rx7NToc5IOGRNzDxaHjMwnapOBrOv8FB0nA+sbYAasxQG3e+4kxAaYOarsJu53tyE8YAlwinYzABv32XuZjZ7/pc3W0gx+Fs0WYXL5tZdhZMVvNXOboTQqC1tY=
-X-Sasl-enc: kjM9ewayzRKBEiHQw2ySX8QsVzoZnfU9HWyQvUFIeig1 1298458653
+	by gateway1.messagingengine.com (Postfix) with ESMTP id DDCFF20B0C;
+	Wed, 23 Feb 2011 06:21:57 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 23 Feb 2011 06:21:57 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=nseZWfLblk8evIjdQbkTpIUuFgQ=; b=LSTjENSfV38a4yEHci263Etqdiht9ezN2ZjolJwJua19mvbPNPLFM1291v/z/Yo33Qzd35csZX/PCbH/NMTGZAwO/Bz1nNcvuZZcQDjAZqIGdYBY5zn4QvpJRsD05AE01T+VWSLvTH7kF9rlqxxktDXoJ/3uwVFAUsBHm52sYmg=
+X-Sasl-enc: cvROf/upUUVUrNO4dQPPXrXUk9DvrVwPY5iM0XAlj9DQ 1298460117
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4B9DB401100;
-	Wed, 23 Feb 2011 05:57:33 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2D159443035;
+	Wed, 23 Feb 2011 06:21:57 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <201102212306.39084.jnareb@gmail.com>
+In-Reply-To: <1298398479.32648.184.camel@lenovo-w500>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167687>
 
-Jakub Narebski venit, vidit, dixit 21.02.2011 23:06:
-> On Tue, 15 Feb 2011, Michael J Gruber wrote:
->> Jakub Narebski venit, vidit, dixit 14.02.2011 20:39:
+Michael Meeks venit, vidit, dixit 22.02.2011 19:14:
+> Hi Michael,
 > 
->>> Now that we are talking about future of git, including breaking some
->>> of backwards compatibility bugs / misdesigns for 1.8.0, perhaps it is
->>> the time to discuss long term goals and the future of gitweb.
->> ...
->>> Current requirements are:
->>> - Perl 5.8.x (for proper Unicode / UTF-8 support)
->>> - core Perl modules: CGI, Encode, Fcntl, File::Find, File::Basename,...
->>> - non-core Perl modules optional, needed for some of extra features
->>> - backward compatibility (query params and path_info URLs)
->>
->> I'd second that this is important for adaption by some main users.
+> On Tue, 2011-02-22 at 18:30 +0100, Michael J Gruber wrote:
+>> I get thousands of conflicts. Have the branches moved since your post?
+>> It may be better to give us sha1 or stable tags.
 > 
-> You mean here backward compatibility of API (i.e. old links keep working),
-> isn't it?
-
-Yep, the last item.
-
+> 	Nope; there are thousands of conflicts; a subset of these are (I would
+> like to think ;-) erroneous; but I'm picking out individual files with
+> problems that I can repeat easily and that have (I hope) simple history
+> to try to isolate the problems for you.
 > 
->>> - easy installation even without admin rights
->>> - scanning for repositories (as an option)
->>> - lightweight
->>
->> All of these are important for instaweb also. 
+>> Are you doing any builds before merging?
 > 
-> Nowadays git-instaweb uses _installed_ gitweb, so neither easy 
-> installation, nor installing / running without admin rights is necessary
-> for use of gitweb in git-instaweb.  Strictly speaking neither is scanning
-> for repositories; I think git-isnatweb could generate file with list of
-> repositories (with repository) to show.
+> 	Builds of what ? git - no; LibreOffice - sure, it builds before the
+> merge - and then there is a huge slew of work to do to make it build
+> afterwards ;-) but then that is not so suprising.
 
-Cool, I didn't know, but it's a great feature.
-By "easy installation" I mean being able to use it without having to
-configure a "central" web server, i.e. just the way a git+gitweb in
-$HOME can run instaweb without admin rights.
+Builds of LO, naturally. The point is that possibly one branch tracks
+some build products that the other doesn't track - e.g., autogenerated
+make or autoconf stuff etc. (This happens easily when you change your
+build chain.) That would lead to a message like that:
 
->> I consider instaweb a very
->> underrated feature! (It also needs some works of love, not just
->> appreciation, of course.)
-> 
-> Beside adding support for new web servers (like recently added 'plackup'),
-> what do you thing needs to be done?
+> 	Anyhow - thanks for looking at it; can you replicate the suprising
+> result in that file: ucb/source/ucp/ext/makefile.mk ? what does
+> 'refusing to loose untracked file' mean in that context ?
 
-E.g., using an installed gitweb - I just learned it does that already!
+Say, you build on branch A, that generates an untracked file foo, but
+branch B (which you want to merge) tracks that. Merges refuses to
+overwrite foo (even though A does not have foo) so that you don't loose
+the contents of the untracked file.
 
-Also, the graph viewer, i.e. including it as a module with the same
-"looks" as the rest of gitweb.
+But I'm really wondering whether we're merging the same revs. As I
+mentioned, I don't see that branch in "stage" that you're merging, only
+"stage/ooo/dev300", see below. Also, I'm getting
 
-I don't know how customisable gitweb's layout is right now (CSS). That
-might be important for some. Personally, whenever I'm on the more
-"modern" repo hosters, I'm longing for the clean interface and high
-information density of gitweb.
+AA ucb/source/ucp/ext/makefile.mk
 
->>> 1. Splitting gitweb into modules (packages), for better maintainability.
->>
->> Also, this may help including other optional parts. The graph viewer as
->> used on repo.or.cz sets gitweb apart from quite a few alternatives and
->> would be used more widely if it were an optional module shipping with
->> gitweb. Just imagine instaweb with graphs ;)
->> Also, being part of gitweb, the viewer may attract a few coders.
-> 
-> Well, adding anything major (like e.g. write functionality, output caching;
-> perhaps graph of history is also in this category) really require split
-> gitweb.  It is getting hard to maintain gitweb as it is now.
+which has a somewhat surprising markup (the left side introduces no
+change, the right side does - should have a trivial resolution), without
+building LO before.
 
-100% agreed. Also, smaller modules make it easier for new gitweb
-contributors to join and help.
+Note that you're merging branches which are way off,
 
-Cheers,
+git rev-list --count --left-right
+origin/integration/dev300_m98...stage/ooo/dev300
+3566    3126
+
+and that the merge base is quite old:
+
+af61642 (#i105937# Fixed a few remaining gradient glitches, 2010-01-16)
+
+The latter explains many of the problems (and the "surprising" above):
+compared to the merge base, both branches add
+ucb/source/ucp/ext/makefile.mk as a *new* file with different contents,
+so that the conflict can't be resolved automatically, and that's how it
+is marked up.
+
+Is that merge really what you're after?
+
+Michael
+
+Branches with your recipe:
+
+* integration/dev300_m98
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/feature/bootstrap-build
+  remotes/origin/feature/currency-64bit
+  remotes/origin/feature/gnumake2.1
+  remotes/origin/feature/helppack
+  remotes/origin/feature/layout
+  remotes/origin/feature/pptx-export-ooxml11
+  remotes/origin/feature/rodatastrings
+  remotes/origin/feature/sqlite
+  remotes/origin/feature/winshrink
+  remotes/origin/integration/dev300_m98
+  remotes/origin/libreoffice-3-3
+  remotes/origin/libreoffice-3-3-0
+  remotes/origin/libreoffice-3-3-1
+  remotes/origin/master
+  remotes/stage/ooo/dev300
+  remotes/stage/ooo/dev300_m100
+  remotes/stage/premerge/dev300_m98
+
+
 Michael
