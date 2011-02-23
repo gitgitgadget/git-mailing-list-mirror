@@ -1,76 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/6] fetch/pull: Add the 'on-demand' value to the
- --recurse-submodules option
-Date: Wed, 23 Feb 2011 17:14:30 -0600
-Message-ID: <20110223231430.GD6819@elie>
-References: <4D656F25.5090007@web.de>
- <4D656F77.7060306@web.de>
- <20110223231210.GC6819@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/6] Submodules: Add 'on-demand' value for the
+ 'fetchRecurseSubmodule' option
+Date: Wed, 23 Feb 2011 15:16:21 -0800
+Message-ID: <7vei6y5ol6.fsf@alter.siamese.dyndns.org>
+References: <4D656F25.5090007@web.de> <4D656FB0.7040904@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
 	Marc Branchaud <marcnarc@xiplink.com>,
-	Kevin Ballard <kevin@sb.org>, Heiko Voigt <hvoigt@hvoigt.net>
+	Kevin Ballard <kevin@sb.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
 To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Feb 24 00:14:44 2011
+X-From: git-owner@vger.kernel.org Thu Feb 24 00:16:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsNut-00076v-Cg
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 00:14:43 +0100
+	id 1PsNwo-0008C3-Su
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 00:16:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126Ab1BWXOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 18:14:37 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:53785 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752735Ab1BWXOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 18:14:36 -0500
-Received: by vws12 with SMTP id 12so3578631vws.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 15:14:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=zX5mWcAGH8vp47NIhoVSHe2bCPeJ8TAk2LkPsjjoeKI=;
-        b=sNu/vjDBAivkdvYZRX9X/grKwln5gCZcPoReaKLiRvSK4V4A36/ceK3lhpIWzztfNx
-         cgwV72bO8rHWwmAPtkHcf5xcRA2bYWkc54sXX0U+htGBh6CePNIZ/OXsJWccLC8NEXe/
-         tMcvP/G/Id7+HnNTnp6kJem5jCpeFoxunDjy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=I7YrPwFhOXbGB8gu3bxQTDCJWp4JjIUYt0iUoFdv3VFk05iT3Iel6T/J4gyNxPO2ol
-         08ZZLKM5/g6c4G/0ghyeL4Sl3kNGkMXd5jWaeyb30XfiOQvMtsbOA/z5lgrWHB4v54QM
-         Sx8QpOxBv3gtxl5ZuP+O/PDSs3xX/6ceWX0c8=
-Received: by 10.52.166.1 with SMTP id zc1mr265218vdb.14.1298502875478;
-        Wed, 23 Feb 2011 15:14:35 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id a6sm3851291vcm.22.2011.02.23.15.14.33
-        (version=SSLv3 cipher=OTHER);
-        Wed, 23 Feb 2011 15:14:34 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110223231210.GC6819@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751494Ab1BWXQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 18:16:38 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63207 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751417Ab1BWXQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 18:16:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 971CF4363;
+	Wed, 23 Feb 2011 18:17:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=unsn0UMUylV4lcO9tI3Laywr13Y=; b=VHNU1B
+	spGHX2jlFzDWH2NcrFmMTXNAnPr10TPygmkczGcBwqWjcuj/BuHJAH9xd87saPoL
+	fv2RRyAsw8hptYCu8icxTAyPuDfxdthZEnHRRsrDYMWwThJYekGWzumy76DKVYlq
+	4G6s/zAYyY6wRzOqLs+gGVZfVT8Us/lZBbJC0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m78j++kv81lIe4Cn5fblerlWTIzY70t3
+	A5BQpPr8IBweHO+s3bSubGclb2UD4qQP2Ooho2HnVpXfgNpTIFD30qk+kBxvV3Jv
+	UQtyKIybb3er3k1RGsvGZYJxs+pnEwop4g+v50ZYs157D82ZnJz+s/mCDZEFY+xo
+	CUVa2565jrU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2B4CB435B;
+	Wed, 23 Feb 2011 18:17:43 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 405EE4355; Wed, 23 Feb 2011
+ 18:17:35 -0500 (EST)
+In-Reply-To: <4D656FB0.7040904@web.de> (Jens Lehmann's message of "Wed\, 23
+ Feb 2011 21\:36\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DAE0718-3FA3-11E0-A957-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167737>
 
-Jonathan Nieder wrote:
-> Jens Lehmann wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
->>             As fetch and pull now by default just fetch those submodules
->> for which new commits have been fetched in the superproject, a command
->> line option to enforce that behavior is needed to be able to override
->> configuration settings.
->
-> Probably this should go first in the series (the usual procedure:
-> first command line for easy testing, then configuration for routine
-> use, then defaults).
+> diff --git a/submodule.c b/submodule.c
+> index cccd728..b477c3c 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -113,7 +113,7 @@ int parse_submodule_config_option(const char *var, const char *value)
+>  		if (!config)
+>  			config = string_list_append(&config_fetch_recurse_submodules_for_name,
+>  						    strbuf_detach(&submodname, NULL));
+> -		config->util = git_config_bool(var, value) ? (void *)1 : NULL;
+> +		config->util = (void *)(size_t)parse_fetch_recurse_submodules_arg(value);
 
-Ah, sorry for the nonsense.  The series already follows that order.
+What is this double-cast about?
+
+> @@ -376,8 +376,13 @@ int fetch_populated_submodules(int num_options, const char **options,
+> ...
+> +				if ((size_t)fetch_recurse_submodules_option->util == RECURSE_SUBMODULES_OFF)
+>  					continue;
+> +				if ((size_t)fetch_recurse_submodules_option->util == RECURSE_SUBMODULES_ON_DEMAND) {
+
+Likewise here; size_t feels a strange type to cast to in this comparison
+between (void *) and an enum, no?
