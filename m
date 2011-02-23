@@ -1,131 +1,80 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: libreoffice merge(tool?) issue #3 ...
-Date: Wed, 23 Feb 2011 12:18:42 +0100
-Message-ID: <4D64ED12.5050802@drmicha.warpmail.net>
-References: <1298388877.32648.171.camel@lenovo-w500>	 <4D63F2C5.2080505@drmicha.warpmail.net> <1298398479.32648.184.camel@lenovo-w500>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, kendy@novell.com,
-	Norbert Thiebaud <nthiebaud@gmail.com>
-To: michael.meeks@novell.com
-X-From: git-owner@vger.kernel.org Wed Feb 23 12:22:04 2011
+From: Luka Kac <luka.kac@sis.si>
+Subject: Re: Problem with git shell on mac
+Date: Wed, 23 Feb 2011 12:25:29 +0100
+Message-ID: <2F352739-EDBA-44A7-8B8C-C6B41DB386F5@sis.si>
+References: <60BD7CF3-7781-4BEC-9545-8B653F62F32E@sis.si> <AANLkTikuYHY9a+PWp63fP_+Up1YaW5gTH2LiQq7kQV1V@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 23 12:25:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsCnE-000694-45
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 12:22:04 +0100
+	id 1PsCqj-0007c4-3o
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 12:25:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141Ab1BWLV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 06:21:59 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33809 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751173Ab1BWLV6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 06:21:58 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DDCFF20B0C;
-	Wed, 23 Feb 2011 06:21:57 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 23 Feb 2011 06:21:57 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=nseZWfLblk8evIjdQbkTpIUuFgQ=; b=LSTjENSfV38a4yEHci263Etqdiht9ezN2ZjolJwJua19mvbPNPLFM1291v/z/Yo33Qzd35csZX/PCbH/NMTGZAwO/Bz1nNcvuZZcQDjAZqIGdYBY5zn4QvpJRsD05AE01T+VWSLvTH7kF9rlqxxktDXoJ/3uwVFAUsBHm52sYmg=
-X-Sasl-enc: cvROf/upUUVUrNO4dQPPXrXUk9DvrVwPY5iM0XAlj9DQ 1298460117
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2D159443035;
-	Wed, 23 Feb 2011 06:21:57 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <1298398479.32648.184.camel@lenovo-w500>
+	id S1752526Ab1BWLZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 06:25:36 -0500
+Received: from sis-gw.amis.net ([212.18.35.94]:61766 "EHLO
+	sishost.gostovanje.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752279Ab1BWLZf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 06:25:35 -0500
+Received: from localhost ([127.0.0.1] helo=sishost.gostovanje.com)
+	by sishost.gostovanje.com with esmtpa (Exim 4.69)
+	(envelope-from <luka.kac@sis.si>)
+	id 1PsCnG-0000by-PD; Wed, 23 Feb 2011 12:22:06 +0100
+Received: from [192.168.1.141] ([127.0.0.2] helo=[192.168.1.141]) with
+	IPv4:26 by sishost.gostovanje.com; 23 Feb 2011 12:22:06 +0100
+In-Reply-To: <AANLkTikuYHY9a+PWp63fP_+Up1YaW5gTH2LiQq7kQV1V@mail.gmail.com>
+X-Mailer: Apple Mail (2.1082)
+X-Assp-Whitelisted: Yes
+X-Assp-Envelope-From: luka.kac@sis.si
+X-Assp-Intended-For: jaysoffian@gmail.com
+X-Assp-ID: sishost.gostovanje.com ()
+X-Assp-Version: 1.7.1.3(1.0.1)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - sishost.gostovanje.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - sis.si
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167688>
 
-Michael Meeks venit, vidit, dixit 22.02.2011 19:14:
-> Hi Michael,
+
+On 22.2.2011, at 23:34, Jay Soffian wrote:
+
+> On Tue, Feb 22, 2011 at 9:39 AM, Luka Kac <luka.kac@sis.si> wrote:
+>> Hi guys.
+>> 
+>> I have a problem with git on a Mac os server.
+>> a program is trying to run git shell with this command :
+>> 
+>> git shell -c git-upload-pack '/path/to/repo.git'
+>> 
+>> the process dies on an assert in exec_cmd.c :
+>> 
+>> Assertion failed: (argv0_path), function system_path, file exec_cmd.c, line 27.
+>> error: git-shell died of signal 6
+>> 
+>> 
+>> what could be wrong ? is the argv0_path path to the git-upload-pack executable ? I'm pretty sure that it is in path because ssh git@server \echo $PATH contains the path to git.
+>> 
+>> What else should I do ?
 > 
-> On Tue, 2011-02-22 at 18:30 +0100, Michael J Gruber wrote:
->> I get thousands of conflicts. Have the branches moved since your post?
->> It may be better to give us sha1 or stable tags.
+> Your binary appears to have been compiled with RUNTIME_PREFIX set.
+> This is (AFAIK) only enabled by default under Cygwin/MinGW. In any
+> case, I believe it requires that you invoke git using an absolute
+> path.
 > 
-> 	Nope; there are thousands of conflicts; a subset of these are (I would
-> like to think ;-) erroneous; but I'm picking out individual files with
-> problems that I can repeat easily and that have (I hope) simple history
-> to try to isolate the problems for you.
+> Try /path/to/git shell  ...
 > 
->> Are you doing any builds before merging?
-> 
-> 	Builds of what ? git - no; LibreOffice - sure, it builds before the
-> merge - and then there is a huge slew of work to do to make it build
-> afterwards ;-) but then that is not so suprising.
+> j.
 
-Builds of LO, naturally. The point is that possibly one branch tracks
-some build products that the other doesn't track - e.g., autogenerated
-make or autoconf stuff etc. (This happens easily when you change your
-build chain.) That would lead to a message like that:
-
-> 	Anyhow - thanks for looking at it; can you replicate the suprising
-> result in that file: ucb/source/ucp/ext/makefile.mk ? what does
-> 'refusing to loose untracked file' mean in that context ?
-
-Say, you build on branch A, that generates an untracked file foo, but
-branch B (which you want to merge) tracks that. Merges refuses to
-overwrite foo (even though A does not have foo) so that you don't loose
-the contents of the untracked file.
-
-But I'm really wondering whether we're merging the same revs. As I
-mentioned, I don't see that branch in "stage" that you're merging, only
-"stage/ooo/dev300", see below. Also, I'm getting
-
-AA ucb/source/ucp/ext/makefile.mk
-
-which has a somewhat surprising markup (the left side introduces no
-change, the right side does - should have a trivial resolution), without
-building LO before.
-
-Note that you're merging branches which are way off,
-
-git rev-list --count --left-right
-origin/integration/dev300_m98...stage/ooo/dev300
-3566    3126
-
-and that the merge base is quite old:
-
-af61642 (#i105937# Fixed a few remaining gradient glitches, 2010-01-16)
-
-The latter explains many of the problems (and the "surprising" above):
-compared to the merge base, both branches add
-ucb/source/ucp/ext/makefile.mk as a *new* file with different contents,
-so that the conflict can't be resolved automatically, and that's how it
-is marked up.
-
-Is that merge really what you're after?
-
-Michael
-
-Branches with your recipe:
-
-* integration/dev300_m98
-  master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/feature/bootstrap-build
-  remotes/origin/feature/currency-64bit
-  remotes/origin/feature/gnumake2.1
-  remotes/origin/feature/helppack
-  remotes/origin/feature/layout
-  remotes/origin/feature/pptx-export-ooxml11
-  remotes/origin/feature/rodatastrings
-  remotes/origin/feature/sqlite
-  remotes/origin/feature/winshrink
-  remotes/origin/integration/dev300_m98
-  remotes/origin/libreoffice-3-3
-  remotes/origin/libreoffice-3-3-0
-  remotes/origin/libreoffice-3-3-1
-  remotes/origin/master
-  remotes/stage/ooo/dev300
-  remotes/stage/ooo/dev300_m100
-  remotes/stage/premerge/dev300_m98
-
-
-Michael
+Thank you. That worked.
