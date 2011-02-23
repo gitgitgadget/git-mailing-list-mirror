@@ -1,101 +1,81 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH v2 00/31] refactor rebase
-Date: Wed, 23 Feb 2011 06:26:33 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102230613040.5290@debian>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vd3mz33xb.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102111811300.26684@debian>
- <alpine.DEB.2.00.1102132047500.4253@debian> <alpine.DEB.2.00.1102220847500.5290@debian> <7vd3mjdge1.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: gitk with the latest branch makes the system unusable for some
+ time
+Date: Wed, 23 Feb 2011 12:28:48 +0100
+Message-ID: <4D64EF70.9060600@drmicha.warpmail.net>
+References: <AANLkTim3MW0PmD5_tra4nmRapfgHJ9K_usJWGVK3AOUC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 23 12:26:44 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Justin Mattock <justinmattock@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 23 12:32:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsCrj-0008Ah-94
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 12:26:43 +0100
+	id 1PsCx3-0002Ki-Di
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 12:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab1BWL0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 06:26:39 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:41381 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752297Ab1BWL0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 06:26:38 -0500
-Received: by qwd7 with SMTP id 7so3636891qwd.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 03:26:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=nQrc3Zo3jfnJ/JpvGCYHv8a2FVqJw3bO/5EYKdT6t2A=;
-        b=sGMMHNyLsTmNVAUqkiW5uzcFPT+lsfwIho7Sup90+pYidkGKGszpGhL9IaJnBwX9mT
-         AjKEPRoRnj619mwTvULDZY0NWPjQfaVTwQRtDaS3KYGeUp/chBNy8pKzkCT2scFreCle
-         yPZJAmMFSP+xdyq1KVpCjux2WuPAkjgcRyuXw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=Nx7FOQN+OKXNowSz3ZeTR4HLsToCjS6UwzBlT8HeIc24imgycFi+qu99c2KKpbpqd4
-         7vV1SM62+r/kcAcWK9QPpaD1LccawTKdyIMCK+089GA2gNzlS6LX65Uu8Q1NBY/8SLBS
-         XIUXR1t9EYJJcJShgZ09AHEs12K4HMJwQ9tC4=
-Received: by 10.229.246.196 with SMTP id lz4mr2950467qcb.39.1298460397329;
-        Wed, 23 Feb 2011 03:26:37 -0800 (PST)
-Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id y17sm5400570qci.9.2011.02.23.03.26.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 23 Feb 2011 03:26:36 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <7vd3mjdge1.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1752929Ab1BWLcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 06:32:08 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60591 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752847Ab1BWLcG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 06:32:06 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B96682087D;
+	Wed, 23 Feb 2011 06:32:05 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 23 Feb 2011 06:32:05 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=uVGbSL3jDoEpu7SC8XKJG3eex1k=; b=KmC0HRvTfZiF2smKCVWAph+/G1C69ARhPJ4Jm7Sa3ZZCUgkXLMoAVSZ69lDGWl6HEiQP8Zwk/WE0Z/0hXKa0LPlVxVtv437eV486qJNiLwxoHH5o9s/O2rCoPRs7EH2dl26hmCFFm6/iRxLfjitsJgkffOz7osjhMJFUx3ekBkg=
+X-Sasl-enc: 6ah7WhFQiZjdWAgtYud5uRnGhpKQekwUPR6sOejiC9JI 1298460724
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id CA4B0403F90;
+	Wed, 23 Feb 2011 06:32:02 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <AANLkTim3MW0PmD5_tra4nmRapfgHJ9K_usJWGVK3AOUC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167690>
 
-On Tue, 22 Feb 2011, Junio C Hamano wrote:
+Justin Mattock venit, vidit, dixit 23.02.2011 00:53:
+> not sure if there is any reports of this or not, basically using gitk
+> on my macbookpro2,2 makes the system extremely slow and unusable
+> (after a while can finally use the system)
 
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+..and "the latest branch" is master,next or pu from when?
+
+Is that gitk on the (which) kernel repo?
+
+I have no trouble with gitk (today's next) on git.git (nor on the
+LibreOffice beast).
+
+> in dmesg I am seeing this:
 > 
-> > On Sun, 13 Feb 2011, Martin von Zweigbergk wrote:
-> > ...
-> >> This would apply on top of mz/rebase after dropping 95135b0 (rebase:
-> >> stricter check of standalone sub command, 2011-02-06). If you agree
-> >> with it, I will include it in a future re-roll.
-> >
-> > Any opinions about this, anyone? I have one example: I was rebasing
-> > some things the other day where I thought there would be no conflicts.
-> > After applying a number of patches, it turned out there were
-> > conflicts. I think allowing 'git rebase --continue -sours' would have
-> > been useful in that case. It's rare enough that I don't care much,
-> > though.
-> 
-> Hmm, do you think applying -sours throughout to the rest of the series
-> would have been a safe thing, or do you think you would rather wanted to
-> see -sours applied only to that particular one?
+> [ 6089.363045] NetworkManager invoked oom-killer: gfp_mask=0x84d0,
+> order=0, oom_adj=0, oom_score_adj=0
+> [ 6089.363050] Pid: 2107, comm: NetworkManager Not tainted
+> 2.6.38-rc5-00101-gebad2c2 #2
+> [ 6089.363052] Call Trace:
+> [ 6089.363062]  [<ffffffff810c563c>] ? T.547+0x6a/0x180
+> [ 6089.363066]  [<ffffffff810c5799>] ? T.544+0x47/0x24c
+> [ 6089.363070]  [<ffffffff810c5beb>] ? out_of_memory+0x24d/0x2f8
+> [ 6089.363074]  [<ffffffff810c9142>] ? __alloc_pages_nodemask+0x55c/0x696
+> [ 6089.363079]  [<ffffffff810dc985>] ? handle_pte_fault+0x2cd/0x73f
+> [ 6089.363084]  [<ffffffff8104e522>] ? pte_alloc_one+0x1e/0x3c
+> [ 6089.363088]  [<ffffffff810c8406>] ? __free_pages+0x1b/0x24
+> [ 6089.363091]  [<ffffffff810ddfc1>] ? __pte_alloc+0x1d/0xcd
+> [ 6089.363094]  [<ffffffff810de185>] ? handle_mm_fault+0x114/0x164
+> [ 6089.363099]  [<ffffffff8144973d>] ? do_page_fault+0x3dc/0x401
+> [ 6089.363104]  [<ffffffff81112eef>] ? mntput_no_expire+0x8d/0x13f
+> [ 6089.363108]  [<ffffffff81112fc2>] ? mntput+0x21/0x23
+> [ 6089.363112]  [<ffffffff810fb8dc>] ? fput+0x20e/0x21d
+> [ 6089.363116]  [<ffffffff81446a25>] ? page_fault+0x25/0x30
 
-In this particular case, I actually wanted it on the rest of the
-series, but it was such a degenerate case that it doesn't really
-matter (I just wanted the history graph for testing and didn't care
-about the trees).
+So you think gitk took down your Networkmanager?
 
-> > The reason I'm asking is that I have a patch that fixes the problems
-> > with the command line parsing that Johannes Sixt pointed out in
-> > another mail on this thread and would like to know if I should make it
-> > apply on top of this patch or not.
-> 
-> It is a good idea to build a change you are more certain of first,
-> excluding the ones you have doubts about.
-
-True. Will do.
-
-Let's leave this patch for now then and get back to it in a few years
-when/if someone actually requests it ;-). I agree that it's not clear
-at this point what the desired behavior is.
+Michael
