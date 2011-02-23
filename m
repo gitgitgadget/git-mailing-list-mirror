@@ -1,86 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/6] Teach fetch/pull the on-demand mode and make it the
- default
-Date: Wed, 23 Feb 2011 17:21:56 -0600
-Message-ID: <20110223232156.GE6819@elie>
-References: <4D656F25.5090007@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] fetch/pull: Don't recurse into a submodule when
+ commits are already present
+Date: Wed, 23 Feb 2011 15:21:53 -0800
+Message-ID: <7vaahm5oby.fsf@alter.siamese.dyndns.org>
+References: <4D656F25.5090007@web.de> <4D656FC7.2060201@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
 	Marc Branchaud <marcnarc@xiplink.com>,
-	Kevin Ballard <kevin@sb.org>, Heiko Voigt <hvoigt@hvoigt.net>
+	Kevin Ballard <kevin@sb.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
 To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Feb 24 00:22:09 2011
+X-From: git-owner@vger.kernel.org Thu Feb 24 00:22:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsO24-0002qD-Jo
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 00:22:08 +0100
+	id 1PsO2D-0002vv-1B
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 00:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753852Ab1BWXWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 18:22:03 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:39703 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753485Ab1BWXWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 18:22:02 -0500
-Received: by vws12 with SMTP id 12so3583162vws.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 15:22:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=HG8gSi9vZvly9jULt792fD/KCswml7cc9KfD7ceHtNM=;
-        b=kP85jMs5vD1N4pn+w90+DnsYRr0We1J7hCy1QTcmSbeTQYbGN8bAWgLGuvVDTQyZX9
-         t7iCv0xxtxEUGf7DcFvk/CwH/4rWsBhpiLWxWm+IbZboZWONWml/KpM7r7QApTKTiQzv
-         VsCLX0r9LBMnECUNViCHrXU8quvSWk86rYTvk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=qiLH/9HwZReF5S398tqWdux5lvdV0GxUe7d303jyFEEoZo6ZRbg2q8R4mmjDY6cqdm
-         u6t89VSI9BUKiGwQ+Ch32PXHd5zny4e3481XZtmdG6vJPmMsXa5a7zLLgj1npbiYiB29
-         hiH9yeq0xk0qE0K0bIukdX7Kh8xx0T7b2o2RA=
-Received: by 10.52.96.5 with SMTP id do5mr225098vdb.134.1298503321039;
-        Wed, 23 Feb 2011 15:22:01 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id k39sm3850851vcr.2.2011.02.23.15.21.59
-        (version=SSLv3 cipher=OTHER);
-        Wed, 23 Feb 2011 15:22:00 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D656F25.5090007@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754544Ab1BWXWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 18:22:11 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46721 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753982Ab1BWXWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 18:22:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BBCDB4420;
+	Wed, 23 Feb 2011 18:23:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hTPQn+EvAvdz/IVp/NNG/PoqD1o=; b=ku+lfz
+	zpGBeoosAwzedBnwmUDPNQ0MRrb0fHZKPcJThOb9ovhdMvzemYqvRrc2EDaQMakP
+	KZ15NfJZOcmF4vxBafUI483+90vDYwaD3ykR1jhEV2QNqXmtUbYusQBMlvrpSOWB
+	9n7YErXx1bkCMji7zjVREn9ppmWSXY8ZqBLtg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CHiFS3BM4+MA6uMbqQbljh0XniU755au
+	wLZhNKFu9LlV54v8MEWCNwa9M5Fq/6IS/13olq5ltn2hhRA3H0g4nREtiOCncFBQ
+	qhWHeIfYPOWB0aWiVJsGRv3koJkSUEoWTXPIGPKTEgSi1I4OJW3RzFT/MW30fRUX
+	Ont6lN7IzVU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5858B441C;
+	Wed, 23 Feb 2011 18:23:15 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D5724417; Wed, 23 Feb 2011
+ 18:23:07 -0500 (EST)
+In-Reply-To: <4D656FC7.2060201@web.de> (Jens Lehmann's message of "Wed\, 23
+ Feb 2011 21\:36\:23 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E3AF14C0-3FA3-11E0-9412-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167740>
 
-Jens Lehmann wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> *) The fetch is only done when the recorded submodule commit isn't
->    already present.
+> diff --git a/submodule.c b/submodule.c
+> index b477c3c..ddb0a29 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -263,6 +263,13 @@ void set_config_fetch_recurse_submodules(int value)
+>  	config_fetch_recurse_submodules = value;
+>  }
+>
+> +static int is_submodule_commit_present(const char *path, unsigned char sha1[20])
+> +{
+> +	if (!add_submodule_odb(path))
+> +		return lookup_commit_reference(sha1) != 0;
+> +	return 0;
+> +}
 
-I like this part a lot.
+Don't you need to prove the usual "reachabile from the refs" here, instead
+of just the presense of a commit object?
 
-> I tend to think that this is suited for 1.7.5 but don't have any
-> objections against holding it back until 1.8.0 either. What do
-> others think?
-
-I see no backward-compatibility to wait for this, but I would be more
-included to trust people using "git submodule update" heavily than I
-do.  The "submodule update" change could cause the following to break.
-Would that be disruptive?
-
-	cd submodule
-	git fetch --no-recurse-submodules
-	...
-
-	cd ..
-	bin/script-to-update-submodules-that-calls-submodule-update
-
-Thanks a lot for working on this.
-Jonathan
+If not, why not?
