@@ -1,110 +1,88 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH 6/6] submodule update: Don't fetch when the submodule commit
- is already present
-Date: Wed, 23 Feb 2011 21:36:47 +0100
-Message-ID: <4D656FDF.5050400@web.de>
-References: <4D656F25.5090007@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] completion: complete "git diff ...branc<TAB>"
+Date: Wed, 23 Feb 2011 13:43:08 -0800
+Message-ID: <7vlj1677gz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 23 21:36:54 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 23 22:43:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsLSA-0008Ft-0Z
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 21:36:54 +0100
+	id 1PsMUY-00022U-8L
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 22:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755794Ab1BWUgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 15:36:49 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:33417 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755780Ab1BWUgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 15:36:48 -0500
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate01.web.de (Postfix) with ESMTP id DCD80189C4F87;
-	Wed, 23 Feb 2011 21:36:47 +0100 (CET)
-Received: from [93.240.119.189] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1PsLS3-00063t-00; Wed, 23 Feb 2011 21:36:47 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <4D656F25.5090007@web.de>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18oarigYCq5N2HoBU4YtX9xJpD6kiZUjN8u0Mvl
-	o8wDBh2WXXgND6bN0vNkJ2bFlMtQL7118N0jNCjBzYTeQz2Zhn
-	sRlLY5QTJxY4A140hGAg==
+	id S1756029Ab1BWVnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 16:43:20 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56496 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753663Ab1BWVnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 16:43:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 373DC3750;
+	Wed, 23 Feb 2011 16:44:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=MVVZ
+	KcmJYww2f/bCYmF59gv8ff0=; b=mr99gXQC5++U9CIvRuSjvFis+S8DDPvY1iHM
+	KGvlPXEqNN44W8kEx73/UI0qPbi4a+BnMD4JdyzIVVuCx9kVTZSCd5fkgiD49s/U
+	RAV99111UCXLClOdrMyIjuRJZCtjjkrN1HzNIQeG/pAauTikHqboZ+swVEJ+G3bH
+	4RJZc1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	N+dD5TV1tABGgpFkJ/2cfHHB0mJ79QS9J+P7qx7YR6blVQbZjttT5ZRc+wWGfJZP
+	D95PlKiQUTwnUf207+FGXM+NovkfgSUAmVxByBSFAmcMWkSf48gXWVNymHMOYxX5
+	alfMODjCUN/nu0Q3HT3jQ6ReS7yFpbUryxuy5tNXgj8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 04990374E;
+	Wed, 23 Feb 2011 16:44:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C02CA374C; Wed, 23 Feb 2011
+ 16:44:23 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 16AEFB64-3F96-11E0-800D-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167728>
 
-If the commit to be checked out on "git submodule update" has already been
-fetched in the submodule there is no need to run "git fetch" again. Since
-"git fetch" recently learned recursion (and the new on-demand mode to
-fetch commits recorded in the superproject is enabled by default) this
-will happen pretty often, thereby making the unconditional fetch during
-"git submodule update" unnecessary.
+While doing a final sanity check before merging a topic Bsomething, it is
+a good idea to review what damage Bsomething branch would make, by running:
 
-If the commit is not present in the submodule (e.g. the user disabled the
-fetch on-demand mode) the fetch will be run as before.
+    $ git diff ...Bsomething
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+I however find myself often typing "git diff ...B<TAB>", seeing nothing
+happening and then repeatedly hitting <TAB>, saying "huh? <TAAAAAAAAB>!".
+
+This change would hopefully help me, and others like me.
+
+Even though there is no point in supporting "git diff A..B" (you can say
+"git diff A B" just fine), but reusing complete-revlist was the easiest
+and that form is supported as a benign but not so useful side effect.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-submodule.sh            |    2 +-
- t/t7406-submodule-update.sh |   20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletions(-)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 8b90589..ea49760 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -465,7 +465,7 @@ cmd_update()
- 			if test -z "$nofetch"
- 			then
- 				(clear_local_git_env; cd "$path" &&
--					git-fetch) ||
-+					(git rev-parse --verify $sha1 >/dev/null || git-fetch)) ||
- 				die "Unable to fetch in submodule path '$path'"
- 			fi
+ * I sent this out a while ago and have been using it ever since, but
+   totally forgot about it.  Likes, dislikes, alternatives?
 
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index bfb4975..ee3eec5 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -74,6 +74,26 @@ test_expect_success 'submodule update detaching the HEAD ' '
- 	)
- '
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-+apos="'";
-+test_expect_success 'submodule update does not fetch already present commits' '
-+	(cd submodule &&
-+	  echo line3 >> file &&
-+	  git add file &&
-+	  test_tick &&
-+	  git commit -m "upstream line3"
-+	) &&
-+	(cd super/submodule &&
-+	  head=$(git rev-parse --verify HEAD) &&
-+	  echo "Submodule path ${apos}submodule$apos: checked out $apos$head$apos" > ../../expected &&
-+	  git reset --hard HEAD~1
-+	) &&
-+	(cd super &&
-+	  git submodule update > ../actual 2> ../actual.err
-+	) &&
-+	test_cmp expected actual &&
-+	! test -s actual.err
-+'
-+
- test_expect_success 'submodule update --rebase staying on master' '
- 	(cd super/submodule &&
- 	  git checkout master
--- 
-1.7.4.1.190.g13e20
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 64341d5..cf56514 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1137,7 +1137,7 @@ _git_diff ()
+ 		return
+ 		;;
+ 	esac
+-	__git_complete_file
++	__git_complete_revlist
+ }
+ 
+ __git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
