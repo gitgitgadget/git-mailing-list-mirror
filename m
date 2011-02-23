@@ -1,111 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [1.8.0] Don't copy "submodule.<name>.update" to .git/config on
- submodule init
-Date: Wed, 23 Feb 2011 12:28:02 -0800
-Message-ID: <7v7hcq8pil.fsf@alter.siamese.dyndns.org>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <7vwrll57ha.fsf@alter.siamese.dyndns.org> <4D65660D.3040501@web.de>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH 0/6] Teach fetch/pull the on-demand mode and make it the default
+Date: Wed, 23 Feb 2011 21:33:41 +0100
+Message-ID: <4D656F25.5090007@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Feb 23 21:28:17 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 23 21:34:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsLJo-0003PM-Ln
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 21:28:17 +0100
+	id 1PsLQ9-00070X-Qu
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 21:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174Ab1BWU2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 15:28:12 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64544 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755272Ab1BWU2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 15:28:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 13D364E77;
-	Wed, 23 Feb 2011 15:29:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Glk85dRmAAwkJDT41E1KyDa7OGE=; b=vqDxea
-	lZS1WRHvRBna5KWXdzMsfDq42MnQV1nuzXklINQqQNACBRLvq2t/wCe4TAxMM+0z
-	uGj/Y7NQkv+OQJ4mos2JIZ3jMWZuMLMn9MMv5Gpbrp0ea7zDoPS+l3Zfa2l7HsD8
-	ITkZyj+yJrVljCiDzeQxGOBxPJ/lcOU47VMX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dBa7fSwabLl8qVhMGvoNwzAxi+dI7UuB
-	JI4+H0dCVjqZMB4mTrzgXDh0f1m0l8WwkuLGCJ3Ev5IjJ6L4GZO3L9j2BWsFVYtz
-	iOyM1Cpx+zOrGTCxgr35OvFFg8tDmQz4HtsKpA20DkzJ1IoZePjMQgVxFIjM+XQH
-	yWQWAil6i/A=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E5B9A4E6A;
-	Wed, 23 Feb 2011 15:29:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DC0804E65; Wed, 23 Feb 2011
- 15:29:16 -0500 (EST)
-In-Reply-To: <4D65660D.3040501@web.de> (Jens Lehmann's message of "Wed\, 23
- Feb 2011 20\:54\:53 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 97AF2686-3F8B-11E0-A690-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1755313Ab1BWUep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 15:34:45 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:50460 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754665Ab1BWUeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 15:34:44 -0500
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 90AF818933EB6;
+	Wed, 23 Feb 2011 21:33:41 +0100 (CET)
+Received: from [93.240.119.189] (helo=[192.168.178.43])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PsLP3-00023V-00; Wed, 23 Feb 2011 21:33:41 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18wAsGhjeocAcQnlIxNQCrd2d001NIZ15sbpZsx
+	ho8rYzOtqNbon1j+K6ImSyWod+VWXpy4E9Hdd3Bu+Cxm5pqDTT
+	lNuwassSwVJP8TwwwpRg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167721>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+So here is my patch series to implement the new default "on-demand"
+fetch mode and let "git submodule update" only fetch submodules when
+the commit to check out is not already present in the submodule.
+This is only done for populated submodules and prepares them for
+disconnected operation without having to think about doing a
+recursive fetch before going on a plane and having to add the '-N'
+option to "git submodule update" while on it. Also merging submodule
+commits in the superproject and "git diff --submodule" (which is
+used by git gui and gitk) depend on the presence of those commits
+referenced by the superproject to work.
 
-> Proposal:
->
-> Stop copying the "submodule.<name>.update" entries into .git/config
-> on "git submodule init". The current behavior makes it impossible
-> for upstream to change defaults later, as this value can only be
-> altered through user intervention when it resides in .git/config.
-> This is a good thing when he chose to copy it there, but it doesn't
-> seem to make much sense doing it by default.
+The last commit is slightly orthogonal as it would be useful without
+on-demand fetch too. With it rewinding a submodule to a commit that
+is already present (e.g. because it was checked out earlier) will be
+done without issuing a fetch even in current git. Together with the
+other patches "git submodule update" won't have to fetch a submodule
+at all anymore (at least unless the new "on-demand" default is
+disabled through the also added configuration options).
 
-Doesn't it just come from the usual "upstream can give a sane default as
-recommendation to users who may not bother to set up .git/config, and the
-user can tweak that if that doesn't suit his/her needs" convention?
+Changes since the last version:
+(see http://article.gmane.org/gmane.comp.version-control.git/163429)
 
-I have a feeling that the correct fix (not limited to "update" but all the
-submodule related configuration that share the same "give default, allow
-tweak" philosophy) is to:
+*) Added the "on-demand" value to the "--recurse-submodules" command
+   line option and the "submodule.<name>.fetchRecurseSubmodules" and
+   "fetch.recurseSubmodules" config options.
+*) The fetch is only done when the recorded submodule commit isn't
+   already present.
+*) Added test cases.
 
- (1) record submodule.<name>.update at initialization time, to allow the
-     upstream a chance to give a sensible default, as we do now;
+There are two things that could be optimized, but that can be the
+topic of other patches:
 
- (2) in addition to that, record the fact that the value came as upstream
-     default.  You could do so in multiple ways:
+*) The submodule fetches could be done in parallel.
+*) It might be expensive to compute the newly fetched commits. If
+   the transport helper could be asked for the list commits it just
+   fetched that would go away.
 
-     a) record the commit that gave the suggested default to .git/config,
-     perhaps submodule.<name>.defaultedFrom (notice that this is
-     independent from "update", and covers all such configuration
-     variables with a single value); or
+I tend to think that this is suited for 1.7.5 but don't have any
+objections against holding it back until 1.8.0 either. What do
+others think?
 
-     b) record the value the upstream gave to .git/config in a separate
-     variable, perhaps submodule.<name>.updateSuggested; or
+Jens Lehmann (6):
+  fetch/pull: recurse into submodules when necessary
+  fetch/pull: Add the 'on-demand' value to the --recurse-submodules
+    option
+  config: teach the fetch.recurseSubmodules option the 'on-demand'
+    value
+  Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule'
+    option
+  fetch/pull: Don't recurse into a submodule when commits are already
+    present
+  submodule update: Don't fetch when the submodule commit is already
+    present
 
-     c) some other clever way you can think of, as long as it lets us do
-     the next step.
+ Documentation/config.txt        |   12 ++-
+ Documentation/fetch-options.txt |   24 +++-
+ Documentation/git-pull.txt      |    2 +-
+ Documentation/gitmodules.txt    |    4 +-
+ builtin/fetch.c                 |   49 ++++++--
+ git-pull.sh                     |    3 +
+ git-submodule.sh                |    2 +-
+ submodule.c                     |  124 +++++++++++++++++--
+ submodule.h                     |   11 ++-
+ t/t5526-fetch-submodules.sh     |  255 +++++++++++++++++++++++++++++++++++++++
+ t/t7403-submodule-sync.sh       |    2 +-
+ t/t7406-submodule-update.sh     |   20 +++
+ 12 files changed, 471 insertions(+), 37 deletions(-)
 
- (3) when updating from the upstream results in a change in .gitmodules
-     file that changes the previously suggested default the user
-     considered, tell that to the user and have him/her choose.  If you
-     took (a) in the previous step, you can use "git diff" to determine if
-     the suggested default has changed; if you took (b) in the previous
-     step, you can compare submodule.<name>.update in .gitmodules with
-     submodule.<name>.updateSuggested to do so; if you did (c), you are on
-     your own ;-).  After the user updates (or chooses to keep the current
-     setting), record the current suggested default just like you did at
-     the init time in step (2).
-
-One thing to be careful is in (3) you should not bother users who chose to
-ignore the upstream default (i.e. has submodule.<name>.update set
-differently from what is suggested by the .gitmodules at the time of
-initialization).  The reason (3) updates the "current suggested default"
-is exactly for that purpose---the user has seen what the last suggested
-default was, and decided to either go with it or have his/her own setting.
+-- 
+1.7.4.1.190.g13e20
