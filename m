@@ -1,90 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] strbuf: add fixed-length version of add_wrapped_text
-Date: Wed, 23 Feb 2011 04:50:19 -0500
-Message-ID: <20110223095018.GA9222@sigill.intra.peff.net>
-References: <20110223094844.GA9205@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Recursive make and variations on the theme
+Date: Wed, 23 Feb 2011 03:56:50 -0600
+Message-ID: <20110223095650.GE30485@elie>
+References: <20110218022701.GA23435@elie>
+ <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
+ <20110218092518.GB30648@elie>
+ <7vei75p3zr.fsf@alter.siamese.dyndns.org>
+ <20110219111103.GA1841@elie>
+ <20110222155637.GC27178@sigill.intra.peff.net>
+ <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
+ <20110223045143.GA11846@sigill.intra.peff.net>
+ <20110223082929.GB30485@elie>
+ <20110223084329.GA10738@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: xzer <xiaozhu@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 23 10:50:28 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 23 10:58:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsBMZ-0005hT-Ax
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 10:50:27 +0100
+	id 1PsBUI-00018x-Dn
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 10:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306Ab1BWJuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 04:50:21 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57802 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751673Ab1BWJuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 04:50:20 -0500
-Received: (qmail 10704 invoked by uid 111); 23 Feb 2011 09:50:19 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 23 Feb 2011 09:50:19 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Feb 2011 04:50:19 -0500
+	id S1752419Ab1BWJ6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 04:58:16 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:43999 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752538Ab1BWJ6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 04:58:11 -0500
+Received: by vxi39 with SMTP id 39so2758418vxi.19
+        for <git@vger.kernel.org>; Wed, 23 Feb 2011 01:58:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=HDg6o62jYhrrtBYJswbOJs7izIj2TX40z+Jmlr5Ekc4=;
+        b=X7kyxPSG7mMjydaD1eeK+p58jARDfquZtiOKjy/flpbK9SeMGZpa0dLMUaiNPKJ+Uw
+         l1iYFRbwHSurKiqd8B+B6e+8eocKnncSVm32GYGomhE6CWUMmDNmGKJIhafeseyArfoW
+         jFBM1ukv5Ud7nnOCpHrfi1xhLtLDxMLUEg0Ig=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=JZUkQFzHxtXnhywYq+X3gJvQ8c2dg5LGSFk5OcPlYPHrBqU1T4vkCAxb2ZLKN/vLmj
+         YXPyXjEGU8axhEpR5yjOGPJ6cvF2ImbtOwQ18OLZiAjBRHYIM3mf37TiS3JorzZNJzOu
+         HgdBXUo/qt+VWfrvCFTB8wu/5g/GGxg/F9eL8=
+Received: by 10.52.174.167 with SMTP id bt7mr161629vdc.221.1298455014808;
+        Wed, 23 Feb 2011 01:56:54 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
+        by mx.google.com with ESMTPS id l6sm3464905vcp.14.2011.02.23.01.56.52
+        (version=SSLv3 cipher=OTHER);
+        Wed, 23 Feb 2011 01:56:53 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110223094844.GA9205@sigill.intra.peff.net>
+In-Reply-To: <20110223084329.GA10738@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167682>
 
-The function strbuf_add_wrapped_text takes a NUL-terminated
-string. This makes it annoying to wrap strings we have as a
-pointer and a length.
+Jeff King wrote:
 
-Refactoring strbuf_add_wrapped_text and all of its
-sub-functions to handle fixed-length strings turned out to
-be really ugly. So this implementation is lame; it just
-strdups the text and operates on the NUL-terminated version.
-This should be fine as the strings we are wrapping are
-generally pretty short.  If it becomes a problem, we can
-optimize later.
+> The problem is that no single make was
+> allowed to see the whole dependency tree.
+>
+> I know GNU make does have some magic for communicating between recursive
+> makes. Does it handle this situation?
+>
+> You can fix this with a rule like "only invoke recursive makes on
+> directories _below_ you, never above or to the side". But then you can't
+> run "make" from inside cmds/.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- utf8.c |    9 +++++++++
- utf8.h |    2 ++
- 2 files changed, 11 insertions(+), 0 deletions(-)
+In that story, commands/Makefile would make commands/built-in.a and
+various commands/foo.o.  The toplevel makefile would pass "make -C
+commands" a long list of targets to build, presumably deduced from
+$(MAKECMDGOALS).  Not pleasant, I agree.
 
-diff --git a/utf8.c b/utf8.c
-index 84cfc72..8acbc66 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -405,6 +405,15 @@ new_line:
- 	}
- }
- 
-+int strbuf_add_wrapped_bytes(struct strbuf *buf, const char *data, int len,
-+			     int indent, int indent2, int width)
-+{
-+	char *tmp = xstrndup(data, len);
-+	int r = strbuf_add_wrapped_text(buf, tmp, indent, indent2, width);
-+	free(tmp);
-+	return r;
-+}
-+
- int is_encoding_utf8(const char *name)
- {
- 	if (!name)
-diff --git a/utf8.h b/utf8.h
-index ebc4d2f..81f2c82 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -10,6 +10,8 @@ int is_encoding_utf8(const char *name);
- 
- int strbuf_add_wrapped_text(struct strbuf *buf,
- 		const char *text, int indent, int indent2, int width);
-+int strbuf_add_wrapped_bytes(struct strbuf *buf, const char *data, int len,
-+			     int indent, int indent2, int width);
- 
- #ifndef NO_ICONV
- char *reencode_string(const char *in, const char *out_encoding, const char *in_encoding);
--- 
-1.7.2.5.15.gfdd1c
+>>      - keep careful track of what directory "make" was run from; [*]
+>> [...]
+>>     [*] is a little hazy and sounds hackish.
+>
+> Yeah, you have to be careful with paths.
+
+It could be pretty simple by maintaining a $(prefix_) variable
+representing the path from the cwd to the directory containing the
+makefile.  Might try it out.
+
+> I think a more sane way would
+> be a single top-level Makefile that [...] contains everything
+
+That sounds best to me in the short term, too.
+
+> A dummy Makefile in each subdir that cd's to the toplevel and runs a
+> specific target. So from the top-level, "make" would build everything,
+> "make lib" would build stuff in the lib directory, and the Makefile in
+> lib/ would just do "cd .. && make lib".
+
+Yes, reasonable.
+
+Ciao,
+Jonathan
