@@ -1,154 +1,107 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [1.8.0] Don't copy "submodule.<name>.update" to .git/config on
- submodule init
-Date: Wed, 23 Feb 2011 23:43:27 +0100
-Message-ID: <4D658D8F.2040203@web.de>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <4D65660D.3040501@web.de> <7v7hcq8pil.fsf@alter.siamese.dyndns.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: RFD: Handling case-colliding filenames on case-insensitive filesystems
+Date: Wed, 23 Feb 2011 17:52:29 -0500
+Message-ID: <4D658FAD.2010505@xiplink.com>
+References: <201102231811.45948.johan@herland.net> <AANLkTi=MyqXYi=zNZ+MFcUW2p-_icwg0m_aMQpVioT8J@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 23 23:44:18 2011
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 23 23:52:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsNRR-0005sj-Lo
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 23:44:18 +0100
+	id 1PsNZ2-0002as-7H
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 23:52:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751470Ab1BWWoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 17:44:12 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:33325 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751186Ab1BWWoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 17:44:11 -0500
-Received: from smtp03.web.de  ( [172.20.0.65])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 3EB21189346DE;
-	Wed, 23 Feb 2011 23:43:28 +0100 (CET)
-Received: from [93.240.119.189] (helo=[192.168.178.43])
-	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1PsNQe-0004Kq-00; Wed, 23 Feb 2011 23:43:28 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <7v7hcq8pil.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19FX2a8fH/fCHOTukNSdXZ6Odq16EiXPdc+mgbG
-	UP59K2iiVoCTXIJ2IiLZJVvM6JyBQVRzPaGYL/DN62gCC297dw
-	5dwLuCxYbFBrd94PN/MQ==
+	id S1753226Ab1BWWwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 17:52:02 -0500
+Received: from smtp202.iad.emailsrvr.com ([207.97.245.202]:42900 "EHLO
+	smtp202.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752981Ab1BWWwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 17:52:01 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp50.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 648BE370477;
+	Wed, 23 Feb 2011 17:52:00 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp50.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 2D59E37035F;
+	Wed, 23 Feb 2011 17:52:00 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <AANLkTi=MyqXYi=zNZ+MFcUW2p-_icwg0m_aMQpVioT8J@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167731>
 
-Am 23.02.2011 21:28, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Proposal:
+On 11-02-23 02:07 PM, Jay Soffian wrote:
+> On Wed, Feb 23, 2011 at 12:11 PM, Johan Herland <johan@herland.net> wrote:
+>> A colleague suggested instead that Git should notice that the collision
+>> will occur, and work around the failure to represent the repository
+>> objects in the file system with a one-to-one match. Either by checking
+>> out only _one_ of the colliding files, or by using a non-colliding name
+>> for the second file. After all, Git already has functionality for
+>> manipulating the file contents on checkout (CRLF conversion). Doesn't
+>> it make sense to add functionality for manipulating the _directory_
+>> contents on checkout as well? Even if that makes sense, I'm not sure
+>> that implementing it will be straightforward.
 >>
->> Stop copying the "submodule.<name>.update" entries into .git/config
->> on "git submodule init". The current behavior makes it impossible
->> for upstream to change defaults later, as this value can only be
->> altered through user intervention when it resides in .git/config.
->> This is a good thing when he chose to copy it there, but it doesn't
->> seem to make much sense doing it by default.
+>> Are there better suggestions on how to deal with this?
 > 
-> Doesn't it just come from the usual "upstream can give a sane default as
-> recommendation to users who may not bother to set up .git/config, and the
-> user can tweak that if that doesn't suit his/her needs" convention?
-
-Yup, but when *copying* it locally upstream won't be able to change that
-default ever again. Wouldn't it suffice to copy that *only* if the user
-really wants to tweak it?
-
-And now I read that again I notice that I forgot to add a very important
-sentence, sorry about that:
-
-"Take the setting from .gitmodules if submodule.<name>.update is not
-configured by the user in .git/config."
-
-> I have a feeling that the correct fix (not limited to "update" but all the
-> submodule related configuration that share the same "give default, allow
-> tweak" philosophy) is to:
-
-I agree that all should behave the same way for consistency reasons.
-
->  (1) record submodule.<name>.update at initialization time, to allow the
->      upstream a chance to give a sensible default, as we do now;
+> The general problem is aliasing in the working-tree, of which
+> case-insenitivity is the most common form, but it also happens due to
+> HFS's use of NFD. A search on gmane for "insensitive" or "nfd" will
+> return many hits.
 > 
->  (2) in addition to that, record the fact that the value came as upstream
->      default.  You could do so in multiple ways:
+> I think the argument against remapping filenames is that it doesn't
+> really help the user.
 > 
->      a) record the commit that gave the suggested default to .git/config,
->      perhaps submodule.<name>.defaultedFrom (notice that this is
->      independent from "update", and covers all such configuration
->      variables with a single value); or
+> Let's say (for the sake of argument) that git supported remapping
+> between the index and the working-tree. Further, my repo has:
 > 
->      b) record the value the upstream gave to .git/config in a separate
->      variable, perhaps submodule.<name>.updateSuggested; or
+> $ cat Foo.c
+> #include "Foo.h"
 > 
->      c) some other clever way you can think of, as long as it lets us do
->      the next step.
-
-My proposal uses the values in .gitmodules for those proposed by upstream
-and those in .git/config as those tweaked by the user. Isn't that simpler
-than 1) and 2) while giving us the same functionality? And additionally it
-is not setting the upstream default in stone (which is rather arbitrary as
-it just happened to be present in our .gitmodules when we did the "git
-submodule init" and might be different at another point in the history)?
-
->  (3) when updating from the upstream results in a change in .gitmodules
->      file that changes the previously suggested default the user
->      considered, tell that to the user and have him/her choose.  If you
->      took (a) in the previous step, you can use "git diff" to determine if
->      the suggested default has changed; if you took (b) in the previous
->      step, you can compare submodule.<name>.update in .gitmodules with
->      submodule.<name>.updateSuggested to do so; if you did (c), you are on
->      your own ;-).  After the user updates (or chooses to keep the current
->      setting), record the current suggested default just like you did at
->      the init time in step (2).
+> $ cat foo.c
+> #include "foo.h"
 > 
-> One thing to be careful is in (3) you should not bother users who chose to
-> ignore the upstream default (i.e. has submodule.<name>.update set
-> differently from what is suggested by the .gitmodules at the time of
-> initialization).  The reason (3) updates the "current suggested default"
-> is exactly for that purpose---the user has seen what the last suggested
-> default was, and decided to either go with it or have his/her own setting.
+> And on a case-insensitive file-system, git has remapped foo.[ch] to
+> foo~2.[ch] for the purposes of avoiding collisions on checkout.
+> 
+> The checkout can't be compiled correctly, so what's the point of even
+> allowing it?
 
-Consider the following situation: The .git directories of the submodules
-reside in the .git directory of the superproject so their work trees can
-be safely deleted and we have means to let upstream configure which
-submodules should be populated on clone. (Hopefully this is the future ;-)
+In our case it would be useful to still have that checkout because the people
+working on the case-insensitive systems are dealing with a different part of
+the tree and don't care about the part with the collision.
 
-What happens when we fetch a commit which records a new submodule marked
-to be populated on clone in the .gitmodules of that commit? I assume we
-would want to fetch the bare submodule into a subdirectory of the .git
-directory of the superproject so that we have it present so we can
-populate it when the superproject's commit is checked out later, no?
+A build designed to exploit case-sensitivity obviously won't work on a
+case-insensitive system, but there's no reason to expect a git repo to have a
+single, monolithic build.  There are a couple of parts of our code tree --
+parts that are out of our control -- that use case sensitive file names, but
+most of it doesn't.  It would be good if git would allow people on
+case-insensitive systems to work with the repository, if not the complete build.
 
-Should we ask the user if he wants to fetch the bare submodule into the
-.git directory of the superproject or to ignore the clone setting while
-fetching? Should we ask him again on checkout time if he wants to use the
-upstream setting of checking out the submodule? Or should we just let it
-happen and when the user decides that he never wanted this submodule he
-says so in his .git/config while everybody who is happy with the default
-just moves on? (And of course we would honor any configurations the user
-did beforehand, like e.g. ignoring all upstream clone defaults)
+I suggest:
 
-I have the impression that using submodules won't work smoothly unless
-we honor the defaults set by upstream until told otherwise by the user.
-If we copy the settings into .git/config right away we take away much of
-the flexibility that I believe is needed here, and I can't really see
-the upsides of that. But the downside is that the setting is copied at
-an random point in time and therefore is rather arbitrary.
+1. Git should emit a warning when checking out a case-colliding file (or
+directory) on a case-insensitive system.  I don't really care _what_ gets
+checked out for that file -- whatever it is ain't gonna work anyway.  Let's
+say it checks out the associated blob the first time it runs across
+thing.foo, but then emits the warning when it tries to check out Thing.Foo.
 
-Another example is the repo where submodules normally use the on-demand
-fetch mode (so everybody only gets those submodule commits he really
-needs) while having topic branches where certain submodules are always
-fetched in full to be able to record new commits of those in the
-superproject. Depending on what branch you were when the copy into
-.git/config occurred you would be stuck with either setting, which I
-think is suboptimal.
+2. Git should forbid (yes, *forbid*) a user on a case-insensitive system from
+adding any change to any files stored in the repository under
+case-conflicting names.  The error message should basically be "You need to
+use a case-sensitive system to work on this file."
 
-What am I missing?
+3. I'm OK with git allowing case-insensitive users to forcibly delete
+case-conflicting files.  "git rm thing.foo" should, on case-insensitive
+systems, fail and display all case-colliding names for
+[tT][hH][iI][nN][gG].[fF][oO][oO], and tell the user to use -f if they really
+want to delete *all* those files.
+
+		M.
