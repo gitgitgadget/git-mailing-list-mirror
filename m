@@ -1,59 +1,112 @@
-From: Christian Halstrick <christian.halstrick@gmail.com>
-Subject: Re: How to create tags outside of refs/tags?
-Date: Wed, 23 Feb 2011 14:45:58 +0100
-Message-ID: <AANLkTinEFRn2AqT7c56MgZ94nk4JL-tRnWgW8iQQHf4f@mail.gmail.com>
-References: <AANLkTimxAhMfPsqEJVyteuTzXLr+QnhcxpJLgaE=y12_@mail.gmail.com>
- <AANLkTi=7yUh9J9S5LdpNY0SwCv008ih2LEd3KNvy46sL@mail.gmail.com>
- <20110222080305.GA11177@sigill.intra.peff.net> <7vvd0cebi6.fsf@alter.siamese.dyndns.org>
- <20110222081458.GA11825@sigill.intra.peff.net> <m3wrks756a.fsf@localhost.localdomain>
- <20110222152723.GA23353@sigill.intra.peff.net> <AANLkTinTj7BehKYc15jbQzMq+q=2CfLvzTkGSJ-Ps-FH@mail.gmail.com>
- <7v7hcrewyz.fsf@alter.siamese.dyndns.org> <AANLkTiki9W_mJKLON+punKJLDWx5rmQdZ3bS16zadYFj@mail.gmail.com>
- <4D6500C5.7020803@drmicha.warpmail.net>
+From: xzer <xiaozhu@gmail.com>
+Subject: Re: [PATCH] generate a valid rfc2047 mail header for multi-line subject.
+Date: Thu, 24 Feb 2011 00:16:04 +0900
+Message-ID: <AANLkTimUXqKdTDcSVDK44XPhxWbHtQuDWHMED3PKqWE4@mail.gmail.com>
+References: <1297670968-28130-1-git-send-email-xiaozhu@gmail.com>
+	<7vsjvfby0z.fsf@alter.siamese.dyndns.org>
+	<20110223080854.GB2724@sigill.intra.peff.net>
+	<20110223094844.GA9205@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>, git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 23 14:46:25 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 23 16:16:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsF2u-0003cu-3Y
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 14:46:24 +0100
+	id 1PsGRo-0003wW-Sa
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 16:16:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752601Ab1BWNqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 08:46:19 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:34502 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751470Ab1BWNqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 08:46:19 -0500
-Received: by qwd7 with SMTP id 7so3729561qwd.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 05:46:18 -0800 (PST)
+	id S1753245Ab1BWPQH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Feb 2011 10:16:07 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:35457 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753109Ab1BWPQF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 10:16:05 -0500
+Received: by iyb26 with SMTP id 26so2848235iyb.19
+        for <git@vger.kernel.org>; Wed, 23 Feb 2011 07:16:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=fr20yZHsTt//jGX5lKCaaoBqcwfFYExW5Z7tmedTN/Q=;
-        b=ZCCk8BPGzPjvsXj95Z4i+/DnX29Q1CkcSFWIl8M/AyynH1BfejpGaQNGcC0qtO8OVA
-         U/bZ/0cIeRBM+a1sMOQNWaME6pMLMMXIQStxKLG2BnjzJv3QoQvyYbpLaqTGEdzfXKlZ
-         hrTFBOBnwYt8GqmTGVklMaWletl/SlLeU/8fk=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=D1VghktycG9tagi+DrL+ruR5EGDH0Mp8dRKw/6aKltU=;
+        b=pmjqQdwBvukby5G7DnS5F5KwT7VqAYPW2Yr4LzawRdzv4ksPnXxfIv6mfk6cXJ58gG
+         6wIqY2roCoSlwXMBXgHjE6P+WJfjOZoICAwe81odvb2LS2/PembREm0XubAM8TtL7oTI
+         febmvdvpYoa7JjFlocPfSPI3A7keaHhmo9CWY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=xna1Q8Um9TBPfzNCbQocL6/r6BnHmrX30eGzXLZtvRjkifH4ictYeJtjjAgpo8nimq
-         +tfeJdPh4alZZQxppBsCrQ0d8UBumGZGaDFjHEKkf8U6+FDyBeqzZvVjHGQPet7GLnrz
-         GbmgeMb7wFmhF89kLXnw8SF6/o2BKif99Jj9I=
-Received: by 10.229.81.6 with SMTP id v6mr3084478qck.223.1298468778101; Wed,
- 23 Feb 2011 05:46:18 -0800 (PST)
-Received: by 10.229.50.6 with HTTP; Wed, 23 Feb 2011 05:45:58 -0800 (PST)
-In-Reply-To: <4D6500C5.7020803@drmicha.warpmail.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sIhdsi/RItSxsrYfbSVekLCg9rxuShMq6x4rbDpDpzVRtyRe2ncYmXBcXjclE1f/cH
+         swwZZxIxK5Eu0NUKwcM2917VNGoyQxAjilicW/QXLt5Jl0C9dgVk4hPrj/2VFjw9VHU+
+         gUmU6Aja+EGGCH1zwvY/dGCJNUW+ePACQ0+uk=
+Received: by 10.42.169.71 with SMTP id a7mr5095046icz.268.1298474164530; Wed,
+ 23 Feb 2011 07:16:04 -0800 (PST)
+Received: by 10.231.35.3 with HTTP; Wed, 23 Feb 2011 07:16:04 -0800 (PST)
+In-Reply-To: <20110223094844.GA9205@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167696>
 
-thanks all of you for your fast help. My problem is now solved.
+2011/2/23 Jeff King <peff@peff.net>:
+> On Wed, Feb 23, 2011 at 03:08:54AM -0500, Jeff King wrote:
+>
+>> Yeah, I think the best path forward is:
+>>
+>> =C2=A0 1. Stop feeding "pre-folded" subject lines to the email forma=
+tter.
+>> =C2=A0 =C2=A0 =C2=A0Give it the regular subject line with no newline=
+s.
+>>
+>> =C2=A0 2. rfc2047 encoding should encode a literal newline. Which sh=
+ould
+>> =C2=A0 =C2=A0 =C2=A0generally never happen, but is probably the most=
+ sane thing to do
+>> =C2=A0 =C2=A0 =C2=A0if it does.
+>>
+>> =C2=A0 3. rfc2047 should fold all lines at some sane length. As it i=
+s now, we
+>> =C2=A0 =C2=A0 =C2=A0may sometimes generate long lines in headers (th=
+ough in practice, I
+>> =C2=A0 =C2=A0 =C2=A0doubt this is much of a problem).
+>
+> So here is a series that does this. It still doesn't preserve subject
+> newlines in "format-patch | am", but I don't think that was ever a go=
+al
+> of the code. If we want to add it as an optional feature on top (mayb=
+e
+> as part of "-k"?), it should be easy to do (since the rfc2047 encodin=
+g
+> will now preserve embedded newlines).
+>
+> =C2=A0[1/3]: strbuf: add fixed-length version of add_wrapped_text
+> =C2=A0[2/3]: format-patch: wrap long header lines
+> =C2=A0[3/3]: format-patch: rfc2047-encode newlines in headers
+>
+> -Peff
+>
+
+To the first point, I really want to find a way that we can remain the
+line breaker
+after import a formatted patch. That's why I add a new function to prod=
+uct multi
+line header, I want to do something which is special to subject. In my =
+usage,
+I told my men every day that don't write too long in the first
+paragraph, but there
+are always somebody who forgets it, then I will get a patch with a
+very long subject
+just like a nightmare(yes, I gave them my temporary fix which I submitt=
+ed here,
+so they can write as long as they want).
+
+So I want to know whether we can generate a 2047 compatible header so
+that mailer
+can catch it correctly and the git-am can import it with line breaker
+correctly too.
