@@ -1,111 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] generate a valid rfc2047 mail header for multi-line
- subject.
-Date: Wed, 23 Feb 2011 09:34:32 -0800
-Message-ID: <7vd3miac47.fsf@alter.siamese.dyndns.org>
-References: <1297670968-28130-1-git-send-email-xiaozhu@gmail.com>
- <7vsjvfby0z.fsf@alter.siamese.dyndns.org>
- <20110223080854.GB2724@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: xzer <xiaozhu@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 23 18:34:47 2011
+From: Justin Mattock <justinmattock@gmail.com>
+Subject: Re: gitk with the latest branch makes the system unusable for some time
+Date: Wed, 23 Feb 2011 09:37:34 -0800
+Message-ID: <2E3AD768-C697-4945-AAEA-9897709E011E@gmail.com>
+References: <AANLkTim3MW0PmD5_tra4nmRapfgHJ9K_usJWGVK3AOUC@mail.gmail.com> <4D64EF70.9060600@drmicha.warpmail.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Feb 23 18:37:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsIbv-0005yF-6r
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 18:34:47 +0100
+	id 1PsIev-0007pE-N9
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 18:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755410Ab1BWReo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 12:34:44 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61853 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755275Ab1BWRem (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 12:34:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 313A43AE3;
-	Wed, 23 Feb 2011 12:35:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cSBZqANpZsnHbD4zyZCY3NipdZo=; b=pPtmZt
-	vCXl98Asv3QIYxWiRqiu3GBBahVpLb3+d3kiVl4HvQVkK8MCaJXPLrwFCgZNfPYo
-	ii4pMyvvsnqf2zzAy4IfTkR0X0DlBb3SaKt3U50aVDDOk/Gz2n6eEYxEUVMm4w4F
-	TjnDTt31geU4CUU/rRwZIdHZB2Yh1uDA9keac=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MG8NwJjkt2iE57GhnvYJ2yqhL+JpECEV
-	hbvD8Nk1IvKUkJWD0QeueyH3sTkeSwH+j+zE2S8hoXABQXks2UOjqRBjPd8vmaWD
-	/ud5ncrChaFyZ4Cf/1Mvlny/6oYhkTeDF5o1mJYbMzxxxrIHJyAwTfIADbNJp5fN
-	qkvK4S+4Ynk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F28FD3ADF;
-	Wed, 23 Feb 2011 12:35:50 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B10413ADD; Wed, 23 Feb 2011
- 12:35:46 -0500 (EST)
-In-Reply-To: <20110223080854.GB2724@sigill.intra.peff.net> (Jeff King's
- message of "Wed\, 23 Feb 2011 03\:08\:54 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B78BFD2-3F73-11E0-A474-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1755430Ab1BWRhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 12:37:39 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:48763 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752460Ab1BWRhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 12:37:37 -0500
+Received: by pzk35 with SMTP id 35so480904pzk.19
+        for <git@vger.kernel.org>; Wed, 23 Feb 2011 09:37:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        bh=87W4gg7n9ZLICYNoPY3l0TikAEy+RKT/r5CvWWsuui0=;
+        b=jj+iSRqp5bZ+MydqzcMmAO4zzHSchnHrFwwnafADmq0ASz29ltbdZARMSUqUUNldLI
+         qTgWJI0diCX5tz4792TNH4G/kwwcBE2b0Pxcn4ykcG6o3pySeaGGPdZ3Y0lkwVmDUBZB
+         HYii5yW5UxPaZ9r/YH5zIjRhp177LynmnzsVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=EjupgQyWB1B/eCgi+JLv3dkJ1HLBrXhWGnbUWk0Y0F3Um1RuQ/0/ct71jUT6u80HSh
+         XTCoqYBoXQc4EO54HCSJJBDbzupfG6qbGlmBuyIgA8PVFiKbuHNOil2G8sEl3U5/9LLb
+         Eb2kABVJ+VcKK2EN9qOerZHmU52EWf4offIIM=
+Received: by 10.142.107.6 with SMTP id f6mr3437918wfc.142.1298482656913;
+        Wed, 23 Feb 2011 09:37:36 -0800 (PST)
+Received: from [172.29.71.32] (cpe-76-94-2-152.socal.res.rr.com [76.94.2.152])
+        by mx.google.com with ESMTPS id 25sm11057414wfb.22.2011.02.23.09.37.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 23 Feb 2011 09:37:35 -0800 (PST)
+In-Reply-To: <4D64EF70.9060600@drmicha.warpmail.net>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167707>
 
-Jeff King <peff@peff.net> writes:
 
-> Yeah, I think the best path forward is:
+On Feb 23, 2011, at 3:28 AM, Michael J Gruber wrote:
+
+> Justin Mattock venit, vidit, dixit 23.02.2011 00:53:
+>> not sure if there is any reports of this or not, basically using gitk
+>> on my macbookpro2,2 makes the system extremely slow and unusable
+>> (after a while can finally use the system)
 >
->   1. Stop feeding "pre-folded" subject lines to the email formatter.
->      Give it the regular subject line with no newlines.
+> ..and "the latest branch" is master,next or pu from when?
+>
 
-A bit of history.  The original design of the pp_title_line() function
-since 4234a76 (Extend --pretty=oneline to cover the first paragraph,
-2007-06-11) was to notice a multi-line paragraph and turn embedded
-newlines into line folds (this seems to be a breakage specific to
-non-ASCII titles).
+latest Mainline 2.6.38-rc5
 
-As RFC 5322 (or 822/2822 for that matter) does not allow newlines in field
-bodies (2.2: A field body MUST NOT include CR and LF except when used in
-"folding" and "unfolding"...), it was the only way to allow the recipient
-to tell where the original line breaks were to fold at the line breaks in
-the original commit message.  Then the recipient _can_ be git aware and
-turn the folding CRLF-SP into a LF, not just a SP, relying on the hope
-that the transport between the sender and the recipient would not clobber
-line folding, to recover the original.
+> Is that gitk on the (which) kernel repo?
 
-The rebase pipeline (i.e. "format-patch | am") would have satisfied such a
-flaky assumption and that was the only reason I wrote the line folding on
-the output side that way.  These days, however, "am" invoked in the rebase
-pipeline knows to slurp the message not from the patch text but from the
-original message, so we can safely depart form the original design rationale.
+the git version is 1.6.5.2.180.gc5b3e
 
->   2. rfc2047 encoding should encode a literal newline. Which should
->      generally never happen, but is probably the most sane thing to do
->      if it does.
+>
+> I have no trouble with gitk (today's next) on git.git (nor on the
+> LibreOffice beast).
+>
 
-I was re-reading RFC 2047 and its 5. (3) [Page 8] seems to imply that this
-might be allowed: "Only printable and white space character data should be
-encoded using this scheme."; I think LF is counted as a white space
-character in this context, but it is a bit unclear.
+yeah over here its very slow
 
-If this "encode newline via 2047" _were_ allowed, I would say that my
-preference is not to go with your 1. above.  Instead I would prefer to see
-us feed the entire first paragraph, whether it is a single-liner or
-multi-line paragraph, to the step 2 ...
+>> in dmesg I am seeing this:
+>>
+>> [ 6089.363045] NetworkManager invoked oom-killer: gfp_mask=0x84d0,
+>> order=0, oom_adj=0, oom_score_adj=0
+>> [ 6089.363050] Pid: 2107, comm: NetworkManager Not tainted
+>> 2.6.38-rc5-00101-gebad2c2 #2
+>> [ 6089.363052] Call Trace:
+>> [ 6089.363062]  [<ffffffff810c563c>] ? T.547+0x6a/0x180
+>> [ 6089.363066]  [<ffffffff810c5799>] ? T.544+0x47/0x24c
+>> [ 6089.363070]  [<ffffffff810c5beb>] ? out_of_memory+0x24d/0x2f8
+>> [ 6089.363074]  [<ffffffff810c9142>] ? __alloc_pages_nodemask+0x55c/ 
+>> 0x696
+>> [ 6089.363079]  [<ffffffff810dc985>] ? handle_pte_fault+0x2cd/0x73f
+>> [ 6089.363084]  [<ffffffff8104e522>] ? pte_alloc_one+0x1e/0x3c
+>> [ 6089.363088]  [<ffffffff810c8406>] ? __free_pages+0x1b/0x24
+>> [ 6089.363091]  [<ffffffff810ddfc1>] ? __pte_alloc+0x1d/0xcd
+>> [ 6089.363094]  [<ffffffff810de185>] ? handle_mm_fault+0x114/0x164
+>> [ 6089.363099]  [<ffffffff8144973d>] ? do_page_fault+0x3dc/0x401
+>> [ 6089.363104]  [<ffffffff81112eef>] ? mntput_no_expire+0x8d/0x13f
+>> [ 6089.363108]  [<ffffffff81112fc2>] ? mntput+0x21/0x23
+>> [ 6089.363112]  [<ffffffff810fb8dc>] ? fput+0x20e/0x21d
+>> [ 6089.363116]  [<ffffffff81446a25>] ? page_fault+0x25/0x30
+>
+> So you think gitk took down your Networkmanager?
+>
+> Michael
 
->   3. rfc2047 should fold all lines at some sane length...
 
-... and the have step3 fold its result to limit the physical length of the
-output line(s).  Note that a multi-line first paragraph always will be
-encoded using 2047 because we cannot have a newline in the field body per
-RFC5322.  But going the above route would allow us to recover the original
-first paragraph intact.
+yeah I was streaming music, then all hell broke loose..
+maybe I should update git to the latest(didn't think to do so)
 
-We might need to tweak the receiving end a bit, though.  IIRC, mailinfo
-output assumed we will always be dealing with a single-liner subject.
+Justin P. Mattock
