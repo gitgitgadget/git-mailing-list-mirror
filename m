@@ -1,79 +1,173 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC/PATCH 1/4] tag: speed up --contains calculation
-Date: Wed, 23 Feb 2011 16:51:02 +0100
-Message-ID: <AANLkTinL-gN3sCkUzzsBbzwxo1AYx1NURjKaE8D4TgvU@mail.gmail.com>
-References: <20100705122723.GB21146@sigill.intra.peff.net>
-	<20100705123335.GA25699@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] generate a valid rfc2047 mail header for multi-line
+ subject.
+Date: Wed, 23 Feb 2011 11:35:58 -0500
+Message-ID: <20110223163558.GA10042@sigill.intra.peff.net>
+References: <1297670968-28130-1-git-send-email-xiaozhu@gmail.com>
+ <7vsjvfby0z.fsf@alter.siamese.dyndns.org>
+ <20110223080854.GB2724@sigill.intra.peff.net>
+ <20110223094844.GA9205@sigill.intra.peff.net>
+ <AANLkTimUXqKdTDcSVDK44XPhxWbHtQuDWHMED3PKqWE4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: tytso@mit.edu, Avery Pennarun <apenwarr@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 23 16:51:44 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: xzer <xiaozhu@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 23 17:36:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsH0B-0008Dx-OB
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 16:51:44 +0100
+	id 1PsHhB-000150-W3
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Feb 2011 17:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197Ab1BWPvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 10:51:38 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64280 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753733Ab1BWPvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 10:51:38 -0500
-Received: by fxm17 with SMTP id 17so4114599fxm.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 07:51:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=WwL73SUfWt9JC/IYq8YjvqRD4cHt1jMXwgUeX5FUdFU=;
-        b=mI/nIQOE8W9GVzykI55W8mFYU5NxZPMjshuoXstyWrsVDANJuTN2yFr6OIgxG5wG9x
-         Gw0zGBwVp+2TLY/zukEIMlz9aZNjyE8izvAztMlgQVqR//JYa451LVnI+R/61sQ6PdeH
-         ZgVANL7louUYgEFaf3us5JPnEIthVvD7+DDbM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=R9/wBdK7c7uJk1i3mNdOuI08sgIo4fNMICQ7Db5r8dlafXneDkfAKitjSY6nfBZKtr
-         Cu4ClMeQg96zp/+Zt13Fc4M2rb/pfhFpRUV8MdBf1bYx03QVqy2JvVHRIzz/NhvPXPp1
-         kybvyK1kRda9vXbwIM898y2VYk3Mjeos3NSu0=
-Received: by 10.223.70.136 with SMTP id d8mr5268571faj.3.1298476263193; Wed,
- 23 Feb 2011 07:51:03 -0800 (PST)
-Received: by 10.223.2.201 with HTTP; Wed, 23 Feb 2011 07:51:02 -0800 (PST)
-In-Reply-To: <20100705123335.GA25699@sigill.intra.peff.net>
+	id S1754923Ab1BWQgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 11:36:04 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44678 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754753Ab1BWQgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 11:36:02 -0500
+Received: (qmail 14240 invoked by uid 111); 23 Feb 2011 16:36:01 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 23 Feb 2011 16:36:01 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Feb 2011 11:35:58 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTimUXqKdTDcSVDK44XPhxWbHtQuDWHMED3PKqWE4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167699>
 
-On Mon, Jul 5, 2010 at 14:33, Jeff King <peff@peff.net> wrote:
-> When we want to know if commit A contains commit B (or any
-> one of a set of commits, B through Z), we generally
-> calculate the merge bases and see if B is a merge base of A
-> (or for a set, if any of the commits B through Z have that
-> property).
+On Thu, Feb 24, 2011 at 12:16:04AM +0900, xzer wrote:
 
-On a work repo with around 10k tags after and before this patch:
+> To the first point, I really want to find a way that we can remain the
+> line breaker
+> after import a formatted patch. That's why I add a new function to product multi
+> line header, I want to do something which is special to subject. In my usage,
+> I told my men every day that don't write too long in the first
+> paragraph, but there
+> are always somebody who forgets it, then I will get a patch with a
+> very long subject
+> just like a nightmare(yes, I gave them my temporary fix which I submitted here,
+> so they can write as long as they want).
+> 
+> So I want to know whether we can generate a 2047 compatible header so
+> that mailer
+> can catch it correctly and the git-am can import it with line breaker
+> correctly too.
 
-    $ time ~/g/git/git tag --contains HEAD~200 | wc -l
-    113
+Yes. With my patches, if you feed a subject with linebreaks to
+add_rfc2047, they will be encoded. So you just need an extra patch on
+top of mine that will use straight linebreaks (_not_ linebreaks with an
+extra space) in pp_title_line.  Below is a quick and dirty patch to do
+that when "-k" is specified. You will also need to specify "-k" with
+applying it with "git am", but other than that it seems to work.
 
-    real    0m0.421s
-    user    0m0.380s
-    sys     0m0.042s
+However, I'm still not sure it's a good idea. Other parts of git will
+try to treat your paragraph as a single line (e.g., git log --oneline).
+Plus this patch is ugly because of the number of layers of abstraction
+we have to pass the keep-subject through. I'm not sure there's a good
+way around that.
 
-    $ time git tag --contains HEAD~200 | wc -l
-    113
-
-    real    2m18.861s
-    user    2m18.750s
-    sys     0m0.092s
-
-I'd love to have this merged downwards from pu. It's the single
-biggest usability improvement in my Git workflow for as long as I can
-remember.
+---
+diff --git a/builtin/log.c b/builtin/log.c
+index d8c6c28..3fdf488 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -768,7 +768,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	pp_user_info(NULL, CMIT_FMT_EMAIL, &sb, committer, DATE_RFC2822,
+ 		     encoding);
+ 	pp_title_line(CMIT_FMT_EMAIL, &msg, &sb, subject_start, extra_headers,
+-		      encoding, need_8bit_cte);
++		      encoding, need_8bit_cte, 0);
+ 	pp_remainder(CMIT_FMT_EMAIL, &msg, &sb, 0);
+ 	printf("%s\n", sb.buf);
+ 
+@@ -1130,6 +1130,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		die ("-n and -k are mutually exclusive.");
+ 	if (keep_subject && subject_prefix)
+ 		die ("--subject-prefix and -k are mutually exclusive.");
++	rev.preserve_subject = keep_subject;
+ 
+ 	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
+ 	if (argc > 1)
+diff --git a/commit.h b/commit.h
+index 659c87c..6eace1c 100644
+--- a/commit.h
++++ b/commit.h
+@@ -73,6 +73,7 @@ struct pretty_print_context
+ 	int abbrev;
+ 	const char *subject;
+ 	const char *after_subject;
++	int preserve_subject;
+ 	enum date_mode date_mode;
+ 	int need_8bit_cte;
+ 	int show_notes;
+@@ -107,7 +108,8 @@ void pp_title_line(enum cmit_fmt fmt,
+ 		   const char *subject,
+ 		   const char *after_subject,
+ 		   const char *encoding,
+-		   int need_8bit_cte);
++		   int need_8bit_cte,
++		   int preserve_lines);
+ void pp_remainder(enum cmit_fmt fmt,
+ 		  const char **msg_p,
+ 		  struct strbuf *sb,
+diff --git a/log-tree.c b/log-tree.c
+index b46ed3b..9b9aaf2 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -504,6 +504,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.date_mode = opt->date_mode;
+ 	ctx.abbrev = opt->diffopt.abbrev;
+ 	ctx.after_subject = extra_headers;
++	ctx.preserve_subject = opt->preserve_subject;
+ 	ctx.reflog_info = opt->reflog_info;
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
+ 
+diff --git a/pretty.c b/pretty.c
+index 65d20a7..315f1d2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1121,12 +1121,13 @@ void pp_title_line(enum cmit_fmt fmt,
+ 		   const char *subject,
+ 		   const char *after_subject,
+ 		   const char *encoding,
+-		   int need_8bit_cte)
++		   int need_8bit_cte,
++		   int preserve_lines)
+ {
+ 	struct strbuf title;
+ 
+ 	strbuf_init(&title, 80);
+-	*msg_p = format_subject(&title, *msg_p, " ");
++	*msg_p = format_subject(&title, *msg_p, preserve_lines ? "\n" : " ");
+ 
+ 	strbuf_grow(sb, title.len + 1024);
+ 	if (subject) {
+@@ -1254,7 +1255,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 	/* These formats treat the title line specially. */
+ 	if (fmt == CMIT_FMT_ONELINE || fmt == CMIT_FMT_EMAIL)
+ 		pp_title_line(fmt, &msg, sb, context->subject,
+-			      context->after_subject, encoding, need_8bit_cte);
++			      context->after_subject, encoding, need_8bit_cte,
++			      context->preserve_subject);
+ 
+ 	beginning_of_body = sb->len;
+ 	if (fmt != CMIT_FMT_ONELINE)
+diff --git a/revision.h b/revision.h
+index 05659c6..f8ddd83 100644
+--- a/revision.h
++++ b/revision.h
+@@ -90,7 +90,8 @@ struct rev_info {
+ 			abbrev_commit:1,
+ 			use_terminator:1,
+ 			missing_newline:1,
+-			date_mode_explicit:1;
++			date_mode_explicit:1,
++			preserve_subject:1;
+ 	unsigned int	disable_stdin:1;
+ 
+ 	enum date_mode date_mode;
