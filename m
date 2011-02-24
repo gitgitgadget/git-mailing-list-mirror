@@ -1,69 +1,77 @@
-From: Marco <netuse@lavabit.com>
-Subject: Re: Why doesn't git commit -a track new files
-Date: Thu, 24 Feb 2011 15:20:27 +0100
-Message-ID: <20110224152027.05aed833@glyph>
-References: <20110224112246.3f811ac2@glyph>
-	<AANLkTinDT6jBxQZ5eukA6Fa=-xRMJsHTJ4pM+Hz4KER_@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH/RFC 0/8] refactor trace code
+Date: Thu, 24 Feb 2011 09:23:09 -0500
+Message-ID: <20110224142308.GA15356@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 24 15:20:56 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 15:23:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Psc3s-0002c7-40
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 15:20:56 +0100
+	id 1Psc67-0004Hh-Pj
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 15:23:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755649Ab1BXOUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 09:20:51 -0500
-Received: from lo.gmane.org ([80.91.229.12]:33182 "EHLO lo.gmane.org"
+	id S1755895Ab1BXOXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 09:23:11 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33729 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755495Ab1BXOUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 09:20:50 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Psc3k-0002WT-EH
-	for git@vger.kernel.org; Thu, 24 Feb 2011 15:20:48 +0100
-Received: from miun108-177.dynamic.miun.se ([193.10.108.177])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Feb 2011 15:20:48 +0100
-Received: from netuse by miun108-177.dynamic.miun.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Feb 2011 15:20:48 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: miun108-177.dynamic.miun.se
-X-Newsreader: Claws Mail 3.7.6 (GTK+ 2.22.0; x86_64-pc-linux-gnu)
+	id S1755495Ab1BXOXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 09:23:10 -0500
+Received: (qmail 23181 invoked by uid 111); 24 Feb 2011 14:23:09 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 24 Feb 2011 14:23:09 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Feb 2011 09:23:09 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167810>
 
-On 2011-02-24 Pascal Obry <pascal@obry.net> wrote:
+A few weeks ago in:
 
-> Marco,
-> 
-> > I don't understand why there's not switch (is there?) for commit to
-> > commit new and deleted files, like -A for git add? Is the only thing to
-> > do this sth like
-> >
-> > git add -A && git commit -m "Message"
-> 
-> Never had the need for this. The reason is maybe when you are trying to have
-> a small set if incremental commits, you usually don't want to add
-> everything but you review the change carefully with "git add -p".
+  http://article.gmane.org/gmane.comp.version-control.git/165496
 
-Of course not as default behaviour. Just as a switch (e.g. -A). If one wishes
-this behaviour one can use it. Nobody forces you to use it (like -a).
+we discussed the possibility of removing the repo setup trace lines. I
+mentioned that I had also recently done some debug code that would not
+be appropriate to show all the time with GIT_TRACE. So here is a series
+that jumbles it all together: refactors the trace code to handle
+multiple environment variables, adds packet-tracing code on its own
+variable, and puts the repo setup traces on their own variable.
 
-> Now in some circumstances it could probably be useful.
+With this, you can do:
 
-Yes.
+  GIT_TRACE=1 \
+  GIT_TRACE_PACKET=/tmp/packet.dump \
+  GIT_TRACE_SETUP=0 \
+  git whatever
 
+There may be a few other places where it is worth either pushing some
+traces to their variable (I think the notes merge code has some
+debugging traces in it), or places where existing debugging code could
+be enabled (e.g., there is some diffcore debugging code that I sometimes
+turn on; it is not even compiled by default, but this would give a nice
+way of pushing that decision to runtime).
 
-Marco
+I have mixed feelings on adding a bunch of debugging code. On the one
+hand, it's mostly dead code that nobody runs. On the other hand, it is
+sometimes really helpful to be able to tell a user "run with this
+environment variable and tell us what it says" without having to get
+them to apply a custom patch.
+
+  [1/8]: compat: provide a fallback va_copy definition
+  [2/8]: strbuf: add strbuf_addv
+  [3/8]: trace: add trace_vprintf
+  [4/8]: trace: refactor to support multiple env variables
+  [5/8]: trace: factor out "do we want to trace" logic
+  [6/8]: trace: add trace_strbuf
+  [7/8]: add packet tracing debug code
+  [8/8]: trace: give repo_setup trace its own key
+
+-Peff
