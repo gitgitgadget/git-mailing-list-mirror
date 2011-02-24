@@ -1,142 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/6] fetch/pull: recurse into submodules when necessary
-Date: Wed, 23 Feb 2011 17:58:08 -0600
-Message-ID: <20110223235808.GB7286@elie>
-References: <4D656F25.5090007@web.de>
- <4D656F4D.6080401@web.de>
- <20110223230713.GB6819@elie>
- <4D659BB2.3020805@web.de>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH 1/2] git-gui: fetch/prune all entry only for more than one entry
+Date: Thu, 24 Feb 2011 00:02:10 +0000
+Message-ID: <87fwrefgfx.fsf@fox.patthoyts.tk>
+References: <20110212164344.GA19433@book.hvoigt.net>
+	<AANLkTi=hY1XpBNfhNDfM8kwgnitQXN-97mM-dkhCpTac@mail.gmail.com>
+	<20110213134753.GC31986@book.hvoigt.net>
+	<20110213135714.GE31986@book.hvoigt.net> <4D640227.9090206@web.de>
+	<20110222192835.GA28519@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Kevin Ballard <kevin@sb.org>, Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Feb 24 00:58:22 2011
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Feb 24 01:02:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsOb7-0003oe-9r
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 00:58:21 +0100
+	id 1PsOfD-0005rL-Gi
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982Ab1BWX6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 18:58:16 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:51291 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753042Ab1BWX6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 18:58:15 -0500
-Received: by ewy6 with SMTP id 6so1717979ewy.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 15:58:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=XYVAdRLFuZuev6bJBtXgRO020TRy6IytTZQxwIBjjqM=;
-        b=jI+Xej/C+PCzPgEBbYqU207/TgcMs5i2d/dpN2T7fy/nLEa1lh79llDLNF9qGf9IMX
-         8/nhYnzBi93YzsxlA4UoLFNNtT5iJFLV71oBVhSddS4aPjL+mrBPxl6SdDDZ2656e8pB
-         +Mgpo2XbbMkVaecQwGptUyNkGS5GwFpl2EIYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=lDiOozhquETnlObpxptUiGAVmt7nuqgF4hN39VteH0uf2qBFvp43y2EL54Z9ak6GVX
-         Zg9M4EDnfFPH9jXNRAOsKlKpGpr2QOJSiwgq5SJFZ9H8fglYGwVIAxl8iWGsr4XN55Sn
-         Gv2AdzBBSNFq798JeCBGk7q/X5rsJyP+0RFmg=
-Received: by 10.213.27.71 with SMTP id h7mr672373ebc.20.1298505493997;
-        Wed, 23 Feb 2011 15:58:13 -0800 (PST)
-Received: from elie ([69.209.53.52])
-        by mx.google.com with ESMTPS id t50sm7600485eeh.6.2011.02.23.15.58.12
-        (version=SSLv3 cipher=OTHER);
-        Wed, 23 Feb 2011 15:58:13 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D659BB2.3020805@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755187Ab1BXACb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 19:02:31 -0500
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:49882 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753177Ab1BXACa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 19:02:30 -0500
+Received: from [172.23.170.141] (helo=anti-virus02-08)
+	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1PsOf6-0002EK-Ox; Thu, 24 Feb 2011 00:02:28 +0000
+Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
+	by asmtp-out3.blueyonder.co.uk with esmtpa (Exim 4.72)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1PsOep-0005Ds-Lx; Thu, 24 Feb 2011 00:02:11 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 016C32003F; Thu, 24 Feb 2011 00:02:10 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <20110222192835.GA28519@book.hvoigt.net> (Heiko Voigt's message
+	of "Tue, 22 Feb 2011 20:28:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167750>
 
-Jens Lehmann wrote:
-> Am 24.02.2011 00:07, schrieb Jonathan Nieder:
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
->> Could this be combined with the --recurse-submodules, with a "last instance
->> of the option wins" rule?  Something like:
->> 
->>  --recurse-submodules[=(yes | no | changed)]::
->>  --no-recurse-submodules::
+>In case there is only one remote a fetch/prune all entry
+>is redundant.
 >
-> Nope, as this only sets the default. "--recurse-submodules" overrides
-> anything configured, which is not what we want here. This option should
-> only set the default.
-
-Ah.  So --recurse-submodules-default means "like --recurse-submodules,
-but with lower precedence than the configuration".  Sensible.  (Maybe
-it could be documented in --help-all that way?)
-
->>> +			/* Submodule is new or was moved here */
->>> +			/* NEEDSWORK: When the .git directories of submodules
->>> +			 * live inside the superprojects .git directory some
->>> +			 * day we should fetch new submodules directly into
->>> +			 * that location too when config or options request
->>> +			 * that so they can be checked out from there. */
->>> +			continue;
->> 
->> Maybe this can be mentioned in a BUGS section on the git-fetch(1)
->> manpage to give readers a warning and clue about the intended
->> meaning of --recurse-submodules?
-[...]
-> I'm not sure I understand what you mean by this, right now this can
-> only work for populated submodules. I hope this will change soon, but
-> I'm not quite there yet ;-)
-
-What I mean is the following: to make life easier for people and
-scripts using --recurse-submodules today, it might be nice to
-document how stable or unstable its meaning is.
-
-In this case, there is a plan to make --recurse-submodules=on-demand
-do more in the future than it does now;
-
- - a note in BUGS could explain that --recurse-submodules's current
-   behavior is considered an infelicity and likely to change;
-
- - unfortunately not all users will necessarily see it that way (c.f.
-   aforementioned use case), so it might be better to plan on yet
-   another choice in the list of options provided by
-   --recurse-submodules.
-
->> Maybe:
->>
->> 	char *new_rev;
->> 	...
->> 	argv[1] = new_rev = xstrdup(...);
->> 	...
->> 	free(new_rev);
+>Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+>---
 >
-> I'm not sure I get what the extra variable gains us ...
-
-A reminder to free that memory in all code paths exiting the function.
-But it might not be worth the noise.
-
->> Maybe a comment so the reader doesn't have to delve deeper?
+>On Tue, Feb 22, 2011 at 07:36:23PM +0100, Jens Lehmann wrote:
+>> 1) It would be nice if the new menu entry would only appear when there
+>>    is more than one remote to fetch from.
 >
-> ?
+>How about this? Disclaimer: Only superficially tested on OSX.
+>
+> lib/remote.tcl |    4 ++--
+> 1 files changed, 2 insertions(+), 2 deletions(-)
+>
+>diff --git a/lib/remote.tcl b/lib/remote.tcl
+>index 42d2061..18d3d06 100644
+>--- a/lib/remote.tcl
+>+++ b/lib/remote.tcl
+>@@ -237,13 +237,13 @@ proc update_all_remotes_menu_entry {} {
+> 
+> 	set have_remote 0
+> 	foreach r $all_remotes {
+>-		set have_remote 1
+>+		incr have_remote
+> 	}
+> 
+> 	set remote_m .mbar.remote
+> 	set fetch_m $remote_m.fetch
+> 	set prune_m $remote_m.prune
+>-	if {$have_remote} {
+>+	if {$have_remote > 1} {
+> 		make_sure_remote_submenues_exist $remote_m
+> 		set index [expr {[$fetch_m type 0] eq "tearoff" ? 1 : 0}]
+> 		if {[$fetch_m entrycget $index -label] ne "All"} {
 
-Sorry for the confusion.  That suggestion refers to the loop after it
-rather than what comes before it.
+This is fine - applied and checked it on Windows.
+I'll add a Suggested-by from Jens as this was a response to his request.
 
->> 	/*
->> 	 * Collect checked out submodules that have changed upstream
->> 	 * in "changed_submodule_paths".
->> 	 */
->> 
->>> +	while ((commit = get_revision(&rev))) {
-[...]
-> Thanks!
-
-Thanks for deciphering the gibberish I sent. :)
-Jonathan
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
