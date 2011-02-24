@@ -1,94 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 1/8] compat: provide a fallback va_copy definition
-Date: Thu, 24 Feb 2011 14:33:17 -0600
-Message-ID: <20110224203317.GC17412@elie>
-References: <20110224142308.GA15356@sigill.intra.peff.net>
- <20110224142647.GA15477@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 4/6] Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule'
+ option
+Date: Thu, 24 Feb 2011 21:44:30 +0100
+Message-ID: <4D66C32E.5090103@web.de>
+References: <4D656F25.5090007@web.de> <4D656FB0.7040904@web.de> <7vei6y5ol6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 24 21:34:47 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 21:45:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pshtb-0002Mh-Bs
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 21:34:43 +0100
+	id 1Psi4F-0004Ug-5X
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 21:45:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756552Ab1BXUej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 15:34:39 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:39597 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756557Ab1BXUeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 15:34:37 -0500
-Received: by vws12 with SMTP id 12so794209vws.19
-        for <git@vger.kernel.org>; Thu, 24 Feb 2011 12:34:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=6UFflCKYhypxtDdMeXfmGjy6CeujOZe1LagJ148Y3tA=;
-        b=NugP8Lcs8MLRBwG9W2sfCthNLZx06ISw6K7hND1HiChlOuKiZvPI6SOn4mhvKoHh0Y
-         0zU/YOUNQ8IRrUS1dPzaDx73Hhwnb9eIlthbzzKGXiSUR94TvXdi6xpKRtBgl+DX/Rx1
-         9OpZ5i2USw56fRWfKNROfJIZYKiF4Mlw5zqjU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=u7Lir6NTZ2fQo8Esx0wiIp27T590ev6xoDCw/xVcmXZpcxfWp7HQCs9Z8fon19vVh7
-         8YybYZD6J8gfdkVqcLCWjWfngjd3yb/k0I9VED2Ft6zyWn5nS/gTL6+6jslAPA/MWkwI
-         yZIxB4cgFCU4Aw+w5x9/oRJ5KuJAQwcv2S7Ig=
-Received: by 10.52.164.168 with SMTP id yr8mr2494255vdb.107.1298579605399;
-        Thu, 24 Feb 2011 12:33:25 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
-        by mx.google.com with ESMTPS id i1sm137432vby.11.2011.02.24.12.33.21
-        (version=SSLv3 cipher=OTHER);
-        Thu, 24 Feb 2011 12:33:23 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110224142647.GA15477@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932123Ab1BXUpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 15:45:38 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:60041 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755645Ab1BXUph (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 15:45:37 -0500
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate02.web.de (Postfix) with ESMTP id C9F431998113B;
+	Thu, 24 Feb 2011 21:44:33 +0100 (CET)
+Received: from [93.240.123.207] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Psi37-0005tn-00; Thu, 24 Feb 2011 21:44:33 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <7vei6y5ol6.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX188rk1zsu2uJImiLtnoVOa92iRM4bmgLg2DbWpT
+	sdTwuPFt0wtfORttH7jHOl+nrYnef2IxU9yMXLkuuxBukWAA4p
+	62plkwsbbixJDmnBsBvw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167859>
 
-Jeff King wrote:
+Am 24.02.2011 00:16, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> diff --git a/submodule.c b/submodule.c
+>> index cccd728..b477c3c 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -113,7 +113,7 @@ int parse_submodule_config_option(const char *var, const char *value)
+>>  		if (!config)
+>>  			config = string_list_append(&config_fetch_recurse_submodules_for_name,
+>>  						    strbuf_detach(&submodname, NULL));
+>> -		config->util = git_config_bool(var, value) ? (void *)1 : NULL;
+>> +		config->util = (void *)(size_t)parse_fetch_recurse_submodules_arg(value);
+> 
+> What is this double-cast about?
 
-> So my guess is that this will be sufficient, but I we won't really know
-> for sure until somebody reports a problem. :(
+64bit gcc warns when I drop either of them because a 32bit integer
+is assigned to a 64bit wide pointer here.
 
-Sounds like a good approach to me.
+>> @@ -376,8 +376,13 @@ int fetch_populated_submodules(int num_options, const char **options,
+>> ...
+>> +				if ((size_t)fetch_recurse_submodules_option->util == RECURSE_SUBMODULES_OFF)
+>>  					continue;
+>> +				if ((size_t)fetch_recurse_submodules_option->util == RECURSE_SUBMODULES_ON_DEMAND) {
+> 
+> Likewise here; size_t feels a strange type to cast to in this comparison
+> between (void *) and an enum, no?
 
-The POSIX rationale hints that some historical implementations used
-arrays of size 1.  Assignment would error out on such an
-implementation, which is not a big deal (since we could switch to
-memcpy then).  I would be more worried about a historical
-implementation using dynamic allocation with va_list being a pointer
-but I haven't heard of any.
-
-> +#ifndef va_copy
-> +#define va_copy(dst,src) (dst) = (src)
-> +#endif
-
-The following (as Erik mentinoed) might be a nice cleanup on top.  The
-duplicate va_copy definition is just redundant rather than causing
-compilation errors because it comes before git-compat-util's
-ifndef-guarded one.
-
-diff --git a/compat/msvc.h b/compat/msvc.h
-index 023aba0..a33b01c 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -9,7 +9,6 @@
- #define inline __inline
- #define __inline__ __inline
- #define __attribute__(x)
--#define va_copy(dst, src)     ((dst) = (src))
- #define strncasecmp  _strnicmp
- #define ftruncate    _chsize
- 
+I get a warning here if I drop the second cast. gcc doesn't warn if
+I drop the first one, but that is just because the enum value happens
+to be 0 there. So I added that cast there too to be on the safe side
+in case the value changes in the future and to be consistent to other
+readers of this code.
