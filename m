@@ -1,122 +1,105 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 2/2] git-gui: fetch/prune all entry appears last
-Date: Thu, 24 Feb 2011 00:09:28 +0000
-Message-ID: <87bp22fg3r.fsf@fox.patthoyts.tk>
-References: <20110212164344.GA19433@book.hvoigt.net>
-	<AANLkTi=hY1XpBNfhNDfM8kwgnitQXN-97mM-dkhCpTac@mail.gmail.com>
-	<20110213134753.GC31986@book.hvoigt.net>
-	<20110213135714.GE31986@book.hvoigt.net> <4D640227.9090206@web.de>
-	<20110222193021.GB28519@book.hvoigt.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
+Date: Wed, 23 Feb 2011 19:14:21 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102231908340.26358@xanadu.home>
+References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
+ <1297304069-14764-1-git-send-email-pclouds@gmail.com>
+ <20110218022701.GA23435@elie>
+ <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
+ <20110218092518.GB30648@elie> <7vei75p3zr.fsf@alter.siamese.dyndns.org>
+ <20110219111103.GA1841@elie> <20110222155637.GC27178@sigill.intra.peff.net>
+ <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
+ <20110223045143.GA11846@sigill.intra.peff.net>
+ <7vlj16aeih.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1102231213280.26358@xanadu.home>
+ <1298502543.28664.19.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Thu Feb 24 01:09:46 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 24 01:14:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsOm9-00014S-Jj
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:09:45 +0100
+	id 1PsOqi-0003Op-6c
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:14:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075Ab1BXAJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 19:09:40 -0500
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:48507 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753629Ab1BXAJj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 19:09:39 -0500
-Received: from [172.23.170.146] (helo=anti-virus03-09)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1PsOm2-0001OW-2J; Thu, 24 Feb 2011 00:09:38 +0000
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by asmtp-out2.blueyonder.co.uk with esmtpa (Exim 4.72)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1PsOls-00044D-FX; Thu, 24 Feb 2011 00:09:28 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 2AD5220918; Thu, 24 Feb 2011 00:09:28 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <20110222193021.GB28519@book.hvoigt.net> (Heiko Voigt's message
-	of "Tue, 22 Feb 2011 20:30:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1755017Ab1BXAOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 19:14:23 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:29354 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639Ab1BXAOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 19:14:22 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LH300G1NHZ87E60@vl-mh-mrz21.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 23 Feb 2011 19:13:56 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1298502543.28664.19.camel@drew-northup.unet.maine.edu>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167753>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+On Wed, 23 Feb 2011, Drew Northup wrote:
 
->The user might have got used to the order the remotes appeared previously.
->Lets add the all entry last so the all entry does not confuse previous
->users.
->
->Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
->---
->
->On Tue, Feb 22, 2011 at 07:36:23PM +0100, Jens Lehmann wrote:
->> 2) I would rather like to see it at the *end* of the submenu, not at the
->>    beginning. Being used to always click on the first menu entry only
->>    to learn that the remote that used to be there got with something
->>    else is kind of surprising ;-)
->
->And this? Disclaimer: Also only superficially tested on OSX.
->
-> lib/remote.tcl |   22 ++++++++++------------
-> 1 files changed, 10 insertions(+), 12 deletions(-)
->
->diff --git a/lib/remote.tcl b/lib/remote.tcl
->index 18d3d06..5e4e7f4 100644
->--- a/lib/remote.tcl
->+++ b/lib/remote.tcl
->@@ -245,29 +245,27 @@ proc update_all_remotes_menu_entry {} {
-> 	set prune_m $remote_m.prune
-> 	if {$have_remote > 1} {
-> 		make_sure_remote_submenues_exist $remote_m
->-		set index [expr {[$fetch_m type 0] eq "tearoff" ? 1 : 0}]
->-		if {[$fetch_m entrycget $index -label] ne "All"} {
->+		if {[$fetch_m entrycget end -label] ne "All"} {
 > 
->-			$fetch_m insert $index separator
->-			$fetch_m insert $index command \
->+			$fetch_m insert end separator
->+			$fetch_m insert end command \
-> 				-label "All" \
-> 				-command fetch_from_all
+> On Wed, 2011-02-23 at 12:18 -0500, Nicolas Pitre wrote:
+> > On Wed, 23 Feb 2011, Junio C Hamano wrote:
+> > 
+> > > Jeff King <peff@peff.net> writes:
+> > > 
+> > > > On Tue, Feb 22, 2011 at 11:30:41AM -0800, Junio C Hamano wrote:
+> > > >
+> > > >> > Speaking of Makefiles, one downside to all of this directory
+> > > >> > segmentation is that you can't run "make" from the subdirectories.
+> > > >> 
+> > > >> I had an impression that "make -C lib/" would be one of the goals, iow,
+> > > >> when we split the directory structure, the next step would be to split the
+> > > >> top-level Makefile so that each directory is covered by its own Makefile,
+> > > >> just like Documentation/ is already usable that way.
+> > > >
+> > > > Ugh. I am not thrilled at the prospect of more recursive make.
+> > > 
+> > > Likewise. Notice that I have consistently been unthrilled when people
+> > > started talking about splitting the source code tree?
+> > 
+> > Maybe that would be wiser to consider an initial set of patches as those 
+> > which were proposed to only do the simple file move first, then wait for 
+> > the dust to settle before doing more changes.  Doing too much in one go 
+> > is inevitably going to bounce against the human tendency to resist any 
+> > kind of change, good or bad.
 > 
->-			$prune_m insert $index separator
->-			$prune_m insert $index command \
->+			$prune_m insert end separator
->+			$prune_m insert end command \
-> 				-label "All" \
-> 				-command prune_from_all
-> 		}
-> 	} else {
-> 		if {[winfo exists $fetch_m]} {
->-			set index [expr {[$fetch_m type 0] eq "tearoff" ? 1 : 0}]
->-			if {[$fetch_m type end] eq "separator"} {
->+			if {[$fetch_m entrycget end -label] eq "All"} {
+> > Nicolas
 > 
->-				delete_from_menu $fetch_m $index
->-				delete_from_menu $fetch_m $index
->+				delete_from_menu $fetch_m end
->+				delete_from_menu $fetch_m end
-> 
->-				delete_from_menu $prune_m $index
->-				delete_from_menu $prune_m $index
->+				delete_from_menu $prune_m end
->+				delete_from_menu $prune_m end
-> 			}
-> 		}
-> 	}
+> Nicolas,
+> They are doing it this way because change is not the objective. A
+> possible better way of managing the codebase is.
 
-This is fine as well. Tested it on windows. Applied to master.
+Incidentally I know that (guess whom this proposal came from initially).  ;-)
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+> Perhaps it isn't the
+> right way to go--and we won't know that until we've explored all of the
+> side-effects, advantages, disadvantages, etc.
+> 
+> Besides, if we move anything around into a deeper directory structure we
+> are inevitably going to have to deal with more recursive make problems.
+> We can't just commit to master a tree that has everything moved about
+> and get around to dealing with the Makefiles later.
+
+The initial set of patches simply moved files into subdirectories and 
+made the corresponding renames within the Makefile.
+
+Reorganizing the Makefile into a better Makefile or sub-makefiles can be 
+done subsequently.  That's my point.
+
+
+Nicolas
