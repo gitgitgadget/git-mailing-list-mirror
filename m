@@ -1,90 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ab/i18n (What's cooking in git.git (Feb 2011, #05; Wed, 23))
-Date: Wed, 23 Feb 2011 17:16:14 -0800
-Message-ID: <7vd3mi44gx.fsf@alter.siamese.dyndns.org>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
- <20110223234828.GA7286@elie>
+From: Hin-Tak Leung <hintak.leung@gmail.com>
+Subject: git-svn dcommit losing/detaching head when commit message empty
+Date: Thu, 24 Feb 2011 01:27:25 +0000
+Message-ID: <AANLkTi=A-UG2aOcwwNbjoBK4pYDtKp=0nFmcwrgVv0f8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 02:16:31 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Feb 24 02:27:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsPol-0004Jc-5u
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 02:16:31 +0100
+	id 1PsPzQ-0000EZ-50
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 02:27:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754972Ab1BXBQ0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Feb 2011 20:16:26 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64908 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754228Ab1BXBQZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 20:16:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 608714F22;
-	Wed, 23 Feb 2011 20:17:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=vJNp3YHNFdpT
-	O9wRW6INkSC4dZs=; b=TsBBluI7efNLg0legw1OR1RNL5ieW0wccqT2syXRrrGJ
-	56XAQ28lNq47AwKkLX6U/QNYDVQixXChhDQh7WcqGSfJxKGqCPD6h83RA6FxpZgE
-	/vHNwBPgoGq7JNXKift+43QIfgvyS6mUsrDWx/snePGOdw3KH2drEMNBBNh/XcU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lA3IBa
-	t4YV07w7VoOgFPfx5ElueGJVq4jVEr6ueAjKPB6uUmzXEFmFVkY5ju9NOuWvQ1vw
-	du73nGvyIsKK0aQgBec0nPT84y722tEUYng720LdsPxoWYXiWHtViaTEW75EXWJV
-	yUm39yDNHyN/J/y2KJto2gZ90201uPBC+GXM8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2DB8D4F1F;
-	Wed, 23 Feb 2011 20:17:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 070EE4F1A; Wed, 23 Feb 2011
- 20:17:30 -0500 (EST)
-In-Reply-To: <20110223234828.GA7286@elie> (Jonathan Nieder's message of
- "Wed\, 23 Feb 2011 17\:48\:28 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DC752842-3FB3-11E0-9D1A-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S932193Ab1BXB12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 20:27:28 -0500
+Received: from mail-gw0-f51.google.com ([74.125.83.51]:55142 "EHLO
+	mail-gw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932173Ab1BXB10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 20:27:26 -0500
+Received: by gwb15 with SMTP id 15so33070gwb.10
+        for <git@vger.kernel.org>; Wed, 23 Feb 2011 17:27:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=i2aJHRqe5lEvbIEB6nrZ/JQjzKgjItk4SU8OseecPwY=;
+        b=hJExE0WMepgeEHOGZXu9FnN3N/Evg5JUGEgdT8QEYTY+fuj2stSzfy5pqhLsgMPRGV
+         Ob3vC1beBfwVmNCypRrZntX7FW36B3C8JINRT4PMLafUTA2fb3wM5qYRCFjRgWPb2xRw
+         FfygE8yHthgIceN/JRKN2pAMX/VlbJp339n8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=uTdWI/ErANdlyJYPg+S+22OSO3I753l1R5BTlYCzqTr8nJJB03zZXJH3iWiIdVnj+B
+         PUYQX/afLQuaCvVNiMiK03HutIA17xw56INvOA7lwclQS3/jm2bK78io+ees34Uz/5iH
+         OZFnEKEhBpwsCg/rD0vxoHPvuFBz+JgY8o7Ac=
+Received: by 10.147.170.14 with SMTP id x14mr348106yao.36.1298510845309; Wed,
+ 23 Feb 2011 17:27:25 -0800 (PST)
+Received: by 10.146.187.22 with HTTP; Wed, 23 Feb 2011 17:27:25 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167763>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> The commit message for the second one seems to have been mangled:
->
-> 	i18n: add GETTEXT_POISON to simulate translated messages unfriendly =
-translator
+I have just encountered a small problem with git-svn dcommit, which
+while not fatal, were quite worrying as
+it resulted in a detached head(?) for a while. This is with
+git-1.7.4-1.fc14.x86_64 .
 
-Yeah, I think I was fooled by the header folding while fixing things up
-inside the mailbox.
+What happened is that I was trying to cherry-pick from one svn branch
+(of commits from somebody else using genuine svn)
+into another svn branch and then do some fix-ups before dcommit to
+push into another svn branch.
 
-> I still don't like the #-sign business in this commit.  Couldn't it
-> be split into a separate patch, not to be applied until just before
-> the strings in commit/tag/wt-status are marked for translation?
+When dcommit'ing, it bombed out in the middle because one of the older
+cherry-picks has no/empty svn commit message. So it
+results into this message:
 
-That might be a sensible thing to do.   =C3=86var what do you think?
+-------------------
+A repository hook failed: 'pre-commit' hook failed with error output:
+Please enter a commit message which details what has changed during this commit.
+ at /usr/libexec/git-core/git-svn line 576
+-------------------
 
-> There is also a patch out there to make this use rot13, which I am
-> somewhat fond of.  Unfortunately, it leaks (because it is not clear
-> how long translated strings are supposed to last).
+That's fair enough and obvious enough, but then at that point, the
+index is at the pre-bomb, and the working directory is post-bomb, I
+think, and neither is HEAD of
+my working branch. This is quite worrying - I think if I had done 'git
+gc --prune=now --aggressive' at this point I would have lost my work?
+Luckily I had a "git log" display before, so I did "git checkout -b
+preserving_work sha1_of_working_branch_head" to keep it.
 
-Yeah I would imagine it would leak.  Also blindly running rot13 to turn=
- %d
-into %q is probably not what you want.
+So I did git rebase -i to edit the original commit messages to add
+something to them. (which arguably git-svn should do automatically? or
+empty messages really frowned upon? I always commit with at least a
+trivial message, but as I said, I was cherry-picking others' commits,
+whose development habits I have no control over)
 
-> I'd be happy with renaming use_poison() to gettext_poison() or
-> similar.  I suppose that is not urgent.
+After I fixed that and continue as I intended, then there is another
+bomb-out, when git-svn complains about a git commit message of mine
+(with minor edit):
+-------------
+Running
+perl -pi -e 's(sometag="original")(sometag="replacement")' directory/*
+-------------
+being empty. On hind-sight, it is probably not a good idea to have
+perl regular expression code within a commit message (git-svn itself
+being in perl), but complaining about a non-empty commit message (and
+seem to be a valid one, no strange utf8/chinese characters, etc) being
+empty seems to be a bug.
 
-I would prefer to be able to merge the first handful to 'master' sooner
-rather than later to minimize the damage to in-flight topics, though.
+Hope this helps. BTW, git-svn is a great tool, and thanks a lot for
+that - I wouldn't use anything else (including the "authentic" svn
+client) to interact with svn repositories these days.
 
-Thanks.
+Hin-Tak
