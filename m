@@ -1,77 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH/RFC 0/8] refactor trace code
-Date: Thu, 24 Feb 2011 09:23:09 -0500
-Message-ID: <20110224142308.GA15356@sigill.intra.peff.net>
+Subject: [RFC/PATCH 1/8] compat: provide a fallback va_copy definition
+Date: Thu, 24 Feb 2011 09:26:47 -0500
+Message-ID: <20110224142647.GA15477@sigill.intra.peff.net>
+References: <20110224142308.GA15356@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Jonathan Nieder <jrnieder@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 15:23:16 2011
+X-From: git-owner@vger.kernel.org Thu Feb 24 15:26:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Psc67-0004Hh-Pj
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 15:23:16 +0100
+	id 1Psc9e-0006Xm-Fz
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 15:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755895Ab1BXOXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 09:23:11 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33729 "EHLO peff.net"
+	id S1755989Ab1BXO0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 09:26:49 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57938 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755495Ab1BXOXK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 09:23:10 -0500
-Received: (qmail 23181 invoked by uid 111); 24 Feb 2011 14:23:09 -0000
+	id S1754868Ab1BXO0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 09:26:48 -0500
+Received: (qmail 23254 invoked by uid 111); 24 Feb 2011 14:26:48 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 24 Feb 2011 14:23:09 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Feb 2011 09:23:09 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 24 Feb 2011 14:26:48 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Feb 2011 09:26:47 -0500
 Content-Disposition: inline
+In-Reply-To: <20110224142308.GA15356@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167811>
 
-A few weeks ago in:
+va_copy is C99. Prior to this, the usual procedure was to
+simply copy the va_list by assignment.
 
-  http://article.gmane.org/gmane.comp.version-control.git/165496
+Signed-off-by: Jeff King <peff@peff.net>
+---
+We have avoided using va_copy many times in the past, which has led to a
+bunch of cut-and-paste. From everything I found searching the web,
+implementations have historically either provided va_copy or just let
+your code assume that simple assignment of worked. I couldn't find any
+mention of any other alternatives.
 
-we discussed the possibility of removing the repo setup trace lines. I
-mentioned that I had also recently done some debug code that would not
-be appropriate to show all the time with GIT_TRACE. So here is a series
-that jumbles it all together: refactors the trace code to handle
-multiple environment variables, adds packet-tracing code on its own
-variable, and puts the repo setup traces on their own variable.
+So my guess is that this will be sufficient, but I we won't really know
+for sure until somebody reports a problem. :(
 
-With this, you can do:
+ git-compat-util.h |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-  GIT_TRACE=1 \
-  GIT_TRACE_PACKET=/tmp/packet.dump \
-  GIT_TRACE_SETUP=0 \
-  git whatever
-
-There may be a few other places where it is worth either pushing some
-traces to their variable (I think the notes merge code has some
-debugging traces in it), or places where existing debugging code could
-be enabled (e.g., there is some diffcore debugging code that I sometimes
-turn on; it is not even compiled by default, but this would give a nice
-way of pushing that decision to runtime).
-
-I have mixed feelings on adding a bunch of debugging code. On the one
-hand, it's mostly dead code that nobody runs. On the other hand, it is
-sometimes really helpful to be able to tell a user "run with this
-environment variable and tell us what it says" without having to get
-them to apply a custom patch.
-
-  [1/8]: compat: provide a fallback va_copy definition
-  [2/8]: strbuf: add strbuf_addv
-  [3/8]: trace: add trace_vprintf
-  [4/8]: trace: refactor to support multiple env variables
-  [5/8]: trace: factor out "do we want to trace" logic
-  [6/8]: trace: add trace_strbuf
-  [7/8]: add packet tracing debug code
-  [8/8]: trace: give repo_setup trace its own key
-
--Peff
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9c23622..00d41e4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -535,6 +535,10 @@ void git_qsort(void *base, size_t nmemb, size_t size,
+ #define fstat_is_reliable() 1
+ #endif
+ 
++#ifndef va_copy
++#define va_copy(dst,src) (dst) = (src)
++#endif
++
+ /*
+  * Preserves errno, prints a message, but gives no warning for ENOENT.
+  * Always returns the return value of unlink(2).
+-- 
+1.7.2.5.25.g3bb93
