@@ -1,81 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 4/6] Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule'
- option
-Date: Thu, 24 Feb 2011 21:44:30 +0100
-Message-ID: <4D66C32E.5090103@web.de>
-References: <4D656F25.5090007@web.de> <4D656FB0.7040904@web.de> <7vei6y5ol6.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/8] trace: refactor to support multiple env variables
+Date: Thu, 24 Feb 2011 12:50:57 -0800
+Message-ID: <7v39nd17im.fsf@alter.siamese.dyndns.org>
+References: <20110224142308.GA15356@sigill.intra.peff.net>
+ <20110224142841.GD15477@sigill.intra.peff.net>
+ <7vsjvd1e9r.fsf@alter.siamese.dyndns.org>
+ <20110224190258.GA4318@sigill.intra.peff.net>
+ <7vbp211alu.fsf@alter.siamese.dyndns.org>
+ <20110224194828.GA5616@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 21:45:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 24 21:51:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Psi4F-0004Ug-5X
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 21:45:43 +0100
+	id 1Psi9b-00083l-Qr
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 21:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932123Ab1BXUpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 15:45:38 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:60041 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755645Ab1BXUph (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 15:45:37 -0500
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate02.web.de (Postfix) with ESMTP id C9F431998113B;
-	Thu, 24 Feb 2011 21:44:33 +0100 (CET)
-Received: from [93.240.123.207] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Psi37-0005tn-00; Thu, 24 Feb 2011 21:44:33 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <7vei6y5ol6.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX188rk1zsu2uJImiLtnoVOa92iRM4bmgLg2DbWpT
-	sdTwuPFt0wtfORttH7jHOl+nrYnef2IxU9yMXLkuuxBukWAA4p
-	62plkwsbbixJDmnBsBvw==
+	id S1753338Ab1BXUvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 15:51:12 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51646 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753243Ab1BXUvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 15:51:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6E04737E0;
+	Thu, 24 Feb 2011 15:52:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ime9QbIWbrNIiIjzzpwufh5lbrA=; b=EmXM/I
+	Yt6p/Ttnx2I6pk+6dAE/Jmt7zgJHDS0CN/0B0o+rW2fA4jMMU7ceOiCVEAEa3Nhh
+	FFLA/IZE+f/QsOsIiJXO1Kr4RvNvmOdTgbEgXc4b5cM9VePGnXuDcwVwmtcxdfND
+	Rx96FVVY4iFxbv0k20cCX/rv1tHCAqW2Y8raM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M0jxMAReSXAA7u7cEDq9gNoUnLFGAedO
+	yjHIMjh7y9q9REoiEc3Ab2H4AtyFlxIzHnF5c59w/HnEbysjXS+ag0LxBzCyBKCI
+	SSdOKlhExYHNom+W3mqIYXZ4AodSR5k4dtBuBLEBRr6/3d1sqr5Vo5II9HmRyj1m
+	PVZIUBYPzg4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2AA6537DD;
+	Thu, 24 Feb 2011 15:52:19 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BC20B37D9; Thu, 24 Feb 2011
+ 15:52:13 -0500 (EST)
+In-Reply-To: <20110224194828.GA5616@sigill.intra.peff.net> (Jeff King's
+ message of "Thu\, 24 Feb 2011 14\:48\:28 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F8301476-4057-11E0-A275-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167860>
 
-Am 24.02.2011 00:16, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> diff --git a/submodule.c b/submodule.c
->> index cccd728..b477c3c 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -113,7 +113,7 @@ int parse_submodule_config_option(const char *var, const char *value)
->>  		if (!config)
->>  			config = string_list_append(&config_fetch_recurse_submodules_for_name,
->>  						    strbuf_detach(&submodname, NULL));
->> -		config->util = git_config_bool(var, value) ? (void *)1 : NULL;
->> +		config->util = (void *)(size_t)parse_fetch_recurse_submodules_arg(value);
-> 
-> What is this double-cast about?
+Jeff King <peff@peff.net> writes:
 
-64bit gcc warns when I drop either of them because a 32bit integer
-is assigned to a 64bit wide pointer here.
+>> > I think I covered that pretty well above, but you lose the flexibility
+>> > of pushing different trace types to different places if you want to.
+>> 
+>> That statement illustrates the inflexibility that all packet traces going
+>> to a same place rather clearly, doesn't it, though?  That "two-tier" thing
+>> was my primary concern.
+>
+> Sorry, I don't quite understand what you're saying here.
 
->> @@ -376,8 +376,13 @@ int fetch_populated_submodules(int num_options, const char **options,
->> ...
->> +				if ((size_t)fetch_recurse_submodules_option->util == RECURSE_SUBMODULES_OFF)
->>  					continue;
->> +				if ((size_t)fetch_recurse_submodules_option->util == RECURSE_SUBMODULES_ON_DEMAND) {
-> 
-> Likewise here; size_t feels a strange type to cast to in this comparison
-> between (void *) and an enum, no?
+I was contrasting these two and called that "two-tier thing":
 
-I get a warning here if I drop the second cast. gcc doesn't warn if
-I drop the first one, but that is just because the enum value happens
-to be 0 there. So I added that cast there too to be on the safe side
-in case the value changes in the future and to be consistent to other
-readers of this code.
+ - GIT_TRACE_SETUP and GIT_TRACE_PACKET can be used to give you
+   flexibility of sending their output to the same location or to
+   different destination.  Nice and flexibile.
+
+ - Even though the trace identities like "clone", "fetch-pack", etc. are
+   clearly marked in the code, you cannot take advantage of the marking
+   and send the output from these packet sources to different destination,
+   because GIT_TRACE_PACKET is just one and single variable.
+
+Clearer?
+
+Not that I think the same flexibility in the latter is absolutely
+necessary, but it somewhat feels inconsistent to have these two classes.
