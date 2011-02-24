@@ -1,101 +1,108 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFD] Line spacing in git log for merge commits with --oneline
-Date: Thu, 24 Feb 2011 10:41:44 +0100
-Message-ID: <4D6627D8.2030208@drmicha.warpmail.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
+Date: Thu, 24 Feb 2011 10:45:33 +0100
+Message-ID: <AANLkTimWy+W+rcZHsac_n--y9iMeaoO66CPZVbN1VBp2@mail.gmail.com>
+References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org> <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 24 10:45:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	msysGit <msysgit@googlegroups.com>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 10:48:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsXl3-0001E1-DW
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 10:45:13 +0100
+	id 1PsXo5-00032J-1H
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 10:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115Ab1BXJpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 04:45:06 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:51518 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756047Ab1BXJpC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Feb 2011 04:45:02 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8990C208D2
-	for <git@vger.kernel.org>; Thu, 24 Feb 2011 04:45:01 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 24 Feb 2011 04:45:01 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:content-type:content-transfer-encoding; s=smtpout; bh=TnSVELS38GIEyk8ldxCEzjHI3Hs=; b=f2KHKaMGY+44nDNq8SmrGK9coDrsw0jgSsZjXsgkzrU0PwDpKLtVNftaTW+hUsZCwyvs2rRlKkiPRqC4rIZEpRy4Jq1eeAebbAofhcD9kuXpO8Qn6kUQeLWl6yVhCpFq+FJ+31elMg5AaRtX2qWFZQD3GrGWQ8qACWFxnSIIxPM=
-X-Sasl-enc: k2YkxXp0GETAzzFGhyfNWfd5SvgafBvVWzk4uCP/Sfte 1298540701
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id CB73E441BF2
-	for <git@vger.kernel.org>; Thu, 24 Feb 2011 04:45:00 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+	id S1754461Ab1BXJsQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Feb 2011 04:48:16 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62776 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752928Ab1BXJsO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Feb 2011 04:48:14 -0500
+Received: by fxm17 with SMTP id 17so353529fxm.19
+        for <git@vger.kernel.org>; Thu, 24 Feb 2011 01:48:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7xxz0eAlmcLGW8/wVtq7EzdzhlgWVH3pqsuh7NnBrso=;
+        b=UBkSbOhkHetkbSy+OJGs4xOhd0BCvSbOYUoZQoMK/Ne+4vLAhsDzJhP7hyf734rADO
+         41xYUYBMbnFzPh4Nrg0fybO/jWm2wEx46vxz7y/mQNR7I9j3qeGbtGGrjA7SOMpvXE5e
+         E6gKFo+ScOb84R7pObuONBS7opDP2MaCZLmyM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=vzZC163ilF2snt0DlHV+JmXwSi1PEwhQ1XR+AvpGqU/HaeMyXnM1D1AoSkj54izdP+
+         +K5DwdaR7WS0gJf8o8ycf7TjUBI4wwL/OyBjynb5KP3MCtXpGqtjMGIJtZenk5S8mA3v
+         QE25PlOC3plJ0RalgBLOWG/zOvSWvuYRJ5NUw=
+Received: by 10.223.101.134 with SMTP id c6mr751103fao.12.1298540753209; Thu,
+ 24 Feb 2011 01:45:53 -0800 (PST)
+Received: by 10.223.95.206 with HTTP; Thu, 24 Feb 2011 01:45:33 -0800 (PST)
+In-Reply-To: <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167788>
 
-Currently, displaying, say, origin/next@{1}..origin/next with
-git log --graph --abbrev-commit --oneline
-produces something like:
+On Thu, Feb 24, 2011 at 1:32 AM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> And then there's the issue that unlike the C patches these will not b=
+e
+> a no-op that'll be optimized away by the compiler. We'll be calling a=
+n
+> external program for displaying messages. While this is a trivial cos=
+t
+> on Unix (especially in the context we're using it, i.e. not in tight
+> loops) it's more expensive on Windows.
+>
 
-*   426d48d Merge branch 'lp/config-vername-check' into next
-|\
-| * 2169ddc Disallow empty section and variable names
-| * b09c53a Sanity-check config variable names
-*   58b03b1 Merge branch 'jc/grep--no-index-pathspec-fix' into next
-|\
-| * 9d8b831 grep --no-index: honor pathspecs correctly
-*   b5c25fa Merge branch 'jh/push-default-upstream-configname' into next
-|\
-| * 53c4031 push.default: Rename 'tracking' to 'upstream'
-...
+Ouch. I remember this being brought up earlier, but I just assumed it
+had been fixed somehow. The shell-scripts are already pretty slow on
+Windows, and the overhead of starting a new process here is quite
+significant.
 
-What bothers me is that visually, the description at the merge points
-sticks to the commits above (look at 58b03b1,b5c25fa), whereas logically
-it belongs to the block below.
+It sounds to me like we should revert these patches in msysGit, at
+least until there's some actual translations in place (and that time
+actually goes into something useful)...
 
-Now, I don't know what the best solution would be that doesn't bother
-anyone else. (Also, I have no clue about the --graph code.) Maybe there
-is one already that I don't know of? Also, I haven't looked at fork
-points. I'm putting two fake solutions below.
+> I don't see any way to deal with that short of implementing some
+> pre-processor, but I think the cost is worth it, but others might
+> disagree of course.
+>
 
-Michael
+I'm not so sure. This is mostly a problem with the no-op version on
+Windows (due to the slow process-startup there), but I think Git for
+Windows probably wants to have i18n support in it's distribution as it
+strives to be the canonical Git-distribution for Windows. But if we
+do, there's nothing to optimize. There's no no-op-stuff, and we need
+to spend that time getting translations.
 
-Extra lines before each merge (needs more space):
+It might be that some people that build Git for Windows themselves and
+know that they don't want a translated Git could benefit from a
+pre-processor, but I'm not so sure. Translated strings occur when
+there's communication going on between Git and the user, and then
+we're some times waiting for user-input, and even when we aren't it
+should be relatively few messages (unless verbose flags are turned on,
+which isn't an important use-case performance-wise to me).
 
-*   426d48d Merge branch 'lp/config-vername-check' into next
-|\
-| * 2169ddc Disallow empty section and variable names
-| * b09c53a Sanity-check config variable names
-|
-*   58b03b1 Merge branch 'jc/grep--no-index-pathspec-fix' into next
-|\
-| * 9d8b831 grep --no-index: honor pathspecs correctly
-|
-*   b5c25fa Merge branch 'jh/push-default-upstream-configname' into next
-|\
-| * 53c4031 push.default: Rename 'tracking' to 'upstream'
-...
+> Anyway, I can submit these patches (around 53) real soon, or wait
+> until the current series settles. It's the same to me, which would yo=
+u
+> prefer?
+>
 
-Denser display (may break with "%w(..)" and what not?):
-
-*\  426d48d Merge branch 'lp/config-vername-check' into next
-| * 2169ddc Disallow empty section and variable names
-| * b09c53a Sanity-check config variable names
-*\  58b03b1 Merge branch 'jc/grep--no-index-pathspec-fix' into next
-| * 9d8b831 grep --no-index: honor pathspecs correctly
-*\  b5c25fa Merge branch 'jh/push-default-upstream-configname' into next
-| * 53c4031 push.default: Rename 'tracking' to 'upstream'
-...
-
-*\
-| * is suboptimal, maybe there are better solutions, like
-
-*
-|`*
-
-and/or marking a merge commit with '+'.
+If we're going to revert these patches in 4msysgit.git, then I can
+imagine that the process becomes very awkward and error-prone if we're
+going to diverge for a long time. So I think it'd make more sense for
+us (the msysgit-developers, that is) if it was merged together with
+the first translations. But that might be sub-optimal for the rest of
+you guys.
