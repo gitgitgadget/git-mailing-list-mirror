@@ -1,77 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
-Date: Thu, 24 Feb 2011 14:08:09 -0500
-Message-ID: <20110224190808.GB4318@sigill.intra.peff.net>
-References: <20110219111103.GA1841@elie>
- <20110222155637.GC27178@sigill.intra.peff.net>
- <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
- <20110223045143.GA11846@sigill.intra.peff.net>
- <7vlj16aeih.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1102231213280.26358@xanadu.home>
- <1298502543.28664.19.camel@drew-northup.unet.maine.edu>
- <alpine.LFD.2.00.1102231908340.26358@xanadu.home>
- <1298567455.19041.39.camel@drew-northup.unet.maine.edu>
- <alpine.LFD.2.00.1102241252000.26358@xanadu.home>
+From: Chris Friesen <chris.friesen@genband.com>
+Subject: [feature request] embed original commit info in cherry-pick
+Date: Thu, 24 Feb 2011 12:30:33 -0600
+Message-ID: <4D66A3C9.7050001@genband.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Feb 24 20:08:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 24 20:09:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsgXw-0000U3-VR
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 20:08:17 +0100
+	id 1PsgYp-0000zp-RY
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 20:09:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755775Ab1BXTIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 14:08:12 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:47207 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754834Ab1BXTIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 14:08:11 -0500
-Received: (qmail 26868 invoked by uid 111); 24 Feb 2011 19:08:10 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 24 Feb 2011 19:08:10 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Feb 2011 14:08:09 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1102241252000.26358@xanadu.home>
+	id S1756293Ab1BXTJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 14:09:00 -0500
+Received: from exprod7og104.obsmtp.com ([64.18.2.161]:33693 "EHLO
+	exprod7og104.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756280Ab1BXTJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 14:09:00 -0500
+X-Greylist: delayed 1069 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Feb 2011 14:08:59 EST
+Received: from source ([63.149.188.88]) (using TLSv1) by exprod7ob104.postini.com ([64.18.6.12]) with SMTP
+	ID DSNKTWasy8+OX+vU7DVpTaVs2kPH0D42YntD@postini.com; Thu, 24 Feb 2011 11:08:59 PST
+Received: from gbausmail.genband.com ([172.16.21.55]) by mail.genband.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 24 Feb 2011 12:30:34 -0600
+Received: from localhost.localdomain ([1.220.17.171]) by gbausmail.genband.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 24 Feb 2011 12:30:34 -0600
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc11 Thunderbird/3.0.4
+X-OriginalArrivalTime: 24 Feb 2011 18:30:34.0193 (UTC) FILETIME=[EC963410:01CBD450]
+X-TM-AS-Product-Ver: SMEX-8.0.0.4160-6.500.1024-17976.001
+X-TM-AS-Result: No--2.776600-5.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167849>
 
-On Thu, Feb 24, 2011 at 01:04:21PM -0500, Nicolas Pitre wrote:
 
-> > It can be done as a separate patch, but it should all be done in the
-> > public branch (pu?) as atomically as possible (one merge from Junio's
-> > workspace). In other words, the public branch should never fail to build
-> > because of this work.
-> 
-> Who said this would fail to compile?
-> 
-> If you move bar.c into the foo directory, then in the existing Makefile 
-> you simply have to make a mechanical rename of bar.c to foo/bar.c.  
-> Restructuring the Makefile can be done separately from the file move 
-> without ever breaking the build (except for unintentional mistakes of 
-> course).
+If I cherry-pick a  bugfix from a more recent version of a project, it
+would be useful to have an indication somewhere in the commit
+information of where it originally came from.
 
-Exactly. Maybe it wasn't clear in the previous bits of the thread, but
-Makefile reorganization is a totally optional thing that can come on top
-of file movement if we choose. I just brought it up with file movement
-because having a bunch of subdirs is going to probably make us _want_ to
-do something with Makefiles.
+That way, if I then upgrade to a newer version of the software it
+becomes obvious that I don't need to worry about porting that commit
+forwards because it's already been handled upstream.
 
-In the interim it may not work to run make from the "cmds" subdirectory,
-but that is not a "fail to build" breakage. As long as we build via
-"make" from the root, then there is no regression. Adding extra make
-fluff on top of that is feature work, not a bug fix.
+As it stands, it's not immediately obvious what was cherry-picked vs
+what was developed locally.
 
--Peff
+Chris
+
+-- 
+Chris Friesen
+Software Developer
+GENBAND
+chris.friesen@genband.com
+www.genband.com
