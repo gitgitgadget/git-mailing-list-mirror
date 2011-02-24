@@ -1,217 +1,147 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
-Date: Thu, 24 Feb 2011 01:32:47 +0100
-Message-ID: <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [1.8.0] Don't copy "submodule.<name>.update" to .git/config on
+ submodule init
+Date: Wed, 23 Feb 2011 16:34:45 -0800
+Message-ID: <7vwrkq46e2.fsf@alter.siamese.dyndns.org>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+ <7vwrll57ha.fsf@alter.siamese.dyndns.org> <4D65660D.3040501@web.de>
+ <7v7hcq8pil.fsf@alter.siamese.dyndns.org> <4D658D8F.2040203@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 01:32:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Feb 24 01:35:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsP8Z-00036S-60
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:32:55 +0100
+	id 1PsPAm-00044i-Qa
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:35:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753629Ab1BXAcu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Feb 2011 19:32:50 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:59579 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752006Ab1BXAct convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 19:32:49 -0500
-Received: by bwz15 with SMTP id 15so602971bwz.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 16:32:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LDHkX7Kv19tqiQFyYx4EP80ep906HXzAQp5c+Q6xTuQ=;
-        b=eaZwj+jdncheA3vvPeSrB3YYl/ArenP77PgA4PuEiJ1tUp+kkde2bBTX+NK7049RHA
-         +uU3PmZXhzYm4RKWwv2KOkXX2jhY8C+5Tz4ns7cCi9CbIx5gZdjL5bObG20/A0oqXcAF
-         3XIXbsgzmyhz8akjLN1OLoaulZx7w9A4RljCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KvgmFgqHMztTcT8A8mDGmpzZHXpBm/D4/eOVMDq7+lcRg+/FzHe3DIGg8KVByfSDfo
-         MLSKVMSaub4DC3WDkEknWIfdbMgQYD1V2JAWqJscl/Wj58JtWlY++IFO/vH1eSipKr4x
-         XUhJNgeNaAX6jM7ERwAVLlcj8PRBEw8AheBAg=
-Received: by 10.204.7.213 with SMTP id e21mr145534bke.47.1298507567539; Wed,
- 23 Feb 2011 16:32:47 -0800 (PST)
-Received: by 10.204.71.7 with HTTP; Wed, 23 Feb 2011 16:32:47 -0800 (PST)
-In-Reply-To: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
+	id S1755561Ab1BXAez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 19:34:55 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59224 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755544Ab1BXAey (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 19:34:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3365F4B8F;
+	Wed, 23 Feb 2011 19:36:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DngwmUg31WHpmLTDQIPolVJH+iw=; b=SzJV3/
+	Z0vp/+UfUHZJGn3H5cJyZNi1GNU+h5/jS9ogwP2mKyzQIlmJJtcLCG/MtyPaY13v
+	+xsrUDkWsuuypKuA43P5Pb6oCYmaMk6aDvR9/3fdLvMnuKxOk8xrb7wwnmAM9dZ3
+	Sjy3+AjYFIq5we1GDmmWmA1WqtR5yqkz6xMqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CGUnyZYZHN3FbokRr2wNORwB8pogLv5t
+	cMfOfMiRnvLctXidvU1OcmhmhOUm6CZV9zO1jGCrRxPymgW6e8RalYN1E3IOWLWJ
+	2+/K+OEsLxaCRWMjhTw1FZ7ZSAaoGFEVHAj9T6yVa/EjsuTPUH8bSsTeaIwY8C1s
+	NDpUCUnJAI8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1005D4B8E;
+	Wed, 23 Feb 2011 19:36:03 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DA8164B8A; Wed, 23 Feb 2011
+ 19:35:59 -0500 (EST)
+In-Reply-To: <4D658D8F.2040203@web.de> (Jens Lehmann's message of "Wed\, 23
+ Feb 2011 23\:43\:27 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0F09B27E-3FAE-11E0-895E-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167757>
 
-On Thu, Feb 24, 2011 at 00:26, Junio C Hamano <gitster@pobox.com> wrote=
-:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> * ab/i18n (2011-02-22) 73 commits
-> [...]
+> And now I read that again I notice that I forgot to add a very important
+> sentence, sorry about that:
 >
-> Re^4-roll, coordinated between =C3=86var and Jonathan.
->
-> I'd like to fast-track the basics (especially the bottom 3 patches), =
-and
-> am even tempted to rebase other patches on 'pu' that are not yet in '=
-next'
-> on top of them, to make the transition easier, so please lend extra s=
-ets
-> of eyeballs on an earlier ones to make sure they are sane (I thought =
-they
-> were, but I am far from perfect).
+> "Take the setting from .gitmodules if submodule.<name>.update is not
+> configured by the user in .git/config."
 
-Great that we're moving this forward. After this has made it to next
-(or master) I'm going to fix this up a bit and submit the shellscript
-i18n-ize patches:
+Yeah, that changes everything.
 
-    https://github.com/avar/git/compare/5bd8b10...8fd2407
+> My proposal uses the values in .gitmodules for those proposed by upstream
+> and those in .git/config as those tweaked by the user. Isn't that simpler
+> than 1) and 2) while giving us the same functionality?
 
-Open issues:
+It actually is even more flexible, in that it allows the user to say "I
+don't care either way; I'll follow along whatever the version that I
+happen to have checked out says"; I am however tempted to think that this
+particular flexibility is not necessarily a good thing to have.
 
-   * Write documentation for git-sh-i18n.sh and git-sh-i18n--envsubst
-     like we have for git-sh-setup (already in WIP form).
+> And additionally it
+> is not setting the upstream default in stone (which is rather arbitrary as
+> it just happened to be present in our .gitmodules when we did the "git
+> submodule init" and might be different at another point in the history)?
 
-   * git-sh-i18n--envsubst is still too fat:
+If the setting changes the behaviour of the command so drastically, would
+the "I'll follow along" mode be really sensible?  A setting in .gitmodules
+might be different between 'maint' and 'master' from the upstream and
+depending on which branch is checked out and you are working on, you may
+get different behaviour (e.g. 'checkout' vs 'merge' vs 'rebase' depending
+on the value-of-the-day in submodule.<name>.update).  Depending on the
+nature of the setting, it may or may not be.
 
-        $ ldd -r git-sh-i18n--envsubst
-            linux-vdso.so.1 =3D>  (0x00007fffc60fd000)
-            libz.so.1 =3D> /usr/lib/libz.so.1 (0x00007f25cff9e000)
-            libcrypto.so.0.9.8 =3D> /usr/lib/libcrypto.so.0.9.8
-(0x00007f25cfbfd000)
-            libpthread.so.0 =3D> /lib/libpthread.so.0 (0x00007f25cf9e00=
-00)
-            libc.so.6 =3D> /lib/libc.so.6 (0x00007f25cf67f000)
-            libdl.so.2 =3D> /lib/libdl.so.2 (0x00007f25cf47b000)
-            /lib64/ld-linux-x86-64.so.2 (0x00007f25d01c0000)
+The "record once and then help the users to adjust but make aware of the
+new duggestion" actually comes from a very old discussion circa 1.5.2
+days:
 
-     It only needs to link to libc, but I didn't find out when I last
-     checked how to convince the Makefile to only link against
-     that. Help welcome :)
+  Cf. http://thread.gmane.org/gmane.comp.version-control.git/47466/focus=47621
 
-   * Deal with the changes in 92c62a3f4f93432c0c82e3031a9e64e03ba290f7:
+Imagine the upstream URL to fetch submodule from has changed over time.
+You don't want to interact with an ancient and now defunct URL only
+because you happen to have a checkout of an old version by reading from
+its .gitmodules file.  The (2) and (3) in the previous message when taken
+to their logical conclusion will be the "seen values" that is hinted in
+the above message from May 2007.  Let the user record what s/he wants
+under the condition that s/he has seen these choices, and do not bother
+her/im again when choices do not change, but do ask permission and/or
+confirmation when a new choice appears.  git-submodule script hasn't
+learned to do that yet, unfortunately.
 
-        $ git --no-pager  grep -A1 abomination *.sh
-        git-pull.sh:            # XXX: This is an abomination
-        git-pull.sh-            require_clean_work_tree "pull with
-rebase" "Please commit or stash them."
+In any case, URL is a good example of variables that would want to stay
+around (while giving the user helping hand to update it when choice
+changes).  "update" would be a good example of a variable that may want to
+be per branch (e.g. 'maint' might encourage "checkout" while 'master'
+might encourage "rebase").  So most likely we would need to support both
+modes of operation.
 
-     The changes Ramkumar Ramachandra made in 92c62a3f4f, while good,
-     are hard to square with i18n.
+> Consider the following situation: The .git directories of the submodules
+> reside in the .git directory of the superproject so their work trees can
+> be safely deleted and we have means to let upstream configure which
+> submodules should be populated on clone. (Hopefully this is the future ;-)
 
-     I think I'll just leave those bits untranslated for now and deal
-     with them later, since I'm trying to keep this minimal.
+Yes, this is very much needed and that is one of the reasons we introduced
+the support for textual ".git" file.
 
-And then there's the issue that unlike the C patches these will not be
-a no-op that'll be optimized away by the compiler. We'll be calling an
-external program for displaying messages. While this is a trivial cost
-on Unix (especially in the context we're using it, i.e. not in tight
-loops) it's more expensive on Windows.
+> What happens when we fetch a commit which records a new submodule marked
+> to be populated on clone in the .gitmodules of that commit? I assume we
 
-I don't see any way to deal with that short of implementing some
-pre-processor, but I think the cost is worth it, but others might
-disagree of course.
+Marked by who?  The supplier of the superproject?
 
-Anyway, I can submit these patches (around 53) real soon, or wait
-until the current series settles. It's the same to me, which would you
-prefer?
+> would want to fetch the bare submodule into a subdirectory of the .git
+> directory of the superproject so that we have it present so we can
+> populate it when the superproject's commit is checked out later, no?
 
-> * gr/cvsimport-alternative-cvspass-location (2011-02-18) 1 commit
-> =C2=A0- Look for password in both CVS and CVSNT password files.
+If the user consents (e.g. "git clone --recursive"), yes.
 
-Given that this solves someone's problem I don't think there's any
-harm in letting it through. The code and overall behavior is somewhat
-nasty, but then so is the rest of git-cvs*.perl, so meh.
+> Should we ask the user if he wants to fetch the bare submodule into the
+> .git directory of the superproject or to ignore the clone setting while
+> fetching?
 
-> * jc/checkout-orphan-warning (2011-02-18) 1 commit
-> =C2=A0- commit: give final warning when reattaching HEAD to leave com=
-mits behind
+If we don't know what the user wants yet, yes.  Note that explicit command
+line options "git clone --recursive" and $HOME/.gitconfig counts as the
+user letting us know what s/he wants.
 
-I like this sort of thing.
+> ... Should we ask him again on checkout time if he wants to use the
+> upstream setting of checking out the submodule?
 
-Generally speaking I don't mind Git being more friendly and verbose
-about this sort of thing. I.e. for common pitfalls print a few lines
-of help because it'll help more than it hurts. I think we've been to
-conservative about that in the past.
-
-There's a grammar error here though if I'm not mistaken:
-
-    w git ((f11f53c...) $%) $ ./git co pu
-    Warning: you are leaving 1 commit behind that are not connected to
-    any of your branches:
-
-=46or the singular this should be "1 commit behind which is not
-corrected to any of your branches".
-
-We're also being somewhat inaccurate by omission here, since we won't
-give this warning if the commit is reachable from any named referenc,
-i.e. if the user just tagged it. So perhaps this should say something
-about "not reachable from any named reference" or something, but then
-again that would confuse the sort of users that need this the most.
-
-> * jh/maint-do-not-track-non-branches (2011-02-17) 1 commit
-> =C2=A0- branch/checkout --track: Ensure that upstream branch is indee=
-d a branch
-
-I like it.
-
-> * jk/merge-rename-ux (2011-02-20) 6 commits
-> =C2=A0- pull: propagate --progress to merge
-> =C2=A0- merge: enable progress reporting for rename detection
-> =C2=A0- add inexact rename detection progress infrastructure
-> =C2=A0- commit: stop setting rename limit
-> =C2=A0- bump rename limit defaults (again)
-> =C2=A0- merge: improve inexact rename limit warning
->
-> The above three all seemed sensible improvements.
-
-Agreed.
-
-> * jn/test-terminal-punt-on-osx-breakage (2011-02-17) 1 commit
-> =C2=A0(merged to 'next' on 2011-02-23 at d754139)
-> =C2=A0+ tests: skip terminal output tests on OS X
-
-Looks good, and maybe I'll debug the Perl one of these days.
-
-> * jk/tag-contains (2010-07-05) 4 commits
-> =C2=A0- Why is "git tag --contains" so slow?
-> =C2=A0- default core.clockskew variable to one day
-> =C2=A0- limit "contains" traversals based on commit timestamp
-> =C2=A0- tag: speed up --contains calculation
->
-> The idea of the bottom one is probably Ok, except that the use of obj=
-ect
-> flags needs to be rethought, or at least the helper needs to be moved=
- to
-> builtin/tag.c to make it clear that it should not be used outside the
-> current usage context.
-
-I really like this as noted elsewhere. But it seems that it would go
-down better if the helper was submitted later on.
-
-> * jh/push-default-upstream-configname (2011-02-16) 1 commit
-> =C2=A0(merged to 'next' on 2011-02-23 at b5c25fa)
-> =C2=A0+ push.default: Rename 'tracking' to 'upstream'
->
-> This is not "renaming" in the sense that breaks existing practice, bu=
-t
-> giving a new official name and deprecating the existing one.
-
-I like the new name.
-
-> * mo/perl-bidi-pipe-envfix (2011-02-15) 1 commit
-> =C2=A0(merged to 'next' on 2011-02-15 at c36e816)
-> =C2=A0+ perl: command_bidi_pipe() method should set-up git environmen=
-s
->
-> Looked reasonable.
-
-Yeah, but fix up the typo in the subject. Should be "environments" :)
+Yes if the available choice and/or suggestion by the upstream has changed,
+otherwise no.
