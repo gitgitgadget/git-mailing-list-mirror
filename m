@@ -1,76 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/6] fetch/pull: recurse into submodules when necessary
-Date: Wed, 23 Feb 2011 18:22:49 -0600
-Message-ID: <20110224002236.GB7433@elie>
-References: <4D656F25.5090007@web.de>
- <4D656F4D.6080401@web.de>
- <7vipwa5phh.fsf@alter.siamese.dyndns.org>
- <4D659818.4070107@web.de>
+From: Johan Herland <johan@herland.net>
+Subject: Re: RFD: Handling case-colliding filenames on case-insensitive
+ filesystems
+Date: Thu, 24 Feb 2011 01:30:05 +0100
+Message-ID: <201102240130.05800.johan@herland.net>
+References: <201102231811.45948.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Kevin Ballard <kevin@sb.org>, Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Feb 24 01:23:05 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 24 01:30:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsOz2-0007X2-BE
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:23:04 +0100
+	id 1PsP61-000206-0V
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:30:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755480Ab1BXAW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 19:22:58 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:41869 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752126Ab1BXAW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 19:22:57 -0500
-Received: by vxi39 with SMTP id 39so3670vxi.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 16:22:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=bR8y6r965LjFSpq4kxiT2GQXbymBFvqGb9jBv0/S6IE=;
-        b=I4Sp3g7UpGDOPyhEQDynPecBloYTD7ROQsI0+oHjjeeWO8t9++CgbatfQuR/PZYjIc
-         qRzfoCIwR99oqX3/jjh0pq+VraCfFfrJsSmU5Q9/MTBHPPN6cCXCnafxxATtMFfA8jv2
-         Y8+GczFyOiEHTWgFLg/OwugTah3llCFld6bCw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UZeN7srdho8AvS3MGHIuYhWHE2J1mkKNa7mH2D8XwhVd4S7yQio121cqbbcMtvOp9C
-         9L0s2DCHBFwV8eQq/tbZcZrilrwmn0zgNAJejjlRe7XzSIM2OGFm0XVhXfwlgaS1LHez
-         qLlj++IsoPGUe3sRQ5sCgk91JVRVNf8EG5qVM=
-Received: by 10.52.162.66 with SMTP id xy2mr352029vdb.20.1298506976658;
-        Wed, 23 Feb 2011 16:22:56 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id b5sm1338065vcx.28.2011.02.23.16.22.54
-        (version=SSLv3 cipher=OTHER);
-        Wed, 23 Feb 2011 16:22:55 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D659818.4070107@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753215Ab1BXAaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 19:30:10 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:57246 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752006Ab1BXAaJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 19:30:09 -0500
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LH300082IQ7T770@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 24 Feb 2011 01:30:07 +0100 (MET)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 2161E1EEF108_D65A68FB	for <git@vger.kernel.org>; Thu,
+ 24 Feb 2011 00:30:07 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 3C7551EEEFD7_D65A68EF	for <git@vger.kernel.org>; Thu,
+ 24 Feb 2011 00:30:06 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LH300NXJIQ61B00@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 24 Feb 2011 01:30:06 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <201102231811.45948.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167755>
 
-Jens Lehmann wrote:
+On Wednesday 23 February 2011, Johan Herland wrote:
+> Are there better suggestions on how to deal with this?
 
-> But maybe
-> fetch_populated_submodules() should empty the string_list it just
-> worked through?
+Just a small note that I forgot in the first email:
 
-No, I don't think so.  There might be cases where you want to fetch
-and then check out the changed submodules some day.
+For the record, this issue has been discussed on stackoverflow <URL: 
+http://stackoverflow.com/questions/2528589/git-windows-case-sensitive-file-
+names-not-handled-properly > and the last comment there suggests an 
+alternative way to work around the case-colliding problem without having to 
+remove either file from the repo:
 
-What might be nice is for cmd_fetch to clear the list before it
-returns.  That way, if this functionality ever gets lib-ified then
-there will be that reminder about how to reset the state.  And
-valgrind can be a little quieter. :)
+Use sparse-checkout to exclude the case-colliding files from the working 
+tree.
+
+Obviously, this isn't a permanent solution, but I thought I'd just throw it 
+out there, as something to consider until a more permanent solution is in 
+place.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
