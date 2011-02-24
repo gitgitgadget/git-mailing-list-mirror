@@ -1,76 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFD: Handling case-colliding filenames on case-insensitive
- filesystems
-Date: Wed, 23 Feb 2011 17:26:55 -0800
-Message-ID: <7v8vx643z4.fsf@alter.siamese.dyndns.org>
-References: <201102231811.45948.johan@herland.net>
- <AANLkTi=gAM3LGwU47_EkENerZeKmjwuhWhpHZJGSiW=n@mail.gmail.com>
- <7vfwre8sax.fsf@alter.siamese.dyndns.org>
- <201102240158.24363.johan@herland.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
+Date: Thu, 24 Feb 2011 02:37:36 +0100
+Message-ID: <AANLkTik6-AFN1T7GYz6z4ad=pPCZG4Z5LWung0qYwe2X@mail.gmail.com>
+References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
+	<AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
+	<7vk4gq45bo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Feb 24 02:27:49 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 02:37:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsPzg-0000LQ-O1
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 02:27:49 +0100
+	id 1PsQ9H-0004LZ-Qa
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 02:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932105Ab1BXB1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 20:27:11 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42852 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755719Ab1BXB1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 20:27:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9CC68300B;
-	Wed, 23 Feb 2011 20:28:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pqyfeLHcisPUBDUqJMSIdyROSdk=; b=fR/Z45
-	CKpXW1uMm0N1SwgavieohIrpOavro5Mh6UBZ6obnHbt4GcEANqK94wqmDhNoBdkJ
-	Pnh/qrZsxFh8BUagvMpJ1e4Q9Q+eiFB2RWLINv44KQ2UP6D97YjER+kxfu0s48cZ
-	un7frTcg2QFG4z1ie2+vQYcxrR/lU+aCd40mM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PlQjEReg259b6z58EluDDx/45v7fcneP
-	bseysaJh2uIMzoIEK1ud71exFnZkfehBxtsqmRB/NyMS0wyNfbCkW3eGnBNMFbrY
-	qaLEziTi+jkMo3H5ChJPlEj2DPWDT/+/ZnKetkV/BEYmJ3aG5RGxQiTxQEjgEg4e
-	O5xJkonebrM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 686EE300A;
-	Wed, 23 Feb 2011 20:28:16 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 18C8C3007; Wed, 23 Feb 2011
- 20:28:10 -0500 (EST)
-In-Reply-To: <201102240158.24363.johan@herland.net> (Johan Herland's message
- of "Thu\, 24 Feb 2011 01\:58\:24 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5AA971A4-3FB5-11E0-BBD2-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1755516Ab1BXBhi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Feb 2011 20:37:38 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43791 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755189Ab1BXBhi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 20:37:38 -0500
+Received: by fxm17 with SMTP id 17so85416fxm.19
+        for <git@vger.kernel.org>; Wed, 23 Feb 2011 17:37:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ptUpTpXEqa7jtPF6ekE3b1P31RTV6qjd5N10dG+16a8=;
+        b=nEAEeVh1YRcKeqi3bJ49uCWUs2a9Mo7OuBMCyfhGbWIjqTWQCkLqNC+ujoMRwjSkPR
+         phPh0HSyS8v8oEg6nZIhWiC2RGfXOxYJ/WjGZGLzRT4qkQPQTVUxUfJyfOQG/AjKRUd7
+         E23c2Rvm/OfNaThUTxh/sH/79PzbENmjuauzM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OuOzkt1bDYcXrzn2rUbEdVt7saSHM76MUm2MPLVlPIm9y9oui32Uq9d4C3pdugMi42
+         9P+G7zruxaKfAYnmlCy9PdOazCuDGRlgFhElXw2bZgqu/1bZtdf5byhgNqjRRnXirsMe
+         hh2TvTO0qSjMbdm15afV8VYJiQvzteepCKEYU=
+Received: by 10.223.70.136 with SMTP id d8mr281821faj.3.1298511456770; Wed, 23
+ Feb 2011 17:37:36 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Wed, 23 Feb 2011 17:37:36 -0800 (PST)
+In-Reply-To: <7vk4gq45bo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167765>
 
-Johan Herland <johan@herland.net> writes:
-
-> On Wednesday 23 February 2011, Junio C Hamano wrote:
->> I think two things are sensible to do, are relatively low hanging fruits,
->> and are of low risk:
->> 
->>  - break checkout on such a tree on incapable filesystems; and
+On Thu, Feb 24, 2011 at 01:57, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Wouldn't that be a regression from the current state (where the poor user in 
-> a case-insensitive worktree can at least "git rm" the offending files, and 
-> keep working without assistance from a case-sensitive worktree)?
+>> And then there's the issue that unlike the C patches these will not =
+be
+>> a no-op that'll be optimized away by the compiler. We'll be calling =
+an
+>> external program for displaying messages. While this is a trivial co=
+st
+>> on Unix (especially in the context we're using it, i.e. not in tight
+>> loops) it's more expensive on Windows.
+>>
+>> I don't see any way to deal with that short of implementing some
+>> pre-processor, but I think the cost is worth it, but others might
+>> disagree of course.
+>
+> Count me one of the others then. =C2=A0Don't we already preprocess ou=
+r scripts
+> before installing anyway?
 
-Depends on the definition of "break".  I meant "exit with non-zero
-status", not necessarily changing what is left in the working tree from
-what the current code gives us.
+Yes, but only for simple variable substitution. Substituting all the
+gettext calls out when we're not compiling with them would be way more
+complex than what we do now, but possible. Anyway I'm not going to do
+it.
+
+>> Anyway, I can submit these patches (around 53) real soon, or wait
+>> until the current series settles. It's the same to me, which would y=
+ou
+>> prefer?
+>
+> One thing at a time is of course preferred.
+
+I'll wait then. No point in submitting them if you won't be merging
+them down until the other things cool down.
+
+> I actually want to stagger the current 70+ patches into two batches. =
+=C2=A0Have
+> the first handful, after polishing them really shiny, merged to maste=
+r,
+> and possibly rebase topics that are only in 'pu' and that are not mea=
+nt
+> for 'maint' on top of the result (so that they can use _() in newly a=
+dded
+> messages), and then merge "mark strings in git-foo with _()" patches =
+in.
+>
+> I suspect it won't be the same to you. =C2=A0At least, it shouldn't.
+>
+> Other topics that fix real bugs or add features continue to trickle d=
+own
+> from 'next' to 'master' and you would need to re-roll what you have t=
+oday.
+> If you wait (or if we have you wait) for too long, the re-roll would
+> become just as unpleasant as my merging the i18n topic to 'pu'.
+
+Right, once we're confident (which at least I am) that the first few
+patches really are no-op's I think it would be easier for everyone to
+merge them down sooner than later.
+
+>> =C2=A0 =C2=A0 Warning: you are leaving 1 commit behind that are not =
+connected to
+>> =C2=A0 =C2=A0 any of your branches:
+>>
+>> For the singular this should be "1 commit behind which is not
+>> corrected to any of your branches".
+>
+> Heh, thanks. =C2=A0I would think "s/ that are /, /" would fix it rath=
+er
+> nicely.
+
+s/corrected/connected/ also :)
