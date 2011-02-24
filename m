@@ -1,133 +1,88 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
-Date: Thu, 24 Feb 2011 12:10:55 -0500
-Message-ID: <1298567455.19041.39.camel@drew-northup.unet.maine.edu>
-References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
-	 <1297304069-14764-1-git-send-email-pclouds@gmail.com>
-	 <20110218022701.GA23435@elie>
-	 <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
-	 <20110218092518.GB30648@elie> <7vei75p3zr.fsf@alter.siamese.dyndns.org>
-	 <20110219111103.GA1841@elie> <20110222155637.GC27178@sigill.intra.peff.net>
-	 <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
-	 <20110223045143.GA11846@sigill.intra.peff.net>
-	 <7vlj16aeih.fsf@alter.siamese.dyndns.org>
-	 <alpine.LFD.2.00.1102231213280.26358@xanadu.home>
-	 <1298502543.28664.19.camel@drew-northup.unet.maine.edu>
-	 <alpine.LFD.2.00.1102231908340.26358@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why doesn't git commit -a track new files
+Date: Thu, 24 Feb 2011 09:27:29 -0800
+Message-ID: <7v7hcp2vi6.fsf@alter.siamese.dyndns.org>
+References: <20110224112246.3f811ac2@glyph>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Feb 24 18:20:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marco <netuse@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 18:27:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PserJ-0000CM-AU
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 18:20:09 +0100
+	id 1Pseyc-0005KU-Cv
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 18:27:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221Ab1BXRUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 12:20:04 -0500
-Received: from beryl.its.maine.edu ([130.111.32.94]:37984 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751331Ab1BXRUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 12:20:03 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p1OHAxxs021903
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 24 Feb 2011 12:11:00 -0500
-In-Reply-To: <alpine.LFD.2.00.1102231908340.26358@xanadu.home>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=7 Fuz1=7
-	Fuz2=7
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p1OHAxxs021903
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1299172261.39239@xGLDfZHqo+XvldE+sclBxg
+	id S1752645Ab1BXR1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 12:27:38 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36523 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521Ab1BXR1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 12:27:37 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A43BB3AAE;
+	Thu, 24 Feb 2011 12:28:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sKd7EmOiBijv7CbAVLnr87DHTqE=; b=Nmz9LN
+	qFecGW/cL8Z/6b+DiVSY/ocCJs2vXSn+DNY6OQCJ8RMfG5m9HSZCq/Bk1mcjsWJW
+	XIOvjY8B/MuyJBDewIPApoxulM8Ngc/YEfmrIFFJ6Zt6U9qKY2HbtCdxRN4qbrur
+	o/rFRNS9HpcSeh8Z22c+8Q4lSN/QvGF7BAdFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OnizBGYmkqlSUY/7ZiXloIoVleceALzY
+	BEohQUOOYy08TLzlj7OfmMUJ9l/aKWx9wyecWZi7XxB/bWPvkyiMiKtiVj0HbSkn
+	3fSZF+xFKxkeAhq++nPM1xdezPXWcLkRQKyCqzc/elF2KV5JnkUVqZilY+g3SgWu
+	QJFNxTK4XNM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7F0843AAD;
+	Thu, 24 Feb 2011 12:28:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9320F3AAC; Thu, 24 Feb 2011
+ 12:28:45 -0500 (EST)
+In-Reply-To: <20110224112246.3f811ac2@glyph> (Marco's message of "Thu\, 24
+ Feb 2011 11\:22\:46 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8A11F890-403B-11E0-95F5-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167840>
 
+Marco <netuse@lavabit.com> writes:
 
-On Wed, 2011-02-23 at 19:14 -0500, Nicolas Pitre wrote:
-> On Wed, 23 Feb 2011, Drew Northup wrote:
-> 
-> > 
-> > On Wed, 2011-02-23 at 12:18 -0500, Nicolas Pitre wrote:
-> > > On Wed, 23 Feb 2011, Junio C Hamano wrote:
-> > > 
-> > > > Jeff King <peff@peff.net> writes:
-> > > > 
-> > > > > On Tue, Feb 22, 2011 at 11:30:41AM -0800, Junio C Hamano wrote:
-> > > > >
-> > > > >> > Speaking of Makefiles, one downside to all of this directory
-> > > > >> > segmentation is that you can't run "make" from the subdirectories.
-> > > > >> 
-> > > > >> I had an impression that "make -C lib/" would be one of the goals, iow,
-> > > > >> when we split the directory structure, the next step would be to split the
-> > > > >> top-level Makefile so that each directory is covered by its own Makefile,
-> > > > >> just like Documentation/ is already usable that way.
-> > > > >
-> > > > > Ugh. I am not thrilled at the prospect of more recursive make.
-> > > > 
-> > > > Likewise. Notice that I have consistently been unthrilled when people
-> > > > started talking about splitting the source code tree?
-> > > 
-> > > Maybe that would be wiser to consider an initial set of patches as those 
-> > > which were proposed to only do the simple file move first, then wait for 
-> > > the dust to settle before doing more changes.  Doing too much in one go 
-> > > is inevitably going to bounce against the human tendency to resist any 
-> > > kind of change, good or bad.
-> > 
-> > > Nicolas
-> > 
-> > Nicolas,
-> > They are doing it this way because change is not the objective. A
-> > possible better way of managing the codebase is.
-> 
-> Incidentally I know that (guess whom this proposal came from initially).  ;-)
-> 
-> > Perhaps it isn't the
-> > right way to go--and we won't know that until we've explored all of the
-> > side-effects, advantages, disadvantages, etc.
-> > 
-> > Besides, if we move anything around into a deeper directory structure we
-> > are inevitably going to have to deal with more recursive make problems.
-> > We can't just commit to master a tree that has everything moved about
-> > and get around to dealing with the Makefiles later.
-> 
-> The initial set of patches simply moved files into subdirectories and 
-> made the corresponding renames within the Makefile.
-> 
-> Reorganizing the Makefile into a better Makefile or sub-makefiles can be 
-> done subsequently.  That's my point.
+> I'm new to git and a bit confused about how some commands work.
+>
+> git add .                    -- Adds everything *but* deleted files
+> git add -A                   -- Adds everything
+> git commit -a -m "whatever"  -- Commits everything *but* new files
+>
+> I don't understand why there's not switch (is there?) for commit to commit new
+> and deleted files, like -A for git add?
 
-It can be done as a separate patch, but it should all be done in the
-public branch (pu?) as atomically as possible (one merge from Junio's
-workspace). In other words, the public branch should never fail to build
-because of this work. That's what I meant by "later" in my comment (as
-it apparently wasn't obvious from context alone). This is especially
-important for gaining the accession of the rest of the developer
-community. Jeff (Peff) and Junio are both apparently quite well aware of
-this--and I happen to agree with Jeff's way of approaching this type of
-change.
+Historical accident.  In the early days of git, there was no .gitignore
+mechanism, so a mode that operates on everything under the working tree
+was almost always an undesired thing to have (think *.o files).
 
-As for making an authoritative publicly available branch containing this
-reorganization work (due solely to the extreme effect it will have on
-other development), I will leave it an open question as to whether this
-belongs in pu while a 1.7.5 release is still a possibility. It looks
-like a headache either way.
+Then .gitignore mechanism came, and "add ." has become usable.  But
+"commit -a" has been widely used way before that.
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+If you look at "commit -a" within that context, you would understand why
+it should only look at the paths git knows about.
+
+Of course, "add -A" is a much later invention.  The option was named "-A"
+with capital letter, even though there is no "add -a".
+
+This was because I knew we would eventually want to have "commit -A" that
+grabs everything and new files (honoring the gitignore mechanism), and
+aimed for consistency between "add -A" that I was adding, and "commit -A"
+that was yet to be written.  See 3ba1f11 (git-add --all: add all files,
+2008-07-19).
+
+I think it now is sensible to add "commit -A" if somebody is inclined to
+do so.  Nobody felt the need for it strongly enough to do so, it seems.
