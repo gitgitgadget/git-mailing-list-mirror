@@ -1,75 +1,82 @@
-From: Guy Rouillier <guyr@burntmail.com>
-Subject: Re: cvsimport still not working with cvsnt
-Date: Wed, 23 Feb 2011 22:14:26 -0500
-Message-ID: <4D65CD12.3070903@burntmail.com>
-References: <4D0ED5EC.9020402@burntmail.com> <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com> <4D119015.6020207@burntmail.com> <4D2AB63D.7040803@burntmail.com> <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com> <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino> <7v8vynnokt.fsf@alter.siamese.dyndns.org> <4D450655.5090501@burntmail.com> <AANLkTik0Mp=Ww_+ZN_jw6t4gsFwLo1UTw5JOpho8bCd=@mail.gmail.com> <7vhbcb35xk.fsf@alter.siamese.dyndns.org> <4D5E1116.7040501@burntmail.com> <7voc69p4xu.fsf@alter.siamese.dyndns.org> <4D5F6E97.4000402@burntmail.com> <7vy65bkw72.fsf@alter.siamese.dyndns.org> <4D61EA4B.3020708@burntmail.com> <7vtyfxgdz2.fsf@alter.siamese.dyndns.org> <7vipwbbrcc.fsf@alter.siamese.dyndns.org> <AANLkTinUtUNGO3NK=JPTqnwcTtPMYjmLw82wJZ5nC
- -32@mail.gmail.com> <7vei6zbmz8.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH v2 18/31] rebase: extract merge code to new source file
+Date: Wed, 23 Feb 2011 22:27:23 -0500 (EST)
+Message-ID: <alpine.DEB.2.00.1102232216180.11038@debian>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-19-git-send-email-martin.von.zweigbergk@gmail.com> <4D58E17C.9090001@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin@laptop.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Emil Medve <Emilian.Medve@freescale.com>,
-	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 04:15:16 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Feb 24 04:27:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsRff-0002LS-Hv
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 04:15:15 +0100
+	id 1PsRrc-0006zw-6B
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 04:27:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932302Ab1BXDPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Feb 2011 22:15:11 -0500
-Received: from mx02.burntmail.com ([70.87.63.122]:33854 "EHLO
-	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932298Ab1BXDPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Feb 2011 22:15:09 -0500
-Received: from [173.79.61.50] (helo=[192.168.1.60])
-	by mx02.burntmail.com with esmtpa (Exim 4.72)
-	(envelope-from <guyr@burntmail.com>)
-	id 1PsRev-0001A1-Rg; Wed, 23 Feb 2011 21:14:29 -0600
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <7vei6zbmz8.fsf@alter.siamese.dyndns.org>
+	id S932277Ab1BXD1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 22:27:31 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:62006 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932173Ab1BXD1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 22:27:31 -0500
+Received: by qwd7 with SMTP id 7so102829qwd.19
+        for <git@vger.kernel.org>; Wed, 23 Feb 2011 19:27:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=YtxzKwJO4Fe6JwRG59FKLEC2D1Djb7Vx2lUCdsCD5+4=;
+        b=rZ8qAZL2BiZ0RBeDYsARQWXPUB2vCRduM2GR7U3xQSwwMaRvR3yQJBIoop34gD4xcA
+         FCOdbFIiZsmSlEeaM0O5S20sO6kwoP/xxHnnlV8vOkSEg8RmlyKpbFdmBxpn0kENSA5p
+         PhGK+xmAkbc5Gfcf/jp56DMqFPivEvIocNcxI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=LAtZd0Nzk0v9W18ilKdLVfMDnmEufgBdtoEBwyLYqpXHME7DTa2V24zF2DOVnw387q
+         fJnBAMCMM7PTc6glomBb8l0nkKpOLxMiG07GTb9X5aHLIn+P+yf7NmXV3hvxkFCoR6Hf
+         CYpAKxQPoceXJtCOgxRiMuseoctjb/1r1ypiM=
+Received: by 10.224.11.15 with SMTP id r15mr232299qar.192.1298518050148;
+        Wed, 23 Feb 2011 19:27:30 -0800 (PST)
+Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id t7sm6072361qcs.4.2011.02.23.19.27.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 23 Feb 2011 19:27:28 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <4D58E17C.9090001@viscovery.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167773>
 
-On 2/22/2011 7:42 PM, Junio C Hamano wrote:
-> Martin Langhoff<martin@laptop.org>  writes:
->
->> On Tue, Feb 22, 2011 at 6:08 PM, Junio C Hamano<gitster@pobox.com>  wrote:
->>> Even though I don't deeply care about what CVSNT does...
->> ...
->>> Does anybody know why?  Only to make things incompatible, perhaps? ;-)
->>
->> A brief googling around shows that it also stores it in the Windows registry.
->
-> Yes, I saw that too.  I actually also got the impression that registry is
-> the primary location for cvsnt (hence I suspect .cvs/cvspass support might
-> be secondary and would not be surprised if it were sub-par).
+On Mon, 14 Feb 2011, Johannes Sixt wrote:
 
-There may perhaps be a misunderstanding of CVSNT.  CVSNT is a 
-multi-platform client and server.  Both parts can run on many platforms, 
-including Windows, Linux, and Solaris.  I don't use Macs so don't know 
-about them.
+> Am 2/6/2011 19:43, schrieb Martin von Zweigbergk:
+> > diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+> > new file mode 100644
+> > index 0000000..c04ce8a
+> > --- /dev/null
+> > +++ b/git-rebase--merge.sh
+> 
+> This should be mode 100755. (Ditto for git-rebase--am.sh in 19/31)
 
-Use of HOME/.cvs/cvspass is not secondary or sub-par.  On any platform 
-other than Windows, HOME/.cvs/cvspass is the standard place that CVSNT 
-stores repository passwords.  And on Windows, you can optionally tell it 
-to store repository passwords in HOME/.cvs/cvspass instead of the 
-registry.  I have my Windows configured that way for consistency with my 
-numerous Linux accounts.
+I was just about to fix now and I noticed that quite a few other
+script files are mode 100644. Should all be changed to mode 100755 or
+is there some kind of rule as to which mode they should be? Both
+git-sh-setup.sh and git-parse-remote.sh are also mode 100644 and I
+(think I) know that both are always sourced. If the rule is that
+sourced scripts should be mode 100644 (but I'm just guessing here),
+then I should actually have changed the mode of
+git-rebase--interactive.sh to that mode instead. Please advice.
 
-The whole reason I resurrected this 2 year old topic is that we are 
-trying to migrate from CVSNT on *Linux* to git.
 
-Thanks.
-
--- 
-Guy Rouillier
+/Martin
