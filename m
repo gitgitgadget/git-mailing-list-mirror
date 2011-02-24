@@ -1,86 +1,115 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
-Date: Thu, 24 Feb 2011 16:39:52 -0600
-Message-ID: <20110224223952.GA22524@elie>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
- <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
- <AANLkTimWy+W+rcZHsac_n--y9iMeaoO66CPZVbN1VBp2@mail.gmail.com>
- <AANLkTike1qDGJ-mLsSRYpBk59_evk9x5oFeGt5RSUg3d@mail.gmail.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: git svn clone failing
+Date: Thu, 24 Feb 2011 17:44:19 -0500
+Message-ID: <1298587459.22431.19.camel@drew-northup.unet.maine.edu>
+References: <AANLkTi=Y64ohHnduBqxs--aLW3AYKCxrag2YoAFt58NC@mail.gmail.com>
+	 <1298033812.10893.23.camel@drew-northup.unet.maine.edu>
+	 <AANLkTim9obiU2H_PLb=O1=YxTr1nZ0v-zXC7mxUORVAH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kusmabite@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 23:40:26 2011
+Cc: git@vger.kernel.org
+To: Vampire <Vampire@masters-of-disaster.de>
+X-From: git-owner@vger.kernel.org Thu Feb 24 23:45:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsjrF-0007Xo-Nj
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 23:40:26 +0100
+	id 1Psjvg-0001XF-7z
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 23:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755962Ab1BXWkH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Feb 2011 17:40:07 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:53590 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754445Ab1BXWkG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Feb 2011 17:40:06 -0500
-Received: by vxi39 with SMTP id 39so897233vxi.19
-        for <git@vger.kernel.org>; Thu, 24 Feb 2011 14:40:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=UhpQRVdSQHyl4DEtWF1LXMNbH+Aaex48fpAyPDdFfBA=;
-        b=JUM1ukdmtcPhmyM14uFKwbV8sYf9D75tFNZ3ohmWPj4GVfDAMOjQc3gUgUqjrfOKfR
-         yXFKHvC7sTCEk9EXWNP9L4iPFYHu5TDzI/7pnKuigLcCEoIhc0B9JKw+SM5Oq/BhoqnY
-         mWHQ3D720K8dffvdZ50nJYKH6Kixp8666fVjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=pws+45zv9Rh1s1cmkXcxELe+dDi7tOyCI5x2l5Fz6xnh+eJ7Jga7K4bVyvg06SnZsk
-         N0jmIo37CB8J34qTLAKk+zp7l0g/DufVvBpd+DTXLpQPeWwBpEeFUXO+sOrcWzVR4XRN
-         sAdo+XMfx8sL8mqrZ1N23EUZlU0JFos9E5voc=
-Received: by 10.52.158.66 with SMTP id ws2mr2590499vdb.281.1298587203892;
-        Thu, 24 Feb 2011 14:40:03 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id b6sm7034vci.0.2011.02.24.14.40.00
-        (version=SSLv3 cipher=OTHER);
-        Thu, 24 Feb 2011 14:40:01 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTike1qDGJ-mLsSRYpBk59_evk9x5oFeGt5RSUg3d@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756221Ab1BXWoz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Feb 2011 17:44:55 -0500
+Received: from beryl.its.maine.edu ([130.111.32.94]:45845 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753570Ab1BXWoy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 17:44:54 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p1OMiPtI009779
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 24 Feb 2011 17:44:25 -0500
+In-Reply-To: <AANLkTim9obiU2H_PLb=O1=YxTr1nZ0v-zXC7mxUORVAH@mail.gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
+	Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p1OMiPtI009779
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1299192278.55052@3KUBRhBjmk6wH/PoS5xTDA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167868>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> IIRC last time this was discussed I asked whether the size of the
-> binary mattered for execution startup time (i.e. more so than on
-> Unix). We're only invoking printf(1) and git-sh-i18n--envsubst, both
-> of which only are (or only need to be) linked to libc.
+On Fri, 2011-02-18 at 15:21 +0100, Vampire wrote:
+> Hi Drew,
+>=20
+> SVN client is in version 1.6.5.
+> svn co http://svn.apache.org/repos/asf/ant/core/trunk .
+> works fine and without problem.
+> I guess it is in the phase of searching for history in other places i=
+n
+> the repository and there some place is accessed that is password
+> protected.
+> I did not contact the server admin as the normal svn client works fin=
+e
+> and so it seems to be a problem of git-svn, not of the SVN server.
+> Did you try the command I gave you and does it succeed for you? It is
+> a publicly available repository so you should be able to reproduce th=
+e
+> problem.
+>=20
+> Regards
+> Bj=C3=B6rn
 
-printf is usually built in to the shell.  I think if we're very
-careful about quoting shell metacharacters then we can get by using
-eval in place of envsubst.  See the message that
+The error is reproducible, and I'm running a newer subversion client
+than you are. It definitely isn't making it through all of the revision=
+s
+available before dying.
 
- http://thread.gmane.org/gmane.comp.version-control.git/160396
+=2E....
+Checked through r161300
+Checked through r161400
+RA layer request failed: Server sent unexpected return value (403 Forbi=
+dden) in response to REPORT request for '/repos/asf/!svn/vcc
+/default' at /usr/libexec/git-core/git-svn line 5131
 
-is a reply to (which does not seem to have hit the ml; sorry about
-that).
+I forgot to ask, which version git are you running? I am running 1.7.4
+on the machine I tried this (RHEL5 RPM, compiled locally).
 
-I hope preprocessing away the "eval" is not needed. :)
+> 2011/2/18 Drew Northup <drew.northup@maine.edu>:
+> >
+> > On Mon, 2011-02-14 at 18:24 +0100, Vampire wrote:
+> >> Hi,
+> >>
+> >> I'm trying to issue the following command:
+> >>
+> >> git svn clone --stdlayout http://svn.apache.org/repos/asf/ant/core=
+/ .
+> >>
+> >> But unfortunately this fails after some time with the message:
+> >>
+> >> RA layer request failed: Server sent unexpected return value (403
+> >> Forbidden) in response to REPORT request for
+> >> '/repos/asf/!svn/vcc/default' at /usr/lib/git-core/git-svn line 43=
+54
+> >>
+> >> Regards
+> >> Bj=C3=B6rn
+> >
+> > Bj=C3=B6rn,
+> > Have you made sure your subversion client is up-to-date? Does this =
+work
+> > as a plain svn clone? Have you contacted the server admin?
+> > Without context we cannot act on this.
+> >
 
-> It would also be interesting to have some real world benchmarks on
-> Windows with and without this series, maybe it won't be so bad.
-
-Yes, e.g. timing from running the rebase tests in the testsuite
-might be interesting.
+--=20
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
