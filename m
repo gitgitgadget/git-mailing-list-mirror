@@ -1,85 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: ab/i18n (What's cooking in git.git (Feb 2011, #05; Wed, 23))
-Date: Thu, 24 Feb 2011 05:00:29 -0600
-Message-ID: <20110224110029.GE14115@elie>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
- <20110223234828.GA7286@elie>
- <7vd3mi44gx.fsf@alter.siamese.dyndns.org>
- <AANLkTinY4pt5DLokKkuCNnC1yi7nQBHcZv722x9CKvCh@mail.gmail.com>
- <20110224031414.GC7970@elie>
- <AANLkTikfqmPKA0T4Q-ac0CXzqmCEp0cWNskODEjmACW_@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: new behaviour in git merge
+Date: Thu, 24 Feb 2011 06:52:33 -0500
+Message-ID: <20110224115233.GA31356@sigill.intra.peff.net>
+References: <20110224143353.ddaa316a.sfr@canb.auug.org.au>
+ <20110224081553.GD25595@sigill.intra.peff.net>
+ <20110224202454.d3b8668e.sfr@canb.auug.org.au>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 12:00:41 2011
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+To: Stephen Rothwell <sfr@canb.auug.org.au>
+X-From: git-owner@vger.kernel.org Thu Feb 24 12:52:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsYw5-0005cJ-0t
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 12:00:41 +0100
+	id 1PsZkQ-0006Pb-68
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 12:52:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755598Ab1BXLAg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Feb 2011 06:00:36 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:48315 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753606Ab1BXLAf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Feb 2011 06:00:35 -0500
-Received: by vxi39 with SMTP id 39so309311vxi.19
-        for <git@vger.kernel.org>; Thu, 24 Feb 2011 03:00:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=f29p5cwN1tsiDsT8DZ209u9NVV9iy2u88tzIz0ggWMQ=;
-        b=q2REVwGIdxQj1zWcA4jkf1JtaigwXdBpZgXtNsUFUvqxT3/d8zcSx9x+qLNStZ6aqQ
-         vurduml113FaHNYxTKVoW93wTUV3tntUSQzdSz5rUVkILM/tb76fbO0/BdZKwiqmk/9t
-         nmVuqKl2KR2thXdqrbZzya50nXHq6YD+i6PP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=WhYerpQi6DJk+jZNNUdRapLiLOcLGoxhEiP1kuXjMmnckhkGAfB9BiVysQiSCsIdwW
-         WZgi/O0WlGG/IBzmgp0NEa3Iziy42MfWHKShCBDxjYJE/QvThHexYsQzPDA/vICQ3kL6
-         nd5GaZ0D90/bd+KvsrYwGyKdGa5jR/bakxnSA=
-Received: by 10.52.167.73 with SMTP id zm9mr1136567vdb.106.1298545234551;
-        Thu, 24 Feb 2011 03:00:34 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
-        by mx.google.com with ESMTPS id m10sm3044666vcs.8.2011.02.24.03.00.32
-        (version=SSLv3 cipher=OTHER);
-        Thu, 24 Feb 2011 03:00:33 -0800 (PST)
+	id S1752847Ab1BXLwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 06:52:36 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:48769 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751370Ab1BXLwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 06:52:35 -0500
+Received: (qmail 21979 invoked by uid 111); 24 Feb 2011 11:52:34 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 24 Feb 2011 11:52:34 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Feb 2011 06:52:33 -0500
 Content-Disposition: inline
-In-Reply-To: <AANLkTikfqmPKA0T4Q-ac0CXzqmCEp0cWNskODEjmACW_@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20110224202454.d3b8668e.sfr@canb.auug.org.au>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167800>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+[+cc Elijah Newren; this is a bug that bisects to one of your commits.
+ The backstory is that during a merge, many unrelated files get
+ unnecessarily re-written with the same content. Read on for details.]
 
-> I don't mean it that way at all, I just mean that as a comment to
-> *this* particular patch series I don't think it's something we have t=
-o
-> worry about.
+On Thu, Feb 24, 2011 at 08:24:54PM +1100, Stephen Rothwell wrote:
 
-This is really tiring and unpleasant.  I don't want to stand in the
-way of a translated git happening or to take on the project myself
-so I can't just decree "it will be like so".
+> In today's linux-next tree (available at
+> git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git),
+> commit ad11c1e8abca18872c2993b09b1abde418955b6c is just before the merge
+> and commit a2c06ee2fe5b48a71e697bae00c6e7195fc016b6 is what was merged.
+> 
+> I just did this in a copy of my tree:
+> 
+> 	git reset --hard ad11c1e8abca18872c2993b09b1abde418955b6c
+> 	sleep 90
+> 	git merge a2c06ee2fe5b48a71e697bae00c6e7195fc016b6
+> 
+> A comparison of the ls -lR ouput before and after showed a lot of changed
+> modification times.
+> 
+> Several other merges showed the same problem.
 
-It's your and Junio's (and lots other people's, of course) code.  But
-that means that for me to be able to help, I need to be able to say,
-"here's a suggested change" and get an "okay" or "no, here's what's
-wrong with that and how you can improve it".
+Thanks for the reproduction recipe. I was able to bisect using this
+script as my test:
 
-And that just doesn't seem to be happening now.  I don't know how to
-fix it, but I thought I should explain why I am probably so
-frustrating to work with right now.
+-- >8 --
+#!/bin/sh
 
-Sorry about that.
+stat() {
+  git ls-files -z | xargs --null stat --format='%Y %n' | sort
+}
+
+cd linux-next &&
+git reset --hard ad11c1e8abca18872c2993b09b1abde418955b6c &&
+sleep 3 &&
+stat >before &&
+git merge a2c06ee2fe5b48a71e697bae00c6e7195fc016b6 &&
+stat >after &&
+comm -13 before after | cut -d' ' -f2 | sort >stat-diff &&
+git diff-tree -r --name-only HEAD HEAD^ >tree-diff &&
+comm -23 stat-diff tree-diff >extra-stats &&
+if test -s extra-stats; then
+  cat extra-stats
+  echo FAIL
+  exit 1
+else
+  echo OK
+  exit 0
+fi
+-- 8< --
+
+It bisects to 882fd11 (merge-recursive: Delay content merging for
+renames, 2010-09-20). And indeed, looking further at the files that get
+modified, they appear to be renames on one side of the merge, but not
+touched on the other side. But rather than notice that there is nothing
+to be done on them, we seem to update the index and write out the new
+entries.
+
+The patch below makes the problem go away in your test case, but also
+introduces some test failures in t3509, so I'm sure there is something
+else going on. I'm somewhat clueless about the merge code, so I'll defer
+to Elijah, who wrote 882fd11, and see what he says.
+
+-Peff
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 0ca54bd..1dd643f 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1083,7 +1083,8 @@ static int process_renames(struct merge_options *o,
+ 					b = ren1->pair->two;
+ 					a = &src_other;
+ 				}
+-				update_stages_and_entry(ren1_dst, ren1->dst_entry, one, a, b, 1);
++				if (hashcmp(one->sha1, b->sha1))
++					update_stages_and_entry(ren1_dst, ren1->dst_entry, one, a, b, 1);
+ 				if (string_list_has_string(&o->current_directory_set, ren1_dst)) {
+ 					setup_rename_df_conflict_info(RENAME_NORMAL,
+ 								      ren1->pair,
