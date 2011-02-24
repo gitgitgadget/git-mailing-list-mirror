@@ -1,102 +1,86 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 8/8] trace: give repo_setup trace its own key
-Date: Thu, 24 Feb 2011 15:49:59 -0600
-Message-ID: <20110224214959.GH17412@elie>
-References: <20110224142308.GA15356@sigill.intra.peff.net>
- <20110224143030.GH15477@sigill.intra.peff.net>
+Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
+Date: Thu, 24 Feb 2011 16:39:52 -0600
+Message-ID: <20110224223952.GA22524@elie>
+References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
+ <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
+ <AANLkTimWy+W+rcZHsac_n--y9iMeaoO66CPZVbN1VBp2@mail.gmail.com>
+ <AANLkTike1qDGJ-mLsSRYpBk59_evk9x5oFeGt5RSUg3d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 24 22:50:49 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kusmabite@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 23:40:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Psj5E-0007mh-SC
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 22:50:49 +0100
+	id 1PsjrF-0007Xo-Nj
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 23:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215Ab1BXVuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 16:50:44 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:49536 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056Ab1BXVun (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 16:50:43 -0500
-Received: by vws12 with SMTP id 12so858205vws.19
-        for <git@vger.kernel.org>; Thu, 24 Feb 2011 13:50:43 -0800 (PST)
+	id S1755962Ab1BXWkH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Feb 2011 17:40:07 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:53590 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754445Ab1BXWkG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Feb 2011 17:40:06 -0500
+Received: by vxi39 with SMTP id 39so897233vxi.19
+        for <git@vger.kernel.org>; Thu, 24 Feb 2011 14:40:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=AYTJ2Hqr0Fa4WezoUew6gX57Ewf2ihQOkd0lQINzw/Q=;
-        b=CZWjlkR+ZzI2vnEo6EGqXzDyxJnePZQQhBPLy9giYgafLd1ne6JDAXx9TLoLZwYnpx
-         HmMzp+sFlKxCuRCFtSwAH1xSCuRBLy5jrFHoh4xA9USl6J0OQVsQXMSiZnm47JcA0uqX
-         urg1u+BjXuL193ANAM8X1pxK+6RXaqihxqfvU=
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=UhpQRVdSQHyl4DEtWF1LXMNbH+Aaex48fpAyPDdFfBA=;
+        b=JUM1ukdmtcPhmyM14uFKwbV8sYf9D75tFNZ3ohmWPj4GVfDAMOjQc3gUgUqjrfOKfR
+         yXFKHvC7sTCEk9EXWNP9L4iPFYHu5TDzI/7pnKuigLcCEoIhc0B9JKw+SM5Oq/BhoqnY
+         mWHQ3D720K8dffvdZ50nJYKH6Kixp8666fVjs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=x2tbzK+gJBkIkM7erU/ABMJCeYf5D7iCbJ0t9+3L4HcV+ckyfuOnzdM32HkWHc+gLv
-         WWeDTcwLgLfBbAQ9KDksoaG0g0i0qpHDlg1iBD2aBx7PGfGRlOMLuPEWwbdfu145zcxl
-         n5W8iB5fASTvL9KI1RppIgsLd1S4uzhgZFKvQ=
-Received: by 10.52.167.166 with SMTP id zp6mr2744960vdb.93.1298584205537;
-        Thu, 24 Feb 2011 13:50:05 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
-        by mx.google.com with ESMTPS id e37sm6649778vbm.5.2011.02.24.13.50.03
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=pws+45zv9Rh1s1cmkXcxELe+dDi7tOyCI5x2l5Fz6xnh+eJ7Jga7K4bVyvg06SnZsk
+         N0jmIo37CB8J34qTLAKk+zp7l0g/DufVvBpd+DTXLpQPeWwBpEeFUXO+sOrcWzVR4XRN
+         sAdo+XMfx8sL8mqrZ1N23EUZlU0JFos9E5voc=
+Received: by 10.52.158.66 with SMTP id ws2mr2590499vdb.281.1298587203892;
+        Thu, 24 Feb 2011 14:40:03 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
+        by mx.google.com with ESMTPS id b6sm7034vci.0.2011.02.24.14.40.00
         (version=SSLv3 cipher=OTHER);
-        Thu, 24 Feb 2011 13:50:04 -0800 (PST)
+        Thu, 24 Feb 2011 14:40:01 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110224143030.GH15477@sigill.intra.peff.net>
+In-Reply-To: <AANLkTike1qDGJ-mLsSRYpBk59_evk9x5oFeGt5RSUg3d@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167867>
 
-Jeff King wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> You no longer get this output with GIT_TRACE=1; instead, you
-> can do GIT_TRACE_SETUP=1.
+> IIRC last time this was discussed I asked whether the size of the
+> binary mattered for execution startup time (i.e. more so than on
+> Unix). We're only invoking printf(1) and git-sh-i18n--envsubst, both
+> of which only are (or only need to be) linked to libc.
 
-Thank you. :)
+printf is usually built in to the shell.  I think if we're very
+careful about quoting shell metacharacters then we can get by using
+eval in place of envsubst.  See the message that
 
-> --- a/trace.c
-> +++ b/trace.c
-> @@ -155,10 +155,11 @@ static const char *quote_crnl(const char *path)
->  /* FIXME: move prefix to startup_info struct and get rid of this arg */
->  void trace_repo_setup(const char *prefix)
->  {
-> +	static const char *key = "GIT_TRACE_SETUP";
+ http://thread.gmane.org/gmane.comp.version-control.git/160396
 
-Micronit:
+is a reply to (which does not seem to have hit the ml; sorry about
+that).
 
-	static const char key[] = ...
+I hope preprocessing away the "eval" is not needed. :)
 
-> @@ -170,10 +171,10 @@ void trace_repo_setup(const char *prefix)
->  	if (!prefix)
->  		prefix = "(null)";
->  
-> -	trace_printf("setup: git_dir: %s\n", quote_crnl(get_git_dir()));
-> -	trace_printf("setup: worktree: %s\n", quote_crnl(git_work_tree));
-> -	trace_printf("setup: cwd: %s\n", quote_crnl(cwd));
-> -	trace_printf("setup: prefix: %s\n", quote_crnl(prefix));
-> +	trace_printf_key(key, "setup: git_dir: %s\n", quote_crnl(get_git_dir()));
-> +	trace_printf_key(key, "setup: worktree: %s\n", quote_crnl(git_work_tree));
-> +	trace_printf_key(key, "setup: cwd: %s\n", quote_crnl(cwd));
-> +	trace_printf_key(key, "setup: prefix: %s\n", quote_crnl(prefix));
+> It would also be interesting to have some real world benchmarks on
+> Windows with and without this series, maybe it won't be so bad.
 
-I wonder if it would make sense for this to be
-
-	trace_printf("setup", "git_dir: %s\n", ...);
-
-and:
-
- - automatically prefix each line with the key instead of "trace:"
- - enable or redirect based on the content of the GIT_TRACE_$(uc $key)
-   variable
-
-But what you have here already works, so:
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Yes, e.g. timing from running the rebase tests in the testsuite
+might be interesting.
