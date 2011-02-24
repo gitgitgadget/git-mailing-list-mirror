@@ -1,123 +1,102 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/8] add packet tracing debug code
-Date: Thu, 24 Feb 2011 15:44:12 -0600
-Message-ID: <20110224214412.GG17412@elie>
+Subject: Re: [PATCH 8/8] trace: give repo_setup trace its own key
+Date: Thu, 24 Feb 2011 15:49:59 -0600
+Message-ID: <20110224214959.GH17412@elie>
 References: <20110224142308.GA15356@sigill.intra.peff.net>
- <20110224143019.GG15477@sigill.intra.peff.net>
+ <20110224143030.GH15477@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 24 22:44:25 2011
+X-From: git-owner@vger.kernel.org Thu Feb 24 22:50:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Psiz3-0004Up-Ac
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 22:44:25 +0100
+	id 1Psj5E-0007mh-SC
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 22:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754164Ab1BXVoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 16:44:20 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:36824 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753440Ab1BXVoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 16:44:19 -0500
-Received: by vxi39 with SMTP id 39so857458vxi.19
-        for <git@vger.kernel.org>; Thu, 24 Feb 2011 13:44:19 -0800 (PST)
+	id S1753215Ab1BXVuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 16:50:44 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:49536 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056Ab1BXVun (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 16:50:43 -0500
+Received: by vws12 with SMTP id 12so858205vws.19
+        for <git@vger.kernel.org>; Thu, 24 Feb 2011 13:50:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=x+DEUkvDK7b5mKI1etcZhvU+kYB1hJT4KyFpZNQvND8=;
-        b=SkEOu9bgnMJFL7yvHboUJgIWBfdZZMbaoNrWSU+TmTo+Cd0g85uyccJ1Svta5dqzLb
-         lqMVpXtUTUCHjIUuuLHFGe6I6J6fuIqd+6995Tb23KnQt5/eEyvZJeqy2t249t9tbU0y
-         F5JlXOJTCRd9ZfJByE6gPfuW2mLVHNqFN6QRc=
+        bh=AYTJ2Hqr0Fa4WezoUew6gX57Ewf2ihQOkd0lQINzw/Q=;
+        b=CZWjlkR+ZzI2vnEo6EGqXzDyxJnePZQQhBPLy9giYgafLd1ne6JDAXx9TLoLZwYnpx
+         HmMzp+sFlKxCuRCFtSwAH1xSCuRBLy5jrFHoh4xA9USl6J0OQVsQXMSiZnm47JcA0uqX
+         urg1u+BjXuL193ANAM8X1pxK+6RXaqihxqfvU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=kBrFuZZP8hch5FFMtz1rNENp7oqO+h/Vwv/RwmgWlM3ahFp4uQwjoSDW4toAXIV+f/
-         xiXXWh9gUwYq7/DDgCjAuL3SIG+0SXFeFKTSSPpZQc/FVYjo/SqEMo+2ORZyIizB+IyP
-         JQq/tCUImyJrhvff33dpLuVZ2ktKZ/q5oZtNg=
-Received: by 10.52.160.3 with SMTP id xg3mr2516020vdb.215.1298583858539;
-        Thu, 24 Feb 2011 13:44:18 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id q5sm4470199vcr.39.2011.02.24.13.44.16
+        b=x2tbzK+gJBkIkM7erU/ABMJCeYf5D7iCbJ0t9+3L4HcV+ckyfuOnzdM32HkWHc+gLv
+         WWeDTcwLgLfBbAQ9KDksoaG0g0i0qpHDlg1iBD2aBx7PGfGRlOMLuPEWwbdfu145zcxl
+         n5W8iB5fASTvL9KI1RppIgsLd1S4uzhgZFKvQ=
+Received: by 10.52.167.166 with SMTP id zp6mr2744960vdb.93.1298584205537;
+        Thu, 24 Feb 2011 13:50:05 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
+        by mx.google.com with ESMTPS id e37sm6649778vbm.5.2011.02.24.13.50.03
         (version=SSLv3 cipher=OTHER);
-        Thu, 24 Feb 2011 13:44:17 -0800 (PST)
+        Thu, 24 Feb 2011 13:50:04 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110224143019.GG15477@sigill.intra.peff.net>
+In-Reply-To: <20110224143030.GH15477@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167866>
 
 Jeff King wrote:
 
-> This shows a trace of all packets coming in or out of a given
-> program. This can help with debugging object negotiation or
-> other protocol issues.
+> You no longer get this output with GIT_TRACE=1; instead, you
+> can do GIT_TRACE_SETUP=1.
 
-Sounds handy.
+Thank you. :)
 
-> Packet tracing can be enabled with GIT_TRACE_PACKET=<foo>,
-> where <foo> takes the same arguments as GIT_TRACE.
-[...]
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -383,6 +383,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  
->  	junk_pid = getpid();
->  
-> +	packet_trace_identity("clone");
-
-My first thought on reading this was "identity operation" (= pass-through),
-which left me a little confused.
-
-Maybe "packet_trace_set_identity" (or ...set_prefix) would be a little
-clearer?
-
-> +++ b/pkt-line.c
-> @@ -1,6 +1,51 @@
-[...]
-> +	if ((len >= 4 && !prefixcmp(buf, "PACK")) ||
-> +	    (len >= 5 && !prefixcmp(buf+1, "PACK"))) {
-> +		strbuf_addstr(&out, "PACK ...");
-> +		unsetenv(trace_key);
-> +	}
-> +	else {
-
-Style: should be cuddled, I think.
-
-> +		/* XXX we should really handle printable utf8 */
-> +		for (i = 0; i < len; i++) {
-
-Maybe using is_utf8, extended to take a length argument?
-(Assuming it's okay if non-ASCII is escaped in packets containing
-non-utf8 parts.)
-
-[...]
-> @@ -39,11 +84,13 @@ ssize_t safe_write(int fd, const void *buf, ssize_t n)
->   */
->  void packet_flush(int fd)
+> --- a/trace.c
+> +++ b/trace.c
+> @@ -155,10 +155,11 @@ static const char *quote_crnl(const char *path)
+>  /* FIXME: move prefix to startup_info struct and get rid of this arg */
+>  void trace_repo_setup(const char *prefix)
 >  {
-> +	packet_trace("0000", 4, 1);
->  	safe_write(fd, "0000", 4);
+> +	static const char *key = "GIT_TRACE_SETUP";
 
-... I wonder if it would make sense to do
+Micronit:
 
- static void packet_writebuf(int fd, const char *buf, size_t buflen)
- {
-	packet_trace(buf, buflen, 1);
-	safe_write(fd, buf, buflen);
- }
+	static const char key[] = ...
 
-Nah, that would include the size noise for even nonempty packets,
-which your implementation conveniently omits.
+> @@ -170,10 +171,10 @@ void trace_repo_setup(const char *prefix)
+>  	if (!prefix)
+>  		prefix = "(null)";
+>  
+> -	trace_printf("setup: git_dir: %s\n", quote_crnl(get_git_dir()));
+> -	trace_printf("setup: worktree: %s\n", quote_crnl(git_work_tree));
+> -	trace_printf("setup: cwd: %s\n", quote_crnl(cwd));
+> -	trace_printf("setup: prefix: %s\n", quote_crnl(prefix));
+> +	trace_printf_key(key, "setup: git_dir: %s\n", quote_crnl(get_git_dir()));
+> +	trace_printf_key(key, "setup: worktree: %s\n", quote_crnl(git_work_tree));
+> +	trace_printf_key(key, "setup: cwd: %s\n", quote_crnl(cwd));
+> +	trace_printf_key(key, "setup: prefix: %s\n", quote_crnl(prefix));
 
-Thanks, looks useful.
+I wonder if it would make sense for this to be
+
+	trace_printf("setup", "git_dir: %s\n", ...);
+
+and:
+
+ - automatically prefix each line with the key instead of "trace:"
+ - enable or redirect based on the content of the GIT_TRACE_$(uc $key)
+   variable
+
+But what you have here already works, so:
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
