@@ -1,73 +1,81 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: Why doesn't git commit -a track new files
-Date: Thu, 24 Feb 2011 17:04:17 +0100
-Message-ID: <4D668181.404@drmicha.warpmail.net>
-References: <20110224112246.3f811ac2@glyph>	<4D6672F7.4020101@drmicha.warpmail.net> <vpqk4gp4dxf.fsf@bauges.imag.fr>
+Date: Thu, 24 Feb 2011 11:09:33 -0500
+Message-ID: <20110224160932.GC30275@sigill.intra.peff.net>
+References: <20110224112246.3f811ac2@glyph>
+ <4D6672F7.4020101@drmicha.warpmail.net>
+ <20110224154908.GA29309@sigill.intra.peff.net>
+ <4D667F1A.5060408@drmicha.warpmail.net>
+ <20110224160027.GA30275@sigill.intra.peff.net>
+ <4D6680F3.1000205@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: Marco <netuse@lavabit.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 24 17:07:42 2011
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 24 17:09:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsdjB-0002HL-T8
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 17:07:42 +0100
+	id 1Psdl5-0003Og-Qs
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 17:09:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756194Ab1BXQHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 11:07:36 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53664 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752306Ab1BXQHf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Feb 2011 11:07:35 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B1DCE201B3;
-	Thu, 24 Feb 2011 11:07:34 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 24 Feb 2011 11:07:34 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ad7uFoLlQmoH7xk8or788R3Utaw=; b=s7/jTuFr9h0JrVYFCScsVQlPm/Ztv9j+gLw2vCVAXoVxW+oxtTvSzstW5dxlr+RZ89dbCD0mSw/1KacWM459po7ATK74g98Z5m3xKTRB1E7Yyr+Gc8sOpvxYNKGOG6zZPGo8pbzmAjf+sTmHf/Z6IWEqNvPV+h9Iwx1JKxfFMrA=
-X-Sasl-enc: FKnlLucCl9X75B/aND5BjegHcFbLm7i5qqQD7BFTQGDx 1298563654
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2017C400A7C;
-	Thu, 24 Feb 2011 11:07:34 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <vpqk4gp4dxf.fsf@bauges.imag.fr>
+	id S1756240Ab1BXQJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 11:09:34 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58861 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752306Ab1BXQJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 11:09:34 -0500
+Received: (qmail 25495 invoked by uid 111); 24 Feb 2011 16:09:33 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 24 Feb 2011 16:09:33 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Feb 2011 11:09:33 -0500
+Content-Disposition: inline
+In-Reply-To: <4D6680F3.1000205@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167832>
 
-Matthieu Moy venit, vidit, dixit 24.02.2011 17:04:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Thu, Feb 24, 2011 at 05:01:55PM +0100, Michael J Gruber wrote:
+
+> >> - hom. interface: allow "-a pathspec" for commit
+> > 
+> > What would it do? It would just behave like "git commit -i
+> > pathspec"?
 > 
->> Why does it not exist? Because you should at least
->> "git add -A && git status && behappy && git commit".
-> 
-> There are alternatives like
-> 
-> git status && behappy && git commit -A
+> It should do what "-u pathspec" does for add: limit "all tracked" to the
+> pathspec. I know it's the same as without "-a", but why bail out on it?
 
-That may not give the full picture of untracked stuff in subdirs.
+Without "-a", we do "git commit -o", which is slightly different with
+respect to stuff in the index.  In the case of:
 
-> or
-> 
-> git commit -A && look at status $EDITOR && behapy && save
+  git add -u <path> && git commit
 
-Yes, I even mentioned that, but you cut it. Bad bad boy! ;)
+we will add new changes from <path>, and then commit them along with
+whatever was already in the index.
 
->> Also, "-A" supports a very "un-gitty" way of using git. This makes it
->> unlikely that someone cares to implement it...
-> 
-> I guess that's it. It's not usefull to most Git developers, hence nobody
-> cared to implement it. But IIRC the switch "add -A" was chosen partly
-> because -A didn't exist for commit, hence this leaves room for commit
+With:
 
-Yes.
+  git commit <path>
 
-So, we have one more volunteer for the plan just laid out, right?
+We will commit _just_ the changes in <path>, regardless of what is in
+the index.
 
-Michael
+I assumed that:
+
+ git commit -a <path>
+
+would behave more like the "git add -u <path>" case; add new stuff to
+the index from <path>, and then commit those changes plus whatever was
+already in the index.
+
+> I've done all the careful planning already, laid out in nice steps. Now
+> it's your time ;)
+
+Heh. Transitioning to management, I see.
+
+-Peff
