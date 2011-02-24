@@ -1,97 +1,111 @@
-From: Justin Mattock <justinmattock@gmail.com>
-Subject: Re: gitk with the latest branch makes the system unusable for some time
-Date: Thu, 24 Feb 2011 10:20:12 -0800
-Message-ID: <C89C2D5B-9DD7-42FD-8CB5-E33EDC919DEE@gmail.com>
-References: <AANLkTim3MW0PmD5_tra4nmRapfgHJ9K_usJWGVK3AOUC@mail.gmail.com> <20110224164551.GD888@home.goodmis.org>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-X-From: linux-kernel-owner@vger.kernel.org Thu Feb 24 19:20:26 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/8] trace: refactor to support multiple env variables
+Date: Thu, 24 Feb 2011 10:25:04 -0800
+Message-ID: <7vsjvd1e9r.fsf@alter.siamese.dyndns.org>
+References: <20110224142308.GA15356@sigill.intra.peff.net>
+ <20110224142841.GD15477@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 24 19:25:29 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Psfnd-0004jP-Kj
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 24 Feb 2011 19:20:25 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PsfsU-000855-Ht
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 19:25:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755022Ab1BXSUU (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 24 Feb 2011 13:20:20 -0500
-Received: from mail-px0-f174.google.com ([209.85.212.174]:59774 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752158Ab1BXSUO (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 24 Feb 2011 13:20:14 -0500
-Received: by pxi15 with SMTP id 15so126416pxi.19
-        for <multiple recipients>; Thu, 24 Feb 2011 10:20:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        bh=S7c1auyzutDJHZtB+NhEYrgS97GlIbZpD5C636qiTX0=;
-        b=fM2uKcKlGTIV8x98d+rS7axFOLEx04G/Y/sh9vom4rXkHFpKcvcJr0pXIj8YW69SR0
-         aEeuNUh8HN0ht17eDmx99ssidRQr+dz07B9t62LExEfQ7dzu3bEWt9FhiEsLhv1vlMRI
-         zmNqDKj3Gsi4uKZoRZuFJWecFH8QcDx5tQaWc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=raRhcMQAfzlIJp0+rpyWaKswnwkmdA7gJmqZP+fuyXs8fqk+4J9/isrllPypEPjzze
-         opmFlnshdzfxr3KgzBBIoRo8WZfTQ9wTS4vYQhZtmgvQnuTItyXqNkCPr6hYmReI0bsC
-         RVzGo8ColriAUI4lpyFi96R8fx2yonyjQNXYs=
-Received: by 10.142.239.14 with SMTP id m14mr922114wfh.12.1298571614063;
-        Thu, 24 Feb 2011 10:20:14 -0800 (PST)
-Received: from [172.29.71.32] (cpe-76-94-2-152.socal.res.rr.com [76.94.2.152])
-        by mx.google.com with ESMTPS id s41sm7945119wfc.3.2011.02.24.10.20.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Feb 2011 10:20:12 -0800 (PST)
-In-Reply-To: <20110224164551.GD888@home.goodmis.org>
-X-Mailer: Apple Mail (2.936)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755474Ab1BXSZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 13:25:19 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34914 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754404Ab1BXSZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 13:25:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A786A42C3;
+	Thu, 24 Feb 2011 13:26:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=ZT1bkQTtGTs2K5+IjOx6HzJu25w=; b=Z8/Qbs/qzhSgp0K995ifUPG
+	/t1ldmC7Yd9y7R8HlKk6+H0zHqZsoUzEAZ6wEB9Ru5TosBvPqm5kmna0/Qp/T/g0
+	1l/VyYfZlLJxjPtD3fAH1hys0dwIixqTbvGhzQmq+06RogfcoBNmHb/eUz1jPec4
+	NQsVYzQbDppQJd85CY58=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=b7tmqq7lx3Id6yw/I9vtFAGmlgjP7SqaxZEjcpoPn3DVI2DEE
+	++e0lQ0Fxw74rTncESiCwYbt8NxqhyDxUMr/tw2vhdqoa4EWDtzOwA2yLs/2gvTs
+	WhxSxtZsKoBLlpqTZt2RwJryPoqCOO2pjmGoPcC+FS8jThIDATS1U2nDKo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6753B42C2;
+	Thu, 24 Feb 2011 13:26:26 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D864E42BE; Thu, 24 Feb 2011
+ 13:26:20 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9724166E-4043-11E0-8FBD-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167844>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167845>
 
+Jeff King <peff@peff.net> writes:
 
-On Feb 24, 2011, at 8:45 AM, Steven Rostedt wrote:
-
-> Hi Justin,
+> Right now you turn all tracing off and on with GIT_TRACE. To
+> support new types of tracing without forcing the user to see
+> all of them, we will soon support turning each tracing area
+> on with GIT_TRACE_*.
 >
-> On Tue, Feb 22, 2011 at 03:53:08PM -0800, Justin Mattock wrote:
->> not sure if there is any reports of this or not, basically using gitk
->> on my macbookpro2,2 makes the system extremely slow and unusable
->> (after a while can finally use the system)
->>
->> in dmesg I am seeing this:
->>
->
->
->> [ 6089.367430] [ 2593]  1000  2593    26616        1   1       0
->>      0 bash
->> [ 6089.367435] [ 2717]  1000  2717   326078   204267   0       0
->>      0 wish
->> [ 6089.367439] [ 2729]  1000  2729   141207     7349   0       0
->>      0 git
->> [ 6089.367444] Out of memory: Kill process 2717 (wish) score 802 or
->> sacrifice child
->
-> Looks like a memory leak in gitk and nothing to do with the kernel. I
-> would take this up with them.
->
-> -- Steve
->
+> This patch lays the groundwork by providing an interface
+> which does not assume GIT_TRACE. However, we still maintain
+> the trace_printf interface so that existing callers do not
+> need to be refactored.
 
+One thing I found missing in the patch description is a statement of the
+overall design and expected usage.  It appears to me that the design is
+built around the idea to give each named/namable area to be traceable its
+own trace output file descriptor, so that different kinds of trace events
+are sent to different files.
 
-cool... I haven't had a chance yet to upgrade git(external things in  
-life)
-but once I get to it I will, and see.
+I however expect that majority of "trace only areas A and B" users would
+want to see logs of events from these two areas in the same stream to see
+them in the order they happened.  Perhaps you are envisioning that these
+users would use redirection from the command line to send GIT_TRACE_A and
+GIT_TRACE_B to the same place; that probably needs to be spelled out more
+explicitly somewhere in the documentation, as that would be a more common
+thing to do.
 
-Thanks
+I think your [7/8] is kind of strange when viewed in that light.  Imagine
+what would happen if you gave separate GIT_TRACE_* to each packet class,
+instead of giving them a single umbrella variable GIT_TRACE_PACKET.  If
+the user wants to see them all in a single stream, the same redirection
+you would use to unify GIT_TRACE_A and GIT_TRACE_B can be used.
 
-Justin P. Mattock
+Instead, you have packet class prefix in the output so that later the
+different kinds of packet events can be sifted out from the unified
+output, even though they are forced to go to the same output stream.  In a
+sense, you have two-tier classification system for traceable events (the
+top layer that can be separated or merged at the file descriptor level,
+and the bottom layer that can only be separated by looking at the prefix).
+
+Is this necessarily a good thing (not a rhetorical question)?
+
+To put it another and opposite way, I wonder if it would be better to
+instead use a single output stream named by GIT_TRACE and add trace event
+class prefix to the output for classes like SETUP and PACKET (again, not a
+rhetorical question).
+
+Also instead of wasting environment variable names, it might be a more
+compact design from the user's point of view if we took a list of trace
+event classes in a single environment variable, e.g.
+
+	GIT_TRACE_CLASS=setup,packet \
+        GIT_TRACE=/tmp/tr \
+        git push
+
+I dunno.
