@@ -1,127 +1,88 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
-Date: Thu, 24 Feb 2011 02:37:36 +0100
-Message-ID: <AANLkTik6-AFN1T7GYz6z4ad=pPCZG4Z5LWung0qYwe2X@mail.gmail.com>
+Date: Wed, 23 Feb 2011 17:59:50 -0800
+Message-ID: <7v4o7u42g9.fsf@alter.siamese.dyndns.org>
 References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
-	<AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
-	<7vk4gq45bo.fsf@alter.siamese.dyndns.org>
+ <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
+ <7vk4gq45bo.fsf@alter.siamese.dyndns.org>
+ <AANLkTik6-AFN1T7GYz6z4ad=pPCZG4Z5LWung0qYwe2X@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 02:37:44 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 03:00:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsQ9H-0004LZ-Qa
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 02:37:44 +0100
+	id 1PsQV2-0007A7-1H
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 03:00:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755516Ab1BXBhi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Feb 2011 20:37:38 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43791 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755189Ab1BXBhi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 20:37:38 -0500
-Received: by fxm17 with SMTP id 17so85416fxm.19
-        for <git@vger.kernel.org>; Wed, 23 Feb 2011 17:37:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ptUpTpXEqa7jtPF6ekE3b1P31RTV6qjd5N10dG+16a8=;
-        b=nEAEeVh1YRcKeqi3bJ49uCWUs2a9Mo7OuBMCyfhGbWIjqTWQCkLqNC+ujoMRwjSkPR
-         phPh0HSyS8v8oEg6nZIhWiC2RGfXOxYJ/WjGZGLzRT4qkQPQTVUxUfJyfOQG/AjKRUd7
-         E23c2Rvm/OfNaThUTxh/sH/79PzbENmjuauzM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OuOzkt1bDYcXrzn2rUbEdVt7saSHM76MUm2MPLVlPIm9y9oui32Uq9d4C3pdugMi42
-         9P+G7zruxaKfAYnmlCy9PdOazCuDGRlgFhElXw2bZgqu/1bZtdf5byhgNqjRRnXirsMe
-         hh2TvTO0qSjMbdm15afV8VYJiQvzteepCKEYU=
-Received: by 10.223.70.136 with SMTP id d8mr281821faj.3.1298511456770; Wed, 23
- Feb 2011 17:37:36 -0800 (PST)
-Received: by 10.223.2.201 with HTTP; Wed, 23 Feb 2011 17:37:36 -0800 (PST)
-In-Reply-To: <7vk4gq45bo.fsf@alter.siamese.dyndns.org>
+	id S1753534Ab1BXCAE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Feb 2011 21:00:04 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39050 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753160Ab1BXCAD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 21:00:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78472338A;
+	Wed, 23 Feb 2011 21:01:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=iPnXaW/bYPW3
+	WWrUlzbl9RAF9mc=; b=QmH8cdoBSAgrDANyFVMl/dxFFkQZiEZkSUuIzWCXfDZx
+	Sqhl9O/tN4nZQVyCM7bnQrLhrXPAqi27KlnVpkDqBw2kEvVt0gbTj12ggftavJAS
+	pnl2qdh3U0YEjc+6X/bIcDDf18eOszD3qcR5ydy0SXhXCQciFEoSK/XcqYYHTt4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=mu8bho
+	QZPseYju/a/sfmrBEOk8NGiN5bCPQq2uNqRvMNH16PBZwS0LG9EOxDiikmywMj7k
+	T95YB8w3ZaozxAxjA/noY/8B+0KIgTCv3y409U46qeA+kZuvvzTjLx0XsNDoYD/f
+	MeDuCPZ0Smuiwu2eRBcKtngpoDFq/eeNLuxF4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 473C93387;
+	Wed, 23 Feb 2011 21:01:10 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 268873385; Wed, 23 Feb 2011
+ 21:01:05 -0500 (EST)
+In-Reply-To: <AANLkTik6-AFN1T7GYz6z4ad=pPCZG4Z5LWung0qYwe2X@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu\, 24 Feb
+ 2011 02\:37\:36 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F32E968A-3FB9-11E0-BD2E-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167766>
 
-On Thu, Feb 24, 2011 at 01:57, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> And then there's the issue that unlike the C patches these will not =
-be
->> a no-op that'll be optimized away by the compiler. We'll be calling =
-an
->> external program for displaying messages. While this is a trivial co=
-st
->> on Unix (especially in the context we're using it, i.e. not in tight
->> loops) it's more expensive on Windows.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> Right, once we're confident (which at least I am) that the first few
+> patches really are no-op's I think it would be easier for everyone to
+> merge them down sooner than later.
+
+We three are pretty much on the same page, then.
+
+Two minor points are what to do with the "#" prefix in "# POISON #" and
+namespace contamination, but other than these I don't think there is
+anything controversial.
+
+
+>>> =C2=A0 =C2=A0 Warning: you are leaving 1 commit behind that are not=
+ connected to
+>>> =C2=A0 =C2=A0 any of your branches:
+>>>
+>>> For the singular this should be "1 commit behind which is not
+>>> corrected to any of your branches".
 >>
->> I don't see any way to deal with that short of implementing some
->> pre-processor, but I think the cost is worth it, but others might
->> disagree of course.
+>> Heh, thanks. =C2=A0I would think "s/ that are /, /" would fix it rat=
+her
+>> nicely.
 >
-> Count me one of the others then. =C2=A0Don't we already preprocess ou=
-r scripts
-> before installing anyway?
+> s/corrected/connected/ also :)
 
-Yes, but only for simple variable substitution. Substituting all the
-gettext calls out when we're not compiling with them would be way more
-complex than what we do now, but possible. Anyway I'm not going to do
-it.
-
->> Anyway, I can submit these patches (around 53) real soon, or wait
->> until the current series settles. It's the same to me, which would y=
-ou
->> prefer?
->
-> One thing at a time is of course preferred.
-
-I'll wait then. No point in submitting them if you won't be merging
-them down until the other things cool down.
-
-> I actually want to stagger the current 70+ patches into two batches. =
-=C2=A0Have
-> the first handful, after polishing them really shiny, merged to maste=
-r,
-> and possibly rebase topics that are only in 'pu' and that are not mea=
-nt
-> for 'maint' on top of the result (so that they can use _() in newly a=
-dded
-> messages), and then merge "mark strings in git-foo with _()" patches =
-in.
->
-> I suspect it won't be the same to you. =C2=A0At least, it shouldn't.
->
-> Other topics that fix real bugs or add features continue to trickle d=
-own
-> from 'next' to 'master' and you would need to re-roll what you have t=
-oday.
-> If you wait (or if we have you wait) for too long, the re-roll would
-> become just as unpleasant as my merging the i18n topic to 'pu'.
-
-Right, once we're confident (which at least I am) that the first few
-patches really are no-op's I think it would be easier for everyone to
-merge them down sooner than later.
-
->> =C2=A0 =C2=A0 Warning: you are leaving 1 commit behind that are not =
-connected to
->> =C2=A0 =C2=A0 any of your branches:
->>
->> For the singular this should be "1 commit behind which is not
->> corrected to any of your branches".
->
-> Heh, thanks. =C2=A0I would think "s/ that are /, /" would fix it rath=
-er
-> nicely.
-
-s/corrected/connected/ also :)
+That typo appears only in _your_ version, not mine ;-).
