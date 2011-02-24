@@ -1,93 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: complete "git diff ...branc<TAB>"
-Date: Thu, 24 Feb 2011 09:09:48 -0800
-Message-ID: <7vfwrd2wbn.fsf@alter.siamese.dyndns.org>
-References: <7vlj1677gz.fsf@alter.siamese.dyndns.org>
- <20110224151328.GB14720@neumann>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [RFC/PATCH 0/3] Thinning the git toplevel directory
+Date: Thu, 24 Feb 2011 12:10:55 -0500
+Message-ID: <1298567455.19041.39.camel@drew-northup.unet.maine.edu>
+References: <7vmxm4onwk.fsf@alter.siamese.dyndns.org>
+	 <1297304069-14764-1-git-send-email-pclouds@gmail.com>
+	 <20110218022701.GA23435@elie>
+	 <AANLkTik8wUrUnjTiUxUZbg3paaQEc7UERQ6J6jUzA2u5@mail.gmail.com>
+	 <20110218092518.GB30648@elie> <7vei75p3zr.fsf@alter.siamese.dyndns.org>
+	 <20110219111103.GA1841@elie> <20110222155637.GC27178@sigill.intra.peff.net>
+	 <7v4o7vdfz2.fsf@alter.siamese.dyndns.org>
+	 <20110223045143.GA11846@sigill.intra.peff.net>
+	 <7vlj16aeih.fsf@alter.siamese.dyndns.org>
+	 <alpine.LFD.2.00.1102231213280.26358@xanadu.home>
+	 <1298502543.28664.19.camel@drew-northup.unet.maine.edu>
+	 <alpine.LFD.2.00.1102231908340.26358@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Feb 24 18:10:09 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Feb 24 18:20:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Psehd-00023s-CC
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 18:10:09 +0100
+	id 1PserJ-0000CM-AU
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 18:20:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665Ab1BXRKE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Feb 2011 12:10:04 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52439 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754983Ab1BXRKD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Feb 2011 12:10:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4151238D9;
-	Thu, 24 Feb 2011 12:11:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qf+F2zIlxDQK
-	g4Uxd50AN90MsUk=; b=goJOYjmwcfAXfLOzRdLiUC6Da/8yPYnrlPGaaZtcsV3a
-	Xrft2ZxEpdN0zRBV7gSNsuKzW9uNi/nV9dUFAY82Q3M5wRjVyXuKwu8Gdo9T9ool
-	Hpqm3khHEW5LvG8ah/6tege4PYmh1BH+kVrQBlfjmeao79ggOLQBYZ/p33XgsOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Kw4FIe
-	S1HbeRJHuzjLbOEcA/D+gXpfoJ5syScaG53RpInW66etQuJFJhWg/DsFgswwG1WS
-	EKGsOXnr21skZhX3mWHkqGgegW0jDIDlkJxHl/HPNI7ev649DBKwIA12ETLt2PYt
-	Lg6kcnZj5f7qChGXwziju2K8x5838TCj4kEE8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F397838D8;
-	Thu, 24 Feb 2011 12:11:09 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9553138D4; Thu, 24 Feb 2011
- 12:11:04 -0500 (EST)
-In-Reply-To: <20110224151328.GB14720@neumann> ("SZEDER =?utf-8?Q?G=C3=A1bo?=
- =?utf-8?Q?r=22's?= message of "Thu\, 24 Feb 2011 16\:13\:28 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1323FD0C-4039-11E0-83D0-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752221Ab1BXRUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Feb 2011 12:20:04 -0500
+Received: from beryl.its.maine.edu ([130.111.32.94]:37984 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751331Ab1BXRUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Feb 2011 12:20:03 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p1OHAxxs021903
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 24 Feb 2011 12:11:00 -0500
+In-Reply-To: <alpine.LFD.2.00.1102231908340.26358@xanadu.home>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=7 Fuz1=7
+	Fuz2=7
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p1OHAxxs021903
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1299172261.39239@xGLDfZHqo+XvldE+sclBxg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167839>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-> There is this 'ref:file' notation (as in 'git show master:README', bu=
-t
-> I don't know the proper term for it), which is understood by
-> __git_complete_file(), and can be useful for 'git diff', e.g. to
-> compare a file in two branches when the file was renamed in between:
->
->   git diff branchA:old branchB:new
->
-> However, __git_complete_revlist() doesn't understand this notation,
+On Wed, 2011-02-23 at 19:14 -0500, Nicolas Pitre wrote:
+> On Wed, 23 Feb 2011, Drew Northup wrote:
+> 
+> > 
+> > On Wed, 2011-02-23 at 12:18 -0500, Nicolas Pitre wrote:
+> > > On Wed, 23 Feb 2011, Junio C Hamano wrote:
+> > > 
+> > > > Jeff King <peff@peff.net> writes:
+> > > > 
+> > > > > On Tue, Feb 22, 2011 at 11:30:41AM -0800, Junio C Hamano wrote:
+> > > > >
+> > > > >> > Speaking of Makefiles, one downside to all of this directory
+> > > > >> > segmentation is that you can't run "make" from the subdirectories.
+> > > > >> 
+> > > > >> I had an impression that "make -C lib/" would be one of the goals, iow,
+> > > > >> when we split the directory structure, the next step would be to split the
+> > > > >> top-level Makefile so that each directory is covered by its own Makefile,
+> > > > >> just like Documentation/ is already usable that way.
+> > > > >
+> > > > > Ugh. I am not thrilled at the prospect of more recursive make.
+> > > > 
+> > > > Likewise. Notice that I have consistently been unthrilled when people
+> > > > started talking about splitting the source code tree?
+> > > 
+> > > Maybe that would be wiser to consider an initial set of patches as those 
+> > > which were proposed to only do the simple file move first, then wait for 
+> > > the dust to settle before doing more changes.  Doing too much in one go 
+> > > is inevitably going to bounce against the human tendency to resist any 
+> > > kind of change, good or bad.
+> > 
+> > > Nicolas
+> > 
+> > Nicolas,
+> > They are doing it this way because change is not the objective. A
+> > possible better way of managing the codebase is.
+> 
+> Incidentally I know that (guess whom this proposal came from initially).  ;-)
+> 
+> > Perhaps it isn't the
+> > right way to go--and we won't know that until we've explored all of the
+> > side-effects, advantages, disadvantages, etc.
+> > 
+> > Besides, if we move anything around into a deeper directory structure we
+> > are inevitably going to have to deal with more recursive make problems.
+> > We can't just commit to master a tree that has everything moved about
+> > and get around to dealing with the Makefiles later.
+> 
+> The initial set of patches simply moved files into subdirectories and 
+> made the corresponding renames within the Makefile.
+> 
+> Reorganizing the Makefile into a better Makefile or sub-makefiles can be 
+> done subsequently.  That's my point.
 
-If that is the case, I wonder if complete-revlist should learn it as we=
-ll.
-The "<tree>:<path>" notation is just one of the "extended SHA-1
-expressions" to name an entry in a tree object and should be usable
-anywhere an object name is expected to occur.
+It can be done as a separate patch, but it should all be done in the
+public branch (pu?) as atomically as possible (one merge from Junio's
+workspace). In other words, the public branch should never fail to build
+because of this work. That's what I meant by "later" in my comment (as
+it apparently wasn't obvious from context alone). This is especially
+important for gaining the accession of the rest of the developer
+community. Jeff (Peff) and Junio are both apparently quite well aware of
+this--and I happen to agree with Jeff's way of approaching this type of
+change.
 
-The users of complete-revlist seems to be "log" and their friends, and
-they don't expect arbitrary object names; they are only interested in
-commit objects and tags and then paths.  Teaching <tree>:<path> to it m=
-ay
-make "git log HEAD:bar<TAB>" to complete to "git log HEAD:bar/boz" that
-would be a nonsense, but anything that the original "git log HEAD:bar"
-would complete would be a nonsense to begin with (as soon as you said
-"HEAD:<something to follow>", you are naming either a blob or a tree
-object, and you cannot start log from them), so I don't see a harm done=
- in
-doing so.
+As for making an authoritative publicly available branch containing this
+reorganization work (due solely to the extreme effect it will have on
+other development), I will leave it an open question as to whether this
+belongs in pu while a 1.7.5 release is still a possibility. It looks
+like a headache either way.
 
-IOW, shouldn't there be just one unified complete-rev-then-path that is=
- a
-superset of the current complete-revlist and complete-file that all the
-current users of complete-revlist and complete-file should use?
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
