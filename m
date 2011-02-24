@@ -1,117 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
-Date: Wed, 23 Feb 2011 16:57:47 -0800
-Message-ID: <7vk4gq45bo.fsf@alter.siamese.dyndns.org>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
- <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: RFD: Handling case-colliding filenames on case-insensitive
+ filesystems
+Date: Thu, 24 Feb 2011 01:58:24 +0100
+Message-ID: <201102240158.24363.johan@herland.net>
+References: <201102231811.45948.johan@herland.net>
+ <AANLkTi=gAM3LGwU47_EkENerZeKmjwuhWhpHZJGSiW=n@mail.gmail.com>
+ <7vfwre8sax.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 24 01:58:02 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 24 01:58:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsPWr-00053I-LZ
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:58:02 +0100
+	id 1PsPXL-0005Hn-Nk
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Feb 2011 01:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755576Ab1BXA54 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Feb 2011 19:57:56 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47828 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755496Ab1BXA5z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Feb 2011 19:57:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D97D44D62;
-	Wed, 23 Feb 2011 19:59:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=j0iBcsJsgaK8
-	TvwRktCadL12+R8=; b=riTZzsa2deypTgJvoTlVJU5OgxTUAb56n/TX97S4dxWy
-	O5jQfPkR85nZs5I5kpNnTuJy1aE9QfSzYbx+RWYQu+YVG/lKTrcxQ15m34fOc6wd
-	NSMRQU80Ffu4B8OL2Q9wIwctJxSIzSfMcVCYEo/r0W1NkLOzooQKxJKM569Bqbw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pT/oJh
-	pJ7pjnMpVIC52h021AFVHzFG8rnQ113KycaCtleQL46OdFPPZCz3rA5UeLebuUeL
-	/rAjc3nMuUPvz8R6C1YL6u7EanHbIkCxQxkg/V9llFo8H7h7Sd7VsfFLJJ1e0Wg0
-	kNMfMLj9O4x9v+91Gfl8XQQiEfDJ4dOB8MSPo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B5D4D4D5E;
-	Wed, 23 Feb 2011 19:59:06 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9C7864D5C; Wed, 23 Feb 2011
- 19:59:03 -0500 (EST)
-In-Reply-To: <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu\, 24 Feb
- 2011 01\:32\:47 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 47C644C6-3FB1-11E0-B5E4-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1755563Ab1BXA60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Feb 2011 19:58:26 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:58307 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755079Ab1BXA60 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Feb 2011 19:58:26 -0500
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LH30002XK1CT780@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 24 Feb 2011 01:58:24 +0100 (MET)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id CC1B71EEEDCC_D65AD30B	for <git@vger.kernel.org>; Thu,
+ 24 Feb 2011 00:58:24 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 9F20E1EEEC91_D65AD30F	for <git@vger.kernel.org>; Thu,
+ 24 Feb 2011 00:58:24 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LH300NPPK1C1B10@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 24 Feb 2011 01:58:24 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <7vfwre8sax.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167760>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Wednesday 23 February 2011, Junio C Hamano wrote:
+> I think two things are sensible to do, are relatively low hanging fruits,
+> and are of low risk:
+> 
+>  - break checkout on such a tree on incapable filesystems; and
 
-> And then there's the issue that unlike the C patches these will not b=
-e
-> a no-op that'll be optimized away by the compiler. We'll be calling a=
-n
-> external program for displaying messages. While this is a trivial cos=
-t
-> on Unix (especially in the context we're using it, i.e. not in tight
-> loops) it's more expensive on Windows.
->
-> I don't see any way to deal with that short of implementing some
-> pre-processor, but I think the cost is worth it, but others might
-> disagree of course.
+Wouldn't that be a regression from the current state (where the poor user in 
+a case-insensitive worktree can at least "git rm" the offending files, and 
+keep working without assistance from a case-sensitive worktree)?
 
-Count me one of the others then.  Don't we already preprocess our scrip=
-ts
-before installing anyway?
+What about giving a warning on checkout, instead, explaining the problem, 
+and advising that - for now - the user can remove the offending files with 
+"git rm"?
 
-> Anyway, I can submit these patches (around 53) real soon, or wait
-> until the current series settles. It's the same to me, which would yo=
-u
-> prefer?
+>  - per project configuration (or attribute given to paths underneath a
+>    particular directory) that forbids or warns addition of case colliding
+>    paths to the index; enforce it at write_index() codepath; and
+> 
+>  - if we choose to just warn in the second item above instead of
+> downright forbidding, barf in cache_tree_update() codepath when the per
+> project configuration (or attribute) triggers upon case colliding paths,
+> to prevent a commit from being made.
 
-One thing at a time is of course preferred.
+I support making this a per-project configuration that will trigger at tree-
+creation (i.e. commit) time. I would even argue that the default should be 
+to warn about (though maybe not refuse) case-colliding filenames, since they 
+are either (a) directly harmful for cross-platform projects, or (b) probably 
+unwanted in most projects anyway.
 
-I actually want to stagger the current 70+ patches into two batches.  H=
-ave
-the first handful, after polishing them really shiny, merged to master,
-and possibly rebase topics that are only in 'pu' and that are not meant
-for 'maint' on top of the result (so that they can use _() in newly add=
-ed
-messages), and then merge "mark strings in git-foo with _()" patches in=
-=2E
+Having a per-project configuration sure beats trying to solve the problem in 
+a hook script (using "pre-commit" introduces the logistical problem making 
+sure everybody installs/enables the hook, whereas using "update" requires 
+(precious) server runtime, triggers too late in the developer's workflow 
+(forcing developer to amend/rebase), and probably confuses newbie developers 
+as well).
 
-I suspect it won't be the same to you.  At least, it shouldn't.
+> I think "warn at add time, fail at write-tree time" is more preferrable,
+> as it might be more convenient if you can add hello.c while you still
+> have HELLO.c in the index as long as you do not forget to remove HELLO.c
+> from the index before making your next commit.
 
-Other topics that fix real bugs or add features continue to trickle dow=
-n
-from 'next' to 'master' and you would need to re-roll what you have tod=
-ay.
-If you wait (or if we have you wait) for too long, the re-roll would
-become just as unpleasant as my merging the i18n topic to 'pu'.
+Agreed.
 
->     Warning: you are leaving 1 commit behind that are not connected t=
-o
->     any of your branches:
->
-> For the singular this should be "1 commit behind which is not
-> corrected to any of your branches".
 
-Heh, thanks.  I would think "s/ that are /, /" would fix it rather
-nicely.
+...Johan
 
-> ... but then
-> again that would confuse the sort of users that need this the most.
-
-That is exactly why I phrased it this way.
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
