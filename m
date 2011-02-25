@@ -1,119 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4 24/73] gettextize: git-checkout "Switched to a ..
- branch" message
-Date: Fri, 25 Feb 2011 02:10:48 -0600
-Message-ID: <20110225081048.GH23037@elie>
-References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
- <1298418152-27789-25-git-send-email-avarab@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Why doesn't git commit -a track new files
+Date: Fri, 25 Feb 2011 09:43:03 +0100
+Message-ID: <4D676B97.3000204@drmicha.warpmail.net>
+References: <20110224112246.3f811ac2@glyph> <4D6672F7.4020101@drmicha.warpmail.net> <buozkpk91nf.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 09:11:06 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Marco <netuse@lavabit.com>, git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Feb 25 09:46:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsslV-0006pc-K0
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 09:11:05 +0100
+	id 1PstK4-0005DM-Rs
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 09:46:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755927Ab1BYIK5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 03:10:57 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:41967 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754907Ab1BYIK4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 03:10:56 -0500
-Received: by vxi39 with SMTP id 39so1173847vxi.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 00:10:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=nv6YINyLHVsM0qEUvt/Vu4q/dl5tzRSYzkPTtEPs4/U=;
-        b=pP6JEoF9n8ttGfQra2kdiZdbxHvN3aKWssdSuuFa8rbq3ni6ua9zn645Wdl8qfC/91
-         4XXjcZt0kADpwHTONanIra1nF2NEhE6YajK7qPbSTKnKPq/uFSCcF7AFL5Izx/4eYGg9
-         ZlJu2KmT9rzMqMRnDNR9QIsGmL9QhN86zNJ40=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=KQ+0HyidvaDZE8H80L+sCncr2uilD0grEjLy1eS8s3D4GJfDG3A4WYs+kPlExxlhPH
-         SNbW3xcx10wWW9ZTAOgRr/iUXTi3ydZ2FagwfPiagcPO4tj/uvSpEV37EbAmvvkgJVOb
-         UJvMkKQWk+5fwhtkKzwJzAZ/tN37O8DQdJsVo=
-Received: by 10.52.160.8 with SMTP id xg8mr3203017vdb.264.1298621455790;
-        Fri, 25 Feb 2011 00:10:55 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id s6sm237570vch.23.2011.02.25.00.10.53
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Feb 2011 00:10:54 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1298418152-27789-25-git-send-email-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754884Ab1BYIqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 03:46:24 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41483 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754179Ab1BYIqX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 03:46:23 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3609D20B58;
+	Fri, 25 Feb 2011 03:46:22 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 25 Feb 2011 03:46:22 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=UYL58EABJoTde8c1AzKX+099l84=; b=sfQAp9+JHTZgpaSi6VLKBNU7w7sISV6ll14wBM89vEQCyCt53scoscsXR72nQ/xAXB5W2VoshOvowZRzJqHjyje9TH5KA7COnWFd01xUZiID2nTBM02R088pKp5oHSroAyX+vuiKMcDGPaVnIV4pGhPD3NjOBaf1oKIe2sLG3xY=
+X-Sasl-enc: 4OIj8z+Hzl6obp2HDCN3iuIdYFDjTrswcYDiKbgQzjYU 1298623581
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9508D4074E2;
+	Fri, 25 Feb 2011 03:46:21 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <buozkpk91nf.fsf@dhlpc061.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167884>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Miles Bader venit, vidit, dixit 25.02.2011 05:30:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>> git add -A && git commit -m "Message"
+>>
+>> "commit -a" is much like "add -u", at least when used without file
+>> arguments ("pathspec").
+>>
+>> "commit -A" does not exist, so that "git add -A && git commit" is your
+>> only way.
+>>
+>> Why does it not exist? Because you should at least
+>> "git add -A && git status && behappy && git commit".
+> 
+> The exact same argument applies to "git commit -a" of course, but it's
 
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -550,9 +550,10 @@ static void update_refs_for_switch(struct checko=
-ut_opts *opts,
->  				fprintf(stderr, _("Already on '%s'\n"),
->  					new->name);
->  			else if (opts->new_branch)
-> -				fprintf(stderr, "Switched to%s branch '%s'\n",
-> -					opts->branch_exists ? " and reset" : " a new",
-> -					new->name);
-> +				if (opts->branch_exists)
-> +					fprintf(stderr, _("Switched to and reset branch '%s'\n"), new->=
-name);
-> +				else
-> +					fprintf(stderr, _("Switched to a new branch '%s'\n"), new->name=
-);
->  			else
+No, because you are usually more aware of tracked files than of
+untracked ones, especially in subdirs.
 
-C grammar is on your side, but the following seems worthwhile for
-the sanity of readers and those who might modify the code in the
-future.
----
- builtin/checkout.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+> still supported.  Why?  Because it's a nice convenience for many common
+> situations.  It isn't the least bit unsafe if one does git status _first_.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 92049cb..fc727ce 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -553,17 +553,18 @@ static void update_refs_for_switch(struct checkou=
-t_opts *opts,
- 	if (new->path) {
- 		create_symref("HEAD", new->path, msg.buf);
- 		if (!opts->quiet) {
--			if (old->path && !strcmp(new->path, old->path))
-+			if (old->path && !strcmp(new->path, old->path)) {
- 				fprintf(stderr, _("Already on '%s'\n"),
- 					new->name);
--			else if (opts->new_branch)
-+			} else if (opts->new_branch) {
- 				if (opts->branch_exists)
- 					fprintf(stderr, _("Switched to and reset branch '%s'\n"), new->na=
-me);
- 				else
- 					fprintf(stderr, _("Switched to a new branch '%s'\n"), new->name);
--			else
-+			} else {
- 				fprintf(stderr, _("Switched to branch '%s'\n"),
- 					new->name);
-+			}
- 		}
- 		if (old->path && old->name) {
- 			char log_file[PATH_MAX], ref_file[PATH_MAX];
---=20
-1.7.4.1
+That is why I recommended to use git status first. But "-A" is still
+different, because (depending on your config) git status does not show
+you files in untracked subdirs.
+
+>> Also, "-A" supports a very "un-gitty" way of using git. This makes it
+>> unlikely that someone cares to implement it... (By "un-gitty" I don't
+>> mean a matter of personal taste, but a matter of fruitful habits.)
+> 
+> Nonsense.
+> 
+> The index is a great idea, and cool and useful in many situations; I use
+> it heavily, and wish other systems had something like it.  But there's
+> nothing "un-gitty" or "unfruitful" about directly commiting sometimes.
+
+And you can do that with "git add -A" followed by "git commit".
+
+> For the record, I usually use the index, but sometimes when the changes
+
+So if you use the index usually, it must be a fruitful habit. That
+renders your "Nonsense" remark rather nonsensical.
+
+> are simple, I'll use shortcuts like "commit -a", because they're handy.
+> Typically I'll do "git status" _first_, check that everything's kosher,
+> and then do "git commit -a ...".  If "git commit -A" existed, I'd use
+> that in the same way.
+
+It almost exists (add -A plus commit), and you carefully chose to ignore
+my earlier posts about the implementation strategy leading to "commit
+-A" (after I had looked at the details of the code - have you?), of
+course, because otherwise the content of your post would be baseless;
+the tone is anyway. No surprise here either.
+
+Just for those wondering:
+
+The "habit problem" with "commit -A" is that, potentially, it keeps
+newcomers from learning vcs/git at all. It's a (too) wonderful way of
+not having to worry even about the concept of "files under version
+control" - this has nothing to do with using the index or not (that
+would be the "-a" thingy). Even "svn commit" does not do what "git
+commit -A" would.
+
+No more posts from me on this subthread, it's just not worth it.
+Michael
