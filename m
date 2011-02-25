@@ -1,160 +1,67 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC/PATCH] commit notes workflow
-Date: Fri, 25 Feb 2011 16:58:22 +0100
-Message-ID: <201102251658.22678.johan@herland.net>
-References: <20110225133056.GA1026@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why doesn't git commit -a track new files
+Date: Fri, 25 Feb 2011 09:00:25 -0800
+Message-ID: <7v8vx4camu.fsf@alter.siamese.dyndns.org>
+References: <20110224112246.3f811ac2@glyph>
+ <7v7hcp2vi6.fsf@alter.siamese.dyndns.org> <20110224194514.2ca47772@glyph>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 25 16:58:37 2011
+To: Marco <netuse@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Feb 25 18:00:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pt03v-0002xj-5d
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 16:58:35 +0100
+	id 1Pt11z-00080N-1V
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 18:00:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932565Ab1BYP63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 10:58:29 -0500
-Received: from smtp.opera.com ([213.236.208.81]:48910 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932411Ab1BYP63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 10:58:29 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p1PFwMao004677
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 25 Feb 2011 15:58:23 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <20110225133056.GA1026@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S932486Ab1BYRAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 12:00:34 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47172 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755767Ab1BYRAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 12:00:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 49804379C;
+	Fri, 25 Feb 2011 12:01:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/kQef/nfQ4WWoU7mOTSxwqBdwao=; b=sPRy8J
+	cu7vcUvqtLV0p7SSWppedd9c7O5WzPigS8wBIcBeym5RMroBThLEwjT41PKcg5bU
+	BnWuid/E2iWjATxk82tw0esH/fKNrHJ4xT3/qghL/Pzwp9T7uij19kmJ4Cv6ku/X
+	UE7Jd8Kzueyoi29ydRgh+Nog2bXYBOOy0N7v0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AqhwbAnCN8nCkEIQ5xB1dJhsaTbEgyrR
+	90sQPn7/Dla1v5gtQ36v2LC+DOCohJc6pFgGm/2ALtFZiazoJRhagaRecy8bs4qP
+	QixVgHSqENYWbraHi3WuK4Y4mNt7Vo6Tk2YtbKFHyRk6V0VK5AYsuv0wSxOu5dth
+	bdCqjXcrHG0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 24A7C379B;
+	Fri, 25 Feb 2011 12:01:44 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3FBAE3798; Fri, 25 Feb 2011
+ 12:01:40 -0500 (EST)
+In-Reply-To: <20110224194514.2ca47772@glyph> (Marco's message of "Thu\, 24
+ Feb 2011 19\:45\:14 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EC48DD7E-4100-11E0-9975-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167914>
 
-On Friday 25 February 2011, Jeff King wrote:
-> So my solution was that "git commit" should be able to embed and
-> extract notes from the commit message itself. The patch below
-> implements "git commit --notes", which does two things:
->
->   1. If we are amending, it populates the commit message not just
-> with the existing message, but also with a "---" divider and any
-> notes on the commit.
->
->   2. After editing the commit message, it looks for the "---" divider
->      and puts everything after it into a commit note (whether or not
-> it put in a divider in step (1), so you can add new notes, too).
->
-> So your commit template looks like:
->
->   subject
->
->   commit message body
->   ---
->   notes data
->
->   # usual template stuff
->
-> I'm curious what people think. Do others find this useful? Does it
-> seem harmful?
+Marco <netuse@lavabit.com> writes:
 
-I _really_ like the idea. :)
+> To sum this up: -A would be a nice-to-have feature but it's not necessary to
+> implement since we have add -A. But if I'm willing to implement it myself I'm
+> free to do that.
 
-> It's yet another magic format to worry about when writing a commit
-> message. But you don't need to care unless you use "--notes" (and I
-> would probably add a config option, since I would always want this on
-> personally). And "---" is already something to be aware of, since
-> "am" treats it specially (technically, I could just drop "notes"
-> entirely and use "---" in my commit message; so perhaps this is just
-> overengineering).
+"It's not necessary to implement since we have add -A" is not what I said.
+"I've shown the way long time ago, but that hasn't happened yet" was.
 
-Maybe we should use a slightly more verbose separator (i.e. more 
-unlikely to trigger false positives). As you say, we already have to 
-watch out for "---" because of "am", but that only applies to projects 
-that _use_ "am" (i.e. mailing-list-centric projects like git.git and 
-the Linux kernel). Other projects (e.g. github-centric projects or most 
-centralized "$dayjob-style" projects) seldom or never use "am" at all, 
-so I wouldn't expect those developers think of "---" as "special" in 
-any way.
-
-What about using something like "--- Notes ---" instead?
-
-> How should this interact with --cleanup? Right now it splits
-> everything after the "---" into the notes part, including any "#"
-> lines. Which should be fine, I think, because they get pulled out by
-> stripspace in either case. If you were using --cleanup=verbatim, then
-> you'd have gotten rid of them manually anyway. And if you really want
-> a literal "---", you would use "git commit" (or "git commit
-> --no-notes" once there is a config option). So I think the behavior
-> in this patch is sane.
-
-What if you combine --notes with --verbose (i.e. including the 
-diff-to-be-committed in the commit message template)?
-
-AFAICS, stripspace() doesn't know how to remove the diff (there's a 
-separate section in cmd_commit() discarding everything 
-following "\ndiff --git ").
-
-> I only turn on --edit when we launch an editor. It seems somehow more
-> confusing to me that "git commit -F file" should split notes out (or
-> worse, "git commit -m"). If you are doing things non-interactively,
-> it's probably not a big deal to just call "git notes add" separately.
-> And I expect "-F" is used by porcelains, or people wanting to do
-> verbatim stuff.
-
-Agreed.
-
-> How should this interact with the commit-msg hook? In my
-> implementation, it sees the whole thing, message and notes. Should we
-> be picking apart the two bits after the editor and rewriting the
-> COMMIT_EDITMSG before the hook sees it?
-
-I'm not sure about this, but I suspect we should follow the same 
-behaviour as --verbose (i.e. does the commit-msg hook see the entire 
-diff inline in the commit message?).
-
-A short look at builtin/commit.c indicates that we should leave 
-everything in there for the commit-msg hook (AFAICS, the commit-msg 
-hook is invoked from prepare_to_commit(), which is invoked from 
-cmd_commit() _before_ the verbose diff part is removed.)
-
-> How should this interact with the post-rewrite hook? I obviously need
-> to set that up for my workflow, too, but I haven't yet. This patch
-> does nothing, but I'm pretty sure it should turn of "git commit
-> --amend" calling the rewrite hook if we are using --notes (since the
-> user has already seen and edited the notes, and we've written them
-> out).
-
-I don't see what this has to do with the post-rewrite hook. Currently, 
-the post-rewrite documentation ("git help hooks") states that it is run 
-_after_ the automatic notes copying. AFAICS, your --notes simply 
-replaces the usual automatic notes copying with a 
-semi-automatic "edit-and-copy" instead. But this all happens before the 
-port-rewrite hook is called, and thus shouldn't affect it.
-
-> @@ -730,6 +780,9 @@ static int prepare_to_commit(const char
-> *index_file, const char *prefix, strbuf_release(&sob);
->  	}
->
-> +	if (edit_notes && amend)
-> +		add_notes_from_commit(&sb, "HEAD");
-
-I haven't read the sources closely enough to figure out when/where the 
-commit diff is added to the commit message (in case of --verbose), but 
-I trust that it happens _after_ the above lines (so that the notes part 
-doesn't end up after the diff)
-
-Otherwise, this looks good to me from a precursory review.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Luckily, it seems that it is changing now ;-).
