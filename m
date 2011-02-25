@@ -1,67 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 3/3] git-add: rename -u to -a
-Date: Fri, 25 Feb 2011 11:40:11 -0800
-Message-ID: <7vipw7aoo4.fsf@alter.siamese.dyndns.org>
-References: <cover.1298644872.git.git@drmicha.warpmail.net>
- <a917b13f6944704d5f923d5790e2a43f99ae63ed.1298644872.git.git@drmicha.warpmail.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Revert a single commit in a single file
+Date: Fri, 25 Feb 2011 20:43:42 +0100
+Message-ID: <AANLkTinzhd_nL265e7DZA4xEnXqDn-5m=9GPS7JsFY-S@mail.gmail.com>
+References: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
+	<7v8vx4aqun.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Feb 25 20:40:40 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 25 20:45:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pt3Wp-0008EZ-E3
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 20:40:39 +0100
+	id 1Pt3be-00036J-Si
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 20:45:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932711Ab1BYTkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 14:40:24 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54059 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932638Ab1BYTkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 14:40:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4353D4BA2;
-	Fri, 25 Feb 2011 14:41:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tkCUUNQwwfPk4WX1xc7NTd2d594=; b=Osb0dM
-	u34qciY+aCJd2RJ9XYrqiR9dG2R8+UdNXPmpYZ6zoOqIi42H9TvHbbu+0WlcPdQB
-	uVlaGZG+PSTWfoKzcqbUg+UJBf+J2zigSTK17cfiHlJLbl0j82iUsY6x7UdRP2DJ
-	i2gLvpt3iYNFpe1v4K4z2cos7NQkUpBV7qeo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w6bNcoPoOld/gHhNqMI1Yr0HSWs8sf4V
-	1lSTezBLHvuYZ88Bq9lVTr7sbkO6SmcIJ/xYYeQgtyfCtzbv/1xhIHK7HfP3d6T1
-	DZN0aYVY6+2TgiZ2t/5DA099clVDqsW+Knp6FDaj59vtIO+jHSUyYqHk627oBcIA
-	/NPmoWJqvak=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 11F7E4BA1;
-	Fri, 25 Feb 2011 14:41:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8452D4BA0; Fri, 25 Feb 2011
- 14:41:28 -0500 (EST)
-In-Reply-To: <a917b13f6944704d5f923d5790e2a43f99ae63ed.1298644872.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri\, 25 Feb 2011 15\:45\:54 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4051E72E-4117-11E0-B1BB-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S932785Ab1BYTpe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 14:45:34 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58188 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932710Ab1BYTpd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 14:45:33 -0500
+Received: by fxm17 with SMTP id 17so2006764fxm.19
+        for <git@vger.kernel.org>; Fri, 25 Feb 2011 11:45:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Z46FJbqs8KrKNE3sRLS8acBfpZFjNaw4JKfrjwNkV9E=;
+        b=BhgABoj9YRZxvQfCbJ9r14qnZi1DLrlScixvFybe2/CbTVkljehdkSR1BM+0Rvl0cM
+         +0rTA14G0/Hzj1ErYG8HGwYrVG/c45oNEKahiAfcxVkgBX478PlGxDmEG0PF5YrhWS/D
+         UatG4UIg+53m+fKkOOoaqiHGZhHXbkn5sSNTs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=c+EskOashVAJROZ1cPt1BqCo4VeXmeRJmzCgtmkAl6tB3lgnGKluZx5HEDn1ih+Jlo
+         pLvQKHveBgI/mMmQ9ktQu6Qp4oEOKnZW4/OKhV0yoLqBVvbBS4a5iwCUfsiEWV4apEj0
+         pco/X8A2eXGa4UzEKZIj5fPgwT0FYEO9L5DGE=
+Received: by 10.223.100.15 with SMTP id w15mr3119920fan.121.1298663022988;
+ Fri, 25 Feb 2011 11:43:42 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Fri, 25 Feb 2011 11:43:42 -0800 (PST)
+In-Reply-To: <7v8vx4aqun.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167925>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Fri, Feb 25, 2011 at 19:53, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Thomas Ferris Nicolaisen <tfnico@gmail.com> writes:
+>
+>> I tried asking the same question on the "newbie" list some time ago:
+>>
+>> http://groups.google.com/group/git-users/browse_thread/thread/d562b4=
+eeac016711
+>>
+>> Basically, when I go
+>>> git revert <commit> <path>
+>>
+>> .. my expectation was that a new commit would be made reverting the
+>> changes from the old commit, but only for specified path/file.
+>>
+>> Maybe it's a bit of a corner-case, but still would be nice to have
+>> once in a while. What do you think?
+>
+> I am afraid that it would lead to encouraging people to record a horr=
+ibly
+> broken history, unless you think carefully about what the resulting c=
+ommit
+> log message should describe. =C2=A0It would look _as if_ you negated =
+the effect
+> of the original commit as a whole, but in reality you are only revert=
+ing
+> just a part of what you chose to revert with <path>.
+>
+> We do encourage people to record the _reason_ why the particular comm=
+it
+> was removed by not supporting "-m <message>" option to "git revert"
+> command, but the commit template in the editor given to the user shou=
+ld
+> make it absolutely clear that the particular partial revert is revert=
+ing
+> only a part of the original commit, and need additional words to stro=
+ngly
+> encourage to record why only that part and not other parts are revert=
+ed.
 
-> since it does what "commit -a" does (minus the committing). The long
+Agreed, but FWIW where I work I've seen people record "horribly broken
+history" already because git-revert doesn't support this, and they
+don't know the trick I described.
 
-I somehow find this quite the other way around.
+I also don't agree that the history would be horribly broken. The
+message is just an advisory template, it's always the content that
+changed that we care about, and we can analyze the history and see
+that this chunk is the reverse of a chunk in a previous commit.
 
-The original "add -u" makes perfect sense as it is a request to say: "to
-the index, add _updated_ contents".  Perhaps "commit -a" is the one that
-should gain a synonym "commit -u" to ask "please commit updated contents"
-(implying "not new ones").
+But just like we now have:
+
+    Revert "some commit"
+
+    This partially reverts commit <sha1>.
+
+We could have with <path>:
+
+    Revert "some commit"
+
+    This partially reverts commit <sha1>. Only the path <path> has
+    been reverted, which is X out of Y files changed in the original
+    commit.
+
+Or something like that.
