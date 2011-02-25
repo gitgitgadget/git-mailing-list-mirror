@@ -1,74 +1,58 @@
-From: Dario Rodriguez <soft.d4rio@gmail.com>
-Subject: Re: Revert a single commit in a single file
-Date: Fri, 25 Feb 2011 12:19:15 -0300
-Message-ID: <AANLkTi=VJpTpAiLXohDi19ZsZVs5RP3s61DyoriCJnaa@mail.gmail.com>
-References: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
- <AANLkTimLRc4LybUvmD2ZCKfQqEP+vr+2aBnb4n3B+Mb2@mail.gmail.com>
- <4D67A293.2050306@drmicha.warpmail.net> <AANLkTimqszvGjVeJHKLPWicDugeOuqbgO1+wy5BO-AE0@mail.gmail.com>
- <4D67A92D.2000300@drmicha.warpmail.net> <AANLkTikb_mWdgF4gf6FEBF=CLxLeefJJkRgDzEB5=3SO@mail.gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: git-cherry like operation for SVN imports
+Date: Fri, 25 Feb 2011 10:43:10 -0500 (EST)
+Message-ID: <5213723.55273.1298648590311.JavaMail.root@mail.hq.genarts.com>
+References: <26101193.54947.1298648399611.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 16:19:42 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 25 16:51:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PszSH-0005Tb-En
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 16:19:41 +0100
+	id 1Pszww-0006qo-AR
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 16:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768Ab1BYPTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 10:19:36 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54635 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753066Ab1BYPTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 10:19:36 -0500
-Received: by iwn34 with SMTP id 34so1165355iwn.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 07:19:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=TEd1AyFAjXbVisGYC6Njk7bzEtZnsUDv6Wv345NECn8=;
-        b=iffP+c1znQZidlVawQvQclnBhRhvbfnbdKWkfAsVZxqfX0v6pxVc1osyfzlQWsDYl7
-         WpJf3my3wfyUFz7qXWKMZOON4QweOeDf/kzbMM3zusZK4JuGLVG5y0iZRJav78QNalNh
-         rGFIPkFD5uUwGqg/sAZJP4bAVtJYEI6YrheNo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=aHMHkBFdS8A8jeqJuZ4RwgEX5STo1/oJ/tGu/6s239Fu5yr+6qmUBPD+AOH2kYmQSE
-         PcY/Ly5eOoFINnUMj55i78vmw1dFCkWcYZzCBxLtRyNIhUhuVlfAk0CHnXqHI7fbh8qj
-         Fx/+chZ96pIsIOZ3Qa2Rhev8+IU0Mih8GXf94=
-Received: by 10.42.219.65 with SMTP id ht1mr870072icb.393.1298647175108; Fri,
- 25 Feb 2011 07:19:35 -0800 (PST)
-Received: by 10.42.53.194 with HTTP; Fri, 25 Feb 2011 07:19:15 -0800 (PST)
-In-Reply-To: <AANLkTikb_mWdgF4gf6FEBF=CLxLeefJJkRgDzEB5=3SO@mail.gmail.com>
+	id S932381Ab1BYPvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 10:51:17 -0500
+Received: from hq.genarts.com ([173.9.65.1]:40987 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932196Ab1BYPvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 10:51:16 -0500
+X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Feb 2011 10:51:16 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id D032BEA240B
+	for <git@vger.kernel.org>; Fri, 25 Feb 2011 10:43:16 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Ah0UcQIg7OhY for <git@vger.kernel.org>;
+	Fri, 25 Feb 2011 10:43:10 -0500 (EST)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 673E3EA2415
+	for <git@vger.kernel.org>; Fri, 25 Feb 2011 10:43:10 -0500 (EST)
+In-Reply-To: <26101193.54947.1298648399611.JavaMail.root@mail.hq.genarts.com>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167912>
 
-Michael, my comment was about "reverting the changes from the old
-commit, but only for specified path/file", sorry about non quoting it.
+Hi all-
 
-I think that ''the old commit" is HEAD~1, so reverting it is about
-checking out HEAD~2, and commiting the results. The same is for a
-given file.
+At my day job we've got about 17k commits in our Git repository (covering ~13 years) that were imported from Subversion.  Recently we've had a few regression issues come up that we thought were fixed in older (pre-Git) releases, and we're having a hard time pinning down if/when they got merged back to the mainline development branch.
 
-On Fri, Feb 25, 2011 at 11:38 AM, Thomas Ferris Nicolaisen
-<tfnico@gmail.com> wrote:
-> Dario: Yes, I understand the reasoning. It's not often a problem, and
-> when it occurs there are ways to do it. I just thought I'd bring it up
-> on the list cause it feels like expected behavior (other git commands
-> behave correspondingly).
+In a pure Git world, I would use either git branch --contains or git-cherry...
 
-Yeah, and may be your reasoning is better for the principle of least surprise.
+Unfortunately during our SVN->Git process we didn't have SVN mergeinfo, so none of the Subversion merges were captured in Git (the diffs are correct, but the DAG is not).  So right away git {branch,tag} --contains is out the window (I think).  The next obvious choice is git-cherry, but (at least in our process) SVN merges are a single commit that roll up a series of diffs so the patch-id of the merge doesn't match the patch-id of the original commit (at least I haven't found a way to make this work).
 
-Cheers,
-Dario
+One possible solution proposed by a coworker was do something like patch-id, but at the hunk level.  This has promise, but I'm not convinced that the hunks showing up in the merge commit would match those in the original (but I'm no expert when it comes to diff logic).
+
+Does anyone have any experience with this type of problem?  Any suggestions on how we can make this work?
+
+Thanks,
+Stephen
