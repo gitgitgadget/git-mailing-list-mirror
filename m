@@ -1,83 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Revert a single commit in a single file
-Date: Fri, 25 Feb 2011 10:53:04 -0800
-Message-ID: <7v8vx4aqun.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
+From: seanh <snhmnd@gmail.com>
+Subject: git commit not committing, confused
+Date: Fri, 25 Feb 2011 19:02:35 +0000
+Message-ID: <20110225190235.GB15815@kisimul>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 19:55:24 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 25 19:57:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pt2p1-00078d-BS
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 19:55:23 +0100
+	id 1Pt2rH-0000Rx-0P
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 19:57:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639Ab1BYSzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 13:55:16 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64631 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756483Ab1BYSxL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 13:53:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D5D66469B;
-	Fri, 25 Feb 2011 13:54:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mqfc0X/T6vfKZpND6H3cqkdo4Xk=; b=n+nKtc
-	hA2azTrmYUT7gmoemqAr29CGXH1XMo3IZ+5JH3vJmP88L8SsMP+8sIXJOdqJUSpY
-	B01q30RiPAxCNAUPKUZXP0QHCv6vT3dJLlVJQxNRRy+HGizFbm4H3aLiOOERGzSJ
-	IPa0zTijMEP3TNZTi92f53cLQI9ZAU7aL6GrU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BjD7Z6Zlb6SCweJk/52RaMRXR98ekltf
-	ItSnoK02PMPUa7eBXZZujJfbvi5re5KofsUsqMY/rD1Afl4zNTzYnNIUAEcAubCs
-	Jv3uLyfJsjFkaDFmJwfZxjrsop1Kv9Y5nnV7d0UgTKrzUGmgGK2sANnSUPAGHxxS
-	fQErFWuCSkE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B5C92469A;
-	Fri, 25 Feb 2011 13:54:24 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D1A524699; Fri, 25 Feb 2011
- 13:54:21 -0500 (EST)
-In-Reply-To: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
- (Thomas Ferris Nicolaisen's message of "Fri\, 25 Feb 2011 11\:34\:18 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A9E999AE-4110-11E0-BC62-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1755274Ab1BYS5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 13:57:38 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:45644 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325Ab1BYS5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 13:57:37 -0500
+Received: by wwe15 with SMTP id 15so978357wwe.1
+        for <git@vger.kernel.org>; Fri, 25 Feb 2011 10:57:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:subject:message-id
+         :mail-followup-to:mime-version:content-type:content-disposition
+         :user-agent;
+        bh=+7enOMtXQgDtzTjpwfOUAu8XlmUnzVYU2VGylOnsVKU=;
+        b=uUx9UYA9fFsZ1Qc/rhbTj+Kxh7tMCKtPdGrxl4gD6vLA83MC3nk/Wsw6295r94ZxPo
+         lJwRAHOZYgQANTK0FJu0jR5SZWHF7HBIijYLsVDxP5UJauXn+ysAtbiaYwf5HKmyV7T3
+         3LG5A9W5lHwIfzKgVdwf17VeT9lg+b538Exjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent;
+        b=t9hbwmQ5f7LQXDWReCoHgQIYDxlW7LF7UQzvv9+vWbaatB1cEgKRDEryixn3Kf0jsh
+         cfVIAB+tshNWMiKJmUL+/2IqnT2ctB1MVUwMAUL3G9VcJ2bt4NlbDZE9kO0t2ieBu3T4
+         qTfre21nnf7cJjlRvP0cXg8IraGNcdvmIIkbQ=
+Received: by 10.216.172.15 with SMTP id s15mr7220024wel.70.1298660255929;
+        Fri, 25 Feb 2011 10:57:35 -0800 (PST)
+Received: from kisimul (kisimul.inf.ed.ac.uk [129.215.197.9])
+        by mx.google.com with ESMTPS id n11sm478612wej.19.2011.02.25.10.57.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Feb 2011 10:57:34 -0800 (PST)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167918>
 
-Thomas Ferris Nicolaisen <tfnico@gmail.com> writes:
+How did this happen?
 
-> I tried asking the same question on the "newbie" list some time ago:
->
-> http://groups.google.com/group/git-users/browse_thread/thread/d562b4eeac016711
->
-> Basically, when I go
->> git revert <commit> <path>
->
-> .. my expectation was that a new commit would be made reverting the
-> changes from the old commit, but only for specified path/file.
->
-> Maybe it's a bit of a corner-case, but still would be nice to have
-> once in a while. What do you think?
+I have a git repo containing a LOG.txt file. I made some changes to this
+file and committed them. Actually, I called this script which did so:
 
-I am afraid that it would lead to encouraging people to record a horribly
-broken history, unless you think carefully about what the resulting commit
-log message should describe.  It would look _as if_ you negated the effect
-of the original commit as a whole, but in reality you are only reverting
-just a part of what you chose to revert with <path>.
+	#!/bin/sh -e
+	# Append timestamped one-liners to a file and commit the file to git.
+	logdir=~/txt
+	logfile=LOG.txt
+	cd "$logdir"
+	if [ $# = 0 ]; then
+		# No command-line arguments, just print out the last entry.
+		tail -n 1 $logfile
+	else
+		entry="[`date`] [`hostname`] $*"
+		echo $entry >> $logfile
+		git commit $logfile -m "$logfile: $*"
+		git push
+		tail -n 1 $logfile
+	fi
 
-We do encourage people to record the _reason_ why the particular commit
-was removed by not supporting "-m <message>" option to "git revert"
-command, but the commit template in the editor given to the user should
-make it absolutely clear that the particular partial revert is reverting
-only a part of the original commit, and need additional words to strongly
-encourage to record why only that part and not other parts are reverted.
+The script executes (and shows output from git) with no errors. `git
+log` shows the commit, `git log -p` shows the changes committed to the
+LOG.txt file.
+
+However, `git log LOG.txt` does _not_ show the commit.
+`git status` shows LOG.txt as modified and unstaged.
+`git diff LOG.txt` shows a diff of the changes to LOG.txt, the same changes so
+that show up in `git log -P`.
+After running `git add LOG.txt` again, `git status` still shows LOG.txt
+as modified and unstaged!
+`git commit LOG.txt` reports 'no changes added to commit'.
+
+So this doesn't make sense. I don't know what happened or how. git's
+index seems to have got into a mess. If I clone the repo then cd into
+the clone and run git status it shows LOG.txt as modified and unstaged,
+even though this is a brand new fresh clone!
