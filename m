@@ -1,78 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4 27/73] gettextize: git-commit formatting messages
-Date: Fri, 25 Feb 2011 15:35:05 -0600
-Message-ID: <20110225213505.GD4580@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 04/73] Makefile: "pot" target to extract messages
+ marked for translation
+Date: Fri, 25 Feb 2011 13:36:53 -0800
+Message-ID: <7vsjvb94p6.fsf@alter.siamese.dyndns.org>
 References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
- <1298418152-27789-28-git-send-email-avarab@gmail.com>
- <20110225094342.GJ23037@elie>
- <7vd3mgar5g.fsf@alter.siamese.dyndns.org>
+ <1298418152-27789-5-git-send-email-avarab@gmail.com>
+ <20110225072212.GC23037@elie>
+ <AANLkTim72p3H5zrELsApN8EM1CAU1H=FdjaoL+s=cJzH@mail.gmail.com>
+ <20110225212010.GC4580@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 22:35:27 2011
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 25 22:37:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pt5Jt-0002dE-S7
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 22:35:26 +0100
+	id 1Pt5Ld-0003R1-HM
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 22:37:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755118Ab1BYVfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 16:35:21 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:53544 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753076Ab1BYVfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 16:35:20 -0500
-Received: by vxi39 with SMTP id 39so1769719vxi.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 13:35:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=tDp/zXsYkbDArOCCw3NJMe7ihgjW9RmGGYZ7Gc6XkaU=;
-        b=uSl7+G347epjUrO/7PywhmXeLJeEEqdSktU/+u/qTkBEYG62A/7ryYeIvMesR2dHly
-         9KDflDldqbKDg9nqVZkQWgSZpSRFhvaZGX7woAMMTLzUUHUMHZL9fKDQFyWtC3vkuv2s
-         bPqsqsD0rHuI7XMm/8YjKeizFmBOxK3540Hs4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XodmBbXJZMyuKyEeerZpDBis1JEaO9NM+y3L/Khozhn8zEq9hi49DkqWL/QgAeyIb4
-         Vr/qiJoILFCIm1XgA9JKaKTqBx5qufUvOJPBSMPMjcXKbMbiUv3jArN8vSGxM46JymNI
-         QuN9Lzfqw2Ta1F0dgKT4wvdwQtoC4evresKe0=
-Received: by 10.52.157.74 with SMTP id wk10mr5073015vdb.114.1298669712076;
-        Fri, 25 Feb 2011 13:35:12 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
-        by mx.google.com with ESMTPS id b26sm796766vby.3.2011.02.25.13.35.10
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Feb 2011 13:35:11 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vd3mgar5g.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755527Ab1BYVhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 16:37:07 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37640 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753076Ab1BYVhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 16:37:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C2343923;
+	Fri, 25 Feb 2011 16:38:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TEwVPnTFLh8qOxnK9nn3oYSkdHk=; b=RcyUFs
+	gyc8YLq+6Blm6+6YCgvmGwb+wvsamIxdPN2EAnDePoOakg/0nT9ndspLGnLFxds5
+	Q2CWTtZ8Zh93R+xXqC7fCqpijA/YzOCo8cdRBTJueGrdUSeiDDlG4p3u3hJw4j0a
+	BB3SKOdnRQ0RfC/x2iQcaLbXkdQm50bai1m4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KRo94Ct2bqijXFommPb9bCuP+KA+jUpd
+	PM4uH8E2M3buxfVbL10D8Stn8a79l2ShJeWv1VJOrtL/PWVm4J62UBdfsayiX8u/
+	ut2LxvveXWOY4rHnFoASwQGG5k12HAZEy/Gm8+rKn4s+OYrD9HmRY1vJ3evwaRO1
+	reo1e43RcH0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5AB2C3922;
+	Fri, 25 Feb 2011 16:38:16 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C0FA2391D; Fri, 25 Feb 2011
+ 16:38:10 -0500 (EST)
+In-Reply-To: <20110225212010.GC4580@elie> (Jonathan Nieder's message of
+ "Fri\, 25 Feb 2011 15\:20\:10 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8E03C112-4127-11E0-BD95-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167945>
 
-Junio C Hamano wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> It might be a good idea to introduce status_print{,_ln,_more} wrapper
-> functions around color_vfprintf()
+> Hmm, I had been wondering where that message came from.  Maybe the
+> following would help?
+> ...
+>  po/git.pot: $(LOCALIZED_C)
+> -	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ $(XGETTEXT_FLAGS_C) $(LOCALIZED_C) && \
+> -	mv $@+ $@
+> +	$(QUIET_XGETTEXT)$(XGETTEXT) -ogit-tmp.pot $(XGETTEXT_FLAGS_C) $(LOCALIZED_C) && \
+> +	mv git-tmp.pot $@
 
-My main obstacle to sending this was lack of good names for the
-relevant functions. :)
+Yeah, or "tmp-$@".
 
->  - Another advantage is that this makes it easier for us to drop "#"
->    prefix in "git status" output in later versions of git if we wanted to.
->
-> In "git commit" template, these lines need to be made into comments, but
-> there is no reason, other than that we are sooooo used to seeing these
-> lines prefixed with "# ", in "git status" output.
+In either case, I'd prefer to see the above removed the temporary and the
+target before running the command, following the idiom:
 
-Good point.  Expect patches soon (for the status_print*, not "#" removal
-from output).
+	rm -f $@+ $@ && \
+        $(command that does not remove its output when killed) -o $@+ && \
+        mv $@+ $@
+
+Does xgettext leave output file specified with -o when it gets killed?  If
+not, we don't have to use a temporary.  Makefiles in gitk and git-gui do
+not seem to protect against it either.
