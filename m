@@ -1,72 +1,87 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Revert a single commit in a single file
-Date: Fri, 25 Feb 2011 15:22:29 -0500
-Message-ID: <AANLkTim2AYWqb4Q13Lk6BDC=TQtzFX9+595b2SsDpsnu@mail.gmail.com>
-References: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
- <7v8vx4aqun.fsf@alter.siamese.dyndns.org> <AANLkTinzhd_nL265e7DZA4xEnXqDn-5m=9GPS7JsFY-S@mail.gmail.com>
- <7vei6vao0p.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 18/31] rebase: extract merge code to new source file
+Date: Fri, 25 Feb 2011 12:24:54 -0800
+Message-ID: <7vwrkn9815.fsf@alter.siamese.dyndns.org>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <1297017841-20678-19-git-send-email-martin.von.zweigbergk@gmail.com>
+ <4D58E17C.9090001@viscovery.net> <alpine.DEB.2.00.1102232216180.11038@debian>
+ <20110224080734.GB25595@sigill.intra.peff.net>
+ <20110224080904.GC25595@sigill.intra.peff.net>
+ <alpine.DEB.2.00.1102242229230.11894@debian>
+ <20110225090238.GB16861@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 21:23:13 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 25 21:25:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pt4Bx-0006tP-UH
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 21:23:10 +0100
+	id 1Pt4E6-00080H-Df
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 21:25:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932944Ab1BYUXB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 15:23:01 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59905 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932641Ab1BYUW7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 15:22:59 -0500
-Received: by iyb26 with SMTP id 26so1203557iyb.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 12:22:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=pMnmBaCQgc7WoHdaiIEsBmCiIQsDgdlZZY2JxZCm8bY=;
-        b=fyWNw8c7g+0AmSaOrbLck1XOrj/5t1tqQm3v74hM2Dsk3snec2ELP5WGgraRyWOa+R
-         D5QSCtOaeOwDqBgUcnt///EqZw9y34v+WrX70KRkIDH31D3V0HhxnyJTbTvo2G7bC4uX
-         I6fsoD2IrBqm59sS55+edyCEJUYeII556kqZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=otwecQKB1XiRSXMAvJegUjF/c1FGxodojuy8HikljrFSa8VZ27Ylgzr6VLmRfP1kcX
-         axsQTdFZ6hDbdJOg01HF2KyFDcNftp9Ors9FLWEeawZuFrp/1e7BJAn/x2VQC4A/ooe+
-         e1bubRxBW5CClunTczBEg5Lq0KFRXlwis/lNQ=
-Received: by 10.231.12.67 with SMTP id w3mr3155147ibw.119.1298665379172; Fri,
- 25 Feb 2011 12:22:59 -0800 (PST)
-Received: by 10.231.40.2 with HTTP; Fri, 25 Feb 2011 12:22:29 -0800 (PST)
-In-Reply-To: <7vei6vao0p.fsf@alter.siamese.dyndns.org>
+	id S932930Ab1BYUZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 15:25:16 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41246 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932808Ab1BYUZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 15:25:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E07B1308D;
+	Fri, 25 Feb 2011 15:26:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q+DhRnn/BklJanc3JiA06EcdAGk=; b=pnv0qy
+	SmY1dUy+cURuFGQIkPclOce7cqI/ihl2chggJ4WhB6CZV1saVvxey3uV2lL0/qAr
+	mpVcQt2wLQoY7V0Fm677TZGo6X2L8CZlzwzKsrc6MtL5u+QeTyPfAWR74BJ2YY70
+	0+fPLXaX+HFYoHabrbGSASw8HJmKLdX6rrmOU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fKlg7JgZEezjnkKkP7ijIhE+Fbztkdoq
+	WUahLi1N+GwseTiuOQ8310CYvMNoVLWXXjN8+wcOB6WutpDMsQzsxZuiTrRJ+iYi
+	8FJkkR5vYN1OD85z2jXWjrGPXdnV6NtvdJ2hNEjO0hPuTrGVnem9LC0C7VnY5RAx
+	jHG1eMazKUk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 70AAC3089;
+	Fri, 25 Feb 2011 15:26:21 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EA6843080; Fri, 25 Feb 2011
+ 15:26:11 -0500 (EST)
+In-Reply-To: <20110225090238.GB16861@sigill.intra.peff.net> (Jeff King's
+ message of "Fri\, 25 Feb 2011 04\:02\:39 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8220D786-411D-11E0-825B-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167938>
 
-On Fri, Feb 25, 2011 at 2:54 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> On the similar line of thought, it might be a good idea to update the
-> commit template we give slightly perhaps like...
+Jeff King <peff@peff.net> writes:
+
+> Looks right, but...
 >
-> =C2=A0 =C2=A0 Revert "some commit"
+>> @@ -382,6 +379,9 @@ SCRIPT_SH += git-web--browse.sh
+>>  SCRIPT_LIB += git-mergetool--lib
+>>  SCRIPT_LIB += git-parse-remote
+>>  SCRIPT_LIB += git-sh-setup
+>> +SCRIPT_LIB += git-rebase--am.sh
+>> +SCRIPT_LIB += git-rebase--interactive.sh
+>> +SCRIPT_LIB += git-rebase--merge.sh
+>
+> We usually keep these sorted.
 
-<bikeshed>
-Maybe:
+Also SCRIPT_LIB omits .sh (which feels inconsistent) and the above will
+break the build.
 
-      Partially revert "some commit"
+No need to resend, as I've already fixed it up.
 
-to make it easier to notice in summaries.
-</bikeshed>
-
-j.
+Thanks.
