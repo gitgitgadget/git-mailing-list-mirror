@@ -1,71 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Compiling fails on SunOS
-Date: Fri, 25 Feb 2011 03:57:37 -0600
-Message-ID: <20110225095731.GC2908@elie>
-References: <20110225100954.37c00fea@glyph>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: libreoffice merge(tool?) issue #3 ... (bogus)
+Date: Fri, 25 Feb 2011 11:08:24 +0100
+Message-ID: <4D677F98.7080502@drmicha.warpmail.net>
+References: <1298388877.32648.171.camel@lenovo-w500>	 <993F66D7-7659-4AA5-9931-1EB66CAA01DB@silverinsanity.com> <1298565560.32648.258.camel@lenovo-w500>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marco <netuse@lavabit.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 10:58:18 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org,
+	kendy@novell.com, Norbert Thiebaud <nthiebaud@gmail.com>
+To: michael.meeks@novell.com
+X-From: git-owner@vger.kernel.org Fri Feb 25 11:11:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PsuRE-000509-Cm
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 10:58:16 +0100
+	id 1PsueN-00037s-Ft
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 11:11:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932434Ab1BYJ5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 04:57:48 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:63016 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754271Ab1BYJ5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 04:57:45 -0500
-Received: by qyg14 with SMTP id 14so1335649qyg.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 01:57:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=QyjMS20T03cYyPYAWi/7pMZRV7JHZlgDKzhSye14p2Y=;
-        b=o6Mubjso9dn7XbQpRFZDBZUJyRfhdatorlKoNFjnlDw9TQlkSLauWtNzFo/OeBiR38
-         b3JasaGOOQ5hpFnMSWYgNEpUONmHzq7Tso0BgxwraaRTc3oIooz6qp8SjrGdB2d+Oqh+
-         8sZ645eDFp3kFv92boHwx/l46J36KZ7+Ygjdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=wUgWm7sOd1qzDmQThC4d2w1fk3nqV16Kqh8pdjAJFvbOG6kOpdWmd9IVMLgKPS0PM6
-         LxciQvGeacmXsEAk6SH9GZgafhKTmGLkgNJq47nKeJnEmlUNocL2BfEUfDZOqG9oEm8j
-         +dmxOFxfvJmuV2t64m8iM30pgRRFAZJziFkkc=
-Received: by 10.229.240.85 with SMTP id kz21mr1676733qcb.2.1298627864697;
-        Fri, 25 Feb 2011 01:57:44 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.sbcglobal.net [69.209.53.52])
-        by mx.google.com with ESMTPS id nb15sm393459qcb.14.2011.02.25.01.57.43
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Feb 2011 01:57:44 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110225100954.37c00fea@glyph>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932512Ab1BYKLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 05:11:45 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57611 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932495Ab1BYKLo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 05:11:44 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id CB1DC200FC;
+	Fri, 25 Feb 2011 05:11:43 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 25 Feb 2011 05:11:43 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=QIa/3Gtyw5P+DbMXCJ43QSTJ+DA=; b=MSFlkg+v/GEmvL8k+8SXv8RLaDjRMhEjqHPwVp+nbPZULpOj4nKtaKqkba7YUljY1pwmwg+iYbttTKJGI+vjIxz8ft585dBgZJpw+BEfVzm+P3TD2VtPhtf/ECE6ucMrQyyv63cWBc6Mo08IwBu/vcTrWULCWU7l8AHdbW8HL/w=
+X-Sasl-enc: 4uK7ZfFxLxHvfAlMJGsMkknkSjSzCMEWeSeU5xaLpcn/ 1298628703
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E883844847A;
+	Fri, 25 Feb 2011 05:11:42 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <1298565560.32648.258.camel@lenovo-w500>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167896>
 
-Marco wrote:
+Michael Meeks venit, vidit, dixit 24.02.2011 17:39:
+> Hi Brian,
+> 
+> 	First - it seems that the issue here was entirely bogus, not least
+> because we had a bug with re-writing these makefiles as we checked them
+> in; so hopefully only 2 issues pending ;-)
+> 
+> 	Anyhow - I tried your kind advice:
+> 
+> On Tue, 2011-02-22 at 10:55 -0500, Brian Gernhardt wrote:
+>> FYI: `git clone foo bar` will use hard-links to copy the object
+>> files and is both very fast and space efficient.  (See the
+>> description of `--local` in git-clone(1), which is used by
+>> default for local repositories since git 1.5.3.)  It's also
+>> guaranteed to work while the correctness of `cp -lR` depends
+>> on implementation details of git.
+> 
+> 	Sounds like just what I need. Unfortunately, it didn't clone some of
+> the pieces I needed; eg. other configured remotes, I ended up with just
+> 'origin' - which was unexpected (and less wonderful than cp -lR ;-).
+> 
+> 	Is that a feature ?
 
-> Are there any known workarounds or solutions?
+Yes, because by cloning someone else's config they could make you do
+what they want (alias...).
 
-Random guess: have you tried running "gmake"?
+I think in your case you can just copy over the .git/config and maybe
+set up "alternates" so that you don't have to refetch the remote objects
+which are not referenced by local refs. (Alternatively, clone --mirror,
+then copy over config and turn into non bare.)
 
-Alternatively, you might want to add the path containing your
-locally installed "make" to SANE_TOOL_PATH, for example by writing
-the following to config.mak:
+Maybe we do need "clone --copy" or something as a safe version of "cp -al"?
 
-	SANE_TOOL_PATH = /path/to/good/tools:/usr/xpg6/bin:/usr/xpg4/bin
-
-Hope that helps,
-Jonathan
+Michael
