@@ -1,96 +1,101 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: Why doesn't git commit -a track new files
-Date: Fri, 25 Feb 2011 13:30:28 +0900
-Message-ID: <buozkpk91nf.fsf@dhlpc061.dev.necel.com>
-References: <20110224112246.3f811ac2@glyph>
- <4D6672F7.4020101@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 8/8] trace: give repo_setup trace its own key
+Date: Fri, 25 Feb 2011 13:38:25 +0700
+Message-ID: <AANLkTimC2gv4GjA6YT7H9KuPcwOApkPxRcbDEOvvv9M8@mail.gmail.com>
+References: <20110224142308.GA15356@sigill.intra.peff.net> <20110224143030.GH15477@sigill.intra.peff.net>
+ <20110224214959.GH17412@elie>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Marco <netuse@lavabit.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Feb 25 05:30:38 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 25 07:39:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PspK9-0006qk-HM
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 05:30:37 +0100
+	id 1PsrKb-000179-43
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 07:39:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752887Ab1BYEab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Feb 2011 23:30:31 -0500
-Received: from relmlor1.renesas.com ([210.160.252.171]:41235 "EHLO
-	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752440Ab1BYEab (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Feb 2011 23:30:31 -0500
-Received: from relmlir2.idc.renesas.com ([10.200.68.152])
- by relmlor1.idc.renesas.com ( SJSMS)
- with ESMTP id <0LH500C5XOIUISF0@relmlor1.idc.renesas.com> for
- git@vger.kernel.org; Fri, 25 Feb 2011 13:30:30 +0900 (JST)
-Received: from relmlac2.idc.renesas.com ([10.200.69.22])
- by relmlir2.idc.renesas.com ( SJSMS)
- with ESMTP id <0LH5000ICOIT4BD0@relmlir2.idc.renesas.com> for
- git@vger.kernel.org; Fri, 25 Feb 2011 13:30:29 +0900 (JST)
-Received: by relmlac2.idc.renesas.com (Postfix, from userid 0)
-	id D316328088; Fri, 25 Feb 2011 13:30:29 +0900 (JST)
-Received: from relmlac2.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac2.idc.renesas.com (Postfix) with ESMTP id BB3AA28070; Fri,
- 25 Feb 2011 13:30:29 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac2.idc.renesas.com with ESMTP id PAN04593; Fri,
- 25 Feb 2011 13:30:29 +0900
-X-IronPort-AV: E=Sophos;i="4.62,222,1297004400";   d="scan'208";a="13475721"
-Received: from unknown (HELO relay11.aps.necel.com) ([10.29.19.46])
- by relmlii2.idc.renesas.com with ESMTP; Fri, 25 Feb 2011 13:30:29 +0900
-Received: from relay11.aps.necel.com ([10.29.19.46] [10.29.19.46])
- by relay11.aps.necel.com with ESMTP; Fri, 25 Feb 2011 13:30:29 +0900
-Received: from dhlpc061 ([10.114.97.82] [10.114.97.82])
- by relay11.aps.necel.com with ESMTP; Fri, 25 Feb 2011 13:30:29 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id 034AE52E1DC; Fri,
- 25 Feb 2011 13:30:28 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <4D6672F7.4020101@drmicha.warpmail.net>
+	id S1753538Ab1BYGi5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 01:38:57 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:60242 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751938Ab1BYGi4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 01:38:56 -0500
+Received: by wwb39 with SMTP id 39so1764789wwb.1
+        for <git@vger.kernel.org>; Thu, 24 Feb 2011 22:38:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=KGL9EAfhkcQMeQeUCo6t2UNkEfEQn/slAqtf2+pk6qQ=;
+        b=QoQ2CWIMJOHLPRH1arJ1CLuoL9FfK6AsPaQutwN02K84gU+VS24Yp+Lu2gcsGOltLN
+         9XCcTNmmE47mT3zL5vfrNPAwn/K4tWk3KMEh6+Rt54fMh7ZkKPZ+sRWv5O6rDWZRkSna
+         ogfWHJ9K8MOzE2/2I7VM5tkpaqyv+ReCLUJYc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=MjyKmR6IZznFH2pGZX9XE4gq75GWStHDOBvtLJfNpPjnQ8Q3bxOT0bidXEV1qhn0lb
+         NEsrByKiXLVkrx2q/a3CVfl88t6YJmwDI+DYfVmvMpJFWAfne3WCJXk+IddBsgE4V8Ru
+         rVLroQ0OfPcmIDajt9wPTIhF/gVHYAiAIgzsc=
+Received: by 10.216.185.142 with SMTP id u14mr6744215wem.31.1298615935091;
+ Thu, 24 Feb 2011 22:38:55 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Thu, 24 Feb 2011 22:38:25 -0800 (PST)
+In-Reply-To: <20110224214959.GH17412@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167876>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
->> git add -A && git commit -m "Message"
+On Fri, Feb 25, 2011 at 4:49 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Jeff King wrote:
 >
-> "commit -a" is much like "add -u", at least when used without file
-> arguments ("pathspec").
+>> You no longer get this output with GIT_TRACE=3D1; instead, you
+>> can do GIT_TRACE_SETUP=3D1.
+
+Minor note. GIT_TRACE warning in test-lib.sh will need improvement for
+checking GIT_TRACE_*
+
+>> @@ -170,10 +171,10 @@ void trace_repo_setup(const char *prefix)
+>> =C2=A0 =C2=A0 =C2=A0 if (!prefix)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 prefix =3D "(null)"=
+;
+>>
+>> - =C2=A0 =C2=A0 trace_printf("setup: git_dir: %s\n", quote_crnl(get_=
+git_dir()));
+>> - =C2=A0 =C2=A0 trace_printf("setup: worktree: %s\n", quote_crnl(git=
+_work_tree));
+>> - =C2=A0 =C2=A0 trace_printf("setup: cwd: %s\n", quote_crnl(cwd));
+>> - =C2=A0 =C2=A0 trace_printf("setup: prefix: %s\n", quote_crnl(prefi=
+x));
+>> + =C2=A0 =C2=A0 trace_printf_key(key, "setup: git_dir: %s\n", quote_=
+crnl(get_git_dir()));
+>> + =C2=A0 =C2=A0 trace_printf_key(key, "setup: worktree: %s\n", quote=
+_crnl(git_work_tree));
+>> + =C2=A0 =C2=A0 trace_printf_key(key, "setup: cwd: %s\n", quote_crnl=
+(cwd));
+>> + =C2=A0 =C2=A0 trace_printf_key(key, "setup: prefix: %s\n", quote_c=
+rnl(prefix));
 >
-> "commit -A" does not exist, so that "git add -A && git commit" is your
-> only way.
+> I wonder if it would make sense for this to be
 >
-> Why does it not exist? Because you should at least
-> "git add -A && git status && behappy && git commit".
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_printf("setup", "git_dir: %s\n", ...=
+);
+>
+> and:
+>
+> =C2=A0- automatically prefix each line with the key instead of "trace=
+:"
+> =C2=A0- enable or redirect based on the content of the GIT_TRACE_$(uc=
+ $key)
+> =C2=A0 variable
 
-The exact same argument applies to "git commit -a" of course, but it's
-still supported.  Why?  Because it's a nice convenience for many common
-situations.  It isn't the least bit unsafe if one does git status _first_.
-
-> Also, "-A" supports a very "un-gitty" way of using git. This makes it
-> unlikely that someone cares to implement it... (By "un-gitty" I don't
-> mean a matter of personal taste, but a matter of fruitful habits.)
-
-Nonsense.
-
-The index is a great idea, and cool and useful in many situations; I use
-it heavily, and wish other systems had something like it.  But there's
-nothing "un-gitty" or "unfruitful" about directly commiting sometimes.
-
-For the record, I usually use the index, but sometimes when the changes
-are simple, I'll use shortcuts like "commit -a", because they're handy.
-Typically I'll do "git status" _first_, check that everything's kosher,
-and then do "git commit -a ...".  If "git commit -A" existed, I'd use
-that in the same way.
-
--Miles
-
--- 
-Mayonnaise, n. One of the sauces that serve the French in place of a state
-religion.
+Yeah I think it's nice to have key =3D "setup", then env name becomes
+GIT_TRACE_$(uc $key) and prepend "$key: " in all trace messages.
+--=20
+Duy
