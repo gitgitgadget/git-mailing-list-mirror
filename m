@@ -1,145 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] commit: error out for missing commit message template
-Date: Fri, 25 Feb 2011 03:07:57 -0600
-Message-ID: <20110225090756.GI23037@elie>
-References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
- <1298418152-27789-28-git-send-email-avarab@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Why doesn't git commit -a track new files
+Date: Fri, 25 Feb 2011 04:09:08 -0500
+Message-ID: <20110225090908.GA17145@sigill.intra.peff.net>
+References: <20110224112246.3f811ac2@glyph>
+ <4D6672F7.4020101@drmicha.warpmail.net>
+ <20110224154908.GA29309@sigill.intra.peff.net>
+ <4D667F1A.5060408@drmicha.warpmail.net>
+ <20110224160027.GA30275@sigill.intra.peff.net>
+ <4D6680F3.1000205@drmicha.warpmail.net>
+ <20110224160932.GC30275@sigill.intra.peff.net>
+ <4D676D99.2010600@drmicha.warpmail.net>
+ <20110225090126.GA16861@sigill.intra.peff.net>
+ <4D677054.9050908@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 10:08:20 2011
+Cc: Marco <netuse@lavabit.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Feb 25 10:09:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pster-0006B8-J8
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 10:08:17 +0100
+	id 1Pstfp-0006a3-KL
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 10:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932357Ab1BYJIK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 04:08:10 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:45606 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932167Ab1BYJIG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 04:08:06 -0500
-Received: by vxi39 with SMTP id 39so1197198vxi.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 01:08:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=stCx4oxk/6a/U4D9AlE4ETE2WVaB+ia9gCGnpevgvHY=;
-        b=uqcYREQp4b7hdHVg6+xGnZ9nEH+aGmmBf46JN63XGHIZ1SscJnvfatT5ABCyhBls9H
-         QuJQvTqM5jyS8Rhv7VcssBFdyzaZ+io1PckvqvYG4EorXub9tG0nxWS199zjFe7hODyB
-         KhnNJo7VClmqu/GH5Kb6Cj3UaQSs1zEo39aR8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=dgmGVSWloC3IQf3WZHOzXMIVtJ+1M5WJ4RDwheaRK2m6OrW3xQIz17hmV8h0q1MbTt
-         gEs6uYHbRQjVL9REGJR9nVHxvc7zg092yKbS4vCoAyFgjwcevwNtekD6YLOktymk7dDU
-         t4RcORK5bX2OQdfwDXKmal7wyzkFF9bNmp1wE=
-Received: by 10.52.159.38 with SMTP id wz6mr3571673vdb.19.1298624884308;
-        Fri, 25 Feb 2011 01:08:04 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id a6sm252497vcm.22.2011.02.25.01.08.01
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Feb 2011 01:08:02 -0800 (PST)
+	id S932299Ab1BYJJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 04:09:11 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38966 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932167Ab1BYJJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 04:09:10 -0500
+Received: (qmail 32671 invoked by uid 111); 25 Feb 2011 09:09:09 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 25 Feb 2011 09:09:09 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Feb 2011 04:09:08 -0500
 Content-Disposition: inline
-In-Reply-To: <1298418152-27789-28-git-send-email-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <4D677054.9050908@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167890>
 
-When "git commit" was rewritten in C (v1.5.4-rc0~78^2~30,
-2007-11-08), a subtle bug in --template was introduced.  If the
-file named by a --template parameter is missing, previously git
-would error out with a message:
+On Fri, Feb 25, 2011 at 10:03:16AM +0100, Michael J Gruber wrote:
 
-	Commit template file does not exist.
+> > (which is why the default for commit with paths switched from "-i"
+> > to "-o" long ago).
+> 
+> ...before my time (or under my radar).
 
-but in the C version the --template parameter gets ignored and
-the default template is used.
+Almost before my time, too. See 130fcca (git-commit: revamp the
+git-commit semantics., 2006-02-05).
 
-t7500 has two tests for this case which would have caught it, except
-that with the default $EDITOR, the commit message template is left
-unmodified, causing 'git commit' to error out and the test to
-succeed.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -725,15 +725,15 @@ static int prepare_to_commit(const char *index_=
-file, const char *prefix,
-[...]
-> -				"%s"
-> -				"# Author:    %s\n",
-> +				_("%s"
-> +				"# Author:    %s\n"),
-
-The above change causes the commit message template to be nonempty,
-excluding comments, so bare "git commit" succeeds, exposing this
-longstanding bug.
-
- builtin/commit.c  |    2 +-
- t/t7500-commit.sh |   14 +++++++++++---
- 2 files changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d7f55e3..1a1fb73 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -634,7 +634,7 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix,
- 		if (strbuf_read_file(&sb, git_path("SQUASH_MSG"), 0) < 0)
- 			die_errno("could not read SQUASH_MSG");
- 		hook_arg1 =3D "squash";
--	} else if (template_file && !stat(template_file, &statbuf)) {
-+	} else if (template_file) {
- 		if (strbuf_read_file(&sb, template_file, 0) < 0)
- 			die_errno("could not read '%s'", template_file);
- 		hook_arg1 =3D "template";
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index d551b77..5976f59 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -28,13 +28,21 @@ test_expect_success 'a basic commit in an empty tre=
-e should succeed' '
- test_expect_success 'nonexistent template file should return error' '
- 	echo changes >> foo &&
- 	git add foo &&
--	test_must_fail git commit --template "$PWD"/notexist
-+	(
-+		GIT_EDITOR=3D"echo hello >\"\$1\"" &&
-+		export GIT_EDITOR &&
-+		test_must_fail git commit --template "$PWD"/notexist
-+	)
- '
-=20
- test_expect_success 'nonexistent template file in config should return=
- error' '
- 	git config commit.template "$PWD"/notexist &&
--	test_must_fail git commit &&
--	git config --unset commit.template
-+	test_when_finished "git config --unset commit.template" &&
-+	(
-+		GIT_EDITOR=3D"echo hello >\"\$1\"" &&
-+		export GIT_EDITOR &&
-+		test_must_fail git commit
-+	)
- '
-=20
- # From now on we'll use a template file that exists.
---=20
-1.7.4.1
+-Peff
