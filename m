@@ -1,69 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 24/73] gettextize: git-checkout "Switched to a ..
- branch" message
-Date: Fri, 25 Feb 2011 11:56:19 -0800
-Message-ID: <7vaahjanx8.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v4 04/73] Makefile: "pot" target to extract messages
+ marked for translation
+Date: Fri, 25 Feb 2011 20:53:21 +0100
+Message-ID: <AANLkTim72p3H5zrELsApN8EM1CAU1H=FdjaoL+s=cJzH@mail.gmail.com>
 References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org>
- <1298418152-27789-25-git-send-email-avarab@gmail.com>
- <20110225081048.GH23037@elie>
- <AANLkTikGZL--hn-BTPmPK-9oDi0p1h6o7EZ47jeEF0iY@mail.gmail.com>
+	<1298418152-27789-5-git-send-email-avarab@gmail.com>
+	<20110225072212.GC23037@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jakub Narebski <jnareb@gmail.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 20:56:39 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 25 20:58:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pt3mG-00014l-S6
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 20:56:37 +0100
+	id 1Pt3oV-0002LA-81
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 20:58:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932810Ab1BYT4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 14:56:32 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40712 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325Ab1BYT4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 14:56:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3DE074D41;
-	Fri, 25 Feb 2011 14:57:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8Y5iCIfpgExSLiDzU5Xc1R1/taY=; b=LyMy0f
-	pnCLMCvEv6aQj+vnCQNvdg74rhVG81DpH/DML9GuHz+vBZyMHtvcEbdPL4eLU48S
-	9HnovW7Tcxyj2Dv3kpAlAZwMi7AyH3qdSL5KtUO+HRYuUmVm4xxUjMx2R8Uz+bDP
-	nZ2j+cbFTuxI78KPZFI5Ay+tjZsW1uS5eVE5k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I/YfuO71mnvnLiIzYCcjV7qjUAVQf9qU
-	GvUbVETQNv7lI5eM6jT9J0JR5XNdVd9SaHL8bf15qUSRkQC3Eo/3/zrct9W09mOW
-	8pCYd1C5wYp5He0uCvjBRgGCvw4lVyDR6C06orcBpQVuXnhEjZ/jBSXvKhWJokn1
-	v0B+ntwejok=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EDCB24D3F;
-	Fri, 25 Feb 2011 14:57:42 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 51EFE4D3D; Fri, 25 Feb 2011
- 14:57:37 -0500 (EST)
-In-Reply-To: <AANLkTikGZL--hn-BTPmPK-9oDi0p1h6o7EZ47jeEF0iY@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri\, 25 Feb
- 2011 20\:47\:15 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 81D47296-4119-11E0-9322-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S932864Ab1BYT6u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 14:58:50 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39323 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756368Ab1BYT6t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 14:58:49 -0500
+Received: by fxm17 with SMTP id 17so2020377fxm.19
+        for <git@vger.kernel.org>; Fri, 25 Feb 2011 11:58:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Nw4HAG0n1OGZr/1DnD75mZIsLhZQMDHoFIG57OkUuCw=;
+        b=D6Hh6rrIkMfDbRbrEGW5aUfzj/OEr0YhMuoEDGWppDcqYrt1njd1/NaO1iVFl5+3Dd
+         l///YqGddSR1oeud/KbbWiwUTg6AUuOBDgXLl9k7BOOjW+ZZ/dpPWAFhF3yJ5vb7p2lM
+         0i0v2GmLlVHbRbKf98MsyQkmKHfYa8hqi5Wko=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vQZERL9kzI0tytmwjzJgJqJaggW/uMRMQ8x09lpdLvGg+7I7Z1uq1GzSXH1Am7jEFR
+         BV26016Oy59GmhWz78F70YX8jEoZ+kSGdAHIJoyxjbPccF1Wf4xcKRbXVeCcEr3Zi+K0
+         yAoeiuKvfh0WJz5sm7+ZKKh8E52utLoSYAYMQ=
+Received: by 10.223.103.66 with SMTP id j2mr3177994fao.83.1298663601803; Fri,
+ 25 Feb 2011 11:53:21 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Fri, 25 Feb 2011 11:53:21 -0800 (PST)
+In-Reply-To: <20110225072212.GC23037@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167929>
 
-I've locally amended this, and inserted the distclean-pot, in the series,
-so no need to resend only for these two.
+On Fri, Feb 25, 2011 at 08:22, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
 
-If you are re-rolling the series, please don't forget to include them, as
-I'd be wholesale replacing in that case.
+> A forgotten piece. =C2=A0Not urgent at all.
 
-Thanks.
+Yeah, noticed this. Meant to sent a fixup for it. Thanks for beating
+me to it.
+
+There's also one other (future) issue your `mv $i+ $i` trick confuses
+xgettext, which complains about invalid CHARSET in a later patch when
+there's more than one xgettext call. I.e. it doesn't like to append to
+files that don't end in *.pot for some reason.
+
+The output is still the same though, so the warning doesn't have any
+real effect.
+
+Just thought I'd mention it.
