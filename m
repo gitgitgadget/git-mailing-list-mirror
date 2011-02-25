@@ -1,75 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
-Date: Fri, 25 Feb 2011 12:11:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1102251208380.1561@bonsai2>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org> <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com> <AANLkTimWy+W+rcZHsac_n--y9iMeaoO66CPZVbN1VBp2@mail.gmail.com> <20110225090544.GA3783@tugrik.mns.mnsspb.ru>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Revert a single commit in a single file
+Date: Fri, 25 Feb 2011 12:17:27 +0100
+Message-ID: <AANLkTimLRc4LybUvmD2ZCKfQqEP+vr+2aBnb4n3B+Mb2@mail.gmail.com>
+References: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Fri Feb 25 12:12:17 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 25 12:17:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Psvaq-0006Nf-J7
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 12:12:16 +0100
+	id 1Psvg1-0000WC-Pl
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 12:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932520Ab1BYLMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 06:12:10 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:55553 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S932459Ab1BYLMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 06:12:09 -0500
-Received: (qmail invoked by alias); 25 Feb 2011 11:12:07 -0000
-Received: from pD9EB2478.dip0.t-ipconnect.de (EHLO noname) [217.235.36.120]
-  by mail.gmx.net (mp035) with SMTP; 25 Feb 2011 12:12:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/SAfpeUhHShW13mQxWdWavQNU1pKZesiu9kyUiHv
-	W6GPf9SqAbJkya
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <20110225090544.GA3783@tugrik.mns.mnsspb.ru>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752033Ab1BYLRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 06:17:33 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63353 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751222Ab1BYLRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 06:17:32 -0500
+Received: by fxm17 with SMTP id 17so1503681fxm.19
+        for <git@vger.kernel.org>; Fri, 25 Feb 2011 03:17:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=fL8xoPdUHyxA7W9s7fqQVsZMLFy8loM978pD31kfSJs=;
+        b=rp7nnRLgAYpTAKFpDvvlTe8MNPZT2+O9IO2ZSe2+tbjZ2XNI3dKGY6ZBjr41afDbvF
+         v6ldKT6e/hEMaAoFGuP56Sw5k+g+voHhPM3t5S1t8ZKqpGMYA2cLZJzqSkn6Qw2D79Ne
+         K0cpUlc4MYenBDrfRLuzNpj9urUTv4SvwPZH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=nwuFdALe/g/uB3lyJe/TvDlJHLKkQHPi0NcUnOPzv3k0IxrhncdttpW0qGVhKJLa7n
+         1BAlUOaub+lSkkASBSVZkHg/J5NpnM/+BxSGX8HQVViul5lhpAGwyKY7x0OGFkKQhfEy
+         KiQkmMCpXWEMXO9Pepf32GD7PXBe//qhAqG+E=
+Received: by 10.223.71.9 with SMTP id f9mr2487574faj.64.1298632647235; Fri, 25
+ Feb 2011 03:17:27 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Fri, 25 Feb 2011 03:17:27 -0800 (PST)
+In-Reply-To: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167900>
 
-Hi,
+On Fri, Feb 25, 2011 at 11:34, Thomas Ferris Nicolaisen
+<tfnico@gmail.com> wrote:
+> I tried asking the same question on the "newbie" list some time ago:
+>
+> http://groups.google.com/group/git-users/browse_thread/thread/d562b4eeac016711
+>
+> Basically, when I go
+>> git revert <commit> <path>
+>
+> .. my expectation was that a new commit would be made reverting the
+> changes from the old commit, but only for specified path/file.
+>
+> Maybe it's a bit of a corner-case, but still would be nice to have
+> once in a while. What do you think?
 
-On Fri, 25 Feb 2011, Kirill Smelkov wrote:
+It would. What you can do in the meantime is:
 
-> Johannes, can we please try my patch[1] for msys.dll not to load 
-> user32.dll for every msys program (i.e. sh.exe too)? Combined together 
-> with 3 clipboard functions removal (details in [2]) from sh.exe, I bet 
-> this will result in significantly faster shell startup, configure runs, 
-> etc...
-> 
-> This days I have lack of access to windows machines, only wine, so I
-> desperately need someones help to at least first rebuild msys.dll.
-> 
-> [1] http://repo.or.cz/w/msys/kirr.git/commitdiff/f7d7efebd35e8e5bf6d685ff4f1197941984be04
-> [2] http://repo.or.cz/w/msys/kirr.git/commitdiff/a97bed5d22f9c05f39776d8ea7856db4ce572dc5
-
-Three things:
-
-[2] does not apply cleanly, so I am still desperately trying to find some 
-time to finish it off (the patches are to msys.git, not the 'msys' branch 
-of msysgit.git, so I had to find a quarter an hour in order to put them 
-there in the first place, taking up all the Git time budget I wanted to 
-allow myself for this week).
-
-Further, I think that my beloved Shift+Insert will no longer work with 
-your [2].
-
-And lastly, in [2] you claim that you cross-built msys-1.0.dll. I would 
-like to have a script doing that in msysgit.git.
-
-Ciao,
-Dscho
+    git revert <commit>
+    git reset
+    git add <path>
+    git commit ...
+    git reset --hard # making sure you didn't have uncommited changes earlier
