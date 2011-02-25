@@ -1,92 +1,88 @@
-From: seanh <snhmnd@gmail.com>
-Subject: git commit not committing, confused
-Date: Fri, 25 Feb 2011 19:02:35 +0000
-Message-ID: <20110225190235.GB15815@kisimul>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] commit notes workflow
+Date: Fri, 25 Feb 2011 10:59:59 -0800
+Message-ID: <7v4o7saqj4.fsf@alter.siamese.dyndns.org>
+References: <20110225133056.GA1026@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 25 19:57:47 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 25 20:00:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pt2rH-0000Rx-0P
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 19:57:43 +0100
+	id 1Pt2tk-0001sc-Hp
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 20:00:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755274Ab1BYS5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Feb 2011 13:57:38 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:45644 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325Ab1BYS5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Feb 2011 13:57:37 -0500
-Received: by wwe15 with SMTP id 15so978357wwe.1
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 10:57:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:subject:message-id
-         :mail-followup-to:mime-version:content-type:content-disposition
-         :user-agent;
-        bh=+7enOMtXQgDtzTjpwfOUAu8XlmUnzVYU2VGylOnsVKU=;
-        b=uUx9UYA9fFsZ1Qc/rhbTj+Kxh7tMCKtPdGrxl4gD6vLA83MC3nk/Wsw6295r94ZxPo
-         lJwRAHOZYgQANTK0FJu0jR5SZWHF7HBIijYLsVDxP5UJauXn+ysAtbiaYwf5HKmyV7T3
-         3LG5A9W5lHwIfzKgVdwf17VeT9lg+b538Exjo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:user-agent;
-        b=t9hbwmQ5f7LQXDWReCoHgQIYDxlW7LF7UQzvv9+vWbaatB1cEgKRDEryixn3Kf0jsh
-         cfVIAB+tshNWMiKJmUL+/2IqnT2ctB1MVUwMAUL3G9VcJ2bt4NlbDZE9kO0t2ieBu3T4
-         qTfre21nnf7cJjlRvP0cXg8IraGNcdvmIIkbQ=
-Received: by 10.216.172.15 with SMTP id s15mr7220024wel.70.1298660255929;
-        Fri, 25 Feb 2011 10:57:35 -0800 (PST)
-Received: from kisimul (kisimul.inf.ed.ac.uk [129.215.197.9])
-        by mx.google.com with ESMTPS id n11sm478612wej.19.2011.02.25.10.57.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 Feb 2011 10:57:34 -0800 (PST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756279Ab1BYTAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Feb 2011 14:00:08 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40622 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325Ab1BYTAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Feb 2011 14:00:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D2F024794;
+	Fri, 25 Feb 2011 14:01:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f09y6X0tF8UYMeFenOW37rlPIYQ=; b=lhYGyX
+	VtBD74N8vwPUkmfQhsgMQA2D/oo5npDq9nqd3R5ugiwVWZ0VlLHSv1/737Ab+iOF
+	W18+YLYmjoaAh9mvqqATWc7d0qSjoX/KOC8m/ZEh+Dvq3ivBEKubupOz4WQQqjyP
+	MZnWRO4bxjsmTmpc2itSmOFph/mgHpjvcisUE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pGC4DwSuLYSsh8BtYuUKaDYQXJnNuFUX
+	M/LParhgcqmqCf8Fv17WsPL8AAG4eZHPTi5+IioF63sAOP97l5DFI5ozEjsSoQ4q
+	TORwfOmSuoiq0QH0CtrjElXwDdhcViy0fGt3T7Xek5OMEjv0LsHX/NRQtH8PN43g
+	Sl6To4S8tVo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B06F74784;
+	Fri, 25 Feb 2011 14:01:20 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BD4524780; Fri, 25 Feb 2011
+ 14:01:17 -0500 (EST)
+In-Reply-To: <20110225133056.GA1026@sigill.intra.peff.net> (Jeff King's
+ message of "Fri\, 25 Feb 2011 08\:30\:57 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A1DAB760-4111-11E0-AE43-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167919>
 
-How did this happen?
+Jeff King <peff@peff.net> writes:
 
-I have a git repo containing a LOG.txt file. I made some changes to this
-file and committed them. Actually, I called this script which did so:
+> So your commit template looks like:
+>
+>   subject
+>
+>   commit message body
+>   ---
+>   notes data
+>
+>   # usual template stuff
+>
+> I'm curious what people think. Do others find this useful? Does it seem
+> harmful?
 
-	#!/bin/sh -e
-	# Append timestamped one-liners to a file and commit the file to git.
-	logdir=~/txt
-	logfile=LOG.txt
-	cd "$logdir"
-	if [ $# = 0 ]; then
-		# No command-line arguments, just print out the last entry.
-		tail -n 1 $logfile
-	else
-		entry="[`date`] [`hostname`] $*"
-		echo $entry >> $logfile
-		git commit $logfile -m "$logfile: $*"
-		git push
-		tail -n 1 $logfile
-	fi
+As long as this is done only under "commit --notes", I don't think it
+should hurt innocent bystanders.
 
-The script executes (and shows output from git) with no errors. `git
-log` shows the commit, `git log -p` shows the changes committed to the
-LOG.txt file.
+> It's yet another magic format to worry about when writing a commit
+> message. But you don't need to care unless you use "--notes" (and I
+> would probably add a config option, since I would always want this on
+> personally).
 
-However, `git log LOG.txt` does _not_ show the commit.
-`git status` shows LOG.txt as modified and unstaged.
-`git diff LOG.txt` shows a diff of the changes to LOG.txt, the same changes so
-that show up in `git log -P`.
-After running `git add LOG.txt` again, `git status` still shows LOG.txt
-as modified and unstaged!
-`git commit LOG.txt` reports 'no changes added to commit'.
+Then --no-notes would also be necessary, but I think you would get it for
+free these days ;-).
 
-So this doesn't make sense. I don't know what happened or how. git's
-index seems to have got into a mess. If I clone the repo then cd into
-the clone and run git status it shows LOG.txt as modified and unstaged,
-even though this is a brand new fresh clone!
+> I only turn on --edit when we launch an editor. It seems somehow more
+> confusing to me that "git commit -F file" should split notes out (or
+> worse, "git commit -m").
+
+So if you see -F -m and there is no --edit, you don't split out notes at
+the divider?  That sounds like a sensible thing to me.
