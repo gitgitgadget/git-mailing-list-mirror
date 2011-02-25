@@ -1,80 +1,113 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Dario Rodriguez <soft.d4rio@gmail.com>
 Subject: Re: Revert a single commit in a single file
-Date: Fri, 25 Feb 2011 13:37:39 +0100
-Message-ID: <4D67A293.2050306@drmicha.warpmail.net>
-References: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com> <AANLkTimLRc4LybUvmD2ZCKfQqEP+vr+2aBnb4n3B+Mb2@mail.gmail.com>
+Date: Fri, 25 Feb 2011 09:48:12 -0300
+Message-ID: <AANLkTimqszvGjVeJHKLPWicDugeOuqbgO1+wy5BO-AE0@mail.gmail.com>
+References: <AANLkTikpdGfAAUMu_7DfA-GRUv7gKn5Yc9RnJwo2iKoM@mail.gmail.com>
+ <AANLkTimLRc4LybUvmD2ZCKfQqEP+vr+2aBnb4n3B+Mb2@mail.gmail.com> <4D67A293.2050306@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 25 13:41:12 2011
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Feb 25 13:48:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pswyr-0004ib-Gx
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 13:41:09 +0100
+	id 1Psx66-0008HY-7K
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Feb 2011 13:48:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165Ab1BYMlA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 07:41:00 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53959 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932091Ab1BYMk7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 07:40:59 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A625420C72;
-	Fri, 25 Feb 2011 07:40:58 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 25 Feb 2011 07:40:58 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=gMRAJeZHKh9RpQfNTpmWZ7aLS+M=; b=ehImlXpsW26WueP5v556PCfo5uvsRZJYMuLnGUj313O0NTFz0UQd08QOdg9r0RbAS0bbVjUtRIyPRtgxb9XShXIgJP86+1u3x0O6Y+4Id7Fn3Ywr+k9Y+ei4qziWPOR/vdpCioRMGurvzZ+ZEqWEDNBw6gO45hN3/913ksyMJPA=
-X-Sasl-enc: Rv68hHV6T+EjD/S9XWtd6u1a+LF1WmaiSh0HaRqrxnN/ 1298637658
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id CB43B404D48;
-	Fri, 25 Feb 2011 07:40:57 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <AANLkTimLRc4LybUvmD2ZCKfQqEP+vr+2aBnb4n3B+Mb2@mail.gmail.com>
+	id S1754387Ab1BYMse convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Feb 2011 07:48:34 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42143 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753665Ab1BYMsd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Feb 2011 07:48:33 -0500
+Received: by iwn34 with SMTP id 34so1054873iwn.19
+        for <git@vger.kernel.org>; Fri, 25 Feb 2011 04:48:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=tuccc4JNQEhzBhBKZOMPfCHpKbjZDSbPiGzCDkTWgOY=;
+        b=OYTD/UAnxJCp5JmT/dejFwKsZHL0d0vqauywgd5ZDPryDioaLs5ogEpBrZdOK2s1jC
+         zNHiA+/KHt2lepvFtb3tlzBu66vxxDwKlMpfD88+rq7xF+/V/4bVaOwHYmhr+gAHhkjn
+         8FsUoxmh4Vcyc3Je6cioEdQmGw2+Rg4MqKUN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=W/W1vQuL4y0DzpZeS/FSnKisIhyVtt0X2sJdw3/Jb9K0yX6aE/GDMbL0x6h/s+Z06D
+         MV2NoUDoChyj9XpYcV45DX2oNrz0Z4cSbpH8SSu/7kW5qKRc22FUZttQbz5SOywvFEdY
+         bw/73mSqSjGmGAu1zkwKdkYSr809KIVB3QI44=
+Received: by 10.42.197.138 with SMTP id ek10mr705897icb.58.1298638112072; Fri,
+ 25 Feb 2011 04:48:32 -0800 (PST)
+Received: by 10.42.53.194 with HTTP; Fri, 25 Feb 2011 04:48:12 -0800 (PST)
+In-Reply-To: <4D67A293.2050306@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167903>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 25.02.2011 1=
-2:17:
-> On Fri, Feb 25, 2011 at 11:34, Thomas Ferris Nicolaisen
-> <tfnico@gmail.com> wrote:
->> I tried asking the same question on the "newbie" list some time ago:
->>
->> http://groups.google.com/group/git-users/browse_thread/thread/d562b4=
-eeac016711
->>
->> Basically, when I go
->>> git revert <commit> <path>
->>
->> .. my expectation was that a new commit would be made reverting the
->> changes from the old commit, but only for specified path/file.
->>
->> Maybe it's a bit of a corner-case, but still would be nice to have
->> once in a while. What do you think?
->=20
-> It would. What you can do in the meantime is:
->=20
->     git revert <commit>
+The most sensible way to do this seems to be:
 
-=C3=86var meant to write "git revert --no-commit <commit>" here. (Or th=
-ere
-wouldn't be anything to reset and add.)
+ git checkout HEAD~2 file.c
 
->     git reset
->     git add <path>
->     git commit ...
->     git reset --hard # making sure you didn't have uncommited changes=
- earlier
+And your index will show file.c modified, as it will have it's content
+reverted 2 commits.
 
-If you want to revert changes to all files but a few, you can do it the
-other way round (revert, checkout HEAD^ -- <path>, commit --amend).
+The behavior of 'revert' is to revert commits, not files, so it's not
+expected to work if you say 'git revert <commit> <path>'
 
 Cheers,
-Michael
+Dario
+
+On Fri, Feb 25, 2011 at 9:37 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> =C6var Arnfj=F6r=F0 Bjarmason venit, vidit, dixit 25.02.2011 12:17:
+>> On Fri, Feb 25, 2011 at 11:34, Thomas Ferris Nicolaisen
+>> <tfnico@gmail.com> wrote:
+>>> I tried asking the same question on the "newbie" list some time ago=
+:
+>>>
+>>> http://groups.google.com/group/git-users/browse_thread/thread/d562b=
+4eeac016711
+>>>
+>>> Basically, when I go
+>>>> git revert <commit> <path>
+>>>
+>>> .. my expectation was that a new commit would be made reverting the
+>>> changes from the old commit, but only for specified path/file.
+>>>
+>>> Maybe it's a bit of a corner-case, but still would be nice to have
+>>> once in a while. What do you think?
+>>
+>> It would. What you can do in the meantime is:
+>>
+>> =A0 =A0 git revert <commit>
+>
+> =C6var meant to write "git revert --no-commit <commit>" here. (Or the=
+re
+> wouldn't be anything to reset and add.)
+>
+>> =A0 =A0 git reset
+>> =A0 =A0 git add <path>
+>> =A0 =A0 git commit ...
+>> =A0 =A0 git reset --hard # making sure you didn't have uncommited ch=
+anges earlier
+>
+> If you want to revert changes to all files but a few, you can do it t=
+he
+> other way round (revert, checkout HEAD^ -- <path>, commit --amend).
+>
+> Cheers,
+> Michael
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
