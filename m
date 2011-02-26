@@ -1,8 +1,9 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 0/2] Fix unnecessary updates of files during merge
-Date: Sat, 26 Feb 2011 11:34:55 -0700
-Message-ID: <1298745297-25713-1-git-send-email-newren@gmail.com>
+Subject: [RFC PATCH 1/2] t6022: New test checking for unnecessary updates of renamed+modified files
+Date: Sat, 26 Feb 2011 11:34:56 -0700
+Message-ID: <1298745297-25713-2-git-send-email-newren@gmail.com>
 References: <20110224115233.GA31356@sigill.intra.peff.net>
+ <1298745297-25713-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Feb 26 19:35:23 2011
@@ -11,63 +12,91 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtOzB-0001Ny-CW
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 19:35:21 +0100
+	id 1PtOzB-0001Ny-TL
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 19:35:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319Ab1BZSfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752418Ab1BZSfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Feb 2011 13:35:16 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:49022 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752070Ab1BZSfN (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 26 Feb 2011 13:35:13 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:45445 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070Ab1BZSfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Feb 2011 13:35:11 -0500
-Received: by yxs7 with SMTP id 7so1114909yxs.19
-        for <git@vger.kernel.org>; Sat, 26 Feb 2011 10:35:10 -0800 (PST)
+Received: by gxk8 with SMTP id 8so1097822gxk.19
+        for <git@vger.kernel.org>; Sat, 26 Feb 2011 10:35:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=BnoY+PAwYXvn228eIPYBjvuu9g109iBCHALfqlLbT24=;
-        b=epXc4TV9FJPpf/xcpE6RpZXro4A7srAzOA2M2CcePa6ERqZiKIYNnCJq+JiLUkGSir
-         DabFdLrdVwR0OiYGgopiJDj6z/2yn0hDvSCnQeOJ9fo4jvpcER/qIa+SX3PkFYF/WiQ2
-         kc7YsazR1RZ8sgm4KvJu4y1Hv6gSTwtdLgB8c=
+        bh=k6aYDoXG5AAL7M1jX+28OELRReiWqT+82ZbZgzT1k7A=;
+        b=nWhmklBp3mEV0kdj/iiqi8A72MnzmBzZsIbvDnYTS6LZ7UMTKPQNKQJYYaYGuD14LM
+         DiiI9QOlssBg71i8Lt8+1pHqkd5GGL9umaQ70OufNNaB42t4wA2y/SVbzdfvW1fCLFbV
+         lhbNVHDK0RsWR5yA3LK06hvU81MXMpe7Ulpd8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=TUBKhQFC0bzQ4KoAZ5e+z5hWCpDdQYAw/xAHiSGegPOk39mSlixyLujFU2n5toOtW5
-         Ie6fJwN8uB6wXCkW9A+x4f2BUpi2ZC/sY9mrqEt9fkBjH3YgCJ+dk7qIZ4vbcP1OqE6T
-         RyaeOHTKTKa//aYEZk/nBvc4QPIfSU7hIu/oY=
-Received: by 10.146.167.13 with SMTP id p13mr5285469yae.1.1298745310696;
-        Sat, 26 Feb 2011 10:35:10 -0800 (PST)
+        b=rXdAbpgp6OqpnutZhVwY0XzDGbGVRpHUUB1utQZXwJrOcfjb8D3kCdnbmQ3LuLLy/3
+         KgBDQ21FQielEYlDGJ+c/mapgCOXTWu3Tm6T2bRLWxbcfLsn/9yQy4NutDMVdJuLn3lg
+         qUIs4uTYoUv2SZe7cnasYCtp0vBz4qPade2sc=
+Received: by 10.91.197.31 with SMTP id z31mr5291353agp.178.1298745312789;
+        Sat, 26 Feb 2011 10:35:12 -0800 (PST)
 Received: from Miney.hsd1.nm.comcast.net. (c-174-56-87-200.hsd1.nm.comcast.net [174.56.87.200])
-        by mx.google.com with ESMTPS id b11sm2491718ana.18.2011.02.26.10.35.08
+        by mx.google.com with ESMTPS id b11sm2491718ana.18.2011.02.26.10.35.10
         (version=SSLv3 cipher=OTHER);
-        Sat, 26 Feb 2011 10:35:09 -0800 (PST)
+        Sat, 26 Feb 2011 10:35:12 -0800 (PST)
 X-Mailer: git-send-email 1.7.4.1.23.g4865dd
-In-Reply-To: <20110224115233.GA31356@sigill.intra.peff.net>
+In-Reply-To: <1298745297-25713-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167987>
 
-This patch series adds a simple testcase demonstrating the problem
-reported by Stephen Rothwell, and a fix.  Unfortunately, there's a bug
-with the fix (hence the RFC) that makes the relevant files racily clean
-rather than clearly clean (i.e. 'git diff-files' will report these files
-as modified when it shouldn't).
 
-I'll try to figure out how to fix the second problem in the next few
-days.  If anyone has some hints, I'm all ears.
-
-Elijah Newren (2):
-  t6022: New test checking for unnecessary updates of renamed+modified
-    files
-  merge-recursive: When we detect we can skip an update, actually skip
-    it
-
- merge-recursive.c       |    7 +++++--
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
  t/t6022-merge-rename.sh |   32 ++++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 2 deletions(-)
+ 1 files changed, 32 insertions(+), 0 deletions(-)
 
+diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
+index 1ed259d..71bfd22 100755
+--- a/t/t6022-merge-rename.sh
++++ b/t/t6022-merge-rename.sh
+@@ -609,4 +609,36 @@ test_expect_success 'check handling of differently renamed file with D/F conflic
+ 	! test -f original
+ '
+ 
++test_expect_success 'setup avoid unnecessary update' '
++	git reset --hard &&
++	git checkout --orphan avoid-unnecessary-update &&
++	git rm -rf . &&
++	git clean -fdqx &&
++
++	printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" >original &&
++	git add -A &&
++	git commit -m "Common commmit" &&
++
++	git mv original rename &&
++	echo 11 >>rename &&
++	git add -u &&
++	git commit -m "Renamed and modified" &&
++
++	git checkout -b other-branch HEAD~1 &&
++	echo "random content" >random-file &&
++	git add -A &&
++	git commit -m "Random, unrelated changes"
++'
++
++test_expect_failure 'avoid unnecessary update' '
++	git checkout -q avoid-unnecessary-update^0 &&
++	orig=$(stat --format="%Y" rename) &&
++	sleep 1 &&
++	git merge other-branch &&
++	new=$(stat --format="%Y" rename) &&
++	echo "Checking whether stat times are same: $orig vs $new" &&
++	test "$orig" == "$new" &&
++	git diff-files --exit-code # Is "rename" clean, or only racily clean?
++'
++
+ test_done
 -- 
 1.7.4.1.23.g4865dd
