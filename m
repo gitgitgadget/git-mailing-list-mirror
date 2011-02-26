@@ -1,97 +1,88 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 2/2] merge-recursive: When we detect we can skip an update, actually skip it
-Date: Sat, 26 Feb 2011 11:34:57 -0700
-Message-ID: <1298745297-25713-3-git-send-email-newren@gmail.com>
+Subject: Re: [RFC PATCH 0/2] Fix unnecessary updates of files during merge
+Date: Sat, 26 Feb 2011 11:43:10 -0700
+Message-ID: <AANLkTiknGZ-WQrwhtX9rJ=k1z7p3cYCE-j8F7rt4UL+M@mail.gmail.com>
 References: <20110224115233.GA31356@sigill.intra.peff.net>
- <1298745297-25713-1-git-send-email-newren@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>
+	<1298745297-25713-1-git-send-email-newren@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elijah Newren <newren@gmail.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 26 19:35:34 2011
+X-From: git-owner@vger.kernel.org Sat Feb 26 19:43:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtOzO-0001TU-0K
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 19:35:34 +0100
+	id 1PtP6q-0004xi-KV
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 19:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751630Ab1BZSfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Feb 2011 13:35:19 -0500
-Received: from mail-gw0-f51.google.com ([74.125.83.51]:35461 "EHLO
-	mail-gw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752372Ab1BZSfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Feb 2011 13:35:16 -0500
-Received: by gwb15 with SMTP id 15so1681072gwb.10
-        for <git@vger.kernel.org>; Sat, 26 Feb 2011 10:35:15 -0800 (PST)
+	id S1752374Ab1BZSnM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Feb 2011 13:43:12 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44047 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491Ab1BZSnL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Feb 2011 13:43:11 -0500
+Received: by fxm17 with SMTP id 17so2685102fxm.19
+        for <git@vger.kernel.org>; Sat, 26 Feb 2011 10:43:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=QRAmz44W0KkIwbqlKJ2tlqOZQy8U3/upVQcxSs7m4Fk=;
-        b=unfgr/mnM3l9MCbtD7625aPUjKk25l+BbnGQwgIm75mqy8vmweOYijQPddwZjGbpRu
-         r3wQiPswOB8FJz2jxUnahxia03oCFyLLdvIBJ5HFIISWwE5bDYzC7h8VvC+oST2kz2aN
-         ijZtzUzZHpKxdAUynAD+vh/3P/7qR+gUfPoto=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KUP4yCGrgj3T5LBlPUk39ry21kxX0ixiBBRp5zv9Xl8=;
+        b=rQEUI6JRkCFejd/+0W5e32HwiFwmEKUP9d+5pO35jwxVpAlcRegBmtUUwaLnjiqYo5
+         sLAUQy3VkJkv+mI4bHCwXZT/n9RKjEenp3r9H/LTZFYzwmWmw5GetGhlNtftni+btCfE
+         Irt4GpxRZHx4SUc2wCywKnocwr41dcYFUfLZ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=gvTujMiitXv8mBEhkRu+UaMg/mDV5RcJcILAO98TZhfWqnbRWfssVcB2MZrBH0cTZr
-         KuNhzaeL1O5QA8s9tXC6654YIi/Egd062RlLBkAH3CwredcxqS89w5XQ2CuMVsTc8od5
-         vWfmitwTTyFkYBtVxUUmaBBgmW/LeZqoTjscU=
-Received: by 10.90.72.17 with SMTP id u17mr5334229aga.180.1298745315077;
-        Sat, 26 Feb 2011 10:35:15 -0800 (PST)
-Received: from Miney.hsd1.nm.comcast.net. (c-174-56-87-200.hsd1.nm.comcast.net [174.56.87.200])
-        by mx.google.com with ESMTPS id b11sm2491718ana.18.2011.02.26.10.35.12
-        (version=SSLv3 cipher=OTHER);
-        Sat, 26 Feb 2011 10:35:14 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1.23.g4865dd
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mefR7dq4Rx5DaaGLjuHG5bXV+kKtdsKxlRLtLXDJwmdeDCsSSvnSgMOXl6DRv+VtrA
+         2wvWp65mjE2fpGa8tLHuinAfIm1/oP1L2OnpJYTiFoN6jmT1tVzUwN4WtSvwol2u1IJG
+         qu5H8jj9ulNA+hOBQduP4uIE2UHj2Ki0FvkSM=
+Received: by 10.223.74.15 with SMTP id s15mr4362687faj.28.1298745790107; Sat,
+ 26 Feb 2011 10:43:10 -0800 (PST)
+Received: by 10.223.75.136 with HTTP; Sat, 26 Feb 2011 10:43:10 -0800 (PST)
 In-Reply-To: <1298745297-25713-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167989>
 
-In 882fd11 (merge-recursive: Delay content merging for renames 2010-09-20),
-the code that checked for whether we could skip updating a file in the
-working directory (due to the merged version matching the current copy) was
-moved into a separate function.  In order to defer the content merging, we
-had to update the index with unmerged entries.  As part of the move, a bug
-was introduced such that the message about skipping the update would be
-printed (if GIT_MERGE_VERBOSITY was sufficiently high) but the file would
-be updated in the working copy anyway.
+Hi,
 
-When we detect that the file does not need to be updated in the working
-copy, update the index to remove the unmerged entries and then return early
-before updating the working copy.
+On Sat, Feb 26, 2011 at 11:34 AM, Elijah Newren <newren@gmail.com> wrot=
+e:
+> This patch series adds a simple testcase demonstrating the problem
+> reported by Stephen Rothwell, and a fix. =C2=A0Unfortunately, there's=
+ a bug
+> with the fix (hence the RFC) that makes the relevant files racily cle=
+an
+> rather than clearly clean (i.e. 'git diff-files' will report these fi=
+les
+> as modified when it shouldn't).
+>
+> I'll try to figure out how to fix the second problem in the next few
+> days. =C2=A0If anyone has some hints, I'm all ears.
 
-STILL BROKEN: Unfortunately, this change leaves the index in a state where
-the renamed file is only racily clean; a 'git diff-files' will report the
-file as modified.
+And, of course, I forgot to include the cc's in my send-email command.
+ Sorry about that, Stephen and Jeff.  Adding you on this email, at
+least.
 
----
-No Signed-off-by since it still doesn't work.
-
- merge-recursive.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 16c2dbe..94b818c 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1274,9 +1274,12 @@ static int merge_content(struct merge_options *o,
- 	}
- 
- 	if (mfi.clean && !df_conflict_remains &&
--	    sha_eq(mfi.sha, a_sha) && mfi.mode == a.mode)
-+	    sha_eq(mfi.sha, a_sha) && mfi.mode == a.mode) {
- 		output(o, 3, "Skipped %s (merged same as existing)", path);
--	else
-+		add_cacheinfo(mfi.mode, mfi.sha, path,
-+			      0, 0, ADD_CACHE_OK_TO_REPLACE);
-+		return mfi.clean;
-+	} else
- 		output(o, 2, "Auto-merging %s", path);
- 
- 	if (!mfi.clean) {
--- 
-1.7.4.1.23.g4865dd
+> Elijah Newren (2):
+> =C2=A0t6022: New test checking for unnecessary updates of renamed+mod=
+ified
+> =C2=A0 =C2=A0files
+> =C2=A0merge-recursive: When we detect we can skip an update, actually=
+ skip
+> =C2=A0 =C2=A0it
+>
+> =C2=A0merge-recursive.c =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A07 +++++--
+> =C2=A0t/t6022-merge-rename.sh | =C2=A0 32 +++++++++++++++++++++++++++=
++++++
+> =C2=A02 files changed, 37 insertions(+), 2 deletions(-)
