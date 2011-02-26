@@ -1,102 +1,105 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 0/5] status, commit: separate "# " from the translatable
- part of output
-Date: Fri, 25 Feb 2011 23:07:23 -0600
-Message-ID: <20110226050723.GA27864@elie>
+Subject: [PATCH 1/5] compat: provide a fallback va_copy definition
+Date: Fri, 25 Feb 2011 23:08:25 -0600
+Message-ID: <20110226050825.GA27887@elie>
+References: <20110226050723.GA27864@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 26 06:07:55 2011
+X-From: git-owner@vger.kernel.org Sat Feb 26 06:08:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtCNl-0007Aj-Mr
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 06:07:54 +0100
+	id 1PtCOY-0007MB-3O
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 06:08:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750769Ab1BZFHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Feb 2011 00:07:38 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:43070 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695Ab1BZFHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Feb 2011 00:07:37 -0500
-Received: by vxi39 with SMTP id 39so1975389vxi.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 21:07:37 -0800 (PST)
+	id S1750923Ab1BZFIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Feb 2011 00:08:37 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:42591 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750701Ab1BZFIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Feb 2011 00:08:36 -0500
+Received: by vws12 with SMTP id 12so1956872vws.19
+        for <git@vger.kernel.org>; Fri, 25 Feb 2011 21:08:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=EelyZr4wevME+5/4AXD9/SGNScN/1/0TzUayhH0fNbU=;
-        b=aE8bUIgvA9SilDkm5hGfGvBzfbDg6iabZADkkLn/RHvk5TcNYs912oRd9JUJ4/BLYU
-         TePwl5aR2cbLsjmhbFfN+mlehnJyXuD5FItbJy1cp8G7ZT59iUVPog/uccGIPTh2zf23
-         4S627tHH8u/CtzmRdmlN1W0kJNq8rVeJVR1ZY=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=aZeFzRRGSp0d0QzcBFm7z0vKiPxoN0Q91a/B1cwWQzA=;
+        b=Jv1GWet5a16AJYMdggaxiYQPD6ALSRzAA/2YhJRqr97r73NRPEWVIXs+0AvKcMIlo0
+         Ux+d7Ap0wH9YV6J9ngkaf2AXJYwvJWXOIQc4TQQUnQZWF/NjhwgIWdiJm0qXj/ZdjTpx
+         gG+l2uApSmDEjeV7k3JgyXb0yX8w5ZL/Kvh8k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=VpPnfQjWepRGCypC1ITfXzGzdypaubeE20LVLGHSqsK5a/1tFHmAseg9WoYW7xj+sv
-         h4S6QEfb6VfZqGIPjRqg6D/lrUPPxx0xmFBabRBKU/+gAUjF2Nf7hHcTktbR0jUeAoDu
-         FRNHtSYZzOakMMOq2TSe83DqEwWv1/dgFkZdc=
-Received: by 10.52.167.166 with SMTP id zp6mr5381072vdb.286.1298696857049;
-        Fri, 25 Feb 2011 21:07:37 -0800 (PST)
-Received: from elie ([69.209.53.52])
-        by mx.google.com with ESMTPS id u4sm716331vch.36.2011.02.25.21.07.34
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=m5OsWOXPxmnrZQ6eTf+7IAnoQ5wMxB+UaYH0s7HEOF6/BsyyvbkciaKVL6CPqikyg7
+         vbE/1HhsU1U71wM8MqXOMosdZfWk9vhlnqT6GK9f3vmxWlftt9FekcVhkRTRy0td+YLj
+         0rk0/OOlgTQHnty2UAeBOs1Kb1xwRDfZNv6/c=
+Received: by 10.220.177.196 with SMTP id bj4mr800724vcb.128.1298696915799;
+        Fri, 25 Feb 2011 21:08:35 -0800 (PST)
+Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
+        by mx.google.com with ESMTPS id y15sm716566vch.29.2011.02.25.21.08.33
         (version=SSLv3 cipher=OTHER);
-        Fri, 25 Feb 2011 21:07:36 -0800 (PST)
+        Fri, 25 Feb 2011 21:08:35 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <20110226050723.GA27864@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167955>
 
-Hi,
+From: Jeff King <peff@peff.net>
 
-This series makes wt-status and builtin-commit code a little
-less explicit about the '#' signs they produce in their output.
-The main goal is to make messages like
+va_copy is C99.  We have avoided using va_copy many times in the past,
+which has led to a bunch of cut-and-paste.  From everything I found
+searching the web, implementations have historically either provided
+va_copy or just let your code assume that simple assignment of worked.
 
-		"\n"
-		"It looks like you may be committing a MERGE.\n"
-		"If this is not correct, please remove the file\n"
-		"	%s\n"
-		"and try again.\n"
-		""
+So my guess is that this will be sufficient, though we won't really
+know for sure until somebody reports a problem.
 
-safe to translate by getting rid of the functionally important initial
-# signs; a nice side effect is to make the source code a little easier
-# to read and change (for example if we want to use some other kind
-of formatting some day for "git status" output).
-
-The first two patches (va_copy, strbuf_vaddf) are stolen from Jeff's
-GIT_TRACE_FACET series.
-
-Thanks for your help and patience so far.  I hope the series can be
-useful.
-
-Jeff King (2):
-  compat: provide a fallback va_copy definition
-  strbuf: add strbuf_vaddf
-
-Jonathan Nieder (3):
-  wt-status: add helpers for printing wt-status lines
-  commit: refer to commit template as s->fp
-  commit, status: use status_printf{,_ln,_more} helpers
-
- builtin/commit.c  |   58 ++++++++++----------
- color.c           |    9 +++
- color.h           |    3 +
+Signed-off-by: Jeff King <peff@peff.net>
+Improved-by: Erik Faye-Lund <kusmabite@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
  compat/msvc.h     |    1 -
- fsck.c            |   14 +----
- git-compat-util.h |    4 +
- merge-recursive.c |   15 +-----
- strbuf.c          |   27 +++++----
- strbuf.h          |    2 +
- trace.c           |   32 ++---------
- wt-status.c       |  160 ++++++++++++++++++++++++++++++++++++++--------------
- wt-status.h       |    7 ++
- 12 files changed, 195 insertions(+), 137 deletions(-)
+ git-compat-util.h |    4 ++++
+ 2 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/compat/msvc.h b/compat/msvc.h
+index 023aba0..a33b01c 100644
+--- a/compat/msvc.h
++++ b/compat/msvc.h
+@@ -9,7 +9,6 @@
+ #define inline __inline
+ #define __inline__ __inline
+ #define __attribute__(x)
+-#define va_copy(dst, src)     ((dst) = (src))
+ #define strncasecmp  _strnicmp
+ #define ftruncate    _chsize
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9c23622..00d41e4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -535,6 +535,10 @@ void git_qsort(void *base, size_t nmemb, size_t size,
+ #define fstat_is_reliable() 1
+ #endif
+ 
++#ifndef va_copy
++#define va_copy(dst,src) (dst) = (src)
++#endif
++
+ /*
+  * Preserves errno, prints a message, but gives no warning for ENOENT.
+  * Always returns the return value of unlink(2).
+-- 
+1.7.4.1
