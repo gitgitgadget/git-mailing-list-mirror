@@ -1,77 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: ab/i18n (What's cooking in git.git (Feb 2011, #05; Wed, 23))
-Date: Fri, 25 Feb 2011 23:14:47 -0600
-Message-ID: <20110226051447.GF27887@elie>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
- <20110223234828.GA7286@elie>
- <7vd3mi44gx.fsf@alter.siamese.dyndns.org>
- <AANLkTinY4pt5DLokKkuCNnC1yi7nQBHcZv722x9CKvCh@mail.gmail.com>
- <20110224031414.GC7970@elie>
- <AANLkTikfqmPKA0T4Q-ac0CXzqmCEp0cWNskODEjmACW_@mail.gmail.com>
- <20110224110029.GE14115@elie>
- <AANLkTi=qK4vL7Zq1zp590jxPb1j-dqt6D7Jesy1uAni3@mail.gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Why doesn't git commit -a track new files
+Date: Sat, 26 Feb 2011 15:45:05 +0900
+Message-ID: <87oc5zi9am.fsf@catnip.gol.com>
+References: <20110224112246.3f811ac2@glyph>
+	<4D6672F7.4020101@drmicha.warpmail.net>
+	<buozkpk91nf.fsf@dhlpc061.dev.necel.com>
+	<4D676B97.3000204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 26 06:15:00 2011
+Content-Type: text/plain
+Cc: Marco <netuse@lavabit.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat Feb 26 07:45:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtCUd-0000SW-W8
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 06:15:00 +0100
+	id 1PtDu6-0004Cc-Jw
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 07:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291Ab1BZFO4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Feb 2011 00:14:56 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:38147 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751033Ab1BZFOz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Feb 2011 00:14:55 -0500
-Received: by qwd7 with SMTP id 7so1722239qwd.19
-        for <git@vger.kernel.org>; Fri, 25 Feb 2011 21:14:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=YW4uvsKnb2ik+G3vZUzrxt/84mBlQWzT1SIngELCn+s=;
-        b=pLAjdIM6WLGtu/yxYBKXKi8ofMaTRQ8p/AbHBV6nmCoyCgVSPR+OsJVR9D4IVbSBYD
-         D59Jiw9mT2Y/qW0Vj7Scs0WHNu8jCM36O56WFCLDuYM9ABFtmlFx+VRg9V8SJ9obKjP/
-         HyFO8nSyeUF8H0oVYr6ztj3SbqGUon+YU2ZeE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=rNTMcwhvgLSi3W7w6TJ2gX/4HfFAXEA4l1zrr/YghhafMqCSNYGqxOOOq2jVz09dPu
-         22QDxiPyKKApzffszSOzR/93osFbWrpgw413WfRdsoiDiAQeJ52APFDNAg8qOGnfmnPd
-         MGFvxMnqS54oa+423e5v/3Lad/RfdEd5YM+4U=
-Received: by 10.224.201.74 with SMTP id ez10mr2773505qab.56.1298697294766;
-        Fri, 25 Feb 2011 21:14:54 -0800 (PST)
-Received: from elie (adsl-69-209-53-52.dsl.chcgil.ameritech.net [69.209.53.52])
-        by mx.google.com with ESMTPS id y17sm1114156qci.9.2011.02.25.21.14.53
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Feb 2011 21:14:54 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=qK4vL7Zq1zp590jxPb1j-dqt6D7Jesy1uAni3@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751404Ab1BZGpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Feb 2011 01:45:16 -0500
+Received: from smtp12.dentaku.gol.com ([203.216.5.74]:55225 "EHLO
+	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376Ab1BZGpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Feb 2011 01:45:15 -0500
+Received: from 218.231.234.87.eo.eaccess.ne.jp ([218.231.234.87] helo=catnip.gol.com)
+	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
+	(envelope-from <miles@gnu.org>)
+	id 1PtDtq-0005Jm-BD; Sat, 26 Feb 2011 15:45:06 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id 83B89DFA0; Sat, 26 Feb 2011 15:45:05 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+In-Reply-To: <4D676B97.3000204@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Fri, 25 Feb 2011 09:43:03 +0100")
+X-Virus-Scanned: ClamAV GOL (outbound)
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167961>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+> No more posts from me on this subthread, it's just not worth it.
 
-> First off, I really appreciate having your input and help on all this=
-,
-> really. And I didn't mean to cause frustration.
+Indeed, after sending my reply I read the rest of the messages on the
+thread, and wished I hadn't replied at all.
 
-The series seems to be un-stuck now, so frustration gone.  Sorry, I'm
-no good at this sort of thing.
+Oh well; "read the whole thread before replying" is a lesson that needs
+to be relearned occasionally I suppose...
 
-Thanks for translated git, gettext poison, "prove"-able tests and
-other assorted neat toys. :)
+-Miles
+
+-- 
+Is it true that nothing can be known?  If so how do we know this?  -Woody Allen
