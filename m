@@ -1,84 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/8] trace: give repo_setup trace its own key
-Date: Sat, 26 Feb 2011 00:34:08 -0800
-Message-ID: <7v7hcn8a9r.fsf@alter.siamese.dyndns.org>
-References: <20110224142308.GA15356@sigill.intra.peff.net>
- <20110224143030.GH15477@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v4 64/73] gettextize: git-describe basic messages
+Date: Sat, 26 Feb 2011 10:55:55 +0100
+Message-ID: <201102261055.58539.jnareb@gmail.com>
+References: <7vhbbwdjnm.fsf@alter.siamese.dyndns.org> <1298418152-27789-65-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 26 09:34:28 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 26 10:56:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtFbf-0004pO-Jq
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 09:34:27 +0100
+	id 1PtGt0-0002lP-JJ
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 10:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751634Ab1BZIeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Feb 2011 03:34:20 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42833 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571Ab1BZIeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Feb 2011 03:34:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AD923270A;
-	Sat, 26 Feb 2011 03:35:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FDujEhXPjJY3dl2SWFYRtPSQq40=; b=QZQjlx
-	wE0PVV5RB0jkbuBNF90qQsJ3fpjVRg7JwzFDqJZJeicsY/Pa15HBrnBSojQWo9ih
-	sPh1Jw52zXeQtrc9N5X1p00sjg9Abx3WQDvIyOLavtm1/sV5Zmj4KVYPUA/RUJry
-	98xgoYaNnlmREzda81Pfo38CdT2zzXeXaRYOc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s4GhIQIEANC7wc9a18zVGuACXlMbZ6/0
-	iI6WwzJdZ5Oa5/i/IQ2+um62v4FFaME25nQuSVnKMGT/cZdBPZizz0RbAVu8x8Ot
-	9bfsDLUhOhUpl9ig32zUOAP5y3Tl6MK/rUwMvKxx9H+henJY0T35h9vnT60SuHiM
-	wy7mSKFQx40=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6DE892709;
-	Sat, 26 Feb 2011 03:35:31 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 310972708; Sat, 26 Feb 2011
- 03:35:25 -0500 (EST)
-In-Reply-To: <20110224143030.GH15477@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 24 Feb 2011 09\:30\:30 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5F28406E-4183-11E0-8C39-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751705Ab1BZJ4M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Feb 2011 04:56:12 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39177 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751656Ab1BZJ4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Feb 2011 04:56:11 -0500
+Received: by fxm17 with SMTP id 17so2476947fxm.19
+        for <git@vger.kernel.org>; Sat, 26 Feb 2011 01:56:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=l6FldT3OrJcovzvaJwZPSt8TUhFZ2s7qqYmRzvosjYs=;
+        b=bnv9c2i+6tme/1iu6xyEw2VaCsngFeFulU3FF9s5ERv7JQujdMpQECIqEGvb3yV9aA
+         YyFN9ChskhJ0eK+HTxM2e8trSFijGItAjpYvtJQh9jY/YeBt1pgAGaXeQnjBD6IeuLVu
+         npiax18SSQ0/p+XA6Er275hgTwJAWsEk9sb4Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ra9Ix5vc3tBbHj4GPx8BGqIW9Y64QYwbclNtG3RSj4t2scU2vpZCGumHM5qgtQVfQo
+         ZsGrTl8iIVlzGP8G+HxxnENgHzMHUbxKou+7m0NWhIX3AkVSpSk5K8f9ybUUBg0NTIDy
+         hJPUXnHtGd8qS4dpEoyOb4xl6wXnvYGkqXsuo=
+Received: by 10.223.103.4 with SMTP id i4mr3410905fao.123.1298714169901;
+        Sat, 26 Feb 2011 01:56:09 -0800 (PST)
+Received: from [192.168.1.13] (abwr26.neoplus.adsl.tpnet.pl [83.8.241.26])
+        by mx.google.com with ESMTPS id y3sm687272fai.14.2011.02.26.01.56.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 26 Feb 2011 01:56:08 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1298418152-27789-65-git-send-email-avarab@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167965>
 
-Jeff King <peff@peff.net> writes:
+On Wed, 23 Feb 2011, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> You no longer get this output with GIT_TRACE=1; instead, you
-> can do GIT_TRACE_SETUP=1.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0if (strcmp(n->tag->tag, all ? n->path + 5 : =
+n->path))
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0wa=
+rning("tag '%s' is really '%s' here", n->tag->tag, n->path);
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0wa=
+rning(_("tag '%s' is really '%s' here"), n->tag->tag, n->path);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0n->name_checked =3D 1;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
 
-Hence you would need this on top?
+Don't we need to use order notation to be able to change order of those
+two parameters, i.e. use
 
- t/t1510-repo-setup.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+  +                       warning(_("tag '%1$s' is really '%2$s' here")=
+, n->tag->tag, n->path);
 
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 15101d5..ec50a9a 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -57,7 +57,7 @@ test_repo () {
- 			export GIT_WORK_TREE
- 		fi &&
- 		rm -f trace &&
--		GIT_TRACE="$(pwd)/trace" git symbolic-ref HEAD >/dev/null &&
-+		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null &&
- 		grep '^setup: ' trace >result &&
- 		test_cmp expected result
- 	)
+Perhaps also some comment for translators describing placeholders?
+
+--=20
+Jakub Narebski
+Poland
