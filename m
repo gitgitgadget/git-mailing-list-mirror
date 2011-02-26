@@ -1,53 +1,52 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH 1/3] mergetool--lib: Sort tools alphabetically for easier
- lookup
-Date: Sat, 26 Feb 2011 11:51:14 +0100
-Message-ID: <4D68DB22.8000105@gmail.com>
+Subject: [PATCH 2/3] mergetool--lib: Add Beyond Compare 3 as a tool
+Date: Sat, 26 Feb 2011 11:52:17 +0100
+Message-ID: <4D68DB61.4070607@gmail.com>
 References: <4D68DAC4.9060100@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, charles@hashpling.org
+Cc: git@vger.kernel.org, charles@hashpling.org, judge.packham@gmail.com
 To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sat Feb 26 11:51:29 2011
+X-From: git-owner@vger.kernel.org Sat Feb 26 11:52:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtHkG-0007TW-58
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 11:51:29 +0100
+	id 1PtHlF-0007tg-SS
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Feb 2011 11:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832Ab1BZKvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Feb 2011 05:51:23 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46406 "EHLO
+	id S1751837Ab1BZKwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Feb 2011 05:52:25 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55794 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751757Ab1BZKvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Feb 2011 05:51:22 -0500
-Received: by bwz15 with SMTP id 15so2590563bwz.19
-        for <git@vger.kernel.org>; Sat, 26 Feb 2011 02:51:21 -0800 (PST)
+	with ESMTP id S1751757Ab1BZKwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Feb 2011 05:52:25 -0500
+Received: by bwz15 with SMTP id 15so2590906bwz.19
+        for <git@vger.kernel.org>; Sat, 26 Feb 2011 02:52:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:message-id:date:from:user-agent:mime-version
          :newsgroups:cc:subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=FlTeblSOEc9Fa3V9k/ZW/FpSmL4ZkALQtpOFz/2bNEQ=;
-        b=HnwuEcBkvWjDoPTlU5woiRAP4WtfuY9Qk2V3fZEN2SpSeMnRnbu/YHQjdOXsmjNTJe
-         idDxzNrrgOqhki6Y7hq5apqrLyEYB0+httO9ANo3jOaJYwJeoADYYffdhxhsxxM5scFZ
-         339Bl/9nsn1PJ3Nqey4BjzsVi5DeOXF54HYIs=
+        bh=LKQ2liMWwp45X9cpfw9IT9V4mpFqpW9ocvCMwhZ9s+Y=;
+        b=TOEXtgnWL5m2/0IireK6BMkQe0V1gPpN2P/mDLCDRfZjbrsWuRCm6k8V9vlcC27kmC
+         MU6jwSnHdVOLt3XLIoJxY18hcetsQweoEjZankROvXU1kuz420PT5uD/nZRIKzZO3bqx
+         ioOoD6HR02imaolR0pU5OvjhtUTTA93zwckA8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        b=KzMKJtJ1DW+gT2tT++4YEVM86YBE2em56V486OJ9UBbzpp3403yho55hWKWhKe0Wsv
-         7V9Loxa/AIuUa77UmL+fS81txjUTkI0K6LR648v52Z+Db/Qr05dYxDEX6EYEtoJ8Xp/F
-         LMhecUSP8AtQHypvDI5YE6Vjl4kuLpgVZlq70=
-Received: by 10.204.152.220 with SMTP id h28mr2869350bkw.158.1298717480795;
-        Sat, 26 Feb 2011 02:51:20 -0800 (PST)
+        b=XMyXLjCAOsLyCxng89s+UY1RSD1syg9R5sqfy3BXrrYLHTNlApGaLUmIUxuaB08wwi
+         IZG69UtchjcsC8O0nmcO4ib7YPC5uKDld9007ZJRdmRkeiRNO5cQaGt23+JmXYHsHfFq
+         rpU8uyWseOz3CCd7SpLXgY2gSgMaJEfMu8HEk=
+Received: by 10.204.121.73 with SMTP id g9mr2961357bkr.37.1298717543769;
+        Sat, 26 Feb 2011 02:52:23 -0800 (PST)
 Received: from [192.168.178.23] (p5DDB01ED.dip0.t-ipconnect.de [93.219.1.237])
-        by mx.google.com with ESMTPS id z18sm1044787bkf.20.2011.02.26.02.51.19
+        by mx.google.com with ESMTPS id b16sm1041443bkw.14.2011.02.26.02.52.22
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 26 Feb 2011 02:51:20 -0800 (PST)
+        Sat, 26 Feb 2011 02:52:23 -0800 (PST)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Newsgroups: gmane.comp.version-control.git
 In-Reply-To: <4D68DAC4.9060100@gmail.com>
@@ -55,559 +54,141 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167976>
 
 Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
 ---
- Documentation/git-difftool.txt  |    4 +-
- Documentation/git-mergetool.txt |    4 +-
- Documentation/merge-config.txt  |    8 +-
- git-gui/lib/mergetool.tcl       |   94 ++++++++--------
- git-mergetool--lib.sh           |  245 +++++++++++++++++++--------------------
- 5 files changed, 177 insertions(+), 178 deletions(-)
+ Documentation/git-difftool.txt         |    2 +-
+ Documentation/git-mergetool.txt        |    2 +-
+ Documentation/merge-config.txt         |    2 +-
+ contrib/completion/git-completion.bash |    2 +-
+ git-gui/lib/mergetool.tcl              |    7 +++++++
+ git-mergetool--lib.sh                  |   22 ++++++++++++++++++++--
+ 6 files changed, 31 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index db87f1d..4c8825d 100644
+index 4c8825d..f087eff 100644
 --- a/Documentation/git-difftool.txt
 +++ b/Documentation/git-difftool.txt
-@@ -31,8 +31,8 @@ OPTIONS
+@@ -31,7 +31,7 @@ OPTIONS
  --tool=<tool>::
  	Use the diff tool specified by <tool>.
  	Valid merge tools are:
--	kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff,
--	ecmerge, diffuse, opendiff, p4merge and araxis.
-+	araxis, diffuse, emerge, ecmerge, gvimdiff, kdiff3,
-+	kompare, meld, opendiff, p4merge, tkdiff, vimdiff and xxdiff.
+-	araxis, diffuse, emerge, ecmerge, gvimdiff, kdiff3,
++	araxis, bc3, diffuse, emerge, ecmerge, gvimdiff, kdiff3,
+ 	kompare, meld, opendiff, p4merge, tkdiff, vimdiff and xxdiff.
  +
  If a diff tool is not specified, 'git difftool'
- will use the configuration variable `diff.tool`.  If the
 diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index 1f75a84..4987245 100644
+index 4987245..740b3f1 100644
 --- a/Documentation/git-mergetool.txt
 +++ b/Documentation/git-mergetool.txt
-@@ -26,8 +26,8 @@ OPTIONS
+@@ -26,7 +26,7 @@ OPTIONS
  --tool=<tool>::
  	Use the merge resolution program specified by <tool>.
  	Valid merge tools are:
--	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge,
--	diffuse, tortoisemerge, opendiff, p4merge and araxis.
-+	araxis, diffuse, ecmerge, emerge, gvimdiff, kdiff3,
-+	meld, opendiff, p4merge, tkdiff, tortoisemerge, vimdiff and xxdiff.
+-	araxis, diffuse, ecmerge, emerge, gvimdiff, kdiff3,
++	araxis, bc3, diffuse, ecmerge, emerge, gvimdiff, kdiff3,
+ 	meld, opendiff, p4merge, tkdiff, tortoisemerge, vimdiff and xxdiff.
  +
  If a merge resolution program is not specified, 'git mergetool'
- will use the configuration variable `merge.tool`.  If the
 diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 1e5c22c..90587db 100644
+index 90587db..33bf74c 100644
 --- a/Documentation/merge-config.txt
 +++ b/Documentation/merge-config.txt
-@@ -33,10 +33,10 @@ merge.stat::
- 
+@@ -34,7 +34,7 @@ merge.stat::
  merge.tool::
  	Controls which merge resolution program is used by
--	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
--	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff",
--	"diffuse", "ecmerge", "tortoisemerge", "p4merge", "araxis" and
--	"opendiff".  Any other value is treated is custom merge tool
-+	linkgit:git-mergetool[1].  Valid built-in values are: "araxis",
-+	"diffuse", "ecmerge", "emerge", "gvimdiff", "kdiff3", "meld",
-+	"opendiff", "p4merge", "tkdiff", "tortoisemerge", "vimdiff"
-+	and "xxdiff".  Any other value is treated is custom merge tool
+ 	linkgit:git-mergetool[1].  Valid built-in values are: "araxis",
+-	"diffuse", "ecmerge", "emerge", "gvimdiff", "kdiff3", "meld",
++	"bc3", "diffuse", "ecmerge", "emerge", "gvimdiff", "kdiff3", "meld",
+ 	"opendiff", "p4merge", "tkdiff", "tortoisemerge", "vimdiff"
+ 	and "xxdiff".  Any other value is treated is custom merge tool
  	and there must be a corresponding mergetool.<tool>.cmd option.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 893b771..058c2a9 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1358,7 +1358,7 @@ _git_diff ()
+ }
  
- merge.verbosity::
+ __git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
+-			tkdiff vimdiff gvimdiff xxdiff araxis p4merge
++			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc3
+ "
+ 
+ _git_difftool ()
 diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
-index 3fe90e6..249e0cf 100644
+index 249e0cf..3c8e73b 100644
 --- a/git-gui/lib/mergetool.tcl
 +++ b/git-gui/lib/mergetool.tcl
-@@ -175,43 +175,49 @@ proc merge_resolve_tool2 {} {
- 
- 	# Build the command line
- 	switch -- $tool {
--	kdiff3 {
-+	araxis {
- 		if {$base_stage ne {}} {
--			set cmdline [list "$merge_tool_path" --auto --L1 "$MERGED (Base)" \
--				--L2 "$MERGED (Local)" --L3 "$MERGED (Remote)" -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE"]
-+			set cmdline [list "$merge_tool_path" -wait -merge -3 -a1 \
-+				-title1:"'$MERGED (Base)'" -title2:"'$MERGED (Local)'" \
-+				-title3:"'$MERGED (Remote)'" \
-+				"$BASE" "$LOCAL" "$REMOTE" "$MERGED"]
- 		} else {
--			set cmdline [list "$merge_tool_path" --auto --L1 "$MERGED (Local)" \
--				--L2 "$MERGED (Remote)" -o "$MERGED" "$LOCAL" "$REMOTE"]
-+			set cmdline [list "$merge_tool_path" -wait -2 \
-+				 -title1:"'$MERGED (Local)'" -title2:"'$MERGED (Remote)'" \
-+				 "$LOCAL" "$REMOTE" "$MERGED"]
+@@ -187,6 +187,13 @@ proc merge_resolve_tool2 {} {
+ 				 "$LOCAL" "$REMOTE" "$MERGED"]
  		}
  	}
--	tkdiff {
-+	ecmerge {
- 		if {$base_stage ne {}} {
--			set cmdline [list "$merge_tool_path" -a "$BASE" -o "$MERGED" "$LOCAL" "$REMOTE"]
-+			set cmdline [list "$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" --default --mode=merge3 --to="$MERGED"]
- 		} else {
--			set cmdline [list "$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE"]
-+			set cmdline [list "$merge_tool_path" "$LOCAL" "$REMOTE" --default --mode=merge2 --to="$MERGED"]
- 		}
- 	}
--	meld {
--		set cmdline [list "$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"]
-+	emerge {
++	bc3 {
 +		if {$base_stage ne {}} {
-+			set cmdline [list "$merge_tool_path" -f emerge-files-with-ancestor-command \
-+					"$LOCAL" "$REMOTE" "$BASE" "$basename"]
++			set cmdline [list "$merge_tool_path" "$LOCAL" "$REMOTE" "$BASE" -mergeoutput="$MERGED"]
 +		} else {
-+			set cmdline [list "$merge_tool_path" -f emerge-files-command \
-+					"$LOCAL" "$REMOTE" "$basename"]
++			set cmdline [list "$merge_tool_path" "$LOCAL" "$REMOTE" -mergeoutput="$MERGED"]
 +		}
- 	}
- 	gvimdiff {
- 		set cmdline [list "$merge_tool_path" -f "$LOCAL" "$MERGED" "$REMOTE"]
- 	}
--	xxdiff {
-+	kdiff3 {
- 		if {$base_stage ne {}} {
--			set cmdline [list "$merge_tool_path" -X --show-merged-pane \
--					    -R {Accel.SaveAsMerged: "Ctrl-S"} \
--					    -R {Accel.Search: "Ctrl+F"} \
--					    -R {Accel.SearchForward: "Ctrl-G"} \
--					    --merged-file "$MERGED" "$LOCAL" "$BASE" "$REMOTE"]
-+			set cmdline [list "$merge_tool_path" --auto --L1 "$MERGED (Base)" \
-+				--L2 "$MERGED (Local)" --L3 "$MERGED (Remote)" -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE"]
- 		} else {
--			set cmdline [list "$merge_tool_path" -X --show-merged-pane \
--					    -R {Accel.SaveAsMerged: "Ctrl-S"} \
--					    -R {Accel.Search: "Ctrl+F"} \
--					    -R {Accel.SearchForward: "Ctrl-G"} \
--					    --merged-file "$MERGED" "$LOCAL" "$REMOTE"]
-+			set cmdline [list "$merge_tool_path" --auto --L1 "$MERGED (Local)" \
-+				--L2 "$MERGED (Remote)" -o "$MERGED" "$LOCAL" "$REMOTE"]
- 		}
- 	}
-+	meld {
-+		set cmdline [list "$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"]
 +	}
- 	opendiff {
+ 	ecmerge {
  		if {$base_stage ne {}} {
- 			set cmdline [list "$merge_tool_path" "$LOCAL" "$REMOTE" -ancestor "$BASE" -merge "$MERGED"]
-@@ -219,22 +225,20 @@ proc merge_resolve_tool2 {} {
- 			set cmdline [list "$merge_tool_path" "$LOCAL" "$REMOTE" -merge "$MERGED"]
- 		}
- 	}
--	ecmerge {
--		if {$base_stage ne {}} {
--			set cmdline [list "$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" --default --mode=merge3 --to="$MERGED"]
--		} else {
--			set cmdline [list "$merge_tool_path" "$LOCAL" "$REMOTE" --default --mode=merge2 --to="$MERGED"]
--		}
-+	p4merge {
-+		set cmdline [list "$merge_tool_path" "$BASE" "$REMOTE" "$LOCAL" "$MERGED"]
- 	}
--	emerge {
-+	tkdiff {
- 		if {$base_stage ne {}} {
--			set cmdline [list "$merge_tool_path" -f emerge-files-with-ancestor-command \
--					"$LOCAL" "$REMOTE" "$BASE" "$basename"]
-+			set cmdline [list "$merge_tool_path" -a "$BASE" -o "$MERGED" "$LOCAL" "$REMOTE"]
- 		} else {
--			set cmdline [list "$merge_tool_path" -f emerge-files-command \
--					"$LOCAL" "$REMOTE" "$basename"]
-+			set cmdline [list "$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE"]
- 		}
- 	}
-+	vimdiff {
-+		error_popup [mc "Not a GUI merge tool: '%s'" $tool]
-+		return
-+	}
- 	winmerge {
- 		if {$base_stage ne {}} {
- 			# This tool does not support 3-way merges.
-@@ -245,25 +249,21 @@ proc merge_resolve_tool2 {} {
- 				-dl "Theirs File" -dr "Mine File" "$REMOTE" "$LOCAL" "$MERGED"]
- 		}
- 	}
--	araxis {
-+	xxdiff {
- 		if {$base_stage ne {}} {
--			set cmdline [list "$merge_tool_path" -wait -merge -3 -a1 \
--				-title1:"'$MERGED (Base)'" -title2:"'$MERGED (Local)'" \
--				-title3:"'$MERGED (Remote)'" \
--				"$BASE" "$LOCAL" "$REMOTE" "$MERGED"]
-+			set cmdline [list "$merge_tool_path" -X --show-merged-pane \
-+					    -R {Accel.SaveAsMerged: "Ctrl-S"} \
-+					    -R {Accel.Search: "Ctrl+F"} \
-+					    -R {Accel.SearchForward: "Ctrl-G"} \
-+					    --merged-file "$MERGED" "$LOCAL" "$BASE" "$REMOTE"]
- 		} else {
--			set cmdline [list "$merge_tool_path" -wait -2 \
--				 -title1:"'$MERGED (Local)'" -title2:"'$MERGED (Remote)'" \
--				 "$LOCAL" "$REMOTE" "$MERGED"]
-+			set cmdline [list "$merge_tool_path" -X --show-merged-pane \
-+					    -R {Accel.SaveAsMerged: "Ctrl-S"} \
-+					    -R {Accel.Search: "Ctrl+F"} \
-+					    -R {Accel.SearchForward: "Ctrl-G"} \
-+					    --merged-file "$MERGED" "$LOCAL" "$REMOTE"]
- 		}
- 	}
--	p4merge {
--		set cmdline [list "$merge_tool_path" "$BASE" "$REMOTE" "$LOCAL" "$MERGED"]
--	}
--	vimdiff {
--		error_popup [mc "Not a GUI merge tool: '%s'" $tool]
--		return
--	}
- 	default {
- 		error_popup [mc "Unsupported merge tool '%s'" $tool]
- 		return
+ 			set cmdline [list "$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" --default --mode=merge3 --to="$MERGED"]
 diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 77d4aee..9fb82e5 100644
+index 9fb82e5..3ac6231 100644
 --- a/git-mergetool--lib.sh
 +++ b/git-mergetool--lib.sh
-@@ -10,17 +10,17 @@ merge_mode() {
- 
- translate_merge_tool_path () {
- 	case "$1" in
--	vimdiff|vimdiff2)
--		echo vim
--		;;
--	gvimdiff|gvimdiff2)
--		echo gvim
-+	araxis)
-+		echo compare
+@@ -13,6 +13,9 @@ translate_merge_tool_path () {
+ 	araxis)
+ 		echo compare
  		;;
++	bc3)
++		echo BCompare
++		;;
  	emerge)
  		echo emacs
  		;;
--	araxis)
--		echo compare
-+	gvimdiff|gvimdiff2)
-+		echo gvim
-+		;;
-+	vimdiff|vimdiff2)
-+		echo vim
- 		;;
- 	*)
- 		echo "$1"
-@@ -46,17 +46,16 @@ check_unchanged () {
+@@ -46,7 +49,7 @@ check_unchanged () {
  
  valid_tool () {
  	case "$1" in
--	kdiff3 | tkdiff | xxdiff | meld | opendiff | \
--	vimdiff | gvimdiff | vimdiff2 | gvimdiff2 | \
--	emerge | ecmerge | diffuse | araxis | p4merge)
-+	araxis | diffuse | ecmerge | emerge | gvimdiff | gvimdiff2 | \
-+	kdiff3 | meld | opendiff | p4merge | tkdiff | vimdiff | vimdiff2 | xxdiff)
+-	araxis | diffuse | ecmerge | emerge | gvimdiff | gvimdiff2 | \
++	araxis | bc3 | diffuse | ecmerge | emerge | gvimdiff | gvimdiff2 | \
+ 	kdiff3 | meld | opendiff | p4merge | tkdiff | vimdiff | vimdiff2 | xxdiff)
  		;; # happy
--	tortoisemerge)
--		if ! merge_mode; then
-+	kompare)
-+		if ! diff_mode; then
- 			return 1
+ 	kompare)
+@@ -106,6 +109,21 @@ run_merge_tool () {
+ 				>/dev/null 2>&1
  		fi
  		;;
--	kompare)
--		if ! diff_mode; then
-+	tortoisemerge)
-+		if ! merge_mode; then
- 			return 1
- 		fi
- 		;;
-@@ -89,69 +88,22 @@ run_merge_tool () {
- 	status=0
- 
- 	case "$1" in
--	kdiff3)
--		if merge_mode; then
--			if $base_present; then
--				("$merge_tool_path" --auto \
--					--L1 "$MERGED (Base)" \
--					--L2 "$MERGED (Local)" \
--					--L3 "$MERGED (Remote)" \
--					-o "$MERGED" \
--					"$BASE" "$LOCAL" "$REMOTE" \
--				> /dev/null 2>&1)
--			else
--				("$merge_tool_path" --auto \
--					--L1 "$MERGED (Local)" \
--					--L2 "$MERGED (Remote)" \
--					-o "$MERGED" \
--					"$LOCAL" "$REMOTE" \
--				> /dev/null 2>&1)
--			fi
--			status=$?
--		else
--			("$merge_tool_path" --auto \
--				--L1 "$MERGED (A)" \
--				--L2 "$MERGED (B)" "$LOCAL" "$REMOTE" \
--			> /dev/null 2>&1)
--		fi
--		;;
--	kompare)
--		"$merge_tool_path" "$LOCAL" "$REMOTE"
--		;;
--	tkdiff)
--		if merge_mode; then
--			if $base_present; then
--				"$merge_tool_path" -a "$BASE" \
--					-o "$MERGED" "$LOCAL" "$REMOTE"
--			else
--				"$merge_tool_path" \
--					-o "$MERGED" "$LOCAL" "$REMOTE"
--			fi
--			status=$?
--		else
--			"$merge_tool_path" "$LOCAL" "$REMOTE"
--		fi
--		;;
--	p4merge)
-+	araxis)
- 		if merge_mode; then
--		    touch "$BACKUP"
++	bc3)
++		if merge_mode; then
 +			touch "$BACKUP"
- 			if $base_present; then
--				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-+				"$merge_tool_path" -wait -merge -3 -a1 \
-+					"$BASE" "$LOCAL" "$REMOTE" "$MERGED" \
-+					>/dev/null 2>&1
- 			else
--				"$merge_tool_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
-+				"$merge_tool_path" -wait -2 \
-+					"$LOCAL" "$REMOTE" "$MERGED" \
-+					>/dev/null 2>&1
- 			fi
- 			check_unchanged
- 		else
--			"$merge_tool_path" "$LOCAL" "$REMOTE"
--		fi
--		;;
--	meld)
--		if merge_mode; then
--			touch "$BACKUP"
--			"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
--			check_unchanged
--		else
--			"$merge_tool_path" "$LOCAL" "$REMOTE"
-+			"$merge_tool_path" -wait -2 "$LOCAL" "$REMOTE" \
-+				>/dev/null 2>&1
- 		fi
- 		;;
- 	diffuse)
-@@ -170,23 +122,58 @@ run_merge_tool () {
- 			"$merge_tool_path" "$LOCAL" "$REMOTE" | cat
- 		fi
- 		;;
--	vimdiff|gvimdiff)
-+	ecmerge)
- 		if merge_mode; then
- 			touch "$BACKUP"
- 			if $base_present; then
--				"$merge_tool_path" -f -d -c "wincmd J" \
--					"$MERGED" "$LOCAL" "$BASE" "$REMOTE"
-+				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" \
-+					--default --mode=merge3 --to="$MERGED"
- 			else
--				"$merge_tool_path" -f -d -c "wincmd l" \
--					"$LOCAL" "$MERGED" "$REMOTE"
++			if $base_present; then
++				"$merge_tool_path" "$LOCAL" "$REMOTE" "$BASE" \
++					-mergeoutput="$MERGED"
++			else
 +				"$merge_tool_path" "$LOCAL" "$REMOTE" \
-+					--default --mode=merge2 --to="$MERGED"
- 			fi
- 			check_unchanged
- 		else
--			"$merge_tool_path" -f -d -c "wincmd l" \
-+			"$merge_tool_path" --default --mode=diff2 \
- 				"$LOCAL" "$REMOTE"
- 		fi
- 		;;
--	vimdiff2|gvimdiff2)
-+	emerge)
-+		if merge_mode; then
-+			if $base_present; then
-+				"$merge_tool_path" \
-+					-f emerge-files-with-ancestor-command \
-+					"$LOCAL" "$REMOTE" "$BASE" \
-+					"$(basename "$MERGED")"
-+			else
-+				"$merge_tool_path" \
-+					-f emerge-files-command \
-+					"$LOCAL" "$REMOTE" \
-+					"$(basename "$MERGED")"
-+			fi
-+			status=$?
-+		else
-+			"$merge_tool_path" -f emerge-files-command \
-+				"$LOCAL" "$REMOTE"
-+		fi
-+		;;
-+	gvimdiff|vimdiff)
-+		if merge_mode; then
-+			touch "$BACKUP"
-+			if $base_present; then
-+				"$merge_tool_path" -f -d -c "wincmd J" \
-+					"$MERGED" "$LOCAL" "$BASE" "$REMOTE"
-+			else
-+				"$merge_tool_path" -f -d -c "wincmd l" \
-+					"$LOCAL" "$MERGED" "$REMOTE"
++					-mergeoutput="$MERGED"
 +			fi
 +			check_unchanged
 +		else
-+			"$merge_tool_path" -f -d -c "wincmd l" \
-+				"$LOCAL" "$REMOTE"
++			"$merge_tool_path" "$LOCAL" "$REMOTE"
 +		fi
 +		;;
-+	gvimdiff2|vimdiff2)
+ 	diffuse)
  		if merge_mode; then
  			touch "$BACKUP"
- 			"$merge_tool_path" -f -d -c "wincmd l" \
-@@ -197,30 +184,42 @@ run_merge_tool () {
- 				"$LOCAL" "$REMOTE"
- 		fi
- 		;;
--	xxdiff)
-+	kdiff3)
- 		if merge_mode; then
--			touch "$BACKUP"
- 			if $base_present; then
--				"$merge_tool_path" -X --show-merged-pane \
--					-R 'Accel.SaveAsMerged: "Ctrl-S"' \
--					-R 'Accel.Search: "Ctrl+F"' \
--					-R 'Accel.SearchForward: "Ctrl-G"' \
--					--merged-file "$MERGED" \
--					"$LOCAL" "$BASE" "$REMOTE"
-+				("$merge_tool_path" --auto \
-+					--L1 "$MERGED (Base)" \
-+					--L2 "$MERGED (Local)" \
-+					--L3 "$MERGED (Remote)" \
-+					-o "$MERGED" \
-+					"$BASE" "$LOCAL" "$REMOTE" \
-+				> /dev/null 2>&1)
- 			else
--				"$merge_tool_path" -X $extra \
--					-R 'Accel.SaveAsMerged: "Ctrl-S"' \
--					-R 'Accel.Search: "Ctrl+F"' \
--					-R 'Accel.SearchForward: "Ctrl-G"' \
--					--merged-file "$MERGED" \
--					"$LOCAL" "$REMOTE"
-+				("$merge_tool_path" --auto \
-+					--L1 "$MERGED (Local)" \
-+					--L2 "$MERGED (Remote)" \
-+					-o "$MERGED" \
-+					"$LOCAL" "$REMOTE" \
-+				> /dev/null 2>&1)
- 			fi
-+			status=$?
-+		else
-+			("$merge_tool_path" --auto \
-+				--L1 "$MERGED (A)" \
-+				--L2 "$MERGED (B)" "$LOCAL" "$REMOTE" \
-+			> /dev/null 2>&1)
-+		fi
-+		;;
-+	kompare)
-+		"$merge_tool_path" "$LOCAL" "$REMOTE"
-+		;;
-+	meld)
-+		if merge_mode; then
-+			touch "$BACKUP"
-+			"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
- 			check_unchanged
+@@ -342,7 +360,7 @@ guess_merge_tool () {
  		else
--			"$merge_tool_path" \
--				-R 'Accel.Search: "Ctrl+F"' \
--				-R 'Accel.SearchForward: "Ctrl-G"' \
--				"$LOCAL" "$REMOTE"
-+			"$merge_tool_path" "$LOCAL" "$REMOTE"
+ 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
  		fi
- 		;;
- 	opendiff)
-@@ -239,39 +238,31 @@ run_merge_tool () {
- 			"$merge_tool_path" "$LOCAL" "$REMOTE" | cat
- 		fi
- 		;;
--	ecmerge)
-+	p4merge)
- 		if merge_mode; then
--			touch "$BACKUP"
-+		    touch "$BACKUP"
- 			if $base_present; then
--				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" \
--					--default --mode=merge3 --to="$MERGED"
-+				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
- 			else
--				"$merge_tool_path" "$LOCAL" "$REMOTE" \
--					--default --mode=merge2 --to="$MERGED"
-+				"$merge_tool_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
- 			fi
- 			check_unchanged
- 		else
--			"$merge_tool_path" --default --mode=diff2 \
--				"$LOCAL" "$REMOTE"
-+			"$merge_tool_path" "$LOCAL" "$REMOTE"
- 		fi
- 		;;
--	emerge)
-+	tkdiff)
- 		if merge_mode; then
- 			if $base_present; then
--				"$merge_tool_path" \
--					-f emerge-files-with-ancestor-command \
--					"$LOCAL" "$REMOTE" "$BASE" \
--					"$(basename "$MERGED")"
-+				"$merge_tool_path" -a "$BASE" \
-+					-o "$MERGED" "$LOCAL" "$REMOTE"
- 			else
- 				"$merge_tool_path" \
--					-f emerge-files-command \
--					"$LOCAL" "$REMOTE" \
--					"$(basename "$MERGED")"
-+					-o "$MERGED" "$LOCAL" "$REMOTE"
- 			fi
- 			status=$?
- 		else
--			"$merge_tool_path" -f emerge-files-command \
--				"$LOCAL" "$REMOTE"
-+			"$merge_tool_path" "$LOCAL" "$REMOTE"
- 		fi
- 		;;
- 	tortoisemerge)
-@@ -286,22 +277,30 @@ run_merge_tool () {
- 			status=1
- 		fi
- 		;;
--	araxis)
-+	xxdiff)
- 		if merge_mode; then
- 			touch "$BACKUP"
- 			if $base_present; then
--				"$merge_tool_path" -wait -merge -3 -a1 \
--					"$BASE" "$LOCAL" "$REMOTE" "$MERGED" \
--					>/dev/null 2>&1
-+				"$merge_tool_path" -X --show-merged-pane \
-+					-R 'Accel.SaveAsMerged: "Ctrl-S"' \
-+					-R 'Accel.Search: "Ctrl+F"' \
-+					-R 'Accel.SearchForward: "Ctrl-G"' \
-+					--merged-file "$MERGED" \
-+					"$LOCAL" "$BASE" "$REMOTE"
- 			else
--				"$merge_tool_path" -wait -2 \
--					"$LOCAL" "$REMOTE" "$MERGED" \
--					>/dev/null 2>&1
-+				"$merge_tool_path" -X $extra \
-+					-R 'Accel.SaveAsMerged: "Ctrl-S"' \
-+					-R 'Accel.Search: "Ctrl+F"' \
-+					-R 'Accel.SearchForward: "Ctrl-G"' \
-+					--merged-file "$MERGED" \
-+					"$LOCAL" "$REMOTE"
- 			fi
- 			check_unchanged
- 		else
--			"$merge_tool_path" -wait -2 "$LOCAL" "$REMOTE" \
--				>/dev/null 2>&1
-+			"$merge_tool_path" \
-+				-R 'Accel.Search: "Ctrl+F"' \
-+				-R 'Accel.SearchForward: "Ctrl-G"' \
-+				"$LOCAL" "$REMOTE"
- 		fi
- 		;;
- 	*)
+-		tools="$tools gvimdiff diffuse ecmerge p4merge araxis"
++		tools="$tools gvimdiff diffuse ecmerge p4merge araxis bc3"
+ 	fi
+ 	case "${VISUAL:-$EDITOR}" in
+ 	*vim*)
 -- 
 1.7.3.2.msysgit.6.dirty
