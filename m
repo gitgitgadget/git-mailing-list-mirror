@@ -1,78 +1,83 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without pathspec
-Date: Mon, 28 Feb 2011 00:04:40 +0700
-Message-ID: <AANLkTim9EOHBtZj5h1+xs9C_WhpcycwoPbWZHrZ38w+E@mail.gmail.com>
-References: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
- <7vei6t4uwa.fsf@alter.siamese.dyndns.org> <vpqoc5x4saj.fsf@bauges.imag.fr>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Sun, 27 Feb 2011 13:46:52 -0500
+Message-ID: <4D6A9C1C.5000907@cisco.com>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>	<20110213193738.GA26868@elie>	<7v8vxjwnhj.fsf@alter.siamese.dyndns.org>	<AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>	<20110214231920.GA24814@elie> <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Jeff King <peff@peff.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Feb 27 18:05:20 2011
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 27 19:47:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ptk3Y-0002ip-ST
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 18:05:17 +0100
+	id 1Ptle2-0002sA-Ow
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 19:47:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751979Ab1B0RFM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Feb 2011 12:05:12 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:54717 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908Ab1B0RFL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Feb 2011 12:05:11 -0500
-Received: by wwb22 with SMTP id 22so2211802wwb.1
-        for <git@vger.kernel.org>; Sun, 27 Feb 2011 09:05:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=JogBCUnWOlJE1RfYM6F1V03hySuGqPp/ijd5LGu1rq4=;
-        b=qsTwUdsVRV0xtSVtdrcbkjX8kCPAJHEnicMpzxrnuPXFP7Fd4uLBtmAOI+9L9yjYwz
-         IY/UUrXuDef4E5nuujgZt4A5GoGEIOY0oiewOWhskymb/qc/uwmKjPNrrS8o6OeaKuNw
-         XNsEQLCxKSHeKcguOqm3ybV3G42UDq7Ou90Fg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=W9z4vrqYFr1l4x1ULcMCgUwo73tqKZEyKFgw4t2nlIlNmz1pRIT3/awQM4vV1XdOGq
-         tAn6QkihmFYsLA4BUXTDj7egUlW14x/c0k3oOo4xdTTvlqgenGHmRlAg9caqvSOJPrv1
-         jKOpzYjDhvEU0Zr8xSA5j7Zbtp0YkBXniDzS4=
-Received: by 10.216.184.139 with SMTP id s11mr1440171wem.13.1298826310126;
- Sun, 27 Feb 2011 09:05:10 -0800 (PST)
-Received: by 10.216.239.5 with HTTP; Sun, 27 Feb 2011 09:04:40 -0800 (PST)
-In-Reply-To: <vpqoc5x4saj.fsf@bauges.imag.fr>
+	id S1752182Ab1B0Sq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Feb 2011 13:46:57 -0500
+Received: from sj-iport-4.cisco.com ([171.68.10.86]:55735 "EHLO
+	sj-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992Ab1B0Sq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Feb 2011 13:46:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=1247; q=dns/txt;
+  s=iport; t=1298832416; x=1300042016;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=qjuEXTSq2CK4B9BY5gwVCCWzlXflTcMpXt90TxB9Gr0=;
+  b=ht2s/ex6rszc6FaEnxVDpPJIusZGc4yuHKsmkLiB3SmH0AIs33tb3Ysi
+   QnNtR7atzc/QQy1ZNPKFo7YU3aN5/x6S3WaFYANc0aZc2MZ3cwtKaGJCC
+   UFz+VsmqK2kcpodxxYJwj6L4E2HdwoMOSe7UP3GirvRh0NxEYAGv5UgCL
+   0=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EAGsrak2rR7Ht/2dsb2JhbACEJKIgdJ4ziwWPPYEng0R2BIUQhw2DPg
+X-IronPort-AV: E=Sophos;i="4.62,235,1297036800"; 
+   d="scan'208";a="265935480"
+Received: from sj-core-1.cisco.com ([171.71.177.237])
+  by sj-iport-4.cisco.com with ESMTP; 27 Feb 2011 18:46:55 +0000
+Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
+	by sj-core-1.cisco.com (8.13.8/8.14.3) with ESMTP id p1RIkrek017960;
+	Sun, 27 Feb 2011 18:46:53 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168047>
 
-On Sun, Feb 27, 2011 at 6:43 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Step 2, two cycles (i.e. 6-8 months) before 1.8.0, provided if the
->> previous step is proven positive:
->>
->> =C2=A0* When "git add -u" is run without any pathspec, and when the =
-user does
->> =C2=A0 =C2=A0not have the configuration variable, warn loudly that t=
-he default
->> =C2=A0 =C2=A0behaviour will change in 1.8.0,
->
-> I'd even say "error out", since the old behavior is still easily
-> available with "git add -u ." (which should be mentionned in the
-> warning/error message).
+On 02/26/2011 04:09 PM, Felipe Contreras wrote:
+> I don't like the phrase "staging area". A "stage" already has an area.
+> You put things on the stage. Sometimes there are multiple stages.
 
-You wouldn't want scripts to break this way. Warnings can give script
-writers some time to update (assume that scripts are installed system
-wide, not in $HOME).
---=20
-Duy
+A "staging area" (idiomatically, perhaps) is a location where things are
+collected to be organized before deployment.  Sounds a lot like our index.
+
+http://en.wikipedia.org/wiki/Staging_area
+
+> If only a subset of the files are there, it's an 'index', if not, then
+> I'd say it's a 'registry'. Anyway, it's something the user shouldn't
+> care about.
+
+When we pack up our kayak club for a trip, we stage equipment we're
+bringing.  Eventually we make a decision about which equipment is going
+and which is staying.  The decision is codified by the equipment we
+leave in the staging area versus the equipment we remove to local
+storage.  Everyone seems to understand the term when we use it in this
+context.
+
+I think the parade analogy is also pretty common.
+
+I like "staging area(n)/stage(v)" better than "index" or "cache" because
+of the connotation in English.  But if it doesn't translate well, the
+search may need to go on.  Maybe we can fall back on stdc methods and
+invent generic terms like strcpy.  How about "xnar"?
+
+Phil
