@@ -1,129 +1,112 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] git-gui: support for underline styles
-Date: Sun, 27 Feb 2011 21:04:05 +0100
-Message-ID: <AANLkTimnX-OJYzSvot-yUMGKXmqJw9deTGS-6mzywoEe@mail.gmail.com>
-References: <1289815498-12287-1-git-send-email-bert.wesarg@googlemail.com>
-	<87oc9lhbjx.fsf@fox.patthoyts.tk>
+Subject: Re: [PATCH 2/2] git-gui: support for diff3 conflict style
+Date: Sun, 27 Feb 2011 21:15:18 +0100
+Message-ID: <AANLkTin4-1_bNuH2kQ0m6wpevnO5uCJUmLvy=gP4mLfH@mail.gmail.com>
+References: <1289899312-2732-1-git-send-email-bert.wesarg@googlemail.com>
+	<1289899618-2845-1-git-send-email-bert.wesarg@googlemail.com>
+	<87fwuxh75m.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: base64
 Cc: "Shawn O . Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sun Feb 27 21:04:16 2011
+X-From: git-owner@vger.kernel.org Sun Feb 27 21:15:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ptmqj-0005cA-M6
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 21:04:14 +0100
+	id 1Ptn1d-0002gk-1p
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 21:15:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755Ab1B0UEJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Feb 2011 15:04:09 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:63412 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751658Ab1B0UEH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Feb 2011 15:04:07 -0500
-Received: by wyg36 with SMTP id 36so3063563wyg.19
-        for <git@vger.kernel.org>; Sun, 27 Feb 2011 12:04:05 -0800 (PST)
+	id S1751746Ab1B0UPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Feb 2011 15:15:21 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:45795 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751706Ab1B0UPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Feb 2011 15:15:20 -0500
+Received: by wwb22 with SMTP id 22so2311946wwb.1
+        for <git@vger.kernel.org>; Sun, 27 Feb 2011 12:15:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=vBr5UcsDDLRm9qwVWftS7ya1yV5J4QfwnOSw10x4gyg=;
-        b=xSkU3WptFODHOhIZYQh1ucgSSFsCFuAlMj+zeOgcx4aBpSELylMJXQqqfzYYLqNZKi
-         LUdOUTGXfdPV2aSXFZPlGpRPo8gA8Dqji5dTHqzZE2QIkDi0uK0qgl5W8wOnqeLFkSHr
-         qFJ7q51fpH1D4bZR7m5uLy8r/eZQXtSr84Reg=
+        bh=sFvHQYU8a7FpGgeXLn6d63z8UjFlTcP+r6M3JBQbBlY=;
+        b=VJ/qy20R6aBEG2aFeLicmMp39hANI0ZjSESHe0o8MnPj0trNqr39DhhmMrweSzsc/S
+         dkqx+vDd9bEjWN/Jkv5NuMHgYJOEghEJODSD2GS18LYAW1et+FipSKlUvvKvUsoHrWD8
+         +L8SazwvgUZ/kAgnfWttxtgyi1gZyu1KBqHc0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=AnkV4NU+dtcgFF9piIYb8iPZE5cmWMpIjjHyPccr+QADU0wD7IBBw3tuA95p3hocnm
-         +FJdl6uPgNgmRyw7JEHyJn7cyb9jyIh0Nu/DP4+vwNr3obXdWMXbHp6DV2t9ri0fXHMr
-         ifzFz3uJD3sPlOKgIpdSgOol2yo1zWUJdXtcw=
-Received: by 10.227.23.207 with SMTP id s15mr722832wbb.197.1298837045610; Sun,
- 27 Feb 2011 12:04:05 -0800 (PST)
-Received: by 10.227.132.137 with HTTP; Sun, 27 Feb 2011 12:04:05 -0800 (PST)
-In-Reply-To: <87oc9lhbjx.fsf@fox.patthoyts.tk>
+        b=jW8EV7hO70QoK+wgKazsyPJD0JQ9g+qDFCPRnDY1bR736QcAEIbCOKM6fcif/Ap2l/
+         cmzWzaKCFQGZ38nTJVSlpWgHZlkzoe8f+3gpkOkhf5O46qZyPTT77lhRhtCeW2Fc+oRq
+         Mmahhkk04DPppE2u1vVaeltnUrZH/GZrTrTYM=
+Received: by 10.227.157.1 with SMTP id z1mr4245881wbw.23.1298837718679; Sun,
+ 27 Feb 2011 12:15:18 -0800 (PST)
+Received: by 10.227.132.137 with HTTP; Sun, 27 Feb 2011 12:15:18 -0800 (PST)
+In-Reply-To: <87fwuxh75m.fsf@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168053>
 
-On Fri, Nov 19, 2010 at 11:00, Pat Thoyts
-<patthoyts@users.sourceforge.net> wrote:
->
-> Suggested-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-> ---
->
-> I left underline out because I reckon it would just make text harder =
-to
-> read on a gui display. It seems like the option would only be useful =
-on
-> monochrome terminals.
->
-> If we do want to support underlines in the diff view window then we c=
-an
-> have a different tag rather than replicating each color to get a
-> underlined version of the same color.
-> Something like the following should do it:
-
-I miss this in git-gui.git.
-
-Thanks,
-Bert
-
->
->
-> =C2=A0git-gui.sh =C2=A0 | =C2=A0 =C2=A01 +
-> =C2=A0lib/diff.tcl | =C2=A0 =C2=A02 +-
-> =C2=A02 files changed, 2 insertions(+), 1 deletions(-)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index d3acf0d..137cd72 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -3330,6 +3330,7 @@ foreach {n c} {0 black 1 red4 2 green4 3 yellow=
-4 4 blue4 5 magenta4 6 cyan4 7 gr
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff tag configure clri3$n -background=
- $c
-> =C2=A0}
-> =C2=A0$ui_diff tag configure clr1 -font font_diffbold
-> +$ui_diff tag configure clr4 -underline 1
->
-> =C2=A0$ui_diff tag conf d_cr -elide true
-> =C2=A0$ui_diff tag conf d_@ -font font_diffbold
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 0579fa6..203ab07 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -473,7 +473,7 @@ proc read_diff {fd cont_info} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0set prefix clr
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0foreach style [split $colbegin ";"] {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if {$style eq "7"} {append pr=
-efix i; continue}
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if {$style < 30 || $style > 47} {co=
-ntinue}
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if {$style !=3D 4 && ($style < 30 |=
-| $style > 47)} {continue}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set a "$mark linestart + $pos=
-begin chars"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set b "$mark linestart + $pos=
-end chars"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0catch {$ui_diff tag add $pref=
-ix$style $a $b}
-> --
-> 1.7.3.1.msysgit.0
->
->
+T24gRnJpLCBOb3YgMTksIDIwMTAgYXQgMTI6NDEsIFBhdCBUaG95dHMKPHBhdHRob3l0c0B1c2Vy
+cy5zb3VyY2Vmb3JnZS5uZXQ+IHdyb3RlOgo+IEJlcnQgV2VzYXJnIDxiZXJ0Lndlc2FyZ0Bnb29n
+bGVtYWlsLmNvbT4gd3JpdGVzOgo+Cj4+VGhpcyBhZGRzIGhpZ2hsaWdodCBzdXBwb3J0IGZvciB0
+aGUgZGlmZjMgY29uZmxpY3Qgc3R5bGUuCj4+Cj4+VGhlIGNvbW1vbiBwcmUtaW1hZ2Ugd2lsbCBi
+ZSByZXZlcnNlZCB0byAtLSwgYmVjYXVzZSBpdCBoYXMgYmVlbiByZW1vdmVkCj4+YW5kIGVpdGhl
+ciByZXBsYWNlZCB3aXRoIG91ciBvciB0aGVpciBzaWRlLgo+Pgo+PlNpZ25lZC1vZmYtYnk6IEJl
+cnQgV2VzYXJnIDxiZXJ0Lndlc2FyZ0Bnb29nbGVtYWlsLmNvbT4KPj4KPj4tLS0KPj4gZ2l0LWd1
+aS9naXQtZ3VpLnNoIMKgIHwgwqAgwqAzICsrKwo+PiBnaXQtZ3VpL2xpYi9kaWZmLnRjbCB8IMKg
+IDEwICsrKysrKysrKysKPj4gMiBmaWxlcyBjaGFuZ2VkLCAxMyBpbnNlcnRpb25zKCspLCAwIGRl
+bGV0aW9ucygtKQo+Pgo+PmRpZmYgLS1naXQgYS9naXQtZ3VpL2dpdC1ndWkuc2ggYi9naXQtZ3Vp
+L2dpdC1ndWkuc2gKPj5pbmRleCAzODM2MmZhLi4wMTM0NDM4IDEwMDc1NQo+Pi0tLSBhL2dpdC1n
+dWkvZ2l0LWd1aS5zaAo+PisrKyBiL2dpdC1ndWkvZ2l0LWd1aS5zaAo+PkBAIC0zMzU0LDYgKzMz
+NTQsOSBAQCAkdWlfZGlmZiB0YWcgY29uZiBkX3MtIFwKPj4gJHVpX2RpZmYgdGFnIGNvbmYgZDwg
+XAo+PiDCoCDCoCDCoCAtZm9yZWdyb3VuZCBvcmFuZ2UgXAo+PiDCoCDCoCDCoCAtZm9udCBmb250
+X2RpZmZib2xkCj4+KyR1aV9kaWZmIHRhZyBjb25mIGR8IFwKPj4rIMKgIMKgIMKgLWZvcmVncm91
+bmQgb3JhbmdlIFwKPj4rIMKgIMKgIMKgLWZvbnQgZm9udF9kaWZmYm9sZAo+PiAkdWlfZGlmZiB0
+YWcgY29uZiBkPSBcCj4+IMKgIMKgIMKgIC1mb3JlZ3JvdW5kIG9yYW5nZSBcCj4+IMKgIMKgIMKg
+IC1mb250IGZvbnRfZGlmZmJvbGQKPj5kaWZmIC0tZ2l0IGEvZ2l0LWd1aS9saWIvZGlmZi50Y2wg
+Yi9naXQtZ3VpL2xpYi9kaWZmLnRjbAo+PmluZGV4IGQ0ZTJjZTMuLmNjZDRjNzAgMTAwNjQ0Cj4+
+LS0tIGEvZ2l0LWd1aS9saWIvZGlmZi50Y2wKPj4rKysgYi9naXQtZ3VpL2xpYi9kaWZmLnRjbAo+
+PkBAIC0zMzksNiArMzM5LDcgQEAgcHJvYyBzdGFydF9zaG93X2RpZmYge2NvbnRfaW5mbyB7YWRk
+X29wdHMge319fSB7Cj4+IMKgIMKgIMKgIH0KPj4KPj4gwqAgwqAgwqAgc2V0IDo6Y3VycmVudF9k
+aWZmX2luaGVhZGVyIDEKPj4rIMKgIMKgIMKgc2V0IDo6aW5fY29uZmxpY3RfcHJlX2ltYWdlIDAK
+Pj4gwqAgwqAgwqAgZmNvbmZpZ3VyZSAkZmQgXAo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCAtYmxv
+Y2tpbmcgMCBcCj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIC1lbmNvZGluZyBbZ2V0X3BhdGhfZW5j
+b2RpbmcgJHBhdGhdIFwKPj5AQCAtNDIwLDYgKzQyMSwxNSBAQCBwcm9jIHJlYWRfZGlmZiB7ZmQg
+Y29uZmxpY3Rfc2l6ZSBjb250X2luZm99IHsKPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc2V0IGlzX2NvbmZsaWN0X2RpZmYgMQo+PiDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBz
+ZXQgbGluZSBbc3RyaW5nIHJlcGxhY2UgJGxpbmUgMCAxIHsgwqB9XQo+PiDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzZXQgdGFncyBkJG9w
+Cj4+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoHNldCA6OmluX2NvbmZsaWN0X3ByZV9pbWFnZSAwCj4+KyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoH0gZWxzZWlmIHtbcmVnZXhwIHteXCtcK1x8eyRjb25m
+bGljdF9zaXplfSg/OiB8JCl9ICRsaW5lXX0gewo+PisgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzZXQgaXNfY29uZmxpY3RfZGlmZiAxCj4+
+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oHNldCBsaW5lIFtzdHJpbmcgcmVwbGFjZSAkbGluZSAwIDEgeyDCoH1dCj4+KyDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHNldCB0YWdzIGR8
+Cj4+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoHNldCA6OmluX2NvbmZsaWN0X3ByZV9pbWFnZSAxCj4+KyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoH0gZWxzZWlmICgkOjppbl9jb25mbGljdF9wcmVfaW1h
+Z2UpIHsKPj4rIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgc2V0IGxpbmUgW3N0cmluZyByZXBsYWNlICRsaW5lIDAgMSB7LS19XQo+PisgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzZXQg
+dGFncyBkXy0tCj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IH0gZWxzZSB7Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIHNldCB0YWdzIGRfKysKPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgfQo+Cj4gVGhpcyBoYXMgdGhlIHNhbWUgaXNzdWUgYXMgdGhlIGxh
+c3QgcGF0Y2ggd2l0aCB2YXJpYWJsZSBzdWJzdGl0dXRpb24KPiBpbnRvIHRoZSByZWdleHAuIFJl
+cGxhY2VkIHRoZSByZWdleHAgZXhwcmVzc2lvbiB3aXRoCj4gwqAgW3JlZ2V4cCAiXlxcK1xcK1xc
+fHskY29uZmxpY3Rfc2l6ZX0oPzogfFwkKSIgJGxpbmVdCj4KPiBJIGNvbmZpZ3VyZWQgYSB0ZXN0
+IHJlcG9zaXRvcnkgd2l0aAo+ICdtZXJnZS5jb25mbGljdHN0eWxlIGRpZmYzJyBhbmQgY291bGQg
+dGVzdCB0aGlzLiBMb29rcyBmaW5lLgoKSSBtaXNzIHRoaXMgb25lIGluIGdpdC1ndWkuZ2l0CgpU
+aGFua3MsCkJlcnQKCj4gLS0KPiBQYXQgVGhveXRzIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgaHR0cDovL3d3dy5wYXR0aG95dHMudGsvCj4gUEdQIGZpbmdlcnByaW50
+IDJDIDZFIDk4IDA3IDJDIDU5IEM4IDk3IMKgMTAgQ0UgMTEgRTYgMDQgRTAgQjkgREQKPgo=
