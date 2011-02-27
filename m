@@ -1,73 +1,77 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: Adding Beyond Compare as a merge tool, was: Re: What's cooking in
- git.git (Feb 2011, #05; Wed, 23)
-Date: Sun, 27 Feb 2011 12:15:50 +0100
-Message-ID: <AANLkTinByZS0yQ6TNTwp74kW3yvTg8G_PQN3F99MKR2w@mail.gmail.com>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
-	<4D68D4FA.7090500@gmail.com>
-	<4D69E355.7010104@gmail.com>
-	<AANLkTimWPwCFgnAYz_jJ3Yw5QWvPNhPxq=j502UorEot@mail.gmail.com>
+Subject: [PATCH 0/2 v2] Adding Beyond Compare as a merge tool
+Date: Sun, 27 Feb 2011 12:28:28 +0100
+Message-ID: <4D6A355C.3000805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	charles@hashpling.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 27 12:15:57 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Chris Packham <judge.packham@gmail.com>, charles@hashpling.org,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 27 12:28:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtebU-0000cR-4j
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 12:15:56 +0100
+	id 1Pteo2-0006FT-JM
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 12:28:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030Ab1B0LPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Feb 2011 06:15:51 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:56848 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751937Ab1B0LPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Feb 2011 06:15:51 -0500
-Received: by qyk7 with SMTP id 7so1546825qyk.19
-        for <git@vger.kernel.org>; Sun, 27 Feb 2011 03:15:50 -0800 (PST)
+	id S1752034Ab1B0L2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Feb 2011 06:28:40 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48726 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751937Ab1B0L2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Feb 2011 06:28:39 -0500
+Received: by fxm17 with SMTP id 17so2955804fxm.19
+        for <git@vger.kernel.org>; Sun, 27 Feb 2011 03:28:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=HKVts/bxswq4ToWpG5QVr+CAL6y0JKPTchncZIsikRo=;
-        b=fhIKT0ct2jRfnelPZ43uYDy0dqWCXsBhLQIFR1z5+Q1ufq5+BI+RS/bmhPY2aMmfWI
-         DGp3zfXAiaRiI5NtpRsncBjTJw+3VDc6n60eV4lDlseFjJJmT7QWqIGxRJyoBdi+pE70
-         AYUvyOx4hzwjrxrCUqaqXKwxEqG0uxYF7MKVc=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:content-type:content-transfer-encoding;
+        bh=FUUdxm6nM5Kt++i40mzrMV63bu5ATTEv8qQYnIoNd+I=;
+        b=ZKmuPjecWN0uNWzQx7aZ63r6xHAA9J47fPPikZpCX40d53phyihhrmNhMUSYclvZgp
+         ghi6bmoIA53tlnE0ZNuNAUp7jzIl80avdZz0XA6d5+2uKP5ilYSCGwzvybKJGOEQttF5
+         ynjI2FCX/uiG/uWVeWPxeqExO1FjqeoONKFEE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=tCnSiU33dq1tvz9uvyq44VH4n5CE/0F4jWNCAHb/3yXiFuPDai8rWjCEulUH6qIeWF
-         0uipBgPeVx5WNxPThRxhiFaiPY92bj11ffEK9+fMly3Z2gfoi0Efkgn+61pXBNRcMuqx
-         YSqjpy596OYAt7+ALoTZ4dZ99th9mmPxU6z4M=
-Received: by 10.229.185.210 with SMTP id cp18mr3145693qcb.187.1298805350530;
- Sun, 27 Feb 2011 03:15:50 -0800 (PST)
-Received: by 10.229.17.73 with HTTP; Sun, 27 Feb 2011 03:15:50 -0800 (PST)
-In-Reply-To: <AANLkTimWPwCFgnAYz_jJ3Yw5QWvPNhPxq=j502UorEot@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=EE96SmiSH4DjdnRTpud/xPZOVq8qifKxfbvSb7lUpseZOvsRIzkgoMXvQKxKHnpnlh
+         BW85wauBHbIwXvTOM+p3LdlRkjUSLuNojJ9EHJ18cOGgG9NsxcW3OzRT45yKEnf4WJWw
+         o2HS51pDEKRqfcUseWZD9VgiBgvo4EVoXdpQM=
+Received: by 10.223.86.199 with SMTP id t7mr4935567fal.29.1298806117942;
+        Sun, 27 Feb 2011 03:28:37 -0800 (PST)
+Received: from [192.168.178.23] (p5DDB0164.dip0.t-ipconnect.de [93.219.1.100])
+        by mx.google.com with ESMTPS id 11sm1055688faw.20.2011.02.27.03.28.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 27 Feb 2011 03:28:37 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168026>
 
-On Sun, Feb 27, 2011 at 11:57, Sebastian Schuberth <sschuberth@gmail.com> wrote:
+This is the second iteration of the series to add Beyond Compare as a merge tool as an alternative to
 
->> with your suggestion. We should probably make use of the -title options
->> to remove ambiguity.
->
-> Good idea, I'll look into this.
+cp/mergetool-beyondcompare 
 
-Given that the -title options actually replace the display of the file
-name (instead of displaying the title in addition), I'd prefer not to
-make use of these options. In fact, the file names Git uses for
-merging already contain "BASE", "LOCAL", "REMOTE", so there should be
-no real need for additional titles, IMHO.
+It replaces calling "BCompare" with "bcompare". While the first is the correct binary name, the latter is the name of the wrapper script to start Beyond Compare on Linux. On Windows, this change does not matter, as Windows is case-insensitive.
 
-I'll push out the updated series now.
+Moreover, the third patch in the series has been dropped for similar reasons. While the binary for ECMerge is called "guimerge", the link in /usr/local/bin is called "ecmerge". There is no "ecmerge" executable on Windows, but Windows users need to set mergetool.ecmerge.path anyway, and just specify the path to "guimerge" here.
+
+Sebastian Schuberth (2):
+  mergetool--lib: Sort tools alphabetically for easier lookup
+  mergetool--lib: Add Beyond Compare 3 as a tool
+
+ Documentation/git-difftool.txt         |    4 +-
+ Documentation/git-mergetool.txt        |    4 +-
+ Documentation/merge-config.txt         |    8 +-
+ contrib/completion/git-completion.bash |    2 +-
+ git-gui/lib/mergetool.tcl              |  101 +++++++------
+ git-mergetool--lib.sh                  |  247 +++++++++++++++++---------------
+ 6 files changed, 195 insertions(+), 171 deletions(-)
 
 -- 
-Sebastian Schuberth
+1.7.3.2.msysgit.6.dirty
