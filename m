@@ -1,104 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cvsimport still not working with cvsnt
-Date: Sun, 27 Feb 2011 00:26:27 -0800
-Message-ID: <7vvd056fyk.fsf@alter.siamese.dyndns.org>
-References: <4D0ED5EC.9020402@burntmail.com> <4D119015.6020207@burntmail.com>
- <4D2AB63D.7040803@burntmail.com>
- <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com>
- <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino>
- <7v8vynnokt.fsf@alter.siamese.dyndns.org> <4D450655.5090501@burntmail.com>
- <AANLkTik0Mp=Ww_+ZN_jw6t4gsFwLo1UTw5JOpho8bCd=@mail.gmail.com>
- <7vhbcb35xk.fsf@alter.siamese.dyndns.org> <4D5E1116.7040501@burntmail.com>
- <7voc69p4xu.fsf@alter.siamese.dyndns.org> <4D5F6E97.4000402@burntmail.com>
- <7vy65bkw72.fsf@alter.siamese.dyndns.org> <4D61EA4B.3020708@burntmail.com>
- <7vtyfxgdz2.fsf@alter.siamese.dyndns.org>
- <7vipwbbrcc.fsf@alter.siamese.dyndns.org>
- <AANLkTinUtUNGO3NK=JPTqnwcTtPMYjmLw82wJZ5nC -32@mail.gmail.com>
- <4D644FEE.5030004@burntmail.com> <7vaahnbmu2.fsf@alter.siamese.dyndns.org>
- <4D69DF29.8030701@burntmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Sun, 27 Feb 2011 03:43:17 -0500
+Message-ID: <20110227084317.GB3356@sigill.intra.peff.net>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie>
+ <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
+ <20110214231920.GA24814@elie>
+ <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin@laptop.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Emil Medve <Emilian.Medve@freescale.com>,
-	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Guy Rouillier <guyr@burntmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 27 09:27:06 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 27 09:43:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ptby2-0000s2-51
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 09:27:02 +0100
+	id 1PtcDt-0001kr-PC
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 09:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713Ab1B0I0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Feb 2011 03:26:47 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61271 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647Ab1B0I0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Feb 2011 03:26:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7041623BB;
-	Sun, 27 Feb 2011 03:28:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VM+8AZtm7G+bifAlx/VSww6BlUY=; b=p+jot9
-	8HXxDwbah/BrR6pRVDVEH+5LczdRWqFLQ2c4HnwmBxgq5ZZ0TrNUkDlOWsNvOgVE
-	iRsI5VuwL3BruP/qWA0lyfZySgMmJ8XerOe0BfSPwMWiAbVb0F1FMTvvSfc3b59x
-	XXzxUpx8s8fD2MXk3L8AfvjzE7DClfYbzSXYM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xu3IFojzITlGVVALvQAEOUwoEnBsVYTz
-	Z7Jf89gHfTfAImK0fzKjRsRZBj02ascS+EBnAsOLroqnRvPhIuGyGe/KyhQ76q/A
-	CPnTpETRXd5P/w3ZkjxPdGXHeLW2GwIwQM4rm1gq/5/I99LUuOoSUM+9JOYbKYN+
-	/yNJnUHPMGU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EBCC923BA;
-	Sun, 27 Feb 2011 03:27:53 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E472723B7; Sun, 27 Feb 2011
- 03:27:44 -0500 (EST)
-In-Reply-To: <4D69DF29.8030701@burntmail.com> (Guy Rouillier's message of
- "Sun\, 27 Feb 2011 00\:20\:41 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 78E3697A-424B-11E0-A222-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751816Ab1B0InU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Feb 2011 03:43:20 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:35586 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751528Ab1B0InU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Feb 2011 03:43:20 -0500
+Received: (qmail 14447 invoked by uid 111); 27 Feb 2011 08:43:19 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 27 Feb 2011 08:43:19 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Feb 2011 03:43:17 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168012>
 
-Guy Rouillier <guyr@burntmail.com> writes:
+On Sat, Feb 26, 2011 at 11:09:14PM +0200, Felipe Contreras wrote:
 
-> As I suspected after reading how the cvspass file is read and written,
-> CVSNT doesn't work with repositories with an equal sign in the
-> repository name.  You can init it fine, and you can set up a password
-> for it.  But if you try to login things go very wrong:
-> ...
-> Since CVSNT can't handle a repository with an equal sign in its name,
-> I say we don't worry about this.  I say the same about the original
-> CVS with a repository name with embedded spaces.  We certainly don't
-> want to try to solve problems the original product doesn't solve.
+> On Tue, Feb 15, 2011 at 1:19 AM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
+> > When people talk about the staging area I tend to get confused. =C2=
+=A0I
+> > think there's an idea that because it sounds more concrete, there i=
+s
+> > less to explain --- or maybe I am just wired the wrong way.
+>=20
+> I don't like the phrase "staging area". A "stage" already has an area=
+=2E
+> You put things on the stage. Sometimes there are multiple stages.
 
-Thanks; your observation matches my earlier suspicion.  So in short:
+As a native English speaker, this makes no sense to me. A stage as a
+noun is either:
 
- - CVSNT does not work with repository path with an '=' in it, but does work
-   with ones with a SP in it; and
+  1. a raised platform where you give performances
 
- - CVS has trouble with repository path with a SP in it, but works with
-   ones with an '=' in it just fine.
+  2. a phase that some process goes through (e.g., "the early stages of
+     Alzheimer's disease")
 
-Have I summarized it correctly?
+Whereas the term "staging area" is a stopping point on a journey for
+collecting and organizing items. I couldn't find a definite etymology
+online, but it seems to be military in origin (e.g., you would send all
+your tanks to a staging area, then once assembled and organized, begin
+your attack). You can't just call it "staging", which is not a noun, an=
+d
+the term "stage" is not a synonym. "Staging area" has a very particular
+meaning.
 
-So I agree that cvsimport should not worry about supporting repository
-path with an '=' in it, but we do need to make sure we work with one with
-a SP in it, when we are reading from cvspass file for CVSNT.
+So the term "staging area" makes perfect sense to me; it is where we
+collect changes to make a commit. I am willing to accept that does not
+to others (native English speakers or no), and that we may need to come
+up with a better term. But I think just calling it "the stage" is even
+worse; it loses the concept that it is a place for collecting and
+organizing.
 
-Similarly when we are reading from cvspass file for CVS, we should make
-sure we don't break with repository path with an '=' in it.
-
-Do we already have such a solution in the thread?  Can somebody conclude
-the discussion with a final, tested and applyable patch, please?
+-Peff
