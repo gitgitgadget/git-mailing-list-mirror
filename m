@@ -1,123 +1,100 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Feb 2011, #05; Wed, 23)
-Date: Sun, 27 Feb 2011 15:28:43 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1102271509540.1561@bonsai2>
-References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org> <AANLkTinUtqJJHNyS9CxrC=VnS87v=GH=pOw9yr4r=pii@mail.gmail.com> <AANLkTimWy+W+rcZHsac_n--y9iMeaoO66CPZVbN1VBp2@mail.gmail.com> <20110225090544.GA3783@tugrik.mns.mnsspb.ru> <alpine.DEB.1.00.1102251208380.1561@bonsai2>
- <20110225192455.GA7130@tugrik.mns.mnsspb.ru> <alpine.DEB.1.00.1102252251140.15247@pacific.mpi-cbg.de> <20110226110740.GA3096@tugrik.mns.mnsspb.ru>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] commit notes workflow
+Date: Sun, 27 Feb 2011 15:31:50 +0100
+Message-ID: <4D6A6056.20201@drmicha.warpmail.net>
+References: <20110225133056.GA1026@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Sun Feb 27 15:29:06 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 27 15:30:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PthcO-0005lD-9B
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 15:29:04 +0100
+	id 1Pthe1-0006Om-5S
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 15:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031Ab1B0O2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Feb 2011 09:28:50 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:39342 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751955Ab1B0O2t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Feb 2011 09:28:49 -0500
-Received: (qmail invoked by alias); 27 Feb 2011 14:28:46 -0000
-Received: from pD9EB2AFE.dip0.t-ipconnect.de (EHLO noname) [217.235.42.254]
-  by mail.gmx.net (mp007) with SMTP; 27 Feb 2011 15:28:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+X+R8alcqXMVb64Ms7ZDG0KC2hAxxbyanAbvoRAm
-	yhTzKP7T5XCVvr
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <20110226110740.GA3096@tugrik.mns.mnsspb.ru>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752071Ab1B0Oak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Feb 2011 09:30:40 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44280 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751984Ab1B0Oak (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Feb 2011 09:30:40 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 20044207A1;
+	Sun, 27 Feb 2011 09:30:39 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Sun, 27 Feb 2011 09:30:39 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=/3X8v7khTunKBx2+yZJotSECBmk=; b=TPyC0UVU7GNX3tNzjwIwQsWnE5Md8RPIb/RYoktGOMdVSGHwqpdPm8Ugv6oVdydawlOvFnGbRwowe36jKeHnM5CErkXXkbL1aTiGwPbz4qVbqETuDQOw5QG9x2rXqcjKvj/KbuBRxea1+DKBH+Tx1m9ZngYNAgbskzormbGp97A=
+X-Sasl-enc: oxb4wKD3D8HC9xncB9wLpXobKp8MbxPXf623bSPn/bUF 1298817038
+Received: from localhost.localdomain (p5485925B.dip0.t-ipconnect.de [84.133.146.91])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7B5E5407C4B;
+	Sun, 27 Feb 2011 09:30:38 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <20110225133056.GA1026@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168032>
 
-Hi Kirill,
-
-On Sat, 26 Feb 2011, Kirill Smelkov wrote:
-
-> On Fri, Feb 25, 2011 at 10:54:40PM +0100, Johannes Schindelin wrote:
-> > 
-> > On Fri, 25 Feb 2011, Kirill Smelkov wrote:
-> > 
-> > > On Fri, Feb 25, 2011 at 12:11:59PM +0100, Johannes Schindelin wrote:
-> > > 
-> > > > Further, I think that my beloved Shift+Insert will no longer work 
-> > > > with your [2].
-> > > 
-> > > Probably yes,
-> > 
-> > In my experiment after rebuilding msys-1.0.dll, it still works.
+Jeff King venit, vidit, dixit 25.02.2011 14:30:
+> I was revising a long-ish series today, and I have been wanting to start
+> using "git notes" to store information on what's changed between
+> versions (which will eventually go after the "---" in format-patch).
 > 
-> xser32.dll has nothing to do with msys - it's just a fake stub for
-> sh.exe. Before testing, have you "patched" sh.exe the way it is done in
-> my ks/xser32.dll
-> (http://repo.or.cz/w/msysgit/kirr.git/commit/9d952c74a52f577b2d16d4e4a489541a8fa7fbbd)
-
-Ah. I had to add -Wl,-kill-at to the LDFLAGS so it works. 
-
-See the ks/xser32 branch (and the ks/msys branch) of msysgit.git.
-
-> > The problem for now is that when I time /share/msysGit/run-tests.sh, 
-> > there is hardly any gain from your patches:
-> > 
-> > Old:
-> > 
-> > 
-> > real    18m1.031s
-> > user    6m17.861s
-> > sys     19m25.257s
-> > 
-> > New:
-> > 
-> > real    17m54.500s
-> > user    6m12.319s
-> > sys     19m28.567s
+> So my workflow was something like:
 > 
-> Did you patch sh.exe to link to xser32.dll instead of user32.dll?
+>   1. git rebase -i, mark one or more commits for edit
+> 
+>   2. For each commit we stop at:
+> 
+>      a. Tweak the tree either with enhancements, or to resolve
+>         conflicts from tweaks to earlier patches.
+> 
+>      b. commit --amend, tweak commit message is needed
+> 
+>      c. git notes add, mention changes
+> 
+>      d. git rebase --continue
+> 
+> Two things annoyed me:
+> 
+>   1. Editing the commit message and notes separately felt awkward. They
+>      are conceptually part of the same task to me.
+> 
+>   2. In the conflict case, there is no opportunity to run "git notes
+>      add" because you fix up commits and directly run "rebase
+>      --continue".
+> 
+> So my solution was that "git commit" should be able to embed and extract
+> notes from the commit message itself. The patch below implements "git
+> commit --notes", which does two things:
+> 
+>   1. If we are amending, it populates the commit message not just with
+>      the existing message, but also with a "---" divider and any notes on
+>      the commit.
+> 
+>   2. After editing the commit message, it looks for the "---" divider
+>      and puts everything after it into a commit note (whether or not it
+>      put in a divider in step (1), so you can add new notes, too).
+> 
+> So your commit template looks like:
+> 
+>   subject
+> 
+>   commit message body
+>   ---
+>   notes data
+> 
+>   # usual template stuff
+> 
+> I'm curious what people think. Do others find this useful? Does it seem
+> harmful?
 
-Now I did, and the difference is quite noticable:
+I can haz tis wiz "format-patch --notes-behind-triple-dash"?
 
-real    15m37.281s
-user    5m6.934s
-sys     15m53.911s
-
-(Note that I did not spend time to increase the N, so there is no point in 
-putting a percentage on the difference.)
-
-I wonder whether we could patch sh.exe so it loads user32.dll _lazily_ 
-rather than using the xser32.dll hack?
-
-(This would also fix the issue that I can no longer use Shift+Insert to 
-paste the clipboard into the Git Bash...)
-
-> Also I can't say for sure (hope yet) how sh-intensitive git tests are, 
-> but at least running configure for say gettext or whatever should be 
-> visibly faster, at least on wine.
-
-They are pretty intensive, as they are shell scripts all over the place in 
-their own right. I fear, however, that the real problem (maybe not on 
-WINE, but with real Windows) is that sh.exe needs to provide too many 
-POSIX-like things when starting new processes.
-
-I fear, further, that the only way to make things more efficient on 
-Windows is to get rid of the many exec() calls and do more things 
-in-process. (If this is true, JGit should kick msysGit's ass.) This would 
-not apply to the test suite, though, which needs to stay a shell script 
-suite.
-
-But maybe I am wrong, and the performance is lost through memory 
-management and filesystem interaction.
-
-Ciao,
-Dscho
+Michael
