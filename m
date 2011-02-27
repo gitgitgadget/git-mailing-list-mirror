@@ -1,86 +1,141 @@
-From: Guy Rouillier <guyr@burntmail.com>
-Subject: Re: cvsimport still not working with cvsnt
-Date: Sun, 27 Feb 2011 00:20:41 -0500
-Message-ID: <4D69DF29.8030701@burntmail.com>
-References: <4D0ED5EC.9020402@burntmail.com> <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com> <4D119015.6020207@burntmail.com> <4D2AB63D.7040803@burntmail.com> <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com> <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino> <7v8vynnokt.fsf@alter.siamese.dyndns.org> <4D450655.5090501@burntmail.com> <AANLkTik0Mp=Ww_+ZN_jw6t4gsFwLo1UTw5JOpho8bCd=@mail.gmail.com> <7vhbcb35xk.fsf@alter.siamese.dyndns.org> <4D5E1116.7040501@burntmail.com> <7voc69p4xu.fsf@alter.siamese.dyndns.org> <4D5F6E97.4000402@burntmail.com> <7vy65bkw72.fsf@alter.siamese.dyndns.org> <4D61EA4B.3020708@burntmail.com> <7vtyfxgdz2.fsf@alter.siamese.dyndns.org> <7vipwbbrcc.fsf@alter.siamese.dyndns.org> <AANLkTinUtUNGO3NK=JPTqnwcTtPMYjmLw82wJZ5nC
- -32@mail.gmail.com> <4D644FEE.5030004@burntmail.com> <7vaahnbmu2.fsf@alter.siamese.dyndns.org>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Adding Beyond Compare as a merge tool, was: Re: What's cooking
+ in git.git (Feb 2011, #05; Wed, 23)
+Date: Sun, 27 Feb 2011 18:38:29 +1300
+Message-ID: <4D69E355.7010104@gmail.com>
+References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org> <4D68D4FA.7090500@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin@laptop.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Emil Medve <Emilian.Medve@freescale.com>,
-	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 27 06:22:15 2011
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, charles@hashpling.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 27 06:37:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtZ59-0003Wz-EI
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 06:22:11 +0100
+	id 1PtZJw-0007bb-2u
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 06:37:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803Ab1B0FV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Feb 2011 00:21:56 -0500
-Received: from mx02.burntmail.com ([70.87.63.122]:58745 "EHLO
-	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730Ab1B0FVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Feb 2011 00:21:55 -0500
-Received: from [71.191.145.140] (helo=[192.168.1.60])
-	by mx02.burntmail.com with esmtpa (Exim 4.72)
-	(envelope-from <guyr@burntmail.com>)
-	id 1PtZ3p-00021l-0o; Sat, 26 Feb 2011 23:20:49 -0600
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <7vaahnbmu2.fsf@alter.siamese.dyndns.org>
+	id S1750824Ab1B0FhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Feb 2011 00:37:23 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:56290 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750810Ab1B0FhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Feb 2011 00:37:22 -0500
+Received: by pxi15 with SMTP id 15so464308pxi.19
+        for <git@vger.kernel.org>; Sat, 26 Feb 2011 21:37:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=VoHw47nQnexLU3jKK8fc+TlkfJBuV3ShA30Li/ZMDtI=;
+        b=G5RMcQEmtl8AOX9/gncfQDdWXqdlbW5njkqo0GrWPvm5pbL+jmqF5MhOijMarirAo0
+         K5qpTQS0hWyiihdgMtB9FQBoyNR6xl5sgZl48U+pjQb/a/4Y7M3QP4OYb3zcNPp3KJZN
+         09atzlOoTmL48xdRJNvD1JPrffO/MibIAyF4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=HTEU0zg5QWipplshtcPzL36qVGIlRQ10DYoy7FwASzxcBlmSHDpOx0W5iZ9rpz4wPd
+         M+Ckiq3qo26mlVQEqtz53qLzW1UccvAMzoISRI94O6gLZviFIYfs8mB7ciNgl4fKpCzK
+         EdeJkEOjzVr2m6wVymJJMYBCZzToP6n4n5Bew=
+Received: by 10.142.231.3 with SMTP id d3mr3099553wfh.255.1298785040331;
+        Sat, 26 Feb 2011 21:37:20 -0800 (PST)
+Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
+        by mx.google.com with ESMTPS id m10sm3755486wfl.23.2011.02.26.21.37.16
+        (version=SSLv3 cipher=OTHER);
+        Sat, 26 Feb 2011 21:37:18 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.16) Gecko/20101125 SUSE/3.0.11 Thunderbird/3.0.11
+In-Reply-To: <4D68D4FA.7090500@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168008>
 
-On 2/23/2011 12:24 AM, Junio C Hamano wrote:
-> Guy Rouillier<guyr@burntmail.com>  writes:
->
->> ... Note that this issue is not unique to CVSNT.  What does CVS do
->> with CVSROOT containing a space character?
->
-> IIRC, the comparison is done against canonicalized cvsroot string, so
-> that you can try to connect to :pserver:Xz.Com:/path/to/repo even
-> after you ran "cvs -d :pserver:xz.com:/path/to/repo login" and I
-> wouldn't be surprised if the canonicalization involved quoting SP.
-> Since August 2009 nobody has complained with the current code that
-> doesn't do any canonicalization, and I take that as a sign that
-> nobody sane so far used a cvsroot with a space in it ;-).  But that
-> doesn't mean nobody sane has been using a cvsroot with an equal sign
-> in it, so we would need to at least avoid splitting at an equal sign
-> when reading from .cvsroot.
->
-> It probably is a good idea to port the cvsroot canonicalization code
-> to cvsimport in any case.
+On 26/02/11 23:24, Sebastian Schuberth wrote:
+> On 24.02.2011 00:26, Junio C Hamano wrote:
+> 
+>> * cp/mergetool-beyondcompare (2011-02-18) 1 commit
+>>   - mergetool--lib: add support for beyond compare
+> 
+> Sorry for not responding earlier to this, but problems at my news
+> provider seem to have swallowed mails from several days, including the
+> original post of
+> 
+> http://marc.info/?l=git&m=129801656713478&w=2
+> 
+> A while ago, I had already proposed
+> 
+> http://marc.info/?l=git&m=129007741814521&w=2
+> 
+> I'm not entirely sure why it was ignored in the end, probably I did not
+> report back to have tested it in Linux.
 
-As I suspected after reading how the cvspass file is read and written, 
-CVSNT doesn't work with repositories with an equal sign in the 
-repository name.  You can init it fine, and you can set up a password 
-for it.  But if you try to login things go very wrong:
+Sorry that I missed it (I didn't really look too hard).
 
-guyr@gentoo-vm /data $ cvs -d 
-":pserver:guyr@gentoo-vm:2401:/data/cvs\=repo/cvsroot" login
-Logging in to :pserver:guyr@gentoo-vm:2401:/data/cvs\=repo/cvsroot
-CVS Password:
-Empty password used - try 'cvs login' with a real password
-cvs [login aborted]: /data/cvs\=repo/cvsroot: no such repository
+> 
+> A few things that I like better in my patch than in Chris':
+> 
+> - Beyond Compare is added as "bc3" instead of "bcompare", which is both
+> shorter and indicates that only version 3, not version 2, is supported.
 
-I tried as many permutations as I could think of, escaping the equal 
-sign, not escaping it, etc.  None of them worked.  I did verify my 
-environment before running this test by setting up a repository without 
-the equal sign in the name, and everything works fine.
+v2 isn't natively available for linux, although it works quite well
+under wine. Either way you're quite correct that v2 is not much use as a
+3-way merge tool. Trying to indicate v3 only make sense to me (at least
+until they release a v4 :)
 
-Since CVSNT can't handle a repository with an equal sign in its name, I 
-say we don't worry about this.  I say the same about the original CVS 
-with a repository name with embedded spaces.  We certainly don't want to 
-try to solve problems the original product doesn't solve.
+> - Chris seems to be missing the patch to git-gui/lib/mergetool.tcl
 
--- 
-Guy Rouillier
+Didn't know to add it, thanks for pointing it out. If my patch get's
+picked up I'll include it in the next round.
+
+> - To the best of my knownledge, the Beyond Compare executable is called
+> "BCompare" (note the case), that means even with the merge tool named
+> "bcompare" a translation step in git-mergetool--lib.sh should by
+> required (as done in my patch). Chris, as you seem to have tested ion
+> Linux, could you shed a light on  this?
+
+In linux it's bcompare, although BCompare is the eventual executable
+
+chrisp@laptop:~> rpm -q --filesbypkg bcompare
+bcompare                  /usr/bin/bcompare
+bcompare                  /usr/lib/beyondcompare/BCompare
+
+Unfortunately /usr/bin/bcompare is a little more involved than a symlink
+so for linux we need to call bcompare. Do we have a nice way of handling
+this? We could just treat them completely separate but that seems a but
+like sweeping the problem under the carpet.
+
+> - Using dashes for the options to Beyond Compare is fine on Windows,
+
+Good to hear. I was meaning to fire up a vbox windows XP image to double
+check but you've saved me the hassle.
+
+> however, I believe the order of the files is wrong, although that might
+> be a bit subjective. For a 3-way merge the syntax is
+> 
+> BCompare.exe C:\Left.ext C:\Right.ext C:\Center.ext
+> 
+> So the file that should go to the center panel is specified last. AFAIK,
+> all other merge tools are called such that $BASE goes to the center.
+> This is why my patch specifies $BASE last.
+
+I actually prefer base on the left a-la kdiff3 and araxis (and from my
+previous life as a clearcase user). I've since found that with beyond
+compare it is a pain to take changes from the center version so I agree
+with your suggestion. We should probably make use of the -title options
+to remove ambiguity.
+
+> Any more opinions? Chris, in case you'd agree to prefer my patch, I'd be
+> very grateful if you could test it on Linux.
+> 
+> For your convenience, I've rebased onto the current master and attached
+> the patch files.
+
+I'll give it a whirl when I get a chance. I suspect I'll need to handle
+the BCompare/bcompare thing but that's not a huge issue.
