@@ -1,78 +1,74 @@
-From: =?ISO-8859-1?Q?Mart_S=F5mermaa?= <mrts.pydev@gmail.com>
-Subject: Re: git diff: add option for omitting the contents of deletes
-Date: Mon, 28 Feb 2011 00:33:07 +0200
-Message-ID: <AANLkTik+MPPYOm+O5cmFur_2DKKy0bt9i0XeuKbHbaJU@mail.gmail.com>
-References: <AANLkTi=++gcw5CDQnTRbhUGkvWc9Zm+Ct4Zm5oGGYKUh@mail.gmail.com>
-	<7vk4gm7dz3.fsf@alter.siamese.dyndns.org>
-	<4D6A6291.8050206@drmicha.warpmail.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetool-lib: call vim in readonly mode for diffs
+Date: Sun, 27 Feb 2011 14:33:54 -0800
+Message-ID: <20110227223350.GA37866@gmail.com>
+References: <20110224203412.29b732b9@glyph>
+ <227c6e4e11ce964a6e6898afb422d424d46a7b50.1298626494.git.git@drmicha.warpmail.net>
+ <7v62s7anp0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 27 23:33:16 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	netuse@lavabit.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 27 23:34:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtpAw-0001Zg-Vw
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 23:33:15 +0100
+	id 1PtpC3-00029o-Ah
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 23:34:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975Ab1B0WdK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Feb 2011 17:33:10 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:52962 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751886Ab1B0WdI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Feb 2011 17:33:08 -0500
-Received: by qyg14 with SMTP id 14so2894914qyg.19
-        for <git@vger.kernel.org>; Sun, 27 Feb 2011 14:33:07 -0800 (PST)
+	id S1751927Ab1B0WeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Feb 2011 17:34:18 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57666 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751886Ab1B0WeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Feb 2011 17:34:17 -0500
+Received: by iwn34 with SMTP id 34so2606754iwn.19
+        for <git@vger.kernel.org>; Sun, 27 Feb 2011 14:34:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=/LGAaUhMPVgWE8EQSnlCa45YimSnxScbNRolP7Ny43U=;
-        b=aPbzBCeTyciqc3vxV6KGscZcUE2GYZPjE6XlJNFJqADOFFQ0kiPKf6Yq/92W75muin
-         y5EXlKcFB1Jsw60s98cZMiReSr43cl+WuZZpN9R4Mf1+nX/rEjsAD13xQAR+Dzw9wE6X
-         qsgUkNKY0ff4SEBV32Z4D8ip0KL+Rag5XGsMI=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Soheu49iEFNnQ7GBrLL4Jxf59SHCIk1/tbhUwV3Kqps=;
+        b=t7F3V2plunUYz6OTHZbYJ498BauazM58yZvlTJP74xz2K6G1ADzWOWn4xQ3cA2sMKD
+         4FTsq3JZ4YK7oAapaKEQAb4ZsqZvdliSHCfSIhqty71PEXK5FzZOfcJkQx6lSMkCY1cd
+         siGAK7nJK7p6v5v3eqiLMZA5M/dviCjCp6+BU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=p6l0MBX4rZKVWXZjpB/M0RWmRhNZ3OibsKDV0NGuGNopJfn1OYsdQQnsQbC1d69M16
-         DLx9Iq+ogQuamZ+vtATGOXfYlw7S3i4C5xOIVj+g93X18jF5bjMQB0pyNrlGkzLfgwAY
-         QSYFPu4eHcLIPf1ig29S1SV2nNqFJUlnUgSSE=
-Received: by 10.229.90.148 with SMTP id i20mr1791403qcm.280.1298845987596;
- Sun, 27 Feb 2011 14:33:07 -0800 (PST)
-Received: by 10.229.192.14 with HTTP; Sun, 27 Feb 2011 14:33:07 -0800 (PST)
-In-Reply-To: <4D6A6291.8050206@drmicha.warpmail.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=IQbSfHz+yj2LxKmOaQ9CQOJOErTYI2POGrD6O8Cqim+e9IiboZyklNKhjwPnJB/f7b
+         zAdklgWnT3dz7nLj1vxvN0OnxuxidEqLtPMS3sy9Au/hzsep5X83JyxV5m8N2SV+UXPs
+         R3Vye01awfDSwTOKWpF8oorz+2wLdpAErKR2E=
+Received: by 10.42.175.65 with SMTP id az1mr4051673icb.192.1298846057161;
+        Sun, 27 Feb 2011 14:34:17 -0800 (PST)
+Received: from gmail.com (h-66-134-235-242.lsanca54.static.covad.net [66.134.235.242])
+        by mx.google.com with ESMTPS id uf10sm947720icb.5.2011.02.27.14.34.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 27 Feb 2011 14:34:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7v62s7anp0.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168058>
 
-Junio, jokes aside, do you think this is useful?
-Would you accept a patch that implements this?
+On Fri, Feb 25, 2011 at 12:01:15PM -0800, Junio C Hamano wrote:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+> > When [g]vimdiff is called for files which are opened already, the editor
+> > complains about the existing swap file. But we do not want to write
+> > anything when called from difftool. So, make difftool use "-R" for the
+> > vim family.
+> 
+> Makes sense.  Maint-worthy?
 
-Micheal, thanks for the indirect + :). Is it +0 or +1?
-
-Best,
-MS
-
-On Sun, Feb 27, 2011 at 4:41 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Junio C Hamano venit, vidit, dixit 26.02.2011 21:11:
->> Mart S=F5mermaa <mrts.pydev@gmail.com> writes:
->>
->>> Paging through deletes adds a cognitive burden when reviewing code.
->>
->> Wasn't the ability to say '/^diff --git ' in your pager invented for
->> exactly for that?
->
-> Wasn't the pager invented for sifting through output which has to be
-> several pages, but not not for that which could be more concise? ;)
->
-> In fact, -D would be quite analogous to -M and -C in that respect.
->
-> Michael
->
+I think this would be good in maint.
+thanks,
+-- 
+		David
