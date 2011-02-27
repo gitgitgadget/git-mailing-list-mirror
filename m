@@ -1,84 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Consistent terminology: cached/staged/index
-Date: Sun, 27 Feb 2011 03:43:17 -0500
-Message-ID: <20110227084317.GB3356@sigill.intra.peff.net>
-References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
- <20110213193738.GA26868@elie>
- <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
- <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
- <20110214231920.GA24814@elie>
- <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Adding Beyond Compare as a merge tool, was: Re: What's cooking
+ in git.git (Feb 2011, #05; Wed, 23)
+Date: Sun, 27 Feb 2011 01:09:42 -0800
+Message-ID: <7vhbbp6dyh.fsf@alter.siamese.dyndns.org>
+References: <7v1v2y5o3p.fsf@alter.siamese.dyndns.org>
+ <4D68D4FA.7090500@gmail.com> <4D69E355.7010104@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 27 09:43:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>,
+	charles@hashpling.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 27 10:10:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtcDt-0001kr-PC
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 09:43:26 +0100
+	id 1Ptcdf-0003xZ-PG
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Feb 2011 10:10:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816Ab1B0InU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Feb 2011 03:43:20 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:35586 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751528Ab1B0InU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Feb 2011 03:43:20 -0500
-Received: (qmail 14447 invoked by uid 111); 27 Feb 2011 08:43:19 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 27 Feb 2011 08:43:19 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Feb 2011 03:43:17 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
+	id S1751790Ab1B0JKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Feb 2011 04:10:00 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35215 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751367Ab1B0JJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Feb 2011 04:09:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BEF34265C;
+	Sun, 27 Feb 2011 04:11:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U/LGGWx2IWG9Ckm4hVdHS0vYQB4=; b=Cd/rPz
+	OiprNiCRcDEZvR+n5yY5Rm09hJDC9hkHAF3DrmsbYzbRw3oILLlImGHLQ3cRNt4e
+	A0I8RHbkFXQagfVNsD1f+Tvw1Vc4e2Ta/bQTuDmxOFYIco5BN/PnWUMf+Dtqyf6w
+	MhQAh7Dcxlm6Aksrnq/02L/gcm4FCbjxg1r4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qkgLOesUbot9GUr677CPYpKqdKVDh/hV
+	ibbGxHPAdDlh/007uMWUOo29Y5IGkZYWREFBfE1V0zNXwGMuRZjwD+Xg5A3RQO1B
+	Kiy0ow4XQ8PUFeDWd1RpzwczmPsCzRNZa66kmvuO55y/XhUJHBYIkJuZHnEKJ4WD
+	fLXKG975zvk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7CC8E264A;
+	Sun, 27 Feb 2011 04:11:06 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3C9252649; Sun, 27 Feb 2011
+ 04:11:00 -0500 (EST)
+In-Reply-To: <4D69E355.7010104@gmail.com> (Chris Packham's message of "Sun\,
+ 27 Feb 2011 18\:38\:29 +1300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 822A6C1C-4251-11E0-82E2-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168013>
 
-On Sat, Feb 26, 2011 at 11:09:14PM +0200, Felipe Contreras wrote:
+Chris Packham <judge.packham@gmail.com> writes:
 
-> On Tue, Feb 15, 2011 at 1:19 AM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
-> > When people talk about the staging area I tend to get confused. =C2=
-=A0I
-> > think there's an idea that because it sounds more concrete, there i=
-s
-> > less to explain --- or maybe I am just wired the wrong way.
->=20
-> I don't like the phrase "staging area". A "stage" already has an area=
-=2E
-> You put things on the stage. Sometimes there are multiple stages.
+> In linux it's bcompare, although BCompare is the eventual executable
+>
+> chrisp@laptop:~> rpm -q --filesbypkg bcompare
+> bcompare                  /usr/bin/bcompare
+> bcompare                  /usr/lib/beyondcompare/BCompare
+>
+> Unfortunately /usr/bin/bcompare is a little more involved than a symlink
+> so for linux we need to call bcompare.
 
-As a native English speaker, this makes no sense to me. A stage as a
-noun is either:
+The real question is which one the end-users like git-mergetool--lib are
+expected to call, and it looks like the "bcompare" in /usr/bin spelled in
+lowercase is the one.  So shouldn't we be calling that, Sebastian?
 
-  1. a raised platform where you give performances
-
-  2. a phase that some process goes through (e.g., "the early stages of
-     Alzheimer's disease")
-
-Whereas the term "staging area" is a stopping point on a journey for
-collecting and organizing items. I couldn't find a definite etymology
-online, but it seems to be military in origin (e.g., you would send all
-your tanks to a staging area, then once assembled and organized, begin
-your attack). You can't just call it "staging", which is not a noun, an=
-d
-the term "stage" is not a synonym. "Staging area" has a very particular
-meaning.
-
-So the term "staging area" makes perfect sense to me; it is where we
-collect changes to make a commit. I am willing to accept that does not
-to others (native English speakers or no), and that we may need to come
-up with a better term. But I think just calling it "the stage" is even
-worse; it loses the concept that it is a place for collecting and
-organizing.
-
--Peff
+And if we invoke lowercase "bcompare" on Windows, the system would do the
+right thing, no?
