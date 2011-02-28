@@ -1,61 +1,69 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: copying git repositories ...
-Date: Mon, 28 Feb 2011 10:10:39 -0500
-Message-ID: <43737C0D-E1B7-4036-BE39-8DF09751E22D@silverinsanity.com>
-References: <1298388877.32648.171.camel@lenovo-w500> <993F66D7-7659-4AA5-9931-1EB66CAA01DB@silverinsanity.com> <1298565560.32648.258.camel@lenovo-w500> <201102252155.13466.andres@anarazel.de> <1298903102.14697.127.camel@lenovo-w500>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Andres Freund <andres@anarazel.de>, git@vger.kernel.org,
-	kendy@novell.com, Norbert Thiebaud <nthiebaud@gmail.com>
-To: michael.meeks@novell.com
-X-From: git-owner@vger.kernel.org Mon Feb 28 16:10:49 2011
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: git-grep to operate across who repository and not just CWD?
+Date: Mon, 28 Feb 2011 10:27:06 -0500
+Message-ID: <AANLkTimJWeZLJbPndTyE0EUW3R9EC=yV55jhHbpZnnJn@mail.gmail.com>
+References: <AANLkTimnOSzF1o-fX-n7b26Qx2aLP3aU3pTMGY_f5hKy@mail.gmail.com> <4D6B6A8B.20709@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: David Chanters <david.chanters@googlemail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Feb 28 16:27:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pu4kK-000459-8Q
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 16:10:48 +0100
+	id 1Pu50f-0005kW-RM
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 16:27:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754727Ab1B1PKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 10:10:43 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:44109 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754545Ab1B1PKn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 10:10:43 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id C26F81FFC151; Mon, 28 Feb 2011 15:10:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=3.5 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.1.7] (cpe-74-78-177-55.twcny.res.rr.com [74.78.177.55])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id AB0D61FFC057;
-	Mon, 28 Feb 2011 15:10:37 +0000 (UTC)
-In-Reply-To: <1298903102.14697.127.camel@lenovo-w500>
-X-Mailer: Apple Mail (2.1082)
+	id S1754217Ab1B1P1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 10:27:37 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46533 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753674Ab1B1P1g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 10:27:36 -0500
+Received: by iwn34 with SMTP id 34so3175467iwn.19
+        for <git@vger.kernel.org>; Mon, 28 Feb 2011 07:27:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=YapTkrya4lT3o2GKDq3XoaFyoZzKhcST3YdN/VJvnP8=;
+        b=yCeFjnEvXmK1/NImGZlyAlfAPVd3MFeFa/F8IWFU4nSupU+xqKaZDmmPxBNopFRS8V
+         utwt7MzNdS0V0hcrK4XAbtZ6/TLJn/J4PsJuCdHRpZ/vh8T0AyEjMSWOnmuu869jI2pP
+         8r/Z4OEGzxoS7RES+N1Attn7qHr6g8xc0pkzs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=YC2oLEnSJq/WP5/RNA1gGydZevwakrw/XvvoZGTqT3bgilJZMwR3QF3Wk0T8e38BYw
+         VO/G2kWCgLZy3WoFN0CVFXF1RKAbBjeTvd5QHXqDMTG5kjl1WNW8JIkBPu1bun3OxyZu
+         2zN+2vzGH6XWx3WdCU3NCFs5HQYmTd1ydppxQ=
+Received: by 10.231.182.5 with SMTP id ca5mr5464294ibb.144.1298906856141; Mon,
+ 28 Feb 2011 07:27:36 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Mon, 28 Feb 2011 07:27:06 -0800 (PST)
+In-Reply-To: <4D6B6A8B.20709@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168115>
 
+On Mon, Feb 28, 2011 at 4:27 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> git grep -- $(git rev-parse --show-cdup)
+>
+> is the best we have right now. I think we're still looking for a good
+> way to denote "root of repo" (like "." for cwd).
+>
+> Also, we're thinking of changing a few defaults (to repo-wide), but "git
+> grep" is meant to stay close to ordinary grep.
 
-On Feb 28, 2011, at 9:25 AM, Michael Meeks wrote:
+I had the crazy thought that if git had a --cdup option, then this
+would work with any command you wanted to run from the top:
 
-> 	I'm really looking for an equivalent of 'cp -lR foo baa' that:
-> 
-> 	* uses hard links to save space
-> 	* produces precisely-a-duplicate repository
+  git --cdup grep ...
 
-I mostly handle this sort of thing by branch switching in the same checkout, which I assume you're trying not to do because of recompilation time.  Your way, eventually the repositories in question would start to diverge and you'd have to keep them in sync manually, which sounds far less than ideal.  Eventual repacks would break the hard links and you'd even lose the space savings.
+Maybe that's the best way to expose "from the top please" generically?
 
-What you might be interested in is the git-new-workdir script in git.git/contrib/workdir.  It uses symbolic links to create a new working directory backed by the exact same object store and config as the original.
-
-
-This is not a situation git is well designed for, honestly.  The more "git-like" work flow would be to maintain a single central, probably bare, repository on your machine that pulls from everything that all your local repositories need.  Then set up the other repositories to get all the references from the central repo.  Then there's only one that needs to be updated from the remotes.  If you use the --reference option to git-clone, you're not even duplicating the object store and each clone only has the objects it needs.
-
-~~ Brian
+j.
