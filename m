@@ -1,83 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/WIP] attr: make attributes depend on file type
-Date: Mon, 28 Feb 2011 09:48:17 -0800
-Message-ID: <7v39n8jbj2.fsf@alter.siamese.dyndns.org>
-References: <20110228130850.GB9054@sigill.intra.peff.net>
- <f35b1b4b57a563f57f169602440b3b0abdef5a07.1298906628.git.git@drmicha.warpmail.net> <20110228173037.GC24915@sigill.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 3/5] index-pack: --verify
+Date: Mon, 28 Feb 2011 09:48:57 -0800
+Message-ID: <20110228174857.GB17278@spearce.org>
+References: <1298886583-30965-1-git-send-email-gitster@pobox.com>
+ <1298886583-30965-4-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 28 18:48:37 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 28 18:49:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pu7Cz-00084q-Ft
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 18:48:33 +0100
+	id 1Pu7DY-0008Q5-9m
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 18:49:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753534Ab1B1Rs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 12:48:28 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62496 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753442Ab1B1Rs1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 12:48:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 56CD548FF;
-	Mon, 28 Feb 2011 12:49:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wLOLXRTdWqBEdMN3jdQ9Lg6hYEs=; b=aUMnr+
-	hx4pASmLHFpF2xYB44gPHzbdunfUHAFaGfkh15Qmr+Djn05jGbtCa7GCQyPgGHt7
-	ibTTZldSZMZiUxwGwxxzWvl5GEnbhnkJn3HJm6r5hgDExDuIEDairs4LWRRVV8PU
-	Dub47Vx8wGL6xCtY1UFrjQd+RR8iXSe85vlcU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xoZdreOS6ZrlxyHoaCAWhJRG6BSh+nLg
-	68QQ2cQ77iFKCJHG7mj06dWaQH5OlsNUC/rQFuRstj/wHzMmBXOCHMm+mG9zoCc5
-	wWogGRpoj8Zqb7PAAon9ls+yYxoS6m454nptejBLf0Yn3ztCXTIX12yQ01zibc9R
-	ygp1KzdIExU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2420748FE;
-	Mon, 28 Feb 2011 12:49:42 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 179BE48FC; Mon, 28 Feb 2011
- 12:49:37 -0500 (EST)
-In-Reply-To: <20110228173037.GC24915@sigill.intra.peff.net> (Jeff King's
- message of "Mon\, 28 Feb 2011 12\:30\:37 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1EF15D3C-4363-11E0-A2E1-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1753824Ab1B1RtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 12:49:01 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:38393 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753509Ab1B1RtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 12:49:01 -0500
+Received: by pwi15 with SMTP id 15so767283pwi.19
+        for <git@vger.kernel.org>; Mon, 28 Feb 2011 09:49:00 -0800 (PST)
+Received: by 10.143.132.6 with SMTP id j6mr4488937wfn.264.1298915340760;
+        Mon, 28 Feb 2011 09:49:00 -0800 (PST)
+Received: from localhost (sop.mtv.corp.google.com [172.18.74.69])
+        by mx.google.com with ESMTPS id w19sm6262794wfd.20.2011.02.28.09.48.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 28 Feb 2011 09:48:59 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1298886583-30965-4-git-send-email-gitster@pobox.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168127>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Given an existing .pack file and the .idx file that describes it,
+> this new mode of operation reads and re-index the packfile and makes
+> sure the existing .idx file matches the result byte-for-byte.
+> 
+> All the objects in the .pack file are validated during this operation as
+> well.  Unlike verify-pack, which visits each object described in the .idx
+> file in the SHA-1 order, index-pack efficiently exploits the delta-chain
+> to avoid rebuilding the objects that are used as the base of deltified
+> objects over and over again while validating the objects.  This should
+> result in much quicker verification of the .pack file and its .idx file.
+> 
+> This version however cannot verify a .pack/.idx pair with a handcrafted v2
+> index that uses 64-bit offset representation for offsets that would fit
+> within 31-bit. You can create such an .idx file by giving a custom offset
+> to --index-version option to the command.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>  * This does not make much of a difference in a small project like git.git
+>    itself, especially when the repository is packed with not very big depth
+>    value.
 
-> The only downside is that it is technically a regression if somebody was
-> using gitattributes for the bizarrely named file "symlink:". It seems
-> pretty unlikely, but possibly we should be carving out a syntactic
-> namespace like:
->
->   ^[a-z]+:
->
-> or even:
->
->   ^[a-z]+(=[^:]*)?:
+However it is useful on larger repositories, like linux-2.6. I'd like
+to see this series cleaned up and submitted, because as Peff's tests
+shows, it shaves 1 minute off the linux-2.6 fsck.
 
-Or even '^:[a-z]+(=[^,=])?(,[a-z]+(=[^,=])?)*:' to
+Skim reading the code it mostly looked OK, though the NEEDSWORK
+stuff has to be cleaned up. And I wonder if the series cannot be
+flipped around a bit to put the 4/5 earlier and try to avoid a
+stage where `index-pack --verify` doesn't do the right thing on
+the hand-rolled lower 32 bit index limit.
 
- (1) always have some special character at the beginning, to limit the
-     extent of the damage to existing funny pathnames (i.e. to collide
-     your pathname must begin with such a special character).  This also
-     has a nice side effect of making it clear that something special is
-     going on; and
+In this patch I'm not happy about csum-file having this check_fd
+part of its contents. But its probably the shortest way to inject
+validation into index-pack without butchering a large part of its
+index generation function.
 
- (2) allow more than one such special on the line, comma-separated.
-
-But that is just a small bikeshed.  Other than that, I like what Michael
-and you are aiming for (I am only commenting on the general direction at
-this moment, as I haven't looked at the patch at all yet).
+-- 
+Shawn.
