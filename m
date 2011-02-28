@@ -1,62 +1,92 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: symling diff driver (Was: Re: git diff: add option for omitting the
- contents of deletes)
-Date: Mon, 28 Feb 2011 13:42:06 +0100
-Message-ID: <4D6B981E.5090206@drmicha.warpmail.net>
-References: <AANLkTi=++gcw5CDQnTRbhUGkvWc9Zm+Ct4Zm5oGGYKUh@mail.gmail.com> <7vk4gm7dz3.fsf@alter.siamese.dyndns.org> <4D6A6291.8050206@drmicha.warpmail.net> <7v7hclulz0.fsf@alter.siamese.dyndns.org> <7v39n9uldp.fsf@alter.siamese.dyndns.org> <4D6B4F6B.1040209@drmicha.warpmail.net> <20110228121726.GA5197@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff: add option for omitting the contents of deletes
+Date: Mon, 28 Feb 2011 07:59:09 -0500
+Message-ID: <20110228125909.GA9054@sigill.intra.peff.net>
+References: <AANLkTi=++gcw5CDQnTRbhUGkvWc9Zm+Ct4Zm5oGGYKUh@mail.gmail.com>
+ <7vk4gm7dz3.fsf@alter.siamese.dyndns.org>
+ <4D6A6291.8050206@drmicha.warpmail.net>
+ <7v7hclulz0.fsf@alter.siamese.dyndns.org>
+ <7v39n9uldp.fsf@alter.siamese.dyndns.org>
+ <4D6B4F6B.1040209@drmicha.warpmail.net>
+ <20110228121726.GA5197@sigill.intra.peff.net>
+ <20110228122335.GB5197@sigill.intra.peff.net>
+ <4D6B95E3.7040603@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 28 13:45:37 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mart =?utf-8?B?U8O1bWVybWFh?= <mrts.pydev@gmail.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Feb 28 13:59:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pu2Tm-0004qJ-Sc
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 13:45:35 +0100
+	id 1Pu2h4-0002wT-TQ
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 13:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab1B1Mpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 07:45:30 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:58369 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753789Ab1B1Mp3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 07:45:29 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 55CAB20560;
-	Mon, 28 Feb 2011 07:45:29 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 28 Feb 2011 07:45:29 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=qdhh5KbrlN3DWioFC7pqTZ7lPIA=; b=mKYbSrkxWKmU3RKIKxDV5Kq7mivtpu1aZIQasodFLsLHrHPQmNpdNkzRlCcYzOvAS8rkwDzO5XbcM8kDbKhuORBRGdXWS81pAFzS5E8tHho5sv75R1mVEl2EVj2wMKe7teXDyzuCHdOk3+0rCrnEoFydhswPUIUB1G+UZ9h9yMk=
-X-Sasl-enc: 7fgmtFEOh8SFJaxNOltMqIATI2AWOx6AG8OnVkEfNk+K 1298897129
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BB9C04427C7;
-	Mon, 28 Feb 2011 07:45:28 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <20110228121726.GA5197@sigill.intra.peff.net>
+	id S1754010Ab1B1M7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 07:59:13 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:51510 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753557Ab1B1M7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 07:59:13 -0500
+Received: (qmail 23052 invoked by uid 111); 28 Feb 2011 12:59:11 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 28 Feb 2011 12:59:11 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Feb 2011 07:59:09 -0500
+Content-Disposition: inline
+In-Reply-To: <4D6B95E3.7040603@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168106>
 
-Jeff King venit, vidit, dixit 28.02.2011 13:17:
-> On Mon, Feb 28, 2011 at 08:31:55AM +0100, Michael J Gruber wrote:
+On Mon, Feb 28, 2011 at 01:32:35PM +0100, Michael J Gruber wrote:
+
+> > Actually, thinking on this a bit more, I guess "-M" and "-C" are usable
+> > without the sha1. In fact, we don't even provide it for a strict 100%
+> > rename, and for a rename-with-patch, you can apply the patch, assuming
+> > you have the original file in any form. So they are really about "is
+> > your recipient using git", not "is your recipient using git _and_ will
+> > he/she have the right sha1".
 > 
-[non symlink stuff snipped]
->> Reminds me of my failed attempt to make the diff output for symlinks
->> more human-friendly. The latter can be solved with textconv, though.
+> $ git mv Makefile Dofile
+> $ git staged # yadayada
+> diff --git c/Makefile i/Dofile
+> similarity index 100%
+> rename from Makefile
+> rename to Dofile
 > 
-> I am still carrying around my "symlinks as a special class of diff"
-> patches if you are interested:
+> Same with copy.
 > 
->   https://github.com/peff/git/tree/jk/userdiff-symlinks
+> But that's not good, is it? I mean, Alice sends me her "copy patch" and
+> I send her my Makefile patch, both on top of the same base. We both
+> apply each other's patch cleanly. We end up with different "Dofile".
+> Checking the sha1 would prevent this. It's no surprise that patch
+> application is non-commutative, but shouldn't we catch this?
 
-This is marvelous (except for s/perl -pe/sed -e/, of course).
+Won't you either get a conflict or end up with the same Dofile? Clearly
+you will have a Dofile with your Makefile changes, as you applied the
+movement on top of your changes.
 
-Is there anything left to do to get this in pu? (The reference to
-"previous patch" may need to be more explicit.)
+Alice will either:
 
-Michael
+  1. Apply not using rename detection (e.g., not using git, or using
+     "git am" without "-3"). In this case, she gets a conflict because
+     she no longer has Makefile.
+
+  2. Apply using rename detection (e.g., via "git am -3"). In this case,
+     we will notice the movement of Makefile to Dofile, and apply the
+     patch to Dofile.
+
+Still, I do wonder if we should be including an index line on a straight
+rename patch. It lets the recipient check that what is being renamed is
+what they have (IOW, it gives the same check that they would do if they
+ahd the whole patch text). And then the recipient can decide how to
+resolve the conflict.
+
+-Peff
