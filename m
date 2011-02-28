@@ -1,97 +1,68 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git diff: add option for omitting the contents of deletes
-Date: Mon, 28 Feb 2011 17:10:06 +0100
-Message-ID: <4D6BC8DE.1090402@drmicha.warpmail.net>
-References: <AANLkTi=++gcw5CDQnTRbhUGkvWc9Zm+Ct4Zm5oGGYKUh@mail.gmail.com>	<7vk4gm7dz3.fsf@alter.siamese.dyndns.org>	<4D6A6291.8050206@drmicha.warpmail.net>	<7v7hclulz0.fsf@alter.siamese.dyndns.org>	<7v39n9uldp.fsf@alter.siamese.dyndns.org> <AANLkTim-vyWhgmFuewbd5e5iJiTC-EHz7g=efr2Sz-RH@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Using index-pack in place of verify-pack
+Date: Mon, 28 Feb 2011 08:16:10 -0800
+Message-ID: <7vfwr8jfsl.fsf@alter.siamese.dyndns.org>
+References: <1298886583-30965-1-git-send-email-gitster@pobox.com>
+ <AANLkTimrO6NqB0pXcfz=dAzA5fxz9ZizLyW7YV4Jan6S@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?ISO-8859-1?Q?Mart_S=F5mermaa?= <mrts.pydev@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 28 17:13:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 28 17:16:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pu5j6-0007A3-UF
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 17:13:37 +0100
+	id 1Pu5ls-0000Vs-Dr
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 17:16:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144Ab1B1QNc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 11:13:32 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49667 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751618Ab1B1QNb (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 11:13:31 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EEDB520659;
-	Mon, 28 Feb 2011 11:13:30 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 28 Feb 2011 11:13:30 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=vtTnPNRktKDm7AULKnRnV8yojoE=; b=tAIOS9vc6KIL1nPbQSFvxQUHUJpR9v2X3u1I1JpAYYOT2WoBLoVXhBQA3sdorbIFGjszIcsStC9Unk5nSKzAkTvsd7JsoNfdV+sILzkIezy2f9kvL7SsC7Wca/12QjfTRS/TiF8HimLweE+VVEQkKQfk7yKBg3UgmBoCRiF6qs8=
-X-Sasl-enc: DK64XXFmUyTi6GD9g4UFjCW7IU8ff2cDR5CgFS1b2jHm 1298909610
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 25F81404EC0;
-	Mon, 28 Feb 2011 11:13:30 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <AANLkTim-vyWhgmFuewbd5e5iJiTC-EHz7g=efr2Sz-RH@mail.gmail.com>
+	id S1754344Ab1B1QQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 11:16:22 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43787 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322Ab1B1QQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 11:16:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C8FBE3BF0;
+	Mon, 28 Feb 2011 11:17:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=p+zv1faV0gB2EVzcc73pdKYJ1u8=; b=OvFzuM
+	6HsGmgsLxa5BhdB2JXc5crMueiFbFYW5SsOjyUNoGuZFm7t0ULbvZuRBFe1/7vUI
+	aPawoN/DFSS9al+9S6p3X69nSepZrYcgOIQICv9xX1bAdsF88VBM9ECpz+wlHQhD
+	BCIBGWL+eQnoAtNoiRsDZeXYazbF78USgSB6k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h7pf7ayevSVIbdwNQ7by/4hEyE978qhs
+	aIGJfDrfMBX/vOtJ7jjkM7PvYn9Lx0Ffq9x2HCl6yYawikgj73k5r8NYd+zMnt0+
+	GpRJr92imEUT5Wi4SF40mXfY+S9197oARQly+CHc0yBDjTiy5eYJ9p1oFABbb90r
+	4oPLZ5wwB2k=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 983383BED;
+	Mon, 28 Feb 2011 11:17:35 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1C0853BE7; Mon, 28 Feb 2011
+ 11:17:30 -0500 (EST)
+In-Reply-To: <AANLkTimrO6NqB0pXcfz=dAzA5fxz9ZizLyW7YV4Jan6S@mail.gmail.com>
+ (Sverre Rabbelier's message of "Mon\, 28 Feb 2011 14\:07\:20 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 40DFDEE4-4356-11E0-85D0-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168118>
 
-Mart S=F5mermaa venit, vidit, dixit 28.02.2011 11:45:
-> Why not just make it reversible then?
->=20
-> $ git diff -M
-> diff --git a/foo b/bar
-> similarity index 100%
-> rename from foo
-> rename to bar
->=20
-> is nonreversible without git already (i.e. does not work with plain
-> patch AFAIK).
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-That "i.e." is a misunderstanding:
+> On Mon, Feb 28, 2011 at 10:49, Junio C Hamano <gitster@pobox.com> wrote:
+>> The basic idea, which comes from Shawn Pearce, is to run index-pack on a
+>> packfile being verified, and compare the resulting .idx file with the
+>> existing one, and make sure they match.
+>
+> Do you have any timings, on say, the kernel repo?
 
-I'm sure Junio meant that "git apply -R" should make sense on a path
-like that.
-
-You can easily undo (reverse) a rename without knowing the file
-contents; undeleting a file is more difficult :)
-
-> Adding
->=20
-> $ git diff -D
-> diff --git a/foo b/foo
-> deleted file mode 100644
-> delete foo
->=20
-> would be neither less nor more reversible -- it would also only work
-> with git apply
-> (assuming that apply is amended accordingly).
-
-To reverse it, we would need the sah1 lines, and the repo would need
-that blob.
-
-> Cognitive burdens aside, the "delete foo" output is both
-> more explicit and shorter anyway. Occam's razor FTW :)!
-
-Yes.
-
-> Junio, I won't push this further, so it's a final call -- if you give=
- -1,
-> then let -D fall to the colourless abyss of oblivion :), if +1 or +0,
-> I'll see if I can come up with a patch.
-
-You can always submit a patch, and you can never know what happens ;)
-
-> Best regards,
-> MS
-
-Uhm, and please don't do that top post thing and the cc culling.
-Readding J&J.
-
-[quote snipped]
+Not yet; the code has just become in good enough shape to be built and
+measured by anybody interested --- didn't I say WIP somewhere?
