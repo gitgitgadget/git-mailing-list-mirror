@@ -1,100 +1,70 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH 2/2] push: better error messages for detached HEAD and "no destination"
-Date: Mon, 28 Feb 2011 17:48:04 -0500
-Message-ID: <AANLkTim7O4O2UUWzZOrZOWN1zp2iruLYf3+3WMFTi8_5@mail.gmail.com>
-References: <1298927645-2716-1-git-send-email-Matthieu.Moy@imag.fr> <1298927645-2716-3-git-send-email-Matthieu.Moy@imag.fr>
+Date: Tue, 01 Mar 2011 00:00:19 +0100
+Message-ID: <vpqwrkjepdo.fsf@bauges.imag.fr>
+References: <1298927645-2716-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1298927645-2716-3-git-send-email-Matthieu.Moy@imag.fr>
+	<AANLkTim7O4O2UUWzZOrZOWN1zp2iruLYf3+3WMFTi8_5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 28 23:48:40 2011
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 00:00:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuBtQ-0003Hx-4L
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 23:48:40 +0100
+	id 1PuC4v-0000xi-8I
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 00:00:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753156Ab1B1Wsf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 17:48:35 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:57750 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752696Ab1B1Wse convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 17:48:34 -0500
-Received: by iwn34 with SMTP id 34so3553788iwn.19
-        for <git@vger.kernel.org>; Mon, 28 Feb 2011 14:48:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=u0dmNr/hrLbpLTrsByis2H4nU+eA01aDhYtNcQzJcAU=;
-        b=nkqxl7mS9nKnX3U4O5taI/wmlocoVYl5ppTR/8wvbCEd7ZhfiGXkiTpA4Pestk+tdw
-         VnJnkK2VzHPEFatna0JStkcJp3coz1QBSTYLGYi9jckXbfPddWLztcfTeIaZ3VeSDc2U
-         KYHL4zSuyks9evgNzFUhrA0Cdey0RO90SVUmQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=V4wySFVuTrJZkEO4Rq5eOOQfaloIXZWDZxDpQU/J272beF5lVzaEY8B0kLNAe59Q01
-         gktQP7hXa2HQTKOh+1gjI+mlUcopw0JWU1c38pvkFQTHN3zxfWl0U8qm+gZ43eERQNyw
-         BOoLjKmabf7FhKWpodEechhpNBqzKZmPJV/o8=
-Received: by 10.231.20.68 with SMTP id e4mr5759727ibb.194.1298933314159; Mon,
- 28 Feb 2011 14:48:34 -0800 (PST)
-Received: by 10.231.40.2 with HTTP; Mon, 28 Feb 2011 14:48:04 -0800 (PST)
-In-Reply-To: <1298927645-2716-3-git-send-email-Matthieu.Moy@imag.fr>
+	id S1753098Ab1B1XA2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 18:00:28 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:47984 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752667Ab1B1XA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 18:00:27 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p1SN0Hwh011041
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 1 Mar 2011 00:00:17 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PuC4i-0002B7-28; Tue, 01 Mar 2011 00:00:20 +0100
+In-Reply-To: <AANLkTim7O4O2UUWzZOrZOWN1zp2iruLYf3+3WMFTi8_5@mail.gmail.com>
+	(Jay Soffian's message of "Mon, 28 Feb 2011 17:48:04 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 01 Mar 2011 00:00:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p1SN0Hwh011041
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1299538819.05065@/KnfXGE3HD5qHekmytzm2g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168159>
 
-On Mon, Feb 28, 2011 at 4:14 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wr=
-ote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> ---
-> =C2=A0builtin/push.c | =C2=A0 12 ++++++++++--
-> =C2=A01 files changed, 10 insertions(+), 2 deletions(-)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "Either specify the URL from t=
+he command line or configure a remote repository using\n"
 >
-> @@ -152,7 +153,14 @@ static int do_push(const char *repo, int flags)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!remote) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (repo)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0die("bad repository '%s'", repo);
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("No destinatio=
-n configured to push to.");
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("No destinatio=
-n configured to push to.\n"
+> Maybe "Either specify the URL explicitly or configure..."
 
-The dangling preposition is awkward. How about:
+I prefer "from the command-line" to "explicitely", because "explicitely=
+"
+could mean "in a configuration file", or so.
 
-  No configured push destination.
+> Well, I just bikeshedded that 3 different colors, didn't I? You're we=
+lcome. :-)
 
-Or
+Thanks, I took the 2 other colors.
 
-  Push destination not configured.
-
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "Eit=
-her specify the URL from the command line or configure a remote reposit=
-ory using\n"
-
-Maybe "Either specify the URL explicitly or configure..."
-
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "\n"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 " =C2=
-=A0 =C2=A0git remote add <name> <url>\n"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "\n"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "and=
- then push using the remote name like\n"
-
-s/like//
-
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "\n"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 " =C2=
-=A0 =C2=A0git push <name>\n");
-
-Well, I just bikeshedded that 3 different colors, didn't I? You're welc=
-ome. :-)
-
-j.
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
