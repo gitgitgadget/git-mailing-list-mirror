@@ -1,325 +1,365 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/5] write_idx_file: introduce a struct to hold idx
- customization options
-Date: Mon, 28 Feb 2011 01:49:40 -0800
-Message-ID: <1298886583-30965-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH 3/5] index-pack: --verify
+Date: Mon, 28 Feb 2011 01:49:41 -0800
+Message-ID: <1298886583-30965-4-git-send-email-gitster@pobox.com>
 References: <1298886583-30965-1-git-send-email-gitster@pobox.com>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 28 10:50:10 2011
+X-From: git-owner@vger.kernel.org Mon Feb 28 10:50:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ptzk1-0000vE-4L
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 10:50:09 +0100
+	id 1Ptzk8-0000zy-LC
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 10:50:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274Ab1B1JuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 04:50:03 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48140 "EHLO
+	id S1753289Ab1B1JuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 04:50:07 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48193 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753118Ab1B1JuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 04:50:01 -0500
+	with ESMTP id S1753118Ab1B1JuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 04:50:04 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 104E13544;
-	Mon, 28 Feb 2011 04:51:18 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C53213547;
+	Mon, 28 Feb 2011 04:51:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=EFFI
-	o6vsSQl6scEaucin22zDLLs=; b=Yuz1ZbF8ZBH0AQPPS22+6t4r9jYqIAQRh5bV
-	zVEbkdqfQhG9qzPKq78Nr8wFH2fYJLc8vQhuIjbCyOEMWeZsOK77p7VUWnUqS4f3
-	A1vis0UGbp9sybElW2+SAWbjKT15euqVrrZ+Xknr9Z3E4bSY/UftC9sC9pP2lBEY
-	doH83A0=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=LYUG
+	99Us/7yUsicDAnT5nj1Uxvk=; b=McoBFhEUSOGfxu98Y5CcyATQoTtJvydiklLa
+	QN2POQK1Tzll+clZkNwVrdJYewZ5LI2Evyb/oTsAkNJEy0dsn89VBXjfw0+imW1s
+	bB7LETA5SExW83NGLR4gZND8bEUu/BhIbZpgcCOp6TOn6VreG53wTgcNfnzmDtrg
+	0FjcsO8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	gfZ5CjqLUibdCIuuFDYX05S3lnvOfxfuBUl7EByoBfBOXzHot4glVHwJoakVBpVf
-	KgJeqee1xxP7+jg6tdu9ohZQzGGz3cnpNe2mhhojh/IQUClK3q+FvYkOHIBVtT02
-	3Zajmpsb6Cky0EehVlj3ElNFQW4gmOsJSsP2stKz3Gk=
+	Guo5qBI3+irXjCDdedDpGwLXmiDRtzX4LSHj5X3VR+9BCZSHIJODoHbPZoG+IGiM
+	zN8vFp3/ktZhafvn9wfkyzmZsAgMNKZFx3Zvu7hILU1LWH7uHPiT0BNJFGXdAxef
+	MnTlF94QurhMV63iAQFa2EHUextgt8sewXh6YV4/1q8=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F212E3543;
-	Mon, 28 Feb 2011 04:51:16 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1FE53546;
+	Mon, 28 Feb 2011 04:51:20 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D47383542; Mon, 28 Feb 2011
- 04:51:14 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9121C3545; Mon, 28 Feb 2011
+ 04:51:18 -0500 (EST)
 X-Mailer: git-send-email 1.7.4.1.249.g4aa72
 In-Reply-To: <1298886583-30965-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 49568E82-4320-11E0-9C1A-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 4B90AA5C-4320-11E0-A286-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168089>
 
-Remove two globals, pack_idx_default version and pack_idx_off32_limit,
-and place them in a pack_idx_option structure.  Allow callers to pass
-it to write_idx_file() as a parameter.
+Given an existing .pack file and the .idx file that describes it,
+this new mode of operation reads and re-index the packfile and makes
+sure the existing .idx file matches the result byte-for-byte.
 
-Adjust all callers to the API change.
+All the objects in the .pack file are validated during this operation as
+well.  Unlike verify-pack, which visits each object described in the .idx
+file in the SHA-1 order, index-pack efficiently exploits the delta-chain
+to avoid rebuilding the objects that are used as the base of deltified
+objects over and over again while validating the objects.  This should
+result in much quicker verification of the .pack file and its .idx file.
+
+This version however cannot verify a .pack/.idx pair with a handcrafted v2
+index that uses 64-bit offset representation for offsets that would fit
+within 31-bit. You can create such an .idx file by giving a custom offset
+to --index-version option to the command.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/index-pack.c   |   23 +++++++++++++----------
- builtin/pack-objects.c |   20 +++++++++++---------
- fast-import.c          |   10 ++++++----
- pack-write.c           |   17 +++++++++++------
- pack.h                 |   11 +++++++----
- 5 files changed, 48 insertions(+), 33 deletions(-)
+
+ * This does not make much of a difference in a small project like git.git
+   itself, especially when the repository is packed with not very big depth
+   value.
+
+ builtin/index-pack.c  |   46 ++++++++++++++++++++++++++++++++++++++++------
+ csum-file.c           |   46 +++++++++++++++++++++++++++++++++++++++++++++-
+ csum-file.h           |    2 ++
+ pack-write.c          |   26 ++++++++++++++++----------
+ pack.h                |    4 ++++
+ t/t5302-pack-index.sh |   18 ++++++++++++++++++
+ 6 files changed, 125 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 1b5d83a..4df6818 100644
+index 4df6818..24a9a16 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -880,11 +880,12 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+@@ -11,7 +11,7 @@
+ #include "exec_cmd.h"
  
- static int git_index_pack_config(const char *k, const char *v, void *cb)
+ static const char index_pack_usage[] =
+-"git index-pack [-v] [-o <index-file>] [ --keep | --keep=<msg> ] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
++"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--verify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
+ 
+ struct object_entry
  {
-+	struct pack_idx_option *opts = cb;
-+
- 	if (!strcmp(k, "pack.indexversion")) {
--		pack_idx_default_version = git_config_int(k, v);
--		if (pack_idx_default_version > 2)
--			die("bad pack.indexversion=%"PRIu32,
--				pack_idx_default_version);
-+		opts->version = git_config_int(k, v);
-+		if (opts->version > 2)
-+			die("bad pack.indexversion=%"PRIu32, opts->version);
- 		return 0;
- 	}
+@@ -891,9 +891,32 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
  	return git_default_config(k, v, cb);
-@@ -898,6 +899,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ }
+ 
++static void read_idx_option(struct pack_idx_option *opts, const char *pack_name)
++{
++	struct packed_git *p = add_packed_git(pack_name, strlen(pack_name), 1);
++
++	if (!p)
++		die("Cannot open existing pack file '%s'", pack_name);
++	if (open_pack_index(p))
++		die("Cannot open existing pack idx file for '%s'", pack_name);
++
++	/* Read the attributes from the existing idx file */
++	opts->version = p->index_version;
++
++	/*
++	 * Get rid of the idx file as we do not need it anymore.
++	 * NEEDSWORK: extract this bit from free_pack_by_name() in
++	 * sha1_file.c, perhaps?  It shouldn't matter very much as we
++	 * know we haven't installed this pack (hence we never have
++	 * read anything from it).
++	 */
++	close_pack_index(p);
++	free(p);
++}
++
+ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ {
+-	int i, fix_thin_pack = 0;
++	int i, fix_thin_pack = 0, verify = 0;
+ 	const char *curr_pack, *curr_index;
+ 	const char *index_name = NULL, *pack_name = NULL;
  	const char *keep_name = NULL, *keep_msg = NULL;
- 	char *index_name_buf = NULL, *keep_name_buf = NULL;
- 	struct pack_idx_entry **idx_objects;
-+	struct pack_idx_option opts;
- 	unsigned char pack_sha1[20];
+@@ -922,6 +945,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				fix_thin_pack = 1;
+ 			} else if (!strcmp(arg, "--strict")) {
+ 				strict = 1;
++			} else if (!strcmp(arg, "--verify")) {
++				verify = 1;
+ 			} else if (!strcmp(arg, "--keep")) {
+ 				keep_msg = "";
+ 			} else if (!prefixcmp(arg, "--keep=")) {
+@@ -988,6 +1013,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 		strcpy(keep_name_buf + len - 5, ".keep");
+ 		keep_name = keep_name_buf;
+ 	}
++	if (verify) {
++		if (!index_name)
++			die("--verify with no packfile name given");
++		read_idx_option(&opts, index_name);
++		opts.flags |= WRITE_IDX_VERIFY;
++	}
  
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
-@@ -905,7 +907,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 
- 	read_replace_refs = 0;
- 
--	git_config(git_index_pack_config, NULL);
-+	reset_pack_idx_option(&opts);
-+	git_config(git_index_pack_config, &opts);
- 	if (prefix && chdir(prefix))
- 		die("Cannot come back to cwd");
- 
-@@ -944,12 +947,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 				index_name = argv[++i];
- 			} else if (!prefixcmp(arg, "--index-version=")) {
- 				char *c;
--				pack_idx_default_version = strtoul(arg + 16, &c, 10);
--				if (pack_idx_default_version > 2)
-+				opts.version = strtoul(arg + 16, &c, 10);
-+				if (opts.version > 2)
- 					die("bad %s", arg);
- 				if (*c == ',')
--					pack_idx_off32_limit = strtoul(c+1, &c, 0);
--				if (*c || pack_idx_off32_limit & 0x80000000)
-+					opts.off32_limit = strtoul(c+1, &c, 0);
-+				if (*c || opts.off32_limit & 0x80000000)
- 					die("bad %s", arg);
- 			} else
- 				usage(index_pack_usage);
-@@ -1032,7 +1035,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	idx_objects = xmalloc((nr_objects) * sizeof(struct pack_idx_entry *));
- 	for (i = 0; i < nr_objects; i++)
- 		idx_objects[i] = &objects[i].idx;
--	curr_index = write_idx_file(index_name, idx_objects, nr_objects, pack_sha1);
-+	curr_index = write_idx_file(index_name, idx_objects, nr_objects, &opts, pack_sha1);
+ 	curr_pack = open_pack_file(pack_name);
+ 	parse_pack_header();
+@@ -1038,10 +1069,13 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	curr_index = write_idx_file(index_name, idx_objects, nr_objects, &opts, pack_sha1);
  	free(idx_objects);
  
- 	final(pack_name, curr_pack,
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b0503b2..dc471b7 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -70,6 +70,7 @@ static int local;
- static int incremental;
- static int ignore_packed_keep;
- static int allow_ofs_delta;
-+static struct pack_idx_option pack_idx_opts;
- static const char *base_name;
- static int progress = 1;
- static int window = 10;
-@@ -493,8 +494,8 @@ static void write_pack_file(void)
- 			const char *idx_tmp_name;
- 			char tmpname[PATH_MAX];
- 
--			idx_tmp_name = write_idx_file(NULL, written_list,
--						      nr_written, sha1);
-+			idx_tmp_name = write_idx_file(NULL, written_list, nr_written,
-+						      &pack_idx_opts, sha1);
- 
- 			snprintf(tmpname, sizeof(tmpname), "%s-%s.pack",
- 				 base_name, sha1_to_hex(sha1));
-@@ -1880,10 +1881,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 	if (!strcmp(k, "pack.indexversion")) {
--		pack_idx_default_version = git_config_int(k, v);
--		if (pack_idx_default_version > 2)
-+		pack_idx_opts.version = git_config_int(k, v);
-+		if (pack_idx_opts.version > 2)
- 			die("bad pack.indexversion=%"PRIu32,
--				pack_idx_default_version);
-+			    pack_idx_opts.version);
- 		return 0;
- 	}
- 	if (!strcmp(k, "pack.packsizelimit")) {
-@@ -2130,6 +2131,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	rp_av[1] = "--objects"; /* --thin will make it --objects-edge */
- 	rp_ac = 2;
- 
-+	reset_pack_idx_option(&pack_idx_opts);
- 	git_config(git_pack_config, NULL);
- 	if (!pack_compression_seen && core_compression_seen)
- 		pack_compression_level = core_compression_level;
-@@ -2274,12 +2276,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		}
- 		if (!prefixcmp(arg, "--index-version=")) {
- 			char *c;
--			pack_idx_default_version = strtoul(arg + 16, &c, 10);
--			if (pack_idx_default_version > 2)
-+			pack_idx_opts.version = strtoul(arg + 16, &c, 10);
-+			if (pack_idx_opts.version > 2)
- 				die("bad %s", arg);
- 			if (*c == ',')
--				pack_idx_off32_limit = strtoul(c+1, &c, 0);
--			if (*c || pack_idx_off32_limit & 0x80000000)
-+				pack_idx_opts.off32_limit = strtoul(c+1, &c, 0);
-+			if (*c || pack_idx_opts.off32_limit & 0x80000000)
- 				die("bad %s", arg);
- 			continue;
- 		}
-diff --git a/fast-import.c b/fast-import.c
-index 3886a1b..91e936d 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -315,6 +315,7 @@ static unsigned int atom_cnt;
- static struct atom_str **atom_table;
- 
- /* The .pack file being generated */
-+static struct pack_idx_option pack_idx_opts;
- static unsigned int pack_id;
- static struct sha1file *pack_file;
- static struct packed_git *pack_data;
-@@ -905,7 +906,7 @@ static const char *create_index(void)
- 	if (c != last)
- 		die("internal consistency error creating the index");
- 
--	tmpfile = write_idx_file(NULL, idx, object_count, pack_data->sha1);
-+	tmpfile = write_idx_file(NULL, idx, object_count, &pack_idx_opts, pack_data->sha1);
- 	free(idx);
- 	return tmpfile;
- }
-@@ -3055,10 +3056,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 	if (!strcmp(k, "pack.indexversion")) {
--		pack_idx_default_version = git_config_int(k, v);
--		if (pack_idx_default_version > 2)
-+		pack_idx_opts.version = git_config_int(k, v);
-+		if (pack_idx_opts.version > 2)
- 			die("bad pack.indexversion=%"PRIu32,
--			    pack_idx_default_version);
-+			    pack_idx_opts.version);
- 		return 0;
- 	}
- 	if (!strcmp(k, "pack.packsizelimit")) {
-@@ -3116,6 +3117,7 @@ int main(int argc, const char **argv)
- 		usage(fast_import_usage);
- 
- 	setup_git_directory();
-+	reset_pack_idx_option(&pack_idx_opts);
- 	git_config(git_pack_config, NULL);
- 	if (!pack_compression_seen && core_compression_seen)
- 		pack_compression_level = core_compression_level;
-diff --git a/pack-write.c b/pack-write.c
-index a905ca4..f739a0f 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -2,8 +2,12 @@
- #include "pack.h"
+-	final(pack_name, curr_pack,
+-		index_name, curr_index,
+-		keep_name, keep_msg,
+-		pack_sha1);
++	if (!verify)
++		final(pack_name, curr_pack,
++		      index_name, curr_index,
++		      keep_name, keep_msg,
++		      pack_sha1);
++	else
++		close(input_fd);
+ 	free(objects);
+ 	free(index_name_buf);
+ 	free(keep_name_buf);
+diff --git a/csum-file.c b/csum-file.c
+index 4d50cc5..f70e3dd 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -11,8 +11,20 @@
+ #include "progress.h"
  #include "csum-file.h"
  
--uint32_t pack_idx_default_version = 2;
--uint32_t pack_idx_off32_limit = 0x7fffffff;
-+void reset_pack_idx_option(struct pack_idx_option *opts)
-+{
-+	memset(opts, 0, sizeof(*opts));
-+	opts->version = 2;
-+	opts->off32_limit = 0x7fffffff;
-+}
+-static void flush(struct sha1file *f, void * buf, unsigned int count)
++static void flush(struct sha1file *f, void *buf, unsigned int count)
+ {
++	if (0 <= f->check_fd && count)  {
++		unsigned char check_buffer[8192];
++		ssize_t ret = read_in_full(f->check_fd, check_buffer, count);
++
++		if (ret < 0)
++			die_errno("%s: sha1 file read error", f->name);
++		if (ret < count)
++			die("%s: sha1 file truncated", f->name);
++		if (memcmp(buf, check_buffer, count))
++			die("sha1 file '%s' validation error", f->name);
++	}
++
+ 	for (;;) {
+ 		int ret = xwrite(f->fd, buf, count);
+ 		if (ret > 0) {
+@@ -59,6 +71,17 @@ int sha1close(struct sha1file *f, unsigned char *result, unsigned int flags)
+ 		fd = 0;
+ 	} else
+ 		fd = f->fd;
++	if (0 <= f->check_fd) {
++		char discard;
++		int cnt = read_in_full(f->check_fd, &discard, 1);
++		if (cnt < 0)
++			die_errno("%s: error when reading the tail of sha1 file",
++				  f->name);
++		if (cnt)
++			die("%s: sha1 file has trailing garbage", f->name);
++		if (close(f->check_fd))
++			die_errno("%s: sha1 file error on close", f->name);
++	}
+ 	free(f);
+ 	return fd;
+ }
+@@ -101,10 +124,31 @@ struct sha1file *sha1fd(int fd, const char *name)
+ 	return sha1fd_throughput(fd, name, NULL);
+ }
  
- static int sha1_compare(const void *_a, const void *_b)
++struct sha1file *sha1fd_check(const char *name)
++{
++	int sink, check;
++	struct sha1file *f;
++
++	sink = open("/dev/null", O_WRONLY);
++	if (sink < 0)
++		return NULL;
++	check = open(name, O_RDONLY);
++	if (check < 0) {
++		int saved_errno = errno;
++		close(sink);
++		errno = saved_errno;
++		return NULL;
++	}
++	f = sha1fd(sink, name);
++	f->check_fd = check;
++	return f;
++}
++
+ struct sha1file *sha1fd_throughput(int fd, const char *name, struct progress *tp)
  {
-@@ -18,7 +22,8 @@ static int sha1_compare(const void *_a, const void *_b)
-  * will be sorted by SHA1 on exit.
-  */
- const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects,
--			   int nr_objects, unsigned char *sha1)
-+			   int nr_objects, const struct pack_idx_option *opts,
-+			   unsigned char *sha1)
- {
- 	struct sha1file *f;
- 	struct pack_idx_entry **sorted_by_sha, **list, **last;
-@@ -55,7 +60,7 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 	f = sha1fd(fd, index_name);
+ 	struct sha1file *f = xmalloc(sizeof(*f));
+ 	f->fd = fd;
++	f->check_fd = -1;
+ 	f->offset = 0;
+ 	f->total = 0;
+ 	f->tp = tp;
+diff --git a/csum-file.h b/csum-file.h
+index 294add2..6a7967c 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -6,6 +6,7 @@ struct progress;
+ /* A SHA1-protected file */
+ struct sha1file {
+ 	int fd;
++	int check_fd;
+ 	unsigned int offset;
+ 	git_SHA_CTX ctx;
+ 	off_t total;
+@@ -21,6 +22,7 @@ struct sha1file {
+ #define CSUM_FSYNC	2
+ 
+ extern struct sha1file *sha1fd(int fd, const char *name);
++extern struct sha1file *sha1fd_check(const char *name);
+ extern struct sha1file *sha1fd_throughput(int fd, const char *name, struct progress *tp);
+ extern int sha1close(struct sha1file *, unsigned char *, unsigned int);
+ extern int sha1write(struct sha1file *, void *, unsigned int);
+diff --git a/pack-write.c b/pack-write.c
+index f739a0f..16529c3 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -47,17 +47,22 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
+ 	else
+ 		sorted_by_sha = list = last = NULL;
+ 
+-	if (!index_name) {
+-		static char tmpfile[PATH_MAX];
+-		fd = odb_mkstemp(tmpfile, sizeof(tmpfile), "pack/tmp_idx_XXXXXX");
+-		index_name = xstrdup(tmpfile);
++	if (opts->flags & WRITE_IDX_VERIFY) {
++		assert(index_name);
++		f = sha1fd_check(index_name);
+ 	} else {
+-		unlink(index_name);
+-		fd = open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
++		if (!index_name) {
++			static char tmpfile[PATH_MAX];
++			fd = odb_mkstemp(tmpfile, sizeof(tmpfile), "pack/tmp_idx_XXXXXX");
++			index_name = xstrdup(tmpfile);
++		} else {
++			unlink(index_name);
++			fd = open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
++		}
++		if (fd < 0)
++			die_errno("unable to create '%s'", index_name);
++		f = sha1fd(fd, index_name);
+ 	}
+-	if (fd < 0)
+-		die_errno("unable to create '%s'", index_name);
+-	f = sha1fd(fd, index_name);
  
  	/* if last object's offset is >= 2^31 we should use index V2 */
--	index_version = (last_obj_offset >> 31) ? 2 : pack_idx_default_version;
-+	index_version = (last_obj_offset >> 31) ? 2 : opts->version;
+ 	index_version = (last_obj_offset >> 31) ? 2 : opts->version;
+@@ -142,7 +147,8 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
+ 	}
  
- 	/* index versions 2 and above need a header */
- 	if (index_version >= 2) {
-@@ -115,7 +120,7 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 		list = sorted_by_sha;
- 		for (i = 0; i < nr_objects; i++) {
- 			struct pack_idx_entry *obj = *list++;
--			uint32_t offset = (obj->offset <= pack_idx_off32_limit) ?
-+			uint32_t offset = (obj->offset <= opts->off32_limit) ?
- 				obj->offset : (0x80000000 | nr_large_offset++);
- 			offset = htonl(offset);
- 			sha1write(f, &offset, 4);
-@@ -126,7 +131,7 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 		while (nr_large_offset) {
- 			struct pack_idx_entry *obj = *list++;
- 			uint64_t offset = obj->offset;
--			if (offset > pack_idx_off32_limit) {
-+			if (offset > opts->off32_limit) {
- 				uint32_t split[2];
- 				split[0] = htonl(offset >> 32);
- 				split[1] = htonl(offset & 0xffffffff);
+ 	sha1write(f, sha1, 20);
+-	sha1close(f, NULL, CSUM_FSYNC);
++	sha1close(f, NULL, ((opts->flags & WRITE_IDX_VERIFY)
++			    ? CSUM_CLOSE : CSUM_FSYNC));
+ 	git_SHA1_Final(sha1, &ctx);
+ 	return index_name;
+ }
 diff --git a/pack.h b/pack.h
-index bb27576..953f57e 100644
+index 953f57e..dddafdd 100644
 --- a/pack.h
 +++ b/pack.h
-@@ -34,9 +34,12 @@ struct pack_header {
-  */
+@@ -35,6 +35,10 @@ struct pack_header {
  #define PACK_IDX_SIGNATURE 0xff744f63	/* "\377tOc" */
  
--/* These may be overridden by command-line parameters */
--extern uint32_t pack_idx_default_version;
--extern uint32_t pack_idx_off32_limit;
-+struct pack_idx_option {
-+	uint32_t version;
-+	uint32_t off32_limit;
-+};
+ struct pack_idx_option {
++	unsigned flags;
++	/* flag bits */
++#define WRITE_IDX_VERIFY 01
 +
-+extern void reset_pack_idx_option(struct pack_idx_option *);
- 
- /*
-  * Packed object index header
-@@ -55,7 +58,7 @@ struct pack_idx_entry {
- 	off_t offset;
+ 	uint32_t version;
+ 	uint32_t off32_limit;
  };
+diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
+index b34ea93..7c5fa03 100755
+--- a/t/t5302-pack-index.sh
++++ b/t/t5302-pack-index.sh
+@@ -65,6 +65,14 @@ test_expect_success \
+     'cmp "test-1-${pack1}.idx" "1.idx" &&
+      cmp "test-2-${pack2}.idx" "2.idx"'
  
--extern const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects, int nr_objects, unsigned char *sha1);
-+extern const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects, int nr_objects, const struct pack_idx_option *, unsigned char *sha1);
- extern int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, off_t len, unsigned int nr);
- extern int verify_pack_index(struct packed_git *);
- extern int verify_pack(struct packed_git *);
++test_expect_success 'index-pack --verify on index version 1' '
++	git index-pack --verify "test-1-${pack1}.pack"
++'
++
++test_expect_success 'index-pack --verify on index version 2' '
++	git index-pack --verify "test-2-${pack2}.pack"
++'
++
+ test_expect_success \
+     'index v2: force some 64-bit offsets with pack-objects' \
+     'pack3=$(git pack-objects --index-version=2,0x40000 test-3 <obj-list)'
+@@ -93,6 +101,16 @@ test_expect_success OFF64_T \
+     '64-bit offsets: index-pack result should match pack-objects one' \
+     'cmp "test-3-${pack3}.idx" "3.idx"'
+ 
++test_expect_success OFF64_T 'index-pack --verify on 64-bit offset v2 (cheat)' '
++	# This cheats by knowing which lower offset should still be encoded
++	# in 64-bit representation.
++	git index-pack --verify --index-version=2,0x40000 "test-3-${pack3}.pack"
++'
++
++test_expect_failure OFF64_T 'index-pack --verify on 64-bit offset v2' '
++	git index-pack --verify "test-3-${pack3}.pack"
++'
++
+ # returns the object number for given object in given pack index
+ index_obj_nr()
+ {
 -- 
 1.7.4.1.249.g4aa72
