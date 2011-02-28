@@ -1,103 +1,95 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: git-grep to operate across who repository and not just CWD?
-Date: Mon, 28 Feb 2011 17:25:58 -0500
-Message-ID: <4D6C20F6.3070905@cisco.com>
-References: <AANLkTimnOSzF1o-fX-n7b26Qx2aLP3aU3pTMGY_f5hKy@mail.gmail.com> <4D6B6A8B.20709@drmicha.warpmail.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [1.8.0] fix branch.autosetupmerge and branch.autosetuprebase
+Date: Mon, 28 Feb 2011 17:37:49 -0500
+Message-ID: <AANLkTi=Ei-Gr3=O0_dfaCekQ0+nB8v1kZYT7sTw-Ydm+@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: David Chanters <david.chanters@googlemail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Feb 28 23:35:31 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Dustin Sallings <dustin@spy.net>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 28 23:38:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuBgg-0005be-Ce
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 23:35:30 +0100
+	id 1PuBjV-0006uu-N4
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 23:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804Ab1B1WfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 17:35:25 -0500
-Received: from rtp-iport-2.cisco.com ([64.102.122.149]:61185 "EHLO
-	rtp-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752696Ab1B1WfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 17:35:24 -0500
-X-Greylist: delayed 564 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Feb 2011 17:35:24 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1997; q=dns/txt;
-  s=iport; t=1298932524; x=1300142124;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=NHetpxNu6+SV71rJkox4Ky34JfWDUqOn+JFATMSA4cs=;
-  b=G2CEklfEd+OVdbizZgXhbwsVSxHVeK875s4yuYz98ACiRwNkrUE4ffU9
-   pEfqyfCvvCsDzeIAr7twZpzbGXrWzj4bENrvIHTx7DbXgSfQmiMJnSqUi
-   GrHu+7cIJqszornRSIwPHMqwursjq7vLWpInIymHc42jxiLPh2anIi3xR
-   k=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAE+va01AZnwN/2dsb2JhbACmRXSgAZtjhWEEhQ+HDYM+
-X-IronPort-AV: E=Sophos;i="4.62,242,1297036800"; 
-   d="scan'208";a="221262231"
-Received: from rtp-core-2.cisco.com ([64.102.124.13])
-  by rtp-iport-2.cisco.com with ESMTP; 28 Feb 2011 22:25:59 +0000
-Received: from [64.100.104.120] (dhcp-64-100-104-120.cisco.com [64.100.104.120])
-	by rtp-core-2.cisco.com (8.13.8/8.14.3) with ESMTP id p1SMPxu1024500;
-	Mon, 28 Feb 2011 22:25:59 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <4D6B6A8B.20709@drmicha.warpmail.net>
-X-Enigmail-Version: 1.1.2
+	id S1752711Ab1B1WiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 17:38:21 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37606 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752190Ab1B1WiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 17:38:20 -0500
+Received: by iwn34 with SMTP id 34so3546731iwn.19
+        for <git@vger.kernel.org>; Mon, 28 Feb 2011 14:38:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=jg/TfHG5YJtJBpkhhGqIIKa/ojg3RFf9gguebLOI7vw=;
+        b=LgpUGbviQycUfI23bKan/yJHJ6dk1dausnhK6joh6T07uenDe+qbqtjtIsMAPJshlp
+         jKa7FhFK4z2lCvkJnmM97S7rFQF5el5dfjynXZp3w2f5u7z+KSl6KsCiS3rlNTzVUfkL
+         KZKCsfiYIwQrfqDW/7z+hs2q7hhGILJTfGydo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=LqNo/EGCVw7m8Uuc32IhFf3mJUPXkELzX/yD6TMK/IFcO9jo8wlQXdKAUri/Rf4sNj
+         cvSR/DD3C088UXLbd3D2i7Byn1K1JeXLlYrsTdLDGeVUdAqyjXDQTQG3nCpXbYi5wjwC
+         iFRCGADNV02CRP1fXbBNFNL0giqHBIk2CoOl8=
+Received: by 10.42.176.7 with SMTP id bc7mr1534864icb.257.1298932700183; Mon,
+ 28 Feb 2011 14:38:20 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Mon, 28 Feb 2011 14:37:49 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168157>
 
-(cc list: Pardon this duplicate attempt)
+It strikes me that branch.autosetupmerge and branch.autosetuprebase
+are a bit crufty. So a proposal:
 
-On 02/28/2011 04:27 AM, Michael J Gruber wrote:
-> David Chanters venit, vidit, dixit 28.02.2011 01:17:
->> > Hi all,
->> > 
->> > [ Please Cc me as I am not subscribed to this list, thanks. ]
->> > 
->> > I'm wondering if there's an easy way to get git-grep (and I suppose
->> > other commands which operate on a per-repository level rather than
->> > per-tree) to work across the whole repository?
-> git grep -- $(git rev-parse --show-cdup)
->
-> is the best we have right now. I think we're still looking for a good
-> way to denote "root of repo" (like "." for cwd).
->
-> Also, we're thinking of changing a few defaults (to repo-wide), but "git
-> grep" is meant to stay close to ordinary grep.
+Proposal
+========
 
-But git grep is different than grep in exactly the "files selection"
-area.  With grep, I always have to specify the files to search.  With
-git-grep, I don't.
+1. Deprecate branch.autosetupmerge. Right now it's got three choices:
+false, true, and always, defaulting to "true"
 
-Oridinary grep with no paths fails (reads stdin), so when I make this
-mistake it is always immediately evident. I retry the command with
-paths/wildcards.  But git-grep with no path "works" and I am likely to
-forget that it worked only on my $PWD.
+But I wonder, does anyone use "false" and not set the upstream? And I
+think that "always" is a misfeature (I'm qualified to say this, see
+9ed36cf). 99% of the time, I think you are doing one of the following:
 
-git-grep also includes subdirectories and excludes untracked files by
-default.  This makes git-grep feel like the "repository grep" tool that
-it is. The fact that it does _not_ search from the top of the repository
-by default seems (to me) to be the only oddball case.
+  $ git branch topic origin/master    # 1
+  $ git branch topic master           # 2
+  $ git branch topic some_other_topic # 3
 
-I would be much more comfortable with David's proposed option turned on
-always.  When I want to search "here", I can add a dot.
+In the case of (1), you want origin/master to be configured as the
+upstream for topic. In the case of (2), even though you are starting
+at master, I'll bet you want the upstream to be origin/master. In the
+case of (3), even though you are starting at some_other_topic, I'll
+bet you want topic to have the same configured upstream as
+some_other_topic.
 
-  git grep foo       # search the whole repository
-  git grep foo -- .  # Search only from $PWD
+So, my proposal wrt to branch.autosetupmerge is that we deprecate it
+and always do the following:
 
-Maybe it's dangerous as an always-on option, as it can break scripts. 
-And I'd be happy-ish even with a --full-tree option.  But I think I
-would eventually alias it so it always does what I expect.
+- When creating a local branch L from remote-tracking branch R, set R
+as upstream of L.
+- When creating a local branch L1 from other local branch L2, whose
+upstream is remote-tracking branch R, set R as upstream of L1.
 
-I know that's not what the original question was, but it's the behavior
-I often erroneously expect.
+For the 1% of the time that you really want local branch L2 to be
+upstream of L1, specify that explicitly when you create the branch.
 
-Thoughts?
+2. Deprecate branch.autosetuprebase. Pull's default action shouldn't
+be specified when the branch is created. Rather, add a "pull.rebase"
+boolean defaulting to false, and which is overridden per-branch by
+branch.<name>.rebase.
 
-Phil
+Migration
+=========
+
+Let's first see if the proposal flies because it's good, or whether it
+has flies because it stinks. :-)
+
+j.
