@@ -1,83 +1,76 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH svn-fe] fast-import: make code "-Wpointer-arith" clean
-Date: Mon, 28 Feb 2011 22:36:33 +0100
-Message-ID: <AANLkTikD8qQKdhXN9dx+hk8r=eGRBtc3eRSFU2vDxmsP@mail.gmail.com>
-References: <20101224080505.GA29681@burratino> <20110226114435.GB12231@elie>
- <7vhbbolm5q.fsf@alter.siamese.dyndns.org> <20110228213210.GD1942@elie>
+From: Jeff King <peff@peff.net>
+Subject: Re: remote's HEAD not detected correctly
+Date: Mon, 28 Feb 2011 16:42:07 -0500
+Message-ID: <20110228214207.GA5854@sigill.intra.peff.net>
+References: <AANLkTimWieViK4JcJQuTDiRiAdyvHuwkwy8fL+XUV+i-@mail.gmail.com>
+ <AANLkTimqTa24QSWACFX9GErt-Tn+wLda1s_AvH7dzEpm@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 28 22:37:35 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jeffrey Middleton <jefromi@gmail.com>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 28 22:42:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuAma-0001R8-TZ
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 22:37:33 +0100
+	id 1PuAr8-0003zH-1U
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 22:42:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753095Ab1B1VhR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 16:37:17 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:33143 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753018Ab1B1VhN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 16:37:13 -0500
-Received: by ywj3 with SMTP id 3so1422821ywj.19
-        for <git@vger.kernel.org>; Mon, 28 Feb 2011 13:37:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=K0I9rEMqF7Ie6m+L7ePP6fFo5BQPsc8FSYmUwH9qemk=;
-        b=HvYkIs0OzKOzTy948UQ9jczlEPCGzAV3WGiAU3xdmzQoRFZYWRvclojZO6kK+lXq3V
-         ULJlYjlJNJc6Tq1w8Q+FSyUPKtGJAktZiWVRIZ2iyLN+YhmrDkLPahcxJ30IN3zQB6DG
-         guk8lT5x215jmSUgNz5FKZZ0QqLB/YxD+jfoo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TQ15WXkYeZY7NKUNrrD1SyP1oP/KY2SsXUIpuisxbGtBP9Odu8TBQLYcTeaaxM+pTi
-         M9Dshz07+RnFFiYivxrfMxDUBglSyhdmRoIaPM2Tg9QaZVOjkAao24Q5w+CLPjLHukIg
-         BePbt//h9c03hEQJFmchYOWULg04pCt4PmNaY=
-Received: by 10.150.8.10 with SMTP id 10mr7907756ybh.7.1298929033099; Mon, 28
- Feb 2011 13:37:13 -0800 (PST)
-Received: by 10.151.11.12 with HTTP; Mon, 28 Feb 2011 13:36:33 -0800 (PST)
-In-Reply-To: <20110228213210.GD1942@elie>
+	id S1753165Ab1B1VmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 16:42:07 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:37413 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752948Ab1B1VmG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 16:42:06 -0500
+Received: (qmail 28829 invoked by uid 111); 28 Feb 2011 21:42:06 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 28 Feb 2011 21:42:06 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Feb 2011 16:42:07 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTimqTa24QSWACFX9GErt-Tn+wLda1s_AvH7dzEpm@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168151>
 
-Heya,
+On Mon, Feb 28, 2011 at 01:01:08PM -0800, Shawn O. Pearce wrote:
 
-On Mon, Feb 28, 2011 at 22:32, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> This should fix it, I suppose? =C2=A0A
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-std=3Dc99 -O3 -Wall -W
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-sign-compare
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-unused-parameter
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-missing-field-initializers
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-empty-body
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-pointer-to-int-cast
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-type-limits
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-unused-but-set-variable
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wold-style-definition -Wpointer-arith -Wv=
-la
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-Wdeclaration-after-statement -Werror
->
-> build passes, except for an "unsigned long expire" in builtin-reflog
-> that confuses this copy of gcc.
+> On Mon, Feb 28, 2011 at 12:52, Jeffrey Middleton <jefromi@gmail.com> wrote:
+> >
+> > So somehow, the clone misses the fact that origin's HEAD is pu, not
+> > master, and git remote is only partially aware of this. It looks like
+> > this only happens when the two branches in question are pointing to
+> > the same commit; perhaps git is trying to guess what HEAD is via the
+> > SHA1? I know that ls-remote prints an SHA1, not a refname, for HEAD -
+> > is it not actually possible to get that information through a general
+> > transport protocol?
+> 
+> Right. The transport protocol doesn't expose the name that a symbolic
+> reference points to, only its current value. Thus clients are forced
+> to guess by looking for another reference whose current SHA-1 is the
+> same. If there is more than one, its taking a best guess.
+> 
+> There have been a few attempts to expand the protocol and include the
+> current symbolic reference target name, but thus far it hasn't gotten
+> much beyond the idea stage.
 
-How come this slipped by unnoticed (except by Junio)? Is the default
-Makefile not strict enough?
+It depends on the transport protocol. It actually works over dumb http,
+though I suspect that is not getting used much these days. I also
+implemented a quick-and-dirty patch for local repositories here:
 
---=20
-Cheers,
+  http://article.gmane.org/gmane.comp.version-control.git/110049
 
-Sverre Rabbelier
+which would make Jeffrey's test pass, but I have a feeling it was just a
+simple test case and that he actually cares about real remotes.
+
+-Peff
+
+PS I think the "send-HEAD-explicitly" patch series was here:
+
+     http://thread.gmane.org/gmane.comp.version-control.git/102039
+
+   I had some complaints at the time, but re-reading it I don't see
+   anything that would prevent us from revisiting the topic now.
