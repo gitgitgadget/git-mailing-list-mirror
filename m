@@ -1,76 +1,97 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2011, #06; Sun, 27)
-Date: Mon, 28 Feb 2011 14:22:42 +0100
-Message-ID: <AANLkTikW1GVzFoq=zUxvi7MTcUYBLO6fbjJPVZziLUk8@mail.gmail.com>
-References: <7vy650k62n.fsf@alter.siamese.dyndns.org>
+From: Michael Meeks <michael.meeks@novell.com>
+Subject: copying git repositories ...
+Date: Mon, 28 Feb 2011 14:25:02 +0000
+Organization: Novell, Inc.
+Message-ID: <1298903102.14697.127.camel@lenovo-w500>
+References: <1298388877.32648.171.camel@lenovo-w500>
+	 <993F66D7-7659-4AA5-9931-1EB66CAA01DB@silverinsanity.com>
+	 <1298565560.32648.258.camel@lenovo-w500>
+	 <201102252155.13466.andres@anarazel.de>
+Reply-To: michael.meeks@novell.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 28 14:23:29 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org,
+	kendy@novell.com, Norbert Thiebaud <nthiebaud@gmail.com>
+To: Andres Freund <andres@anarazel.de>
+X-From: git-owner@vger.kernel.org Mon Feb 28 15:25:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pu34R-0007QE-Qw
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 14:23:28 +0100
+	id 1Pu42l-0005GW-4b
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 15:25:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932Ab1B1NXX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 08:23:23 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:48020 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753871Ab1B1NXW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 08:23:22 -0500
-Received: by gxk8 with SMTP id 8so1507477gxk.19
-        for <git@vger.kernel.org>; Mon, 28 Feb 2011 05:23:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=jNa15iATJ84Blp7c8cqkl8sXHQ1GE/X9tKuvoAYJ7Ps=;
-        b=Kgvk+cCf6aex7/h3+oHK+m99Vhafz1MruP9cqYC9+FzDDu4v0XhRX0GxMDtJ3wp4N6
-         tPxvKIQpHTBeSfj6Yl+dy5RFAyTcMs14NEbUKwoOm8VDVlAiN5/syEqNgs6hMNlAIJ6m
-         0oZb3PPFAAiunOvNuAZkb7TdcFToABmztpF3Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=noG/6G2kT369hKIsq5X6GeXytjs7wQ1EAxyxYNyw28d2rbFLCToPbR/qkpq8Hk56U9
-         5FoX/sonAz0r2OK8cl9+txuYuJLnJl9Fu13yb+/o7IgtxySvxD+f47eGrBXv1nm4A4CZ
-         qDdkXMeb9wCsEPiBbvEZInpoCkekyo075YYKs=
-Received: by 10.150.8.10 with SMTP id 10mr7231090ybh.7.1298899402112; Mon, 28
- Feb 2011 05:23:22 -0800 (PST)
-Received: by 10.151.11.12 with HTTP; Mon, 28 Feb 2011 05:22:42 -0800 (PST)
-In-Reply-To: <7vy650k62n.fsf@alter.siamese.dyndns.org>
+	id S1754475Ab1B1OZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 09:25:42 -0500
+Received: from charybdis-ext.suse.de ([195.135.221.2]:42250 "EHLO
+	nat.nue.novell.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754020Ab1B1OZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 09:25:41 -0500
+Received: from [192.168.0.5] (mmeeks.gotadsl.co.uk [213.208.123.138])
+	by nat.nue.novell.com with ESMTP; Mon, 28 Feb 2011 15:25:39 +0100
+In-Reply-To: <201102252155.13466.andres@anarazel.de>
+X-Mailer: Evolution 2.32.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168112>
 
-Heya,
+Hi Andres & Brian,
 
-On Mon, Feb 28, 2011 at 07:48, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> * jc/checkout-orphan-warning (2011-02-18) 1 commit
-> =C2=A0- commit: give final warning when reattaching HEAD to leave com=
-mits behind
->
-> Likes, dislikes?
+	Thanks for your help;
 
-I can't find a message containing this commit title, can you link to
-the relevant thread? I did find that in the last what's cooking =C3=86v=
-ar
-replied and said +1? I agree that this is something we want to do
-though, I'd like all operations in git to be as data-preserving as
-possible, and to be similarly helpful to users about not losing data.
-I think this is a good step in that direction.
+On Fri, 2011-02-25 at 21:55 +0100, Andres Freund wrote:
+> > On Tue, 2011-02-22 at 10:55 -0500, Brian Gernhardt wrote:
+> > > FYI: `git clone foo bar` will use hard-links to copy the object
+> > > files and is both very fast and space efficient.  (See the
+> > > description of `--local` in git-clone(1), which is used by
+> > > default for local repositories since git 1.5.3.)  It's also
+> > > guaranteed to work while the correctness of `cp -lR` depends
+> > > on implementation details of git.
+..
+> > 	Sounds like just what I need. Unfortunately, it didn't clone some of
+> > the pieces I needed; eg. other configured remotes, I ended up with just
+> > 'origin' - which was unexpected (and less wonderful than cp -lR ;-).
+..
+> See the --mirror option for clone
 
+	I tried all of this; none of it did what I had hoped :-)
 
---=20
-Cheers,
+	git clone src dest
 
-Sverre Rabbelier
+	yields a different repository, with a totally different config /
+remotes setup - missing all but a new synthetic origin pointing at the
+local files and which can't be git pulled from in the normal way; ie. it
+behaves extremely differently to the cp -lR result.
+
+	git clone --mirror src dest
+
+	yields a similar problem-repository, which is for extra measure a bare
+checkout, and thus also not what I need.
+
+	I'm really looking for an equivalent of 'cp -lR foo baa' that:
+
+	* uses hard links to save space
+	* produces precisely-a-duplicate repository
+
+	For #2 - I would use the verb 'clone' except of course the 'clone' I'm
+talking about would be one that is identical, the same, with no
+differences (not eg. missing a few limbs ;-) 
+
+	Clearly cp -lR is bad & evil and all that; but it yields exactly what I
+need to effectively manage my local trees, multiple checkouts, and
+different builds without burning the entire disk.
+
+	Is there a blessed 'cp -lR' wrapper for git that is functionally
+identical ? [ and I'm happy of course for some slow divergence, and loss
+of efficiency as I pull more changes from time to time into each tree ].
+
+	Sorry for the noise,
+
+		Michael.
+
+-- 
+ michael.meeks@novell.com  <><, Pseudo Engineer, itinerant idiot
