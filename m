@@ -1,70 +1,118 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/2] push: better error messages for detached HEAD and "no destination"
-Date: Tue, 01 Mar 2011 00:00:19 +0100
-Message-ID: <vpqwrkjepdo.fsf@bauges.imag.fr>
-References: <1298927645-2716-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1298927645-2716-3-git-send-email-Matthieu.Moy@imag.fr>
-	<AANLkTim7O4O2UUWzZOrZOWN1zp2iruLYf3+3WMFTi8_5@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Mon, 28 Feb 2011 18:03:11 -0500
+Message-ID: <20110228230311.GA7533@sigill.intra.peff.net>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie>
+ <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
+ <20110214231920.GA24814@elie>
+ <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
+ <20110227084317.GB3356@sigill.intra.peff.net>
+ <1298820840.19827.69.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 00:00:33 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 01 00:03:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuC4v-0000xi-8I
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 00:00:33 +0100
+	id 1PuC7i-0002LX-Bk
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 00:03:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753098Ab1B1XA2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 18:00:28 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:47984 "EHLO rominette.imag.fr"
+	id S1753558Ab1B1XDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 18:03:13 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58320 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752667Ab1B1XA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 18:00:27 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p1SN0Hwh011041
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 1 Mar 2011 00:00:17 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PuC4i-0002B7-28; Tue, 01 Mar 2011 00:00:20 +0100
-In-Reply-To: <AANLkTim7O4O2UUWzZOrZOWN1zp2iruLYf3+3WMFTi8_5@mail.gmail.com>
-	(Jay Soffian's message of "Mon, 28 Feb 2011 17:48:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 01 Mar 2011 00:00:17 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p1SN0Hwh011041
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1299538819.05065@/KnfXGE3HD5qHekmytzm2g
+	id S1753555Ab1B1XDK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 18:03:10 -0500
+Received: (qmail 29895 invoked by uid 111); 28 Feb 2011 23:03:09 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 28 Feb 2011 23:03:09 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Feb 2011 18:03:11 -0500
+Content-Disposition: inline
+In-Reply-To: <1298820840.19827.69.camel@drew-northup.unet.maine.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168160>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+On Sun, Feb 27, 2011 at 10:34:00AM -0500, Drew Northup wrote:
 
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "Either specify the URL from t=
-he command line or configure a remote repository using\n"
->
-> Maybe "Either specify the URL explicitly or configure..."
+> The concept of a "staging area" is definitely of limited use for many of
+> us attempting to learn how git works. The very fact that the object
+> cache and the Index (or multiple, as is useful at times) are distinct
+> elements is useful and should be mentioned somewhere.
 
-I prefer "from the command-line" to "explicitely", because "explicitely=
-"
-could mean "in a configuration file", or so.
+Now your terminology has _me_ confused. What is the "object cache"?
 
-> Well, I just bikeshedded that 3 different colors, didn't I? You're we=
-lcome. :-)
+> Alas, creating in the user's mind that there is a distinct unified
+> "staging area" acts against this dissemination of knowledge. It
+> definitely didn't help me.
 
-Thanks, I took the 2 other colors.
+I'm not sure what you mean by "distint unified staging area". It is a
+conceptual idea that you will put your changes somewhere, and when they
+look good to you, then you will finalize them in some way.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+But note that it is a mental model. The fact that it is implemented
+inside the index, along with the stat cache, doesn't need to be relevant
+to the user. And the fact that the actual content is in the object
+store, with sha1-identifiers in the index, is not relevant either. At
+least I don't think so, and I am usually of the opinion that we should
+expose the data structures to the user, so that their mental model can
+match what is actually happening. But in this case, I think they can
+still have a pretty useful but simpler mental model.
+
+> If we use "staging area made up of the object store and information kept
+> in the Index" then we tie a knot on everything, make it clear that it
+> may be more complex than that--and you don't have to care, and we do not
+> foreclose on the possibility of more complete explanation later. That
+> does not bother me. We do however need to recognize that "staging area"
+> is an idiom of limited portability and deal with that appropriately.
+
+Sure, I'm willing to accept that the specific words of the idiom aren't
+good for people with different backgrounds.
+
+One analogy I like for the index is that it's a bucket. It starts out
+full of files from the last commit. You can put new, changed files in
+the bucket. When it looks good, you dump the bucket into a commit. You
+can have multiple buckets if you want. You can pull files from other
+commits and put them in the bucket. You can take files out of the bucket
+and put them in your work tree.
+
+So maybe it should just be called "the bucket"?
+
+I'm not sure that's a good idea, because while the analogy makes sense,
+it doesn't by itself convey any meaning. That is, knowing the concept, I
+can see that bucket is a fine term. But hearing about git's bucket, I
+have no clue what it means. Whereas "staging area" I think is a bit more
+specific, _if_ you know what a staging area is.
+
+So there are two questions:
+
+  1. Is there a more universal term that means something like "staging
+     area"?
+
+  2. Is the term "staging area", while meaningful to some, actually
+     _worse_ to others than a term like "bucket"? That is, does it sound
+     complex and scary, when it is really a simple thing. And while
+     people won't know what the "git bucket" is off the bat, it is
+     relatively easy to learn.
+
+     And obviously, replace "bucket" here with whatever term makes more
+     sense.
+
+> A particular Three Stooges episode comes to mind here for me.
+
+Wow, 180,000 messages and this is somehow the first Three Stooges
+analogy on the git list.
+
+-Peff
