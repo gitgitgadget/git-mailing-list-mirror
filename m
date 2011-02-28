@@ -1,68 +1,88 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Consistent terminology: cached/staged/index
-Date: Mon, 28 Feb 2011 15:53:46 -0500
-Message-ID: <1298926426.29337.5.camel@drew-northup.unet.maine.edu>
-References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
-	 <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
-	 <4D589CE0.7020203@pcharlan.com>
-	 <AANLkTik3rV6vejf=aRvysvxr4qn_UJxUqiQiTB0AG-vp@mail.gmail.com>
+From: Jeffrey Middleton <jefromi@gmail.com>
+Subject: remote's HEAD not detected correctly
+Date: Mon, 28 Feb 2011 14:52:42 -0600
+Message-ID: <AANLkTimWieViK4JcJQuTDiRiAdyvHuwkwy8fL+XUV+i-@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Pete Harlan <pgit@pcharlan.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	git@vger.kernel.org
-To: Aghiles <aghilesk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 28 21:54:33 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 28 21:59:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuA6y-0003kO-Ft
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 21:54:32 +0100
+	id 1PuABJ-00062p-V3
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 21:59:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755045Ab1B1Uy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 15:54:27 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:47119 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752805Ab1B1Uy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 15:54:26 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p1SKrpKI031967
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 28 Feb 2011 15:53:56 -0500
-In-Reply-To: <AANLkTik3rV6vejf=aRvysvxr4qn_UJxUqiQiTB0AG-vp@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=6
-	Fuz1=6 Fuz2=6
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p1SKrpKI031967
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1299531237.60325@HcoojA6OP7sp/4o97Q6W1w
+	id S1754995Ab1B1U65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 15:58:57 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52709 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754788Ab1B1U64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 15:58:56 -0500
+Received: by wyg36 with SMTP id 36so4033570wyg.19
+        for <git@vger.kernel.org>; Mon, 28 Feb 2011 12:58:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=0Gyct6tumIFUJMMRFJw3b5TEpjcDuWp4ssBWTPo7BV8=;
+        b=jli70t1bRUWs0q0PCzwhdYysmhHH7VbTnSI8yBZc9SJutFAuQ4y5RDx8qcG3JEjHX0
+         S3/1yq/bajOYoybquLcUIST8IB03Olsmoz4Of8vJhrhDxQBnfr6jbE4RN51GmQ8cHtKY
+         OagnVdHN45GZK/Pv2i8oHamX4NJeOEgDHtRpE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=xwYuayzZbrlWTEYlnf+J+7fLyCdB/odXZC+lrjv9brgQlGPVryRFvuEIJ4iM9AnTIS
+         hYqNWeP1xJPLlh66kUc6JCtIy6wU114U6W/BHnfEIZION6YI03K0b0zXomXPy2bE4R0X
+         kvjDE+veUZGNlezGivU24bvM5XwoB0lAKdZME=
+Received: by 10.216.18.76 with SMTP id k54mr2577950wek.61.1298926735149; Mon,
+ 28 Feb 2011 12:58:55 -0800 (PST)
+Received: by 10.216.164.132 with HTTP; Mon, 28 Feb 2011 12:52:42 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168144>
+
+There appears to be some weirdness here - git isn't properly looking
+at the HEAD of the remote repository
+
+#!/bin/bash
+
+(mkdir project &&
+cd project &&
+git init -q &&
+touch a &&
+git add a &&
+git commit -q -m "add a" &&
+git checkout -q -b pu) &&
+git clone -q project project.clone &&
+(cd project.clone &&
+echo -n "HEAD: " && git symbolic-ref HEAD &&
+echo -n "origin/HEAD: " && git symbolic-ref refs/remotes/origin/HEAD &&
+git remote show origin)
 
 
-On Sun, 2011-02-27 at 16:16 -0500, Aghiles wrote:
-> > FWIW, when teaching Git I have found that users immediately understand
-> > "staging area", while "index" and "cache" confuse them.
-> 
-> FWIW, same here.
+The output is:
 
-I would really like to hear the actual presentation. What one says in
-person in front of a classroom and what one puts in a manpage are
-frequently not the same thing--and there's a good reason for that. 
-If nothing else, we could come up with a better presentation at the end!
+HEAD: refs/heads/master
+origin/HEAD: refs/remotes/origin/master
+* remote origin
+  Fetch URL: /home/jefromi/sandbox/project
+  Push  URL: /home/jefromi/sandbox/project
+  HEAD branch (remote HEAD is ambiguous, may be one of the following):
+    master
+    pu
+8< more git remote output 8<
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+So somehow, the clone misses the fact that origin's HEAD is pu, not
+master, and git remote is only partially aware of this. It looks like
+this only happens when the two branches in question are pointing to
+the same commit; perhaps git is trying to guess what HEAD is via the
+SHA1? I know that ls-remote prints an SHA1, not a refname, for HEAD -
+is it not actually possible to get that information through a general
+transport protocol?
+
+
+Jeffrey
