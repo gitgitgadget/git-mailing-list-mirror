@@ -1,110 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH svn-fe] fast-import: make code "-Wpointer-arith" clean
-Date: Mon, 28 Feb 2011 15:32:10 -0600
-Message-ID: <20110228213210.GD1942@elie>
-References: <20101224080505.GA29681@burratino>
- <20110226114435.GB12231@elie>
- <7vhbbolm5q.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 28 22:32:45 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 0/2] push: better error messages
+Date: Mon, 28 Feb 2011 22:14:03 +0100
+Message-ID: <1298927645-2716-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 28 22:37:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuAhu-0007U3-TM
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 22:32:43 +0100
+	id 1PuAmD-0001ED-8r
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 22:37:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752406Ab1B1Vci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 16:32:38 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:46855 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751372Ab1B1Vch (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 16:32:37 -0500
-Received: by vxi39 with SMTP id 39so3572570vxi.19
-        for <git@vger.kernel.org>; Mon, 28 Feb 2011 13:32:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=DZkJFrFhNpdyMoEbpMVOkIvKNR3bJtcl1xAmT4K7RJE=;
-        b=Gf86MTUnS1fDfZS4JOuBpWb4nGj/NnzQMgtlh6Xm218fR7yqvRZHc84yQOPd7j4dCq
-         jg4J13os3nA007l9A28nJm4K2YirJK27z3rKr2p2H0ThuuppIUgk84HkhOk6HKcaZW5k
-         GxkoFJZ/HViak3/VnEvGXQRrVU2wXCe99Rdug=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=C0Fi27qxhk8vAgIq5CD+Lo0RRdIGzrYSbEscLusTeXK9Yc+wT/zRx9te2ZEGBYFSlf
-         988yGhqVEMPz7nzqpe+bbSh6QZ4nRIyWtvHFC5AZ92qjSsdj4znMH0kAW+a2jIxuPOAf
-         XS1NaCqvTCFnOML+FlwynhHmfvS6N+01WnIHs=
-Received: by 10.52.156.233 with SMTP id wh9mr9942854vdb.235.1298928737504;
-        Mon, 28 Feb 2011 13:32:17 -0800 (PST)
-Received: from elie (adsl-76-206-235-173.dsl.chcgil.sbcglobal.net [76.206.235.173])
-        by mx.google.com with ESMTPS id q5sm1846950vcr.15.2011.02.28.13.32.15
-        (version=SSLv3 cipher=OTHER);
-        Mon, 28 Feb 2011 13:32:16 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vhbbolm5q.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752895Ab1B1VhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 16:37:04 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:56355 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751450Ab1B1VhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 16:37:02 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p1SLE9Lv015983
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 28 Feb 2011 22:14:09 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PuAPy-0000Nh-UJ; Mon, 28 Feb 2011 22:14:10 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1PuAPy-0000lL-RX; Mon, 28 Feb 2011 22:14:10 +0100
+X-Mailer: git-send-email 1.7.4.1.142.g43604.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Feb 2011 22:14:10 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p1SLE9Lv015983
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1299532454.00431@N+ID0evSjzcraulEiR7f9w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168149>
 
-The dereference() function to peel a tree-ish and find the underlying
-tree expects arithmetic to (void *) to work on byte addresses.  We
-should be reading the text of objects through a char * anyway.
+Since it's likely to become the default in 1.8.0, I've played a bit
+with "push.default = tracking". I was very happy to see that the flow
 
-Noticed-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Junio C Hamano wrote:
+git init bla
+git clone bla
+git commit
+git push
 
-> ... Yikes.  I said the above and then my build for "master" breaks with
->
->   fast-import.c: In function 'dereference':
->   fast-import.c:2885: error: pointer of type 'void *' used in arithmetic
->   fast-import.c:2890: error: pointer of type 'void *' used in arithmetic
+was working like a charm (it required a --all or so the first time),
+but the "create a new branch and push it" is still a bit hard to get
+for newbies.
 
-This should fix it, I suppose?  A
+[PATCH 1/2] should solve it, by providing a cut-and-paste ready
+command to do the push.
 
-	-std=c99 -O3 -Wall -W
-	-Wno-sign-compare
-	-Wno-unused-parameter
-	-Wno-missing-field-initializers
-	-Wno-empty-body
-	-Wno-pointer-to-int-cast
-	-Wno-type-limits
-	-Wno-unused-but-set-variable
-	-Wold-style-definition -Wpointer-arith -Wvla
-	-Wdeclaration-after-statement -Werror
+While I was there, I also improved a bit other messages which gives
+[PATCH 2/2]. I've kept the changes in separate patches, but they may
+be squashed once reviewed.
 
-build passes, except for an "unsigned long expire" in builtin-reflog
-that confuses this copy of gcc.
+Matthieu Moy (2):
+  push: better error message when push.default = tracking
+  push: better error messages for detached HEAD and "no destination"
 
- fast-import.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ builtin/push.c |   27 ++++++++++++++++++++-------
+ 1 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 6c37b84..e1268b8 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2848,7 +2848,7 @@ static struct object_entry *dereference(struct object_entry *oe,
- 					unsigned char sha1[20])
- {
- 	unsigned long size;
--	void *buf = NULL;
-+	char *buf = NULL;
- 	if (!oe) {
- 		enum object_type type = sha1_object_info(sha1, NULL);
- 		if (type < 0)
 -- 
-1.7.4.1
+1.7.4.1.142.g43604.dirty
