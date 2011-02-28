@@ -1,111 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PULL svn-fe] fast-import 'ls', line-buffer changes
-Date: Sun, 27 Feb 2011 22:15:45 -0800
-Message-ID: <7vhbbolm5q.fsf@alter.siamese.dyndns.org>
-References: <20101224080505.GA29681@burratino> <20110226114435.GB12231@elie>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 2/2 v2] mergetool--lib: Add Beyond Compare 3 as a tool
+Date: Mon, 28 Feb 2011 07:25:32 +0100
+Message-ID: <AANLkTimC2bE1fjr=+ys4YHyft5H7y-mknOMbuMdewJDQ@mail.gmail.com>
+References: <4D6A355C.3000805@gmail.com>
+	<4D6A365E.4030904@gmail.com>
+	<4D6B3D6B.2010001@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 28 07:16:07 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	charles@hashpling.org, Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 28 07:26:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PtwOs-00055O-SO
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 07:16:07 +0100
+	id 1PtwYY-0000Px-Jg
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 07:26:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751069Ab1B1GQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 01:16:00 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42193 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853Ab1B1GP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 01:15:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B4F5F26D3;
-	Mon, 28 Feb 2011 01:17:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jebXne5Ah6r7b5qMs8BfxH/PcIY=; b=Zvzmic
-	y7H0Ngi2Cam2ejMGyR6xrF9yfWxZV2vTNCnZ7GX9jT6OEBbh0cw7YzeED8VPu2sq
-	mFYLyyRdO7Lrm2WM14lQX63dUA4vKo2Ff8ErFg62j9VwwIqUYwyMHenaCmNUDU5I
-	Osc/K0njEzc0i+C3q9+fjmHk9kzQub0jI8BtA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tGBYrhllreJSt7slzLX60+cdpThEEDjS
-	mGDD/IR805L+8uT1/zS+f8/UzRIWSiQmjNU35jcTmVmCW5xq0ezkrlKZADXCB50N
-	B3VxMsh7d/qYipmDN0hLUguANupQBDuaAMCAKspMOCPwAWrnGOeCSp4twePRAEhH
-	Tmz/TWVCtWo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 64C5C26D2;
-	Mon, 28 Feb 2011 01:17:11 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BE15426CE; Mon, 28 Feb 2011
- 01:17:04 -0500 (EST)
-In-Reply-To: <20110226114435.GB12231@elie> (Jonathan Nieder's message of
- "Sat\, 26 Feb 2011 05\:44\:42 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 60C6A19C-4302-11E0-9C00-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752271Ab1B1G0C convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 01:26:02 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:52546 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751238Ab1B1G0A convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 01:26:00 -0500
+Received: by qwd7 with SMTP id 7so2589587qwd.19
+        for <git@vger.kernel.org>; Sun, 27 Feb 2011 22:25:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BL2kAUP/NsgO5xAQhdmDD6lFlSS7AvA4zz/sVfBmKC8=;
+        b=uQFR7EoxkPjlbiQ0jmSn55CW4Um3lqFDfzdN5j6B604v85tOsvYfo5q3hxyZPoKpPT
+         fF5XHJseY3qy6PeSU3B2CyqSFaQAaI/8EpQZ3PJQgpO/f5jqn92PvqivIP8poXQthkb4
+         tmK6CZZ0vf1CcJJSzY4AoExaFCwsITV6h6Jrk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CFuaK7A4l1eOukniovSsut/1ucdJnRcGWQXriGOhdq/8qk3Qj625vorvetB45FKb4H
+         w3OxTOx0d+TWmQ86+C48HgCiXy7xy1XET/perLDkq1+ar32RPwForFBOY5I2Ny2sq90g
+         vYQq5FNleE19nI5a9ZlYuCSlrWHBCmVn/aEDs=
+Received: by 10.229.236.194 with SMTP id kl2mr3698886qcb.263.1298874332370;
+ Sun, 27 Feb 2011 22:25:32 -0800 (PST)
+Received: by 10.229.17.73 with HTTP; Sun, 27 Feb 2011 22:25:32 -0800 (PST)
+In-Reply-To: <4D6B3D6B.2010001@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168067>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Mon, Feb 28, 2011 at 07:15, Chris Packham <judge.packham@gmail.com> =
+wrote:
 
-> Hi Junio,
+>> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+>> ---
+>> =C2=A0Documentation/git-difftool.txt =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=
+=A0 =C2=A02 +-
+>> =C2=A0Documentation/git-mergetool.txt =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=
+=A0 =C2=A02 +-
+>> =C2=A0Documentation/merge-config.txt =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=
+=A0 =C2=A02 +-
+>> =C2=A0contrib/completion/git-completion.bash | =C2=A0 =C2=A02 +-
+>> =C2=A0git-gui/lib/mergetool.tcl =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0| =C2=A0 =C2=A07 +++++++
+>> =C2=A0git-mergetool--lib.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0| =C2=A0 22 ++++++++++++++++++++--
+>> =C2=A06 files changed, 31 insertions(+), 6 deletions(-)
 >
-> Please pull
+> Works for me.
 >
->   git://repo.or.cz/git/jrn.git svn-fe
->
-> to get the following changes on top of master + the old jn/svn-fe.
->
-> These are patches from the threads $gmane/164146 and $gmane/167536,
-> providing some plumbing to support incremental import in svn-fe.  They
-> are probably far from perfect but they seem to work okay so far, and
-> I'd be fine with putting any fixes on top of them.
->
-> Thoughts, suggestions, etc welcome as always.
+> Tested-by: Chris Packham <judge.packham@gmail.com>
 
-As I was not involved in the thread heavily, I'll just pull this into
-'master', trusting that the responsible parties will be able to handle
-potential fallouts to fast-import users, if any, promptly.
+Great, thanks for testing!
 
-... Yikes.  I said the above and then my build for "master" breaks with
-
-  fast-import.c: In function 'dereference':
-  fast-import.c:2885: error: pointer of type 'void *' used in arithmetic
-  fast-import.c:2890: error: pointer of type 'void *' used in arithmetic
-
-forcing me to redo all three integration branches.  What an un-fun.
-
-Not pulled.
-
- fast-import.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/fast-import.c b/fast-import.c
-index 6c37b84..cfddb7a 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2882,12 +2882,12 @@ static struct object_entry *dereference(struct object_entry *oe,
- 	switch (oe->type) {
- 	case OBJ_TAG:
- 		if (size < 40 + strlen("object ") ||
--		    get_sha1_hex(buf + strlen("object "), sha1))
-+		    get_sha1_hex((char *)buf + strlen("object "), sha1))
- 			die("Invalid SHA1 in tag: %s", command_buf.buf);
- 		break;
- 	case OBJ_COMMIT:
- 		if (size < 40 + strlen("tree ") ||
--		    get_sha1_hex(buf + strlen("tree "), sha1))
-+		    get_sha1_hex((char *)buf + strlen("tree "), sha1))
- 			die("Invalid SHA1 in commit: %s", command_buf.buf);
- 	}
- 
+--=20
+Sebastian Schuberth
