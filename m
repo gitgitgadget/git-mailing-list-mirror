@@ -1,109 +1,91 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv2 3/3] git-add: rename -u to -a
-Date: Mon, 28 Feb 2011 10:40:13 +0100
-Message-ID: <vpqwrkkpkea.fsf@bauges.imag.fr>
-References: <cover.1298821535.git.git@drmicha.warpmail.net>
-	<4D68D630.9000608@drmicha.warpmail.net>
-	<711e34a5f4761ccd1056a992df21e3389db7add7.1298821535.git.git@drmicha.warpmail.net>
-	<AANLkTintuaM+p7XKmTy+hOa80nkbph7MP00cvEA+oHZJ@mail.gmail.com>
-	<7v39n8ll0s.fsf@alter.siamese.dyndns.org>
-	<4D6B5D09.8010806@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Mon, 28 Feb 2011 10:38:19 +0100
+Message-ID: <4D6B6D0B.3040304@drmicha.warpmail.net>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com> <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org> <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com> <20110214231920.GA24814@elie> <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com> <20110227084317.GB3356@sigill.intra.peff.net> <87bp1xest7.fsf@catnip.gol.com> <AANLkTinphmVJe8XW6BhjoyHgA38aopgEk=o=qEp4UT+4@mail.gmail.com> <7vmxlhm3ne.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Feb 28 10:40:39 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jon Seymour <jon.seymour@gmail.com>, Miles Bader <miles@gnu.org>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 28 10:41:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ptzao-00053Y-LJ
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 10:40:39 +0100
+	id 1Ptzbu-0005gR-S5
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Feb 2011 10:41:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864Ab1B1Jkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Feb 2011 04:40:33 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:40513 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752384Ab1B1Jkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Feb 2011 04:40:32 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p1S9eEjs029647
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 28 Feb 2011 10:40:16 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PtzaQ-0002hN-9M; Mon, 28 Feb 2011 10:40:14 +0100
-In-Reply-To: <4D6B5D09.8010806@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Mon, 28 Feb 2011 09:30:01 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Feb 2011 10:40:17 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p1S9eEjs029647
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1299490819.25928@6FUmnFhEPGf7qpqYcjj1Bw
+	id S1752888Ab1B1Jlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 04:41:42 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47301 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752387Ab1B1Jll (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 04:41:41 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6005720A2B;
+	Mon, 28 Feb 2011 04:41:41 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 28 Feb 2011 04:41:41 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=5r+G+r6jLUq2O8duHbk6UGWtJc4=; b=p50kRD7/ZVLu1B5w15VxWWWs5k2iCAsROWLcBETt0ZNIVcsmUxQcK+ddj8XshIWqFLZXZzAdLLrjcfA6myeBN5DjLdQUd7dUNHq3nNN9LXLnZcJrXSP55lCKpAt/C5UK0Xh1INWCzMtX1bd2gUaMSVkPNP4hjs0+Ec4bVPq6pHo=
+X-Sasl-enc: Hb0UjgfS8CwPdv57WFlQ2xiX1GxEa9SJ7EGqulCktVKM 1298886101
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2F8E740AD04;
+	Mon, 28 Feb 2011 04:41:40 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <7vmxlhm3ne.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168085>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano venit, vidit, dixit 28.02.2011 00:57:
+> Jon Seymour <jon.seymour@gmail.com> writes:
+> 
+>> I guess the noun 'stage' does have a use in git-speak to refer to the
+>> different arms of an unresolved merge.
+> 
+> That is correct.
+> 
+> For some historical background around "cache" and "index", this
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/780/focus=924
+> 
+> may shed some light.
+> 
+>     From: Linus Torvalds <torvalds@osdl.org>
+>     Subject: Re: [RFC] Possible strategy cleanup for git add/remove/diff etc.
+>     Date: Tue, 19 Apr 2005 18:51:06 -0700 (PDT)
+>     Message-ID: <Pine.LNX.4.58.0504191846290.6467@ppc970.osdl.org>
+> 
+>     That is indeed the whole point of the index file. In my world-view, the
+>     index file does _everything_. It's the staging area ("work file"), it's
+>     the merging area ("merge directory") and it's the cache file ("stat
+>     cache").
+> 
+> And this one:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/6670/focus=6863
+> 
+> is even more illuminating.
+> 
+> Notice that the word "staging area" is used in the old article as a way to
+> explain one of the three important aspects of the index, and the other
+> article that is about nailing down the terminology, the word does not even
+> come into the picture at all (one reason being that it will confuse
+> readers if "staging area" is used too casually in a document to precisely
+> define terminology, which needs to explain the merge stage(s) in the
+> index).
 
-> But just how useful is our default that "git add" is a no-op?
+Oh, the classics :)
 
-I dont care very much myself, but if you consider "git add ." as a
-potentially destructive operation (discards changes that may be precious
-in the index), then it's good that "git add" is a no-op.
+Thanks for an illuminating and entertaining read!
 
-Many beginners will try commands expecting to get a help message or a
-hint on how to use it when ran without argument (principle of least
-surprise)
-
-Like:
-
-$ ls
-file1 file2
-=> oh, so "ls" lists files.
-$ rm
-rm: missing operand
-Try `rm --help' for more information.
-=> ok, so rm needs more operands
-
-A user typing "git add" just "to see what happens" may be disapointed to
-have all its files added. In particular since "git add" is silent by
-default, hence
-
-# let's see what happens ...
-$ git add
-$ 
-# ok, nothing happened ...
-# continue hacking without noticing that a bunch of files have been added.
-
-Mercurial has taken the other way, making "hg add" add everything by
-default, and some users do complain:
-
-http://osdir.com/ml/version-control.mercurial.general/2007-08/msg00316.html
-
-If you change this for Git, you'll have people complaining about
-backward compatibility plus people complaining about least surprise :-(
-
-> - "add" should be about tracked paths by default (default pathspec "."),
->
-> - "commit -a,--add <addopts>" be "add <addopts> && commit", and
->
-> - "-A,--all pathspec" (default pathspec ".") be about tracked and
-> untracked paths (whether add or commit).
-
-Today, "git add ." adds new content in tracked files, and new files, but
-doesn't notice files deletions. Did I miss something, or is there no way
-to do that with your proposal?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Michael
