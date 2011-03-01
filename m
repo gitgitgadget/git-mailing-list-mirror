@@ -1,75 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 1/3] t6022: New test checking for unnecessary updates
- of renamed+modified files
-Date: Tue, 1 Mar 2011 14:38:52 -0500
-Message-ID: <20110301193852.GC10082@sigill.intra.peff.net>
-References: <1298941732-19763-1-git-send-email-newren@gmail.com>
- <1298941732-19763-2-git-send-email-newren@gmail.com>
- <4D6CA13C.1000006@viscovery.net>
+From: Robert Buck <buck.robert.j@gmail.com>
+Subject: got myself into trouble; now what? - how to revert once you've pushed
+Date: Tue, 1 Mar 2011 14:37:19 -0500
+Message-ID: <AANLkTi=RGhGMcoDEL4q2pnnZ97tdswYG7OkjNS3wF7jn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Stephen Rothwell <sfr@canb.auug.org.au>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 20:39:43 2011
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 01 20:42:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuVQ5-0001L3-5Q
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 20:39:41 +0100
+	id 1PuVSg-0002xO-7y
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 20:42:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757249Ab1CATip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 14:38:45 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45374 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757242Ab1CATin (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 14:38:43 -0500
-Received: (qmail 9545 invoked by uid 111); 1 Mar 2011 19:38:43 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Mar 2011 19:38:43 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2011 14:38:52 -0500
-Content-Disposition: inline
-In-Reply-To: <4D6CA13C.1000006@viscovery.net>
+	id S1757272Ab1CATmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 14:42:10 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:62896 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757200Ab1CAThU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 14:37:20 -0500
+Received: by yxs7 with SMTP id 7so2097623yxs.19
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 11:37:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=/piR/DdnnQkOAXn+MBMXhm3JtgZ/AeoJrmNYJ/QBfc4=;
+        b=vYm3ZOgTehFjNQjR2Mx4VO+U23WGoOx3K0NId0uij0Xka3PIj97FqWKpvGiOc1Mxb1
+         9ghWMrwQ1VjjMY2n6/Bvq1LvhvLu5uj5YvAJ5TuqskCuYgHfU0ldv2muY9P+vk37uArt
+         BDgL/i3/xg0k64bEMCxsrzzIEDGhC7m7AKLnw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=vW8jh582EGbi8v1MCXCbbd+LboHPZqQT9Jje289W3ukg0aXPtCh/xAJQpzsYgq5PR+
+         CLtjRRxZeRmvMjlY6qfj1GdJSF2aEdZryHJcV/IKbTYdDodgN3/aUD6l/esIXvExfVjj
+         JwWgq6tiZpC34HUUSFQXfAUreAvyUFoBZcNa8=
+Received: by 10.236.185.162 with SMTP id u22mr6930375yhm.23.1299008239137;
+ Tue, 01 Mar 2011 11:37:19 -0800 (PST)
+Received: by 10.236.108.33 with HTTP; Tue, 1 Mar 2011 11:37:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168245>
 
-On Tue, Mar 01, 2011 at 08:33:16AM +0100, Johannes Sixt wrote:
+I have a problem where a unexpected merge occurred and got pushed to
+our Gitolite repository.
 
-> > +	orig=$(stat --format="%Y" rename) &&
-> 
-> 	orig=$(test-chmtime -v +0 rename) &&
-> 
-> > +	git merge merge-branch-1 &&
-> > +	new=$(stat --format="%Y" rename) &&
-> 
-> 	new=$(test-chmtime -v +0 rename) &&
-> 
-> > +	echo "Checking whether stat times are same: $orig vs $new" &&
-> 
-> 	echo "Checking whether stat times are same: ${orig%%	*} vs ${new%%	*}" &&
-> 
-> (that's TAB after the %%)
-> 
-> > +	test "$orig" == "$new" &&
-> 
-> 	test "${orig%%	*}" = "${new%%	*}" &&
+We have two branches: master, feature/wixinstall
 
-Maybe this would be simpler as:
+Apparently a merge happened from the branch to master (and I am pretty
+sure I never typed `git merge...`). But alas, a merge somehow happened
+and got pushed.
 
-  test-chmtime -v +0 rename >orig &&
-  ... do the merge ...
-  test-chmtime -v +0 rename >new &&
-  test_cmp orig new
+Then I followed the Git Pro documentation, which said to do this...
 
-And then you don't have to care about the format that test-chmtime
-outputs at all, and test_cmp's diff output is usually self-explanatory
-when there is a mismatch (it's even better if you name the files
-"expect" and "actual").
+    git revert -m 1 [sha_of_C8]
 
--Peff
+Now I am left with a bigger mess. When I merge master to the branch,
+all the newly added files on the branch got deleted (not what I
+wanted). Somehow git is interpreting the revert literally as a
+sequence of deletes which it incorrectly then applies to the work on
+the branch.
+
+What I really wanted the revert to do is restore the history of the
+world immediately prior to the merge. But now I have a branch I can't
+merge into at all without losing a weeks work.
+
+How can I get out of this mess?
+
+Bob
