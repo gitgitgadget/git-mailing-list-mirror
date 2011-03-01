@@ -1,67 +1,61 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: git-grep to operate across who repository and not just CWD?
-Date: Tue, 1 Mar 2011 16:44:13 +0700
-Message-ID: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com>
-References: <AANLkTimnOSzF1o-fX-n7b26Qx2aLP3aU3pTMGY_f5hKy@mail.gmail.com>
- <4D6B6A8B.20709@drmicha.warpmail.net> <4D6C20F6.3070905@cisco.com>
- <4D6CA8B7.5000608@drmicha.warpmail.net> <AANLkTim78nQgS7NPXWErQyrqmt41OUXY6gzJmMwjtxo9@mail.gmail.com>
- <4D6CB45F.1030800@drmicha.warpmail.net> <AANLkTik1_f7s0OUK9Q-BER9RkOdWiB=ZeN76HnCgmj+3@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Phil Hord <hordp@cisco.com>,
-	David Chanters <david.chanters@googlemail.com>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 10:44:50 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH/POC 0/2] grep --full-tree
+Date: Tue,  1 Mar 2011 10:53:28 +0100
+Message-ID: <cover.1298972832.git.git@drmicha.warpmail.net>
+References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 10:57:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuM8P-00072D-SI
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 10:44:50 +0100
+	id 1PuMKD-00055t-41
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 10:57:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755909Ab1CAJop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 04:44:45 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:61435 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754060Ab1CAJoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 04:44:44 -0500
-Received: by wwe15 with SMTP id 15so4194137wwe.1
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 01:44:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=WnOGHsIXwqLROgPZY4SjFbT4QgFYemMBQn+fKJuNYnY=;
-        b=rbZMglg6K2fWSMfU9NyjwSOll6H+YWrLy2K7fSq3mqO24k27fVZG8RlUo3WI9VUf39
-         4+90bBbb6skp5AyoZKBCXL02QNhM55bROh7GNKNoxLCFt93/jQDu4jG9vOtR6pTND92Q
-         OnUAh/nKkT+rOWZInjEfODOnWG//sf1fJdWVY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=KOeCUgIZJ6HgHxc8ykf9qyRjZfQx7yLt5LMEgnUkFwwnppujZ+ejVCjLq7ttzwjV9R
-         ReckNxdDf3jE2ygSEYrXTPV/QteMtRm3ySApGwvskZwG/1K3el2wUNzpVCcj89jXI+DU
-         A9V0RGRhqJFOKhSVn+VJRbMM39GM9dnT+f6F4=
-Received: by 10.216.163.69 with SMTP id z47mr5845061wek.43.1298972683079; Tue,
- 01 Mar 2011 01:44:43 -0800 (PST)
-Received: by 10.216.239.5 with HTTP; Tue, 1 Mar 2011 01:44:13 -0800 (PST)
-In-Reply-To: <AANLkTik1_f7s0OUK9Q-BER9RkOdWiB=ZeN76HnCgmj+3@mail.gmail.com>
+	id S1756105Ab1CAJ44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 04:56:56 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54908 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754461Ab1CAJ4z (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 04:56:55 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5A909206EC;
+	Tue,  1 Mar 2011 04:56:55 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 01 Mar 2011 04:56:55 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=BBXtQu8rbU5QPnhWAhnvmWLwJiA=; b=XrYP2PXa2F6kvQYzFKjsRuxF4h41OwzQgg71VlIrqdEJsXmQgmOjNCZOE2OGd/Clprz0Lfnq42KvN90eQgM/IR9ZaJQFV3IsljSc4zbQDpyGDcrLRn/jyrRXk1sFacm+o1Q04tUtVmUSn7b17zIVXdrQdmxJV9JNlrnvCMY67xc=
+X-Sasl-enc: 1Q10z4ZRKGrEmju0wl6H54F3SkPxKzBBihtrVaEYLu6m 1298973414
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D20A44413B8;
+	Tue,  1 Mar 2011 04:56:54 -0500 (EST)
+X-Mailer: git-send-email 1.7.4.1.257.gb09fa
+In-Reply-To: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168204>
 
-On Tue, Mar 1, 2011 at 4:32 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> No it was in next or pu for a while, then got dropped out. I don't
-> remember what "what's cooking" mail though.
+I think we could make --full-tree useful with pathspecs like below. There are
+no tests yet and no doc because I actually favour a pathspec based solution,
+and that would possibly lead to mixed pathspecs (relative+absolute),
+interacting badly with an overall option.
 
-I got it, 1dbdbcb (What's cooking (2009/12 #04)):
+But I have to look at the pathspec stuff first. Or maybe at format-patch, if I
+interpret the latest What's Cooking correctly...
 
-+The interaction with this option and pathspecs need to be worked out
-+better.  I _think_ "grep --full-tree -e pattern -- '*.h'" should find from
-+all the header files in the tree, for example.
+Junio C Hamano (1):
+  grep: --full-tree
+
+Michael J Gruber (1):
+  grep: make --full-tree work with pathspecs
+
+ builtin/grep.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
 -- 
-Duy
+1.7.4.1.257.gb09fa
