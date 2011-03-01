@@ -1,77 +1,90 @@
-From: Rick Bradley <rick@rickbradley.com>
-Subject: Re: problem with updating a shallow clone via a branch fetch
-Date: Mon, 28 Feb 2011 20:07:35 -0600
-Message-ID: <AANLkTimSRG+UkD1vJszUf+3j0nV+_pPWSE3N2Dy9SfTa@mail.gmail.com>
-References: <AANLkTinx01bzzLKk=DfyEvfSz8Hun-YqzJfEDpX7gNSS@mail.gmail.com> <7vtyfng00i.fsf@alter.siamese.dyndns.org>
+From: Computer Druid <computerdruid@gmail.com>
+Subject: Re: Git changes permissions on directories when deleting files.
+Date: Mon, 28 Feb 2011 21:19:58 -0500
+Message-ID: <AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com>
+References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 03:08:13 2011
+To: Chad Joan <chadjoan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 03:20:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuF0X-0002xw-3u
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 03:08:13 +0100
+	id 1PuFC3-0007QO-58
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 03:20:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754700Ab1CACH5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Feb 2011 21:07:57 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63730 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754406Ab1CACH4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Feb 2011 21:07:56 -0500
-Received: by fxm17 with SMTP id 17so4388580fxm.19
-        for <git@vger.kernel.org>; Mon, 28 Feb 2011 18:07:55 -0800 (PST)
-Received: by 10.223.72.15 with SMTP id k15mr7418763faj.54.1298945275163; Mon,
- 28 Feb 2011 18:07:55 -0800 (PST)
-Received: by 10.223.72.208 with HTTP; Mon, 28 Feb 2011 18:07:35 -0800 (PST)
-In-Reply-To: <7vtyfng00i.fsf@alter.siamese.dyndns.org>
+	id S1755460Ab1CACUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Feb 2011 21:20:00 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45358 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755300Ab1CACT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Feb 2011 21:19:59 -0500
+Received: by wyg36 with SMTP id 36so4259671wyg.19
+        for <git@vger.kernel.org>; Mon, 28 Feb 2011 18:19:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Vou9gHD4iWsLeFFNcegg/Hrsg/r+dGSJCwBVBLv7S9s=;
+        b=xTfWrJcTQu77HHnoksCzcpc2g2VvbhsJwnDYYhMXCh9WslwAtgTIfEX9kk2Nv5QQgT
+         AOrwHbUO3hueSwr/emMNit7+FV/wNkADv7lOzVp1kCwU64p8Oe27zxdW2tQ1l+xL+k6+
+         /V6JnHlhOJuRBqWlDFARyD0mi38CVGydvodDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=qRUqI+qd7YO7o1btyDz59RpZmjGkJumScBOjTfZPjaGiJeZO7nKd+43dgebPItuxC9
+         rr6z2TtSb657V3WDSU15tJA+tkIG0+k7HhoNZ6M7nbevD+lMzhpcfLcRjagFriubK9Hf
+         K3akV9ZHUJIo3jHPiZbLhGHCJHASU6shevvnM=
+Received: by 10.216.13.194 with SMTP id b44mr5191718web.68.1298945998615; Mon,
+ 28 Feb 2011 18:19:58 -0800 (PST)
+Received: by 10.216.161.79 with HTTP; Mon, 28 Feb 2011 18:19:58 -0800 (PST)
+In-Reply-To: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168183>
 
-Junio,
-Thanks for the assistance.  I'll be looking in the direction of what
-could have caused sanity problems in the upstream repo.  If it happens
-again and we can collect more tea leaves (this checkout was cleaned up
-before I could get a copy of it to do further diagnosis :-/) I'll see
-what else we can find out.
+On Mon, Feb 28, 2011 at 8:42 PM, Chad Joan <chadjoan@gmail.com> wrote:
+> Hello,
+>
+> What I'm experiencing is this:
+>
+> $ cd ~/project
+> $ ls -dl somedir
+> drwxrwx--- 1 cjoan cjoan 0 Feb 28 19:57 somedir
+> $ echo "some text" > somedir/somefile.txt
+> $ git add somedir/somefile.txt
+> $ git rm -f somedir/somefile.txt
+> rm 'somedir/somefile.txt'
+> $ ls -dl somedir
+> drw------- 1 cjoan cjoan 0 Feb 28 19:57 somedir
+> $ echo "some text" > somedir/somefile.txt
+> bash: somedir/somefile.txt: Permission denied
 
-Rick
+After you remove the file, is "somedir" empty?
 
-On Mon, Feb 28, 2011 at 6:25 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Rick Bradley <rick@rickbradley.com> writes:
->
->> So I have a git repo that is shallow cloned:
->>
->> =A0 % git clone --depth 1 <repo url>
->>
->> Sometimes (very rarely), when I do a branch fetch to update that
->> repository I get an error:
->>
->> =A0% git fetch origin +refs/head/<branch>:refs/remotes/origin/<branc=
-h>
->>
->> fatal: did not find object for shallow <hash>
->
-> The message comes from the repository you are fetching from. =A0When =
-you
-> fetch from a shallow clone, the fetch process on your end tells the o=
-ther
-> side what commits your incomplete history ends at, and if the other e=
-nd
-> does not have any of these commits, you get that message. =A0So the o=
-nly
-> case (unless there is a bug---and I don't think this codepath is heav=
-ily
-> exercised so it is very possible there are bugs) you would see that
-> message is if the other side rewound the branch and then later garbag=
-e
-> collection lost the commit.
->
+Git doesn't track empty directories, and therefore git rm on the last
+file in a directory deletes it:
+
+% git init
+Initialized empty Git repository in /home/cdruid/testrepo/.git/
+% mkdir dir
+% ls -l
+total 4
+drwxr-xr-x 2 cdruid cdruid 4096 Feb 28 21:14 dir
+% touch dir/test.txt
+% git add dir/test.txt
+% git rm -f dir/test.txt
+rm 'dir/test.txt'
+% ls -l
+total 0
+
+My guess is git is somehow failing to delete the directory, thus
+causing your changed permissions issue.
+
+-Dan Johnson
