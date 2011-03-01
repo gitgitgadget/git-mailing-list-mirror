@@ -1,94 +1,151 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 18/31] rebase: extract merge code to new source file
-Date: Tue, 1 Mar 2011 23:43:31 +0100
-Message-ID: <201103012343.33781.jnareb@gmail.com>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <m3sjvb7tg4.fsf@localhost.localdomain> <20110301220428.GE23945@sigill.intra.peff.net>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH/RFC 0/2] no-op shell script i18n infrastructure
+Date: Tue,  1 Mar 2011 22:49:35 +0000
+Message-ID: <1299019777-19033-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 23:44:10 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 23:49:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuYIb-00016k-HD
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 23:44:09 +0100
+	id 1PuYO7-0003pk-2i
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 23:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756643Ab1CAWoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 17:44:04 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62839 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756496Ab1CAWoC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 17:44:02 -0500
-Received: by fxm17 with SMTP id 17so5336659fxm.19
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 14:44:01 -0800 (PST)
+	id S1755604Ab1CAWtq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 17:49:46 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:43216 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755336Ab1CAWtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 17:49:45 -0500
+Received: by bwz15 with SMTP id 15so5073648bwz.19
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 14:49:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Mu+W7UQrfBXiclFRokIOoFl7rg/RluhSB/LxPDk/Cwc=;
-        b=Gu28/p5GMZodV9tG0vEfRNNUBfKDvYuopOLAIDZq5oZm/E1iRTGygcpwcBUBGAzoJD
-         tYeuv6OWYJeNCCztxciDE9Zn5SYTJnX/5CC9q3rrsxBSI1xj9vHQNHdzhxuT1LROVKR3
-         FDdLwwuLFZnkHLywxQd1L1vhfcrXRZZRDN/vU=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=lMH85J+ku7g+4/kQLGbmWS4zmgx7zM45qOHhvn+LOsk=;
+        b=MZ8fqbtSxhzwKu+wPYod1yo+B8GJOSrxVSYvPMDtfTNizFl8LkkOb9yS80eW5CtiEM
+         U/KHsVCWaM1bus3TuddftuzEDLs6LJFJQf/bUOzZLA++3ap/AAABM+fwdhhx692oapqi
+         +uglINZlQqNHNwA959kQ3cz44CsYXL/3Cqkvk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KgOE6qog0B8l64rUV+6/pXWJgMJJ/htxE0ZZJu1ZNbeqaw/0YqWTNcMfNZYm761SKS
-         dSOr/TBn/f4QTl/L+FfWqg3KC52kHqbReeQhMDRuGa1TeuAewZFMOooLoa1QweQ2xhJF
-         IyZr1qkrVx0oxMWhLGe9D+qct6k6zT35OhxZU=
-Received: by 10.223.102.67 with SMTP id f3mr3651295fao.125.1299019424386;
-        Tue, 01 Mar 2011 14:43:44 -0800 (PST)
-Received: from [192.168.1.13] (abvt248.neoplus.adsl.tpnet.pl [83.8.217.248])
-        by mx.google.com with ESMTPS id n2sm184591fam.28.2011.03.01.14.43.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 Mar 2011 14:43:43 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110301220428.GE23945@sigill.intra.peff.net>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=dqxofeeetxQDCnEjuoP5a5eg9bGJGvQ1N9Baz03FX8X5cFsyZrP8Fch+O33et569FG
+         zv63d0p5xr99k17ETy7nTl1MVIJSPYee47cQ6Kg0J8HNnLW7qg1Qr8RTvewqmq/9zPOH
+         nENVSkfAXgnzD2EmXntA0IB/hWSbfW0EJpn2A=
+Received: by 10.205.23.208 with SMTP id rb16mr6564544bkb.130.1299019783064;
+        Tue, 01 Mar 2011 14:49:43 -0800 (PST)
+Received: from w.nix.is (w.nix.is [188.40.98.140])
+        by mx.google.com with ESMTPS id z18sm3733741bkf.8.2011.03.01.14.49.42
+        (version=SSLv3 cipher=OTHER);
+        Tue, 01 Mar 2011 14:49:42 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168270>
 
-On Tue, 1 Mar 2011, Jeff King wrote:
-> On Fri, Feb 25, 2011 at 12:27:03PM -0800, Jakub Narebski wrote:
-> 
-> > > > Yes, sourced scripts should not have an executable bit. See 46bac90 for
-> > > > rationale.
-> > > 
-> > > And I should have mentioned: they should go in SCRIPT_LIB in the
-> > > Makefile, not SCRIPT_SH.
-> > 
-> > Shouldn't this information be in Documentation/CodingGuidelines, and
-> > perhaps also (checking if one doesn't accidentally change executable
-> > bit on sourced scripts) in Documentation/SubmittingPatches?
-> 
-> I think it might make more sense as comments in the Makefile, which is
-> not very well commented for people tweaking non-config bits. Patches
-> welcome.
+While the no-op C patch series is cooking I thought I'd send an RFC
+for the no-op shellscript infrastructure. So here (as threatened in
+<AANLkTinUtqJJHNyS9CxrC=3DVnS87v=3DGH=3DpOw9yr4r=3Dpii@mail.gmail.com>[=
+1]) is
+the infrastructure needed to gettextize the shell script programs.
 
-I meant here describing that sourced scripts should not have an executable
-bit in CodingGuidelines, ensure that it didn't acquire executable bit in
-SubmittingPatches, the fact that added new scripts got to SCRIPT_SH and
-new sourced scripts to SCRIPT_LIB in CodingGuidelines / SubmittingPatches.
+To quote my previous E-Mail[1] here are the things that are DONE and
+still need to be done.
+   =20
+    Open issues:
+   =20
+       * Write documentation for git-sh-i18n.sh and git-sh-i18n--envsub=
+st
+         like we have for git-sh-setup (already in WIP form).
 
-Description of SCRIPT_SH and SCRIPT_LIB in Makefile comments would be
-also nice, and perhaps replace some of proposed additions to 
-CodingGuidelines and SubmittingPatches documents.
+It now has documentation. So this isn't a problem anymore.
+   =20
+       * git-sh-i18n--envsubst is still too fat:
+   =20
+            $ ldd -r git-sh-i18n--envsubst
+                linux-vdso.so.1 =3D>  (0x00007fffc60fd000)
+                libz.so.1 =3D> /usr/lib/libz.so.1 (0x00007f25cff9e000)
+                libcrypto.so.0.9.8 =3D> /usr/lib/libcrypto.so.0.9.8
+    (0x00007f25cfbfd000)
+                libpthread.so.0 =3D> /lib/libpthread.so.0 (0x00007f25cf=
+9e0000)
+                libc.so.6 =3D> /lib/libc.so.6 (0x00007f25cf67f000)
+                libdl.so.2 =3D> /lib/libdl.so.2 (0x00007f25cf47b000)
+                /lib64/ld-linux-x86-64.so.2 (0x00007f25d01c0000)
+   =20
+         It only needs to link to libc, but I didn't find out when I la=
+st
+         checked how to convince the Makefile to only link against
+         that. Help welcome :)
 
--- 
-Jakub Narebski
-Poland
+This is still an issue. It needs to link to libgit for xmalloc() and
+friends, but it doesn't need libz, libcrypto etc.
+   =20
+       * Deal with the changes in 92c62a3f4f93432c0c82e3031a9e64e03ba29=
+0f7:
+   =20
+            $ git --no-pager  grep -A1 abomination *.sh
+            git-pull.sh:            # XXX: This is an abomination
+            git-pull.sh-            require_clean_work_tree "pull with
+    rebase" "Please commit or stash them."
+   =20
+         The changes Ramkumar Ramachandra made in 92c62a3f4f, while goo=
+d,
+         are hard to square with i18n.
+   =20
+         I think I'll just leave those bits untranslated for now and de=
+al
+         with them later, since I'm trying to keep this minimal.
+
+This is not part of this RFC series, but I still haven't dealt with it
+in my branch.
+   =20
+    And then there's the issue that unlike the C patches these will not=
+ be
+    a no-op that'll be optimized away by the compiler. We'll be calling=
+ an
+    external program for displaying messages. While this is a trivial c=
+ost
+    on Unix (especially in the context we're using it, i.e. not in tigh=
+t
+    loops) it's more expensive on Windows.
+   =20
+    I don't see any way to deal with that short of implementing some
+    pre-processor, but I think the cost is worth it, but others might
+    disagree of course.
+
+This is still a problem I think. Although there's been some work on
+this on the MinGW front from what I can gleam from the mailing list.
+   =20
+1. http://www.spinics.net/lists/git/msg151971.html
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+  git-sh-i18n--envsubst: our own envsubst(1) for eval_gettext()
+  git-sh-i18n.sh: add no-op gettext() and eval_gettext() wrappers
+
+ .gitignore                              |    3 +
+ Documentation/git-sh-i18n--envsubst.txt |   36 +++
+ Documentation/git-sh-i18n.txt           |   57 ++++
+ Makefile                                |    2 +
+ git-sh-i18n.sh                          |   17 ++
+ sh-i18n--envsubst.c                     |  444 +++++++++++++++++++++++=
+++++++++
+ 6 files changed, 559 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-sh-i18n--envsubst.txt
+ create mode 100644 Documentation/git-sh-i18n.txt
+ create mode 100644 git-sh-i18n.sh
+ create mode 100644 sh-i18n--envsubst.c
+
+--=20
+1.7.4.1
