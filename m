@@ -1,92 +1,101 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
- by ':'
-Date: Tue, 01 Mar 2011 11:25:43 -0500
-Message-ID: <4D6D1E07.1080109@cisco.com>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Tue, 01 Mar 2011 11:46:03 -0500
+Message-ID: <1298997963.5247.30.camel@drew-northup.unet.maine.edu>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+	 <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+	 <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
+	 <20110214231920.GA24814@elie>
+	 <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
+	 <20110227084317.GB3356@sigill.intra.peff.net>
+	 <1298820840.19827.69.camel@drew-northup.unet.maine.edu>
+	 <20110228230311.GA7533@sigill.intra.peff.net>
+	 <AANLkTi=LPqu9zDiAJpxqC=ZCLig+aCv5ztXw668ERtH7@mail.gmail.com>
+	 <op.vrnq8gk856e9f9@xman.eng.oslo.osa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, David <bouncingcats@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 17:25:52 2011
+	Jon Seymour <jon.seymour@gmail.com>,
+	Miles Bader <miles@gnu.org>
+To: Alexey Feldgendler <alexeyf@opera.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 17:53:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuSOV-0007Ij-9W
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 17:25:51 +0100
+	id 1PuSoX-0006L3-C5
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 17:52:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756814Ab1CAQZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 11:25:46 -0500
-Received: from sj-iport-4.cisco.com ([171.68.10.86]:3390 "EHLO
-	sj-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756567Ab1CAQZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 11:25:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1100; q=dns/txt;
-  s=iport; t=1298996745; x=1300206345;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=TS+5bdmWYGFA3xs5Y9zfyrotXziQHzsyTR+v6V7BzVQ=;
-  b=N7ButCjlNIlchhQ80Q80Sh83EIDi6Q5YHgSyvhzRAy7IrhjoQ4YSmDcW
-   moVlfd3KjZ9xzT9KGpuWfZgdcHVm+MCnDZ+6j7bHriASCGKtW4z1Z/WTt
-   f7m8iWaN5oygD4w7nqWsGIXyUFfWOPxqgLeZJKBhBcy0sg5qUetusj6in
-   Y=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAEWsbE2rR7Hu/2dsb2JhbACmTHSgP5wshWEEhRKHDYNA
-X-IronPort-AV: E=Sophos;i="4.62,248,1297036800"; 
-   d="scan'208";a="267263601"
-Received: from sj-core-5.cisco.com ([171.71.177.238])
-  by sj-iport-4.cisco.com with ESMTP; 01 Mar 2011 16:25:45 +0000
-Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
-	by sj-core-5.cisco.com (8.13.8/8.14.3) with ESMTP id p21GPi60004817;
-	Tue, 1 Mar 2011 16:25:44 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.2
+	id S1756453Ab1CAQwk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 11:52:40 -0500
+Received: from beryl.its.maine.edu ([130.111.32.94]:48030 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754051Ab1CAQwj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 11:52:39 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p21Gk7cU019584
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 1 Mar 2011 11:46:08 -0500
+In-Reply-To: <op.vrnq8gk856e9f9@xman.eng.oslo.osa>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=11
+	Fuz1=11 Fuz2=11
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p21Gk7cU019584
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1299602787.48322@KxQzABmMy2X2A7A0EKR8Gw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168229>
 
-On 03/01/2011 09:50 AM, Junio C Hamano wrote:
-> The reason I am skeptical about the "from root prefix" is because I do not
-> see a way to make it compatible with other meaningful pathspecs.
->
->     $ cd Documentation
->     $ git grep -e frotz '*.txt'
->
-> would find frotz in all *.txt files in Documentation (and its
-> subdirectories), if the command takes "relatigve to cwd".
->
-> It also is very clear that
->
->     $ cd Documentation
->     $ git grep --full-tree -e frotz '*.txt'
->
-> would find those anywhere, inside or outside Documentation.
->
-> On the other hand, it is natural to expect that
->
->     $ git grep -e frotz ".../*.txt"
->
-> should find *.txt files _only_ at the root level, so it is not as
-useful as
-> the --full-tree (or --root).
 
-I don't understand this last statement.  I think it implies that it is
-also natural to expect that
+On Tue, 2011-03-01 at 10:27 +0100, Alexey Feldgendler wrote:
+> On Tue, 01 Mar 2011 10:11:11 +0100, David <bouncingcats@gmail.com> wr=
+ote:
+>=20
+> > A suggestion: could your conceptual bucket be named as "the precomm=
+it".
+> >
+> > Motives for this suggestion are:
+> > 1)  I imagine this word will be readily translatable;
+>=20
+> Less so than =E2=80=9Cstaging area=E2=80=9D, at least into Russian.
+>=20
+> Just my two cents.
 
-    $ git grep -e frotz -- "../*.txt"
+I was starting to think about "commit preparation area" this morning,
+but it sounds horribly long. Would "Prep area" work provided that the
+longer version has already been introduced into the discussion? This
+provides a similar language metaphor to "staging area" hopefully withou=
+t
+the translation problem.
 
-should find *.txt files _only_ in the parent directory.  But this is not
-the case.  It returns the same search results as
+Also, I still think that it is important to note somewhere that the way
+that git handles commits is not the way that most users are likely to
+imagine (the Index doesn't contain the blob objects itself; a finalized
+commit is not just a bundled collection of everything as somebody might
+expect; etc) so this "Prep area" is a logical space not completely
+analogous to stuff found in the ".git" directory. Pretending that
+complexity does not exist will not help; letting the users know that
+they don't need to grok all of the details to get started is, on the
+other hand, quite important.
 
-    $ ( cd .. ; git grep -e frotz -- "*.txt" )
+(Reconstructing the CC list... let me know if I left you out, spammed
+you, etc...)
 
-Phil
+--=20
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
