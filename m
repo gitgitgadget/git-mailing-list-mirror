@@ -1,68 +1,115 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Limit file descriptors used by packs
-Date: Tue, 1 Mar 2011 06:58:49 -0800
-Message-ID: <AANLkTik=FiwsQUg89MRXZX1-jR-fkF7uyJAimSXVSLvR@mail.gmail.com>
-References: <1298924835-23413-1-git-send-email-spearce@spearce.org>
- <7vwrkjhp27.fsf@alter.siamese.dyndns.org> <20110228204727.GB26052@spearce.org>
- <7vwrkiex62.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
+ by ':'
+Date: Tue, 01 Mar 2011 16:01:37 +0100
+Message-ID: <4D6D0A51.9030701@drmicha.warpmail.net>
+References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 15:59:17 2011
+X-From: git-owner@vger.kernel.org Tue Mar 01 16:05:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuR2i-0006R5-C3
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 15:59:16 +0100
+	id 1PuR8S-0001ZP-Da
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 16:05:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756509Ab1CAO7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 09:59:10 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:32937 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756447Ab1CAO7J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 09:59:09 -0500
-Received: by vxi39 with SMTP id 39so4225276vxi.19
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 06:59:09 -0800 (PST)
-Received: by 10.52.68.180 with SMTP id x20mr6754454vdt.43.1298991549110; Tue,
- 01 Mar 2011 06:59:09 -0800 (PST)
-Received: by 10.52.163.66 with HTTP; Tue, 1 Mar 2011 06:58:49 -0800 (PST)
-In-Reply-To: <7vwrkiex62.fsf@alter.siamese.dyndns.org>
+	id S1756550Ab1CAPFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 10:05:05 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48791 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756535Ab1CAPFE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 10:05:04 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3006E20878;
+	Tue,  1 Mar 2011 10:05:02 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 01 Mar 2011 10:05:02 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=xPXL8fq9ja63ZCbMmhNOoD3DIhU=; b=I3lA3+FkDy475a5GmGDK0pkgYM5bZuIBBsV9MySHuMUXIAKewQbQmr6+DHGwpOxCCbp/uqoFb9xQrvUzfFWQIjLlR+d/n4lDuhJCbPYbF11tFsEYTjVMmYyo8mppcI1Yqe9F1+sJ+Q7wn+Vw2zZuZ9ceg8Yqq/U0hsyaRb4QYyI=
+X-Sasl-enc: KSk/fxmJ9vQA3hSpGq+XUKBXWD8jNPPwB5bmEB6fcJyn 1298991901
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8DE51448E0D;
+	Tue,  1 Mar 2011 10:05:01 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168226>
 
-On Tue, Mar 1, 2011 at 06:24, Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
->
->> In this particular part of C Git, if we are bumping up against the
->> hard pack_max_fds limit we're already into some pretty difficult
->> computation. Trying to push the rlimit higher in order to avoid
->> close/open calls as we cycle through fds isn't really going to make
->> a huge difference on end-user latency for the command to finish
->> its task. So maybe we are better off honoring the rlim_cur that we
->> inherited from the user/environment.
->
-> Let's step back a bit.
-...
-> For a .pack that fits inside a single pack window, however, can't we close
-> the file descriptor immediately after mmap() it to obtain a sole window
-> into it?
+Junio C Hamano venit, vidit, dixit 01.03.2011 15:50:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+> 
+>> No. ':foo' as a reference to 'foo' in index is a SHA1-extended syntax
+>> and I think we try to avoid ambiguation when a sha1-extended syntax
+>> may look like a path or vice versa.
+> 
+> Very true.
+> 
+> Just as a thought experiment (I am skeptical about this whole "this is
+> from root" prefix idea to begin with, but I don't want to shoot an idea
+> down prematurely when there may still be untold gems I haven't seen in
+> it):
+> 
+>     $ git grep -e frotz .../
+> 
+> to abbreviate "I don't bother to count my ../" might be an alternative,
+> though.
+> 
+> The reason I am skeptical about the "from root prefix" is because I do not
+> see a way to make it compatible with other meaningful pathspecs.
+> 
+>     $ cd Documentation
+>     $ git grep -e frotz '*.txt'
+> 
+> would find frotz in all *.txt files in Documentation (and its
+> subdirectories), if the command takes "relatigve to cwd".
+> 
+> It also is very clear that
+> 
+>     $ cd Documentation
+>     $ git grep --full-tree -e frotz '*.txt'
+> 
+> would find those anywhere, inside or outside Documentation.
+> 
+> On the other hand, it is natural to expect that
+> 
+>     $ git grep -e frotz ".../*.txt"
+> 
+> should find *.txt files _only_ at the root level, so it is not as useful as
+> the --full-tree (or --root).
 
-Yes. And its unrelated to this patch. You can still run out of file
-descriptors because you have a lot of large packs. :-)
+Exactly that is (one of the reasons) why I used something which does not
+look like "as many ../ as necessary" nor like "/". With my implementation,
 
-I've considered this in the past, but avoided it because I thought the
-unuse_one_window() function might become more complex. But its not, we
-can just keep popping windows until the condition is met, which for a
-file descriptor is that we are below the limit.
+git grep -e frotz ":*.txt"
 
-I'll send a follow-up patch that builds on top of this one to close
-the pack fd if the entire thing fits into one window.
+from a subdir will grep the exact same files as
 
--- 
-Shawn.
+(cd $(git rev-parse --cdup) && git grep -e frotz "*.txt")
+
+will (it is --full-tree!), and will output the results relative to the
+current workdir.
+
+Note that we already have to disambiguate between revspecs and pathspecs
+with -- in several places; that is not different with the new notation,
+and even not more frequent if it is not used.
+
+I have to say I'm really excited about how transparently this works
+across all kinds of commands, and how suggestive this is with rev:path
+in mind.
+
+Also, e.g.,
+
+git grep -e frotz "*.c" ":*.h"
+
+will look in all C files in the cwd and and all headers everywhere. Just
+think of the possibilities, and of the usefulness with clean, add,
+commit, reset,...!
+
+Michael
