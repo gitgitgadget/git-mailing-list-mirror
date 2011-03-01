@@ -1,7 +1,7 @@
-From: Computer Druid <computerdruid@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Git changes permissions on directories when deleting files.
-Date: Tue, 1 Mar 2011 15:39:10 -0500
-Message-ID: <AANLkTinkjhH6YR7VPC0hji9CK=qeQMAYr+ptJE3szUyR@mail.gmail.com>
+Date: Tue, 01 Mar 2011 21:43:58 +0100
+Message-ID: <vpqmxlea7w1.fsf@bauges.imag.fr>
 References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
 	<AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com>
 	<AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
@@ -13,86 +13,64 @@ References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
 	<20110301200805.GA18587@sigill.intra.peff.net>
 	<AANLkTint3PARNNN4cpic8XG6HsM3AAGuX5a+oeXfFNx=@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Computer Druid <computerdruid@gmail.com>, git@vger.kernel.org
 To: Chad Joan <chadjoan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 21:39:25 2011
+X-From: git-owner@vger.kernel.org Tue Mar 01 21:44:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuWLq-0000nc-PG
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 21:39:23 +0100
+	id 1PuWQV-0003dI-8V
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 21:44:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757510Ab1CAUjN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 15:39:13 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:62413 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757481Ab1CAUjM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 15:39:12 -0500
-Received: by wyg36 with SMTP id 36so5091584wyg.19
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 12:39:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=brYdi2KG8MNOtDQmTykge+KlXUrIOCIaWjRJsalt58U=;
-        b=rg+rXWVgNHEKEEEn+39FvdfOABi1Og7GhfYiQbsQPlbwrZOehlzu3fX2via1NIaahM
-         iHRvUBRNuva4GzEUu5kHX1k4YjYHBXkun2UdXxJDM1lOBDjbz9LykR4gTaDij2BeV4IE
-         0Cs0Av/DkPERvz/v7VnljiYNJGzOgwEaKZl70=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Hjf06+I1lSaAYw/QX8DU12GRoy/gKMncf4gmk64Hj/f67xpFAeQg5LYRglEsYO6V1l
-         GNJ/gelplkvx8Ksm3TjFqPHeXoS3LrVyPm5wO+ErSuzvowS9MtX/BQBJs1c3v0/sR9tU
-         2M7cc9EWbcu7djmhLgExUSdWgW44yat28Ea4M=
-Received: by 10.216.181.199 with SMTP id l49mr3763057wem.68.1299011950779;
- Tue, 01 Mar 2011 12:39:10 -0800 (PST)
-Received: by 10.216.161.79 with HTTP; Tue, 1 Mar 2011 12:39:10 -0800 (PST)
+	id S1757482Ab1CAUoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 15:44:05 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:34503 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757361Ab1CAUoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 15:44:04 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p21KhsaB030857
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 1 Mar 2011 21:43:54 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PuWQI-0007LD-Gy; Tue, 01 Mar 2011 21:43:58 +0100
 In-Reply-To: <AANLkTint3PARNNN4cpic8XG6HsM3AAGuX5a+oeXfFNx=@mail.gmail.com>
+	(Chad Joan's message of "Tue, 1 Mar 2011 15:30:39 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 01 Mar 2011 21:43:54 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p21KhsaB030857
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1299617035.01799@KEsRJrIzTqsax0/3/+mWvA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168256>
 
-On Tue, Mar 1, 2011 at 3:30 PM, Chad Joan <chadjoan@gmail.com> wrote:
-> On Tue, Mar 1, 2011 at 3:08 PM, Jeff King <peff@peff.net> wrote:
->> But it just seems horribly broken to me. This is CIFS to an OpenVMS
->> machine you said? Do the broken permissions appear to other clients =
-or
->> across a remount (i.e., is it broken state in your CIFS client, or h=
-as
->> the server actually munged permissions)? If so, have you tried repor=
-ting
->> the issue to whoever writes CIFS server on OpenVMS (is it just samba=
-)?
->>
->> -Peff
->>
->
-> Yep, CIFS to OpenVMS.
->
-> I don't know about other clients because there are none (yet). =C2=A0=
-The
-> permission change does survive remounting.
->
-> I haven't reported it. =C2=A0I didn't know it existed until now ;)
->
-> I'll do that, but it will probably take a long long time for me to se=
-e
-> the patch. =C2=A0I'm hoping there's some cheap hack I can use to work
+Chad Joan <chadjoan@gmail.com> writes:
+
+> I'll do that, but it will probably take a long long time for me to see
+> the patch.  I'm hoping there's some cheap hack I can use to work
 > around it in the meantime.
 
-A simple answer to preventing git from calling rmdir would be to run
-rm and git rm separately:
-$ rm file
-$ git rm --cached -f file
+I'd say grep for "rmdir" is Git's source code, and replace the calls
+with a wrapper that does roughly
 
-But that doesn't solve the misbehavior of git under the previous
-scenario. I'm not sure if this is something we should fix in git or if
-it should be fixed in cifs.
+rmdir_wrapper(dir) {
+	rmdir(dir);
+	if (stat(dir, &buf))
+		chmod(dir, buf.st_mode | 0777);
+}
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
