@@ -1,71 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide
- pathspecs by ':'
-Date: Tue, 01 Mar 2011 12:00:57 -0800
-Message-ID: <7v4o7mehl2.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com>
- <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org> <4D6D0A51.9030701@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git changes permissions on directories when deleting files.
+Date: Tue, 1 Mar 2011 15:08:06 -0500
+Message-ID: <20110301200805.GA18587@sigill.intra.peff.net>
+References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
+ <AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com>
+ <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
+ <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
+ <AANLkTimx7s94wjPasgdY7O9eoyzXXmhWm6f+CB0_2sv3@mail.gmail.com>
+ <AANLkTimBrUo_O6sjhSEf2sPKrYhjMcr24hwRe0kH4CgO@mail.gmail.com>
+ <20110301194428.GD10082@sigill.intra.peff.net>
+ <AANLkTimCzBwsz4TV=jEGeSEScVtgwmGEiDWOomaeTgWD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 21:01:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Computer Druid <computerdruid@gmail.com>, git@vger.kernel.org
+To: Chad Joan <chadjoan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 21:08:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuVky-00058a-Tq
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 21:01:17 +0100
+	id 1PuVrY-0000NI-BS
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 21:08:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757180Ab1CAUBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 15:01:11 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43007 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755721Ab1CAUBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 15:01:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BF09C38EB;
-	Tue,  1 Mar 2011 15:02:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a2n8wBAoFks1afcEsKd3+5oe8fA=; b=jSSnDm
-	DR6iQXiaYN1hDYQrEwFq+3DCE2+yp7hRahVKwTuQ9gcBIbIfLXvDUYzp11/FCFg5
-	orj0xDHfONUoeYMXIThHqpdLpD5IUa4EYXTW1tL4uOsd41oQrV0Lu+kCKPCh5Cxq
-	ojJMJmTE0SDQJyOgNeg2GATFPiutFOOS82VZI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q4Of7e3U4xcR0lZN8xiliZRHPCvvSteR
-	QapdTDQE+YJTF+rSQjXVpuQxamdsAsaKpQu5tn3s95aI8a+OywQYODWgh6AkmyH/
-	6AdSmY4LLtdeyuT2yjClA8E9FqHDqlvun0WzPTCrt//qkhlP/rxQBV4rG5xBjn3i
-	ahQ1DRXzAhI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8D97538EA;
-	Tue,  1 Mar 2011 15:02:24 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5BB4A38E9; Tue,  1 Mar 2011
- 15:02:20 -0500 (EST)
-In-Reply-To: <4D6D0A51.9030701@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Tue\, 01 Mar 2011 16\:01\:37 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D3563C80-443E-11E0-A3AC-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1757185Ab1CAUH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 15:07:58 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:52377 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756459Ab1CAUH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 15:07:58 -0500
+Received: (qmail 9875 invoked by uid 111); 1 Mar 2011 20:07:56 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Mar 2011 20:07:56 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2011 15:08:06 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTimCzBwsz4TV=jEGeSEScVtgwmGEiDWOomaeTgWD@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168251>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, Mar 01, 2011 at 02:57:19PM -0500, Chad Joan wrote:
 
-> Also, e.g.,
->
-> git grep -e frotz "*.c" ":*.h"
->
-> will look in all C files in the cwd and and all headers everywhere.
+> > Exactly. Rather than spend time figuring out if the directory is
+> > removable (which would not be atomic, anyway), we just rmdir and ignore
+> > the error condition.
+> >
+> > I would argue that your filesystem is broken. Even if we implemented a
+> > workaround to opendir() and check for files, it would still have a race
+> > condition that could cause this situation to occur.
+> 
+> Ouch.
+> 
+> Would it work to do something like alias rmdir to a script or program
+> that would call /bin/rmdir and then fix up the permissions?
 
-Ah, that is cute.  I don't know if the syntax is acceptable to the general
-public, but I do see the beauty in that approach of marking individual
-pathspec as "(the rest is) from root".
+Well, we're using the rmdir system call, so you would need a patch to
+git either way. If that was something we wanted to support (with a
+config option, of course), we could do the permissions check-and-restore
+ourselves.
 
-Nice.
+But it just seems horribly broken to me. This is CIFS to an OpenVMS
+machine you said? Do the broken permissions appear to other clients or
+across a remount (i.e., is it broken state in your CIFS client, or has
+the server actually munged permissions)? If so, have you tried reporting
+the issue to whoever writes CIFS server on OpenVMS (is it just samba)?
+
+-Peff
