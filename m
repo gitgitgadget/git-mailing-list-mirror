@@ -1,65 +1,94 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [RFC/PATCH] commit notes workflow
-Date: Tue, 01 Mar 2011 17:26:35 -0500
-Message-ID: <1299018395.14490.12.camel@drew-northup.unet.maine.edu>
-References: <20110225133056.GA1026@sigill.intra.peff.net>
-	 <1298665854.27129.25.camel@drew-northup.unet.maine.edu>
-	 <20110301220053.GB23945@sigill.intra.peff.net>
-	 <1299017913.14490.10.camel@drew-northup.unet.maine.edu>
-	 <20110301222350.GA24215@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 18/31] rebase: extract merge code to new source file
+Date: Tue, 1 Mar 2011 23:43:31 +0100
+Message-ID: <201103012343.33781.jnareb@gmail.com>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <m3sjvb7tg4.fsf@localhost.localdomain> <20110301220428.GE23945@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 23:27:14 2011
+X-From: git-owner@vger.kernel.org Tue Mar 01 23:44:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuY2C-0001Cm-Kf
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 23:27:13 +0100
+	id 1PuYIb-00016k-HD
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 23:44:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756537Ab1CAW1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 17:27:07 -0500
-Received: from beryl.its.maine.edu ([130.111.32.94]:39691 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754013Ab1CAW1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 17:27:06 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p21MQf4c010758
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 1 Mar 2011 17:26:41 -0500
-In-Reply-To: <20110301222350.GA24215@sigill.intra.peff.net>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=4 Fuz1=4
-	Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p21MQf4c010758
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1299623206.05858@Am8B+ar7d9eE9BSwyeVIuw
+	id S1756643Ab1CAWoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 17:44:04 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62839 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756496Ab1CAWoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 17:44:02 -0500
+Received: by fxm17 with SMTP id 17so5336659fxm.19
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 14:44:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Mu+W7UQrfBXiclFRokIOoFl7rg/RluhSB/LxPDk/Cwc=;
+        b=Gu28/p5GMZodV9tG0vEfRNNUBfKDvYuopOLAIDZq5oZm/E1iRTGygcpwcBUBGAzoJD
+         tYeuv6OWYJeNCCztxciDE9Zn5SYTJnX/5CC9q3rrsxBSI1xj9vHQNHdzhxuT1LROVKR3
+         FDdLwwuLFZnkHLywxQd1L1vhfcrXRZZRDN/vU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=KgOE6qog0B8l64rUV+6/pXWJgMJJ/htxE0ZZJu1ZNbeqaw/0YqWTNcMfNZYm761SKS
+         dSOr/TBn/f4QTl/L+FfWqg3KC52kHqbReeQhMDRuGa1TeuAewZFMOooLoa1QweQ2xhJF
+         IyZr1qkrVx0oxMWhLGe9D+qct6k6zT35OhxZU=
+Received: by 10.223.102.67 with SMTP id f3mr3651295fao.125.1299019424386;
+        Tue, 01 Mar 2011 14:43:44 -0800 (PST)
+Received: from [192.168.1.13] (abvt248.neoplus.adsl.tpnet.pl [83.8.217.248])
+        by mx.google.com with ESMTPS id n2sm184591fam.28.2011.03.01.14.43.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 Mar 2011 14:43:43 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110301220428.GE23945@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168269>
 
-
-On Tue, 2011-03-01 at 17:23 -0500, Jeff King wrote:
-> On Tue, Mar 01, 2011 at 05:18:33PM -0500, Drew Northup wrote:
-
+On Tue, 1 Mar 2011, Jeff King wrote:
+> On Fri, Feb 25, 2011 at 12:27:03PM -0800, Jakub Narebski wrote:
 > 
-> No, I meant the "#" lines. The "---" of format-patch isn't relevant
-> here, since we're just talking about commit messages inside the editor
-> during git-commit.
+> > > > Yes, sourced scripts should not have an executable bit. See 46bac90 for
+> > > > rationale.
+> > > 
+> > > And I should have mentioned: they should go in SCRIPT_LIB in the
+> > > Makefile, not SCRIPT_SH.
+> > 
+> > Shouldn't this information be in Documentation/CodingGuidelines, and
+> > perhaps also (checking if one doesn't accidentally change executable
+> > bit on sourced scripts) in Documentation/SubmittingPatches?
+> 
+> I think it might make more sense as comments in the Makefile, which is
+> not very well commented for people tweaking non-config bits. Patches
+> welcome.
 
-That's the part I missed. I'll crawl back under my rock now...
+I meant here describing that sourced scripts should not have an executable
+bit in CodingGuidelines, ensure that it didn't acquire executable bit in
+SubmittingPatches, the fact that added new scripts got to SCRIPT_SH and
+new sourced scripts to SCRIPT_LIB in CodingGuidelines / SubmittingPatches.
+
+Description of SCRIPT_SH and SCRIPT_LIB in Makefile comments would be
+also nice, and perhaps replace some of proposed additions to 
+CodingGuidelines and SubmittingPatches documents.
 
 -- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Jakub Narebski
+Poland
