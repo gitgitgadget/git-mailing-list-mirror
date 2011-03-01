@@ -1,106 +1,91 @@
-From: Chad Joan <chadjoan@gmail.com>
-Subject: Re: Git changes permissions on directories when deleting files.
-Date: Tue, 1 Mar 2011 14:57:19 -0500
-Message-ID: <AANLkTimCzBwsz4TV=jEGeSEScVtgwmGEiDWOomaeTgWD@mail.gmail.com>
-References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
- <AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com>
- <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
- <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
- <AANLkTimx7s94wjPasgdY7O9eoyzXXmhWm6f+CB0_2sv3@mail.gmail.com>
- <AANLkTimBrUo_O6sjhSEf2sPKrYhjMcr24hwRe0kH4CgO@mail.gmail.com> <20110301194428.GD10082@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without
+ pathspec
+Date: Tue, 1 Mar 2011 15:00:25 -0500
+Message-ID: <20110301200025.GF10082@sigill.intra.peff.net>
+References: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
+ <7vei6t4uwa.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=BwTHRWcUu26VLWAhFupmuJpu8fvOF98--HJ5f@mail.gmail.com>
+ <7vy6512rnb.fsf@alter.siamese.dyndns.org>
+ <AANLkTimqBxhHBVzet9M-6AqiCp664hkroM9QWS_1SiLP@mail.gmail.com>
+ <7vk4gkk5pd.fsf@alter.siamese.dyndns.org>
+ <vpqipw2rixy.fsf@bauges.imag.fr>
+ <7vd3maelbh.fsf@alter.siamese.dyndns.org>
+ <vpq4o7mfzd1.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Computer Druid <computerdruid@gmail.com>, git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Mar 01 20:57:47 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Sebastian Pipping <webmaster@hartwork.org>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 01 21:00:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuVhZ-0003PS-IB
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 20:57:45 +0100
+	id 1PuVk8-0004gU-M6
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 21:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756827Ab1CAT5k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 14:57:40 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:41591 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754233Ab1CAT5k convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 14:57:40 -0500
-Received: by vws12 with SMTP id 12so4499783vws.19
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 11:57:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:cc:content-type:content-transfer-encoding;
-        bh=oktuQjSjPL4QILIAEUqowbwB1DJHzAolEhGNx54YtU8=;
-        b=tECOeAT+VUPd17HsOWOvOlmxomGA6U+2VqCoXBOJ1zX/RXj6Z5OmQo86tL2Lw0Oi6A
-         maS7K/2WtqYtJZVCUW0uTzXAYgUKJafEFFWbetHJVovUfPnYVSjLQOJaVVjXXQHJUaKj
-         vSB1XqnlR+kOQLzugr0IjeY81puWGMY8ENMrI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:cc
-         :content-type:content-transfer-encoding;
-        b=fck5CQa5YS3pCECLogXCj+hapKN5FtQyPeH+FDPSNdZcJD86MDK8n1LUuPrt9L1qgG
-         /Fn3QhJ7+tXzWAirT5KgMHrbo7Gz7NBsUAHR6AlMwrgBwwUeyw/hZ3gm1C3RGf4xgM8Y
-         SQFW2cgUdhHkBjbNeCqtvW6VVz5hqhlhPJ3wY=
-Received: by 10.52.68.65 with SMTP id u1mt6884625vdt.176.1299009459156; Tue,
- 01 Mar 2011 11:57:39 -0800 (PST)
-Received: by 10.220.94.136 with HTTP; Tue, 1 Mar 2011 11:57:19 -0800 (PST)
-In-Reply-To: <20110301194428.GD10082@sigill.intra.peff.net>
+	id S1755446Ab1CAUAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 15:00:18 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:35402 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752647Ab1CAUAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 15:00:17 -0500
+Received: (qmail 9764 invoked by uid 111); 1 Mar 2011 20:00:15 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Mar 2011 20:00:15 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2011 15:00:25 -0500
+Content-Disposition: inline
+In-Reply-To: <vpq4o7mfzd1.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168249>
 
-On Tue, Mar 1, 2011 at 2:44 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 01, 2011 at 02:35:41PM -0500, Chad Joan wrote:
->
->> Something fairly interesting:
->>
->> $ mkdir foo
->> $ mkdir foo/bar
->> $ ls -dl foo/bar
->> drwxr-x--x 1 cjoan cjoan 0 Mar =A01 14:31 foo/bar
->> $ ls -dl foo
->> drwxr-x--x 1 cjoan cjoan 0 Mar =A01 14:31 foo
->> $ echo "test" > foo/bar/baz.txt
->> $ echo "somestuff" > foo/bar/somefile.txt
->> $ ls -dl foo/bar
->> drwxr-x--x 1 cjoan cjoan 0 Mar =A01 14:31 foo/bar
->> $ ls -dl foo
->> drwxr-x--x 1 cjoan cjoan 0 Mar =A01 14:31 foo
->> $ rmdir foo/bar
->> rmdir: failed to remove `foo/bar': Directory not empty
->> $ ls -dl foo/bar
->> drw------- 1 cjoan cjoan 0 Mar =A01 14:32 foo/bar
->> $ ls -dl foo
->> drwxr-x--x 1 cjoan cjoan 0 Mar =A01 14:31 foo
->>
->>
->> The rmdir fails of course, but it also changes the permissions.
->> So I take it that git always runs an rmdir on the parent directory
->> when it removes a file? =A0Seems like it would be a sensible way to =
-do
->> it on a system without this behavior.
->
-> Exactly. Rather than spend time figuring out if the directory is
-> removable (which would not be atomic, anyway), we just rmdir and igno=
-re
-> the error condition.
->
-> I would argue that your filesystem is broken. Even if we implemented =
-a
-> workaround to opendir() and check for files, it would still have a ra=
-ce
-> condition that could cause this situation to occur.
->
-> -Peff
->
+On Tue, Mar 01, 2011 at 07:51:38PM +0100, Matthieu Moy wrote:
 
-Ouch.
+> > Once your users (you as a script writer) have an option to set the
+> > configuration to participate in the tree-wide party early, you would need
+> > to update your scripts immediately so that they don't break on them;
+> 
+> But "update" should mean "replace git add -u with git add -u .", which
+> is the portable way to do the same.
+> 
+> > so the introduction of the configuration becomes a flag-day event.
+> > Hmph...
+> 
+> The introduction of the config variable is a non-event if you already
+> use the portable . notation.
 
-Would it work to do something like alias rmdir to a script or program
-that would call /bin/rmdir and then fix up the permissions?
+Right. Once this happens, you can never say "git add -u" again portably.
+You can't rely on the old behavior, because it's changing. You can't
+rely on the new behavior, because you might be using an old version. So
+as a script you _must_ say "git add -u .", and if you want top-level
+behavior and are not at the top-level, you must cd to the toplevel and
+"add .". Which sounds onerous, but it is what scripts have to do
+already with the current behavior.
+
+> > Yeah, I think you convinced me that an elaborate configuration wouldn't
+> > help us at all.  We just keep warning in 1.7.x series when "add -u" didn't
+> > see any pathspec, and flip the default at 1.8.0
+> >
+> > Simpler and cleaner ;-)
+> 
+> I think is still makes sense to have a config variable, so that people
+> who want the new behavior can get it ASAP. Right after 1.8 is out, I'll
+> still have machines where I'm too lazy to install a brand new Git, and
+> I'll want to get the 1.8 goodness for free ;-).
+
+Agreed. I also think there should be a setting to keep the current
+behavior. I don't want to use it, but given that configuration does not
+introduce any existing portability issues, we can help people who really
+liked the old behavior. We are inconveniencing them by changing the
+default, but it seems doubly mean to leave them with no way of restoring
+it short of typing extra characters on every invocation.
+
+-Peff
