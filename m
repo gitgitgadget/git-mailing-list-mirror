@@ -1,89 +1,64 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Consistent terminology: cached/staged/index
-Date: Tue, 01 Mar 2011 12:02:45 -0500
-Message-ID: <1298998965.5247.46.camel@drew-northup.unet.maine.edu>
-References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
-	 <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
-	 <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
-	 <20110214231920.GA24814@elie>
-	 <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
-	 <20110227084317.GB3356@sigill.intra.peff.net>
-	 <1298820840.19827.69.camel@drew-northup.unet.maine.edu>
-	 <20110228230311.GA7533@sigill.intra.peff.net>
-	 <AANLkTi=LPqu9zDiAJpxqC=ZCLig+aCv5ztXw668ERtH7@mail.gmail.com>
-	 <vpqaahf9p69.fsf@bauges.imag.fr>
-	 <AANLkTi=sXLcVJRVH87jXvVwCth+8vGgc7Ha0=XEG0Kx4@mail.gmail.com>
+From: Computer Druid <computerdruid@gmail.com>
+Subject: Re: Git changes permissions on directories when deleting files.
+Date: Tue, 1 Mar 2011 12:11:26 -0500
+Message-ID: <AANLkTimx7s94wjPasgdY7O9eoyzXXmhWm6f+CB0_2sv3@mail.gmail.com>
+References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
+	<AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com>
+	<AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
+	<AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	David <bouncingcats@gmail.com>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alexei Sholik <alcosholik@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 18:03:41 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Chad Joan <chadjoan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 18:11:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuSz6-0004nF-NN
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 18:03:41 +0100
+	id 1PuT6o-0001kJ-53
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 18:11:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756876Ab1CARDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 12:03:33 -0500
-Received: from beryl.its.maine.edu ([130.111.32.94]:42310 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756776Ab1CARDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 12:03:32 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p21H2ngY013282
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 1 Mar 2011 12:02:49 -0500
-In-Reply-To: <AANLkTi=sXLcVJRVH87jXvVwCth+8vGgc7Ha0=XEG0Kx4@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=9 Fuz1=9
-	Fuz2=9
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p21H2ngY013282
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1299603769.9908@i9G/KdNd7cD3Mce3Q/o9aQ
+	id S1756916Ab1CARLd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 12:11:33 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:63806 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756162Ab1CARLc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 12:11:32 -0500
+Received: by eyx24 with SMTP id 24so1745575eyx.19
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 09:11:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=p4e5hWiGMO/qEPAFWhcU3p2KhtCioZF5O/zXf2DpOCE=;
+        b=CKd00SbF5crrj7/sezUmAcicfxx6cpBFY00DS1RGvaSKZP5mIECsMLIi8N0sMuAdgs
+         jR0Mv1szXWLae3kMhuUlA7xAQD5soJpF2SoO2MKa3Jyi3F5NxZT/5301JeuWF3udjTyN
+         0Dql/2kQDC8SzyAa+CE3bRJz/gW27/XZ9I5rM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=uEx8reUv6mbNomhARSQd3Q4+pGJHWCtpAdyedmZgBe8sGCsjB2DbwMbY+cmHcx38tC
+         vmQ/bOndjN9/2QEsbkrGVZc5sxwUD+KTvm/NbkM0iq+scuwf/azka7Bh9YhrzNm5upzt
+         s0I2JnoJ2JM+cmc7csPclqoUjzEtyR/ZXTfMY=
+Received: by 10.216.178.138 with SMTP id f10mr5919550wem.98.1298999487050;
+ Tue, 01 Mar 2011 09:11:27 -0800 (PST)
+Received: by 10.216.161.79 with HTTP; Tue, 1 Mar 2011 09:11:26 -0800 (PST)
+In-Reply-To: <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168231>
 
+On Tue, Mar 1, 2011 at 10:51 AM, Chad Joan <chadjoan@gmail.com> wrote:
+> More info:
+>
+> $ mkdir foo
+> $ mkdir foo/bar
+> $ echo "test" > foo/bar/baz.txt
+> $ echo "somestuff" > foo/bar/somefile.txt
+What happens if you "rmdir foo/bar" here? (while there are files still in it)
 
-On Tue, 2011-03-01 at 11:32 +0200, Alexei Sholik wrote:
-
-> I guess, people who are friendly with git using the word "index"
-> because it's easier to type. But it confuses an unprepared reader. The
-> solution of the problem with confusion must be relevant to these
-> points:
->  - clarify that "index" means the same thing as the "staging area" (in
-> man if it isn't there already?)
-
-Alas, this isn't quite true. Blobs are copied to the .git/objects
-directory (which I referred to earlier as an object store without proper
-qualification) with each "git add" action AND are noted in the Index at
-the same time. Therefore the Index is quite literally containing
-information about the blobs to be committed without containing the blobs
-themselves. This is why I find any specific equivalence between Index
-and "staging area" distasteful--it is misleading. 
-
-(Yes, I made that mistake as well--helped along by a lot of third-party
-documentation referring to a specific cache or a specific "staging area"
-without noting that those were tools to understand the logical function
-of git but did not have anything to do with implementation. When you
-claim to be explaining "how something works" you should be doing just
-that.)
-
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+-Dan Johnson
