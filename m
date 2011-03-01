@@ -1,73 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
- by ':'
-Date: Tue, 01 Mar 2011 12:16:35 +0100
-Message-ID: <4D6CD593.2090705@drmicha.warpmail.net>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without pathspec
+Date: Tue, 1 Mar 2011 18:22:24 +0700
+Message-ID: <AANLkTimRuUdGsgkt63PspvNXXjusZeOJWMhSXQ5nS81t@mail.gmail.com>
+References: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
+ <7vei6t4uwa.fsf@alter.siamese.dyndns.org> <AANLkTi=BwTHRWcUu26VLWAhFupmuJpu8fvOF98--HJ5f@mail.gmail.com>
+ <7vy6512rnb.fsf@alter.siamese.dyndns.org> <AANLkTimqBxhHBVzet9M-6AqiCp664hkroM9QWS_1SiLP@mail.gmail.com>
+ <7vk4gkk5pd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 12:20:08 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Sebastian Pipping <webmaster@hartwork.org>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 12:23:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuNcd-0008It-Pm
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 12:20:08 +0100
+	id 1PuNfR-0001WT-NF
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 12:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756094Ab1CALUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 06:20:01 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44637 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755822Ab1CALUA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 06:20:00 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 184E220782;
-	Tue,  1 Mar 2011 06:20:00 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 01 Mar 2011 06:20:00 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=I1+N98qc8wxdhSCpulMX+7g8hHQ=; b=jyKyz8cGQV0/j6i1jVDHKT0EDVQ0UCYkQ12g5VqhgKXs/ujG2PBZn8Q5+j9okjYxmEcbmZiTlv860en76/XUOvBk/B+IeK1f4sbKFd7W+6+15xTghlyn+levdXvlKD0XohYbJO/7R402EXv8hqm69aVMklEFGHoe2xpPmJiZb6s=
-X-Sasl-enc: 89UYielWASQ39rDvh5QRA1V4CI7hPaDjJf/mG665JhAw 1298978399
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 78481442B4A;
-	Tue,  1 Mar 2011 06:19:59 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com>
+	id S1756158Ab1CALW4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 06:22:56 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:57874 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753794Ab1CALWz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 06:22:55 -0500
+Received: by wyg36 with SMTP id 36so4545888wyg.19
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 03:22:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=Jrfj07plmByumka3/x2Ga1eFM0kEwzXtv2IA0v3OhFU=;
+        b=TNj3ZB6MRhfcVnRsVTkDX5BuQs/c/6CriEnhG9nSD4zFUhLL0J+2UoZG8vr7aDT91R
+         /CDwD01UHm2z4Hf7ctZHTIDKoaGKBSJgjcdp7YwbaCvqkZiAccSSM3N5888M2qrlxaZ+
+         MVTcMUQYSRbZsxMhSfLtydl1F5pzzvpNHksZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=VjLvPUh+4caa7Bq7/fAl0jgZzP+hlu50faZaidiYarlLNP/PZ2HvFqdrPyf0zrWVhy
+         rvYLjXTSh6Iow8D+KEZDlaSAoqUiv+dZu3vl1+dOdXGRsmaimOXLIL7tFc+lbj0Ogu8Z
+         BctFW0LpA5hZE7VVi3HW8z4WYBgUxAfeXXBvc=
+Received: by 10.216.186.144 with SMTP id w16mr5902107wem.13.1298978574221;
+ Tue, 01 Mar 2011 03:22:54 -0800 (PST)
+Received: by 10.216.239.5 with HTTP; Tue, 1 Mar 2011 03:22:24 -0800 (PST)
+In-Reply-To: <7vk4gkk5pd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168211>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 01.03.2011 12:13:
-> 2011/3/1 Michael J Gruber <git@drmicha.warpmail.net>:
->> Introduce a leading ':' as the notation for repo-wide pathspecs.
->>
->> This is in line with our treeish:path notation which defaults to
->> repowide paths.
->>
->> Heck: Even ':./path' works for pathspecs, and I have no clue why!
-> 
-> If you are going to turn pathspecs into something more complex,
-> reserve room for future extension. I have negative pathspecs that can
-> utilize it.
-> 
-> I take it, from now on people must refer file name ':foo' as './:foo'
-> with your patch?
+On Mon, Feb 28, 2011 at 1:56 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Perhaps the migration plan is not helpful enough? =C2=A0If that is th=
+e case we
+> would need to rethink it to be even less impactful.
 
-That is up for discussion, of course. When discussing a new approach for
-file mode dependent attributes, I was hoping to get through with
-symlink:path, and did not. But it was decided that something like
-:symlink:path would be good enough, in the sense of avoiding enough
-possible conflicts. That made me hope that :path would be, too.
+But how many people may be impacted this way? If it's few, probably
+not worth the headaches. I want to believe the number is few, but I
+think anybody who ssh to some machine may have the same problem
+because they may not control what's in that machine.
 
-(I have not checked for interaction of those two, which are in flight.)
+I can only think of another way, ugly though: add a new command name,
+say "nad", that goes with new behavior, "add" remains old school. This
+way if I mistakenly type 'nad' on unsupported git, it refuses and I'm
+safe. Whether the new name is temporary (until the behavior flip in
+"add") or permanent is another ugly matter to think about.
 
-I would think that file names like ":foo" are problematic on msys
-already, so in a sense they are no-no already, and free to take as
-special notation.
-
-Michael
+Or accept that evolution is painful and go with current plan, which I'm=
+ OK too.
+--=20
+Duy
