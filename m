@@ -1,115 +1,75 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
- by ':'
-Date: Tue, 01 Mar 2011 16:01:37 +0100
-Message-ID: <4D6D0A51.9030701@drmicha.warpmail.net>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
+From: Chad Joan <chadjoan@gmail.com>
+Subject: Re: Git changes permissions on directories when deleting files.
+Date: Tue, 1 Mar 2011 10:51:39 -0500
+Message-ID: <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
+References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
+ <AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com> <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 16:05:12 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 16:52:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuR8S-0001ZP-Da
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 16:05:12 +0100
+	id 1PuRrq-0003Pj-8g
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 16:52:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756550Ab1CAPFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 10:05:05 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48791 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756535Ab1CAPFE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 10:05:04 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3006E20878;
-	Tue,  1 Mar 2011 10:05:02 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 01 Mar 2011 10:05:02 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=xPXL8fq9ja63ZCbMmhNOoD3DIhU=; b=I3lA3+FkDy475a5GmGDK0pkgYM5bZuIBBsV9MySHuMUXIAKewQbQmr6+DHGwpOxCCbp/uqoFb9xQrvUzfFWQIjLlR+d/n4lDuhJCbPYbF11tFsEYTjVMmYyo8mppcI1Yqe9F1+sJ+Q7wn+Vw2zZuZ9ceg8Yqq/U0hsyaRb4QYyI=
-X-Sasl-enc: KSk/fxmJ9vQA3hSpGq+XUKBXWD8jNPPwB5bmEB6fcJyn 1298991901
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8DE51448E0D;
-	Tue,  1 Mar 2011 10:05:01 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
+	id S1756500Ab1CAPwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 10:52:00 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:36247 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754095Ab1CAPv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 10:51:59 -0500
+Received: by vxi39 with SMTP id 39so4279376vxi.19
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 07:51:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=azHEQB/3/dzy2/lF8qgW0Qdoyq8iRTTJQlyJa+9JeDc=;
+        b=noUwwqqTqyOFppfHKb4qo8eFWNfT+Sqwt4sp7dTKWvRRJd6s1MzymlTNEupKQYLatU
+         BfWVgoPVYj5qbpp7MhlSY8VLdgLEOUAjioUnPEGH1X4VknfuFz8fUoUaNSxMMQf7TosG
+         rIkK2aDL+iWXkZP/F0Auzm6Cv8Kw+3GWf2bGg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=jaXhorzuv3YyVII9W1AMqGWDa3R60LuliGSCsMMPUBfEzcwzD/qWH0YhAYK5colESL
+         gI8tdI03QCA37sZb+e1PBcU/klstIIm0joangOzEyCx+M5hGCB8J11rhiT35w4LNNxCe
+         cyHgGyUi7cT1Yi9JjZdleG0eFcyKCjX9T1bOs=
+Received: by 10.52.68.65 with SMTP id u1mr4532261vdt.176.1298994719093; Tue,
+ 01 Mar 2011 07:51:59 -0800 (PST)
+Received: by 10.220.94.136 with HTTP; Tue, 1 Mar 2011 07:51:39 -0800 (PST)
+In-Reply-To: <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168227>
 
-Junio C Hamano venit, vidit, dixit 01.03.2011 15:50:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-> 
->> No. ':foo' as a reference to 'foo' in index is a SHA1-extended syntax
->> and I think we try to avoid ambiguation when a sha1-extended syntax
->> may look like a path or vice versa.
-> 
-> Very true.
-> 
-> Just as a thought experiment (I am skeptical about this whole "this is
-> from root" prefix idea to begin with, but I don't want to shoot an idea
-> down prematurely when there may still be untold gems I haven't seen in
-> it):
-> 
->     $ git grep -e frotz .../
-> 
-> to abbreviate "I don't bother to count my ../" might be an alternative,
-> though.
-> 
-> The reason I am skeptical about the "from root prefix" is because I do not
-> see a way to make it compatible with other meaningful pathspecs.
-> 
->     $ cd Documentation
->     $ git grep -e frotz '*.txt'
-> 
-> would find frotz in all *.txt files in Documentation (and its
-> subdirectories), if the command takes "relatigve to cwd".
-> 
-> It also is very clear that
-> 
->     $ cd Documentation
->     $ git grep --full-tree -e frotz '*.txt'
-> 
-> would find those anywhere, inside or outside Documentation.
-> 
-> On the other hand, it is natural to expect that
-> 
->     $ git grep -e frotz ".../*.txt"
-> 
-> should find *.txt files _only_ at the root level, so it is not as useful as
-> the --full-tree (or --root).
+More info:
 
-Exactly that is (one of the reasons) why I used something which does not
-look like "as many ../ as necessary" nor like "/". With my implementation,
+$ mkdir foo
+$ mkdir foo/bar
+$ echo "test" > foo/bar/baz.txt
+$ echo "somestuff" > foo/bar/somefile.txt
+$ git add foo/bar/*
+$ ls -dl foo
+drwxr-x--x 1 cjoan cjoan 0 Mar  1 10:46 foo
+$ ls -dl foo/bar
+drwxr-x--x 1 cjoan cjoan 0 Mar  1 10:46 foo/bar
+$ git rm -f foo/bar/somefile.txt
+rm 'foo/bar/somefile.txt'
+$ ls -dl foo
+drwxr-x--x 1 cjoan cjoan 0 Mar  1 10:46 foo
+$ ls -dl foo/bar
+drw------- 1 cjoan cjoan 0 Mar  1 10:47 foo/bar
+$ git rm -f foo/bar/baz.txt
+rm 'foo/bar/baz.txt'
+fatal: git rm: 'foo/bar/baz.txt': Permission denied
 
-git grep -e frotz ":*.txt"
 
-from a subdir will grep the exact same files as
 
-(cd $(git rev-parse --cdup) && git grep -e frotz "*.txt")
-
-will (it is --full-tree!), and will output the results relative to the
-current workdir.
-
-Note that we already have to disambiguate between revspecs and pathspecs
-with -- in several places; that is not different with the new notation,
-and even not more frequent if it is not used.
-
-I have to say I'm really excited about how transparently this works
-across all kinds of commands, and how suggestive this is with rev:path
-in mind.
-
-Also, e.g.,
-
-git grep -e frotz "*.c" ":*.h"
-
-will look in all C files in the cwd and and all headers everywhere. Just
-think of the possibilities, and of the usefulness with clean, add,
-commit, reset,...!
-
-Michael
+This time I tried it with git 1.7.4.
