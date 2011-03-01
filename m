@@ -1,121 +1,96 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Consistent terminology: cached/staged/index
-Date: Tue, 01 Mar 2011 12:41:58 -0500
-Message-ID: <1299001318.5247.57.camel@drew-northup.unet.maine.edu>
-References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
-	 <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
-	 <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
-	 <20110214231920.GA24814@elie>
-	 <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
-	 <20110227084317.GB3356@sigill.intra.peff.net>
-	 <1298820840.19827.69.camel@drew-northup.unet.maine.edu>
-	 <20110228230311.GA7533@sigill.intra.peff.net>
-	 <AANLkTi=LPqu9zDiAJpxqC=ZCLig+aCv5ztXw668ERtH7@mail.gmail.com>
-	 <vpqaahf9p69.fsf@bauges.imag.fr>
-	 <AANLkTi=sXLcVJRVH87jXvVwCth+8vGgc7Ha0=XEG0Kx4@mail.gmail.com>
-	 <1298998965.5247.46.camel@drew-northup.unet.maine.edu>
-	 <AANLkTikCEoc55WuiRNo6Q=sXqTd_WDfVRb6cnN5bRD=0@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Feb 2011, #07; Mon, 28)
+Date: Tue, 01 Mar 2011 09:50:13 -0800
+Message-ID: <7voc5uenmy.fsf@alter.siamese.dyndns.org>
+References: <7vbp1vfy5f.fsf@alter.siamese.dyndns.org>
+ <AANLkTiksROE_dQTUn3Y_1Op6NDpGzEsSJ70JNYyYrufS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	David <bouncingcats@gmail.com>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alexei Sholik <alcosholik@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 18:42:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Tue Mar 01 18:50:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuTae-000475-Hb
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 18:42:28 +0100
+	id 1PuTiT-0008F6-5f
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 18:50:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753611Ab1CARmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 12:42:23 -0500
-Received: from beryl.its.maine.edu ([130.111.32.94]:44503 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753079Ab1CARmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 12:42:23 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p21Hg2XA020209
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 1 Mar 2011 12:42:03 -0500
-In-Reply-To: <AANLkTikCEoc55WuiRNo6Q=sXqTd_WDfVRb6cnN5bRD=0@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-dmv.com-Metrics: beryl.its.maine.edu 1181; Body=9 Fuz1=9 Fuz2=9
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p21Hg2XA020209
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1299606124.01231@g9zORWEtye6qwzSPxLGs6A
+	id S1753888Ab1CARu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 12:50:28 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61847 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752908Ab1CARu1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 12:50:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B5FBB45BE;
+	Tue,  1 Mar 2011 12:51:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NYf6ge7xx//Njj32YFExAadBJRE=; b=hVolNr
+	uTjMbrJV6MzieScFDU5kl/P46yvqvULeb8yylhJwgzakzPDF/Ht1+Y58PIccI4Ac
+	ZJ3JW0/Z0TdQKJ3obL5KJIRw3fgdVLrkAChKP+P/hLdj0zcDMNslsOuUTfKXEiLC
+	mPYp5gUqeODQ+xbTt0q6GD99cKlco2VCcExOk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O7mfD1oXaKggVUBXF1Ooa5s//EsqyiKH
+	tHt51NXieWbV+dwx5gaHWV+5wEwkKPWjZoJm0EqI0sQFthHKSgmMmGjLBObM4p5V
+	jmbgFo76W/RhA0sAauMdyTWp81/MoXBJ4nAzhaPu4u1d3I2fW9DmifmXADAqkTZv
+	3P50m+TCwUE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8454045BB;
+	Tue,  1 Mar 2011 12:51:41 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3042245BA; Tue,  1 Mar 2011
+ 12:51:36 -0500 (EST)
+In-Reply-To: <AANLkTiksROE_dQTUn3Y_1Op6NDpGzEsSJ70JNYyYrufS@mail.gmail.com>
+ (Erik Faye-Lund's message of "Tue\, 1 Mar 2011 09\:39\:07 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 908484FA-442C-11E0-82BD-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168234>
 
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-On Tue, 2011-03-01 at 19:30 +0200, Alexei Sholik wrote:
-> On 1 March 2011 19:02, Drew Northup <drew.northup@maine.edu> wrote:
-> >
-> > On Tue, 2011-03-01 at 11:32 +0200, Alexei Sholik wrote:
-> >
-> >> I guess, people who are friendly with git using the word "index"
-> >> because it's easier to type. But it confuses an unprepared reader. The
-> >> solution of the problem with confusion must be relevant to these
-> >> points:
-> >>  - clarify that "index" means the same thing as the "staging area" (in
-> >> man if it isn't there already?)
-> >
-> > Alas, this isn't quite true. Blobs are copied to the .git/objects
-> > directory (which I referred to earlier as an object store without proper
-> > qualification) with each "git add" action AND are noted in the Index at
-> > the same time. Therefore the Index is quite literally containing
-> > information about the blobs to be committed without containing the blobs
-> > themselves. This is why I find any specific equivalence between Index
-> > and "staging area" distasteful--it is misleading.
-> 
-> There's no reason to make it more confusing by telling all the
-> implementation details users are not interested in.
+>> Erik, please check the made-up commit log message and sign it off.
+>> Will merge to 'next' after that.
+>
+> Do you have any hint on how I can create a repo with more than 2048
+> packs so I can test that the patch works?
 
-I am not advocating that.
+A stupid and brute force way is to prepare an empty bare repository, add
+something like the following to its config:
 
-> Once I add a modified file to index (via 'git add') or even add a new
-> file, its content is already tracked by git. This is the most relevant
-> part.
+    [transfer]
+            unpacklimit = 1
 
-Agreed.
+    [gc]
+            auto = 0
+            autopacklimit = 0
 
-> It is not relevant from the user's point of view whether it's already
-> in .git/objects or not. Once I've staged a file, I can rm it and then
-> 'git checkout' it again to the version that's remembered in the
-> staging area, i.e. I will not lose it's contents once it's been
-> staged.
-> 
-> If what you're trying to say is that new users think of the 'staging
-> area' as some place where the content is stored before a subsequent
-> commit, there's nothing bad about it. If they will try to find out
-> about it's concrete location in the fs, they'll eventually find out
-> about index and its true nature in terms of implementation.
+and push into it from a random existing repository starting from a
+reasonably old commit, walking to a newer commit.  You can use something
+like (totally untested):
 
-My argument is that we should use "staging area" or "preparation area"
-or whatever we end up using as tools to explain the USAGE of Git without
-inferring that IT WORKS THAT WAY DEEP INSIDE. That's why I don't want to
-claim that the Index is (or means the same thing as) a staging area--we
-shouldn't be bothering beginner users with the Index yet anyway. Just
-saying that the information gets put into files in .git that act as a
-"staging area" is good enough--we don't need to extricate all mentions
-of "Index" or "cache" from the documentation.
-Unfortunately, if this is not done carefully we end up with people
-complaining that the documentation is inconsistent when it is often just
-blunt and indelicately worded.
+        git rev-list --first-parent master |
+        head -n 2000 |
+        tac |
+        while read commit
+        do
+		git push ../victim.git $commit:refs/heads/master
+	done
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+> There's also the added complication that _open_osfhandle also seems to
+> be limited by this 2048 limit (see the third comment here:
+> http://bugs.mysql.com/bug.php?id=24509). We use this function for
+> pipes and sockets as well. This alone might be a reason to corner-case
+> test the resulting binary on Windows properly.
+
+As long as the use of osfhandles for non filedescriptors is reasonably
+bounded, it may be enough to make the 25 slop configurable per platform,
+no?
