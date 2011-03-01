@@ -1,75 +1,92 @@
-From: Chad Joan <chadjoan@gmail.com>
-Subject: Re: Git changes permissions on directories when deleting files.
-Date: Tue, 1 Mar 2011 10:51:39 -0500
-Message-ID: <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
-References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
- <AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com> <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
+ by ':'
+Date: Tue, 01 Mar 2011 11:25:43 -0500
+Message-ID: <4D6D1E07.1080109@cisco.com>
+References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 01 16:52:07 2011
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 17:25:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuRrq-0003Pj-8g
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 16:52:06 +0100
+	id 1PuSOV-0007Ij-9W
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 17:25:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756500Ab1CAPwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 10:52:00 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:36247 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754095Ab1CAPv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 10:51:59 -0500
-Received: by vxi39 with SMTP id 39so4279376vxi.19
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 07:51:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=azHEQB/3/dzy2/lF8qgW0Qdoyq8iRTTJQlyJa+9JeDc=;
-        b=noUwwqqTqyOFppfHKb4qo8eFWNfT+Sqwt4sp7dTKWvRRJd6s1MzymlTNEupKQYLatU
-         BfWVgoPVYj5qbpp7MhlSY8VLdgLEOUAjioUnPEGH1X4VknfuFz8fUoUaNSxMMQf7TosG
-         rIkK2aDL+iWXkZP/F0Auzm6Cv8Kw+3GWf2bGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        b=jaXhorzuv3YyVII9W1AMqGWDa3R60LuliGSCsMMPUBfEzcwzD/qWH0YhAYK5colESL
-         gI8tdI03QCA37sZb+e1PBcU/klstIIm0joangOzEyCx+M5hGCB8J11rhiT35w4LNNxCe
-         cyHgGyUi7cT1Yi9JjZdleG0eFcyKCjX9T1bOs=
-Received: by 10.52.68.65 with SMTP id u1mr4532261vdt.176.1298994719093; Tue,
- 01 Mar 2011 07:51:59 -0800 (PST)
-Received: by 10.220.94.136 with HTTP; Tue, 1 Mar 2011 07:51:39 -0800 (PST)
-In-Reply-To: <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
+	id S1756814Ab1CAQZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 11:25:46 -0500
+Received: from sj-iport-4.cisco.com ([171.68.10.86]:3390 "EHLO
+	sj-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756567Ab1CAQZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 11:25:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=1100; q=dns/txt;
+  s=iport; t=1298996745; x=1300206345;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=TS+5bdmWYGFA3xs5Y9zfyrotXziQHzsyTR+v6V7BzVQ=;
+  b=N7ButCjlNIlchhQ80Q80Sh83EIDi6Q5YHgSyvhzRAy7IrhjoQ4YSmDcW
+   moVlfd3KjZ9xzT9KGpuWfZgdcHVm+MCnDZ+6j7bHriASCGKtW4z1Z/WTt
+   f7m8iWaN5oygD4w7nqWsGIXyUFfWOPxqgLeZJKBhBcy0sg5qUetusj6in
+   Y=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAEWsbE2rR7Hu/2dsb2JhbACmTHSgP5wshWEEhRKHDYNA
+X-IronPort-AV: E=Sophos;i="4.62,248,1297036800"; 
+   d="scan'208";a="267263601"
+Received: from sj-core-5.cisco.com ([171.71.177.238])
+  by sj-iport-4.cisco.com with ESMTP; 01 Mar 2011 16:25:45 +0000
+Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
+	by sj-core-5.cisco.com (8.13.8/8.14.3) with ESMTP id p21GPi60004817;
+	Tue, 1 Mar 2011 16:25:44 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168228>
 
-More info:
+On 03/01/2011 09:50 AM, Junio C Hamano wrote:
+> The reason I am skeptical about the "from root prefix" is because I do not
+> see a way to make it compatible with other meaningful pathspecs.
+>
+>     $ cd Documentation
+>     $ git grep -e frotz '*.txt'
+>
+> would find frotz in all *.txt files in Documentation (and its
+> subdirectories), if the command takes "relatigve to cwd".
+>
+> It also is very clear that
+>
+>     $ cd Documentation
+>     $ git grep --full-tree -e frotz '*.txt'
+>
+> would find those anywhere, inside or outside Documentation.
+>
+> On the other hand, it is natural to expect that
+>
+>     $ git grep -e frotz ".../*.txt"
+>
+> should find *.txt files _only_ at the root level, so it is not as
+useful as
+> the --full-tree (or --root).
 
-$ mkdir foo
-$ mkdir foo/bar
-$ echo "test" > foo/bar/baz.txt
-$ echo "somestuff" > foo/bar/somefile.txt
-$ git add foo/bar/*
-$ ls -dl foo
-drwxr-x--x 1 cjoan cjoan 0 Mar  1 10:46 foo
-$ ls -dl foo/bar
-drwxr-x--x 1 cjoan cjoan 0 Mar  1 10:46 foo/bar
-$ git rm -f foo/bar/somefile.txt
-rm 'foo/bar/somefile.txt'
-$ ls -dl foo
-drwxr-x--x 1 cjoan cjoan 0 Mar  1 10:46 foo
-$ ls -dl foo/bar
-drw------- 1 cjoan cjoan 0 Mar  1 10:47 foo/bar
-$ git rm -f foo/bar/baz.txt
-rm 'foo/bar/baz.txt'
-fatal: git rm: 'foo/bar/baz.txt': Permission denied
+I don't understand this last statement.  I think it implies that it is
+also natural to expect that
 
+    $ git grep -e frotz -- "../*.txt"
 
+should find *.txt files _only_ in the parent directory.  But this is not
+the case.  It returns the same search results as
 
-This time I tried it with git 1.7.4.
+    $ ( cd .. ; git grep -e frotz -- "*.txt" )
+
+Phil
