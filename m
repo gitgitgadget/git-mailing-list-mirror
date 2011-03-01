@@ -1,120 +1,159 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git changes permissions on directories when deleting files.
-Date: Tue, 1 Mar 2011 16:08:52 -0500
-Message-ID: <20110301210852.GB21429@sigill.intra.peff.net>
-References: <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
- <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
- <AANLkTimx7s94wjPasgdY7O9eoyzXXmhWm6f+CB0_2sv3@mail.gmail.com>
- <AANLkTimBrUo_O6sjhSEf2sPKrYhjMcr24hwRe0kH4CgO@mail.gmail.com>
- <20110301194428.GD10082@sigill.intra.peff.net>
- <AANLkTimCzBwsz4TV=jEGeSEScVtgwmGEiDWOomaeTgWD@mail.gmail.com>
- <20110301200805.GA18587@sigill.intra.peff.net>
- <AANLkTint3PARNNN4cpic8XG6HsM3AAGuX5a+oeXfFNx=@mail.gmail.com>
- <vpqmxlea7w1.fsf@bauges.imag.fr>
- <AANLkTi=UX7VNH+biFgn0FQawP-ttCjW2D7SMf2n6XB6w@mail.gmail.com>
+Subject: Re: [RFC/PATCH] commit notes workflow
+Date: Tue, 1 Mar 2011 16:59:07 -0500
+Message-ID: <20110301215907.GA23945@sigill.intra.peff.net>
+References: <20110225133056.GA1026@sigill.intra.peff.net>
+ <201102251658.22678.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Computer Druid <computerdruid@gmail.com>, git@vger.kernel.org
-To: Chad Joan <chadjoan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 22:08:50 2011
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Mar 01 22:59:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuWoL-0001H3-JK
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 22:08:49 +0100
+	id 1PuXax-00030H-Sc
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 22:59:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757515Ab1CAVIo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 16:08:44 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:52772 "EHLO peff.net"
+	id S1755765Ab1CAV66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 16:58:58 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:50470 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757226Ab1CAVIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 16:08:43 -0500
-Received: (qmail 10467 invoked by uid 111); 1 Mar 2011 21:08:42 -0000
+	id S1755574Ab1CAV65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 16:58:57 -0500
+Received: (qmail 10823 invoked by uid 111); 1 Mar 2011 21:58:56 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Mar 2011 21:08:42 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2011 16:08:52 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Mar 2011 21:58:56 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2011 16:59:07 -0500
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=UX7VNH+biFgn0FQawP-ttCjW2D7SMf2n6XB6w@mail.gmail.com>
+In-Reply-To: <201102251658.22678.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168261>
 
-On Tue, Mar 01, 2011 at 03:46:46PM -0500, Chad Joan wrote:
+On Fri, Feb 25, 2011 at 04:58:22PM +0100, Johan Herland wrote:
 
-> >> I'll do that, but it will probably take a long long time for me to=
- see
-> >> the patch. =C2=A0I'm hoping there's some cheap hack I can use to w=
-ork
-> >> around it in the meantime.
+> > I'm curious what people think. Do others find this useful? Does it
+> > seem harmful?
+> 
+> I _really_ like the idea. :)
+
+Thanks. Everybody seems to like it, so I'm going to polish it up and
+submit a nicer version.
+
+> Maybe we should use a slightly more verbose separator (i.e. more 
+> unlikely to trigger false positives). As you say, we already have to 
+> watch out for "---" because of "am", but that only applies to projects 
+> that _use_ "am" (i.e. mailing-list-centric projects like git.git and 
+> the Linux kernel). Other projects (e.g. github-centric projects or most 
+> centralized "$dayjob-style" projects) seldom or never use "am" at all, 
+> so I wouldn't expect those developers think of "---" as "special" in 
+> any way.
+> 
+> What about using something like "--- Notes ---" instead?
+
+Yeah, it is true that many git users will never care about the
+patch-through-mail workflow. And I think these days that is OK, because
+rebase will take care to keep their commit message intact even if it
+doesn't format well in a "format-patch | am" pipeline.
+
+I really wanted to keep it short and natural, though. Because eventually
+I'd like to have this on all the time via a config option, and I don't
+want to see "--- Notes ---" in every commit that doesn't have notes. But
+I _do_ want to be able to quickly say "oh, let me make a note on this"
+and just add a quick separator.
+
+It wouldn't be a regression if people had to opt into the feature using
+the command-line or config option. So in theory they could learn about
+"---" then, unless we turn it on by default (but why would we? A user
+has to know about this feature to use it, so they can easily turn on the
+option).
+
+Or maybe the divider should be configurable and default to something
+long. But clueful people can set it to "---". That kind of seems like
+overkill, though.
+
+> What if you combine --notes with --verbose (i.e. including the 
+> diff-to-be-committed in the commit message template)?
+> 
+> AFAICS, stripspace() doesn't know how to remove the diff (there's a 
+> separate section in cmd_commit() discarding everything 
+> following "\ndiff --git ").
+
+Ugh. Yeah, I looked at that in an earlier iteration but then forgot
+about it in the final. We will end up with "-v" crap in the notes. I'll
+fix that in the next revision.
+
+I also think it will be worth making a nice test script of all of these
+different cases.
+
+> > How should this interact with the commit-msg hook? In my
+> > implementation, it sees the whole thing, message and notes. Should we
+> > be picking apart the two bits after the editor and rewriting the
+> > COMMIT_EDITMSG before the hook sees it?
+> 
+> I'm not sure about this, but I suspect we should follow the same 
+> behaviour as --verbose (i.e. does the commit-msg hook see the entire 
+> diff inline in the commit message?).
+> 
+> A short look at builtin/commit.c indicates that we should leave 
+> everything in there for the commit-msg hook (AFAICS, the commit-msg 
+> hook is invoked from prepare_to_commit(), which is invoked from 
+> cmd_commit() _before_ the verbose diff part is removed.)
+
+Yeah, I think the commit-msg hook sees everything. Which is arguably not
+the most convenient behavior, but it is the most flexible. Sort of. The
+hook doesn't actually know whether "-v" was supplied, so it has to guess
+at what is "-v" junk and what is not. I wonder if anyone actually uses
+"-v" these days. It seems like "git add -p" would have superseded it in
+most workflows.
+
+> > How should this interact with the post-rewrite hook? I obviously need
+> > to set that up for my workflow, too, but I haven't yet. This patch
+> > does nothing, but I'm pretty sure it should turn of "git commit
+> > --amend" calling the rewrite hook if we are using --notes (since the
+> > user has already seen and edited the notes, and we've written them
+> > out).
+> 
+> I don't see what this has to do with the post-rewrite hook. Currently, 
+> the post-rewrite documentation ("git help hooks") states that it is run 
+> _after_ the automatic notes copying. AFAICS, your --notes simply 
+> replaces the usual automatic notes copying with a 
+> semi-automatic "edit-and-copy" instead. But this all happens before the 
+> port-rewrite hook is called, and thus shouldn't affect it.
+
+I think this was just me showing my cluelessness about how the notes
+rewriting code worked. I was thinking you needed to have a post-rewrite
+hook to make it work at all, but it looks like it does the rewrite and
+then lets you tweak it. So my code doesn't turn off the existing copy,
+but it probably should. Should the post-rewrite hook run after this? I'm
+not really sure what people use post-rewrite hooks for, to be honest.
+
+> > @@ -730,6 +780,9 @@ static int prepare_to_commit(const char
+> > *index_file, const char *prefix, strbuf_release(&sob);
+> >  	}
 > >
-> > I'd say grep for "rmdir" is Git's source code, and replace the call=
-s
-> > with a wrapper that does roughly
-> >
-> > rmdir_wrapper(dir) {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0rmdir(dir);
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0if (stat(dir, &buf))
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0chmod(dir, b=
-uf.st_mode | 0777);
-> > }
-> >
-> OK, I'll try that when I get a chance.
+> > +	if (edit_notes && amend)
+> > +		add_notes_from_commit(&sb, "HEAD");
+> 
+> I haven't read the sources closely enough to figure out when/where the 
+> commit diff is added to the commit message (in case of --verbose), but 
+> I trust that it happens _after_ the above lines (so that the notes part 
+> doesn't end up after the diff)
 
-I think this is the cheap hack that you want:
+I think so, but I'll double check. I agree that it's important for it to
+go right after the commit message (and before the "#" comment lines, I
+think).
 
-diff --git a/dir.c b/dir.c
-index 168dad6..fb6d306 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1236,6 +1236,29 @@ void setup_standard_excludes(struct dir_struct *=
-dir)
- 		add_excludes_from_file(dir, excludes_file);
- }
-=20
-+static int rmdir_on_broken_cifs(const char *path)
-+{
-+	struct stat sb;
-+	if (stat(path, &sb) < 0) {
-+		/* Oh well, hopefully if we can't stat it
-+		 * it is already gone or we don't have
-+		 * permissions to screw it up anyway. */
-+		return rmdir(path);
-+	}
-+	if (rmdir(path) =3D=3D 0) {
-+		/* it worked, nothing to restore */
-+		return 0;
-+	}
-+	/* maybe remove this conditional if you can trigger
-+	 * the problem with other types of errors */
-+	if (errno !=3D ENOTEMPTY)
-+		return -1;
-+	if (chmod(path, sb.st_mode) < 0)
-+		warning("we probably just screwed up the permissions of %s",
-+			path);
-+	return -1;
-+}
-+
- int remove_path(const char *name)
- {
- 	char *slash;
-@@ -1249,7 +1272,7 @@ int remove_path(const char *name)
- 		slash =3D dirs + (slash - name);
- 		do {
- 			*slash =3D '\0';
--		} while (rmdir(dirs) =3D=3D 0 && (slash =3D strrchr(dirs, '/')));
-+		} while (rmdir_on_broken_cifs(dirs) =3D=3D 0 && (slash =3D strrchr(d=
-irs, '/')));
- 		free(dirs);
- 	}
- 	return 0;
+> Otherwise, this looks good to me from a precursory review.
 
-Totally untested, of course. But hey, it compiles, so it must be good.
+Thanks. I'll work on some tests for the --cleanup and -v cases so we can
+be sure that it's behaving as we want, and then hopefully submit a nicer
+version.
 
 -Peff
