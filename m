@@ -1,93 +1,65 @@
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 2/2] git-request-pull: open-code the only invocation of get_remote_url
-Date: Tue,  1 Mar 2011 10:21:37 +0100
-Message-ID: <1298971297-20326-2-git-send-email-u.kleine-koenig@pengutronix.de>
-References: <20110301084110.GT22310@pengutronix.de>
+From: "Alexey Feldgendler" <alexeyf@opera.com>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Tue, 01 Mar 2011 10:27:58 +0100
+Organization: Opera Software ASA
+Message-ID: <op.vrnq8gk856e9f9@xman.eng.oslo.osa>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
+ <20110214231920.GA24814@elie>
+ <AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
+ <20110227084317.GB3356@sigill.intra.peff.net>
+ <1298820840.19827.69.camel@drew-northup.unet.maine.edu>
+ <20110228230311.GA7533@sigill.intra.peff.net>
+ <AANLkTi=LPqu9zDiAJpxqC=ZCLig+aCv5ztXw668ERtH7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kernel@pengutronix.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 10:22:19 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 10:28:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuLmW-00041W-CH
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 10:22:12 +0100
+	id 1PuLsU-0007lz-VU
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 10:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756020Ab1CAJWG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 04:22:06 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:36579 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754017Ab1CAJWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 04:22:05 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PuLm8-00071k-HD; Tue, 01 Mar 2011 10:21:48 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PuLm7-0005tN-9X; Tue, 01 Mar 2011 10:21:47 +0100
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <20110301084110.GT22310@pengutronix.de>
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1755638Ab1CAJ2Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 04:28:16 -0500
+Received: from smtp.opera.com ([213.236.208.81]:40628 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754364Ab1CAJ2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 04:28:14 -0500
+Received: from xman.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p219Rwg0014533
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 1 Mar 2011 09:28:13 GMT
+In-Reply-To: <AANLkTi=LPqu9zDiAJpxqC=ZCLig+aCv5ztXw668ERtH7@mail.gmail.com>
+User-Agent: Opera Mail/11.01 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168200>
 
-So sh:get_remote_url can go now and git-request-pull
-doesn't need to source git-parse-remote. anymore.
+On Tue, 01 Mar 2011 10:11:11 +0100, David <bouncingcats@gmail.com> wrot=
+e:
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- git-parse-remote.sh |    4 ----
- git-request-pull.sh |    3 +--
- 2 files changed, 1 insertions(+), 6 deletions(-)
+> A suggestion: could your conceptual bucket be named as "the precommit=
+".
+>
+> Motives for this suggestion are:
+> 1)  I imagine this word will be readily translatable;
 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 0ab1192..e7013f7 100644
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -4,10 +4,6 @@
- # this would fail in that case and would issue an error message.
- GIT_DIR=3D$(git rev-parse -q --git-dir) || :;
-=20
--get_remote_url () {
--	git ls-remote --get-url "$1"
--}
--
- get_default_remote () {
- 	curr_branch=3D$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
- 	origin=3D$(git config --get "branch.$curr_branch.remote")
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 6fdea39..fc080cc 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -15,7 +15,6 @@ p    show patch text as well
- '
-=20
- . git-sh-setup
--. git-parse-remote
-=20
- GIT_PAGER=3D
- export GIT_PAGER
-@@ -55,7 +54,7 @@ branch=3D$(git ls-remote "$url" \
- 		p
- 		q
- 	}")
--url=3D$(get_remote_url "$url")
-+url=3D$(git ls-remote --get-url "$url")
- if [ -z "$branch" ]; then
- 	echo "warn: No branch of $url is at:" >&2
- 	git log --max-count=3D1 --pretty=3D'tformat:warn:   %h: %s' $headrev =
->&2
+Less so than =E2=80=9Cstaging area=E2=80=9D, at least into Russian.
+
+Just my two cents.
+
+
 --=20
-1.7.2.3
+Alexey Feldgendler
+Software Developer, Desktop Team, Opera Software ASA
+[ICQ: 115226275] http://my.opera.com/feldgendler/
