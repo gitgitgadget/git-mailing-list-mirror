@@ -1,78 +1,138 @@
-From: James Pickens <jepicken@gmail.com>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide
- pathspecs by ':'
-Date: Tue, 1 Mar 2011 11:31:12 -0700
-Message-ID: <AANLkTimFuU1QduAfwred0zu6LdWN2eHo9X+T4=_qfh_C@mail.gmail.com>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com>
- <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net>
- <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com>
- <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com>
- <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com>
- <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2 v2] push: better error messages when push.default =
+ tracking
+Date: Tue, 01 Mar 2011 10:34:02 -0800
+Message-ID: <7vhbbmellx.fsf@alter.siamese.dyndns.org>
+References: <1298927645-2716-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1298970662-25828-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 19:31:40 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 01 19:34:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuUMF-00061P-Oo
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 19:31:40 +0100
+	id 1PuUOn-0007L8-OR
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 19:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756712Ab1CASbf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 13:31:35 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:39493 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756671Ab1CASbd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 13:31:33 -0500
-Received: by fxm17 with SMTP id 17so5090915fxm.19
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 10:31:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=8LRaFi8tVLuuv3FTC/Y1+Uiw81xyBWHvcDNPOuuPMJs=;
-        b=NnxobArwVvH9fDK8GOBmP4yOsVLyRc6y6uj37knR7VLM0wvfLYKHBh9q4tJTIv3K0a
-         fp7L4wZ1TxMHPJyJO8h1oCq1Ut/B80zbp+TkmVbg2XgiWa6xWbsIy+qhOu4vlQpqAB4L
-         g/Mr694oV0imIO1SNar2v0WLSD+efHxyHHo0E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=VfgBpRYgIv9KJ+DRUEmESQcvQ2Ha7I4SRlaNnrau3CXdW4SwAa7sJP850MLfJOd8hE
-         DwIcOFWAsk5Ivj4Topsi9j+qgtRtGMIDVCHM8Y8PRlqK7IYb5PH9VcC29O1/MoriKYBv
-         EoEFIdOpC+fg4+uCYD2nahSvaCm93+lwEn1w0=
-Received: by 10.223.144.81 with SMTP id y17mr4526511fau.69.1299004292084; Tue,
- 01 Mar 2011 10:31:32 -0800 (PST)
-Received: by 10.223.109.16 with HTTP; Tue, 1 Mar 2011 10:31:12 -0800 (PST)
-In-Reply-To: <7vsjv6evy4.fsf@alter.siamese.dyndns.org>
+	id S1756773Ab1CASeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 13:34:13 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61068 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756194Ab1CASeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 13:34:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5819F4BE1;
+	Tue,  1 Mar 2011 13:35:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dDe0AvLnk7010gon7PqmWe6tKi8=; b=dYM4O/
+	/NulR9sfQzZ//O42TsR5jtDYvWBvwU5y4uDRTGpUpbGcGgdXkvZ04u79fAQXpa5e
+	ySHipBHP8kwvL/sqRJSXb816We9izBdF5ZAnU159ujJe6SWel/OXyBis2A+aTPkG
+	VRoc0i6pTjvHUiQ3mYu9wlDGv5gtqegVDR90w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rUfjGtsqOl2lybI21pwhrl2oXTWB19as
+	Syg5thxiqlmN2NkiNuIJsxa2gLV5gCUcTc4Vn362jK8xHPkrZ8UfqRrDq3y2AlD5
+	8Dm1gV0wUBBJboBcWj05KrskadjQxSblCQAM0rFS0Gnuo+6n8xxEY8yHymdJlY2u
+	d9a8ziC0OuY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 320994BE0;
+	Tue,  1 Mar 2011 13:35:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 176BD4BDA; Tue,  1 Mar 2011
+ 13:35:24 -0500 (EST)
+In-Reply-To: <1298970662-25828-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Tue\,  1 Mar 2011 10\:11\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AE221094-4432-11E0-BDBB-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168236>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> On the other hand, it is natural to expect that
->
-> =C2=A0 =C2=A0$ git grep -e frotz ".../*.txt"
->
-> should find *.txt files _only_ at the root level, so it is not as use=
-ful as
-> the --full-tree (or --root).
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-I've often wished Git supported the zsh '**' wildcard to match anything=
-,
-including slashes.  Here's another case where it would be useful - to
-match *.txt everywhere, you'd use ".../**.txt", and it leaves you the
-option of using ".../*.txt" if you really want to find *.txt only at th=
-e
-root level.  Of course, it may be very difficult to implement...
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 31da418..c949187 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -64,14 +64,23 @@ static void set_refspecs(const char **refs, int nr)
+>  	}
+>  }
+>  
+> -static void setup_push_upstream(void)
+> +static void setup_push_upstream(struct remote *remote)
+>  {
+>  	struct strbuf refspec = STRBUF_INIT;
+>  	struct branch *branch = branch_get(NULL);
+>  	if (!branch)
+> -		die("You are not currently on a branch.");
+> +		die("You are not currently on a branch (detached HEAD).\n"
+> +		    "To push a specific branch and set the remote as upstream, use\n"
+> +		    "\n"
+> +		    "    git push --set-upstream %s <branch-name>\n",
+> +		    remote->name);
 
-James
+For all the other cases covered in this patch, the sequence that lead to
+this situation would be like this:
+
+	git checkout somebranch
+        hack hack hack including commits
+        git push
+
+and it is very clear that the user wants to push the current branch to the
+corresponding place but the user is getting an error because there is no
+"corresponding place" mapping established yet.
+
+I agree "push --set-upstream" is a very good advice to give under that
+scenario---it would push the history s/he wanted to push right now, while
+establishing the mapping for later use, both at the same time with a
+single command.
+
+However, I don't think that applies to this case with detached HEAD; it is
+more likely that the user came here this way:
+
+	git checkout somebranch~4 ;# the tip 3 are not quite ready
+        hack hack quickfix to do only the sure part of the tip 3 did
+        commit and test
+        git push
+
+Maybe the user needed to quickly push out a minimum fix out of the more
+elaborate work, in which case, what would follow in the workflow is first
+to:
+
+	git push origin HEAD:somebranch
+
+in order to unblock others.  This will then be followed by a more
+leisurely:
+
+	git rebase HEAD somebranch
+
+to get back to the more elaborate work that is not yet presentable.
+
+It is not likely that the end user wanted to:
+
+	git checkout $not_a_branch_tip ;# detached
+        hack hack hack including commits
+        git push origin an_unrelated_branch
+
+and wanted to omit "where and what" part.  We are talking about "push the
+current branch only to corresponding destination" people, so if that
+unrelated branch were already ready for external consumption, they would
+have already pushed it out at the end of the session when they were on
+that branch (and seen the other advice you are adding in this patch).
+
+That is why I suggested to advice an explicit push, without checkout nor
+set upstream, in my original review message.  IOW, I think the message
+should instead suggest:
+
+	If you want to push the history leading to the current (detached)
+	state now, use
+
+	    git push $remote HEAD:the-branch-you-want-to-push-to
