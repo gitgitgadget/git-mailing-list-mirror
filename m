@@ -1,68 +1,115 @@
-From: Pierre Habouzit <madcoder@madism.org>
-Subject: Re: Git bugtraq for all users who clone my repos?
-Date: Tue, 1 Mar 2011 13:55:40 +0100
-Message-ID: <20110301125540.GI3577@madism.org>
-References: <4D6B8F7E.4070804@fischer.name>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] rerere forget: deprecate invocation without pathspec
+Date: Tue, 01 Mar 2011 14:21:05 +0100
+Message-ID: <4D6CF2C1.9070805@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Markus Fischer <markus@fischer.name>
-X-From: git-owner@vger.kernel.org Tue Mar 01 14:05:37 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 01 14:21:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuPGh-0005Qw-T5
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 14:05:36 +0100
+	id 1PuPVr-00069N-Bv
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 14:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752914Ab1CANF1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 08:05:27 -0500
-Received: from pan.madism.org ([88.191.52.104]:37294 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752889Ab1CANF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 08:05:27 -0500
-X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Mar 2011 08:05:26 EST
-Received: from madism.org (unknown [94.228.180.170])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 9CFBF51A65;
-	Tue,  1 Mar 2011 13:55:41 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id B04A41908; Tue,  1 Mar 2011 13:55:40 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <4D6B8F7E.4070804@fischer.name>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753280Ab1CANVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 08:21:10 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:41152 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753139Ab1CANVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 08:21:09 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PuPVi-0008Gw-7Q
+	for git@vger.kernel.org; Tue, 01 Mar 2011 14:21:06 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id EDC061660F
+	for <git@vger.kernel.org>; Tue,  1 Mar 2011 14:21:05 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168219>
 
-On Mon, Feb 28, 2011 at 01:05:18PM +0100, Markus Fischer wrote:
-> Hi,
->=20
-> I'm used to svn to use svn:propset to set bugtraq URLs,
-> pus^H^H^Hcommit them to the server and all users who
-> clo^H^H^Hcheckout from it have the settings.
->=20
-> In git I can store them in my local or repository specific
-> configuration, but other users who clone from it don't benefit from
-> it: they simply don't get my/the bugtraq configuration.
->=20
-> Do I need to educate every developer to configure their checkouts
-> (also unsatisfying for myself when I move somewhere else have to do
-> clone my repository again) or it possible to feed it when the
-> repository is being cloned?
+From: Johannes Sixt <j6t@kdbg.org>
 
-This is horrible practice, but the top level makefile / configure of
-some of my projects force the git configuration of the repository to
-some sane values that are required for it to work properly.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+rerere forget is a destructive command. When invoked without a path, it
+operates on the current directory, potentially deleting many recorded
+conflict resolutions.
+
+To make the command safer, a path must be specified as of git 1.8.0. Until
+then, give users time to write 'git rerere forget .' if they really mean
+the entire current directory.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ I assume that 'rerere forget' is a rarely used command, we can afford
+ to change its behavior without a lot of fuzz. Let's not dive into the
+ discussion whether it should operate on the current directory or the
+ entire repository; rather, require users to be explicit. After all,
+ it is destructive!
+
+ BTW, notice that documentation for 'remaining' is missing.
+
+ -- Hannes
+
+ Documentation/git-rerere.txt |    4 ++--
+ builtin/rerere.c             |    7 +++++--
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
+index db99d47..484fdd5 100644
+--- a/Documentation/git-rerere.txt
++++ b/Documentation/git-rerere.txt
+@@ -7,7 +7,7 @@ git-rerere - Reuse recorded resolution of conflicted merges
+ 
+ SYNOPSIS
+ --------
+-'git rerere' ['clear'|'forget' [<pathspec>]|'diff'|'status'|'gc']
++'git rerere' ['clear'|'forget' <pathspec>|'diff'|'status'|'gc']
+ 
+ DESCRIPTION
+ -----------
+@@ -43,7 +43,7 @@ will automatically invoke this command.
+ 'forget' <pathspec>::
+ 
+ This resets the conflict resolutions which rerere has recorded for the current
+-conflict in <pathspec>.  The <pathspec> is optional.
++conflict in <pathspec>.
+ 
+ 'diff'::
+ 
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index 67cbfeb..8235885 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -8,7 +8,7 @@
+ #include "xdiff-interface.h"
+ 
+ static const char * const rerere_usage[] = {
+-	"git rerere [clear | status | remaining | diff | gc]",
++	"git rerere [clear | forget path... | status | remaining | diff | gc]",
+ 	NULL,
+ };
+ 
+@@ -136,7 +136,10 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
+ 		return rerere(flags);
+ 
+ 	if (!strcmp(argv[0], "forget")) {
+-		const char **pathspec = get_pathspec(prefix, argv + 1);
++		const char **pathspec;
++		if (argc < 2)
++			warning("'git rerere forget' without paths is deprecated");
++		pathspec = get_pathspec(prefix, argv + 1);
+ 		return rerere_forget(pathspec);
+ 	}
+ 
+-- 
+1.7.4.rc3.76.gfb457d
