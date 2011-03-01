@@ -1,96 +1,100 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without pathspec
-Date: Tue, 01 Mar 2011 21:25:29 +0100
-Message-ID: <vpqvd02a8qu.fsf@bauges.imag.fr>
-References: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
-	<7vei6t4uwa.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=BwTHRWcUu26VLWAhFupmuJpu8fvOF98--HJ5f@mail.gmail.com>
-	<7vy6512rnb.fsf@alter.siamese.dyndns.org>
-	<AANLkTimqBxhHBVzet9M-6AqiCp664hkroM9QWS_1SiLP@mail.gmail.com>
-	<7vk4gkk5pd.fsf@alter.siamese.dyndns.org>
-	<vpqipw2rixy.fsf@bauges.imag.fr>
-	<7vd3maelbh.fsf@alter.siamese.dyndns.org>
-	<vpq4o7mfzd1.fsf@bauges.imag.fr>
-	<7vzkped2hk.fsf@alter.siamese.dyndns.org>
+From: Chad Joan <chadjoan@gmail.com>
+Subject: Re: Git changes permissions on directories when deleting files.
+Date: Tue, 1 Mar 2011 15:30:39 -0500
+Message-ID: <AANLkTint3PARNNN4cpic8XG6HsM3AAGuX5a+oeXfFNx=@mail.gmail.com>
+References: <AANLkTikJcOgBAZS=cCWULFYz4U_Mxx1gFMg51+r9qDo0@mail.gmail.com>
+ <AANLkTinCjaGMe3TnheqORe7Y_qWYTAr3p6UEsK3u4VyE@mail.gmail.com>
+ <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
+ <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
+ <AANLkTimx7s94wjPasgdY7O9eoyzXXmhWm6f+CB0_2sv3@mail.gmail.com>
+ <AANLkTimBrUo_O6sjhSEf2sPKrYhjMcr24hwRe0kH4CgO@mail.gmail.com>
+ <20110301194428.GD10082@sigill.intra.peff.net> <AANLkTimCzBwsz4TV=jEGeSEScVtgwmGEiDWOomaeTgWD@mail.gmail.com>
+ <20110301200805.GA18587@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	SZEDER =?iso-8859-1?Q?G=E1b?= =?iso-8859-1?Q?or?= 
-	<szeder@ira.uka.de>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 21:26:01 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Computer Druid <computerdruid@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 01 21:31:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuW8t-0001xc-Fp
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 21:25:59 +0100
+	id 1PuWDs-0004Yo-8f
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Mar 2011 21:31:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757418Ab1CAUZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 15:25:54 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:35466 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757388Ab1CAUZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 15:25:53 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p21KPP6n027495
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 1 Mar 2011 21:25:25 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PuW8P-00075p-Ie; Tue, 01 Mar 2011 21:25:29 +0100
-In-Reply-To: <7vzkped2hk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 01 Mar 2011 12:12:23 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 01 Mar 2011 21:25:26 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p21KPP6n027495
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1299615928.13833@YYO/watZATdO+OOK1H8dPg
+	id S1757458Ab1CAUbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 15:31:01 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:46514 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757148Ab1CAUbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 15:31:00 -0500
+Received: by vxi39 with SMTP id 39so4557905vxi.19
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 12:31:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=mjhvuGumljj4ebQ3rjnpVYBlV/cVBZdXjiQP/KDDBt0=;
+        b=M8pgzDkcWjiZd9TrWPtJ+53rPDxKyW6/a8u/hiPb7DiRi6RIvRJdRUsI3eiI7SrLrC
+         4dXfFdnqeKneMmPitZ2Pbr15qQhJ0280X7iFiCUZxMCN7jXCihh7yxE76j0dCM4tMbFn
+         5Ss/r0Om0BO5KAhgkB2v/rRipFLV1d+l904EM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=pjV7buyPOcWtLDxRiPHWttMVKv/mp1KDrkVRcX79/4fWVi6LB4AVTdcMryDrx3qTOZ
+         O31H6t+/RMJ/AM3pQhd0lKfnrnv0T1959o837jdpzZSm6ucXEMEV3LEy2prqajgsqy8N
+         y3UcXpx72WDW1DtQiSBQk614ft9yQzDkXMdE4=
+Received: by 10.220.178.13 with SMTP id bk13mr1002897vcb.145.1299011459145;
+ Tue, 01 Mar 2011 12:30:59 -0800 (PST)
+Received: by 10.220.94.136 with HTTP; Tue, 1 Mar 2011 12:30:39 -0800 (PST)
+In-Reply-To: <20110301200805.GA18587@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168254>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Tue, Mar 1, 2011 at 3:08 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 01, 2011 at 02:57:19PM -0500, Chad Joan wrote:
 >
->> But "update" should mean "replace git add -u with git add -u .", which
->> is the portable way to do the same.
+>> > Exactly. Rather than spend time figuring out if the directory is
+>> > removable (which would not be atomic, anyway), we just rmdir and ignore
+>> > the error condition.
+>> >
+>> > I would argue that your filesystem is broken. Even if we implemented a
+>> > workaround to opendir() and check for files, it would still have a race
+>> > condition that could cause this situation to occur.
 >>
->>> so the introduction of the configuration becomes a flag-day event.
->>> Hmph...
+>> Ouch.
 >>
->> The introduction of the config variable is a non-event if you already
->> use the portable . notation.
+>> Would it work to do something like alias rmdir to a script or program
+>> that would call /bin/rmdir and then fix up the permissions?
 >
-> I think you got this part wrong.  Until now, there was no "portability" to
-> worry about when using "git add -u".  "git add -u" used to be _guaranteed_
-> to be relative to the cwd, with or without ".".  Our update will _break_
-> that expectation and suddenly make "." "the portable notation".
+> Well, we're using the rmdir system call, so you would need a patch to
+> git either way. If that was something we wanted to support (with a
+> config option, of course), we could do the permissions check-and-restore
+> ourselves.
 >
-> In other words, it is far from a non-event.
+> But it just seems horribly broken to me. This is CIFS to an OpenVMS
+> machine you said? Do the broken permissions appear to other clients or
+> across a remount (i.e., is it broken state in your CIFS client, or has
+> the server actually munged permissions)? If so, have you tried reporting
+> the issue to whoever writes CIFS server on OpenVMS (is it just samba)?
+>
+> -Peff
+>
 
-There is a "if" in my sentence, and I do claim that if you verify the
-condition behind the "if", it is a non-event.
+Yep, CIFS to OpenVMS.
 
-I did not claim that the whole change was a non-event, just that the
-introduction of a config variable was.
+I don't know about other clients because there are none (yet).  The
+permission change does survive remounting.
 
-> We still have to say "We are sorry, we will be breaking your scripts.
-> Please add an extra dot at the end".
+I haven't reported it.  I didn't know it existed until now ;)
 
-Absolutely. My claim is just that adding the extra dot is the way to fix
-script wrt the future change, or at least a better way than relying on a
-config variable.
+I'll do that, but it will probably take a long long time for me to see
+the patch.  I'm hoping there's some cheap hack I can use to work
+around it in the meantime.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+- Chad
