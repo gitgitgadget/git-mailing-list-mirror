@@ -1,61 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Feb 2011, #06; Sun, 27)
-Date: Wed, 2 Mar 2011 16:28:24 -0500
-Message-ID: <20110302212824.GF20400@sigill.intra.peff.net>
-References: <7vy650k62n.fsf@alter.siamese.dyndns.org>
- <AANLkTikW1GVzFoq=zUxvi7MTcUYBLO6fbjJPVZziLUk8@mail.gmail.com>
- <7v7hckje4n.fsf@alter.siamese.dyndns.org>
- <20110301205424.GA18793@sigill.intra.peff.net>
- <7vwrkiccy6.fsf@alter.siamese.dyndns.org>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: In-depth git blame?
+Date: Wed, 2 Mar 2011 22:29:51 +0100
+Message-ID: <20110302212951.GB24660@m62s10.vlinux.de>
+References: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
+ <20110302211545.GD20400@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:28:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jez <jezreel@gmail.com>, Thomas Rast <trast@student.ethz.ch>,
+	Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 02 22:30:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Putb2-0005S2-1M
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:28:36 +0100
+	id 1Putce-0006IK-J7
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:30:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756804Ab1CBV21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 16:28:27 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:34448 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756074Ab1CBV20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:28:26 -0500
-Received: (qmail 20626 invoked by uid 111); 2 Mar 2011 21:28:26 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 21:28:26 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 16:28:24 -0500
+	id S1757695Ab1CBV36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 16:29:58 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:42994 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1757670Ab1CBV35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 16:29:57 -0500
+Received: (qmail invoked by alias); 02 Mar 2011 21:29:55 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp072) with SMTP; 02 Mar 2011 22:29:55 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1+VGa9gDl+VeX+5waP0bR0vyttqImjaqYV9E3HSDF
+	5oHTUwb9HGBBbB
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id A01D2D401F; Wed,  2 Mar 2011 22:29:51 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <7vwrkiccy6.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20110302211545.GD20400@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168348>
 
-On Tue, Mar 01, 2011 at 09:24:01PM -0800, Junio C Hamano wrote:
-
-> >   - Nit: you nicely use "%d commit%s" to handle the single/plural case
-> >     in the warning message, but then you "them" later on. It needs
-> >     (1 < lost) ? "them" : "it".
+On Wed, Mar 02, 2011 at 04:15:45PM -0500, Jeff King wrote:
+> On Wed, Mar 02, 2011 at 03:43:42PM -0500, Jez wrote:
 > 
-> I actually don't like playing games like that, especially when i18n topic
-> is in flight.  Among the languages I know rules reasonably well, two has
-> the rule that a countable noun is spelled differently depending on the
-> number of that thing is one or more, and one spells the noun the same way
-> regardless of the number.  Who knows if git needs to be translated into a
-> language whose noun changes its shape three-way, depending on the number
-> being one, two, or more?
+> > Git-blame is useful, but sometimes I want to know the series of
+> > commits that have affected a line -- not just the most recent one. Is
+> > there a way to do this?
+> 
+> If you use "git gui blame" or "tig blame", both have a "blame from
+> parent commit" feature. This restarts the blame using the content as it
+> was just before the answer you just got, so you can recursively dig.
+> It's unfortunately a somewhat manual process.
+> 
+ 
+Hm. I guess pressing 'B' will blame the parent commit in tig. 
+But I can't figure out how to navigate back to the old commit (before pressing 'B')?
+Any hints appreciated!
 
-OK, I am showing my English-centric ignorance then, I think. :) I will
-leave that topic for the i18n people to deal with.
-
--Peff
+-Peter
