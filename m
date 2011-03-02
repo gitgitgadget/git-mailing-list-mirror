@@ -1,85 +1,73 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: In-depth git blame?
-Date: Wed, 2 Mar 2011 22:50:20 +0100
-Message-ID: <20110302215020.GD24660@m62s10.vlinux.de>
-References: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
- <20110302211545.GD20400@sigill.intra.peff.net>
- <20110302212951.GB24660@m62s10.vlinux.de>
- <20110302213437.GG20400@sigill.intra.peff.net>
- <20110302214445.GC24660@m62s10.vlinux.de>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
+Date: Wed, 2 Mar 2011 22:55:56 +0100
+Message-ID: <20110302215556.GL22310@pengutronix.de>
+References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek>
+ <20110301222141.GB7918@elie>
+ <4D6D97FB.3050106@kernel.org>
+ <201103022218.46640.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jez <jezreel@gmail.com>, Thomas Rast <trast@student.ethz.ch>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:50:36 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "J.H." <warthog9@kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org, admin@repo.or.cz
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 22:56:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PutwJ-0000Fh-6z
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:50:35 +0100
+	id 1Puu1i-0003Ff-Ng
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:56:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757606Ab1CBVua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 16:50:30 -0500
-Received: from mailout-de.gmx.net ([213.165.64.22]:51277 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1757509Ab1CBVu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:50:29 -0500
-Received: (qmail invoked by alias); 02 Mar 2011 21:50:26 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp006) with SMTP; 02 Mar 2011 22:50:26 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX18zqt5packzVkigUOpg94kyibTfRnaqPPA1tCyCTK
-	7NbGO6iwEvZen1
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 4C673D401F; Wed,  2 Mar 2011 22:50:20 +0100 (CET)
+	id S1757365Ab1CBV4E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 16:56:04 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:38346 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756306Ab1CBV4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 16:56:02 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Puu1X-0000NY-HC; Wed, 02 Mar 2011 22:55:59 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Puu1U-0002cc-7h; Wed, 02 Mar 2011 22:55:56 +0100
 Content-Disposition: inline
-In-Reply-To: <20110302214445.GC24660@m62s10.vlinux.de>
+In-Reply-To: <201103022218.46640.jnareb@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168354>
 
-On Wed, Mar 02, 2011 at 10:44:45PM +0100, Peter Baumann wrote:
-> [ Cc Jonas, because he might know more about that ]
-> 
-> On Wed, Mar 02, 2011 at 04:34:37PM -0500, Jeff King wrote:
-> > On Wed, Mar 02, 2011 at 10:29:51PM +0100, Peter Baumann wrote:
-> > 
-> > > > If you use "git gui blame" or "tig blame", both have a "blame from
-> > > > parent commit" feature. This restarts the blame using the content as
-> > > > it was just before the answer you just got, so you can recursively
-> > > > dig.  It's unfortunately a somewhat manual process.
-> > > > 
-> > >  
-> > > Hm. I guess pressing 'B' will blame the parent commit in tig.  But I
-> > > can't figure out how to navigate back to the old commit (before
-> > > pressing 'B')?  Any hints appreciated!
-> > 
-> > No, it is "," (comma) from the blame viewer in tig to blame starting
-> > from the parent of the blamed commit of the highlighted line.
-> > 
-> Thx, I didn't know that. Your help is really appreciated!
-> 
-> > Doing "B" will just re-blame starting at that commit, which will of
-> > course give you the same answer (I think it is a global "go to blame
-> > view", so it is more useful when you are _not_ in the blame viewer
-> > already).
-> > 
-> > And if you are confused at any point, "h" should give you a
-> > context-sensitive list of keystrokes.
-> > 
-> Hm. I did look at the 'h'elp, but it wasn't mentioned there, at least
-> not in my version (tig version 0.16-9-g7630a8f) here.
-> 
+Hello Jakub,
 
-Ok. I take it back. I was blind not having it seen in the help. Searching
-for ',' did make me see it :-)
+On Wed, Mar 02, 2011 at 10:18:44PM +0100, Jakub Narebski wrote:
+> What is most important that makes this feature to be considered for
+> removal (or rehauling) is that only half of this feature is implement=
+ed
+> in gitweb: the displaying part.  There is half-attempt of providing
+> some web interface for managing tags... which needs external script w=
+ith
+> strict coupling, doesn't offer any access control as far as I know, d=
+o
+> not allow deleting tags, etc.
+=46or a small set of repositories the need to hand-edit the tags is OK
+IMHO.  That's what I intended to do.
 
--Peter
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
