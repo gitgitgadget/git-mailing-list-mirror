@@ -1,88 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] git blame-tree
-Date: Wed, 2 Mar 2011 16:41:42 -0500
-Message-ID: <20110302214142.GH20400@sigill.intra.peff.net>
-References: <20110302164031.GA18233@sigill.intra.peff.net>
- <20110302171653.GA18957@sigill.intra.peff.net>
- <AANLkTim4fKO=Lb0dY0DzRu1QqC8NHPoF8iveYQ2E6OBH@mail.gmail.com>
- <20110302180722.GA20287@sigill.intra.peff.net>
- <AANLkTi=m_WTohMfJZxTqObRT3rhhtxo=QfnDJCHO=U0K@mail.gmail.com>
- <20110302211035.GC20400@sigill.intra.peff.net>
- <AANLkTi=hqVcGw16q6uJBO5kPjKtsa=ujtQxg4FRj_+i6@mail.gmail.com>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: In-depth git blame?
+Date: Wed, 2 Mar 2011 22:44:45 +0100
+Message-ID: <20110302214445.GC24660@m62s10.vlinux.de>
+References: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
+ <20110302211545.GD20400@sigill.intra.peff.net>
+ <20110302212951.GB24660@m62s10.vlinux.de>
+ <20110302213437.GG20400@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:41:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jez <jezreel@gmail.com>, Thomas Rast <trast@student.ethz.ch>,
+	Bo Yang <struggleyb.nku@gmail.com>,
+	Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 02 22:44:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Putnr-0004AT-2e
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:41:51 +0100
+	id 1Putqp-0005i0-P5
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:44:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757398Ab1CBVlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 16:41:45 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54627 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755118Ab1CBVlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:41:44 -0500
-Received: (qmail 20777 invoked by uid 111); 2 Mar 2011 21:41:44 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 21:41:44 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 16:41:42 -0500
+	id S1757497Ab1CBVou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 16:44:50 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:37269 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755527Ab1CBVou (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 16:44:50 -0500
+Received: (qmail invoked by alias); 02 Mar 2011 21:44:48 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp022) with SMTP; 02 Mar 2011 22:44:48 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX18w6JNsb6IwsEkE2qZPgbLS/0j3zRXjHVSucphEWH
+	kUp4U30+7EEyvN
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id 06EE1D401F; Wed,  2 Mar 2011 22:44:46 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=hqVcGw16q6uJBO5kPjKtsa=ujtQxg4FRj_+i6@mail.gmail.com>
+In-Reply-To: <20110302213437.GG20400@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168352>
 
-On Wed, Mar 02, 2011 at 10:24:29PM +0100, Piotr Krukowiecki wrote:
+[ Cc Jonas, because he might know more about that ]
 
-> So it's like this?
+On Wed, Mar 02, 2011 at 04:34:37PM -0500, Jeff King wrote:
+> On Wed, Mar 02, 2011 at 10:29:51PM +0100, Peter Baumann wrote:
 > 
-> B1
-> |
-> M - B2
-> |
-> P <- changes foo
-
-Yes.
-
-> > What do we output? Both branches have equal claim to the commit.
+> > > If you use "git gui blame" or "tig blame", both have a "blame from
+> > > parent commit" feature. This restarts the blame using the content as
+> > > it was just before the answer you just got, so you can recursively
+> > > dig.  It's unfortunately a somewhat manual process.
+> > > 
+> >  
+> > Hm. I guess pressing 'B' will blame the parent commit in tig.  But I
+> > can't figure out how to navigate back to the old commit (before
+> > pressing 'B')?  Any hints appreciated!
 > 
-> That's easy. In "show only differences" we don't show anything,
-> because on both branches last-change-commit of "foo" is the same.
-> In "show all" last-change-commit is P so show it (with message like
-> "changed in common root" or whatever).
+> No, it is "," (comma) from the blame viewer in tig to blame starting
+> from the parent of the blamed commit of the highlighted line.
+> 
+Thx, I didn't know that. Your help is really appreciated!
 
-Ah, that is totally not the output I would have expected. But now I
-understand a little better what you are talking about. In the former
-case, you are interested in a blame traversal going to the merge-base of
-branch1 and branch2, and you are interested in the source. So I think
-you could do it with something like:
+> Doing "B" will just re-blame starting at that commit, which will of
+> course give you the same answer (I think it is a global "go to blame
+> view", so it is more useful when you are _not_ in the blame viewer
+> already).
+> 
+> And if you are confused at any point, "h" should give you a
+> context-sensitive list of keystrokes.
+> 
+Hm. I did look at the 'h'elp, but it wasn't mentioned there, at least
+not in my version (tig version 0.16-9-g7630a8f) here.
 
-  git blame-tree dir --left-right branch1...branch2
-
-though of course the current output doesn't actually notice things like
-left-right markings from the revision traversal machinery.
-
-And then there is also the question of representing greater than two
-branches. If "foo" blames to a commit that is in branch1 and branch2,
-but not branch3, what should be output? Presumably you would want it
-enumerated as "branch1 and branch2 touched it in commit X, branch three
-touched it in commit Y". But I'm not sure how well git's revision
-machinery tracks more than two sources.
-
-> I think this is simple, but maybe I don't understand some git
-> internals that make it hard.
-
-I think it is possible, and probably would build on top of the work I am
-doing. But I am going to try to get the basics right first, and then we
-can see about building other stuff on top.
-
--Peff
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
