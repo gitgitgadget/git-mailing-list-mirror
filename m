@@ -1,77 +1,91 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide
- pathspecs by ':'
-Date: Wed, 2 Mar 2011 13:34:58 +0100
-Message-ID: <AANLkTi=YHNnuBAF_GitrmMYFK1h_p9JP54hRyj9vWTzc@mail.gmail.com>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com>
- <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net>
- <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com>
- <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com>
- <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com>
- <7vsjv6evy4.fsf@alter.siamese.dyndns.org> <4D6D0A51.9030701@drmicha.warpmail.net>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [RFC/PATCH] commit notes workflow
+Date: Wed, 02 Mar 2011 07:45:21 -0500
+Message-ID: <1299069921.17973.26.camel@drew-northup.unet.maine.edu>
+References: <20110225133056.GA1026@sigill.intra.peff.net>
+	 <201102251658.22678.johan@herland.net>
+	 <20110301215907.GA23945@sigill.intra.peff.net> <4D6DEB64.1080003@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
 	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Mar 02 13:35:52 2011
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 13:47:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PulHN-0004zO-CR
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 13:35:45 +0100
+	id 1PulSW-0002dC-7Q
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 13:47:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756722Ab1CBMfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 07:35:39 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:43782 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756562Ab1CBMfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 07:35:39 -0500
-Received: by yia27 with SMTP id 27so1466929yia.19
-        for <git@vger.kernel.org>; Wed, 02 Mar 2011 04:35:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=a5UILhFiX3YQKrl6nVCrdcylW4p3lyKeBNusPL5GV1k=;
-        b=iOz/J05RecyxC4lBoA1LoZQ7PGUUPtAhFqEu+QU774IAqOsI/S2em/Y5M6QyaIHK4f
-         p55SOnYoEKCu/Axa/dbzd+lyo/uorz0ACxgbmvFIYjzF5127X7ju0T2CNCJwJimuVOWU
-         eXPzVgP4wWQd7LVWWWVw2dQH3oSDef2h8o2Bs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=B40SqILLPPZKTsXztjP3xHjzAgH4NIeKTv2gsWfSjtHt3R8n7clY/cl/4RJhe3iGpQ
-         GRPSCN2aR/bsr+hI6B2h8hnq+/KiPe3VduhneFGcoBD+L8dm3zbllBoFRkBRIxNkR3jt
-         0yZjRqEScIbm4RbRbNhAaFyaTHBO6qw7sCR5E=
-Received: by 10.150.66.10 with SMTP id o10mr83635yba.235.1299069338095; Wed,
- 02 Mar 2011 04:35:38 -0800 (PST)
-Received: by 10.151.11.12 with HTTP; Wed, 2 Mar 2011 04:34:58 -0800 (PST)
-In-Reply-To: <4D6D0A51.9030701@drmicha.warpmail.net>
+	id S1756638Ab1CBMrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 07:47:10 -0500
+Received: from basalt.its.maine.edu ([130.111.32.66]:49718 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755269Ab1CBMrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 07:47:09 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p22CjN5Q011832
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 2 Mar 2011 07:45:28 -0500
+In-Reply-To: <4D6DEB64.1080003@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
+	Fuz1=4 Fuz2=4
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p22CjN5Q011832
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1299674743.00909@MVPf0axywtGRfBbPruJHhg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168304>
 
-Heya,
 
-On Tue, Mar 1, 2011 at 16:01, Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> I have to say I'm really excited about how transparently this works
-> across all kinds of commands, and how suggestive this is with rev:path
-> in mind.
+On Wed, 2011-03-02 at 20:01 +1300, Chris Packham wrote:
+> On 02/03/11 10:59, Jeff King wrote:
+> > On Fri, Feb 25, 2011 at 04:58:22PM +0100, Johan Herland wrote:
+> >> Maybe we should use a slightly more verbose separator (i.e. more 
+> >> unlikely to trigger false positives). As you say, we already have to 
+> >> watch out for "---" because of "am", but that only applies to projects 
+> >> that _use_ "am" (i.e. mailing-list-centric projects like git.git and 
+> >> the Linux kernel). Other projects (e.g. github-centric projects or most 
+> >> centralized "$dayjob-style" projects) seldom or never use "am" at all, 
+> >> so I wouldn't expect those developers think of "---" as "special" in 
+> >> any way.
+> >>
+> >> What about using something like "--- Notes ---" instead?
+> > 
+> > Yeah, it is true that many git users will never care about the
+> > patch-through-mail workflow. And I think these days that is OK, because
+> > rebase will take care to keep their commit message intact even if it
+> > doesn't format well in a "format-patch | am" pipeline.
+> > 
+> > I really wanted to keep it short and natural, though. Because eventually
+> > I'd like to have this on all the time via a config option, and I don't
+> > want to see "--- Notes ---" in every commit that doesn't have notes. But
+> > I _do_ want to be able to quickly say "oh, let me make a note on this"
+> > and just add a quick separator.
+> 
+> <bikesheding>
+> What about "#---"? Satisfies the quick to type and is a lot less likely
+> to appear in commit messages. Not sure about the implications of finding
+> that string before the commit message is stripped.
+> </bikesheding>
 
-I like it, especially considering how small the impact on the codebase
-is. The downside is (once again) backwards compatibility though, I
-haven't heard much on how to address that, other than "just quote it"
-(which _I_ think is fine, people with filenames that start with fancy
-characters are probably used to quoting them anyway), but what does
-Junio think?
+
+True enough, but that would be seen as a comment and dropped outright
+the way things are currently standing. If you want short, definitely
+rare, and most likely intentional you'd need something harder to
+remember like "-!N" as the tag. I don't know how well that'd go over
+with people--it definitely isn't natural.
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
