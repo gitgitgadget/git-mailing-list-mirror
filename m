@@ -1,92 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2 v2] Adding Beyond Compare as a merge tool
-Date: Tue, 01 Mar 2011 20:26:18 -0800
-Message-ID: <7vhbbmf8r9.fsf@alter.siamese.dyndns.org>
-References: <4D6A355C.3000805@gmail.com>
- <7voc5wk5wl.fsf@alter.siamese.dyndns.org> <87hbbmqsbt.fsf@fox.patthoyts.tk>
+Subject: Re: What's cooking in git.git (Feb 2011, #06; Sun, 27)
+Date: Tue, 01 Mar 2011 21:24:01 -0800
+Message-ID: <7vwrkiccy6.fsf@alter.siamese.dyndns.org>
+References: <7vy650k62n.fsf@alter.siamese.dyndns.org>
+ <AANLkTikW1GVzFoq=zUxvi7MTcUYBLO6fbjJPVZziLUk8@mail.gmail.com>
+ <7v7hckje4n.fsf@alter.siamese.dyndns.org>
+ <20110301205424.GA18793@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
-	Chris Packham <judge.packham@gmail.com>, charles@hashpling.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Mar 02 05:26:50 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 02 06:24:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PudeC-0005ky-OO
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 05:26:49 +0100
+	id 1PueXs-0000kn-TP
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 06:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757875Ab1CBE0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 23:26:35 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49921 "EHLO
+	id S1751469Ab1CBFYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 00:24:15 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53687 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757821Ab1CBE0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 23:26:34 -0500
+	with ESMTP id S1750918Ab1CBFYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 00:24:14 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BAEB843EF;
-	Tue,  1 Mar 2011 23:27:51 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 057A3491E;
+	Wed,  2 Mar 2011 00:25:32 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LF13+JN9Pbn7Qnu5Xlq8/v8POyk=; b=Bsr7B2
-	aIdlp6seeHwLS/L9icX81zFFPmAMYtCC4T/yVKdWiSZ98d0EKSRy9lumElNJqNQh
-	f9y0mIsdmSgNoY27pcNXYsjkCtBvyGTFLeYv3n8GMJuCjRNYk/pObqwIIWsjURqR
-	iwJhnUW04+DvXZXwwrTGmebee4/kKNc3AdnUI=
+	:content-type; s=sasl; bh=jgIaw2GIsSJqjZkcNxpDBmMHeZE=; b=ukmarM
+	GLLQRIX+MPAUnwrWgggMvs0HC1hKhRTtuzqMXaKr1R4bSCo0EkHvnPS8cUJwI9rA
+	vX44y2tg5nI4dvrHHnU1Dbwc+SNV6AXs59WAjYAkjaXVNfZz4q5kmNxvcOXxxFmN
+	mkX3W79ZL0ByjZUEKrF1GZ39Z1apDko3a6h4E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ho+z7PgoHD2hdKxv7XLO5EuDZwN/IUsA
-	801EkmtboIVmhvnK07V/6aafT5dam8wxRyLd21gg0RGJLJUtE9VT1GDMg2npMOVP
-	1vqBqoZYKeKP91xKD9rLkwRs2lzthtN6WKVqN291S1ruDuB4930McN6w4oQ9ANRA
-	yPa/g6vyVRo=
+	:content-type; q=dns; s=sasl; b=Y4G9FpS5u9WBo1gVNpY8lDlq7UtUWZFD
+	E+44YKyCGmwu2gQqIP1JdpWvzxdqxmgesgqfzRgLBMnUJ7hQiBgmMnJ36ChAldTn
+	FdUfzgBs7/9glIj6Db4EYPxN5uOicvKh81yCYZmcrH1GPYf7B5cC1pRe0zv+zVMX
+	9l7zpSBLsUU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6940943EA;
-	Tue,  1 Mar 2011 23:27:46 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9227491C;
+	Wed,  2 Mar 2011 00:25:27 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D50F143E8; Tue,  1 Mar 2011
- 23:27:39 -0500 (EST)
-In-Reply-To: <87hbbmqsbt.fsf@fox.patthoyts.tk> (Pat Thoyts's message of
- "Wed\, 02 Mar 2011 00\:28\:06 +0000")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 507C74918; Wed,  2 Mar 2011
+ 00:25:22 -0500 (EST)
+In-Reply-To: <20110301205424.GA18793@sigill.intra.peff.net> (Jeff King's
+ message of "Tue\, 1 Mar 2011 15\:54\:24 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C9144E4-4485-11E0-9A05-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 7BADB8BA-448D-11E0-A0E4-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168292>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> So I'm curious what you think is missing in the balance you mentioned
+> above.
+
+I touched this in a separate message, I think...
+
+> A few other things I noticed are:
+> ...
+>     I am so used to regular git output. But I think just using " %h %s",
+>     e.g.:
 >
->>Sebastian Schuberth <sschuberth@gmail.com> writes:
->>
->>> Sebastian Schuberth (2):
->>>   mergetool--lib: Sort tools alphabetically for easier lookup
->>>   mergetool--lib: Add Beyond Compare 3 as a tool
->>>
->>>  Documentation/git-difftool.txt         |    4 +-
->>>  Documentation/git-mergetool.txt        |    4 +-
->>>  Documentation/merge-config.txt         |    8 +-
->>>  contrib/completion/git-completion.bash |    2 +-
->>>  git-gui/lib/mergetool.tcl              |  101 +++++++------
->>>  git-mergetool--lib.sh                  |  247 +++++++++++++++++---------------
->>>  6 files changed, 195 insertions(+), 171 deletions(-)
->>
->>Hmm, I really would have liked if you took the hint and separated git-gui
->>bits into separate patches.
->>
->>I saw Tested-by from Chris, so I'll add that to what is queued on 'pu',
->>ask Pat to keep an eye on the ss/git-gui-mergetool branch, and then merge
->>my ss/mergetool--lib branch to 'master' during my next integration run.
->
-> Where is this branch?
+>        1234abcd commit subject one
+>        5678defa commit subject two
 
-$ git log --oneline --first-parent master..pu
+That would be better, I agree.
 
-Look for the commit that merge ss/git-gui-mergetool and pick its second
-parent, which is ffe6dc0 (mergetool--lib: Add Beyond Compare 3 as a tool,
-2011-02-27).
+> ...
+>     In other words, I think this safety valve is not just useful for
+>     clueless people who make commits without realizing they're on a
+>     detached HEAD. It is also useful for clueful people as a helpful
+>     reminder that they may be leaving commits behind, and they can
+>     ignore or deal with it as appropriate. I tend to ignore the
+>     "Previous HEAD was..." message because it shows _every time_,
+>     whether those are my new commits or not.
 
-Thanks.
+... never thought about this from that angle.  Perhaps you are right.
+
+>   - Nit: you nicely use "%d commit%s" to handle the single/plural case
+>     in the warning message, but then you "them" later on. It needs
+>     (1 < lost) ? "them" : "it".
+
+I actually don't like playing games like that, especially when i18n topic
+is in flight.  Among the languages I know rules reasonably well, two has
+the rule that a countable noun is spelled differently depending on the
+number of that thing is one or more, and one spells the noun the same way
+regardless of the number.  Who knows if git needs to be translated into a
+language whose noun changes its shape three-way, depending on the number
+being one, two, or more?
