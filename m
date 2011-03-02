@@ -1,78 +1,129 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 0/2 v2] Adding Beyond Compare as a merge tool
-Date: Wed, 02 Mar 2011 00:28:06 +0000
-Message-ID: <87hbbmqsbt.fsf@fox.patthoyts.tk>
-References: <4D6A355C.3000805@gmail.com>
-	<7voc5wk5wl.fsf@alter.siamese.dyndns.org>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
+Date: Tue, 01 Mar 2011 17:06:03 -0800
+Message-ID: <4D6D97FB.3050106@kernel.org>
+References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek> <20110301222141.GB7918@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
-	Chris Packham <judge.packham@gmail.com>, charles@hashpling.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 01:28:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	=?UTF-8?B?VXdlIEtsZWluZS1Lw7ZuaWc=?= 
+	<u.kleine-koenig@pengutronix.de>, admin@repo.or.cz
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 02:06:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuZvc-0007OM-9W
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 01:28:32 +0100
+	id 1PuaWG-0005EO-Iq
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 02:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756168Ab1CBA21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 19:28:27 -0500
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:51388 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755799Ab1CBA20 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 19:28:26 -0500
-Received: from [172.23.170.137] (helo=anti-virus01-08)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1PuZvT-0002XP-BT; Wed, 02 Mar 2011 00:28:23 +0000
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.72)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1PuZvI-0007NG-7l; Wed, 02 Mar 2011 00:28:12 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 59EC121850; Wed,  2 Mar 2011 00:28:06 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <7voc5wk5wl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 27 Feb 2011 22:52:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1757658Ab1CBBGS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 20:06:18 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:41725 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757552Ab1CBBGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 20:06:17 -0500
+Received: from voot-cruiser.eaglescrag.net (173-23-136-205.client.mchsi.com [173.23.136.205])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p22163lb000773
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Tue, 1 Mar 2011 17:06:04 -0800
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <20110301222141.GB7918@elie>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Tue, 01 Mar 2011 17:06:06 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168286>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->Sebastian Schuberth <sschuberth@gmail.com> writes:
->
->> Sebastian Schuberth (2):
->>   mergetool--lib: Sort tools alphabetically for easier lookup
->>   mergetool--lib: Add Beyond Compare 3 as a tool
+On 03/01/2011 02:21 PM, Jonathan Nieder wrote:
+> (resending, censored for vger; sorry for the noise)
+> Hi Jakub et al,
+>=20
+> Uwe Kleine-K=C3=B6nig wrote [1]:
+>=20
+>> I experiment with $feature{'ctags'}.  After installing
+>> libhtml-tagcloud-perl (0.34-1) and adding
 >>
->>  Documentation/git-difftool.txt         |    4 +-
->>  Documentation/git-mergetool.txt        |    4 +-
->>  Documentation/merge-config.txt         |    8 +-
->>  contrib/completion/git-completion.bash |    2 +-
->>  git-gui/lib/mergetool.tcl              |  101 +++++++------
->>  git-mergetool--lib.sh                  |  247 +++++++++++++++++---------------
->>  6 files changed, 195 insertions(+), 171 deletions(-)
->
->Hmm, I really would have liked if you took the hint and separated git-gui
->bits into separate patches.
->
->I saw Tested-by from Chris, so I'll add that to what is queued on 'pu',
->ask Pat to keep an eye on the ss/git-gui-mergetool branch, and then merge
->my ss/mergetool--lib branch to 'master' during my next integration run.
+>> 	$feature{'ctags'}{'default'} =3D [1];
+>>
+>> to gitweb.conf and doing
+>>
+>> 	mkdir ctags
+>> 	echo Linux > ctags/Linux
+>>
+>> in the only repository served by gitweb makes iceweasel barf on the
+>> output (see attachment).
+>=20
+> With chromium I get:
+>=20
+> 	This page contains the following errors:
+>=20
+> 	error on line 26 at column 6: XML declaration allowed only at the st=
+art of the document
+> 	Below is a rendering of the page up to the first error.
+>=20
+> First, we hit
+>=20
+> 	if ($show_ctags) {
+> 		my %ctags;
+> 		foreach my $p (@projects) {
+> 			foreach my $ct (keys %{$p->{'ctags'}}) {
+> 				$ctags{$ct} +=3D $p->{'ctags'}->{$ct};
+>=20
+> which produces a warning warning in error.log:
+>=20
+> 	index.cgi: Argument "Linux" isn't numeric in addition (+) at /usr/sh=
+are/gitweb/index.cgi line 4819.
+>=20
+> in error.log.  Then we hit git_show_project_tagcloud, which dies in
+> "$cloud->html_and_css($count);" with
+>=20
+> 	HTML::TagCloud..
+> 	index.cgi: Can't take log of 0 at /usr/share/perl5/HTML/TagCloud.pm =
+line 67.
+>=20
+> For some reason, the result is an _embedded_ error page:
+>=20
+> 	<form method=3D"get" action=3D"/gitweb/" enctype=3D"application/x-ww=
+w-form-urlencoded">=20
+> 	<p class=3D"projsearch">Search:
+> 	<input type=3D"text" name=3D"s"  />=20
+> 	</p>=20
+> 	</form>=20
+> 	Content-type: {a content type which shall not be named}
+> 	=20
+> 	<?xml version=3D"1.0" encoding=3D"utf-8"?>=20
+>  [...]
+> 	500 - Internal Server Error
+>=20
+> So I suspect there are two bugs here.
+>=20
 
-Where is this branch?
+As a general note the cloud tags code that's there has a whole slew of
+problems, including a pretty trivial way to crash gitweb entirely if th=
+e
+tags file is malformed in any way to what it's expecting.
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+I've said it before, I'd rather see that code reverted or completely
+overhauled, and as far as I know repo.or.cz is the only place even usin=
+g
+the code at all.
+
+I also think I reported this particular error a couple of years ago
+(with the file being malformed and causing all kinds of problems).  The
+fact that the tags don't follow the repository when it's cloned more or
+less makes this entire feature a giant PITA, couple that with no good
+documentation on how to create the tag files (I think the file itself
+needs to have filename of tag, and *ONLY* contain 1 for it's contains
+for it to work)
+
+Linux:
+1
+EOF
+
+- John 'Warthog9' Hawley
