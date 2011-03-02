@@ -1,145 +1,104 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2011, #06; Sun, 27)
-Date: Wed, 02 Mar 2011 02:32:23 -0800 (PST)
-Message-ID: <m3k4gh7r0m.fsf@localhost.localdomain>
-References: <7vy650k62n.fsf@alter.siamese.dyndns.org>
-	<AANLkTikW1GVzFoq=zUxvi7MTcUYBLO6fbjJPVZziLUk8@mail.gmail.com>
-	<7v7hckje4n.fsf@alter.siamese.dyndns.org>
-	<20110301205424.GA18793@sigill.intra.peff.net>
-	<7vwrkiccy6.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=+iBR3OBZ=4fi_g=JMQKi=47F47hRsWxK=RbMv@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] doc: technical details about the index file format
+Date: Wed, 2 Mar 2011 18:43:56 +0700
+Message-ID: <AANLkTimKT2dgPu_0L=K-14e6bBCgPhiQ59AmPWp7y6vg@mail.gmail.com>
+References: <AANLkTi=iFe=MmUiXzC_HMwueZxLJDCea+zp_-SNWvSup@mail.gmail.com>
+ <1283769430-9263-1-git-send-email-pclouds@gmail.com> <AANLkTi=YJkk6KHChCrrazij_ziyG-Ru7kGLWc7JnUGoN@mail.gmail.com>
+ <AANLkTi=hz0xRsTy5f8xhzBhu0md_iPCxvdTrEPrzYwzt@mail.gmail.com>
+ <20110226100310.GA21724@do> <7vsjvb6qmt.fsf@alter.siamese.dyndns.org>
+ <20110226133639.GA32442@do> <7vpqqaffy2.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=GhdfWCyx7MN3w0ZPhqKHcC1e6RmPeZt67OeqG@mail.gmail.com> <7voc5ucb6b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	=?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 11:32:58 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	kusmabite@gmail.com, raa.lkml@gmail.com, jjuran@gmail.com,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 12:44:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PujMY-000545-Dp
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 11:32:58 +0100
+	id 1PukTp-0005Ge-IM
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 12:44:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756562Ab1CBKcw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 05:32:52 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35846 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756239Ab1CBKcv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2011 05:32:51 -0500
-Received: by fxm17 with SMTP id 17so5739270fxm.19
-        for <git@vger.kernel.org>; Wed, 02 Mar 2011 02:32:50 -0800 (PST)
+	id S1756680Ab1CBLo2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 06:44:28 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:55731 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755977Ab1CBLo1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2011 06:44:27 -0500
+Received: by wwb22 with SMTP id 22so5727350wwb.1
+        for <git@vger.kernel.org>; Wed, 02 Mar 2011 03:44:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type:content-transfer-encoding;
-        bh=O7/tcXtaXMJD2dtK0eFH1mt/7GmBcIGdLqP+WeBP8Z0=;
-        b=dAe7W1RI/K7B/GFRSe8ZRrLYlV5CP5tYifiEsbBlBXf4UXjhYy9bBbl3vHU58MI5Vb
-         urCpz7CJWD78xa6fIEf4+THG5Q0D1jk8xM4/pQiRE95N4IeWs03q7/liPNKGougdMx0B
-         nLjgcZNOFyj0QrRH0fVK7SqCTBlC4Oh+1h/6E=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=w2cZ7wjx4F9N5jgs0LSxyIB3e9qucXhfAKR73yDt89s=;
+        b=em0ImcQFJwHCYXUrUcIVWLBeRsRZEwJZeFjSfxi0XK+9oBs9q7+c6GzgWMOKkG+ZSZ
+         Tn7Pf/6t091Gv0ewmWZ5akdPP4hND/P/jI0/A1SzL0HGHm7SrKa57+rXASqE9F1QpR7b
+         olZ720SRBrcLOodYK0lKuoWHccCX2mrbPf4yU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=JzFALiUWbLJuVKGYs8teWbDStV5xgquQXjSkvOS5K2GbDfXMbMJhS+zumuhrKv0EOk
-         4f/hAf0XeMmNgmq8av02OU2PBti6tWxuscnImVPhokFDl9iLXktwtCW0iW9Mk1Hy7+IT
-         HMirf5TfQcx3untw+WUjbX0alwCiigwuKCPHs=
-Received: by 10.223.70.141 with SMTP id d13mr9597848faj.111.1299061944352;
-        Wed, 02 Mar 2011 02:32:24 -0800 (PST)
-Received: from localhost.localdomain (abvi92.neoplus.adsl.tpnet.pl [83.8.206.92])
-        by mx.google.com with ESMTPS id n1sm480454fam.40.2011.03.02.02.32.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 Mar 2011 02:32:23 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p22AVi0K001441;
-	Wed, 2 Mar 2011 11:31:54 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p22AVMeb001437;
-	Wed, 2 Mar 2011 11:31:22 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTi=+iBR3OBZ=4fi_g=JMQKi=47F47hRsWxK=RbMv@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=TxMr9PNmpUVIlEha3QoM9d7TFcXBBPHw0p3saKj6dzCdNxd20kV2SLtbpuN7/l56Lo
+         v9Kx2fBnEFDON14fRcRKlyCesj5AwdkiEkT4RMUuVxgyCCuTQxLlz6jJekkBQJg9u7ms
+         713Hircy0BxXaoEDzYuFqKeTw+ICevIzsorgU=
+Received: by 10.216.163.69 with SMTP id z47mr7244025wek.43.1299066266106; Wed,
+ 02 Mar 2011 03:44:26 -0800 (PST)
+Received: by 10.216.239.5 with HTTP; Wed, 2 Mar 2011 03:43:56 -0800 (PST)
+In-Reply-To: <7voc5ucb6b.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168302>
 
-Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
-> On Wed, Mar 2, 2011 at 6:24 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> Jeff King <peff@peff.net> writes:
+On Wed, Mar 2, 2011 at 1:02 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>> I wonder if we should also point to relevant source files, so if thi=
+s
+>> document becomes out of date, the readers can jump in the source and
+>> verify themselves (perhaps coming up with patches to this doc)?
+>
+> I suspect that is a sure way to guarantee the document to go stale.
 
->>> =A0 - Nit: you nicely use "%d commit%s" to handle the single/plural=
- case
->>> =A0 =A0 in the warning message, but then you "them" later on. It ne=
-eds
->>> =A0 =A0 (1 < lost) ? "them" : "it".
->>
->> I actually don't like playing games like that, especially when i18n =
-topic
->> is in flight. =A0Among the languages I know rules reasonably well, t=
-wo has
->> the rule that a countable noun is spelled differently depending on t=
-he
->> number of that thing is one or more, and one spells the noun the sam=
-e way
->> regardless of the number. =A0Who knows if git needs to be translated=
- into a
->> language whose noun changes its shape three-way, depending on the nu=
-mber
->> being one, two, or more?
+No it does not. The point is to make it easier for readers to help
+themselves when they suspect the document is not entirely correct.
 
-Well, one of such languages with spelling depending in number of
-things is Russian, for which we have translation for git-gui, so
-I guess somebody would add one for git itself.
-=20
-> For gettex this is described at
-> http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
+> I didn't like the way I explained the cache-tree entry order. =C2=A0W=
+as it
+> understandable?
 
-Which includes example for Polish language:
+It is, although I'm wondering if it's just like memcmp() order with
+parent component cut out.
 
-    1 file       =3D  1 plik
-    2,3,4 files  =3D  2,3,4 pliki
-    5-21 files   =3D  5-21  plik=F3w
-    22-24 files  =3D  22-24 pliki
-    25-31 files  =3D  25-31 plik=F3w
-    and so on
+> I am wondering if an illustration with an example might be in order. =
+=C2=A0I
+> think anybody halfway intelligent may be able to get a fuzzy idea of =
+what
+> is going on by looking at the output from test-dump-cache-tree after
+> "reset --hard && write-tree" and then by comparing it with the output=
+ from
+> test-dump-cache-tree after running ">t/something && git add t/somethi=
+ng"
+> (which invalidates the top-level tree and t/ subtree).
 
-  [...] =20
- =20
-  Three forms, special case for one and some numbers ending in 2, 3, or=
- 4
-     The header entry would look like this:
+A short example would be great. test-dump-cache-tree might not be.
+Last time I read its output, I wasn't sure I understood. Maybe because
+I ran it on git.git and did not compare two outputs.
 
-          Plural-Forms: nplurals=3D3; \
-              plural=3Dn=3D=3D1 ? 0 : \
-                     n%10>=3D2 && n%10<=3D4 && (n%100<10 || n%100>=3D20=
-) ? 1 : 2;
-
-     Languages with this property include:
-
-     Slavic family
-          Polish
-
-=20
-> Don't know how it's handled in shell scripts or perl or whatever othe=
-r
-> language (which does not use gettext?)
-
-Both shell scripts and Perl scripts would use gettext: gettext.sh for
-shell, Locale::Messages for Perl (we need lower level than Text::Domain=
-,
-and Locale::Maketext is first no longer recommended, and second does
-not use gettext at least by default).
-
+> But a well written
+> documentation should be able to help clarifying the idea obtainable t=
+hat
+> way. =C2=A0I don't think what I wrote in the previous message is suff=
+icient
+> even for that (i.e. comparing the two output would give you better
+> explanation of what is going on than what I wrote--iow, what I wrote =
+may
+> not be very useful for people who are motivated to learn).
 --=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Duy
