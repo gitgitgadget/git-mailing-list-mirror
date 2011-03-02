@@ -1,72 +1,56 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] git blame-tree
-Date: Wed, 2 Mar 2011 16:10:35 -0500
-Message-ID: <20110302211035.GC20400@sigill.intra.peff.net>
-References: <20110302164031.GA18233@sigill.intra.peff.net>
- <20110302171653.GA18957@sigill.intra.peff.net>
- <AANLkTim4fKO=Lb0dY0DzRu1QqC8NHPoF8iveYQ2E6OBH@mail.gmail.com>
- <20110302180722.GA20287@sigill.intra.peff.net>
- <AANLkTi=m_WTohMfJZxTqObRT3rhhtxo=QfnDJCHO=U0K@mail.gmail.com>
+Subject: Re: In-depth git blame?
+Date: Wed, 2 Mar 2011 16:15:45 -0500
+Message-ID: <20110302211545.GD20400@sigill.intra.peff.net>
+References: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:10:59 2011
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org
+To: Jez <jezreel@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 22:15:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PutJy-0001cn-QK
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:10:59 +0100
+	id 1PutOn-0006K0-9r
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:15:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757593Ab1CBVKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 16:10:40 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:37545 "EHLO peff.net"
+	id S1757584Ab1CBVPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 16:15:51 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44232 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756459Ab1CBVKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:10:38 -0500
-Received: (qmail 20422 invoked by uid 111); 2 Mar 2011 21:10:36 -0000
+	id S1757460Ab1CBVPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 16:15:50 -0500
+Received: (qmail 20477 invoked by uid 111); 2 Mar 2011 21:15:47 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 21:10:36 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 16:10:35 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 21:15:47 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 16:15:45 -0500
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=m_WTohMfJZxTqObRT3rhhtxo=QfnDJCHO=U0K@mail.gmail.com>
+In-Reply-To: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168343>
 
-On Wed, Mar 02, 2011 at 07:39:20PM +0100, Piotr Krukowiecki wrote:
+On Wed, Mar 02, 2011 at 03:43:42PM -0500, Jez wrote:
 
-> I'd expect this to be something like union. Currently I can only think about
-> following case:
-> 
-> Some files were changed in branch1, some in branch2, some in both.
-> Show me how the files are changed. For example:
->   file1 changed in branch1 in commit1
->   file2 changed in branch2 in commit2
->   file3 changed in branch1 in commit3 and in branch2 in commit4
-> 
-> If file was not changed since branch creation then don't show it (optionally).
+> Git-blame is useful, but sometimes I want to know the series of
+> commits that have affected a line -- not just the most recent one. Is
+> there a way to do this?
 
-I think we are getting into something different here, because you are
-caring not just about the commit in some traversal that touched a file,
-but for each source, which commits got us there and potentially multiple
-such commits, one per source for each file.
+If you use "git gui blame" or "tig blame", both have a "blame from
+parent commit" feature. This restarts the blame using the content as it
+was just before the answer you just got, so you can recursively dig.
+It's unfortunately a somewhat manual process.
 
-And that's a bit more expensive to compute, and the answers are not
-always unambiguous. For example, let's say branch1 and branch2 fork from
-some merge-base M. In the parent of M, file "foo" was changed. We
-traverse from branch1 and branch2, not seeing anything interesting for
-"foo". We hit M, and then finally see that its parent touched "foo".
-
-What do we output? Both branches have equal claim to the commit.
-
-I think you could figure out semantics that make sense if you spent
-enough time on it. But I also think it is making the relatively simple
-problem of blame-tree a lot more complex.
+There was a GSoC project to do what you asked, where you would indicate
+a set of lines and get a "git log"-like output of all the commits
+touching those lines. But there were some issues with the code, and it
+never quite made it upstream, I think. I'm not sure what the current
+status is. Cc'ing Thomas and Bo, who worked on it.
 
 -Peff
