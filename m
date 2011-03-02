@@ -1,73 +1,88 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
-Date: Wed, 2 Mar 2011 22:55:56 +0100
-Message-ID: <20110302215556.GL22310@pengutronix.de>
-References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek>
- <20110301222141.GB7918@elie>
- <4D6D97FB.3050106@kernel.org>
- <201103022218.46640.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Shallow clones vs blame/log
+Date: Wed, 2 Mar 2011 16:58:08 -0500
+Message-ID: <20110302215808.GI20400@sigill.intra.peff.net>
+References: <AANLkTim87tZTN4FGLgwCHdAJH4dum4wBXqA=GcQm-uJ=@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "J.H." <warthog9@kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-	git@vger.kernel.org, admin@repo.or.cz
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:56:13 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 22:58:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Puu1i-0003Ff-Ng
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:56:11 +0100
+	id 1Puu3k-0004LA-SZ
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:58:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757365Ab1CBV4E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 16:56:04 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:38346 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756306Ab1CBV4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:56:02 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Puu1X-0000NY-HC; Wed, 02 Mar 2011 22:55:59 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Puu1U-0002cc-7h; Wed, 02 Mar 2011 22:55:56 +0100
+	id S1757703Ab1CBV6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 16:58:11 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:48020 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757122Ab1CBV6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 16:58:10 -0500
+Received: (qmail 20951 invoked by uid 111); 2 Mar 2011 21:58:10 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 21:58:10 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 16:58:08 -0500
 Content-Disposition: inline
-In-Reply-To: <201103022218.46640.jnareb@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <AANLkTim87tZTN4FGLgwCHdAJH4dum4wBXqA=GcQm-uJ=@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168355>
 
-Hello Jakub,
+On Wed, Mar 02, 2011 at 08:51:27PM +0100, Piotr Krukowiecki wrote:
 
-On Wed, Mar 02, 2011 at 10:18:44PM +0100, Jakub Narebski wrote:
-> What is most important that makes this feature to be considered for
-> removal (or rehauling) is that only half of this feature is implement=
-ed
-> in gitweb: the displaying part.  There is half-attempt of providing
-> some web interface for managing tags... which needs external script w=
-ith
-> strict coupling, doesn't offer any access control as far as I know, d=
-o
-> not allow deleting tags, etc.
-=46or a small set of repositories the need to hand-edit the tags is OK
-IMHO.  That's what I intended to do.
+> I'd like to confirm: when doing shallow clone with --depth=n, and then
+> using blame, git does know only about n last revisions. For each
+> change that happened before shows "^commit" where "commit" is n+1
+> commit ?
+> 
+> I wonder if this can be more clear. I was bitten by this today. I was
+> using blame on a file and it showed a commit and author for a line.
+> But the line was not changed in that commit. Took me a while to
+> understand that it's caused by shallow copy...
 
-Best regards
-Uwe
+It's not just shallow copy, but any time you have limited the traversal.
+So you could do "git blame v1.5.0..v1.6.0 wt-status.c", and lines that
+come from v1.5.0 or before are attributed to v1.5.0 with the carat.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+The magic name for this is "boundary commits". See the "-b" option for
+an alternative way of viewing them.
+
+> I could be blamed for not reading git-blame man, but luckily ^commit is not
+> described there ;)
+
+Yes, we seem not to describe the regular output in very much detail at
+all (nor mention the "^" syntax in the description of porcelain output),
+which we probably should.
+
+We do mention in the "specifying ranges" section that unchanged lines
+will be blamed to the boundary commit. Part of the problem is that you
+didn't realize you had a range because you were using a shallow clone.
+But I wonder if that information would be more appropriate when
+introducing shallow clones in git-clone(1).
+
+> Also, git-log puts all not cloned commits into last not cloned commit,
+> and there's no information that it's a "fake" commit.
+
+Same issue. The bottom end of a shallow clone has no parents, and log's
+diffs show root commits as giant creation events.
+
+Maybe it would be nice if the log output somehow noted that it was not a
+real root commit, but rather the endpoint of a shallow clone, regardless
+of whether there is a diff being shown. Because it is also potentially
+confusing to do "git log", scroll to the bottom, and think that is the
+very first commit, when it's not (and you could deepen your repository
+if you wanted).
+
+I think all of this is due to the fact that shallow clones were tacked
+on after the fact, and are not all that commonly used.
+
+Patches welcome (for docs or for log), of course.
+
+-Peff
