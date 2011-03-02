@@ -1,56 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: In-depth git blame?
-Date: Wed, 2 Mar 2011 16:15:45 -0500
-Message-ID: <20110302211545.GD20400@sigill.intra.peff.net>
-References: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
+Date: Wed, 2 Mar 2011 22:18:44 +0100
+Message-ID: <201103022218.46640.jnareb@gmail.com>
+References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek> <20110301222141.GB7918@elie> <4D6D97FB.3050106@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org
-To: Jez <jezreel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:15:58 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Uwe =?utf-8?q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, admin@repo.or.cz
+To: "J.H." <warthog9@kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 02 22:19:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PutOn-0006K0-9r
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:15:57 +0100
+	id 1PutSf-0000Pq-Hn
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757584Ab1CBVPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 16:15:51 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44232 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757460Ab1CBVPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:15:50 -0500
-Received: (qmail 20477 invoked by uid 111); 2 Mar 2011 21:15:47 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 21:15:47 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 16:15:45 -0500
+	id S1757587Ab1CBVTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 16:19:52 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51055 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755096Ab1CBVTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 16:19:51 -0500
+Received: by fxm17 with SMTP id 17so450737fxm.19
+        for <git@vger.kernel.org>; Wed, 02 Mar 2011 13:19:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=lqTHp60giFiZh8vUBcS7bk+Zb9OED265Wd7aJkSJjG4=;
+        b=Bn/sIb3dyOzMp/QR4f+9CglZXcROfhppfiZnh23upJenUq6wUQgidHabrWlM/rDhk7
+         BC3cHGaOm7Ne7QZqywDlzAF+A5vUhbJ5ucuRow6lEMRIRQQjB80j7G/YLpSoVZTKo0PE
+         aTOYDH0cuqjzVedqQn3inRyy5F2ro4n4tc08s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=jFA0Ce4a04cTN9KZxLr1tEQmDgBMBsgP9msQeTEIgHTz3/MPeqfvC/yVWzwlQTIRJ1
+         m2iYBsPpTR4WR+ofAB+wN1PhkhtGScLRDOCrBE3L7s2mpJdpcFbbblMXIjT+xhNSS/V+
+         kc/bvD5i/BPb9vmojAu2R0OJ/R5HFG0ILHKOE=
+Received: by 10.223.93.139 with SMTP id v11mr446561fam.101.1299100739336;
+        Wed, 02 Mar 2011 13:18:59 -0800 (PST)
+Received: from [192.168.1.13] (abvi92.neoplus.adsl.tpnet.pl [83.8.206.92])
+        by mx.google.com with ESMTPS id n3sm243989faa.5.2011.03.02.13.18.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 02 Mar 2011 13:18:56 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4D6D97FB.3050106@kernel.org>
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168344>
 
-On Wed, Mar 02, 2011 at 03:43:42PM -0500, Jez wrote:
+On Wed, 2 Mar 2011 02:06, J.H. wrote:
 
-> Git-blame is useful, but sometimes I want to know the series of
-> commits that have affected a line -- not just the most recent one. Is
-> there a way to do this?
+> As a general note the cloud tags code that's there has a whole slew of
+> problems, including a pretty trivial way to crash gitweb entirely if the
+> tags file is malformed in any way to what it's expecting.
 
-If you use "git gui blame" or "tig blame", both have a "blame from
-parent commit" feature. This restarts the blame using the content as it
-was just before the answer you just got, so you can recursively dig.
-It's unfortunately a somewhat manual process.
+That's not a huge problem, I think; it would be enough to add some
+validation to parsing ctags code (e.g. treat any contents that is
+not a single number as a 1).
+ 
+> I've said it before, I'd rather see that code reverted or completely
+> overhauled, and as far as I know repo.or.cz is the only place even using
+> the code at all.
+> 
+> I also think I reported this particular error a couple of years ago
+> (with the file being malformed and causing all kinds of problems).  The
+> fact that the tags don't follow the repository when it's cloned more or
+> less makes this entire feature a giant PITA, couple that with no good
+> documentation on how to create the tag files (I think the file itself
+> needs to have filename of tag, and *ONLY* contain 1 for it's contains
+> for it to work)
+> 
+> Linux:
+> 1
+> EOF
 
-There was a GSoC project to do what you asked, where you would indicate
-a set of lines and get a "git log"-like output of all the commits
-touching those lines. But there were some issues with the code, and it
-never quite made it upstream, I think. I'm not sure what the current
-status is. Cc'ing Thomas and Bo, who worked on it.
+Well, neither does README.html follow the repository when it is cloned,
+and usually neither does description ('description' file is generated by
+git default template, and description file overrides `gitweb.description'
+config variable).
 
--Peff
+Documentation always can be added, either as comments for the 'ctags'
+feature, or in gitweb/README (or, in the future, in gitweb manpage).
+
+
+What is most important that makes this feature to be considered for
+removal (or rehauling) is that only half of this feature is implemented
+in gitweb: the displaying part.  There is half-attempt of providing
+some web interface for managing tags... which needs external script with
+strict coupling, doesn't offer any access control as far as I know, do
+not allow deleting tags, etc.
+
+-- 
+Jakub Narebski
+Poland
