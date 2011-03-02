@@ -1,80 +1,91 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: [1.8.0] fix branch.autosetupmerge and branch.autosetuprebase
-Date: Wed, 2 Mar 2011 08:30:00 +0100
-Message-ID: <1jxhtdj.c6tsy3wnbmbjM%lists@haller-berlin.de>
-References: <AANLkTi=Ei-Gr3=O0_dfaCekQ0+nB8v1kZYT7sTw-Ydm+@mail.gmail.com>
-Cc: dustin@spy.net (Dustin Sallings)
-To: jaysoffian@gmail.com (Jay Soffian), git@vger.kernel.org (git)
-X-From: git-owner@vger.kernel.org Wed Mar 02 08:30:12 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
+Date: Wed, 2 Mar 2011 09:24:28 +0100
+Message-ID: <201103020924.32924.jnareb@gmail.com>
+References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek> <20110301222141.GB7918@elie> <201103020105.04440.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Uwe =?utf-8?q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, admin@repo.or.cz,
+	John Hawley <warthog9@kernel.org>, Petr Baudis <pasky@suse.cz>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 09:25:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PugVf-0008Ep-GN
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 08:30:11 +0100
+	id 1PuhMi-0006qg-Sh
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 09:25:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754000Ab1CBHaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 02:30:05 -0500
-Received: from mail.ableton.net ([62.96.12.117]:57202 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750881Ab1CBHaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 02:30:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=EYVYZ44gTxxl+4dAGgr+axcECtGuL0i51P+jKYAlgIg=;
-	b=iTL6QxAtnBumy/z+r9PxDXXSUu3XSSOQEbAJSBUP6/m8o+IAuli6Jz/yhRY2zM7EM7aJ8u4wGKlvIAl1R3++j9IoOCWuGHCZeS+0N/67K1tBfR8aZnEKUz6PMt/KGY3YLvg3y8BN/cRhdRFRbIz7FoQyXvNR1YHwCq4o01JFz2U=;
-Received: from dslb-088-074-017-003.pools.arcor-ip.net ([88.74.17.3] helo=[192.168.42.92])
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1PugVU-0007Mr-C8; Wed, 02 Mar 2011 08:30:00 +0100
-In-Reply-To: <AANLkTi=Ei-Gr3=O0_dfaCekQ0+nB8v1kZYT7sTw-Ydm+@mail.gmail.com>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.6 (x86))
+	id S1755926Ab1CBIYp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 03:24:45 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:46855 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755916Ab1CBIYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 03:24:43 -0500
+Received: by fxm17 with SMTP id 17so5654131fxm.19
+        for <git@vger.kernel.org>; Wed, 02 Mar 2011 00:24:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=VwYx9RF3mebJoAjeA/3KSIAKVJr27SlJFqF+Z/YsVR8=;
+        b=Qi2V5vQePYohC4DtEwCKlzfnm0EFWljSyTwHAtC/3pbl+WP2xxgZ5m4UztBho7JBq0
+         H3XTdJ9H4LV0cF32OrqR+4o2bB0WDNuYqFRgl++EfUPDln/qr68snFwoxnUJBx8kls3r
+         TBaGXLshiuYqstB0Tcxg+0LqSSE8j+q4yc9Ys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=uJ1yz1wz93DBkzAGD6KLRkq26BU2xnTxbNO60OkQTwIhzejhdWWko05QewRbp/CAmZ
+         wfBhSL4lynGzqRdNkRkBHCHYz/02m31WTEEG/eNOgNUU7KLaqGAiuUTKT0gEXPapDsOp
+         zNutgdqpPgui/rCSZrB+7qLhUtMWqUpxCgtHQ=
+Received: by 10.223.86.13 with SMTP id q13mr9454699fal.53.1299054282646;
+        Wed, 02 Mar 2011 00:24:42 -0800 (PST)
+Received: from [192.168.1.13] (abvi92.neoplus.adsl.tpnet.pl [83.8.206.92])
+        by mx.google.com with ESMTPS id r24sm974274fax.3.2011.03.02.00.24.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 02 Mar 2011 00:24:40 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201103020105.04440.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168299>
 
-Jay Soffian <jaysoffian@gmail.com> wrote:
+On Wed, 2 Mar 2011, Jakub Narebski wrote:
+> On Tue, 1 Mar 2011, Jonathan Nieder wrote:
+> > Uwe Kleine-K=C3=B6nig wrote [1]:
+> > [1] http://bugs.debian.org/616005
+>=20
+> > > I experiment with $feature{'ctags'}.  After installing
+> > > libhtml-tagcloud-perl (0.34-1) and adding
+> > >
+> > >	$feature{'ctags'}{'default'} =3D [1];
 
-> 99% of the time, I think you are doing one of the following:
-> 
->   $ git branch topic origin/master    # 1
->   $ git branch topic master           # 2
->   $ git branch topic some_other_topic # 3
-> 
-> In the case of (1), you want origin/master to be configured as the
-> upstream for topic. In the case of (2), even though you are starting
-> at master, I'll bet you want the upstream to be origin/master. In the
-> case of (3), even though you are starting at some_other_topic, I'll
-> bet you want topic to have the same configured upstream as
-> some_other_topic.
+This is also invalid... but this one actually is described:
 
-Where I work, none of these is true.  I guess these may be true for an
-open-source kind of setup, where one developer is working on a branch
-and then posts a patch series; however, in a corporate environment with
-a central repository and multiple developers collaborating on a topic
-branch, it's not.  Our workflow is to branch a topic from master (with
---no-track), push the topic to the central repository, others pull the
-topic branch (with autosetuprebase=always) and contribute to it, and
-eventually it is merged back to master.  We never want automatic
-rebasing onto master for topics.
+ # gitweb by itself can show existing tags, but it does not handle
+ # tagging itself; you need an external application for that.
+ # For an example script, check Girocco's cgi/tagproj.cgi.
+ # You may want to install the HTML::TagCloud Perl module to get
+ # a pretty tag cloud instead of just a list of tags.
 
-Which means that we only ever have upstream branches with the same name
-as the local branch.  I haven't seen a single exception yet, and I wish
-there was a way to set autosetupmerge to "only_if_name_matches" or some
-such.
+ # To enable system wide have in $GITWEB_CONFIG
+ # $feature{'ctags'}{'default'} =3D ['path_to_tag_script'];
+ # Project specific override is not supported.
 
-> 2. Deprecate branch.autosetuprebase. Pull's default action shouldn't
-> be specified when the branch is created. Rather, add a "pull.rebase"
-> boolean defaulting to false, and which is overridden per-branch by
-> branch.<name>.rebase.
+Using "$feature{'ctags'}{'default'} =3D [1];" would lead to errors when=
+=20
+you would want to create a tag from web interface.
 
-I like this part of the proposal though.
-
-
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+--=20
+Jakub Narebski
+Poland
