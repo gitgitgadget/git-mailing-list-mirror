@@ -1,92 +1,154 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
- by ':'
-Date: Wed, 02 Mar 2011 14:12:38 +0100
-Message-ID: <4D6E4246.5080407@drmicha.warpmail.net>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org> <4D6D0A51.9030701@drmicha.warpmail.net> <AANLkTi=YHNnuBAF_GitrmMYFK1h_p9JP54hRyj9vWTzc@mail.gmail.com> <AANLkTimPGxzP+XfX8Ng5U_4UnPWZCFLQ-3rP4oPTE3o+@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: got myself into trouble; now what? - how to revert once you've
+ pushed
+Date: Wed, 2 Mar 2011 08:37:20 -0500
+Message-ID: <20110302133720.GA26989@sigill.intra.peff.net>
+References: <AANLkTi=RGhGMcoDEL4q2pnnZ97tdswYG7OkjNS3wF7jn@mail.gmail.com>
+ <20110301195027.GE10082@sigill.intra.peff.net>
+ <AANLkTi==_zmSy4j-JwyCuYouV-J3shSObJe2y942PjCn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 14:16:14 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Robert Buck <buck.robert.j@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 14:37:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuluW-00006I-AF
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 14:16:12 +0100
+	id 1PumF7-0002el-RQ
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 14:37:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754338Ab1CBNQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 08:16:06 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37338 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751690Ab1CBNQF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2011 08:16:05 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D56F5209BD;
-	Wed,  2 Mar 2011 08:16:03 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 02 Mar 2011 08:16:03 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=1oKq2X2VpM5ghIjRKxDHbctGo+8=; b=jAOCtuPPbeQUZLupfH70baCEKqvbw9QK3VRsHKWp/z8HI/ooSCLEvy8cR9fDYqENQqr9F1QwEntL34cAAOblutRDO1SBXNLZQ27AE4RPVZzXqo+erbt8oxeNIdhHdfH2RKrLj1yo9G//ZI3aa00bEmV0WVruw3KizFkLxTGUN0M=
-X-Sasl-enc: Btvgj504nbbS4UA+DMhoxoQbiY1gyWnaqXlXgMtCtkYo 1299071763
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 29E4F446C57;
-	Wed,  2 Mar 2011 08:16:03 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.8
-In-Reply-To: <AANLkTimPGxzP+XfX8Ng5U_4UnPWZCFLQ-3rP4oPTE3o+@mail.gmail.com>
+	id S1753415Ab1CBNhY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 08:37:24 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33855 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750848Ab1CBNhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 08:37:23 -0500
+Received: (qmail 15187 invoked by uid 111); 2 Mar 2011 13:37:21 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 13:37:21 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 08:37:20 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTi==_zmSy4j-JwyCuYouV-J3shSObJe2y942PjCn@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168310>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 02.03.2011 13:57:
-> On Wed, Mar 2, 2011 at 7:34 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->> Heya,
->>
->> On Tue, Mar 1, 2011 at 16:01, Michael J Gruber <git@drmicha.warpmail.net> wrote:
->>> I have to say I'm really excited about how transparently this works
->>> across all kinds of commands, and how suggestive this is with rev:path
->>> in mind.
->>
->> I like it, especially considering how small the impact on the codebase
->> is. The downside is (once again) backwards compatibility though, I
->> haven't heard much on how to address that, other than "just quote it"
->> (which _I_ think is fine, people with filenames that start with fancy
->> characters are probably used to quoting them anyway)
-> 
-> Yeah. And if this is accepted, the "git add -u (without dot)" issue
-> may cool down. I personally don't mind typing "git add -u :" (or "git
-> add -u :/").
+On Wed, Mar 02, 2011 at 08:10:38AM -0500, Robert Buck wrote:
 
-Why not even ":)"
+> > If you can accept that history will be rewritten (which is a proble=
+m if
+> > people have built on top of your bogus merge), then what you want i=
+s:
+> >
+> > =C2=A0git checkout master
+> > =C2=A0git reset --hard $SHA1_OF_MERGE^
+> >
+> > and then re-push.
+>=20
+> That does not work; the central server rejects the commit. Now there
+> are two other commits after mine, and the problem is getting worse.
 
-Seriously, I'm glad this is gaining support. As for the notation, I
-tried to take several things into account, which is only possible by
-compromising somewhat on some:
+Yeah, you would need "git push -f" to force push the rewrite of history=
+=2E
+But if people are building on top, then you would be removing their
+history.
 
-- usability (as short as possible - 1 char optimum, 2 at most)
+It's also possible that your server is configured to disallow pushing
+history rewrites entirely, in which case all of the advice below will b=
+e
+useless to you.
 
-- suggestiveness, e.g. ":path" like in "rev:path" in line with git
-usage, or "/path" in line with unix usage (although this has the wrong
-connotation of being anchored at root)
+> Does anyone have a detailed guide of how to obliterate a range of
+> commits and replay subsequent history on top of that?
 
-- backward compatibility (new code does not misinterpret old notation)
+You can do what you want with rebase. But note that this is also
+rewriting history, so people building on top of what you rewrite will b=
+e
+inconvenienced. If you are working a small-ish team where you can tell
+everybody "stop what you're doing, let me fix this, and then we'll
+proceed with working on top of my new history", then you can do
+something like this.
 
-- msysgit compatibility (I think "/" has issues)
+Your history presumably looks something like this:
 
-- disambiguation from other notation (notably rev:path)
+         T1--T2--T3
+         /         \
+  ...A--B--C--D--E--M--N1--N2 <-- master
 
-I ended up compromising slightly on the last one. Note that this does
-not introduce additional ambiguities for existing use cases[*], only for
-the new notation, i.e. commands expecting "treeish pathspec" need a
-helping double dash when they are feed the new :pathspec without a treeish.
+where A..E are commits on master, T1..T3 are commits on the topic branc=
+h
+that accidentally got merged, M is the merge commit, and N1..N2 are
+commits built on top. Presumably your master points at N2. Obviously th=
+e
+numbers of commits I just made up, but you should be able to identify
+the sha1 id of the merge commit, "M".
 
-Michael
+Though the reflogs will provide a safety net for reversing the changes
+we're about to make, it may be simpler to experiment on a new branch,
+just in case we screw things up. Then when we have it looking good, we
+can put our changes onto the master and topic branches.
 
-[*] I keep forgetting that some people may have files whose names begin
-with ":". They are ambiguous now already with "treeish pathspec"
-commands, but not with "pathspec" commands. The latter would change.
+So the first thing I would do is:
+
+  git checkout -b new-master master
+
+to make a new branch and check it out. We can also give a name to the
+bogus merge commit to make it easier to refer to:
+
+  git tag M <commit sha1 of M>
+
+So now we want to go back to "E", and replay N1 and N2 on top of that.
+Because M was a merge of topic to master, we know that E is the first
+parent of M, which we can refer to as "M^1". So we can use rebase like:
+
+  git rebase --onto M^1 M
+
+which will take all commits between the merge and the current branch ti=
+p
+(which should be N1 and N2), and replay them on top of the commit just
+prior to the merge. Check the result in "git log" or "gitk", or checkin=
+g
+it out, or whatever makes sense to you. If you're happy, you can force
+it into master with:
+
+  git branch -f master new-master
+
+I think you also said you ended up merging the bogus merge back onto th=
+e
+topic branch. To undo that, probably you want to just move the topic
+branch back to T3, where it was just prior to the merge. T3 is the
+second parent of the merge, so you can use "M^2".
+
+  git branch -f new-topic M^2
+
+and then check that new-topic looks good, and install it with:
+
+  git branch -f topic new-topic
+
+Now you can push it all upstream with:
+
+  git push -f origin master topic
+
+Everybody else on your team will then want to fetch the new history and
+reset their branch pointers to match:
+
+  git fetch origin
+  git branch -f master origin/master
+  git branch -f topic origin/topic
+
+Note that this will _throw away_ any work they had done that was not in
+the rewritten history. If they had more commits that weren't pushed,
+they will need to do a rebase. I think "git pull --rebase" will do what
+they want, but I've never actually used it myself.
+
+I hope that helps. Let me know if you try it and run into complications=
+,
+or if some of my assumptions don't match your situation.
+
+-Peff
