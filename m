@@ -1,91 +1,80 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2011, #06; Sun, 27)
-Date: Wed, 2 Mar 2011 08:17:38 +0100
-Message-ID: <AANLkTi=+iBR3OBZ=4fi_g=JMQKi=47F47hRsWxK=RbMv@mail.gmail.com>
-References: <7vy650k62n.fsf@alter.siamese.dyndns.org>
-	<AANLkTikW1GVzFoq=zUxvi7MTcUYBLO6fbjJPVZziLUk8@mail.gmail.com>
-	<7v7hckje4n.fsf@alter.siamese.dyndns.org>
-	<20110301205424.GA18793@sigill.intra.peff.net>
-	<7vwrkiccy6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Sverre Rabbelier <srabbelier@gmail.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 08:17:47 2011
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: [1.8.0] fix branch.autosetupmerge and branch.autosetuprebase
+Date: Wed, 2 Mar 2011 08:30:00 +0100
+Message-ID: <1jxhtdj.c6tsy3wnbmbjM%lists@haller-berlin.de>
+References: <AANLkTi=Ei-Gr3=O0_dfaCekQ0+nB8v1kZYT7sTw-Ydm+@mail.gmail.com>
+Cc: dustin@spy.net (Dustin Sallings)
+To: jaysoffian@gmail.com (Jay Soffian), git@vger.kernel.org (git)
+X-From: git-owner@vger.kernel.org Wed Mar 02 08:30:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PugJd-0003dA-1v
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 08:17:45 +0100
+	id 1PugVf-0008Ep-GN
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 08:30:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918Ab1CBHRk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 02:17:40 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59224 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750903Ab1CBHRj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2011 02:17:39 -0500
-Received: by iyb26 with SMTP id 26so4657874iyb.19
-        for <git@vger.kernel.org>; Tue, 01 Mar 2011 23:17:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/cs8aM1M7wsWxxqrh2BGlaRXvmPdpgQ04V854Lc1hkc=;
-        b=cZOXUL8vXhJvYt2F6pzzL/PwNa5L+xEYMTrQqgYZXsj2xeJCJ6xKTS+L05aBZajMwK
-         Z8XnfxDVydHUj3zoK2cYDabpdGhYXbbAaG3lU5ZXH3fsmzIVdSLLqKa1yxAort3f2QVu
-         pfk4cRQe3WUnD4yI92cnSGP6dzCIWtrt1jDkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wkQH0xTVRyMIj/jGFGHEgPhXnLxhxyy2UF/0wDltAapBmQlK/QQyssqZ+ndT85lBgb
-         GTD2YlemAmUSPTIJMux2tj0vkMAIsSGPTGgMasdgqCPzzGFsh9NdVo0vLcCztipjPVgW
-         LV++8WinYeMppuYiWJPHOGqewI5XD0Bz6q1ko=
-Received: by 10.42.243.5 with SMTP id lk5mr1384226icb.282.1299050259009; Tue,
- 01 Mar 2011 23:17:39 -0800 (PST)
-Received: by 10.42.232.204 with HTTP; Tue, 1 Mar 2011 23:17:38 -0800 (PST)
-In-Reply-To: <7vwrkiccy6.fsf@alter.siamese.dyndns.org>
+	id S1754000Ab1CBHaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 02:30:05 -0500
+Received: from mail.ableton.net ([62.96.12.117]:57202 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750881Ab1CBHaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 02:30:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=EYVYZ44gTxxl+4dAGgr+axcECtGuL0i51P+jKYAlgIg=;
+	b=iTL6QxAtnBumy/z+r9PxDXXSUu3XSSOQEbAJSBUP6/m8o+IAuli6Jz/yhRY2zM7EM7aJ8u4wGKlvIAl1R3++j9IoOCWuGHCZeS+0N/67K1tBfR8aZnEKUz6PMt/KGY3YLvg3y8BN/cRhdRFRbIz7FoQyXvNR1YHwCq4o01JFz2U=;
+Received: from dslb-088-074-017-003.pools.arcor-ip.net ([88.74.17.3] helo=[192.168.42.92])
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1PugVU-0007Mr-C8; Wed, 02 Mar 2011 08:30:00 +0100
+In-Reply-To: <AANLkTi=Ei-Gr3=O0_dfaCekQ0+nB8v1kZYT7sTw-Ydm+@mail.gmail.com>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.6 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168298>
 
-On Wed, Mar 2, 2011 at 6:24 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Jeff King <peff@peff.net> writes:
->> =A0 - Nit: you nicely use "%d commit%s" to handle the single/plural =
-case
->> =A0 =A0 in the warning message, but then you "them" later on. It nee=
-ds
->> =A0 =A0 (1 < lost) ? "them" : "it".
->
-> I actually don't like playing games like that, especially when i18n t=
-opic
-> is in flight. =A0Among the languages I know rules reasonably well, tw=
-o has
-> the rule that a countable noun is spelled differently depending on th=
-e
-> number of that thing is one or more, and one spells the noun the same=
- way
-> regardless of the number. =A0Who knows if git needs to be translated =
-into a
-> language whose noun changes its shape three-way, depending on the num=
-ber
-> being one, two, or more?
+Jay Soffian <jaysoffian@gmail.com> wrote:
 
-=46or gettex this is described at
-http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
+> 99% of the time, I think you are doing one of the following:
+> 
+>   $ git branch topic origin/master    # 1
+>   $ git branch topic master           # 2
+>   $ git branch topic some_other_topic # 3
+> 
+> In the case of (1), you want origin/master to be configured as the
+> upstream for topic. In the case of (2), even though you are starting
+> at master, I'll bet you want the upstream to be origin/master. In the
+> case of (3), even though you are starting at some_other_topic, I'll
+> bet you want topic to have the same configured upstream as
+> some_other_topic.
 
-Don't know how it's handled in shell scripts or perl or whatever other
-language (which does not use gettext?)
+Where I work, none of these is true.  I guess these may be true for an
+open-source kind of setup, where one developer is working on a branch
+and then posts a patch series; however, in a corporate environment with
+a central repository and multiple developers collaborating on a topic
+branch, it's not.  Our workflow is to branch a topic from master (with
+--no-track), push the topic to the central repository, others pull the
+topic branch (with autosetuprebase=always) and contribute to it, and
+eventually it is merged back to master.  We never want automatic
+rebasing onto master for topics.
+
+Which means that we only ever have upstream branches with the same name
+as the local branch.  I haven't seen a single exception yet, and I wish
+there was a way to set autosetupmerge to "only_if_name_matches" or some
+such.
+
+> 2. Deprecate branch.autosetuprebase. Pull's default action shouldn't
+> be specified when the branch is created. Rather, add a "pull.rebase"
+> boolean defaulting to false, and which is overridden per-branch by
+> branch.<name>.rebase.
+
+I like this part of the proposal though.
 
 
---=20
-Piotrek
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
