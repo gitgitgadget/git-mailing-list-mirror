@@ -1,107 +1,120 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
-Date: Wed, 2 Mar 2011 22:18:44 +0100
-Message-ID: <201103022218.46640.jnareb@gmail.com>
-References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek> <20110301222141.GB7918@elie> <4D6D97FB.3050106@kernel.org>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [RFC] git blame-tree
+Date: Wed, 2 Mar 2011 22:24:29 +0100
+Message-ID: <AANLkTi=hqVcGw16q6uJBO5kPjKtsa=ujtQxg4FRj_+i6@mail.gmail.com>
+References: <20110302164031.GA18233@sigill.intra.peff.net>
+	<20110302171653.GA18957@sigill.intra.peff.net>
+	<AANLkTim4fKO=Lb0dY0DzRu1QqC8NHPoF8iveYQ2E6OBH@mail.gmail.com>
+	<20110302180722.GA20287@sigill.intra.peff.net>
+	<AANLkTi=m_WTohMfJZxTqObRT3rhhtxo=QfnDJCHO=U0K@mail.gmail.com>
+	<20110302211035.GC20400@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Uwe =?utf-8?q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, admin@repo.or.cz
-To: "J.H." <warthog9@kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:19:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 02 22:24:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PutSf-0000Pq-Hn
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:19:58 +0100
+	id 1PutX9-00039F-Os
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:24:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757587Ab1CBVTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 16:19:52 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51055 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755096Ab1CBVTv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:19:51 -0500
-Received: by fxm17 with SMTP id 17so450737fxm.19
-        for <git@vger.kernel.org>; Wed, 02 Mar 2011 13:19:50 -0800 (PST)
+	id S1757280Ab1CBVYa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 16:24:30 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:35668 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754587Ab1CBVYa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2011 16:24:30 -0500
+Received: by vxi39 with SMTP id 39so404973vxi.19
+        for <git@vger.kernel.org>; Wed, 02 Mar 2011 13:24:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=lqTHp60giFiZh8vUBcS7bk+Zb9OED265Wd7aJkSJjG4=;
-        b=Bn/sIb3dyOzMp/QR4f+9CglZXcROfhppfiZnh23upJenUq6wUQgidHabrWlM/rDhk7
-         BC3cHGaOm7Ne7QZqywDlzAF+A5vUhbJ5ucuRow6lEMRIRQQjB80j7G/YLpSoVZTKo0PE
-         aTOYDH0cuqjzVedqQn3inRyy5F2ro4n4tc08s=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7smMWhJbX4++94wkhb+qCU5hAzeDUEj06Pe0lmSma3M=;
+        b=gTdyB9FDHWvWtM+rqLJW7d2j3zp1bzXkVMbA+jAvKqXTELdZwbHB/tu+ELyivRXfBP
+         EbBq+TV/tbxzJ5Zh/A9/lZS35DZi2KlKKv47l/Rrj6aXnZNNNZYRk5MuFpu2KNcLHCoV
+         gBOwBfArR3SfvlQQoc6nl3upNx9sHrnfvR/Ss=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=jFA0Ce4a04cTN9KZxLr1tEQmDgBMBsgP9msQeTEIgHTz3/MPeqfvC/yVWzwlQTIRJ1
-         m2iYBsPpTR4WR+ofAB+wN1PhkhtGScLRDOCrBE3L7s2mpJdpcFbbblMXIjT+xhNSS/V+
-         kc/bvD5i/BPb9vmojAu2R0OJ/R5HFG0ILHKOE=
-Received: by 10.223.93.139 with SMTP id v11mr446561fam.101.1299100739336;
-        Wed, 02 Mar 2011 13:18:59 -0800 (PST)
-Received: from [192.168.1.13] (abvi92.neoplus.adsl.tpnet.pl [83.8.206.92])
-        by mx.google.com with ESMTPS id n3sm243989faa.5.2011.03.02.13.18.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 Mar 2011 13:18:56 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4D6D97FB.3050106@kernel.org>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JF4P3jlvFgLTVQJZgLK7/eGaR4c86cVjZ8cexOUncgn9WdUt0FQbN+R8EfgZwW0KPB
+         NUgt+aNZ47IxG20e4zqtwswbkorEbAgqhz8swaiVTZ84Oqi/lqFkqPXfQzeGcWU/FKRS
+         sZ26nwA12ThwpfLOs6iarBWuoFU2ecm/H08to=
+Received: by 10.52.159.170 with SMTP id xd10mr530022vdb.51.1299101069113; Wed,
+ 02 Mar 2011 13:24:29 -0800 (PST)
+Received: by 10.220.61.140 with HTTP; Wed, 2 Mar 2011 13:24:29 -0800 (PST)
+In-Reply-To: <20110302211035.GC20400@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168345>
 
-On Wed, 2 Mar 2011 02:06, J.H. wrote:
+On Wed, Mar 2, 2011 at 10:10 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 02, 2011 at 07:39:20PM +0100, Piotr Krukowiecki wrote:
+>
+>> I'd expect this to be something like union. Currently I can only thi=
+nk about
+>> following case:
+>>
+>> Some files were changed in branch1, some in branch2, some in both.
+>> Show me how the files are changed. For example:
+>> =A0 file1 changed in branch1 in commit1
+>> =A0 file2 changed in branch2 in commit2
+>> =A0 file3 changed in branch1 in commit3 and in branch2 in commit4
+>>
+>> If file was not changed since branch creation then don't show it (op=
+tionally).
+>
+> I think we are getting into something different here, because you are
+> caring not just about the commit in some traversal that touched a fil=
+e,
+> but for each source, which commits got us there and potentially multi=
+ple
+> such commits, one per source for each file.
 
-> As a general note the cloud tags code that's there has a whole slew of
-> problems, including a pretty trivial way to crash gitweb entirely if the
-> tags file is malformed in any way to what it's expecting.
-
-That's not a huge problem, I think; it would be enough to add some
-validation to parsing ctags code (e.g. treat any contents that is
-not a single number as a 1).
- 
-> I've said it before, I'd rather see that code reverted or completely
-> overhauled, and as far as I know repo.or.cz is the only place even using
-> the code at all.
-> 
-> I also think I reported this particular error a couple of years ago
-> (with the file being malformed and causing all kinds of problems).  The
-> fact that the tags don't follow the repository when it's cloned more or
-> less makes this entire feature a giant PITA, couple that with no good
-> documentation on how to create the tag files (I think the file itself
-> needs to have filename of tag, and *ONLY* contain 1 for it's contains
-> for it to work)
-> 
-> Linux:
-> 1
-> EOF
-
-Well, neither does README.html follow the repository when it is cloned,
-and usually neither does description ('description' file is generated by
-git default template, and description file overrides `gitweb.description'
-config variable).
-
-Documentation always can be added, either as comments for the 'ctags'
-feature, or in gitweb/README (or, in the future, in gitweb manpage).
+Yah, it might be something for git-log or git-diff.
 
 
-What is most important that makes this feature to be considered for
-removal (or rehauling) is that only half of this feature is implemented
-in gitweb: the displaying part.  There is half-attempt of providing
-some web interface for managing tags... which needs external script with
-strict coupling, doesn't offer any access control as far as I know, do
-not allow deleting tags, etc.
+> And that's a bit more expensive to compute, and the answers are not
+> always unambiguous. For example, let's say branch1 and branch2 fork f=
+rom
+> some merge-base M. In the parent of M, file "foo" was changed. We
+> traverse from branch1 and branch2, not seeing anything interesting fo=
+r
+> "foo". We hit M, and then finally see that its parent touched "foo".
 
--- 
-Jakub Narebski
-Poland
+So it's like this?
+
+B1
+|
+M - B2
+|
+P <- changes foo
+
+
+> What do we output? Both branches have equal claim to the commit.
+
+That's easy. In "show only differences" we don't show anything,
+because on both branches last-change-commit of "foo" is the same.
+In "show all" last-change-commit is P so show it (with message like
+"changed in common root" or whatever).
+
+
+> I think you could figure out semantics that make sense if you spent
+> enough time on it. But I also think it is making the relatively simpl=
+e
+> problem of blame-tree a lot more complex.
+
+I think this is simple, but maybe I don't understand some git
+internals that make it hard.
+
+
+--=20
+Piotrek
