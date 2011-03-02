@@ -1,90 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2011, #06; Sun, 27)
-Date: Tue, 01 Mar 2011 18:07:29 -0800
-Message-ID: <7vlj0yff6m.fsf@alter.siamese.dyndns.org>
-References: <7vy650k62n.fsf@alter.siamese.dyndns.org>
- <AANLkTikW1GVzFoq=zUxvi7MTcUYBLO6fbjJPVZziLUk8@mail.gmail.com>
- <7v7hckje4n.fsf@alter.siamese.dyndns.org>
- <20110301205424.GA18793@sigill.intra.peff.net>
+From: John Kristian <jkristian@linkedin.com>
+Subject: git-svn with big subversion repository
+Date: Wed, 2 Mar 2011 02:43:23 +0000
+Message-ID: <C992EE5B.CBFB%jkristian@linkedin.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 02 03:08:00 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 02 03:54:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PubTr-0004Pu-IL
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 03:07:59 +0100
+	id 1PucD5-0004GN-8C
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 03:54:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757857Ab1CBCHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 21:07:45 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33878 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757786Ab1CBCHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2011 21:07:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A16F54588;
-	Tue,  1 Mar 2011 21:09:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z3gyD6KvEbuzj0PdPinrKo5dALs=; b=gwrwk3
-	LjB0S3m8g2jxy/iE8maN+8qxYkjO6/ACoAvszcaE48qHI6RqJWRmIIisGElSLAas
-	XJKgZvXw+SPvOpIR45hVamh6i1H/q8kI78reZXd0CrlfOpGH/eZR4k7s2PsbfSNr
-	3r/P5rlZiTRtxFVYCp/StuRrMJkhDJ5AH17mM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FHtFnjwqIxiuwynbQwbSibxVaPcV20G7
-	Uxkh4/kr27jcvhT3R9oUs7wBgWXw4u+IcLmkPZR6L9IuN5H3D3pW8W2rgJ0529hS
-	mlG7xx+GGI5hWWAHFdlYi1lWZlcq2qmAs/ZRrD56nXVe4XmHW7tZSWLQw08NoZsf
-	5NLliJGaS1o=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 552BD4586;
-	Tue,  1 Mar 2011 21:08:57 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B5B154582; Tue,  1 Mar 2011
- 21:08:50 -0500 (EST)
-In-Reply-To: <20110301205424.GA18793@sigill.intra.peff.net> (Jeff King's
- message of "Tue\, 1 Mar 2011 15\:54\:24 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 080C3866-4472-11E0-A7F8-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1757201Ab1CBCy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2011 21:54:29 -0500
+Received: from esv4-mav02.corp.linkedin.com ([69.28.149.24]:44470 "EHLO
+	esv4-mav02.corp.linkedin.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756369Ab1CBCy2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 21:54:28 -0500
+X-Greylist: delayed 752 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Mar 2011 21:54:28 EST
+DomainKey-Signature: s=prod; d=linkedin.com; c=nofws; q=dns;
+  h=X-IronPort-AV:Received:From:To:Subject:Thread-Topic:
+   Thread-Index:Date:Message-ID:Accept-Language:
+   Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+   user-agent:x-originating-ip:Content-Type:Content-ID:
+   Content-Transfer-Encoding:MIME-Version;
+  b=Enu47WjWRbd6yPlSoYPQjz4lZRSM9Wz2hZ+olnWB4zPrcYCBnBfNWHRY
+   Scs4pnfBniJaYF3qLiLh5R9n3CEkLurKIV5RLj+J4CL/fkAz+fGNUCjR+
+   +phl+nYVqlOHHwf;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=linkedin.com; i=jkristian@linkedin.com; q=dns/txt;
+  s=proddkim; t=1299034462; x=1330570462;
+  h=from:sender:reply-to:subject:date:message-id:to:cc:
+   mime-version:content-transfer-encoding:content-id:
+   content-description:resent-date:resent-from:resent-sender:
+   resent-to:resent-cc:resent-message-id:in-reply-to:
+   references:list-id:list-help:list-unsubscribe:
+   list-subscribe:list-post:list-owner:list-archive;
+  z=From:=20John=20Kristian=20<jkristian@linkedin.com>
+   |Subject:=20git-svn=20with=20big=20subversion=20repositor
+   y|Date:=20Wed,=202=20Mar=202011=2002:43:23=20+0000
+   |Message-ID:=20<C992EE5B.CBFB%jkristian@linkedin.com>|To:
+   =20"git@vger.kernel.org"=20<git@vger.kernel.org>
+   |MIME-Version:=201.0|Content-Transfer-Encoding:=20quoted-
+   printable|Content-ID:=20<CA8D7D3D741BF347AAB194C5360C3E4F
+   @linkedin.co 
+X-IronPort-AV: E=Sophos;i="4.62,251,1297065600"; 
+   d="scan'208";a="21244455"
+Received: from ESV4-EXC03.linkedin.biz ([fe80::985a:a6b4:f1e1:23b0]) by
+ esv4-cas02.linkedin.biz ([172.18.46.142]) with mapi id 14.01.0251.000; Tue, 1
+ Mar 2011 18:43:24 -0800
+Thread-Topic: git-svn with big subversion repository
+Thread-Index: AcvYg1ZGiSO4GnAk+0a6XdOy6VBU6w==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-Entourage/13.5.0.100510
+x-originating-ip: [172.18.46.247]
+Content-ID: <CA8D7D3D741BF347AAB194C5360C3E4F@linkedin.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168289>
 
-Jeff King <peff@peff.net> writes:
+How do you recommend using git to work with branches of a large, busy
+subversion repository? In general, how can small teams use git for their
+tasks, and use subversion to coordinate with a larger organization?
 
-> On Mon, Feb 28, 2011 at 08:52:08AM -0800, Junio C Hamano wrote:
->
->> I am not convinced that this patch nailed that balance at exactly the
->> right place, even though I think we are getting closer than before.  In
->> this sequence:
->> 
->>     $ git checkout somewhere^0
->>     $ git commit
->>     $ git reset --hard somewhere_else
->>     $ git commit
->>     $ git checkout master
->> ...
-> I really wouldn't expect it to help here. The problem isn't that you're
-> on a detached HEAD. It's that you're using "git reset" at all.
+git-svn has some trouble, I find. For example, this tries to copy the entire
+repo starting with revision 1:
 
-As you would realize later in your message, the "reset --hard" can instead
-be "checkout v1.7.3".  And the bothersome thing is that there is no safety
-against that.  We don't bother users while they are jumping around on
-detached HEAD, and it is not new; we don't say where the previous detached
-HEAD was.
+git svn clone --stdlayout svn+ssh://server/repo/project
 
-Perhaps that needs to be changed to have the same safety?  IOW, regardless
-of your "checkout" destination, whenever you leave a detached commit that
-would become unreachable, we should warn the same way?
+This would take weeks, I estimate for my subversion repository.
 
-I suspect I would loath it as being too loud; I dunno...
+Choosing a subset of the repository enables git svn clone to cope, but then
+git svn fetch will stall after processing a few revisions.  For example:
+
+git svn clone --no-follow-parent --no-minimize-url \
+ --branches=branches \
+ --ignore-paths="^(?!branches/(TEAM_|RELEASE_))" \
+ -r $BASE svn+ssh://server/repo/project
+git svn fetch --no-follow-parent # stalls
+
+I don't why it stalls. I guess it's doing something that requires processing
+the entire subversion repository.
+
+The best I can do is clone each subversion branch into a separate svn-remote
+section of the .git/config file, for example:
+
+git svn clone --no-follow-parent --no-minimize-url \
+ --svn-remote=TEAM_FOO --id=TEAM_FOO \
+ -r $BASE svn+ssh://server/repo/project/branches/TEAM_FOO
+git svn fetch --no-follow-parent
+
+The clone runs about as long as svn checkout, and the fetch replays the
+later revisions briskly. Sadly, the relationship between branches isn't
+fetched: git log won't tell me how a given subversion branch was copied from
+another. I use svn for that.
+
+I'm using git version 1.7.4, git-svn version 1.7.4 (svn 1.6.5), svn version
+1.6.0 (r36650) and Mac OS X version 10.6.5. I got git from MacPorts.
+
+- John Kristian
