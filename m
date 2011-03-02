@@ -1,133 +1,150 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] gitk: ensure quoted tag names in event bindings
-Date: Tue, 01 Mar 2011 23:50:50 +0000
-Message-ID: <87tyfmqu1x.fsf_-_@fox.patthoyts.tk>
-References: <20110227224024.3751.96676.reportbug@pcfelipe.sateler>
-	<20110301013841.GC5597@elie>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
+Date: Wed, 2 Mar 2011 01:05:00 +0100
+Message-ID: <201103020105.04440.jnareb@gmail.com>
+References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek> <20110301222141.GB7918@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>,
-	Felipe Sateler <fsateler@debian.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Uwe =?utf-8?q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, admin@repo.or.cz,
+	John Hawley <warthog9@kernel.org>, Petr Baudis <pasky@suse.cz>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 00:51:12 2011
+X-From: git-owner@vger.kernel.org Wed Mar 02 01:05:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuZLQ-0007u0-Di
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 00:51:08 +0100
+	id 1PuZZL-0005Za-0c
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 01:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756749Ab1CAXvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2011 18:51:01 -0500
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:36985 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756534Ab1CAXvA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2011 18:51:00 -0500
-Received: from [172.23.170.145] (helo=anti-virus03-08)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1PuZLF-00043b-5G; Tue, 01 Mar 2011 23:50:57 +0000
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.72)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1PuZL9-0004n8-7G; Tue, 01 Mar 2011 23:50:51 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 8C85C21850; Tue,  1 Mar 2011 23:50:50 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <20110301013841.GC5597@elie> (Jonathan Nieder's message of "Mon,
-	28 Feb 2011 19:38:41 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1757511Ab1CBAFU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2011 19:05:20 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49335 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751396Ab1CBAFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2011 19:05:19 -0500
+Received: by wwb22 with SMTP id 22so5165677wwb.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2011 16:05:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=2l6qj94KcrP7Tgp2BTo74UBMAc2cQzBeUuExPWWaMTM=;
+        b=tWwW7Pn/zn/ycNrR5MtAqS7KnOW2aFEjJwjWEoflAIgMQWWnAZnblnfJJSS0s/3+WA
+         cSPeP0tQJjIdhsNfKFbICp4qfrQ51UD2l/joX+m+19rOtO2UETNmvE/5NpYINEfINHRq
+         NubJtiPTE/aCFnd004DIxKEW8lPNsu+X4q9Jg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=OIZgEpgi1aghYLM2A4mLNbVt13XSplBe57iD//1tWKM3cZ+szJhsMNKD4xvGsyA7tC
+         imvZ6uUqAg08UXQtAVxrPbeohlQMqRVcWmtsS7YGUzUgymbSG8b9kVmDR6n/uDpCdRCV
+         HHB5mU5aEGEEG+0CGf1iSy9JEjEYJoIUmm+EY=
+Received: by 10.216.155.75 with SMTP id i53mr4076842wek.27.1299024317876;
+        Tue, 01 Mar 2011 16:05:17 -0800 (PST)
+Received: from [192.168.1.13] (abvt248.neoplus.adsl.tpnet.pl [83.8.217.248])
+        by mx.google.com with ESMTPS id o33sm2787634wej.37.2011.03.01.16.05.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 Mar 2011 16:05:16 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110301222141.GB7918@elie>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168282>
 
-Tag names that contain a % character require quoting when used in event
-bindings or the name may be mis-recognised for percent substitution in
-the event script.
+On Tue, 1 Mar 2011, Jonathan Nieder wrote:
+> Uwe Kleine-K=C3=B6nig wrote [1]:
+> [1] http://bugs.debian.org/616005
 
-Reported-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
+> > I experiment with $feature{'ctags'}.  After installing
+> > libhtml-tagcloud-perl (0.34-1) and adding
+> >
+> >	$feature{'ctags'}{'default'} =3D [1];
+> >
+> > to gitweb.conf and doing
+> >
+> > 	mkdir ctags
+> > 	echo Linux > ctags/Linux
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+This is invalid usage.  See below for details.
 
->Hi,
->
->Felipe Sateler wrote[1]:
->
->> Gitk chokes on tags containing a % character.
->
->Reproduced as follows:
->
->	git tag a%b
->	gitk
->
->and then clicking on the "| a%b >" symbol.
->
->Result:
->
->	can't read "tagids(foo1ar)": no such element in array
->	can't read "tagids(foo1ar)": no such element in array
->	    while executing
->	"set text "[mc "Tag"]: $tag\n[mc "Id"]:  $tagids($tag)""
->	    (procedure "showtag" line 19)
->	    invoked from within
->	"showtag foo1ar 1"
->	    (command bound to event)
->
->It seems that a tag containing a percent sign works okay in
->an expression like $tagids($tag), but not in a quoted expression
->like "$tagids($tag)".
->
->Hints?
->
->Thanks for gitk, of course. :)
->Jonathan
->
->[1] http://bugs.debian.org/615645
+> >
+> > in the only repository served by gitweb makes iceweasel barf on the
+> > output (see attachment).
+>=20
+> With chromium I get:
+>=20
+> 	This page contains the following errors:
+>=20
+> 	error on line 26 at column 6: XML declaration allowed only at the st=
+art of the document
+> 	Below is a rendering of the page up to the first error.
+>=20
+> First, we hit
+>=20
+> 	if ($show_ctags) {
+> 		my %ctags;
+> 		foreach my $p (@projects) {
+> 			foreach my $ct (keys %{$p->{'ctags'}}) {
+> 				$ctags{$ct} +=3D $p->{'ctags'}->{$ct};
+>=20
+> which produces a warning warning in error.log:
+>=20
+> 	index.cgi: Argument "Linux" isn't numeric in addition (+) at /usr/sh=
+are/gitweb/index.cgi line 4819.
+>=20
+> in error.log.
 
- gitk |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+Well, blame Pasky for not describing 'ctags' in more detail.  Value of
+tag is its weight, so instead of
 
-diff --git a/gitk b/gitk
-index 9cbc09d..6513537 100755
---- a/gitk
-+++ b/gitk
-@@ -6300,6 +6300,7 @@ proc drawtags {id x xt y1} {
- 	       -width $lthickness -fill black -tags tag.$id]
-     $canv lower $t
-     foreach tag $marks x $xvals wid $wvals {
-+	set tag_quoted [string map {% %%} $tag]
- 	set xl [expr {$x + $delta}]
- 	set xr [expr {$x + $delta + $wid + $lthickness}]
- 	set font mainfont
-@@ -6308,7 +6309,7 @@ proc drawtags {id x xt y1} {
- 	    set t [$canv create polygon $x [expr {$yt + $delta}] $xl $yt \
- 		       $xr $yt $xr $yb $xl $yb $x [expr {$yb - $delta}] \
- 		       -width 1 -outline black -fill yellow -tags tag.$id]
--	    $canv bind $t <1> [list showtag $tag 1]
-+	    $canv bind $t <1> [list showtag $tag_quoted 1]
- 	    set rowtextx([rowofcommit $id]) [expr {$xr + $linespc}]
- 	} else {
- 	    # draw a head or other ref
-@@ -6335,9 +6336,9 @@ proc drawtags {id x xt y1} {
- 	set t [$canv create text $xl $y1 -anchor w -text $tag -fill $fgcolor \
- 		   -font $font -tags [list tag.$id text]]
- 	if {$ntags >= 0} {
--	    $canv bind $t <1> [list showtag $tag 1]
-+	    $canv bind $t <1> [list showtag $tag_quoted 1]
- 	} elseif {$nheads >= 0} {
--	    $canv bind $t $ctxbut [list headmenu %X %Y $id $tag]
-+	    $canv bind $t $ctxbut [list headmenu %X %Y $id $tag_quoted]
- 	}
-     }
-     return $xt
--- 
-1.7.4.msysgit.0
+ 	mkdir ctags
+	echo Linux > ctags/Linux
+
+one should use
+
+ 	mkdir ctags
+	echo 1 > ctags/Linux
+
+Admittedly gitweb should be more defensive about invalid input...
+
+> Then we hit git_show_project_tagcloud, which dies in=20
+> "$cloud->html_and_css($count);" with
+>=20
+> 	HTML::TagCloud..
+> 	index.cgi: Can't take log of 0 at /usr/share/perl5/HTML/TagCloud.pm =
+line 67.
+>=20
+> For some reason, the result is an _embedded_ error page:
+>=20
+> 	<form method=3D"get" action=3D"/gitweb/" enctype=3D"application/x-ww=
+w-form-urlencoded">=20
+> 	<p class=3D"projsearch">Search:
+> 	<input type=3D"text" name=3D"s"  />=20
+> 	</p>=20
+> 	</form>=20
+> 	Content-type: {a content type which shall not be named}
+> 	=20
+> 	<?xml version=3D"1.0" encoding=3D"utf-8"?>=20
+>  [...]
+> 	500 - Internal Server Error
+>=20
+> So I suspect there are two bugs here.
+
+This I think is caused by the fact that error ("die") occurs after gitw=
+eb
+have send some output to web browser already.  That would be harder to =
+fix.
+
+
+--=20
+Jakub Narebski
+Poland
