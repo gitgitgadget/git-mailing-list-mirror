@@ -1,88 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Shallow clones vs blame/log
-Date: Wed, 2 Mar 2011 16:58:08 -0500
-Message-ID: <20110302215808.GI20400@sigill.intra.peff.net>
-References: <AANLkTim87tZTN4FGLgwCHdAJH4dum4wBXqA=GcQm-uJ=@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [Patch] Error message grammar
+Date: Wed, 02 Mar 2011 23:03:12 +0100
+Message-ID: <vpqd3m9yycf.fsf@bauges.imag.fr>
+References: <1299101838.2807.54.camel@SillyFace>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 22:58:17 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: A.J.Delaney@brighton.ac.uk
+X-From: git-owner@vger.kernel.org Wed Mar 02 23:03:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Puu3k-0004LA-SZ
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 22:58:17 +0100
+	id 1Puu8g-0006pe-KI
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 23:03:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757703Ab1CBV6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 16:58:11 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:48020 "EHLO peff.net"
+	id S1757920Ab1CBWDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 17:03:19 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:45008 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757122Ab1CBV6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 16:58:10 -0500
-Received: (qmail 20951 invoked by uid 111); 2 Mar 2011 21:58:10 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 02 Mar 2011 21:58:10 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2011 16:58:08 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTim87tZTN4FGLgwCHdAJH4dum4wBXqA=GcQm-uJ=@mail.gmail.com>
+	id S1757280Ab1CBWDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 17:03:17 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p22M3BVZ002920
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 2 Mar 2011 23:03:11 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Puu8W-0005nZ-GC; Wed, 02 Mar 2011 23:03:12 +0100
+In-Reply-To: <1299101838.2807.54.camel@SillyFace> (A. J. Delaney's message of
+	"Wed, 02 Mar 2011 21:37:18 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 Mar 2011 23:03:11 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p22M3BVZ002920
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1299708192.46032@Vp8LI7o8AFkAzdmFOFOMSw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168356>
 
-On Wed, Mar 02, 2011 at 08:51:27PM +0100, Piotr Krukowiecki wrote:
+A.J.Delaney@brighton.ac.uk writes:
 
-> I'd like to confirm: when doing shallow clone with --depth=n, and then
-> using blame, git does know only about n last revisions. For each
-> change that happened before shows "^commit" where "commit" is n+1
-> commit ?
-> 
-> I wonder if this can be more clear. I was bitten by this today. I was
-> using blame on a file and it showed a commit and author for a line.
-> But the line was not changed in that commit. Took me a while to
-> understand that it's caused by shallow copy...
+> Dear all,
+> 	I got an error message from git and the grammar tweaked me (maybe it's
+> just the mood I'm in).  I'm not subscribed to the list.
 
-It's not just shallow copy, but any time you have limited the traversal.
-So you could do "git blame v1.5.0..v1.6.0 wt-status.c", and lines that
-come from v1.5.0 or before are attributed to v1.5.0 with the carat.
+Please, read
+http://repo.or.cz/w/git.git/blob_plain?f=Documentation/SubmittingPatches
+in particular the Signed-off-by part and the "don't attach patches"
+one. Otherwise, your contribution cannot be included in Git.
 
-The magic name for this is "boundary commits". See the "-b" option for
-an alternative way of viewing them.
+Other than that, the patch looks good.
 
-> I could be blamed for not reading git-blame man, but luckily ^commit is not
-> described there ;)
-
-Yes, we seem not to describe the regular output in very much detail at
-all (nor mention the "^" syntax in the description of porcelain output),
-which we probably should.
-
-We do mention in the "specifying ranges" section that unchanged lines
-will be blamed to the boundary commit. Part of the problem is that you
-didn't realize you had a range because you were using a shallow clone.
-But I wonder if that information would be more appropriate when
-introducing shallow clones in git-clone(1).
-
-> Also, git-log puts all not cloned commits into last not cloned commit,
-> and there's no information that it's a "fake" commit.
-
-Same issue. The bottom end of a shallow clone has no parents, and log's
-diffs show root commits as giant creation events.
-
-Maybe it would be nice if the log output somehow noted that it was not a
-real root commit, but rather the endpoint of a shallow clone, regardless
-of whether there is a diff being shown. Because it is also potentially
-confusing to do "git log", scroll to the bottom, and think that is the
-very first commit, when it's not (and you could deepen your repository
-if you wanted).
-
-I think all of this is due to the fact that shallow clones were tacked
-on after the fact, and are not all that commonly used.
-
-Patches welcome (for docs or for log), of course.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
