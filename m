@@ -1,87 +1,149 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 0/3] Fix unnecessary (mtime) updates of files during
- merge
-Date: Wed, 02 Mar 2011 15:22:00 -0800
-Message-ID: <7vaahdaz1j.fsf@alter.siamese.dyndns.org>
-References: <1298941732-19763-1-git-send-email-newren@gmail.com>
+Subject: Re: [RFC] git blame-tree
+Date: Wed, 02 Mar 2011 15:22:14 -0800
+Message-ID: <7v39n5az15.fsf@alter.siamese.dyndns.org>
+References: <20110302164031.GA18233@sigill.intra.peff.net>
+ <20110302171653.GA18957@sigill.intra.peff.net>
+ <7vbp1tcr25.fsf@alter.siamese.dyndns.org>
+ <20110302210434.GB20400@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephen Rothwell <sfr@canb.auug.org.au>,
-	Jeff King <peff@peff.net>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 00:22:20 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 03 00:22:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuvN6-000493-As
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 00:22:20 +0100
+	id 1PuvNE-0004Cn-7F
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 00:22:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752897Ab1CBXWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 18:22:15 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33804 "EHLO
+	id S1752551Ab1CBXWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 18:22:23 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33922 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752551Ab1CBXWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 18:22:14 -0500
+	with ESMTP id S1751989Ab1CBXWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 18:22:22 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 650B63229;
-	Wed,  2 Mar 2011 18:23:33 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DBB323236;
+	Wed,  2 Mar 2011 18:23:42 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=1gIOYp1NRSl0rFOupY4Kp/BOiMk=; b=Frg8NrLJ0WTwNbouATty+37
-	fsBvfCXlgZ8QqoJ1OSDJ1DcMbBIpqjf2WL91+kelVP6WoGoWMmRpYwc4aiMq/gZ3
-	hfldvrL28/brvkEH1XrrTwQzH5gXuAfLzvQdU7qQr3oHuC/aVyq8Qxivv49tmVFB
-	d7xif/NajcpJ63Vvm1Co=
+	sasl; bh=KgTgXLpgNRb/XHjgfNQTvE3xx54=; b=fYeQc45L/l2xuahrVDL8sZu
+	c9nZy7N2f/fYgmSMLbvbJCXh1tQGFtnMX8SqZ5hJodWN5mDvr/R/u22iL2KO9ZgY
+	StbGRe+aGqfmKog8tA5L4roXDWGdChizz8SUhq6J5BYnEm64rMkdeTDObZm0Eyb5
+	kTkxP48Nst4Q17YfkCl0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=QDHnsTrdrVKD39QrfV06Blrny4aqWOhMAyh/TrhQs1vo7uvZc
-	aApEiQWPOMZxpnmeT9XRN6FKLSJozpopfzGO7JTGELEE+cbtC+CWbx1uQy2+Ot7t
-	RjGHIX9NLmcxprt27lN/BWeGlkYBdCzla7HptGfI9sCNtOCR5UvsEqr8w4=
+	dns; s=sasl; b=qpjXcOrwVsZYQki1p5l4QYcniMJFN4Rpq2TDu211/xR9Id3QX
+	B7XUaswct0vSK9YNgEJ8lfsAPDvF6W22uOojGFZ2m9/hWlAtneQ9NwuMIri6f4BH
+	pU4Mrz6OtVEmHCLT1v3g+8J43le1lIZ3pEvsfwFhCtEN71IciV30H8BBKU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 24ECF3225;
-	Wed,  2 Mar 2011 18:23:29 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B777E3232;
+	Wed,  2 Mar 2011 18:23:40 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BABBE3224; Wed,  2 Mar 2011
- 18:23:23 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8F53B322A; Wed,  2 Mar 2011
+ 18:23:37 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 14CB17E0-4524-11E0-ABBB-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 1BB52A14-4524-11E0-A788-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168361>
 
-Elijah Newren <newren@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> We could fix this second testcase by recording stat information for
-> files removed by make_room_for_directories_of_df_conflicts(), and
-> then, if those files are reinstated at the end of conflict resolution
-> (i.e. the directory of the D/F conflict went away during the merge),
-> then call utime() to reset the modification times on those files back
-> to what they originally were.
+> With sensible semantics, we can turn off --no-merges and still get good
+> results. And anybody who cares for something different can use
+> --no-merges themselves. Though I expect the opposite to be the case; I
+> can imagine somebody wanting --first-parent to blame files only to
+> merges.  I'll have to make sure that works properly in my re-roll.
 
-Which is a big Yuck.  I agree that we don't want to go there.
+I still do not understand why anybody would even want to say --no-merges.
 
-The real cause of the problem is that the code removes the files that
-could potentially involved in conflict _way_ too early, and unfortunately
-this is coming from the way merge-recursive tracks d/f conflicts, which is
-to grab set of path that can potentially appear as directories by throwing
-all directories into a single string list from both sides of the merge
-(same for non directory paths using another single string list) upfront,
-and after that point, it becomes very hard to tell if the potential
-directory is on your (i.e. stage #2) side or on their side, and to make
-things worse, it doesn't wait writing partial results out to the working
-tree before it knows the result of the merge to say something intelligent
-like "all these files under the directory will go away and we can safely
-keep the file there".  Your earlier series, e.g. 2ff739f (merge-recursive:
-New function to assist resolving renames in-core only, 2010-09-20), was a
-step in the right direction, but we are not there yet while functions like
-make_room_for_path() and make_room_for_directories_of_df_conflicts() are
-used.
+What does this even mean?
 
-So I think it would need a lot major restructuring of the merge-recursive,
-especially its d/f conflict logic, to fix the second one correctly.
+	git blame --no-merges master..pu -- builtin | builtin/push.c
 
-Thanks.
+It may find ab/i18n or mm/push-default-advice depending on the timestamp,
+by ignoring a content-level merge but is it a useful information?
+
+> I was thinking something like:
+>
+>   git blame-tree dir branch1 branch2
+>
+> where branch2 is actually _ahead_ of branch1. We take the file list from
+> branch1, but may blame commits on branch2. It's probably a little bit of
+> a crazy thing to ask for, though.
+
+To be compatible with all the git commands, the order of parameters should
+be revs first and then pathspec, i.e. "git blame-tree branch1 branch2 dir".
+But that is a tangent.
+
+Again, the same "what does that mean" applies.
+
+>> The second point is "why didn't you use pathspec, but chose to take only
+>> one path?"  It would be useful if you can say
+>> 
+>> 	$ git blame v2.6.24..v2.6.37 -- net include/net
+>> 
+>> no?
+>
+> ...  So in the
+> traversal above, if 2.6.25 removes net/foo.c, then a regular traversal
+> will think that's interesting and mention it.  But for blame-tree, we
+> don't want that. We want to mention net/foo.c only if it existed at the
+> beginning.
+
+Of course, if v2.6.37 that is the endpoint of the history (i.e. "at the
+beginning" above) didn't have net/foo.c, then we shouldn't show it.
+
+But that doesn't change my question.  Why are you taking a single
+directory and doing "ls-tree $endpoint $that_directory" to populate the
+set of paths to find who touched them last, instead of using the args as
+regular pathspecs and running "ls-tree $endpoint -- net include/net" to
+populate the set?
+
+> Of course it would be easy enough to parse the revision parameters, then
+> create our initial path list by combining the initial tree and the
+> pathspecs....
+
+As I said already, it does not make any sense to have more than one
+endpoint to begin with when you are asking "what is the last one that
+touched things", and that also applies to the regular blame, which I think
+already has a logic to make sure you have only one positive commit in the
+starting rev list.
+
+> ... When net/subdir/foo.c changes, we do care, we just say
+> "net/subdir" changed.
+
+I think you would want diff-tree with or without -r then.  I suspect
+people may want to pass --recursive to this command.
+
+> The expensive part is actually looking at the tree and doing even the
+> raw diff for each commit.
+
+... which may probably be helped by limiting the recursion of that diff
+with pathspec, but I realize that you are not by default running recursive
+diff, so...
+
+It also occurs to me that it may also be a plausible implementation to
+hook this into the usual revision traversal machinery.
+
+> I'm not sure if we do that optimization. Even if we do, I'm not sure how
+> much practical difference it will make. I expect most of the time is
+> spent getting the tree out of storage at all, not walking the entries.
+
+Yeah, my "pathspec" comment primarily comes from my expectation that this
+would want to be recursive.  If you are only scanning a single flat tree
+without recursing, then there is no need.
+
+> And then I _will_ need to feed the proper pathspecs to diff. Because it
+> won't be a matter of looking at a few extra entries in a tree we have
+> already pulled from storage. We need to tell diff not to delve into
+> those extra trees at all...
+
+Yes.
