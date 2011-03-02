@@ -1,111 +1,133 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Shallow clones vs blame/log
-Date: Wed, 2 Mar 2011 20:51:27 +0100
-Message-ID: <AANLkTim87tZTN4FGLgwCHdAJH4dum4wBXqA=GcQm-uJ=@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 02 20:51:40 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2 v3] push: better error messages when push.default = tracking
+Date: Wed,  2 Mar 2011 21:12:10 +0100
+Message-ID: <1299096731-14194-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7vhbbmellx.fsf@alter.siamese.dyndns.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Mar 02 21:12:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pus58-0005G6-LD
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 20:51:35 +0100
+	id 1PusPS-00006g-5a
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 21:12:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757341Ab1CBTv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 14:51:29 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:48445 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756670Ab1CBTv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 14:51:28 -0500
-Received: by vxi39 with SMTP id 39so314315vxi.19
-        for <git@vger.kernel.org>; Wed, 02 Mar 2011 11:51:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=A/hwfZZ2IGUrlv+MSipA+JJGNlWrLFjHFgSC81+v6Wo=;
-        b=GoonkkdaK8uO0Qj9HfW+aJqhua08PZNc0fmgh7A29UotILZFG0+vQ6HKY4gZGY6c96
-         /CAYBDLricB1es0dmsHmN8Fi/IsIHH+bQ8XdzOMOy4NOZ9SEMA2M0JY4b6y33RCpDcAL
-         18nplQ/I2Hwp6Yk0NsmLGjEcQwev8fN3CwnVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=WRHOyhcbOhkv9yK+y54HlerKszjbZ+STNS8f8pe0DJlOwZ4u+lRFVnXba1VXW77gt+
-         bsZfrjw1end6FaYFZS3l6O2j0HfJ01PKnN0SjgGtNXs4vCOQmygV1wbQ/b1GlExxvZjg
-         xPNrSqRL+/7d+ozUSYY8ZA5l6JIJr0yX2b0F8=
-Received: by 10.220.168.13 with SMTP id s13mr71570vcy.0.1299095487773; Wed, 02
- Mar 2011 11:51:27 -0800 (PST)
-Received: by 10.220.61.140 with HTTP; Wed, 2 Mar 2011 11:51:27 -0800 (PST)
+	id S1756919Ab1CBUM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 15:12:29 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:36022 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755982Ab1CBUM2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 15:12:28 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p22KCEeu029745
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 2 Mar 2011 21:12:14 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PusPA-0004MZ-Vn; Wed, 02 Mar 2011 21:12:17 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1PusPA-0003hi-Tr; Wed, 02 Mar 2011 21:12:16 +0100
+X-Mailer: git-send-email 1.7.4.1.176.g6b069.dirty
+In-Reply-To: <7vhbbmellx.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 02 Mar 2011 21:12:15 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p22KCEeu029745
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1299701539.57954@ZfxTa2VF8rSlwCQm6JdFOQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168336>
 
-Hi,
+A common scenario is to create a new branch and push it (checkout -b &&
+push [--set-upstream]). In this case, the user was getting "The current
+branch %s has no upstream branch.", which doesn't help much.
 
-I'd like to confirm: when doing shallow clone with --depth=n, and then
-using blame,
-git does know only about n last revisions. For each change that happened before
-shows "^commit" where "commit" is n+1 commit ?
+Provide the user a command to push the current branch. To avoid the
+situation in the future, suggest --set-upstream.
 
-I wonder if this can be more clear. I was bitten by this today. I was
-using blame
-on a file and it showed a commit and author for a line. But the line
-was not changed
-in that commit. Took me a while to understand that it's caused by
-shallow copy...
+While we're there, also improve the error message in the "detached HEAD"
+case. We mention explicitly "detached HEAD" since this is the keyword to
+look for in documentations.
 
-I could be blamed for not reading git-blame man, but luckily ^commit is not
-described there ;)
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
 
-Also, git-log puts all not cloned commits into last not cloned commit,
-and there's no
-information that it's a "fake" commit.
+I applied Junio's suggestion to suggest pushing HEAD in detached HEAD
+state. I don't care very much either way indeed (and I didn't want to
+make the message too heavy, just give the user a way to do something).
 
+hope that's OK for inclusion.
 
-Example:
+ builtin/push.c |   22 ++++++++++++++++------
+ 1 files changed, 16 insertions(+), 6 deletions(-)
 
-/tmp$ mkdir r && cd r && git init && echo a > a && git add a && git
-commit -a -m first && echo b > b && git add b && git commit -a -m
-second && echo aa >> a && git commit -a -m third && echo bb >> b &&
-git commit -a -m fourth  && cd ..
-warning: templates not found /home/piotr/share/git-core/templates
-Initialized empty Git repository in /tmp/r/.git/
-[master (root-commit) 890ec47] first
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 a
-[master f969fda] second
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 b
-[master 20c3c2c] third
- 1 files changed, 1 insertions(+), 0 deletions(-)
-[master 9dcd745] fourth
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-/tmp$ DIR=clone1;  git clone --depth 1 file:///tmp/r $DIR && cd $DIR
-&& git log --stat --oneline
-Cloning into clone1...
-warning: templates not found /home/piotr/share/git-core/templates
-remote: Counting objects: 7, done.
-remote: Compressing objects: 100% (4/4), done.
-Receiving objects: 100% (7/7), 515 bytes, done.
-remote: Total 7 (delta 0), reused 0 (delta 0)
-9dcd745 fourth
- b |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-20c3c2c third
- a |    2 ++
- b |    1 +
- 2 files changed, 3 insertions(+), 0 deletions(-)
-
-/tmp/clone1$ git blame a
-^20c3c2c (Piotr Krukowiecki 2011-03-02 20:42:53 +0100 1) a
-^20c3c2c (Piotr Krukowiecki 2011-03-02 20:42:53 +0100 2) aa
-
-/tmp/clone1$ git blame b
-^20c3c2c (Piotr Krukowiecki 2011-03-02 20:42:53 +0100 1) b
-9dcd7453 (Piotr Krukowiecki 2011-03-02 20:42:53 +0100 2) bb
+diff --git a/builtin/push.c b/builtin/push.c
+index 31da418..1b493fb 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -64,14 +64,24 @@ static void set_refspecs(const char **refs, int nr)
+ 	}
+ }
+ 
+-static void setup_push_upstream(void)
++static void setup_push_upstream(struct remote *remote)
+ {
+ 	struct strbuf refspec = STRBUF_INIT;
+ 	struct branch *branch = branch_get(NULL);
+ 	if (!branch)
+-		die("You are not currently on a branch.");
++		die("You are not currently on a branch.\n"
++		    "To push the history leading to the current (detached HEAD)\n"
++		    "state now, use\n"
++		    "\n"
++		    "    git push %s HEAD:<name-of-remote-branch>\n",
++		    remote->name);
+ 	if (!branch->merge_nr || !branch->merge)
+-		die("The current branch %s has no upstream branch.",
++		die("The current branch %s has no upstream branch.\n"
++		    "To push the current branch and set the remote as upstream, use\n"
++		    "\n"
++		    "    git push --set-upstream %s %s\n",
++		    branch->name,
++		    remote->name,
+ 		    branch->name);
+ 	if (branch->merge_nr != 1)
+ 		die("The current branch %s has multiple upstream branches, "
+@@ -80,7 +90,7 @@ static void setup_push_upstream(void)
+ 	add_refspec(refspec.buf);
+ }
+ 
+-static void setup_default_push_refspecs(void)
++static void setup_default_push_refspecs(struct remote *remote)
+ {
+ 	switch (push_default) {
+ 	default:
+@@ -89,7 +99,7 @@ static void setup_default_push_refspecs(void)
+ 		break;
+ 
+ 	case PUSH_DEFAULT_UPSTREAM:
+-		setup_push_upstream();
++		setup_push_upstream(remote);
+ 		break;
+ 
+ 	case PUSH_DEFAULT_CURRENT:
+@@ -175,7 +185,7 @@ static int do_push(const char *repo, int flags)
+ 			refspec = remote->push_refspec;
+ 			refspec_nr = remote->push_refspec_nr;
+ 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
+-			setup_default_push_refspecs();
++			setup_default_push_refspecs(remote);
+ 	}
+ 	errs = 0;
+ 	if (remote->pushurl_nr) {
+-- 
+1.7.4.1.176.g6b069.dirty
