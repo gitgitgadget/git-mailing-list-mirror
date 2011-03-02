@@ -1,152 +1,214 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
 Subject: Re: [RFC] git blame-tree
-Date: Wed, 02 Mar 2011 10:31:30 -0800
-Message-ID: <7vbp1tcr25.fsf@alter.siamese.dyndns.org>
+Date: Wed, 2 Mar 2011 19:39:20 +0100
+Message-ID: <AANLkTi=m_WTohMfJZxTqObRT3rhhtxo=QfnDJCHO=U0K@mail.gmail.com>
 References: <20110302164031.GA18233@sigill.intra.peff.net>
- <20110302171653.GA18957@sigill.intra.peff.net>
+	<20110302171653.GA18957@sigill.intra.peff.net>
+	<AANLkTim4fKO=Lb0dY0DzRu1QqC8NHPoF8iveYQ2E6OBH@mail.gmail.com>
+	<20110302180722.GA20287@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 02 19:33:16 2011
+X-From: git-owner@vger.kernel.org Wed Mar 02 19:39:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuqrI-0000c4-9s
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 19:33:12 +0100
+	id 1PuqxN-00046X-DN
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 19:39:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756375Ab1CBSdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 13:33:06 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47760 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755568Ab1CBSdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 13:33:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1FE3A4B09;
-	Wed,  2 Mar 2011 13:34:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5hqiY7nzZcQWIlxPt9mNMUtS6ic=; b=UQT4j3
-	z6KlVVD9O53nb4jmIwNphn1EsOU3yRyOAdXSGleIbmvRVJwLLOys/sSAFqKBuj1a
-	AiFpGCv3QgSzhsjZdTdsp2CHX/Zg9x+aD0mEaY0juTKRSDWUz0gy5Uk7olYuHSDN
-	InPyvu/cxFS/ntv9QD5rD1HxVbo493uqMjMNI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bQgv7apQt9uLFMmWjSI2dZ+xrPuy04i1
-	JNUAEdIWj3BAy1S1XyhcYbfxw31NdM5B40DwDzy8AaBnOWkJGcu1HSDQyop9ovml
-	e06Qdm2wyfHgED6hYIUqCZkMRIAhlXzbD2bF9/GgBm3pKUEVzDcwN2g/SZO0o0Zm
-	Vd8j0S8Btww=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F0B9D4AFF;
-	Wed,  2 Mar 2011 13:34:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 089A24AB4; Wed,  2 Mar 2011
- 13:32:51 -0500 (EST)
-In-Reply-To: <20110302171653.GA18957@sigill.intra.peff.net> (Jeff King's
- message of "Wed\, 2 Mar 2011 12\:16\:54 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AFE1BB40-44FB-11E0-9891-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1756198Ab1CBSjW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 13:39:22 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:54672 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753984Ab1CBSjV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2011 13:39:21 -0500
+Received: by vxi39 with SMTP id 39so240204vxi.19
+        for <git@vger.kernel.org>; Wed, 02 Mar 2011 10:39:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3TpZYQ1hnuffrN5HWa1hYR8ZBiYbQ2RxZV1JH/jkVGw=;
+        b=vZFxg3s4ij88D5vJyM4iCl/dT2QydJLZ8VouIkK/UmHwgIMjB+62viHn1WOe3uRF2v
+         J9OIIynvAMiWr/Rnx8sCv8Qg/XGCNe4PBGc0woW54SiLnSrcMSl9I/UojBYpgcTuubUQ
+         m40IaTTuf/KzfiOIvXlrQCEmTJZlm1BYqtZpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hFKVlPs90g/IHRG1qH4/kSZXYt2x0UeMIIEkNbD6UF8u43u4ZStEAGDF1bxVicFNO1
+         EAIrV2GiELjDgWbOVU6v7hhfrSYLWXbiU1QXfKMxsbgYbxto7q8a0YYP3Wo419XKScy2
+         ASEsfEJsC8REsiYK1hoHcNdEqCttWwCT9tkdM=
+Received: by 10.220.168.13 with SMTP id s13mr49973vcy.0.1299091160464; Wed, 02
+ Mar 2011 10:39:20 -0800 (PST)
+Received: by 10.220.61.140 with HTTP; Wed, 2 Mar 2011 10:39:20 -0800 (PST)
+In-Reply-To: <20110302180722.GA20287@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168334>
 
-Jeff King <peff@peff.net> writes:
-
-> I considered making it a special mode of "git blame" when blame is fed a
-> directory instead of a file...  ... If we want to go that way,
-> we can always catch the special case in blame and just exec blame-tree.
-
-I agree that rolling it into "blame" will be a good way to conclude this
-feature from the end-user UI point of view, provided if (as you said) this
-proves to be the most reasonable way to give a coarser, file-level blame
-to a history.
-
-It has been my opinion that the default github view that seems to be
-modeled after cvsview is the least useful choice of the default in the
-more modern git era ;-), but I guess people's eyes and brains are trained
-by the old school "file boundaries matter" way of thinking.
-
-I am not against catering to them as long as it is done in a modular way
-that does not negatively affect the other parts of the code, and this
-implementation certainly is a good one from a cursory reading, except for
-two points.
-
-One is merges, which you punted on with --no-merges ;-).  If I were doing
-this, I would probably have traversed without --no-merges, and would blame
-all cases that are not TREESAME to the merge (i.e. regardless of the
-cleanness of the content level merge), as this feature is about file level
-blame.  If the child took the whole content as-is from a parent, it is a
-no-event, but if the child has the resulting content that is different
-from any of its parents, then that child is responsible for the end-result
-content at the file level.
-
-Doing nothing else makes sense.  There is a fundamental expectation for
-file level history: if you give a commit C as the result for path F,
-saying C was the one that touched path F the last, you are saying that F
-that is contained in C is exactly the same as F at the tip of the history
-(i.e. whereever you started digging back from).  If you don't stop at a
-merge that had content-level merge, you would break that expectation.  You
-would also rely on the local clock of the merged branches to say which
-branch made a commit touching the path the last, but it is much minor
-issue compared to the breakage of "result must match where we say it came
-from" expectation.
-
-> The initial set of interesting files we come up with is gotten by
-> looking at the tree of the first pending object after parsing the rev
-> options (defaulting to HEAD). Which sounds a little flaky to me, but
-> does what you want in practice. I'd be curious if somebody can come up
-> with a counterexample where the ability to manually specify the source
-> tree would be more useful.
-
-I started writing "In what sense is it flaky?  What corner case do you
-have in mind?" in a few lines above and then moved that here ;-).
-
-The second point is "why didn't you use pathspec, but chose to take only
-one path?"  It would be useful if you can say
-
-	$ git blame v2.6.24..v2.6.37 -- net include/net
-
-no?
-
-> So this is the per-commit processing. Basically we just do a diff for
-> each commit, and see if each path has been claimed.  Note that it
-> depends on the string-list item->util being initialized to zero. Hence
-> my recent patch to string-list, and this needs to go on top of 62b8102
-> (which is in master and maint).
-
-Once you know who the guilty party is, can't you just remove that element
-from the list, so that later search from the "remaining path" list would
-decrease in cost as you go deeper?
-
-Also at some point the set of remaining path would become small and it
-might make sense to feed that as diff-tree pathspec.  After all, aren't
-you re-initializing the diff machinery for each commit (which is _not_ a
-bad thing to do--I am just pointing out that there is an opportunity to
-use narrower pathspecs as you go without any additional cost)?  Note that
-I am not suggesting to update the pathspec used for commit traversal in
-the middle; that is a lot trickier.
-
->> +	while (data.num_interesting > 0 &&
+On Wed, Mar 2, 2011 at 7:07 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 02, 2011 at 06:51:57PM +0100, Piotr Krukowiecki wrote:
 >
-> An optimization; we can quit the traversal as soon as everything is
-> claimed. In practice this helps disappointingly little.
+>> On Wed, Mar 2, 2011 at 6:16 PM, Jeff King <peff@peff.net> wrote:
+>> > I considered making it a special mode of "git blame" when blame is=
+ fed a
+>> > directory instead of a file. But the implementations aren't shared=
+ at
+>> > all (nor do I think they need to be; blame-tree is _way_ simpler).=
+ And I
+>>
+>> git blame dir/file.c
+>> =A0 "Show what revision and author last modified each line of a file=
+"
+>>
+>> git blame dir/
+>> =A0 "Show what revision and author last modified each file"
+>
+> Right, I think we are agreeing.
+>
+>> This makes sense to me (the user). =A0I don't understand the
+>> implementation thing. I don't see a difference between those two
+>> commands. Even more, if I'm educated =A0Unix user I might know
+>> directories are also files.
+>
+> I mean the implementations are very different, so there was not much
+> point in putting the code into builtin/blame.c.
 
-That is somewhat unexpected, but would strongly suggest that the approach
-to use more specific pathspec that cover only the remaining paths would
-give you faster per-commit diff?
+Ah, ok.
 
-> My merge handling is just "which files are different from the parents".
-> Which is reasonable, but I don't actually exercise it since we use
-> --no-merges by default. :)
 
-I think that is a big mistake and I already said it above.
+>> > didn't want to steal that concept in case somebody can think of a =
+more
+>> > content-level way of blaming a whole tree that makes sense (obviou=
+sly
+>> > just showing the concatenation of the blames of each file is one w=
+ay,
+>> > but I don't know how useful that would be). If we want to go that =
+way,
+>> > we can always catch the special case in blame and just exec blame-=
+tree.
+>>
+>> Still can be in git-blame command, no?
+>
+> Right. What I meant was that we don't have to make the decision now. =
+If
+> people like blame-tree, we can later magically turn:
+>
+> =A0git blame dir
+>
+> into "git blame-tree dir". So I think we are just agreeing.
 
-> We could try to do something clever here about evil merges.
+I hope nobody likes "blame-dir" :)
 
-Again, I wouldn't even think about it; this is a "file boundary matters"
-tool; you shouldn't care about cleanliness of content-level merges.
+
+>> > The initial set of interesting files we come up with is gotten by
+>> > looking at the tree of the first pending object after parsing the =
+rev
+>> > options (defaulting to HEAD). Which sounds a little flaky to me, b=
+ut
+>> > does what you want in practice. I'd be curious if somebody can com=
+e up
+>> > with a counterexample where the ability to manually specify the so=
+urce
+>> > tree would be more useful.
+>>
+>> Same argument as for normal blame: I want to know who modified files=
+ at
+>> the state of commit X (if I understand the question correctly).
+>
+> Yeah, that's what it does now. Specifically I was wondering about mor=
+e
+> elaborate examples, like:
+>
+> =A0git blame-tree dir branch1 branch2
+>
+> It will traverse using both branch1 and branch2, but get the initial
+> list of files from branch1. I guess we could also union those trees o=
+r
+> something.
+
+I'd expect this to be something like union. Currently I can only think =
+about
+following case:
+
+Some files were changed in branch1, some in branch2, some in both.
+Show me how the files are changed. For example:
+  file1 changed in branch1 in commit1
+  file2 changed in branch2 in commit2
+  file3 changed in branch1 in commit3 and in branch2 in commit4
+
+If file was not changed since branch creation then don't show it (optio=
+nally).
+
+But maybe this is more like a diff or log than a blame. Maybe there's a=
+lready
+such mode - I could not find it.
+
+
+$ git init
+Initialized empty Git repository in /tmp/a/.git/
+$ echo a > a
+$ echo b > b
+$ echo c > c
+$ git add .
+$ git commit -a -m new
+[master (root-commit) af5d319] new
+ 3 files changed, 3 insertions(+), 0 deletions(-)
+ create mode 100644 a
+ create mode 100644 b
+ create mode 100644 c
+$ git branch branch1
+$ echo trunk1 > a
+$ git commit -a -m trunk1
+[master 2dc7f47] trunk1
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+$ echo trunk2 > b
+$ git commit -a -m trunk1
+[master 736fcd2] trunk1
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+$ git checkout branch1
+Switched to branch 'branch1'
+$ echo branch1 > c
+$ git commit -a -m branch1
+[branch1 52e371d] branch1
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+$ echo branch2 > b
+$ git commit -a -m branch2
+[branch1 9fed07c] branch2
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+$ git diff --stat branch1 master
+ a |    2 +-
+ b |    2 +-
+ c |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+
+I would like to see output like this:
+ a   2dc7f47  (master)
+ b   736fcd2  (master)
+ b   9fed07c  (branch1)
+ c   52e371d  (branch1)
+
+
+Not sure how useful it would be. Just an idea.
+
+
+> But I expect most calls to be:
+>
+> =A0git blame-tree dir commit
+>
+> and that's it.
+
+Me too.
+
+
+--=20
+Piotrek
