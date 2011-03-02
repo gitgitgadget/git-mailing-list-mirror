@@ -1,80 +1,86 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/2 v3] push: better error message when no remote configured
-Date: Wed,  2 Mar 2011 21:12:11 +0100
-Message-ID: <1299096731-14194-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vhbbmellx.fsf@alter.siamese.dyndns.org>
- <1299096731-14194-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Mar 02 21:13:02 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 3/3] merge-recursive: When we detect we can skip an
+ update, actually skip it
+Date: Wed, 02 Mar 2011 12:19:03 -0800
+Message-ID: <7vwrkhb7ig.fsf@alter.siamese.dyndns.org>
+References: <1298941732-19763-1-git-send-email-newren@gmail.com>
+ <1298941732-19763-4-git-send-email-newren@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Jeff King <peff@peff.net>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 21:19:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PusPt-0000Kc-Bi
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 21:13:01 +0100
+	id 1PusW3-0003j1-47
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 21:19:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756459Ab1CBUMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 15:12:55 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:57328 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754106Ab1CBUMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 15:12:55 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p22KCMJk014227
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 2 Mar 2011 21:12:22 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1PusPH-0004N6-Sq; Wed, 02 Mar 2011 21:12:23 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1PusPH-0003hm-Rl; Wed, 02 Mar 2011 21:12:23 +0100
-X-Mailer: git-send-email 1.7.4.1.176.g6b069.dirty
-In-Reply-To: <1299096731-14194-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 Mar 2011 21:12:22 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p22KCMJk014227
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1299701544.23051@5wS5sLjhSkbK1+zm2kOhnA
+	id S1757395Ab1CBUTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 15:19:18 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50263 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754997Ab1CBUTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 15:19:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1D6B3B45;
+	Wed,  2 Mar 2011 15:20:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Is6pTdshAP3igYFuk9/5d9Vj5DE=; b=B6oqVT
+	IYqop8H/SYgK3F607QkLcMbSv8PHJ6Pp10p0/LtFMRNVoysxXcmtRxRScsOYrkVj
+	iqpw9+2n37qQAG810BggysqfJY6M88iCCdGPF09X+KzKdKhEttTOgMj15eVneyZN
+	j0Yu6ncdORzIIfdexls7nm3hOTJAdDQsMxYvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PDcZZ59MFn8EEqxljT9hwZs0OvkShzeA
+	O46TKdDWtL6OhWbp1N+E6ZOuERmafiausXaTsSKaDqK6BxoJCAuyYZu6ctixCOPC
+	R9efnkxMX9jCX/ELhGty/m/4m0paUQ+K5G0p6Bj939YWU55AXJf+gN21WG7mD/8r
+	PMQumokNyfU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 618073B42;
+	Wed,  2 Mar 2011 15:20:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C96113B3E; Wed,  2 Mar 2011
+ 15:20:24 -0500 (EST)
+In-Reply-To: <1298941732-19763-4-git-send-email-newren@gmail.com> (Elijah
+ Newren's message of "Mon\, 28 Feb 2011 18\:08\:52 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 858AF88E-450A-11E0-88B3-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168338>
 
+Elijah Newren <newren@gmail.com> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-No change since v2
+> @@ -1274,9 +1275,13 @@ static int merge_content(struct merge_options *o,
+>  	}
+>  
+>  	if (mfi.clean && !df_conflict_remains &&
+> -	    sha_eq(mfi.sha, a_sha) && mfi.mode == a.mode)
+> +	    sha_eq(mfi.sha, a_sha) && mfi.mode == a.mode &&
+> +	    lstat(path, &st) == 0) {
+>  		output(o, 3, "Skipped %s (merged same as existing)", path);
+> -	else
+> +		add_cacheinfo(mfi.mode, mfi.sha, path,
+> +			      0 /*stage*/, 1 /*refresh*/, 0 /*options*/);
+> +		return mfi.clean;
+> +	} else
 
- builtin/push.c |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+Hmmmm.  During a merge, we allow files missing from the working tree as if
+it is not modified from the index.  Changing the behaviour based on the
+existence of the path on the filesystem does not feel quite right.
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 1b493fb..c3c2feb 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -157,7 +157,14 @@ static int do_push(const char *repo, int flags)
- 	if (!remote) {
- 		if (repo)
- 			die("bad repository '%s'", repo);
--		die("No destination configured to push to.");
-+		die("No configured push destination.\n"
-+		    "Either specify the URL from the command-line or configure a remote repository using\n"
-+		    "\n"
-+		    "    git remote add <name> <url>\n"
-+		    "\n"
-+		    "and then push using the remote name\n"
-+		    "\n"
-+		    "    git push <name>\n");
- 	}
- 
- 	if (remote->mirror)
--- 
-1.7.4.1.176.g6b069.dirty
+Even if we decide that regressing in that use case were acceptable, what
+guarantees that the path that happens to be in the work tree has the same
+contents as what the merge result should be?  IOW, shouldn't we be looking
+at the original index, making sure that our side (stage #2) at the path
+had a file there that matches the merge result mfi.{sha,mode}, instead of
+looking at the working tree?
