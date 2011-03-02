@@ -1,55 +1,89 @@
-From: Jez <jezreel@gmail.com>
-Subject: In-depth git blame?
-Date: Wed, 2 Mar 2011 15:43:42 -0500
-Message-ID: <AANLkTi=694NiUMzcHkNZ09sotcoN+=wPMnxnom5_ex+f@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2 7/7] fetch/pull: Describe --recurse-submodule restrictions
+ in the BUGS section
+Date: Wed, 02 Mar 2011 21:53:19 +0100
+Message-ID: <4D6EAE3F.9070202@web.de>
+References: <4D6D7A50.5090802@web.de> <4D6D7B8D.3020409@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 02 21:44:15 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Mar 02 21:53:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pusu4-0002aM-3a
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 21:44:12 +0100
+	id 1Put3T-0000IJ-B8
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Mar 2011 21:53:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755568Ab1CBUoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 15:44:05 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:61077 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754516Ab1CBUoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 15:44:03 -0500
-Received: by iyb26 with SMTP id 26so298551iyb.19
-        for <git@vger.kernel.org>; Wed, 02 Mar 2011 12:44:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=tMtPWale2Os9tEsFJ/F3rABS/wy22iIi/LVOkrdIyrA=;
-        b=gGQk7g/DoSIpqlcsVpbqM8q7FIM6Ps3WdGRTXBc+R+f+vN/6nJ9ucDEjsb/oikQx/T
-         2SOOtDDr6YD6f/Di+Bat8kqMKKF25n4Spu14fU+7AlHBmyTc8Z5QtZwhF8W0ynkJgV16
-         8/VMw0jPHxrNdGhA0svsnbqpGEF8s0BHsOdl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=d0Oke49z/3lkcQQ50H43BBBWOIbqnXFlw4fEe64cgbZpbFcVuBikSrOuPfugbaq2oK
-         SFYQE7FHnbTaIstiRb0NymLE5nwDgKGdx6tuJE4taGmiOOYmQl29LrJ64eiFa7+4vvsk
-         PHdxn876/r1xXsiItBHOHgT1lVqwHJfjn/cMQ=
-Received: by 10.42.18.193 with SMTP id y1mr564471ica.524.1299098643122; Wed,
- 02 Mar 2011 12:44:03 -0800 (PST)
-Received: by 10.231.15.194 with HTTP; Wed, 2 Mar 2011 12:43:42 -0800 (PST)
+	id S1755863Ab1CBUxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 15:53:49 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:38722 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754516Ab1CBUxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 15:53:49 -0500
+Received: from smtp03.web.de  ( [172.20.0.65])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 194D61898530F;
+	Wed,  2 Mar 2011 21:53:20 +0100 (CET)
+Received: from [93.240.114.148] (helo=[192.168.178.43])
+	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Put2t-0002w1-00; Wed, 02 Mar 2011 21:53:19 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <4D6D7B8D.3020409@web.de>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/Jja+PINtLqaHklgawCUNgXINcORE718hMmTPo
+	bHTwXrtM0yP3mraANpN4XjFkdzzEa7Kgann2+xR5NEAcm6JNdi
+	ERe8ewjCqDzHLCa4aSdA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168340>
 
-Hi all,
+Am 02.03.2011 00:04, schrieb Jens Lehmann:
+> Using the --recurse-submodules option with fetch and pull might not always
+> fetch all the submodule commits the user expects, as this will only work
+> when the submodule is already checked out. Document that and warn that
+> this is expected to change in the future.
 
-Git-blame is useful, but sometimes I want to know the series of
-commits that have affected a line -- not just the most recent one. Is
-there a way to do this?
+This patch needs the following diff to get rid of some typos. Will be
+fixed in v3.
 
-Regards,
-Jez
+--------8<--------
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index f907ef5..8669227 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -78,10 +78,10 @@ because it is prefixed with a plus sign; `tmp` will not be.
+
+ BUGS
+ ----
+-Using --recurse-submodules can only fetch new commits in alrady checked
++Using --recurse-submodules can only fetch new commits in already checked
+ out submodules right now. When e.g. upstream added a new submodule in the
+ just fetched commits of the superproject the submodule itself can not be
+-fetched, making it impossible to check out that submodule later whithout
++fetched, making it impossible to check out that submodule later without
+ having to do a fetch again. This is expected to be fixed in a future git
+ version.
+
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 1596d2b..1aad8bf 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -222,10 +222,10 @@ would want to start over, you can recover with 'git reset'
+
+ BUGS
+ ----
+-Using --recurse-submodules can only fetch new commits in alrady checked
++Using --recurse-submodules can only fetch new commits in already checked
+ out submodules right now. When e.g. upstream added a new submodule in the
+ just fetched commits of the superproject the submodule itself can not be
+-fetched, making it impossible to check out that submodule later whithout
++fetched, making it impossible to check out that submodule later without
+ having to do a fetch again. This is expected to be fixed in a future git
+ version.
