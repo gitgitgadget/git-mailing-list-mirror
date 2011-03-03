@@ -1,80 +1,134 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git changes permissions on directories when deleting files.
-Date: Thu, 3 Mar 2011 10:16:09 -0500
-Message-ID: <20110303151608.GD1074@sigill.intra.peff.net>
-References: <AANLkTimx7s94wjPasgdY7O9eoyzXXmhWm6f+CB0_2sv3@mail.gmail.com>
- <AANLkTimBrUo_O6sjhSEf2sPKrYhjMcr24hwRe0kH4CgO@mail.gmail.com>
- <20110301194428.GD10082@sigill.intra.peff.net>
- <AANLkTimCzBwsz4TV=jEGeSEScVtgwmGEiDWOomaeTgWD@mail.gmail.com>
- <20110301200805.GA18587@sigill.intra.peff.net>
- <AANLkTint3PARNNN4cpic8XG6HsM3AAGuX5a+oeXfFNx=@mail.gmail.com>
- <vpqmxlea7w1.fsf@bauges.imag.fr>
- <AANLkTi=UX7VNH+biFgn0FQawP-ttCjW2D7SMf2n6XB6w@mail.gmail.com>
- <20110301210852.GB21429@sigill.intra.peff.net>
- <AANLkTi=nFMDHR5WL=TiFmshFkxLMF9N4dNEjqw+r7wyh@mail.gmail.com>
+Subject: Re: [RFC] git blame-tree
+Date: Thu, 3 Mar 2011 10:36:48 -0500
+Message-ID: <20110303153647.GE1074@sigill.intra.peff.net>
+References: <20110302164031.GA18233@sigill.intra.peff.net>
+ <20110302171653.GA18957@sigill.intra.peff.net>
+ <7vbp1tcr25.fsf@alter.siamese.dyndns.org>
+ <20110302210434.GB20400@sigill.intra.peff.net>
+ <7v39n5az15.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Computer Druid <computerdruid@gmail.com>, git@vger.kernel.org
-To: Chad Joan <chadjoan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 16:16:17 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 16:36:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvAGH-0008JA-2L
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 16:16:17 +0100
+	id 1PvAaI-0005gm-G7
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 16:36:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758190Ab1CCPQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2011 10:16:12 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57563 "EHLO peff.net"
+	id S1758373Ab1CCPgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2011 10:36:53 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49585 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756354Ab1CCPQL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2011 10:16:11 -0500
-Received: (qmail 27816 invoked by uid 111); 3 Mar 2011 15:16:10 -0000
+	id S1758345Ab1CCPgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2011 10:36:52 -0500
+Received: (qmail 27948 invoked by uid 111); 3 Mar 2011 15:36:49 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 03 Mar 2011 15:16:10 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Mar 2011 10:16:09 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 03 Mar 2011 15:36:49 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Mar 2011 10:36:48 -0500
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=nFMDHR5WL=TiFmshFkxLMF9N4dNEjqw+r7wyh@mail.gmail.com>
+In-Reply-To: <7v39n5az15.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168397>
 
-On Wed, Mar 02, 2011 at 10:48:00PM -0500, Chad Joan wrote:
+On Wed, Mar 02, 2011 at 03:22:14PM -0800, Junio C Hamano wrote:
 
-> It seems to be working!  I've tried it with 'git rm' and when pulling
-> deletions.
+> Jeff King <peff@peff.net> writes:
+> 
+> > With sensible semantics, we can turn off --no-merges and still get good
+> > results. And anybody who cares for something different can use
+> > --no-merges themselves. Though I expect the opposite to be the case; I
+> > can imagine somebody wanting --first-parent to blame files only to
+> > merges.  I'll have to make sure that works properly in my re-roll.
+> 
+> I still do not understand why anybody would even want to say --no-merges.
 
-Great.
+Originally, because my merge semantics were crap. But what I was saying
+here was "if, for whatever reason, somebody decided that --no-merges,
+they can still do it". So I don't know why. My point was we can safely
+drop the automatic no-merges as junk.
 
-> I imagine that race condition can happen if files in the directory are
-> being modified while git does an rmdir?  If that's the case then I'm
-> not too worried.  There is only one other programmer that might be
-> working with me at the same time on an infrequently used directory.
+> > I was thinking something like:
+> >
+> >   git blame-tree dir branch1 branch2
+> >
+> > where branch2 is actually _ahead_ of branch1. We take the file list from
+> > branch1, but may blame commits on branch2. It's probably a little bit of
+> > a crazy thing to ask for, though.
+> 
+> To be compatible with all the git commands, the order of parameters should
+> be revs first and then pathspec, i.e. "git blame-tree branch1 branch2 dir".
+> But that is a tangent.
 
-The race condition I mentioned earlier was for a different workaround.
-Basically there are two strategies, each with a difference race:
+Yeah, agreed (for some reason when I wrote the original patch, I had the
+brain-dead idea that I was matching blame. But obviously that is not the
+case).
 
-  1. Don't rmdir on non-empty directories. This means we have to opendir
-     the directory and look for entries before rmdir(). If there is file
-     activity in the directory while we are looking we may think it is
-     empty when it's not and rmdir(), screwing up the permissions.
+> Again, the same "what does that mean" applies.
 
-  2. Before any rmdir, check permissions. Do the rmdir, and then restore
-     the permissions if rmdir fails. The race here is if somebody is
-     modifying the permissions on a non-empty directory, we may
-     overwrite their changes.
+Assuming we switched it, we have:
 
-Obviously the patch does (2), so there is still that race.
+  git blame-tree branch1 branch2 -- dir
 
-> diff -crB git-1.7.3.4/dir.c git-1.7.3.4-new/dir.c
+And no, I don't know what that means. My question was what should we do
+with it? I think your answer is "complain if rev.pending.nr != 1", and
+that sounds sensible to me.
 
-Context diff? Eww. There is this awesome tool called "git" that can help
-you with managing versions of software. :)
+One other possible answer is to take the union of the trees of each
+revision listed on the command line. Then you could do something like
+"git blame-tree --all -- path", and see all files in all trees. But I
+don't really see how that is a particularly useful output, so I'd just
+as soon disallow it for now.
+
+> But that doesn't change my question.  Why are you taking a single
+> directory and doing "ls-tree $endpoint $that_directory" to populate the
+> set of paths to find who touched them last, instead of using the args as
+> regular pathspecs and running "ls-tree $endpoint -- net include/net" to
+> populate the set?
+
+Because my initial attempt was bolted onto ls-tree before I realized
+that what I really wanted was blame-tree, and this historical crap
+survived from an earlier iteration. I think what you are suggesting is
+much better.
+
+> As I said already, it does not make any sense to have more than one
+> endpoint to begin with when you are asking "what is the last one that
+> touched things", and that also applies to the regular blame, which I think
+> already has a logic to make sure you have only one positive commit in the
+> starting rev list.
+
+Yeah, agreed.
+
+> > ... When net/subdir/foo.c changes, we do care, we just say
+> > "net/subdir" changed.
+> 
+> I think you would want diff-tree with or without -r then.  I suspect
+> people may want to pass --recursive to this command.
+
+Yeah, I am coming to that conclusion the more I think about it.
+
+> ... which may probably be helped by limiting the recursion of that diff
+> with pathspec, but I realize that you are not by default running recursive
+> diff, so...
+
+Yes, I definitely didn't want recursion. But clearly that is an obvious
+option for people to want, and we should support it. So the code needs
+to be structured to handle both cases.
+
+Partially I was blinded in my initial effort by trying to make it as
+fast and simple as possible for one specific case. But I think we can
+get good performance results using the more traditional traversal and
+diff machinery, and have a lot more options, too. My rewrite will be
+based around that.
+
+Thanks for the comments.
 
 -Peff
