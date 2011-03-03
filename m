@@ -1,97 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: Google Summer of Code 2011
-Date: Thu, 03 Mar 2011 13:25:16 -0800 (PST)
-Message-ID: <m3bp1r7v94.fsf@localhost.localdomain>
+Date: Thu, 3 Mar 2011 16:08:26 -0600
+Message-ID: <20110303220826.GA6551@elie>
 References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
-	<20110303185918.GA18503@sigill.intra.peff.net>
-	<AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com>
-	<20110303203323.GA21102@sigill.intra.peff.net>
+ <20110303210419.GB27973@kytes>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 03 22:25:28 2011
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 23:08:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvG1W-00021i-GV
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 22:25:26 +0100
+	id 1PvGhM-0007Q4-Oy
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 23:08:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758859Ab1CCVZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2011 16:25:21 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43851 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758699Ab1CCVZU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2011 16:25:20 -0500
-Received: by fxm17 with SMTP id 17so1554170fxm.19
-        for <git@vger.kernel.org>; Thu, 03 Mar 2011 13:25:18 -0800 (PST)
+	id S1758939Ab1CCWIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2011 17:08:35 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43943 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758762Ab1CCWIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2011 17:08:34 -0500
+Received: by wwb22 with SMTP id 22so1957098wwb.1
+        for <git@vger.kernel.org>; Thu, 03 Mar 2011 14:08:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=7ZdXBTzFO1hyUv9YI3kdrk0FDo9Jsv3k3ew51lHZR3w=;
-        b=vwWSPV/eFJfCZibZBMVZxIYlLCF81FvItzjcr1heL/ldogfuAPtNWn1RI5Q8Tx5L3a
-         TMhPylbQrvfmQPqdRqjmorlUh/xnobWazXASkxRJY5GAVen0krPQkokNKaJ9ITqtRC1n
-         3HveBkkHfc7v7E2W0Zfe/be3eGYuefJcOZvH0=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mxWYzGwb5X8HdcLFu5zuVM59NAo/80vGqGBBCYHQqw0=;
+        b=BJbw+55H+u5pb9gJxSKEzJA+x15Zl6cubVt2zg5uigAIYrotI+2BP1qY5lgnVtjQf/
+         5bsSV8QVGKG2yJjz+Yr0iDwZ1RJpsgC5xxraTIIvfXJyPiy4hWK9jGOJkVnIRMvKQog6
+         MnFFygMJL6WI3Wm4fUGkFhjyxN3eOqhmNLidg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=MWJa3GpExGOPxcHdtPJ1sls9AF5U+Dfww6arubi4bg+fuEReOjhmALlHaifrmNKnyv
-         2p5zlJkztRd7EQbe8zdfNEqfPMrLp+ekur0nemDcIz4NAXOyrro31/zcNNn3cBJf3XOK
-         l/kvOW5I0qH7nVnab3lVSyyMK/5/Yda9MEyfw=
-Received: by 10.223.4.203 with SMTP id 11mr1699068fas.44.1299187518596;
-        Thu, 03 Mar 2011 13:25:18 -0800 (PST)
-Received: from localhost.localdomain (abwg77.neoplus.adsl.tpnet.pl [83.8.230.77])
-        by mx.google.com with ESMTPS id b7sm846588faa.42.2011.03.03.13.25.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 03 Mar 2011 13:25:16 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p23LOkrH000483;
-	Thu, 3 Mar 2011 22:24:56 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p23LOOfT000478;
-	Thu, 3 Mar 2011 22:24:24 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20110303203323.GA21102@sigill.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=THBrBeMQRazWGxgEz1TJh6h9LYRc5fMILfQiClPdYpi/xD1B+ZmXPheFUrwCo+ZStW
+         79rrQuWjnZR8cUsMT9il97ZhDmDCkAStBQ2UbnI7GYdTv3DbCdsF682pCNEgaaYT+AUb
+         hkSzdDYw/quwoB7tu57ABVI9D7sn2J+q2gOrQ=
+Received: by 10.216.173.7 with SMTP id u7mr1081005wel.50.1299190113361;
+        Thu, 03 Mar 2011 14:08:33 -0800 (PST)
+Received: from elie (adsl-69-209-48-61.dsl.chcgil.sbcglobal.net [69.209.48.61])
+        by mx.google.com with ESMTPS id m2sm484871wer.37.2011.03.03.14.08.31
+        (version=SSLv3 cipher=OTHER);
+        Thu, 03 Mar 2011 14:08:32 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110303210419.GB27973@kytes>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168412>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Thu, Mar 03, 2011 at 11:04:51AM -0800, Shawn O. Pearce wrote:
-> 
-> > > I'd be happy to. I can also act as org admin this year if you want. I
-> > > bowed out last year due to impending baby, but have no such excuse this
-> > > year. :)
-> > 
-> > I would appreciate that, I'm too busy this year. :-(
-> 
-> OK, there is now:
-> 
->   https://git.wiki.kernel.org/index.php/SoC2011Application
+Ramkumar Ramachandra wrote:
 
-Quote:
+> Although I'm probably not experienced enough to independently mentor a
+> project, I'd be more than happy to co-mentor, or step in if a mentor
+> is suddenly unavailable. I should have a lot of time to give in
+> summer.
 
- "In 2010, we had three projects: native svn support, libgit2, and a
-  line level history browser.
+I'd also be willing to co-mentor.  Time might be a constraint, but I can
+find time.
 
-  All three projects were successful. [...]"
-
-What about 'integrated web client for git', aka. "Splitting gitweb and
-developing write functionalities" project wit Pavan Kumar Sankara
-(pkumar), which failed midterm evaluations?
-
-See https://git.wiki.kernel.org/index.php/SoC2010Projects#Splitting_gitweb_and_developing_write_functionalities_.28Integrated_web_client_for_git.29
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Jonathan
