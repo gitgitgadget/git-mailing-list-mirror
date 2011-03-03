@@ -1,91 +1,206 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
- by ':'
-Date: Wed, 02 Mar 2011 22:44:09 -0500
-Message-ID: <4D6F0E89.4020200@cisco.com>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org> <4D6D0A51.9030701@drmicha.warpmail.net> <AANLkTi=YHNnuBAF_GitrmMYFK1h_p9JP54hRyj9vWTzc@mail.gmail.com> <AANLkTimPGxzP+XfX8Ng5U_4UnPWZCFLQ-3rP4oPTE3o+@mail.gmail.com> <4D6E4246.5080407@drmicha.warpmail.net> <7vhbblcvl7.fsf@alter.siamese.dyndns.org>
+From: Chad Joan <chadjoan@gmail.com>
+Subject: Re: Git changes permissions on directories when deleting files.
+Date: Wed, 2 Mar 2011 22:48:00 -0500
+Message-ID: <AANLkTi=nFMDHR5WL=TiFmshFkxLMF9N4dNEjqw+r7wyh@mail.gmail.com>
+References: <AANLkTikFMg_yLWmanqyHveDMR==bw8kxjZgr4mSOmY-2@mail.gmail.com>
+ <AANLkTimw+TLYv3ANf_Gx6G3SaLwRnRf6PF1YUv86rC5J@mail.gmail.com>
+ <AANLkTimx7s94wjPasgdY7O9eoyzXXmhWm6f+CB0_2sv3@mail.gmail.com>
+ <AANLkTimBrUo_O6sjhSEf2sPKrYhjMcr24hwRe0kH4CgO@mail.gmail.com>
+ <20110301194428.GD10082@sigill.intra.peff.net> <AANLkTimCzBwsz4TV=jEGeSEScVtgwmGEiDWOomaeTgWD@mail.gmail.com>
+ <20110301200805.GA18587@sigill.intra.peff.net> <AANLkTint3PARNNN4cpic8XG6HsM3AAGuX5a+oeXfFNx=@mail.gmail.com>
+ <vpqmxlea7w1.fsf@bauges.imag.fr> <AANLkTi=UX7VNH+biFgn0FQawP-ttCjW2D7SMf2n6XB6w@mail.gmail.com>
+ <20110301210852.GB21429@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 04:44:19 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Computer Druid <computerdruid@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 03 04:48:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuzSc-0000AP-Gp
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 04:44:18 +0100
+	id 1PuzWg-0001VK-3N
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 04:48:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757774Ab1CCDoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 22:44:12 -0500
-Received: from sj-iport-2.cisco.com ([171.71.176.71]:16480 "EHLO
-	sj-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751174Ab1CCDoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 22:44:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1130; q=dns/txt;
-  s=iport; t=1299123851; x=1300333451;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=zKgkAx9dQAfpGbtnavqjco/PqPdKFP12o1fsdWfE644=;
-  b=TVwzjbh2XwSXdFD1wAD2h/ho3/VRPmxPV79Q5785SKpvcmj6GpYf9HkY
-   3LG/dIjG+Len/AIXR6a2ywB2E1/32K5sZu6/tllc3KZ45Z5g4GLwXcDwW
-   +BDPRJXT5DXyS1NvvzI8SQUijPPvO57HNkk+LXaMg0ct7QUfZXR3OQgwg
-   s=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAE+dbk2rR7H+/2dsb2JhbACmcnSidJwAhWEEhReHD4NA
-X-IronPort-AV: E=Sophos;i="4.62,257,1297036800"; 
-   d="scan'208";a="316706420"
-Received: from sj-core-2.cisco.com ([171.71.177.254])
-  by sj-iport-2.cisco.com with ESMTP; 03 Mar 2011 03:44:11 +0000
-Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
-	by sj-core-2.cisco.com (8.13.8/8.14.3) with ESMTP id p233iAl3014313;
-	Thu, 3 Mar 2011 03:44:10 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <7vhbblcvl7.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.2
+	id S932126Ab1CCDsX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 22:48:23 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:46052 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758133Ab1CCDsV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2011 22:48:21 -0500
+Received: by vxi39 with SMTP id 39so670867vxi.19
+        for <git@vger.kernel.org>; Wed, 02 Mar 2011 19:48:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=PTocsrPnygHDumfq4ZAbmw403bPg2agoQYeUeZHcKHo=;
+        b=RiizDeLj5IkqTXYsc/KVGl0dW3sodFloGCn7mBzF//HP7qTWbrRYut5R0Ha2ytMmg4
+         eYaeZndM/1+tW6Qo6xsmaWm6CiCcDfNNCj+R/Yotv3aWl027Bi91NO1XpUCyGnjl+Qpv
+         MMn7ZkNjp4Bof+DwNtVMRO/yts8uZF/FIOVkQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=bOH1vCz+5qYOIMoavMaSTT/l/OVuL6r3dpODvcOtAK8Wyi6pSLlxXZwMGS/fSOrUea
+         gqhpoLH9zriKtO1E42z5DOAyaH83JeS6hnvc0ovJ8o012B2pqvWyR399Z1b1Ja3dg1IN
+         kpxEAWo+IKcKAwDidUlb8fpHCWVIlKDwsqZ34=
+Received: by 10.220.5.129 with SMTP id 1mr151328vcv.169.1299124100217; Wed, 02
+ Mar 2011 19:48:20 -0800 (PST)
+Received: by 10.220.94.136 with HTTP; Wed, 2 Mar 2011 19:48:00 -0800 (PST)
+In-Reply-To: <20110301210852.GB21429@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168370>
 
-On 03/02/2011 11:53 AM, Junio C Hamano wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->> [*] I keep forgetting that some people may have files whose names begin
->> with ":". They are ambiguous now already with "treeish pathspec"
->> commands, but not with "pathspec" commands. The latter would change.
-> Just to make sure I understand that they have easy workarounds:
+On Tue, Mar 1, 2011 at 4:08 PM, Jeff King <peff@peff.net> wrote:
 >
->  - If you have a path foo/:bar, you can say
+> I think this is the cheap hack that you want:
 >
->    git log master -- foo/:bar
+> diff --git a/dir.c b/dir.c
+> index 168dad6..fb6d306 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1236,6 +1236,29 @@ void setup_standard_excludes(struct dir_struct=
+ *dir)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0add_excludes_from_file(dir, excludes_f=
+ile);
+> =A0}
 >
->    because ':' signals the magic and gets stripped only when it is at the
->    beginning (i.e. not affecting foo/:bar); and
+> +static int rmdir_on_broken_cifs(const char *path)
+> +{
+> + =A0 =A0 =A0 struct stat sb;
+> + =A0 =A0 =A0 if (stat(path, &sb) < 0) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Oh well, hopefully if we can't stat =
+it
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* it is already gone or we don't hav=
+e
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* permissions to screw it up anyway.=
+ */
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return rmdir(path);
+> + =A0 =A0 =A0 }
+> + =A0 =A0 =A0 if (rmdir(path) =3D=3D 0) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* it worked, nothing to restore */
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+> + =A0 =A0 =A0 }
+> + =A0 =A0 =A0 /* maybe remove this conditional if you can trigger
+> + =A0 =A0 =A0 =A0* the problem with other types of errors */
+> + =A0 =A0 =A0 if (errno !=3D ENOTEMPTY)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return -1;
+> + =A0 =A0 =A0 if (chmod(path, sb.st_mode) < 0)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 warning("we probably just screwed up th=
+e permissions of %s",
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 path);
+> + =A0 =A0 =A0 return -1;
+> +}
+> +
+> =A0int remove_path(const char *name)
+> =A0{
+> =A0 =A0 =A0 =A0char *slash;
+> @@ -1249,7 +1272,7 @@ int remove_path(const char *name)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0slash =3D dirs + (slash - name);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0*slash =3D '\0';
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 } while (rmdir(dirs) =3D=3D 0 && (slash=
+ =3D strrchr(dirs, '/')));
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 } while (rmdir_on_broken_cifs(dirs) =3D=
+=3D 0 && (slash =3D strrchr(dirs, '/')));
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0free(dirs);
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0return 0;
 >
->  - For :boz at the root level, you can say
+> Totally untested, of course. But hey, it compiles, so it must be good=
+=2E
 >
->    git log master -- '\:boz'
+> -Peff
 >
->    because the backslash in '\:boz' makes the colon not at the beginning and
->    the glob match sees '\:boz' and then matches '\:' with literal ':' at the
->    beginning of the pathname ":boz".
 
-Easy workaround, maybe, but still a potential problem for unsuspecting
-scripts.
+It seems to be working!  I've tried it with 'git rm' and when pulling
+deletions.
 
-  - I think this fails in a directory with :foo.c
+I imagine that race condition can happen if files in the directory are
+being modified while git does an rmdir?  If that's the case then I'm
+not too worried.  There is only one other programmer that might be
+working with me at the same time on an infrequently used directory.
 
-    git log master -- *.c
+Thank you everyone for the excellent help!
 
+I modified the patch with some extra paranoia and replaced the other
+rmdir instance in that file:
 
-  - Would this work, though?
+diff -crB git-1.7.3.4/dir.c git-1.7.3.4-new/dir.c
+*** git-1.7.3.4/dir.c	Wed Mar  2 13:00:54 2011
+--- git-1.7.3.4-new/dir.c	Wed Mar  2 14:25:10 2011
+***************
+*** 994,999 ****
+--- 994,1022 ----
+  	return ret;
+  }
 
-    git log master -- "*.c"
++ static int rmdir_on_broken_cifs(const char *path)
++ {
++        struct stat sb;
++        if (stat(path, &sb) < 0) {
++                /* Oh well, hopefully if we can't stat it
++                 * it is already gone or we don't have
++                 * permissions to screw it up anyway. */
++                return rmdir(path);
++        }
++        if (rmdir(path) =3D=3D 0) {
++                /* it worked, nothing to restore */
++                return 0;
++        }
++        /* maybe remove this conditional if you can trigger
++         * the problem with other types of errors */
++        if (errno !=3D ENOTEMPTY)
++                return -1;
++        if (chmod(path, sb.st_mode) < 0)
++                warning("we probably just screwed up the permissions o=
+f %s",
++                        path);
++        return -1;
++ }
++
+  int remove_dir_recursively(struct strbuf *path, int flag)
+  {
+  	DIR *dir;
+***************
+*** 1037,1043 ****
 
-Phil
+  	strbuf_setlen(path, original_len);
+  	if (!ret)
+! 		ret =3D rmdir(path->buf);
+  	return ret;
+  }
+
+--- 1060,1066 ----
+
+  	strbuf_setlen(path, original_len);
+  	if (!ret)
+! 		ret =3D rmdir_on_broken_cifs(path->buf);
+  	return ret;
+  }
+
+***************
+*** 1066,1072 ****
+  		slash =3D dirs + (slash - name);
+  		do {
+  			*slash =3D '\0';
+! 		} while (rmdir(dirs) =3D=3D 0 && (slash =3D strrchr(dirs, '/')));
+  		free(dirs);
+  	}
+  	return 0;
+--- 1090,1096 ----
+  		slash =3D dirs + (slash - name);
+  		do {
+  			*slash =3D '\0';
+! 		} while (rmdir_on_broken_cifs(dirs) =3D=3D 0 && (slash =3D strrchr(=
+dirs, '/')));
+  		free(dirs);
+  	}
+  	return 0;
