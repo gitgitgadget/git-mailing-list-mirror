@@ -1,97 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
-Date: Thu, 3 Mar 2011 01:42:15 +0100
-Message-ID: <201103030142.17258.jnareb@gmail.com>
-References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek> <201103022218.46640.jnareb@gmail.com> <20110302215556.GL22310@pengutronix.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2 v3] push: better error messages when push.default =
+ tracking
+Date: Wed, 02 Mar 2011 17:43:24 -0800
+Message-ID: <7vbp1t9dxf.fsf@alter.siamese.dyndns.org>
+References: <7vhbbmellx.fsf@alter.siamese.dyndns.org>
+ <1299096731-14194-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "J.H." <warthog9@kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-	git@vger.kernel.org, admin@repo.or.cz
-To: Uwe =?iso-8859-1?q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Thu Mar 03 01:42:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Mar 03 02:43:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Puwcj-0002vC-Bw
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 01:42:33 +0100
+	id 1PuxZr-00013b-Re
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 02:43:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754233Ab1CCAm1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2011 19:42:27 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33389 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753982Ab1CCAm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 19:42:26 -0500
-Received: by wwb22 with SMTP id 22so727401wwb.1
-        for <git@vger.kernel.org>; Wed, 02 Mar 2011 16:42:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=btrelldxJBe9ZLLmPuJvyy/uZ4fywKs1H+my5c1g4dA=;
-        b=FT8Rgm2Jz67NC0DSU6EetaHNWXD2JZH84Xd40pZDu8eGyPBRZ+XkT96f7jr8dEhMAW
-         aut7eGUvDygIZR8Lv+2OgazMDj4Nf0PsBSFTDmpZiqVlAcCzScZLg6ATRBg1laDOvtnj
-         kHOfDJNRVRqOutIPTC0SDdSFcZhiUZcLNuCPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=W9yrH2ezGAjjHvZNXLWj35u3O36Y47Ri7oupjaLMg8VGUtST+YIM9/c3HIeFRSvnJu
-         OF7WBkbxyif8upobFnP1BMF28Db0WDFKpKvP44QhrmJR+VWT7aQaJVqMOgGvqQfDbDAV
-         n60dLCXUNiDB+Rxl+ZCXZclFHDuw+GhQHH144=
-Received: by 10.227.54.203 with SMTP id r11mr328036wbg.106.1299112945134;
-        Wed, 02 Mar 2011 16:42:25 -0800 (PST)
-Received: from [192.168.1.13] (abvi92.neoplus.adsl.tpnet.pl [83.8.206.92])
-        by mx.google.com with ESMTPS id w25sm435179wbd.11.2011.03.02.16.42.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 Mar 2011 16:42:23 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110302215556.GL22310@pengutronix.de>
-Content-Disposition: inline
+	id S1756924Ab1CCBne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 20:43:34 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59006 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754348Ab1CCBnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 20:43:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5214F42F4;
+	Wed,  2 Mar 2011 20:44:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mkIESBltfoT0I2iaMw9Mpuas2Qs=; b=JI7ii2
+	OXT0SGhpKLFcIXxw2n1AZaDnU0hrt1v9/f6DuYyyCJ/t621cdn79TLTfGvoikL8X
+	JPnc7Dk2LNFKwP50PEaCDOE2ic37RdcTCc7G80z5fN7qE5qs+TVjhyKZD4CgEeOw
+	AH3bz7uBjLcZpgbftbi5EAn6/fAY6uAhKyoBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yo8W5yCqAsFIJD6X6VOWDEvwqdDgRuDk
+	kC/epKWiKdco1ikipyHDIpTgv6XaFqPBBwOaBiyN9aEx7OW66IMEA3sZenOzwDkC
+	HsrQ8w0TWDYHvnMryYXX08Js5q+zZDRfFh7DHlY7613qOLvs8Q1f13rIgjYFCZio
+	bCqjU17sjvU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3004442F2;
+	Wed,  2 Mar 2011 20:44:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4537A42DB; Wed,  2 Mar 2011
+ 20:44:48 -0500 (EST)
+In-Reply-To: <1299096731-14194-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Wed\,  2 Mar 2011 21\:12\:10 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D47C6414-4537-11E0-A1F1-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168365>
 
-On Wed, 2 Mar 2011, Uwe Kleine-K=F6nig wrote:
-> On Wed, Mar 02, 2011 at 10:18:44PM +0100, Jakub Narebski wrote:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> > What is most important that makes this feature to be considered for
-> > removal (or rehauling) is that only half of this feature is impleme=
-nted
-> > in gitweb: the displaying part.  There is half-attempt of providing
-> > some web interface for managing tags... which needs external script=
- with
-> > strict coupling, doesn't offer any access control as far as I know,=
- do
-> > not allow deleting tags, etc.
->
-> For a small set of repositories the need to hand-edit the tags is OK
-> IMHO.  That's what I intended to do.
+> I applied Junio's suggestion to suggest pushing HEAD in detached HEAD
+> state. I don't care very much either way indeed (and I didn't want to
+> make the message too heavy, just give the user a way to do something).
 
-So what would you like to see?
+If I were asked my honest opinion, I would have to say that I do not care
+too deeply about it either, in the sense that I won't claim that the
+workflow I thought was most likely to get a new user into the situation to
+get the message on the detached HEAD would be really the most likely one,
+but I wouldn't spend too much time on coming up with other scenarios
+myself even though I admit that there may be some other cases that the
+updated message is not optimal.
 
-1. Hardening parsing of ctags files, so that gitweb does not crash on
-   malformed entries, but e.g. just ignores them.
+But one thing that I would value (and I would like to see others on the
+list to also value) is that every change we make is backed by solid
+thinking---at least I would like to see us being able to explain _why_ we
+thought that the message after applying this is better than the old one
+today.  Others who will wonder why the message advises the action it
+advises three months down the road should be able to find out the thinking
+behind the change, and decide to agree or disagree with it.  Without such
+a trace of clear and solid thinking, i.e. "even though we admit we may not
+have fully thought things through, at least we considered this and that
+when we came up with this solution", we would end up going circles,
+wasting everybody's time.
 
-2. Generating tag cloud upfront, before sending any output to browser,
-   to catch error better (and perhaps separate CSS for HTML::TagCloud).
-
-3. Describe format of ctags files, either in comments in code, or in
-   gitweb/README.
-
-4. Either:
-
-   A. Remove editing ctags from gitweb, or
-   B. Add some simple generation of ctags file to gitweb
-
-or should we remove ctags feature altogether?
---=20
-Jakub Narebski
-Poland
+In any case, I've applied them and pushed the results out.  Thanks.
