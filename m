@@ -1,80 +1,76 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
- by ':'
-Date: Wed, 02 Mar 2011 22:51:17 -0500
-Message-ID: <4D6F1035.1040902@cisco.com>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTim2HmBEQv=buRG7-87+c99FnsxXUTQzKy__azfM@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide
+ pathspecs by ':'
+Date: Wed, 02 Mar 2011 19:52:21 -0800
+Message-ID: <7vy64w97yi.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com>
+ <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTinke05gcQbrDLSUoBUus5gnx+ci5830766d2Jqs@mail.gmail.com> <4D6CDF20.3020701@drmicha.warpmail.net> <AANLkTikzSsBZ757p4gnwsUrGNmRKHsxrqXeqPKyLihjT@mail.gmail.com> <7vsjv6evy4.fsf@alter.siamese.dyndns.org> <4D6D0A51.9030701@drmicha.warpmail.net> <AANLkTi=YHNnuBAF_GitrmMYFK1h_p9JP54hRyj9vWTzc@mail.gmail.com> <AANLkTimPGxzP+XfX8Ng5U_4UnPWZCFLQ-3rP4oPTE3o+@mail.gmail.com> <4D6E4246.5080407@drmicha.warpmail.net> <7vhbblcvl7.fsf@alter.siamese.dyndns.org> <4D6E7EF0.5040106@drmicha.warpmail.net> <buo4o7kc4ce.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 04:51:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Mar 03 04:52:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuzZV-0002YD-I1
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 04:51:25 +0100
+	id 1Puzai-0002wv-79
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 04:52:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143Ab1CCDvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 22:51:20 -0500
-Received: from sj-iport-4.cisco.com ([171.68.10.86]:26489 "EHLO
-	sj-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751186Ab1CCDvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 22:51:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1078; q=dns/txt;
-  s=iport; t=1299124279; x=1300333879;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=hgvp/KYuJAtcxTMMHunuJzg+0YqQ4pNQA3xHSqCtnrQ=;
-  b=EIT1X5bZfCJuB0zPuJ0BJ7yFHtIEh4Udi4TYXY6PME0J7ojs/r4LPEIr
-   r+Uct/LBvelnMbysMTakT1ld0xcNQHyqvAepitwpGzmDkctB1t9q5pAmN
-   FsLFJcueXRmbYnQTq0czifK3szEozSY5JvFFKrxo4X2pAEq8hTsVqmvGi
-   Y=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EAHuebk2rR7Hu/2dsb2JhbACEKKJKdKJ4iwqQdoEng0R2BIUXhw+DQA
-X-IronPort-AV: E=Sophos;i="4.62,257,1297036800"; 
-   d="scan'208";a="268519809"
-Received: from sj-core-5.cisco.com ([171.71.177.238])
-  by sj-iport-4.cisco.com with ESMTP; 03 Mar 2011 03:51:19 +0000
-Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
-	by sj-core-5.cisco.com (8.13.8/8.14.3) with ESMTP id p233pIfJ028855;
-	Thu, 3 Mar 2011 03:51:18 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <AANLkTim2HmBEQv=buRG7-87+c99FnsxXUTQzKy__azfM@mail.gmail.com>
-X-Enigmail-Version: 1.1.2
+	id S932230Ab1CCDwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2011 22:52:35 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55480 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932106Ab1CCDwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2011 22:52:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 610674FB8;
+	Wed,  2 Mar 2011 22:53:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AAi6X4itoKK64U1e3QZkPeWEe5g=; b=Fea6HV
+	51h7eY/VUGFY6qhWJ91uVVAupzZnthj0aY6eh+ljQmYVL/b38O+FvdpuNugZtTTY
+	YFnuVj0kxa8KLvpBxdtiHCdlK+b7qy0bIM546swKdiwq00bLllyC0+lFln+JCe68
+	Jdd3Dx0S28iop3bRbNdv106SsKEy+/3yOnCB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NnIXEosRogCmVLHJuB1qce9GIXa/BjaG
+	tQaZIt9phiCd+C1zT35Mf0FsVyuB9hbJdxpGP4AP/acUl00KnfF+NoL+8lY88qcp
+	4HPcl6781xdMsWNMJaW8AAj+gg/XNizYt3PRJcKsYYVjSCECcjCfhUgLtXGGoGTU
+	mmBBRy2l5Cs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 116324FB7;
+	Wed,  2 Mar 2011 22:53:50 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 663194FB0; Wed,  2 Mar 2011
+ 22:53:43 -0500 (EST)
+In-Reply-To: <buo4o7kc4ce.fsf@dhlpc061.dev.necel.com> (Miles Bader's message
+ of "Thu\, 03 Mar 2011 11\:42\:09 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D9370D62-4549-11E0-80C8-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168373>
 
-On 03/01/2011 07:12 PM, Nguyen Thai Ngoc Duy wrote:
-> On Tue, Mar 1, 2011 at 6:16 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Nguyen Thai Ngoc Duy venit, vidit, dixit 01.03.2011 12:13:
->>> If you are going to turn pathspecs into something more complex,
->>> reserve room for future extension. I have negative pathspecs that can
->>> utilize it.
->>>
->>> I take it, from now on people must refer file name ':foo' as './:foo'
->>> with your patch?
->> That is up for discussion, of course. When discussing a new approach for
->> file mode dependent attributes, I was hoping to get through with
->> symlink:path, and did not. But it was decided that something like
->> :symlink:path would be good enough, in the sense of avoiding enough
->> possible conflicts. That made me hope that :path would be, too.
-> Good morning! I'm saner now. How about :/path? That would reserve
-> anything next to ':' except '/'.
+Miles Bader <miles@gnu.org> writes:
 
-I like this.  The only 'failure' that comes to mind is something like
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>>  Would this ':'
+>>> trick affect that argument?  If a command is relative to the cwd with no
+>>> pathspec, you can now give a single ':' to affect the whole tree.
+>>
+>> In my view yes. I would even say: If we don't change every single
+>> command to repo-wide default there is no need to change (and break
+>> things) if we have an easy one-character way of saying "repo-wide".
+>
+> ... except, of course that the current state is still confusingly
+> inconsistent....
 
-     git log -- */*.c
-
-when there's a subdirectory named ':'. 
-
-Phil
+You should know that we are already in violent agreement, if you re-read
+my message where I say "a good default matters".
