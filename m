@@ -1,63 +1,107 @@
-From: allstars <allstars.chh@gmail.com>
-Subject: 1 patch to two branches
-Date: Thu, 3 Mar 2011 04:46:36 -0800 (PST)
-Message-ID: <38ac3be3-8d09-4a38-b31e-9365fe0f2992@v11g2000prb.googlegroups.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: cloud tags feature produces malformed XML for errors
+Date: Thu, 3 Mar 2011 14:29:29 +0100
+Message-ID: <201103031429.32657.jnareb@gmail.com>
+References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek> <201103022218.46640.jnareb@gmail.com> <20110303115856.GH24584@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 03 14:27:30 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "J.H." <warthog9@kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org,
+	Uwe =?iso-8859-1?q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>, admin@repo.or.cz
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Mar 03 14:29:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pv8Yb-0001XP-LW
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 14:27:06 +0100
+	id 1Pv8bG-0003dC-25
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 14:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758248Ab1CCN01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2011 08:26:27 -0500
-Received: from mail-gx0-f184.google.com ([209.85.161.184]:43680 "EHLO
-	mail-gx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757974Ab1CCN0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2011 08:26:24 -0500
-X-Greylist: delayed 2387 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Mar 2011 08:26:24 EST
-Received: by gxk20 with SMTP id 20so741988gxk.1
-        for <git@vger.kernel.org>; Thu, 03 Mar 2011 05:26:23 -0800 (PST)
-Received: by 10.91.123.15 with SMTP id a15mr174454agn.59.1299156396179; Thu,
- 03 Mar 2011 04:46:36 -0800 (PST)
-Received: by v11g2000prb.googlegroups.com with HTTP; Thu, 3 Mar 2011 04:46:36
- -0800 (PST)
-X-IP: 211.22.63.249
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.13
- (KHTML, like Gecko) Chrome/9.0.597.107 Safari/534.13,gzip(gfe)
+	id S1757927Ab1CCN3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2011 08:29:45 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42061 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756243Ab1CCN3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2011 08:29:44 -0500
+Received: by bwz15 with SMTP id 15so1133192bwz.19
+        for <git@vger.kernel.org>; Thu, 03 Mar 2011 05:29:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=QeeDsVdm2aMEJAVNSfklQ6hAeXPbu9JAf/wvs5HYgrI=;
+        b=I2SBLSXAu7e6/ATmr/kint0LAeQ/K9m1QQGa7tT+8GmKm3oIqrz6m+DJ+cFZKEHc8L
+         YARG0reQlyRFluKVB7EvN01tpXlLTn27fYYR1skkfff5cScnCW7YbeVR/Zm7DjKZm0B1
+         LdADo4Ua1kNbyptRKpR+ka2hUzWFIQEURb57E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=MSk1/ZlBkZ2TgFVr/7vtPIxmivR4/qpCbUsso/ZiNGxJJTg9VAL59HRegbaf0oUPFp
+         6UxUPYOREmBQ6PUarl92R/hVhu6q7HTlTbJZPy56kdVWtKKgGbNiZbyUwo1HzG76hKF4
+         vd+EQZsr4blHRjBlUqYKKZdFMQWwFJTWmPB9A=
+Received: by 10.204.80.82 with SMTP id s18mr1404390bkk.149.1299158983569;
+        Thu, 03 Mar 2011 05:29:43 -0800 (PST)
+Received: from [192.168.1.13] (abwg77.neoplus.adsl.tpnet.pl [83.8.230.77])
+        by mx.google.com with ESMTPS id d17sm754873bkd.1.2011.03.03.05.29.40
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 03 Mar 2011 05:29:41 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110303115856.GH24584@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168393>
 
-hi
-my case is as follows
-I have two branches
-basically they are the same, except they differ from different package
-name(java) and namespace(cpp) due to customer request
+On Thu, 3 March 2011, Petr Baudis wrote:
+> On Wed, Mar 02, 2011 at 10:18:44PM +0100, Jakub Narebski wrote:
 
-but now I have a fix , say a patch
-I want to commit it to both branches
+> > Well, neither does README.html follow the repository when it is cloned,
+> > and usually neither does description ('description' file is generated by
+> > git default template, and description file overrides `gitweb.description'
+> > config variable).
+> > 
+> > Documentation always can be added, either as comments for the 'ctags'
+> > feature, or in gitweb/README (or, in the future, in gitweb manpage).
+> > 
+> > 
+> > What is most important that makes this feature to be considered for
+> > removal (or rehauling) is that only half of this feature is implemented
+> > in gitweb: the displaying part.  There is half-attempt of providing
+> > some web interface for managing tags... which needs external script with
+> > strict coupling, doesn't offer any access control as far as I know, do
+> > not allow deleting tags, etc.
+> 
+> Well, but your argument above also applies here - gitweb does not allow
+> users to modify README.html or desrciption either. Who knows where ctags
+> may come from, they might even be autogenerated based on something.
+> I admit that the code could be a bit more resilient to invalid contents
+> of the files, but I do not see that as a major problem either (it is
+> possible to confuse gitweb by putting invalid stuff into other
+> repository files too).
 
-but I am lazy so I just want to do just one 'git commit' and 'git
-push'
+Well, if not the whole 'ctags' / folksonomy feature, then perhaps (as
+proposed in other subthread of this discussion, and what Uwe agreed upon)
+to remove "write" support for content tags.
 
-so I am thinking using a githook in remote server
-and each commit to branch A can also commit to branch B as well
-
-but I am not quite sure what I should use in the hook
-
-git rebase , git merge or git cherry pick ?
-
-seems these 3 ways all lead to the same result
-but I dont know which is better and why
+Current solution with gitweb providing interface, and third-party script
+providing implementation for creating tags, with unspecified API given by
+gitweb, and no way to edit / delete tags from web interface, seems 
+half-baked at best.
 
 
-thanks
+BTW. if I remember correctly [failed] GSoC 2010 project was among others
+to add ability to edit description and README.html from gitweb; is there
+any code about this in Pavan repository?
+
+-- 
+Jakub Narebski
+Poland
