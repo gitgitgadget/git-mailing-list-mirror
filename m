@@ -1,83 +1,77 @@
-From: Dietmar Winkler <dietmarw@gmx.de>
-Subject: [Bug] %[a|c]d placeholder does not respect --date= option in combination
- with git archive
-Date: Thu, 03 Mar 2011 10:30:16 +0100
-Message-ID: <4D6F5FA8.5030105@gmx.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC/PATCH] commit notes workflow
+Date: Thu, 3 Mar 2011 12:12:39 +0100
+Message-ID: <AANLkTikzgGY8Fryfc7n2MYiL8ZvY1Vr0cj4QStAypwBf@mail.gmail.com>
+References: <20110225133056.GA1026@sigill.intra.peff.net> <201102251658.22678.johan@herland.net>
+ <20110301215907.GA23945@sigill.intra.peff.net> <201103020121.54690.johan@herland.net>
+ <AANLkTino7fGnLutJ3cAxcvx8O-JbcDPJDrYHznjoN-TC@mail.gmail.com> <7v39n4ammh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 03 10:30:38 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 12:13:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pv4rk-0003uU-Qj
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 10:30:37 +0100
+	id 1Pv6TK-0007ql-S4
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 12:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756779Ab1CCJa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2011 04:30:26 -0500
-Received: from mailout-de.gmx.net ([213.165.64.22]:34232 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1756636Ab1CCJaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2011 04:30:21 -0500
-Received: (qmail invoked by alias); 03 Mar 2011 09:30:18 -0000
-Received: from pc88180.hit.no (EHLO [128.39.88.180]) [128.39.88.180]
-  by mail.gmx.net (mp016) with SMTP; 03 Mar 2011 10:30:18 +0100
-X-Authenticated: #223389
-X-Provags-ID: V01U2FsdGVkX18Fq95wEaMF57R0c6qUqjQDiP7j2zO6QN4PC8Vxpb
-	k1dDnVuKHTwrIE
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.5.0
-X-Enigmail-Version: 1.1.1
-X-Y-GMX-Trusted: 0
+	id S1756557Ab1CCLNV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Mar 2011 06:13:21 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:37421 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755315Ab1CCLNU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Mar 2011 06:13:20 -0500
+Received: by yxs7 with SMTP id 7so322917yxs.19
+        for <git@vger.kernel.org>; Thu, 03 Mar 2011 03:13:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=nEOI8vKWA3cxvpZQMIh3ERaiL9F2KNsefy1hou2H4Cs=;
+        b=RbrHwRWKFP4etmkIUtaVVikOoIZDgXrJNkq0aG5RKYuSca9HWaVKHJ8tp27XP3Wdmp
+         WBY1Wj/fB2H+IyF7CQltli6Z2Z6a2lLMCRnrVVo/OfMzFlJpcGcoMUxdOiyhrIUdBa/9
+         GDpxnBbBK69rzOzsZeMaaLQGOrTnzXE6Bjx2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=AQhpt5IZsJAXDB3zPQfUCJAgC725OhmErgO12dxBd4HJ0Afainz44H10g+lgMdOcoe
+         Hejl5cwsjXKx5xaT/rvnYru8WO/vhvbj6I1N/RiJGO6Si71qjx1kE3dbiI0X/nnOBdtw
+         azAWiI7m6rimnte17P50S3pqdFj24UcdgGi7I=
+Received: by 10.150.227.2 with SMTP id z2mr1635407ybg.178.1299150799206; Thu,
+ 03 Mar 2011 03:13:19 -0800 (PST)
+Received: by 10.151.11.12 with HTTP; Thu, 3 Mar 2011 03:12:39 -0800 (PST)
+In-Reply-To: <7v39n4ammh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168385>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Heya,
 
-It seems like that the place holders %ad and %cd do not respect the
-- --date= option when used as part of the export substitution.
+On Thu, Mar 3, 2011 at 04:50, Junio C Hamano <gitster@pobox.com> wrote:
+> Good question. =C2=A0There was no reason other than "that is just a h=
+istorical
+> accident".
+>
+> The intention has always been "allow people to review the change for =
+the
+> last time while writing a log message"; there was never a feature req=
+uest
+> to allow the diff to be included---it would always have been an unwel=
+come
+> accident it that ever happened.
 
-In my file I have the place holder $Format:%ad$ and in .git/config the
-setting log.date = short is present.
+In that case, can we change it to be that way now if it makes this case=
+ easier?
 
-I can very this the date setting by running
-	git log --pretty=format:%ad
-and I get:
-2011-03-03
-2011-02-28
-2011-02-28
-2011-02-28
-2011-02-28
+--=20
+Cheers,
 
-
-Now if I run on the same repo
-	git archive --format=zip HEAD -o out.zip
-and check the place holder in the exported zip file it is actually
-replaced with:
-
-Thu, 3 Mar 2011 10:06:43 +0100
-
-and not
-
-2011-03-03
-
-The same happens with the place holder %cd
-
-/Dietmar/
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iJwEAQECAAYFAk1vX6gACgkQCXG8gXafJGFfHwQApYJ/y0bS0D97fMKGjjBjjZQv
-sOrPbwxIaPII2RGeRqxlQLjDL2kYnXHObTor+3rLWbNHLXPjjPw/2r4YIeCxz/f+
-vA8ro9o4dTAyvGiUc/xUhu/U4XaVuV4Rl3QX83oaGmuefHRGc5/esex4R4mnzVdW
-QBPVvqqs25gyiu7zV6s=
-=lVtM
------END PGP SIGNATURE-----
+Sverre Rabbelier
