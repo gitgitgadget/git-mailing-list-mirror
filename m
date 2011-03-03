@@ -1,64 +1,218 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] commit, status: #comment diff output in verbose mode
-Date: Thu, 3 Mar 2011 12:25:59 +0100
-Message-ID: <AANLkTinDWTEM4C2tkCyEa3zgrFNceUJW_qw7Bj94HDvL@mail.gmail.com>
-References: <AANLkTikzgGY8Fryfc7n2MYiL8ZvY1Vr0cj4QStAypwBf@mail.gmail.com> <1299151419-16027-1-git-send-email-icomfort@stanford.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Ian Ward Comfort <icomfort@stanford.edu>
+Subject: [PATCH] commit, status: #comment diff output in verbose mode
+Date: Thu,  3 Mar 2011 03:23:39 -0800
+Message-ID: <1299151419-16027-1-git-send-email-icomfort@stanford.edu>
+References: <AANLkTikzgGY8Fryfc7n2MYiL8ZvY1Vr0cj4QStAypwBf@mail.gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org
-To: Ian Ward Comfort <icomfort@stanford.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 03 12:26:45 2011
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 12:31:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pv6g9-0005B0-Cm
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 12:26:45 +0100
+	id 1Pv6kT-0007AN-KW
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 12:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757792Ab1CCL0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2011 06:26:40 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:34116 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755376Ab1CCL0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2011 06:26:39 -0500
-Received: by yxs7 with SMTP id 7so326372yxs.19
-        for <git@vger.kernel.org>; Thu, 03 Mar 2011 03:26:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=HiJ8Cj4Dr+uiHRyJnr068+wIFCXVL5kijsRo65Qjx/w=;
-        b=unoZsNXBM5ekELGcitBaCSPcOQ7G53jhk5oNdbrTDhWsTMDcPujsBguNBtrc8KdC8o
-         gxBvbkaM2L3G66xLOwsRH/QU8CLQ4pLu2a46chnU/8QAyIuwv5i25jCUdzVvFnOiC4pW
-         bn8zuy63cHlI1i9Jv+eVoTL3VmKINUFSNxDaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=o9d9leiaEJSxLXYfGiYPniCr9a71ydTdS6y1KK7OCNlM9b7pD15OGpyTcjZOeSgZsU
-         l7lzPWfffiLfeB/mIGlxkzGFZOzWNA2sldtFANA8FVhy1eIKkD34t6f5EaJZRHTFj+W6
-         iDaP1PdfuzstHGsE20gg8ovU75Y6EromAuMVo=
-Received: by 10.150.218.16 with SMTP id q16mr1582050ybg.349.1299151599122;
- Thu, 03 Mar 2011 03:26:39 -0800 (PST)
-Received: by 10.151.11.12 with HTTP; Thu, 3 Mar 2011 03:25:59 -0800 (PST)
-In-Reply-To: <1299151419-16027-1-git-send-email-icomfort@stanford.edu>
+	id S1757909Ab1CCLbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2011 06:31:08 -0500
+Received: from smtp3.Stanford.EDU ([171.67.219.83]:52520 "EHLO
+	smtp.stanford.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756557Ab1CCLbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2011 06:31:07 -0500
+X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Mar 2011 06:31:07 EST
+Received: from smtp.stanford.edu (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with SMTP id 4A9B51A1D06;
+	Thu,  3 Mar 2011 03:23:46 -0800 (PST)
+Received: from ashbury.stanford.edu (ashbury.Stanford.EDU [171.67.43.200])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.stanford.edu (Postfix) with ESMTPS id C4DDA1A1CF3;
+	Thu,  3 Mar 2011 03:23:43 -0800 (PST)
+Received: by ashbury.stanford.edu (Postfix, from userid 26037)
+	id A1AC81D005A; Thu,  3 Mar 2011 03:23:43 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.1.177.g1c06f
+In-Reply-To: <AANLkTikzgGY8Fryfc7n2MYiL8ZvY1Vr0cj4QStAypwBf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168387>
 
-Heya,
+On 3 Mar 2011, at 3:12 AM, Sverre Rabbelier wrote:
+> On Thu, Mar 3, 2011 at 04:50, Junio C Hamano <gitster@pobox.com> wrote:
+>> Good question.  There was no reason other than "that is just a historical
+>> accident".
+>>
+>> The intention has always been "allow people to review the change for the
+>> last time while writing a log message"; there was never a feature request
+>> to allow the diff to be included---it would always have been an unwelcome
+>> accident it that ever happened.
+>
+> In that case, can we change it to be that way now if it makes this case
+> easier?
 
-On Thu, Mar 3, 2011 at 12:23, Ian Ward Comfort <icomfort@stanford.edu> wrote:
-> How about something like this?
+How about something like this?
 
-Yup, that's what I meant :)
+--8<--
 
+By historical accident, diffs included in commit templates and status
+output when the "-v" option is given are not prefixed with the # comment
+character, as other advice and status information is. Stripping these
+lines is thus a best-effort operation, as it is not always possible to
+tell which lines were generated by "-v" and which were inserted by the
+user.
+
+Improve this situation by adding the # prefix to diff output along with
+all other status output in these cases. The change is simply made thanks
+to a3c158d (Add a prefix output callback to diff output, 2010-05-26). The
+prefixed diff can be stripped (or not, as configured) by the standard
+cleanup code, so our special verbose-mode heuristic can be removed.
+
+Documentation and a few tests which rely on the old "-v" format are
+updated to match. One known breakage is fixed in t7507.
+
+Signed-off-by: Ian Ward Comfort <icomfort@stanford.edu>
+---
+ Documentation/git-commit.txt |    3 +--
+ builtin/commit.c             |    7 -------
+ t/t4030-diff-textconv.sh     |    2 +-
+ t/t7502-commit.sh            |    4 ++--
+ t/t7507-commit-verbose.sh    |    4 ++--
+ wt-status.c                  |   12 ++++++++++++
+ 6 files changed, 18 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 8f89f6f..792f993 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -233,8 +233,7 @@ configuration variable documented in linkgit:git-config[1].
+ --verbose::
+ 	Show unified diff between the HEAD commit and what
+ 	would be committed at the bottom of the commit message
+-	template.  Note that this diff output doesn't have its
+-	lines prefixed with '#'.
++	template.
+ 
+ -q::
+ --quiet::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 355b2cb..efecac3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1381,13 +1381,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		die("could not read commit message: %s", strerror(saved_errno));
+ 	}
+ 
+-	/* Truncate the message just before the diff, if any. */
+-	if (verbose) {
+-		p = strstr(sb.buf, "\ndiff --git ");
+-		if (p != NULL)
+-			strbuf_setlen(&sb, p - sb.buf + 1);
+-	}
+-
+ 	if (cleanup_mode != CLEANUP_NONE)
+ 		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
+ 	if (message_is_empty(&sb) && !allow_empty_message) {
+diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
+index 88c5619..b00999e 100755
+--- a/t/t4030-diff-textconv.sh
++++ b/t/t4030-diff-textconv.sh
+@@ -79,7 +79,7 @@ test_expect_success 'format-patch produces binary' '
+ test_expect_success 'status -v produces text' '
+ 	git reset --soft HEAD^ &&
+ 	git status -v >diff &&
+-	find_diff <diff >actual &&
++	sed -e "s/^# //" <diff | find_diff >actual &&
+ 	test_cmp expect.text actual &&
+ 	git reset --soft HEAD@{1}
+ '
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index 50da034..a916001 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -151,8 +151,8 @@ test_expect_success 'verbose' '
+ 
+ 	echo minus >negative &&
+ 	git add negative &&
+-	git status -v | sed -ne "/^diff --git /p" >actual &&
+-	echo "diff --git a/negative b/negative" >expect &&
++	git status -v | sed -ne "/^# diff --git /p" >actual &&
++	echo "# diff --git a/negative b/negative" >expect &&
+ 	test_cmp expect actual
+ 
+ '
+diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+index da5bd3b..5b21bbb 100755
+--- a/t/t7507-commit-verbose.sh
++++ b/t/t7507-commit-verbose.sh
+@@ -5,7 +5,7 @@ test_description='verbose commit template'
+ 
+ cat >check-for-diff <<EOF
+ #!$SHELL_PATH
+-exec grep '^diff --git' "\$1"
++exec grep '^# diff --git' "\$1"
+ EOF
+ chmod +x check-for-diff
+ test_set_editor "$PWD/check-for-diff"
+@@ -65,7 +65,7 @@ test_expect_success 'diff in message is retained without -v' '
+ 	check_message diff
+ '
+ 
+-test_expect_failure 'diff in message is retained with -v' '
++test_expect_success 'diff in message is retained with -v' '
+ 	git commit --amend -F diff -v &&
+ 	check_message diff
+ '
+diff --git a/wt-status.c b/wt-status.c
+index a82b11d..fc0063e 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -32,6 +32,12 @@ static const char *color(int slot, struct wt_status *s)
+ 	return c;
+ }
+ 
++static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void *data)
++{
++	assert(data);
++	return (struct strbuf *)data;
++}
++
+ void wt_status_prepare(struct wt_status *s)
+ {
+ 	unsigned char sha1[20];
+@@ -588,6 +594,7 @@ static void wt_status_print_verbose(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+ 	struct setup_revision_opt opt;
++	struct strbuf diff_output_prefix = STRBUF_INIT;
+ 
+ 	init_revisions(&rev, NULL);
+ 	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
+@@ -596,10 +603,14 @@ static void wt_status_print_verbose(struct wt_status *s)
+ 	opt.def = s->is_initial ? EMPTY_TREE_SHA1_HEX : s->reference;
+ 	setup_revisions(0, NULL, &rev, &opt);
+ 
++	strbuf_addstr(&diff_output_prefix, "# ");
++
+ 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
+ 	rev.diffopt.detect_rename = 1;
+ 	rev.diffopt.file = s->fp;
+ 	rev.diffopt.close_file = 0;
++	rev.diffopt.output_prefix = diff_output_prefix_callback;
++	rev.diffopt.output_prefix_data = &diff_output_prefix;
+ 	/*
+ 	 * If we're not going to stdout, then we definitely don't
+ 	 * want color, since we are going to the commit message
+@@ -609,6 +620,7 @@ static void wt_status_print_verbose(struct wt_status *s)
+ 	if (s->fp != stdout)
+ 		DIFF_OPT_CLR(&rev.diffopt, COLOR_DIFF);
+ 	run_diff_index(&rev, 1);
++	strbuf_release(&diff_output_prefix);
+ }
+ 
+ static void wt_status_print_tracking(struct wt_status *s)
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.7.4.1.177.g1c06f
