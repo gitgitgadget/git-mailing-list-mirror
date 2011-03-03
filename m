@@ -1,73 +1,76 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/alternative/raw and rough] setup.c: denote repo wide pathspecs
- by ':'
-Date: Thu, 03 Mar 2011 09:21:34 +0100
-Message-ID: <4D6F4F8E.6090905@drmicha.warpmail.net>
-References: <AANLkTi=xrnxUtkayyW1Merh49N6uHy5p-GMrYe6+p==t@mail.gmail.com> <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <AANLkTimJ7QsPTW0Vm9JgYVbcRQRoTnuiXUxOK=0unk6P@mail.gmail.com> <4D6CD593.2090705@drmicha.warpmail.net> <AANLkTim2HmBEQv=buRG7-87+c99FnsxXUTQzKy__azfM@mail.gmail.com> <4D6F1035.1040902@cisco.com>
+From: Alexander Miseler <alexander@miseler.de>
+Subject: Re: [BUG] Out of memory in Git.pm
+Date: Thu, 3 Mar 2011 08:37:14 +0000 (UTC)
+Message-ID: <loom.20110303T093108-235@post.gmane.org>
+References: <4D6E3FB7.60600@tweerlei.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 09:25:23 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 03 09:50:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pv3qc-00034y-91
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 09:25:22 +0100
+	id 1Pv4Em-0004hu-Cx
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 09:50:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757224Ab1CCIZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2011 03:25:04 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41225 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753591Ab1CCIZB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Mar 2011 03:25:01 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0ED5620906;
-	Thu,  3 Mar 2011 03:25:01 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 03 Mar 2011 03:25:01 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=+FNjBtZf59kxozZ5LZlNUxQpA04=; b=qJwOf41N3kVOpAf5py/mnOGjZk3n150WDSGQW1boY+8MVPy07KzlfdKV1XdhofqQuuxtCQjDEj85S1JgRKEn+Rzd8sfKSGwOvEkTX5012e0cjaYjmoFUtWuobZFUb0Sihz4p2VvhP49FIGHeLtWpzevI/lAOZlHmmk7dJ967dOA=
-X-Sasl-enc: aAI+2hko3U1LDldS+z/SoptfGDCA5Kq/svf93v+IZchL 1299140700
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 168C1408125;
-	Thu,  3 Mar 2011 03:24:59 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.8
-In-Reply-To: <4D6F1035.1040902@cisco.com>
+	id S1757969Ab1CCIuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2011 03:50:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:48533 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756566Ab1CCIuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2011 03:50:07 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Pv4EX-0004br-PA
+	for git@vger.kernel.org; Thu, 03 Mar 2011 09:50:05 +0100
+Received: from dslb-188-103-115-227.pools.arcor-ip.net ([188.103.115.227])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Mar 2011 09:50:05 +0100
+Received: from alexander by dslb-188-103-115-227.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Mar 2011 09:50:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.103.115.227 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Iron/9.0.600.0 Chrome/9.0.600.0 Safari/534.13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168382>
 
-Phil Hord venit, vidit, dixit 03.03.2011 04:51:
-> On 03/01/2011 07:12 PM, Nguyen Thai Ngoc Duy wrote:
->> On Tue, Mar 1, 2011 at 6:16 PM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Nguyen Thai Ngoc Duy venit, vidit, dixit 01.03.2011 12:13:
->>>> If you are going to turn pathspecs into something more complex,
->>>> reserve room for future extension. I have negative pathspecs that can
->>>> utilize it.
->>>>
->>>> I take it, from now on people must refer file name ':foo' as './:foo'
->>>> with your patch?
->>> That is up for discussion, of course. When discussing a new approach for
->>> file mode dependent attributes, I was hoping to get through with
->>> symlink:path, and did not. But it was decided that something like
->>> :symlink:path would be good enough, in the sense of avoiding enough
->>> possible conflicts. That made me hope that :path would be, too.
->> Good morning! I'm saner now. How about :/path? That would reserve
->> anything next to ':' except '/'.
-> 
-> I like this.  The only 'failure' that comes to mind is something like
-> 
->      git log -- */*.c
-> 
-> when there's a subdirectory named ':'. 
+Robert Wruck <wruck <at> tweerlei.de> writes:
+> there seems to be a problem in Git.pm (git-1.7.4.1, sub cat_blob, line 
+> 891) where the whole object is read into memory ($blob) before writing 
 
-msysgit anyone?
 
-Michael
+There already seems to be a fix for this in 
+git://repo.or.cz/git/mingw/4msysgit.git but I couldn't find the commit in 
+git://git.kernel.org/pub/scm/git/git.git:
+
+Author:		Gregor Uhlenheuer (kongo2002@googlemail.com)
+Author date:	13 days ago (Fri Feb 18 11:42:12 2011 +0100)
+Committer:	Johannes Schindelin (johannes.schindelin@gmx.de)
+Commit date:	13 days ago (Fri Feb 18 17:09:08 2011 +0100)
+Commit hash:	e91fdbabfe29b6e37f1bc582316a82f7784a0275
+
+
+Git.pm: Use stream-like writing in cat_blob()
+
+This commit fixes the issue with the handling of large files causing an
+'Out of memory' perl exception. Instead of reading and writing the whole
+blob at once now the blob is written in small pieces.
+
+The problem was raised and discussed in this mail to the msysGit mailing
+list: http://thread.gmane.org/gmane.comp.version-control.msysgit/12080
+
+Signed-off-by: Gregor Uhlenheuer <kongo2002@googlemail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+Contained in branches: devel
+Contained in no tag
