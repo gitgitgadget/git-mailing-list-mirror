@@ -1,76 +1,62 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: libgit2: Resolving HEAD to a SHA
-Date: Thu, 3 Mar 2011 18:31:01 +0100
-Message-ID: <AANLkTi=Cb2HTqopLs9J1cgakJGNz2O_o7mhW7nKzbqY2@mail.gmail.com>
-References: <4D6FBD00.6010208@workspacewhiz.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 0/3] Fix unnecessary (mtime) updates of files during
+ merge
+Date: Thu, 03 Mar 2011 09:52:21 -0800
+Message-ID: <7vpqq8852i.fsf@alter.siamese.dyndns.org>
+References: <1299132792-17497-1-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>, vicent@github.com,
-	Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 18:31:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stephen Rothwell <sfr@canb.auug.org.au>,
+	Jeff King <peff@peff.net>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 18:52:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvCNQ-0007Gz-2P
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 18:31:48 +0100
+	id 1PvChd-0002Ur-Ll
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 18:52:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758461Ab1CCRbm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Mar 2011 12:31:42 -0500
-Received: from mail-gw0-f51.google.com ([74.125.83.51]:63982 "EHLO
-	mail-gw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756708Ab1CCRbl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Mar 2011 12:31:41 -0500
-Received: by gwb15 with SMTP id 15so686649gwb.10
-        for <git@vger.kernel.org>; Thu, 03 Mar 2011 09:31:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=rxFiZVoHARGMdsARfexsbLpygrApLuNiO4ez1K+n6j4=;
-        b=vGj3sV2rxSGfA22rtwXyPvs66T5udAl6EuDUS0QcPgaxjouPB7NvcxX0aLndks6Rce
-         nykoMHS2TYOuqxtua9HffwKrsVN4dvZeUvjuWsxp/sZRInAjDyVGykJdIHdpRV1h57Ab
-         Taxsbz8YtKnJ4zXr+zq8Zmt6cg9rillhs/6k4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=gGYgDWJQdv59Vjrt7TEWLBizNU3W3D91QD07lNi8hZN3EwVqSmfkwxJZFjgO9ikK88
-         rCE6Xuk3g/Qpi+wnHetyWSfvOfUu6oV4RDMgsrXLofe08Q0TQ0aaaTYdwAu03cbkK9TD
-         L2MS8HxnReO+UyCkSgWC4oKIlkI13A5Y0i3Wo=
-Received: by 10.150.178.17 with SMTP id a17mr1913961ybf.163.1299173501134;
- Thu, 03 Mar 2011 09:31:41 -0800 (PST)
-Received: by 10.151.11.12 with HTTP; Thu, 3 Mar 2011 09:31:01 -0800 (PST)
-In-Reply-To: <4D6FBD00.6010208@workspacewhiz.com>
+	id S932277Ab1CCRwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2011 12:52:36 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51246 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932182Ab1CCRwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2011 12:52:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 106423F11;
+	Thu,  3 Mar 2011 12:53:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=XoHBvVGkvPKom8rkHJBjTfjDgEo=; b=au0/gO
+	cpTs1froCHvvE4LS0cEd7T/7CIzGOvAFFNraNxxCyMXnXu6GHTciK3d2p0oUHHjn
+	fknhmoNFccRFyAwQ9tMG8TEGuiF9PZjst9KlXh3Txs6fr+FdSCjhD4lBUqhEerda
+	yLXoD9Q9pSk2+FEv0KIovPmLWoUp3q521/DZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CB89bvedbp/z0i/EsX8csWiDsktsisyF
+	hmWUlz6lFV27CSgqBHJxO7zwSfxBKBzQuiMppiXc0ZUG9g9Q1Flf7jl9eHGQ61N0
+	1onhlLoJAlOoKsIvZWOnHhB72xOS7nbdFxGjYCEtjRMW1bH1lzcy83LCZOpdfuK9
+	Htsb29jrLtk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C37C03F0F;
+	Thu,  3 Mar 2011 12:53:49 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8385E3F0B; Thu,  3 Mar 2011
+ 12:53:44 -0500 (EST)
+In-Reply-To: <1299132792-17497-1-git-send-email-newren@gmail.com> (Elijah
+ Newren's message of "Wed\,  2 Mar 2011 23\:13\:09 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 31CBAFC6-45BF-11E0-A524-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168402>
 
-Heya,
+This seems to more-or-less match what I queued in 'pu' yesterday (v2 with
+fix-ups from the list).
 
-[+scott, vincent]
-
-On Thu, Mar 3, 2011 at 17:08, Joshua Jensen <jjensen@workspacewhiz.com>=
- wrote:
-> I spent a couple hours yesterday trying different methods of resolvin=
-g HEAD
-> to its appropriate SHA-1. =C2=A0At best, I could get a resolution of =
-HEAD to
-> 'master'.
->
-> How do I achieve the functionality of 'git rev-parse' with the libgit=
-2 API?
->
-> Thanks.
->
-> Josh
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Thanks.
