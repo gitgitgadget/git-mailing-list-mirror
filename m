@@ -1,86 +1,73 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: git-svn with big subversion repository
-Date: Wed, 02 Mar 2011 23:13:44 -0500
-Message-ID: <4D6F1578.3000203@cisco.com>
-References: <C992EE5B.CBFB%jkristian@linkedin.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: John Kristian <jkristian@linkedin.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 05:14:03 2011
+From: Elijah Newren <newren@gmail.com>
+Subject: [PATCHv3 0/3] Fix unnecessary (mtime) updates of files during merge
+Date: Wed,  2 Mar 2011 23:13:09 -0700
+Message-ID: <1299132792-17497-1-git-send-email-newren@gmail.com>
+Cc: git@vger.kernel.org, Stephen Rothwell <sfr@canb.auug.org.au>,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Mar 03 07:13:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PuzvO-00015W-VX
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 05:14:03 +0100
+	id 1Pv1mo-0003e5-To
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Mar 2011 07:13:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758118Ab1CCENq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2011 23:13:46 -0500
-Received: from sj-iport-2.cisco.com ([171.71.176.71]:28723 "EHLO
-	sj-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757807Ab1CCENq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2011 23:13:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1406; q=dns/txt;
-  s=iport; t=1299125626; x=1300335226;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=3Jr1ttUM1eCmnWQEOhplQ8n9eTojzet4JTSwN0eUKu4=;
-  b=FnTdlgtDZHCiURXanAgmMOCz/Hd/hKCEQDMLe/fJz5rpaf/wn8cO4iOu
-   BsDTgwP18ywMlnd6q4rEI1ViyGOQQZnzo+lDwIYrhxuSq9G/yyQn/DCjA
-   oJc3w2ookfFBBnBJtLGssV/Nml4+8APIWgF1ZMswQ2zy8lvgqtW0lgwoz
-   I=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAFekbk2rR7H+/2dsb2JhbACmcnSiZ5t6hWEEhReHD4NA
-X-IronPort-AV: E=Sophos;i="4.62,257,1297036800"; 
-   d="scan'208";a="316712942"
-Received: from sj-core-2.cisco.com ([171.71.177.254])
-  by sj-iport-2.cisco.com with ESMTP; 03 Mar 2011 04:13:45 +0000
-Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
-	by sj-core-2.cisco.com (8.13.8/8.14.3) with ESMTP id p234Djl5000499;
-	Thu, 3 Mar 2011 04:13:45 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <C992EE5B.CBFB%jkristian@linkedin.com>
-X-Enigmail-Version: 1.1.2
+	id S1753051Ab1CCGNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2011 01:13:14 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:37884 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931Ab1CCGNN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2011 01:13:13 -0500
+Received: by qwd7 with SMTP id 7so617671qwd.19
+        for <git@vger.kernel.org>; Wed, 02 Mar 2011 22:13:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=tUpnpJmBIJg2Cde3DzOcsRa1T95hpws7ifUPaZFD/j4=;
+        b=EwdJ9VlRPXqGg5r7sICfJ6OUcMcm3ENcDjesrMC+Z6qnN4TdaldLC0VbxRLdykD8//
+         pqlqf/M7QXGPRTSwaNkP7F+Thse81Vjuc6+9ji3U7xmjZ4apnTotgSgj7MJRHWBUpgdU
+         D3zMGpviJ8CqPUjfgvm0JAkF67vMAvxha88YI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Dn17kFtgqhrtuNtyuGy2pU99mVkmdSj04xyr34VQILKq1as2lvDIPm+cIAMUqjvPUH
+         h19YqNcui/WlljqhNW39aNzyTO5YnnwxQ7yEaeYiv6y0kInLxYfvNT5HALo+goKMfWRK
+         WqyoopzKJpRP0dMnK2DBKb6s6w0cQiillsBl0=
+Received: by 10.224.205.132 with SMTP id fq4mr635907qab.297.1299132792163;
+        Wed, 02 Mar 2011 22:13:12 -0800 (PST)
+Received: from Miney.hsd1.nm.comcast.net. (c-174-56-87-200.hsd1.nm.comcast.net [174.56.87.200])
+        by mx.google.com with ESMTPS id s32sm402361qco.38.2011.03.02.22.13.09
+        (version=SSLv3 cipher=OTHER);
+        Wed, 02 Mar 2011 22:13:10 -0800 (PST)
+X-Mailer: git-send-email 1.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168375>
 
-On 03/01/2011 09:43 PM, John Kristian wrote:
-> How do you recommend using git to work with branches of a large, busy
-> subversion repository? In general, how can small teams use git for their
-> tasks, and use subversion to coordinate with a larger organization?
->
-> git-svn has some trouble, I find. For example, this tries to copy the entire
-> repo starting with revision 1:
->
-> git svn clone --stdlayout svn+ssh://server/repo/project
->
-> This would take weeks, I estimate for my subversion repository.
->
-> Choosing a subset of the repository enables git svn clone to cope, but then
-> git svn fetch will stall after processing a few revisions.  For example:
->
-> git svn clone --no-follow-parent --no-minimize-url \
->  --branches=branches \
->  --ignore-paths="^(?!branches/(TEAM_|RELEASE_))" \
->  -r $BASE svn+ssh://server/repo/project
-> git svn fetch --no-follow-parent # stalls
->
-> I don't why it stalls. I guess it's doing something that requires processing
-> the entire subversion repository.
+This patch series fixes a bug reported by Stephen Rothwell -- that
+during merges git would unnecessarily update modification times of
+files.  As noted by both Jeff and Junio, it's a bit of a band-aid
+since it doesn't dive into fixing make_room_for_path() and
+make_room_for_directories_of_df_conflicts(), but that would be a
+much bigger and more invasive change.
 
-My initial git-svn clone took several days and many restarts.  It was
-much faster on my laptop.  I found out later I had a flaky router and it
-was dropping about 20% of my packets.  Replaced the router and the clone
-dropped to a reasonable couple-of-hours.   Is it just me?
+Changes since last version:
+  * Portability fixes for the tests suggested by Hannes (thanks!)
+  * Additional test cleanups suggested by Jeff
+  * Jeff's acks have been added
 
-You can optimize by cloning specific paths inside the svn repo and then
-merging in git later.
+Elijah Newren (3):
+  t6022: New test checking for unnecessary updates of renamed+modified files
+  t6022: New test checking for unnecessary updates of files in D/F conflicts
+  merge-recursive: When we detect we can skip an update, actually skip it
 
-Phil
+ merge-recursive.c       |   17 ++++++++----
+ t/t6022-merge-rename.sh |   65 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 76 insertions(+), 6 deletions(-)
+
+-- 
+1.7.4
