@@ -1,110 +1,107 @@
-From: "Hillel (Sabba) Markowitz" <sabbahillel@gmail.com>
-Subject: Newbie question about setting up git repository from svn (git svn)
-Date: Fri, 4 Mar 2011 10:57:21 -0500
-Message-ID: <AANLkTi=UG4oq4QHhKoDOi9+4bhF1TDy4Z26ORj9Bdcwc@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] git cat-file does not terminate
+Date: Fri, 4 Mar 2011 11:00:47 -0500
+Message-ID: <20110304160047.GA9662@sigill.intra.peff.net>
+References: <4D70E340.3050309@tweerlei.de>
+ <20110304154014.GE24660@m62s10.vlinux.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 04 16:57:38 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Robert Wruck <wruck@tweerlei.de>, git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 04 17:00:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvXNp-000741-8x
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 16:57:37 +0100
+	id 1PvXR1-0000GE-GW
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 17:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932278Ab1CDP5Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2011 10:57:25 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:33559 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932264Ab1CDP5X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2011 10:57:23 -0500
-Received: by vxi39 with SMTP id 39so2120355vxi.19
-        for <git@vger.kernel.org>; Fri, 04 Mar 2011 07:57:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=AqJu2goCkqDFzS0nZ+iFFR/FdjNHGaTGQuI00MFEcjo=;
-        b=GM7dnepJDssltgeoL+jXu/0CrYiuT6SBvMzI6dXIWZRKcwl337NrdfZrdAQXWhYUlu
-         HMo6JIziTdZ2auWcR8HOY0rjqwA31ad9a3qzsCu5iWzhFaTp2ELS5HmGl9cIYyaQ3ajB
-         rxeC88BJIiAxmCyjsUWUbkE+ts0VQx78v9/yQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=CwYWo0DdhZMNeJmM97ri5KL7meCFcGeJ6K/WOUwa60ZJcWk34ravqDBfZQ5C/Cg61R
-         K89BznOPtzlU7Bd+91+VhRY3VLvbRVbwqp3FQtmAl2ymfSmWwjEdBnNnFgi96XEfPFtR
-         uiW6BV0D4T8IOSoZ0U+GW2SyWOw5roEmf2eBU=
-Received: by 10.52.89.101 with SMTP id bn5mr1191222vdb.121.1299254241933; Fri,
- 04 Mar 2011 07:57:21 -0800 (PST)
-Received: by 10.52.158.9 with HTTP; Fri, 4 Mar 2011 07:57:21 -0800 (PST)
+	id S1752232Ab1CDQAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2011 11:00:50 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:39115 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751790Ab1CDQAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2011 11:00:49 -0500
+Received: (qmail 4903 invoked by uid 111); 4 Mar 2011 16:00:49 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 04 Mar 2011 16:00:49 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Mar 2011 11:00:47 -0500
+Content-Disposition: inline
+In-Reply-To: <20110304154014.GE24660@m62s10.vlinux.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168444>
 
-Please respond directly to sabbahillel@gmail.com as I do not have time
-to follow this mailing list.
+On Fri, Mar 04, 2011 at 04:40:14PM +0100, Peter Baumann wrote:
 
+> > I "fixed" it by limiting each write to 64k (thus looping in
+> > write_in_full) but maybe somebody knows about that cygwin behaviour?
+> > 
+> > This seems to be the cause of the dreaded "No newline found after
+> > blob" when running `git svn clone` under cygwin on a repository with
+> > large files.
+> > 
+> > You could argue that this is a cygwin bug but maybe limiting each
+> > write to a maximum size is a simple workaround.
+> > 
+> Maybe you could post a patch, so everyone can see the technical implications
+> and discuss the fix?
 
-I am attempting to set up a git repository based on an svn repository.
-The idea would be that the members of the project would be able to use
-git exclusively with the central git repository acting as the
-coordinator. This git server would be the only one capable of issuing
-the git svn dcommit and git svn rebase and the members of the project
-would not have to worry about it. Eventually, the subversion
-repository would be transferred to git.
+It would probably look like the patch below, though it really feels like
+the right solution is to fix the cygwin bug.
 
-I created a separate Ubuntu VM in order to set up the git repository.
-I used "git svn clone -s" to set up MyProject.git on "gitserver"
+-Peff
 
-The command "git branch -a" shows
-* master
-  remotes/branch1
-  remotes/branch2
-  remotes/trunk
-
-
-I then went to my main VM and used ssh to clone the repository
-
-git clone gitserver:/opt/git/MyProject
-cd MyProject
-git branch -a
-* master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/master
-
-How do I check out the trunk or appropriate branches from the remote?
-I am probably misreading the documentation. Would it be
-
-git checkout -b branch1
-
-does the master on the remote (and here) actually point to the trunk by=
- default?
-should I checkout the branches on "gitserver"?
-
-I also do not see how I can get the list of branches from the remote
-location.without having to do an ssh into the gitserver, cd to the
-repository directory, and use a 'branch -a' there. Is there a way to
-ask for this information? I have not yet been successful in setting up
-gitosis yet because this is on an internal company intranet and I do
-not have a valid machine name for my accounts as everything is being
-done on VMs. Thus, my public key ends with
-"sabbahillel@desktop-ubuntu" rather than an actual machine name or
-address.
-
-Would you have a pointer to a HOW-TO that discusses this.
-
-Thanks for any help that you can give me.
-
---
-=C2=A0 =C2=A0 =C2=A0=C2=A0 Sabba=C2=A0 =C2=A0=C2=A0 -=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =D7=A1=D7=91=D7=90 =D7=94=D7=9C=D7=9C=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 -=C2=A0 =C2=A0=C2=A0 Hillel
-Hillel (Sabba) Markowitz | Said the fox to the fish, "Join me ashore"
-=C2=A0SabbaHillel@gmail.com | The fish are the Jews, Torah is our water
-http://sabbahillel.blogspot.com
+---
+diff --git a/Makefile b/Makefile
+index 4c31d1a..e7d3285 100644
+--- a/Makefile
++++ b/Makefile
+@@ -167,6 +167,9 @@ all::
+ # Define NO_ST_BLOCKS_IN_STRUCT_STAT if your platform does not have st_blocks
+ # field that counts the on-disk footprint in 512-byte blocks.
+ #
++# Define MAX_WRITE_SIZE to N if your platform has unpredictable results for
++# write() calls larger than N (e.g., cygwin).
++#
+ # Define ASCIIDOC7 if you want to format documentation with AsciiDoc 7
+ #
+ # Define DOCBOOK_XSL_172 if you want to format man pages with DocBook XSL v1.72
+@@ -928,6 +931,7 @@ ifeq ($(uname_O),Cygwin)
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+ 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	MAX_WRITE_SIZE=65536
+ 	# There are conflicting reports about this.
+ 	# On some boxes NO_MMAP is needed, and not so elsewhere.
+ 	# Try commenting this out if you suspect MMAP is more efficient
+@@ -1495,6 +1499,10 @@ ifdef NO_POSIX_GOODIES
+ 	BASIC_CFLAGS += -DNO_POSIX_GOODIES
+ endif
+ 
++ifdef MAX_WRITE_SIZE
++	BASIC_CFLAGS += -DMAX_WRITE_SIZE=$(MAX_WRITE_SIZE)
++endif
++
+ ifdef BLK_SHA1
+ 	SHA1_HEADER = "block-sha1/sha1.h"
+ 	LIB_OBJS += block-sha1/sha1.o
+diff --git a/wrapper.c b/wrapper.c
+index 056e9d6..a7a2437 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -133,6 +133,10 @@ ssize_t xread(int fd, void *buf, size_t len)
+ ssize_t xwrite(int fd, const void *buf, size_t len)
+ {
+ 	ssize_t nr;
++#ifdef MAX_WRITE_SIZE
++	if (len > MAX_WRITE_SIZE)
++		len = MAX_WRITE_SIZE;
++#endif
+ 	while (1) {
+ 		nr = write(fd, buf, len);
+ 		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
