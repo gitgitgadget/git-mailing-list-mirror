@@ -1,107 +1,94 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [PATCH] transport-helper.c: fix check for size_t < 0
-Date: Fri, 4 Mar 2011 21:20:46 +0100
-Message-ID: <AANLkTimc_iLDXxrV=tfZc+_dCkpx6897Lh8sZxkwbgDo@mail.gmail.com>
-References: <20110304202834.2e74d56d@absol.kitzblitz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] git-am silently applying patches incorrectly
+Date: Fri, 04 Mar 2011 13:33:17 -0800
+Message-ID: <7vtyfi606a.fsf@alter.siamese.dyndns.org>
+References: <4D70EBC3.3010400@colin.guthr.ie>
+ <7vr5am7p30.fsf@alter.siamese.dyndns.org>
+ <7vei6m7muw.fsf@alter.siamese.dyndns.org>
+ <7v39n27llq.fsf@alter.siamese.dyndns.org>
+ <AANLkTim=jpJmBZmtAVX2V8Ui44AwpTbevJtSR2Xk=wLX@mail.gmail.com>
+ <7vy64u65ta.fsf@alter.siamese.dyndns.org>
+ <loom.20110304T210337-216@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Kaiser <nikai@nikai.net>
-X-From: git-owner@vger.kernel.org Fri Mar 04 21:20:55 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexander Miseler <alexander@miseler.de>
+X-From: git-owner@vger.kernel.org Fri Mar 04 22:33:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvbUc-00046C-F8
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 21:20:54 +0100
+	id 1Pvccw-00011u-1g
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 22:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760139Ab1CDUUr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2011 15:20:47 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35573 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751746Ab1CDUUr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2011 15:20:47 -0500
-Received: by vws12 with SMTP id 12so2323596vws.19
-        for <git@vger.kernel.org>; Fri, 04 Mar 2011 12:20:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hg0C9yXj2TKX6mUQoUJHiWuGOu+sdfYvvlkaoVs9tOQ=;
-        b=wGeBLdSbB98b9aoKi5fpBUPwi1b6kL5ffRc3i5a95B3V+uPvNhCaMDedNSZdWS0zql
-         vM667FiecaDbaIEtY1DLhjkYFFxhiILwMA9L06iKwDf3/OaDm8Yk3Z+nHbbrrLV3N9WF
-         tvXnmFlI1rMUg87TyPeK1euFR4e0YD7baOOlw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FWsXPL8H29hYZgVdwnF8VDEV+bkktbQCJxq2WSgCrdNcGna75l6ElfYb0XpCUxBovi
-         n5PmsV808RvSi3nPaVfy45j6XKrhTrlpZWQ/6kf2CzVtOGNM/ZvzYRCiI52SkbNUcFR1
-         x481tYZIAGYvkIbJWxWqdTog1NZZCo5uGscCc=
-Received: by 10.52.72.232 with SMTP id g8mr1647308vdv.108.1299270046172; Fri,
- 04 Mar 2011 12:20:46 -0800 (PST)
-Received: by 10.220.61.140 with HTTP; Fri, 4 Mar 2011 12:20:46 -0800 (PST)
-In-Reply-To: <20110304202834.2e74d56d@absol.kitzblitz>
+	id S1760214Ab1CDVd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2011 16:33:28 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55867 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760167Ab1CDVd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2011 16:33:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CF99F40CF;
+	Fri,  4 Mar 2011 16:34:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0C+pnSZvI/cGwcK7LL0kF40fHqQ=; b=cImUkH
+	4RQQ46tckkg63NZZIoSDFlBHt2+7nplWjdCW6DZ8yAD8h1Cn4zSNf9Gj3KpVIqDY
+	3Ymsz0p5jYha3yr+p95g8NrSBlqWMl2VrW+FlaiPHde+PguH/x+GuzUM35RFUFS5
+	PqoeG0NYme5gqr+U1usWSlLhVZFm5clU1BHSk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JVMD55sKMCeygUjLi+02D/SWeTVnBLqQ
+	yv8w+j+iI8D8UMchg/fDoZli8j9mN3LndRZh/9FGrkXCsAGhuoVrmOldcwf4bGN6
+	yqGe5NtB9EqcxnyLh2bCY30kQk5QwqIbwHKUOeHWiSV+0tbVBE3P+iIpU4+tOA35
+	vE6ykHhvwJE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ABD7940CB;
+	Fri,  4 Mar 2011 16:34:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5EBF640CA; Fri,  4 Mar 2011
+ 16:34:41 -0500 (EST)
+In-Reply-To: <loom.20110304T210337-216@post.gmane.org> (Alexander Miseler's
+ message of "Fri\, 4 Mar 2011 20\:14\:01 +0000 \(UTC\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 39F06564-46A7-11E0-B91F-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168467>
 
-On Fri, Mar 4, 2011 at 8:28 PM, Nicolas Kaiser <nikai@nikai.net> wrote:
-> 'bytes' is unsigned of type size_t, and can't be negative.
-> But the assigned write() returns ssize_t, and -1 on error.
-> For testing < 0, 'bytes' needs to be of a signed type.
+Alexander Miseler <alexander@miseler.de> writes:
 
-You are right that, but the fix should be to use ssize_t not  plain "in=
-t".
-(udt_do_read() correctly uses ssize_t)
+> It's a bit intimidating for a newbie to chime in on a discussion between the 
+> creator and the maintainer, but:
+> IMHO the biggest problem here isn't the incorrectly, but rather the silently. 
+> Reducing the chance of guessing incorrectly is good, but git-am still has to 
+> guess sometimes and it should warn/inform the user when it does that.
 
-Not providing patch since the change is trivial.
+(Please don't cull Cc line).
 
->
-> Signed-off-by: Nicolas Kaiser <nikai@nikai.net>
-> ---
-> Testsuite did not regress at my place.
->
-> =A0transport-helper.c | =A0 =A04 ++--
-> =A01 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/transport-helper.c b/transport-helper.c
-> index 4e4754c..710b6f1 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -973,7 +973,7 @@ static int udt_do_read(struct unidirectional_tran=
-sfer *t)
-> =A0*/
-> =A0static int udt_do_write(struct unidirectional_transfer *t)
-> =A0{
-> - =A0 =A0 =A0 size_t bytes;
-> + =A0 =A0 =A0 int bytes;
->
-> =A0 =A0 =A0 =A0if (t->bufuse =3D=3D 0)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return 0; =A0 =A0 =A0 /* Nothing to wr=
-ite. */
-> @@ -989,7 +989,7 @@ static int udt_do_write(struct unidirectional_tra=
-nsfer *t)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (t->bufuse)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0memmove(t->buf, t->buf=
- + bytes, t->bufuse);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0transfer_debug("Wrote %i bytes to %s (=
-buffer now at %i)",
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (int)bytes, t->dest_nam=
-e, (int)t->bufuse);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 bytes, t->dest_name, (i=
-nt)t->bufuse);
-> =A0 =A0 =A0 =A0}
-> =A0 =A0 =A0 =A0return 0;
-> =A0}
-> --
-> 1.7.3.4
+No need to feel intimidated.  
 
+The patch under discussion was merely "first things first--let's fix the
+obviously wrong case that can be fixed without regression".
 
---=20
-Piotrek
+Try implementing that warning logic, and using it in real-life projects.
+You don't actually have to _code_ it, but merely imagining how it would
+work and perform would be sufficient for you to realize that it would be
+quite expensive (you need to find all the possible mismatches, essentially
+scanning the whole file), and worse yet, it would be annoyingly noisy with
+many false positives, because in many real-life projects, end of function
+tends to match the problematic pattern that triggered this discussion
+quite often even without patches that introduce more of the pattern.
+
+Unless you can reduce the false hits to manageable levels, such a warning
+is not very useful (it would be useful as a lame excuse "we warned, but
+you took the suspicious result", but that does not help the users).
+
+In short, Linus and I both know what you are talking about, and we may
+revisit that issue later, but the thing is that it would not be very
+pleasant, and not something that can be done in one sitting during a
+single discussion thread on the list.
