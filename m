@@ -1,107 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] git cat-file does not terminate
-Date: Fri, 4 Mar 2011 11:00:47 -0500
-Message-ID: <20110304160047.GA9662@sigill.intra.peff.net>
-References: <4D70E340.3050309@tweerlei.de>
- <20110304154014.GE24660@m62s10.vlinux.de>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [BUG] git-am silently applying patches incorrectly
+Date: Fri, 04 Mar 2011 11:17:51 -0500
+Message-ID: <1299255471.22002.15.camel@drew-northup.unet.maine.edu>
+References: <4D70EBC3.3010400@colin.guthr.ie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robert Wruck <wruck@tweerlei.de>, git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 04 17:00:57 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Colin Guthrie <gmane@colin.guthr.ie>
+X-From: git-owner@vger.kernel.org Fri Mar 04 17:20:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvXR1-0000GE-GW
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 17:00:55 +0100
+	id 1PvXjt-0002NY-AB
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 17:20:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232Ab1CDQAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2011 11:00:50 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:39115 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751790Ab1CDQAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2011 11:00:49 -0500
-Received: (qmail 4903 invoked by uid 111); 4 Mar 2011 16:00:49 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 04 Mar 2011 16:00:49 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Mar 2011 11:00:47 -0500
-Content-Disposition: inline
-In-Reply-To: <20110304154014.GE24660@m62s10.vlinux.de>
+	id S1759774Ab1CDQUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2011 11:20:19 -0500
+Received: from basalt.its.maine.edu ([130.111.32.66]:40602 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759739Ab1CDQUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2011 11:20:18 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p24GHtFP023129
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 4 Mar 2011 11:18:00 -0500
+In-Reply-To: <4D70EBC3.3010400@colin.guthr.ie>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
+	Fuz1=2 Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p24GHtFP023129
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1299860283.61635@bLN/PwmsRNqp77tW9tEp1A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168445>
 
-On Fri, Mar 04, 2011 at 04:40:14PM +0100, Peter Baumann wrote:
 
-> > I "fixed" it by limiting each write to 64k (thus looping in
-> > write_in_full) but maybe somebody knows about that cygwin behaviour?
-> > 
-> > This seems to be the cause of the dreaded "No newline found after
-> > blob" when running `git svn clone` under cygwin on a repository with
-> > large files.
-> > 
-> > You could argue that this is a cygwin bug but maybe limiting each
-> > write to a maximum size is a simple workaround.
-> > 
-> Maybe you could post a patch, so everyone can see the technical implications
-> and discuss the fix?
+On Fri, 2011-03-04 at 13:40 +0000, Colin Guthrie wrote:
+> Hi,
+> 
+> We recently found a bug in git-am 1.7.4.1 while working on PulseAudio.
+> 
+> It seems that it mis-applied a patch and did so silently without
+> generating any warnings. It is reproducible and has been confirmed on
+> different distros.
+> 
+> I make reference to the bug here:
+> http://thread.gmane.org/gmane.comp.audio.pulseaudio.general/8840/focus=8857
+> 
+> In order to reproduce:
+> 
+> git clone http://git.0pointer.de/repos/pulseaudio.git
+> git co -b misapply 0ce3017b7407ab1c4094f7ce271bb68319a7eba7
+> git am 0002-alsa-mixer-add-required-any-and-required-for-enum-op.patch
+> 
+> (I've attached the patch here for convenience).
 
-It would probably look like the patch below, though it really feels like
-the right solution is to fix the cygwin bug.
+> For reference, applying the patch manually with patch works fine and
+> does not result in an error:
+> 
+> $ cat 0002-alsa-mixer-add-required-any-and-required-for-enum-op.patch |
+> patch -p1
+> patching file src/modules/alsa/alsa-mixer.c
+> Hunk #1 succeeded at 1121 (offset 103 lines).
+> Hunk #2 succeeded at 1325 (offset 103 lines).
+> Hunk #3 succeeded at 1356 (offset 103 lines).
+> Hunk #4 succeeded at 1613 (offset 103 lines).
+> Hunk #5 succeeded at 1640 (offset 103 lines).
+> Hunk #6 succeeded at 1913 (offset 103 lines).
+> Hunk #7 succeeded at 1997 (offset 105 lines).
+> Hunk #8 succeeded at 2242 (offset 106 lines).
+> Hunk #9 succeeded at 2261 (offset 106 lines).
+> Hunk #10 succeeded at 2312 (offset 106 lines).
+> patching file src/modules/alsa/alsa-mixer.h
+> Hunk #1 succeeded at 112 (offset 1 line).
+> Hunk #2 succeeded at 133 (offset 1 line).
+> Hunk #3 succeeded at 169 (offset 1 line).
+> patching file src/modules/alsa/mixer/paths/analog-output.conf.common
 
--Peff
+Did you try removing the first line from the patch mbox file?
+It seems to work just fine if you do that. 
 
----
-diff --git a/Makefile b/Makefile
-index 4c31d1a..e7d3285 100644
---- a/Makefile
-+++ b/Makefile
-@@ -167,6 +167,9 @@ all::
- # Define NO_ST_BLOCKS_IN_STRUCT_STAT if your platform does not have st_blocks
- # field that counts the on-disk footprint in 512-byte blocks.
- #
-+# Define MAX_WRITE_SIZE to N if your platform has unpredictable results for
-+# write() calls larger than N (e.g., cygwin).
-+#
- # Define ASCIIDOC7 if you want to format documentation with AsciiDoc 7
- #
- # Define DOCBOOK_XSL_172 if you want to format man pages with DocBook XSL v1.72
-@@ -928,6 +931,7 @@ ifeq ($(uname_O),Cygwin)
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
- 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-+	MAX_WRITE_SIZE=65536
- 	# There are conflicting reports about this.
- 	# On some boxes NO_MMAP is needed, and not so elsewhere.
- 	# Try commenting this out if you suspect MMAP is more efficient
-@@ -1495,6 +1499,10 @@ ifdef NO_POSIX_GOODIES
- 	BASIC_CFLAGS += -DNO_POSIX_GOODIES
- endif
- 
-+ifdef MAX_WRITE_SIZE
-+	BASIC_CFLAGS += -DMAX_WRITE_SIZE=$(MAX_WRITE_SIZE)
-+endif
-+
- ifdef BLK_SHA1
- 	SHA1_HEADER = "block-sha1/sha1.h"
- 	LIB_OBJS += block-sha1/sha1.o
-diff --git a/wrapper.c b/wrapper.c
-index 056e9d6..a7a2437 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -133,6 +133,10 @@ ssize_t xread(int fd, void *buf, size_t len)
- ssize_t xwrite(int fd, const void *buf, size_t len)
- {
- 	ssize_t nr;
-+#ifdef MAX_WRITE_SIZE
-+	if (len > MAX_WRITE_SIZE)
-+		len = MAX_WRITE_SIZE;
-+#endif
- 	while (1) {
- 		nr = write(fd, buf, len);
- 		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
+That first line is "removed" from the output of "git format-patch" when
+you correctly import the mbox file into your mail client's drafts folder
+as described in the documentation. Then you send the mail created by
+importing that draft.
+If you just send the output of "git format-patch" untouched as an
+attachment you can expect problems.
+
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
