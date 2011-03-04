@@ -1,67 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: why is merging with unstaged changes allowed when rebasing is
- not?
-Date: Fri, 04 Mar 2011 09:53:10 -0800
-Message-ID: <7vmxla7oxl.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=dnyaPTX0Y43nbAGp46NtscKT3a2idxEhkreMm@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [PATCH/RFC] init, clone: support --real-git-dir for .git file
+Date: Fri, 4 Mar 2011 19:09:21 +0100
+Message-ID: <AANLkTinQCZXYAbndLuRVVEr6NTRA8aaypFfvtqNjknLQ@mail.gmail.com>
+References: <1299156201-12149-1-git-send-email-pclouds@gmail.com>
+	<4D700469.7090807@gmail.com>
+	<7vhbbj93yb.fsf@alter.siamese.dyndns.org>
+	<AANLkTin8Gnbyji4sz6cnWLcAzC2RAS_wnd_o3avDvsvG@mail.gmail.com>
+	<AANLkTiksQg1U=uAEVJG8fyjd7HpsTqgBOdyh6wrEMSED@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Christian Halstrick <christian.halstrick@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 04 18:53:26 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 04 19:09:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvZBq-0005S0-3u
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 18:53:22 +0100
+	id 1PvZRR-0006to-0z
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 19:09:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429Ab1CDRxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2011 12:53:17 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38012 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751790Ab1CDRxR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2011 12:53:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8D4ED457B;
-	Fri,  4 Mar 2011 12:54:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0zVsiN4nZBKR4cU8ugJRrhan9uk=; b=KniDK6
-	g39rmUgrfiU0e8UDczHtXWGo3tVZK/9Y5R6NyhFta8H40Fbc5uzaR6wHm/xEHTRn
-	SLx2ZooiJVLoori13YW12skC9hMMHTvvZLI+d36+Cax53BpvXLVibhkBrdMFnKYp
-	r8I/tysnRO80fUEk+F7MVPAbxJvIH69QYbwkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hvBek+0oPbEiwfEPv5dyEd8O9fslFrMJ
-	x9ZyLQErLvGrkzraFZOn+cAhHihcGdX64bmEHmIgw3fCToEk04/KnET/wBuQCCMC
-	orl15Ykxuc0jjCcq305vocSwJ/ElU7MarlRM82/ULEH3+8Yl9Hjbr6LpXE89Khvi
-	YyI6PU7ZurE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6B7F0457A;
-	Fri,  4 Mar 2011 12:54:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 775DD4579; Fri,  4 Mar 2011
- 12:54:34 -0500 (EST)
-In-Reply-To: <AANLkTi=dnyaPTX0Y43nbAGp46NtscKT3a2idxEhkreMm@mail.gmail.com>
- (Christian Halstrick's message of "Fri\, 4 Mar 2011 17\:32\:19 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 789AA2A8-4688-11E0-BC73-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1759747Ab1CDSJX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2011 13:09:23 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:46428 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751883Ab1CDSJW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2011 13:09:22 -0500
+Received: by vxi39 with SMTP id 39so2237536vxi.19
+        for <git@vger.kernel.org>; Fri, 04 Mar 2011 10:09:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aaEF1VESQjIl6Z2NF3VUeAT4Pgf1i43+7sY5XmixfPo=;
+        b=ITV8dl8vRlWy4PYMKyrYt10+WusFBa92mtutvO6AC/zLte2DtHOzBpImboiZ2olTKA
+         n31aqhM7TPRjQOPitKuCzWLCHzIDgMIJrDWJ9pUlwqYfIOQLeguW54GM2AozKmxAhNb8
+         FSJN3gdgBYZKQ0f8CPJ3UUzNujxBOAUBWoZsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YO+zLIE+w+voIP4r4M2s+WiBBsQbV/hq6o8MDY++19JFnPYZ9zhP+nRo4YoVDLQVKD
+         RAWHxD4iEenfnwn37rNdkkwmyi55Mi8uwLqEW+M+TsWDSaa0agMlL5RchsUZymy5poco
+         bSkzVGeyelxltthIlINUyJUfs6SchoRk+c9gs=
+Received: by 10.52.72.232 with SMTP id g8mr1424874vdv.108.1299262161588; Fri,
+ 04 Mar 2011 10:09:21 -0800 (PST)
+Received: by 10.220.61.140 with HTTP; Fri, 4 Mar 2011 10:09:21 -0800 (PST)
+In-Reply-To: <AANLkTiksQg1U=uAEVJG8fyjd7HpsTqgBOdyh6wrEMSED@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168455>
 
-Christian Halstrick <christian.halstrick@gmail.com> writes:
+On Fri, Mar 4, 2011 at 1:26 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com=
+> wrote:
+> 2011/3/4 Piotr Krukowiecki <piotr.krukowiecki@gmail.com>:
+>> I thought it was user-level file, like $GIT_DIR
+>>
+>> I'm not into data duplication, but in this case the message is next =
+to the
+>> previous use:
+>>
+>> =A0 =A0 =A0 if (prefixcmp(buf, "gitdir: "))
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("Invalid gitfile format: %s\nUse git=
+dir: <PATH>", path);
+>>
+>>
+>> BTW I think it might be enough to have just path in the .git file. I=
+f
+>> .git has path
+>> to a correct git repo then chances it's coincidence are quite low.
+>> (The format does not matter if it's internal file of course)
+>
+> It's actually good that path is prefixed by gitdir. I imagine once
+> superproject is supported, .git file in subprojects will have another
+> line
+>
+> supergitdir: /path/to/superproject
 
-> Isn't it inconsistent that I can merge with unstaged changes in my
-> work-tree but not rebase?
+Why would it be better than keeping this information under .git/, in co=
+nfig
+or other specific file?
 
-Because people who wrote rebase didn't bother; it is too cumbersome to
-check all the possibly affected paths beforehand while replaying multiple
-changes.
 
-Patches welcome ;-).
+
+--=20
+Piotrek
