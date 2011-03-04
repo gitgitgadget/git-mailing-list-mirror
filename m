@@ -1,69 +1,77 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Miles Bader <miles@gnu.org>
 Subject: Re: [PATCH/RFC] init, clone: support --real-git-dir for .git file
-Date: Fri, 4 Mar 2011 13:39:39 +0700
-Message-ID: <AANLkTik3+g10ihwc4wZK0bFBKr0TMBF9M5BtzW_O1vBA@mail.gmail.com>
+Date: Fri, 04 Mar 2011 15:57:04 +0900
+Message-ID: <buoaahb8jb3.fsf@dhlpc061.dev.necel.com>
 References: <1299156201-12149-1-git-send-email-pclouds@gmail.com>
- <7v8vwv927a.fsf@alter.siamese.dyndns.org> <AANLkTimG7Hg4YxJbMVaXVkZ1CRb0ttK6RAYEoRQ_4iW4@mail.gmail.com>
+ <7v8vwv927a.fsf@alter.siamese.dyndns.org>
+ <AANLkTimG7Hg4YxJbMVaXVkZ1CRb0ttK6RAYEoRQ_4iW4@mail.gmail.com>
  <7v4o7j8lxg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 04 07:40:18 2011
+X-From: git-owner@vger.kernel.org Fri Mar 04 07:57:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvOgT-0002qz-CF
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 07:40:17 +0100
+	id 1PvOwp-0000A9-F3
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 07:57:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423Ab1CDGkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2011 01:40:11 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:59843 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103Ab1CDGkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2011 01:40:10 -0500
-Received: by wyg36 with SMTP id 36so1810325wyg.19
-        for <git@vger.kernel.org>; Thu, 03 Mar 2011 22:40:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=a2N7Mz3op8aJlfM+DNuufZNUzFuR+L6RBxZ47fmeb9s=;
-        b=GkJPA0bwyxT/8DzjsQL2YkeakWKXI0LQTN2Rezr7bp0hLBHsYAo1Yz6uCCZc3rk92m
-         ycdu/DFkhXvMok0mcbN8nOqYJZ39fDfJtTv8IIQ9BhgfMI9gIrY/IVckTlXCwMW7nuLy
-         fl6OIHVJpw7xxfm7YZzc0UkJCoH2Utf7gkR2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=a5GjhrtAn+t1lfrQpSVcOPJqPQGfMYldPdI+sPLToJ/gOV2mwTOwgIgtsyraE8T452
-         XMmkh4R9/QVSkwCo6P7KoqujeGCnYr782RElqA0gRMlfHQb125BebD7jwUMDtmiY6AKx
-         BNO6dufaTN6MbMJQCVbKuyYVuXzN4r6uySwwQ=
-Received: by 10.216.82.13 with SMTP id n13mr225099wee.1.1299220809069; Thu, 03
- Mar 2011 22:40:09 -0800 (PST)
-Received: by 10.216.239.5 with HTTP; Thu, 3 Mar 2011 22:39:39 -0800 (PST)
-In-Reply-To: <7v4o7j8lxg.fsf@alter.siamese.dyndns.org>
+	id S1754878Ab1CDG5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2011 01:57:07 -0500
+Received: from relmlor3.renesas.com ([210.160.252.173]:64735 "EHLO
+	relmlor3.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751421Ab1CDG5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2011 01:57:06 -0500
+Received: from relmlir1.idc.renesas.com ([10.200.68.151])
+ by relmlor3.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LHI00AWMTZ5XGE0@relmlor3.idc.renesas.com> for
+ git@vger.kernel.org; Fri, 04 Mar 2011 15:57:05 +0900 (JST)
+Received: from relmlac3.idc.renesas.com ([10.200.69.23])
+ by relmlir1.idc.renesas.com (SJSMS)
+ with ESMTP id <0LHI000JETZ46740@relmlir1.idc.renesas.com> for
+ git@vger.kernel.org; Fri, 04 Mar 2011 15:57:05 +0900 (JST)
+Received: by relmlac3.idc.renesas.com (Postfix, from userid 0)
+	id F2A5E18077; Fri, 04 Mar 2011 15:57:04 +0900 (JST)
+Received: from relmlac3.idc.renesas.com (localhost [127.0.0.1])
+	by relmlac3.idc.renesas.com (Postfix) with ESMTP id F114318080; Fri,
+ 04 Mar 2011 15:57:04 +0900 (JST)
+Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
+ relmlac3.idc.renesas.com with ESMTP id RAG22484; Fri,
+ 04 Mar 2011 15:57:04 +0900
+X-IronPort-AV: E=Sophos;i="4.62,263,1297004400";   d="scan'208";a="14898397"
+Received: from unknown (HELO relay11.aps.necel.com) ([10.29.19.46])
+ by relmlii2.idc.renesas.com with ESMTP; Fri, 04 Mar 2011 15:57:04 +0900
+Received: from relay11.aps.necel.com ([10.29.19.46] [10.29.19.46])
+ by relay11.aps.necel.com with ESMTP; Fri, 04 Mar 2011 15:57:04 +0900
+Received: from dhlpc061 ([10.114.97.66] [10.114.97.66])
+ by relay11.aps.necel.com with ESMTP; Fri, 04 Mar 2011 15:57:04 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)	id B92A852E1D6; Fri,
+ 04 Mar 2011 15:57:04 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-reply-to: <7v4o7j8lxg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168430>
 
-On Fri, Mar 4, 2011 at 1:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> Moving .git away from existing repos/worktrees I have.
->
+Junio C Hamano <gitster@pobox.com> writes:
 > You are only saying you want to move it, not saying why you want to move
 > it.
 >
 > That is not an explanation _why_ it is useful to be able to do so.
 
-The same reason why I don't want to place .git close to worktree in
-the first place (paranoid, throwaway worktree, disk constraint...). If
-I'm going to make a policy that "there must be no .git under ~/w", new
-repos with --real-git-dir are ok, but what about old repos?
+Hmm, one scenario would be when you want to "manage" a work tree using a
+relatively-passive tool that might barf over the contents (large, weird,
+files...) of a .git dir.  E.g., eclipse or something (well I guess
+eclipse might actually have direct git support these days, but you get
+the idea).
+
+-Miles
+
 -- 
-Duy
+Politeness, n. The most acceptable hypocrisy.
