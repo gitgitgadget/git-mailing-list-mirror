@@ -1,110 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git cat-file does not terminate
-Date: Fri, 04 Mar 2011 09:16:30 -0800
-Message-ID: <7vzkpa7qmp.fsf@alter.siamese.dyndns.org>
-References: <4D70E340.3050309@tweerlei.de>
- <20110304154014.GE24660@m62s10.vlinux.de>
- <20110304160047.GA9662@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Fri, 4 Mar 2011 19:18:51 +0200
+Message-ID: <AANLkTinAUsY-d3Ec6HpKbjzC+eUjGcq1LK5ODjxRC-yz@mail.gmail.com>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+	<20110213193738.GA26868@elie>
+	<7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+	<AANLkTim4UKxYwRagCk3R20e7wsRb7CxvS_ze9b8MfWjL@mail.gmail.com>
+	<20110214231920.GA24814@elie>
+	<AANLkTik-jc0ZX9S4bCYV8VBgPXJZsX0U08W2H+jufO8r@mail.gmail.com>
+	<20110227084317.GB3356@sigill.intra.peff.net>
+	<1298820840.19827.69.camel@drew-northup.unet.maine.edu>
+	<20110228230311.GA7533@sigill.intra.peff.net>
+	<AANLkTi=LPqu9zDiAJpxqC=ZCLig+aCv5ztXw668ERtH7@mail.gmail.com>
+	<op.vrnq8gk856e9f9@xman.eng.oslo.osa>
+	<1298997963.5247.30.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Baumann <waste.manager@gmx.de>,
-	Robert Wruck <wruck@tweerlei.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 04 18:17:04 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexey Feldgendler <alexeyf@opera.com>, git@vger.kernel.org,
+	David <bouncingcats@gmail.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jon Seymour <jon.seymour@gmail.com>,
+	Miles Bader <miles@gnu.org>
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Fri Mar 04 18:19:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvYcf-0001MN-Hd
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 18:17:01 +0100
+	id 1PvYeb-0002a9-DW
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 18:19:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760044Ab1CDRQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2011 12:16:46 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55333 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759998Ab1CDRQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2011 12:16:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B077E3F8A;
-	Fri,  4 Mar 2011 12:18:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OcPmFWUPegMj34IvoqAU6TwMmj4=; b=TaqnpQ
-	v7qmGtsaEeiShl/M1/7rxxHnp5OIGGiWVBdxnmKtpJoO0Ovmbi+d9Kt6OhfEO1g0
-	W98nskW8JOMeaCO0hPsSo3Kl/s1DZiKH5ZRmt9IEFf3KN/1fFxktbr+40fewCDRy
-	PQHH0/IPOb0jXUZE8ei8orCI6qfZEQK/1nyjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rZIOVVnGh8/WypgLYpV3KBjwbSAslQO2
-	aitdARwIy3mv4eZglkwL9x2/G9ZIha6PYNP/bV8hWaH0oQZzILGL/vbxWSa+WOK0
-	c2MQ/y57bidcyn7WBQSMR0e5vJW/1lNsmmkf+mbjqufManEYE/X1iCFb1vn/z1Oe
-	f5blnNw8HQs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C66383F85;
-	Fri,  4 Mar 2011 12:18:00 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2184B3F77; Fri,  4 Mar 2011
- 12:17:54 -0500 (EST)
-In-Reply-To: <20110304160047.GA9662@sigill.intra.peff.net> (Jeff King's
- message of "Fri\, 4 Mar 2011 11\:00\:47 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B4D4E3A-4683-11E0-B007-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1759948Ab1CDRSz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2011 12:18:55 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:48113 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751723Ab1CDRSy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2011 12:18:54 -0500
+Received: by bwz15 with SMTP id 15so2235984bwz.19
+        for <git@vger.kernel.org>; Fri, 04 Mar 2011 09:18:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DcVNq99sV+MnQWCRyAB0NOjR/gkdxwikaqxoV70CoIM=;
+        b=j+KKLmfw+eWD1sta6OR3gYRHfVk2saqUShiH8S8h4R01IavKkBpxpiN4bgS3/1r6lU
+         K2vMHeeCbRrKMsYIDOW17L2zbtDvqKzR8FfzAm6uO/ZJTs5Od4AQEQTaT9VunCOo8qJc
+         GE0rPYZ6ki+Sb6GZnoQ1rdUmGHJ61wgNzMG7E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=pJmSAiogWkrPEWKZC75u8fkE8KsT+tiXBQHNcwuJcQ/wWoJmeUOQdlsm3AGI4mNaVe
+         cxu0cmk+jNKWUUqYIhb2XFlKT0oCLwPj6myAh2p9+U0LBfZZ5Sotne+ukjPL9KLTDgbe
+         P/jNwO6Xmyn38/t/BXUA79A52TqLma+tuVSiQ=
+Received: by 10.204.1.136 with SMTP id 8mr799005bkf.107.1299259132862; Fri, 04
+ Mar 2011 09:18:52 -0800 (PST)
+Received: by 10.204.67.141 with HTTP; Fri, 4 Mar 2011 09:18:51 -0800 (PST)
+In-Reply-To: <1298997963.5247.30.camel@drew-northup.unet.maine.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168449>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Mar 1, 2011 at 6:46 PM, Drew Northup <drew.northup@maine.edu> w=
+rote:
+>
+> On Tue, 2011-03-01 at 10:27 +0100, Alexey Feldgendler wrote:
+>> On Tue, 01 Mar 2011 10:11:11 +0100, David <bouncingcats@gmail.com> w=
+rote:
+>>
+>> > A suggestion: could your conceptual bucket be named as "the precom=
+mit".
+>> >
+>> > Motives for this suggestion are:
+>> > 1) =C2=A0I imagine this word will be readily translatable;
+>>
+>> Less so than =E2=80=9Cstaging area=E2=80=9D, at least into Russian.
+>>
+>> Just my two cents.
+>
+> I was starting to think about "commit preparation area" this morning,
+> but it sounds horribly long. Would "Prep area" work provided that the
+> longer version has already been introduced into the discussion? This
+> provides a similar language metaphor to "staging area" hopefully with=
+out
+> the translation problem.
+>
+> Also, I still think that it is important to note somewhere that the w=
+ay
+> that git handles commits is not the way that most users are likely to
+> imagine (the Index doesn't contain the blob objects itself; a finaliz=
+ed
+> commit is not just a bundled collection of everything as somebody mig=
+ht
+> expect; etc) so this "Prep area" is a logical space not completely
+> analogous to stuff found in the ".git" directory. Pretending that
+> complexity does not exist will not help; letting the users know that
+> they don't need to grok all of the details to get started is, on the
+> other hand, quite important.
 
-> It would probably look like the patch below, though it really feels like
-> the right solution is to fix the cygwin bug.
+=46irst I liked this proposal, but then I thought about 'git diff
+--preped' (doesn't really sound right). I think the term should:
 
-Thanks for a quick analysis and fix, folks.
+ 1) Have a nice noun version; staging area, preparation area
+ 2) Have a nice verb version; to stage, to prep
+ 3) Have a nice past-participle; staged, cached
 
-We would need to assume certain things that the platform would give its
-users are reliable, and system calls are fundamental part; otherwise we
-would end up tying our hands behind our back saying "we cannot use this
-and that as these are unreliable in certain places" and litter our
-codebase with full of ifdefs and workarounds.
+Casting? Forging? I don't know, staging always seems right.
 
-If this were merely of a breakage in a test release or a nightly build, I
-would be happier to see us ignore this, but the problematic one is widely
-in the wild, a workaround would be necessary, and more importantly, if it
-is harder for a casual end-user to tell if the platform is affected (I am
-assuming that most releases of Cygwin is without this bug, and most users
-who build git themselves wouldn't bother reading README or Makefile even
-if we said a MAX_WRITE_SIZE definition is necessary only for this and that
-version), I would rather see a change that covers the problem a bit more
-widely than necessary.
+Cheers.
 
-How prevalent is the problematic cygwin1.dll 1.7.8?  Also for how long did
-this bug exist, in other words, if we were to make a table of problematic
-versions, would we have only just a handful entries in it?  Also can we at
-runtime find out what version we are running?
-
-The reason I am asking these questions is because I think, assuming that
-this would affect many unsuspecting Cygwin users, the best fix would be to
-add a hook in the compat/ layer that decides if MAX_WRITE_SIZE workaround
-is necessary at runtime, and do something like this:
-
-	ssize_t xwrite(int fd, const void *buf, size_t len)
-        {
-        	ssize_t nr;
-                static size_t max_write_size = platform_max_write_size();
-
-                if (max_write_size && max_write_size < len)
-                	len = max_write_size;
-		...
-	}
-
-And then we would have in git-compat-util.h something like:
-
-	#define platform_max_write_size() 0
-
-on sane platforms, so that the fix will be optimized away by the compiler.
-
-By the way, does the same version of Cygwin have similar issue on the read
-side?
+--=20
+=46elipe Contreras
