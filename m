@@ -1,73 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git-am silently applying patches incorrectly
-Date: Fri, 04 Mar 2011 11:31:29 -0800
-Message-ID: <7vy64u65ta.fsf@alter.siamese.dyndns.org>
-References: <4D70EBC3.3010400@colin.guthr.ie>
- <7vr5am7p30.fsf@alter.siamese.dyndns.org>
- <7vei6m7muw.fsf@alter.siamese.dyndns.org>
- <7v39n27llq.fsf@alter.siamese.dyndns.org>
- <AANLkTim=jpJmBZmtAVX2V8Ui44AwpTbevJtSR2Xk=wLX@mail.gmail.com>
+From: Nicolas Kaiser <nikai@nikai.net>
+Subject: [PATCH] builtin/apply.c: remove impossible check
+Date: Fri, 4 Mar 2011 20:43:58 +0100
+Organization: -
+Message-ID: <20110304204358.3f5618cf@absol.kitzblitz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Colin Guthrie <gmane@colin.guthr.ie>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 04 20:31:49 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 04 20:45:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pvaj5-0003XZ-Ty
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 20:31:48 +0100
+	id 1Pvawb-0002TS-71
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 20:45:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759934Ab1CDTbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2011 14:31:42 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62430 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759792Ab1CDTbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2011 14:31:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 91A603369;
-	Fri,  4 Mar 2011 14:33:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q2QdfiJdFmutvQtUrmoJU3GHd+A=; b=mPeBm+
-	8jotirzwMWKSfNO2eQslU0RXDYk5lTyT7GRwwNFL8qKuviCatpEEs7c7iEDdlVf6
-	qJ3N6mvqV+DUEcArq+hNRCuby9pm/q4Wa0d4MvFK299AamR+bhpYbkcQQ9P6D8ZG
-	8UkAzDBr4GQC+/AwyGbECc1U/rim7G5G594aE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YXnb3GwLv+oK574BaQCkb8q92Utz1VJx
-	Y+HvR8qbH6ijlDwkIkXNQuuXF6Z5CEA5lovmM2nBNmGy7DzvuaG++Oo/SLlxxi78
-	HTNQA2Y8Q69koY33/d/u95gkZMxjfBv99hAFUArCTPMS2QFGpz6rSTDTUFjJ3DE9
-	bYEse1Mi1UY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 584D83368;
-	Fri,  4 Mar 2011 14:32:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3FD8C3367; Fri,  4 Mar 2011
- 14:32:53 -0500 (EST)
-In-Reply-To: <AANLkTim=jpJmBZmtAVX2V8Ui44AwpTbevJtSR2Xk=wLX@mail.gmail.com>
- (Linus Torvalds's message of "Fri\, 4 Mar 2011 11\:18\:01 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 35D32B3A-4696-11E0-A99E-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S932517Ab1CDTpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2011 14:45:17 -0500
+Received: from webhosting01.bon.m2soft.com ([195.38.20.32]:48208 "EHLO
+	webhosting01.bon.m2soft.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932470Ab1CDTpO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2011 14:45:14 -0500
+X-Greylist: delayed 806 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Mar 2011 14:45:13 EST
+Received: from absol.kitzblitz (85-127-41-184.dynamic.xdsl-line.inode.at [85.127.41.184])
+	(authenticated bits=0)
+	by webhosting01.bon.m2soft.com (8.13.8/8.13.8) with ESMTP id p24JQ7rW027701;
+	Fri, 4 Mar 2011 20:26:08 +0100
+X-Face: "fF&[w2"Nws:JNH4'g|:gVhgGKLhj|X}}&w&V?]0=,7n`jy8D6e[Jh=7+ca|4~t5e[ItpL5
+ N'y~Mvi-vJm`"1T5fi1^b!&EG]6nW~C!FN},=$G?^U2t~n[3;u\"5-|~H{-5]IQ2
+X-Mailer: Claws Mail (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168463>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+'n1' and 'n2' are unsigned of type size_t, and can never
+be negative.
 
-> IOW, maybe something like "img->last_match = applied_pos +
-> postimage.nr;" or whatever.
->
-> I dunno.
+Signed-off-by: Nicolas Kaiser <nikai@nikai.net>
+---
+Testsuite did not regress at my place.
 
-I was lazy and didn't want to worry about the consequences of excluding
-the end of the context lines in the previous hunk, especially when the
-patch was generated with small number of context lines.
+ builtin/apply.c |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
 
-But it would probably be a good idea to cut the search at the tail end of
-the previous hunk.
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 14951da..6069377 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -248,9 +248,6 @@ static int fuzzy_matchlines(const char *s1, size_t n1,
+ 	const char *last2 = s2 + n2 - 1;
+ 	int result = 0;
+ 
+-	if (n1 < 0 || n2 < 0)
+-		return 0;
+-
+ 	/* ignore line endings */
+ 	while ((*last1 == '\r') || (*last1 == '\n'))
+ 		last1--;
+-- 
+1.7.3.4
