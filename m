@@ -1,77 +1,65 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC] init, clone: support --real-git-dir for .git file
-Date: Fri, 4 Mar 2011 19:26:16 +0700
-Message-ID: <AANLkTiksQg1U=uAEVJG8fyjd7HpsTqgBOdyh6wrEMSED@mail.gmail.com>
-References: <1299156201-12149-1-git-send-email-pclouds@gmail.com>
- <4D700469.7090807@gmail.com> <7vhbbj93yb.fsf@alter.siamese.dyndns.org> <AANLkTin8Gnbyji4sz6cnWLcAzC2RAS_wnd_o3avDvsvG@mail.gmail.com>
+From: Robert Wruck <wruck@tweerlei.de>
+Subject: [BUG] git cat-file does not terminate
+Date: Fri, 04 Mar 2011 14:04:00 +0100
+Message-ID: <4D70E340.3050309@tweerlei.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 04 13:26:55 2011
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 04 14:04:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvU5u-0003s5-N8
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 13:26:55 +0100
+	id 1PvUg0-0004tz-Nu
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 14:04:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759409Ab1CDM0t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2011 07:26:49 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41921 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751999Ab1CDM0s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2011 07:26:48 -0500
-Received: by wyg36 with SMTP id 36so2018028wyg.19
-        for <git@vger.kernel.org>; Fri, 04 Mar 2011 04:26:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=pdMvAMgjvuc+dfvEMauhQSXkziDabTA9HHVmZdwemOY=;
-        b=Y7GdD5kajpg8m9RGARUSPWtW3wPFHLfv6zxn1Pd85PZYmT07mynEqXgTfSypfeEjhD
-         0P9Y+vFirMjlKns6JnSbmhzlHSStYp0eG72q+IKpxzSZNTFLdVGMZkWRY/oowUUSExgw
-         6Nxpc+Da0223HuPggKc55JBmV+HzOHxReZcTw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=WpZb2sU58y64vHUVwFtxYRf0Paoa0BtT3MBMzF3q/sAmbtdE3DEGQqdVTHUeMDMuV1
-         KFta+IVg2tabu37B4BsRJscjQHgBSnkpwvhvG0o6Xt1BFSsa4/bUANmoRuiwcVTUeU5l
-         +C0sJW6GHLbJBZhurQtLnF27UTYIILJn9aHJs=
-Received: by 10.216.35.82 with SMTP id t60mr515794wea.46.1299241607103; Fri,
- 04 Mar 2011 04:26:47 -0800 (PST)
-Received: by 10.216.239.5 with HTTP; Fri, 4 Mar 2011 04:26:16 -0800 (PST)
-In-Reply-To: <AANLkTin8Gnbyji4sz6cnWLcAzC2RAS_wnd_o3avDvsvG@mail.gmail.com>
+	id S1759551Ab1CDNEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2011 08:04:06 -0500
+Received: from mail.tweerlei.de ([88.198.48.46]:40810 "EHLO mail.tweerlei.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759502Ab1CDNEF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2011 08:04:05 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by mail.tweerlei.de (Postfix) with ESMTPSA id 459C4277B5
+	for <git@vger.kernel.org>; Fri,  4 Mar 2011 14:04:03 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168438>
 
-2011/3/4 Piotr Krukowiecki <piotr.krukowiecki@gmail.com>:
-> I thought it was user-level file, like $GIT_DIR
->
-> I'm not into data duplication, but in this case the message is next t=
-o the
-> previous use:
->
-> =C2=A0 =C2=A0 =C2=A0 if (prefixcmp(buf, "gitdir: "))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("Invalid gitfile=
- format: %s\nUse gitdir: <PATH>", path);
->
->
-> BTW I think it might be enough to have just path in the .git file. If
-> .git has path
-> to a correct git repo then chances it's coincidence are quite low.
-> (The format does not matter if it's internal file of course)
+Hi,
 
-It's actually good that path is prefixed by gitdir. I imagine once
-superproject is supported, .git file in subprojects will have another
-line
+this is some strange behaviour of cat-file:
+On a certain file, `git cat-file blob <objectname>` writes an endless 
+stream repeating the first 4096 byte of the original file.
+cat-file -s and cat-file -t produce correct results.
 
-supergitdir: /path/to/superproject
---=20
-Duy
+Even stranger: This only happens with cygwin-git (1.7.4.1).
+msysgit (same machine, same repository): works
+linux-git (same machine, same repository): works
+
+Even more strange: This only happens with cygwin on a particular machine 
+(recent cygwin1.dll 1.7.8) under WinXP/32bit. On another machine, recent 
+cygwin, Windows7/64bit it works...
+
+Debugging a bit, I found that the following happens:
+In xwrite (wrapper.c), write() is called with the total file size - in 
+my case about 87 MB. This call returns -1 and EAGAIN but nevertheless 
+writes 4096 byte to the output fd. I don't think that's expected 
+behaviour...
+
+I "fixed" it by limiting each write to 64k (thus looping in 
+write_in_full) but maybe somebody knows about that cygwin behaviour?
+
+This seems to be the cause of the dreaded "No newline found after blob" 
+when running `git svn clone` under cygwin on a repository with large files.
+
+You could argue that this is a cygwin bug but maybe limiting each write 
+to a maximum size is a simple workaround.
+
+
+-Robert
