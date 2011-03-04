@@ -1,79 +1,70 @@
-From: Miles Bader <miles@gnu.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [PATCH/RFC] init, clone: support --real-git-dir for .git file
-Date: Fri, 04 Mar 2011 13:13:32 +0900
-Message-ID: <buozkpb8qvn.fsf@dhlpc061.dev.necel.com>
-References: <1299156201-12149-1-git-send-email-pclouds@gmail.com>
- <7v8vwv927a.fsf@alter.siamese.dyndns.org>
+Date: Fri, 4 Mar 2011 11:19:06 +0700
+Message-ID: <AANLkTikaD5oxx2bwx0R3x_1p1KnfBFqJJ2xtNiWW4-SC@mail.gmail.com>
+References: <1299156201-12149-1-git-send-email-pclouds@gmail.com> <4D700469.7090807@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 04 05:13:44 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 04 05:19:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvMOc-0005nX-Kd
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 05:13:42 +0100
+	id 1PvMUQ-0007qB-L2
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Mar 2011 05:19:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758523Ab1CDENg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2011 23:13:36 -0500
-Received: from relmlor4.renesas.com ([210.160.252.174]:45745 "EHLO
-	relmlor4.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758465Ab1CDENg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2011 23:13:36 -0500
-Received: from relmlir3.idc.renesas.com ([10.200.68.153])
- by relmlor4.idc.renesas.com ( SJSMS)
- with ESMTP id <0LHI00AI7MEMXW60@relmlor4.idc.renesas.com> for
- git@vger.kernel.org; Fri, 04 Mar 2011 13:13:34 +0900 (JST)
-Received: from relmlac2.idc.renesas.com ([10.200.69.22])
- by relmlir3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LHI00H88MEMK060@relmlir3.idc.renesas.com> for
- git@vger.kernel.org; Fri, 04 Mar 2011 13:13:34 +0900 (JST)
-Received: by relmlac2.idc.renesas.com (Postfix, from userid 0)
-	id 4A50D28076; Fri, 04 Mar 2011 13:13:34 +0900 (JST)
-Received: from relmlac2.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac2.idc.renesas.com (Postfix) with ESMTP id 3DED528070; Fri,
- 04 Mar 2011 13:13:34 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac2.idc.renesas.com with ESMTP id PAK13972; Fri,
- 04 Mar 2011 13:13:34 +0900
-X-IronPort-AV: E=Sophos;i="4.62,262,1297004400";   d="scan'208";a="14851443"
-Received: from unknown (HELO relay11.aps.necel.com) ([10.29.19.46])
- by relmlii2.idc.renesas.com with ESMTP; Fri, 04 Mar 2011 13:13:34 +0900
-Received: from relay11.aps.necel.com ([10.29.19.46] [10.29.19.46])
- by relay11.aps.necel.com with ESMTP; Fri, 04 Mar 2011 13:13:34 +0900
-Received: from dhlpc061 ([10.114.97.66] [10.114.97.66])
- by relay11.aps.necel.com with ESMTP; Fri, 04 Mar 2011 13:13:34 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id 658B652E1D6; Fri,
- 04 Mar 2011 13:13:33 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <7v8vwv927a.fsf@alter.siamese.dyndns.org>
+	id S1758621Ab1CDETi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Mar 2011 23:19:38 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:40565 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758523Ab1CDETh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Mar 2011 23:19:37 -0500
+Received: by wyg36 with SMTP id 36so1754743wyg.19
+        for <git@vger.kernel.org>; Thu, 03 Mar 2011 20:19:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=A8xl9EEEAZQ0yWWvxCb1vMoXugyqyJOjz/5ruka2XO0=;
+        b=f1arzdV1ZTEkFElDCNpTCPBCXhLeeJ5z3owGnutqbqd4q5EgjQ7i64Lc8WKTe9kZ5V
+         4hYpypPUBh4J83DUSSCr59EjLkPmje+48fglQsrnWUBTAcayZPwe13XmI2QQLzfcchbS
+         KDCgyHlvyINEZ4yI1OkmRNLkXVh2ps3QMWwF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=SZav2UnKZe5+A5pt4xD7himmxv2g5B4/Vndck7t5niShQnyeegrlfibrS/ngFEV31e
+         SqmemV1umujnBaRR4VTuXW/DgJeOIx411jHAnSJ5VQuzdz/rF+3Lo1wNZeOzxGWvV22i
+         ncRuWqv0AWdyAO1bumjc0u6C0jcZSAcG+ARqo=
+Received: by 10.216.136.91 with SMTP id v69mr172079wei.16.1299212376250; Thu,
+ 03 Mar 2011 20:19:36 -0800 (PST)
+Received: by 10.216.239.5 with HTTP; Thu, 3 Mar 2011 20:19:06 -0800 (PST)
+In-Reply-To: <4D700469.7090807@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168425>
 
-Junio C Hamano <gitster@pobox.com> writes:
->> Instead of creating the repository at $GIT_DIR, --real-git-dir will
->> tell git to put the repository there, then make $GIT_DIR a .git file
->> that points to --real-git-dir.
+2011/3/4 Piotr Krukowiecki <piotr.krukowiecki@gmail.com>:
+>> =C2=A0This makes '.git symbolic link' (what's its official name?) mo=
+re
+>> =C2=A0convenient to use. Previously whenever I need to create a .git=
+ link,
+>> =C2=A0I need to open docs to see its format. Now all I need to do is
 >
-> Just like you, I am also bad at naming things, so I cannot offhand suggest
-> a better name, even though I _know_ --real-git-dir sounds horrible.
+> Took me a while to find documentation for .git file format. Probably =
+my
+> fault, missed the gitrepository-layout link.
 
---separate-git-dir  ?
-
-[Terms like "separate source dir" and "separate build dir" seems to be
-common when talking about build systems, and it seems a somewhat
-similar situation -- separation of usually co-located information.]
-
--miles
-
--- 
-It wasn't the Exxon Valdez captain's driving that caused the Alaskan oil spill.
-It was yours.  [Greenpeace advertisement, New York Times, 25 February 1990]
+Exactly why I wrote this patch. I do remember there is a prefix before
+the path, but what is it? gitdir: or git-dir: or dir:? No I don't want
+to look at the document every time I need to create a link. Trial and
+error is not preferred either. Also manual manipulation on repos
+should be avoided if possible.
+--=20
+Duy
