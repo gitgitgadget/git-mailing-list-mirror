@@ -1,103 +1,51 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: Re: why is my repo size ten times bigger than what I expected?
-Date: Sat, 5 Mar 2011 10:49:58 +0000
-Message-ID: <AANLkTimp8B5Lv15qhGOwOzh+kqOS0g3Xwvgib8vyk+m+@mail.gmail.com>
-References: <AANLkTimi+OnpdX+Y7jx1JaOmGbZc_XEgJFeK0PKLpu2o@mail.gmail.com> <AANLkTi=V3nEamocowbHovvV0U69nZgD70fysu1CQOwrR@mail.gmail.com>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: git-svn with big subversion repository
+Date: Sat, 05 Mar 2011 11:53:12 +0100
+Message-ID: <87lj0t7s9z.fsf@mid.deneb.enyo.de>
+References: <C992EE5B.CBFB%jkristian@linkedin.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ruben Laguna <ruben.laguna@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 11:50:29 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 05 11:53:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pvp49-0001Fc-7W
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 11:50:29 +0100
+	id 1Pvp6s-0002U1-K7
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 11:53:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752920Ab1CEKuY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Mar 2011 05:50:24 -0500
-Received: from juliet.asmallorange.com ([207.210.105.70]:35090 "EHLO
-	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277Ab1CEKuX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Mar 2011 05:50:23 -0500
-X-Greylist: delayed 2951 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Mar 2011 05:50:23 EST
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:64128)
-	by juliet.asmallorange.com with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.69)
-	(envelope-from <maillist@steelskies.com>)
-	id 1Pvp40-0004Mt-Fz
-	for git@vger.kernel.org; Sat, 05 Mar 2011 05:50:20 -0500
-Received: by qwd7 with SMTP id 7so2240959qwd.19
-        for <git@vger.kernel.org>; Sat, 05 Mar 2011 02:50:18 -0800 (PST)
-Received: by 10.229.67.142 with SMTP id r14mr1311753qci.209.1299322218329;
- Sat, 05 Mar 2011 02:50:18 -0800 (PST)
-Received: by 10.229.188.205 with HTTP; Sat, 5 Mar 2011 02:49:58 -0800 (PST)
-In-Reply-To: <AANLkTi=V3nEamocowbHovvV0U69nZgD70fysu1CQOwrR@mail.gmail.com>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - steelskies.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752524Ab1CEKxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2011 05:53:14 -0500
+Received: from ka.mail.enyo.de ([87.106.162.201]:51322 "EHLO ka.mail.enyo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751553Ab1CEKxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2011 05:53:13 -0500
+Received: from [172.17.135.4] (helo=deneb.enyo.de)
+	by ka.mail.enyo.de with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	id 1Pvp6m-0006mO-A3
+	for git@vger.kernel.org; Sat, 05 Mar 2011 11:53:12 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.72)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1Pvp6m-0002Qj-2y
+	for git@vger.kernel.org; Sat, 05 Mar 2011 11:53:12 +0100
+In-Reply-To: <C992EE5B.CBFB%jkristian@linkedin.com> (John Kristian's message
+	of "Wed, 2 Mar 2011 02:43:23 +0000")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168486>
 
-On 5 March 2011 10:05, Ruben Laguna <ruben.laguna@gmail.com> wrote:
-> Hi,
->
-> I had a repo which was big 143MB because it contained a bunch of jar
-> files. So I decided to remove those completely from the history.
->
-> In short I used the git-large-blob [1] to find all the jars and used
-> the git-remove-history script [2] which does the filter-branch thing,
-> prune, etc.
->
-> I did this on all branches (that I know of) and now I can see that th=
-e
-> jars are gone because I can't find them with git-large-blob. =C2=A0an=
-d the
-> repo size has dropped from 143Mb to 87Mb.
->
-> My concern is that 87Mb is still really big taking into account he
-> size of the project. =C2=A0in fact if I run "git diff-tree -r -p $com=
-mit
-> |wc -c" for each commit and sum all I get 5.5Mb.
->
->
-> I also ran the git-rev-size [3] script that I found in this mailing
-> list and I only see that the size grows steadly from commit to commit
-> up to 1482731 bytes. So again how come the .git directory is 87MB?
->
->
-> So, Can anybody tell me if this repository size is "normal" for a
-> project with 1.4MB source and 352 commits?
-> Is there a better way to calculate the size (in bytes) of each commit=
-?
->
-> Is there any other thing I could do to reduce and audit =C2=A0the rep=
-ository size?
->
->
-> Thanks in advance!
-> Rub=C3=A9n
->
-> ---
-> [1]=C2=A0http://stackoverflow.com/questions/298314/find-files-in-git-=
-repo-over-x-megabytes-that-dont-exist-in-head
-> [2]=C2=A0http://dound.com/2009/04/git-forever-remove-files-or-folders=
--from-history/
-> [3] http://markmail.org/message/762zzg5zckbiq2i7
+* John Kristian:
 
-What happens if you clone that repo?
-git-gc will only pruned unused objects that're older than 2 weeks by
-default, so it's possible that your repo size will suddenly shrink in
-2 weeks time (or sooner, if you run git-gc with the appropriate
-options)
+> How do you recommend using git to work with branches of a large, busy
+> subversion repository? In general, how can small teams use git for their
+> tasks, and use subversion to coordinate with a larger organization?
+
+I've used svnsync to a local repository and git-svn against that.
+This meant that my experiments do not cause excessive load on the
+server.
+
+You should definitely coordinate this because this could be considered
+leaching IP if the repository is not public.
