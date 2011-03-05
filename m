@@ -1,72 +1,84 @@
-From: Nicolas Kaiser <nikai@nikai.net>
-Subject: [PATCH] transport-helper.c: fix check for size_t < 0 v2
-Date: Sat, 5 Mar 2011 00:16:26 +0100
-Organization: -
-Message-ID: <20110305001626.3b6c507d@absol.kitzblitz>
-References: <20110304202834.2e74d56d@absol.kitzblitz>
-	<AANLkTimc_iLDXxrV=tfZc+_dCkpx6897Lh8sZxkwbgDo@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] git-am silently applying patches incorrectly
+Date: Fri, 04 Mar 2011 16:05:35 -0800
+Message-ID: <7vd3m65t4g.fsf@alter.siamese.dyndns.org>
+References: <4D70EBC3.3010400@colin.guthr.ie>
+ <7vr5am7p30.fsf@alter.siamese.dyndns.org>
+ <7vei6m7muw.fsf@alter.siamese.dyndns.org>
+ <7v39n27llq.fsf@alter.siamese.dyndns.org>
+ <AANLkTim=jpJmBZmtAVX2V8Ui44AwpTbevJtSR2Xk=wLX@mail.gmail.com>
+ <7vy64u65ta.fsf@alter.siamese.dyndns.org>
+ <loom.20110304T210337-216@post.gmane.org>
+ <7vtyfi606a.fsf@alter.siamese.dyndns.org> <4D717116.3050305@miseler.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 00:18:21 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexander Miseler <alexander@miseler.de>
+X-From: git-owner@vger.kernel.org Sat Mar 05 01:05:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PveGK-0007ip-8d
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 00:18:20 +0100
+	id 1Pvf0J-0002es-0p
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 01:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758463Ab1CDXSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2011 18:18:15 -0500
-Received: from webhosting01.bon.m2soft.com ([195.38.20.32]:42570 "EHLO
-	webhosting01.bon.m2soft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751587Ab1CDXSO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2011 18:18:14 -0500
-Received: from absol.kitzblitz (85-127-41-184.dynamic.xdsl-line.inode.at [85.127.41.184])
-	(authenticated bits=0)
-	by webhosting01.bon.m2soft.com (8.13.8/8.13.8) with ESMTP id p24Mx1UF011140;
-	Fri, 4 Mar 2011 23:59:02 +0100
-In-Reply-To: <AANLkTimc_iLDXxrV=tfZc+_dCkpx6897Lh8sZxkwbgDo@mail.gmail.com>
-X-Face: "fF&[w2"Nws:JNH4'g|:gVhgGKLhj|X}}&w&V?]0=,7n`jy8D6e[Jh=7+ca|4~t5e[ItpL5
- N'y~Mvi-vJm`"1T5fi1^b!&EG]6nW~C!FN},=$G?^U2t~n[3;u\"5-|~H{-5]IQ2
-X-Mailer: Claws Mail (Linux)
+	id S1760227Ab1CEAFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2011 19:05:46 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53618 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760224Ab1CEAFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2011 19:05:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D3DD7324D;
+	Fri,  4 Mar 2011 19:07:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AUzXNoC8cwIGyxSexvjw6YN90es=; b=dPEOCp
+	u41eskh3oNMAWmOhnz+w9HRZ039U7+5Hvl3JOBiEfESmblfHHzWuBw/+cJHUdmPx
+	60pAuAQ1uS3/Xdk0zHCOC7HCx0DxMUxXRgnmCoIilJtPV2XRxqwcKXfFIRakVtZK
+	T/o5WBivL24zwvhev5E7drIqjJR+n4eb9BHnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MSkg0d8Tm/1X1V0vzyNcO+3MV6jciB3G
+	cVVxr0mvMtY+9yafY7XWySGUNvtZlYSFDZqiUHYOY9/P64O9hdTJLEfmhygm/ij6
+	kU2N9aPDtw3L+sVpDKO+ml26zUxdo4RaosM6Z7jfUC0w1E/PYE2yucXr9RqVBLY6
+	Ji5V8L83ym8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C83FD324C;
+	Fri,  4 Mar 2011 19:07:02 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CECB5324A; Fri,  4 Mar 2011
+ 19:06:59 -0500 (EST)
+In-Reply-To: <4D717116.3050305@miseler.de> (Alexander Miseler's message of
+ "Sat\, 05 Mar 2011 00\:09\:10 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7F7D2F76-46BC-11E0-B053-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168476>
 
-'bytes' is unsigned of type size_t, and can't be negative.
-But the assigned write() returns ssize_t, and -1 on error.
-For testing < 0, 'bytes' needs to be of a signed type.
+Alexander Miseler <alexander@miseler.de> writes:
 
-Signed-off-by: Nicolas Kaiser <nikai@nikai.net>
----
-* Piotr Krukowiecki <piotr.krukowiecki@gmail.com>:
-> You are right that, but the fix should be to use ssize_t not  plain "int".
-> (udt_do_read() correctly uses ssize_t)
+> .... On a side note: if this problem is tackled it might be
+> sensible to add a heuristic to git format-patch that increases the
+> context size for hunks that are likely to be ambiguous.
 
-Indeed, thanks. Here's a version with ssize_t.
-Testsuite did not regress at my place.
+In general that approach would not help.  Imagine a case where the
+problematic patch from David Henningsson were only about moving the
+calling site of check_required() within the element_probe() function.
+IOW, imagine that the hunk starting at line 1018 to modify
+check_required() itself weren't involved in his change.
 
- transport-helper.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Before or after such a change, there would be only one location that
+closes two blocks followed by a blank line and return 0 at the end of the
+function, which is the necessary context of the "moved after" hunk of the
+patch, so when producing the patch, there is no way for format-patch to
+notice that it is likely to become ambiguous.
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 4e4754c..ba06b70 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -973,7 +973,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
-  */
- static int udt_do_write(struct unidirectional_transfer *t)
- {
--	size_t bytes;
-+	ssize_t bytes;
- 
- 	if (t->bufuse == 0)
- 		return 0;	/* Nothing to write. */
--- 
-1.7.3.4
+But if the change to check_required() were applied as a separate patch
+before the change to move the call site was applied, at the application
+time, the patch becomes ambiguous.
