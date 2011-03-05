@@ -1,65 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
 Subject: Re: [PATCH] Added --exit-code option to git-status
-Date: Sat, 05 Mar 2011 08:10:01 -0800
-Message-ID: <7v4o7h5z1i.fsf@alter.siamese.dyndns.org>
+Date: Sat, 5 Mar 2011 17:32:18 +0100
+Message-ID: <AANLkTimeE0yscLFTkJ-824wi55eQQme8X+qobx80NVby@mail.gmail.com>
 References: <4D7254CB.5040704@gmail.com>
+	<7v4o7h5z1i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 17:10:21 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 17:32:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pvu3f-0007Bi-Pk
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 17:10:20 +0100
+	id 1PvuP3-0000qv-6T
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 17:32:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753149Ab1CEQKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2011 11:10:12 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51066 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753021Ab1CEQKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2011 11:10:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 07E1C4AE3;
-	Sat,  5 Mar 2011 11:11:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z+FMq2/p4TTviwdOOdR6/M0AZqU=; b=k0lP5e
-	Of8/wuS/DPF6NnpDfOHfp4dSkntr7IK358N1PI1vDB6tRFOp1lZfjY+tLGoy2tlZ
-	hX0GXoz/iQk7OJV1hsHSmUE92Qb9pEpNqZi41EaJ/HfNuxYYPfFlavnrpw5Hqm9p
-	kLW8nTT+PAVsx2CC8+po3Pe4G+l2KryPcUF2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nObeGDpVl9dhs/CssaTiylwuIpaiwiKt
-	sZwVhxqF11hZcJX5I7x4v2JxVEjABGAkuZaQYk4OcyohoRG+DC+1TC/XqhS6Vu1W
-	sS/pAft8vLaLhiJuaubewU/LIkHgNk0E9+IpLAvdZ5NceM+7xpEvBwSp/qXNYqKJ
-	6HVXMVfc84o=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DAEDF4AE2;
-	Sat,  5 Mar 2011 11:11:29 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 113E74AE1; Sat,  5 Mar 2011
- 11:11:26 -0500 (EST)
-In-Reply-To: <4D7254CB.5040704@gmail.com> (Piotr Krukowiecki's message of
- "Sat\, 05 Mar 2011 16\:20\:43 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3AF44D94-4743-11E0-9CBE-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1753127Ab1CEQcU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2011 11:32:20 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:44178 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752248Ab1CEQcT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2011 11:32:19 -0500
+Received: by vws12 with SMTP id 12so2775311vws.19
+        for <git@vger.kernel.org>; Sat, 05 Mar 2011 08:32:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=zzQker14DWzY9zDL40Z70qjhkcuEI69Nhcg85CjdnT0=;
+        b=dGYQYFWZSnwVvnuLcv/qmkESWivDpOT1pzQve0Y4URYdzeoHWVEpzafPmmiswLcHOt
+         aAzQBCuFWlY119PpFZPl3wCgfDt1hBJB2O/ONFnMcBOIhqYeyjpDmy7UFOoee2HGgsWD
+         9y3JYeyR4PSCZFSYOIPnq4pUiHNozt+tQA2so=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=TzJrUjgViWxqT1HjLo4zKczD893x1HYgmVLP9jZtUuUYpg4sb8qtC0cpV83smKVXdU
+         k2vv5zRTLQc4HMdAZ1uaAM9jJo86KLEs6x+bBKFQV3cH0DuuNhIp6ILdck7eFp4r3ohz
+         umFiyOG2hpUw1ZepQdVPkbKxSwGi2F8upwJ/w=
+Received: by 10.52.98.97 with SMTP id eh1mr377551vdb.148.1299342738725; Sat,
+ 05 Mar 2011 08:32:18 -0800 (PST)
+Received: by 10.220.61.140 with HTTP; Sat, 5 Mar 2011 08:32:18 -0800 (PST)
+In-Reply-To: <7v4o7h5z1i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168502>
 
-Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+On Sat, Mar 5, 2011 at 5:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>
+>> When this option is specified git-status returns non-zero
+>> exit code when there are untracked, modifed or staged files.
+>> ...
+>> Comments?
+>
+> Knowing the history of "commit --dry-run" vs "status", my gut reaction was
+> that adding anything to "status" is going totally backwards.
 
-> When this option is specified git-status returns non-zero
-> exit code when there are untracked, modifed or staged files.
-> ...
-> Comments?
+What's the history?
 
-Knowing the history of "commit --dry-run" vs "status", my gut reaction was
-that adding anything to "status" is going totally backwards.
+
+-- 
+Piotrek
