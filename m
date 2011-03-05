@@ -1,104 +1,119 @@
-From: Colin Guthrie <gmane@colin.guthr.ie>
-Subject: Re: [BUG] git-am silently applying patches incorrectly
-Date: Sat, 05 Mar 2011 11:51:05 +0000
-Message-ID: <4D7223A9.6080105@colin.guthr.ie>
-References: <4D70EBC3.3010400@colin.guthr.ie> <7vr5am7p30.fsf@alter.siamese.dyndns.org> <7vei6m7muw.fsf@alter.siamese.dyndns.org> <7v39n27llq.fsf@alter.siamese.dyndns.org> <AANLkTim=jpJmBZmtAVX2V8Ui44AwpTbevJtSR2Xk=wLX@mail.gmail.com> <7vy64u65ta.fsf@alter.siamese.dyndns.org> <loom.20110304T210337-216@post.gmane.org> <7vtyfi606a.fsf@alter.siamese.dyndns.org> <4D7165A3.5080308@colin.guthr.ie> <7vlj0u5wyw.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: frustrated forensics: hard to find diff that undid a fix
+Date: Sat, 5 Mar 2011 06:51:00 -0600
+Message-ID: <20110305125100.GA14547@elie>
+References: <4D71D63E.3030907@gmail.com>
+ <m37hcd7qfv.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alexander Miseler <alexander@miseler.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 12:51:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Monsen <haircut@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 13:51:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pvq0y-0000yi-VI
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 12:51:17 +0100
+	id 1Pvqx1-00080h-QC
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 13:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927Ab1CELvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2011 06:51:10 -0500
-Received: from brent.tribalogic.net ([78.86.109.144]:47250 "EHLO
-	summit.brent.tribalogic.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752715Ab1CELvI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Mar 2011 06:51:08 -0500
-Received: from localhost (summit.brent.tribalogic.net [127.0.0.1])
-	by summit.brent.tribalogic.net (Postfix) with ESMTP id 7237DD8711;
-	Sat,  5 Mar 2011 11:51:07 +0000 (GMT)
-X-Virus-Scanned: amavisd-new at brent.tribalogic.net
-Received: from summit.brent.tribalogic.net ([127.0.0.1])
-	by localhost (summit.brent.tribalogic.net [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id NF2Dxf-Ig+1I; Sat,  5 Mar 2011 11:51:06 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Mageia/3.1.8-1.mga1 (1) Thunderbird/3.1.8
-In-Reply-To: <7vlj0u5wyw.fsf@alter.siamese.dyndns.org>
+	id S1753117Ab1CEMvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2011 07:51:09 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:59447 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633Ab1CEMvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2011 07:51:08 -0500
+Received: by iwn34 with SMTP id 34so2660176iwn.19
+        for <git@vger.kernel.org>; Sat, 05 Mar 2011 04:51:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=4U1h77DPukE/U/i/V02BMJvtG3/18eKSulbUWHh6IPk=;
+        b=tUu1auTvvS9nZc+Q+WEiiK9EElJPxupCkFp3GuyGQL37szVhrF+ZHFGb6KEtT0ha9f
+         OxHlbpj5GF+od1eY5LCw2BzsCcHtmF6JJNoTBGHLnD+Y4ehT/x+OBmr39GLU0FSutXWJ
+         MIK6IWspF1bpdpIMtRsxyioRyj3xcpqDTHP9Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=aty5DeqmY+J/hcERPccIVtjJQA1XU2NJLdAkeVYZAGY2EVyh6Z1sZ7Lny4NpIzKN6W
+         /+yOvPO195MmFDvTfvmVi3ZIxmZGzkpP5wN7amJQcaUTOQcZjN+nSJogMhT7Ui+vC194
+         YopBcoBvJCkEKdjebNmQxXcgeuL32Twgn3rCA=
+Received: by 10.231.195.222 with SMTP id ed30mr1224329ibb.114.1299329467577;
+        Sat, 05 Mar 2011 04:51:07 -0800 (PST)
+Received: from elie (adsl-69-209-58-75.dsl.chcgil.ameritech.net [69.209.58.75])
+        by mx.google.com with ESMTPS id u9sm568310ibe.8.2011.03.05.04.51.05
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Mar 2011 04:51:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <m37hcd7qfv.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168491>
 
-'Twas brillig, and Junio C Hamano at 04/03/11 22:42 did gyre and gimble:
-> Colin Guthrie <gmane@colin.guthr.ie> writes:
-> 
->> 'Twas brillig, and Junio C Hamano at 04/03/11 21:33 did gyre and gimble:
->>> In short, Linus and I both know what you are talking about, and we may
->>> revisit that issue later, but the thing is that it would not be very
->>> pleasant, and not something that can be done in one sitting during a
->>> single discussion thread on the list.
->>
->> As a simple option to avoid that, how about just printing out (by
->> default) the line offsets if hunks don't apply 100% cleanly? This would
->> at least alert you to the fact that some fixups were needed.
->>
->> Just a thought...
-> 
-> ... and a patch to do so would look like this.  "git apply -v" and (GNU)
-> "patch -p1" seems to report exactly the same numbers for the problematic
-> patch and the initial state that started this discussion.
-> 
->  builtin/apply.c |   15 ++++++++++++++-
->  1 files changed, 14 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index 14951da..4d22d16 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -2638,6 +2643,14 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
->  				apply = 0;
->  		}
->  
-> +		if (apply_verbosely && applied_pos != pos) {
-> +			int offset = applied_pos - pos;
-> +			if (offset < 0)
-> +				offset = 0 - offset;
-> +			fprintf(stderr, "Applied at %d (offset %d line(s)).\n",
-> +				applied_pos + 1, offset);
-> +		}
-> +
->  		/*
->  		 * Warn if it was necessary to reduce the number
->  		 * of context lines.
+Hi,
 
-Personally I wouldn't bother making offset absolute... (equiv of
-abs(offset)) as knowing it applied earlier or later could be useful...
-the direction is lost here and I don't really see why that's nicer for
-the user. But maybe that's just my opinion?
+Jakub Narebski wrote:
 
-Col
+> I guess that pickaxe also needs -c or -m.
 
-PS Many thanks for working on this :)
+I am not so sure.
 
+Pickaxe is used to ask, "what commit introduced this string?".  Using
+"git log --raw -c", I can see that the current state of
+contrib/fast-import/git-p4 came about in commit 6d74e5c9d (Merge
+branch 'mh/p4', 2011-03-04):
 
--- 
+| $ git log --oneline --raw -c
+| 07873dc Merge branch 'maint'
+| 
+| 6d74e5c Merge branch 'mh/p4'
+| 
+| ::100755 100755 100755 a4f440d... 8b00fd8... 2df3bb2... MM
+| contrib/fast-import/git-p4
+[...]
 
-Colin Guthrie
-gmane(at)colin.guthr.ie
-http://colin.guthr.ie/
+Now, working backwards, I ask git:
 
-Day Job:
-  Tribalogic Limited [http://www.tribalogic.net/]
-Open Source:
-  Mageia Contributor [http://www.mageia.org/]
-  PulseAudio Hacker [http://www.pulseaudio.org/]
-  Trac Hacker [http://trac.edgewall.org/]
+| $ git log --oneline -S "$(cat contrib/fast-import/git-p4)" maint..master
+| $
+
+No hits.  Maybe it's from one of those mergey diffs?
+
+| $ git log --oneline -m -S "$(cat contrib/fast-import/git-p4)" maint..master
+| 07873dc (from 964498e) Merge branch 'maint'
+| 6d74e5c (from 08fd871) Merge branch 'mh/p4'
+| 6d74e5c (from c9dbab0) Merge branch 'mh/p4'
+| $
+
+Too many hits (it includes every merge in which one side contains
+the string and the other does not).  How about -c, which seemed to
+produce such nice output with --raw?
+
+| $ git log --oneline -c -S "$(cat contrib/fast-import/git-p4)" maint..master
+| 07873dc Merge branch 'maint'
+| 6d74e5c Merge branch 'mh/p4'
+| 08fd871 Merge branch 'mg/maint-difftool-vim-readonly'
+| 5cb3c9b Merge branch 'jn/maint-commit-missing-template'
+| 1538f21 Merge branch 'jk/diffstat-binary'
+| 24161eb Merge branch 'lt/rename-no-extra-copy-detection'
+| [...]
+
+Oh.  diff_tree_combined_merge simply doesn't know about pickaxe,
+so -c and --cc with -S print _all_ merges.
+
+So the only sensible way to use pickaxe with merges is
+
+| $ git log --oneline -m --first-parent \
+|	-S "$(cat contrib/fast-import/git-p4)" maint..master
+| 6d74e5c Merge branch 'mh/p4'
+
+for now.  I'd be happy to help anyone hoping to improve this.
+(Hopefully all that is needed is something like the
+diff_queue_is_empty() check from v0.99~504 --- Diffcore updates,
+2005-05-22.)
