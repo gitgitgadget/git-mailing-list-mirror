@@ -1,75 +1,70 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: why is my repo size ten times bigger than what I expected?
-Date: Sat, 05 Mar 2011 13:57:45 +0100
-Message-ID: <m2zkp9wwqe.fsf@igel.home>
-References: <AANLkTimi+OnpdX+Y7jx1JaOmGbZc_XEgJFeK0PKLpu2o@mail.gmail.com>
-	<AANLkTi=V3nEamocowbHovvV0U69nZgD70fysu1CQOwrR@mail.gmail.com>
-	<AANLkTimp8B5Lv15qhGOwOzh+kqOS0g3Xwvgib8vyk+m+@mail.gmail.com>
-	<AANLkTinwHMULqPZSguYtJztuA4Oy6-s6Ah3_tcVVO7D9@mail.gmail.com>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [ANNOUNCE] CGIT 0.8.3.5
+Date: Sat, 5 Mar 2011 14:43:14 +0100
+Message-ID: <AANLkTi=QjgcYRqJ_dY1zjUfz1TQCQz9Eo5Wi2fEJJfWC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan del Strother <maillist@steelskies.com>,
-	git@vger.kernel.org
-To: Ruben Laguna <ruben.laguna@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 13:57:56 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 05 14:43:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pvr3U-0002Po-CG
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 13:57:56 +0100
+	id 1Pvrlb-0005Y5-0T
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 14:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842Ab1CEM5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2011 07:57:50 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:49775 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487Ab1CEM5u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2011 07:57:50 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 29AA9188A191;
-	Sat,  5 Mar 2011 13:57:48 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 8CBD71C000A2;
-	Sat,  5 Mar 2011 13:57:46 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id TNu63NhYO29p; Sat,  5 Mar 2011 13:57:46 +0100 (CET)
-Received: from igel.home (ppp-88-217-99-207.dynamic.mnet-online.de [88.217.99.207])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sat,  5 Mar 2011 13:57:45 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id A4DD0CA2A0; Sat,  5 Mar 2011 13:57:45 +0100 (CET)
-X-Yow: So this is what it feels like to be potato salad
-In-Reply-To: <AANLkTinwHMULqPZSguYtJztuA4Oy6-s6Ah3_tcVVO7D9@mail.gmail.com>
-	(Ruben Laguna's message of "Sat, 5 Mar 2011 12:41:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.94 (gnu/linux)
+	id S1751008Ab1CENnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2011 08:43:16 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:58745 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853Ab1CENnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2011 08:43:15 -0500
+Received: by vxi39 with SMTP id 39so2743365vxi.19
+        for <git@vger.kernel.org>; Sat, 05 Mar 2011 05:43:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=Xbi8AN2xo4sbqM8UZU5g+BlEsSBVjQbJ55E5NFy9ALM=;
+        b=Z5110RZOv/tIbtKvp2FHYrCJ59VnDmSTWQRtjDTAnEKhG2DheuTo5ogztkwR7zQ6gf
+         0rRTwysBEV+6uKdAGTGDsi+cJrQEwsbe2Oat4QN8g0AafZXRUoPbkdL9r/t4rPyi+q0Y
+         pogPrUhAFjzQsFfsIfwU/gJO469vXtwtHmDf0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=xVFtEPajZMVmFVp4Lj8LXJpg3Wdp4Zp3yi0JnJkoWamQv3y01Rd7V355b6lw8T5y1G
+         5JlJrHZyN5YntKo7bHWKNrZBkh+i1h5SKjw6DQ1H0HJo4psjBp0VFldvnrTVQa8SpW6s
+         6TZLl782N0uJ+BWDO+mLwsSeHQZaVOtfH5mcI=
+Received: by 10.52.71.35 with SMTP id r3mr2582078vdu.232.1299332594218; Sat,
+ 05 Mar 2011 05:43:14 -0800 (PST)
+Received: by 10.52.160.130 with HTTP; Sat, 5 Mar 2011 05:43:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168493>
 
-Ruben Laguna <ruben.laguna@gmail.com> writes:
+A bugfix relase of cgit, a web interface to git repositories, is now
+available at http://hjemli.net/git/cgit. This release removes a DoS
+possibility, and as such is highly recommended (the fix is also
+included in the latest master-branch in the same repo, which will
+become cgit-0.9 today).
 
-> also cloning the repo doesn't change a thing
->
-> $ git clone en4j en4j_xx
-> Cloning into en4j_xx...
-> done.
-> $ cd en4j_xx
-> $ du -sh .git
->  87M    .git
->
-> any other idea?
+Thanks to everyone who contributed:
 
-Please use file://$PWD/en4j as URL, otherwise git clone just hard links
-everything.
+Bernhard Reutner-Fischer (1):
+      ui-shared: silence warning
 
-Andreas.
+Dean Scarff (1):
+      Use absolute path for scanned repo readme
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Jim Meyering (1):
+      do not infloop on a query ending in %XY, for invalid hex X or Y
+
+Lars Hjemli (2):
+      Avoid trailing slash in virtual-root
+      CGIT 0.8.3.5
+
+Lukas Fleischer (1):
+      Makefile: Make `make get-git` work under OpenBSD.
