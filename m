@@ -1,106 +1,112 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [PATCH] Add link to git-cherry(1) in git-cherry-pick(1)
-Date: Sat, 5 Mar 2011 20:26:25 +0100
-Message-ID: <AANLkTikumH9gSMtJO2FR=oGPh4NP-xEYYxdcv8heH9J1@mail.gmail.com>
-References: <4D728A6A.8090507@gmail.com>
-	<AANLkTi=QZhtByUe5h5w1MFrQ703MsWpoWHZcxvFsvNZk@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Bug] %[a|c]d placeholder does not respect --date= option in
+ combination with git archive
+Date: Sat, 5 Mar 2011 14:50:20 -0500
+Message-ID: <20110305195020.GA3089@sigill.intra.peff.net>
+References: <4D6F5FA8.5030105@gmx.de>
+ <20110303151019.GC1074@sigill.intra.peff.net>
+ <4D70BA9C.1080902@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 05 20:26:35 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Dietmar Winkler <dietmarw@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Mar 05 20:50:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pvx7Y-0000oH-Rk
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 20:26:33 +0100
+	id 1PvxUj-000420-G6
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 20:50:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754008Ab1CET01 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Mar 2011 14:26:27 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:64998 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753897Ab1CET01 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Mar 2011 14:26:27 -0500
-Received: by vxi39 with SMTP id 39so2866545vxi.19
-        for <git@vger.kernel.org>; Sat, 05 Mar 2011 11:26:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=hwojR8/ub0akbFdJfCL+BOm8Hu1FaRyYqww9j4dqX3A=;
-        b=rPQpS1n2AFMj/bhdyqVy3q1W4Xi9zvN1wfWNxvl6la0FiJ2Xp5GQ/+6gdgnsqlez2q
-         kEAtGzkU/ROrPHW/HG00gUIhF7Ajx5X04CKiyY/kmj/abqaIo3am5jYkpoz96GE9uEWm
-         b6knhT5XfnWf1YmvyZhBeycj3VN0nVFhjBcyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=ErT0yV7o6WOmvix4ByMpdW8DHqDjne8wdZK4da2hTHp8fjWzXUVL/Xl3jBVF2cEgzo
-         vd5g+a/MPamQpSc2FAhdZeGKHJ8afpbNmGmphTcRGxD+CZY4O9t40AnkGZP6y4QXqSnH
-         UYy1ryoxXfnNrTXJsdIZTwMug011JI3Lcm8zk=
-Received: by 10.220.191.74 with SMTP id dl10mr556146vcb.104.1299353185977;
- Sat, 05 Mar 2011 11:26:25 -0800 (PST)
-Received: by 10.220.61.140 with HTTP; Sat, 5 Mar 2011 11:26:25 -0800 (PST)
-In-Reply-To: <AANLkTi=QZhtByUe5h5w1MFrQ703MsWpoWHZcxvFsvNZk@mail.gmail.com>
+	id S1753897Ab1CETuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2011 14:50:24 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60281 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752616Ab1CETuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2011 14:50:24 -0500
+Received: (qmail 14142 invoked by uid 111); 5 Mar 2011 19:50:21 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 05 Mar 2011 19:50:21 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Mar 2011 14:50:20 -0500
+Content-Disposition: inline
+In-Reply-To: <4D70BA9C.1080902@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168507>
 
-Ignore that - I didn't understand how the 'cherry' works.
+On Fri, Mar 04, 2011 at 11:10:36AM +0100, Dietmar Winkler wrote:
 
-Anyway, two questions:
-1. is there a reason why git-cherry is separate command and not part
-of git-branch?
-2. is there a way to make gitk show cherry-picks (or plans for implemen=
-ting it)?
+> Well in
+> http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html it says:
+> 
+>   "The placeholders are the same as those for the option
+> --pretty=format: of git-log(1), except that they need to be wrapped like
+> this: $Format:PLACEHOLDERS$ in the file."
+> 
+> And in git log the list includes (besides the various date formats) also
+> 
+>  %ad: author date (format respects --date= option)
+>   ...
+>  %cd: committer date *
+> 
+> *) actually here the string "(format respects --date= option)" is
+> missing. Otherwise what committer date format are we speaking about ;)
+> 
+> So either the documentation should make clear that the substitution will
+> *not* work or (and this would be preferable) fix the substitution so
+> that it works as documented.
 
+Yeah, the documentation is misleadingly vague there. I've improved it in
+the patch series below.
 
-On Sat, Mar 5, 2011 at 8:12 PM, Piotr Krukowiecki
-<piotr.krukowiecki@gmail.com> wrote:
-> Hm now I started to wonder: is git cherry the same as git branch --co=
-ntains?
->
-> On Sat, Mar 5, 2011 at 8:09 PM, Piotr Krukowiecki
-> <piotr.krukowiecki@gmail.com> wrote:
->>
->> Signed-off-by: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
->> ---
->> =A0Documentation/git-cherry-pick.txt | =A0 =A02 +-
->> =A01 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-c=
-herry-pick.txt
->> index 749d68a..c078cc9 100644
->> --- a/Documentation/git-cherry-pick.txt
->> +++ b/Documentation/git-cherry-pick.txt
->> @@ -162,7 +162,7 @@ Documentation by Junio C Hamano and the git-list=
- <git@vger.kernel.org>.
->>
->> =A0SEE ALSO
->> =A0--------
->> -linkgit:git-revert[1]
->> +linkgit:git-revert[1], linkgit:git-cherry[1]
->>
->> =A0GIT
->> =A0---
->> --
->> 1.7.4.1.179.gb9a20
->>
->> --
->> Piotr Krukowiecki
->>
->
->
->
-> --
-> Piotrek
->
+> > I remember at some point discussing extending the specifier syntax to
+> > allow things like "%(ad,date=short)", but it was never implemented. I
+> > think that would be the cleanest way to do what you want.
+> 
+> Yes that would be even better since it would give one the freedom of
+> defining different format for the subsitutions  in different places in a
+> project. Shame it was not accepted.
 
+I think we got bogged down in what exactly the extended format should
+look like and then nothing got done. I spent a few hours yesterday
+looking again at how bad it would be to extend the syntax to handle both
+the traditional format and '%(foo,arg=value)' but there are lot of
+corner cases.
 
+So this morning I scrapped that and just added "%ad(mode)" which was
+much simpler, and matches syntactically with some of our other commands.
+It's in the series below.
 
---=20
-Piotrek
+> > The second cleanest would be adding an archive.date variable. Which is
+> > much simpler, obviously. But I think making "log.date" start applying to
+> > archive substitutions is going to surprise some people and possibly
+> > break their setups.
+> 
+> How should this surprise people? If the used %ad they would have
+> expected a configuration depended substitution to start with. If they
+> wanted a log.date *independent* substitution they should have (according
+> to the documentation) some of the other formats (e.g., %ar, %ai, ...).
+> So I don't really see this as a reason for not fixing this bug.
+
+Imagine a project which uses "git archive" as part of its scripts for
+building a distribution tarball. I.e., you run "make dist" or similar,
+and it produces the tarball. The gitattributes and $Format:%ad$
+placeholders are contained in the upstream repository. So anybody who
+clones it can run "make dist" and get the identical tarball.
+
+Now imagine as a developer on the project, you prefer to see your logs
+with a different date format. So you set log.date to "short". But if
+git-archive behaves as you want it to, then your "make dist" is now
+broken. It generates different results to everyone else's.
+
+Anyway, hopefully the point becomes moot with this patch series, which
+lets you do %ad(short) in your format strings:
+
+  [1/2]: pretty.c: give format_person_part the whole placeholder
+  [2/2]: pretty.c: allow date formats in user format strings
+
+-Peff
