@@ -1,129 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] pretty.c: give format_person_part the whole placeholder
-Date: Sat, 5 Mar 2011 14:51:56 -0500
-Message-ID: <20110305195156.GA32095@sigill.intra.peff.net>
-References: <20110305195020.GA3089@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Dietmar Winkler <dietmarw@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 05 20:52:05 2011
+From: Adam Monsen <haircut@gmail.com>
+Subject: [PATCH 0/2] improve combined diff documentation
+Date: Sat,  5 Mar 2011 11:56:42 -0800
+Message-ID: <1299355004-3532-1-git-send-email-haircut@gmail.com>
+References: <4D724A0F.7050904@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio Hamano <gitster@pobox.com>,
+	Adam Monsen <haircut@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 05 20:57:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvxWF-0005Dk-U5
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 20:52:04 +0100
+	id 1Pvxbq-0007ar-SZ
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 20:57:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930Ab1CETv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2011 14:51:59 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60285 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753519Ab1CETv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2011 14:51:58 -0500
-Received: (qmail 14190 invoked by uid 111); 5 Mar 2011 19:51:58 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 05 Mar 2011 19:51:58 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Mar 2011 14:51:56 -0500
-Content-Disposition: inline
-In-Reply-To: <20110305195020.GA3089@sigill.intra.peff.net>
+	id S1753343Ab1CET5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2011 14:57:37 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:33008 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752616Ab1CET5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2011 14:57:37 -0500
+Received: by pwi15 with SMTP id 15so547608pwi.19
+        for <git@vger.kernel.org>; Sat, 05 Mar 2011 11:57:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=E1KwmjxYU+jKHJujJLrpCRPpKncBgNNEjl+MXqjsAjQ=;
+        b=p+bMlMsCoL19EKD3gZqZ+0jmyp7SyJ+uyHlJNZBMGr81rsiDhd6bi1oNZ/Ee+Xiz89
+         0d9bpFI8EQbVdH53hxSAxlDeK/nW9HfFlgS/zUYn5i8x327NL/RHjevO1e5aifYaCClx
+         ZN3Mv99ZntckVDe+PnpZ0LKl6yJjqQmOz/zh8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=enbI0Am6uF8CsttChq8cbRUTOnaABYKC3uVPtZ2s+gColZ1egzOg9QGR9k5LBoQWF1
+         yTcT7PoXjYuRm9z+rYMiCRKcYNzuFMS10Di/jSNk36HiKV9DkUZEYO+jJLZ7Txl+0xvY
+         GmX/l50qINrEc9hJI4Tns3jiXOh1B3PPwy/+U=
+Received: by 10.142.199.2 with SMTP id w2mr1667629wff.293.1299355054976;
+        Sat, 05 Mar 2011 11:57:34 -0800 (PST)
+Received: from localhost.localdomain (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
+        by mx.google.com with ESMTPS id w19sm1339031wfd.8.2011.03.05.11.57.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 05 Mar 2011 11:57:34 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <4D724A0F.7050904@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168509>
 
-Until now it only got to see the next character. Giving it
-the whole string will make it possible to add longer
-placeholders in a future patch.
+The "combined diff format" documentation in diff-generate-patch.txt
+incorrectly implied that "log -p" shows conflict resolutions as
+combined diffs.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I split this out because the patch ends up so noisy.
+With these small documentation fixes I'm hoping to save someone the
+time it took me to figure out how a merge conflict was resolved.
 
- pretty.c |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
+Related thread:
 
-diff --git a/pretty.c b/pretty.c
-index 8549934..00bcf83 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -440,7 +440,7 @@ static int mailmap_name(char *email, int email_len, char *name, int name_len)
- 	return mail_map->nr && map_user(mail_map, email, email_len, name, name_len);
- }
- 
--static size_t format_person_part(struct strbuf *sb, char part,
-+static size_t format_person_part(struct strbuf *sb, const char *part,
- 				 const char *msg, int len, enum date_mode dmode)
- {
- 	/* currently all placeholders have same length */
-@@ -477,7 +477,7 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 		goto skip;
- 	end = mail_end-msg;
- 
--	if (part == 'N' || part == 'E') { /* mailmap lookup */
-+	if (*part == 'N' || *part == 'E') { /* mailmap lookup */
- 		strlcpy(person_name, name_start, name_end-name_start+1);
- 		strlcpy(person_mail, mail_start, mail_end-mail_start+1);
- 		mailmap_name(person_mail, sizeof(person_mail), person_name, sizeof(person_name));
-@@ -486,11 +486,11 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 		mail_start = person_mail;
- 		mail_end = mail_start +  strlen(person_mail);
- 	}
--	if (part == 'n' || part == 'N') {	/* name */
-+	if (*part == 'n' || *part == 'N') {	/* name */
- 		strbuf_add(sb, name_start, name_end-name_start);
- 		return placeholder_len;
- 	}
--	if (part == 'e' || part == 'E') {	/* email */
-+	if (*part == 'e' || *part == 'E') {	/* email */
- 		strbuf_add(sb, mail_start, mail_end-mail_start);
- 		return placeholder_len;
- 	}
-@@ -504,7 +504,7 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 	if (msg + start == ep)
- 		goto skip;
- 
--	if (part == 't') {	/* date, UNIX timestamp */
-+	if (*part == 't') {	/* date, UNIX timestamp */
- 		strbuf_add(sb, msg + start, ep - (msg + start));
- 		return placeholder_len;
- 	}
-@@ -518,7 +518,7 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 			tz = -tz;
- 	}
- 
--	switch (part) {
-+	switch (*part) {
- 	case 'd':	/* date */
- 		strbuf_addstr(sb, show_date(date, tz, dmode));
- 		return placeholder_len;
-@@ -538,8 +538,8 @@ skip:
- 	 * bogus commit, 'sb' cannot be updated, but we still need to
- 	 * compute a valid return value.
- 	 */
--	if (part == 'n' || part == 'e' || part == 't' || part == 'd'
--	    || part == 'D' || part == 'r' || part == 'i')
-+	if (*part == 'n' || *part == 'e' || *part == 't' || *part == 'd'
-+	    || *part == 'D' || *part == 'r' || *part == 'i')
- 		return placeholder_len;
- 
- 	return 0; /* unknown placeholder */
-@@ -899,11 +899,11 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 
- 	switch (placeholder[0]) {
- 	case 'a':	/* author ... */
--		return format_person_part(sb, placeholder[1],
-+		return format_person_part(sb, placeholder + 1,
- 				   msg + c->author.off, c->author.len,
- 				   c->pretty_ctx->date_mode);
- 	case 'c':	/* committer ... */
--		return format_person_part(sb, placeholder[1],
-+		return format_person_part(sb, placeholder + 1,
- 				   msg + c->committer.off, c->committer.len,
- 				   c->pretty_ctx->date_mode);
- 	case 'e':	/* encoding */
+http://thread.gmane.org/gmane.comp.version-control.git/168481
+
+The patches apply cleanly to maint.
+
+Hope this helps,
+-Adam ("meonkeys" on IRC)
+
+Adam Monsen (2):
+  documentation fix: git log -p does not imply -c.
+  English grammar fixes for combined diff doc.
+
+ Documentation/diff-generate-patch.txt |    8 +++-----
+ 1 files changed, 3 insertions(+), 5 deletions(-)
+
 -- 
-1.7.4.rc1.24.g38985d
+1.7.2.3
