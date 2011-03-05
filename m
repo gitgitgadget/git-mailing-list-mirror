@@ -1,93 +1,81 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+From: Adam Monsen <haircut@gmail.com>
 Subject: Re: frustrated forensics: hard to find diff that undid a fix
-Date: Sat, 5 Mar 2011 09:29:57 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1103050844130.26585@debian>
-References: <4D71D63E.3030907@gmail.com>
+Date: Sat, 05 Mar 2011 06:34:55 -0800
+Message-ID: <4D724A0F.7050904@gmail.com>
+References: <4D71D63E.3030907@gmail.com> <m37hcd7qfv.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Adam Monsen <haircut@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 15:30:12 2011
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 15:35:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PvsUm-0001kB-Bq
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 15:30:12 +0100
+	id 1PvsZv-00046h-EM
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Mar 2011 15:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752581Ab1CEOaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2011 09:30:04 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:44026 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751962Ab1CEOaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2011 09:30:03 -0500
-Received: by vxi39 with SMTP id 39so2760330vxi.19
-        for <git@vger.kernel.org>; Sat, 05 Mar 2011 06:30:02 -0800 (PST)
+	id S1752339Ab1CEOf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2011 09:35:27 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37863 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750957Ab1CEOf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2011 09:35:26 -0500
+Received: by iwn34 with SMTP id 34so2705540iwn.19
+        for <git@vger.kernel.org>; Sat, 05 Mar 2011 06:35:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=pNuiTq7RFw/iKw2DQWwIf73FIHD8TF/u6aN6n0e8z0Y=;
-        b=SjTttLQsuTua5RhgX1sTc8fQTZa4U9Ofp6SxnuPKQRQPNnSbIJmLSObv2/XWSqzPPL
-         se9o2Ey9RM3/V69jATNmIBlv+PVR609JbHt628R16zi42EnaHfRk5WsD9mPTiMqbRTsv
-         Znr+nU8b1XsTO2q2jhO/NFlGLdK5Zv1gRRUjA=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=/LK7ITLkIKaojb34JfAKbHOIUoUvGzkLOyZD+WWWEsA=;
+        b=LIe+ywnpd/NQ+SyFOlMMdGg2eKttPBUiLHjHvyllVyff/sL+m+mDyqTY5NCCVAH7xa
+         btVxr2OGt2qcJC6zH5PYdtmLIOLBMWdRFg+hs4UBk374JV37OYgrTmB6fDwX5q0YrYAC
+         B+0kh7IaGKoCwRtwREZ9wVyKBQ43dkalZT8W0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=V6UQg6c/DA+0dRqRCcwKJZwYXGf3+T1LxUelGZYMBXFyk+5llmeRX1NB0as8g3DY0Z
-         P+GnOSqGfqUg6DKtlJHZKsIFt5c1sTXWdHFxcp4FR8rSPd6hG8mDs/aHbjAuYXWsrfqg
-         rnJFV6rIdoSDGetIKGq+OfjjHQjxWtsWiS/Z4=
-Received: by 10.220.14.66 with SMTP id f2mr509971vca.117.1299335402635;
-        Sat, 05 Mar 2011 06:30:02 -0800 (PST)
-Received: from [192.168.1.104] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id v26sm98829vcr.13.2011.03.05.06.30.01
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=Crw+iDKuhruLMf4ddyKyUnHdzQi9b01Ij7jvE40n/GTJC3JpoFjSPhnuBJzZOgUqQ7
+         56kxLGTSh41Wail8vuOBch4FJ+7c+yNPg3mMikpwTn+bxZgVt2KecaH2iJmfh/7e51s5
+         8yyauYKvqduEUeKjBHEuQqOtuROActT6F3brk=
+Received: by 10.43.61.147 with SMTP id ww19mr2293286icb.154.1299335725637;
+        Sat, 05 Mar 2011 06:35:25 -0800 (PST)
+Received: from [192.168.13.8] (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
+        by mx.google.com with ESMTPS id xa8sm590113icb.10.2011.03.05.06.35.24
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Mar 2011 06:30:01 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <4D71D63E.3030907@gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        Sat, 05 Mar 2011 06:35:25 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.14) Gecko/20110221 Lightning/1.0b2 Thunderbird/3.1.8
+In-Reply-To: <m37hcd7qfv.fsf@localhost.localdomain>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168499>
 
-On Fri, 4 Mar 2011, Adam Monsen wrote:
+Jakub Narebski wrote:
+> By default "git log -p" and "git show" considers merges uninteresting.
+> Try "git log -p -c" or "git log -p -m".
 
-> I made a fix a month ago on the master branch in a shared repo. A week
-> later, a colleague did a merge that undid the fix. I didn't figure out
-> the problem until just now because I'd been assuming the fix was still
-> on master. I mean, if it wasn't, I should see a reverse patch using "git
-> log -p master", right? Wrong. Turns out the fix was undone as part of
-> merge conflict resolution (I think).
-> 
-> Is there some way to include merge conflict resolutions in "git log -p"
-> or "git show"? Apparently some important information can be hidden in
-> the conflict resolution. Or, more likely, I just don't understand how
-> this bit of git works.
-> 
-> I also tried bisect and pickaxe. Bisect wrongly identified the first bad
-> commit, and pickaxe just didn't see the change at all.
+Holy cow, that's a lifesaver! Thank you, Jakub!!
 
-I was also bitten by this at work not too long ago. I started
-wondering if it would make sense to introduce a new option to git log
-and friends that would show the differences compared to a recreated
-merge commit. In the simple case where there are no merge conflicts,
-this would show only changes that someone explicitly dropped, like in
-your case. If there were conflicts, I imagine it would show the same
-output as -c or --cc. Does this make any sense?
+I totally missed the whole "Diff Formatting" section in the git-log(1)
+manpage.
 
-One of the reasons that people sometimes drop the 'theirs' side while
-merging is that they see the files show up when running 'git status'
-and they think "Hmm... I didn't modify this file, let's reset
-it". Would it be completely nonsensical to suggest that 'git status'
-could learn to, during a merge, compare to a recreated merge commit
-instead of comparing to HEAD?
+"git log -p -c" does exactly what I want. I'll make an alias or
+something for these options.
 
-Let me know what you think. I haven't really thought this through, so
-I wouldn't be surprised if I'm just talking nonsense.
+I'm confused by this section of git-log(1):
 
+  COMBINED DIFF FORMAT
+    "git-diff-tree", "git-diff-files" and "git-diff" can take -c
+    or --cc option to produce combined diff. For showing a merge
+    commit with "git log -p", this is the default format; you can
+    force showing full diff with the -m option.
 
-/Martin
+Sounds like this is saying that -c is the default with "git log -p".
+I'll submit a patch to fix that.
