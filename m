@@ -1,118 +1,173 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git-am silently applying patches incorrectly
-Date: Sun, 06 Mar 2011 14:40:05 -0800
-Message-ID: <7vhbbf50vu.fsf@alter.siamese.dyndns.org>
-References: <4D70EBC3.3010400@colin.guthr.ie>
- <7vr5am7p30.fsf@alter.siamese.dyndns.org>
- <7vei6m7muw.fsf@alter.siamese.dyndns.org>
- <7v39n27llq.fsf@alter.siamese.dyndns.org>
- <AANLkTim=jpJmBZmtAVX2V8Ui44AwpTbevJtSR2Xk=wLX@mail.gmail.com>
- <7vy64u65ta.fsf@alter.siamese.dyndns.org>
- <loom.20110304T210337-216@post.gmane.org>
- <7vtyfi606a.fsf@alter.siamese.dyndns.org> <4D7165A3.5080308@colin.guthr.ie>
- <7vlj0u5wyw.fsf@alter.siamese.dyndns.org> <4D7223A9.6080105@colin.guthr.ie>
- <7vsjuz520w.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2 00/12] vcs-svn: incremental import
+Date: Sun, 6 Mar 2011 16:54:40 -0600
+Message-ID: <20110306225419.GA24327@elie>
+References: <20101210102007.GA26298@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 06 23:40:39 2011
+Cc: David Barr <david.barr@cordelta.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 06 23:54:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwMcq-0003gO-8B
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 23:40:32 +0100
+	id 1PwMqk-0001lM-65
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 23:54:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515Ab1CFWkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 17:40:17 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48780 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751810Ab1CFWkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 17:40:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5DFD142C7;
-	Sun,  6 Mar 2011 17:41:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R0r0FJn2tmkCZe7ZlUDOkPvARRg=; b=mO05Aj
-	s5djNxVDZRBonTRdlvMk0ntDBbOh0oU0korSvsgPpDvXKJiUANmv30LpqMuoIsYa
-	w35iFM1M+kV/NIzIFADOXlhTeinTGwmIoxgkRkTuoAtRcQZVV5kpr7Z1UKqcaqCk
-	E2+SyRAfEtmkl+n5M2BJ0ACP/w6o6w+WuZAUE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kNA6eqICaY1Uc5iEZHwhggoOLCFfWNb1
-	4z3nRPf2GjlQmfEL3dWQgrpkZ4xl1u9ih+ad6ZzSvTYLOzMCIp4QGEqBjnTV3vWB
-	EdjwPabO6DYaFSVeiYaYUHXBIz6ed5RIlgjNGzkxgu+zADYzHNspVsd/kMlYRYCQ
-	C8E0y92aGfI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2DA1942C6;
-	Sun,  6 Mar 2011 17:41:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E226A42C5; Sun,  6 Mar 2011
- 17:41:32 -0500 (EST)
-In-Reply-To: <7vsjuz520w.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun\, 06 Mar 2011 14\:15\:27 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E5329CAC-4842-11E0-814E-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1754731Ab1CFWys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 17:54:48 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:62238 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810Ab1CFWyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 17:54:47 -0500
+Received: by ywj3 with SMTP id 3so1413879ywj.19
+        for <git@vger.kernel.org>; Sun, 06 Mar 2011 14:54:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=MjXZzlSfxFuEUuQeVhVIP++Z9oO44Ehi8DRhPkui4AE=;
+        b=mUiNufrEdDskfXnXzhhJCtjOtl+ChXI8TwD2KxUJlmk1zff0O1frUU9nQcZbe/w4d3
+         ZbF7nO2S9Q6+Z7g+ffTHxij3jKW7BnfqZzG0mGIwYuSQ4CkNy6MJva6ysMf5NvkgbjAx
+         JgB7vRPJKbMXQdxHN307kWyRlGmRkoGfVr0/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=a/qowI+IgVws+TQ8raFh8CNTA+FEMkrk1eg88kf/FiNSc6LjvcFWgk2PCdnsAEYi7a
+         BqRmaDzk6biUePX2C20x0vtdWCy5aIL2+35BEMID+jY4haQ/1G+VXwoi1CvnzE3klikD
+         f5bxyVhZW0dtCpCz07tvffL4i15K72dvuzItg=
+Received: by 10.151.27.18 with SMTP id e18mr4042086ybj.31.1299452086253;
+        Sun, 06 Mar 2011 14:54:46 -0800 (PST)
+Received: from elie (adsl-69-209-66-207.dsl.chcgil.sbcglobal.net [69.209.66.207])
+        by mx.google.com with ESMTPS id r18sm1293225yba.23.2011.03.06.14.54.44
+        (version=SSLv3 cipher=OTHER);
+        Sun, 06 Mar 2011 14:54:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101210102007.GA26298@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168546>
 
-Junio C Hamano <junio@pobox.com> writes:
+Hi again,
 
-> ...
-> So here is my exercise for preparing the new code for upcoming i18n.
-> Does it look sane?
->
-> Do we want a new wrapper similar to _() that would easily make this into a
-> noop under NO_GETTEXT in the proposed i18n infrastructure?
->
->  builtin/apply.c |    3 +++
->  1 files changed, 3 insertions(+), 0 deletions(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index a231c0c..f084250 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -2644,7 +2644,10 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
->  			if (apply_in_reverse)
->  				offset = 0 - offset;
->  			fprintf(stderr,
-> +				ngettext(
-> +				"Hunk #%d succeeded at %d (offset %d line).\n",
->  				"Hunk #%d succeeded at %d (offset %d lines).\n",
-> +				(offset < 0 ? (0 - offset) : offset)),
->  				nth_fragment, applied_pos + 1, offset);
->  		}
->  
+Jonathan Nieder wrote:
 
-If we were to do i18n, we would probably need to include something like
-the following in the early fast-tracked part of the series, perhaps as
-part of the e6bb27e (i18n: add no-op _() and N_() wrappers, 2011-02-22)
+> Using David's "ls" command we can eliminate the in-memory repo_tree
+> and rely on the target repository for information about old revs.
 
+Here's a reroll.  Aside from the aspects already mentioned (which
+avoid a dependency on the mostly orthogonal topic of support for text
+deltas), the original patch #10 has been split into smaller, more
+easily digestible pieces.
 
+Most of the credit for this incarnation of the series belongs to
+David, who heroically streamlined it and untangled it from other
+topics.
 
- gettext.h |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+Patch 1 changes the mark numbers for blobs to be ridiculously high,
+to make room for memorable commit marks (:1 for r1, :2 for r2, etc).
+Patch 2 brings those commit marks into existence, as mentioned before.
 
-diff --git a/gettext.h b/gettext.h
-index 6949d73..1510c5d 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -23,4 +23,10 @@ static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
- /* Mark msgid for translation but do not translate it. */
- #define N_(msgid) (msgid)
- 
-+static inline const char *ngettext(const char *msgid, const char *plu, unsigned long n)
-+{
-+	/* fallback ngettext() without using libintl */
-+	return (n == 1) ? msgid : plu;
-+}
-+
- #endif
+Patches 3-5 simplify the repo-tree API somewhat.  They are somewhat
+minimal; patches on top of this series offering further simplification
+would be very welcome.
+
+Patch 6 is a bit sneaky.  We want svn-fe's output to change from
+
+	<import blob>
+	<import blob>
+	...
+	<import blob>
+	<import commit, using blobs>
+
+to
+
+	<commit header>
+	M 100644 inline one/path
+	<import blob>
+	M 100644 inline another/path
+	...
+	<commit footer (progress update)>
+
+since the latter allows svn-fe to maintain much less state.  But
+that's a big change, so patch 6 introduces a stepping stone on the way
+there:
+
+	<comment that will become commit header>
+	<import blob>
+	...
+	<import commit; this will become the commit footer>
+
+That paves the way for patches 7-11, which teach svn-fe to rely
+on the fast-import backend for information about previously
+imported blobs, at long last.
+
+The visible effects should be:
+
+ - svn-fe _requires_ a backchannel from the fast-import
+   backend now.  You can't do
+
+	svn-fe <dump >stream &&
+	fast-import <stream
+
+   in two steps any more.
+
+ - Given one dump that picks up where another left off, svn-fe
+   can continue the import.  Use
+
+	git fast-import --relative-marks \
+		--import-marks-if-exists=svn-revs \
+		--export-marks=svn-revs \
+		--cat-blob-fd=3 3>backchannel
+
+   for both imports.
+
+I'm not happy about the loss of usability but I'm happy about the gain
+in functionality.  A good next step might be to build a simple remote
+helper to make this comfortable to use.
+
+Thoughts?  Improvements?  Complaints?  Despite the deficiencies just
+mentioned I'm tempted to push this out soon.  Feedback in either
+direction would be welcome.
+
+David Barr (3):
+  vcs-svn: set up channel to read fast-import cat-blob response
+  vcs-svn: quote paths correctly for ls command
+  vcs-svn: use mark from previous import for parent commit
+
+Jonathan Nieder (9):
+  vcs-svn: use higher mark numbers for blobs
+  vcs-svn: save marks for imported commits
+  vcs-svn: introduce repo_read_path to check the content at a path
+  vcs-svn: handle_node: use repo_read_path
+  vcs-svn: simplify repo_modify_path and repo_copy
+  vcs-svn: add a comment before each commit
+  vcs-svn: allow input errors to be detected promptly
+  vcs-svn: eliminate repo_tree structure
+  vcs-svn: handle filenames with dq correctly
+
+ contrib/svn-fe/svn-fe.txt |    6 +-
+ t/t9010-svn-fe.sh         |  217 +++++++++++++++++++------
+ vcs-svn/fast_export.c     |  145 +++++++++++++++--
+ vcs-svn/fast_export.h     |   39 +++--
+ vcs-svn/line_buffer.c     |    5 +
+ vcs-svn/line_buffer.h     |    1 +
+ vcs-svn/repo_tree.c       |  386 ++++++++-------------------------------------
+ vcs-svn/repo_tree.h       |    5 +-
+ vcs-svn/string_pool.c     |   13 ++-
+ vcs-svn/string_pool.h     |    3 +-
+ vcs-svn/svndump.c         |  106 +++++++++----
+ 11 files changed, 490 insertions(+), 436 deletions(-)
+ rewrite vcs-svn/fast_export.h (75%)
+ rewrite vcs-svn/repo_tree.c (96%)
