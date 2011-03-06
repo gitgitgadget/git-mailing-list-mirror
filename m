@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 08/12] vcs-svn: set up channel to read fast-import cat-blob
- response
-Date: Sun, 6 Mar 2011 17:11:30 -0600
-Message-ID: <20110306231130.GJ24327@elie>
+Subject: [PATCH 09/12] vcs-svn: eliminate repo_tree structure
+Date: Sun, 6 Mar 2011 17:12:12 -0600
+Message-ID: <20110306231212.GK24327@elie>
 References: <20101210102007.GA26298@burratino>
  <20110306225419.GA24327@elie>
 Mime-Version: 1.0
@@ -13,45 +12,45 @@ Cc: David Barr <david.barr@cordelta.com>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
 	Tomas Carnecky <tom@dbservice.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 07 00:11:42 2011
+X-From: git-owner@vger.kernel.org Mon Mar 07 00:12:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwN6z-0000kV-Kp
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 00:11:42 +0100
+	id 1PwN7h-00014U-9h
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 00:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754899Ab1CFXLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 18:11:37 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:45305 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754594Ab1CFXLg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 18:11:36 -0500
-Received: by gyh20 with SMTP id 20so1459736gyh.19
-        for <git@vger.kernel.org>; Sun, 06 Mar 2011 15:11:35 -0800 (PST)
+	id S1751413Ab1CFXMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 18:12:21 -0500
+Received: from mail-gw0-f51.google.com ([74.125.83.51]:48402 "EHLO
+	mail-gw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754901Ab1CFXMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 18:12:19 -0500
+Received: by gwb15 with SMTP id 15so2203808gwb.10
+        for <git@vger.kernel.org>; Sun, 06 Mar 2011 15:12:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=vJtMPZQcI49iyTDhFR8yL135cDJTZPuWJy9EXxO7utY=;
-        b=xIo/iTcDKBiZucfCSTeahz/J5/41m/ScvzZ7r0kk0ACPsu/pECFQ8gXOP0KUzB8oL1
-         9/7u4nHbrVGj6f5iK+sR+YpgSJzVB5XTQvF1xkhugES4qHbun0gjzVKSvGafWhlFhHVX
-         EMi7zT0Ax/Kyb6UEENYBqCY6gcAXJJRDZ42Ko=
+        bh=8ISeZ7gBaKy+jtn8vdVruXCButIZxhun5fg6LJOHj4M=;
+        b=lW8rfnaRXI5d6/3C6ucrQCS8ErdKhH6l69RrfThRm6OH2b3J22utO24mDhZQjmVlcj
+         1l4RlaBT7qnBv/QTIGMuo+3m3+VUgXTFzgu79W113swLorbaLlUL+cTjX7R+osexSphi
+         JSIk4AaK67U2ImGH1ZpLzKyoFL2r2cwcJJdFg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=yAU+ds7YX6nL5Ub0XqlC1c0U/mFrzmqBOfe/IXKXvtEwRBlJyHWHzv7vnIsMAPv+7T
-         VxXHvvxP2F9tJ8popGqwfa12VBZov7Qe52LRBgFN/IOzGBFg1cDPKHfAuqIygqR2Ex79
-         WxGbVmYplkL7CKUlizxj/6chzKyyuJiob1thU=
-Received: by 10.236.72.168 with SMTP id t28mr2074698yhd.74.1299453095457;
-        Sun, 06 Mar 2011 15:11:35 -0800 (PST)
-Received: from elie (adsl-69-209-66-207.dsl.chcgil.sbcglobal.net [69.209.66.207])
-        by mx.google.com with ESMTPS id j8sm1302831yha.1.2011.03.06.15.11.33
+        b=gG6a/VEKxd6uO6n0Rlluly77yFs4UNndGYBPM16E/s6GKDuFJ8/0AWVNI0XJogu6iZ
+         9d4E4o5TYOMWqF47T1auiDTIT8sgfcT3L1MC0rxuWXslG5azbWNDk/sQ0GSjM91MAcBv
+         j9K/+H6q0DkQ7GJgSboAu/PbZRtn7LiTqO5OI=
+Received: by 10.151.5.14 with SMTP id h14mr3739250ybi.138.1299453138671;
+        Sun, 06 Mar 2011 15:12:18 -0800 (PST)
+Received: from elie (adsl-69-209-66-207.dsl.chcgil.ameritech.net [69.209.66.207])
+        by mx.google.com with ESMTPS id v13sm1252494ybk.6.2011.03.06.15.12.15
         (version=SSLv3 cipher=OTHER);
-        Sun, 06 Mar 2011 15:11:34 -0800 (PST)
+        Sun, 06 Mar 2011 15:12:17 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110306225419.GA24327@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -59,480 +58,818 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168556>
 
-From: David Barr <david.barr@cordelta.com>
-Date: Sat, 5 Mar 2011 13:30:23 +1100
+Date: Fri, 10 Dec 2010 04:00:55 -0600
 
-Set up some plumbing: teach the svndump lib to pass a file descriptor
-number to the fast_export lib, representing where cat-blob/ls
-responses can be read from, and add a get_response_line helper
-function to the fast_export lib to read a line from that file.
+Rely on fast-import for information about previous revs.
 
-Unfortunately this means that svn-fe needs file descriptor 3 to be
-redirected from somewhere (preferrably the cat-blob stream of a
-fast-import backend); otherwise it will fail:
+This requires always setting up backward flow of information, even for
+v2 dumps.  On the plus side, it simplifies the code by quite a bit and
+opens the door to further simplifications.
 
-	$ svndump <path> | svn-fe
-	fatal: cannot read from file descriptor 3: Bad file descriptor
+[db: adjusted to support final version of the cat-blob patch]
+[jn: avoiding hard-coding git's name for the empty tree for
+ portability to other backends]
 
-For the moment, "svn-fe 3</dev/null" works as a workaround but it
-will not work for very long.  A fast-import backend that can retrieve
-old commits is needed in order to be able to fulfill svn
-"Node-copyfrom-rev" requests that refer to revs from a previous run.
-
-[jn: with new change description]
-
-Based-on-patch-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- contrib/svn-fe/svn-fe.txt |    6 ++-
- t/t9010-svn-fe.sh         |  118 +++++++++++++++++++++++++-------------------
- vcs-svn/fast_export.c     |   28 +++++++++++
- vcs-svn/fast_export.h     |    4 ++
- vcs-svn/svndump.c         |    5 ++
- 5 files changed, 109 insertions(+), 52 deletions(-)
+ vcs-svn/fast_export.c |  108 ++++++++++++--
+ vcs-svn/fast_export.h |   44 +++---
+ vcs-svn/repo_tree.c   |  389 ++++++++-----------------------------------------
+ vcs-svn/repo_tree.h   |    2 +-
+ vcs-svn/string_pool.c |    2 +-
+ vcs-svn/string_pool.h |    2 +-
+ vcs-svn/svndump.c     |   53 +++++--
+ 7 files changed, 222 insertions(+), 378 deletions(-)
+ rewrite vcs-svn/fast_export.h (65%)
+ rewrite vcs-svn/repo_tree.c (95%)
 
-diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
-index cd075b9..85f7b83 100644
---- a/contrib/svn-fe/svn-fe.txt
-+++ b/contrib/svn-fe/svn-fe.txt
-@@ -7,7 +7,11 @@ svn-fe - convert an SVN "dumpfile" to a fast-import stream
- 
- SYNOPSIS
- --------
--svnadmin dump --incremental REPO | svn-fe [url] | git fast-import
-+[verse]
-+mkfifo backchannel &&
-+svnadmin dump --incremental REPO |
-+	svn-fe [url] 3<backchannel |
-+	git fast-import --cat-blob-fd=3 3>backchannel
- 
- DESCRIPTION
- -----------
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 5a6a4b9..2ae5374 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -5,8 +5,26 @@ test_description='check svn dumpfile importer'
- . ./test-lib.sh
- 
- reinit_git () {
-+	if ! test_declared_prereq PIPE
-+	then
-+		echo >&4 "reinit_git: need to declare PIPE prerequisite"
-+		return 127
-+	fi
- 	rm -fr .git &&
--	git init
-+	rm -f stream backflow &&
-+	git init &&
-+	mkfifo stream backflow
-+}
-+
-+try_dump () {
-+	input=$1 &&
-+	maybe_fail=${2:+test_$2} &&
-+
-+	{
-+		$maybe_fail test-svn-fe "$input" >stream 3<backflow &
-+	} &&
-+	git fast-import --cat-blob-fd=3 <stream 3>backflow &&
-+	wait $!
- }
- 
- properties () {
-@@ -35,21 +53,27 @@ text_no_props () {
- 
- >empty
- 
--test_expect_success 'empty dump' '
-+test_expect_success 'setup: have pipes?' '
-+	rm -f frob &&
-+	if mkfifo frob
-+	then
-+		test_set_prereq PIPE
-+	fi
-+'
-+
-+test_expect_success PIPE 'empty dump' '
- 	reinit_git &&
- 	echo "SVN-fs-dump-format-version: 2" >input &&
--	test-svn-fe input >stream &&
--	git fast-import <stream
-+	try_dump input
- '
- 
--test_expect_success 'v4 dumps not supported' '
-+test_expect_success PIPE 'v4 dumps not supported' '
- 	reinit_git &&
- 	echo "SVN-fs-dump-format-version: 4" >v4.dump &&
--	test_must_fail test-svn-fe v4.dump >stream &&
--	test_cmp empty stream
-+	try_dump v4.dump must_fail
- '
- 
--test_expect_failure 'empty revision' '
-+test_expect_failure PIPE 'empty revision' '
- 	reinit_git &&
- 	printf "rev <nobody, nobody@local>: %s\n" "" "" >expect &&
- 	cat >emptyrev.dump <<-\EOF &&
-@@ -64,13 +88,12 @@ test_expect_failure 'empty revision' '
- 	Content-length: 0
- 
- 	EOF
--	test-svn-fe emptyrev.dump >stream &&
--	git fast-import <stream &&
-+	try_dump emptyrev.dump &&
- 	git log -p --format="rev <%an, %ae>: %s" HEAD >actual &&
- 	test_cmp expect actual
- '
- 
--test_expect_success 'empty properties' '
-+test_expect_success PIPE 'empty properties' '
- 	reinit_git &&
- 	printf "rev <nobody, nobody@local>: %s\n" "" "" >expect &&
- 	cat >emptyprop.dump <<-\EOF &&
-@@ -88,13 +111,12 @@ test_expect_success 'empty properties' '
- 
- 	PROPS-END
- 	EOF
--	test-svn-fe emptyprop.dump >stream &&
--	git fast-import <stream &&
-+	try_dump emptyprop.dump &&
- 	git log -p --format="rev <%an, %ae>: %s" HEAD >actual &&
- 	test_cmp expect actual
- '
- 
--test_expect_success 'author name and commit message' '
-+test_expect_success PIPE 'author name and commit message' '
- 	reinit_git &&
- 	echo "<author@example.com, author@example.com@local>" >expect.author &&
- 	cat >message <<-\EOF &&
-@@ -121,15 +143,14 @@ test_expect_success 'author name and commit message' '
- 		echo &&
- 		cat props
- 	} >log.dump &&
--	test-svn-fe log.dump >stream &&
--	git fast-import <stream &&
-+	try_dump log.dump &&
- 	git log -p --format="%B" HEAD >actual.log &&
- 	git log --format="<%an, %ae>" >actual.author &&
- 	test_cmp message actual.log &&
- 	test_cmp expect.author actual.author
- '
- 
--test_expect_success 'unsupported properties are ignored' '
-+test_expect_success PIPE 'unsupported properties are ignored' '
- 	reinit_git &&
- 	echo author >expect &&
- 	cat >extraprop.dump <<-\EOF &&
-@@ -149,13 +170,12 @@ test_expect_success 'unsupported properties are ignored' '
- 	author
- 	PROPS-END
- 	EOF
--	test-svn-fe extraprop.dump >stream &&
--	git fast-import <stream &&
-+	try_dump extraprop.dump &&
- 	git log -p --format=%an HEAD >actual &&
- 	test_cmp expect actual
- '
- 
--test_expect_failure 'timestamp and empty file' '
-+test_expect_failure PIPE 'timestamp and empty file' '
- 	echo author@example.com >expect.author &&
- 	echo 1999-01-01 >expect.date &&
- 	echo file >expect.files &&
-@@ -186,8 +206,7 @@ test_expect_failure 'timestamp and empty file' '
- 
- 		EOF
- 	} >emptyfile.dump &&
--	test-svn-fe emptyfile.dump >stream &&
--	git fast-import <stream &&
-+	try_dump emptyfile.dump &&
- 	git log --format=%an HEAD >actual.author &&
- 	git log --date=short --format=%ad HEAD >actual.date &&
- 	git ls-tree -r --name-only HEAD >actual.files &&
-@@ -198,7 +217,7 @@ test_expect_failure 'timestamp and empty file' '
- 	test_cmp empty file
- '
- 
--test_expect_success 'directory with files' '
-+test_expect_success PIPE 'directory with files' '
- 	reinit_git &&
- 	printf "%s\n" directory/file1 directory/file2 >expect.files &&
- 	echo hi >hi &&
-@@ -242,8 +261,7 @@ test_expect_success 'directory with files' '
- 		EOF
- 		text_no_props hi
- 	} >directory.dump &&
--	test-svn-fe directory.dump >stream &&
--	git fast-import <stream &&
-+	try_dump directory.dump &&
- 
- 	git ls-tree -r --name-only HEAD >actual.files &&
- 	git checkout HEAD directory &&
-@@ -252,7 +270,8 @@ test_expect_success 'directory with files' '
- 	test_cmp hi directory/file2
- '
- 
--test_expect_success 'node without action' '
-+test_expect_success PIPE 'node without action' '
-+	reinit_git &&
- 	cat >inaction.dump <<-\EOF &&
- 	SVN-fs-dump-format-version: 3
- 
-@@ -269,10 +288,11 @@ test_expect_success 'node without action' '
- 
- 	PROPS-END
- 	EOF
--	test_must_fail test-svn-fe inaction.dump
-+	try_dump inaction.dump must_fail
- '
- 
--test_expect_success 'action: add node without text' '
-+test_expect_success PIPE 'action: add node without text' '
-+	reinit_git &&
- 	cat >textless.dump <<-\EOF &&
- 	SVN-fs-dump-format-version: 3
- 
-@@ -290,10 +310,10 @@ test_expect_success 'action: add node without text' '
- 
- 	PROPS-END
- 	EOF
--	test_must_fail test-svn-fe textless.dump
-+	try_dump textless.dump must_fail
- '
- 
--test_expect_failure 'change file mode but keep old content' '
-+test_expect_failure PIPE 'change file mode but keep old content' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -356,8 +376,7 @@ test_expect_failure 'change file mode but keep old content' '
- 
- 	PROPS-END
- 	EOF
--	test-svn-fe filemode.dump >stream &&
--	git fast-import <stream &&
-+	try_dump filemode.dump &&
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
-@@ -370,7 +389,7 @@ test_expect_failure 'change file mode but keep old content' '
- 	test_cmp hello actual.target
- '
- 
--test_expect_success 'change file mode and reiterate content' '
-+test_expect_success PIPE 'change file mode and reiterate content' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -382,7 +401,7 @@ test_expect_success 'change file mode and reiterate content' '
- 	EOF
- 	echo "link hello" >expect.blob &&
- 	echo hello >hello &&
--	cat >filemode.dump <<-\EOF &&
-+	cat >filemode2.dump <<-\EOF &&
- 	SVN-fs-dump-format-version: 3
- 
- 	Revision-number: 1
-@@ -437,8 +456,7 @@ test_expect_success 'change file mode and reiterate content' '
- 	PROPS-END
- 	link hello
- 	EOF
--	test-svn-fe filemode.dump >stream &&
--	git fast-import <stream &&
-+	try_dump filemode2.dump &&
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
-@@ -451,7 +469,8 @@ test_expect_success 'change file mode and reiterate content' '
- 	test_cmp hello actual.target
- '
- 
--test_expect_success 'deltas not supported' '
-+test_expect_success PIPE 'deltas not supported' '
-+	reinit_git &&
- 	{
- 		# (old) h + (inline) ello + (old) \n
- 		printf "SVNQ%b%b%s" "Q\003\006\005\004" "\001Q\0204\001\002" "ello" |
-@@ -511,10 +530,10 @@ test_expect_success 'deltas not supported' '
- 		echo PROPS-END &&
- 		cat delta
- 	} >delta.dump &&
--	test_must_fail test-svn-fe delta.dump
-+	test_must_fail try_dump delta.dump
- '
- 
--test_expect_success 'property deltas supported' '
-+test_expect_success PIPE 'property deltas supported' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -570,8 +589,7 @@ test_expect_success 'property deltas supported' '
- 		PROPS-END
- 		EOF
- 	} >propdelta.dump &&
--	test-svn-fe propdelta.dump >stream &&
--	git fast-import <stream &&
-+	try_dump propdelta.dump &&
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --stdin |
-@@ -580,7 +598,7 @@ test_expect_success 'property deltas supported' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'properties on /' '
-+test_expect_success PIPE 'properties on /' '
- 	reinit_git &&
- 	cat <<-\EOF >expect &&
- 	OBJID
-@@ -625,8 +643,7 @@ test_expect_success 'properties on /' '
- 
- 	PROPS-END
- 	EOF
--	test-svn-fe changeroot.dump >stream &&
--	git fast-import <stream &&
-+	try_dump changeroot.dump &&
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --always --stdin |
-@@ -635,7 +652,7 @@ test_expect_success 'properties on /' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'deltas for typechange' '
-+test_expect_success PIPE 'deltas for typechange' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -711,8 +728,7 @@ test_expect_success 'deltas for typechange' '
- 	PROPS-END
- 	link testing 321
- 	EOF
--	test-svn-fe deleteprop.dump >stream &&
--	git fast-import <stream &&
-+	try_dump deleteprop.dump &&
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
-@@ -736,12 +752,12 @@ test_expect_success 'set up svn repo' '
- 	fi
- '
- 
--test_expect_success SVNREPO 't9135/svn.dump' '
--	git init simple-git &&
--	test-svn-fe "$TEST_DIRECTORY/t9135/svn.dump" >simple.fe &&
-+test_expect_success SVNREPO,PIPE 't9135/svn.dump' '
-+	mkdir -p simple-git &&
- 	(
- 		cd simple-git &&
--		git fast-import <../simple.fe
-+		reinit_git &&
-+		try_dump "$TEST_DIRECTORY/t9135/svn.dump"
- 	) &&
- 	(
- 		cd simple-svnco &&
 diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 5a105ad..8786ed2 100644
+index 8786ed2..a8ce5c6 100644
 --- a/vcs-svn/fast_export.c
 +++ b/vcs-svn/fast_export.c
-@@ -12,6 +12,24 @@
+@@ -8,6 +8,7 @@
+ #include "line_buffer.h"
+ #include "repo_tree.h"
+ #include "string_pool.h"
++#include "strbuf.h"
+ 
  #define MAX_GITSVN_LINE_LEN 4096
  
- static uint32_t first_commit_done;
-+static struct line_buffer report_buffer = LINE_BUFFER_INIT;
-+
-+void fast_export_init(int fd)
+@@ -31,7 +32,7 @@ void fast_export_reset(void)
+ 	buffer_reset(&report_buffer);
+ }
+ 
+-void fast_export_delete(uint32_t depth, uint32_t *path)
++void fast_export_delete(uint32_t depth, const uint32_t *path)
+ {
+ 	putchar('D');
+ 	putchar(' ');
+@@ -39,22 +40,27 @@ void fast_export_delete(uint32_t depth, uint32_t *path)
+ 	putchar('\n');
+ }
+ 
+-void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
+-			uint32_t mark)
++static void fast_export_truncate(uint32_t depth, const uint32_t *path, uint32_t mode)
 +{
-+	if (buffer_fdinit(&report_buffer, fd))
-+		die_errno("cannot read from file descriptor %d", fd);
++	fast_export_modify(depth, path, mode, "inline");
++	printf("data 0\n\n");
 +}
 +
-+void fast_export_deinit(void)
-+{
-+	if (buffer_deinit(&report_buffer))
-+		die_errno("error closing fast-import feedback stream");
-+}
-+
-+void fast_export_reset(void)
-+{
-+	buffer_reset(&report_buffer);
++void fast_export_modify(uint32_t depth, const uint32_t *path, uint32_t mode,
++			const char *dataref)
+ {
+ 	/* Mode must be 100644, 100755, 120000, or 160000. */
+-	printf("M %06"PRIo32" :%"PRIu32" ", mode, mark);
++	if (!dataref) {
++		fast_export_truncate(depth, path, mode);
++		return;
++	}
++	printf("M %06"PRIo32" %s ", mode, dataref);
+ 	pool_print_seq(depth, path, '/', stdout);
+ 	putchar('\n');
+ }
+ 
+-void fast_export_begin_commit(uint32_t revision)
+-{
+-	printf("# commit %"PRIu32".\n", revision);
+-}
+-
+ static char gitsvnline[MAX_GITSVN_LINE_LEN];
+-void fast_export_commit(uint32_t revision, uint32_t author, char *log,
++void fast_export_begin_commit(uint32_t revision, uint32_t author, char *log,
+ 			uint32_t uuid, uint32_t url,
+ 			unsigned long timestamp)
+ {
+@@ -81,12 +87,31 @@ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+ 			printf("from refs/heads/master^0\n");
+ 		first_commit_done = 1;
+ 	}
+-	repo_diff(revision - 1, revision);
+-	fputc('\n', stdout);
 +}
  
- void fast_export_delete(uint32_t depth, uint32_t *path)
- {
-@@ -69,6 +87,16 @@ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
++void fast_export_end_commit(uint32_t revision)
++{
  	printf("progress Imported commit %"PRIu32".\n\n", revision);
  }
  
-+static const char *get_response_line(void)
++static void ls_from_rev(uint32_t rev, uint32_t depth, const uint32_t *path)
 +{
-+	const char *line = buffer_read_line(&report_buffer);
-+	if (line)
-+		return line;
-+	if (buffer_ferror(&report_buffer))
-+		die_errno("error reading from fast-import");
-+	die("unexpected end of fast-import feedback");
++	/* ls :5 path/to/old/file */
++	printf("ls :%"PRIu32" ", rev);
++	pool_print_seq(depth, path, '/', stdout);
++	putchar('\n');
++	fflush(stdout);
 +}
 +
- void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len, struct line_buffer *input)
++static void ls_from_active_commit(uint32_t depth, const uint32_t *path)
++{
++	/* ls "path/to/file" */
++	printf("ls \"");
++	pool_print_seq(depth, path, '/', stdout);
++	printf("\"\n");
++	fflush(stdout);
++}
++
+ static const char *get_response_line(void)
+ {
+ 	const char *line = buffer_read_line(&report_buffer);
+@@ -97,14 +122,69 @@ static const char *get_response_line(void)
+ 	die("unexpected end of fast-import feedback");
+ }
+ 
+-void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len, struct line_buffer *input)
++void fast_export_data(uint32_t mode, uint32_t len, struct line_buffer *input)
  {
  	if (mode == REPO_MODE_LNK) {
+ 		/* svn symlink blobs start with "link " */
+ 		buffer_skip_bytes(input, 5);
+ 		len -= 5;
+ 	}
+-	printf("blob\nmark :%"PRIu32"\ndata %"PRIu32"\n", mark, len);
++	printf("data %"PRIu32"\n", len);
+ 	buffer_copy_bytes(input, len);
+ 	fputc('\n', stdout);
+ }
++
++static int parse_ls_response(const char *response, uint32_t *mode,
++					struct strbuf *dataref)
++{
++	const char *tab;
++	const char *response_end;
++
++	assert(response);
++	response_end = response + strlen(response);
++
++	if (*response == 'm') {	/* Missing. */
++		errno = ENOENT;
++		return -1;
++	}
++
++	/* Mode. */
++	if (response_end - response < strlen("100644") ||
++	    response[strlen("100644")] != ' ')
++		die("invalid ls response: missing mode: %s", response);
++	*mode = 0;
++	for (; *response != ' '; response++) {
++		char ch = *response;
++		if (ch < '0' || ch > '7')
++			die("invalid ls response: mode is not octal: %s", response);
++		*mode *= 8;
++		*mode += ch - '0';
++	}
++
++	/* ' blob ' or ' tree ' */
++	if (response_end - response < strlen(" blob ") ||
++	    (response[1] != 'b' && response[1] != 't'))
++		die("unexpected ls response: not a tree or blob: %s", response);
++	response += strlen(" blob ");
++
++	/* Dataref. */
++	tab = memchr(response, '\t', response_end - response);
++	if (!tab)
++		die("invalid ls response: missing tab: %s", response);
++	strbuf_add(dataref, response, tab - response);
++	return 0;
++}
++
++int fast_export_ls_rev(uint32_t rev, uint32_t depth, const uint32_t *path,
++				uint32_t *mode, struct strbuf *dataref)
++{
++	ls_from_rev(rev, depth, path);
++	return parse_ls_response(get_response_line(), mode, dataref);
++}
++
++int fast_export_ls(uint32_t depth, const uint32_t *path,
++				uint32_t *mode, struct strbuf *dataref)
++{
++	ls_from_active_commit(depth, path);
++	return parse_ls_response(get_response_line(), mode, dataref);
++}
 diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
-index aff8005..09b2033 100644
+dissimilarity index 65%
+index 09b2033..633d219 100644
 --- a/vcs-svn/fast_export.h
 +++ b/vcs-svn/fast_export.h
-@@ -3,6 +3,10 @@
- 
- #include "line_buffer.h"
- 
+@@ -1,19 +1,25 @@
+-#ifndef FAST_EXPORT_H_
+-#define FAST_EXPORT_H_
+-
+-#include "line_buffer.h"
+-
+-void fast_export_init(int fd);
+-void fast_export_deinit(void);
+-void fast_export_reset(void);
+-
+-void fast_export_delete(uint32_t depth, uint32_t *path);
+-void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
+-			uint32_t mark);
+-void fast_export_begin_commit(uint32_t revision);
+-void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+-			uint32_t uuid, uint32_t url, unsigned long timestamp);
+-void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len,
+-		      struct line_buffer *input);
+-
+-#endif
++#ifndef FAST_EXPORT_H_
++#define FAST_EXPORT_H_
++
++struct strbuf;
++struct line_buffer;
++
 +void fast_export_init(int fd);
 +void fast_export_deinit(void);
 +void fast_export_reset(void);
 +
- void fast_export_delete(uint32_t depth, uint32_t *path);
- void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
- 			uint32_t mark);
++void fast_export_delete(uint32_t depth, const uint32_t *path);
++void fast_export_modify(uint32_t depth, const uint32_t *path,
++			uint32_t mode, const char *dataref);
++void fast_export_begin_commit(uint32_t revision, uint32_t author, char *log,
++			uint32_t uuid, uint32_t url, unsigned long timestamp);
++void fast_export_end_commit(uint32_t revision);
++void fast_export_data(uint32_t mode, uint32_t len, struct line_buffer *input);
++
++/* If there is no such file at that rev, returns -1, errno == ENOENT. */
++int fast_export_ls_rev(uint32_t rev, uint32_t depth, const uint32_t *path,
++			uint32_t *mode_out, struct strbuf *dataref_out);
++int fast_export_ls(uint32_t depth, const uint32_t *path,
++			uint32_t *mode_out, struct strbuf *dataref_out);
++
++#endif
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
+dissimilarity index 95%
+index 036a686..e75f580 100644
+--- a/vcs-svn/repo_tree.c
++++ b/vcs-svn/repo_tree.c
+@@ -1,325 +1,64 @@
+-/*
+- * Licensed under a two-clause BSD-style license.
+- * See LICENSE for details.
+- */
+-
+-#include "git-compat-util.h"
+-
+-#include "string_pool.h"
+-#include "repo_tree.h"
+-#include "obj_pool.h"
+-#include "fast_export.h"
+-
+-#include "trp.h"
+-
+-struct repo_dirent {
+-	uint32_t name_offset;
+-	struct trp_node children;
+-	uint32_t mode;
+-	uint32_t content_offset;
+-};
+-
+-struct repo_dir {
+-	struct trp_root entries;
+-};
+-
+-struct repo_commit {
+-	uint32_t root_dir_offset;
+-};
+-
+-/* Memory pools for commit, dir and dirent */
+-obj_pool_gen(commit, struct repo_commit, 4096)
+-obj_pool_gen(dir, struct repo_dir, 4096)
+-obj_pool_gen(dent, struct repo_dirent, 4096)
+-
+-static uint32_t active_commit;
+-static uint32_t mark;
+-
+-static int repo_dirent_name_cmp(const void *a, const void *b);
+-
+-/* Treap for directory entries */
+-trp_gen(static, dent_, struct repo_dirent, children, dent, repo_dirent_name_cmp);
+-
+-uint32_t next_blob_mark(void)
+-{
+-	return mark++;
+-}
+-
+-static struct repo_dir *repo_commit_root_dir(struct repo_commit *commit)
+-{
+-	return dir_pointer(commit->root_dir_offset);
+-}
+-
+-static struct repo_dirent *repo_first_dirent(struct repo_dir *dir)
+-{
+-	return dent_first(&dir->entries);
+-}
+-
+-static int repo_dirent_name_cmp(const void *a, const void *b)
+-{
+-	const struct repo_dirent *dent1 = a, *dent2 = b;
+-	uint32_t a_offset = dent1->name_offset;
+-	uint32_t b_offset = dent2->name_offset;
+-	return (a_offset > b_offset) - (a_offset < b_offset);
+-}
+-
+-static int repo_dirent_is_dir(struct repo_dirent *dent)
+-{
+-	return dent != NULL && dent->mode == REPO_MODE_DIR;
+-}
+-
+-static struct repo_dir *repo_dir_from_dirent(struct repo_dirent *dent)
+-{
+-	if (!repo_dirent_is_dir(dent))
+-		return NULL;
+-	return dir_pointer(dent->content_offset);
+-}
+-
+-static struct repo_dir *repo_clone_dir(struct repo_dir *orig_dir)
+-{
+-	uint32_t orig_o, new_o;
+-	orig_o = dir_offset(orig_dir);
+-	if (orig_o >= dir_pool.committed)
+-		return orig_dir;
+-	new_o = dir_alloc(1);
+-	orig_dir = dir_pointer(orig_o);
+-	*dir_pointer(new_o) = *orig_dir;
+-	return dir_pointer(new_o);
+-}
+-
+-static struct repo_dirent *repo_read_dirent(uint32_t revision,
+-					    const uint32_t *path)
+-{
+-	uint32_t name = 0;
+-	struct repo_dirent *key = dent_pointer(dent_alloc(1));
+-	struct repo_dir *dir = NULL;
+-	struct repo_dirent *dent = NULL;
+-	dir = repo_commit_root_dir(commit_pointer(revision));
+-	while (~(name = *path++)) {
+-		key->name_offset = name;
+-		dent = dent_search(&dir->entries, key);
+-		if (dent == NULL || !repo_dirent_is_dir(dent))
+-			break;
+-		dir = repo_dir_from_dirent(dent);
+-	}
+-	dent_free(1);
+-	return dent;
+-}
+-
+-static void repo_write_dirent(const uint32_t *path, uint32_t mode,
+-			      uint32_t content_offset, uint32_t del)
+-{
+-	uint32_t name, revision, dir_o = ~0, parent_dir_o = ~0;
+-	struct repo_dir *dir;
+-	struct repo_dirent *key;
+-	struct repo_dirent *dent = NULL;
+-	revision = active_commit;
+-	dir = repo_commit_root_dir(commit_pointer(revision));
+-	dir = repo_clone_dir(dir);
+-	commit_pointer(revision)->root_dir_offset = dir_offset(dir);
+-	while (~(name = *path++)) {
+-		parent_dir_o = dir_offset(dir);
+-
+-		key = dent_pointer(dent_alloc(1));
+-		key->name_offset = name;
+-
+-		dent = dent_search(&dir->entries, key);
+-		if (dent == NULL)
+-			dent = key;
+-		else
+-			dent_free(1);
+-
+-		if (dent == key) {
+-			dent->mode = REPO_MODE_DIR;
+-			dent->content_offset = 0;
+-			dent = dent_insert(&dir->entries, dent);
+-		}
+-
+-		if (dent_offset(dent) < dent_pool.committed) {
+-			dir_o = repo_dirent_is_dir(dent) ?
+-					dent->content_offset : ~0;
+-			dent_remove(&dir->entries, dent);
+-			dent = dent_pointer(dent_alloc(1));
+-			dent->name_offset = name;
+-			dent->mode = REPO_MODE_DIR;
+-			dent->content_offset = dir_o;
+-			dent = dent_insert(&dir->entries, dent);
+-		}
+-
+-		dir = repo_dir_from_dirent(dent);
+-		dir = repo_clone_dir(dir);
+-		dent->content_offset = dir_offset(dir);
+-	}
+-	if (dent == NULL)
+-		return;
+-	dent->mode = mode;
+-	dent->content_offset = content_offset;
+-	if (del && ~parent_dir_o)
+-		dent_remove(&dir_pointer(parent_dir_o)->entries, dent);
+-}
+-
+-uint32_t repo_read_path(const uint32_t *path)
+-{
+-	uint32_t content_offset = 0;
+-	struct repo_dirent *dent = repo_read_dirent(active_commit, path);
+-	if (dent != NULL)
+-		content_offset = dent->content_offset;
+-	return content_offset;
+-}
+-
+-uint32_t repo_read_mode(const uint32_t *path)
+-{
+-	struct repo_dirent *dent = repo_read_dirent(active_commit, path);
+-	if (dent == NULL)
+-		die("invalid dump: path to be modified is missing");
+-	return dent->mode;
+-}
+-
+-void repo_copy(uint32_t revision, const uint32_t *src, const uint32_t *dst)
+-{
+-	uint32_t mode = 0, content_offset = 0;
+-	struct repo_dirent *src_dent;
+-	src_dent = repo_read_dirent(revision, src);
+-	if (src_dent != NULL) {
+-		mode = src_dent->mode;
+-		content_offset = src_dent->content_offset;
+-		repo_write_dirent(dst, mode, content_offset, 0);
+-	}
+-}
+-
+-void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark)
+-{
+-	repo_write_dirent(path, mode, blob_mark, 0);
+-}
+-
+-void repo_delete(uint32_t *path)
+-{
+-	repo_write_dirent(path, 0, 0, 1);
+-}
+-
+-static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo_dir *dir);
+-
+-static void repo_git_add(uint32_t depth, uint32_t *path, struct repo_dirent *dent)
+-{
+-	if (repo_dirent_is_dir(dent))
+-		repo_git_add_r(depth, path, repo_dir_from_dirent(dent));
+-	else
+-		fast_export_modify(depth, path,
+-				   dent->mode, dent->content_offset);
+-}
+-
+-static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo_dir *dir)
+-{
+-	struct repo_dirent *de = repo_first_dirent(dir);
+-	while (de) {
+-		path[depth] = de->name_offset;
+-		repo_git_add(depth + 1, path, de);
+-		de = dent_next(&dir->entries, de);
+-	}
+-}
+-
+-static void repo_diff_r(uint32_t depth, uint32_t *path, struct repo_dir *dir1,
+-			struct repo_dir *dir2)
+-{
+-	struct repo_dirent *de1, *de2;
+-	de1 = repo_first_dirent(dir1);
+-	de2 = repo_first_dirent(dir2);
+-
+-	while (de1 && de2) {
+-		if (de1->name_offset < de2->name_offset) {
+-			path[depth] = de1->name_offset;
+-			fast_export_delete(depth + 1, path);
+-			de1 = dent_next(&dir1->entries, de1);
+-			continue;
+-		}
+-		if (de1->name_offset > de2->name_offset) {
+-			path[depth] = de2->name_offset;
+-			repo_git_add(depth + 1, path, de2);
+-			de2 = dent_next(&dir2->entries, de2);
+-			continue;
+-		}
+-		path[depth] = de1->name_offset;
+-
+-		if (de1->mode == de2->mode &&
+-		    de1->content_offset == de2->content_offset) {
+-			; /* No change. */
+-		} else if (repo_dirent_is_dir(de1) && repo_dirent_is_dir(de2)) {
+-			repo_diff_r(depth + 1, path,
+-				    repo_dir_from_dirent(de1),
+-				    repo_dir_from_dirent(de2));
+-		} else if (!repo_dirent_is_dir(de1) && !repo_dirent_is_dir(de2)) {
+-			repo_git_add(depth + 1, path, de2);
+-		} else {
+-			fast_export_delete(depth + 1, path);
+-			repo_git_add(depth + 1, path, de2);
+-		}
+-		de1 = dent_next(&dir1->entries, de1);
+-		de2 = dent_next(&dir2->entries, de2);
+-	}
+-	while (de1) {
+-		path[depth] = de1->name_offset;
+-		fast_export_delete(depth + 1, path);
+-		de1 = dent_next(&dir1->entries, de1);
+-	}
+-	while (de2) {
+-		path[depth] = de2->name_offset;
+-		repo_git_add(depth + 1, path, de2);
+-		de2 = dent_next(&dir2->entries, de2);
+-	}
+-}
+-
+-static uint32_t path_stack[REPO_MAX_PATH_DEPTH];
+-
+-void repo_diff(uint32_t r1, uint32_t r2)
+-{
+-	repo_diff_r(0,
+-		    path_stack,
+-		    repo_commit_root_dir(commit_pointer(r1)),
+-		    repo_commit_root_dir(commit_pointer(r2)));
+-}
+-
+-void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
+-		 uint32_t url, unsigned long timestamp)
+-{
+-	fast_export_commit(revision, author, log, uuid, url, timestamp);
+-	dent_commit();
+-	dir_commit();
+-	active_commit = commit_alloc(1);
+-	commit_pointer(active_commit)->root_dir_offset =
+-		commit_pointer(active_commit - 1)->root_dir_offset;
+-}
+-
+-static void mark_init(void)
+-{
+-	uint32_t i;
+-	mark = 1024 * 1024 * 1024;
+-	for (i = 0; i < dent_pool.size; i++)
+-		if (!repo_dirent_is_dir(dent_pointer(i)) &&
+-		    dent_pointer(i)->content_offset > mark)
+-			mark = dent_pointer(i)->content_offset;
+-	mark++;
+-}
+-
+-void repo_init(void)
+-{
+-	mark_init();
+-	if (commit_pool.size == 0) {
+-		/* Create empty tree for commit 0. */
+-		commit_alloc(1);
+-		commit_pointer(0)->root_dir_offset = dir_alloc(1);
+-		dir_pointer(0)->entries.trp_root = ~0;
+-		dir_commit();
+-	}
+-	/* Preallocate next commit, ready for changes. */
+-	active_commit = commit_alloc(1);
+-	commit_pointer(active_commit)->root_dir_offset =
+-		commit_pointer(active_commit - 1)->root_dir_offset;
+-}
+-
+-void repo_reset(void)
+-{
+-	pool_reset();
+-	commit_reset();
+-	dir_reset();
+-	dent_reset();
+-}
++/*
++ * Licensed under a two-clause BSD-style license.
++ * See LICENSE for details.
++ */
++
++#include "git-compat-util.h"
++#include "strbuf.h"
++#include "repo_tree.h"
++#include "fast_export.h"
++
++const char *repo_read_path(const uint32_t *path)
++{
++	int err;
++	uint32_t dummy;
++	static struct strbuf buf = STRBUF_INIT;
++
++	strbuf_reset(&buf);
++	err = fast_export_ls(REPO_MAX_PATH_DEPTH, path, &dummy, &buf);
++	if (err) {
++		if (errno != ENOENT)
++			die_errno("BUG: unexpected fast_export_ls error");
++		return NULL;
++	}
++	return buf.buf;
++}
++
++uint32_t repo_read_mode(const uint32_t *path)
++{
++	int err;
++	uint32_t result;
++	static struct strbuf dummy = STRBUF_INIT;
++
++	strbuf_reset(&dummy);
++	err = fast_export_ls(REPO_MAX_PATH_DEPTH, path, &result, &dummy);
++	if (err) {
++		if (errno != ENOENT)
++			die_errno("BUG: unexpected fast_export_ls error");
++		/* Treat missing paths as directories. */
++		return REPO_MODE_DIR;
++	}
++	return result;
++}
++
++void repo_copy(uint32_t revision, const uint32_t *src, const uint32_t *dst)
++{
++	int err;
++	uint32_t mode;
++	static struct strbuf data = STRBUF_INIT;
++
++	strbuf_reset(&data);
++	err = fast_export_ls_rev(revision, REPO_MAX_PATH_DEPTH, src, &mode, &data);
++	if (err) {
++		if (errno != ENOENT)
++			die_errno("BUG: unexpected fast_export_ls_rev error");
++		fast_export_delete(REPO_MAX_PATH_DEPTH, dst);
++		return;
++	}
++	fast_export_modify(REPO_MAX_PATH_DEPTH, dst, mode, data.buf);
++}
++
++void repo_delete(uint32_t *path)
++{
++	fast_export_delete(REPO_MAX_PATH_DEPTH, path);
++}
+diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
+index 11d48c2..d690784 100644
+--- a/vcs-svn/repo_tree.h
++++ b/vcs-svn/repo_tree.h
+@@ -14,7 +14,7 @@
+ uint32_t next_blob_mark(void);
+ void repo_copy(uint32_t revision, const uint32_t *src, const uint32_t *dst);
+ void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark);
+-uint32_t repo_read_path(const uint32_t *path);
++const char *repo_read_path(const uint32_t *path);
+ uint32_t repo_read_mode(const uint32_t *path);
+ void repo_delete(uint32_t *path);
+ void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
+diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
+index f5b1da8..c08abac 100644
+--- a/vcs-svn/string_pool.c
++++ b/vcs-svn/string_pool.c
+@@ -65,7 +65,7 @@ uint32_t pool_tok_r(char *str, const char *delim, char **saveptr)
+ 	return token ? pool_intern(token) : ~0;
+ }
+ 
+-void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream)
++void pool_print_seq(uint32_t len, const uint32_t *seq, char delim, FILE *stream)
+ {
+ 	uint32_t i;
+ 	for (i = 0; i < len && ~seq[i]; i++) {
+diff --git a/vcs-svn/string_pool.h b/vcs-svn/string_pool.h
+index 222fb66..3720cf8 100644
+--- a/vcs-svn/string_pool.h
++++ b/vcs-svn/string_pool.h
+@@ -4,7 +4,7 @@
+ uint32_t pool_intern(const char *key);
+ const char *pool_fetch(uint32_t entry);
+ uint32_t pool_tok_r(char *str, const char *delim, char **saveptr);
+-void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream);
++void pool_print_seq(uint32_t len, const uint32_t *seq, char delim, FILE *stream);
+ uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, char *str);
+ void pool_reset(void);
+ 
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index a384996..3cc4135 100644
+index 3cc4135..7ecb227 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -14,6 +14,8 @@
- #include "obj_pool.h"
- #include "string_pool.h"
+@@ -36,6 +36,8 @@ obj_pool_gen(log, char, 4096)
+ 
+ static struct line_buffer input = LINE_BUFFER_INIT;
  
 +#define REPORT_FILENO 3
 +
- #define NODEACT_REPLACE 4
- #define NODEACT_DELETE 3
- #define NODEACT_ADD 2
-@@ -382,6 +384,7 @@ int svndump_init(const char *filename)
+ static char *log_copy(uint32_t length, const char *log)
+ {
+ 	char *buffer;
+@@ -202,15 +204,21 @@ static void read_props(void)
+ 
+ static void handle_node(void)
+ {
+-	uint32_t mark = 0;
+ 	const uint32_t type = node_ctx.type;
+ 	const int have_props = node_ctx.propLength != LENGTH_UNKNOWN;
+ 	const int have_text = node_ctx.textLength != LENGTH_UNKNOWN;
++	/*
++	 * Old text for this node:
++	 *  NULL	- directory or bug
++	 *  empty_blob	- empty
++	 *  "<dataref>"	- data retrievable from fast-import
++	 */
++	static const char *const empty_blob = "::empty::";
++	const char *old_data = NULL;
+ 
+ 	if (node_ctx.text_delta)
+ 		die("text deltas not supported");
+-	if (have_text)
+-		mark = next_blob_mark();
++
+ 	if (node_ctx.action == NODEACT_DELETE) {
+ 		if (have_text || have_props || node_ctx.srcRev)
+ 			die("invalid dump: deletion node has "
+@@ -230,15 +238,15 @@ static void handle_node(void)
+ 		die("invalid dump: directories cannot have text attached");
+ 
+ 	/*
+-	 * Decide on the new content (mark) and mode (node_ctx.type).
++	 * Find old content (old_data) and decide on the new mode.
+ 	 */
+ 	if (node_ctx.action == NODEACT_CHANGE && !~*node_ctx.dst) {
+ 		if (type != REPO_MODE_DIR)
+ 			die("invalid dump: root of tree is not a regular file");
++		old_data = NULL;
+ 	} else if (node_ctx.action == NODEACT_CHANGE) {
+ 		uint32_t mode;
+-		if (!have_text)
+-			mark = repo_read_path(node_ctx.dst);
++		old_data = repo_read_path(node_ctx.dst);
+ 		mode = repo_read_mode(node_ctx.dst);
+ 		if (mode == REPO_MODE_DIR && type != REPO_MODE_DIR)
+ 			die("invalid dump: cannot modify a directory into a file");
+@@ -246,7 +254,11 @@ static void handle_node(void)
+ 			die("invalid dump: cannot modify a file into a directory");
+ 		node_ctx.type = mode;
+ 	} else if (node_ctx.action == NODEACT_ADD) {
+-		if (!have_text && type != REPO_MODE_DIR)
++		if (type == REPO_MODE_DIR)
++			old_data = NULL;
++		else if (have_text)
++			old_data = empty_blob;
++		else
+ 			die("invalid dump: adds node without text");
+ 	} else {
+ 		die("invalid dump: Node-path block lacks Node-action");
+@@ -265,24 +277,34 @@ static void handle_node(void)
+ 	/*
+ 	 * Save the result.
+ 	 */
+-	repo_add(node_ctx.dst, node_ctx.type, mark);
+-	if (have_text)
+-		fast_export_blob(node_ctx.type, mark,
+-				 node_ctx.textLength, &input);
++	if (type == REPO_MODE_DIR)	/* directories are not tracked. */
++		return;
++	assert(old_data);
++	if (old_data == empty_blob)
++		/* For the fast_export_* functions, NULL means empty. */
++		old_data = NULL;
++	if (!have_text) {
++		fast_export_modify(REPO_MAX_PATH_DEPTH, node_ctx.dst,
++					node_ctx.type, old_data);
++		return;
++	}
++	fast_export_modify(REPO_MAX_PATH_DEPTH, node_ctx.dst,
++				node_ctx.type, "inline");
++	fast_export_data(node_ctx.type, node_ctx.textLength, &input);
+ }
+ 
+ static void begin_revision(void)
+ {
+ 	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
+ 		return;
+-	fast_export_begin_commit(rev_ctx.revision);
++	fast_export_begin_commit(rev_ctx.revision, rev_ctx.author, rev_ctx.log,
++		dump_ctx.uuid, dump_ctx.url, rev_ctx.timestamp);
+ }
+ 
+ static void end_revision(void)
+ {
+ 	if (rev_ctx.revision)
+-		repo_commit(rev_ctx.revision, rev_ctx.author, rev_ctx.log,
+-			dump_ctx.uuid, dump_ctx.url, rev_ctx.timestamp);
++		fast_export_end_commit(rev_ctx.revision);
+ }
+ 
+ void svndump_read(const char *url)
+@@ -383,7 +405,6 @@ int svndump_init(const char *filename)
+ {
  	if (buffer_init(&input, filename))
  		return error("cannot open %s: %s", filename, strerror(errno));
- 	repo_init();
-+	fast_export_init(REPORT_FILENO);
+-	repo_init();
+ 	fast_export_init(REPORT_FILENO);
+ 	reset_dump_ctx(~0);
+ 	reset_rev_ctx(0);
+@@ -396,7 +417,6 @@ void svndump_deinit(void)
+ {
+ 	log_reset();
+ 	fast_export_deinit();
+-	repo_reset();
  	reset_dump_ctx(~0);
  	reset_rev_ctx(0);
  	reset_node_ctx(NULL);
-@@ -392,6 +395,7 @@ int svndump_init(const char *filename)
- void svndump_deinit(void)
- {
+@@ -411,7 +431,6 @@ void svndump_reset(void)
  	log_reset();
-+	fast_export_deinit();
- 	repo_reset();
+ 	fast_export_reset();
+ 	buffer_reset(&input);
+-	repo_reset();
  	reset_dump_ctx(~0);
  	reset_rev_ctx(0);
-@@ -405,6 +409,7 @@ void svndump_deinit(void)
- void svndump_reset(void)
- {
- 	log_reset();
-+	fast_export_reset();
- 	buffer_reset(&input);
- 	repo_reset();
- 	reset_dump_ctx(~0);
+ 	reset_node_ctx(NULL);
 -- 
 1.7.4.1
