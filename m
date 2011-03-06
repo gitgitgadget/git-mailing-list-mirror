@@ -1,8 +1,8 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v3 0/7] Teach fetch/pull the on-demand mode and make it the
- default
-Date: Sun, 06 Mar 2011 23:09:32 +0100
-Message-ID: <4D74061C.5050908@web.de>
+Subject: [PATCH v3 1/7] fetch/pull: recurse into submodules when necessary
+Date: Sun, 06 Mar 2011 23:10:46 +0100
+Message-ID: <4D740666.3060607@web.de>
+References: <4D74061C.5050908@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
@@ -10,73 +10,525 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Marc Branchaud <marcnarc@xiplink.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 06 23:09:52 2011
+X-From: git-owner@vger.kernel.org Sun Mar 06 23:10:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwM95-0007a4-Jn
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 23:09:47 +0100
+	id 1PwMAA-00083n-B0
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 23:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753866Ab1CFWJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 17:09:43 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:33711 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752222Ab1CFWJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 17:09:42 -0500
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 0B03119A20BDB;
-	Sun,  6 Mar 2011 23:09:41 +0100 (CET)
+	id S1754591Ab1CFWKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 17:10:49 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:38905 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752222Ab1CFWKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 17:10:48 -0500
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id F216018A8D0F0;
+	Sun,  6 Mar 2011 23:10:46 +0100 (CET)
 Received: from [93.246.45.11] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1PwM8y-0002oF-00; Sun, 06 Mar 2011 23:09:41 +0100
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PwMA2-0001lL-00; Sun, 06 Mar 2011 23:10:46 +0100
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.14) Gecko/20110221 Thunderbird/3.1.8
+In-Reply-To: <4D74061C.5050908@web.de>
 X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX198S8cOXHAQJO5L38hyyrRuNb9S17/A2+sQ/D0u
-	qXrKr1o2dKpSMXLZMwbZaZLEiNv7o1pHoDuipKmO12GWBcmEOL
-	R2ON17j1GAoeyFJmyrng==
+X-Provags-ID: V01U2FsdGVkX18kgas/no15EpggeZuytdgkOeEfAzguDb1NUCSk
+	O92iKWzIujhxmR/r8i3PS8a9jjSPukfWDB0yLzXuXHTBshv/vg
+	d59Ez+UkAIxqQv1+ELug==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168536>
 
-Here is v3 of this patch series. Changes to v2 are:
+To be able to access all commits of populated submodules referenced by the
+superproject it is sufficient to only then let "git fetch" recurse into a
+submodule when the new commits fetched in the superproject record new
+commits for it. Having these commits present is extremely useful when
+using the "--submodule" option to "git diff" (which is what "git gui" and
+"gitk" do since 1.6.6), as all submodule commits needed for creating a
+descriptive output can be accessed. Also merging submodule commits (added
+in 1.7.3) depends on the submodule commits in question being present to
+work. Last but not least this enables disconnected operation when using
+submodules, as all commits necessary for a successful "git submodule
+update -N" will have been fetched automatically. So we choose this mode as
+the default for fetch and pull.
 
-*) Changed some documentation texts as proposed by Marc
-*) Renamed the "--submodule-default" option to "--recurse-submodules-default"
-*) Fixed some typos in the BUGS section
+Before a new or changed ref from upstream is updated in update_local_ref()
+"git rev-list <new-sha1> --not --branches --remotes" is used to determine
+all newly fetched commits. These are then walked and diffed against their
+parent(s) to see if a submodule has been changed. If that is the case, its
+path is stored to be fetched after the superproject fetch is completed.
 
-Jens Lehmann (7):
-  fetch/pull: recurse into submodules when necessary
-  fetch/pull: Add the 'on-demand' value to the --recurse-submodules
-    option
-  config: teach the fetch.recurseSubmodules option the 'on-demand'
-    value
-  Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule'
-    option
-  fetch/pull: Don't recurse into a submodule when commits are already
-    present
-  submodule update: Don't fetch when the submodule commit is already
-    present
-  fetch/pull: Describe --recurse-submodule restrictions in the BUGS
-    section
+Using the "--recurse-submodules" or the "--no-recurse-submodules" option
+disables the examination of the fetched refs because the result will be
+ignored anyway.
 
- Documentation/config.txt        |   12 ++-
- Documentation/fetch-options.txt |   25 ++++-
- Documentation/git-fetch.txt     |    9 ++
- Documentation/git-pull.txt      |   11 ++-
- Documentation/gitmodules.txt    |    4 +-
- builtin/fetch.c                 |   48 ++++++--
- git-pull.sh                     |    3 +
- git-submodule.sh                |    5 +-
- submodule.c                     |  152 +++++++++++++++++++++--
- submodule.h                     |   11 ++-
- t/t5526-fetch-submodules.sh     |  255 +++++++++++++++++++++++++++++++++++++++
+There is currently no infrastructure for storing deleted and new
+submodules in the .git directory of the superproject. That's why fetch and
+pull for now only fetch submodules that are already checked out and are
+not renamed.
+
+In t7403 the "--no-recurse-submodules" argument had to be added to "git
+pull" to avoid failure because of the moved upstream submodule repo.
+
+Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
+Thanks-to: Heiko Voigt <hvoigt@hvoigt.net>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+ Documentation/fetch-options.txt |    8 +++
+ builtin/fetch.c                 |   26 ++++++---
+ submodule.c                     |  106 +++++++++++++++++++++++++++++++++++---
+ submodule.h                     |    9 +++
+ t/t5526-fetch-submodules.sh     |  109 +++++++++++++++++++++++++++++++++++++++
  t/t7403-submodule-sync.sh       |    2 +-
- t/t7406-submodule-update.sh     |   20 +++
- 13 files changed, 520 insertions(+), 37 deletions(-)
+ 6 files changed, 243 insertions(+), 17 deletions(-)
 
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index f37276e..bde62d4 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -73,6 +73,14 @@ ifndef::git-pull[]
+ 	Prepend <path> to paths printed in informative messages
+ 	such as "Fetching submodule foo".  This option is used
+ 	internally when recursing over submodules.
++
++--recurse-submodules-default=[yes|on-demand]::
++	This option is used internally to temporarily provide a
++	non-negative default value for the --recurse-submodules
++	option.  All other methods of configuring fetch's submodule
++	recursion (such as settings in linkgit:gitmodules[5] and
++	linkgit:git-config[1]) override this option, as does
++	specifying --[no-]recurse-submodules directly.
+ endif::git-pull[]
+
+ -u::
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7efecfe..4d046fc 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -28,12 +28,6 @@ enum {
+ 	TAGS_SET = 2
+ };
+
+-enum {
+-	RECURSE_SUBMODULES_OFF = 0,
+-	RECURSE_SUBMODULES_DEFAULT = 1,
+-	RECURSE_SUBMODULES_ON = 2
+-};
+-
+ static int all, append, dry_run, force, keep, multiple, prune, update_head_ok, verbosity;
+ static int progress, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int tags = TAGS_DEFAULT;
+@@ -42,6 +36,7 @@ static const char *upload_pack;
+ static struct strbuf default_rla = STRBUF_INIT;
+ static struct transport *transport;
+ static const char *submodule_prefix = "";
++static const char *recurse_submodules_default;
+
+ static struct option builtin_fetch_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+@@ -73,6 +68,9 @@ static struct option builtin_fetch_options[] = {
+ 		   "deepen history of shallow clone"),
+ 	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, "dir",
+ 		   "prepend this to submodule path output", PARSE_OPT_HIDDEN },
++	{ OPTION_STRING, 0, "recurse-submodules-default",
++		   &recurse_submodules_default, NULL,
++		   "default mode for recursion", PARSE_OPT_HIDDEN },
+ 	OPT_END()
+ };
+
+@@ -284,6 +282,9 @@ static int update_local_ref(struct ref *ref,
+ 		else {
+ 			msg = "storing head";
+ 			what = "[new branch]";
++			if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
++			    (recurse_submodules != RECURSE_SUBMODULES_ON))
++				check_for_new_submodule_commits(ref->new_sha1);
+ 		}
+
+ 		r = s_update_ref(msg, ref, 0);
+@@ -299,6 +300,9 @@ static int update_local_ref(struct ref *ref,
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "..");
+ 		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
++		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
++		    (recurse_submodules != RECURSE_SUBMODULES_ON))
++			check_for_new_submodule_commits(ref->new_sha1);
+ 		r = s_update_ref("fast-forward", ref, 1);
+ 		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : ' ',
+ 			TRANSPORT_SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
+@@ -310,6 +314,9 @@ static int update_local_ref(struct ref *ref,
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "...");
+ 		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
++		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
++		    (recurse_submodules != RECURSE_SUBMODULES_ON))
++			check_for_new_submodule_commits(ref->new_sha1);
+ 		r = s_update_ref("forced-update", ref, 1);
+ 		sprintf(display, "%c %-*s %-*s -> %s  (%s)", r ? '!' : '+',
+ 			TRANSPORT_SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
+@@ -949,9 +956,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+ 		const char *options[10];
+ 		int num_options = 0;
+-		/* Set recursion as default when we already are recursing */
+-		if (submodule_prefix[0])
+-			set_config_fetch_recurse_submodules(1);
++		if (recurse_submodules_default) {
++			int arg = parse_fetch_recurse_submodules_arg("--recurse-submodules-default", recurse_submodules_default);
++			set_config_fetch_recurse_submodules(arg);
++		}
+ 		gitmodules_config();
+ 		git_config(submodule_config, NULL);
+ 		add_options_to_argv(&num_options, options);
+diff --git a/submodule.c b/submodule.c
+index 6f1c107..e248695 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -12,7 +12,8 @@
+ struct string_list config_name_for_path;
+ struct string_list config_fetch_recurse_submodules_for_name;
+ struct string_list config_ignore_for_name;
+-static int config_fetch_recurse_submodules;
++static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
++struct string_list changed_submodule_paths;
+
+ static int add_submodule_odb(const char *path)
+ {
+@@ -152,6 +153,20 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+ 		die("bad --ignore-submodules argument: %s", arg);
+ }
+
++int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
++{
++	switch (git_config_maybe_bool(opt, arg)) {
++	case 1:
++		return RECURSE_SUBMODULES_ON;
++	case 0:
++		return RECURSE_SUBMODULES_OFF;
++	default:
++		if (!strcmp(arg, "on-demand"))
++			return RECURSE_SUBMODULES_ON_DEMAND;
++		die("bad %s argument: %s", opt, arg);
++	}
++}
++
+ void show_submodule_summary(FILE *f, const char *path,
+ 		unsigned char one[20], unsigned char two[20],
+ 		unsigned dirty_submodule,
+@@ -248,27 +263,95 @@ void set_config_fetch_recurse_submodules(int value)
+ 	config_fetch_recurse_submodules = value;
+ }
+
++static void submodule_collect_changed_cb(struct diff_queue_struct *q,
++					 struct diff_options *options,
++					 void *data)
++{
++	int i;
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (!S_ISGITLINK(p->two->mode))
++			continue;
++
++		if (S_ISGITLINK(p->one->mode)) {
++			/* NEEDSWORK: We should honor the name configured in
++			 * the .gitmodules file of the commit we are examining
++			 * here to be able to correctly follow submodules
++			 * being moved around. */
++			struct string_list_item *path;
++			path = unsorted_string_list_lookup(&changed_submodule_paths, p->two->path);
++			if (!path)
++				string_list_append(&changed_submodule_paths, xstrdup(p->two->path));
++		} else {
++			/* Submodule is new or was moved here */
++			/* NEEDSWORK: When the .git directories of submodules
++			 * live inside the superprojects .git directory some
++			 * day we should fetch new submodules directly into
++			 * that location too when config or options request
++			 * that so they can be checked out from there. */
++			continue;
++		}
++	}
++}
++
++void check_for_new_submodule_commits(unsigned char new_sha1[20])
++{
++	struct rev_info rev;
++	struct commit *commit;
++	const char *argv[] = {NULL, NULL, "--not", "--all", NULL};
++	int argc = ARRAY_SIZE(argv) - 1;
++
++	init_revisions(&rev, NULL);
++	argv[1] = xstrdup(sha1_to_hex(new_sha1));
++	setup_revisions(argc, argv, &rev, NULL);
++	if (prepare_revision_walk(&rev))
++		die("revision walk setup failed");
++
++	/*
++	 * Collect all submodules (whether checked out or not) for which new
++	 * commits have been recorded upstream in "changed_submodule_paths".
++	 */
++	while ((commit = get_revision(&rev))) {
++		struct commit_list *parent = commit->parents;
++		while (parent) {
++			struct diff_options diff_opts;
++			diff_setup(&diff_opts);
++			diff_opts.output_format |= DIFF_FORMAT_CALLBACK;
++			diff_opts.format_callback = submodule_collect_changed_cb;
++			if (diff_setup_done(&diff_opts) < 0)
++				die("diff_setup_done failed");
++			diff_tree_sha1(parent->item->object.sha1, commit->object.sha1, "", &diff_opts);
++			diffcore_std(&diff_opts);
++			diff_flush(&diff_opts);
++			parent = parent->next;
++		}
++	}
++	free((char *)argv[1]);
++}
++
+ int fetch_populated_submodules(int num_options, const char **options,
+ 			       const char *prefix, int ignore_config,
+ 			       int quiet)
+ {
+-	int i, result = 0, argc = 0;
++	int i, result = 0, argc = 0, default_argc;
+ 	struct child_process cp;
+ 	const char **argv;
+ 	struct string_list_item *name_for_path;
+ 	const char *work_tree = get_git_work_tree();
+ 	if (!work_tree)
+-		return 0;
++		goto out;
+
+ 	if (!the_index.initialized)
+ 		if (read_cache() < 0)
+ 			die("index file corrupt");
+
+-	/* 4: "fetch" (options) "--submodule-prefix" prefix NULL */
+-	argv = xcalloc(num_options + 4, sizeof(const char *));
++	/* 6: "fetch" (options) --recurse-submodules-default default "--submodule-prefix" prefix NULL */
++	argv = xcalloc(num_options + 6, sizeof(const char *));
+ 	argv[argc++] = "fetch";
+ 	for (i = 0; i < num_options; i++)
+ 		argv[argc++] = options[i];
++	argv[argc++] = "--recurse-submodules-default";
++	default_argc = argc++;
+ 	argv[argc++] = "--submodule-prefix";
+
+ 	memset(&cp, 0, sizeof(cp));
+@@ -282,7 +365,7 @@ int fetch_populated_submodules(int num_options, const char **options,
+ 		struct strbuf submodule_git_dir = STRBUF_INIT;
+ 		struct strbuf submodule_prefix = STRBUF_INIT;
+ 		struct cache_entry *ce = active_cache[i];
+-		const char *git_dir, *name;
++		const char *git_dir, *name, *default_argv;
+
+ 		if (!S_ISGITLINK(ce->ce_mode))
+ 			continue;
+@@ -292,6 +375,7 @@ int fetch_populated_submodules(int num_options, const char **options,
+ 		if (name_for_path)
+ 			name = name_for_path->util;
+
++		default_argv = "yes";
+ 		if (!ignore_config) {
+ 			struct string_list_item *fetch_recurse_submodules_option;
+ 			fetch_recurse_submodules_option = unsorted_string_list_lookup(&config_fetch_recurse_submodules_for_name, name);
+@@ -299,8 +383,13 @@ int fetch_populated_submodules(int num_options, const char **options,
+ 				if (!fetch_recurse_submodules_option->util)
+ 					continue;
+ 			} else {
+-				if (!config_fetch_recurse_submodules)
++				if (config_fetch_recurse_submodules == RECURSE_SUBMODULES_OFF)
+ 					continue;
++				if (config_fetch_recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) {
++					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
++						continue;
++					default_argv = "on-demand";
++				}
+ 			}
+ 		}
+
+@@ -314,6 +403,7 @@ int fetch_populated_submodules(int num_options, const char **options,
+ 			if (!quiet)
+ 				printf("Fetching submodule %s%s\n", prefix, ce->name);
+ 			cp.dir = submodule_path.buf;
++			argv[default_argc] = default_argv;
+ 			argv[argc] = submodule_prefix.buf;
+ 			if (run_command(&cp))
+ 				result = 1;
+@@ -323,6 +413,8 @@ int fetch_populated_submodules(int num_options, const char **options,
+ 		strbuf_release(&submodule_prefix);
+ 	}
+ 	free(argv);
++out:
++	string_list_clear(&changed_submodule_paths, 1);
+ 	return result;
+ }
+
+diff --git a/submodule.h b/submodule.h
+index 4729023..3434a8e 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -3,17 +3,26 @@
+
+ struct diff_options;
+
++enum {
++	RECURSE_SUBMODULES_ON_DEMAND = -1,
++	RECURSE_SUBMODULES_OFF = 0,
++	RECURSE_SUBMODULES_DEFAULT = 1,
++	RECURSE_SUBMODULES_ON = 2
++};
++
+ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
+ 		const char *path);
+ int submodule_config(const char *var, const char *value, void *cb);
+ void gitmodules_config();
+ int parse_submodule_config_option(const char *var, const char *value);
+ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
++int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+ void show_submodule_summary(FILE *f, const char *path,
+ 		unsigned char one[20], unsigned char two[20],
+ 		unsigned dirty_submodule,
+ 		const char *del, const char *add, const char *reset);
+ void set_config_fetch_recurse_submodules(int value);
++void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+ int fetch_populated_submodules(int num_options, const char **options,
+ 			       const char *prefix, int ignore_config,
+ 			       int quiet);
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index a5f4585..6d92f7a 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -192,4 +192,113 @@ test_expect_success "--no-recurse-submodules overrides config setting" '
+ 	! test -s actual.err
+ '
+
++test_expect_success "Recursion doesn't happen when no new commits are fetched in the superproject" '
++	(
++		cd downstream &&
++		(
++			cd submodule &&
++			git config --unset fetch.recurseSubmodules
++		) &&
++		git config --unset fetch.recurseSubmodules
++		git fetch >../actual.out 2>../actual.err
++	) &&
++	! test -s actual.out &&
++	! test -s actual.err
++'
++
++test_expect_success "Recursion stops when no new submodule commits are fetched" '
++	head1=$(git rev-parse --short HEAD) &&
++	git add submodule &&
++	git commit -m "new submodule" &&
++	head2=$(git rev-parse --short HEAD) &&
++	echo "Fetching submodule submodule" > expect.out.sub &&
++	echo "From $pwd/." > expect.err.sub &&
++	echo "   $head1..$head2  master     -> origin/master" >> expect.err.sub
++	head -2 expect.err >> expect.err.sub &&
++	(
++		cd downstream &&
++		git fetch >../actual.out 2>../actual.err
++	) &&
++	test_cmp expect.err.sub actual.err &&
++	test_cmp expect.out.sub actual.out
++'
++
++test_expect_success "Recursion doesn't happen when new superproject commits don't change any submodules" '
++	add_upstream_commit &&
++	head1=$(git rev-parse --short HEAD) &&
++	echo a > file &&
++	git add file &&
++	git commit -m "new file" &&
++	head2=$(git rev-parse --short HEAD) &&
++	echo "From $pwd/." > expect.err.file &&
++	echo "   $head1..$head2  master     -> origin/master" >> expect.err.file &&
++	(
++		cd downstream &&
++		git fetch >../actual.out 2>../actual.err
++	) &&
++	! test -s actual.out &&
++	test_cmp expect.err.file actual.err
++'
++
++test_expect_success "Recursion picks up config in submodule" '
++	(
++		cd downstream &&
++		git fetch --recurse-submodules &&
++		(
++			cd submodule &&
++			git config fetch.recurseSubmodules true
++		)
++	) &&
++	add_upstream_commit &&
++	head1=$(git rev-parse --short HEAD) &&
++	git add submodule &&
++	git commit -m "new submodule" &&
++	head2=$(git rev-parse --short HEAD) &&
++	echo "From $pwd/." > expect.err.sub &&
++	echo "   $head1..$head2  master     -> origin/master" >> expect.err.sub &&
++	cat expect.err >> expect.err.sub &&
++	(
++		cd downstream &&
++		git fetch >../actual.out 2>../actual.err &&
++		(
++			cd submodule &&
++			git config --unset fetch.recurseSubmodules
++		)
++	) &&
++	test_cmp expect.err.sub actual.err &&
++	test_cmp expect.out actual.out
++'
++
++test_expect_success "Recursion picks up all submodules when necessary" '
++	add_upstream_commit &&
++	(
++		cd submodule &&
++		(
++			cd deepsubmodule &&
++			git fetch &&
++			git checkout -q FETCH_HEAD
++		) &&
++		head1=$(git rev-parse --short HEAD^) &&
++		git add deepsubmodule &&
++		git commit -m "new deepsubmodule"
++		head2=$(git rev-parse --short HEAD) &&
++		echo "From $pwd/submodule" > ../expect.err.sub &&
++		echo "   $head1..$head2  master     -> origin/master" >> ../expect.err.sub
++	) &&
++	head1=$(git rev-parse --short HEAD) &&
++	git add submodule &&
++	git commit -m "new submodule" &&
++	head2=$(git rev-parse --short HEAD) &&
++	echo "From $pwd/." > expect.err.2 &&
++	echo "   $head1..$head2  master     -> origin/master" >> expect.err.2 &&
++	cat expect.err.sub >> expect.err.2 &&
++	tail -2 expect.err >> expect.err.2 &&
++	(
++		cd downstream &&
++		git fetch >../actual.out 2>../actual.err
++	) &&
++	test_cmp expect.err.2 actual.err &&
++	test_cmp expect.out actual.out
++'
++
+ test_done
+diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+index e5b1953..d600583 100755
+--- a/t/t7403-submodule-sync.sh
++++ b/t/t7403-submodule-sync.sh
+@@ -52,7 +52,7 @@ test_expect_success 'change submodule url' '
+
+ test_expect_success '"git submodule sync" should update submodule URLs' '
+ 	(cd super-clone &&
+-	 git pull &&
++	 git pull --no-recurse-submodules &&
+ 	 git submodule sync
+ 	) &&
+ 	test -d "$(git config -f super-clone/submodule/.git/config \
 -- 
 1.7.4.1.300.g29eea0
