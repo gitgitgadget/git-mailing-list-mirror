@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 05/12] vcs-svn: simplify repo_modify_path and repo_copy
-Date: Sun, 6 Mar 2011 17:09:23 -0600
-Message-ID: <20110306230923.GG24327@elie>
+Subject: [PATCH 06/12] vcs-svn: add a comment before each commit
+Date: Sun, 6 Mar 2011 17:09:52 -0600
+Message-ID: <20110306230951.GH24327@elie>
 References: <20101210102007.GA26298@burratino>
  <20110306225419.GA24327@elie>
 Mime-Version: 1.0
@@ -12,45 +12,45 @@ Cc: David Barr <david.barr@cordelta.com>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
 	Tomas Carnecky <tom@dbservice.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 07 00:09:35 2011
+X-From: git-owner@vger.kernel.org Mon Mar 07 00:10:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwN4v-0008GK-3b
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 00:09:33 +0100
+	id 1PwN5N-0008RI-MG
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 00:10:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754864Ab1CFXJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 18:09:29 -0500
+	id S1754890Ab1CFXJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 18:09:57 -0500
 Received: from mail-yw0-f46.google.com ([209.85.213.46]:50720 "EHLO
 	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754594Ab1CFXJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 18:09:28 -0500
-Received: by ywj3 with SMTP id 3so1416737ywj.19
-        for <git@vger.kernel.org>; Sun, 06 Mar 2011 15:09:27 -0800 (PST)
+	with ESMTP id S1754594Ab1CFXJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 18:09:56 -0500
+Received: by mail-yw0-f46.google.com with SMTP id 3so1416737ywj.19
+        for <git@vger.kernel.org>; Sun, 06 Mar 2011 15:09:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=gpH5tXsl0dPFLBIefTdmUti/VEBl4eOK++Dhm5RGQZA=;
-        b=tTfYcF7k/IUyfmeNN5xrSkqYKGGjH4TbjyCLU5svoxUcWfiDFYyNt7B5UDMiEpH5sH
-         q/D3bDWE/y2rcvQJg7/BKHsTe7IzWw9j0Xc6DOMKxMlRpuyf48jOq6xDYTeUHL8VXW94
-         MNjn+rdsSpXtwSmA/n+Yypa+EppSkm3Za4ND4=
+        bh=3irDXvFHSsa2X8vMje4ilwvvczKoknQuuRJp1C+AlaA=;
+        b=WvIiOOjJsLHALaiZ8Vj8Dd/Jr2BNL1JZgZdn1c8Rtcfie3dK0PZbX9yAMErU2bfSEm
+         to15fDgHXf9PWoOM4ysfQS8Mu1UduMHOvDVwHyEUUwtxStxSJ+ptJ2Rz2Q2WIXTOE/m1
+         zVnPfA//xAty/z/hmLabi7D7Xww9YVfUdANLs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=sxvdZRkfgJwEu0jWxxZU1saisxslr++jsgTBOJwcRGDfZpXX8cFoBKRzIXMv5HEuAw
-         D7J56BYAClK3yppl4so/3QBbO3y0J9mfMTHKs6jrEtsW5Brf0rp2XuSnK1I6VmLNOFWl
-         2lyIc+JBUaa75vfIt/LPbeHsbDqaf24LpW3QI=
-Received: by 10.150.204.11 with SMTP id b11mr2156219ybg.38.1299452967606;
-        Sun, 06 Mar 2011 15:09:27 -0800 (PST)
-Received: from elie (adsl-69-209-66-207.dsl.chcgil.sbcglobal.net [69.209.66.207])
-        by mx.google.com with ESMTPS id l2sm1300514ybn.15.2011.03.06.15.09.25
+        b=W4nI5sPrz0vb33ouobVexguE9X5mb1frRo80smqQSCkx1OSwVZTsXCK9oFjn23kx2s
+         gCbta9SIkNyMgTzH4s9iqsP7VgrliKRH34neAjvg1OzOjii7dj8kWSaGu6TLA5IX7zmK
+         /43VFb0PfBPLN4OGbHZMB4MkQvsXVWCe4D+EY=
+Received: by 10.150.100.18 with SMTP id x18mr3688912ybb.329.1299452996377;
+        Sun, 06 Mar 2011 15:09:56 -0800 (PST)
+Received: from elie (adsl-69-209-66-207.dsl.chcgil.ameritech.net [69.209.66.207])
+        by mx.google.com with ESMTPS id n56sm1299894yhn.7.2011.03.06.15.09.54
         (version=SSLv3 cipher=OTHER);
-        Sun, 06 Mar 2011 15:09:26 -0800 (PST)
+        Sun, 06 Mar 2011 15:09:55 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110306225419.GA24327@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -58,118 +58,154 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168553>
 
-Date: Fri, 10 Dec 2010 00:53:54 -0600
+Date: Tue, 4 Jan 2011 21:53:33 -0600
 
-Restrict the repo_tree API to functions that are actually needed.
+Current svn-fe produces output like this:
 
- - decouple reading the mode and content of dirents from other
-   operations.
- - remove repo_modify_path.  It is only used to read the mode from
-   dirents.
- - remove the ability to use repo_read_mode on a missing path.  The
-   existing code only errors out in that case, anyway.
+	blob
+	mark :7382321
+	data 5
+	hello
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: David Barr <david.barr@cordelta.com>
+	blob
+	mark :7382322
+	data 5
+	Hello
+
+	commit
+	mark :3
+[...]
+	M 100644 :7382321 hello.c
+	M 100644 :7382322 hello2.c
+
+This means svn-fe has to keep track of the paths modified in each
+commit and the corresponding marks, instead of dealing with each file
+as it arrives in input and then forgetting about it.  A better
+strategy would be to use inline blobs:
+
+	commit
+	mark :3
+[...]
+	M 100644 inline hello.c
+	data 5
+	hello
+[...]
+
+As a first step towards that, teach svn-fe to notice when the
+collection of blobs for each commit starts and write a comment
+("# commit 3.") there.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- vcs-svn/repo_tree.c |   27 ++++++++++-----------------
- vcs-svn/repo_tree.h |    4 ++--
- vcs-svn/svndump.c   |    4 +---
- 3 files changed, 13 insertions(+), 22 deletions(-)
+ vcs-svn/fast_export.c |    5 +++++
+ vcs-svn/fast_export.h |    1 +
+ vcs-svn/svndump.c     |   29 ++++++++++++++++++++++-------
+ 3 files changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
-index 23a9371..036a686 100644
---- a/vcs-svn/repo_tree.c
-+++ b/vcs-svn/repo_tree.c
-@@ -106,7 +106,7 @@ static struct repo_dirent *repo_read_dirent(uint32_t revision,
- 	return dent;
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index 932824a..5a105ad 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -30,6 +30,11 @@ void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
+ 	putchar('\n');
  }
  
--static void repo_write_dirent(uint32_t *path, uint32_t mode,
-+static void repo_write_dirent(const uint32_t *path, uint32_t mode,
- 			      uint32_t content_offset, uint32_t del)
- {
- 	uint32_t name, revision, dir_o = ~0, parent_dir_o = ~0;
-@@ -167,7 +167,15 @@ uint32_t repo_read_path(const uint32_t *path)
- 	return content_offset;
- }
- 
--uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst)
-+uint32_t repo_read_mode(const uint32_t *path)
++void fast_export_begin_commit(uint32_t revision)
 +{
-+	struct repo_dirent *dent = repo_read_dirent(active_commit, path);
-+	if (dent == NULL)
-+		die("invalid dump: path to be modified is missing");
-+	return dent->mode;
++	printf("# commit %"PRIu32".\n", revision);
 +}
 +
-+void repo_copy(uint32_t revision, const uint32_t *src, const uint32_t *dst)
- {
- 	uint32_t mode = 0, content_offset = 0;
- 	struct repo_dirent *src_dent;
-@@ -177,7 +185,6 @@ uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst)
- 		content_offset = src_dent->content_offset;
- 		repo_write_dirent(dst, mode, content_offset, 0);
- 	}
--	return mode;
- }
- 
- void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark)
-@@ -185,20 +192,6 @@ void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark)
- 	repo_write_dirent(path, mode, blob_mark, 0);
- }
- 
--uint32_t repo_modify_path(uint32_t *path, uint32_t mode, uint32_t blob_mark)
--{
--	struct repo_dirent *src_dent;
--	src_dent = repo_read_dirent(active_commit, path);
--	if (!src_dent)
--		return 0;
--	if (!blob_mark)
--		blob_mark = src_dent->content_offset;
--	if (!mode)
--		mode = src_dent->mode;
--	repo_write_dirent(path, mode, blob_mark, 0);
--	return mode;
--}
--
- void repo_delete(uint32_t *path)
- {
- 	repo_write_dirent(path, 0, 0, 1);
-diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
-index 3202bbe..11d48c2 100644
---- a/vcs-svn/repo_tree.h
-+++ b/vcs-svn/repo_tree.h
-@@ -12,10 +12,10 @@
- #define REPO_MAX_PATH_DEPTH 1000
- 
- uint32_t next_blob_mark(void);
--uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst);
-+void repo_copy(uint32_t revision, const uint32_t *src, const uint32_t *dst);
- void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark);
--uint32_t repo_modify_path(uint32_t *path, uint32_t mode, uint32_t blob_mark);
- uint32_t repo_read_path(const uint32_t *path);
-+uint32_t repo_read_mode(const uint32_t *path);
- void repo_delete(uint32_t *path);
- void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
- 		 uint32_t url, long unsigned timestamp);
+ static char gitsvnline[MAX_GITSVN_LINE_LEN];
+ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+ 			uint32_t uuid, uint32_t url,
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+index 054e7d5..aff8005 100644
+--- a/vcs-svn/fast_export.h
++++ b/vcs-svn/fast_export.h
+@@ -6,6 +6,7 @@
+ void fast_export_delete(uint32_t depth, uint32_t *path);
+ void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
+ 			uint32_t mark);
++void fast_export_begin_commit(uint32_t revision);
+ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+ 			uint32_t uuid, uint32_t url, unsigned long timestamp);
+ void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len,
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index f07376f..e6d84ba 100644
+index e6d84ba..a384996 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -235,9 +235,7 @@ static void handle_node(void)
- 		uint32_t mode;
- 		if (!have_text)
- 			mark = repo_read_path(node_ctx.dst);
--		mode = repo_modify_path(node_ctx.dst, 0, 0);
--		if (!mode)
--			die("invalid dump: path to be modified is missing");
-+		mode = repo_read_mode(node_ctx.dst);
- 		if (mode == REPO_MODE_DIR && type != REPO_MODE_DIR)
- 			die("invalid dump: cannot modify a directory into a file");
- 		if (mode != REPO_MODE_DIR && type == REPO_MODE_DIR)
+@@ -20,9 +20,11 @@
+ #define NODEACT_CHANGE 1
+ #define NODEACT_UNKNOWN 0
+ 
+-#define DUMP_CTX 0
+-#define REV_CTX  1
+-#define NODE_CTX 2
++/* States: */
++#define DUMP_CTX 0	/* dump metadata */
++#define REV_CTX  1	/* revision metadata */
++#define NODE_CTX 2	/* node metadata */
++#define INTERNODE_CTX 3	/* between nodes */
+ 
+ #define LENGTH_UNKNOWN (~0)
+ #define DATE_RFC2822_LEN 31
+@@ -267,7 +269,14 @@ static void handle_node(void)
+ 				 node_ctx.textLength, &input);
+ }
+ 
+-static void handle_revision(void)
++static void begin_revision(void)
++{
++	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
++		return;
++	fast_export_begin_commit(rev_ctx.revision);
++}
++
++static void end_revision(void)
+ {
+ 	if (rev_ctx.revision)
+ 		repo_commit(rev_ctx.revision, rev_ctx.author, rev_ctx.log,
+@@ -301,13 +310,17 @@ void svndump_read(const char *url)
+ 		} else if (key == keys.revision_number) {
+ 			if (active_ctx == NODE_CTX)
+ 				handle_node();
++			if (active_ctx == REV_CTX)
++				begin_revision();
+ 			if (active_ctx != DUMP_CTX)
+-				handle_revision();
++				end_revision();
+ 			active_ctx = REV_CTX;
+ 			reset_rev_ctx(atoi(val));
+ 		} else if (key == keys.node_path) {
+ 			if (active_ctx == NODE_CTX)
+ 				handle_node();
++			if (active_ctx == REV_CTX)
++				begin_revision();
+ 			active_ctx = NODE_CTX;
+ 			reset_node_ctx(val);
+ 		} else if (key == keys.node_kind) {
+@@ -349,7 +362,7 @@ void svndump_read(const char *url)
+ 				read_props();
+ 			} else if (active_ctx == NODE_CTX) {
+ 				handle_node();
+-				active_ctx = REV_CTX;
++				active_ctx = INTERNODE_CTX;
+ 			} else {
+ 				fprintf(stderr, "Unexpected content length header: %"PRIu32"\n", len);
+ 				buffer_skip_bytes(&input, len);
+@@ -358,8 +371,10 @@ void svndump_read(const char *url)
+ 	}
+ 	if (active_ctx == NODE_CTX)
+ 		handle_node();
++	if (active_ctx == REV_CTX)
++		begin_revision();
+ 	if (active_ctx != DUMP_CTX)
+-		handle_revision();
++		end_revision();
+ }
+ 
+ int svndump_init(const char *filename)
 -- 
 1.7.4.1
