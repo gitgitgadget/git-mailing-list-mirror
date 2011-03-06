@@ -1,67 +1,86 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Google Summer of Code 2011
-Date: Mon, 07 Mar 2011 08:24:50 +1300
-Message-ID: <4D73DF82.5020900@vilain.net>
-References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] unpack-trees.c: check return value of lstat()
+Date: Sun, 06 Mar 2011 20:50:15 +0100
+Message-ID: <4D73E577.1010604@web.de>
+References: <201103062013.52793.tboegi@web.de> <vpqfwr0hwu0.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Mar 06 20:31:42 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	drizzd@aon.at, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Mar 06 20:50:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwJg5-0002fD-QM
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 20:31:42 +0100
+	id 1PwJyg-0002A9-UE
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 20:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581Ab1CFTbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 14:31:36 -0500
-Received: from vilain.net ([60.234.254.246]:49932 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751454Ab1CFTbf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 14:31:35 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Mar 2011 14:31:35 EST
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 720E42E0AC; Mon,  7 Mar 2011 08:24:53 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [192.168.1.83] (arcturus.local [192.168.1.83])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 3E7082E0A6;
-	Mon,  7 Mar 2011 08:24:51 +1300 (NZDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
-X-Enigmail-Version: 1.1.2
+	id S1753987Ab1CFTut convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Mar 2011 14:50:49 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:54905 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753634Ab1CFTus (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 14:50:48 -0500
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate02.web.de (Postfix) with ESMTP id D120F199E42FD;
+	Sun,  6 Mar 2011 20:50:16 +0100 (CET)
+Received: from [213.64.3.195] (helo=birne.lan)
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PwJy4-00018U-00; Sun, 06 Mar 2011 20:50:16 +0100
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <vpqfwr0hwu0.fsf@bauges.imag.fr>
+X-Sender: tboegi@web.de
+X-Provags-ID: V01U2FsdGVkX19yqRfOkTD5bMPpLtKGSSNdx+Jrj5kpic8gwy9g
+	ZpAmqkjO92wzNX0iN69Qp32hO+8xUKKhG+tEMR5l2iTCsn/35x
+	54zl+QLxI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168527>
 
-Hi Shawn,
+On 06.03.11 20:29, Matthieu Moy wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>=20
+>> +		if (!lstat(path, &st))
+>> +			return check_ok_to_remove(path, len, DT_UNKNOWN, NULL, &st,
+>> +			                          error_type, o);
+>>  	} else if (!lstat(ce->name, &st))
+>=20
+> What happens if lstat returns a non-0 value?
+The result of "st" is 100% garbage, and should not be passed to anybody=
+=2E
+Not checking the return value (error or not) is not a good thing.
+Developers might be tempted to write unreliable code...
+>=20
+> Anyway, this seems to have been fixed by a93e53018 (Wed Jan 12 20:28:=
+09
+> 2011, unpack-trees: handle lstat failure for existing file) already.
+>=20
+Hm,
+v1.7.4 says:
+commit e39212ab08e8d37dda5d8fd32b54099fe01dbbdb
+Merge: 716958c 9e08273
+(so far so good)
+My git looks like this:
 
-On 04/03/11 07:08, Shawn Pearce wrote:
-> Anyone want to mentor this year?
+static int verify_absent_1(struct cache_entry *ce,
+				 enum unpack_trees_error_types error_type,
+				 struct unpack_trees_options *o)
+{
+[snip]
+	else if (len > 0) {
+		char path[PATH_MAX + 1];
+		memcpy(path, ce->name, len);
+		path[len] =3D 0;
+		lstat(path, &st);
+                ^^^^^^^^^^^^^^^^^^
+		return check_ok_to_remove(path, len, DT_UNKNOWN, NULL, &st,
+				error_type, o);
 
-This year I'm likely to be far too busy to mentor anyone or review
-applications; however I expect to find time to deliver on my earlier
-promise to revisit GitTorrent with a series of articles and how-to's on
-the comp.git section of my blog.  I've made at least administrative
-progress towards this goal; by setting up ikiwiki and arranging a
-discrete comp.git section, so that readers can follow without getting my
-other articles.
 
-The introductory article is at
-http://vilain.net/comp/git/gittorrent/past_synthesis.html and I hope to
-be able to keep producing one article a week.  I would love following,
-input, criticism etc from anyone who has been involved in the GitTorrent
-project or its many spin-offs over the years.
-
-Cheers and hope GSoC 2011 works out well for git!
-Sam
+(And I had to correct drizzd@aon.a -> drizzd@aon.at)
+/Torsten
