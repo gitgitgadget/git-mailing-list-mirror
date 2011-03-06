@@ -1,71 +1,71 @@
-From: Serhat Sevki Dincer <jfcgauss@gmail.com>
-Subject: multiple branch shallow clones and object sharing
-Date: Sun, 6 Mar 2011 22:00:55 +0200
-Message-ID: <AANLkTimo-Ba8dt5p7aDG8X1VJC=tQfricD=iJvcUw7_y@mail.gmail.com>
+From: David Barr <david.barr@cordelta.com>
+Subject: Re: [PATCH v2] vcs-svn: prepare to eliminate repo_tree structure
+Date: Mon, 7 Mar 2011 07:41:33 +1100
+Message-ID: <AANLkTimX1+hZGZ-y01ePCdWhPmwjUFpUbJe1-iB4GQrq@mail.gmail.com>
+References: <20101210102007.GA26298@burratino>
+	<20101210102806.GH26331@burratino>
+	<20110306125259.GA20010@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 06 21:01:06 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 06 21:41:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwK8Y-00064R-AD
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 21:01:06 +0100
+	id 1PwKlp-0005hL-Rm
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 21:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754162Ab1CFUA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 15:00:58 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64906 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752607Ab1CFUA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 15:00:57 -0500
-Received: by bwz15 with SMTP id 15so3369906bwz.19
-        for <git@vger.kernel.org>; Sun, 06 Mar 2011 12:00:56 -0800 (PST)
+	id S1754421Ab1CFUlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 15:41:35 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52760 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754364Ab1CFUlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 15:41:35 -0500
+Received: by wwb22 with SMTP id 22so4489190wwb.1
+        for <git@vger.kernel.org>; Sun, 06 Mar 2011 12:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=j9UIUIoLkun6Q6jOAXQymDUTOeVGtZdxsk89JqC46po=;
-        b=iwb4AnfuSX9jTGCa7wOy7nqw8T6C7LYJwzjbF7nB1c3hX7zA4F6ulLDH6VTwq3c4FK
-         eZSaZJBnJUrdRAevEDSP0F/1xddphFMMLvkDmxnyNBWLY4ixPdWK9KGZQ0j1FRwJlwe2
-         1vQibLOd3Sps3uPQCFRR3uQdOqh5BrEm5cWRo=
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=BsBA/c9KEtQTfRjLgXXxdAqXcKQWlLHUWuTD4x2sRTs=;
+        b=C+miIUdzOmDWAzPibLen/WKpkc9T6s7vwfNCis7yXW8jx65HcEmnQ+mKOzb7QOnOcr
+         v8q5a2Zt1dfhYIAY1y1hy53w3sQztqxb+EQ+y97x+I4ETg7c0y1XxfCFdZ0E7VECvEU4
+         UUWihLWisukzL0VNrOIrKokVcBbI/5oRv/0zQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=k+kbCYDjnsVeP9hHbbRLUAufVwVIvwsxXJH+X9ggYxyS19FZArdYnIyUG7h+Kvexn4
-         zB1e8Rqf2dAijKCCa/i8Ohak4WYVenJata0a2IhMLkTh5/XtQbgitP4SEM/bMTuwrJKO
-         ACn8N4m/nC2eYTopdvPW6QR1RJic4PqGYiQ0I=
-Received: by 10.204.74.85 with SMTP id t21mr2626420bkj.128.1299441655043; Sun,
- 06 Mar 2011 12:00:55 -0800 (PST)
-Received: by 10.204.124.5 with HTTP; Sun, 6 Mar 2011 12:00:55 -0800 (PST)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=HhvTQN9zDL7pv10zQE5wGDyS+/xPt8/memJZ5U++fkKHvJxAWA/S97J74hHs65FFo6
+         l3CeU5xHVQnlnVgHFYlH2BhYxmMb9BsS2Se8oOyWtb3RddME8DopmHo+x2YDh6Ocwr7M
+         7TfE0nC3A17VgGWpAI1yF0WCniRN0n7PevGAg=
+Received: by 10.216.209.230 with SMTP id s80mr2728434weo.26.1299444093526;
+ Sun, 06 Mar 2011 12:41:33 -0800 (PST)
+Received: by 10.216.19.79 with HTTP; Sun, 6 Mar 2011 12:41:33 -0800 (PST)
+In-Reply-To: <20110306125259.GA20010@elie>
+X-Google-Sender-Auth: J9ivfDa1Bo7WxUF23m6xnIRywAI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168530>
 
 Hi,
-Say, I would like to get just the recent history of two branches of a
-big project with, for example:
-git clone -b REL-1_10_0_PATCHES --depth  99
-git://git.postgresql.org/git/pgadmin3.git pgadmin-1.10
-git clone -b REL-1_12_0_PATCHES --depth 299
-git://git.postgresql.org/git/pgadmin3.git pgadmin-1.12
 
-If the 1st one were not a shallow clone, we could have --referenced it
-in the 2nd command to avoid unnecassary downloads of many objects, but
-since the history of the project is very big we just want some recent
-history. Is the following commandline syntax too absurd/naive for a
-new feature of git :?
+> David, may I have your sign-off on this series (the
+> vcs-svn-incremental branch)?
 
-git clone -b REL-1_10_0_PATCHES --depth 99 -b REL-1_12_0_PATCHES
---depth 299 git://git.postgresql.org/git/pgadmin3.git pgadmin-1.10
-pgadmin-1.12
+Absolutely, I've updated my branch with the correct sign-offs.
 
-this is supposed to download the two branches simultaneously into two
-respective local directories, making any possible download savings
-along the way.
+Please pull
 
-Thanks,
-Serhat
+ git://github.com/barrbrain/git.git vcs-svn-incremental
+
+for the complete series of back-ported patches to support incremental
+imports for vcs-svn.
+
+--
+David Barr.
