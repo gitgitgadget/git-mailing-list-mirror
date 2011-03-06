@@ -1,107 +1,118 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 02/10] vcs-svn: save marks for imported commits
-Date: Sun, 6 Mar 2011 05:15:24 -0600
-Message-ID: <20110306111524.GA12761@elie>
-References: <20101210102007.GA26298@burratino>
- <20101210102216.GB26331@burratino>
+Subject: Re: [PATCH 3/8] vcs-svn: Introduce repo_read_path to check the
+ content at a path
+Date: Sun, 6 Mar 2011 06:29:42 -0600
+Message-ID: <20110306122942.GA18995@elie>
+References: <20101118050023.GA14861@burratino>
+ <20101120004525.GA17445@burratino>
+ <20101120192153.GA17823@burratino>
+ <20101120192528.GD17823@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 06 12:15:49 2011
+X-From: git-owner@vger.kernel.org Sun Mar 06 13:29:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwBwD-0007jA-0Q
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 12:15:49 +0100
+	id 1PwD5w-0003Mm-9L
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 13:29:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303Ab1CFLPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 06:15:34 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58018 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721Ab1CFLPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 06:15:33 -0500
-Received: by iwn34 with SMTP id 34so3160949iwn.19
-        for <git@vger.kernel.org>; Sun, 06 Mar 2011 03:15:32 -0800 (PST)
+	id S1753494Ab1CFM3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 07:29:51 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61657 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751553Ab1CFM3t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 07:29:49 -0500
+Received: by iyb26 with SMTP id 26so3181279iyb.19
+        for <git@vger.kernel.org>; Sun, 06 Mar 2011 04:29:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=cHcgvidnFkvONSxHd3EQYgbrN+FICsoEiiiA3Bcco5Y=;
-        b=WKuCRXUinMnjsHmty3DaCsyaYe5Mh1VlVB/W6fhfJnbBADm6X+bQKFMDL3UHFIIwpw
-         ftwta4fZupx9K0foRdgxMQTxcROkpe+5Qxqj7wxxZcPh0OA3YQLinFDlrKENn9vJQmbR
-         JbSU3Bdkt+X/9RK9G9lS0rrXiVclVtUppaqn0=
+        bh=gPQ+TvqJz4FQfUw0tVGd+sAWMLApwMMOIVnQW/YtIfc=;
+        b=hjVO0zKP/RlvZ88fi9DSBFLGh0J63RJS4HOc+ntS5lE5ZTm3wxWE816Pd2pFBzKE9R
+         ZmgcXYyIgoDDDi+KzjXJf8VYYX9UiEfuRmLU5Ri7IuS+ssijks045kqvl3ryM7Qd2as5
+         AVTrB/CJJNsT4Tn6Uc3z2ITVqs+fAH9xk5pfM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=X2ha4SYO5F7h1hGvGdpQ/OLZZabZdlhPwAaeEnLS3JJMPeq12kz5YVUbZsaDng4eVv
-         ap5N+wnk5oma6dAVjx3VxEveFZuCVj2PGZM+KC/8ewF/zJdnVJO8vE2cLdGjGvm8IvyT
-         5tXqnfo/BGBmIzotwze7rBaiOoKXvMZpMc4g0=
-Received: by 10.42.175.200 with SMTP id bb8mr3458504icb.37.1299410132443;
-        Sun, 06 Mar 2011 03:15:32 -0800 (PST)
+        b=Wr81BQJWEA8uRYUWXDtHM1FbG0JKqqvLUNwL95IkE3lnXIFfhyx/Qcz/wXm8fBUkz6
+         T0s/Oik9SSC4UZOvA342FWzzIA6OGsP+frdQg9yUTo0y6iKlKWUd33RBKbEkhYrwiGsm
+         rHyiHRccP6ETqYSIOvPHtU2Ko8sTJhM17FqnY=
+Received: by 10.43.50.5 with SMTP id vc5mr3632791icb.60.1299414588917;
+        Sun, 06 Mar 2011 04:29:48 -0800 (PST)
 Received: from elie (adsl-69-209-74-158.dsl.chcgil.ameritech.net [69.209.74.158])
-        by mx.google.com with ESMTPS id ye16sm1443282icb.9.2011.03.06.03.15.28
+        by mx.google.com with ESMTPS id jv9sm1514617icb.1.2011.03.06.04.29.46
         (version=SSLv3 cipher=OTHER);
-        Sun, 06 Mar 2011 03:15:29 -0800 (PST)
+        Sun, 06 Mar 2011 04:29:47 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20101210102216.GB26331@burratino>
+In-Reply-To: <20101120192528.GD17823@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168515>
 
-(pruned cc because reviving an old thread)
 Hi,
 
 Jonathan Nieder wrote:
 
-> [Subject: vcs-svn: save marks for imported commits]
+> repo_modify_path returns the mode.
 >
 > Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-That's a lousy commit message.  A version committed later (that
-eventually found its way to David's repository) explains:
+Another cryptic commit message.
 
-	This way, a person can use
+A long-winded explanation follows.  Please feel free to ignore it, or
+even better, come up with a summary to use as change description that
+people can refer to for this patch in the future. :)
 
-		svnadmin dump $path |
-		svn-fe |
-		git fast-import --relative-marks --export-marks=svn-revs
+It is currently possible to _modify_ both the mode and the text at a
+path but there is only public functionality to retrieve the mode.  In
+its original context, this patch added analogous functionality to
+retrieve the text (indexed by a blob name) as preparation for applying
+a delta to it.
 
-	to get a list of what commit corresponds to each svn revision (plus
-	some irrelevant blob names) in .git/info/fast-import/svn-revs.
+In the vcs-svn-incremental series, it will allow us to restructure
+handle_node() a little: instead of making little modifications to an
+in-memory cache managed by the repo-tree library (saying, "change the
+mode this way but keep the content; now keep the mode but change the
+content"), handle_node can take responsibility for figuring out what
+will be the final mode and content for the path in question.
 
-In other words, this is the first half of a two-way mapping between
-svn and git commit names.
+In other words, a later patch will change handle_node (in the
+Node-action: change case) from looking like
 
-It should be possible to build a mapping the other way like so:
+	/* Change text at path. */
+	mode = repo_modify_path(path, 0, have_text ? text : 0);
 
-	awk '
-	BEGIN {
-		print "commit refs/notes/svn-id";
-		printf "committer ";
-		system("git var GIT_COMMITTER_IDENT");
-		print "data <<EOT";
-		print "Automatically generated commits-to-revs mapping.";
-		print "EOT";
+	/* Change mode at path. */
+	if (have_props) {
+		read_props(&new_mode);
+		if (new_mode != mode)
+			repo_modify_path(path, new_mode, have_text ? text : 0);
 	}
-	{
-		num = 0 + substr($1, 2);
-		commitname = $2;
-		if (num < 1024 * 1024 * 1024) {
-			print "N inline " commitname
-			print "data <<EOT";
-			print "r" num;
-			print "EOT";
-		}
-	}
-	' .git/info/fast-import/svn-revs |
-	git fast-import
+
+to
+
+	/* Determine desired text and mode at path. */
+	old_text = repo_read_path(path);
+	old_mode = repo_modify_path(path, 0, 0);
+	if (have_props)
+		read_props(old_mode, &mode);
+	if (!have_text)
+		text = old_text;
+
+	/* Make it so. */
+	repo_add(path, mode, text);
+
+It is also just nice to have a function like this, to make the API
+less surprising.
