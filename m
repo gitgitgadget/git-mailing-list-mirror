@@ -1,80 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [Patch] Error message grammar
-Date: Sun, 06 Mar 2011 18:38:47 +0100
-Message-ID: <vpq8vwsp2s8.fsf@bauges.imag.fr>
-References: <1299101838.2807.54.camel@SillyFace>
-	<vpqd3m9yycf.fsf@bauges.imag.fr> <1299424888.4990.13.camel@SillyFace>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: git for mail synchronization
+Date: Sun, 6 Mar 2011 20:10:13 +0100
+Message-ID: <20110306191013.GA12688@nibiru.local>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: A.J.Delaney@brighton.ac.uk
-X-From: git-owner@vger.kernel.org Sun Mar 06 18:39:03 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 06 20:13:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwHv3-0001kQ-LE
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 18:39:02 +0100
+	id 1PwJOj-0003EQ-Nk
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Mar 2011 20:13:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753169Ab1CFRi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 12:38:56 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:33719 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751357Ab1CFRiz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 12:38:55 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p26HcjrN021739
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 Mar 2011 18:38:45 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PwHup-00026h-Hk; Sun, 06 Mar 2011 18:38:47 +0100
-In-Reply-To: <1299424888.4990.13.camel@SillyFace> (A. J. Delaney's message of
-	"Sun, 06 Mar 2011 15:21:28 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 06 Mar 2011 18:38:46 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p26HcjrN021739
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1300037929.32234@8UM82mgXEFAT7bgsydk2Dw
+	id S1753405Ab1CFTNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 14:13:39 -0500
+Received: from caprica.metux.de ([82.165.128.25]:41452 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752610Ab1CFTNj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Mar 2011 14:13:39 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p26JB1E7010477
+	for <git@vger.kernel.org>; Sun, 6 Mar 2011 20:11:01 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p26JAxaH010467
+	for git@vger.kernel.org; Sun, 6 Mar 2011 20:10:59 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p26JAD5B017342
+	for git@vger.kernel.org; Sun, 6 Mar 2011 20:10:13 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168523>
 
-A.J.Delaney@brighton.ac.uk writes:
 
-> Matthieu,
-> On Wed, 2011-03-02 at 23:03 +0100, Matthieu Moy wrote:
->> Please, read
->> http://repo.or.cz/w/git.git/blob_plain?f=Documentation/SubmittingPatches
->> in particular the Signed-off-by part and the "don't attach patches"
->> one.
-> Thanks for the pointer.
+Hi folks,
 
-Now, you should read the part about what goes before and after the ---
-in the message ;-).
 
-The body of the email (before ---) will become the commit message, you
-want it clean and self-contained. Discussions should go after the ---.
-If you don't follow this, our maintainer will have to fix it
-manually...
+I'm currently thinking about using git for mail synchronization.
+The scenario:
 
-> Based on master f70f736bcbb22cfe434eaf20089d9713b991ee31
+* multiple hosts share a set of maildirs where new mails can be
+  added or removed arbitrarily (using non-conflicting filenames,
+  eg. their sha-hashes)
+* on each host, the current tree is committed in some time
+  interval
+* the hosts pull from each other and merge in the other's trees.
 
-This is not needed, and if you add it, put it after ---.
 
-> I certify conformance to Developer's Certificate of Origin 1.1.
->
-> Signed-off-by: Aidan Delaney <a.j.delaney@brighton.ac.uk>
+Could this work well ?
 
-Just the Signed-off-by is sufficient.
 
+cu
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
