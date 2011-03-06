@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 03/12] vcs-svn: introduce repo_read_path to check the content
- at a path
-Date: Sun, 6 Mar 2011 17:07:03 -0600
-Message-ID: <20110306230703.GE24327@elie>
+Subject: [PATCH 04/12] vcs-svn: handle_node: use repo_read_path
+Date: Sun, 6 Mar 2011 17:08:51 -0600
+Message-ID: <20110306230851.GF24327@elie>
 References: <20101210102007.GA26298@burratino>
  <20110306225419.GA24327@elie>
 Mime-Version: 1.0
@@ -13,45 +12,45 @@ Cc: David Barr <david.barr@cordelta.com>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
 	Tomas Carnecky <tom@dbservice.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 07 00:07:15 2011
+X-From: git-owner@vger.kernel.org Mon Mar 07 00:09:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwN2g-0007Q7-5p
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 00:07:14 +0100
+	id 1PwN4P-000840-FS
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 00:09:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754817Ab1CFXHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 18:07:10 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:55698 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754594Ab1CFXHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 18:07:08 -0500
-Received: by yxs7 with SMTP id 7so1418013yxs.19
-        for <git@vger.kernel.org>; Sun, 06 Mar 2011 15:07:07 -0800 (PST)
+	id S1754834Ab1CFXI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 18:08:57 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:52265 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754594Ab1CFXI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 18:08:56 -0500
+Received: by ywj3 with SMTP id 3so1416645ywj.19
+        for <git@vger.kernel.org>; Sun, 06 Mar 2011 15:08:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=8Ah78P9LS+koa0Yqdgv4LUo/6oT7Mp0kI4nvVcPNEjU=;
-        b=VFxmxDjbvhWCOXGFMCbJiFVcqLqfohkOrZI1EOVdYCXQpi0aRW2G96LPSQ/hGaALXR
-         imggnYcfxaZY1Ep99CvcNCBr6EjP2dNhip7fiCy/70N0r3LzldemWBZMjDxuK7+ynHbi
-         sqKfEsJh9ca/IwFjrju0hGaIDVS5pJuXDt/Zs=
+        bh=n9z0Q61K6W4FzpixtNgYtcbySsxu3bmWJ3H36Cio/iQ=;
+        b=qEeT0/CiDU2qb07nyUxtMkWu3nN+zLknx7K8wOtLuK3uurFciWUlthwcuISrRzERCw
+         /KwazVC+I2lp488pdad5zGTUn5+5jrppCFtWVR9w/OR171LL8/93aGCxlq6SoVDh0n6T
+         OjqkRMOxcfaD1cX5svo/p0X7JsIZM/YQeov8Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=tgZJF/Hndj8dKSP+dN/ZHoHz2FTOY+1372gvKFxuw1tlhAjuiy/T9/BkMESxhLeFfq
-         x2qjgZb+Y9jLjkE+CijRPu9r7KDozEUCJvRb69tneFPNJAEehedsxhtVlNki3l6gEzPx
-         e2G3FJU+CVLYsTlOEgpVYZMbLoDQ4T9m7hfE8=
-Received: by 10.151.134.30 with SMTP id l30mr3874654ybn.136.1299452827471;
-        Sun, 06 Mar 2011 15:07:07 -0800 (PST)
+        b=eiEmecYVeWb1eLV+8Qkqpu88Pg582btrYCOKETNMdtP9xRfjXhAMySwyYyPYLzsyE1
+         pT+nTjPpdUyrbALSJgc4vapaE0bfhzVozZROEvvMJ/gKOCC6M5q+W5Bw/aqeVEn0a23F
+         Jg1icE9RZQ+6f/UNtnytBYn09KssGGqBzQxmY=
+Received: by 10.150.62.1 with SMTP id k1mr1645387yba.382.1299452935878;
+        Sun, 06 Mar 2011 15:08:55 -0800 (PST)
 Received: from elie (adsl-69-209-66-207.dsl.chcgil.sbcglobal.net [69.209.66.207])
-        by mx.google.com with ESMTPS id q20sm1249939ybk.5.2011.03.06.15.07.05
+        by mx.google.com with ESMTPS id 17sm106017ybk.0.2011.03.06.15.08.54
         (version=SSLv3 cipher=OTHER);
-        Sun, 06 Mar 2011 15:07:06 -0800 (PST)
+        Sun, 06 Mar 2011 15:08:55 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110306225419.GA24327@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -59,76 +58,110 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168551>
 
-Date: Sat, 20 Nov 2010 13:25:28 -0600
+Date: Fri, 10 Dec 2010 04:28:06 -0600
 
-The repo_tree structure remembers, for each path in each revision, a
-mode (regular file, executable, symlink, or directory) and content
-(blob mark or directory structure).  Maintaining a second copy of all
-this information when it's already in the target repository is
-wasteful, it does not persist between svn-fe invocations, and most
-importantly, there is no convenient way to transfer it from one
-machine to another.  So it would be nice to get rid of it.
+svn-fe processes each commit in two stages: first decide on the
+correct content for all paths and export the relevant blobs, then
+export a commit with the result.
 
-As a first step, let's change the repo_tree API to match fast-import's
-read commands more closely.  Currently to read the mode for a path,
-one uses
+We can keep less state and simplify svn-fe a great deal by doing
+exporting the commit in one stage: use 'inline' blobs for each path
+and remember nothing.  This way, the repo_tree structure could be
+eliminated, and we would get support for incremental imports 'for
+free'.
 
-	repo_modify_path(path, new_mode, new_content);
+Reorganize handle_node() along these lines.  This is just a code
+cleanup; the functional changes to repo_tree and handle_revision
+will come later.
 
-which changes the mode and content as a side effect.  There is no
-function to read the content at a path; add one.
+[db: backported to apply without text delta support]
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- vcs-svn/repo_tree.c |   12 +++++++++++-
- vcs-svn/repo_tree.h |    1 +
- 2 files changed, 12 insertions(+), 1 deletions(-)
+ vcs-svn/svndump.c |   33 +++++++++++++++++++++++----------
+ 1 files changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
-index 093c5ff..23a9371 100644
---- a/vcs-svn/repo_tree.c
-+++ b/vcs-svn/repo_tree.c
-@@ -87,7 +87,8 @@ static struct repo_dir *repo_clone_dir(struct repo_dir *orig_dir)
- 	return dir_pointer(new_o);
- }
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index ee7c0bb..f07376f 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -201,13 +201,14 @@ static void handle_node(void)
+ 	uint32_t mark = 0;
+ 	const uint32_t type = node_ctx.type;
+ 	const int have_props = node_ctx.propLength != LENGTH_UNKNOWN;
++	const int have_text = node_ctx.textLength != LENGTH_UNKNOWN;
  
--static struct repo_dirent *repo_read_dirent(uint32_t revision, uint32_t *path)
-+static struct repo_dirent *repo_read_dirent(uint32_t revision,
-+					    const uint32_t *path)
- {
- 	uint32_t name = 0;
- 	struct repo_dirent *key = dent_pointer(dent_alloc(1));
-@@ -157,6 +158,15 @@ static void repo_write_dirent(uint32_t *path, uint32_t mode,
- 		dent_remove(&dir_pointer(parent_dir_o)->entries, dent);
- }
- 
-+uint32_t repo_read_path(const uint32_t *path)
-+{
-+	uint32_t content_offset = 0;
-+	struct repo_dirent *dent = repo_read_dirent(active_commit, path);
-+	if (dent != NULL)
-+		content_offset = dent->content_offset;
-+	return content_offset;
-+}
+ 	if (node_ctx.text_delta)
+ 		die("text deltas not supported");
+-	if (node_ctx.textLength != LENGTH_UNKNOWN)
++	if (have_text)
+ 		mark = next_blob_mark();
+ 	if (node_ctx.action == NODEACT_DELETE) {
+-		if (mark || have_props || node_ctx.srcRev)
++		if (have_text || have_props || node_ctx.srcRev)
+ 			die("invalid dump: deletion node has "
+ 				"copyfrom info, text, or properties");
+ 		return repo_delete(node_ctx.dst);
+@@ -221,13 +222,20 @@ static void handle_node(void)
+ 		if (node_ctx.action == NODEACT_ADD)
+ 			node_ctx.action = NODEACT_CHANGE;
+ 	}
+-	if (mark && type == REPO_MODE_DIR)
++	if (have_text && type == REPO_MODE_DIR)
+ 		die("invalid dump: directories cannot have text attached");
 +
- uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst)
- {
- 	uint32_t mode = 0, content_offset = 0;
-diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
-index 68baeb5..3202bbe 100644
---- a/vcs-svn/repo_tree.h
-+++ b/vcs-svn/repo_tree.h
-@@ -15,6 +15,7 @@ uint32_t next_blob_mark(void);
- uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst);
- void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark);
- uint32_t repo_modify_path(uint32_t *path, uint32_t mode, uint32_t blob_mark);
-+uint32_t repo_read_path(const uint32_t *path);
- void repo_delete(uint32_t *path);
- void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
- 		 uint32_t url, long unsigned timestamp);
++	/*
++	 * Decide on the new content (mark) and mode (node_ctx.type).
++	 */
+ 	if (node_ctx.action == NODEACT_CHANGE && !~*node_ctx.dst) {
+ 		if (type != REPO_MODE_DIR)
+ 			die("invalid dump: root of tree is not a regular file");
+ 	} else if (node_ctx.action == NODEACT_CHANGE) {
+-		uint32_t mode = repo_modify_path(node_ctx.dst, 0, mark);
++		uint32_t mode;
++		if (!have_text)
++			mark = repo_read_path(node_ctx.dst);
++		mode = repo_modify_path(node_ctx.dst, 0, 0);
+ 		if (!mode)
+ 			die("invalid dump: path to be modified is missing");
+ 		if (mode == REPO_MODE_DIR && type != REPO_MODE_DIR)
+@@ -236,22 +244,27 @@ static void handle_node(void)
+ 			die("invalid dump: cannot modify a file into a directory");
+ 		node_ctx.type = mode;
+ 	} else if (node_ctx.action == NODEACT_ADD) {
+-		if (!mark && type != REPO_MODE_DIR)
++		if (!have_text && type != REPO_MODE_DIR)
+ 			die("invalid dump: adds node without text");
+-		repo_add(node_ctx.dst, type, mark);
+ 	} else {
+ 		die("invalid dump: Node-path block lacks Node-action");
+ 	}
++
++	/*
++	 * Adjust mode to reflect properties.
++	 */
+ 	if (have_props) {
+-		const uint32_t old_mode = node_ctx.type;
+ 		if (!node_ctx.prop_delta)
+ 			node_ctx.type = type;
+ 		if (node_ctx.propLength)
+ 			read_props();
+-		if (node_ctx.type != old_mode)
+-			repo_modify_path(node_ctx.dst, node_ctx.type, mark);
+ 	}
+-	if (mark)
++
++	/*
++	 * Save the result.
++	 */
++	repo_add(node_ctx.dst, node_ctx.type, mark);
++	if (have_text)
+ 		fast_export_blob(node_ctx.type, mark,
+ 				 node_ctx.textLength, &input);
+ }
 -- 
 1.7.4.1
