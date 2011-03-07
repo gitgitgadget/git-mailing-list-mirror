@@ -1,84 +1,76 @@
-From: Michal Rokos <rokos@nextsoft.cz>
-Subject: [PATCH] Honor HP C's noreturn attribute
-Date: Mon, 7 Mar 2011 13:13:15 +0100
-Message-ID: <32EABE0E-2447-4189-A3CE-05B68A5E18EF@nextsoft.cz>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=utf-8
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Google Summer of Code 2011
+Date: Mon, 7 Mar 2011 13:15:50 +0100
+Message-ID: <AANLkTinWT8_drcfzBRQGrVj1TjsTQoUU+=-ZNJ0C1XCV@mail.gmail.com>
+References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com> <20110303210419.GB27973@kytes>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 07 13:13:30 2011
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 13:16:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwZJZ-0002Kh-SB
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 13:13:30 +0100
+	id 1PwZMZ-0003kt-Qy
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 13:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754622Ab1CGMNZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 07:13:25 -0500
-Received: from holub.nextsoft.cz ([195.122.198.235]:41016 "EHLO
-	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752201Ab1CGMNY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2011 07:13:24 -0500
-Received: by holub.nextsoft.cz (Postfix, from userid 111)
-	id 44BBC2AD0; Mon,  7 Mar 2011 13:13:22 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by holub.nextsoft.cz (Postfix) with ESMTP id 0182AB0C
-	for <git@vger.kernel.org>; Mon,  7 Mar 2011 13:13:20 +0100 (CET)
-Received: from holub.nextsoft.cz ([127.0.0.1])
-	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pxn8rmgMuHBQ for <git@vger.kernel.org>;
-	Mon,  7 Mar 2011 13:13:19 +0100 (CET)
-Received: from [10.20.0.58] (unknown [10.20.0.58])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by holub.nextsoft.cz (Postfix) with ESMTPSA id 109F32B6
-	for <git@vger.kernel.org>; Mon,  7 Mar 2011 13:13:18 +0100 (CET)
-X-Mailer: Apple Mail (2.1082)
-X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.5
+	id S1753715Ab1CGMQb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 07:16:31 -0500
+Received: from mail-gw0-f51.google.com ([74.125.83.51]:51565 "EHLO
+	mail-gw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752548Ab1CGMQa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2011 07:16:30 -0500
+Received: by gwb15 with SMTP id 15so2501450gwb.10
+        for <git@vger.kernel.org>; Mon, 07 Mar 2011 04:16:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=fz4rhf1ZbRtM0E9eMRF1IViz2AqNMjYMt+FQ2aBZ5b4=;
+        b=pKYtnkdjREvzS3ay4gpzKprtkz3pOuIH6YDf8nDNS2wiAIkz271q4i8ymrsef+9HIY
+         H8M5Ieulf9HAC7ejxRGW6xX/pJ7xahhoC0OkmuADrigQNwisyELdU+C2Yvu9MJxhBM3S
+         cvHEJzfJuPSr+aKVadXKuhApINdn/kHkghRCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=dxB15OuTEz8bS/jvXr7stzcxRifoHHfYgVXr2z+Jqhdjehi/fyCpcVWOX/Yk/LnSO3
+         u4mSPC0FAlTJz917oNJvraI5Q7phBH/totzHM20aBfuZ80GGzOBJDPUwpySb3dgnyrou
+         SNH05vTppxT6Wlsg+iADvuP28fQdnpXmp+oGU=
+Received: by 10.151.7.20 with SMTP id k20mr4536160ybi.106.1299500190096; Mon,
+ 07 Mar 2011 04:16:30 -0800 (PST)
+Received: by 10.151.11.12 with HTTP; Mon, 7 Mar 2011 04:15:50 -0800 (PST)
+In-Reply-To: <20110303210419.GB27973@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168578>
 
-HP C for Integrity servers (Itanium) gained support for noreturn attrib=
-ute sometime in 2006. It was released in Compiler Version A.06.10 and m=
-ade available in July 2006.
+Heya,
 
-The __HP_cc define detects the HP C compiler version. Precede the __GNU=
-C__ check so it works well when compiling with HP C using -Agcc option =
-that enables partial support for the GNU C dialect. The -Agcc defines t=
-he __GNUC__ too.
 
-Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
+On Thu, Mar 3, 2011 at 23:08, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> On Thu, Mar 3, 2011 at 22:04, Ramkumar Ramachandra <artagnon@gmail.co=
+m> wrote:
+>> Although I'm probably not experienced enough to independently mentor=
+ a
+>> project, I'd be more than happy to co-mentor, or step in if a mentor
+>> is suddenly unavailable. I should have a lot of time to give in
+>> summer.
+>
+> I'd also be willing to co-mentor. =C2=A0Time might be a constraint, b=
+ut I can
+> find time.
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 9c23622..bf947b1 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -214,7 +214,10 @@ extern char *gitbasename(char *);
- #define is_dir_sep(c) ((c) =3D=3D '/')
- #endif
-=20
--#ifdef __GNUC__
-+#if __HP_cc >=3D 61000
-+#define NORETURN __attribute__((noreturn))
-+#define NORETURN_PTR
-+#elif defined(__GNUC__)
- #define NORETURN __attribute__((__noreturn__))
- #define NORETURN_PTR __attribute__((__noreturn__))
- #elif defined(_MSC_VER)
+Perhaps we can mentor a student to work on git-remote-svn with the
+three of us? :)
 
---
+--=20
+Cheers,
 
-Michal Rokos
-
-NextSoft spol. s r.o.
-Vysko=C4=8Dilova 1/1410
-140 21 Praha 4
-Czech Republic
-mobile: +420 736 646 591
-fax:    +420 267 224 307
-e-mail: rokos@nextsoft.cz
+Sverre Rabbelier
