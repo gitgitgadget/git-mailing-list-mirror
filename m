@@ -1,102 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Q about the date format in "git commit --date=..." and such
-Date: Mon, 7 Mar 2011 11:54:48 -0500
-Message-ID: <20110307165448.GD11934@sigill.intra.peff.net>
-References: <4D73B158.5040409@dirk.my1.cc>
+From: loody <miloody@gmail.com>
+Subject: how can we git out source code base on git log?
+Date: Tue, 8 Mar 2011 01:25:53 +0800
+Message-ID: <AANLkTimAPBoHJX0iZOt949xQ8HeGPXRyKfD4CDNJFv7u@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Mon Mar 07 17:55:01 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 07 18:26:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pwdhy-0004tk-Fi
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 17:54:58 +0100
+	id 1PweCJ-0004E8-2X
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 18:26:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753413Ab1CGQyx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 11:54:53 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:56198 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752526Ab1CGQyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2011 11:54:53 -0500
-Received: (qmail 5918 invoked by uid 111); 7 Mar 2011 16:54:51 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 07 Mar 2011 16:54:51 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Mar 2011 11:54:48 -0500
-Content-Disposition: inline
-In-Reply-To: <4D73B158.5040409@dirk.my1.cc>
+	id S1753751Ab1CGR0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2011 12:26:13 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:46701 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751138Ab1CGR0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2011 12:26:13 -0500
+Received: by eyx24 with SMTP id 24so1554632eyx.19
+        for <git@vger.kernel.org>; Mon, 07 Mar 2011 09:26:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=m7VkqQW6n2J7K3dBnHmHucCcERYa/Q2IGXwlftVScr0=;
+        b=a1C5Wr/XwimSbwJXsLtKZRFIJVfLvIIwPC1feDr2PUQUci1ztg/8QvBrvISaS/uvXI
+         VwwARmh5Pziszvlgj8OpsuuA6ZYr+g+sQ03MZLavwkJiVXKhubQpn5PhK5jFHTgWlVe3
+         08LUW4KmKy1g857oWayNvfnIU3c4bpJlHfERM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=hJ6siPMioPRPpNKP/zKEwI87mW/zNQIDYjkn0gsEswIzzGPdantOAYBzWKwCFDzUGP
+         J8znTA/ovCtAJXa89m1FDZnOP1JQU2/qPnQ8RhbHI8JpnY7BRxB4GFgXxLFaIl5QEJuC
+         FbrCP0r4A1QOMIK/4czDrTPF5ZeIbNmHWfQqo=
+Received: by 10.217.3.198 with SMTP id r48mr3527140wes.89.1299518753897; Mon,
+ 07 Mar 2011 09:25:53 -0800 (PST)
+Received: by 10.216.246.11 with HTTP; Mon, 7 Mar 2011 09:25:53 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168597>
 
-On Sun, Mar 06, 2011 at 05:07:52PM +0100, Dirk S=C3=BCsserott wrote:
+Dear all:
+There is a paragraph in faq which told us how to git out some specific tag.
 
-> I frequently change a file in my repo and commit it with
-> "git commit -a -C deadbeef", i.e. using an older commit message. The
-> "-C" switch also re-uses the author timestamp of the given SHA1, whic=
-h
-> is not what I want. So I tried the "--date=3D..." switch in addition,
-> which works fine.
+But how could I check out the source at some specific point of time if
+I have no idea what the tag is or there is no tag on it.
 
-I also do something like this; I have a repository which gets a weekly
-update, and I tend to reuse last week's commit message as a template
-with "git commit -c HEAD --reset-author".
+Below I use uboot for example:
 
-Note that it will _also_ reset the author to you if you were not the
-original author. But that is probably what you want if you are resettin=
-g
-the timestamp; it is semantically "take ownership of this commit".
+commit 3831530dcb7b71329c272ccd6181f8038b6a6dd0
+Author: Mikhail Zolotaryov <lebon@lebon.org.ua>
+Date:   Wed Sep 8 17:06:03 2010 +0300
+.......
+.......
 
-> Instead of giving an exact timestamp (like "--date=3D'06.03.2011 16:5=
-0'")
-> I'd prefer to just say "--date=3Dnow". Is that somehow possible? If n=
-ot:
-> would the community appreciate it, if I would try to implement this?
+commit b75a2dde47cc0ffb686e21cbf1aea4a45e23df10
+Author: Daniel Hobi <daniel.hobi@schmid-telecom.ch>
+Date:   Mon Oct 11 18:03:35 2010 +0200
+    tools/imls: fix comment in Makefile
 
-I mentioned --reset-author above, which I think solves your problem. As
-far as --date=3Dnow goes, it doesn't sound like a terrible idea. But th=
-ere
-is some question of how far we should take it. We basically have two
-date-parsing interfaces: parse_date and approxidate.
+Is it possible I can check out the commit as
+3831530dcb7b71329c272ccd6181f8038b6a6dd0,?
 
-The former is reasonably strict and accepts what you showed above. We
-use it for "commit --date=3D" as well as parsing $GIT_AUTHOR_DATE.
+Meanwhile, is there any command can help me to get the history that
+combine tag and commit such that I can know know the closest tag of
+some specific commit?
 
-Approxidate, on the other hand, will try to turn any nonsense into a
-date. So you can say "3 weeks ago" or "tea.time.on.january.1.2011", or
-even "bogus" (the last of which turns into "now"). So it's flexible, bu=
-t
-it may not do what you want. We use this for "log --since",
-"branch@{date}", and other places.
+take below for example, I will know ccdd is the closest tag of commit
+b75a2dde47cc0ffb686e21cbf1aea4a45e23df10.
 
-I think the original rationale was that it's OK for us to allow some
-sloppiness when _viewing_ commits, since you will generally notice the
-problem. But when making commits, it's better to be careful, since you
-may be setting the sha1 in stone.
 
-These days we have two tools that could help:
+commit 3831530dcb7b71329c272ccd6181f8038b6a6dd0
+Author: Mikhail Zolotaryov <lebon@lebon.org.ua>
+Date:   Wed Sep 8 17:06:03 2010 +0300
+.......
+.......
 
-  1. approxidate_careful will do a regular approxidate, but keep track
-     of whether we found anything even remotely useful. That doesn't
-     mean you can't still get unexpected results, but at least some
-     truly useless cases return errors.
+Tag: aabb
 
-  2. For commits with a different author and committer, we mention the
-     author name in the post-commit summary. We could do the same with =
-a
-     timestamp that was given (i.e., mentioning it in a standard format=
-)
-     to give the user another opportunity to double-check what we
-     parsed.
+commit b75a2dde47cc0ffb686e21cbf1aea4a45e23df10
+Author: Daniel Hobi <daniel.hobi@schmid-telecom.ch>
+Date:   Mon Oct 11 18:03:35 2010 +0200
+    tools/imls: fix comment in Makefile
+......
 
-That being said, with --reset-author I have never needed --date, so I
-don't personally care if it gets done or not.
+Tag: ccdd
 
--Peff
+
+-- 
+Regards,
+
+miloody
