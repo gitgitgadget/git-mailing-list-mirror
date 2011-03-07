@@ -1,116 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] documentation fix: git log -p does not imply -c.
-Date: Mon, 7 Mar 2011 14:12:18 -0500
-Message-ID: <20110307191218.GA20930@sigill.intra.peff.net>
-References: <4D724A0F.7050904@gmail.com>
- <1299355004-3532-2-git-send-email-haircut@gmail.com>
- <7vbp1n4vhv.fsf@alter.siamese.dyndns.org>
- <20110307154712.GA11934@sigill.intra.peff.net>
- <7vtyfe22vy.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: --max-count useless with git-rev-list's --reverse
+Date: Mon, 7 Mar 2011 20:17:38 +0100
+Message-ID: <AANLkTikpK-r_kdqCEPwpqEgENtwgUrZDLwZnuS2QMdH=@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Adam Monsen <haircut@gmail.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 07 20:12:35 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 07 20:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pwfr6-0000vH-Ao
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 20:12:32 +0100
+	id 1Pwfwc-0003Y8-QA
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 20:18:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755505Ab1CGTMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Mar 2011 14:12:25 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58676 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754781Ab1CGTMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2011 14:12:24 -0500
-Received: (qmail 7105 invoked by uid 111); 7 Mar 2011 19:12:22 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 07 Mar 2011 19:12:22 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Mar 2011 14:12:18 -0500
-Content-Disposition: inline
-In-Reply-To: <7vtyfe22vy.fsf@alter.siamese.dyndns.org>
+	id S1755407Ab1CGTSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2011 14:18:08 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45913 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754161Ab1CGTSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2011 14:18:07 -0500
+Received: by fxm17 with SMTP id 17so4406922fxm.19
+        for <git@vger.kernel.org>; Mon, 07 Mar 2011 11:18:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=Bm4Rx4r4LP82TVFfzTJQl0lheT5KC1b/It1o+kvTgSM=;
+        b=UiKaXnHs5LDJeuurVFn1VUAkyydVkPNbdOP0MoGTDnnozvUOxQ3BA88jvaXTtd81eA
+         z6JWSaelSETzfDGmcrA7SoAt16FhFrEAll47t3aMhi1L9jdFw0KRlTou6iD2fov1VaYk
+         bCWrHQfmYD1vZVUwvvvFbeMSGdoGQkm4ifgfA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=KLMNhSOa8X9ef1Kqp+0wcqBOhnaOKfju+MyOmnNQWu3XLWqVp+h93GcHG7BRE+OZXj
+         X/vvQXeAh0j8ay06p1OL/aKWU/iwC8FigIrrgA0L140uFpVgLXf4tUz2w33ycSeOClUg
+         PVicUiVtV5aNpbaV0zvxUcc6YCqt60tz/Ni9s=
+Received: by 10.223.143.86 with SMTP id t22mr5301888fau.68.1299525458834; Mon,
+ 07 Mar 2011 11:17:38 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Mon, 7 Mar 2011 11:17:38 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168604>
 
-On Mon, Mar 07, 2011 at 10:37:21AM -0800, Junio C Hamano wrote:
+On git.git, this works as expected, gives me the first 3 commits:
 
-> > Hmm. "git show" seems to show --cc, but "git log -p" does not show
-> > anything.
-> 
-> The intention has always been to default to --cc since 0fe7c1d (built-in
-> diff: assorted updates., 2006-04-29) for "diff" if I am not misremembering
-> things, but you are right---"log" is a tad different.
-> 
-> The code does not want to use --cc by default for "log", and I don't think
-> that should change.  See 1aec791 (git log: don't do merge diffs by
-> default, 2006-04-19).
+   $ git rev-list --reverse origin/master | head -n 3
+    e83c5163316f89bfbde7d9ab23ca2e25604af290
+    8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
+    e497ea2a9b6c378f01d092c210af20cbee762475
 
-Thanks for the history. I think the doc problem was an inaccuracy that
-snuck in during 272bd3c (Include diff options in the git-log manpage,
-2007-11-01). Nearly identical text (without the inaccuracy) is in the
-"Diff Format For Merges" section in diff-format.txt.
+Why is this so useless about ignoring the --reverse option, is this my
+design (these are the 3 *latest* commits):
 
-Furthermore, the copied text talks about diff-index and diff-tree, but
-gets included inline in git-log(1) (although the part in diff-format.txt
-does not get included in git-log's manpage)[1]. So probably it's
-reasonable to clean it up to something like:
+    $ git rev-list --reverse origin/master --max-count=3
+    08fd8710e277eed73a21c6c5483c57bfeb14e8a7
+    6d74e5c9dbe71e2eb63c6e8862ec979e9a5f068b
+    07873dc5dd67398324278ff0d7627bb1a863ba89
+    $ git rev-list origin/master --max-count=3
+    07873dc5dd67398324278ff0d7627bb1a863ba89
+    6d74e5c9dbe71e2eb63c6e8862ec979e9a5f068b
+    08fd8710e277eed73a21c6c5483c57bfeb14e8a7
 
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index 3ac2bea..3d02da9 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -74,10 +74,12 @@ separate lines indicate the old and the new mode.
- combined diff format
- --------------------
- 
--"git-diff-tree", "git-diff-files" and "git-diff" can take '-c' or
--'--cc' option to produce 'combined diff'.  For showing a merge commit
--with "git log -p", this is the default format; you can force showing
--full diff with the '-m' option.
-+Any diff-generating command can take the `-c` or `--cc` option to
-+produced a 'combined diff' when showing a merge. This is the default
-+format when showing merge conflicts with linkgit:git-diff[1] or a merge
-+commit with linkgit:git-show[1]. Note also that you can vie the full
-+diff with the `-m` option.
-+
- A 'combined diff' format looks like this:
- 
- ------------
+>From the manpage:
 
--- >8 --
+   --reverse
+       Output the commits in reverse order. Cannot be combined with
+--walk-reflogs.
 
-Is there any way to get "git diff" to show combined-form besides an
-index with conflicts? I couldn't convince it to show me a merge commit
-beside its parents, since it doesn't have an equivalent to diff-tree's
---stdin option.
-
--Peff
-
-[1] Reading over this, the whole section could use some editing. I think
-this is another example that needs to be broken out into its own
-user-visible manpage. That is, we have too much "if you use the -p
-option to command X, or command Y by default, or command Z without
---raw, then you see this format". That's pretty dense. Instead command X
-should have:
-
-  -p::
-  --stat::
-  --summary::
-  [etc]
-    Generate diffs in this format. See "git help diff-formats" for
-    details. The default format is "-p".
-
-and then diff-format.txt should _just_ be a description of the diff
-formats, without worrying about commands at all. And probably the text
-above should be factored out as part of diff-options.txt. But that's all
-part of a much bigger documentation architecture change that I am hoping
-to get to eventually. For now, I think it's worth just tweaking this
-text to stop being inaccurate.
+Shouldn't --reverse be applied *before* --max-count?
