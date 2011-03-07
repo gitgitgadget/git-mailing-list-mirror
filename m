@@ -1,76 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] gitignore: ignore GNU GLOBAL tag files
-Date: Mon, 07 Mar 2011 13:07:11 +0100
-Message-ID: <vpqtyffrv68.fsf@bauges.imag.fr>
-References: <1299473349-6248-1-git-send-email-namhyung@gmail.com>
-	<AANLkTinG_pTCyMHov6AexP0rc=PV3wu2TmH=wSkRQ7nH@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+From: Michal Rokos <rokos@nextsoft.cz>
+Subject: [PATCH] Honor HP C's noreturn attribute
+Date: Mon, 7 Mar 2011 13:13:15 +0100
+Message-ID: <32EABE0E-2447-4189-A3CE-05B68A5E18EF@nextsoft.cz>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Namhyung Kim <namhyung@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 07 13:13:04 2011
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 07 13:13:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwZJ9-0002AQ-Ib
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 13:13:03 +0100
+	id 1PwZJZ-0002Kh-SB
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 13:13:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478Ab1CGMM6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 07:12:58 -0500
-Received: from imag.imag.fr ([129.88.30.1]:63629 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751650Ab1CGMM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2011 07:12:57 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p27C7BkN026349
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 7 Mar 2011 13:07:11 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PwZDT-0006FU-Oq; Mon, 07 Mar 2011 13:07:11 +0100
-In-Reply-To: <AANLkTinG_pTCyMHov6AexP0rc=PV3wu2TmH=wSkRQ7nH@mail.gmail.com>
-	(=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Mon, 7
- Mar 2011 13:00:40
-	+0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 07 Mar 2011 13:07:12 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1754622Ab1CGMNZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 07:13:25 -0500
+Received: from holub.nextsoft.cz ([195.122.198.235]:41016 "EHLO
+	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752201Ab1CGMNY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2011 07:13:24 -0500
+Received: by holub.nextsoft.cz (Postfix, from userid 111)
+	id 44BBC2AD0; Mon,  7 Mar 2011 13:13:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by holub.nextsoft.cz (Postfix) with ESMTP id 0182AB0C
+	for <git@vger.kernel.org>; Mon,  7 Mar 2011 13:13:20 +0100 (CET)
+Received: from holub.nextsoft.cz ([127.0.0.1])
+	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pxn8rmgMuHBQ for <git@vger.kernel.org>;
+	Mon,  7 Mar 2011 13:13:19 +0100 (CET)
+Received: from [10.20.0.58] (unknown [10.20.0.58])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(Client did not present a certificate)
+	by holub.nextsoft.cz (Postfix) with ESMTPSA id 109F32B6
+	for <git@vger.kernel.org>; Mon,  7 Mar 2011 13:13:18 +0100 (CET)
+X-Mailer: Apple Mail (2.1082)
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168577>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+HP C for Integrity servers (Itanium) gained support for noreturn attrib=
+ute sometime in 2006. It was released in Compiler Version A.06.10 and m=
+ade available in July 2006.
 
-> On Mon, Mar 7, 2011 at 05:49, Namhyung Kim <namhyung@gmail.com> wrote=
-:
->
->> =A0/TAGS
->> +/GTAGS
->> +/GRTAGS
->> +/GPATH
->> +/GSYMS
->> =A0/cscope*
->> =A0*.obj
->> =A0*.lib
->
-> What causes these to be added?
+The __HP_cc define detects the HP C compiler version. Precede the __GNU=
+C__ check so it works well when compiling with HP C using -Agcc option =
+that enables partial support for the GNU C dialect. The -Agcc defines t=
+he __GNUC__ too.
 
-I don't know, but I suspect they are generated by some variant of
-(e|c)tags which do not appear in our Makefile.
+Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
 
-If this is the case, I'd say the place to put these is in a user-wide
-=2Egitignore (cf. core.excludesfile).
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9c23622..bf947b1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -214,7 +214,10 @@ extern char *gitbasename(char *);
+ #define is_dir_sep(c) ((c) =3D=3D '/')
+ #endif
+=20
+-#ifdef __GNUC__
++#if __HP_cc >=3D 61000
++#define NORETURN __attribute__((noreturn))
++#define NORETURN_PTR
++#elif defined(__GNUC__)
+ #define NORETURN __attribute__((__noreturn__))
+ #define NORETURN_PTR __attribute__((__noreturn__))
+ #elif defined(_MSC_VER)
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--
+
+Michal Rokos
+
+NextSoft spol. s r.o.
+Vysko=C4=8Dilova 1/1410
+140 21 Praha 4
+Czech Republic
+mobile: +420 736 646 591
+fax:    +420 267 224 307
+e-mail: rokos@nextsoft.cz
