@@ -1,97 +1,100 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] unpack-trees.c: check return value of lstat()
-Date: Mon, 07 Mar 2011 16:59:10 +0100
-Message-ID: <4D7500CE.8000106@web.de>
-References: <201103062013.52793.tboegi@web.de>	<vpqfwr0hwu0.fsf@bauges.imag.fr> <4D73E577.1010604@web.de> <vpqpqq4ge71.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: Fwd: [PATCH 2/2] pretty.c: allow date formats in user format
+ strings
+Date: Mon, 7 Mar 2011 11:17:58 -0500
+Message-ID: <20110307161758.GB11934@sigill.intra.peff.net>
+References: <20110305195020.GA3089@sigill.intra.peff.net>
+ <20110305200010.GB32095@sigill.intra.peff.net>
+ <AANLkTinH8zwX2sbd5bpk=x4R3zOAg3Dc92Fbspfdv03T@mail.gmail.com>
+ <AANLkTikaN=wsg6RLFaFxh=L3RCYjKkVGFR4VTrQ=KRZk@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	drizzd@aon.at, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 07 16:59:23 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 17:18:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pwcq7-0000ax-8T
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 16:59:19 +0100
+	id 1Pwd8T-0002H7-SM
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 17:18:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753307Ab1CGP7N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 10:59:13 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:49355 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881Ab1CGP7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2011 10:59:13 -0500
-Received: from smtp05.web.de  ( [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 5505618A94A9F;
-	Mon,  7 Mar 2011 16:59:11 +0100 (CET)
-Received: from [213.64.3.195] (helo=birne.lan)
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Pwcpy-0005tE-00; Mon, 07 Mar 2011 16:59:11 +0100
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <vpqpqq4ge71.fsf@bauges.imag.fr>
-X-Sender: tboegi@web.de
-X-Provags-ID: V01U2FsdGVkX19PaOf0uyNsG2zkigjyjRATyVxwVlpVMMKfE8tg
-	mirN0JPxkkyvkZadbS+Trj3+2OQztje6VXrpODHRxYlfAJMgjn
-	Ztfugs9DQ=
+	id S1754665Ab1CGQSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2011 11:18:05 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40044 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754495Ab1CGQSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2011 11:18:03 -0500
+Received: (qmail 5347 invoked by uid 111); 7 Mar 2011 16:18:01 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 07 Mar 2011 16:18:01 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Mar 2011 11:17:58 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTikaN=wsg6RLFaFxh=L3RCYjKkVGFR4VTrQ=KRZk@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168594>
 
-On 06.03.11 21:57, Matthieu Moy wrote:
-> Torsten B=F6gershausen <tboegi@web.de> writes:
->=20
->> On 06.03.11 20:29, Matthieu Moy wrote:
->>> Torsten B=F6gershausen <tboegi@web.de> writes:
->>>
->>>> +		if (!lstat(path, &st))
->>>> +			return check_ok_to_remove(path, len, DT_UNKNOWN, NULL, &st,
->>>> +			                          error_type, o);
->>>>  	} else if (!lstat(ce->name, &st))
->>>
->>> What happens if lstat returns a non-0 value?
->> The result of "st" is 100% garbage, and should not be passed to
->> anybody.
->=20
-> With your code, you don't do a return, you'll reach the end of the
-> function without calling return, which is probably the worst thing yo=
-u
-> could expect.
->=20
->> v1.7.4 says:
->> commit e39212ab08e8d37dda5d8fd32b54099fe01dbbdb
->> Merge: 716958c 9e08273
->=20
-> You've cut the date:
->=20
-> commit e39212ab08e8d37dda5d8fd32b54099fe01dbbdb
-> Merge: 716958c 9e08273
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Wed Dec 22 14:40:26 2010 -0800
->=20
-> =3D> no big surprise that you don't see the bugfix from Jan 12th.
->=20
->>> Anyway, this seems to have been fixed by a93e53018 (Wed Jan 12 20:2=
-8:09
->>> 2011, unpack-trees: handle lstat failure for existing file) already=
-=2E
->=20
-> Did you look at the content of this commit?
->=20
->> (And I had to correct drizzd@aon.a -> drizzd@aon.at)
->=20
-> Yes, because you've mis-spelled it in the first place and I didn't fi=
-x
-> it ;-).
->=20
+On Sun, Mar 06, 2011 at 09:54:01PM +0000, Will Palmer wrote:
 
-Ojojo,
-While working with the best tracking tool, I lost tracking myself.
-That's why I missed Jonathans fix and learned today 9e08273 !=3D a93e53=
-018
-Thanks for the patience, (and sorry for the noise)
-/Torsten
+> On Sat, Mar 5, 2011 at 8:00 PM, Jeff King <peff@peff.net> wrote:
+> > You can now do "%ad(short)" or similar (using any format
+> > that works for --date). This makes some formats like %aD
+> > redundant (since you can do "%ad(rfc)"), but of course we
+> > keep them for compatibility.
+> >
+> 
+> The more I see long formats like this, the more I think it would make
+> sense to make formats %(likeThis), the way for-each-ref does.
+> Ideally, these formats could even be unified, at some point.
+
+Yeah, I totally agree. One problem is that everytime an extended format
+comes up it gets bikeshedded to death as everybody mentions their
+favorite format and/or feature, and then nobody codes it.
+
+> I tried this a long while ago, as part of my attempt to make all
+> pre-defined formats work in terms of format strings, but that turned
+> into too much of a bloated mess to bother submitting. I don't know
+> if there's enough interest in such a thing to justify trying again (or to
+> justify rebasing the bloated version, cleaning it up and submitting it
+> as-is, for that matter)
+
+I think there is interest. I'd be curious to see what you have. A few
+days ago, when working on this series, I tried to make a
+minimally-invasive change to allow "%(ad)" to work alongside "%ad", with
+a generic arguments format like %(ad:flag:key=value). Which would allow
+existing shorthand, for-each-ref-style %(refname:short), and leave room
+for arbitrary extension of each placeholder (alongside more
+human-readable placeholder names).
+
+The problem I ran into was the internal code interface. We parse the
+format string each time we expand it. This works OK for simple
+printf-like stuff. But ideally we can handle something like:
+
+  %(ad:key=embedded\:colon:key2=embedded\)paren)
+
+It's hard to make a nice interface to that which doesn't involve copying
+the quoted string out into a non-quoted version. But we don't want to be
+doing a bunch of parsing and allocation per-expansion. It's slow, and
+this expansion happens inside a fairly tight loop in many cases (e.g.,
+during rev-list).
+
+So I think the whole thing needs to be factored into two phases: a
+parsing phase where we build some internal parse tree, and then an
+expansion phase where we walk the parse tree for each commit (or ref, or
+whatever is being expanded).
+
+> Point is: we're going to keep having more and more format options,
+> I think that's a given. At some point, these short mnemonics will just
+> stop making sense, and it makes sense to have an escape plan when
+> that happens.
+
+Agreed. And I think it is possible to do it in a backwards-compatible
+way; support %(longname:options) for everything, and keep short-hands
+like %h and %ad for existing elements without options.
+
+-Peff
