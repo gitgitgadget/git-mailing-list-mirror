@@ -1,89 +1,88 @@
-From: "Hillel (Sabba) Markowitz" <sabbahillel@gmail.com>
-Subject: Re: Newbie question about setting up git repository from svn (git svn)
-Date: Sun, 6 Mar 2011 22:20:46 -0500
-Message-ID: <AANLkTinzJC5WnrqnYDsrWzO8B=Ye8wjQmYEk0S4w61g9@mail.gmail.com>
-References: <AANLkTi=UG4oq4QHhKoDOi9+4bhF1TDy4Z26ORj9Bdcwc@mail.gmail.com>
-	<4D7441A9.7090505@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: [PATCH] blame: honor core.abbrevguard
+Date: Mon,  7 Mar 2011 13:35:40 +0900
+Message-ID: <1299472540-6066-1-git-send-email-namhyung@gmail.com>
 Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 07 04:22:08 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 05:35:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwR1L-0002t9-MT
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 04:22:08 +0100
+	id 1PwSAg-0002br-6e
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 05:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755120Ab1CGDWB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Mar 2011 22:22:01 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:44028 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753934Ab1CGDWA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Mar 2011 22:22:00 -0500
-Received: by vxi39 with SMTP id 39so3406260vxi.19
-        for <git@vger.kernel.org>; Sun, 06 Mar 2011 19:21:59 -0800 (PST)
+	id S1755188Ab1CGEfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 23:35:45 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:34019 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754985Ab1CGEfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 23:35:45 -0500
+Received: by pxi15 with SMTP id 15so663485pxi.19
+        for <git@vger.kernel.org>; Sun, 06 Mar 2011 20:35:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XccTktUfiV/9jpgLk4XXlR132Jz1m4viDfYexqUMLdg=;
-        b=GrVx92vCDKkTI+Ile7hhExqg3mQIxHS2/zOocZuH3Db89x0CCdA2J+mYq0Pb6LCCBJ
-         STJ9mmYrhG9SAIPD+VnAxDCcgbmeREaV8uooGgFip4nX4sx+cGD6IA4owxnhamfKpHwl
-         WJyamNDNm/t8WVwnd2a8XhOHAA1+PhW/curPA=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=hPw4ru9b80KdlgCJempJlvQF9uf4cwYTsOGOblpJEG4=;
+        b=tkKzhKrJ8pQZuEjQCVo4oCGg8bA0aULveWy14q8QBAmn0JQIBTAO3Kqs1wLfgZfd83
+         KveEt3NMxQslId6FgwSSuaHrL1GxNiCshUU8uzJxCCtq9CFvSFkeMQ1O5HZRxauO53vP
+         PfNQJ/q2XYekJHUpbRFn0lPpzPcRtxvYBAClM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iMy+KDf4g2Uo1V+Q3YTLucN0bTS9u20J3mi6FagHf3yM7vJbJslyC/rzpjh103mXs5
-         93Pv/gf+avMSWI18+Dz1iZYaiVrJSxerknX5aEkJdgw9ZH4CA6D9fU0DgemWlyuQblSm
-         ZB0Q9aKyb0Tj88/tjc1LB4VoMUUDI2weJ07ZA=
-Received: by 10.52.68.168 with SMTP id x8mr2213024vdt.158.1299468046550; Sun,
- 06 Mar 2011 19:20:46 -0800 (PST)
-Received: by 10.52.158.9 with HTTP; Sun, 6 Mar 2011 19:20:46 -0800 (PST)
-In-Reply-To: <4D7441A9.7090505@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=I7ELbIeRcXtuZw53aV0Wi6NHIaB1GgaOUEG2cyywyhJjNtmf7jiKVqAeLHr3/aYQ3j
+         IWxuCDzLVPif4UsNlHgEM0UhMu1aTyJTICymA/SzmIm8XW1YmjkE+ZvHSdqnFaeosJqv
+         k9TzWff4Z4Ol6jYAea06fHGu0m0gEi8CpBfII=
+Received: by 10.143.170.7 with SMTP id x7mr3018635wfo.34.1299472544571;
+        Sun, 06 Mar 2011 20:35:44 -0800 (PST)
+Received: from localhost.localdomain ([118.176.73.109])
+        by mx.google.com with ESMTPS id w11sm3820682wfh.6.2011.03.06.20.35.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 06 Mar 2011 20:35:44 -0800 (PST)
+X-Mailer: git-send-email 1.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168568>
 
-On Sun, Mar 6, 2011 at 9:23 PM, Neal Kreitzinger <nkreitzinger@gmail.co=
-m> wrote:
+Commit 72a5b561 ("core.abbrevguard: Ensure short object names stay
+unique a bit longer") introduced this config variable to make object
+name unambiguously. Use it.
 
-> not being familiar with git-svn, but familiar with "git", I would adv=
-ise you
-> to do the following:
-> (1) on "gitserver" perform:
-> (a) git branch branch1 remotes/branch1 (this will create a branch cal=
-led
-> branch1 that tracks remotes/branch1)
-> (b) git branch branch2 remotes/branch2
-> (c) git branch trunk remotes/trunk
-> Now you have the branches master, branch1, branch2, and trunk on
-> "gitserver".
+Signed-off-by: Namhyung Kim <namhyung@gmail.com>
+---
+ builtin/blame.c |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
 
-> Despite my ignorance regarding svn and git-svn, I hope my comments wi=
-ll be
-> of some help to you or point you in the right direction.
->
-> v/r,
-> Neal
->
->
-
-Thanks, this seems to point to what I want to do. I think that this
-should give me the information that I want.
-
-
---=20
-=C2=A0 =C2=A0 =C2=A0=C2=A0 Sabba=C2=A0 =C2=A0=C2=A0 -=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =D7=A1=D7=91=D7=90 =D7=94=D7=9C=D7=9C=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 -=C2=A0 =C2=A0=C2=A0 Hillel
-Hillel (Sabba) Markowitz | Said the fox to the fish, "Join me ashore"
-=C2=A0SabbaHillel@gmail.com | The fish are the Jews, Torah is our water
-http://sabbahillel.blogspot.com
+diff --git a/builtin/blame.c b/builtin/blame.c
+index aa30ec52692..d1cf22beba1 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1664,14 +1664,22 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
+ 	struct commit_info ci;
+ 	char hex[41];
+ 	int show_raw_time = !!(opt & OUTPUT_RAW_TIMESTAMP);
++	int length;
+ 
+ 	get_commit_info(suspect->commit, &ci, 1);
+ 	strcpy(hex, sha1_to_hex(suspect->commit->object.sha1));
+ 
++	if (opt & OUTPUT_LONG_OBJECT_NAME)
++		length = 40;
++	else {
++		length = 8 + unique_abbrev_extra_length;
++		if (length > 40)
++			length = 40;
++	}
++
+ 	cp = nth_line(sb, ent->lno);
+ 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
+ 		char ch;
+-		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? 40 : 8;
+ 
+ 		if (suspect->commit->object.flags & UNINTERESTING) {
+ 			if (blank_boundary)
+-- 
+1.7.4
