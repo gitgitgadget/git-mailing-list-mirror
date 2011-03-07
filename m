@@ -1,112 +1,121 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: 1 patch to two branches
-Date: Sun, 06 Mar 2011 18:56:21 -0600
-Message-ID: <4D742D35.6080709@gmail.com>
-References: <38ac3be3-8d09-4a38-b31e-9365fe0f2992@v11g2000prb.googlegroups.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [ANNOUNCE] tig-0.17
+Date: Mon, 7 Mar 2011 03:01:52 +0100
+Message-ID: <20110307020152.GA29723@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: allstars <allstars.chh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 07 01:56:32 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 07 03:02:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwOkR-0005fi-Ji
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 01:56:31 +0100
+	id 1PwPm1-0002F4-Ne
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 03:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314Ab1CGA40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2011 19:56:26 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:43492 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751396Ab1CGA40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2011 19:56:26 -0500
-Received: by yia27 with SMTP id 27so1439272yia.19
-        for <git@vger.kernel.org>; Sun, 06 Mar 2011 16:56:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version
-         :newsgroups:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=2fQqB7gKHX91Z4eT/NLCQ8iEQVWHZ09Ch3CZiigTJR8=;
-        b=x1pK7ILRRk/JvWw+IV0wqbQU+brnTeavyeUg3b0p4CBHUnen/cYfIy9ocLL6BILQOO
-         lvMqySl1aNlIZzfHLD5KSB2ra0Bj8RP1DMQRGOS4INfFVUVO5hrxDHzEgxY/945jHFSV
-         gnC5oeLNQYHo7XMGCH+0JNN84ZGn0d2ELdysQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=QVwyUUE/kYqczMirdEgYJCJX+ic2eE8AG9H4lKHdwCad59ROwPhAQVScE07q7LBhBL
-         3Jk0UIGkzeFH1gUdcyYBv3ji7dt37FGhf2PoiVoo1x6FwrsbG7xEfwldGjYmsEyRlglz
-         0wTR41Zxvj7DyG8h97fLAhJln+fatFC92z2fU=
-Received: by 10.151.25.4 with SMTP id c4mr3710509ybj.288.1299459385659;
-        Sun, 06 Mar 2011 16:56:25 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id q34sm1314105ybk.15.2011.03.06.16.56.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 Mar 2011 16:56:24 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.14) Gecko/20110221 Thunderbird/3.1.8
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <38ac3be3-8d09-4a38-b31e-9365fe0f2992@v11g2000prb.googlegroups.com>
+	id S1754396Ab1CGCCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2011 21:02:09 -0500
+Received: from mgw2.diku.dk ([130.225.96.92]:57231 "EHLO mgw2.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751504Ab1CGCCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2011 21:02:06 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw2.diku.dk (Postfix) with ESMTP id 88E7F19BB6C
+	for <git@vger.kernel.org>; Mon,  7 Mar 2011 03:02:04 +0100 (CET)
+Received: from mgw2.diku.dk ([127.0.0.1])
+ by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 16599-11 for <git@vger.kernel.org>; Mon,  7 Mar 2011 03:01:54 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw2.diku.dk (Postfix) with ESMTP id 8131C19BB06
+	for <git@vger.kernel.org>; Mon,  7 Mar 2011 03:01:54 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP id B52476DF845
+	for <git@vger.kernel.org>; Mon,  7 Mar 2011 02:55:19 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id B1BEC180C14; Mon,  7 Mar 2011 03:01:52 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168563>
 
-On 3/3/2011 6:46 AM, allstars wrote:
-> my case is as follows
-> I have two branches
-> basically they are the same, except they differ from different package
-> name(java) and namespace(cpp) due to customer request
->
-> but now I have a fix , say a patch
-> I want to commit it to both branches
->
-> but I am lazy so I just want to do just one 'git commit' and 'git
-> push'
->
-> so I am thinking using a githook in remote server
-> and each commit to branch A can also commit to branch B as well
->
-> but I am not quite sure what I should use in the hook
->
-> git rebase , git merge or git cherry pick ?
->
-> seems these 3 ways all lead to the same result
-> but I dont know which is better and why
+Hello,
 
-if by "patch" you mean git-am/git-apply then I'm afraid i don't have any 
-suggestions because i don't use those commands.  However, if you use 
-git-push then have you thought about having a script on the local side 
-that does something like this:
+Here's an updated tig, which fixes an incompatibility with ncurses 2.8.
+I also decided to merge my side project to rewrite the revision graph
+renderer. It's far from finished but nice and colorful in its current
+shape, and should be more hackable too.
 
-$ git checkout java-branch
-(hack hack)
-$ git add .
-$ git commit
-$ bash -v myscript  <--run your script
-#!/bin/sh
-# script to commit java-branch head to cpp-branch and push them both
-git checkout cpp-branch &&
-wait
-git cherry-pick java-branch &&
-wait
-git push origin HEAD &&
-wait
-git checkout java-branch &&
-wait
-git push origin HEAD &&
-wait
-exit 0
+What is tig?
+------------
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a git repository browser, but can also assist in staging changes for
+commit at chunk level and act as a pager for output from various git
+commands.
 
-of course, you need some error checking in there.  this is predicated on 
-the assumption that the cherry-pick will not get any conflicts.  if it 
-does get conflicts then you will have to resolve them manually and that 
-is a big reason to do this on the local side instead of the remote side.
+ - Homepage:	http://jonas.nitro.dk/tig/
+ - Manual:	http://jonas.nitro.dk/tig/manual.html
+ - Tarballs:	http://jonas.nitro.dk/tig/releases/
+ - Git URL:	git://repo.or.cz/tig.git 
+ - Gitweb:	http://repo.or.cz/w/tig.git
 
-v/r,
-neal
+Release notes
+-------------
+Improvements:
+
+ - Start rewrite of the revision graph renderer. Three modes are
+   supported UTF-8, ncurses line graphics, and ASCII. Also, enable
+   revision graph rendering by default.
+
+Bug fixes:
+
+ - Fix ncurses 2.8 issue by passing non-zero column size to newwin(1).
+ - Fix opening of diffs when browsing branches.
+
+Change summary
+--------------
+The diffstat and log summary for changes made in this release.
+
+ .gitignore                |    1 +
+ Makefile                  |   13 +-
+ NEWS                      |   14 +
+ VERSION                   |    2 +-
+ config.make.in            |    2 +-
+ configure.ac              |   23 +-
+ contrib/aspell.dict       |   14 +-
+ contrib/ax_with_curses.m4 |  122 +++
+ graph.c                   |  410 +++++++++
+ graph.h                   |   73 ++
+ io.c                      |  441 ++++++++++
+ io.h                      |   76 ++
+ manual.txt                |    1 +
+ test-graph.c              |  106 +++
+ tig.c                     | 1746 ++++++++-----------------------------
+ tig.h                     |  459 ++++++++++
+ tigrc.5.txt               |   13 +-
+ 17 files changed, 2103 insertions(+), 1413 deletions(-)
+
+Jonas Fonseca (13):
+      Improve viewing of diffs when browsing branches
+      Rename opt_*_args to opt_*_argv
+      Add possiblity to pass data to io_load property reader
+      Refactor option parsing error handling to use error codes
+      Unify option toggling
+      Use AX_WITH_CURSES from GNU autoconf archive to detect ncurses
+      Reduce the number of windows to max two by sharing them between all views
+      Remove unnecessary braces
+      Remove draw_text()s trim parameter
+      Move includes, macros and core utilities to tig.h
+      Move IO API to src/io.[ch]
+      Rewrite the revision graph renderer
+      tig-0.17
+
+Loui Chang (2):
+      configure.ac: Set value-if-not-found, don't check for program 'false'
+      Initialise views and screens with nonzero size.
+
+-- 
+Jonas Fonseca
