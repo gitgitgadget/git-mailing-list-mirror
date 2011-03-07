@@ -1,120 +1,80 @@
-From: Ruben Laguna <ruben.laguna@gmail.com>
-Subject: Re: why is my repo size ten times bigger than what I expected?
-Date: Mon, 7 Mar 2011 10:59:29 +0100
-Message-ID: <AANLkTinJZFGVNSQVfCipo33h5uPpK0pFY10E203oTfhU@mail.gmail.com>
-References: <AANLkTimi+OnpdX+Y7jx1JaOmGbZc_XEgJFeK0PKLpu2o@mail.gmail.com>
-	<AANLkTi=V3nEamocowbHovvV0U69nZgD70fysu1CQOwrR@mail.gmail.com>
-	<AANLkTimp8B5Lv15qhGOwOzh+kqOS0g3Xwvgib8vyk+m+@mail.gmail.com>
-	<AANLkTinwHMULqPZSguYtJztuA4Oy6-s6Ah3_tcVVO7D9@mail.gmail.com>
-	<m2zkp9wwqe.fsf@igel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan del Strother <maillist@steelskies.com>,
-	git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Mar 07 10:59:44 2011
+From: Andrey Borzenkov <arvidjaar@gmail.com>
+Subject: [TopGit PATCH] tg-create: let format.signoff control adding of Signed-off-by
+Date: Mon,  7 Mar 2011 13:42:46 +0300
+Message-ID: <1299494566-13021-1-git-send-email-arvidjaar@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 07 11:43:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwXE6-0002Wq-Gc
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 10:59:42 +0100
+	id 1PwXuE-0004s6-Ta
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Mar 2011 11:43:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755628Ab1CGJ7a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 04:59:30 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:41004 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755622Ab1CGJ73 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2011 04:59:29 -0500
-Received: by pwi15 with SMTP id 15so736378pwi.19
-        for <git@vger.kernel.org>; Mon, 07 Mar 2011 01:59:29 -0800 (PST)
+	id S1755531Ab1CGKnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2011 05:43:10 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:36227 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754919Ab1CGKnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2011 05:43:08 -0500
+Received: by ewy6 with SMTP id 6so1325220ewy.19
+        for <git@vger.kernel.org>; Mon, 07 Mar 2011 02:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=S2CznGjDbrmoahs3Lsg05rhzoLFRrKBP9gJcMvQs2uM=;
-        b=WnrtfaQzPUeIVJnN+LaDhdOPDRhhbebdaczdyyX7L6a6V2mJsT6wljKLCdHsTbp5wk
-         S6zOMwxAnUFEGsMKrgCmk2bDEv7YQqC//2lPpYry8ITDUHwjBPscpQ5YHRfGfJv6qjC5
-         iDkdrTRE7AOuKtiRauq7B+mrrHnYGzbPSkno8=
+        h=domainkey-signature:from:to:subject:date:message-id:x-mailer;
+        bh=XoI3IlBVFfOp9lyxEEmLpV4JfAX05CUpsTYO+K3AOs4=;
+        b=p6cidqNlfDr/XGwdN/g1pUJxAC39OgLTVDEMj01b0kkX+/h7qk26Ke6MIGEDzlUQQJ
+         Yrfq0FDxb/lLjpytwCRZeHLIPY4zHNbXbGVnUPdW+M2WGaChwmZfrVGelPdsGuT09PRP
+         hSUb04ngcq0JmsKZsm/7jIph3FUilhu0v8Shk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oLDDL891Py81a7JGf2Y1wdSgKPkpeJJonOWvhCjllxjfcG/U4Xs5eUax3PqWUTaL1k
-         lOfP5aQZXtQulXmkZKJ53iqpAYSZkIPrz2fqjV1d7xuCbgkl8QqgAIFRdIYby4gOZuCb
-         bJT1bJxh/B3FTxthmKn63QeH21Raj5P7T4Kgg=
-Received: by 10.142.208.16 with SMTP id f16mr442397wfg.58.1299491969078; Mon,
- 07 Mar 2011 01:59:29 -0800 (PST)
-Received: by 10.143.162.21 with HTTP; Mon, 7 Mar 2011 01:59:29 -0800 (PST)
-In-Reply-To: <m2zkp9wwqe.fsf@igel.home>
+        h=from:to:subject:date:message-id:x-mailer;
+        b=WK4LIEZO8N2AERfdsSawoj2l/UxQtOYqw+Sy/6nVuvPr0tFbKdgpOPhLkR/oODMVKU
+         I0R5hAHfFCno2gNz3uqaZrvhNVFu3F5QeZzD9Pbtcf8/fbJn0h5N72IwK6a7FhniblxR
+         H6ggld5T7MTc/kP3kQDpjWTWjcoCkvhMkYwV0=
+Received: by 10.213.2.202 with SMTP id 10mr2298401ebk.95.1299494586667;
+        Mon, 07 Mar 2011 02:43:06 -0800 (PST)
+Received: from localhost.localdomain (ppp83-237-195-15.pppoe.mtu-net.ru [83.237.195.15])
+        by mx.google.com with ESMTPS id l3sm651479fan.0.2011.03.07.02.43.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 Mar 2011 02:43:06 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168573>
 
-Cloning it that way didn't help either,
+GIT manual stresses that adding of Signed-off-by should be explicit
+user decision. Some projects do ask for no Signed-off-by lines. So
+make sure it is added by tg-create.sh only when explicity requested
+by user.
 
-But I have more info
+Signed-off-by: Andrey Borzenkov <arvidjaar@gmail.com>
 
-If I set a bare repo and push my four branches to it (master, develop,
-gh-pages and experimental) the total size of the repo is 2.4MB
-(instead of 87MB)
+---
+ tg-create.sh |    8 +++-----
+ 1 files changed, 3 insertions(+), 5 deletions(-)
 
-
-$ git init --bare en4j_xx
-$ cd en4j
-$ git checkout master
-$ git push file://$PWD/../en4j_xx master
-$ git checkout develop
-$ git push file://$PWD/../en4j_xx develop
-$ git checkout experimental
-$ git push file://$PWD/../en4j_xx experimental
-$ git checkout gh-pages
-$ git push file://$PWD/../en4j_xx gh-pages
-$ $ du -sh ../en4j_xx
-2.3M	../en4j_xx
-
-So, how can I find the contents present in en4j that are not present in=
- en4j_xx?
-
-
-
-
-
-
-On Sat, Mar 5, 2011 at 1:57 PM, Andreas Schwab <schwab@linux-m68k.org> =
-wrote:
-> Ruben Laguna <ruben.laguna@gmail.com> writes:
->
->> also cloning the repo doesn't change a thing
->>
->> $ git clone en4j en4j_xx
->> Cloning into en4j_xx...
->> done.
->> $ cd en4j_xx
->> $ du -sh .git
->> =C2=A087M =C2=A0 =C2=A0.git
->>
->> any other idea?
->
-> Please use file://$PWD/en4j as URL, otherwise git clone just hard lin=
-ks
-> everything.
->
-> Andreas.
->
-> --
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756 =C2=A001D3 44D5 214B=
- 8276 4ED5
-> "And now for something completely different."
->
-
-
-
---=20
-/Rub=C3=A9n
+diff --git a/tg-create.sh b/tg-create.sh
+index 2edd537..617031b 100644
+--- a/tg-create.sh
++++ b/tg-create.sh
+@@ -129,11 +129,9 @@ author_addr="${author%> *}>"
+ 	! subject_prefix="$(git config topgit.subjectprefix)" || subject_prefix="$subject_prefix "
+ 	echo "Subject: [${subject_prefix}PATCH] $name"
+ 	echo
+-	cat <<EOT
+-<patch description>
+-
+-Signed-off-by: $author_addr
+-EOT
++	echo '<patch description>'
++	echo
++	[ "$(git config --bool format.signoff)" = true ] && echo "Signed-off-by: $author_addr"
+ } >"$root_dir/.topmsg"
+ git add -f "$root_dir/.topmsg"
+ 
+-- 
+tg: (d279e29..) u/signed-off-by (depends on: master)
