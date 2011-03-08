@@ -1,85 +1,69 @@
-From: "Hillel (Sabba) Markowitz" <sabbahillel@gmail.com>
-Subject: gitosis configuration question
-Date: Tue, 8 Mar 2011 13:46:49 -0500
-Message-ID: <AANLkTik1WFacXcxrWP3RQ26rXCaQphT1H-CAwKEz6Gx8@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Q about the date format in "git commit --date=..." and such
+Date: Tue, 08 Mar 2011 19:51:32 +0100
+Message-ID: <m2vcztqwcr.fsf@igel.home>
+References: <4D73B158.5040409@dirk.my1.cc>
+	<20110307165448.GD11934@sigill.intra.peff.net>
+	<7vzkp6zclw.fsf@alter.siamese.dyndns.org>
+	<20110308011646.GA21278@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 08 19:46:57 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 08 19:51:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px1vs-0001x0-CG
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 19:46:56 +0100
+	id 1Px20W-0004Qh-75
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 19:51:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754238Ab1CHSqv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2011 13:46:51 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:40409 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752984Ab1CHSqu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2011 13:46:50 -0500
-Received: by vxi39 with SMTP id 39so4969018vxi.19
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 10:46:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=r+jCFaQkV3hS+Kua2qgWqVaQ9z5Qjp9VSp6vs6BLUrw=;
-        b=Y6WOEqm/Tf6X/2JnJrgaByXQvb1Y7+ZBVEzu46BvkIQzVkJFrtv0L2z48UBkFVDpKj
-         TDUPX5Kr4uGzCHSCedVG0bZZbGOQDHRH3lPlX/hbIVAOp0T4eU7Ovu7f8QswGjxzKJW7
-         k17i3NFUVaa/ozKcT/syIOC5UQO5sHPGrQMJM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=QKZ/kH+Yl5XeaFK8Xb4Iid6SO+2LgCJkr9zSVoamSwyscrEmCYWkJa4zVVnFk0qRHi
-         AotnsFwCdRpVjPwLwgXsv4d0ybr/fRirtj4lbih1S8+dx0E+SXXTwUthhz5jGOgdYwwz
-         B5fB499FVOBrHRf9YRe7jaRr81uSrWSy25qOw=
-Received: by 10.52.180.102 with SMTP id dn6mr611091vdc.38.1299610009502; Tue,
- 08 Mar 2011 10:46:49 -0800 (PST)
-Received: by 10.52.158.9 with HTTP; Tue, 8 Mar 2011 10:46:49 -0800 (PST)
+	id S1754940Ab1CHSvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 13:51:38 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:48529 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753405Ab1CHSvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 13:51:37 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id E8721186DEEA;
+	Tue,  8 Mar 2011 19:51:34 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 255AC1C0008E;
+	Tue,  8 Mar 2011 19:51:35 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id 5bw9Fv-ExgbY; Tue,  8 Mar 2011 19:51:34 +0100 (CET)
+Received: from igel.home (ppp-88-217-123-39.dynamic.mnet-online.de [88.217.123.39])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Tue,  8 Mar 2011 19:51:34 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 350E1CA2A0; Tue,  8 Mar 2011 19:51:34 +0100 (CET)
+X-Yow: Uh-oh!!  I forgot to submit to COMPULSORY URINALYSIS!
+In-Reply-To: <20110308011646.GA21278@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 7 Mar 2011 20:16:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.94 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168673>
 
-When setting up gitosis, I want to have multiple repos available for a
-particular group. However, the list of repos is too big for a single
-line. The example.conf does not indicate if this is allowed.  That is,
-the example that it gives is
+Jeff King <peff@peff.net> writes:
 
-[group mygroup]
-members =3D Bob Carol Ted Alice
-writable =3D base cover pot lid
+> Why would you be resetting the date but _not_ taking ownership? Maybe
+> a reasonable situation for that exists, but I couldn't think of one.
 
-Is the following allowable?
+If you are already the author it's not so obvious that you have to reset
+authorship in order to reset the date.  Also, if you are the author, but
+under a different email you may not want to change that.
 
-[group new group]
-members =3D Bob Carol Ted
-members =3D Alice
-writable =3D base
-cover
-pot
-lid
+Andreas.
 
-Of course the actual list is much larger.
-
-Also, from the example, would the following be allowed
-
-[repo cover]
-members =3D Bob Carol Ted Alice
-
-Does the last example make the repo cover writable to that group?
-
-
---
-=C2=A0 =C2=A0 =C2=A0=C2=A0 Sabba=C2=A0 =C2=A0=C2=A0 -=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =D7=A1=D7=91=D7=90 =D7=94=D7=9C=D7=9C=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 -=C2=A0 =C2=A0=C2=A0 Hillel
-Hillel (Sabba) Markowitz | Said the fox to the fish, "Join me ashore"
-=C2=A0SabbaHillel@gmail.com | The fish are the Jews, Torah is our water
-http://sabbahillel.blogspot.com
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
