@@ -1,66 +1,83 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
 Subject: Re: Who created a branch - reflog
-Date: Tue, 8 Mar 2011 06:57:38 -0800
-Message-ID: <AANLkTimsz7OPfUF5j=xY6ro4uX4AQty+PzW-tG6TQbuW@mail.gmail.com>
+Date: Tue, 8 Mar 2011 16:11:07 +0100
+Message-ID: <20110308151107.GW3609@genesis.frugalware.org>
 References: <20110308143846.GV3609@genesis.frugalware.org>
+ <AANLkTimsz7OPfUF5j=xY6ro4uX4AQty+PzW-tG6TQbuW@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="dBMBt2YGaTHbdllf"
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Mar 08 15:58:07 2011
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Mar 08 16:11:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwyMP-0004tf-Qi
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 15:58:06 +0100
+	id 1PwyZA-00028f-9w
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 16:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755278Ab1CHO6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 09:58:00 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:37823 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754767Ab1CHO57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 09:57:59 -0500
-Received: by vxi39 with SMTP id 39so4746883vxi.19
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 06:57:58 -0800 (PST)
-Received: by 10.52.0.107 with SMTP id 11mr7420242vdd.236.1299596278124; Tue,
- 08 Mar 2011 06:57:58 -0800 (PST)
-Received: by 10.52.162.33 with HTTP; Tue, 8 Mar 2011 06:57:38 -0800 (PST)
-In-Reply-To: <20110308143846.GV3609@genesis.frugalware.org>
+	id S1755415Ab1CHPLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 10:11:11 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:35686 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755285Ab1CHPLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 10:11:09 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id EC876580B2;
+	Tue,  8 Mar 2011 16:11:07 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id DD93A44965;
+	Tue,  8 Mar 2011 16:11:07 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id CE0A91358449; Tue,  8 Mar 2011 16:11:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimsz7OPfUF5j=xY6ro4uX4AQty+PzW-tG6TQbuW@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168666>
 
-On Tue, Mar 8, 2011 at 06:38, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> We have a repo where multiple users have push access, they access the
-> repo via ssh. Now let's say one of the developers ("A") accidently create a
-> branch named "foo" in the shared repo. Of course the tip of "foo" may
-> not point to a commit authored by "A".
->
-> IIRC reflogs could be used in that case when the push is done via http,
-> as the HTTP username is recorded in the reflog, so we can know who to
-> blame.
->
-> Unfortunately - as far as I see - this is not true for ssh, there simply
-> the author of the tip commit is used.
->
-> Have I missed something? Would it be possible to have the username of
-> the user in the reflog, even when pushing via ssh?
 
-reflog identity entries are derived from GIT_COMMITTER_NAME and
-GIT_COMMITTER_EMAIL in the environment at the time that the log event
-takes place. If these aren't set, they are derived from the current
-user's gecos, or from $GIT_DIR/config or ~/.gitconfig as the
-user.name/user.email variables.
+--dBMBt2YGaTHbdllf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Perhaps over SSH one of these is triggering for a user, allowing the
-user to fill in their own identity... or someone else's. If you want
-to enforce an identity you should set these environment variables on
-the SSH server side before invoking git-receive-pack, perhaps by way
-of a forced SSH command the way gitosis or gitolite is installed.
+On Tue, Mar 08, 2011 at 06:57:38AM -0800, Shawn Pearce <spearce@spearce.org=
+> wrote:
+> reflog identity entries are derived from GIT_COMMITTER_NAME and
+> GIT_COMMITTER_EMAIL in the environment at the time that the log event
+> takes place. If these aren't set, they are derived from the current
+> user's gecos, or from $GIT_DIR/config or ~/.gitconfig as the
+> user.name/user.email variables.
+>=20
+> Perhaps over SSH one of these is triggering for a user, allowing the
+> user to fill in their own identity... or someone else's. If you want
+> to enforce an identity you should set these environment variables on
+> the SSH server side before invoking git-receive-pack, perhaps by way
+> of a forced SSH command the way gitosis or gitolite is installed.
 
--- 
-Shawn.
+Then once I'm sure the users can't alter their identity on the server,
+the same can be achieved using ssh as with http.
+
+Great, that's exactly what I was needed. :)
+
+Thanks!
+
+--dBMBt2YGaTHbdllf
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk12RwsACgkQe81tAgORUJZfcQCeMNUfR8FkVxUrhOJfY5zYsJ8r
+lnEAoIsBqMMhw7Ak0/EtFYacON2P33dd
+=OzEa
+-----END PGP SIGNATURE-----
+
+--dBMBt2YGaTHbdllf--
