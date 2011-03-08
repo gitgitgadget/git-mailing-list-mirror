@@ -1,67 +1,75 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: gitosis configuration question
-Date: Tue, 08 Mar 2011 21:53:17 +0100
-Message-ID: <4D76973D.2030408@web.de>
-References: <AANLkTik1WFacXcxrWP3RQ26rXCaQphT1H-CAwKEz6Gx8@mail.gmail.com> <1299616032.20004.2.camel@drew-northup.unet.maine.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH jk/strbuf-vaddf] compat: fall back on __va_copy if
+ available
+Date: Tue, 8 Mar 2011 14:59:19 -0600
+Message-ID: <20110308205918.GC26471@elie>
+References: <20110224142308.GA15356@sigill.intra.peff.net>
+ <20110224142647.GA15477@sigill.intra.peff.net>
+ <AANLkTin7NBx5NVRkHpgymcZfnaZaJehMMpPv=zD+cKtV@mail.gmail.com>
+ <20110308083344.GD26516@elie>
+ <7v62rte5nb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: "Hillel (Sabba) Markowitz" <sabbahillel@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 08 21:53:53 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 21:59:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px3ui-0002Kt-I7
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 21:53:53 +0100
+	id 1Px40B-0004km-FM
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 21:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756707Ab1CHUxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 15:53:49 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:36090 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755628Ab1CHUxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 15:53:48 -0500
-Received: from smtp06.web.de  ( [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id AAE5A18AADDAB;
-	Tue,  8 Mar 2011 21:53:17 +0100 (CET)
-Received: from [93.240.111.18] (helo=[192.168.178.43])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Px3u9-0004WE-00; Tue, 08 Mar 2011 21:53:17 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <1299616032.20004.2.camel@drew-northup.unet.maine.edu>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+jVXYEINQ5clMkLtZ6HNkg8A6+m5y6igSqDZzM
-	+6F5uUDVFA5o0JkBcC34Mdx/P4g/lopsOhacqQyVuqaRVQEvpH
-	+rBarGMwXlO0VzR251YA==
+	id S1756191Ab1CHU70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 15:59:26 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:50182 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754753Ab1CHU7Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 15:59:25 -0500
+Received: by wwa36 with SMTP id 36so1628061wwa.1
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 12:59:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=v04fdmJpMMGnUNHQaCxzL0BLLEgkG9SN5jiHCigWUWw=;
+        b=tikAAkCCQ7slThfjADm47LztVU8EQg3wtLUio/AW69UmxgeKrXzKYiLqPadHFDmXt4
+         lbbYpauGY1nskqe9IGispzfFZeO/72M9BriVIzxjzYzulyaXo7LKrarzomk5UGPx5B6t
+         N2BpWSXEgfjYRvJO7uovnXLim64QHTcJ8NieQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=GBXQNflE2fVmkNSAyTZrL0AHaWJ3VTyc9lbw6GMOhWMgVxOTBiTx9sO1K3lrCrD7d6
+         sJbTO4Q/IDwBwsVyfgN84ZYL+tXRNJvy8+Sm/mES5Wjm2zPeiqkdzcXddk0p0Rlmkkk0
+         96GOf+P/ZDpn7q6s6cwxHNFosmhUNCDnu/+2w=
+Received: by 10.227.39.89 with SMTP id f25mr4908125wbe.154.1299617964257;
+        Tue, 08 Mar 2011 12:59:24 -0800 (PST)
+Received: from elie ([69.209.61.99])
+        by mx.google.com with ESMTPS id u9sm867020wbg.0.2011.03.08.12.59.22
+        (version=SSLv3 cipher=OTHER);
+        Tue, 08 Mar 2011 12:59:23 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7v62rte5nb.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168691>
 
-Am 08.03.2011 21:27, schrieb Drew Northup:
-> 
-> On Tue, 2011-03-08 at 13:46 -0500, Hillel (Sabba) Markowitz wrote:
->> When setting up gitosis, I want to have multiple repos available for a
->> particular group. However, the list of repos is too big for a single
->> line. The example.conf does not indicate if this is allowed.  That is,
->> the example that it gives is
-> 
-> Hillel,
-> Gitosis is basically no longer supported...
+Junio C Hamano wrote:
 
-Having said that: If you want to use it nonetheless, try using
-backslashes:
+> This is a tangent but when you quote from compiler output could you be in
+> C locale so that it would be easier for everybody to get the same result?
 
-[group new group]
-members = Bob Carol Ted \
-	Alice
-writable = base \
-	cover \
-	pot \
-	lid
+Sure, that makes sense.
 
-Works fine at my dayjob.
+[...]
+> Thanks, the patch looks good.
+
+Thanks for looking it over.
