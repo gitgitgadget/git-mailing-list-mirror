@@ -1,117 +1,99 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: rsync busy non-bare git repo 'source' to quiet
-Date: Tue, 08 Mar 2011 16:20:33 -0600
-Message-ID: <4D76ABB1.9080001@gmail.com>
-References: <il66rd$46u$1@dough.gmane.org> <20110308213959.GB5786@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git fast-import : How to change parent during import?
+Date: Tue, 8 Mar 2011 16:23:28 -0600
+Message-ID: <20110308222328.GE26471@elie>
+References: <AANLkTikiEfUSdNqqTjuYy_JLJnEyCizmusSucYsEHC2r@mail.gmail.com>
+ <20110308024427.GA21471@elie>
+ <AANLkTini6NgeYxRdFtSDKe8GEEszDvXwRtLnuymiRNt4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 08 23:21:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 23:23:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px5H1-00005K-Hj
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 23:20:59 +0100
+	id 1Px5Jc-0001Mr-Ht
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 23:23:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754622Ab1CHWUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 17:20:54 -0500
-Received: from lo.gmane.org ([80.91.229.12]:43968 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754008Ab1CHWUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 17:20:53 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Px5Gu-0008UC-Fs
-	for git@vger.kernel.org; Tue, 08 Mar 2011 23:20:52 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 23:20:52 +0100
-Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 23:20:52 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110308213959.GB5786@sigill.intra.peff.net>
+	id S1753271Ab1CHWXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 17:23:35 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:50133 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751251Ab1CHWXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 17:23:34 -0500
+Received: by qwd7 with SMTP id 7so4316265qwd.19
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 14:23:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=OEUxoWRLg2JPTINbMCAZvpsAp7v8C3VcpKD+0KGosGY=;
+        b=SK1g+G5gRGzN16xyMF9Bimb+u5b+DCP9h+4pr6wOvrf1jgiUfWqFMwe67rCo97Tkcd
+         qfU7ExXoGOiGVK6tlBStnYq8FAHUqphu2zEEL9MUwAbLM5e+kEW4Xb1cdV0Elu4V7RIh
+         lWYIFGHzcC2Q7+AnyJ79/Rz/Px8rSK15wQYn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=nsJBHMvMRSc7wztFB0OrOsuCnq5UagIdJJlcR1eMqncuUqJ4lf5N9nZwCbS9DNu51r
+         PcEl7FIwAXKvOHKcP5idq13c6rOG/uaOJc/tHPzgYXZpm/FV5IUMk3TYFtvniF9JUzCU
+         1KaRjQbPzNQaOXI9hDITQ7gwVpgn1i36qeShs=
+Received: by 10.224.27.141 with SMTP id i13mr3211933qac.239.1299623014001;
+        Tue, 08 Mar 2011 14:23:34 -0800 (PST)
+Received: from elie (adsl-69-209-61-99.dsl.chcgil.sbcglobal.net [69.209.61.99])
+        by mx.google.com with ESMTPS id y17sm884167qci.45.2011.03.08.14.23.31
+        (version=SSLv3 cipher=OTHER);
+        Tue, 08 Mar 2011 14:23:32 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTini6NgeYxRdFtSDKe8GEEszDvXwRtLnuymiRNt4@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168709>
 
-On 3/8/2011 3:39 PM, Jeff King wrote:
-> On Tue, Mar 08, 2011 at 03:25:00PM -0600, Neal Kreitzinger wrote:
->
->> Does anyone have an example of an rsync bash script that will make
->> a good copy of a non-bare git repo (including the working tree)
->> while the "source" git repo is busy and the "destination" git repo
->> is quiet?
->
-> Don't copy the working tree. It's redundant with the repo data
-> (assuming your working tree is clean), so you are probably faster to
-> sync .git and then "reset --hard". And then you don't have to worry
-> about fetching an inconsistent working tree state.
->
-> For syncing the repo, I think you would need to do:
->
-> 1. Copy the refs to a local temp space.
->
-> 2. Copy the object db.
->
-> 3. Install your temp refs into place.
->
-> That way, for any updates in progress you will either not copy them
-> (because the refs weren't in place in step 1, though you may have
-> some of their objects), or if you do copy them, you are guaranteed to
-> have all of the necessary objects (because git will not update the
-> ref until all objects are in place).
->
-> But I really have to wonder why you don't simply use git to do the
-> fetch? It already does the right thing with respect to updates, and
-> it will be way more efficient than rsync in the face of repacking (or
-> if you really do want to use rsync, there is even an rsync transport
-> for git already). It sounds like:
->
->> This would make it very easy for us to refresh our "beta" livebox
->> to emulate the current "gold" livebox using a single rsync instead
->> of a combination of rsync and git-clone/pull due to the pieces that
->> git does not replicate (ie, hooks) and the non-git components of
->> our git based change control menu system (which is written in bash
->> scripts on linux).
->
-> You just don't want to do a pull in addition to an rsync. But I
-> don't think this solution will be any less complex.
->
-One reason is that we only have one development box.  We would have to
-open up the canonical repo and development repos to git:// protocol
-access.  If I use git I have to do the initial clones for creation and 
-then the pulls for refreshes.  rsync will do the creation and refreshes 
-via the same script.  If I use git I would have to rsync the hooks, 
-config, and anything else git doesn't bring over.  On the goldbox I have 
-a bare repo that mirrors the canonical repo and then has additional 
-branches and is in turn mirrored by another bare mirror which has all 
-the additional branches.  I would have to recreate the original remote 
-branch setup and then still maintain the remotes to the goldbox.  Then I 
-wouldn't really have a simulation of the goldbox anymore because I have 
-extra remotes (maybe that wouldn't really hurt anything).  Rsync seems 
-like a simpler solution and more accurate solution for creating a copy 
-of an ecosystem of interrelated git repos colocated on the same box.
+Hi,
 
-A previous post in the newsgroup states:
-"> If you want your rsync backup to be fine, you need to follow some
-> ordering.  You need to copy the refs first (.git/packed-refs and
-> .git/refs/), then the loose objects (.git/objects/??/*), and then all
-> the rest.  If files are copied in a different order while some write
-> operations are performed on the source repository then you may end up
-> with an incoherent repository."
+Vitor Antunes wrote:
+> On Tue, Mar 8, 2011 at 2:44 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Would that work?
+>> The advice in the section "Use Tag Fixup Branches" of git-fast-import(1)
+>> might be useful.
+>
+> I'm still trying to understand it. Do you know of any practical
+> example that I can look into?
 
-v/r,
-neal
+It's likely I misunderstood what you're trying to do.  If you have
+some work in progress, I'd be glad to look at it.
+
+Anyway, concerning tag fixup branches: git://repo.or.cz/cvs2svn.git
+has an example in cvs2svn_lib/git_output_option.py::process_tag_commit.
+The idea is to make commits that don't belong to any branch on a
+separate TAG_FIXUP ref, using the "reset" command where appropriate;
+then the resulting commits can be inspected, merged, reset to, or used
+in some other way later.
+
+The "tag fixup" idea is that in VCSes like CVS, tags do not
+necessarily match the content on any branch.  So the history looks
+somewhat like so (time flowing left to right):
+
+                     TAG
+                    /
+ o --- o --- o --- o --- o --- o ...
+
+instead of the perhaps more sensible
+
+ o --- o --- o --- TAG --- o --- o ...
+
+The side branch leading up to a tag does not correspond to any branch
+name; after it is in the correct state one can use the "tag" command
+to get it remembered in permanent history.  The same technique might
+be useful whenever you are creating history that is not meant to stay
+permanently on any branch.
+
+Jonathan
