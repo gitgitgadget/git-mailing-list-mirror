@@ -1,84 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] git cat-file does not terminate
-Date: Tue, 8 Mar 2011 16:14:23 -0500
-Message-ID: <20110308211423.GB4594@sigill.intra.peff.net>
-References: <4D70E340.3050309@tweerlei.de>
- <20110304154014.GE24660@m62s10.vlinux.de>
- <20110304160047.GA9662@sigill.intra.peff.net>
- <7vzkpa7qmp.fsf@alter.siamese.dyndns.org>
+From: John Feuerstein <john@feurix.com>
+Subject: Re: gitosis configuration question
+Date: Tue, 08 Mar 2011 22:07:23 +0100
+Message-ID: <4D769A8B.7000606@feurix.com>
+References: <AANLkTik1WFacXcxrWP3RQ26rXCaQphT1H-CAwKEz6Gx8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Peter Baumann <waste.manager@gmx.de>,
-	Robert Wruck <wruck@tweerlei.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 22:14:35 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Hillel (Sabba) Markowitz" <sabbahillel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 22:14:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px4Eh-0002uB-Hj
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 22:14:32 +0100
+	id 1Px4F3-00032I-H8
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 22:14:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754468Ab1CHVOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 16:14:25 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56776
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752046Ab1CHVOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 16:14:25 -0500
-Received: (qmail 4395 invoked by uid 107); 8 Mar 2011 21:14:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Mar 2011 16:14:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Mar 2011 16:14:23 -0500
-Content-Disposition: inline
-In-Reply-To: <7vzkpa7qmp.fsf@alter.siamese.dyndns.org>
+	id S1755201Ab1CHVOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 16:14:47 -0500
+Received: from mx1.pyrox.eu ([188.40.139.189]:36846 "EHLO mx1.pyrox.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754857Ab1CHVOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 16:14:47 -0500
+X-Greylist: delayed 442 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Mar 2011 16:14:47 EST
+Received: from mx1.pyrox.eu (mx1.c10.pyrox.eu [10.10.1.5])
+	by mx1.pyrox.eu (pxmail) with ESMTP id D0F9840BB4;
+	Tue,  8 Mar 2011 22:07:24 +0100 (CET)
+Received: from [192.168.10.110] (ip-81-210-160-120.unitymediagroup.de [81.210.160.120])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.pyrox.eu (pxmail) with ESMTPSA id AC614408E3;
+	Tue,  8 Mar 2011 22:07:24 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <AANLkTik1WFacXcxrWP3RQ26rXCaQphT1H-CAwKEz6Gx8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168696>
 
-On Fri, Mar 04, 2011 at 09:16:30AM -0800, Junio C Hamano wrote:
+> [group mygroup]
+> members = Bob Carol Ted Alice
+> writable = base cover pot lid
+>
+> Is the following allowable?
+>
+> [group new group]
+> members = Bob Carol Ted
+> members = Alice
+> writable = base
+> cover
+> pot
+> lid
 
-> How prevalent is the problematic cygwin1.dll 1.7.8?  Also for how long did
-> this bug exist, in other words, if we were to make a table of problematic
-> versions, would we have only just a handful entries in it?  Also can we at
-> runtime find out what version we are running?
-> 
-> The reason I am asking these questions is because I think, assuming that
-> this would affect many unsuspecting Cygwin users, the best fix would be to
-> add a hook in the compat/ layer that decides if MAX_WRITE_SIZE workaround
-> is necessary at runtime, and do something like this:
-> 
-> 	ssize_t xwrite(int fd, const void *buf, size_t len)
->         {
->         	ssize_t nr;
->                 static size_t max_write_size = platform_max_write_size();
-> 
->                 if (max_write_size && max_write_size < len)
->                 	len = max_write_size;
-> 		...
-> 	}
+Gitosis is written in Python and uses the ConfigParser[1] module.
+It allows line continuations in the style of RFC 822, see [2]:
 
-How are we doing the runtime test for platform max write?
+foo = bar
+       baz
+       qux
 
-If I read the original bug report correctly, the problem was that write
-would actually write some bytes _and_ return -1, which is terrible. We
-can detect "seems to be returning -1 over and over", but we can't handle
-a misbehavior like writing and claiming not to have done so.
 
-So I think the test needs to be "is our version of cygwin in the broken
-list" and not "let's try a few different writes and see what works".
+Hope this helps,
+John
 
-But it is still not clear to me how many versions have this bug. I think
-the next stop is to show the cygwin developers a clear test-case and see
-whether it's already fixed, and which versions show the behavior. They
-should be able to get that information much more easily than us. I
-really don't want to get involved in bisecting bugs in cygwin (according
-to cygwin.com, it's kept in CVS. Blech).
-
-Robert, can you try (or have you already tried) submitting a bug report
-to Cygwin?
-
--Peff
+[1] http://docs.python.org/library/configparser.html
+[2] http://tools.ietf.org/html/rfc822.html#section-3.1.1
