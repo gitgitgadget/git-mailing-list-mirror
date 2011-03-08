@@ -1,82 +1,135 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git fast-import : How to change parent during import?
-Date: Tue, 8 Mar 2011 21:19:50 +0000
-Message-ID: <AANLkTini6NgeYxRdFtSDKe8GEEszDvXwRtLnuymiRNt4@mail.gmail.com>
-References: <AANLkTikiEfUSdNqqTjuYy_JLJnEyCizmusSucYsEHC2r@mail.gmail.com> <20110308024427.GA21471@elie>
+From: =?ISO-8859-1?Q?Mart_S=F5mermaa?= <mrts.pydev@gmail.com>
+Subject: Re: git diff: add option for omitting the contents of deletes
+Date: Tue, 8 Mar 2011 23:25:04 +0200
+Message-ID: <AANLkTim9juvhBJKraHBkV8AC=zY75xt_1BnyhTDTcoUZ@mail.gmail.com>
+References: <AANLkTi=++gcw5CDQnTRbhUGkvWc9Zm+Ct4Zm5oGGYKUh@mail.gmail.com>
+	<7vk4gm7dz3.fsf@alter.siamese.dyndns.org>
+	<4D6A6291.8050206@drmicha.warpmail.net>
+	<7v7hclulz0.fsf@alter.siamese.dyndns.org>
+	<7v39n9uldp.fsf@alter.siamese.dyndns.org>
+	<4D6B4F6B.1040209@drmicha.warpmail.net>
+	<20110228121726.GA5197@sigill.intra.peff.net>
+	<20110228122335.GB5197@sigill.intra.peff.net>
+	<7vy650hvwa.fsf@alter.siamese.dyndns.org>
+	<20110228222352.GC5854@sigill.intra.peff.net>
+	<7vfwr7hh7f.fsf@alter.siamese.dyndns.org>
+	<7vy64zg0ms.fsf@alter.siamese.dyndns.org>
+	<AANLkTinBTWPrAOq9BOkBJc5GOhFkzsr__9wqEWnWdwYR@mail.gmail.com>
+	<7vipvte6jc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 22:20:31 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 22:25:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px4KQ-0005m3-RH
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 22:20:27 +0100
+	id 1Px4P3-0008Jt-QF
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 22:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752255Ab1CHVUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 16:20:22 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:63573 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752046Ab1CHVUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 16:20:21 -0500
-Received: by vws12 with SMTP id 12so5092036vws.19
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 13:20:20 -0800 (PST)
+	id S1756614Ab1CHVZH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2011 16:25:07 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:62711 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752329Ab1CHVZF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2011 16:25:05 -0500
+Received: by qyg14 with SMTP id 14so5056411qyg.19
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 13:25:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=rv3bk5Eg6Lgk1KW7tTrXEiDzKJ6fJGzMZe72Qa9iwUI=;
-        b=dDDaVs1Z/uEl1RG+zmBlkzLfQcGI5wTA4HaQX9tmn0H502T0h7VK97eRUOBJ86ikFa
-         z+qk9tpzfOai4sKqAQoh0kK5ZLP/qJTsgBkEdWUCitTCghkef1SkgRVxcbEzOHpKfKsC
-         8v0Bm4EPolCOcG8r5zz//7UuRbIzNI0FFqGjI=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sYjJsp8Ng42cKAo+WbGFXhBUczXWmuKIqAX3Hy3C+m0=;
+        b=nX1kxwaVjGcOQMvC1dAQ/ghvzC6lDNp8FrGtnUGRWfbldTuopQEab7TEYBhbopOvB8
+         a/iqidccVa+MSUFK5mkK/si0aOohJt+8uQSr9Wrqx7KTqJLbjhcCyZjfAkRCPKcoa/w6
+         FoHhCeuOA7fgLwacl0wvH1YaYn9pvjuXAG9P8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=R73LhYCBxeHyVpD9e0m2mhlDhERsBwduXe2VSf14lq3YrPoO1NqQkXMQqFlaSo3TMD
-         BJcziTVIrbnM1J7n8qLNhvU1ymxtPJaFV/hY25ScVxaMNy/1GuDw27q99YcfhiH7sptK
-         j8eh5b1i7hASWHBubfpLtriQqfcqLtYtZikSI=
-Received: by 10.52.0.169 with SMTP id 9mr8096582vdf.303.1299619220086; Tue, 08
- Mar 2011 13:20:20 -0800 (PST)
-Received: by 10.220.178.130 with HTTP; Tue, 8 Mar 2011 13:19:50 -0800 (PST)
-In-Reply-To: <20110308024427.GA21471@elie>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vVLnIi0n2DLIdwHhdknVm/c20GAMcxTtbpFs7zz4x8NshXGDu7RAUBERSggbq0ECMd
+         9ZXH6qjSyGjyXHdOETwtoDacCnEtGyAy7ASXQSV9tA4bJceTnoEHwFW9acOLT2jEqjYP
+         IUmdX7qyGifd7p6Vw+wNvfCnnS5wQP6YisOMY=
+Received: by 10.229.126.210 with SMTP id d18mr4409125qcs.179.1299619505067;
+ Tue, 08 Mar 2011 13:25:05 -0800 (PST)
+Received: by 10.229.98.133 with HTTP; Tue, 8 Mar 2011 13:25:04 -0800 (PST)
+In-Reply-To: <7vipvte6jc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168698>
 
-Hi Jonathan,
-
-On Tue, Mar 8, 2011 at 2:44 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Is it possible to change the parent of a commit during fast import?
->> I've tried using "reset" command and making a new commit pointing to a
->> new parent, but in both cases I get a "new tip ... does not contain
->> ..." error message.
+On Tue, Mar 8, 2011 at 9:49 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Mart S=F5mermaa <mrts.pydev@gmail.com> writes:
 >
-> Have you tried "git fast-import --force"?
-
-Oh... I completely overlooked the command line argument list in the man page...
-Thanks for the tip, worked like a charm!
-
->> Providing a bit of context. I'm trying to improve git-p4 to detect the
->> parent commit of a new branch.
-> [...]
->> To achieve this I used the checkpoint command to flush the list of
->> imported commits to disk and then used standard rev-list and diff-tree
->> commands to make find the parent commit. I am now at a point where I
->> am able to correctly identify the parent commit, but when trying to
->> update the from information I get the above message.
+>> On Tue, Mar 1, 2011 at 2:11 AM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>>> In any case, a minimum patch to give what Mart wanted to see would
+>>> probably look like this. =A0I'll leave bugfixes, documentation and =
+tests to
+>>> the readers ;-).
+>>
+>> The minimum looks to be the optimum -- IMHO this is entirely suffici=
+ent,
 >
-> The advice in the section "Use Tag Fixup Branches" of git-fast-import(1)
-> might be useful.
+> I suspect not, as I don't think I ever did anything to the codepath f=
+or -B
+> output, and I also recall spending some time thinking about this issu=
+e in
+> an earlier message that I mentioned -B besides "deletion", none of th=
+e
+> suggestions in which I don't think I tried to implement.
 
-I'm still trying to understand it. Do you know of any practical
-example that I can look into?
+Your suggestion is as follows:
 
-Thanks for your help,
--- 
-Vitor Antunes
+"It also might make sense to apply the similar principle to shorten the=
+ output
+with -B when a rewrite patch is expressed as a single hunk patch that r=
+emoves
+everything old and then adds everthing new."
+
+I have to admit that I've never used -B, only -M, so please don't mind =
+that
+its semantics and exact behavior are a bit foreign to me.
+
+After running t/t4130-apply-criss-cross-rename.sh,
+`git diff -M -B` outputs the following:
+
+diff --git a/file2 b/file1
+similarity index 100%
+rename from file2
+rename to file1
+diff --git a/file1 b/file2
+similarity index 100%
+rename from file1
+rename to file2
+
+Can you bring a similar example of changes in the output after
+the above-mentioned similar principle has been implemented for -B?
+
+> I also vaguely recall that I suspected that the output may not have t=
+he
+> usual "index deadbeaf..000000 mode" line and that I chose to ignore i=
+t.
+
+'deadbeaf' is present:
+
+$ ../git/bin-wrappers/git diff -D HEAD
+diff --git a/foo.txt b/foo.txt
+deleted file mode 100644
+index 257cc56..0000000
+
+Can we perhaps consider the -B behavior orthogonal to -D (unless I am m=
+issing
+something very important here)?
+
+Best regards,
+MS
