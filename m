@@ -1,63 +1,77 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: gitosis configuration question
-Date: Tue, 08 Mar 2011 15:27:12 -0500
-Message-ID: <1299616032.20004.2.camel@drew-northup.unet.maine.edu>
-References: <AANLkTik1WFacXcxrWP3RQ26rXCaQphT1H-CAwKEz6Gx8@mail.gmail.com>
+From: Thomas Berg <merlin66b@gmail.com>
+Subject: Re: Cannot fetch whole history from Perforce
+Date: Tue, 8 Mar 2011 21:36:31 +0100
+Message-ID: <AANLkTin6BBD+b2OYRk32GyAaEqFa-V7T1B7jEVujRkuL@mail.gmail.com>
+References: <AANLkTik6fxHUJbp6dWdAgV-wr=P=FxK1K-vGAGy8ruBd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Hillel (Sabba) Markowitz" <sabbahillel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 21:28:22 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>, pw@padd.com
+To: Anatol Pomozov <anatol.pomozov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 21:36:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px3W0-00079R-Ne
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 21:28:21 +0100
+	id 1Px3e2-0002z3-CU
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 21:36:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755585Ab1CHU2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 15:28:12 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:45079 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755574Ab1CHU2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 15:28:11 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p28KRITu007594
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 8 Mar 2011 15:27:23 -0500
-In-Reply-To: <AANLkTik1WFacXcxrWP3RQ26rXCaQphT1H-CAwKEz6Gx8@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-dmv.com-Metrics: basalt.its.maine.edu 1181; Body=2 Fuz1=2 Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p28KRITu007594
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1300220850.95459@o9CPQ0o/5CleXZtOjb1+Sw
+	id S1756601Ab1CHUgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 15:36:33 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:47895 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754877Ab1CHUgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 15:36:32 -0500
+Received: by qyk7 with SMTP id 7so3231110qyk.19
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 12:36:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=B/MhqEjWGSs5PTPKAMAlMR0cQuFqEBoYhNh7XeMTYVk=;
+        b=MN+dizvBweMvlYwMRWBbmwBykiJa1+iOX6mWobWrJMadRLDk+tc7nFeRIU9F3migfn
+         o4rsLfje+SQIDyL2UNbg5u39CVpq2ZhdjBIwSeiC13NtNo1zNTM5lYpyzrSDShtP8kBj
+         7WJuK4lU587PdPJq7sJKLf6N9pQdY/AbJSFiE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=ftHb3tOgbLj6ILcbzSO074yb4+7YS5+JbLnhFRhHOPOHIurVhNROPszr4SBDt9YAZL
+         HdAn1O7Bf3LxHopGCPcFKdcYMTSqzEpeX+Tp2PlH4YlDECf3d8Z6y67iDCM7WmVna4mY
+         BLiWuFETRougkI9Usg7ApgUaGJvX3L1dv+8Ic=
+Received: by 10.229.65.71 with SMTP id h7mr1442191qci.229.1299616591917; Tue,
+ 08 Mar 2011 12:36:31 -0800 (PST)
+Received: by 10.229.218.200 with HTTP; Tue, 8 Mar 2011 12:36:31 -0800 (PST)
+In-Reply-To: <AANLkTik6fxHUJbp6dWdAgV-wr=P=FxK1K-vGAGy8ruBd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168687>
 
+Hi,
 
-On Tue, 2011-03-08 at 13:46 -0500, Hillel (Sabba) Markowitz wrote:
-> When setting up gitosis, I want to have multiple repos available for a
-> particular group. However, the list of repos is too big for a single
-> line. The example.conf does not indicate if this is allowed.  That is,
-> the example that it gives is
+On Tue, Mar 8, 2011 at 7:09 PM, Anatol Pomozov <anatol.pomozov@gmail.com> wrote:
+> Hi, I am using HEAD version of the git and I have an issue with git-p4
+> tool (p4 to git importer).
+>
+> git-p4 works fine when I import HEAD version of my project
+>
+> $ git p4 clone //depot/foo/bar --verbose
+> But it fails with a cryptic error when I try to import @all revisions:
+[...]
+>
+> $ git p4 clone //depot/foo/bar@all --verbose
+> Importing from //depot/foo/bar@all into bar
+[...]
+>
+> Can it be related to Pete's changes?
+> http://permalink.gmane.org/gmane.comp.version-control.git/167281
 
-Hillel,
-Gitosis is basically no longer supported...
+Sorry for not testing myself before responding, but in my experience
+with Perforce a trailing slash may be significant. Did you try this
+format?
+$ git p4 clone //depot/foo/bar/@all
+If that also fails you may be onto something.
 
-For Reference:
-http://article.gmane.org/gmane.comp.version-control.git/160230
-
-I hope this helps!
-
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+- Thomas
