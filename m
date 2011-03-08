@@ -1,155 +1,72 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 2/2] commit: allow editing notes in commit message editor
-Date: Tue, 08 Mar 2011 10:15:24 +0100
-Message-ID: <201103081015.24474.johan@herland.net>
-References: <20110307233902.GA20447@sigill.intra.peff.net>
- <20110307234138.GB20912@sigill.intra.peff.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: how to list commits on branch since last merge
+Date: Tue, 8 Mar 2011 04:35:16 -0500
+Message-ID: <AANLkTinOEutM92k4SUGEXbfTpzGcQitpW4CZbcQbg0R4@mail.gmail.com>
+References: <AANLkTi=zW9hOhnddw6HsjQwV2qLf_R_qeNna+XeN6U6x@mail.gmail.com> <4D75ED72.8030203@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 08 10:15:36 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Mar 08 10:35:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pwt0w-0000vF-58
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 10:15:34 +0100
+	id 1PwtKf-0000cW-2x
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 10:35:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab1CHJP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 04:15:28 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:42693 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750726Ab1CHJP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 04:15:26 -0500
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LHQ004F8F1PCNB0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Mar 2011 10:15:25 +0100 (MET)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 5A71A1EA592E_D75F3ADB	for <git@vger.kernel.org>; Tue,
- 08 Mar 2011 09:15:25 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 20E5A1EA3274_D75F3ADF	for <git@vger.kernel.org>; Tue,
- 08 Mar 2011 09:15:25 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LHQ003J1F1PGK00@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Mar 2011 10:15:25 +0100 (MET)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
-In-reply-to: <20110307234138.GB20912@sigill.intra.peff.net>
+	id S1753212Ab1CHJfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 04:35:50 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38065 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753156Ab1CHJfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 04:35:47 -0500
+Received: by iwn34 with SMTP id 34so4697714iwn.19
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 01:35:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=vPd0HVjMgvOamKuDVUdbtdjjAH4i1dzyCGBCgV4Qt64=;
+        b=GTAkBeqfgmPV0OH8CSbSCuG8OoKmK6wIXro9lphi4UHbKJxovd/K7U0x29WQ+CvKqX
+         y2/58Ha0XLhAYG0rFa72mRFJ0/RLzYJNRLS+7i8uz4apbdP4oMGm+TnFpvimZTAMSBPj
+         cFwgfu5uPBR9ojaHMuNtYgbaSY5zqXODjh7+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=gkbyuhTIhNN0e3jvYBJ+7UPd4bgCbR0OHeQfFfwEw54+PRLIRNYCENle885a4n3pxp
+         7LMQyj77cPJaF4cummX0y1rZOY1wTAVvG6+BQFPKDlwSD2NXuTTFzZYFo0nQXdyLuu6S
+         9Xr6kiXqjTE1Mh3tGMMZN5aKwGzsi7GrEog6U=
+Received: by 10.231.112.211 with SMTP id x19mr3730460ibp.182.1299576946187;
+ Tue, 08 Mar 2011 01:35:46 -0800 (PST)
+Received: by 10.231.34.7 with HTTP; Tue, 8 Mar 2011 01:35:16 -0800 (PST)
+In-Reply-To: <4D75ED72.8030203@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168649>
 
-On Tuesday 08 March 2011, Jeff King wrote:
-> Changes from v1:
-> 
->   - fix bug with adding notes to new commit (we failed to
->     initialize the notes tree properly in this case)
-> 
->   - you can now do "commit --notes=foo" to view/edit
->     refs/notes/foo
+On Tue, Mar 8, 2011 at 3:48 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Have you tried:
+>
+> git rev-list --ancestry-path --left-right foo...bar
+>
+> If the ">" commits are the ones that you want you only have to wait for
+> the "--right-only" option which is cooking in pu. And grep '^>' for now ;)
 
-Nice. :)
+Ah. The rev-list man page entry on --ancestry-path only talks about
+using it with '..', so I didn't even try it with the symmetric diff
+operator ('...').
 
->   - added tests for basic operations, plus interaction with
->     --cleanup and -v
-> 
->   - turn off commit rewriting when we edit
-> 
-> Todo:
-> 
->   - commit.notes config variable to have this on all the time
-> 
->   - I punted on the separator decision here.
+That said, seems it would be useful to have an easy way to get to the
+merge which has a merge-base as one of its parents. Maybe even a
+generic way to find all commits which have a particular parent. I
+think rev-list --parents | grep is the only way to do that today.
 
-We probably want to make it configurable, as mentioned earlier in the 
-thread. Still, making it configurable gives me the somewhat uneasy feeling 
-that we're "blaming" the user for any false positives ("It's your fault for 
-not choosing a more unique separator...")...
+Thanks,
 
-What if we start the separator with a comment character (e.g. "# ---"). That 
-way, the user could not expect a false positive to make it into the commit 
-message in the first place (since it'd be stripped along with other 
-comments). Of course, we'd have to make sure that the notes separator was 
-parsed before removing the comments, but I think that's already taken care 
-of in the patch below.
-
->   - probably still some magic needed for rebase conflict
->     case; we will be making a new commit, so we don't know
->     to pull the notes in from the old commit as we do with
->     --amend.
-
-Maybe add a "--notes-copy=<commit>" argument to "git commit" that causes 
-"<commit>" to be passed to add_notes_from_commit(). Of course, in the case 
-of --amend, the default is "--notes-copy=HEAD".
-
->   - still needs the format-patch component to make the
->     workflow complete :)
-> 
->  builtin/commit.c        |   87 ++++++++++++++++++++++-
->  t/t7510-commit-notes.sh |  183 +++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 268 insertions(+), 2 deletions(-)
->  create mode 100755 t/t7510-commit-notes.sh
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index d71e1e0..f84ca23 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-
-[...]
-
-> @@ -559,6 +564,68 @@ static char *cut_ident_timestamp_part(char *string)
->  	return ket;
->  }
-> 
-> +static void init_edit_notes() {
-
-style nit: move "{" to next line.
-
-[...]
-
-> +static void update_notes_for_commit(struct strbuf *notes,
-> +				    unsigned char *commit_sha1)
-> +{
-> +	init_edit_notes();
-> +
-> +	if (cleanup_mode != CLEANUP_NONE)
-> +		stripspace(notes, cleanup_mode == CLEANUP_ALL);
-> +
-> +	if (!notes->len)
-> +		remove_note(&edit_notes_tree, commit_sha1);
-> +	else {
-> +		unsigned char blob_sha1[20];
-> +		if (write_sha1_file(notes->buf, notes->len,
-> +				    blob_type, blob_sha1) < 0)
-> +			die("unable to write note blob");
-> +		add_note(&edit_notes_tree, commit_sha1, blob_sha1,
-> +			 combine_notes_overwrite);
-
-We may want to consider adding a small convenience function to the notes API 
-for turning a strbuf into a notes blob. (Maybe s/strbuf/char* + len/ to 
-cater for binary notes blobs as well.) This would move some low-level 
-details (#include "blob.h", and write_sha1_file(...)) out of the notes API 
-users' code.
-
-
-Otherwise, this looks really good.
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+j.
