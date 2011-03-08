@@ -1,84 +1,117 @@
-From: Michal Rokos <rokos@nextsoft.cz>
-Subject: Re: [PATCH] Honor HP C's noreturn attribute
-Date: Tue, 8 Mar 2011 23:09:41 +0100
-Message-ID: <3597D63F-589A-4BD5-B052-FA720A593301@nextsoft.cz>
-References: <32EABE0E-2447-4189-A3CE-05B68A5E18EF@nextsoft.cz> <7v4o7dfndw.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 23:09:53 2011
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: rsync busy non-bare git repo 'source' to quiet
+Date: Tue, 08 Mar 2011 16:20:33 -0600
+Message-ID: <4D76ABB1.9080001@gmail.com>
+References: <il66rd$46u$1@dough.gmane.org> <20110308213959.GB5786@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 08 23:21:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px56H-0003dg-4S
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 23:09:53 +0100
+	id 1Px5H1-00005K-Hj
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 23:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258Ab1CHWJr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2011 17:09:47 -0500
-Received: from holub.nextsoft.cz ([195.122.198.235]:37967 "EHLO
-	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751261Ab1CHWJq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2011 17:09:46 -0500
-Received: by holub.nextsoft.cz (Postfix, from userid 111)
-	id 55F192819; Tue,  8 Mar 2011 23:09:43 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by holub.nextsoft.cz (Postfix) with ESMTP id 02C3112DF;
-	Tue,  8 Mar 2011 23:09:42 +0100 (CET)
-Received: from holub.nextsoft.cz ([127.0.0.1])
-	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AjqAIh2MiE3J; Tue,  8 Mar 2011 23:09:41 +0100 (CET)
-Received: from [10.0.10.2] (gw.rokos.cz [188.175.127.20])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by holub.nextsoft.cz (Postfix) with ESMTPSA id CADF1B8;
-	Tue,  8 Mar 2011 23:09:41 +0100 (CET)
-In-Reply-To: <7v4o7dfndw.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1082)
-X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.5
+	id S1754622Ab1CHWUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 17:20:54 -0500
+Received: from lo.gmane.org ([80.91.229.12]:43968 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754008Ab1CHWUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 17:20:53 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Px5Gu-0008UC-Fs
+	for git@vger.kernel.org; Tue, 08 Mar 2011 23:20:52 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 23:20:52 +0100
+Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 23:20:52 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <20110308213959.GB5786@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168708>
 
-Dear Junio,
+On 3/8/2011 3:39 PM, Jeff King wrote:
+> On Tue, Mar 08, 2011 at 03:25:00PM -0600, Neal Kreitzinger wrote:
+>
+>> Does anyone have an example of an rsync bash script that will make
+>> a good copy of a non-bare git repo (including the working tree)
+>> while the "source" git repo is busy and the "destination" git repo
+>> is quiet?
+>
+> Don't copy the working tree. It's redundant with the repo data
+> (assuming your working tree is clean), so you are probably faster to
+> sync .git and then "reset --hard". And then you don't have to worry
+> about fetching an inconsistent working tree state.
+>
+> For syncing the repo, I think you would need to do:
+>
+> 1. Copy the refs to a local temp space.
+>
+> 2. Copy the object db.
+>
+> 3. Install your temp refs into place.
+>
+> That way, for any updates in progress you will either not copy them
+> (because the refs weren't in place in step 1, though you may have
+> some of their objects), or if you do copy them, you are guaranteed to
+> have all of the necessary objects (because git will not update the
+> ref until all objects are in place).
+>
+> But I really have to wonder why you don't simply use git to do the
+> fetch? It already does the right thing with respect to updates, and
+> it will be way more efficient than rsync in the face of repacking (or
+> if you really do want to use rsync, there is even an rsync transport
+> for git already). It sounds like:
+>
+>> This would make it very easy for us to refresh our "beta" livebox
+>> to emulate the current "gold" livebox using a single rsync instead
+>> of a combination of rsync and git-clone/pull due to the pieces that
+>> git does not replicate (ie, hooks) and the non-git components of
+>> our git based change control menu system (which is written in bash
+>> scripts on linux).
+>
+> You just don't want to do a pull in addition to an rsync. But I
+> don't think this solution will be any less complex.
+>
+One reason is that we only have one development box.  We would have to
+open up the canonical repo and development repos to git:// protocol
+access.  If I use git I have to do the initial clones for creation and 
+then the pulls for refreshes.  rsync will do the creation and refreshes 
+via the same script.  If I use git I would have to rsync the hooks, 
+config, and anything else git doesn't bring over.  On the goldbox I have 
+a bare repo that mirrors the canonical repo and then has additional 
+branches and is in turn mirrored by another bare mirror which has all 
+the additional branches.  I would have to recreate the original remote 
+branch setup and then still maintain the remotes to the goldbox.  Then I 
+wouldn't really have a simulation of the goldbox anymore because I have 
+extra remotes (maybe that wouldn't really hurt anything).  Rsync seems 
+like a simpler solution and more accurate solution for creating a copy 
+of an ecosystem of interrelated git repos colocated on the same box.
 
-On 8.3.2011, at 20:00, Junio C Hamano wrote:
+A previous post in the newsgroup states:
+"> If you want your rsync backup to be fine, you need to follow some
+> ordering.  You need to copy the refs first (.git/packed-refs and
+> .git/refs/), then the loose objects (.git/objects/??/*), and then all
+> the rest.  If files are copied in a different order while some write
+> operations are performed on the source repository then you may end up
+> with an incoherent repository."
 
-> Michal Rokos <rokos@nextsoft.cz> writes:
->=20
->> The __HP_cc define detects the HP C compiler version. Precede the
->> __GNUC__ check so it works well when compiling with HP C using -Agcc
->> option that enables partial support for the GNU C dialect. The -Agcc
->> defines the __GNUC__ too.
->=20
-> I love it when people write a very readable log message to explain wh=
-y the
-> patch _has_ to be the way it is.  Very good job.
->=20
-> Except for the overlooooooooong lines in the message, which I line-wr=
-apped
-> locally before applying, that is.
+Would that work?
 
-
-thank you for your review. I will try to improve overall patch and the =
-commit
-log quality when sending something more.
-
-Michal
-
---
-
-Michal Rokos
-
-NextSoft spol. s r.o.
-Vysko=C4=8Dilova 1/1410
-140 21 Praha 4
-Czech Republic
-mobile: +420 736 646 591
-fax:    +420 267 224 307
-e-mail: rokos@nextsoft.cz
+v/r,
+neal
