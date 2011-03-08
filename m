@@ -1,82 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git cat-file does not terminate
-Date: Tue, 08 Mar 2011 14:52:44 -0800
-Message-ID: <7vwrk9cjib.fsf@alter.siamese.dyndns.org>
-References: <4D70E340.3050309@tweerlei.de>
- <20110304154014.GE24660@m62s10.vlinux.de>
- <20110304160047.GA9662@sigill.intra.peff.net>
- <7vzkpa7qmp.fsf@alter.siamese.dyndns.org>
- <20110308211423.GB4594@sigill.intra.peff.net>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: rsync busy non-bare git repo 'source' to quiet
+Date: Tue, 08 Mar 2011 17:00:59 -0600
+Message-ID: <4D76B52B.8070307@gmail.com>
+References: <il66rd$46u$1@dough.gmane.org> <20110308213959.GB5786@sigill.intra.peff.net> <4D76ABB1.9080001@gmail.com> <20110308223841.GA6648@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Baumann <waste.manager@gmx.de>,
-	Robert Wruck <wruck@tweerlei.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 08 23:53:07 2011
+X-From: git-owner@vger.kernel.org Wed Mar 09 00:01:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px5m7-0005bs-7w
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 23:53:07 +0100
+	id 1Px5ty-0000Vn-78
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 00:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754961Ab1CHWxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 17:53:00 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46364 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752713Ab1CHWxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 17:53:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C728D4C16;
-	Tue,  8 Mar 2011 17:54:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+pUTLbQI6KobgZf2KzXeGVnE9R8=; b=GQhQJV
-	SxaMKzdEdQPl5yCsUMHDs4ks4JzeFeaJ7zZzBec1efoN5zQYdQKJWR8w5zWywzAW
-	3iNfrMubxlNm55RrbYQU9LtBc8MDYwyyytABgusNunFnn1hmn8XBYWwlY5W1rbtu
-	nxiVtWh0NmXQLQvcVX4K2+5/mE/+2/kErIxms=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hbI+HzYgK70KiEijqYfh/i38XPYe663Z
-	KfArZ0lUX59LbV+eNugzxegh8rx9Cp/0ELTpn5dCSvx1gHLiEVVHiuam3/xJNDyG
-	WikniWACsRgU6NvaSfrK2AxDJatuVeQnTUCeB+NM1seRqDEWT5ehjK3oSttNuY19
-	SWnQvtwbADo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 858BF4C15;
-	Tue,  8 Mar 2011 17:54:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4139F4C13; Tue,  8 Mar 2011
- 17:54:13 -0500 (EST)
-In-Reply-To: <20110308211423.GB4594@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 8 Mar 2011 16:14:23 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 00670CFC-49D7-11E0-A0C3-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755974Ab1CHXBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 18:01:08 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:61929 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755297Ab1CHXBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 18:01:07 -0500
+Received: by gyh20 with SMTP id 20so2205666gyh.19
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 15:01:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version
+         :newsgroups:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=gN8tDxhB2RSZR0DQ91V4Nn4x9m4hY6b9+cDRZoAYy2Y=;
+        b=DDpCXhey9nAR5L7a4S8mpC9F40J/mnxtVuRgz/pUnmuiIRRDM8ncM2mVnhescjUVuS
+         gmWYFONe1bzZ7/KSM+UKU6KN+Bwmt1iX40DdngWUdnfSQtQT3qJ60UmBldjaU4qHrtSJ
+         ZVtfppsprWs5HIBSi+bIngllKGXGXpMXdWy7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=wgUAOFl4O/mTZGbmATfO0lkXkcinC8CteCqhRTEumQuYSaskS52Var0nrRj1IPK/DI
+         YvepE8gD6dWcPqVHKvoKP7xBqkafNSoFUloQ+bvr1xeh7U9yrF7NjOIdkL2/INdHNOxw
+         +YJD3e1wrmNRK82cpCueBA9H61Wu817YkZQZM=
+Received: by 10.100.126.2 with SMTP id y2mr2366765anc.10.1299625266737;
+        Tue, 08 Mar 2011 15:01:06 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id c18sm932874ana.1.2011.03.08.15.01.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 08 Mar 2011 15:01:06 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20110308223841.GA6648@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168715>
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, Mar 04, 2011 at 09:16:30AM -0800, Junio C Hamano wrote:
+On 3/8/2011 4:38 PM, Jeff King wrote:
+> On Tue, Mar 08, 2011 at 04:20:33PM -0600, Neal Kreitzinger wrote:
 >
->> How prevalent is the problematic cygwin1.dll 1.7.8?  Also for how long did
->> this bug exist, in other words, if we were to make a table of problematic
->> versions, would we have only just a handful entries in it?  Also can we at
->> runtime find out what version we are running?
->> 
->> The reason I am asking these questions is because I think, assuming that
->> ...
-> How are we doing the runtime test for platform max write?
+>> Rsync seems like a simpler solution and more accurate solution for
+>> creating a copy of an ecosystem of interrelated git repos colocated on
+>> the same box.
+>
+> Sure. It is simpler, but not atomic unless you do a multi-stage rsync.
+>
+>> A previous post in the newsgroup states:
+>>> If you want your rsync backup to be fine, you need to follow some
+>>> ordering.  You need to copy the refs first (.git/packed-refs and
+>>> .git/refs/), then the loose objects (.git/objects/??/*), and then all
+>>> the rest.  If files are copied in a different order while some write
+>>> operations are performed on the source repository then you may end up
+>>> with an incoherent repository."
+>>
+>> Would that work?
+>
+> If you do it in that order, the end result will be a consistent repo.
+> But during the copy, the refs at the destination will point to objects
+> you don't have. I don't know if that matters for your case.
+>
+We won't be trying to used the "destination" repos during the rsync. 
+The workflow will be:
+(1) I need to test a change to the goldbox change control menu system.
+(2) I determine that my testbox "copy" of the change control menu system 
+has repos that are too out-of-date for a good test, so I run rsync to 
+make a fresh copy of the goldbox.
+(3) After the rsync is finished, I pull over just the branch that 
+contains my untested change menu scripts.  (this is the only git pull i 
+do from goldbox to testbox.)
+(4) I test the changes and see they are good.
+(5) I merge the changes into the master branch of the change control 
+menu non-bare repo on the goldbox.  The menu runs from the working tree 
+so now they are live.
 
-I asked (1) if we can find out at runtime if we are on which version of
-cygwin1.dll, and (2) if we can have a small list of "bad" versions of
-cygwin1.dll.  If both are true, the runtime test should be trivial, no?
+Since I won't be trying to access refs in the "destination" repos via 
+git commandline or gui while the rsync is running, it sounds like it 
+will be ok.  I can keep people from banging on the testbox.  I can't 
+keep them from banging on the goldbox.
 
-> So I think the test needs to be "is our version of cygwin in the broken
-> list" and not "let's try a few different writes and see what works".
+In regards to the working tree of a busy "source" repo, it sounds like 
+it could end up not matching the index.  At the end of the script I 
+could execute a "git reset --hard && git clean -f" on each non-bare repo 
+as you suggested.  That would be pretty straightforward.
 
-Yes, that is exactly what I had in mind.
+Thanks!
+
+v/r,
+Neal
