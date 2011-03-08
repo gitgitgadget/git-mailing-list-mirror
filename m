@@ -1,85 +1,80 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: --max-count useless with git-rev-list's --reverse
-Date: Tue, 08 Mar 2011 09:30:36 +0100
-Message-ID: <4D75E92C.1090506@drmicha.warpmail.net>
-References: <AANLkTikpK-r_kdqCEPwpqEgENtwgUrZDLwZnuS2QMdH=@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 09:34:15 2011
+Subject: [PATCH 2/3] git-log.txt,rev-list-options.txt: -n/--max-count is commit limiting
+Date: Tue,  8 Mar 2011 09:31:25 +0100
+Message-ID: <4c0ad5a9af1d18e59a7e820349a531f220cbf776.1299572814.git.git@drmicha.warpmail.net>
+References: <4D75E92C.1090506@drmicha.warpmail.net>
+Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 08 09:35:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwsMt-0001x0-NI
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 09:34:12 +0100
+	id 1PwsNf-0002EB-LL
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 09:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756344Ab1CHIeF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2011 03:34:05 -0500
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:60303 "EHLO
+	id S1756221Ab1CHIe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 03:34:56 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:59834 "EHLO
 	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756178Ab1CHIeE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2011 03:34:04 -0500
+	by vger.kernel.org with ESMTP id S1753459Ab1CHIez (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2011 03:34:55 -0500
 Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A88E0206BA;
-	Tue,  8 Mar 2011 03:34:02 -0500 (EST)
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 01A0220B19;
+	Tue,  8 Mar 2011 03:34:54 -0500 (EST)
 Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 08 Mar 2011 03:34:02 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=N4XJDvr6c/AhjXxLqWp5Tm8aHbo=; b=DLn2PcHNosd8dUsg0wRIcoC7HAeQ6AR6RU/v//qYae9Jxsh1Q8/2sppimohq2REwnfPrx+X5VpsYORr7LQKMHT0m46CZC5Hc/r+LblgKh0aIaqqpMr90IXBS4JgkFe6DnpLWlOIKYRem6pRwZvxg2uQlbOrujl+c/nAfIJjsGWg=
-X-Sasl-enc: BesBPe0mouqscYwhHra+benV5aAEVNc6EE+wDzcB0N2I 1299573242
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2A26940547F;
-	Tue,  8 Mar 2011 03:34:02 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.8
-In-Reply-To: <AANLkTikpK-r_kdqCEPwpqEgENtwgUrZDLwZnuS2QMdH=@mail.gmail.com>
+  by compute2.internal (MEProxy); Tue, 08 Mar 2011 03:34:55 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=Wt83idOTH+mbEZa11NfzpmbDRRY=; b=ZyD91xK8ItMH9eEvDh5Qeasn8hWROsdw9S9xcl3X3lkmMylA1D8pXIYFFGZBdbP+ZFmt80t5iSTjRXWIOhVebJeryFFpOm6VtfDgZedJ4U2XLJChLKOvvSTRHt5xIuGbdYVLkz98Lll38nidCd0e0VYgKV7Ysmwv5qsGeKZ/UOE=
+X-Sasl-enc: nN1vhO3UwbsJSS4VTxb9Kl+iv1uWJY8QPpSH7sZzu366 1299573294
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7608C407B0B;
+	Tue,  8 Mar 2011 03:34:54 -0500 (EST)
+X-Mailer: git-send-email 1.7.4.1.299.g567d7.dirty
+In-Reply-To: <4D75E92C.1090506@drmicha.warpmail.net>
+In-Reply-To: <2862dfc9969beb42636ec44292d3509ddb215285.1299572814.git.git@drmicha.warpmail.net>
+References: <2862dfc9969beb42636ec44292d3509ddb215285.1299572814.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168643>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 07.03.2011 2=
-0:17:
-> On git.git, this works as expected, gives me the first 3 commits:
->=20
->    $ git rev-list --reverse origin/master | head -n 3
->     e83c5163316f89bfbde7d9ab23ca2e25604af290
->     8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
->     e497ea2a9b6c378f01d092c210af20cbee762475
->=20
-> Why is this so useless about ignoring the --reverse option, is this m=
-y
-> design (these are the 3 *latest* commits):
+and therefore applied after commit ordering and formatting options, in
+particular --reverse. Say so.
 
-I don't think it's your design ;)
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/git-log.txt          |    1 +
+ Documentation/rev-list-options.txt |    3 ++-
+ 2 files changed, 3 insertions(+), 1 deletions(-)
 
->=20
->     $ git rev-list --reverse origin/master --max-count=3D3
->     08fd8710e277eed73a21c6c5483c57bfeb14e8a7
->     6d74e5c9dbe71e2eb63c6e8862ec979e9a5f068b
->     07873dc5dd67398324278ff0d7627bb1a863ba89
->     $ git rev-list origin/master --max-count=3D3
->     07873dc5dd67398324278ff0d7627bb1a863ba89
->     6d74e5c9dbe71e2eb63c6e8862ec979e9a5f068b
->     08fd8710e277eed73a21c6c5483c57bfeb14e8a7
->=20
-> From the manpage:
->=20
->    --reverse
->        Output the commits in reverse order. Cannot be combined with
-
-And that's exactly what it does - built in "tac", so to say.
-
-> --walk-reflogs.
->=20
-> Shouldn't --reverse be applied *before* --max-count?
-
-We could be clearer about the order in which these options are applied,
-for example by listing the option blocks in that order and pointing out
---reverse in particular, see the upcoming little (squashable series).
-
-Cheers,
-Michael
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index ff41784..48c1715 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -25,6 +25,7 @@ OPTIONS
+ 
+ -<n>::
+ 	Limits the number of commits to show.
++	Note that this is a commit limiting option, see below.
+ 
+ <since>..<until>::
+ 	Show only commits between the named two commits.  When
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 76add13..adcafa0 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -158,7 +158,8 @@ Commit Limiting
+ 
+ Besides specifying a range of commits that should be listed using the
+ special notations explained in the description, additional commit
+-limiting may be applied.
++limiting may be applied. Note that they are applied before commit
++ordering and formatting options, such as '--reverse'.
+ 
+ --
+ 
+-- 
+1.7.4.1.299.g567d7.dirty
