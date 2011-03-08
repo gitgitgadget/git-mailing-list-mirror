@@ -1,99 +1,90 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: Cannot fetch whole history from Perforce
-Date: Tue, 8 Mar 2011 23:33:21 +0100
-Message-ID: <AANLkTimaB3BU3YQgC7qgqUH=qYGrthPxnz63b-MLAbCR@mail.gmail.com>
-References: <AANLkTik6fxHUJbp6dWdAgV-wr=P=FxK1K-vGAGy8ruBd@mail.gmail.com>
-	<AANLkTin6BBD+b2OYRk32GyAaEqFa-V7T1B7jEVujRkuL@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] cherry-pick -x: add newline before pick note
+Date: Tue, 8 Mar 2011 16:34:48 -0600
+Message-ID: <20110308223448.GF26471@elie>
+References: <d0318dcd2b52f2e818888003e3dd81c7b713fec6.1289920242.git.git@drmicha.warpmail.net>
+ <loom.20110308T134920-72@post.gmane.org>
+ <20110308220843.GA27156@elie>
+ <20110308221855.GA4030@ugly.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pete Wyckoff <pw@padd.com>
-To: Thomas Berg <merlin66b@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 23:34:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Martin Svensson <martin.k.svensson@netinsight.se>,
+	Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>
+To: Oswald Buddenhagen <ossi@kde.org>
+X-From: git-owner@vger.kernel.org Tue Mar 08 23:35:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px5To-0005pG-Bi
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 23:34:12 +0100
+	id 1Px5UZ-0006A1-Ks
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 23:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828Ab1CHWeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 17:34:06 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64798 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754604Ab1CHWeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 17:34:05 -0500
-Received: by fxm17 with SMTP id 17so5611200fxm.19
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 14:34:04 -0800 (PST)
+	id S1755836Ab1CHWez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 17:34:55 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:57356 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754604Ab1CHWey (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 17:34:54 -0500
+Received: by vxi39 with SMTP id 39so5172196vxi.19
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 14:34:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=9W+Un3yllls2Ij1OoRHTvgRRJqobotbgMGYAGdrO9O0=;
-        b=jZAvidiFn8kll/FKTEMzsp23VM92p4qw7Na07uX/4O2Ixd5StuX/n958hpRJEA/gd9
-         uEFniMAxTuJ1VPiDB6GsjUVgWOsGoCjR3fr8ZTwGmdjopt0BmAlKa8O4LJ0hyLeqwpkg
-         3jgy7KnH6bu2zHA40OS6ltVnr7nst5gztOE3g=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=ieAFG7kTTqMS/JG7toovS+QhOGH82C5Y+Ggymm/Q2/I=;
+        b=fgdWMhPLm28F7EzioddSReKWY+ru4LdMfNPXunUxqreHqhPtEvBLs/HcovQgyuDFXf
+         g+anwwE30l5BsO/e/U4J24Be+iwaUvfEzvVjlfNosN65wt7aeUzfFuMinICFJuDv8Cd0
+         bn2EC87q7uU93PFC6Gofah+YENzsW09P/hfR4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=qydMBptSoUTFu4KggaYEMt7vSi0cUa488Sl12fsLtZoHKoumsgFsR7peooE9QMoE9U
-         24WbrITu/aghj9CoF1gNOCg+kgAw+HvnRzHExREaXxag3CMMMGmLFRXVU61duEh2tQC1
-         l/lJ3mJhaXrw2Sk4ZvEAyg9sSX86Zt9tUCT6o=
-Received: by 10.223.143.86 with SMTP id t22mr4464588fau.81.1299623601979; Tue,
- 08 Mar 2011 14:33:21 -0800 (PST)
-Received: by 10.223.151.16 with HTTP; Tue, 8 Mar 2011 14:33:21 -0800 (PST)
-In-Reply-To: <AANLkTin6BBD+b2OYRk32GyAaEqFa-V7T1B7jEVujRkuL@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kyqOeb3aRPmSCYKRCavUQm3Ps1Z0CWoe7r+aRQ7mx3jUJFCnOOg0p4gcq5BRZF6Wyg
+         YAM47M+YU4R0Zq+LI1Rfi5mEpU4TI89ItZ01Bu+5HfGKN9oGP/Ev2fNp6vESwFFWGrOH
+         AKgTkcCikDLlNOiFqXrfATSWPAshd8opIbBWE=
+Received: by 10.52.97.2 with SMTP id dw2mr1054049vdb.54.1299623693545;
+        Tue, 08 Mar 2011 14:34:53 -0800 (PST)
+Received: from elie (adsl-69-209-61-99.dsl.chcgil.sbcglobal.net [69.209.61.99])
+        by mx.google.com with ESMTPS id cc16sm243011vdb.44.2011.03.08.14.34.51
+        (version=SSLv3 cipher=OTHER);
+        Tue, 08 Mar 2011 14:34:52 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110308221855.GA4030@ugly.local>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168712>
 
-On Tue, Mar 8, 2011 at 9:36 PM, Thomas Berg <merlin66b@gmail.com> wrote:
-> Hi,
->
-> On Tue, Mar 8, 2011 at 7:09 PM, Anatol Pomozov <anatol.pomozov@gmail.com> wrote:
->> Hi, I am using HEAD version of the git and I have an issue with git-p4
->> tool (p4 to git importer).
->>
->> git-p4 works fine when I import HEAD version of my project
->>
->> $ git p4 clone //depot/foo/bar --verbose
->> But it fails with a cryptic error when I try to import @all revisions:
-> [...]
->>
->> $ git p4 clone //depot/foo/bar@all --verbose
->> Importing from //depot/foo/bar@all into bar
-> [...]
->>
->> Can it be related to Pete's changes?
->> http://permalink.gmane.org/gmane.comp.version-control.git/167281
+Hi again.
 
-Whoops! The P4Clone class is a subclass of P4Sync, which means that
-this check (The one you mention from e32e00dc) will be done on every
-clone with @all. We can't have that :)
+Oswald Buddenhagen wrote:
 
-It works for me if I patch it with this one-liner (but it's not
-exactly a beautiful looking line of code anymore):
+> i posted via the gmane webform ...
 
-    -- Tor Arvid
----
+(See <http://thread.gmane.org/gmane.comp.version-control.git/154490>.
+It's obnoxious that there is not an easier way, I agree.)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 2df3bb2..7cb479c 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1763,7 +1763,7 @@ class P4Sync(Command):
+> i did a much simpler patch in that vein as well, but scrapped it again -
+> totally overengineered. the idea is to optimize the simple case -
+> cherry-pick -x, push. everything else needs amends anyway.
 
-                 changes.sort()
-             else:
--                if not self.p4BranchesInGit:
-+                if not isinstance(self, P4Clone) and not self.p4BranchesInGit:
-                     die("No remote p4 branches.  Perhaps you never
-did \"git p4 clone\" in here.");
-                 if self.verbose:
-                     print "Getting p4 changes for %s...%s" % (',
-'.join(self.depotPaths),
+It's been a vague wish of mine for a while to fix "cherry-pick -x -s".
+I currently use it without amends and tolerate the blank line between
+the "cherry picked" and the sign-off.
+
+Maybe you can convince people that wanting no extra blank line between
+an existing sign-off and the "cherry picked from" line is
+overengineering and worth regressing.  I am not a fanatic about it ---
+I just thought it was worth mentioning that this proposed change would
+not be seen as positive by everyone.
+
+Put another way, I don't find the two words "totally overengineered"
+very convincing here.  For what it's worth.
+
+Cheers,
+Jonathan
