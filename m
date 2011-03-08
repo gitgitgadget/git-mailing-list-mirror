@@ -1,147 +1,122 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: Fwd: [PATCH 2/2] pretty.c: allow date formats in user format
- strings
-Date: Tue, 08 Mar 2011 08:29:45 +0000
-Message-ID: <1299572985.4071.30.camel@walleee>
-References: <20110305195020.GA3089@sigill.intra.peff.net>
-	 <20110305200010.GB32095@sigill.intra.peff.net>
-	 <AANLkTinH8zwX2sbd5bpk=x4R3zOAg3Dc92Fbspfdv03T@mail.gmail.com>
-	 <AANLkTikaN=wsg6RLFaFxh=L3RCYjKkVGFR4VTrQ=KRZk@mail.gmail.com>
-	 <20110307161758.GB11934@sigill.intra.peff.net>
-	 <1299518898.3024.10.camel@wpalmer.simply-domain>
-	 <1299523834.1835.17.camel@walleee>
-	 <20110307192640.GB20930@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH jk/strbuf-vaddf] compat: fall back on __va_copy if available
+Date: Tue, 8 Mar 2011 02:33:44 -0600
+Message-ID: <20110308083344.GD26516@elie>
+References: <20110224142308.GA15356@sigill.intra.peff.net>
+ <20110224142647.GA15477@sigill.intra.peff.net>
+ <AANLkTin7NBx5NVRkHpgymcZfnaZaJehMMpPv=zD+cKtV@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 08 09:29:59 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 09:33:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwsIo-0000Dd-3J
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 09:29:58 +0100
+	id 1PwsMe-0001n3-7r
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 09:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755906Ab1CHI3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 03:29:52 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:37763 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754492Ab1CHI3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 03:29:51 -0500
-Received: by wwi17 with SMTP id 17so617337wwi.1
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 00:29:50 -0800 (PST)
+	id S1755674Ab1CHIdu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2011 03:33:50 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:62011 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753459Ab1CHIdt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2011 03:33:49 -0500
+Received: by gyh20 with SMTP id 20so1954763gyh.19
+        for <git@vger.kernel.org>; Tue, 08 Mar 2011 00:33:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
-         :content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=J4QeZ14JbtkFJX1MpNcLazuTSsEubiJ+rp0oiJNPNDE=;
-        b=td78qFfIkuEmVCH5qvmEDUt6KCMn01lVP7if4s2rA/QNEVUza9qyMBwhklItBE5ZC4
-         TsHblPgJQacFbHVaqxvrpoff5c0KEdal7Ti4bF8WS5S6TD5i4bhQBHTOaVNFly8qWv5j
-         0XFWBl3lp6Q4Zk6SCTBt3yeMwUVJvwgx2l7Sc=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=1xlvKxrdqSUY8yNO+IR/zXZmtzr/bewd8cYptjQwmfA=;
+        b=xdz5R+cqn1knSeLRL9EL6ayT/z0QSDxSEC/v27+T86nogC+wApKFcMtC0v1zXOAN6U
+         upKhypxMQGcB2xjSfS0Ex+LMMnJWJKnd7DvCbU1nWvZzPZt3ZrkFT65Jii1XjptzGJr3
+         Zh/yIUJIcPKmNFvWTV/xTc9SRfGFK34b9KFy8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=v6A4gX7BpHRojifz8f7a75U/JHPjX/zwMk/PKA8XznJkL07ClOTn024et47AkIAgFT
-         wUhE3mkbXTVhZzkt9jV2iaygKnz/sgT3k0ZjxA3ZkUjD38xnoNV+qcwaLTROUBUIjxFL
-         xi3QaYxa1hCyhosYdgJs26OEjPJo6QS2Kly+k=
-Received: by 10.216.171.133 with SMTP id r5mr3067272wel.91.1299572990430;
-        Tue, 08 Mar 2011 00:29:50 -0800 (PST)
-Received: from [192.168.0.2] (5acc3aad.bb.sky.com [90.204.58.173])
-        by mx.google.com with ESMTPS id f52sm187600wes.35.2011.03.08.00.29.47
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=o4KuMd/ZRrnYvA8a+Hn9VbT4wnAwZgkgSyIP98TmKkqo5KmwCFqVzXUGDFhO6c7n5N
+         yTQpZLzjIhbk8JK4QEpJgRv6xo7buOtDMa65O6bNPLDySWkEJskA+S6RCQALr3z3GEUt
+         l/WEYFOQXpOXy8xUgQGmzsag8f1RMEsxheY7Y=
+Received: by 10.90.8.38 with SMTP id 38mr6382088agh.48.1299573229049;
+        Tue, 08 Mar 2011 00:33:49 -0800 (PST)
+Received: from elie (adsl-69-209-61-99.dsl.chcgil.ameritech.net [69.209.61.99])
+        by mx.google.com with ESMTPS id w6sm708943anf.26.2011.03.08.00.33.46
         (version=SSLv3 cipher=OTHER);
-        Tue, 08 Mar 2011 00:29:48 -0800 (PST)
-In-Reply-To: <20110307192640.GB20930@sigill.intra.peff.net>
-X-Mailer: Evolution 2.28.3 
+        Tue, 08 Mar 2011 00:33:47 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTin7NBx5NVRkHpgymcZfnaZaJehMMpPv=zD+cKtV@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168641>
 
-On Mon, 2011-03-07 at 14:26 -0500, Jeff King wrote:
-> On Mon, Mar 07, 2011 at 06:50:34PM +0000, Will Palmer wrote:
-> 
-> > I'm home now, and apparently that should have been:
-> > https://github.com/wpalmer/git/tree/pretty/parse-format
-> > 
-> > I assume the code is very hard to follow, as it was pretty much written
-> > with the mindset of "get it done now, fix it later". Looking into it
-> > again, I see that part of the reason I abandoned it was not being able
-> > to determine a good way to split things into logical commits. It's
-> > almost entirely an "everything works or nothing works" change.
-> 
-> I haven't looked at your code yet, but the breakdown of patches I would
-> expect / hope for is something like:
-> 
->   1. introduce infrastructure for creating parse-tree from strbuf_expand
->      format, with some tests
-> 
->   2. port format_commit_* over to new system; I would expect that the
->      caller code will have to be part of both the parsing and the
->      expansion, since the generic code can't know that "%ad" is
->      meaningful (and we want to keep it for backwards compatibility).
->      Leave format_commit_message as a parse + expand wrapper for simple
->      callers who don't care about speed.
-> 
->   3. Add generic "%(key:option)" support to the new infrastructure,
->      forward-porting format_commit_* as necessary (and hopefully the
->      change are minimal...).
-> 
-> So those are all big commits, obviously,
+Since an obvious implementation of va_list is to make it a pointer
+into the stack frame, implementing va_copy as "dst =3D src" will work o=
+n
+many systems.  Platforms that use something different (e.g., a size-1
+array of structs, to be assigned with *(dst) =3D *(src)) will need some
+other compatibility macro, though.
 
-Yeah, looks about right. It's mostly the "those commits will still be
-pretty big" that I was concerned with. There's also the question of:
-as my end-goal is conditional formatting, should these "smaller, but
-still big" commits try to make sense independently, or, for example,
-should I lay out a basic structure in the earlier commits, filled-out
-with a relatively simple loop, and only later expand that into the
-recursive function / parse-tree structure; or, should I start with the
-"fancy" structures, even before they have a justification?
+Luckily, as the glibc manual hints, such systems tend to provide the
+__va_copy macro (introduced in GCC in March, 1997).  By using that if
+it is available, we can cover our bases pretty well.
 
- - the "simple first" way sounds tempting, but it has the result of
-   pretty much "inventing" in-between code which is never intended to
-   actually be used. (even if it is intended to compile and work just 
-   fine)
- - the "write it as it will be", however, is going to result in commits
-   which may not make any sense one after another, and really only make
-   sense in the end. I don't know if that's okay.
+Discovered by building with CC=3D"gcc -std=3Dc89" on an amd64 machine:
 
-Neither of these options sound fun for bisecting, and yet it's such a
-big change (in terms of "everyone uses log, so every user is effected")
-that ease of bisectability seems like a very important consideration.
+ $ make CC=3Dc89 strbuf.o
+ [...]
+ strbuf.c: In function =E2=80=98strbuf_vaddf=E2=80=99:
+ strbuf.c:211:2: error: incompatible types when assigning to type =E2=80=
+=98va_list=E2=80=99 from type =E2=80=98struct __va_list_tag *=E2=80=99
+ make: *** [strbuf.o] Error 1
 
-What I don't want to do is start the patch over from scratch, with only
-the "long formats"/"unification with for-each-ref" in mind, only to
-submit another patch following up later on that needs to completely
-change the structures again to fit with the "parse tree" idea. Given
-that the basic %(opt-color?...) test works, I expect that the current
-state of the tree-structure is at least fairly close to what it should
-be, though I also expect that someone with more experience writing
-parsers may want to slap me for the way that structure is built.
-Criticism is anticipated and appreciated.
+Explained-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Erik Faye-Lund wrote:
 
->
-> ...................................... but hopefully it lets us review
-> in three stages: does the new infrastructure look good, does porting an
-> existing caller (and probably the most complex caller) clean up the
-> caller code, and then finally, does the new syntax look good?
-> 
-> But of course the devil is in the details, so probably that breakdown
-> has some flaw in it. :) I'll see when I look at your code how close to
-> reality I came.
-> 
-> -Peff
+> Wouldn't it be even more portable to fall back on use __va_copy (if
+> present), as suggested by Junio in
+> <7vbpip86q5.fsf@alter.siamese.dyndns.org>?
 
-Er, good luck :)
-As a side-note: It turns out that rebasing to the current "next" was not
-too difficult. The result hasn't been pushed yet (I need to do a little
-be of forensic work to make sure a behaviour I'm seeing isn't a
-rebase-induced regression), but it does imply that at least pretty.c
-should still make a fair amount of sense, even though it's about a year
-old. Most of the problems I expected of the rebase, it turns out would
-have been in sections which I hadn't actually done yet.
+Yes, it seems so.
+
+ git-compat-util.h |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 00d41e4..f4cb0a9 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -536,7 +536,16 @@ void git_qsort(void *base, size_t nmemb, size_t si=
+ze,
+ #endif
+=20
+ #ifndef va_copy
+-#define va_copy(dst,src) (dst) =3D (src)
++/*
++ * Since an obvious implementation of va_list would be to make it a
++ * pointer into the stack frame, a simple assignment will work on
++ * many systems.  But let's try to be more portable.
++ */
++#ifdef __va_copy
++#define va_copy(dst, src) __va_copy(dst, src)
++#else
++#define va_copy(dst, src) ((dst) =3D (src))
++#endif
+ #endif
+=20
+ /*
+--=20
+1.7.4.1
