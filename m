@@ -1,87 +1,64 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git diff: add option for omitting the contents of deletes
-Date: Tue, 08 Mar 2011 08:14:48 +0100
-Message-ID: <4D75D768.1080701@drmicha.warpmail.net>
-References: <AANLkTi=++gcw5CDQnTRbhUGkvWc9Zm+Ct4Zm5oGGYKUh@mail.gmail.com>	<7vk4gm7dz3.fsf@alter.siamese.dyndns.org>	<4D6A6291.8050206@drmicha.warpmail.net>	<7v7hclulz0.fsf@alter.siamese.dyndns.org>	<7v39n9uldp.fsf@alter.siamese.dyndns.org>	<4D6B4F6B.1040209@drmicha.warpmail.net>	<20110228121726.GA5197@sigill.intra.peff.net>	<20110228122335.GB5197@sigill.intra.peff.net>	<7vy650hvwa.fsf@alter.siamese.dyndns.org>	<20110228222352.GC5854@sigill.intra.peff.net>	<7vfwr7hh7f.fsf@alter.siamese.dyndns.org>	<7vy64zg0ms.fsf@alter.siamese.dyndns.org> <AANLkTinBTWPrAOq9BOkBJc5GOhFkzsr__9wqEWnWdwYR@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Is there a way to add a default `--squash` flag for all merges
+ into a head?
+Date: Tue, 8 Mar 2011 02:29:38 -0500
+Message-ID: <AANLkTinmdQ6r8cBDsFjXR+KLGeZR1-yeu7h9R=X0+1PG@mail.gmail.com>
+References: <9f02bed0-fa18-46b1-a3d3-346e1cc7dc01@k15g2000prk.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: =?ISO-8859-1?Q?Mart_S=F5mermaa?= <mrts.pydev@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 08:26:52 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Dun Peal <dunpealer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 08:30:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwrJi-0003Wp-17
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 08:26:50 +0100
+	id 1PwrN0-0004QC-Tq
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 08:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245Ab1CHH0p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2011 02:26:45 -0500
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:50470 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750695Ab1CHH0o (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2011 02:26:44 -0500
-X-Greylist: delayed 508 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Mar 2011 02:26:44 EST
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 2B2ED20A40;
-	Tue,  8 Mar 2011 02:18:15 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 08 Mar 2011 02:18:15 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ohv30yMTud5CgA79IzHidZEpnzE=; b=ikgXMcsm8gbhWKFspN5fRVmllAU4HLdquEpH1eVmiQmv+pBSZqkwhiukfQVpMOSeRMXHNw8jmGwINKZwrcExuepm4ghjiQQqGtpCVK8R8Q/bBe2zqXzHfTj/wBJj8x09gFbe1WCnM8ZyaNic+FdW07rMAEajmrpAur1DSQu88PY=
-X-Sasl-enc: vwJLdJG49ENUsvFhheI02Xm9QoPJ3fH64mRe3yAuw177 1299568694
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 736EA440781;
-	Tue,  8 Mar 2011 02:18:14 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.8
-In-Reply-To: <AANLkTinBTWPrAOq9BOkBJc5GOhFkzsr__9wqEWnWdwYR@mail.gmail.com>
+	id S1754559Ab1CHHaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2011 02:30:10 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42814 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753337Ab1CHHaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 02:30:08 -0500
+Received: by iwn34 with SMTP id 34so4626234iwn.19
+        for <git@vger.kernel.org>; Mon, 07 Mar 2011 23:30:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=IR99Eu8SEPGbOOBqULGowkM1MoM60Cqo4l8AmkFDhWw=;
+        b=dGmCWt/ajx3VesL+ldRz2fLbD38Btwf4j+7riFpXx2Uhrq5tmOddl4YCs7W32mQoP8
+         mRupupyG0eJfd0FSLTbHvPg3GQb3Mjdu45ptykeRaTMSE9xTmzx/K5lL5pGwqWTxztpC
+         pxXS3/td7OFKshyZM+k9ngVQze6KbT8GEvZus=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=K8jXsF8H7P+r56SDpkjNi5OjI3lmUiYacIy2MV97IkS/worO1rJ6xMFFqvaAGaceCn
+         AS81FkvAdGGs4Z1K8w4jvtkVBWA/O7r9RCo2nhfQW5LLeeheLiXGju/NiWqeSJ+7jutm
+         ZRVgDc3Wjobejs+s8gojsrOrCvBVi4um49d4I=
+Received: by 10.231.193.214 with SMTP id dv22mr3705450ibb.157.1299569408198;
+ Mon, 07 Mar 2011 23:30:08 -0800 (PST)
+Received: by 10.231.34.7 with HTTP; Mon, 7 Mar 2011 23:29:38 -0800 (PST)
+In-Reply-To: <9f02bed0-fa18-46b1-a3d3-346e1cc7dc01@k15g2000prk.googlegroups.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168636>
 
-Mart S=F5mermaa venit, vidit, dixit 07.03.2011 21:38:
-> On Tue, Mar 1, 2011 at 2:11 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> In any case, a minimum patch to give what Mart wanted to see would
->> probably look like this.  I'll leave bugfixes, documentation and tes=
-ts to
->> the readers ;-).
->=20
-> The minimum looks to be the optimum -- IMHO this is entirely sufficie=
-nt,
-> thank you very much!
->=20
-> What would the bugfixes be (i.e. do you have any doubts about the
-> implementation)?
-> The change looks quite straightforward, to the point and bug-free to =
-my eyes.
->=20
-> I try to get to writing tests ASAP.
->=20
-> As for the documentation, would the following section be sufficient i=
-n
-> Documentation/diff-options.txt?
->=20
-> -D::
-> --irreversible-delete::
-> 	Omit file contents when file has been deleted and only
+On Mon, Mar 7, 2011 at 2:28 PM, Dun Peal <dunpealer@gmail.com> wrote:
+> There's a configuration feaute `branch.<name>.rebase` for specifying
+> that all merges into a branch (master in this case) would be done by
+> rebase, so I was expecting a similar feature for always squashing back
+> (since some developers may forget to add the flag). Unfortunately, I
+> couldn't find it. Does it exist?
 
-"if the file has"
+Try:
 
-> 	output the header. This is useful during diff review
-> 	but should not be used in actual patches as these would
-> 	be non-reversible due to the omitted file contents.
+  $ git config branch.<name>.mergeoptions --squash
 
-With the current state of git-apply, they could not even be applied, so
-maybe:
-
-	but produces patches which can not be applied by linkgit:git-apply[1].
-
-You can revert to the previous description once you've taught git-apply
-the new diff header :)
-
-Michael
+j.
