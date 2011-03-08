@@ -1,55 +1,111 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: why is my repo size ten times bigger than what I expected?
-Date: Tue, 08 Mar 2011 16:25:18 -0500
-Message-ID: <4D769EBE.40008@cfl.rr.com>
-References: <AANLkTimi+OnpdX+Y7jx1JaOmGbZc_XEgJFeK0PKLpu2o@mail.gmail.com>	<AANLkTi=V3nEamocowbHovvV0U69nZgD70fysu1CQOwrR@mail.gmail.com>	<AANLkTimp8B5Lv15qhGOwOzh+kqOS0g3Xwvgib8vyk+m+@mail.gmail.com>	<AANLkTinwHMULqPZSguYtJztuA4Oy6-s6Ah3_tcVVO7D9@mail.gmail.com>	<m2zkp9wwqe.fsf@igel.home> <AANLkTinJZFGVNSQVfCipo33h5uPpK0pFY10E203oTfhU@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff: add option for omitting the contents of deletes
+Date: Tue, 8 Mar 2011 16:31:34 -0500
+Message-ID: <20110308213133.GA5786@sigill.intra.peff.net>
+References: <4D6B4F6B.1040209@drmicha.warpmail.net>
+ <20110228121726.GA5197@sigill.intra.peff.net>
+ <20110228122335.GB5197@sigill.intra.peff.net>
+ <7vy650hvwa.fsf@alter.siamese.dyndns.org>
+ <20110228222352.GC5854@sigill.intra.peff.net>
+ <7vfwr7hh7f.fsf@alter.siamese.dyndns.org>
+ <7vy64zg0ms.fsf@alter.siamese.dyndns.org>
+ <AANLkTinBTWPrAOq9BOkBJc5GOhFkzsr__9wqEWnWdwYR@mail.gmail.com>
+ <7vipvte6jc.fsf@alter.siamese.dyndns.org>
+ <AANLkTim9juvhBJKraHBkV8AC=zY75xt_1BnyhTDTcoUZ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
 	git@vger.kernel.org
-To: Ruben Laguna <ruben.laguna@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 22:25:35 2011
+To: Mart =?utf-8?B?U8O1bWVybWFh?= <mrts.pydev@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 22:31:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Px4PO-0008U0-Af
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 22:25:34 +0100
+	id 1Px4VI-000340-NJ
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 22:31:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756674Ab1CHVZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2011 16:25:27 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:63065 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754739Ab1CHVZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2011 16:25:26 -0500
-Authentication-Results: cdptpa-omtalb.mail.rr.com smtp.user=psusi@cfl.rr.com; auth=pass (PLAIN)
-X-Authority-Analysis: v=1.1 cv=tLsyj04/L/SH/N6p42ldY6jXDYWe4pX5hAm6uRA1LKo= c=1 sm=0 a=tlzYqRVFg4UA:10 a=IkcTkHD0fZMA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:17 a=gyrN6ww6PLysaRx-40UA:9 a=AqeqPzW5goqkv_o__V5RSgTE_2sA:4 a=QEXdDO2ut3YA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 72.242.190.170
-Received: from [72.242.190.170] ([72.242.190.170:3889] helo=[10.1.1.235])
-	by cdptpa-oedge02.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTPA
-	id F5/80-05134-0CE967D4; Tue, 08 Mar 2011 21:25:22 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <AANLkTinJZFGVNSQVfCipo33h5uPpK0pFY10E203oTfhU@mail.gmail.com>
-X-Enigmail-Version: 1.1.1
+	id S1755876Ab1CHVbf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2011 16:31:35 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49792
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753000Ab1CHVbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2011 16:31:34 -0500
+Received: (qmail 4795 invoked by uid 107); 8 Mar 2011 21:32:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Mar 2011 16:32:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Mar 2011 16:31:34 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTim9juvhBJKraHBkV8AC=zY75xt_1BnyhTDTcoUZ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168701>
 
-On 3/7/2011 4:59 AM, Ruben Laguna wrote:
-> Cloning it that way didn't help either,
-> 
-> But I have more info
-> 
-> If I set a bare repo and push my four branches to it (master, develop,
-> gh-pages and experimental) the total size of the repo is 2.4MB
-> (instead of 87MB)
+On Tue, Mar 08, 2011 at 11:25:04PM +0200, Mart S=C3=B5mermaa wrote:
 
-Then there are other branches using that space.  Run git branch -a and
-see what else is there.
+> "It also might make sense to apply the similar principle to shorten t=
+he output
+> with -B when a rewrite patch is expressed as a single hunk patch that=
+ removes
+> everything old and then adds everthing new."
+>=20
+> I have to admit that I've never used -B, only -M, so please don't min=
+d that
+> its semantics and exact behavior are a bit foreign to me.
+>=20
+> After running t/t4130-apply-criss-cross-rename.sh,
+> `git diff -M -B` outputs the following:
+>=20
+> diff --git a/file2 b/file1
+> similarity index 100%
+> rename from file2
+> rename to file1
+> diff --git a/file1 b/file2
+> similarity index 100%
+> rename from file1
+> rename to file2
+>=20
+> Can you bring a similar example of changes in the output after
+> the above-mentioned similar principle has been implemented for -B?
+
+Try:
+
+  $ git init
+  $ perl -e 'print "a\n" for (1 .. 1000)' >file
+  $ git add file && git commit -m one
+  $ perl -e 'print "b\n" for (1 .. 1000)' >file
+
+Now you can see that -B breaks notes it as a rewrite:
+
+  $ git diff --stat --summary -B
+   file | 2000 +++++++++++++++++++++++++++----------------------------
+   1 files changed, 1000 insertions(+), 1000 deletions(-)
+   rewrite file (100%)
+
+And the diff is long:
+
+  $ git diff -B
+  diff --git a/file b/file
+  dissimilarity index 100%
+  index 5cfafaa..a7b871a 100644
+  --- a/file
+  +++ b/file
+  @@ -1,1000 +1,1000 @@
+  -a
+  -a
+  [... x 1000]
+  +b
+  +b
+  [... x 1000]
+
+But we could perhaps drop the actual 1000-line hunks (or maybe even jus=
+t
+the deletion half).
+
+-Peff
