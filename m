@@ -1,140 +1,92 @@
 From: Namhyung Kim <namhyung@gmail.com>
-Subject: Re: [PATCH v2] blame: honor core.abbrevguard
-Date: Tue, 08 Mar 2011 10:38:16 +0900
-Message-ID: <1299548296.1467.18.camel@leonhard>
-References: <1299472540-6066-1-git-send-email-namhyung@gmail.com>
-	 <1299475335-8436-1-git-send-email-namhyung@gmail.com>
-	 <7vipvuzau2.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] gitignore: ignore GNU GLOBAL tag files
+Date: Tue, 08 Mar 2011 10:42:22 +0900
+Message-ID: <1299548542.1467.22.camel@leonhard>
+References: <1299473349-6248-1-git-send-email-namhyung@gmail.com>
+	 <AANLkTinG_pTCyMHov6AexP0rc=PV3wu2TmH=wSkRQ7nH@mail.gmail.com>
+	 <vpqtyffrv68.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 02:38:35 2011
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 08 02:42:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pwlsg-00023v-Ju
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 02:38:34 +0100
+	id 1PwlwZ-0003Rl-D6
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 02:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752551Ab1CHBiV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 20:38:21 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:48574 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750754Ab1CHBiU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2011 20:38:20 -0500
-Received: by pwi15 with SMTP id 15so851164pwi.19
-        for <git@vger.kernel.org>; Mon, 07 Mar 2011 17:38:20 -0800 (PST)
+	id S1756055Ab1CHBma convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2011 20:42:30 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:41147 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753779Ab1CHBma (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2011 20:42:30 -0500
+Received: by pxi15 with SMTP id 15so811034pxi.19
+        for <git@vger.kernel.org>; Mon, 07 Mar 2011 17:42:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:subject:from:to:cc:in-reply-to:references
          :content-type:date:message-id:mime-version:x-mailer
          :content-transfer-encoding;
-        bh=1C/A67bO7OuPhFkPiNPRXdV81wJHGKnYjdjNRimQTig=;
-        b=pmzPxUyfwskHQVKNAoKkf1sNNSUa2aGDEQBZwmr/s+BSewXeFV+A/uWsQd2iqw4Jzq
-         jF9oEW1yfUbF0qSxhTgXcYwfDZZXHclLdZOokAySp78sIftWQVZ409+sP1xT2840pm6l
-         cDp8FVdjeGqiueLZoRkGjJ5s9UfFh2naWp70w=
+        bh=pI56xtb50JCL4snCW4+eWklI6hCUVwymUODSYXiTuIA=;
+        b=lGCiLzom+wyk/CJiICpO6OhJJQ3gd+RSvmdvOCcjYoGpHnpjDYqL+yrZEPHzO+o2sh
+         GVSswW+yR+/nyBtG1zryX4wGhRyCb2BsvUJ7xVRRFRVpS7HYJGct1j5NAut0NiLPTRdW
+         U30+PDz6NzyIDI+fLDfPDfjdpyeU5MVwVahcA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=subject:from:to:cc:in-reply-to:references:content-type:date
          :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=qnVftcbnEyjRHmFsizm6N4hgJyr5IScj6/wR+W71LsBz2NCYXSbhmF5orcP6OjtYha
-         mQ4gBn0NWDTmVJatcABCsH0j2wcD97v8DxMAsY+jC55LJycpm2SNOgaYQ3HJJnRAoY8Z
-         F/D8BKjyOstIXy0Wft2nnXYNi/iliDrC2jcJ8=
-Received: by 10.142.192.9 with SMTP id p9mr573829wff.120.1299548300265;
-        Mon, 07 Mar 2011 17:38:20 -0800 (PST)
+        b=Q9cC29YFLMwtxWe3qtSYi7ThVflwzzvjw+qj/OGKWKUNTqUChziS13VYjSBAFr7ZKQ
+         yCsoxxYujEb+oNn3diVs8zMKUP85PXiK6EVZRdqpf+CZgblnQcWFMzVD/img1eALtImg
+         HYYBxiaWmxzc2uHNDpCKcgc5WZaNifCb6dYHs=
+Received: by 10.142.188.2 with SMTP id l2mr2854823wff.261.1299548549655;
+        Mon, 07 Mar 2011 17:42:29 -0800 (PST)
 Received: from [118.176.73.109] ([118.176.73.109])
-        by mx.google.com with ESMTPS id z8sm267871wfj.1.2011.03.07.17.38.18
+        by mx.google.com with ESMTPS id o11sm263661wfa.12.2011.03.07.17.42.25
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 07 Mar 2011 17:38:19 -0800 (PST)
-In-Reply-To: <7vipvuzau2.fsf@alter.siamese.dyndns.org>
+        Mon, 07 Mar 2011 17:42:26 -0800 (PST)
+In-Reply-To: <vpqtyffrv68.fsf@bauges.imag.fr>
 X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168631>
 
-Hi,
-
-2011-03-07 (=EC=9B=94), 16:59 -0800, Junio C Hamano:
-> Namhyung Kim <namhyung@gmail.com> writes:
+2011-03-07 (=EC=9B=94), 13:07 +0100, Matthieu Moy:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >=20
-> > Commit 72a5b561 ("core.abbrevguard: Ensure short object names stay
-> > unique a bit longer") introduced this config variable to make objec=
-t
-> > name unambiguously. Use it.
+> > On Mon, Mar 7, 2011 at 05:49, Namhyung Kim <namhyung@gmail.com> wro=
+te:
 > >
-> > Signed-off-by: Namhyung Kim <namhyung@gmail.com>
-> > ---
-> > v2:
-> >  - re-init 'length' in every loop
+> >>  /TAGS
+> >> +/GTAGS
+> >> +/GRTAGS
+> >> +/GPATH
+> >> +/GSYMS
+> >>  /cscope*
+> >>  *.obj
+> >>  *.lib
+> >
+> > What causes these to be added?
 >=20
-> In this codepath, we only aim to make sure that the shortened object =
-name
-> is of the same length.  By choosing hardcoded 8, the original clearly
-> declares that we do not _care_ about the uniqueness.
+> I don't know, but I suspect they are generated by some variant of
+> (e|c)tags which do not appear in our Makefile.
 >=20
-
-Just out of curiousity, where did the number come from? I guess
-DEFAULT_ABBREV + '^' ?
-
-
-> The abbrev-guard that adds to the length that ensures the uniqueness =
-in
-> the particular repository has a very different semantics.  It only ma=
-kes
-> sense if you add to a length that you know would make the object name=
-s
-> minimally unique.  Adding it to hardcoded 8 does not make it less
-> ambiguous the same way as the configuration variable intends to do.
->=20
-> So I am not entirely happy with this patch.
->=20
-> Besides, when OUTPUT_LONG_OBJECT_NAME is specified, the value this
-> variable holds is _not_ "uniq_length", so the name of the variable is=
- not
-> quite correct.  We colloquially call the object name "sha1" in the co=
-de,
-> so "sha1_length" would be a better name for it.
+> If this is the case, I'd say the place to put these is in a user-wide
+> .gitignore (cf. core.excludesfile).
 >=20
 
-OK. I was not happy with the name, too. :)
+Yes, they are from GNU GLOBAL source code tag system. And sorry, I
+didn't aware of that config variable. I'll use it for my environments
+then.
 
-
-> If we _were_ to do a change that uses the configuration variable, I w=
-ould
-> imagine that it would be a part of a change that makes sure that the
-> shortened object names in the output actually uniquely identify the
-> commits.  It would involve find_unique_abbrev() for as many commits a=
-s the
-> number of lines in the blamed range at most (and at that point the ab=
-brev
-> guard would automatically taken into account because find_unique_abbr=
-ev()
-> already does so) before calling "output()"; I suspect that find_align=
-ment()
-> is the right function to do so, as that is where the column alignment
-> logic all happens.
->=20
-> It would probably need to be introduced as a new feature, with its ow=
-n
-> command line option, similar to -l option that forces the full 40-hex
-> output.
->=20
-
-Looks Great. How about -u/--unique? I'm also thinking about --abbrev
-too, isn't it useful at all?
-
-
-> So thanks for a patch, but I don't think we would want to take it in =
-the
-> current shape.
-
-Thanks for your kindly comment.
-
+Thanks.
 
 --=20
 Regards,
