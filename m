@@ -1,83 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] Documentation fix: git log -p does not imply -c.
-Date: Mon, 7 Mar 2011 20:19:18 -0500
-Message-ID: <20110308011917.GB21278@sigill.intra.peff.net>
-References: <20110307191218.GA20930@sigill.intra.peff.net>
- <1299535063-1020-1-git-send-email-haircut@gmail.com>
- <7vsjuyzckd.fsf@alter.siamese.dyndns.org>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: git fast-import : How to change parent during import?
+Date: Tue, 8 Mar 2011 01:21:45 +0000
+Message-ID: <AANLkTikiEfUSdNqqTjuYy_JLJnEyCizmusSucYsEHC2r@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Adam Monsen <haircut@gmail.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 02:19:30 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 08 02:23:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PwlaD-0004wa-UC
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 02:19:30 +0100
+	id 1Pwle8-000669-Lq
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Mar 2011 02:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755161Ab1CHBTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Mar 2011 20:19:25 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53216 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754427Ab1CHBTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2011 20:19:24 -0500
-Received: (qmail 10327 invoked by uid 111); 8 Mar 2011 01:19:24 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 08 Mar 2011 01:19:24 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Mar 2011 20:19:18 -0500
-Content-Disposition: inline
-In-Reply-To: <7vsjuyzckd.fsf@alter.siamese.dyndns.org>
+	id S1756652Ab1CHBX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2011 20:23:26 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:39117 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754732Ab1CHBXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2011 20:23:25 -0500
+Received: by vxi39 with SMTP id 39so4295003vxi.19
+        for <git@vger.kernel.org>; Mon, 07 Mar 2011 17:23:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=7iYU9/YH+EO7lE3LFDBiMfnj3dyvN9i9Y4SPYopzw60=;
+        b=TI1dTXHZA1SZVi9q61tSchrmBwZZlr42J3mYdS3AC3nqhv191McZj1kMBGn10dpuKN
+         Bl83NpiRPtaF18Qtm77FDr+Gxly4rZY84Ah98/6IzWGFCT2J1L4uEWL74g0os32ewvRw
+         +Uk6zda1h5/ZwGsmueXVWzD3pUjxDsbKF2Z+E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=NxVgOx0cNQxsEhjq+4AOejis7mKj9DdnhVs+np58ABDk8Qlr9kovbt6xRN2xAKzaUl
+         EJouFdjOWl79/1MbblXKGnHJjfL1WL+PWNgmgE/uEUUK/LfNTH5TY+NJiZestREaXc//
+         3HX4Q87uJ5Bg5rdeSBaOhntOjZ7PgcXwYV9Bw=
+Received: by 10.52.74.66 with SMTP id r2mr6405788vdv.263.1299547335198; Mon,
+ 07 Mar 2011 17:22:15 -0800 (PST)
+Received: by 10.220.178.130 with HTTP; Mon, 7 Mar 2011 17:21:45 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168629>
 
-On Mon, Mar 07, 2011 at 04:21:54PM -0800, Junio C Hamano wrote:
+Hi everyone,
 
-> > +produced a 'combined diff' when showing a merge. This is the default
-> 
-> s/produced/produce/, I think.
+Is it possible to change the parent of a commit during fast import?
+I've tried using "reset" command and making a new commit pointing to a
+new parent, but in both cases I get a "new tip ... does not contain
+..." error message.
 
-Oops.
+Providing a bit of context. I'm trying to improve git-p4 to detect the
+parent commit of a new branch. Unfortunately, in Perforce a branch is
+nothing more than a copy of a bunch of files into a new location.
+Because the origin of the copy can be any past commit and there is no
+information about which commit was used it is very difficult to
+identify a parent of a new branch. But if we assume that in this copy
+process no file is modified then it should be possible to identify the
+parent commit simply by comparing their SHA-1.
+To achieve this I used the checkpoint command to flush the list of
+imported commits to disk and then used standard rev-list and diff-tree
+commands to make find the parent commit. I am now at a point where I
+am able to correctly identify the parent commit, but when trying to
+update the from information I get the above message.
 
-> > +format when showing merge conflicts with linkgit:git-diff[1] or a merge
-> > +commit with linkgit:git-show[1]. Note also that you can view the full
-> > +diff with the `-m` option.
-> 
-> This "Note" is a bit unclear what command it applies to, isn't it?  I know
-> it applies to all the commands mentioned in the previous sentence in the
-> paragraph, but we are not writing the documentation for me, so perhaps 
-> 
-> 	Note also that you can give the `-m' option to any of these
-> 	commands to force generation of diffs with individual parents of a
-> 	merge.
-
-Yeah, reading it again, I agree it is unclear. Yours is better.
-
-> Also -c and --cc are technically _not_ about "showing merge conflicts".
-> It is about "showing a merge commit".  I don't know if we want to teach
-> the distinction in this part of the document, though.
-
-Yeah, I almost said that, but I couldn't figure out a way to convince
-"git diff" to show me a merge commit, and clearly it is one of the
-interesting commands to mention as "defaults to --cc". Again, I think
-this section would be better as "This is what combined diff looks like"
-and leave the discussion of "this is how and when you trigger combined
-diff" to the individual command manpages. But that is a much bigger
-cleanup.
-
-> If you resolve a conflicted merge taking the results from only one side
-> for a given hunk, --cc won't show anything.  If on the other hand, you
-> futz with a clean merge so that your result does not match with any
-> parent, --cc will show it.
-
-Right, that's the same as "diff-tree --cc" would show if you committed
-it, no? Which makes sense to me.
-
--Peff
+Thanks in advance for your help,
+-- 
+Vitor Antunes
