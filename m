@@ -1,77 +1,81 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Google Summer of Code 2011
-Date: Wed, 9 Mar 2011 09:52:17 -0800
-Message-ID: <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com>
-References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
- <20110303185918.GA18503@sigill.intra.peff.net> <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com>
- <20110303203323.GA21102@sigill.intra.peff.net> <20110309174956.GA22683@sigill.intra.peff.net>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Re: Is there a way to add a default `--squash` flag for all merges
+ into a head?
+Date: Wed, 9 Mar 2011 10:38:17 -0800 (PST)
+Message-ID: <5aad866e-38e6-4f0e-a942-97cc174651bb@o14g2000prb.googlegroups.com>
+References: <9f02bed0-fa18-46b1-a3d3-346e1cc7dc01@k15g2000prk.googlegroups.com>
+ <m2r5aibpsl.fsf@igel.home> <b98e837f-a0ae-4061-aa09-b4d30e3b0522@b13g2000prf.googlegroups.com>
+ <7vr5ahe7jc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 09 18:52:46 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 09 19:49:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxNYz-0003UW-9R
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 18:52:45 +0100
+	id 1PxORm-0008PO-Hu
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 19:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932825Ab1CIRwi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2011 12:52:38 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:55013 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932651Ab1CIRwh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Mar 2011 12:52:37 -0500
-Received: by vxi39 with SMTP id 39so690274vxi.19
-        for <git@vger.kernel.org>; Wed, 09 Mar 2011 09:52:37 -0800 (PST)
-Received: by 10.52.95.66 with SMTP id di2mr6571409vdb.196.1299693157097; Wed,
- 09 Mar 2011 09:52:37 -0800 (PST)
-Received: by 10.52.162.33 with HTTP; Wed, 9 Mar 2011 09:52:17 -0800 (PST)
-In-Reply-To: <20110309174956.GA22683@sigill.intra.peff.net>
+	id S1751529Ab1CIStM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2011 13:49:12 -0500
+Received: from mail-yw0-f56.google.com ([209.85.213.56]:46655 "EHLO
+	mail-yw0-f56.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751249Ab1CIStL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2011 13:49:11 -0500
+X-Greylist: delayed 652 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Mar 2011 13:49:11 EST
+Received: by ywc21 with SMTP id 21so758756ywc.1
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 10:49:10 -0800 (PST)
+Received: by 10.100.114.11 with SMTP id m11mr418695anc.25.1299695897707; Wed,
+ 09 Mar 2011 10:38:17 -0800 (PST)
+Received: by o14g2000prb.googlegroups.com with HTTP; Wed, 9 Mar 2011 10:38:17
+ -0800 (PST)
+In-Reply-To: <7vr5ahe7jc.fsf@alter.siamese.dyndns.org>
+X-IP: 66.250.141.150
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US;
+ rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15,gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168743>
 
-On Wed, Mar 9, 2011 at 09:49, Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 03, 2011 at 03:33:23PM -0500, Jeff King wrote:
->
->> OK, there is now:
->>
->> =A0 https://git.wiki.kernel.org/index.php/SoC2011Application
->>
->> which is mostly just an adapted version of last year's application.
->>
->> I'll give people a week or so to make changes, and then do the
->> application with Google probably next Wednesday or Thursday.
->
-> Our application is officially in. However, we can still edit it until
-> the deadline on Friday. If you have changes, feel free to make them o=
-n
-> the wiki page but make sure to let me know, as I have to migrate them=
- to
-> the official application. I'll also probably do a once-over on Friday=
- to
-> check for any updates. If only the wiki was kept in git. :)
->
-> Also, the application links to our ideas page. Please add ideas! It w=
-ill
-> give the GSoC people a sense of what we are thinking of for projects,
-> and students will probably start looking at them after the list of
-> accepted organizations is published (which is next Friday, the 18th).
+On Mar 8, 1:28pm, Junio C Hamano <gits...@pobox.com> wrote:
+> The solution to whatever problem you are trying to solve should not be to
+> discard one of the most valuable information git keeps track of to avoid
+> the CVS/(old)SVN mess when performing repeated merges with a branch.
 
-The ideas page is very important. Git needs a good set of ideas on its
-ideas page in order to be accepted. Google has stated this many times
-in the past, its a key part of the decision making process (not the
-only part, but an important part nonetheless).
+Junio, this seems viable precisely because we generally don't perform
+repeated merges between the same heads.
 
-We should have a good ideas page by the application deadline, so that
-when Google goes to review applications, they can at least make a fair
-assessment of our ideas list.
+All of our branches right now are feature branches of master, whose
+short lives end with a single merge back. Thus, merging back as a
+single patch implementing that single feature is ideal: the branch was
+only created to implement the feature, so by definition all of its
+individual commits are intermediary, and once the final feature state
+is achieved, the incremental steps leading to it are not interesting
+at all - they're just noise!
 
---=20
-Shawn.
+Why would John care that while implementing feature X, Jill committed
+her half-state Y so she can go home, or made and fixed typo Z ?  In
+fact, why would Jill care a day, let a lone a couple of months, after
+X was completed and merged to master?
+
+The noisy, needless nature of these commits is further emphasized by
+the default behavior of commit graph visualizers to display them in
+full rather than collapse them. We have over 80 developers working on
+all major operating systems, and using a variety of tools on each.
+`log --first-parent` is nice, but my developers also use gitk, gitg,
+gitx, GitExtensions, and TortoiseGit.
+
+Finally, we are planning to integrate a few key long-lived branches,
+for example a 'bleeding_edge' branch that everyone commits to, and
+gets periodically merged into master by a technical lead. The
+collapsing behavior a-la `--first-parent` may not always be desirable
+once we start doing that, but if you turn it off without mandating
+squashes, master's history becomes a mess of numerous feature-branch
+merges, with all of their non-informative intermediary commits.
+
+Hope that makes sense, .D
