@@ -1,116 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 01/12] vcs-svn: use higher mark numbers for blobs
-Date: Wed, 9 Mar 2011 00:55:28 -0600
-Message-ID: <20110309065528.GA28098@elie>
-References: <20101210102007.GA26298@burratino>
- <20110306225419.GA24327@elie>
- <20110306230348.GC24327@elie>
- <7vzkp5e8gr.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/3] rev-list-options.txt: typo fix
+Date: Wed, 09 Mar 2011 08:07:43 +0100
+Message-ID: <4D77273F.8040105@drmicha.warpmail.net>
+References: <4D75E92C.1090506@drmicha.warpmail.net> <2862dfc9969beb42636ec44292d3509ddb215285.1299572814.git.git@drmicha.warpmail.net> <7vei6he68j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
-	Tomas Carnecky <tom@dbservice.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 09 07:55:46 2011
+X-From: git-owner@vger.kernel.org Wed Mar 09 08:11:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxDJC-0001jd-6l
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 07:55:46 +0100
+	id 1PxDYC-000650-On
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 08:11:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751603Ab1CIGzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2011 01:55:40 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:46124 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751156Ab1CIGzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2011 01:55:39 -0500
-Received: by yia27 with SMTP id 27so91521yia.19
-        for <git@vger.kernel.org>; Tue, 08 Mar 2011 22:55:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Te564BDITbWU268xNtAYmtDeNPzZXk/PpBpAxGd/r4c=;
-        b=L3pydYqIUP4oXaWvB/LSqVzaFLAI+TK6/DxgAQZYizT+YzwZyhH47vV+GDJLQqTlaB
-         U6X8TG3/ddXYhn9GtDcCCwfQCPTGZN5EHstH8HJ8Xzd6sZxvmk4NZaez6xvj3L2T/ZJS
-         hhhzupx7CUWtvpYRStflKawQ3MZ9RkZojIpc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=QmwbDSfo2VpzbouyUfh2JgbLX6dj95K6UsKj7oWsbZyPX2yj8JMpeFoomGHNsCIfA9
-         XlR7SnldatWu3IQ3Pc4PjogpDFcIbtBuvarexw7ccH12KBctcR1q/doaUXtYEzm4ZHEw
-         bdklHYgKioJWdIiFzgUCh/zY78qlLNHUcpYG8=
-Received: by 10.150.60.17 with SMTP id i17mr1936726yba.50.1299653739179;
-        Tue, 08 Mar 2011 22:55:39 -0800 (PST)
-Received: from elie (adsl-69-209-61-99.dsl.chcgil.sbcglobal.net [69.209.61.99])
-        by mx.google.com with ESMTPS id q18sm3104350ybk.23.2011.03.08.22.55.35
-        (version=SSLv3 cipher=OTHER);
-        Tue, 08 Mar 2011 22:55:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vzkp5e8gr.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752596Ab1CIHLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2011 02:11:11 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:40723 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751050Ab1CIHLL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Mar 2011 02:11:11 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 58BF1206FA;
+	Wed,  9 Mar 2011 02:11:10 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 09 Mar 2011 02:11:10 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=NIxOIfcjKzvClrEcCqXQbozPT1U=; b=aauCuUqgV81PekPqtoLKwM+VBg0gnxX7c5lufo1IFgZbYDDV+FkAbkGzhRweHWuUGAbCmfrUWHaMY9kcHTFlRm+s3nwjYyVCRIE98srtDWI2grakumN6UzhORbcQE9zlDbOpkYZanfvQdZpHuc27JvTLe3gWVd0017cuP/ENo+k=
+X-Sasl-enc: lRGYvZADQbhCyJ6XpmELx9iIjfTSevjnmDtPprYHF6Un 1299654670
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 28F27445A0A;
+	Wed,  9 Mar 2011 02:11:09 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.8
+In-Reply-To: <7vei6he68j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168721>
 
-Hi,
+Junio C Hamano venit, vidit, dixit 08.03.2011 20:56:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
+>>  Documentation/rev-list-options.txt |    2 +-
+>>  1 files changed, 1 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+>> index 95d209c..76add13 100644
+>> --- a/Documentation/rev-list-options.txt
+>> +++ b/Documentation/rev-list-options.txt
+>> @@ -165,7 +165,7 @@ limiting may be applied.
+>>  -n 'number'::
+>>  --max-count=<number>::
+>>  
+>> -	Limit the number of commits output.
+>> +	Limit the number of commits to output.
+>>  
+>>  --skip=<number>::
+> 
+> IIRC, the original was written using "output" as past particle of verb
+> "output" (as "output" in "the commits are output"), so strictly speaking I
+> don't think it is a typo.
 
-Junio C Hamano wrote:
+When I switch on my "latin mode" I can recognize the participle in that
+position, but only then ;)
 
-> Hmm, 1G+3G split?  Will we have HIGHMEM option someday? ;-)
->
-> How confident are you that you will never need more than two classes later
-> and you will never need to split the larger space again?
->
-> If you are not, and if the topic is to introduce incompatible output,
-> would it be wiser to be even more forward looking and introduce different
-> classes of marks with a backward incompatible syntax, perhaps like using
-> ":\d+" for anything, and using ":[a-zA-Z0-9]+:\d+" for some application
-> specific "class" of objects that is specifed by the [a-zA-Z0-9]+ part?
+> 
+> But I like the new text better, so will apply ;-).
+> 
 
-That sounds very sensible (and I'd be happy to see something like
-that).
-
-In this particular case a later patch ("vcs-svn: eliminate repo_tree
-structure") gets rid of the blob marks so the split is temporary.
-Perhaps a paragraph added to the change description would clear it up.
-
-	A later patch will eliminate the blob marks altogether.
-
-For the "vcs-svn: eliminate repo_tree" patch:
-
-	Rely on fast-import for information about previous revs.
-
-	This requires always setting up backward flow of information,
-	even for v2 dumps.  On the plus side:
-
-	 - No more need to include blobs in the marks table.
-	 - Given one dump that picks up where another left off, svn-fe
-	   can continue the import.  Use
-
-		git fast-import --relative-marks \
-			--export-marks=svn-revs \
-			--cat-blob-fd=3 3>backchannel
-
-	   for the first import and
-
-		git fast-import --relative-marks \
-			--import-marks=svn-revs \
-			--export-marks=svn-revs \
-			--cat-blob-fd=3 3>backchannel
-
-	   for later ones.
-	 - It simplifies the code by quite a bit and opens the door
-	   to further simplifications.
-
-Thanks for some clarity.
-Jonathan
+With s/typo/grammo/ ;-)
