@@ -1,79 +1,74 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] Add Author and Documentation sections to git-for-each-ref.txt
-Date: Wed, 09 Mar 2011 09:08:16 +0100
-Message-ID: <4D773570.4010803@drmicha.warpmail.net>
-References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com> <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [RFC/PATCH] commit notes workflow
+Date: Wed, 09 Mar 2011 09:13:07 +0100
+Organization: Bertin Technologies
+Message-ID: <20110309091307.4b759b7e@chalon.bertin.fr>
+References: <20110225133056.GA1026@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Alexei Sholik <alcosholik@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 09 09:11:50 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 09 09:32:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxEUn-0000IS-Lo
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 09:11:50 +0100
+	id 1PxEoI-00082Q-Qz
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 09:31:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756132Ab1CIILo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2011 03:11:44 -0500
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:52296 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752478Ab1CIILn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Mar 2011 03:11:43 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 266012052D;
-	Wed,  9 Mar 2011 03:11:43 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Wed, 09 Mar 2011 03:11:43 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ccKuI6EKdpVCZC+3Df3J4XRJy9Q=; b=iPxSF5DLZGwS8peZ4Q+9y9oRNyyofYduIPHZrOYcWWZNLW9wsMmhdfQQLPl+tWKCIynR0K0EMED9K9ubNNu8YEwUGMz1WurDYnRuw8nB+5YhKvzGJVVjFuqhvOj/TrwWUyU8y5vVz+lIhJp5uNAcNZXrmnI53fcMazCDuGZK04A=
-X-Sasl-enc: pwpjlXAyOGj1yYs/IGBCLyGcX5s0PvJk4Jkw0tMgkGaX 1299658302
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id DE74E4096DD;
-	Wed,  9 Mar 2011 03:11:41 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.8
-In-Reply-To: <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
+	id S1756520Ab1CIIbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2011 03:31:44 -0500
+Received: from blois.bertin.fr ([195.68.26.9]:54204 "EHLO blois.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753904Ab1CIIbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2011 03:31:43 -0500
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id CB6F25434E
+	for <git@vger.kernel.org>; Wed,  9 Mar 2011 09:31:39 +0100 (CET)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id A931E5434A
+	for <git@vger.kernel.org>; Wed,  9 Mar 2011 09:31:39 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0LHS00AER7ORF880@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Wed, 09 Mar 2011 09:31:39 +0100 (CET)
+In-reply-to: <20110225133056.GA1026@sigill.intra.peff.net>
+X-Mailer: Claws Mail 3.7.8 (GTK+ 2.20.1; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.5.0.1024-17966.004
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168725>
 
-Alexei Sholik venit, vidit, dixit 08.03.2011 14:16:
-> Signed-off-by: Alexei Sholik <alcosholik@gmail.com>
-> ---
->  Documentation/git-for-each-ref.txt |   12 ++++++++++++
->  1 files changed, 12 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index bffb5d2..ceef54b 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -204,3 +204,15 @@ eval=`git for-each-ref --shell --format="$fmt" \
->  	refs/tags`
->  eval "$eval"
->  ------------
-> +
-> +Author
-> +------
-> +Written by Junio C Hamano <gitster@pobox.com>.
-> +
-> +Documentation
-> +--------------
-> +Documentation by Junio C Hamano and the git-list <git@vger.kernel.org>.
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
+That's a nice feature.
 
-+Evangelisation
----------------
-Jeff King <peff@peff.net>
+It may be good to extend the idea to support editing non-default notes
+refs too.  Maybe something like:
 
-Just kidding!
+<commit msg>
+--- Notes ---
+<info for GIT_NOTES_REF>
+--- Notes <whatever> ---
+<info for notes/whatever>
 
-(Jeff is the 2nd main f-e-r author, but Junio created it.)
+In this case, if we want to allow the user to customize the mark, we
+will want to allow formatting like "--- Notes %N ---", but then the
+defaulting for GIT_NOTES_REF would not fit - would we want to force the
+use of "--- Notes commits ---" or similar ?  Maybe this would warrant a
+separate mark for this default case:
 
-Michael ;)
+	--default-note-mark="---"
+	--note-mark="--- %N ---"
+
+OTOH, using a single --note-mark and no special case for the default
+notes ref seems more sane to me, since that shows the user when a
+non-default GIT_NOTES_REF is in effect.
+
+We may also want it to behave in a way similar to git-log, including
+--show-notes[=<ref>] support to override the list of notes ref
+to be considered.
+
+-- 
+Yann Dirson - Bertin Technologies
