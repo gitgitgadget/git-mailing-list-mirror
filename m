@@ -1,102 +1,90 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Re: Is there a way to add a default `--squash` flag for all merges
- into a head?
-Date: Wed, 9 Mar 2011 12:11:54 -0800 (PST)
-Message-ID: <cb5f3a7a-cc84-4ec9-8d08-87436f8af044@k15g2000prk.googlegroups.com>
-References: <9f02bed0-fa18-46b1-a3d3-346e1cc7dc01@k15g2000prk.googlegroups.com>
- <m2r5aibpsl.fsf@igel.home> <b98e837f-a0ae-4061-aa09-b4d30e3b0522@b13g2000prf.googlegroups.com>
- <7vr5ahe7jc.fsf@alter.siamese.dyndns.org> <5aad866e-38e6-4f0e-a942-97cc174651bb@o14g2000prb.googlegroups.com>
- <7v7hc8aybn.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Add Author and Documentation sections to
+ git-for-each-ref.txt
+Date: Wed, 09 Mar 2011 12:17:53 -0800
+Message-ID: <7voc5k9hfy.fsf@alter.siamese.dyndns.org>
+References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com>
+ <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
+ <4D773570.4010803@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 21:12:00 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexei Sholik <alcosholik@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Mar 09 21:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxPjk-0000LW-HU
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 21:12:00 +0100
+	id 1PxPpm-0003IN-0c
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 21:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124Ab1CIULz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2011 15:11:55 -0500
-Received: from mail-px0-f184.google.com ([209.85.212.184]:57590 "EHLO
-	mail-px0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077Ab1CIULz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2011 15:11:55 -0500
-X-Greylist: delayed 166370 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Mar 2011 15:11:55 EST
-Received: by pxi4 with SMTP id 4so126975pxi.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2011 12:11:54 -0800 (PST)
-Received: by 10.142.231.3 with SMTP id d3mr509355wfh.39.1299701514586; Wed, 09
- Mar 2011 12:11:54 -0800 (PST)
-Received: by k15g2000prk.googlegroups.com with HTTP; Wed, 9 Mar 2011 12:11:54
- -0800 (PST)
-In-Reply-To: <7v7hc8aybn.fsf@alter.siamese.dyndns.org>
-X-IP: 66.250.141.150
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US;
- rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15,gzip(gfe)
+	id S1751455Ab1CIUSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2011 15:18:09 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214Ab1CIUSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2011 15:18:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A664F3C1F;
+	Wed,  9 Mar 2011 15:19:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9DwzlRzXzqZc6Jbys4phb0XOark=; b=jidSS3
+	zJjxRF1UxOFBDxRbIEMFeB8budcStsxsCv0jAasoygYbJiL7hETYRP4osDeCjudM
+	5kOW38O1lVX/Jcib9SgImMdIMQWHSv7ITUrTkDg2Y0UawJXmP7cmhwa87i+bForR
+	h8Yo9M+BTkf9f0f1vW2SgabB3gSDM2GaDseM8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SITcvTHwQ7YKPgbkIXsojz+OLGz/Um8U
+	fD3atKY1QP1eoXz3FCYokf5x3+W8iynMk+FjO6izLzMea6xM8k9d0CnEwnNdREdw
+	ZPw/bhHur0oMoVPPAOtML/8Yvx4ei7dookUGB2M+j6rd59kMCKzeqR4UFV8tSkml
+	WLtC00uXFWs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 61BE53C1E;
+	Wed,  9 Mar 2011 15:19:29 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 025223C1D; Wed,  9 Mar 2011
+ 15:19:23 -0500 (EST)
+In-Reply-To: <4D773570.4010803@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Wed, 09 Mar 2011 09:08:16 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 89746658-4A8A-11E0-9634-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168753>
 
-On Mar 9, 1:27 pm, Junio C Hamano <gits...@pobox.com> wrote:
-> Dun Peal <dunpea...@gmail.com> writes:
-> That does not sound like a real world to me, though. When a fix or tweak
-> is needed for codepaths introduced by these feature branches after they
-> are merged to master, the cleanest thing to do is to queue the fix on top
-> of the branch that needs that fix or tweak, and merge that to master.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+
+> Just kidding!
 >
-> Of course, you can choose to abandon these feature branches that are
-> potentially buggy and fork a fix branch from the master branch that was
-> current when the bug happened to be discovered. But that would make the
-> backporting bugfixes (or feature tweaks for that matter) to anything older
-> a lot harder.
+> (Jeff is the 2nd main f-e-r author, but Junio created it.)
 
-That's a good point if feature branches may eventually get merged into
-other branches, e.g. release branches. Our case is simpler: a feature
-branch that branched off master will only get merged back to master,
-usually in one merge action that ends the branch. Therefore any future
-fixes or updates to content that got merged like that can properly be
-committed directly to master.
+Thanks for bringing this up.
 
-Of course, if we did need to merge the feature independently into
-other branches, the squashed branch and any future updates to it would
-have to be manually cherry-picked - an error prone process that
-forgoes many amenities that Git offers for this procedure. However,
-since we do not have such a need, might as well optimize for commit
-graph simplicity.
+In the very early days (like back when the project was only 12 months old)
+it made sense to record that this and that command were primarily done by
+that person.  But I don't think it is a good idea anymore.
 
-We probably could find ways to deal with a ~50-level-deep commit graph
-(composed of 1 master and ~49 feature branches), but if we can instead
-deal with a single-level-deep one (or 2-3 levels when we introduce a
-couple of long-running branches), why shouldn't we?
+For example, format-patch was my invention and all the code was mine back
+when it was a script.  Later it was reimplemented in C by Dscho based on
+my earlier work.  But a large part of the actual implementation was done
+by using the generic revision traversal machinery, whose primary authors
+back then were Linus and me.  The silly original UI design everybody hates
+("format-patch <upstream>" is not similar to 'git log <upstream>..'") is
+"owned" by me, the user facing main() implementation is "owned" by Dscho,
+and the backend machinery is "owned" by Linus and me.
 
-> > Why would John care that while implementing feature X, Jill committed
-> > her half-state Y so she can go home, or made and fixed typo Z? In
-> > fact, why would Jill care a day, let a lone a couple of months, after
-> > X was completed and merged to master?
->
-> Who is merging half-state to 'master' or merging 'master' back to the
-> feature branches?  I don't think any of the above relates to the topic of
-> 'merge --squash' anyway...
+Who should we list, and more importantly, does it make sense to keep the
+list up to date as the system evolves?
 
-If Jill merged her branch X back to master with no squashing, half-
-state Y which got committed in X gets merged to master as well.
+As the project and the community grew, and also as the internal machinery
+infrastructure got more modularized, I think ownership at the individual
+command level has become almost meaningless concept.
 
-Half-states like Y get committed to feature branches all the time,
-since those branches are private, never get deployed in production or
-even built by the continuous integration server; the feature branch is
-all about developer convenience, and we're only strict about what he
-merges back into master.
-
-Of course, Jill can selectively squash with `rebase -i` X to a more
-presentable form before merging it back to master. But if she's
-already squashing, why not use the ultimate, simplest squash offered
-by `rebase --squash`, as it happens to perfectly fit the purpose of
-our short-term feature branches?
-
-D.
+Same reasoning applies to the "Documented by".  I think it's time for
+these two sections to go from most (if not all) pages.
