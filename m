@@ -1,74 +1,103 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [RFC/PATCH] commit notes workflow
-Date: Wed, 09 Mar 2011 09:13:07 +0100
-Organization: Bertin Technologies
-Message-ID: <20110309091307.4b759b7e@chalon.bertin.fr>
-References: <20110225133056.GA1026@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/2] i18n: add ngettext stub
+Date: Wed, 9 Mar 2011 04:31:04 -0600
+Message-ID: <20110309103104.GA30980@elie>
+References: <7vy64u65ta.fsf@alter.siamese.dyndns.org>
+ <loom.20110304T210337-216@post.gmane.org>
+ <7vtyfi606a.fsf@alter.siamese.dyndns.org>
+ <4D7165A3.5080308@colin.guthr.ie>
+ <7vlj0u5wyw.fsf@alter.siamese.dyndns.org>
+ <4D7223A9.6080105@colin.guthr.ie>
+ <7vsjuz520w.fsf@alter.siamese.dyndns.org>
+ <7vhbbf50vu.fsf@alter.siamese.dyndns.org>
+ <20110306225641.GB24327@elie>
+ <AANLkTikctSrfqKCdeYUyvUmAZjr=i7kaFhPeB-LfwgUz@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 09 09:32:00 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 09 11:31:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxEoI-00082Q-Qz
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 09:31:59 +0100
+	id 1PxGfv-0005sp-NQ
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Mar 2011 11:31:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756520Ab1CIIbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2011 03:31:44 -0500
-Received: from blois.bertin.fr ([195.68.26.9]:54204 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753904Ab1CIIbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2011 03:31:43 -0500
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id CB6F25434E
-	for <git@vger.kernel.org>; Wed,  9 Mar 2011 09:31:39 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id A931E5434A
-	for <git@vger.kernel.org>; Wed,  9 Mar 2011 09:31:39 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0LHS00AER7ORF880@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 09 Mar 2011 09:31:39 +0100 (CET)
-In-reply-to: <20110225133056.GA1026@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.7.8 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.5.0.1024-17966.004
+	id S1757164Ab1CIKbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2011 05:31:12 -0500
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:43778 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757135Ab1CIKbL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2011 05:31:11 -0500
+Received: by yia27 with SMTP id 27so152882yia.19
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 02:31:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=F7+iAROCkW01Gj2i5XBefZrR5S8wh/3WQOSeo3l8zNk=;
+        b=FGEhSLI1jSjKc88WA1TABHw1nbVoWLYDipIdQ58lVWJ9tSevVjeE/mfrFwDskPRdAu
+         N2nwC6JF90WKFj6jYRAqvUG1UdZ+WJSxzjcjS/L1SDcI+NrIGaB52NIofQ+34LPoBjoN
+         Ol55djFIAZqhnSD8H5lCJe1Ve+Pi6+63gsCuw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jmMkpIfj7jVuASw1azhPO/XO9ya232rFM5V/CJQTeQvh+vJoo3/kbjPspUl3OByKqp
+         f+yg776b1jYFoucZXEwvATqp0kSQrOA8gaoocZETecw5LveZ0jJouYNIIQCfX5UruQu7
+         fSFZUZgghACzs787RVHreCforfwet6IGEZjgs=
+Received: by 10.150.47.34 with SMTP id u34mr5708989ybu.362.1299666670910;
+        Wed, 09 Mar 2011 02:31:10 -0800 (PST)
+Received: from elie (adsl-69-209-61-99.dsl.chcgil.sbcglobal.net [69.209.61.99])
+        by mx.google.com with ESMTPS id p33sm3187230ybk.2.2011.03.09.02.31.09
+        (version=SSLv3 cipher=OTHER);
+        Wed, 09 Mar 2011 02:31:10 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikctSrfqKCdeYUyvUmAZjr=i7kaFhPeB-LfwgUz@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168726>
 
-That's a nice feature.
+Junio C Hamano wrote:
+> On Mar 6, 2011 3:07 PM, "Jonathan Nieder" <jrnieder@gmail.com> wrote:
 
-It may be good to extend the idea to support editing non-default notes
-refs too.  Maybe something like:
+>> Yep.  Is it safe to do this without the
+>>
+>> #define ngettext git_ngettext
+>> static inline const char *git_ngettext(...)
+>>
+>> dance?
+>
+> Heh you tell me.
 
-<commit msg>
---- Notes ---
-<info for GIT_NOTES_REF>
---- Notes <whatever> ---
-<info for notes/whatever>
+Yegh.  My general feeling was that we should make sure gettext.h works
+even if <libintl.h> was included elsewhere, just in case some system
+header decides to start including it.  That makes life slightly less
+pleasant, since libintl.h does
 
-In this case, if we want to allow the user to customize the mark, we
-will want to allow formatting like "--- Notes %N ---", but then the
-defaulting for GIT_NOTES_REF would not fit - would we want to force the
-use of "--- Notes commits ---" or similar ?  Maybe this would warrant a
-separate mark for this default case:
+ #if defined __OPTIMIZE__ && !defined __cplusplus
+[...]
+ # define ngettext(msgid1, msgid2, n) dngettext (NULL, msgid1, msgid2, n)
+[...]
+ #endif	/* Optimizing.  */
 
-	--default-note-mark="---"
-	--note-mark="--- %N ---"
+How about this?
 
-OTOH, using a single --note-mark and no special case for the default
-notes ref seems more sane to me, since that shows the user when a
-non-default GIT_NOTES_REF is in effect.
+Jonathan Nieder (1):
+  i18n: avoid conflict with ngettext from libintl
 
-We may also want it to behave in a way similar to git-log, including
---show-notes[=<ref>] support to override the list of notes ref
-to be considered.
+Junio C Hamano (1):
+  i18n: add no-op ngettext() fallback
+
+ gettext.h |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
 
 -- 
-Yann Dirson - Bertin Technologies
+1.7.4.1
