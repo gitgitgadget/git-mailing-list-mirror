@@ -1,35 +1,35 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv3 06/10] revision.c: introduce --cherry-mark
-Date: Thu, 10 Mar 2011 15:44:59 +0100
-Message-ID: <c17a82478307a5a29455de09232087b17435c52a.1299767413.git.git@drmicha.warpmail.net>
+Subject: [PATCHv3 05/10] rev-list/log: factor out revision mark generation
+Date: Thu, 10 Mar 2011 15:44:58 +0100
+Message-ID: <3d5377ae86c22a73bdce7896abe2953019039e0e.1299767412.git.git@drmicha.warpmail.net>
 References: <4D78AC8B.7010308@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 10 15:49:32 2011
+X-From: git-owner@vger.kernel.org Thu Mar 10 15:49:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxhB7-0007ob-MY
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 15:49:26 +0100
+	id 1PxhB7-0007ob-5o
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 15:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752795Ab1CJOsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2011 09:48:52 -0500
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:56207 "EHLO
+	id S1752785Ab1CJOsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2011 09:48:51 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:33442 "EHLO
 	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752780Ab1CJOsv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 09:48:51 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EF2DD20CC0;
-	Thu, 10 Mar 2011 09:48:50 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 10 Mar 2011 09:48:50 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=u3y/IY/l3hdIjVLkpv0osUZIV5c=; b=TLoWgQwzGU97oKLetFi+rZL+lPJSw2rIM83nNUgidyXijGV1lVnSvyvxRP+0r5E38ceBn8LNdzxrmWFuAk1M3lKu1AAt8RenfwXqDmjK8Qhs6mUfhjPoS12v24fsxMcrD6uq/4ZUuazWovQkjxwJHC5wFnuPMUaUBiBvxR8UqNI=
-X-Sasl-enc: R+m2uLtXcmzQgGjxb9B2Iv/XxRwJSWfVmAzPjea/ynvP 1299768530
+	by vger.kernel.org with ESMTP id S1752581Ab1CJOst (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 09:48:49 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 04F3D20901;
+	Thu, 10 Mar 2011 09:48:49 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 10 Mar 2011 09:48:49 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=2pJl9p3Y14saAbnryn9gYiU3EVw=; b=WijJnaO55E4pC8xd9LrASeJSb16+mDtu3ivc+Ir1ALLUWolTEkjYDe3Ve46h9F4nfD1rAnEMwMnvjQeoqGbqw98tzyHCTVlj+GNKpPWZ3KXP+0q+OBhClBm3K0N93VZHnXYlBWr0eo7crF/Ri+jJzJ9UWx9TTOPKpnA1Eg2u7u0=
+X-Sasl-enc: n9w+ToH8O7WopSjzG/j5r6qTgKLrhRpOwbjgJ9wpoXPI 1299768528
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4931B44607F;
-	Thu, 10 Mar 2011 09:48:50 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4288640D3AC;
+	Thu, 10 Mar 2011 09:48:48 -0500 (EST)
 X-Mailer: git-send-email 1.7.4.1.317.gf445f
 In-Reply-To: <4D78AC8B.7010308@drmicha.warpmail.net>
 In-Reply-To: <cover.1299767412.git.git@drmicha.warpmail.net>
@@ -38,113 +38,179 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168826>
 
-Introduce --cherry-mark for marking those commits which "--cherry-pick"
-would drop.  The marker for those commits is '=' because '-' denotes a
-boundary commit already, even though 'git cherry' uses it.
+Currently, we have identical code for generating revision marks ('<',
+'>', '-') in 5 places.
 
-Nonequivalent commits are denoted '+' unless '--left-right' is used.
+Factor out the code to a single function get_revsion_mark() for easier
+maintenance and extensibility.
+
+Note that the check for !!revs in graph.c (which gets removed
+effectively by this patch) is superfluous.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- revision.c |   19 +++++++++++++++++--
- revision.h |    4 +++-
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ builtin/rev-list.c |   14 ++------------
+ graph.c            |   17 ++---------------
+ log-tree.c         |   28 ++++------------------------
+ pretty.c           |    6 +-----
+ revision.c         |   16 ++++++++++++++++
+ revision.h         |    1 +
+ 6 files changed, 26 insertions(+), 56 deletions(-)
 
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ba27d39..f458cb7 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -64,18 +64,8 @@ static void show_commit(struct commit *commit, void *data)
+ 	if (info->header_prefix)
+ 		fputs(info->header_prefix, stdout);
+ 
+-	if (!revs->graph) {
+-		if (commit->object.flags & BOUNDARY)
+-			putchar('-');
+-		else if (commit->object.flags & UNINTERESTING)
+-			putchar('^');
+-		else if (revs->left_right) {
+-			if (commit->object.flags & SYMMETRIC_LEFT)
+-				putchar('<');
+-			else
+-				putchar('>');
+-		}
+-	}
++	if (!revs->graph)
++		fputs(get_revision_mark(revs, commit), stdout);
+ 	if (revs->abbrev_commit && revs->abbrev)
+ 		fputs(find_unique_abbrev(commit->object.sha1, revs->abbrev),
+ 		      stdout);
+diff --git a/graph.c b/graph.c
+index f1a63c2..ef2e24e 100644
+--- a/graph.c
++++ b/graph.c
+@@ -798,22 +798,9 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
+ 	}
+ 
+ 	/*
+-	 * If revs->left_right is set, print '<' for commits that
+-	 * come from the left side, and '>' for commits from the right
+-	 * side.
++	 * get_revision_mark() handles all other cases without assert()
+ 	 */
+-	if (graph->revs && graph->revs->left_right) {
+-		if (graph->commit->object.flags & SYMMETRIC_LEFT)
+-			strbuf_addch(sb, '<');
+-		else
+-			strbuf_addch(sb, '>');
+-		return;
+-	}
+-
+-	/*
+-	 * Print '*' in all other cases
+-	 */
+-	strbuf_addch(sb, '*');
++	strbuf_addstr(sb, get_revision_mark(graph->revs, graph->commit));
+ }
+ 
+ /*
+diff --git a/log-tree.c b/log-tree.c
+index b46ed3b..1257040 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -380,18 +380,8 @@ void show_log(struct rev_info *opt)
+ 	if (!opt->verbose_header) {
+ 		graph_show_commit(opt->graph);
+ 
+-		if (!opt->graph) {
+-			if (commit->object.flags & BOUNDARY)
+-				putchar('-');
+-			else if (commit->object.flags & UNINTERESTING)
+-				putchar('^');
+-			else if (opt->left_right) {
+-				if (commit->object.flags & SYMMETRIC_LEFT)
+-					putchar('<');
+-				else
+-					putchar('>');
+-			}
+-		}
++		if (!opt->graph)
++			fputs(get_revision_mark(opt, commit), stdout);
+ 		fputs(find_unique_abbrev(commit->object.sha1, abbrev_commit), stdout);
+ 		if (opt->print_parents)
+ 			show_parents(commit, abbrev_commit);
+@@ -448,18 +438,8 @@ void show_log(struct rev_info *opt)
+ 		if (opt->commit_format != CMIT_FMT_ONELINE)
+ 			fputs("commit ", stdout);
+ 
+-		if (!opt->graph) {
+-			if (commit->object.flags & BOUNDARY)
+-				putchar('-');
+-			else if (commit->object.flags & UNINTERESTING)
+-				putchar('^');
+-			else if (opt->left_right) {
+-				if (commit->object.flags & SYMMETRIC_LEFT)
+-					putchar('<');
+-				else
+-					putchar('>');
+-			}
+-		}
++		if (!opt->graph)
++			fputs(get_revision_mark(opt, commit), stdout);
+ 		fputs(find_unique_abbrev(commit->object.sha1, abbrev_commit),
+ 		      stdout);
+ 		if (opt->print_parents)
+diff --git a/pretty.c b/pretty.c
+index 8549934..f21a30c 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -859,11 +859,7 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 		                              c->abbrev_parent_hashes.off;
+ 		return 1;
+ 	case 'm':		/* left/right/bottom */
+-		strbuf_addch(sb, (commit->object.flags & BOUNDARY)
+-		                 ? '-'
+-		                 : (commit->object.flags & SYMMETRIC_LEFT)
+-		                 ? '<'
+-		                 : '>');
++		strbuf_addstr(sb, get_revision_mark(NULL, commit));
+ 		return 1;
+ 	case 'd':
+ 		format_decoration(sb, commit);
 diff --git a/revision.c b/revision.c
-index 0de1608..864bc9b 100644
+index 1fcaeb7..0de1608 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -535,6 +535,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 	int left_count = 0, right_count = 0;
- 	int left_first;
- 	struct patch_ids ids;
-+	unsigned cherry_flag;
- 
- 	/* First count the commits on the left and on the right */
- 	for (p = list; p; p = p->next) {
-@@ -576,6 +577,8 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 		commit->util = add_commit_patch_id(commit, &ids);
- 	}
- 
-+	cherry_flag = revs->cherry_mark ? PATCHSAME : SHOWN;
-+
- 	/* Check the other side */
- 	for (p = list; p; p = p->next) {
- 		struct commit *commit = p->item;
-@@ -598,7 +601,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 		if (!id)
- 			continue;
- 		id->seen = 1;
--		commit->object.flags |= SHOWN;
-+		commit->object.flags |= cherry_flag;
- 	}
- 
- 	/* Now check the original side for seen ones */
-@@ -610,7 +613,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 		if (!ent)
- 			continue;
- 		if (ent->seen)
--			commit->object.flags |= SHOWN;
-+			commit->object.flags |= cherry_flag;
- 		commit->util = NULL;
- 	}
- 
-@@ -1293,7 +1296,15 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->right_only = 1;
- 	} else if (!strcmp(arg, "--count")) {
- 		revs->count = 1;
-+	} else if (!strcmp(arg, "--cherry-mark")) {
-+		if (revs->cherry_pick && !revs->cherry-mark)
-+			die("--cherry-mark is incompatible with --cherry-pick");
-+		revs->cherry_mark = 1;
-+		revs->cherry_pick = 1;
-+		revs->limited = 1; /* needs limit_list() */
- 	} else if (!strcmp(arg, "--cherry-pick")) {
-+		if (revs->cherry_mark)
-+			die("--cherry-pick is incompatible with --cherry-mark");
- 		revs->cherry_pick = 1;
- 		revs->limited = 1;
- 	} else if (!strcmp(arg, "--objects")) {
-@@ -2270,6 +2281,8 @@ char *get_revision_mark(const struct rev_info *revs, const struct commit *commit
- 		return "-";
- 	else if (commit->object.flags & UNINTERESTING)
- 		return "^";
-+	else if (commit->object.flags & PATCHSAME)
-+		return "=";
- 	else if (!revs || revs->left_right) {
- 		if (commit->object.flags & SYMMETRIC_LEFT)
- 			return "<";
-@@ -2277,5 +2290,7 @@ char *get_revision_mark(const struct rev_info *revs, const struct commit *commit
- 			return ">";
- 	} else if (revs->graph)
- 		return "*";
-+	else if (revs->cherry_mark)
-+		return "+";
- 	return "";
+@@ -2263,3 +2263,19 @@ struct commit *get_revision(struct rev_info *revs)
+ 		graph_update(revs->graph, c);
+ 	return c;
  }
++
++char *get_revision_mark(const struct rev_info *revs, const struct commit *commit)
++{
++	if (commit->object.flags & BOUNDARY)
++		return "-";
++	else if (commit->object.flags & UNINTERESTING)
++		return "^";
++	else if (!revs || revs->left_right) {
++		if (commit->object.flags & SYMMETRIC_LEFT)
++			return "<";
++		else
++			return ">";
++	} else if (revs->graph)
++		return "*";
++	return "";
++}
 diff --git a/revision.h b/revision.h
-index 0e4b35e..d38f135 100644
+index d2ffde1..0e4b35e 100644
 --- a/revision.h
 +++ b/revision.h
-@@ -14,7 +14,8 @@
- #define CHILD_SHOWN	(1u<<6)
- #define ADDED		(1u<<7)	/* Parents already parsed and added? */
- #define SYMMETRIC_LEFT	(1u<<8)
--#define ALL_REV_FLAGS	((1u<<9)-1)
-+#define PATCHSAME	(1u<<9)
-+#define ALL_REV_FLAGS	((1u<<10)-1)
+@@ -165,6 +165,7 @@ extern int handle_revision_arg(const char *arg, struct rev_info *revs,int flags,
  
- #define DECORATE_SHORT_REFS	1
- #define DECORATE_FULL_REFS	2
-@@ -68,6 +69,7 @@ struct rev_info {
- 			reverse:1,
- 			reverse_output_stage:1,
- 			cherry_pick:1,
-+			cherry_mark:1,
- 			bisect:1,
- 			ancestry_path:1,
- 			first_parent_only:1;
+ extern int prepare_revision_walk(struct rev_info *revs);
+ extern struct commit *get_revision(struct rev_info *revs);
++extern char *get_revision_mark(const struct rev_info *revs, const struct commit *commit);
+ 
+ extern void mark_parents_uninteresting(struct commit *commit);
+ extern void mark_tree_uninteresting(struct tree *tree);
 -- 
 1.7.4.1.317.gf445f
