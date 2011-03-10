@@ -1,107 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: Summer of Code project ideas due this Friday
-Date: Wed, 9 Mar 2011 18:10:17 -0600
-Message-ID: <20110310001017.GA24169@elie>
+Date: Thu, 10 Mar 2011 07:19:36 +0700
+Message-ID: <AANLkTimHC3Wfqd4AbLDGuf17wEisTRutMc2VL+S=s2nM@mail.gmail.com>
 References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
- <20110303185918.GA18503@sigill.intra.peff.net>
- <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com>
- <20110303203323.GA21102@sigill.intra.peff.net>
- <20110309174956.GA22683@sigill.intra.peff.net>
- <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com>
- <20110309215841.GC4400@sigill.intra.peff.net>
+ <20110303185918.GA18503@sigill.intra.peff.net> <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com>
+ <20110303203323.GA21102@sigill.intra.peff.net> <20110309174956.GA22683@sigill.intra.peff.net>
+ <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com> <20110309215841.GC4400@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Shawn Pearce <spearce@spearce.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 10 01:10:33 2011
+X-From: git-owner@vger.kernel.org Thu Mar 10 01:20:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxTSa-0001zR-TK
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 01:10:33 +0100
+	id 1PxTbx-0005XU-8k
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 01:20:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604Ab1CJAK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2011 19:10:27 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:35465 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751237Ab1CJAK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2011 19:10:26 -0500
-Received: by qwd7 with SMTP id 7so827459qwd.19
-        for <git@vger.kernel.org>; Wed, 09 Mar 2011 16:10:25 -0800 (PST)
+	id S1753352Ab1CJAUJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2011 19:20:09 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37705 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752721Ab1CJAUH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Mar 2011 19:20:07 -0500
+Received: by wwa36 with SMTP id 36so1328873wwa.1
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 16:20:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=yhL4WDli7eAVPTx2tlXng1Sd3PdCTr6k34phcD39/OM=;
-        b=WV8oT6PX6qgs4x51MYkp+ob8r555siptECe4CKzy8azaPuIcF/8iyoHenjEiJcCKpa
-         H931q3uY05gmUaYfxqHpgZt6OqnX7hnLRHeXvkSJoMYi5djLXTv0TuWokGR8OWyZQlAx
-         nzdHvMPSfhmbttPdMsO5Ih2nS2VbKIW/qkV5Y=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=4rJ4/QFoX89QdgM55TR7tapU4PDpOpuNwWXGL2oKIlo=;
+        b=tPjigNyuk6ztDl/8WGNSi9yaQLVCach1ivC41YPmUdnPv3avf4WVpt7KHBNU5vV+79
+         mqh+Krq8NCI1i8rrLWqcjpRSiLPSPdsCiOsULE6KRH13CoXx9GJBiBkx3s/2hyf/PcKy
+         69DAQfKhQZO4PhUk1WJoshOAGPWl093+q2mKg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=X55i7+0bX45JHbv1gC27uQT8qujW6UWZIKGZpc9tgypy2joZZPRY2qkfwzHccHKiFh
-         cg13sdEzHT1XcRZ19ZXTpLZf19smsI9xvo4WMpH7oJFpT6Fpb4ERhjV3V7mscxgjtPo0
-         YmTG1fQILaGvuEhCOgBuORbddtwnsM/MjDOf4=
-Received: by 10.229.78.22 with SMTP id i22mr1596081qck.28.1299715825638;
-        Wed, 09 Mar 2011 16:10:25 -0800 (PST)
-Received: from elie ([69.209.61.99])
-        by mx.google.com with ESMTPS id d21sm876298qck.40.2011.03.09.16.10.22
-        (version=SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2011 16:10:24 -0800 (PST)
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=b/N5CMYgYGiI7ae8pesKXMd1XE+t4ho8O+i0qWLoDRGs+5muaKjoyY7aPidNFW5ZiO
+         ULRKmca1cNgxt4qDN2d9xwzFy0mYtRzt1FxTUN75zaBT5RlebdC5fygyOSSXya7iGxab
+         61cXEa9Uo1kYurkiHoQCNyjWxBZlFqVP/++VA=
+Received: by 10.216.123.69 with SMTP id u47mr6359577weh.16.1299716406171; Wed,
+ 09 Mar 2011 16:20:06 -0800 (PST)
+Received: by 10.216.239.5 with HTTP; Wed, 9 Mar 2011 16:19:36 -0800 (PST)
 In-Reply-To: <20110309215841.GC4400@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168777>
 
-Hi,
-
-Jeff King wrote:
-
+On Thu, Mar 10, 2011 at 4:58 AM, Jeff King <peff@peff.net> wrote:
+> They will be looking at our ideas page at:
+>
+> =C2=A0 =C2=A0https://git.wiki.kernel.org/index.php/SoC2011Ideas
+>
 > If you have any ideas, please add them to the page!
 
-Thanks for a pointer.  Some ideas still at the "throw them against the
-wall and see if they stick" stage: please feel free to add to the page
-if you think you can find subsets with the right scope.  Later today I
-can look more carefully.
-
-1. Cross-compilable msysgit: ideally, allowing someone to run
-   "make msysgit-installer" on Linux from an msysgit-source.git repo
-   to get an installer.  Nice subsets to start with might be msys.dll
-   (I think there has been some work on that already) and the basic
-   msys utilities.
-
-2. Merge libgit2 into git.git: polish the existing code in libgit2 so
-   that standard git can use it.  Presumably this would happen by
-   porting one function at a time, not by making git link to libgit2
-   immediately.  People familiar with libgit2 might be able to pick
-   out particularly interesting subsets to start with (diff
-   generation?).
-
-3. Remote helpers: bidi git remote-svn (or one-way remote-hg, or
-   remote-cvs, or ...).
-
-4. filter-branch killer: using fast-import's new features to implement
-   common filter-branch operations (--subdirectory-filter,
-   --prune-empty, obliterating certain files) faster.
-
-5. rev-list: Coping with timeskew.
-
-6. shallow clone: Push support.
-
-7. fixing workdirs (and alternates), along the lines explained in the
-   thread <http://thread.gmane.org/gmane.comp.version-control.git/150559>.
-   I would be very much interested in this.
-
-7. packfilev4.
+Jeff, how is the "support multiple transport (torrent, bundle, http..)
+cloning" going? The one that you were working on from the "initial
+clone from bundle" thread? Is it ok to make it a SoC project
+(presumably with at least bundle clone support)?
+--=20
+Duy
