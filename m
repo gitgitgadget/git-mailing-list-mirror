@@ -1,90 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP PATCH 0/5] support --exclude for diff/log commands
-Date: Wed, 09 Mar 2011 22:11:46 -0800
-Message-ID: <7vmxl37bdp.fsf@alter.siamese.dyndns.org>
-References: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: Re: [PATCH 2/2] blame: introduce -u/--unique option
+Date: Thu, 10 Mar 2011 15:13:41 +0900
+Message-ID: <1299737621.1496.55.camel@leonhard>
+References: <1299581951-4670-1-git-send-email-namhyung@gmail.com>
+	 <1299581951-4670-2-git-send-email-namhyung@gmail.com>
+	 <7vy64o9ixz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 07:12:05 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 07:13:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxZ6S-0002qs-30
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 07:12:04 +0100
+	id 1PxZ8G-0003OV-1O
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 07:13:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751456Ab1CJGL6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 01:11:58 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751606Ab1CJGL4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 01:11:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 17019209E;
-	Thu, 10 Mar 2011 01:13:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=tM4ZMbs1ts1X
-	1jk8AO58o5fFuCI=; b=C+SHriesNnp0ElDlr0qV/UCWGO+CyRvfTDBRSazo2q6q
-	yUXBILJVei3GTjHeuIMOWK2UM8skWdRVadZw7RgK+Gsbl182MdHlKVW4pnFczobr
-	PDbaCWQ7XqTB3ETokOMHHCoPD0kKSgrjjDSdBaHGRFxT0eXkrFAiH7McevmQ//E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u1P9Yt
-	WIYrH7YmL8kWX3XVURutJ3JaAW8THxjD3r5UvnIFzRjTBy+skjBzxQzLeQ9mLj7N
-	bXQZJcqwz8kpLRyJKizt9daAWP5cEGR+gjx+/HrYGMlU/7RRXRHN7ewO1VrgU8wV
-	uw4GoV4OTYnBOhCl9Hwc+Ms72DR9W8yz6TWXw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EA5E9209D;
-	Thu, 10 Mar 2011 01:13:18 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0AB0A209A; Thu, 10 Mar 2011
- 01:13:15 -0500 (EST)
-In-Reply-To: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 10 Mar
- 2011 10:13:34 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7E544010-4ADD-11E0-AE1D-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1752238Ab1CJGNw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 01:13:52 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61724 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751832Ab1CJGNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2011 01:13:49 -0500
+Received: by iyb26 with SMTP id 26so1222341iyb.19
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 22:13:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
+         :content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=3uEyJQLmSBkxT1EEKAWBEXmfn/vS9jV6ePoEAcXUN5E=;
+        b=EaXojmZcPAEFkP4zxIeoTBAgiNO7D52R+xvZtjdy/inEy4qX05iWXppJGi8QocH86c
+         5AoGhW1g04jKNvStsGqElkbxHLuDreLDZgJw8ZVWx6wrkL3t7GF2L6hrtMMElW/zOs0u
+         m+VTYl2MyDeHsKvVFDOZh2wIdRN+D0KycqK2w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=XttmtbYdC1PFnXRGfvSzDEjdDBcHZkDU2LrjWGrozNkl4esipkM5otkR1OB60omnMM
+         MQQdY4NBHMQsyyliEa5wDymUGAnc8048esUvMgwDXYViMFIuecRe3srnROGgF1hwhwHV
+         u3XqgUtv+zL1M93Kf53R7fl3DwAO/XI5ffq4A=
+Received: by 10.42.168.129 with SMTP id w1mr7407901icy.373.1299737628325;
+        Wed, 09 Mar 2011 22:13:48 -0800 (PST)
+Received: from [118.176.73.109] ([118.176.73.109])
+        by mx.google.com with ESMTPS id jv9sm1951219icb.13.2011.03.09.22.13.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 09 Mar 2011 22:13:47 -0800 (PST)
+In-Reply-To: <7vy64o9ixz.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168790>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+2011-03-09 (=EC=88=98), 11:45 -0800, Junio C Hamano:
+> Namhyung Kim <namhyung@gmail.com> writes:
+>=20
+> > -u/--unique option will find and use minimum length of unique
+> > SHA-1 name. If -l option is specified also, it will have higher
+> > priority, IOW git blame will use full 40-length SHA-1 name.
+>=20
+> > @@ -1867,6 +1878,10 @@ static void find_alignment(struct scoreboard=
+ *sb, int *option)
+> >  			longest_dst_lines =3D num;
+> >  		if (largest_score < ent_score(sb, e))
+> >  			largest_score =3D ent_score(sb, e);
+> > +		sha1 =3D find_unique_abbrev(suspect->commit->object.sha1,
+> > +					  MINIMUM_ABBREV);
+> > +		if (longest_uniq_sha1 < strlen(sha1))
+> > +			longest_uniq_sha1 =3D strlen(sha1);
+>=20
+> The logic to determine and keep track of the longuest-unique looks
+> correct, but I was hoping that we already have an easy optimization
+> codepath to do this only once per commit, not for every blame-entry i=
+n the
+> result.  Doesn't the code have a similar optimization to figure out t=
+he
+> necessary number of columns to show author names (I haven't read the =
+code
+> recently, though)?
+>=20
 
-> On the other hand, if we go with ':' as a mark of special pathspecs, =
-then
->
->  - ":/" mark pathspecs relative to worktree root
->  - ":!" may mark negative pathspecs
+Right. METAINFO_SHOWN flag does that. I'll move the code under the bloc=
+k
+in next version.
 
-I am still moderately negative on this "negative pathspec" stuff, as it
-will complicate the semantics (just one example: would a path that is
-covered by both positive and negative pathspecs included or excluded?
-would the last one win? would the more specific one win?) and makes the
-design harder to explain to the users. Depending on the semantics chose=
-n,
-it may also make the implementation less efficient and more complex.
 
-As the choice of the syntax goes, in the recent "grep --full-tree"
-discussion, I thought people are more or less happy with the colon
-prefixed "magic pathspec" syntax, and something along the lines of the
-above two seems to be a good design.
+> Also we might find that the performance impact of doing this may be s=
+o
+> miniscule that it is not worth wasting a short option name.  If we we=
+re to
+> use an option, I was actually hoping that the option would let the us=
+ers
+> specify a value different from the hardcoded 8 at the same time.  E.g=
+=2E
+>=20
+>     git blame --abbrev=3D8 ;# current default with uniquefy applied
+>     git blame --abbrev=3D4 ;# equivalent to your "blame -u"
+>=20
 
-The two most important things to consider are to make sure that people
-with funny pathnames can work it around by quoting, and the prefixing
-scheme is extensible so that other types of magic can later be introduc=
-ed
-with the same kind of escape hatch for people with funny pathnames that
-begin with or contain new magic characters used to trigger the new magi=
-c.
+Hmm... I thought about that too. But you mean that you only want
+--abbrev instead of -u, right?
 
-I said "something along the lines" above because ":/ for root, :! for
-negative" does not yet specify how the scheme would satisfy the above
-two consideration very well.
+My original intention was if user specified --abbrev explicitly, it
+should be honored regardless of the uniqueness. The guard will not be
+used in this situation because the user gave the exact length [s]he
+wants to see.
+
+
+> Can we have a benchmark of this feature in a largish and busy file in=
+ a
+> project with a deep history?
+>=20
+
+I gave it a try on a file in Linux kernel (with METAINFO_SHOWN
+optimization applied):
+
+$ wc -l mm/page_alloc.c
+5629 mm/page_alloc.c
+$ git log --oneline mm/page_alloc.c | wc -l
+566
+$ perf record ../git/git blame -u mm/page_alloc.c > /dev/null
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.229 MB perf.data (~10014 samples) ]
+$ perf report
+# Events: 5K cycles
+#
+# Overhead  Command         Shared Object                         Symbo=
+l
+# ........  .......  ....................  ............................=
+=2E
+#
+    21.11%      git  git                   [.] cmd_blame
+    18.34%      git  git                   [.] get_origin
+    18.32%      git  git                   [.] pass_blame
+     3.99%      git  libz.so.1.2.3.3       [.] inflate
+     3.14%      git  git                   [.] xdl_hash_record
+     2.84%      git  libz.so.1.2.3.3       [.] inflate_table
+     2.60%      git  libz.so.1.2.3.3       [.] inflate_fast
+     2.23%      git  git                   [.] find_pack_entry_one
+     1.84%      git  git                   [.] xdl_recmatch
+     1.51%      git  libc-2.11.1.so        [.] memcpy
+     1.49%      git  git                   [.] xdl_prepare_env
+     1.36%      git  git                   [.] xdl_prepare_ctx
+     1.13%      git  [kernel.kallsyms]     [k] __lock_acquire
+     1.12%      git  git                   [.] xdi_diff
+     1.09%      git  git                   [.] blame_chunk
+     0.99%      git  libc-2.11.1.so        [.] _int_malloc
+     0.79%      git  git                   [.] tree_entry_interesting
+     0.77%      git  git                   [.] origin_decref
+     0.67%      git  libz.so.1.2.3.3       [.] adler32
+     0.42%      git  [kernel.kallsyms]     [k] sched_clock_local
+     0.40%      git  git                   [.] decode_tree_entry
+     0.38%      git  [kernel.kallsyms]     [k] clear_page_c
+     0.35%      git  libc-2.11.1.so        [.] __GI___strncmp_ssse3
+     0.32%      git  git                   [.] lookup_object
+     0.31%      git  [kernel.kallsyms]     [k] lock_release
+     0.29%      git  [kernel.kallsyms]     [k] hlock_class
+     0.29%      git  [kernel.kallsyms]     [k] page_fault
+     0.29%      git  git                   [.] patch_delta
+     0.28%      git  [kernel.kallsyms]     [k] local_clock
+     0.27%      git  [kernel.kallsyms]     [k] sched_clock
+     0.25%      git  [kernel.kallsyms]     [k] delay_tsc
+     0.25%      git  git                   [.] parse_commit_buffer
+     0.25%      git  [kernel.kallsyms]     [k] look_up_lock_class
+     0.23%      git  git                   [.] xdl_cha_alloc
+     0.22%      git  libc-2.11.1.so        [.] _int_free
+     0.22%      git  libc-2.11.1.so        [.] malloc_consolidate
+     0.22%      git  [kernel.kallsyms]     [k] mark_lock
+     0.21%      git  libc-2.11.1.so        [.] __malloc
+     0.20%      git  git                   [.] nth_packed_object_offset
+
+Looks like it doesn't have a performance impact IMHO.
+Hope this helps.
+
+Thank you.
+
+
+--=20
+Regards,
+Namhyung Kim
