@@ -1,155 +1,141 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2] i18n: add stub Q_() wrapper for ngettext
-Date: Wed, 9 Mar 2011 21:17:58 -0600
-Message-ID: <20110310031734.GA24781@elie>
-References: <4D7223A9.6080105@colin.guthr.ie>
- <7vsjuz520w.fsf@alter.siamese.dyndns.org>
- <7vhbbf50vu.fsf@alter.siamese.dyndns.org>
- <20110306225641.GB24327@elie>
- <AANLkTikctSrfqKCdeYUyvUmAZjr=i7kaFhPeB-LfwgUz@mail.gmail.com>
- <20110309103104.GA30980@elie>
- <20110309105236.GC30980@elie>
- <7vfwqw9g9b.fsf@alter.siamese.dyndns.org>
- <20110309205155.GC22292@elie>
- <7v7hc89fp7.fsf@alter.siamese.dyndns.org>
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: Re: [PATCH 1/2] sha1_name: try to use same abbrev length when
+ core.abbrevguard is specified
+Date: Thu, 10 Mar 2011 14:27:35 +0900
+Message-ID: <1299734855.1496.9.camel@leonhard>
+References: <1299581951-4670-1-git-send-email-namhyung@gmail.com>
+	 <7vipvsaz27.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 04:18:16 2011
+X-From: git-owner@vger.kernel.org Thu Mar 10 06:27:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxWOE-0000z5-UL
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 04:18:15 +0100
+	id 1PxYPd-0000Rg-6r
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 06:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674Ab1CJDSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2011 22:18:09 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61957 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751675Ab1CJDSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2011 22:18:07 -0500
-Received: by qwd7 with SMTP id 7so907591qwd.19
-        for <git@vger.kernel.org>; Wed, 09 Mar 2011 19:18:06 -0800 (PST)
+	id S1751197Ab1CJF1o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 00:27:44 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34580 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750958Ab1CJF1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2011 00:27:43 -0500
+Received: by iwn34 with SMTP id 34so1193809iwn.19
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 21:27:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=6wk0mw4vOKBrQ9nu2bWzQdnPlYa52xGYeCVey5MwsX0=;
-        b=Nc4/+JAQIjZUyo+83u4IkkEXFWZZIXxWox/wF34zjLXRmNvVo+1q4oG4F6cnBiH/RI
-         5Wj7Kzjx6BQu52QghXJ7EQfdUeTWC47H3qB9x1QaVMpvGFo1d/CsuBrTZHjetTXixBL2
-         4cdHaPpiD4NpCop2O2OaYEovzf+qXxQzjyjwk=
+        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
+         :content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=FWi8gbykH+MmXEfxt2ofQhMyDYmOQ540aYpbJecmDus=;
+        b=EeiRLWvWO/dPYt5jqyNxO798S0IKEGTts2kewE/8ENZ8xUWWOCpXe6p0Y06v6JMWTG
+         HXC2M0xUKpCUKCCI1E38TDHKoeY+DF2AiiBtjD9Ccax/Y4uYtmZ5NBYTjyl9o+BdhMxP
+         W2Vij28h45lSQasW4CYIopyh3Y6NXnuZdXTtA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vTsTAVrc73p0Et+FNNjov2mOtf7gWVXQExShlIj4U36I64KaxKTtsoTkjfZNS/M5o1
-         S/Bae3iOuMhyujxejW1ST+sIC5H1wlhe4pOhgvffnRKIBxsh32G7ZMYvTeEDKCANUpVS
-         905qUIpAQR3A5Yam1YDdOAXY+9PwfMtsCDLDI=
-Received: by 10.229.68.106 with SMTP id u42mr5775862qci.284.1299727086529;
-        Wed, 09 Mar 2011 19:18:06 -0800 (PST)
-Received: from elie (adsl-69-209-61-99.dsl.chcgil.sbcglobal.net [69.209.61.99])
-        by mx.google.com with ESMTPS id g26sm1643563qco.6.2011.03.09.19.18.04
-        (version=SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2011 19:18:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v7hc89fp7.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=FYOTx/moHzpAjKuGFSQn4jVp7yGKLHI6eDvrmM6nq2rGMGRC5vDnT9cxx1kZ2ifAnI
+         Hwkrcpu1tgC0zEJtXG+nGowsjp4vSYEjjryRcFxE3oSZ5Sm7P5RqpE4/BLWBKycuXcF5
+         gt0YTNJHvHbGeIPL9PhbgHfhrs0nhJkQlJBys=
+Received: by 10.43.55.2 with SMTP id vw2mr9281666icb.326.1299734862740;
+        Wed, 09 Mar 2011 21:27:42 -0800 (PST)
+Received: from [118.176.73.109] ([118.176.73.109])
+        by mx.google.com with ESMTPS id wo11sm1359744icb.20.2011.03.09.21.27.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 09 Mar 2011 21:27:41 -0800 (PST)
+In-Reply-To: <7vipvsaz27.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168788>
 
-From: Junio C Hamano <gitster@pobox.com>
-Date: Sun, 6 Mar 2011 14:40:05 -0800
-Subject: i18n: add stub Q_() wrapper for ngettext
+2011-03-09 (=EC=88=98), 11:12 -0800, Junio C Hamano:=20
+> Namhyung Kim <namhyung@gmail.com> writes:
+>=20
+> > If find_unique_abbrev() finds a ambiguous SHA1 name, it tries
+> > to find again with increased length. In this case, result hex
+> > strings could have different lengths even though the
+> > core.abbrevguard config option is specified. But if the option
+> > is specified and increased length (delta) is less than its
+> > value, the result could be adjusted to the same length.
+>=20
+> I am not sure if I can understand what problem you are trying to solv=
+e
+> from the above description.
+>=20
 
-The Q_ function translates a string representing some pharse with an
-alternative plural form and uses the 'count' argument to choose which
-form to return.  Use of Q_ solves the "%d noun(s)" problem in a way
-that is portable to languages outside the Germanic and Romance
-families.
+That's probably because of my poor English. :(
 
-In English, the semantics of Q_(sing, plur, count) are roughly
-equivalent to
 
-	count == 1 ? _(sing) : _(plur)
+> The function is given "len" from the caller to specify the minimum le=
+ngth
+> of the output the caller expects (i.e. even if 4 hexdigits is enough =
+to
+> identify the given commit in a small project, the caller can say it w=
+ants
+> to see at least 7 hexdigits).  The loop without your patch finds the
+> shortest prefix whose length is at least that given length that uniqu=
+ely
+> identifies the given object (or the shortest prefix that doesn't iden=
+tify
+> any existing object if the given sha1 does not exist in the repositor=
+y).
+> And then ensures the returned value is longer by the guard as an extr=
+a
+> safety measure, so that later when the project grows, the disambiguat=
+ion
+> we find today has a better chance to survive.
+>=20
+> With this patch, the loop decreases the length of the guard when "len=
+"
+> given by the caller is insufficient to ensure uniqueness, which does =
+not
+> sound right.
+>=20
+> Suppose the given object has ambiguous other objects and you need 8
+> hexdigits at least to make it unique in today's history.  The caller =
+gives
+> you len of 7, and the guard is set to 3.
+>=20
+> With the original code, the loop starts with 7, finds that it is not
+> long enough to disambiguate, increments and retries, finds that 8 is =
+the
+> shortest prefix, and then adds the guard and returns 11 hexdigits.
+>=20
+> With your patch, the loop starts with 7 with extra set to 3, finds th=
+at 7
+> is not long enough and decrements extra to 2, finds that 8 is the sho=
+rtest
+> prefix, and then returns only 10 hexdigits.
+>=20
+> Which feels like totally going against the reason why we added the gu=
+ard.
+>=20
+> What am I missing?
+>=20
 
-while in other languages there can be more variants (count == 0; more
-random-looking rules based on the historical pronunciation of the
-number).  Behind the scenes, the singular form is used to look up a
-family of translations and the plural form is ignored unless no
-translation is available.
+What I was thinking is like below (from a user's point of view):
 
-Define such a Q_ in gettext.h with the English semantics so C code can
-start using it to mark phrases with a count for translation.
+I knew git use 7 hexdigit to represent a commit object and it was not
+enough for my project. So I gave it 5 for the guard and expected to see
+12 in everywhere - if 12 always guarantees uniqueness for the project
+now and probably, the near future. But sometimes git prints 13 even
+though 12 is long enough to represent the commit uniquely. Because 7 is
+not enough but 8 is, and simply add 5 (the guard) to it.
 
-The name "Q_" is taken from subversion and stands for "quantity".
-Many projects just use ngettext directly without a wrapper analogous
-to _; we should not do so because git's gettext.h is meant not to
-conflict with system headers that might include libintl.h.
+So I thought it would be natural to print 12 always in this case and
+thus, submitted the patch.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Junio C Hamano wrote:
+Thanks.
 
-> Yeah, I am aware of that.  Is there a similar convention for [dn]gettext?
-> Perhaps not....
-
-subversion uses Q_.  Though it does not seem to be standard --- e.g.,
-glib uses:
-
- _() for gettext
- Q_() for a variant on gettext that allows a string of the form
-  "context|message" as its argument;
- C_() for a nicer version of Q_() that takes the context and message
-  as distinct arguments;
- N_() to mark a string for translation without translating it;
- NC_() to mark a string with context for translation without
-  translating it.
-
-I suppose Q_ is as good a name as any.
-
-Hopefully veterans from glib would not be used to glib's alternative
-meaning of Q_, preferring to use C_ for messages with flags.
-
- gettext.h |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/gettext.h b/gettext.h
-index 04b5958..1b253b7 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -9,8 +9,8 @@
- #ifndef GETTEXT_H
- #define GETTEXT_H
- 
--#ifdef _
--#error "namespace conflict: '_' is pre-defined?"
-+#if defined(_) || defined(Q_)
-+#error "namespace conflict: '_' or 'Q_' is pre-defined?"
- #endif
- 
- #define FORMAT_PRESERVING(n) __attribute__((format_arg(n)))
-@@ -26,6 +26,14 @@ static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
- 	return use_gettext_poison() ? "# GETTEXT POISON #" : msgid;
- }
- 
-+static inline FORMAT_PRESERVING(1) FORMAT_PRESERVING(2)
-+const char *Q_(const char *msgid, const char *plu, unsigned long n)
-+{
-+	if (use_gettext_poison())
-+		return "# GETTEXT POISON #";
-+	return n == 1 ? msgid : plu;
-+}
-+
- /* Mark msgid for translation but do not translate it. */
- #define N_(msgid) (msgid)
- 
--- 
-1.7.4.1
+--=20
+Regards,
+Namhyung Kim
