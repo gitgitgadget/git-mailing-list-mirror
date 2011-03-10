@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 3/5] revision.c: get rid of struct rev_info.prune_data
-Date: Thu, 10 Mar 2011 10:13:37 +0700
-Message-ID: <1299726819-5576-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/5] diff: refactor init/release API
+Date: Thu, 10 Mar 2011 10:13:38 +0700
+Message-ID: <1299726819-5576-5-git-send-email-pclouds@gmail.com>
 References: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,304 +10,486 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 10 04:15:26 2011
+X-From: git-owner@vger.kernel.org Thu Mar 10 04:15:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxWLU-0008T7-38
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 04:15:24 +0100
+	id 1PxWLf-0008Vg-Bm
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 04:15:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752740Ab1CJDPS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2011 22:15:18 -0500
+	id S1752754Ab1CJDPa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2011 22:15:30 -0500
 Received: from mail-yw0-f46.google.com ([209.85.213.46]:41493 "EHLO
 	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256Ab1CJDPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2011 22:15:17 -0500
+	with ESMTP id S1751675Ab1CJDP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2011 22:15:29 -0500
 Received: by mail-yw0-f46.google.com with SMTP id 3so484792ywj.19
-        for <git@vger.kernel.org>; Wed, 09 Mar 2011 19:15:17 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 19:15:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=7ystcJhRAH/JykFxum4CbjpO2tiDUkLg68GO+A1uzKE=;
-        b=qOp4BbxdlVuSmFFOuMYfArfvIySrsxOAeaktwKQmUNLLQYYkCc0MXBcYfHdQKm2v8Y
-         FVjX+Nde6yC0UCNCfwsQL2sXt4G5u1iLWbcrVTJbf1hOoiGQscHBQdPGzEWlFtUFXK2C
-         1FROyWDUP7OAPBX7tbDTZDKwvMb0eLBEMDJ0g=
+        bh=gGchKXdxbfDKogoDDV59kWyHVXeT3xRBQNSnp+KK22s=;
+        b=yFoPdpPfX96Ofvw2EoqXT7i+LAblc+HhxfTi5KZYKuOF2wpt/GmeSKKLXfReJiAw/1
+         oA3xTkOAlsRkU9YQqbIMb/R+cS9ly/xO7noLIMZCMshg9dPpGUwwmVfGgkISvY1D+ZAN
+         hc/yaddWgUg92oMwKAEgxlpnjMFNZ1XrktEmA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=ahzer2rzcCF+Pm+OwC6YENBry5z7tWMxEI2JTI8rtkNOpF41VDkXrW87jONjngQfeQ
-         6JEGa2O5B51SJgGcOmYSVq4UWDBnApqnnA8O52+v5XUpR6hpualBGBASocPgZYCWxLM9
-         Wk+c/HkednUVrZPgidLZCb4VOqfNc5GMOpjqY=
-Received: by 10.236.114.193 with SMTP id c41mr165746yhh.252.1299726915946;
-        Wed, 09 Mar 2011 19:15:15 -0800 (PST)
+        b=w0XW+WMPI3xVp9MyCLeiAPRBhglbl5yuutgKa1sshlFhoKaPx9QHgCO4jT5Mo5mQTX
+         wYsHM55AzCjiowbL0h1TOiSD/5IWZQlV2gOfOFUy59xqxKIeT0Kj/zEIvyV/FLQ89mAg
+         qZjmX7RroQq5qx/lQmvDhFPppVxnCiwTfmWrM=
+Received: by 10.236.190.229 with SMTP id e65mr668374yhn.127.1299726929029;
+        Wed, 09 Mar 2011 19:15:29 -0800 (PST)
 Received: from pclouds@gmail.com ([118.69.34.31])
-        by mx.google.com with ESMTPS id m25sm1774920yhm.31.2011.03.09.19.15.10
+        by mx.google.com with ESMTPS id i10sm1796428yhd.10.2011.03.09.19.15.23
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2011 19:15:15 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 10 Mar 2011 10:14:12 +0700
+        Wed, 09 Mar 2011 19:15:27 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 10 Mar 2011 10:14:23 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168783>
 
-There are three struct pathspec(s) in struct rev_info:
+This patch:
 
- - prune_data
- - pruning.pathspec
- - diffopt.pathspec
+ - renames diff_setup() to init_diff()
+ - gets rid of diff_tree_setup_paths()
+ - renames diff_tree_release_paths() to release_diff()
 
-In some places, this pathspec is used, in other places another
-one. I'd like to have only one pathspec in struct rev_info, but i'm
-not sure why diffopt can't be used in place of pruning. So in the
-meantime, prune_data will be gone.
+The first one makes it probably just personal taste. I find "init"
+better name for where input can be garbage, as opposed to "setup",
+where the input is at least sane.
 
-The driving force behind this is now diff_options.pathspec can be
-manipulated behind the scene by diff_setup_done() to support
---exclude. Rev machinery does not know about this and does not need
-to. Remove prune_data in favor of diffopt.pathspec, handing complex
-pathspec manipulation to diff machinery.
+release_diff() is supposed to take care of more cleanup stuff as
+struct diff_options grows.
 
-As part of the changes, setup_revisions() now can take pathspecs
-directly by setting argc =3D 0, argv =3D pathspec
+diff_tree_release_paths() is not just a simple wrapper around
+init_pathspec(). Remove it and manipulate diff_options->pathspec
+directly.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/add.c         |    3 +--
- builtin/diff.c        |    6 +++---
- builtin/fast-export.c |    2 +-
- diff-lib.c            |    6 +++---
- revision.c            |   20 +++++++++++---------
- revision.h            |    1 -
- wt-status.c           |    6 ++----
- 7 files changed, 21 insertions(+), 23 deletions(-)
+ Documentation/technical/api-diff.txt |    2 +-
+ builtin/blame.c                      |   22 +++++++---------------
+ builtin/merge.c                      |    2 +-
+ builtin/reset.c                      |    4 ++--
+ diff-no-index.c                      |    6 +++---
+ diff.c                               |    8 +++++++-
+ diff.h                               |    5 ++---
+ merge-recursive.c                    |    2 +-
+ notes-merge.c                        |    8 ++++----
+ patch-ids.c                          |    2 +-
+ revision.c                           |    4 ++--
+ tree-diff.c                          |   21 ++++-----------------
+ 12 files changed, 35 insertions(+), 51 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index f7a17e4..904db6b 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -85,8 +85,7 @@ int add_files_to_cache(const char *prefix, const char=
- **pathspec, int flags)
- 	struct update_callback_data data;
- 	struct rev_info rev;
- 	init_revisions(&rev, prefix);
--	setup_revisions(0, NULL, &rev, NULL);
--	init_pathspec(&rev.prune_data, pathspec);
-+	setup_revisions(0, pathspec, &rev, NULL);
- 	rev.diffopt.output_format =3D DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback =3D update_callback;
- 	data.flags =3D flags;
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 4c9deb2..1c69da2 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -374,10 +374,10 @@ int cmd_diff(int argc, const char **argv, const c=
-har *prefix)
+diff --git a/Documentation/technical/api-diff.txt b/Documentation/techn=
+ical/api-diff.txt
+index 20b0241..b88ee9e 100644
+--- a/Documentation/technical/api-diff.txt
++++ b/Documentation/technical/api-diff.txt
+@@ -18,7 +18,7 @@ Calling sequence
+ ----------------
+=20
+ * Prepare `struct diff_options` to record the set of diff options, and
+-  then call `diff_setup()` to initialize this structure.  This sets up
++  then call `init_diff()` to initialize this structure.  This sets up
+   the vanilla default.
+=20
+ * Fill in the options structure to specify desired output format, rena=
+me
+diff --git a/builtin/blame.c b/builtin/blame.c
+index aa30ec5..f58e6e4 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -383,14 +383,13 @@ static struct origin *find_origin(struct scoreboa=
+rd *sb,
+ 	 * and origin first.  Most of the time they are the
+ 	 * same and diff-tree is fairly efficient about this.
+ 	 */
+-	diff_setup(&diff_opts);
++	init_diff(&diff_opts);
+ 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
+ 	diff_opts.detect_rename =3D 0;
+ 	diff_opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
+ 	paths[0] =3D origin->path;
+ 	paths[1] =3D NULL;
+-
+-	diff_tree_setup_paths(paths, &diff_opts);
++	init_pathspec(&diff_opts.pathspec, paths);
+ 	if (diff_setup_done(&diff_opts) < 0)
+ 		die("diff-setup");
+=20
+@@ -441,7 +440,7 @@ static struct origin *find_origin(struct scoreboard=
+ *sb,
  		}
- 		die("unhandled object '%s' given.", name);
  	}
--	if (rev.prune_data.nr) {
-+	if (rev.diffopt.pathspec.nr) {
- 		if (!path)
--			path =3D rev.prune_data.items[0].match;
--		paths +=3D rev.prune_data.nr;
-+			path =3D rev.diffopt.pathspec.items[0].match;
-+		paths +=3D rev.diffopt.pathspec.nr;
+ 	diff_flush(&diff_opts);
+-	diff_tree_release_paths(&diff_opts);
++	release_diff(&diff_opts);
+ 	if (porigin) {
+ 		/*
+ 		 * Create a freestanding copy that is not part of
+@@ -469,15 +468,12 @@ static struct origin *find_rename(struct scoreboa=
+rd *sb,
+ 	struct origin *porigin =3D NULL;
+ 	struct diff_options diff_opts;
+ 	int i;
+-	const char *paths[2];
+=20
+-	diff_setup(&diff_opts);
++	init_diff(&diff_opts);
+ 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
+ 	diff_opts.detect_rename =3D DIFF_DETECT_RENAME;
+ 	diff_opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
+ 	diff_opts.single_follow =3D origin->path;
+-	paths[0] =3D NULL;
+-	diff_tree_setup_paths(paths, &diff_opts);
+ 	if (diff_setup_done(&diff_opts) < 0)
+ 		die("diff-setup");
+=20
+@@ -500,7 +496,7 @@ static struct origin *find_rename(struct scoreboard=
+ *sb,
+ 		}
  	}
-=20
- 	/*
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index daf1945..b225427 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -651,7 +651,7 @@ int cmd_fast_export(int argc, const char **argv, co=
-nst char *prefix)
- 	if (import_filename)
- 		import_marks(import_filename);
-=20
--	if (import_filename && revs.prune_data.nr)
-+	if (import_filename && revs.diffopt.pathspec.nr)
- 		full_tree =3D 1;
-=20
- 	get_tags_and_duplicates(&revs.pending, &extra_refs);
-diff --git a/diff-lib.c b/diff-lib.c
-index 1e22992..b3ac269 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -106,7 +106,7 @@ int run_diff_files(struct rev_info *revs, unsigned =
-int option)
- 			DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
- 			break;
-=20
--		if (!ce_path_match(ce, &revs->prune_data))
-+		if (!ce_path_match(ce, &revs->diffopt.pathspec))
- 			continue;
-=20
- 		if (ce_stage(ce)) {
-@@ -427,7 +427,7 @@ static int oneway_diff(struct cache_entry **src, st=
-ruct unpack_trees_options *o)
- 	if (tree =3D=3D o->df_conflict_entry)
- 		tree =3D NULL;
-=20
--	if (ce_path_match(idx ? idx : tree, &revs->prune_data))
-+	if (ce_path_match(idx ? idx : tree, &revs->diffopt.pathspec))
- 		do_oneway_diff(o, idx, tree);
-=20
- 	return 0;
-@@ -501,7 +501,7 @@ int do_diff_cache(const unsigned char *tree_sha1, s=
-truct diff_options *opt)
- 	active_nr =3D dst - active_cache;
-=20
- 	init_revisions(&revs, NULL);
--	init_pathspec(&revs.prune_data, opt->pathspec.raw);
-+	init_pathspec(&revs.diffopt.pathspec, opt->pathspec.raw);
- 	tree =3D parse_tree_indirect(tree_sha1);
- 	if (!tree)
- 		die("bad tree object %s", sha1_to_hex(tree_sha1));
-diff --git a/revision.c b/revision.c
-index 86d2470..f9f66de 100644
---- a/revision.c
-+++ b/revision.c
-@@ -323,7 +323,7 @@ static int rev_compare_tree(struct rev_info *revs, =
-struct commit *parent, struct
- 		 * tagged commit by specifying both --simplify-by-decoration
- 		 * and pathspec.
- 		 */
--		if (!revs->prune_data.nr)
-+		if (!revs->diffopt.pathspec.nr)
- 			return REV_TREE_SAME;
- 	}
-=20
-@@ -969,7 +969,7 @@ static void prepare_show_merge(struct rev_info *rev=
-s)
- 		struct cache_entry *ce =3D active_cache[i];
- 		if (!ce_stage(ce))
- 			continue;
--		if (ce_path_match(ce, &revs->prune_data)) {
-+		if (ce_path_match(ce, &revs->diffopt.pathspec)) {
- 			prune_num++;
- 			prune =3D xrealloc(prune, sizeof(*prune) * prune_num);
- 			prune[prune_num-2] =3D ce->name;
-@@ -979,8 +979,8 @@ static void prepare_show_merge(struct rev_info *rev=
-s)
- 		       ce_same_name(ce, active_cache[i+1]))
- 			i++;
- 	}
--	free_pathspec(&revs->prune_data);
--	init_pathspec(&revs->prune_data, prune);
-+	free_pathspec(&revs->diffopt.pathspec);
-+	init_pathspec(&revs->diffopt.pathspec, prune);
- 	revs->limited =3D 1;
+ 	diff_flush(&diff_opts);
+-	diff_tree_release_paths(&diff_opts);
++	release_diff(&diff_opts);
+ 	return porigin;
  }
 =20
-@@ -1488,6 +1488,10 @@ int setup_revisions(int argc, const char **argv,=
- struct rev_info *revs, struct s
- 	if (opt)
- 		submodule =3D opt->submodule;
+@@ -1048,7 +1044,6 @@ static int find_copy_in_parent(struct scoreboard =
+*sb,
+ 			       int opt)
+ {
+ 	struct diff_options diff_opts;
+-	const char *paths[1];
+ 	int i, j;
+ 	int retval;
+ 	struct blame_list *blame_list;
+@@ -1058,12 +1053,9 @@ static int find_copy_in_parent(struct scoreboard=
+ *sb,
+ 	if (!blame_list)
+ 		return 1; /* nothing remains for this target */
 =20
-+	/* argv is a list of pathspec */
-+	if (!argc && argv)
-+		prune_data =3D argv;
+-	diff_setup(&diff_opts);
++	init_diff(&diff_opts);
+ 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
+ 	diff_opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
+-
+-	paths[0] =3D NULL;
+-	diff_tree_setup_paths(paths, &diff_opts);
+ 	if (diff_setup_done(&diff_opts) < 0)
+ 		die("diff-setup");
+=20
+@@ -1147,7 +1139,7 @@ static int find_copy_in_parent(struct scoreboard =
+*sb,
+ 	}
+ 	reset_scanned_flag(sb);
+ 	diff_flush(&diff_opts);
+-	diff_tree_release_paths(&diff_opts);
++	release_diff(&diff_opts);
+ 	return retval;
+ }
+=20
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a89ddbb..c74ed1f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -379,7 +379,7 @@ static void finish(const unsigned char *new_head, c=
+onst char *msg)
+ 	}
+ 	if (new_head && show_diffstat) {
+ 		struct diff_options opts;
+-		diff_setup(&opts);
++		init_diff(&opts);
+ 		opts.output_format |=3D
+ 			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+ 		opts.detect_rename =3D DIFF_DETECT_RENAME;
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 5de2bce..36b0605 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -195,10 +195,10 @@ static int read_from_tree(const char *prefix, con=
+st char **argv,
+ 	struct diff_options opt;
+=20
+ 	memset(&opt, 0, sizeof(opt));
+-	diff_tree_setup_paths(get_pathspec(prefix, (const char **)argv), &opt=
+);
+ 	opt.output_format =3D DIFF_FORMAT_CALLBACK;
+ 	opt.format_callback =3D update_index_from_diff;
+ 	opt.format_callback_data =3D &index_was_discarded;
++	init_pathspec(&opt.pathspec, get_pathspec(prefix, (const char **)argv=
+));
+=20
+ 	index_fd =3D hold_locked_index(lock, 1);
+ 	index_was_discarded =3D 0;
+@@ -207,7 +207,7 @@ static int read_from_tree(const char *prefix, const=
+ char **argv,
+ 		return 1;
+ 	diffcore_std(&opt);
+ 	diff_flush(&opt);
+-	diff_tree_release_paths(&opt);
++	release_diff(&opt);
+=20
+ 	if (!index_was_discarded)
+ 		/* The index is still clobbered from do_diff_cache() */
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 3a36144..a60eda7 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -203,7 +203,7 @@ void diff_no_index(struct rev_info *revs,
+ 		usagef("git diff %s <path> <path>",
+ 		       no_index ? "--no-index" : "[--no-index]");
+=20
+-	diff_setup(&revs->diffopt);
++	init_diff(&revs->diffopt);
+ 	for (i =3D 1; i < argc - 2; ) {
+ 		int j;
+ 		if (!strcmp(argv[i], "--no-index"))
+@@ -245,10 +245,10 @@ void diff_no_index(struct rev_info *revs,
+ 			     : p);
+ 			paths[i] =3D p;
+ 		}
+-		diff_tree_setup_paths(paths, &revs->diffopt);
++		init_pathspec(&revs->diffopt.pathspec, paths);
+ 	}
+ 	else
+-		diff_tree_setup_paths(argv + argc - 2, &revs->diffopt);
++		init_pathspec(&revs->diffopt.pathspec, argv + argc - 2);
+ 	revs->diffopt.skip_stat_unmatch =3D 1;
+ 	if (!revs->diffopt.output_format)
+ 		revs->diffopt.output_format =3D DIFF_FORMAT_PATCH;
+diff --git a/diff.c b/diff.c
+index 6640857..6f206a9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2847,7 +2847,7 @@ static void run_checkdiff(struct diff_filepair *p=
+, struct diff_options *o)
+ 	builtin_checkdiff(name, other, attr_path, p->one, p->two, o);
+ }
+=20
+-void diff_setup(struct diff_options *options)
++void init_diff(struct diff_options *options)
+ {
+ 	memcpy(options, &default_diff_options, sizeof(*options));
+=20
+@@ -2976,6 +2976,12 @@ int diff_setup_done(struct diff_options *options=
+)
+ 	return 0;
+ }
+=20
 +
- 	/* First, search for "--" */
- 	seen_dashdash =3D 0;
- 	for (i =3D 1; i < argc; i++) {
-@@ -1617,7 +1621,7 @@ int setup_revisions(int argc, const char **argv, =
++void release_diff(struct diff_options *o)
++{
++	free_pathspec(&o->pathspec);
++}
++
+ static int opt_arg(const char *arg, int arg_short, const char *arg_lon=
+g, int *val)
+ {
+ 	char c, *eq;
+diff --git a/diff.h b/diff.h
+index 310bd6b..12a9907 100644
+--- a/diff.h
++++ b/diff.h
+@@ -160,8 +160,6 @@ const char *diff_get_color(int diff_use_color, enum=
+ color_diff ix);
+=20
+ extern const char mime_boundary_leader[];
+=20
+-extern void diff_tree_setup_paths(const char **paths, struct diff_opti=
+ons *);
+-extern void diff_tree_release_paths(struct diff_options *);
+ extern int diff_tree(struct tree_desc *t1, struct tree_desc *t2,
+ 		     const char *base, struct diff_options *opt);
+ extern int diff_tree_sha1(const unsigned char *old, const unsigned cha=
+r *new,
+@@ -226,9 +224,10 @@ extern int parse_long_opt(const char *opt, const c=
+har **argv,
+ extern int git_diff_basic_config(const char *var, const char *value, v=
+oid *cb);
+ extern int git_diff_ui_config(const char *var, const char *value, void=
+ *cb);
+ extern int diff_use_color_default;
+-extern void diff_setup(struct diff_options *);
++extern void init_diff(struct diff_options *);
+ extern int diff_opt_parse(struct diff_options *, const char **, int);
+ extern int diff_setup_done(struct diff_options *);
++extern void release_diff(struct diff_options *);
+=20
+ #define DIFF_DETECT_RENAME	1
+ #define DIFF_DETECT_COPY	2
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 16c2dbe..bbf48c9 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -429,7 +429,7 @@ static struct string_list *get_renames(struct merge=
+_options *o,
+ 	struct diff_options opts;
+=20
+ 	renames =3D xcalloc(1, sizeof(struct string_list));
+-	diff_setup(&opts);
++	init_diff(&opts);
+ 	DIFF_OPT_SET(&opts, RECURSIVE);
+ 	opts.detect_rename =3D DIFF_DETECT_RENAME;
+ 	opts.rename_limit =3D o->merge_rename_limit >=3D 0 ? o->merge_rename_=
+limit :
+diff --git a/notes-merge.c b/notes-merge.c
+index 1467ad3..acf98e5 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -131,7 +131,7 @@ static struct notes_merge_pair *diff_tree_remote(st=
+ruct notes_merge_options *o,
+ 	trace_printf("\tdiff_tree_remote(base =3D %.7s, remote =3D %.7s)\n",
+ 	       sha1_to_hex(base), sha1_to_hex(remote));
+=20
+-	diff_setup(&opt);
++	init_diff(&opt);
+ 	DIFF_OPT_SET(&opt, RECURSIVE);
+ 	opt.output_format =3D DIFF_FORMAT_NO_OUTPUT;
+ 	if (diff_setup_done(&opt) < 0)
+@@ -178,7 +178,7 @@ static struct notes_merge_pair *diff_tree_remote(st=
+ruct notes_merge_options *o,
+ 		       sha1_to_hex(mp->remote));
+ 	}
+ 	diff_flush(&opt);
+-	diff_tree_release_paths(&opt);
++	release_diff(&opt);
+=20
+ 	*num_changes =3D len;
+ 	return changes;
+@@ -195,7 +195,7 @@ static void diff_tree_local(struct notes_merge_opti=
+ons *o,
+ 	trace_printf("\tdiff_tree_local(len =3D %i, base =3D %.7s, local =3D =
+%.7s)\n",
+ 	       len, sha1_to_hex(base), sha1_to_hex(local));
+=20
+-	diff_setup(&opt);
++	init_diff(&opt);
+ 	DIFF_OPT_SET(&opt, RECURSIVE);
+ 	opt.output_format =3D DIFF_FORMAT_NO_OUTPUT;
+ 	if (diff_setup_done(&opt) < 0)
+@@ -265,7 +265,7 @@ static void diff_tree_local(struct notes_merge_opti=
+ons *o,
+ 		       sha1_to_hex(mp->local));
+ 	}
+ 	diff_flush(&opt);
+-	diff_tree_release_paths(&opt);
++	release_diff(&opt);
+ }
+=20
+ static void check_notes_merge_worktree(struct notes_merge_options *o)
+diff --git a/patch-ids.c b/patch-ids.c
+index 5717257..e8ff156 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -37,7 +37,7 @@ struct patch_id_bucket {
+ int init_patch_ids(struct patch_ids *ids)
+ {
+ 	memset(ids, 0, sizeof(*ids));
+-	diff_setup(&ids->diffopts);
++	init_diff(&ids->diffopts);
+ 	DIFF_OPT_SET(&ids->diffopts, RECURSIVE);
+ 	if (diff_setup_done(&ids->diffopts) < 0)
+ 		return error("diff_setup_done failed");
+diff --git a/revision.c b/revision.c
+index f9f66de..014b723 100644
+--- a/revision.c
++++ b/revision.c
+@@ -925,7 +925,7 @@ void init_revisions(struct rev_info *revs, const ch=
+ar *prefix)
+ 	revs->grep_filter.header_tail =3D &(revs->grep_filter.header_list);
+ 	revs->grep_filter.regflags =3D REG_NEWLINE;
+=20
+-	diff_setup(&revs->diffopt);
++	init_diff(&revs->diffopt);
+ 	if (prefix && !revs->diffopt.prefix) {
+ 		revs->diffopt.prefix =3D prefix;
+ 		revs->diffopt.prefix_length =3D strlen(prefix);
+@@ -1662,7 +1662,7 @@ int setup_revisions(int argc, const char **argv, =
 struct rev_info *revs, struct s
- 	}
-=20
- 	if (prune_data)
--		init_pathspec(&revs->prune_data, get_pathspec(revs->prefix, prune_da=
-ta));
-+		init_pathspec(&revs->diffopt.pathspec, get_pathspec(revs->prefix, pr=
-une_data));
-=20
- 	if (revs->def =3D=3D NULL)
- 		revs->def =3D opt ? opt->def : NULL;
-@@ -1648,19 +1652,17 @@ int setup_revisions(int argc, const char **argv=
-, struct rev_info *revs, struct s
- 	if (revs->topo_order)
- 		revs->limited =3D 1;
-=20
--	if (revs->prune_data.nr) {
--		diff_tree_setup_paths(revs->prune_data.raw, &revs->pruning);
-+	if (revs->diffopt.pathspec.nr) {
- 		/* Can't prune commits with rename following: the paths change.. */
- 		if (!DIFF_OPT_TST(&revs->diffopt, FOLLOW_RENAMES))
- 			revs->prune =3D 1;
--		if (!revs->full_diff)
--			diff_tree_setup_paths(revs->prune_data.raw, &revs->diffopt);
- 	}
- 	if (revs->combine_merges)
- 		revs->ignore_merges =3D 0;
  	revs->diffopt.abbrev =3D revs->abbrev;
  	if (diff_setup_done(&revs->diffopt) < 0)
  		die("diff_setup_done failed");
-+	diff_tree_setup_paths(revs->diffopt.pathspec.raw, &revs->pruning);
+-	diff_tree_setup_paths(revs->diffopt.pathspec.raw, &revs->pruning);
++	init_pathspec(&revs->pruning.pathspec, revs->diffopt.pathspec.raw);
 =20
  	compile_grep_patterns(&revs->grep_filter);
 =20
-diff --git a/revision.h b/revision.h
-index 82509dd..066e407 100644
---- a/revision.h
-+++ b/revision.h
-@@ -34,7 +34,6 @@ struct rev_info {
- 	/* Basic information */
- 	const char *prefix;
- 	const char *def;
--	struct pathspec prune_data;
- 	unsigned int early_output;
+diff --git a/tree-diff.c b/tree-diff.c
+index 3954281..7df9064 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -209,26 +209,23 @@ static void try_to_follow_renames(struct tree_des=
+c *t1, struct tree_desc *t2, co
+ 	struct diff_options diff_opts;
+ 	struct diff_queue_struct *q =3D &diff_queued_diff;
+ 	struct diff_filepair *choice;
+-	const char *paths[1];
+ 	int i;
 =20
- 	/* Traversal flags */
-diff --git a/wt-status.c b/wt-status.c
-index a82b11d..7c4171e 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -312,7 +312,7 @@ static void wt_status_collect_changes_worktree(stru=
-ct wt_status *s)
- 	struct rev_info rev;
+ 	/* Remove the file creation entry from the diff queue, and remember i=
+t */
+ 	choice =3D q->queue[0];
+ 	q->nr =3D 0;
 =20
- 	init_revisions(&rev, NULL);
--	setup_revisions(0, NULL, &rev, NULL);
-+	setup_revisions(0, s->pathspec, &rev, NULL);
- 	rev.diffopt.output_format |=3D DIFF_FORMAT_CALLBACK;
- 	DIFF_OPT_SET(&rev.diffopt, DIRTY_SUBMODULES);
- 	if (!s->show_untracked_files)
-@@ -323,7 +323,6 @@ static void wt_status_collect_changes_worktree(stru=
-ct wt_status *s)
-     }
- 	rev.diffopt.format_callback =3D wt_status_collect_changed_cb;
- 	rev.diffopt.format_callback_data =3D s;
--	init_pathspec(&rev.prune_data, s->pathspec);
- 	run_diff_files(&rev, 0);
+-	diff_setup(&diff_opts);
++	init_diff(&diff_opts);
+ 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
+ 	DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
+ 	diff_opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
+ 	diff_opts.single_follow =3D opt->pathspec.raw[0];
+ 	diff_opts.break_opt =3D opt->break_opt;
+-	paths[0] =3D NULL;
+-	diff_tree_setup_paths(paths, &diff_opts);
+ 	if (diff_setup_done(&diff_opts) < 0)
+ 		die("unable to set up diff options to follow renames");
+ 	diff_tree(t1, t2, base, &diff_opts);
+ 	diffcore_std(&diff_opts);
+-	diff_tree_release_paths(&diff_opts);
++	release_diff(&diff_opts);
+=20
+ 	/* Go through the new set of filepairing, and see if we find a more i=
+nteresting one */
+ 	opt->found_follow =3D 0;
+@@ -247,9 +244,9 @@ static void try_to_follow_renames(struct tree_desc =
+*t1, struct tree_desc *t2, co
+ 			choice =3D p;
+=20
+ 			/* Update the path we use from now on.. */
+-			diff_tree_release_paths(opt);
++			release_diff(opt);
+ 			opt->pathspec.raw[0] =3D xstrdup(p->one->path);
+-			diff_tree_setup_paths(opt->pathspec.raw, opt);
++			init_pathspec(&opt->pathspec, opt->pathspec.raw);
+=20
+ 			/*
+ 			 * The caller expects us to return a set of vanilla
+@@ -323,13 +320,3 @@ int diff_root_tree_sha1(const unsigned char *new, =
+const char *base, struct diff_
+ 	free(tree);
+ 	return retval;
  }
-=20
-@@ -335,7 +334,7 @@ static void wt_status_collect_changes_index(struct =
-wt_status *s)
- 	init_revisions(&rev, NULL);
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def =3D s->is_initial ? EMPTY_TREE_SHA1_HEX : s->reference;
--	setup_revisions(0, NULL, &rev, &opt);
-+	setup_revisions(0, s->pathspec, &rev, &opt);
-=20
- 	if (s->ignore_submodule_arg) {
- 		DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
-@@ -348,7 +347,6 @@ static void wt_status_collect_changes_index(struct =
-wt_status *s)
- 	rev.diffopt.detect_rename =3D 1;
- 	rev.diffopt.rename_limit =3D 200;
- 	rev.diffopt.break_opt =3D 0;
--	init_pathspec(&rev.prune_data, s->pathspec);
- 	run_diff_index(&rev, 1);
- }
-=20
+-
+-void diff_tree_release_paths(struct diff_options *opt)
+-{
+-	free_pathspec(&opt->pathspec);
+-}
+-
+-void diff_tree_setup_paths(const char **p, struct diff_options *opt)
+-{
+-	init_pathspec(&opt->pathspec, p);
+-}
 --=20
 1.7.3.1.256.g2539c.dirty
