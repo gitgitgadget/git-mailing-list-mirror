@@ -1,86 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
-Date: Thu, 10 Mar 2011 17:24:43 -0500
-Message-ID: <20110310222443.GC15828@sigill.intra.peff.net>
-References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com>
- <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
- <20110121222440.GA1837@sigill.intra.peff.net>
- <20110123141417.GA6133@mew.padd.com>
- <4D793C7D.1000502@miseler.de>
+Subject: Re: Fwd: [PATCH 2/2] pretty.c: allow date formats in user format
+ strings
+Date: Thu, 10 Mar 2011 17:31:48 -0500
+Message-ID: <20110310223148.GD15828@sigill.intra.peff.net>
+References: <20110305195020.GA3089@sigill.intra.peff.net>
+ <20110305200010.GB32095@sigill.intra.peff.net>
+ <AANLkTinH8zwX2sbd5bpk=x4R3zOAg3Dc92Fbspfdv03T@mail.gmail.com>
+ <AANLkTikaN=wsg6RLFaFxh=L3RCYjKkVGFR4VTrQ=KRZk@mail.gmail.com>
+ <20110307161758.GB11934@sigill.intra.peff.net>
+ <7v39mw9f7a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	emontellese@gmail.com, schacon@gmail.com, joey@kitenet.net
-To: Alexander Miseler <alexander@miseler.de>
-X-From: git-owner@vger.kernel.org Thu Mar 10 23:24:52 2011
+Cc: Dietmar Winkler <dietmarw@gmx.de>,
+	Will Palmer <wmpalmer@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 23:31:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxoHr-0003YT-2A
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 23:24:51 +0100
+	id 1PxoOi-0006ja-TT
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 23:31:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437Ab1CJWYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2011 17:24:44 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36346
+	id S1753294Ab1CJWbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2011 17:31:50 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59825
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750980Ab1CJWYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2011 17:24:43 -0500
-Received: (qmail 31663 invoked by uid 107); 10 Mar 2011 22:25:14 -0000
+	id S1753199Ab1CJWbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2011 17:31:49 -0500
+Received: (qmail 31789 invoked by uid 107); 10 Mar 2011 22:32:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Mar 2011 17:25:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Mar 2011 17:24:43 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Mar 2011 17:32:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Mar 2011 17:31:48 -0500
 Content-Disposition: inline
-In-Reply-To: <4D793C7D.1000502@miseler.de>
+In-Reply-To: <7v39mw9f7a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168858>
 
-On Thu, Mar 10, 2011 at 10:02:53PM +0100, Alexander Miseler wrote:
+On Wed, Mar 09, 2011 at 01:06:17PM -0800, Junio C Hamano wrote:
 
-> I've been debating whether to resurrect this thread, but since it has
-> been referenced by the SoC2011Ideas wiki article I will just go ahead.
-> I've spent a few hours trying to make this work to make git with big
-> files usable under Windows.
+> > Agreed. And I think it is possible to do it in a backwards-compatible
+> > way; support %(longname:options) for everything, and keep short-hands
+> > like %h and %ad for existing elements without options.
 > 
-> > Just a quick aside.  Since (a2b665d, 2011-01-05) you can provide
-> > the filename as an argument to the filter script:
-> > 
-> >     git config --global filter.huge.clean huge-clean %f
-> > 
-> > then use it in place:
-> > 
-> >     $ cat >huge-clean 
-> >     #!/bin/sh
-> >     f="$1"
-> >     echo orig file is "$f" >&2
-> >     sha1=`sha1sum "$f" | cut -d' ' -f1`
-> >     cp "$f" /tmp/big_storage/$sha1
-> >     rm -f "$f"
-> >     echo $sha1
-> > 
-> > 		-- Pete
+> Yes, I think %( is not taken in the pretty-format language, so we should
+> be able to do this.
+> 
+> I wanted to take your earlier "'%ad' or '%ad(format)'" patch but refrained
+> from doing so.  The above line of reasoning is much better for the long
+> term health of the project.
 
-After thinking about this strategy more (the "convert big binary files
-into a hash via clean/smudge filter" strategy), it feels like a hack.
-That is, I don't see any reason that git can't give you the equivalent
-behavior without having to resort to bolted-on scripts.
+OK. Do you want me to throw away the %ad(format) patch for now, then, in
+favor of building it on top of a more sane syntax?
 
-For example, with this strategy you are giving up meaningful diffs in
-favor of just showing a diff of the hashes. But git _already_ can do
-this for binary diffs.  The problem is that git unnecessarily uses a
-bunch of memory to come up with that answer because of assumptions in
-the diff code. So we should be fixing those assumptions. Any place that
-this smudge/clean filter solution could avoid looking at the blobs, we
-should be able to do the same inside git.
-
-Of course that leaves the storage question; Scott's git-media script has
-pluggable storage that is backed by http, s3, or whatever. But again,
-that is a feature that might be worth putting into git (even if it is
-just a pluggable script at the object-db level).
+I had originally planned to do %ad(format) for now, and then worry about
+syntax later. Since we already have a variety of of other placeholders
+with similar syntax (e.g., %w(), %C()). But I don't care too much either
+way; it is not a feature I personally wanted, so delay doesn't bother
+me. Dietmar (the original requestor) may feel differently, of course. :)
 
 -Peff
