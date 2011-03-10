@@ -1,72 +1,100 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/5] revision.c: get rid of struct rev_info.prune_data
-Date: Thu, 10 Mar 2011 13:52:41 +0700
-Message-ID: <AANLkTintigx=smQisL9FPLs93btDYJQPnU9bsSws0T0L@mail.gmail.com>
-References: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
- <1299726819-5576-4-git-send-email-pclouds@gmail.com> <7vhbbb7ays.fsf@alter.siamese.dyndns.org>
+Subject: Re: [WIP PATCH 0/5] support --exclude for diff/log commands
+Date: Thu, 10 Mar 2011 14:03:57 +0700
+Message-ID: <AANLkTimixVPGuZH9o6gkB7J=ZOmJ2PuitCH5HY8AnDe+@mail.gmail.com>
+References: <1299726819-5576-1-git-send-email-pclouds@gmail.com> <7vmxl37bdp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 07:53:20 2011
+X-From: git-owner@vger.kernel.org Thu Mar 10 08:04:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxZkM-0001fb-Bd
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 07:53:18 +0100
+	id 1PxZvG-0005S4-QR
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 08:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502Ab1CJGxN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 01:53:13 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:58756 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752242Ab1CJGxM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 01:53:12 -0500
-Received: by wwa36 with SMTP id 36so1595830wwa.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2011 22:53:11 -0800 (PST)
+	id S1752689Ab1CJHEa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 02:04:30 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:32890 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752242Ab1CJHE2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 02:04:28 -0500
+Received: by wya21 with SMTP id 21so1184205wya.19
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 23:04:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=jL9MZUiQWpkRGMYguf18NjuwNz8BsI128vSVWc3QKUc=;
-        b=aDliKRgr2fa3t+I6oGs1iSO2MblhokU4ItKE5wdzkPYL431tMQtVfpMvQbsKR57kCH
-         0WhNA0SZr9eXSza54RwMSnOtX8MwqSxDFBX2h5cTkQy5Zg1S9pRtOFQkL+QJ62pf/9ku
-         lCag5dH9Mth/oJrjI/vA2Ks4OhRXqen7f7enA=
+        bh=+aSe+y4WBqOkJeJrnsn1Jl7rQAHcT/JjB3ZKTra8Kwg=;
+        b=rHMvGCEXRCKMuC+ino1+z7Ycq6NPaAhbHpJNryIru0nii0i+m5GDyDcshXKtJqroZq
+         z/L87/5cBLV01Ybdh6K7JXoIxgW+LhSsVz6GuHWCpf3sDrWY4VPDv7kf8uFWXsg+++Ar
+         1vzMDKuVfuDSeNbIUU4reObikDWb2u/fl/9Qw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=UYyGeJ190q1WXneMpix2EE0tr0HMZs8byrt+A2rnOmGId0mKrIe8INsM1ErMPuTtdb
-         MwrfsqUDHKFlqrzlXpOTjaNVEJRxggSnutiABEIUbaWecMJuVU4XP2f/ryBWMpzwwkZI
-         Gz+Zo8F54ovVTvLFQvNnhe99zy/29kyUGDXZo=
-Received: by 10.216.123.69 with SMTP id u47mr6609021weh.16.1299739991105; Wed,
- 09 Mar 2011 22:53:11 -0800 (PST)
-Received: by 10.216.239.5 with HTTP; Wed, 9 Mar 2011 22:52:41 -0800 (PST)
-In-Reply-To: <7vhbbb7ays.fsf@alter.siamese.dyndns.org>
+        b=cPavepQear92VaTaJcFgCcnBY+44+PkeOXAxaqCUbONUsC8hwn6sBW29ad9WaNVETC
+         gA+76bhq5R0LR4ZycokUaBIhy7ojBuXtNHxhO2pyq98HWx2+76EqzLNQWFGef9CUljrz
+         WbnV7p2gF1ulGoZfPrb+EW/wCuaw5Th2zDViY=
+Received: by 10.216.87.8 with SMTP id x8mr6571896wee.46.1299740667146; Wed, 09
+ Mar 2011 23:04:27 -0800 (PST)
+Received: by 10.216.239.5 with HTTP; Wed, 9 Mar 2011 23:03:57 -0800 (PST)
+In-Reply-To: <7vmxl37bdp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168793>
 
 2011/3/10 Junio C Hamano <gitster@pobox.com>:
->> In some places, this pathspec is used, in other places another
->> ... but i'm
->> not sure why diffopt can't be used in place of pruning.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
 >
-> A command in the "log" family uses revision traversal and uses one
-> pathspec (pruning.pathspec) to cull side branches and skip irrelevant
-> commits, and another pathspec (diffopt.pathspec) to specify how the f=
-ound
-> commit is shown. =C2=A0Off the top of my head, currently the only cas=
-e the
-> pathspec of these diff options differ is when --full-diff is used, bu=
-t
-> they are independent concepts.
+>> On the other hand, if we go with ':' as a mark of special pathspecs,=
+ then
+>>
+>> =C2=A0- ":/" mark pathspecs relative to worktree root
+>> =C2=A0- ":!" may mark negative pathspecs
+>
+> I am still moderately negative on this "negative pathspec" stuff, as =
+it
+> will complicate the semantics (just one example: would a path that is
+> covered by both positive and negative pathspecs included or excluded?
+> would the last one win? would the more specific one win?) and makes t=
+he
+> design harder to explain to the users. Depending on the semantics cho=
+sen,
+> it may also make the implementation less efficient and more complex.
 
-OK then I did it wrong. I should have removed prune_data in favor of
-pruning.pathspec, leaving diffopt.pathspec intact.
+The semantics resembles .gitignore, or at least that's my intention.
+But yes, this kind of notion is more complex than simple '--exclude'
+option, which would suit 90% cases, I guess.
+
+> The two most important things to consider are to make sure that peopl=
+e
+> with funny pathnames can work it around by quoting, and the prefixing
+> scheme is extensible so that other types of magic can later be introd=
+uced
+> with the same kind of escape hatch for people with funny pathnames th=
+at
+> begin with or contain new magic characters used to trigger the new ma=
+gic.
+>
+> I said "something along the lines" above because ":/ for root, :! for
+> negative" does not yet specify how the scheme would satisfy the above
+> two consideration very well.
+
+The quoting part may go through another painful migration plan if you
+don't want to surprise users.
+
+I have already suggested to reserve the next character after ':' (or
+any char chosen as the magic one) as control character, for this
+extensibility. Any unrecognized control character will be rejected.
+Even if we limit ourselves to punctuation letters only, there's still
+plenty room for future after '/' and '!' are taken.
 --=20
 Duy
