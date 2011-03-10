@@ -1,82 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Mar 2011, #01; Wed, 9)
-Date: Thu, 10 Mar 2011 17:46:09 -0500
-Message-ID: <20110310224609.GG15828@sigill.intra.peff.net>
-References: <7v62rr933v.fsf@alter.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: Google Summer of Code 2011
+Date: Thu, 10 Mar 2011 23:46:55 +0100
+Message-ID: <20110310224654.GA13702@book.hvoigt.net>
+References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com> <20110307194047.GA9588@book.hvoigt.net> <20110307205023.GB11764@paksenarrion.iveqy.com> <20110309215255.GA11845@book.hvoigt.net> <20110309231604.GA3903@paksenarrion.iveqy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 23:46:21 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>,
+	Jens Lehmann <jens.lehmann@web.de>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 23:47:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pxoca-0004rR-So
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 23:46:17 +0100
+	id 1PxodM-0005Bb-Lb
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 23:47:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752214Ab1CJWqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2011 17:46:11 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49005
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751020Ab1CJWqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2011 17:46:10 -0500
-Received: (qmail 31960 invoked by uid 107); 10 Mar 2011 22:46:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Mar 2011 17:46:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Mar 2011 17:46:09 -0500
+	id S1753658Ab1CJWq6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 17:46:58 -0500
+Received: from darksea.de ([83.133.111.250]:47475 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752898Ab1CJWq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2011 17:46:56 -0500
+Received: (qmail 32615 invoked from network); 10 Mar 2011 23:46:54 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 10 Mar 2011 23:46:54 +0100
 Content-Disposition: inline
-In-Reply-To: <7v62rr933v.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20110309231604.GA3903@paksenarrion.iveqy.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168863>
 
-On Wed, Mar 09, 2011 at 05:27:32PM -0800, Junio C Hamano wrote:
+Hi,
 
-> * jc/rename-degrade-cc-to-c (2011-01-06) 3 commits
->  . diffcore-rename: fall back to -C when -C -C busts the rename limit
->  . diffcore-rename: record filepair for rename src
->  . diffcore-rename: refactor "too many candidates" logic
-> 
-> Somebody said that this is an expensive no-op?
+On Thu, Mar 10, 2011 at 12:16:04AM +0100, Fredrik Gustafsson wrote:
+> On Wed, Mar 09, 2011 at 10:52:56PM +0100, Heiko Voigt wrote:
+> > Sounds promising. When I was talking about gui or submodules I did =
+not
+> > think about gui *and* submodules. Do you have some concrete areas y=
+ou
+> > would like to improve in mind?
+>=20
+> Many of the ideas I had was already mentioned in=20
+> https://github.com/jlehmann/git-submod-enhancements/wiki/
+>=20
+> The ones I feel is most important for me is:
+> * gitk: Add popup menu for submodules to see the detailed history of
+> changes
+> * Check before a push in the superproject that all submodules HEADs a=
+re
+> pushed
+> * Showing that a submodule has a HEAD not on any branch in =E2=80=9Cg=
+it status=E2=80=9D
+> * Move the submodules git directories into the superproject=E2=80=99s=
+ .git so that
+> submodules can be created and deleted
 
-It was me, but that was not quite what I said. It is still useful to
-degrade "-C -C" to "-C". But the warning message is a no-op, because the
-only caller who turns it on is merge-recursive, which does not use "-C
--C". It is probably still worth doing.
+Sounds like a good roadmap. From my viewpoint this includes enough work
+for a summer. There are also enough small steps so even if only part of
+this would be finished it would contain enough improvement for git.
+Since this is the first time I am offering to mentor I am not that
+familar how much work can be done during summer. What do others think?
 
-We may also consider turning on the warning message for "git diff". For
-"git log", I'm not so sure. It would perhaps be lost in the spew of
-output, but given that we send stderr to the pager these days, with some
-appropriate calls to fflush() we could make it appear in a sane place.
+(added Jens to the CC)
 
-> * jk/trace-sifter (2011-02-24) 6 commits
->   (merged to 'next' on 2011-03-09 at 07841db)
->  + trace: give repo_setup trace its own key
->  + add packet tracing debug code
->  + trace: add trace_strbuf
->  + trace: factor out "do we want to trace" logic
->  + trace: refactor to support multiple env variables
->  + trace: add trace_vprintf
->  (this branch uses jk/strbuf-vaddf; is tangled with ab/i18n-st and jn/status-translatable.)
+> With this said, I'm not familiar with the git codebase yet and does n=
+ot
+> have any concrete solutions. For example, I don't understand why a
+> submodule doesn't get a default branch.
 
-Hmm, I was surprised to see this make it to next. I was planning a
-re-roll based on list comments (but I got held up in commit-notes, which
-I needed for my re-roll :) ). I can build on top, though.
+The familiarity with the code should not be a problem since the idea of
+the Summer of Code is to allow more people to get involved into a
+project.
 
-> * jk/format-patch-multiline-header (2011-02-23) 3 commits
->   (merged to 'next' on 2011-03-09 at f970fe3)
->  + format-patch: rfc2047-encode newlines in headers
->  + format-patch: wrap long header lines
->  + strbuf: add fixed-length version of add_wrapped_text
+Regarding the default branch: The short answer is that git does not
+record any branchname but a specific revision using its SHA1. This is o=
+n
+purpose to make sure that you get exactly the code you had when you
+created the commit. But a default branch has been requested many times
+to make working easier. AFAIR it the consensus was that creating a
+branch recursively by default would not be a good idea. But doing that =
+on
+explicit user request could be implemented as an option to ease users
+workflow. So something like this could be discussed.
 
-I have a patch to make "format-patch -k" preserve newlines in subjects;
-the result behaves sensibly with both "am" (which munges it to one line)
-and "am -k" (which preserves the newlines).  Did we want to follow-up
-with that or no?
-
--Peff
+Cheers Heiko
