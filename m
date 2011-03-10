@@ -1,60 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] bash: complete 'git diff ...branc<TAB>'
-Date: Thu, 10 Mar 2011 11:30:47 -0800
-Message-ID: <7vhbba4vtk.fsf@alter.siamese.dyndns.org>
-References: <7vfwrd2wbn.fsf@alter.siamese.dyndns.org>
- <1299780749-12435-1-git-send-email-szeder@ira.uka.de>
- <1299780749-12435-2-git-send-email-szeder@ira.uka.de>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Re: Is there a way to add a default `--squash` flag for all merges
+ into a head?
+Date: Thu, 10 Mar 2011 11:38:21 -0800 (PST)
+Message-ID: <5a2ac540-481e-49e6-9e2e-eb410ba483e0@w9g2000prg.googlegroups.com>
+References: <9f02bed0-fa18-46b1-a3d3-346e1cc7dc01@k15g2000prk.googlegroups.com>
+ <AANLkTinmdQ6r8cBDsFjXR+KLGeZR1-yeu7h9R=X0+1PG@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Mar 10 20:31:12 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 10 20:38:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxlZk-0002xW-E2
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 20:31:08 +0100
+	id 1Pxlgp-0006dw-PW
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 20:38:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753926Ab1CJTbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2011 14:31:04 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35582 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752791Ab1CJTbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2011 14:31:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 269F635A8;
-	Thu, 10 Mar 2011 14:32:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=eUwj/z
-	C7y3FRE0NVq3g1FiI/P16UQZnNgcApilw/3YgmxJZdEZdZ4R4fan66IHBuhFG96G
-	yrFvPZXmFppYw7aPMNe/vxT7Bp99fL8yL/roMMiDTrVvQ6THtx5JI7Z3ztPhixrm
-	9b4UfRX6x126W/eNACBeTVlYvadWBdAS5j4lA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MW8NqUNgZSVDqvVNJVIEIhHbNOsw3ICY
-	1R6zIYS913yJpr0C5NRCam4nP+ZQrsaAlvRz1eV/owCs/jGVPYCUEngNdRxufIZ5
-	AirX2UGW6YiXxmPB7rq9II6ai7nDwndfpX7eU4T3lxgSWVE3LdM3fVaDNjAlNPBB
-	LdeR+kV+MaI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DA3C035A2;
-	Thu, 10 Mar 2011 14:32:22 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A0DC535A1; Thu, 10 Mar 2011
- 14:32:17 -0500 (EST)
-In-Reply-To: <1299780749-12435-2-git-send-email-szeder@ira.uka.de> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 10 Mar 2011 19:12:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1F241564-4B4D-11E0-93F4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753618Ab1CJTiW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 14:38:22 -0500
+Received: from mail-yw0-f56.google.com ([209.85.213.56]:58054 "EHLO
+	mail-yw0-f56.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752458Ab1CJTiV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 14:38:21 -0500
+Received: by ywc21 with SMTP id 21so1592735ywc.1
+        for <git@vger.kernel.org>; Thu, 10 Mar 2011 11:38:21 -0800 (PST)
+Received: by 10.101.13.1 with SMTP id q1mr102203ani.33.1299785901246; Thu, 10
+ Mar 2011 11:38:21 -0800 (PST)
+Received: by w9g2000prg.googlegroups.com with HTTP; Thu, 10 Mar 2011 11:38:21
+ -0800 (PST)
+In-Reply-To: <AANLkTinmdQ6r8cBDsFjXR+KLGeZR1-yeu7h9R=X0+1PG@mail.gmail.com>
+X-IP: 66.250.141.150
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13)
+ Gecko/20101203 Firefox/3.6.13,gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168848>
 
-Thanks.
+On Mar 8, 1:29=A0am, Jay Soffian <jaysoff...@gmail.com> wrote:
+> Try:
+>
+> =A0 $ git config branch.<name>.mergeoptions --squash
+
+Thanks, that works great and answers our need. Thanks to Junio as well
+for the thorough discussion of our workflow.
+
+=2ED
