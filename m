@@ -1,112 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] git-log.txt,rev-list-options.txt: put option blocks
- in proper order
-Date: Wed, 09 Mar 2011 15:38:20 -0800
-Message-ID: <7vbp1j985v.fsf@alter.siamese.dyndns.org>
-References: <4D75E92C.1090506@drmicha.warpmail.net>
- <f34ebc6211ead3fa6698ff9b7a92903723715a28.1299572814.git.git@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Summer of Code project ideas due this Friday
+Date: Wed, 9 Mar 2011 18:10:17 -0600
+Message-ID: <20110310001017.GA24169@elie>
+References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
+ <20110303185918.GA18503@sigill.intra.peff.net>
+ <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com>
+ <20110303203323.GA21102@sigill.intra.peff.net>
+ <20110309174956.GA22683@sigill.intra.peff.net>
+ <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com>
+ <20110309215841.GC4400@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 10 00:38:41 2011
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 10 01:10:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxSxk-0006zJ-0c
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 00:38:40 +0100
+	id 1PxTSa-0001zR-TK
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 01:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205Ab1CIXic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2011 18:38:32 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48021 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751979Ab1CIXib (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2011 18:38:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F2274676;
-	Wed,  9 Mar 2011 18:39:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uA+Vh/Tp8StEEBZ7GTBCqrKlShU=; b=A4mXUf
-	/M8WrHJSdc1ve5msakHuEoJoUKu5LW2D43fBi4hJ5T9OQT+q20hLVp+jGl7LcN4M
-	pRa4EBZaMJUN4NclyGHYMG0pC3ouMEGSasZPxnBKadHcZl800Dm5117aGdbBrVcG
-	Rnmo+3x37sq+DOTHAQ9+1OVX7G7LswpaE8Src=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Sol8dIjm+Vkvah7TAMh0FHjV4yIMIhbo
-	skn504zO3wRUaQ8vOyQWcMie842119AGXHP+vr76faZ7bwAbboEXKAuWxmBanjLx
-	8TJpgy1+0tYZzEio1xXCiWI9jrYL0IYRy4I3xPYTykBFKTTPhvxtE4OpQPlgTFxX
-	73x+Yria/QU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5D3244675;
-	Wed,  9 Mar 2011 18:39:54 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2AB954660; Wed,  9 Mar 2011
- 18:39:49 -0500 (EST)
-In-Reply-To: <f34ebc6211ead3fa6698ff9b7a92903723715a28.1299572814.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue, 8 Mar 2011 09:31:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 88E71D9A-4AA6-11E0-8518-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1752604Ab1CJAK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2011 19:10:27 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:35465 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751237Ab1CJAK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2011 19:10:26 -0500
+Received: by qwd7 with SMTP id 7so827459qwd.19
+        for <git@vger.kernel.org>; Wed, 09 Mar 2011 16:10:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=yhL4WDli7eAVPTx2tlXng1Sd3PdCTr6k34phcD39/OM=;
+        b=WV8oT6PX6qgs4x51MYkp+ob8r555siptECe4CKzy8azaPuIcF/8iyoHenjEiJcCKpa
+         H931q3uY05gmUaYfxqHpgZt6OqnX7hnLRHeXvkSJoMYi5djLXTv0TuWokGR8OWyZQlAx
+         nzdHvMPSfhmbttPdMsO5Ih2nS2VbKIW/qkV5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=X55i7+0bX45JHbv1gC27uQT8qujW6UWZIKGZpc9tgypy2joZZPRY2qkfwzHccHKiFh
+         cg13sdEzHT1XcRZ19ZXTpLZf19smsI9xvo4WMpH7oJFpT6Fpb4ERhjV3V7mscxgjtPo0
+         YmTG1fQILaGvuEhCOgBuORbddtwnsM/MjDOf4=
+Received: by 10.229.78.22 with SMTP id i22mr1596081qck.28.1299715825638;
+        Wed, 09 Mar 2011 16:10:25 -0800 (PST)
+Received: from elie ([69.209.61.99])
+        by mx.google.com with ESMTPS id d21sm876298qck.40.2011.03.09.16.10.22
+        (version=SSLv3 cipher=OTHER);
+        Wed, 09 Mar 2011 16:10:24 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110309215841.GC4400@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168776>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hi,
 
-> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-> index 48c1715..6ae57dc 100644
-> --- a/Documentation/git-log.txt
-> +++ b/Documentation/git-log.txt
-> @@ -77,12 +77,12 @@ Common diff options
->  ~~~~~~~~~~~~~~~~~~~
->  
->  :git-log: 1
-> -include::diff-options.txt[]
-> -
->  include::rev-list-options.txt[]
->  
->  include::pretty-formats.txt[]
->  
-> +include::diff-options.txt[]
-> +
->  include::diff-generate-patch.txt[]
+Jeff King wrote:
 
-This is wrong.  The title "Common diff options", telling the AsciiDoc that
-we are formatting for git-log manual page with ":git-log: 1" and inclusion
-of diff-options.txt form a single group.  With your patch, the "Common
-diff options" section will become ampty and makes AsciiDoc barf.
+> If you have any ideas, please add them to the page!
 
-You would need _at least_ something like the attached patch on top, which
-for now I'll squash in.
+Thanks for a pointer.  Some ideas still at the "throw them against the
+wall and see if they stick" stage: please feel free to add to the page
+if you think you can find subsets with the right scope.  Later today I
+can look more carefully.
 
- Documentation/git-log.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+1. Cross-compilable msysgit: ideally, allowing someone to run
+   "make msysgit-installer" on Linux from an msysgit-source.git repo
+   to get an installer.  Nice subsets to start with might be msys.dll
+   (I think there has been some work on that already) and the basic
+   msys utilities.
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 6ae57dc..c43aa43 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -73,14 +73,14 @@ produced by --stat etc.
- 	to be prefixed with "\-- " to separate them from options or
- 	refnames.
- 
--Common diff options
--~~~~~~~~~~~~~~~~~~~
--
--:git-log: 1
- include::rev-list-options.txt[]
- 
- include::pretty-formats.txt[]
- 
-+Common diff options
-+-------------------
-+
-+:git-log: 1
- include::diff-options.txt[]
- 
- include::diff-generate-patch.txt[]
+2. Merge libgit2 into git.git: polish the existing code in libgit2 so
+   that standard git can use it.  Presumably this would happen by
+   porting one function at a time, not by making git link to libgit2
+   immediately.  People familiar with libgit2 might be able to pick
+   out particularly interesting subsets to start with (diff
+   generation?).
+
+3. Remote helpers: bidi git remote-svn (or one-way remote-hg, or
+   remote-cvs, or ...).
+
+4. filter-branch killer: using fast-import's new features to implement
+   common filter-branch operations (--subdirectory-filter,
+   --prune-empty, obliterating certain files) faster.
+
+5. rev-list: Coping with timeskew.
+
+6. shallow clone: Push support.
+
+7. fixing workdirs (and alternates), along the lines explained in the
+   thread <http://thread.gmane.org/gmane.comp.version-control.git/150559>.
+   I would be very much interested in this.
+
+7. packfilev4.
