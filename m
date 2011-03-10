@@ -1,68 +1,66 @@
 From: Alexander Miseler <alexander@miseler.de>
-Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
-Date: Thu, 10 Mar 2011 22:02:53 +0100
-Message-ID: <4D793C7D.1000502@miseler.de>
-References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com> <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com> <20110121222440.GA1837@sigill.intra.peff.net> <20110123141417.GA6133@mew.padd.com>
+Subject: Re: Summer of Code project ideas due this Friday
+Date: Thu, 10 Mar 2011 22:40:01 +0100
+Message-ID: <4D794531.40205@miseler.de>
+References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com> <20110303185918.GA18503@sigill.intra.peff.net> <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com> <20110303203323.GA21102@sigill.intra.peff.net> <20110309174956.GA22683@sigill.intra.peff.net> <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com> <20110309215841.GC4400@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	emontellese@gmail.com, schacon@gmail.com, joey@kitenet.net
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 22:03:54 2011
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 10 22:40:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pxn1U-0006Sx-BI
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 22:03:52 +0100
+	id 1Pxnaq-0007X3-13
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 22:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753914Ab1CJVDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2011 16:03:10 -0500
-Received: from moutng.kundenserver.de ([212.227.17.9]:59993 "EHLO
+	id S1752674Ab1CJVkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2011 16:40:09 -0500
+Received: from moutng.kundenserver.de ([212.227.17.9]:61884 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753823Ab1CJVCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2011 16:02:55 -0500
+	with ESMTP id S1751816Ab1CJVkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2011 16:40:07 -0500
 Received: from [192.168.22.13] (f055053254.adsl.alicedsl.de [78.55.53.254])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0LrqDW-1Q6CTG3lDa-0136n8; Thu, 10 Mar 2011 22:02:49 +0100
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0LtUF2-1Q7nVw1Z9o-010vdU; Thu, 10 Mar 2011 22:39:57 +0100
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110123141417.GA6133@mew.padd.com>
-X-Provags-ID: V02:K0:C00uYdrod9LqUBoNLciyghdmEl8r3+VLbBjLkpJDQ4W
- qvuJ9YK5X4O+wqbxG7A9wbly0FkPydmoaT3tBvSUCW1yamPtBx
- 0W2DXYZRsjB1RoKKD+B5N3EzJOef9lnn3vBH5WxCFUyqLK3NnM
- SAu8mIGjvz9g+Z6BxCOgKY6qM9Tyq1hgiXlXH+IHS2+9A7BUjk
- faWflRdTE8rPzLGruWySA==
+In-Reply-To: <20110309215841.GC4400@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:bAehstKIivM+w8V7WQ7jSDYhrCgqpTcpV+yxM8jJ3+b
+ Por+OU2HMH1Zgcg6huH9g3oernKCOYuXxF2iqLZ4tMFl8NWGMs
+ s44eXuyU8xeFqDfPaCimsFg6KGkmfNDmppcYm/oQwyA4inZhFj
+ PssbUpBKb7MclheCM5Rh3giQNnVDHBhTRGQKDf6n9v0QDA6QEy
+ Pgqw8/7jerhep569gtgjA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168852>
 
-I've been debating whether to resurrect this thread, but since it has been referenced by the SoC2011Ideas wiki article I will just go ahead.
-I've spent a few hours trying to make this work to make git with big files usable under Windows.
+Comments on the "Better big-file support" section:
 
-> Just a quick aside.  Since (a2b665d, 2011-01-05) you can provide
-> the filename as an argument to the filter script:
-> 
->     git config --global filter.huge.clean huge-clean %f
-> 
-> then use it in place:
-> 
->     $ cat >huge-clean 
->     #!/bin/sh
->     f="$1"
->     echo orig file is "$f" >&2
->     sha1=`sha1sum "$f" | cut -d' ' -f1`
->     cp "$f" /tmp/big_storage/$sha1
->     rm -f "$f"
->     echo $sha1
-> 
-> 		-- Pete
 
-First off, the commit mentioned here is no help at all. This commit changes nothing about the input and output of filters. The file is still loaded completely into memory, still streamed to the filter via stdin, still streamed from the filter via stdout into yet another memory buffer. The two of which, IIRC, exist simultaneous for at least some time, thus doubling the memory requirements. This change only additionally provides the file name to the filter and nothing else. If one carefully rereads the commit message this apparently was the intention.
+"While git can handle arbitrary-sized binary content [...]"
 
-After this I started digging into the git source code. To change the filter input would be extremely trivial. However, the function that returns the filter output in a memory buffer is called from 8 places (all details from wetware memory and therefore unreliable). Most, maybe all, of the callers just dump the buffer into a file, which could easily be relocated into the filter calling function itself. But two callers detached the buffer from the strbuf and kept it beyond writing the file. I didn't track it any further since I decided to rather spend my time on improving big file handling in git itself, rather than targeting a workaround. Though of course a completely big-file-ready git should also provide a sane way to feed big files to and from filters.
+This is very much not true. Git tries at many places to load the complete file into memory and usually fails with "out of memory" if it can't. With the 32bit msysGit client this places the upper file size limit, from purely empirical observation, at 600-700 MByte. When a file is to large git fails late, adding and committing works (as long as there are no filters or other complications), but you can forget about pushing, rebasing or otherwise manipulating that commit. Even worse yet, commits consisting of smaller files but with a combined size over the limit will also cause out-of-memories.
 
-If the two detached buffers are no complication this might be a trivial project. If they do it might become demanding though.
+Thus a main focus should be the memory problem, e.g. by using stream-like file handling everywhere, since not working at all is orders of magnitude worse than working slowly :)
+
+
+
+"In some cases, this may be as simple as having a "large file" codepath that avoids pulling whole files into memory (e.g., during "git add")."
+
+Ironically git add is one of the few things that work with large files, as mentioned above. Presumably the stream-oriented zlib enforced/encouraged a steam-like handling here :)
+Slow as hell though and of course it is usually not sensible to compress a 1.5 GByte file.
+
+
+
+
+I'm very willing to work on this topic. Though I'm not a student and as a git code newbie I also don't have the skills for mentoring yet.
