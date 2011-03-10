@@ -1,99 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Using libgit2 code in git.git as a Google Summer of Code project?
-Date: Thu, 10 Mar 2011 04:18:42 -0600
-Message-ID: <20110310101842.GE26851@elie>
-References: <AANLkTinqem5e0+vxzR64s1Y9o7B8RgEFXcm0HV_jeZ4Y@mail.gmail.com>
- <AANLkTinqem5e0+vxzR64s1Y9o7B8RgEFXcm0HV_jeZ4Y@mail.gmail.com>
- <AANLkTikkFDLKn5KMaSTwUABBVX_vYDj8pW1kqmsm1_vy@mail.gmail.com>
- <20110310101332.GC26851@elie>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2 0/9] --left/right-only and --cherry-mark
+Date: Thu, 10 Mar 2011 11:48:43 +0100
+Message-ID: <4D78AC8B.7010308@drmicha.warpmail.net>
+References: <cover.1299499429.git.git@drmicha.warpmail.net> <7vtyfc7ymk.fsf@alter.siamese.dyndns.org> <4D7886FD.60109@drmicha.warpmail.net> <7vd3lz5me5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: libgit2@librelist.com
-X-From: git-owner@vger.kernel.org Thu Mar 10 11:18:54 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 11:53:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxcxJ-0003lW-Mh
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 11:18:54 +0100
+	id 1PxdVE-0003Ua-Mf
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 11:53:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221Ab1CJKSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2011 05:18:48 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:36639 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766Ab1CJKSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2011 05:18:48 -0500
-Received: by gwaa18 with SMTP id a18so353599gwa.19
-        for <git@vger.kernel.org>; Thu, 10 Mar 2011 02:18:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=R6rfu6C01uQXG2vo//zGcAQtp8V1YAN/pZeEq6DWOAM=;
-        b=ZiXFXols43HwbF4vJq/T8gnGRE5nOtKD/2A7G8E/PV2IWea6KUpeTkg2BJFajKswr9
-         TXlyvCDyU6fNyGlt+V1nZkC3bgtPhUnFaTMni3KOwVY0s9KjubQlk8rQoVHecACcOZcY
-         j8CGXpT/qrlspGyV1190LiBcqCXbqEtjx1bZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cvHLMGT1FjVyMuN38D/jUM3MHBspKtvNPtaO9xMdtZ7cwJDulV5uT1JwYVc3CSP1QB
-         V6wYAmQdpE8RAUB37acbVcR8rJbUcvBLAli48UmVmukZG4cryj0igff2TlEICp3futxm
-         FAF/j/El89ZQl542jBH5O5C8nvXQ+r9fQOv0I=
-Received: by 10.150.49.14 with SMTP id w14mr748058ybw.347.1299752326447;
-        Thu, 10 Mar 2011 02:18:46 -0800 (PST)
-Received: from elie (adsl-68-255-100-150.dsl.chcgil.ameritech.net [68.255.100.150])
-        by mx.google.com with ESMTPS id 8sm2007262yhl.44.2011.03.10.02.18.44
-        (version=SSLv3 cipher=OTHER);
-        Thu, 10 Mar 2011 02:18:45 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110310101332.GC26851@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752921Ab1CJKxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2011 05:53:16 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:52351 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752324Ab1CJKwQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 05:52:16 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id F2E4C20BA1;
+	Thu, 10 Mar 2011 05:52:15 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 10 Mar 2011 05:52:15 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Bmnk/85uDrYzmV40QHJM9eLh9x0=; b=Dlfol/ScNPr2sKLKl/G9ytkTC4GIoIhMwX5gHHKzhDpQpKt0rLxws2X2nfCBzD1ZFjM6PkbnRRgnMM2JkdJqNveR3IAUoXa7lPUG+AqCfrgmM5xBl/3xWvcL8NzlFD/0SJFSOZFIPzUjYOa/8i2f9D0mvcnd2uy/n9bEeuxyltQ=
+X-Sasl-enc: 3ei0lyxhELaRIU8XmUtBZnvplJ8uPi5zJ8LSZoT3y+xf 1299754335
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 705C54406FE;
+	Thu, 10 Mar 2011 05:52:15 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110301 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.8
+In-Reply-To: <7vd3lz5me5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168808>
 
-(resending since my last mail was dropped; sorry for the noise)
-Hey Vicent et al,
+Junio C Hamano venit, vidit, dixit 10.03.2011 10:56:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Junio C Hamano venit, vidit, dixit 09.03.2011 22:49:
+>> ...
+>>> Conceptually revs->cherry_mark ought to be a subset of revs->cherry_pick
+>>> and the code shouldn't have to do something like this:
+>>>
+>>> 	if (revs->cherry_pick || revs->cherry_mark)
+>>>         	cherry_pick_list();
+>>>
+>>> Instead, the code should arrange that revs->cherry_pick is always set
+>>> when revs->cherry_mark is set before the calling application enters the
+>>> loop to call get_revision().
+>>>
+>>> But that would make the command line parsing more cumbersome (you would
+>>> either waste one bit so that you can tell if you saw --cherry-pick on the
+>>> command line, or keep the version of parser in this series as-is, and add
+>>> postprocessing code to flip revs->cherry_pick on when revs->cherry_mark
+>>> was given in prepare_revision_walk()), and I understand that is why you
+>>> did it that way?
+>>
+>> Yes, I think so :) Another reason is that even cherry_pick_list() needs
+>> to know which object flag it should set.
+> 
+> I didn't have trouble with "if (revs->cherry_mark)" used for that purpose
+> at all.
+> 
+> That is what I meant by "cherry-mark is a _subset_ of cherry-pick".  In
+> other words, if you are marking the cherry-pick result, you must be doing
+> a cherry-pick to begin with, so having to say "cherry-pick || cherry-mark"
+> is a bad taste.
+> 
+> But that does not contradict with the need to do something differently
+> between the case where you are cherry-marking and where you are not
+> cherry-marking.
+> 
+>> - leave the parser as is
+>> - set cherry_pick when cherry_mark is set
+>> - if (revs->cherry_pick) cherry_pick_list();
+>> - leave cherry_pick_list() as is
+> 
+> I think that essentially is what I speculated in "either X or Y" part as
+> solution Y.
+> 
+>> Would that be better? I didn't do that because it changes the meaning of
+>> cherry_pick (it can mean two things then). It would introduce the
+>> assumption "pick is set when mark is" instead of "at most one is set"
+> 
+> Well, as I said earlier, my suggestion was coming from "if you are
+> cherry-marking, you must be cherry-picking in the first place", so yes, I
+> am saying that "at most one is set" is a bad taste.  If the assumption has
+> to change to match the better taste, that can only be a good thing ;-).
 
-Vicent Marti wrote:
+Being half-way through doing "Y" I remember why I really disliked "Y":
+because it breaks the association between option names (--cherry-pick,
+--cherry-mark) and rev flags (cherry_pick, cherry_mark). With "Y",
+cherry_pick would mean --cherry-pick or --cherry-mark. (Also, as
+mentioned, we're not "picking" when marking.)
 
->                                                           there have
-> been proposals to merge parts of libgit2 into the original Git client;
-> however, this is not one of our priorities (we are designing git.git
-> to be embeddable in Git backends and GUI programs), and the library is
-> not yet stable enough for that kind of job. We'll see what the future
-> brings -- git.git would certainly benefit from some of our code, if
-> anything because it's (slightly) faster and cleaner than the original
-> implementation.
+Additionally, since parse_revision_opt (which calls handle_revision_opt)
+is called from other sites for individual args we would need to do the
+handling in the Y case (set pick when marking) right in
+handle_revision_opt, not just in setup_revisions. It's a matter of a few
+more if's and or's, but still.
 
-I've been thinking that it would be interested to start this work
-early on, partially so that libgit2 and git.git can get to know each
-other better so to speak (which could help libgit2 along nicely and
-help git get past some old limitations, I think).  So I'm thinking of
-proposing stealing some of your code, with an eye toward eventually
-making git "just another libgit2 user", as a Google summer of code
-project idea.
+Taking these together, I wonder whether we shouldn't leave it as in v2.
 
-Is that a sane idea?  Is there any particular subset of the lib that
-would be an interesting place to start?  Do you forsee any obstacles?
-Do you know anyone who might be interested in mentoring such a
-project?
-
-Admittedly I'm not so familiar with libgit2 yet, so I'm willing to
-believe the answers might be no, no, yes, and no. ;-)
-
-The Google Summer of Code application deadline is this Friday
-(March 11) at 23:00 UTC.  If this does seem like a sane thing to do,
-it might be nice to put it on the ideas page at:
-
-  https://git.wiki.kernel.org/index.php/SoC2011Ideas
-
-Thanks for your work.
-Jonathan
+Michael
