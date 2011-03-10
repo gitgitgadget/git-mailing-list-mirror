@@ -1,131 +1,97 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [WIP PATCH 0/5] support --exclude for diff/log commands
-Date: Thu, 10 Mar 2011 17:05:22 +0700
-Message-ID: <AANLkTimsv9bO+Go6Mqrrp_1-AZ=sC3ndyAuskPYLVbkv@mail.gmail.com>
-References: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
- <7vmxl37bdp.fsf@alter.siamese.dyndns.org> <7vvczr5pw6.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Using libgit2 code in git.git as a Google Summer of Code project?
+Date: Thu, 10 Mar 2011 04:13:32 -0600
+Message-ID: <20110310101332.GC26851@elie>
+References: <AANLkTinqem5e0+vxzR64s1Y9o7B8RgEFXcm0HV_jeZ4Y@mail.gmail.com>
+ <AANLkTinqem5e0+vxzR64s1Y9o7B8RgEFXcm0HV_jeZ4Y@mail.gmail.com>
+ <AANLkTikkFDLKn5KMaSTwUABBVX_vYDj8pW1kqmsm1_vy@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 11:06:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: libgit2@librelist.com
+X-From: git-owner@vger.kernel.org Thu Mar 10 11:13:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pxckp-0006J0-RT
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 11:06:00 +0100
+	id 1PxcsJ-0001QM-DG
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Mar 2011 11:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223Ab1CJKFy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 05:05:54 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55074 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751435Ab1CJKFx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2011 05:05:53 -0500
-Received: by wya21 with SMTP id 21so1286329wya.19
-        for <git@vger.kernel.org>; Thu, 10 Mar 2011 02:05:52 -0800 (PST)
+	id S1751147Ab1CJKNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2011 05:13:38 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:33857 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750980Ab1CJKNh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2011 05:13:37 -0500
+Received: by ywj3 with SMTP id 3so581571ywj.19
+        for <git@vger.kernel.org>; Thu, 10 Mar 2011 02:13:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=S7RG9TsnP0/GZ3nNseK4DMvUgB5NF5JRahfpAoyozPY=;
-        b=CAWpNRgDZtBmWZpVYuF+UpJ2RkxrVZsIPkaWEcqR3Wpu/6i4OfQXQlha9009RxaI4j
-         afqUhQKTsMw34W0Ag6Zpr6hN2rEDlmUQnPVEF/obQUZE6KLNqSrKcz2wu/7j/rSJo7MX
-         QbJLW/i9EpQ9ZwAyvelmyFSUt6v0r3io4tYmg=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Bi0aObCous74K2Aoy0zPQov96LM47fIZWSjbebjTuUM=;
+        b=qJZ/IPx46bgL4O6ey1e6Ep0GipJhVOjN7FbhHRacSzlalpnnac7nJ75FBDb91+RiSr
+         c2xyfXUGcWf/rVhrnnCKVtuRFIMuD3TS9ZHLHVIR3gNozmV0DsizgGNWIwGuiHGgIgBJ
+         G//mHSDSDMkOIXsnjQI5qlZxGnjof1xOQhb48=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=lZcNFY+CgS+XxKk9F5FdLh1cEoehU5DvO1lN3K272Hx+Y7kpfxcnYy9oBJF4AsqlC9
-         IOqdSLJeGNLRxE3qQct7Jx9oPSnDw8GjqBIvINroG4Oigak1mtEngmZ0TP5qPXhRIyfg
-         rfejc3obiHRKKyQ/oLhGE0P7+GFxLG/u/0xPM=
-Received: by 10.216.49.15 with SMTP id w15mr5633757web.1.1299751552054; Thu,
- 10 Mar 2011 02:05:52 -0800 (PST)
-Received: by 10.216.239.5 with HTTP; Thu, 10 Mar 2011 02:05:22 -0800 (PST)
-In-Reply-To: <7vvczr5pw6.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jb+74mEpZ1qu1JfNxP8OI3yi7xdufS8VmeJCRSMgOW5/Lt7EyWhty4VlRzt01s/KRP
+         5gSfUPlby34c7GOgN6zfYmFa9yQhqOwFP961IPjdIQO7SbMViSttjxfSKXgYiGAK77++
+         papw+tEMK1uL34fZ8zhyEPhJ8wvFdKBoyGRVU=
+Received: by 10.100.76.9 with SMTP id y9mr3505512ana.217.1299752016638;
+        Thu, 10 Mar 2011 02:13:36 -0800 (PST)
+Received: from elie (adsl-69-209-61-99.dsl.chcgil.sbcglobal.net [69.209.61.99])
+        by mx.google.com with ESMTPS id c39sm1612996anc.7.2011.03.10.02.13.34
+        (version=SSLv3 cipher=OTHER);
+        Thu, 10 Mar 2011 02:13:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikkFDLKn5KMaSTwUABBVX_vYDj8pW1kqmsm1_vy@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168806>
 
-2011/3/10 Junio C Hamano <gitster@pobox.com>:
-> Let's step back a bit.
->
-> We chose to use ":/<regexp>" as one new form of extended SHA-1 expres=
-sion
-> to name an object for two reasons: (1) no normal <ref> can have a col=
-on in
-> it, because of check-ref-format restriction; (2) ":" is an unlikely l=
-etter
-> to appear at the beginning of a pathname, and people with such a path=
- can
-> work around by saying "./:frotz" or "\:xyzzy".
->
-> There is a disambiguation logic to check a list of arguments that lac=
-ks an
-> explicit "--" separator to make sure that each element early on the l=
-ist
-> can only be interpreted as an object name but not as a pathname that
-> exists on the filesystem, and all the remaining elements are pathname=
-s
-> that exist on the filesystem.
->
-> If we introduce an extended syntax for pathspec and make the prefix m=
-agic
-> character ":", and if we choose to use ":/" as one kind of magic, I w=
-as a
-> bit worried that this may affect the disambiguation. =C2=A0The users =
-must use
-> an explicit "--" when feeding a pathspec with the magic so that the p=
-arser
-> knows which kind of magic (either object name magic or pathspec magic=
-)
-> they are talking about.
+Hey Vicent et al,
 
-Or.. we can consider this ':' a special form of wildcard and interpret
-the same way:
+Vicent Marti wrote:
 
- - first try exact match. If it matches, the leading ':' is
-interpreted literally as part of file name.
- - magic.
+>                                                           there have
+> been proposals to merge parts of libgit2 into the original Git client;
+> however, this is not one of our priorities (we are designing git.git
+> to be embeddable in Git backends and GUI programs), and the library is
+> not yet stable enough for that kind of job. We'll see what the future
+> brings -- git.git would certainly benefit from some of our code, if
+> anything because it's (slightly) faster and cleaner than the original
+> implementation.
 
-> I however realized that it is not an issue at all, because the users
-> already need to disambiguate with "--" when using wildcards in their
-> pathspecs (e.g. "git log 'Makefil*'" will give you an ambiguity error=
-).
-> Admittedly, wildcard pathspecs are lessor kind of magic, but they are
-> magic nevertheless.
+I've been thinking that it would be interested to start this work
+early on, partially so that libgit2 and git.git can get to know each
+other better so to speak (which could help libgit2 along nicely and
+help git get past some old limitations, I think).  So I'm thinking of
+proposing stealing some of your code, with an eye toward eventually
+making git "just another libgit2 user", as a Google summer of code
+project idea.
 
-Yes, ':' is on the same side with wildcard pathspecs.
+Is that a sane idea?  Is there any particular subset of the lib that
+would be an interesting place to start?  Do you forsee any obstacles?
+Do you know anyone who might be interested in mentoring such a
+project?
 
-> So my tentative conclusion is that there is no problem using the same=
- ":"
-> as the magic introducer for pathspecs, just like we do for object nam=
-es.
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Side note: please point out flaws in the a=
-bove train of thought
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0that would make the end result non-workabl=
-e.
+Admittedly I'm not so familiar with libgit2 yet, so I'm willing to
+believe the answers might be no, no, yes, and no. ;-)
 
-Huh? I failed.
+The Google Summer of Code application deadline is this Friday
+(March 11) at 23:00 UTC.  If this does seem like a sane thing to do,
+it might be nice to put it on the ideas page at:
 
-> I am not very happy with ":!" as negative from syntactical point of v=
-iew,
-> because traditionally "!" is a tad cumbersome to quote in shells with
-> history support (e.g. "csh"), but unfortunately I don't think of any =
-good
-> alternative that is easy to type. =C2=A0Pathspecs are globs by nature=
-, and "!"
-> is a good choice of nagation indicator for that reason (think "[!aeio=
-u]"
-> not "[^aeiou]" the latter of which is a regexp and not glob), though.
+  https://git.wiki.kernel.org/index.php/SoC2011Ideas
 
-We don't need to stick to ':!'. I just needed something to start
-coding. Other candidates can be '^' or '-' or '~'. '^' looks best in
-my opinion.
---=20
-Duy
+Thanks for your work.
+Jonathan
