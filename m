@@ -1,66 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Buglet] "git show <random-40-hexdigit>" gives an unclear error
- message
-Date: Fri, 11 Mar 2011 10:28:08 -0800
-Message-ID: <7vzkp1y0jr.fsf@alter.siamese.dyndns.org>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: git stash: add --index-only, or --keep-index should not stash index?
+Date: Fri, 11 Mar 2011 19:47:19 +0100
+Message-ID: <4D7A6E37.8080104@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 11 19:28:25 2011
+X-From: git-owner@vger.kernel.org Fri Mar 11 19:47:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py74a-0000us-2S
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 19:28:24 +0100
+	id 1Py7NA-0001tw-WD
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 19:47:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753171Ab1CKS2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 13:28:18 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55191 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753117Ab1CKS2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 13:28:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 319434D55;
-	Fri, 11 Mar 2011 13:29:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=9
-	5MAiyIJRZmCwOWqYRITxJj/QXQ=; b=gskt9QWiyp3BwdKMGvTX5jdbArVgMlf3w
-	IQnDLk3ueydaCc99PsRoUllSERMr+sQjLe5R0wQftTicf7Bn9ua7Syehv49BeNnD
-	3Pvh5phHs3T+BlO8IwqowH8qsKm3bMWXjbdTXkPU9ak0/hZP1I29bvd364WsLQtu
-	9KcufGcpkM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=v9L
-	ehGZYLRlgvIGInuB5norOsSwup3zqQbRtasY2ZK5p6DVTNbZma52ofH0Ha6SZJDF
-	EY3IWJMYqwbgPm5+QPLPfm5RQEW/NfruNRS9M55+WqpLZigFZgSDyI4uqepO/76c
-	HbZ71DwORwGnop1Eaz9L/PefcrgU+cXX60wUOvb0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 17E454D53;
-	Fri, 11 Mar 2011 13:29:42 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5BED94D52; Fri, 11 Mar 2011
- 13:29:40 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 87EAF43A-4C0D-11E0-9EFE-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753581Ab1CKSrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 13:47:31 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:40544 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753143Ab1CKSr3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 13:47:29 -0500
+Received: by bwz15 with SMTP id 15so2919342bwz.19
+        for <git@vger.kernel.org>; Fri, 11 Mar 2011 10:47:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :subject:content-type:content-transfer-encoding;
+        bh=a7HtMvcQdONxBHM78Hbj5Mm4Vm9JeXuxa5mTUXfl+7U=;
+        b=syf0BuDqMyJ/e1fFkKVKr9t3VrcU89XUVCAJYvsN2AvTDoHG74ROJJeMN8/B9/lXZO
+         IbDfkwKXca18b6YDE3WbQm2GwZLGJ5FIzhvrIbYyG4gI/8zqMCNtrkCzZgjtY0IRuoO6
+         fHx2JWUD97c0OjTmgnRSgHPkxRQFtfkLde0OM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=mUhPGHlZ8hgIygJ/coAnWsoIRvaotNM4Hhm51DR9R7dIndnAFrKWt7sknNcGXWXFsb
+         6N8MdYlxqggg2uZT5g0Qd2jjTKwBIaKahhnVJUNeLQl4KVlZG/J5r4TZVe2wzMHeI006
+         t/9w6pFSd7A19eB8wBmQZJodzFUiY84/+57BA=
+Received: by 10.205.24.13 with SMTP id rc13mr1703023bkb.75.1299869247515;
+        Fri, 11 Mar 2011 10:47:27 -0800 (PST)
+Received: from [192.168.1.101] (bxd250.neoplus.adsl.tpnet.pl [83.29.253.250])
+        by mx.google.com with ESMTPS id c11sm1668220bkc.2.2011.03.11.10.47.25
+        (version=SSLv3 cipher=OTHER);
+        Fri, 11 Mar 2011 10:47:26 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168921>
 
-Here is one who wants to tackle potentially a low-hanging fruit.
+Hi,
 
-  $ git cat-file -p 4cd96ce446ab653325a0e47fad73e94c99c57dd2
-  error: unable to find 4cd96ce446ab653325a0e47fad73e94c99c57dd2
-  fatal: Not a valid object name 4cd96ce446ab653325a0e47fad73e94c99c57dd2
+I wanted to do something like "Testing partial commits" described in
+git-stash documentation (see end of mail for reference). I think this
+is a common scenario: you start working on some feature, then discover
+a bug, start fixing it, but realize it needs more work. So now you have
+two features that needs more work (both are not ready for committing). 
 
-This looks sensible and understandable, even though you could argue that
-we don't have to say the same thing twice.  In the same repository:
+The documentation says to use --keep-index in this case.
 
-  $ git show 4cd96ce446ab653325a0e47fad73e94c99c57dd3
-  fatal: bad object 4cd96ce446ab653325a0e47fad73e94c99c57dd3
+The problem is that --keep-index leaves changes in index intact, but at
+the same time it saves them in stash. So if I edit those changes I'm likely
+to get conflicts when applying the stash.
 
-This is bad, as it sounds as if we found the named object but it is
-corrupt.
+For example:
+
+$ git init && echo a > a && git add . && git commit -m a
+$ echo x > a && git add a && git stash save --keep-index
+$ echo y > a && git add a && git commit -m y
+$ git stash pop
+Auto-merging a
+CONFLICT (content): Merge conflict in a
+
+Maybe --keep-index should not stash staged changes? This would fix this
+problem. And I can't  think of a situation when would want to stash changes
+and at the same time keep them.
+
+If --keep-index works correctly maybe a new option, for example --index-only
+(or --cached-only?) could be introduced?
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Testing partial commits::
+
+You can use `git stash save --keep-index` when you want to make two or
+more commits out of the changes in the work tree, and you want to test
+each change before committing:
++
+----------------------------------------------------------------
+# ... hack hack hack ...
+$ git add --patch foo            # add just first part to the index
+$ git stash save --keep-index    # save all other changes to the stash
+$ edit/build/test first part
+$ git commit -m 'First part'     # commit fully tested change
+$ git stash pop                  # prepare to work on all other changes
+# ... repeat above five steps until one commit remains ...
+$ edit/build/test remaining parts
+$ git commit foo -m 'Remaining parts'
+----------------------------------------------------------------
+
+
+-- 
+Piotr Krukowiecki
