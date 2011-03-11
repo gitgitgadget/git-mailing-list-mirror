@@ -1,171 +1,105 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: [RFD] Expanded Pretty Format Placeholders Proposal
-Date: Fri, 11 Mar 2011 00:47:21 +0000
-Message-ID: <1299804441.6220.1.camel@walleee>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] find_unique_abbrev(): honor caller-supplied "len" better
+Date: Thu, 10 Mar 2011 17:16:25 -0800
+Message-ID: <AANLkTikPxSspRFQWke4=u55cmmHw8NsyizeH2gL1kD0y@mail.gmail.com>
+References: <E1PBKT9-0004Uk-Sm@tytso-glaptop> <20101028075631.GA7690@elte.hu>
+ <AANLkTi=8SbOZizWpxLg=Bgp7atdgr8MsR6tnRDYr1+eW@mail.gmail.com>
+ <20101028163854.GA15450@elte.hu> <AANLkTin62vAwJxcsrFk6Yn7Q6tzr-D=EmKKwPazuAJ11@mail.gmail.com>
+ <7veiba9ev2.fsf@alter.siamese.dyndns.org> <7vhbba38mm.fsf_-_@alter.siamese.dyndns.org>
+ <AANLkTimH9=OWD4+dPsdYaL2VPdDkTsUG_N3GBf168XqD@mail.gmail.com> <7vzkp21ocm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 11 01:47:37 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Namhyung Kim <namhyung@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 02:16:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxqVz-0008Q7-M6
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 01:47:36 +0100
+	id 1PxqyJ-0000cH-Po
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 02:16:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740Ab1CKAr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2011 19:47:29 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33277 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754669Ab1CKAr2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2011 19:47:28 -0500
-Received: by wwa36 with SMTP id 36so2626505wwa.1
-        for <git@vger.kernel.org>; Thu, 10 Mar 2011 16:47:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:from:to:content-type:date:message-id
-         :mime-version:x-mailer:content-transfer-encoding;
-        bh=Cm0xrfCKYwUEaG6E7mB13j3fXbFM69Xw+k0kEz0LPvA=;
-        b=EiMjTGZ67Xn/NSSYuYqZF9vS3K0fo0EyWGNOQ1f4yWtwZlL1o8l/X8+lnp9tjZ6oek
-         sDAxlA48bERZ5a+OVwIWErHZIBlQMJ1Uxc3RWRaPn/u7BfsJCVWjp93WOi2N+S2OvX8/
-         iEcsFDgWCVq9Zz/2LfW5iemWwBp66qHzhorIY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        b=IdzgVvLoefinl2LBbxABqH9KsAPbnQRv5qTDHRqxZF3h3SDmbyY5Zar+x8QBdzcvYF
-         diu2vZCdCtTwU2taigO1yiK0NWC7OfYDtIPRu3ezvOc/Ck6qp/neVfpetNzVz6DTvEG7
-         OKQkV8ccB+Uy38UekcJqXryJMG1XcKMORScag=
-Received: by 10.227.110.147 with SMTP id n19mr2704268wbp.51.1299804446880;
-        Thu, 10 Mar 2011 16:47:26 -0800 (PST)
-Received: from [192.168.0.2] (5acc3aad.bb.sky.com [90.204.58.173])
-        by mx.google.com with ESMTPS id y29sm2911627wbd.4.2011.03.10.16.47.23
-        (version=SSLv3 cipher=OTHER);
-        Thu, 10 Mar 2011 16:47:24 -0800 (PST)
-X-Mailer: Evolution 2.28.3 
+	id S1754207Ab1CKBQq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2011 20:16:46 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:41870 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753151Ab1CKBQq convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2011 20:16:46 -0500
+Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p2B1Gjlt026900
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Thu, 10 Mar 2011 17:16:45 -0800
+Received: by iwn34 with SMTP id 34so2133425iwn.19
+        for <git@vger.kernel.org>; Thu, 10 Mar 2011 17:16:45 -0800 (PST)
+Received: by 10.231.177.69 with SMTP id bh5mr6710675ibb.62.1299806205106; Thu,
+ 10 Mar 2011 17:16:45 -0800 (PST)
+Received: by 10.231.12.10 with HTTP; Thu, 10 Mar 2011 17:16:25 -0800 (PST)
+In-Reply-To: <7vzkp21ocm.fsf@alter.siamese.dyndns.org>
+X-Spam-Status: No, hits=-104.981 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168875>
 
-I have been working off and on (mostly off) for a while now on an
-expanded "pretty" format which would allow for, among other things,
-conditional formats and "long" placeholders.
+On Thu, Mar 10, 2011 at 4:40 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>
+> How many characters do we need to name master uniquely today?
+>
+> =A0 =A0$ ./git -c core.abbrevguard=3D0 rev-parse --short=3D1 master
+> =A0 =A083c3c
+>
+> Ok, so there are more than one object with 83c3 and 83c3c is the abso=
+lute
+> minimum.
 
-Recent threads on the mailing list seem to be leaning towards "long"
-placeholders happening sooner, rather than later, so I think it might be
-a good time to discuss how they might work, if only so that I can make
-sure that what might be desired of an expanded format doesn't conflict
-with my goals regarding conditional formats / etc.
+Actually, that's just lucky.
 
-The justifications for allowing "long" placeholders are simple:
-	1) We have a lot of "short" placeholders already, and the
-	   mnemonics are going to keep getting more awkward the more
-	   of them we have
-	2) Long-forms leave room for options and other fun
-	3) Terse is fun to write, verbose is fun to read.
+Do this:
 
-To start with, the basic idea for expanded placeholders is to allow, in
-addition to the current short-forms, such as %h, %ad, etc, "git log" and
-friends would also support "long forms", such as %(hash), %(authordate),
-etc. Ideally, the "long" forms would be compatible with / perhaps even
-(eventually) share code with, the placeholders used by for-each-ref.
+  git rev-list --abbrev=3D4 --abbrev-commit --all --objects | grep '^..=
+=2E......*$'
 
-There are several requirements which I know of:
-	- Long placeholders cannot invalidate any existing placeholders 
-	- Long placeholders must have a method for accepting "parameters"
-	- Nothing should ever be "illegal". ie: any placeholder which does
-	  not make sense to us should be interpreted literally, rather
-	  than causing a fatal error.
+and you'll see several commits in the git tree that need eight
+characters to be unique. The fact that your current 'master' isn't one
+of them, and in fact happens to be one that only needs five, is just
+pure luck.
 
-And, for my own part, there are several requirements which my itch has:
-	- Long placeholders must be able to accept multiple parameters
-	- Long placeholders must be able to accept a variable number of
-	  parameters
-	- It must be possible to include an entire "sub-format" as a
-	  parameter of a long placeholder
+So even in the (much smaller) git repo, 7 is not a sufficient unique
+minimum even today. Never mind any future guarding.
 
-Our current placeholder rules are very simple. If I recall correctly,
-for example, the only escape character is "%". It would be good to keep
-this simplicity. The parser internals, however, are most likely due for
-a change, to allow for a "parse once, process many" approach to make up
-for the long-formats being somewhat slower to parse by nature. Hopefully
-this would give us a slight speed boost in the trivial cases as well,
-though this is not actually a goal of any work I am doing.
+And your argument fails for exactly that reason: yes, for an
+_individual_ SHA1, you may think that "five characters is sufficient",
+and when you then use that random number (5) as a basis for forming
+your "max 8 character" logic, it fails miserably for other cases.
 
-Discussion so far, and the way for-each-ref does things, suggests the
-following specification for long formats:
-	%(placeholdername:optional-parameter)
+Now, if the "abbrevguard" was based not one one random data-point, but
+on the _whole_ current state of the repository, things would be
+different.  Then it would actually become a "let's pick a good default
+abbreviation length for this repo". But that's now that it does. The
+abbrevguard depends on the one particular SHA1 you're looking at, so
+you can actually be asking for a longer abbreviation, but still get a
+_shorter_ end result than when you asked for a shorter abbreviation.
 
-Meanwhile, the existing %w(  ) format gives us a precedent for multiple
-parameters: separate them with commas:
-	%(placeholdername:optional-parameter,optional-parameter)
+IOW, try your example thing not just with "master", but with two
+extreme commits. For example, try
 
-Currently, for-each-ref is strict about whitespace. For example:
-	%(objectname:short) is valid
-	%(objectname: short) is not
+  git -c core.abbrevguard=3D2 rev-parse --short=3D5 83c3c622
+  git -c core.abbrevguard=3D2 rev-parse --short=3D4 979f7929
 
-While log's %w(  ) is less-strict:
-	%w(0,4,4) is valid
-	%w(0, 4, 4 ) is too
-	%w(0,
-		4, 4) is too
+and tell me what you get. I _think_ you should get 7 digits for the
+first case, and 8 digits for the second one. Even though you "asked"
+for a longer name in the first case, and you had the same abbrevguard.
 
-I prefer support for whitespace: there's not really a good reason not to
-allow it, as far as I know, and it gives people more freedom to make
-things readable how they see fit.
+See what I'm saying? I think that's just insane. And it comes exactly
+from the fact that abbreviation ends up being a "local" thing.
 
-As for the names of long placeholders, for-each-ref seems to have the
-opinion of:
-	- only alphabetic characters (ie: no dashes, etc, between words)
-	- only lowercase characters (eg: no camelCase)
-	- strict about both (ie: must be typed exactly, no caSeMixing)
-
-all of these restrictions sound sane, but may be limiting if declared a
-convention to follow. I assume a sane extension would be:
-	- alphanumeric characters and dashes allowed
-
-For my own purposes (conditional formats), I'd like to see the ability
-to embed an entire sub-format within a placeholder. Clearly this would
-complicate the parser quite a bit (we wouldn't be able to just look for
-a closing ")", for example), but I think the flexibility makes it work
-it. To achieve this in terms of a specification to shoot for, we can
-simply say that any embedded "%(" must be terminated by its own ")" to
-be valid. eg:
-	%(foo-condition: %(format: %H, aka %h), %H )
-
-This does conflict with the idea of whitespace being non-important,
-and unfortunately I don't have a good idea for that one yet. There are
-four options, as I see it:
-	A) make whitespace always-important. I don't like this at all
-	B) Add quotation marks and backslashes as additional escape
-	   characters, allowing for " Sally said \"foo\" ". This seems
-	   like a nasty thing to do to an otherwise simple format
-	C) add %(preserve-whitespace: whitespace is important here )
-	   This may add weirdness to the parse that makes it hard to
-	   follow, and we'd need to come up with rules about
-	   "inheritance" of whitespace preservation.
-	D) Require people to type %20 if they want a space at the
-	   beginning/end of a parameter. This idea feels ugly too, but
-	   maybe not as ugly as the alternatives.
-
-For what it's worth, the current WIP code I've got uses option B.
-
-As a final note: "Conditional formats" feel a lot like ternary operators
-in C. Because of that, I feel like saying that conditional formats like:
-	%(opt-color: %Cred%h%Creset, %h)
-Look better to me as:
-	%(opt-color ? %Cred%h%Creset : %h)
-
-But thinking in terms of consistency / simplicity of "what escapes now?"
-I think the more-uniform %(placeholdername:parameter,parameter) is
-probably the one to go for.
-
-Those are my thoughts on the matter, or at least those I have at the
-moment. I'll leave this to the list to discuss for now, and hope that it
-doesn't get bikeshedded to death.
-
--- Will
+                          Linus
