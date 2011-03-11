@@ -1,57 +1,72 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Correcting forgetting to make a new branch
-Date: Fri, 11 Mar 2011 15:31:18 +0000
-Message-ID: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC resumable clone
+Date: Fri, 11 Mar 2011 10:37:52 -0500
+Message-ID: <20110311153752.GA30329@sigill.intra.peff.net>
+References: <AANLkTinrgqLhZK=fQ_+gUanT-zy9Mcbw-y3o7nYV9A-m@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 11 16:31:30 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Alexander Miseler <alexander@miseler.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
+	Pranav Ravichandran <prp.1111@gmail.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 11 16:38:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py4JJ-0005JL-RK
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:31:26 +0100
+	id 1Py4Pi-0000LI-Ga
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749Ab1CKPbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 10:31:21 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54961 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755597Ab1CKPbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 10:31:19 -0500
-Received: by gyf1 with SMTP id 1so44655gyf.19
-        for <git@vger.kernel.org>; Fri, 11 Mar 2011 07:31:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
-         :message-id:subject:from:to:content-type;
-        bh=iQ95qPVsXtPdFOrhPyTyVLbnRjExlF4tZVN8FHsDMkY=;
-        b=xC7eImqACW9j0AutTycF3b5N8JsItohLC3Dhf1ZparPVNbOxw5ccX+i2d5AvkMFVWH
-         l3YM7xebpN6n//7K+U1eAZoeINHUR1m+qUeRsWu5RW/fV9SQFbx3ssKlV/6+/ZRuM7mP
-         4bDohhoBd6mjjgN0ey8JZVH05LKSjFeeskML8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=atkqhM9Z7yGHucPq11MaraDeQQXxO9dqUoc9divstsYGS6qeZmve5sTMtiE3Oq8BJc
-         dc3j5LX/u9EWC8YqV+LhnU3IV14mf6Fbjfi/zLGT8ub7+cCkwG9+GHkkxO8z+r6B7k9a
-         aykhb4dkUudpfG5p4hq0ZBoGXa6mMsWqtVoHM=
-Received: by 10.91.69.20 with SMTP id w20mr11190agk.0.1299857479016; Fri, 11
- Mar 2011 07:31:19 -0800 (PST)
-Received: by 10.90.94.9 with HTTP; Fri, 11 Mar 2011 07:31:18 -0800 (PST)
-X-Google-Sender-Auth: HrAVYTtN__UPbcmckAHm1BScwHw
+	id S1754671Ab1CKPhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 10:37:55 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47686
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752417Ab1CKPhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 10:37:54 -0500
+Received: (qmail 8233 invoked by uid 107); 11 Mar 2011 15:38:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Mar 2011 10:38:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Mar 2011 10:37:52 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTinrgqLhZK=fQ_+gUanT-zy9Mcbw-y3o7nYV9A-m@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168908>
 
-The scenario is that I have done work on a branch and made a number of
-commits. What I wanted to do was to start a new branch before I made
-these commits. Unfortunatel, I got distracted and forgot that I hadn't
-done it.
+On Fri, Mar 11, 2011 at 07:17:31AM -0800, Shawn O. Pearce wrote:
 
-Is there are neat way to create the branch and 'move' the commits over?
+> >> A simpler way to restartable clone is to facilitate bundles (Nicolas'
+> >> idea). Some glue is needed to teach git-fetch/git-daemon to use the
+> >> bundles, and git-push to automatically create bundles periodically (or
+> >> a new command that can be run from cron). I think this way fit in GSoC
+> >> scope better.
+> 
+> I think the cached bundle idea is horrifically stupid in the face of
+> the subsequent cached pack idea. JGit already implements cached packs,
+> and it works very well. The feature just needs to be back-ported to
+> builtin/pack-objects.c, along with some minor edits to my RFC patch to
+> git-repack.sh to be able to construct the cached pack.
 
-TYIA
+I think there is room for both ideas. The cached bundle idea is not just
+"here, download this bundle first". It is "here, download this _other
+thing_ first, which might be a bundle, another git repo, a torrent,
+etc".
+
+So yeah, cached packs are a way better solution if you are just going to
+have an extra bundle on the same machine. But that's just one use case.
+The ability for my server to say "go hit kernel.org first, and then come
+back to me to pick up the deltas" is also valuable. Similarly, the
+ability to serve an initial bundle off a torrent is useful for extremely
+large projects.
+
+-Peff
