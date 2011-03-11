@@ -1,61 +1,71 @@
-From: "Alexey Feldgendler" <alexeyf@opera.com>
-Subject: Re: Correcting forgetting to make a new branch
-Date: Fri, 11 Mar 2011 16:46:50 +0100
-Organization: Opera Software ASA
-Message-ID: <op.vr6rgcqs56e9f9@xman.eng.oslo.osa>
-References: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC resumable clone
+Date: Fri, 11 Mar 2011 10:48:22 -0500
+Message-ID: <20110311154822.GA30605@sigill.intra.peff.net>
+References: <AANLkTinrgqLhZK=fQ_+gUanT-zy9Mcbw-y3o7nYV9A-m@mail.gmail.com>
+ <20110311153752.GA30329@sigill.intra.peff.net>
+ <AANLkTi=D5kYh-w-6CKuCf39fnH1SYT5HxJ31tdq2vb9d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 11 16:46:59 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Alexander Miseler <alexander@miseler.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
+	Pranav Ravichandran <prp.1111@gmail.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 11 16:48:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py4YM-00057A-L1
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:46:58 +0100
+	id 1Py4Zs-0005uN-TK
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:48:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755663Ab1CKPqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 10:46:53 -0500
-Received: from smtp.opera.com ([213.236.208.81]:45049 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754804Ab1CKPqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 10:46:52 -0500
-Received: from xman.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p2BFkpcW022692
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Fri, 11 Mar 2011 15:46:51 GMT
-In-Reply-To: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
-User-Agent: Opera Mail/11.01 (Linux)
+	id S1755744Ab1CKPsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 10:48:25 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48348
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754512Ab1CKPsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 10:48:23 -0500
+Received: (qmail 8605 invoked by uid 107); 11 Mar 2011 15:48:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Mar 2011 10:48:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Mar 2011 10:48:22 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=D5kYh-w-6CKuCf39fnH1SYT5HxJ31tdq2vb9d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168912>
 
-On Fri, 11 Mar 2011 16:31:18 +0100, Howard Miller  
-<howard@e-learndesign.co.uk> wrote:
+On Fri, Mar 11, 2011 at 07:41:14AM -0800, Shawn O. Pearce wrote:
 
-> The scenario is that I have done work on a branch and made a number of
-> commits. What I wanted to do was to start a new branch before I made
-> these commits. Unfortunatel, I got distracted and forgot that I hadn't
-> done it.
->
-> Is there are neat way to create the branch and 'move' the commits over?
+> > I think there is room for both ideas. The cached bundle idea is not just
+> > "here, download this bundle first". It is "here, download this _other
+> > thing_ first, which might be a bundle, another git repo, a torrent,
+> > etc".
+> 
+> Fair enough. Though I wouldn't limit this to bundles. Instead I would
+> suggest supporting any valid Git URLs, and then extend our URL syntax
+> to support bundles over http://, rsync://, and torrent.
 
-Just create a new branch right where you are, it will be correct.
+Sorry, I didn't mean to imply that it was limited to bundles. It would
+support arbitrary URLs or schemes. See this thread for some past
+discussion:
 
-However, the branch that was active before when you should have branched  
-will have been unintentionally updated. To fix that, you'll need to move  
-the old branch a few commits back:
+  http://article.gmane.org/gmane.comp.version-control.git/164700
 
-git branch -f <old-branch> <where-it-was-before>
+> If we support any URL and don't assume the URL is a bundle, you can
+> point traffic at kernel.org to for example grab Linus' primary
+> repository first, even if he doesn't have a bundle.
 
+Exactly.
 
--- 
-Alexey Feldgendler
-Software Developer, Desktop Team, Opera Software ASA
-[ICQ: 115226275] http://my.opera.com/feldgendler/
+-Peff
