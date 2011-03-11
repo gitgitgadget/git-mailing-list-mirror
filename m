@@ -1,59 +1,76 @@
-From: Alexander Miseler <alexander@miseler.de>
-Subject: Re: Summer of Code project ideas due this Friday
-Date: Fri, 11 Mar 2011 13:18:45 +0100
-Message-ID: <4D7A1325.1090003@miseler.de>
-References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com> <20110303185918.GA18503@sigill.intra.peff.net> <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com> <20110303203323.GA21102@sigill.intra.peff.net> <20110309174956.GA22683@sigill.intra.peff.net> <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com> <20110309215841.GC4400@sigill.intra.peff.net>
+From: Vicent Marti <tanoku@gmail.com>
+Subject: Re: Using libgit2 code in git.git as a Google Summer of Code project?
+Date: Fri, 11 Mar 2011 14:22:25 +0200
+Message-ID: <AANLkTinHhHk6U3wTDLUx2f4S17arLWGj4S1NSAw9yM-x@mail.gmail.com>
+References: <AANLkTinqem5e0+vxzR64s1Y9o7B8RgEFXcm0HV_jeZ4Y@mail.gmail.com>
+ <AANLkTikkFDLKn5KMaSTwUABBVX_vYDj8pW1kqmsm1_vy@mail.gmail.com>
+ <20110310101332.GC26851@elie> <AANLkTikQ3x9A6v3y698_om_4_qB87Zpi_kG3u3=d+Dur@mail.gmail.com>
+ <20110310115549.GA31046@elie> <7vlj0m4vz1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 11 13:19:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>, libgit2@librelist.com,
+	git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 13:22:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py1JA-0004At-Pa
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 13:19:05 +0100
+	id 1Py1Mq-00062m-9W
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 13:22:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754842Ab1CKMS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 07:18:58 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:56698 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754630Ab1CKMSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 07:18:54 -0500
-Received: from [192.168.0.32] (dslb-188-103-098-160.pools.arcor-ip.net [188.103.98.160])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0M21V9-1QDMAH2DVb-00tZHp; Fri, 11 Mar 2011 13:18:46 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110309215841.GC4400@sigill.intra.peff.net>
-X-Provags-ID: V02:K0:AozB57HNm4bupV9PnoT3rFCFG87esm2CEDPC/QRPwYG
- 8GuXG8SQ++8Mzt4lF1Rf9HSrzqp4G+jOcci3qQ0SnL0FR4c8H0
- U/vkn0tmjpKpk6NsYsixEllMWAOHrrAWFmtREDGljdQO4jYjxA
- mXAWsKvsnVp80MQvXkW6yUkk9H7Ka+9+DsmJAJSQKmreiM36Ay
- ASHteGG2wLd4aFHLDLw/w==
+	id S1753688Ab1CKMWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 07:22:47 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52309 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752313Ab1CKMWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 07:22:46 -0500
+Received: by wya21 with SMTP id 21so2349646wya.19
+        for <git@vger.kernel.org>; Fri, 11 Mar 2011 04:22:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=XIS0+UXrz/bgtEnA1n2Tp032Z3n1+rnwmVxmIj7x3sI=;
+        b=kuzh+78EfG+FlCrQpJGhV22U4YH1ltFN7f5oc0mxCryZ3zUSwCC+o9zreaIjlMH4bj
+         oovTwJhUu6k1VhOhZIovFzRoeAY1jlN8/ZJ3Pw5g4snLEzmu7ukGLEV+bCdCitm5ThHS
+         YB8+GVDemGY5p3CuQEQwJRt1ElicnDnEDWDXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=MLT2fLBCDmvQFqYtZ4dOHTU+SyJYsJ5xv7bUqhAM+gQe0oNd8CfNlb0E9gJIZeE4if
+         WDHCxcqZEtvATzLkjzj0F6G2dOIcVk/7Qwh8aWRlFLsxtBV2jl0GcbM3/kPzRU7vSt8k
+         EicJTXnhH19TF3gMkv1W97m4KKBsTmD1qdN7Q=
+Received: by 10.216.145.154 with SMTP id p26mr7089360wej.11.1299846165096;
+ Fri, 11 Mar 2011 04:22:45 -0800 (PST)
+Received: by 10.216.244.10 with HTTP; Fri, 11 Mar 2011 04:22:25 -0800 (PST)
+In-Reply-To: <7vlj0m4vz1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168893>
 
-On 09.03.2011 22:58, Jeff King wrote:
-> If you have any ideas, please add them to the page! Whether you are
-> available to mentor the project, or simply think it would make a good
-> project and want to inspire others to mentor it, it's appropriate to go
-> there.
+Hey,
 
-Added two new ideas:
-Port Git to Android
-Resumable clone
+On Thu, Mar 10, 2011 at 9:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> How big a performance penalty does libgit2 have to pay to depart from many
+> "we run once and let exit take care of cleaning up after us" patterns used
+> in git.git primarily in order to avoid the housekeeping cost?
 
-I'm new to the Git code and therefore don't necessarily have an idea what I'm talking about. Please feel free to change, 
-correct, mutilate and massacre this ideas. This are just two things that I would like to see, but don't want to work on 
-myself since I have BIGGER fishes to fry ^_^
+It's not significant. We try to use custom memory allocation wherever
+possible, and the most complex structures (interdependencies in parsed
+objects from the DAG) are internally garbage collected, so we don't do
+any unnecessary free's. We try to offset the cost of 'proper' memory
+management by using smarter/more performance tuned algorithms. So far,
+some stuff ranges from varying degrees of faster-than-git (see: new
+revision walker, index writing, streaming loose object writes) to
+slightly slower (see object parsing :/).
+
+We are working on it. Performance is our main concern.
+
+Cheers,
+Vicent
