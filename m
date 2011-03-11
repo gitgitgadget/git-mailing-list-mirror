@@ -1,56 +1,51 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: idea: pruning stale tags
-Date: Fri, 11 Mar 2011 09:48:31 -0500
-Message-ID: <4D7A363F.7090206@xiplink.com>
-References: <4D790618.9000302@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: GSoC - Contributing to Git
+Date: Fri, 11 Mar 2011 07:03:21 -0800
+Message-ID: <AANLkTi=bfOQ56qEc3uQCmejaxi6NYPEpJy7EQoW-P=Hx@mail.gmail.com>
+References: <AANLkTikh28_8rWzv0KXk1_MTzwWSyb2-60J3im11yrFm@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Adam Monsen <haircut@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 15:50:11 2011
+To: Pranav Ravichandran <prp.1111@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 16:03:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py3fN-0000yr-Vz
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 15:50:10 +0100
+	id 1Py3sb-0008UE-5N
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:03:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755394Ab1CKOuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 09:50:01 -0500
-Received: from smtp142.iad.emailsrvr.com ([207.97.245.142]:45271 "EHLO
-	smtp142.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755347Ab1CKOuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 09:50:01 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp54.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 3032E2B0C39;
-	Fri, 11 Mar 2011 09:50:00 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp54.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id F1C582B0CC4;
-	Fri, 11 Mar 2011 09:49:07 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
-In-Reply-To: <4D790618.9000302@gmail.com>
+	id S1754344Ab1CKPDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 10:03:43 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:62522 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751553Ab1CKPDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 10:03:43 -0500
+Received: by vxi39 with SMTP id 39so2601863vxi.19
+        for <git@vger.kernel.org>; Fri, 11 Mar 2011 07:03:42 -0800 (PST)
+Received: by 10.52.180.9 with SMTP id dk9mr5427690vdc.156.1299855822203; Fri,
+ 11 Mar 2011 07:03:42 -0800 (PST)
+Received: by 10.52.162.33 with HTTP; Fri, 11 Mar 2011 07:03:21 -0800 (PST)
+In-Reply-To: <AANLkTikh28_8rWzv0KXk1_MTzwWSyb2-60J3im11yrFm@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168905>
 
-On 11-03-10 12:10 PM, Adam Monsen wrote:
-> My idea is to add functionality to git-remote to prune stale tags
-> (those which no longer exist on the remote). Add a new ui:
-> 
-> git remote prune --tags [-n | --dry-run] <name> [<remote>]
-> 
-> I think it is not possible to know which remote tags originated
-> from, yes? That's why I suggested adding the [<remote>] parameter;
-> one would be required to specify the remote to sync with if more
-> than one remote is configured.
+On Fri, Mar 11, 2011 at 05:24, Pranav Ravichandran <prp.1111@gmail.com> wrote:
+> I was peering over the previous years' GSoC ideas for Git, and I wish
+> to apply to work with Git in the upcoming GSoC '11. I found the
+> Restartable Clone idea from the GSoC 2008 ideas page interesting,
 
-I agree with this idea, but in the context of Johan's proposed overhaul of
-ref namespaces:
+I don't know why this idea keeps coming back up as GSoC project. Its
+too difficult, that's why nobody has done it yet. Everyone wants to do
+it. Unfortunately its incredibly difficult to layout the object data
+in a way that the stream can be broken and restarted.
 
-http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=165885
+If you are new to Git, its unlikely you would be successful with this
+particular project.
 
-		M.
+-- 
+Shawn.
