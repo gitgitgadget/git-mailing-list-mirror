@@ -1,66 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: Correcting forgetting to make a new branch
-Date: Fri, 11 Mar 2011 16:50:50 +0100
-Message-ID: <vpqk4g57j1h.fsf@bauges.imag.fr>
+Date: Fri, 11 Mar 2011 16:49:23 +0100
+Message-ID: <4D7A4483.5080209@drmicha.warpmail.net>
 References: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
-	<op.vr6rgcqs56e9f9@xman.eng.oslo.osa>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Alexey Feldgendler" <alexeyf@opera.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 16:51:15 2011
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Fri Mar 11 16:53:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py4cU-0007aZ-Kd
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:51:14 +0100
+	id 1Py4eC-0000Nb-F7
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754155Ab1CKPvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 10:51:08 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:39366 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755834Ab1CKPvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 10:51:00 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p2BFomlM029332
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 11 Mar 2011 16:50:48 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Py4c6-0008NQ-6u; Fri, 11 Mar 2011 16:50:50 +0100
-In-Reply-To: <op.vr6rgcqs56e9f9@xman.eng.oslo.osa> (Alexey Feldgendler's
-	message of "Fri, 11 Mar 2011 16:46:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 11 Mar 2011 16:50:49 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p2BFomlM029332
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1300463449.54315@u9DeQjJw1kytNge8MfwUSA
+	id S1754671Ab1CKPwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 10:52:55 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:54210 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752730Ab1CKPwy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Mar 2011 10:52:54 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B898320BE4;
+	Fri, 11 Mar 2011 10:52:53 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 11 Mar 2011 10:52:53 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=iid/XSk4vyOy/VwEeF2Gth8wfG0=; b=dbRmS1BrZ4EgUIm9uhNFl/AdVMKyqeUpF16jsAMKYgqsC/ow10dRBsh1Jsv5s5LNb6a9iTDip3VhOBuwkbY+MwGbF/N2QD4qb1QELbka2H37LiRkqWPb8VZwX+vb0tTH5cH4BDGYoszhMDrVMjMXYlnJ0y0fLqGa+AxHna8CCN0=
+X-Sasl-enc: L+gUm0VcWMhc4B6QP5l8MtIQFdG7K2hqW+3TexTCJVNV 1299858773
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 473BF4405E2;
+	Fri, 11 Mar 2011 10:52:53 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168914>
 
-"Alexey Feldgendler" <alexeyf@opera.com> writes:
+Howard Miller venit, vidit, dixit 11.03.2011 16:31:
+> The scenario is that I have done work on a branch and made a number of
+> commits. What I wanted to do was to start a new branch before I made
+> these commits. Unfortunatel, I got distracted and forgot that I hadn't
+> done it.
+> 
+> Is there are neat way to create the branch and 'move' the commits over?
 
-> However, the branch that was active before when you should have
-> branched will have been unintentionally updated. To fix that, you'll
-> need to move the old branch a few commits back:
->
-> git branch -f <old-branch> <where-it-was-before>
+It depends on which commit you wanted the new branch to start with. If
+you have
 
-This is correct, but for completeness: don't do that if you've already
-pushed your changes. If you pushed them and people already pulled them,
-you can hardly do better than appologize to your co-workers that you
-shouldn't have done that, and possibly create a new commit on top of the
-branch reverting what you did.
+...-*-*-*-X-*-*-*-*-A
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+on branch A and X is the commit where you meant to create a new branch B
+starting at X you can simply
+
+git checkout A
+git branch B
+git reset --hard X
+
+or simply
+
+git branch -m A B
+git branch -f A X
+
+If, on the other hand, you wanted to start B from a different commit Y,
+you will need to rebase:
+
+git branch B A
+git branch -f A X
+git rebase --onto Y A B
+
+After backing up, of course ;)
+
+Michael
