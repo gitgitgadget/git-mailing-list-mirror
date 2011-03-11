@@ -1,71 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC resumable clone
-Date: Fri, 11 Mar 2011 10:48:22 -0500
-Message-ID: <20110311154822.GA30605@sigill.intra.peff.net>
-References: <AANLkTinrgqLhZK=fQ_+gUanT-zy9Mcbw-y3o7nYV9A-m@mail.gmail.com>
- <20110311153752.GA30329@sigill.intra.peff.net>
- <AANLkTi=D5kYh-w-6CKuCf39fnH1SYT5HxJ31tdq2vb9d@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Correcting forgetting to make a new branch
+Date: Fri, 11 Mar 2011 16:50:50 +0100
+Message-ID: <vpqk4g57j1h.fsf@bauges.imag.fr>
+References: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
+	<op.vr6rgcqs56e9f9@xman.eng.oslo.osa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alexander Miseler <alexander@miseler.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
-	Pranav Ravichandran <prp.1111@gmail.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Mar 11 16:48:33 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: "Alexey Feldgendler" <alexeyf@opera.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 16:51:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py4Zs-0005uN-TK
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:48:33 +0100
+	id 1Py4cU-0007aZ-Kd
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755744Ab1CKPsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 10:48:25 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48348
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754512Ab1CKPsX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 10:48:23 -0500
-Received: (qmail 8605 invoked by uid 107); 11 Mar 2011 15:48:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Mar 2011 10:48:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Mar 2011 10:48:22 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=D5kYh-w-6CKuCf39fnH1SYT5HxJ31tdq2vb9d@mail.gmail.com>
+	id S1754155Ab1CKPvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 10:51:08 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:39366 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755834Ab1CKPvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 10:51:00 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p2BFomlM029332
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 11 Mar 2011 16:50:48 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Py4c6-0008NQ-6u; Fri, 11 Mar 2011 16:50:50 +0100
+In-Reply-To: <op.vr6rgcqs56e9f9@xman.eng.oslo.osa> (Alexey Feldgendler's
+	message of "Fri, 11 Mar 2011 16:46:50 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 11 Mar 2011 16:50:49 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p2BFomlM029332
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1300463449.54315@u9DeQjJw1kytNge8MfwUSA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168913>
 
-On Fri, Mar 11, 2011 at 07:41:14AM -0800, Shawn O. Pearce wrote:
+"Alexey Feldgendler" <alexeyf@opera.com> writes:
 
-> > I think there is room for both ideas. The cached bundle idea is not just
-> > "here, download this bundle first". It is "here, download this _other
-> > thing_ first, which might be a bundle, another git repo, a torrent,
-> > etc".
-> 
-> Fair enough. Though I wouldn't limit this to bundles. Instead I would
-> suggest supporting any valid Git URLs, and then extend our URL syntax
-> to support bundles over http://, rsync://, and torrent.
+> However, the branch that was active before when you should have
+> branched will have been unintentionally updated. To fix that, you'll
+> need to move the old branch a few commits back:
+>
+> git branch -f <old-branch> <where-it-was-before>
 
-Sorry, I didn't mean to imply that it was limited to bundles. It would
-support arbitrary URLs or schemes. See this thread for some past
-discussion:
+This is correct, but for completeness: don't do that if you've already
+pushed your changes. If you pushed them and people already pulled them,
+you can hardly do better than appologize to your co-workers that you
+shouldn't have done that, and possibly create a new commit on top of the
+branch reverting what you did.
 
-  http://article.gmane.org/gmane.comp.version-control.git/164700
-
-> If we support any URL and don't assume the URL is a bundle, you can
-> point traffic at kernel.org to for example grab Linus' primary
-> repository first, even if he doesn't have a bundle.
-
-Exactly.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
