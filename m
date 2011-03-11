@@ -1,66 +1,84 @@
-From: Ryan Sun <ryansun81@gmail.com>
-Subject: rebase question
-Date: Fri, 11 Mar 2011 14:57:25 -0500
-Message-ID: <AANLkTi=8Q+gNSY2jzgMMtPX-JHUy4MUEGNTeK85Ddvys@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: GSoC resumable clone
+Date: Fri, 11 Mar 2011 22:50:41 +0200
+Message-ID: <20110311205041.GA10210@LK-Perkele-VI.localdomain>
+References: <AANLkTinrgqLhZK=fQ_+gUanT-zy9Mcbw-y3o7nYV9A-m@mail.gmail.com>
+ <20110311153752.GA30329@sigill.intra.peff.net>
+ <AANLkTi=D5kYh-w-6CKuCf39fnH1SYT5HxJ31tdq2vb9d@mail.gmail.com>
+ <20110311154822.GA30605@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 11 20:57:33 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Alexander Miseler <alexander@miseler.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
+	Pranav Ravichandran <prp.1111@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 11 21:48:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py8Sq-0005k0-Tp
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 20:57:33 +0100
+	id 1Py9G0-00041h-NH
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 21:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753450Ab1CKT52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 14:57:28 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59235 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751553Ab1CKT50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 14:57:26 -0500
-Received: by iyb26 with SMTP id 26so2978809iyb.19
-        for <git@vger.kernel.org>; Fri, 11 Mar 2011 11:57:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=7oIwB02A/jOMxdiqa/g9PJuxSES6SFaUpAoS3q65PrA=;
-        b=Y2lzNbij/xw1wfLtv7oVD0uyAqoXs3X/h2lEz0LDeN0mcPUJqB9nL52kC1CgGe8k1B
-         +PeK5KRi/UOwLHJ0TlcViUD9Hoakl7cc8dTOLMZ9iBkMk9aUQcLc1t3YiLjKB4ayDzUr
-         Ecm4xzY3dagDsxz3loJ7Jn4dtQBKv609RPwng=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=qztIr31bBAYLTwn3iew3/caNaKljuQ17UnIafM+YuD2u4Tt1OQC7BpHY3uTCuWZKTB
-         hpA5VNBvK6CsWHrZfeRq/cMZqlhELp9MNwk3kFrUypUvRG+95vJoip4h8sWAK53Fdo5V
-         Q/xtUro0PgqlykH1mDwKyfWGRvAziN14H81Hg=
-Received: by 10.42.175.7 with SMTP id ay7mr78680icb.298.1299873445216; Fri, 11
- Mar 2011 11:57:25 -0800 (PST)
-Received: by 10.42.228.74 with HTTP; Fri, 11 Mar 2011 11:57:25 -0800 (PST)
+	id S1754114Ab1CKUsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 15:48:15 -0500
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:59433 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753833Ab1CKUsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 15:48:14 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id DBADC18CFF2;
+	Fri, 11 Mar 2011 22:48:12 +0200 (EET)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0783CBFFF1; Fri, 11 Mar 2011 22:48:12 +0200
+Received: from LK-Perkele-VI (a88-112-55-20.elisa-laajakaista.fi [88.112.55.20])
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 4223027D85;
+	Fri, 11 Mar 2011 22:48:01 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <20110311154822.GA30605@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168924>
 
-I want to rebase the current branch B1 from origin/A1 to origin/A2
-so I want to use this command
-git --onto origin/A2 origin/A1 B1
+On Fri, Mar 11, 2011 at 10:48:22AM -0500, Jeff King wrote:
+> On Fri, Mar 11, 2011 at 07:41:14AM -0800, Shawn O. Pearce wrote:
+> 
+> > Fair enough. Though I wouldn't limit this to bundles. Instead I would
+> > suggest supporting any valid Git URLs, and then extend our URL syntax
+> > to support bundles over http://, rsync://, and torrent.
+> 
+> Sorry, I didn't mean to imply that it was limited to bundles. It would
+> support arbitrary URLs or schemes. See this thread for some past
+> discussion:
 
-Q1: is this command right? (A2 is based on A1, current branch is B1,
-B1 is already pushed to origin, a remote repo, and I think I will
-force push B1 after rebase)
+Security pitfall: You need a way to restrict URL schemes that can
+be specified from the remote. Some URL schemes are wildly unsafe
+to use that way (or just don't make sense).
 
-but I accidentally typed
- git --onto origin/A2 origin/A1 origin/A2
-and git says
-----
-First, rewinding head to replay your work on top of it...
-Fast-forwarded origin/base to origin/base.
-----
+The URL schemes where it is safe and makes sense are (at least):
+- git://
+- ssh:// (and the scp syntax)
+- http://
+- ftp://
+- https://
+- ftps://
+- rsync://
+- file:// (?)
 
-Q2:I assume this command is safe and it didn't change anything right?
+New capabilities perhaps? This would allow allowing it on
+per-remote-helper basis if that remote helper is deemed safe to
+be able to receive arbitrary URLs from untrusted sources.
 
-THANKS IN ADVANCE
+-Ilari
