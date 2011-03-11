@@ -1,87 +1,61 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: GSoC resumable clone
-Date: Fri, 11 Mar 2011 22:42:35 +0700
-Message-ID: <AANLkTinDBm-Q3MA62r_TRqt-qxmPuDKPACr4bEPnJ6vz@mail.gmail.com>
-References: <AANLkTinrgqLhZK=fQ_+gUanT-zy9Mcbw-y3o7nYV9A-m@mail.gmail.com>
+From: "Alexey Feldgendler" <alexeyf@opera.com>
+Subject: Re: Correcting forgetting to make a new branch
+Date: Fri, 11 Mar 2011 16:46:50 +0100
+Organization: Opera Software ASA
+Message-ID: <op.vr6rgcqs56e9f9@xman.eng.oslo.osa>
+References: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Alexander Miseler <alexander@miseler.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jeff King <peff@peff.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
-	Pranav Ravichandran <prp.1111@gmail.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Mar 11 16:43:14 2011
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 11 16:46:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Py4Uj-0002zr-GO
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:43:13 +0100
+	id 1Py4YM-00057A-L1
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 16:46:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755485Ab1CKPnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 10:43:09 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:60542 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754736Ab1CKPnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 10:43:07 -0500
-Received: by wya21 with SMTP id 21so2525539wya.19
-        for <git@vger.kernel.org>; Fri, 11 Mar 2011 07:43:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=bvJjGQteasgf8ZaRQ3faMXjh627NIszw45s0qSeoO30=;
-        b=G46ysOaBMUx4NyIVa4kG+CZNlrAPmA9wa/5BP+DiJ/IZcZiKyHxXmA6h9x5EHnhxbb
-         W/1B0XftW85jywtLNb+GOwE2BCCDSfNg6tXXLqKI3nAXVR5h29Qd0e0Kd8+7Az/cQgC/
-         JHr5WIVEfCuAumRQDzHijoFwjcJHw6h+cxwQo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=YacVq4yrRIs8EG4phoE6ptK56dlOp8+rFt8IDnGwSue91fQpzxEpSKysoGA6WdEmNs
-         EtcG5VsOB7O9ogBOmJm85BfL5dX0kJFQqMDTCEAxlYnePoayyHfPyRVKpWD3fq2uSmx2
-         nmk4L0yFt8CLaqYh8VKMHvtBKcwJ5zk+jYUSM=
-Received: by 10.216.200.82 with SMTP id y60mr8444558wen.31.1299858185194; Fri,
- 11 Mar 2011 07:43:05 -0800 (PST)
-Received: by 10.216.239.5 with HTTP; Fri, 11 Mar 2011 07:42:35 -0800 (PST)
-In-Reply-To: <AANLkTinrgqLhZK=fQ_+gUanT-zy9Mcbw-y3o7nYV9A-m@mail.gmail.com>
+	id S1755663Ab1CKPqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 10:46:53 -0500
+Received: from smtp.opera.com ([213.236.208.81]:45049 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754804Ab1CKPqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 10:46:52 -0500
+Received: from xman.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p2BFkpcW022692
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 11 Mar 2011 15:46:51 GMT
+In-Reply-To: <AANLkTi=fp=-pwi7Mj9TptP22mtP51bzq5UwTLRx9LnNB@mail.gmail.com>
+User-Agent: Opera Mail/11.01 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168911>
 
-On Fri, Mar 11, 2011 at 10:17 PM, Shawn Pearce <spearce@spearce.org> wrote:
-> I think the cached bundle idea is horrifically stupid in the face of
-> the subsequent cached pack idea. JGit already implements cached packs,
-> and it works very well. The feature just needs to be back-ported to
-> builtin/pack-objects.c, along with some minor edits to my RFC patch to
-> git-repack.sh to be able to construct the cached pack.
-> ...
+On Fri, 11 Mar 2011 16:31:18 +0100, Howard Miller  
+<howard@e-learndesign.co.uk> wrote:
 
-I wonder why I missed it. Probably to recent and has not be carved to
-my mind yet.
+> The scenario is that I have done work on a branch and made a number of
+> commits. What I wanted to do was to start a new branch before I made
+> these commits. Unfortunatel, I got distracted and forgot that I hadn't
+> done it.
+>
+> Is there are neat way to create the branch and 'move' the commits over?
 
-> Junio and I would like see narrow checkout code re-implemented to
-> support obtaining only a subset of the paths from the remote.
+Just create a new branch right where you are, it will be correct.
 
-I'm close to finishing negative pathspecs (for extending narrow
-clones). I'll get there.
+However, the branch that was active before when you should have branched  
+will have been unintentionally updated. To fix that, you'll need to move  
+the old branch a few commits back:
 
-> Once that is implemented, a client on a really bad network connection
-> could do a resumable clone by grabbing a shallow clone of depth 1
-> along no paths, partition the root tree up, then extend its paths
-> grabbing subdirectories until the root commit is fully expanded. Then
-> it can walk back increasing its depth until it runs into the cached
-> pack... where it can then do byte range requests.
+git branch -f <old-branch> <where-it-was-before>
 
-Yes. But then it'll cost server's processing power more. Partitioning
-by path reduces chances of reusing deltas a lot.
+
 -- 
-Duy
+Alexey Feldgendler
+Software Developer, Desktop Team, Opera Software ASA
+[ICQ: 115226275] http://my.opera.com/feldgendler/
