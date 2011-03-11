@@ -1,71 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Add Author and Documentation sections to
- git-for-each-ref.txt
-Date: Fri, 11 Mar 2011 01:20:41 -0500
-Message-ID: <20110311062041.GA20048@sigill.intra.peff.net>
-References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com>
- <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
- <4D773570.4010803@drmicha.warpmail.net>
- <7voc5k9hfy.fsf@alter.siamese.dyndns.org>
- <20110310223732.GE15828@sigill.intra.peff.net>
- <7v4o7a3748.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Alexei Sholik <alcosholik@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 07:20:49 2011
+From: Andrey Borzenkov <arvidjaar@gmail.com>
+Subject: [PATCH TopGit] tg.sh: check for removed branch in branch_annihilated
+Date: Fri, 11 Mar 2011 10:28:06 +0300
+Message-ID: <1299828486-13167-1-git-send-email-arvidjaar@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 11 08:28:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PxviS-0004XK-W4
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 07:20:49 +0100
+	id 1Pxwlw-0006SW-1P
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Mar 2011 08:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994Ab1CKGUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2011 01:20:44 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36676
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750905Ab1CKGUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2011 01:20:43 -0500
-Received: (qmail 3104 invoked by uid 107); 11 Mar 2011 06:21:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Mar 2011 01:21:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Mar 2011 01:20:41 -0500
-Content-Disposition: inline
-In-Reply-To: <7v4o7a3748.fsf@alter.siamese.dyndns.org>
+	id S1753340Ab1CKH2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2011 02:28:23 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:47700 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751333Ab1CKH2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2011 02:28:22 -0500
+Received: by bwz15 with SMTP id 15so2473637bwz.19
+        for <git@vger.kernel.org>; Thu, 10 Mar 2011 23:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:message-id:x-mailer;
+        bh=XTllkLe6MLAjoGNBbvTSN6P83dSgzJQiWzfcN32+sSg=;
+        b=ZhrNhNJ6JMk5ZzaRopJ1z1wbwwEzHOGRXFXCv63RjwvIaHh4ZeXrrvw0KLqssR+KhI
+         d7vWkkhX365D9XRCyHCEJZwDiuV+UmcHb4l3jBTo+OKT+rpjXYRknL2FpjRPBLJfMWhy
+         H6MKfHd5lBSeETmFR2r0cSu7jWl46ct5krmhk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=fBvziVMi4an95u0usccApoHsxd/nECeL1xah62CjHUCu+TngLgYqADpoPVkOai6BlB
+         uEEoASW4fukvAg0XeFM3suYzUEE57WSZAUHD2uFRO0euUhwXBNFDyiiYoDmLFjTLAave
+         V9zcK+MF6QHvGf38q28txJLCXQlhtomAbVdZM=
+Received: by 10.204.48.33 with SMTP id p33mr6672094bkf.153.1299828501450;
+        Thu, 10 Mar 2011 23:28:21 -0800 (PST)
+Received: from localhost.localdomain (ppp85-140-30-252.pppoe.mtu-net.ru [85.140.30.252])
+        by mx.google.com with ESMTPS id w3sm2687443bkt.5.2011.03.10.23.28.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 10 Mar 2011 23:28:21 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168886>
 
-On Thu, Mar 10, 2011 at 03:09:43PM -0800, Junio C Hamano wrote:
+Check that branch was not deleted by external means; prevents
+errors from further git commands due to non-existing refs.
 
-> > Yeah, I would just as soon drop Author and Documented-by fields in all
-> > manpages. We could replace them with a single "Credits" in git(1). It
-> > can either mention nobody, very few people (like Linus as the originator
-> > and Junio as the long-time maintainer), or the top N (for N < 20 or so)
-> > people in shortlog. And then mention that you can run shortlog yourself.
-> 
-> Sounds sensible.
+Signed-off-by: Andrey Borzenkov <arvidjaar@gmail.com>
 
-If you want to see what the full patch would look like, you can fetch it
-from:
+---
+ tg.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-  git://github.com/peff/git.git jk/doc-credits
-
-The patch itself is rather large, so I didn't want to post it. I don't
-know if we should extract the list of people who are being dropped and
-check if they have any objection. You can get a partial list with:
-
-   git show jk/doc-credits^ |
-     grep ^- |
-     perl -lne 'print for /<(.*?)>/g' |
-     sort -u
-
-though some people are mentioned only by name, not by email.
-
--Peff
+diff --git a/tg.sh b/tg.sh
+index 9082d88..e8447cb 100644
+--- a/tg.sh
++++ b/tg.sh
+@@ -175,9 +175,9 @@ branch_annihilated()
+ 	_name="$1";
+ 
+ 	# use the merge base in case the base is ahead.
+-	mb="$(git merge-base "refs/top-bases/$_name" "$_name")";
++	mb="$(git merge-base "refs/top-bases/$_name" "$_name" 2> /dev/null)";
+ 
+-	test "$(git rev-parse "$mb^{tree}")" = "$(git rev-parse "$_name^{tree}")";
++	test -z "$mb" || test "$(git rev-parse "$mb^{tree}")" = "$(git rev-parse "$_name^{tree}")";
+ }
+ 
+ # is_sha1 REF
+-- 
+tg: (d279e29..) u/removed-branch (depends on: origin/master)
