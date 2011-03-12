@@ -1,60 +1,166 @@
-From: Alexander Miseler <alexander@miseler.de>
-Subject: Re: Summer of Code project ideas due this Friday
-Date: Sat, 12 Mar 2011 22:41:11 +0100
-Message-ID: <4D7BE877.2000607@miseler.de>
-References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com> <20110303185918.GA18503@sigill.intra.peff.net> <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com> <20110303203323.GA21102@sigill.intra.peff.net> <20110309174956.GA22683@sigill.intra.peff.net> <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com> <20110309215841.GC4400@sigill.intra.peff.net> <4D7A1325.1090003@miseler.de> <20110311125259.GA777@LK-Perkele-VI.localdomain> <AANLkTin30fZURU-PxddSai5Qzfqjtwej=maGssyr2b7W@mail.gmail.com> <4D7A2D47.9010101@miseler.de> <AANLkTinKnfiE9zQwYxfCX8VhRfgJhQopDbqBA+oQLL0w@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH] rebase: be cleverer with rebased upstream branches
+Date: Sun, 13 Mar 2011 00:51:30 +0100
+Message-ID: <AANLkTikrYbY6r5hYnhWCB1GVKbPgounxdvAGeejsUKoC@mail.gmail.com>
+References: <1297691481-3308-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <7vzkpxm45e.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102152040370.14950@debian>
+ <AANLkTinmxbYLB-K+VzY50NtOAPwd-q3WwAosAHqKRq_0@mail.gmail.com>
+ <alpine.DEB.2.00.1102161122350.14950@debian> <AANLkTik-JGZFCE+m7g__mwfQhRReOM=Qe_EO3otw50XC@mail.gmail.com>
+ <alpine.DEB.2.00.1103120930250.15442@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
-	Pranav Ravichandran <prp.1111@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 12 22:41:29 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 00:51:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PyWYy-0002xe-Jl
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Mar 2011 22:41:28 +0100
+	id 1PyYbG-0005UM-KI
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 00:51:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755022Ab1CLVlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Mar 2011 16:41:13 -0500
-Received: from moutng.kundenserver.de ([212.227.126.187]:52554 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753346Ab1CLVlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Mar 2011 16:41:12 -0500
-Received: from [192.168.22.13] (f055073147.adsl.alicedsl.de [78.55.73.147])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0M5tNd-1Q93ID3KuH-00xRSI; Sat, 12 Mar 2011 22:41:09 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <AANLkTinKnfiE9zQwYxfCX8VhRfgJhQopDbqBA+oQLL0w@mail.gmail.com>
-X-Provags-ID: V02:K0:dbN9q9R4bX2teWl6CyaGTgf3fYPafN3C/8hUEeADUoZ
- QW8iIOeKpuatjtX5/6B/of3uwkbzVqcdpIpKosEk64ApIRPJMW
- bT/KjP1u1L6VRwVDC8XnZS3KkL1FbM1npZdaBTOzM/+E5yrt1f
- Je1W73D4YqAa+b3IG6471PJzDX8GTseHoaQ4/VYLU3WpsuKsHs
- 1yK3kk0+vPduwm39k9lVQ==
+	id S1756260Ab1CLXvx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Mar 2011 18:51:53 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:54865 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756250Ab1CLXvv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Mar 2011 18:51:51 -0500
+Received: by qyk7 with SMTP id 7so535737qyk.19
+        for <git@vger.kernel.org>; Sat, 12 Mar 2011 15:51:50 -0800 (PST)
+Received: by 10.224.201.198 with SMTP id fb6mr2926158qab.92.1299973910339;
+ Sat, 12 Mar 2011 15:51:50 -0800 (PST)
+Received: by 10.229.78.209 with HTTP; Sat, 12 Mar 2011 15:51:30 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.00.1103120930250.15442@debian>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168952>
 
-> Your move :)
+Thanks for pushing this further.
 
-Heh, I'm still pretty hampered by having no clue ^_^
+I'll read it all carefully later, but let me just comment one thing.
 
+On Sat, Mar 12, 2011 at 10:15 PM, Martin von Zweigbergk
+<martin.von.zweigbergk@gmail.com> wrote:
+> On Thu, 17 Feb 2011, Santi B?jar wrote:
+>
+>> On Wed, Feb 16, 2011 at 5:45 PM, Martin von Zweigbergk
+>> <martin.von.zweigbergk@gmail.com> wrote:
+>> > On Wed, 16 Feb 2011, Santi B?jar wrote:
+>> >
+>> >> On Wed, Feb 16, 2011 at 3:03 AM, Martin von Zweigbergk
+>> >> <martin.von.zweigbergk@gmail.com> wrote:
+>> >> >
+>> >> > =A0 =A0 =A0 =A0.-u@{0}
+>> >> > =A0 =A0 =A0 /
+>> >> > =A0 =A0 =A0.---u@{1}
+>> >> > =A0 =A0 /
+>> >> > x---y-----u@{2}
+>> >> > =A0 =A0 \
+>> >> > =A0 =A0 =A0.---u@{3}---b
+>> >> > =A0 =A0 =A0 \
+>> >> > =A0 =A0 =A0 =A0.-u@{4}
+>> >> >
+>> >> >
+>> >> > I have an idea inspired by bisection, Thomas's exponential stri=
+de, and
+>> >> > what someone (you?) mentioned the other day about virtual merge
+>> >> > commits. I haven't tried it out, but let me know what you think=
+=2E I'll
+>> >> > try to explain it using an example only:
+>> >> >
+>> >> > Exponential stride phase:
+>> >> > 1. candidates=3D{ u@{0} }
+>> >> > =A0 merge-base b $candidates -> y, _not_ in $candidates
+>> >> > 2. candidates=3D{ u@{1} u@{2} }
+>> >> > =A0 merge-base b $candidates -> y, _not_ in $candidates
+>> >> > 3. candidates=3D{ u@{3} u@{4} u@{5} u@{6} }
+>> >> > =A0 merge-base b $candidates -> u@{3}, in $candidates
+>> >>
+>> >> Doesn't it indicate that u@{3} is the commit we are looking for? =
+I
+>> >> haven't found a counterexample...
+>> >
+>> > Yes, of course. Stupid me ;-). Forget about the other half. (I thi=
+nk
+>> > that's what I did manually to match the sha1 back to the ref name,=
+ but
+>> > that is of course complete non-sense to do in the script.)
+>> >
+>> >> If this is true the following patch can implement it for git-pull=
+=2Esh and
+>> >> git-rebase.sh (sorry if it is space damaged):
+>> >
+>> > Thanks! Will have a closer look at it later today. If I understand
+>> > correctly, you simply call merge-base with the _entire_ reflog. I
+>>
+>> Yes, that is the idea (plus the old remote hash in case of git-pull)
+>>
+>> > would have thought that would be slow, but it's great if that is f=
+ast
+>> > enough.
+>>
+>> Yes, I think it is fast enough in the normal case. Even feeding the
+>> entire git.git's master, ~25000 revisions, it takes around 2-4 secon=
+ds
+>> only:
+>>
+>> $ git rev-list origin/master | wc -l
+>> 24380
+>> $ time git merge-base $(git rev-list origin/master)
+>> 9971d6d52c5afeb8ba60ae6ddcffb34af23eeadd
+>>
+>> real =A00m4.014s
+>> user =A00m1.520s
+>> sys =A0 0m2.284s
+>>
+>> (2.5GHz CPU)
+>
+>
+> I finally got around to doing some tests on this myself. I used
+> git.git as of mid Feb, which at that time had 10010 commits in master=
+,
+> following only the first parent. I took the first 563 commits from th=
+e
+> todo branch and transplanted onto master~10000 (there were some
+> conflicts after about 563 commits and I figured that would be enough
+> anyway). I then rebased the resulting branch (let's call it 'u')
+> against master~9990, then against master~9980 and so on to get a
+> reflog with 1001 entries for u. I then created another branch 'b'
+> based on u@{10}, u@{100} and @{1000}, for different runs of the
+> tests. I created one additional commit on b in each case. I then
+> rebased b with master, using the following algorithms to find the bas=
+e
+> to rebase from:
+>
+> =A0manual: simply calling 'git rebase --onto u b~1'
+>
+> =A0linear: same algorithm as in 'git pull', which linearly walks the
+> =A0reflog until a commit that b contains is found
+>
+> =A0merge-base: the base will be calculated as 'git merge-base b $(git
+> =A0ref-list -g u)'
+>
+> =A0exponential: like merge-base, but start with only u@{0}, then
+> =A0{u@{1},u@{2}} and so on until a commit that b contains is found
+>
 
-> My way is "give me a chain of deltas starting from this SHA-1". A big
-> blob can be considered as a history of smaller pieces.
+=46irst, care to share the scripts/patches for the timings? Thanks.
 
-I originally missed the fact that it is completely irrelevant where in the chain the reference point is and that you can go easily from any arbitrary point in the chain to any other arbitrary point in the same chain. This makes it a lot more flexible than I thought. But to support more than just resumable cloning You would still need a more powerful way to negotiate "I have this; I want that" between client and server.
+Could you test also variants of the exponential strategy?
 
-My point was mostly that lazy clone, sparse clone and resumable clone are closely related and should ideally be solved in one go. You currently seem to aim at only one of them, which is a shame.
-For lazy clone the client would start with all blobs referenced by HEAD (and possibly other branches) and then it would walk backwards through the delta chains if/as far/whenever it wants. Though it would also need to detect when it needs to start reading new delta chains as it walks backwards through history. Sparse clone would use the same mechanism and just restrict it to certain paths.
+exponential(n,m): like merge-base, but start with n candidates {u@{0},
+=2E.., u@{n-1}}, then n*m candidates and so on until a commit that b
+contains is found.
+
+Your exponential would be exponential(1,2).
+
+Timings for something like exponential(10,2) or exponential(10,10),
+maybe others.
+
+Thanks,
+Santi
