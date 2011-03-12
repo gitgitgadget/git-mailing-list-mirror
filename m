@@ -1,119 +1,160 @@
-From: Anatol Pomozov <anatol.pomozov@gmail.com>
-Subject: Re: Cannot fetch whole history from Perforce
-Date: Fri, 11 Mar 2011 22:45:40 -0800
-Message-ID: <AANLkTiktQqzxFLn7R+EKm-WxWp95xZoGqKu7ijtRHASe@mail.gmail.com>
-References: <AANLkTik6fxHUJbp6dWdAgV-wr=P=FxK1K-vGAGy8ruBd@mail.gmail.com>
-	<AANLkTin6BBD+b2OYRk32GyAaEqFa-V7T1B7jEVujRkuL@mail.gmail.com>
-	<AANLkTimaB3BU3YQgC7qgqUH=qYGrthPxnz63b-MLAbCR@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git stash: status from current dir not top dir?
+Date: Sat, 12 Mar 2011 09:57:46 +0100
+Message-ID: <4D7B358A.5010101@gmail.com>
+References: <4D7A8AC9.1030506@gmail.com> <20110311223232.GA21410@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Berg <merlin66b@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pete Wyckoff <pw@padd.com>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 12 07:45:51 2011
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 12 09:58:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PyIaE-0005kO-SD
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Mar 2011 07:45:51 +0100
+	id 1PyKeQ-0005su-0U
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Mar 2011 09:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018Ab1CLGpo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Mar 2011 01:45:44 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:43385 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751860Ab1CLGpn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Mar 2011 01:45:43 -0500
-Received: by bwz15 with SMTP id 15so3229104bwz.19
-        for <git@vger.kernel.org>; Fri, 11 Mar 2011 22:45:42 -0800 (PST)
+	id S1752304Ab1CLI57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2011 03:57:59 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:41769 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752155Ab1CLI56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Mar 2011 03:57:58 -0500
+Received: by fxm17 with SMTP id 17so1660338fxm.19
+        for <git@vger.kernel.org>; Sat, 12 Mar 2011 00:57:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=fVFnNzJ2tcKGUXeL8aTE2Tg8/cj71vYhFl1ZVWHHFFQ=;
-        b=aGMLHBdI5XHCqIagBPvseBw2VGE6HjHsWHICPHUCQKdBj7qiJiX5yLn4GagYPn+zNK
-         NW/HKYqBmZZb6MeaP5bavmJ/iRZUTundKG6NwfKOHLTOQu+gdIOe7lPmSv7pf9bBo827
-         iEI1lPOWyuDH7TiDOMqWdnk1eayOUwQ6O5XDk=
+        bh=K1M29PWdkehzyqcxZzyp1dDuOymnIiibJaYBV3Sk9LI=;
+        b=ImjE3PbXl/EWTOay+LKg3wx5sswfmmFoeLEQxPJQgfm4BWWDTi1lXtgQvz/Lv16hT0
+         jL0NOR+y72Y3x5rH+8yAJV374yRE/PKNPAHdtXpg0UDB3sy6+WzaQv01ISIP7J8TBc0E
+         TIESWrjyIusFmnfB0SXBwswJM/BSbEXQhjF9Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UfgLdwtNhAc73YyxEZDxfd7PGcL0nLXbWj2W3sTM8FwCLykyM20yq914o3QL+ks5vG
-         +kdly7cpn+h2kT90VnrL0ed6B+q7VXHj0C1V4aZvBWJPOCxiSzY45p7Kx3q3BsNL2o7I
-         mljxP6noOlMMgkS9jMhgkFl0WB9CAh3vOqviE=
-Received: by 10.205.24.9 with SMTP id rc9mr8724751bkb.92.1299912341298; Fri,
- 11 Mar 2011 22:45:41 -0800 (PST)
-Received: by 10.204.23.71 with HTTP; Fri, 11 Mar 2011 22:45:40 -0800 (PST)
-In-Reply-To: <AANLkTimaB3BU3YQgC7qgqUH=qYGrthPxnz63b-MLAbCR@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=vsusl1yrh+mH0A+MpMPQbG3z+RQKBhpOD3klfim2LQkRWvuhf3RtyT4OLeZbGQJ9/X
+         7ORvY/jaDciXiaFf2ewPlL1HwvKxvn4Bwq/EEmfbcd+6Y2bC+IMkppYosPJzPEVj8ya7
+         zz+uVZeGkpHCkgaSrnr5E2W96HmRrCgWhWNtM=
+Received: by 10.223.143.86 with SMTP id t22mr1171772fau.78.1299920277519;
+        Sat, 12 Mar 2011 00:57:57 -0800 (PST)
+Received: from [192.168.1.101] (buh202.neoplus.adsl.tpnet.pl [83.29.179.202])
+        by mx.google.com with ESMTPS id y11sm2234237fam.39.2011.03.12.00.57.53
+        (version=SSLv3 cipher=OTHER);
+        Sat, 12 Mar 2011 00:57:56 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+In-Reply-To: <20110311223232.GA21410@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168937>
 
-Sorry for the slow response.
 
-On Tue, Mar 8, 2011 at 2:33 PM, Tor Arvid Lund <torarvid@gmail.com> wro=
-te:
-> On Tue, Mar 8, 2011 at 9:36 PM, Thomas Berg <merlin66b@gmail.com> wro=
-te:
->> Hi,
->>
->> On Tue, Mar 8, 2011 at 7:09 PM, Anatol Pomozov <anatol.pomozov@gmail=
-=2Ecom> wrote:
->>> Hi, I am using HEAD version of the git and I have an issue with git=
--p4
->>> tool (p4 to git importer).
->>>
->>> git-p4 works fine when I import HEAD version of my project
->>>
->>> $ git p4 clone //depot/foo/bar --verbose
->>> But it fails with a cryptic error when I try to import @all revisio=
-ns:
->> [...]
->>>
->>> $ git p4 clone //depot/foo/bar@all --verbose
->>> Importing from //depot/foo/bar@all into bar
->> [...]
->>>
->>> Can it be related to Pete's changes?
->>> http://permalink.gmane.org/gmane.comp.version-control.git/167281
->
-> Whoops! The P4Clone class is a subclass of P4Sync, which means that
-> this check (The one you mention from e32e00dc) will be done on every
-> clone with @all. We can't have that :)
->
-> It works for me if I patch it with this one-liner (but it's not
-> exactly a beautiful looking line of code anymore):
->
-> =C2=A0 =C2=A0-- Tor Arvid
-> ---
->
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index 2df3bb2..7cb479c 100755
-> --- a/contrib/fast-import/git-p4
-> +++ b/contrib/fast-import/git-p4
-> @@ -1763,7 +1763,7 @@ class P4Sync(Command):
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 changes.sort(=
-)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else:
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if not self.=
-p4BranchesInGit:
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if not isins=
-tance(self, P4Clone) and not self.p4BranchesInGit:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- die("No remote p4 branches. =C2=A0Perhaps you never
-> did \"git p4 clone\" in here.");
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if self.verbo=
-se:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- print "Getting p4 changes for %s...%s" % (',
-> '.join(self.depotPaths),
+Thanks for review,
+attaching patch with updated commit message.
 
-Yep it fixes the problem for me. Do you have a plan to propose it for u=
-pstream?
+W dniu 11.03.2011 23:32, Jeff King pisze:
+> On Fri, Mar 11, 2011 at 09:49:13PM +0100, Piotr Krukowiecki wrote:
+> 
+>> But "git stash apply" shows status from root of git repository.
+>> This is misleading because you can't copy and paste the paths.
+> 
+> Yeah, I am inclined to call it a bug. git-status will show the status of
+> the whole tree from wherever you are, and people who want full paths
+> will have status.relativePaths turned off, anyway. So I think your
+> proposed semantics are more natural.
+
+I think it's better this way too, one thing that made me doubt if this is 
+intended or not is fact that git-commit also shows paths relative to root
+dir...
+ 
+>> This patch tries to fix git-stash.sh to show status relative to 
+>> current directory. I can resend the patch with better commit message.
+> 
+> Yes, please. There is lots of nice discussion in your email but none of
+> it in the commit message. :)
+
+Didn't want to duplicate ;)
+
+> 
+>> diff --git a/git-stash.sh b/git-stash.sh
+>> index 7561b37..586c12f 100755
+>> --- a/git-stash.sh
+>> +++ b/git-stash.sh
+>> @@ -12,6 +12,7 @@ USAGE="list [<options>]
+>>  
+>>  SUBDIRECTORY_OK=Yes
+>>  OPTIONS_SPEC=
+>> +START_DIR=`pwd`
+>>  . git-sh-setup
+>>  require_work_tree
+>>  cd_to_toplevel
+>> @@ -394,7 +395,7 @@ apply_stash () {
+>>  		then
+>>  			squelch='>/dev/null 2>&1'
+>>  		fi
+>> -		eval "git status $squelch" || :
+>> +		(cd "$START_DIR" && eval "git status $squelch") || :
+>>  	else
+>>  		# Merge conflict; keep the exit status from merge-recursive
+>>  		status=$?
+> 
+> This fix looks reasonable to me. The other option would be to avoid
+> cd_to_toplevel at the beginning (which I am not sure why we really need
+> in the first place, but presumably some code paths rely on it), but it's
+> probably not worth the risk of introducing new confusing bugs.
+> 
+> -Peff
+---8<---
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Date: Fri, 11 Mar 2011 20:50:49 +0100
+Subject: [PATCH] git stash: show status relative to current directory
+
+git status shows modified paths relative to current directory, so it's
+possible to copy&paste them directly, even if you're in a subdirectory.
+
+But "git stash apply" always shows status from root of git repository.
+This is misleading because you can't use the paths without modifications.
+
+This is caused by changing directory to root of repository at the
+beginning of git stash.
+
+This patch makes git stash show status relative to current directory.
+Instead of removing the "cd to toplevel", which would affect whole
+script and might have other side-effects, the fix is to change directory
+temporarily back to original dir just before displaying status.
+
+Signed-off-by: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+---
+ git-stash.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 7561b37..b59c201 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -12,6 +12,7 @@ USAGE="list [<options>]
+ 
+ SUBDIRECTORY_OK=Yes
+ OPTIONS_SPEC=
++START_DIR=`pwd`
+ . git-sh-setup
+ require_work_tree
+ cd_to_toplevel
+@@ -394,7 +395,7 @@ apply_stash () {
+ 		then
+ 			squelch='>/dev/null 2>&1'
+ 		fi
+-		eval "git status $squelch" || :
++		(cd "$START_DIR" && eval "git status $squelch") || :
+ 	else
+ 		# Merge conflict; keep the exit status from merge-recursive
+ 		status=$?
+-- 
+1.7.4.1.228.g9e388
