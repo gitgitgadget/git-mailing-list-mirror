@@ -1,195 +1,145 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] rebase: be cleverer with rebased upstream branches
-Date: Sat, 12 Mar 2011 20:32:39 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1103122005490.15442@debian>
-References: <1297691481-3308-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vzkpxm45e.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102152040370.14950@debian> <AANLkTinmxbYLB-K+VzY50NtOAPwd-q3WwAosAHqKRq_0@mail.gmail.com> <alpine.DEB.2.00.1102161122350.14950@debian>
- <AANLkTik-JGZFCE+m7g__mwfQhRReOM=Qe_EO3otw50XC@mail.gmail.com> <alpine.DEB.2.00.1103120930250.15442@debian> <AANLkTikrYbY6r5hYnhWCB1GVKbPgounxdvAGeejsUKoC@mail.gmail.com>
+From: Eric Montellese <emontellese@gmail.com>
+Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
+Date: Sat, 12 Mar 2011 20:53:53 -0500
+Message-ID: <AANLkTimpbhaGEfxW1wwRc14tpV6qnPDiZYnXp_tvA3Ft@mail.gmail.com>
+References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com>
+ <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
+ <20110121222440.GA1837@sigill.intra.peff.net> <20110123141417.GA6133@mew.padd.com>
+ <4D793C7D.1000502@miseler.de> <20110310222443.GC15828@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Sun Mar 13 02:32:57 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexander Miseler <alexander@miseler.de>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
+	schacon@gmail.com, joey@kitenet.net
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 13 02:54:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PyaAy-0000t1-M7
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 02:32:57 +0100
+	id 1PyaVm-0006ca-Bj
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 02:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756311Ab1CMBco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Mar 2011 20:32:44 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:36064 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754700Ab1CMBcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Mar 2011 20:32:43 -0500
-Received: by vxi39 with SMTP id 39so3551259vxi.19
-        for <git@vger.kernel.org>; Sat, 12 Mar 2011 17:32:43 -0800 (PST)
+	id S1756360Ab1CMByP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Mar 2011 20:54:15 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:34898 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755930Ab1CMByO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Mar 2011 20:54:14 -0500
+Received: by bwz15 with SMTP id 15so3623645bwz.19
+        for <git@vger.kernel.org>; Sat, 12 Mar 2011 17:54:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=IRT6LXhcY20ibKLwxh5wM8DBtBDrpgBn4arJpnlbJlo=;
-        b=Yds90MXJeY5HhdCoHwbq3Xp4yLAKm0afytQ4O1Q+hahl3/hTmFULLBnP3BDPR5Kfbw
-         IHnbyAaYNYYzn+5EqVgV0oy9bKOjPEf98oAzI44TesW4CnfnEPF9pbSDjgYy1uYuoNA7
-         oNPvVSha8cVNrhyB7oQEJUGc+2bmyT3ykzGR0=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=F/8F9QGfLwMtVmpHDLZYA9OoK5BNDoBmIeQH4GoocQs=;
+        b=oB+qXJLk5puqhjfS1JNCj9OWLOY9jE7H5H7yDBBpcGRuqxCDqrGxJlEce5Z4YiuVlX
+         dj2mc1c0tvtlI0NF9zVDVQ+csnf3oXO+RmU3gPqu3MGezmNWROmFZ+WOl65wHzfWTNYz
+         CsPDclbvzIew4pJqWMnKCbOHT+Crg4OTuvANY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=ra/LXuuaA2LdjUXQ4M+rD05DAqdrE0OLTROjCWT5TspuOVpB1mxyNPyHgYPa6Kg7qJ
-         U4F0EyGSoqnPJ+kBxP/stUpzm/I/Nwws6fyPrR9ZckFQanyv5I+pRY6P72nt9/BDv/jR
-         dGpsqCu2DrYSd/ufDcYjXtUcOISmcSF30zG4w=
-Received: by 10.52.91.166 with SMTP id cf6mr8078576vdb.192.1299979963135;
-        Sat, 12 Mar 2011 17:32:43 -0800 (PST)
-Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s6sm1945195vch.23.2011.03.12.17.32.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 12 Mar 2011 17:32:42 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <AANLkTikrYbY6r5hYnhWCB1GVKbPgounxdvAGeejsUKoC@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=vGkEhd8G6WSA5UtOryFt8hmN8prx0vGRk8OkJWL2G41b3/ElGVbJhTbJk0ttApcurR
+         1xLmZEf+Dd1be4IhBwiBo+9CUQcD2LYEKs4VqsbmE+OOeEc/9BbhOssJJknH9r4BwRcx
+         YQQpjTS809L6R0IyZ3xDfeiwYhXO2f4/4V0QE=
+Received: by 10.204.20.74 with SMTP id e10mr2462875bkb.148.1299981253076; Sat,
+ 12 Mar 2011 17:54:13 -0800 (PST)
+Received: by 10.204.14.210 with HTTP; Sat, 12 Mar 2011 17:53:53 -0800 (PST)
+In-Reply-To: <20110310222443.GC15828@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168955>
 
-On Sun, 13 Mar 2011, Santi B?jar wrote:
+This is a good point.
 
-> First, care to share the scripts/patches for the timings? Thanks.
+The best solution, it seems, has two parts:
 
-Sure, see end of mail for the changes to git-rebase.sh. It applies on
-top of the patch that started this thread. There are some minor
-differences from what I used when I ran the tests, but nothing that
-should impact the timings.
+1. Clean up the way in which git considers, diffs, and stores binaries
+to cut down on the overhead of dealing with these files.
+  1.1 Perhaps a "binaries" directory, or structure of directories, with=
+in .git
+  1.2 Perhaps configurable options for when and how to try a binary
+diff? =A0(allow user to decide if storage or speed is more important)
+2. Once (1) is accomplished, add an option to avoid copying binaries
+from all but the tip when doing a "git clone."
+  2.1 The default behavior would be to copy everything, as users
+currently expect.
+  2.2 Core code would have hooks to allow a script to use a central
+location for the binary storage. (ssh, http, gmail-fs, whatever)
 
-To run the tests, I just did modified versions of
+(of course, the implementation of (1) should be friendly to the additio=
+n of (2))
 
-git reset --hard u@{100}
-touch foo && git add foo && git ci -m foo
-time git rebase -n --guess-base=merge u
+Obviously, the major drawback to (2) without (2.2) is that if there is
+truly distributed work going on, some clone-of-a-clone may not know
+where to get the binaries.
 
-I don't have a script that creates the initial setup, but that should
-be easy enough to do. I should warn you that it took 16 hours to run
-it on my 6 year old computer :-).
+But, print a warning when turning on the non-default behavior (2.1),
+then it's a user problem :-)
 
-
-> Could you test also variants of the exponential strategy?
-
-I guess I could :-). Will see if I get time for that later today.
-
-> exponential(n,m): like merge-base, but start with n candidates {u@{0},
-> ..., u@{n-1}}, then n*m candidates and so on until a commit that b
-> contains is found.
-> 
-> Your exponential would be exponential(1,2).
-> 
-> Timings for something like exponential(10,2) or exponential(10,10),
-> maybe others.
-> 
-> Thanks,
-> Santi
-> 
+Eric
 
 
--- 8< --
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index b50c91e..8a4efab 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -56,6 +56,7 @@ ignore-date!       passed to 'git am'
- whitespace=!       passed to 'git apply'
- ignore-whitespace! passed to 'git apply'
- C=!                passed to 'git apply'
-+guess-base=!       to guess the base
-  Actions:
- continue!          continue rebasing process
- abort!             abort rebasing process and restore original branch
-@@ -87,6 +88,7 @@ git_am_opt=
- rebase_root=
- force_rebase=
- allow_rerere_autoupdate=
-+guess_base=
- # Non-empty if a rebase was in progress when 'git rebase' was invoked
- in_progress=
- # One of {am, merge, interactive}
-@@ -228,6 +230,10 @@ do
- 	--no-autosquash)
- 		autosquash=
- 		;;
-+	--guess-base)
-+		shift
-+		guess_base=$1
-+		;;
- 	-M|-m)
- 		do_merge=t
- 		;;
-@@ -459,19 +465,51 @@ esac
- 
- require_clean_work_tree "rebase" "Please commit or stash them."
- 
--upstream_ref=$(git rev-parse -q --verify --symbolic-full-name \
--	"$upstream_name") && test -n "$upstream_ref" &&
--for reflog in $(git rev-list -g $upstream_name 2>/dev/null)
--do
--	if test $reflog = $(git merge-base $reflog $orig_head)
--	then
--		if test $reflog != $(git merge-base $onto $reflog)
--		then
--			upstream=$reflog
--		fi
--		break
--	fi
--done
-+if test -n "$guess_base" && test -n "$(git rev-parse -q --verify \
-+	--symbolic-full-name "$upstream_name")"
-+then
-+	case $guess_base in
-+	linear)
-+		for reflog in $(git rev-list -g $upstream_name 2>/dev/null)
-+		do
-+			if test $reflog = $(git merge-base $reflog $orig_head)
-+			then
-+				if test $reflog != $(git merge-base $onto $reflog)
-+				then
-+					upstream=$reflog
-+				fi
-+				break
-+			fi
-+		done
-+		;;
-+	merge)
-+		upstream=$(git merge-base $orig_head $(git rev-list -g $upstream_name 2>/dev/null))
-+		;;
-+	exponential)
-+		reflogs=$(git rev-list -g $upstream_name 2>/dev/null)
-+		limit=$(echo "$reflogs" | wc -l)
-+		lo=0
-+		hi=1
-+		while true
-+		do
-+			echo $lo - $hi
-+			candidates=$(echo "$reflogs" | head -$hi | tail -$(($hi - $lo)))
-+			reflog=$(git merge-base $orig_head $candidates)
-+			if test -n "$(echo $candidates | grep $reflog)"
-+			then
-+				upstream=$reflog
-+				break
-+			fi
-+			if test $hi -ge $limit
-+			then
-+				break
-+			fi
-+			lo=$hi
-+			hi=$((2 * $lo))
-+		done
-+		;;
-+	esac
-+fi
- 
- # Now we are rebasing commits $upstream..$orig_head (or with --root,
- # everything leading up to $orig_head) on top of $onto
+
+On Thu, Mar 10, 2011 at 5:24 PM, Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Mar 10, 2011 at 10:02:53PM +0100, Alexander Miseler wrote:
+>
+> > I've been debating whether to resurrect this thread, but since it h=
+as
+> > been referenced by the SoC2011Ideas wiki article I will just go ahe=
+ad.
+> > I've spent a few hours trying to make this work to make git with bi=
+g
+> > files usable under Windows.
+> >
+> > > Just a quick aside. =A0Since (a2b665d, 2011-01-05) you can provid=
+e
+> > > the filename as an argument to the filter script:
+> > >
+> > > =A0 =A0 git config --global filter.huge.clean huge-clean %f
+> > >
+> > > then use it in place:
+> > >
+> > > =A0 =A0 $ cat >huge-clean
+> > > =A0 =A0 #!/bin/sh
+> > > =A0 =A0 f=3D"$1"
+> > > =A0 =A0 echo orig file is "$f" >&2
+> > > =A0 =A0 sha1=3D`sha1sum "$f" | cut -d' ' -f1`
+> > > =A0 =A0 cp "$f" /tmp/big_storage/$sha1
+> > > =A0 =A0 rm -f "$f"
+> > > =A0 =A0 echo $sha1
+> > >
+> > > =A0 =A0 =A0 =A0 =A0 =A0 -- Pete
+>
+> After thinking about this strategy more (the "convert big binary file=
+s
+> into a hash via clean/smudge filter" strategy), it feels like a hack.
+> That is, I don't see any reason that git can't give you the equivalen=
+t
+> behavior without having to resort to bolted-on scripts.
+>
+> For example, with this strategy you are giving up meaningful diffs in
+> favor of just showing a diff of the hashes. But git _already_ can do
+> this for binary diffs. =A0The problem is that git unnecessarily uses =
+a
+> bunch of memory to come up with that answer because of assumptions in
+> the diff code. So we should be fixing those assumptions. Any place th=
+at
+> this smudge/clean filter solution could avoid looking at the blobs, w=
+e
+> should be able to do the same inside git.
+>
+> Of course that leaves the storage question; Scott's git-media script =
+has
+> pluggable storage that is backed by http, s3, or whatever. But again,
+> that is a feature that might be worth putting into git (even if it is
+> just a pluggable script at the object-db level).
+>
+> -Peff
