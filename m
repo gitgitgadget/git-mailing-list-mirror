@@ -1,97 +1,80 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Summer of Code project ideas due this Friday
-Date: Sun, 13 Mar 2011 22:38:19 +0530
-Message-ID: <20110313170815.GB19763@kytes>
-References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
- <20110303185918.GA18503@sigill.intra.peff.net>
- <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com>
- <20110303203323.GA21102@sigill.intra.peff.net>
- <20110309174956.GA22683@sigill.intra.peff.net>
- <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com>
- <20110309215841.GC4400@sigill.intra.peff.net>
- <20110310001017.GA24169@elie>
+Subject: Re: Using libgit2 code in git.git as a Google Summer of Code
+ project?
+Date: Sun, 13 Mar 2011 22:41:24 +0530
+Message-ID: <20110313171121.GC19763@kytes>
+References: <AANLkTinqem5e0+vxzR64s1Y9o7B8RgEFXcm0HV_jeZ4Y@mail.gmail.com>
+ <AANLkTikkFDLKn5KMaSTwUABBVX_vYDj8pW1kqmsm1_vy@mail.gmail.com>
+ <20110310101332.GC26851@elie>
+ <AANLkTikQ3x9A6v3y698_om_4_qB87Zpi_kG3u3=d+Dur@mail.gmail.com>
+ <AANLkTi=q6mxGQcdb-Gx9t3TZWDRbNpiZV-iyjgd=NrXj@mail.gmail.com>
+ <AANLkTi=6huFKCqrdfvjXXfYrd0GaeZKmiEg-9UjipBKK@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 13 18:09:32 2011
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, libgit2@librelist.com,
+	git@vger.kernel.org
+To: Vicent Marti <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 18:12:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PyonM-0002PK-4d
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 18:09:32 +0100
+	id 1PyoqK-0003ZR-Dq
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 18:12:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755601Ab1CMRJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Mar 2011 13:09:27 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:57163 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755501Ab1CMRJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Mar 2011 13:09:26 -0400
-Received: by gxk21 with SMTP id 21so733547gxk.19
-        for <git@vger.kernel.org>; Sun, 13 Mar 2011 10:09:26 -0700 (PDT)
+	id S1755311Ab1CMRMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Mar 2011 13:12:31 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:53562 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755559Ab1CMRMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Mar 2011 13:12:31 -0400
+Received: by yia27 with SMTP id 27so1757904yia.19
+        for <git@vger.kernel.org>; Sun, 13 Mar 2011 10:12:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=Q8qFMuuJqZUOxG3vnmlap1/QrgKY9FYurIjwhtAZGKY=;
-        b=bKyzgVTUwoaCRRsEvAmTW/hb5gZLxs9ZMiT8gZo9gnZ4jHRL2MsQSyp9IGrdud3Kah
-         akR5+5801EFpr6k1U9JFR/TWHpiMrBUZ400+H7oP73tDVM6FGGaoS6k/oYj2H5odaMu0
-         6KcNUk+X5iDAXqzL7NM2wzS5cjQCZzWtPauv4=
+        bh=Rw4bMi0z3OP8J/gmd+EtwUFaSY/YC16O+e294Vwr3eI=;
+        b=IxnfKtdw6aRoow66I62L76XEqyujOBTLgjCwEnAtZ1vjt2Rx+loXkixqlvAC/dmPJa
+         hAzgrK9X5wVwoJh01w9xsXu10gZtv0XfvlmCjWSHUS7pHoJf2yRCXaNpZl4d7j1TlF6G
+         q0E44rzNkOJJBCsbVLEcUjt9tZMzx4JLniTPA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=LklOR7Cy36xpH9D1lqLhZ/nG8M62hTmIPaodnW7O8Q9lFVgqRGDrjtPpAvH+te0/Nx
-         eIyo8PekPhAzLLhjXSU29UQO0mu0gRDzkfrIAiMGmcww+lvBV4UsuGR7bPpdLY2JHyKL
-         FOzSIHEu1EUv3AsWMvoJA6vA+bJxifsDxBc04=
-Received: by 10.236.26.41 with SMTP id b29mr427338yha.139.1300036166019;
-        Sun, 13 Mar 2011 10:09:26 -0700 (PDT)
+        b=PePE5HIisNL1RQhORgamd/Fkoo1A4Os1WLCzIVDMZgov8yHQlVPbZdGI5XDrx+uvj1
+         5Y7nk2Ebw4+f0er2TRMtvryAvw6QdrDvUDX7D72SgsKVR1rUR2WfGN0H4e+V/WtLeWQc
+         /5tnNSbmgouQcMGEsVI1QuXXvxNdRuH8/kUaY=
+Received: by 10.150.72.20 with SMTP id u20mr1681269yba.288.1300036350235;
+        Sun, 13 Mar 2011 10:12:30 -0700 (PDT)
 Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id 68sm4553516yhl.19.2011.03.13.10.09.19
+        by mx.google.com with ESMTPS id q29sm4688873ybk.22.2011.03.13.10.12.24
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 13 Mar 2011 10:09:24 -0700 (PDT)
+        Sun, 13 Mar 2011 10:12:29 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110310001017.GA24169@elie>
+In-Reply-To: <AANLkTi=6huFKCqrdfvjXXfYrd0GaeZKmiEg-9UjipBKK@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168972>
 
-Hi Jonathan,
+Hi Vincent,
 
-Jonathan Nieder writes:
-> 3. Remote helpers: bidi git remote-svn (or one-way remote-hg, or
->    remote-cvs, or ...).
+Vicent Marti writes:
+> You can see the key features we are lacking in the SoC2011 ideas wiki:
+> 
+> https://git.wiki.kernel.org/index.php/SoC2011Ideas
 
-I wrote a small introduction and created an entry for git-remote-svn
-in the wiki [1]. Two minor concerns:
-1. The student will have to work very closely with us, and pick up a
-   lot of scattered WIP patches. I hope he doesn't get confused
-   between what's merged and what's in-progress.
-2. The project isn't as de-coupled as we'd ideally like. The student
-   has to learn about the new fast-import features, and the
-   information contained in an SVN replay dumpstream before diving in.
+I thought we should de-couple both ideas and put up the idea of
+getting libgit2 merged on the wiki too: in the process, I've reworded
+things a bit. Please revert these changes if you think they're
+undesirable.
 
-Other than these, I think most of the pending work is in the mapper.
-
-> 4. filter-branch killer: using fast-import's new features to implement
->    common filter-branch operations (--subdirectory-filter,
->    --prune-empty, obliterating certain files) faster.
-
-This is an interesting project that I'd also thought about: it might
-get tangled up along with the Sequencer project though. Should we put
-up this project on the wiki nevertheless?
-
-p.s- Sorry about the late reply; I wasn't in station.
-
-[1] SoC2011Ideas#Welcome and SoC2011Ideas#Remote_helper_for_Subversion
+Thanks.
 
 -- Ram
