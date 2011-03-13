@@ -1,65 +1,82 @@
-From: Alexander Miseler <alexander@miseler.de>
-Subject: Re: [RFD] make rebase abort to original branch, not rebased branch
-Date: Sun, 13 Mar 2011 16:27:43 +0100
-Message-ID: <4D7CE26F.9070608@miseler.de>
-References: <alpine.DEB.2.00.1103122253560.15442@debian> <7vmxkzijpt.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1103131013370.15442@debian>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: [PATCH] Clarify: rebase abort leaves <branch> checked-out
+Date: Sun, 13 Mar 2011 12:54:18 -0400
+Message-ID: <1300035258.5129.12.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 13 16:27:53 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	"Johannes E. Schindelin" <johannes.schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 13 18:03:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PynCy-00073A-7R
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 16:27:52 +0100
+	id 1Pyoh8-0008SJ-7s
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 18:03:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753419Ab1CMP1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Mar 2011 11:27:45 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:62151 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752723Ab1CMP1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Mar 2011 11:27:45 -0400
-Received: from [192.168.22.13] (f055019155.adsl.alicedsl.de [78.55.19.155])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0Le960-1QHLlY0cH6-00ptGS; Sun, 13 Mar 2011 16:27:40 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <alpine.DEB.2.00.1103131013370.15442@debian>
-X-Provags-ID: V02:K0:uJxZo5mCHEVbtgwGDzO4zmd8jgtzH88EDQWqLFt4mXt
- xsvPQczQl9dQiBdJ1inukFG+LJsiXz+Am1fvMRFvOb1BDV4iit
- stgVjAdXcAAUjFs3ukEm8uXMVdj45rfTh7+vig3a44zvzAa/id
- 2uLLUmH5r+/C/cHax+yvqCTvqf7Hpb554pYr8/scob3zA3qx1g
- BGYMij6gBLSKpQpWhjQMA==
+	id S1755311Ab1CMRDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Mar 2011 13:03:00 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:44068 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752189Ab1CMRDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Mar 2011 13:03:00 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2DGsMLm022530
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 13 Mar 2011 12:54:27 -0400
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=8
+	Fuz1=8 Fuz2=8
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p2DGsMLm022530
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1300640177.76814@oYbMcOJM2EJ0up0ZukCwdw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168970>
 
->>> In most cases, this is just a small annoyance, since it's usually
->>> quick and easy to manually switch back to the original
->>> branch. However, I have run into at least two cases where it has been
->>> a bit more annoying:
->>>
->>>  1. When on a detached HEAD and running "git rebase HEAD topic", if
->>>     you abort the rebase, you will have to look up the old commit in
->>>     the reflog.
->>
->> Doesn't this merely show a bad discipline? What were you envisioning to
->> do to your detached HEAD state if the rebase were to succeed? IOW, if the
->> state was so precious, why did you decide to switch to topic and rebase it
->> onto that state, without marking?
-> 
-> This usually happens when I see something that looks a bit suspicious
-> in one of my own commits on my topic branch. I then check out that
-> commit to have a look and perhaps run some test. If I find something
-> broken, I would fix it and either amend the commit or create a new
-> commit on top. I would then run "git rebase --onto HEAD HEAD~1 topic"
-> or "git rebase HEAD topic", respectively. If the merge conflicts turn
-> out to be bigger than I expected, I may decide to abort and to instead
-> create a new branch for the commit(s) until I find time/energy.
+This change makes it clearer that while the change
+to the history effected by executing
+'git rebase master' and 'git rebase master topic'
+(in the example given) will be the same the
+implicit checkout of the second form will not be
+undone even if the rebase operation itself is
+aborted.
 
-This can be easily fixed for your own repository by installing a pre-rebase hook that force-sets a temporary branch (named e.g. "pre-rebase") to the current commit before starting the rebase. I can highly recommend having such a hook, it's damn useful.
+Signed-off-by: Drew Northup <drew.northup@maine.edu>
+---
+ Documentation/git-rebase.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 96680c8..4e2411a 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -66,8 +66,9 @@ would be:
+     D---E---F---G master
+ ------------
+ 
+-The latter form is just a short-hand of `git checkout topic`
+-followed by `git rebase master`.
++*NOTE:* The latter form is just a short-hand of `git checkout topic`
++followed by `git rebase master`. If the rebase is aborted `topic` will 
++remain the checked-out branch.
+ 
+ If the upstream branch already contains a change you have made (e.g.,
+ because you mailed a patch which was applied upstream), then that commit
+-- 
+1.6.4
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
