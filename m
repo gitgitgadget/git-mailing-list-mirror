@@ -1,110 +1,72 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [PATCH v2] commit, status: #comment diff output in verbose mode
-Date: Sun, 13 Mar 2011 19:34:22 +0100
-Message-ID: <AANLkTi=csBKvpBew9QMbD6UA774K_t6h+O4kK1-qa=FC@mail.gmail.com>
-References: <1299787140-21472-1-git-send-email-icomfort@stanford.edu>
-	<20110310225233.GH15828@sigill.intra.peff.net>
-	<7vvczq1o4l.fsf@alter.siamese.dyndns.org>
-	<20110311012318.GB15377@sigill.intra.peff.net>
+From: Alexander Miseler <alexander@miseler.de>
+Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
+Date: Sun, 13 Mar 2011 20:33:18 +0100
+Message-ID: <4D7D1BFE.2030008@miseler.de>
+References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com> <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com> <20110121222440.GA1837@sigill.intra.peff.net> <20110123141417.GA6133@mew.padd.com> <4D793C7D.1000502@miseler.de> <20110310222443.GC15828@sigill.intra.peff.net> <AANLkTimpbhaGEfxW1wwRc14tpV6qnPDiZYnXp_tvA3Ft@mail.gmail.com> <20110313025258.GA10452@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ian Ward Comfort <icomfort@stanford.edu>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Eric Montellese <emontellese@gmail.com>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
+	schacon@gmail.com, joey@kitenet.net
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 13 19:34:40 2011
+X-From: git-owner@vger.kernel.org Sun Mar 13 20:33:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pyq7i-0003mv-H6
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 19:34:38 +0100
+	id 1Pyr2g-00088i-5M
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 20:33:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755286Ab1CMSeY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Mar 2011 14:34:24 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:33532 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754677Ab1CMSeX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Mar 2011 14:34:23 -0400
-Received: by vws1 with SMTP id 1so1859728vws.19
-        for <git@vger.kernel.org>; Sun, 13 Mar 2011 11:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Z9NZtaWusrTw2X56eT4bFA8kPRK28DWbre30d9UiJog=;
-        b=OEYjagrhJL1dLVZdKVxFILwHGLAQFtNP0W+iUkNvhUyGLySYOGA0Nafv9R/K9L9LNN
-         uPCJNrVRsmP2y2E9WmZiQ6bmrLkqXfl+MYuP+YLdXeUdTI1Iz8zD7lwefNgiLo9kfQ9J
-         9NrrmmOyhINyFxg7ITI1bfwHsBmdVXu/DfoEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XYd/+QMsr/tWUFZFN2WuNI5fROGzdFgMarBI0hebRWyopc6xxoORay0Z5/MqE9ZAqq
-         kyWJvUaTKHLqc5mcUkrSWBeNfKrUN851h8APOaxKL+DDCZirHX+WXE9HuEG7ctrLVOJI
-         OdL8tahFPzHiHcxxhCUpsHuFtAGNu4g2lLIzE=
-Received: by 10.52.68.18 with SMTP id r18mr5944260vdt.82.1300041262562; Sun,
- 13 Mar 2011 11:34:22 -0700 (PDT)
-Received: by 10.220.186.205 with HTTP; Sun, 13 Mar 2011 11:34:22 -0700 (PDT)
-In-Reply-To: <20110311012318.GB15377@sigill.intra.peff.net>
+	id S1755361Ab1CMTdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Mar 2011 15:33:24 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:59500 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751943Ab1CMTdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Mar 2011 15:33:24 -0400
+Received: from [192.168.22.13] (f055019155.adsl.alicedsl.de [78.55.19.155])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0M9vlQ-1Pnsfa0X2e-00BIu3; Sun, 13 Mar 2011 20:33:15 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <20110313025258.GA10452@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:U3yfM/iRQq9WCWGYb75TLrumCtMLmU+aVjoUm688zeF
+ tnzPdp/eHTk+Qa1TI2PXvcR8VOlgpMm+hG7kaf1xdyI+7hjDan
+ yNKqTBjE1qeR9Mfb/xgsOcnEa4WGwuY8JhwF7OGr9oxLkVT2Iw
+ 2ZAVIXnfmtWzFa4rOP+IbAY1JQWcQRK8QtFx/i/gqh6tm0WFuJ
+ 4V6cWVO4hzQjJHVlq+I4w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168975>
-
-On Fri, Mar 11, 2011 at 2:23 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 10, 2011 at 04:45:14PM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->> > One reason to keep the existing behavior is that editors will tend=
- to
->> > syntax-highlight the diff portion without much extra effort (in vi=
-m, at
->> > least, the syntax highlighting just includes the diff syntax
->> > highlighting for that section).
->>
->> Hmm, thanks for pointing it out; it indeed is a valid concern.
->>
->> Although I usually strongly resist changes in order to keep the user
->> experience stable, I didn't think about this one, as I don't let the
->> editor syntax highlight anything.
-
-/me too - I find syntax highlighting a nice feature and would prefer it=
- to
-stay as it is over using #commented out diff
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168976>
 
 
-> I like the proposal for:
->
-> =A0# Lines below this one will be removed.
-> =A0diff --git ...
->
-> which seems to have the best of both worlds, robust and easy for edit=
-ors
-> to recognize as a diff. For that matter, we could also do "# Lines be=
-low
-> this one..." for _all_ of the git-status template, but I don't think
-> it's necessary. Those lines are already clearly marked with a delimit=
-er,
-> and I don't think anybody is complaining about them
+My thoughts on big file storage:
 
-The advantage of using such line is that it's more unique - IMO it's le=
-ss likely
-someone writes a commit message with "# Lines below ..." etc then with
-"diff --git".
+We want to store them as flat as possible. Ideally if we have a temp file with the content (e.g. the output of some filter) it should be possible to store it by simply doing a move/rename and updating some meta data external to the actual file.
 
-It also makes possible to remove this line and thus include git diff ou=
-tput in
-commit message.
+Options:
 
-The downside is probably the need to support i18n for "# Lines below ..=
-=2E"
+1.) The loose file format is inherently unsuited for this. It has a header before the actual content and the whole file (header + content) is always compressed. Even if one changes this to compressing/decompressing header and content independently it is still unsuited by a) having the header within the same file and b) because the header has no flags or other means to indicate a different behavior (e.g. no compression) for the content. We could extend the header format or introduce a new object type (e.g. flatblob) but both would probably cause more trouble than other solutions. Another idea would be to keep the metadata in an external file (e.g. 84d7.header for the object 84d7). This would probably have a bad performance though since every object lookup would first need to check for the e
+ xistence of a header file. A smarter variant would be to optionally keep the meta data directly in the filename (e.g. saving the object as 84d7.object_type.size.flag instead of just 84d7). 
+This would only require special handling for cases where the normal lookup for 84d7 fails.
 
-Less magic formats (or formats less magic) is better IMO.
+2.) The pack format fares a lot better. Content and meta data are already separated with the meta data describing how the content is stored. We would need a flag to mark the content as flat and that would pretty much be it. We would still need to include a virtual header when calculating the sha1 so it is guaranteed that the same content has always the same id.
+Thus i think we should simply forgo the loose object phase when storing big files and simply drop each big file flat as a individual pack file, with the idx file describing it as a pack file with one entry which is stored flat.
 
---=20
-Piotr Krukowiecki
+3.) Do some completely different handling for big files, as suggested by Eric:
+>>   1.1 Perhaps a "binaries" directory, or structure of directories, within .git
+> 
+> I'd rather not do something so drastic.
+My main issue with this approach (apart from the 'drastic' ^_^) is that the definition of big file may change at any time by e.g. changing a config value like core.bigFileThreshold. What has been stored as big file may suddenly be considered a normal blob and vice versa. Thus any storage variant that isn't well integrated in the normal object storage will probably be troublesome.
+
+
+
+
+> There may also be code-paths for binary files where
+> we accidentally load them (I just fixed one last week where we
+> unnecessarily loaded them in the diffstat code path). Somebody will need
+> to do some experimenting to shake out those code paths.
+
+This is my main focus for now. They are easy to detect when your memory is small enough :D
