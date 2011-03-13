@@ -1,166 +1,99 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH] rebase: be cleverer with rebased upstream branches
-Date: Sun, 13 Mar 2011 00:51:30 +0100
-Message-ID: <AANLkTikrYbY6r5hYnhWCB1GVKbPgounxdvAGeejsUKoC@mail.gmail.com>
-References: <1297691481-3308-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <7vzkpxm45e.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102152040370.14950@debian>
- <AANLkTinmxbYLB-K+VzY50NtOAPwd-q3WwAosAHqKRq_0@mail.gmail.com>
- <alpine.DEB.2.00.1102161122350.14950@debian> <AANLkTik-JGZFCE+m7g__mwfQhRReOM=Qe_EO3otw50XC@mail.gmail.com>
- <alpine.DEB.2.00.1103120930250.15442@debian>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: rebase question
+Date: Sat, 12 Mar 2011 20:05:32 -0500 (EST)
+Message-ID: <alpine.DEB.2.00.1103121714280.15442@debian>
+References: <AANLkTi=8Q+gNSY2jzgMMtPX-JHUy4MUEGNTeK85Ddvys@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 13 00:51:59 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Ryan Sun <ryansun81@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 02:05:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PyYbG-0005UM-KI
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 00:51:58 +0100
+	id 1PyZkc-0001ag-6C
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 02:05:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756260Ab1CLXvx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Mar 2011 18:51:53 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:54865 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756250Ab1CLXvv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Mar 2011 18:51:51 -0500
-Received: by qyk7 with SMTP id 7so535737qyk.19
-        for <git@vger.kernel.org>; Sat, 12 Mar 2011 15:51:50 -0800 (PST)
-Received: by 10.224.201.198 with SMTP id fb6mr2926158qab.92.1299973910339;
- Sat, 12 Mar 2011 15:51:50 -0800 (PST)
-Received: by 10.229.78.209 with HTTP; Sat, 12 Mar 2011 15:51:30 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.1103120930250.15442@debian>
+	id S1755140Ab1CMBFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2011 20:05:37 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:44756 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754137Ab1CMBFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Mar 2011 20:05:36 -0500
+Received: by vxi39 with SMTP id 39so3544641vxi.19
+        for <git@vger.kernel.org>; Sat, 12 Mar 2011 17:05:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=31dXPZsweHzl7Z6T28EPQNBPtKUup8cyDtSxNKswyg4=;
+        b=KrAEtvmSDSWOHB+Gpms5sSEWbB34IVAjqf6YTls3gkE6lc9onMVmyvClCWHK/uSDK4
+         NqbMj5wg+vDs8/awL8Ygbi4f30SheCyvo1rYA+HIFq5j6cY1UGe6/GgKdabIGAsn14c3
+         cgDK3eMXj0USyj+eF8mkh7z0SNqs+l7I77BTs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=Uia/gjh9KC4fTZkRPteOovSbeuk2anBteRuqfgWV2JAmPR5MaU2MpRKs9Pt9rPbc5H
+         Wy5gh6rBG3lHVJukjei8uqzWLvImUQGbfe3EPQ8OVrRQbEk3W8JCwGdlKfvE4m+ADpvN
+         rtyVtE4QBqTc2j7dlRfE+9dyIHs7Zu4/rf/qE=
+Received: by 10.52.167.230 with SMTP id zr6mr16203094vdb.6.1299978335552;
+        Sat, 12 Mar 2011 17:05:35 -0800 (PST)
+Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id e37sm4013276vbm.15.2011.03.12.17.05.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 12 Mar 2011 17:05:34 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <AANLkTi=8Q+gNSY2jzgMMtPX-JHUy4MUEGNTeK85Ddvys@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168953>
 
-Thanks for pushing this further.
+On Fri, 11 Mar 2011, Ryan Sun wrote:
 
-I'll read it all carefully later, but let me just comment one thing.
+> I want to rebase the current branch B1 from origin/A1 to origin/A2
+> so I want to use this command
+> git --onto origin/A2 origin/A1 B1
+> 
+> Q1: is this command right? (A2 is based on A1, current branch is B1,
+> B1 is already pushed to origin, a remote repo, and I think I will
+> force push B1 after rebase)
 
-On Sat, Mar 12, 2011 at 10:15 PM, Martin von Zweigbergk
-<martin.von.zweigbergk@gmail.com> wrote:
-> On Thu, 17 Feb 2011, Santi B?jar wrote:
->
->> On Wed, Feb 16, 2011 at 5:45 PM, Martin von Zweigbergk
->> <martin.von.zweigbergk@gmail.com> wrote:
->> > On Wed, 16 Feb 2011, Santi B?jar wrote:
->> >
->> >> On Wed, Feb 16, 2011 at 3:03 AM, Martin von Zweigbergk
->> >> <martin.von.zweigbergk@gmail.com> wrote:
->> >> >
->> >> > =A0 =A0 =A0 =A0.-u@{0}
->> >> > =A0 =A0 =A0 /
->> >> > =A0 =A0 =A0.---u@{1}
->> >> > =A0 =A0 /
->> >> > x---y-----u@{2}
->> >> > =A0 =A0 \
->> >> > =A0 =A0 =A0.---u@{3}---b
->> >> > =A0 =A0 =A0 \
->> >> > =A0 =A0 =A0 =A0.-u@{4}
->> >> >
->> >> >
->> >> > I have an idea inspired by bisection, Thomas's exponential stri=
-de, and
->> >> > what someone (you?) mentioned the other day about virtual merge
->> >> > commits. I haven't tried it out, but let me know what you think=
-=2E I'll
->> >> > try to explain it using an example only:
->> >> >
->> >> > Exponential stride phase:
->> >> > 1. candidates=3D{ u@{0} }
->> >> > =A0 merge-base b $candidates -> y, _not_ in $candidates
->> >> > 2. candidates=3D{ u@{1} u@{2} }
->> >> > =A0 merge-base b $candidates -> y, _not_ in $candidates
->> >> > 3. candidates=3D{ u@{3} u@{4} u@{5} u@{6} }
->> >> > =A0 merge-base b $candidates -> u@{3}, in $candidates
->> >>
->> >> Doesn't it indicate that u@{3} is the commit we are looking for? =
-I
->> >> haven't found a counterexample...
->> >
->> > Yes, of course. Stupid me ;-). Forget about the other half. (I thi=
-nk
->> > that's what I did manually to match the sha1 back to the ref name,=
- but
->> > that is of course complete non-sense to do in the script.)
->> >
->> >> If this is true the following patch can implement it for git-pull=
-=2Esh and
->> >> git-rebase.sh (sorry if it is space damaged):
->> >
->> > Thanks! Will have a closer look at it later today. If I understand
->> > correctly, you simply call merge-base with the _entire_ reflog. I
->>
->> Yes, that is the idea (plus the old remote hash in case of git-pull)
->>
->> > would have thought that would be slow, but it's great if that is f=
-ast
->> > enough.
->>
->> Yes, I think it is fast enough in the normal case. Even feeding the
->> entire git.git's master, ~25000 revisions, it takes around 2-4 secon=
-ds
->> only:
->>
->> $ git rev-list origin/master | wc -l
->> 24380
->> $ time git merge-base $(git rev-list origin/master)
->> 9971d6d52c5afeb8ba60ae6ddcffb34af23eeadd
->>
->> real =A00m4.014s
->> user =A00m1.520s
->> sys =A0 0m2.284s
->>
->> (2.5GHz CPU)
->
->
-> I finally got around to doing some tests on this myself. I used
-> git.git as of mid Feb, which at that time had 10010 commits in master=
-,
-> following only the first parent. I took the first 563 commits from th=
-e
-> todo branch and transplanted onto master~10000 (there were some
-> conflicts after about 563 commits and I figured that would be enough
-> anyway). I then rebased the resulting branch (let's call it 'u')
-> against master~9990, then against master~9980 and so on to get a
-> reflog with 1001 entries for u. I then created another branch 'b'
-> based on u@{10}, u@{100} and @{1000}, for different runs of the
-> tests. I created one additional commit on b in each case. I then
-> rebased b with master, using the following algorithms to find the bas=
-e
-> to rebase from:
->
-> =A0manual: simply calling 'git rebase --onto u b~1'
->
-> =A0linear: same algorithm as in 'git pull', which linearly walks the
-> =A0reflog until a commit that b contains is found
->
-> =A0merge-base: the base will be calculated as 'git merge-base b $(git
-> =A0ref-list -g u)'
->
-> =A0exponential: like merge-base, but start with only u@{0}, then
-> =A0{u@{1},u@{2}} and so on until a commit that b contains is found
->
+Yes, it is correct (except that the "rebase" is missing, of
+course). Since A2 is based on A1, you could even use "git rebase
+origin/A2 B1".
 
-=46irst, care to share the scripts/patches for the timings? Thanks.
+> but I accidentally typed
+>  git --onto origin/A2 origin/A1 origin/A2
+> and git says
+> ----
+> First, rewinding head to replay your work on top of it...
+> Fast-forwarded origin/base to origin/base.
+> ----
 
-Could you test also variants of the exponential strategy?
+I assume "origin/base" is what you called "origin/A2" above. The
+output is a bit confusing in this case.
 
-exponential(n,m): like merge-base, but start with n candidates {u@{0},
-=2E.., u@{n-1}}, then n*m candidates and so on until a commit that b
-contains is found.
+I tried "git rebase [--onto origin/pu] origin/pu origin/master". That
+printed
 
-Your exponential would be exponential(1,2).
+Fast-forwarded origin/master to origin/pu.
 
-Timings for something like exponential(10,2) or exponential(10,10),
-maybe others.
+which is even incorrect. It didn't (and shouldn't) update
+origin/master, so it obviously shouldn't say that it did
+either. Should be easy enough to fix. I will have a look at that when
+I get some time.
 
-Thanks,
-Santi
+> Q2:I assume this command is safe and it didn't change anything right?
+
+It detached your HEAD at origin/A2, but no commits, nor refs would
+have been changed or lost. You can safely checkout out B1 again if you
+want.
+
+
+/Martin
