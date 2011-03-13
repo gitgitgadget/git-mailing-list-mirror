@@ -1,98 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Add Author and Documentation sections to
- git-for-each-ref.txt
-Date: Sat, 12 Mar 2011 22:02:14 -0500
-Message-ID: <20110313030214.GB10452@sigill.intra.peff.net>
-References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com>
- <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
- <4D773570.4010803@drmicha.warpmail.net>
- <7voc5k9hfy.fsf@alter.siamese.dyndns.org>
- <20110310223732.GE15828@sigill.intra.peff.net>
- <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH] rebase: be cleverer with rebased upstream branches
+Date: Sat, 12 Mar 2011 22:14:04 -0500 (EST)
+Message-ID: <alpine.DEB.2.00.1103122159300.15442@debian>
+References: <1297691481-3308-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vzkpxm45e.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102152040370.14950@debian> <AANLkTinmxbYLB-K+VzY50NtOAPwd-q3WwAosAHqKRq_0@mail.gmail.com> <alpine.DEB.2.00.1102161122350.14950@debian>
+ <AANLkTik-JGZFCE+m7g__mwfQhRReOM=Qe_EO3otw50XC@mail.gmail.com> <alpine.DEB.2.00.1103120930250.15442@debian> <AANLkTikrYbY6r5hYnhWCB1GVKbPgounxdvAGeejsUKoC@mail.gmail.com> <alpine.DEB.2.00.1103122005490.15442@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Alexei Sholik <alcosholik@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 13 04:02:29 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 04:14:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PybZY-0004iu-Gi
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 04:02:24 +0100
+	id 1PyblC-0007Sc-5y
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 04:14:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756323Ab1CMDCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Mar 2011 22:02:16 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40895
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755216Ab1CMDCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Mar 2011 22:02:16 -0500
-Received: (qmail 29409 invoked by uid 107); 13 Mar 2011 03:02:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 12 Mar 2011 22:02:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Mar 2011 22:02:14 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com>
+	id S1756196Ab1CMDOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2011 22:14:11 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:48511 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755238Ab1CMDOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Mar 2011 22:14:08 -0500
+Received: by vxi39 with SMTP id 39so3574481vxi.19
+        for <git@vger.kernel.org>; Sat, 12 Mar 2011 19:14:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=C6at2X2n9ndsS5/UCajho5qu01mVjwcceZ6WbXw9UTU=;
+        b=HniuA6RqKNxFd39bCghF1rvrIZwukh+FWEC657eJNKT10CFIrQXeUI1jeZtHm6IiRd
+         pl54fbaim8j0KyyefPeJmj7GIqJfbu5/McBRvCXAUCDhp7gVJctuA7ib8FhceJ9wSnVK
+         9Qrmi2jdNx4wz+sinLCyNhp410KfaXAtAOP4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=LImkVGnTAy0+2mHJ2rzfp5k+DcUiWG3c6bBEA9kpnyhU2wLgJ//QxLVonGI24mhxGE
+         EKNjlk+j9LRfybJ32FZPfT2mdt/aEv4m93bBckjsuxX5+Jtdr7Vlf1+i/FME/XFGEtBo
+         17Vd0rc/WT60tPNwQPY+mThJioIuZ6g2up4BY=
+Received: by 10.52.90.109 with SMTP id bv13mr10638617vdb.237.1299986047687;
+        Sat, 12 Mar 2011 19:14:07 -0800 (PST)
+Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id b6sm1957155vci.0.2011.03.12.19.14.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 12 Mar 2011 19:14:06 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <alpine.DEB.2.00.1103122005490.15442@debian>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168958>
 
-On Sat, Mar 12, 2011 at 11:52:23AM +0200, Alexei Sholik wrote:
+On Sat, 12 Mar 2011, Martin von Zweigbergk wrote:
 
-> On 11 March 2011 00:37, Jeff King <peff@peff.net> wrote:
-> > -The documentation for git suite was started by David Greaves
-> > -<david@dgreaves.com>, and later enhanced greatly by the
-> > -contributors on the git-list <git@vger.kernel.org>.
-> > +Git was started by Linus Torvalds, and is currently maintained by Junio
-> > +C Hamano. Numerous contributions have come from the git mailing list
-> > +<git@vger.kernel.org>. For a complete list of contributors, see
-> > +linkgit:git-shortlog[1] and linkgit:git-blame[1].
+> On Sun, 13 Mar 2011, Santi B?jar wrote:
 > 
-> The last sentence could be a little bit more informative for casual
-> git-users, something like
->   For a complete list of contributors, see http://git-scm.com/about,
-> or (if you are a true geek) linkgit:git-shortlog[1] and
-> linkgit:git-blame[1].
+> > Could you test also variants of the exponential strategy?
+> 
+> I guess I could :-). Will see if I get time for that later today.
 
-Yeah, I was tempted to put in explicit instructions but opted to keep it
-simple. I forgot about the credits listing at git-scm.com, though. Maybe
-this on top of my other patches?
+So here are the updated figures for the force-updated history
+(pu-like):
 
--- >8 --
-Subject: [PATCH] docs: point git.txt author credits to git-scm.com
+                 u@{10}     u@{100}    u@{1000}
+manual         0m0.535s    0m1.164s    0m1.415s
+linear         0m1.245s   0m37.367s   5m10.068s
+merge-base    0m14.490s   0m15.409s   0m15.508s
+exp(1,2)       0m1.056s    0m6.175s   0m27.221s
+exp(10,10)     0m1.950s   0m20.031s   0m18.215s
+exp(7,7)       0m1.310s    0m6.851s   0m16.757s
 
-There is a nice shortlog-ish output of the authors there. We
-also point people directly to shortlog, but of course they
-might be reading the documentation online or from a binary
-package of git.
+and for the non-force-updated history (master-like):
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git.txt |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+                 u@{10}     u@{100}    u@{1000}
+manual         0m0.885s    0m6.126s   0m52.248s
+linear         0m1.349s   0m39.688s   5m28.753s
+merge-base     0m1.160s    0m1.699s    0m1.901s
+exp(1,2)       0m0.769s    0m4.342s    0m7.360s
+exp(10,10)     0m0.700s    0m2.535s    0m3.110s
+exp(7,7)       0m0.653s    0m2.332s    0m3.506s
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 4323843..5e57f69 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -747,8 +747,10 @@ Authors
- -------
- Git was started by Linus Torvalds, and is currently maintained by Junio
- C Hamano. Numerous contributions have come from the git mailing list
--<git@vger.kernel.org>. For a complete list of contributors, see
--linkgit:git-shortlog[1] and linkgit:git-blame[1].
-+<git@vger.kernel.org>. For a more complete list of contributors, see
-+http://git-scm.com/about. If you have a clone of git.git itself, the
-+output of linkgit:git-shortlog[1] and linkgit:git-blame[1] can show you
-+the authors for specific parts of the project.
- 
- Reporting Bugs
- --------------
--- 
-1.7.2.5.18.g3ffb9
+
+exp(10,10) is worst possible for the test cases I picked, since the
+wanted reflog entry is always the first one in an interval, so almost
+10 times as many entries as necessary are considered. I therefore also
+tried with exp(7,7) to get more fair figures.
+
+
+/Martin
