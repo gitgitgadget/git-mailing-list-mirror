@@ -1,81 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Add Author and Documentation sections to
- git-for-each-ref.txt
-Date: Sun, 13 Mar 2011 01:47:10 -0500
-Message-ID: <20110313064710.GA13135@sigill.intra.peff.net>
-References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com>
- <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
- <4D773570.4010803@drmicha.warpmail.net>
- <7voc5k9hfy.fsf@alter.siamese.dyndns.org>
- <20110310223732.GE15828@sigill.intra.peff.net>
- <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com>
- <20110313030214.GB10452@sigill.intra.peff.net>
- <7vsjuril5r.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFD] make rebase abort to original branch, not rebased branch
+Date: Sat, 12 Mar 2011 23:05:18 -0800
+Message-ID: <7vmxkzijpt.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.2.00.1103122253560.15442@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alexei Sholik <alcosholik@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 13 07:47:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 08:05:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pyf5A-0007kr-Hw
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 07:47:16 +0100
+	id 1PyfN2-00035l-Rw
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 08:05:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532Ab1CMGrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Mar 2011 01:47:12 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41630
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751912Ab1CMGrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Mar 2011 01:47:11 -0500
-Received: (qmail 31106 invoked by uid 107); 13 Mar 2011 06:47:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 13 Mar 2011 01:47:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Mar 2011 01:47:10 -0500
-Content-Disposition: inline
-In-Reply-To: <7vsjuril5r.fsf@alter.siamese.dyndns.org>
+	id S1752861Ab1CMHF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Mar 2011 03:05:28 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59976 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752624Ab1CMHF1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Mar 2011 03:05:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5A88A2214;
+	Sun, 13 Mar 2011 03:06:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WEZ4R/1y1OoMQbpR2bFXjYKAdX0=; b=ajYvwj
+	7hXNaTopBTNf6pr8zx8vY0c/hVPpqCG0rK56anFGnv73TEO9vo/a8NkEULM0xUL1
+	k3tKkxGuIFc0TGV8vN8KCTQZQFdhiK8i/+OmqDO43DisoYl4N4xoLpvNfX9S55UU
+	PsCVRLa246CdySVlS9Pu1rtH2JavsOqvGBKys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VqhirvgGyjHo6ndIektSKwcvp5Na/9l0
+	8qCbDbVt6H0q4xqGnDEz1bBtTH6SywyRVPL1wPtLCrK5U8CPmC/Oi53aC8aUQDT8
+	wVrRkEpj8bg6pcBBr3Alz879J/RUJc1Q/U/p4auj0M9QfZA5tx3b905mVKwoRwux
+	p1rfiL4tVmw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 375042213;
+	Sun, 13 Mar 2011 03:06:55 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4AAE62212; Sun, 13 Mar 2011
+ 03:06:52 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.00.1103122253560.15442@debian> (Martin von
+ Zweigbergk's message of "Sat, 12 Mar 2011 22:58:20 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7A9CA0F6-4D40-11E0-B0FB-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168962>
 
-On Sat, Mar 12, 2011 at 10:34:08PM -0800, Junio C Hamano wrote:
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-> I see you rebased your jk/doc-credits topic at GitHub but haven't queued
-> this one yet, so I won't be pulling, but give me a holler when the branch
-> is ready to be pulled into 'master'.  I'll then push the result out after
-> running final "make doc" check on a few platforms I have and eyeballing
-> the output.
+> In most cases, this is just a small annoyance, since it's usually
+> quick and easy to manually switch back to the original
+> branch. However, I have run into at least two cases where it has been
+> a bit more annoying:
+>
+>  1. When on a detached HEAD and running "git rebase HEAD topic", if
+>     you abort the rebase, you will have to look up the old commit in
+>     the reflog.
 
-It's pushed now. I rebase my topics aggressively on top of master (which
-you saw), but I don't always push out regularly. Since my main output is
-patches to the list, in general I assume nobody is actually looking at
-my topics directly. :) Let me know if some other strategy would be
-better[1].
+Doesn't this merely show a bad discipline? What were you envisioning to
+do to your detached HEAD state if the rebase were to succeed? IOW, if the
+state was so precious, why did you decide to switch to topic and rebase it
+onto that state, without marking?
 
-I've done a perfunctory check over the changes, but there are a lot of
-them, so another set of eyeballs on the output is appreciated.
+> Are there valid cases where the current behavior is bettter?
 
--Peff
+I don't particularly like the "when aborted it returns to the original
+location" behaviour even for a single argument "git rebase A" case (I do
+deeply care about the tip of the branch that you attempted to rebase _is_
+set back to the original state, but I don't care deeply on which branch
+you would end up on myself), but because "git rebase A B" is a shorthand
+for "git checkout B; git rebase A" (at least that is how I view it
+myself), I would imagine that it would be more surprising to switch back
+to the branch you were on which may not have anything to do with A nor B.
 
-[1] I have mixed feelings about the aggressive rebasing. Our 'master' is
-pretty stable, so I don't feel the need to build off the last tagged
-release. But rebasing a lot does make it hard for others to follow the
-topic, and it makes it hard to organize my work with you queue in pu,
-and then merge to 'next' and 'master'. However, I haven't found a
-satisfactory solution to tracking patches as they move through the
-workflow of local development, sent to list, and applied upstream.
+At least going back to B conceptually makes more sense in one use case I
+have, which was the original reason I invented rebase with the "checkout B
+and rebase it ono A" shorthand in the first place (see 59e6b23), back when
+I was an active contributor throwing patches at Linus (note that back then
+I didn't have "abort then go back" in the code--and that is why I don't
+care too deeply about this "which branch should I be after aborting?"
+myself).
 
-Git-cherry sort of does this, but patch-ids miss a lot of cases: patches
-tweaked in transit, patches applied on a different commit, or even
-patches taken partially or split up. So I rebase frequently, and as
-patches get picked up in master, the branches dwindle to empty.
-Suggestions welcome if anybody else has figured out something clever.
+The reason I tried to rebase B on A with the short-hand form was because I
+wanted to clean up what is on B; I may say "abort" when my first attempt
+to rebase failed because it was a bit too much to bite at once (e.g. the
+history diverged a bit too much since B forked from A's ancestor).
 
--Peff
+But then, the next thing I would want to do in such a case after aborting
+is not to give up and forget about what I needed to do, which is to clean
+up B into a shape easier to merge with the updated codebase that leads to
+A.  I would want to stay on B and examine the situation a bit deeper, and
+try to figuire out a different base (e.g. a bit older commit in the
+history leading to A) to rebase to, so that I can keep up with the other
+branch incrementally without lagging too far behind.  Switching away from
+the original B would be majorly annoying in such a case.
