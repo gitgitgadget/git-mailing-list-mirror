@@ -1,129 +1,98 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
-Date: Sat, 12 Mar 2011 21:52:58 -0500
-Message-ID: <20110313025258.GA10452@sigill.intra.peff.net>
-References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com>
- <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
- <20110121222440.GA1837@sigill.intra.peff.net>
- <20110123141417.GA6133@mew.padd.com>
- <4D793C7D.1000502@miseler.de>
- <20110310222443.GC15828@sigill.intra.peff.net>
- <AANLkTimpbhaGEfxW1wwRc14tpV6qnPDiZYnXp_tvA3Ft@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Add Author and Documentation sections to
+ git-for-each-ref.txt
+Date: Sat, 12 Mar 2011 22:02:14 -0500
+Message-ID: <20110313030214.GB10452@sigill.intra.peff.net>
+References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com>
+ <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
+ <4D773570.4010803@drmicha.warpmail.net>
+ <7voc5k9hfy.fsf@alter.siamese.dyndns.org>
+ <20110310223732.GE15828@sigill.intra.peff.net>
+ <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexander Miseler <alexander@miseler.de>,
-	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	schacon@gmail.com, joey@kitenet.net
-To: Eric Montellese <emontellese@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 13 03:53:24 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Alexei Sholik <alcosholik@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 04:02:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PybQn-00030Y-Ut
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 03:53:22 +0100
+	id 1PybZY-0004iu-Gi
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 04:02:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756374Ab1CMCxE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Mar 2011 21:53:04 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52442
+	id S1756323Ab1CMDCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2011 22:02:16 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40895
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756196Ab1CMCxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Mar 2011 21:53:01 -0500
-Received: (qmail 29353 invoked by uid 107); 13 Mar 2011 02:53:32 -0000
+	id S1755216Ab1CMDCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Mar 2011 22:02:16 -0500
+Received: (qmail 29409 invoked by uid 107); 13 Mar 2011 03:02:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 12 Mar 2011 21:53:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Mar 2011 21:52:58 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 12 Mar 2011 22:02:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Mar 2011 22:02:14 -0500
 Content-Disposition: inline
-In-Reply-To: <AANLkTimpbhaGEfxW1wwRc14tpV6qnPDiZYnXp_tvA3Ft@mail.gmail.com>
+In-Reply-To: <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168957>
 
-On Sat, Mar 12, 2011 at 08:53:53PM -0500, Eric Montellese wrote:
+On Sat, Mar 12, 2011 at 11:52:23AM +0200, Alexei Sholik wrote:
 
-> The best solution, it seems, has two parts:
->=20
-> 1. Clean up the way in which git considers, diffs, and stores binarie=
-s
-> to cut down on the overhead of dealing with these files.
+> On 11 March 2011 00:37, Jeff King <peff@peff.net> wrote:
+> > -The documentation for git suite was started by David Greaves
+> > -<david@dgreaves.com>, and later enhanced greatly by the
+> > -contributors on the git-list <git@vger.kernel.org>.
+> > +Git was started by Linus Torvalds, and is currently maintained by Junio
+> > +C Hamano. Numerous contributions have come from the git mailing list
+> > +<git@vger.kernel.org>. For a complete list of contributors, see
+> > +linkgit:git-shortlog[1] and linkgit:git-blame[1].
+> 
+> The last sentence could be a little bit more informative for casual
+> git-users, something like
+>   For a complete list of contributors, see http://git-scm.com/about,
+> or (if you are a true geek) linkgit:git-shortlog[1] and
+> linkgit:git-blame[1].
 
-This is the easier half, I think.
+Yeah, I was tempted to put in explicit instructions but opted to keep it
+simple. I forgot about the credits listing at git-scm.com, though. Maybe
+this on top of my other patches?
 
->   1.1 Perhaps a "binaries" directory, or structure of directories, wi=
-thin .git
+-- >8 --
+Subject: [PATCH] docs: point git.txt author credits to git-scm.com
 
-I'd rather not do something so drastic. We already have ways of marking
-files as binary and un-diffable within the tree. So you can already do
-pretty well with marking them with gitattributes. I think we can do
-better by making them the binaryness auto-detection less expensive
-(right now we pull in the whole blob to check the first 1K or so for
-NULs or other patterns; this is fine in the common text case, where
-we'll want the whole blob in a minute anyway, but for large files it's
-obviously wasteful). There may also be code-paths for binary files wher=
-e
-we accidentally load them (I just fixed one last week where we
-unnecessarily loaded them in the diffstat code path). Somebody will nee=
-d
-to do some experimenting to shake out those code paths.
+There is a nice shortlog-ish output of the authors there. We
+also point people directly to shortlog, but of course they
+might be reading the documentation online or from a binary
+package of git.
 
-=46or packing, we have core.bigFileThreshold to turn off delta compress=
-ion
-for large files, but according to the documentation, it is only honored
-for fast-import. I think we would want something similar to say "for
-some subset of files (indicated either by name or by minimum size),
-don't bother with zlib-compression either, and always keep them loose".
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git.txt |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-Those are the two major ones, I think. There are probably a handful of
-other cases (like git-add, which really should be able to have a fixed
-memory size). Again, the first step is figuring out where all of the
-problems are (and I'm happy to just fix them one by one as they come up=
-,
-but I am also thinking of this in terms of a GSoC project).
-
->   1.2 Perhaps configurable options for when and how to try a binary
-> diff? =C2=A0(allow user to decide if storage or speed is more importa=
-nt)
-
-We can already do that with gitattributes. But it would be nice to have
-it be fast in the binary auto-detection case.
-
-> 2. Once (1) is accomplished, add an option to avoid copying binaries
-> from all but the tip when doing a "git clone."
-
-This is much harder. :)
-
->   2.1 The default behavior would be to copy everything, as users
-> currently expect.
->   2.2 Core code would have hooks to allow a script to use a central
-> location for the binary storage. (ssh, http, gmail-fs, whatever)
-
-I think we would need a protocol extension for the fetching client to
-say "please don't bother sending me anything larger than N bytes; I wil=
-l
-get it via alternate storage". Although there are situations more
-complicated than that. Your alternate storage might have up to commit X=
-,
-and you don't want large objects in X or its ancestors. But you _do_
-want large objects in descendants of X, since you have no other way to
-get them.
-
-So you need some way of saying which sets of large objects you need and
-which you don't. One implementation is that you could fetch from
-alternate storage (which would then need to be not just large-blob
-storage, but actually have a full repo), and then afterwards fetch from
-the remote (which would then send you all binaries, because by
-definition anything you are fetching is not something the alternate
-storage has). That feels a bit hack-ish. Doing something more clever
-would require a pretty major protocol extension, though.
-
-I haven't been paying attention to any sparse clone proposals. I know i=
-t
-has come up but I don't know how mature the idea is. But this is
-potentially related.
-
--Peff
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 4323843..5e57f69 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -747,8 +747,10 @@ Authors
+ -------
+ Git was started by Linus Torvalds, and is currently maintained by Junio
+ C Hamano. Numerous contributions have come from the git mailing list
+-<git@vger.kernel.org>. For a complete list of contributors, see
+-linkgit:git-shortlog[1] and linkgit:git-blame[1].
++<git@vger.kernel.org>. For a more complete list of contributors, see
++http://git-scm.com/about. If you have a clone of git.git itself, the
++output of linkgit:git-shortlog[1] and linkgit:git-blame[1] can show you
++the authors for specific parts of the project.
+ 
+ Reporting Bugs
+ --------------
+-- 
+1.7.2.5.18.g3ffb9
