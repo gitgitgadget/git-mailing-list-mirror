@@ -1,149 +1,148 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] Add Author and Documentation sections to git-for-each-ref.txt
-Date: Sun, 13 Mar 2011 14:27:05 +0100
-Message-ID: <4D7CC629.2020000@drmicha.warpmail.net>
-References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com> <1299590170-30799-3-git-send-email-alcosholik@gmail.com> <4D773570.4010803@drmicha.warpmail.net> <7voc5k9hfy.fsf@alter.siamese.dyndns.org> <20110310223732.GE15828@sigill.intra.peff.net> <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com> <20110313030214.GB10452@sigill.intra.peff.net> <7vsjuril5r.fsf@alter.siamese.dyndns.org> <20110313064710.GA13135@sigill.intra.peff.net> <7vd3lviie7.fsf@alter.siamese.dyndns.org>
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: Re: [PATCH] find_unique_abbrev(): honor caller-supplied "len"
+ better
+Date: Sun, 13 Mar 2011 22:30:26 +0900
+Message-ID: <1300023026.1450.1.camel@leonhard>
+References: <E1PBKT9-0004Uk-Sm@tytso-glaptop>
+	 <20101028075631.GA7690@elte.hu>
+	 <AANLkTi=8SbOZizWpxLg=Bgp7atdgr8MsR6tnRDYr1+eW@mail.gmail.com>
+	 <20101028163854.GA15450@elte.hu>
+	 <AANLkTin62vAwJxcsrFk6Yn7Q6tzr-D=EmKKwPazuAJ11@mail.gmail.com>
+	 <7veiba9ev2.fsf@alter.siamese.dyndns.org>
+	 <7vhbba38mm.fsf_-_@alter.siamese.dyndns.org>
+	 <AANLkTimH9=OWD4+dPsdYaL2VPdDkTsUG_N3GBf168XqD@mail.gmail.com>
+	 <7vzkp21ocm.fsf@alter.siamese.dyndns.org>
+	 <AANLkTikPxSspRFQWke4=u55cmmHw8NsyizeH2gL1kD0y@mail.gmail.com>
+	 <7vmxl21lwr.fsf@alter.siamese.dyndns.org>
+	 <7vipvq1hpw.fsf@alter.siamese.dyndns.org>
+	 <7vvczpff89.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Alexei Sholik <alcosholik@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 13 14:27:24 2011
+X-From: git-owner@vger.kernel.org Sun Mar 13 14:30:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PylKM-0006jS-Nh
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 14:27:23 +0100
+	id 1PylNY-0007lw-H5
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Mar 2011 14:30:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756276Ab1CMN1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Mar 2011 09:27:10 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:42006 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756150Ab1CMN1H (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Mar 2011 09:27:07 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 79E8020824;
-	Sun, 13 Mar 2011 09:27:06 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Sun, 13 Mar 2011 09:27:06 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=JXdKvDe18GpINFtYzVpddmtLWxs=; b=gcG1I3GR/2gPvqkAuL164gIifG2eBzbgcQe04Mxz6onkxmHpS2YgOEOpTkblyc0t9qNaUFjaPc42JLLLjXxmNO78QPwkryihIy+nhJY7qNBLrRd4J9XTOzqww4yVZetvdJ+2k/7Pku+47C5dD3Kuq9FoWv8iE5sGlwz94xKR9Xw=
-X-Sasl-enc: tzx0hxOydQNjQtvXEI3d56hL8pwmZCZiSj/eXxppZC5d 1300022825
-Received: from localhost.localdomain (p54859936.dip0.t-ipconnect.de [84.133.153.54])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3E376442526;
-	Sun, 13 Mar 2011 09:27:05 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7vd3lviie7.fsf@alter.siamese.dyndns.org>
+	id S1756328Ab1CMNaf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Mar 2011 09:30:35 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:45650 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754887Ab1CMNae (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Mar 2011 09:30:34 -0400
+Received: by pxi2 with SMTP id 2so1123640pxi.10
+        for <git@vger.kernel.org>; Sun, 13 Mar 2011 06:30:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
+         :content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=GTgFSylaVw4IXlWcebso9iT+FqwlujOyefwybtlWI88=;
+        b=Ew9Bj3VkkzSc9WVf2WHoE3fFDWqz/ZI/M1PC2jeBJKMzDNyUoi0zkR6/AaI5gohR6l
+         hO06OhTrYS02gU+g/midDUZ+FNcZtw/0CjK+QhZAkeCRAIs/QGEf/qv+fFyl0UJ/AsA6
+         4NKrDMrIa2En5xZgn0O6nFj2ZIEOR4sUhQWis=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=YGpygqLPjhCGk0kMT92mVH1GR0nSsgrxVzB9O1/INrVm7jY7bUs69A1pP8O3YN+YO/
+         ShbgL1/nbLaKkSPEhujJq4LCsM7zTCQvUKnGyRBKbbCeq8vh8vaupSIwY1AZddIUVNxe
+         r+HZuPoj5Ao1c6PITqHKsCcuIEPy+MPtExPzM=
+Received: by 10.142.120.40 with SMTP id s40mr9638522wfc.193.1300023034228;
+        Sun, 13 Mar 2011 06:30:34 -0700 (PDT)
+Received: from [118.176.78.238] ([118.176.78.238])
+        by mx.google.com with ESMTPS id x11sm2016140wfd.13.2011.03.13.06.30.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 13 Mar 2011 06:30:32 -0700 (PDT)
+In-Reply-To: <7vvczpff89.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168967>
 
-Junio C Hamano venit, vidit, dixit 13.03.2011 08:33:
-> Jeff King <peff@peff.net> writes:
-> 
->> [1] I have mixed feelings about the aggressive rebasing. Our 'master' is
->> pretty stable, so I don't feel the need to build off the last tagged
->> release.
-> 
-> In a very busy project (like the kernel), it would make sense to build off
-> of the last tagged release when your interaction with the upstream is
-> primarily based on patch exchange. But I think that is primarily because
-> the maintainer and the reviewer do not have to ask "where does this apply
-> to?  It does not apply to my tree; please resend" if you did so. Because
-> our "master" does not move so fast, sending a complete patch series based
-> on any commit that was once at the tip of "master" works similarly well,
-> especially because "am -3" works well in such an environment if "master"
-> is never rewound.
-> 
-> But if your interaction with the upstream is merge based, I think it is
-> preferrable to base your fork point as if you are the person at the
-> upstream. There is no "where does this apply to" at that point, and you
-> have a larger responsibility and say in the final shape of the history.
-> 
-> Namely (I know you know this, and I am writing this primarily for other
-> people on the list):
-> 
->  - an fix would be appropriate to be made on top of the oldest maintenance
->    track that contains the commit that introduced a bug (or even directly
->    on the buggy commit itself), as long as merging up from maint-O to
->    maint-N (O < N) to master is simple enough;
-> 
->  - For enhancement patches that do not deserve to be backported to
->    maintenance branches, "master" is a good place to start.
-> 
-> For this topic, you could have said that this is a documentation bug fix
-> and started the topic at the tip of maint, given that this is a fairly
-> low-risk change, and that we haven't added any new file between maint and
-> master that requires an evil merge to fix up.  Or you can say that this is
-> very minor and not worth fixing in maintenance track to fork from master.
-> 
->> Git-cherry sort of does this, but patch-ids miss a lot of cases: patches
->> tweaked in transit, patches applied on a different commit, or even
->> patches taken partially or split up. So I rebase frequently, and as
->> patches get picked up in master, the branches dwindle to empty.
->> Suggestions welcome if anybody else has figured out something clever.
-> 
-> A solution to string different iterations of the same patch together,
-> perhaps using notes as the storage media, that makes it easier to view the
-> changes between different iterations?  I think Shawn does something like
-> that in Gerrit code review.
-> 
-> When I rebase, I tend to keep the base stable (in other words, I don't use
-> "rebase" in order to change the base, but to rewrite individual patches),
-> too keep comparison between iterations simpler, but I haven't found a
-> satisfactory solution for such a comparison for changes near the tip of
-> longer series.
-> 
+2011-03-11 (=EA=B8=88), 14:45 -0800, Junio C Hamano:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > So let's scrap the abbrevguard thing.  I somehow thought that I alr=
+eady
+> > took your "make DEFAULT_ABBREV tweakable" patch, but apparently I d=
+idn't.
+> > That one is the real fix to the issue of futureproofing.
+>=20
+> In return for a free education last night, I now owe you your patch f=
+rom
+> October last year, resurrected from the list archive, and here it is.
+>=20
+> With a forged sign-off from you, as I know that everything you write =
+is
+> supposed to be open source.
+>=20
+>  - I do not think making minimum configurable is worth it, but I left=
+ it in
+>    (there is no UI to tweak it anyway).
+>=20
+>  - I somewhat tweaked "describe" and "describe --abbrev" implementati=
+on.
+>    OPT__ABBREV() uses DEFAULT_ABBREV in its callback, so we need to r=
+ead
+>    from the configuration before calling parse_options().  As it won'=
+t
+>    make any sense to call "git describe" outside repository where you
+>    cannot get to your configuration, I think it is safe to add a call=
+ to
+>    git_config() in this codepath. Other users of OPT__ABBREV() may ne=
+ed to
+>    be audited.
+>=20
+> By the way, I've already reverted the abbrevguard thing away.
+>=20
+> -- >8 --
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> Date: Thu, 28 Oct 2010 11:28:04 -0700
+> Subject: [PATCH] Make the default abbrev length configurable
+>=20
+> The default of 7 comes from fairly early in git development, when
+> seven hex digits was a lot (it covers about 250+ million hash
+> values). Back then I thought that 65k revisions was a lot (it was wha=
+t
+> we were about to hit in BK), and each revision tends to be about 5-10
+> new objects or so, so a million objects was a big number.
+>=20
+> These days, the kernel isn't even the largest git project, and even
+> the kernel has about 220k revisions (_much_ bigger than the BK tree
+> ever was) and we are approaching two million objects. At that point,
+> seven hex digits is still unique for a lot of them, but when we're
+> talking about just two orders of magnitude difference between number
+> of objects and the hash size, there _will_ be collisions in truncated
+> hash values. It's no longer even close to unrealistic - it happens al=
+l
+> the time.
+>=20
+> We should both increase the default abbrev that was unrealistically
+> small, _and_ add a way for people to set their own default per-projec=
+t
+> in the git config file.
+>=20
+> This is the first step to first make it configurable; the default of =
+7
+> is not raised yet.
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-In a way it's comforting to know that even long-time contributors like
-Jeff haven't found a good workflow for git.git patch lifetime management
-yet. But there's progress, such as "commit --notes". I'm also fiddling
-with refname notes (so you could store the cover-letter as a note to the
-branch name) and have working code I'll send soon.
+Reviewed-by: Namhyung Kim <namhyung@gmail.com>
 
-As far as keeping track of patch versions (without topgit) goes I've
-been thinking about "mergy rebase". Before it sits around any longer,
-I'll include a rough concept below.
+Thanks.
 
-And sorry for thread hijacking - it wasn't me :)
 
-Michael
-
-Say, you start developping a patch series on a branch "topic":
-
-*--A1--B1--C1=topic
-
-Then you rewrite/fixup your series:
-
-*--A2--B2--C2=topic
-
-The previous versions are lost (in the reflog).
-
-With a mergy rebase, a rewrite/fixup would produce:
-
-*--A1--B1--C1
- \  \   \   \
-  ---A2--B2--C2=topic
-
-That is, "log --first-parent topic" would always walk the current
-version of the topic branch, but the previous one is still accessible:
-
-*--A1--B1--C1
- \  \   \   \
-  ---A2--B2--C2
-   \  \   \   \
-    ---A3--B3--C3
-     \  \   \   \
-      ---A4--B4--C4=topic
-
-"log --second-parent C4" will give you the history of the patch C
-through the different versions of ypur patch series.
-
-(And yes, I have a WIP for --second-parent.)
-
-Downside is that all those merges are evil, of course. But do not be
-afraid...
+--=20
+Regards,
+Namhyung Kim
