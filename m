@@ -1,67 +1,99 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: "Franz Liedke" <franz@develophp.org>
 Subject: Re: [Support] Branch pointer does not move
-Date: Mon, 14 Mar 2011 16:48:22 +0100
-Message-ID: <4D7E38C6.4010804@drmicha.warpmail.net>
-References: <op.vsb4lif0bl4hj1@metalltrottel.fritz.box> <AANLkTik5MGyw_6vnT8055Yap3Ca1pDQYpJ_RXiZQbwA4@mail.gmail.com> <op.vsb95dilbl4hj1@metalltrottel.fritz.box> <AANLkTimW+01wriSjvEVEyQ8SE5RPxhGv_o2Rus9kw6ZQ@mail.gmail.com> <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
+Date: Mon, 14 Mar 2011 17:14:43 +0100
+Organization: develoPHP
+Message-ID: <op.vsccqtbobl4hj1@metalltrottel.fritz.box>
+References: <op.vsb4lif0bl4hj1@metalltrottel.fritz.box>
+ <AANLkTik5MGyw_6vnT8055Yap3Ca1pDQYpJ_RXiZQbwA4@mail.gmail.com>
+ <op.vsb95dilbl4hj1@metalltrottel.fritz.box>
+ <AANLkTimW+01wriSjvEVEyQ8SE5RPxhGv_o2Rus9kw6ZQ@mail.gmail.com>
+ <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
+ <4D7E38C6.4010804@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=iso-8859-15; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Franz Liedke <franz@develophp.org>
-X-From: git-owner@vger.kernel.org Mon Mar 14 16:52:09 2011
+Cc: "Sverre Rabbelier" <srabbelier@gmail.com>, git@vger.kernel.org
+To: "Michael J Gruber" <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 14 17:16:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzA3w-0000DX-5u
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 16:52:04 +0100
+	id 1PzARJ-00047i-7s
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 17:16:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755501Ab1CNPvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 11:51:55 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:37406 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752892Ab1CNPvy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2011 11:51:54 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D7B0120B93;
-	Mon, 14 Mar 2011 11:51:53 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 14 Mar 2011 11:51:53 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=u4zGsPTyZ88JVU/0JAQIO1ucei8=; b=lVbHHjIxpaf077jCPRIJN1IjFHAF/WmKk4gkbazj5I882yR65gm7AP8ivfOYLtyEwqSojtXiqQBAtpa9+0Qp+ETlxRR4JT4LTVgdSuCbl29oZGzVD1nT/sAiK7aZ9NAQZMFkFcO1yn5hmv1WLPF8HrB0YwNAyWSex47L9ywwWB4=
-X-Sasl-enc: qTDpYPAQVJFR9QGieFYDii2x3qgIAHXG4Tx7XTQczV60 1300117913
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3CD66441DE8;
-	Mon, 14 Mar 2011 11:51:53 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
+	id S1756596Ab1CNQPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 12:15:52 -0400
+Received: from relay01.alfahosting-server.de ([80.86.191.88]:40135 "EHLO
+	relay01.alfahosting-server.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756148Ab1CNQPw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2011 12:15:52 -0400
+Received: by relay01.alfahosting-server.de (Postfix, from userid 1001)
+	id DFE2932C03D7; Mon, 14 Mar 2011 17:15:49 +0100 (CET)
+X-Spam-DCC: : relay01 1356; Body=1 Fuz1=1 Fuz2=1
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=7.0 tests=BAYES_50 autolearn=disabled
+	version=3.2.5
+Received: from alfa3007.alfahosting-server.de (alfa3007.alfahosting-server.de [82.197.146.14])
+	by relay01.alfahosting-server.de (Postfix) with ESMTP id 1B90F32C0555;
+	Mon, 14 Mar 2011 17:13:02 +0100 (CET)
+Received: from metalltrottel.fritz.box (sd-89-66.stud.uni-potsdam.de [141.89.89.66])
+	by alfa3007.alfahosting-server.de (Postfix) with ESMTPSA id C77852F04CD6;
+	Mon, 14 Mar 2011 17:13:01 +0100 (CET)
+In-Reply-To: <4D7E38C6.4010804@drmicha.warpmail.net>
+User-Agent: Opera Mail/11.01 (Win32)
+X-Virus-Status: No
+X-Virus-Checker-Version: clamassassin 1.2.4 with ClamAV 0.97/12834/Mon Mar 14 14:25:12 2011
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168996>
 
-Franz Liedke venit, vidit, dixit 14.03.2011 16:24:
-> Oops, sorry I didn't make that clear. The branch pointer is still  
-> displayed next to the old commit in SmartGit, the GUI I normally use.
-> 
-> On Mon, 14 Mar 2011 16:19:39 +0100, Sverre Rabbelier  
-> <srabbelier@gmail.com> wrote:
-> 
->> Heya,
->>
->> On Mon, Mar 14, 2011 at 16:18, Franz Liedke <franz@develophp.org> wrote:
->>> "git status" and "git branch" both tell me I'm on my feature branch.
->>
->> And that one _is_ updating?
->>
->>> .git/packed-refs and .git/info/refs are both not updated.
->>
->> That's fine, don't worry about those.
->>
+Hey Michael,
 
-So, taking a step back - when you "make a commit", do you mean using git
-or using smartgit? Have you been mixing git command line and smartgit
-actions (while smartgit was running)?
+in fact, I have been making commits both from the command line and from  
+SmartGit from time to time, and yes, they were both running.
+This has never been the problem before.
 
-Michael
+I ran some sort of cleanup tool yesterday, possibly about the time when  
+the problem started (I only noticed it today). Something along the lines  
+of 'git gc' maybe, if I remember correctly. Could that be the cause?
+
+Thanks a bunch
+Franz
+
+On Mon, 14 Mar 2011 16:48:22 +0100, Michael J Gruber  
+<git@drmicha.warpmail.net> wrote:
+
+> Franz Liedke venit, vidit, dixit 14.03.2011 16:24:
+>> Oops, sorry I didn't make that clear. The branch pointer is still
+>> displayed next to the old commit in SmartGit, the GUI I normally use.
+>>
+>> On Mon, 14 Mar 2011 16:19:39 +0100, Sverre Rabbelier
+>> <srabbelier@gmail.com> wrote:
+>>
+>>> Heya,
+>>>
+>>> On Mon, Mar 14, 2011 at 16:18, Franz Liedke <franz@develophp.org>  
+>>> wrote:
+>>>> "git status" and "git branch" both tell me I'm on my feature branch.
+>>>
+>>> And that one _is_ updating?
+>>>
+>>>> .git/packed-refs and .git/info/refs are both not updated.
+>>>
+>>> That's fine, don't worry about those.
+>>>
+>
+> So, taking a step back - when you "make a commit", do you mean using git
+> or using smartgit? Have you been mixing git command line and smartgit
+> actions (while smartgit was running)?
+>
+> Michael
+>
+
+
+-- 
+Using Opera's revolutionary email client: http://www.opera.com/mail/
