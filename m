@@ -1,110 +1,103 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 2/2] upload-pack: More aggressively send 'ACK %s ready'
-Date: Mon, 14 Mar 2011 16:48:39 -0700
-Message-ID: <1300146519-26508-2-git-send-email-spearce@spearce.org>
-References: <1300146519-26508-1-git-send-email-spearce@spearce.org>
+Subject: [PATCH 1/2] fetch-pack: Finish negotation if remote replies "ACK %s ready"
+Date: Mon, 14 Mar 2011 16:48:38 -0700
+Message-ID: <1300146519-26508-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 00:48:51 2011
+X-From: git-owner@vger.kernel.org Tue Mar 15 00:48:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzHVL-0006QM-86
+	id 1PzHVK-0006QM-Kf
 	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 00:48:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754843Ab1CNXsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 19:48:46 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:55395 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754081Ab1CNXsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 19:48:45 -0400
-Received: by gyf1 with SMTP id 1so16389gyf.19
-        for <git@vger.kernel.org>; Mon, 14 Mar 2011 16:48:44 -0700 (PDT)
-Received: by 10.101.18.20 with SMTP id v20mr3940447ani.139.1300146524850;
-        Mon, 14 Mar 2011 16:48:44 -0700 (PDT)
+	id S1754168Ab1CNXsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 19:48:43 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:47093 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754081Ab1CNXsm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 19:48:42 -0400
+Received: by pvg12 with SMTP id 12so8029pvg.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 16:48:42 -0700 (PDT)
+Received: by 10.142.9.9 with SMTP id 9mr10950195wfi.149.1300146521888;
+        Mon, 14 Mar 2011 16:48:41 -0700 (PDT)
 Received: from localhost (sop.mtv.corp.google.com [172.18.74.69])
-        by mx.google.com with ESMTPS id c17sm2721621anc.35.2011.03.14.16.48.43
+        by mx.google.com with ESMTPS id m10sm10896015wfl.11.2011.03.14.16.48.40
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Mar 2011 16:48:44 -0700 (PDT)
+        Mon, 14 Mar 2011 16:48:41 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.9.5.g6bd7.dirty
-In-Reply-To: <1300146519-26508-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169037>
 
-If a client is merely following the remote (and has not made any
-new commits itself), all "have %s" lines sent by the client will be
-common to the server.  As all lines are common upload-pack never
-calls ok_to_give_up() and does not compute if it has a good cut
-point in the commit graph.
+If multi_ack_detailed was selected in the protocol capabilities
+(both client and server are >= Git 1.6.6) the upload-pack side will
+send "ACK %s ready" when it knows how to safely cut the graph and
+produce a reasonable pack for the want list that was already sent
+on the connection.
 
-Without this computation the following client is going to send all
-tagged commits, as these were determined to be COMMON_REF during the
-initial advertisement, but the client does not parse their history
-to transitively pass the COMMON flag and empty its queue of commits.
+Upon receiving "ACK %s ready" there is no point in looking at
+the remaining commits inside of rev_list.  Sending additional
+"have %s" lines to the remote will not construct a smaller pack.
+It is unlikely a commit older than the current cut point will have
+a better delta base than the cut point itself has.
 
-For git.git with 339 commit tags, it takes clients 11 rounds of
-negotation to fully send all tagged commits and exhaust its queue
-of things to send as common.  This is pretty slow for a client that
-has not done any local development activity.
+The original design of this code had fetch-pack empty rev_list by
+marking a commit and its transitive ancestors COMMON whenever the
+remote side said "ACK %s {continue,common}" and skipping over any
+already COMMON commits during get_rev().  This approach does not
+work when most of rev_list is actually COMMON_REF, commits that
+are pointed to by a reference on the remote, which exist locally,
+and which have not yet been sent to the remote as a "have %s" line.
 
-Force computing ok_to_give_up() and send "ACK %s ready" at the end
-of the current round if this round only contained common objects
-and ok_to_give_up() was therefore not called.  This may allow the
-client to break early, avoiding transmission of the COMMON_REFs.
+Most of the common references are tags in the ref/tags namespace,
+using points in the commit graph that are more than 1 commit apart.
+In git.git itself, this is currently 340 tags, 339 of which point to
+commits in the commit graph.  fetch-pack pushes all of these into
+rev_list, but is unable to mark them COMMON and discard during a
+remote's "ACK %s {continue,common}" because it does not parse through
+the entire parent chain.  Not parsing the entire parent chain is
+an optimization to avoid walking back to the roots of the repository.
+
+Assuming the client is only following the remote (and does not make
+its own local commits), the client needs 11 rounds to spin through
+the entire list of tags (32 commits per round, ceil(339/32) == 11).
+Unfortunately the server knows on the first "have %s" line that
+it can produce a good pack, and does not need to see the remaining
+320 tags in the other 10 rounds.
+
+Over git:// and ssh:// this isn't as bad as it sounds, the client is
+only transmitting an extra 16,000 bytes that it doesn't need to send.
+
+Over smart HTTP, the client must do an additional 10 HTTP POST
+requests, each of which incurs round-trip latency, and must upload
+the entire state vector of all known common objects.  On the final
+POST request, this is 16 KiB worth of data.
+
+Fix all of this by clearing rev_list as soon as the remote side
+says it can construct a pack.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- upload-pack.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+ builtin/fetch-pack.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index b40a43f..2a0f19e 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -429,6 +429,8 @@ static int get_common_commits(void)
- 	static char line[1000];
- 	unsigned char sha1[20];
- 	char last_hex[41];
-+	int got_common = 0;
-+	int got_other = 0;
- 
- 	save_commit_buffer = 0;
- 
-@@ -437,16 +439,22 @@ static int get_common_commits(void)
- 		reset_timeout();
- 
- 		if (!len) {
-+			if (multi_ack == 2 && got_common
-+					&& !got_other && ok_to_give_up())
-+				packet_write(1, "ACK %s ready\n", last_hex);
- 			if (have_obj.nr == 0 || multi_ack)
- 				packet_write(1, "NAK\n");
- 			if (stateless_rpc)
- 				exit(0);
-+			got_common = 0;
-+			got_other = 0;
- 			continue;
- 		}
- 		strip(line, len);
- 		if (!prefixcmp(line, "have ")) {
- 			switch (got_sha1(line+5, sha1)) {
- 			case -1: /* they have what we do not */
-+				got_other = 1;
- 				if (multi_ack && ok_to_give_up()) {
- 					const char *hex = sha1_to_hex(sha1);
- 					if (multi_ack == 2)
-@@ -456,6 +464,7 @@ static int get_common_commits(void)
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index b999413..dfacfdf 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -379,6 +379,8 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 					retval = 0;
+ 					in_vain = 0;
+ 					got_continue = 1;
++					if (ack == ACK_ready)
++					  rev_list = NULL;
+ 					break;
+ 					}
  				}
- 				break;
- 			default:
-+				got_common = 1;
- 				memcpy(last_hex, sha1_to_hex(sha1), 41);
- 				if (multi_ack == 2)
- 					packet_write(1, "ACK %s common\n", last_hex);
 -- 
 1.7.0.9.5.g6bd7.dirty
