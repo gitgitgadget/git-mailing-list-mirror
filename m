@@ -1,74 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] smart-http: Really never use Expect: 100-continue
-Date: Mon, 14 Mar 2011 11:28:17 -0700
-Message-ID: <1300127297-8025-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 19:28:27 2011
+From: Alexei Sholik <alcosholik@gmail.com>
+Subject: 'typechange' in the git-status output
+Date: Mon, 14 Mar 2011 20:29:57 +0200
+Message-ID: <AANLkTimWR0avW6mBWGa0ArVB8oZUM7nuvc5AYf=wgU-W@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 14 19:30:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzCVG-0002BK-MG
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 19:28:27 +0100
+	id 1PzCWt-0002ui-7W
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 19:30:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484Ab1CNS2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 14:28:21 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48433 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752328Ab1CNS2U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 14:28:20 -0400
-Received: by ywj3 with SMTP id 3so2163132ywj.19
-        for <git@vger.kernel.org>; Mon, 14 Mar 2011 11:28:20 -0700 (PDT)
-Received: by 10.236.27.98 with SMTP id d62mr6527052yha.5.1300127300084;
-        Mon, 14 Mar 2011 11:28:20 -0700 (PDT)
-Received: from localhost (sop.mtv.corp.google.com [172.18.74.69])
-        by mx.google.com with ESMTPS id l65sm5471735yhn.39.2011.03.14.11.28.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Mar 2011 11:28:19 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.1.408.gb6b16.dirty
+	id S1753474Ab1CNS37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 14:29:59 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:61774 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753446Ab1CNS37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 14:29:59 -0400
+Received: by wya21 with SMTP id 21so4634747wya.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 11:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=ZKO+IBf72rJIRF0wY65EKqEweqXHr9hUaMiCw9vJZKo=;
+        b=hAvGoTjFV1vE5vG93/dEL92zGKPfIZaNa8IEJ0NK2+IHvgZkHEnFXtQbzwG7ENVArH
+         gPD3m3v+pLoRxG9DnwQ6dE4oNbWgs60kduOUyeeiEZ3YwRlzp3zZIvDG79cUm35KoPUi
+         uyaF13SRUaSmY5cAheAoBY5TND87Rt6gPeZwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=oS352WcIJsd8IXyoIsGw3rNJ8xjKuDDMy3c/XGOz0jLmNvnMSiEK/3SVyblTJ8S0So
+         u0eglC4wpprEvswOiXwPHgvGbaJ4lhR9KQibGcqI8l7U2/IcYc8Gz+9+UEGO9EBr5yeq
+         ftFc4151dA7elPTMtSYF3Ibg2/cPBBSFRTbb0=
+Received: by 10.216.22.79 with SMTP id s57mr2604250wes.94.1300127397844; Mon,
+ 14 Mar 2011 11:29:57 -0700 (PDT)
+Received: by 10.216.1.142 with HTTP; Mon, 14 Mar 2011 11:29:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169005>
 
-libcurl may choose to try and use Expect: 100-continue for
-any type of POST, not just a Transfer: chunked-encoding type.
-Force it to disable this feature, as not all proxy servers support
-100-continue and leaving it enabled can cause 1 second stalls during
-the negotiation phase of fetch-pack/upload-pack.
+Hi git,
 
-In ("206b099d26 smart-http: Don't use Expect: 100-Continue") we
-tried to disable this for only large POST bodies, but it should be
-disabled for every POST body.
+I cloned git mirror from github[1]. When I run git-status in it's
+working directory, I see no output.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+But then, after copying the whole directory with 'cp -r' and running
+git-status in the newly created directory, I get the following:
 
- This should be applied onto the tip of sp/maint-smart-http-sans-100-continue.
+> # On branch master
+> # Changed but not updated:
+> #   (use "git add <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working directory)
+> #
+> #	typechange: RelNotes
 
- remote-curl.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+git-diff shows
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 256326a..1f41a90 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -453,12 +453,12 @@ static int post_rpc(struct rpc_state *rpc)
- 
- 	headers = curl_slist_append(headers, rpc->hdr_content_type);
- 	headers = curl_slist_append(headers, rpc->hdr_accept);
-+	headers = curl_slist_append(headers, "Expect:");
- 
- 	if (large_request) {
- 		/* The request body is large and the size cannot be predicted.
- 		 * We must use chunked encoding to send it.
- 		 */
--		headers = curl_slist_append(headers, "Expect:");
- 		headers = curl_slist_append(headers, "Transfer-Encoding: chunked");
- 		rpc->initial_buffer = 1;
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
+> diff --git a/RelNotes b/RelNotes
+> new file mode 100644
+> index 0000000..56c3863
+> --- /dev/null
+> +++ b/RelNotes
+> ... // the whole contents of the file
+
+Both copies of the repository are on the branch master with the latest
+commit 07873dc. Simply diffing copies of the RelNotes file gives no
+output.
+
+What happened with the copied repository? I've found a couple of
+instances of the word 'typechange' in the source, but no mention in
+the docs. What does it mean and what could be the cause of this
+change?
+
+
+  [1]: git://github.com/git/git.git
+
 -- 
-1.7.4.1.408.gb6b16.dirty
+Best regards,
+Alexei Sholik
