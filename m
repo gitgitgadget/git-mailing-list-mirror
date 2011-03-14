@@ -1,81 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git stash: status from current dir not top dir?
-Date: Mon, 14 Mar 2011 00:29:51 -0700
-Message-ID: <7v1v2agnww.fsf@alter.siamese.dyndns.org>
-References: <4D7A8AC9.1030506@gmail.com>
- <20110311223232.GA21410@sigill.intra.peff.net> <4D7B358A.5010101@gmail.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH] Clarify: rebase abort leaves <branch> checked-out
+Date: Mon, 14 Mar 2011 07:40:32 -0400
+Message-ID: <1300102832.5129.17.camel@drew-northup.unet.maine.edu>
+References: <1300035258.5129.12.camel@drew-northup.unet.maine.edu>
+	 <7vtyf6hkpo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 08:30:14 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	"Johannes E. Schindelin" <johannes.schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 12:41:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pz2EF-0007oE-Pf
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 08:30:12 +0100
+	id 1Pz69P-0003ac-Jh
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 12:41:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752437Ab1CNHaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 03:30:05 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59170 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752020Ab1CNHaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 03:30:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 792672829;
-	Mon, 14 Mar 2011 03:31:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iG+ioc4Ez5V8fLs5lteOwnc9KB0=; b=ZPpcI3
-	qnhotBPhsxNwCA4jlQ/cuR6Ov2X/YyfQCfSfiiGnPMO8K9k+XZK8Uo7Q9WaU4wOy
-	cZ0BkKO0O0EdaSEoKDCOvGYjHDRgZB5NJd807degdWmEfZKx5yVYpF3qrYeIE/dw
-	z0NTLK4IeFQqKW0EmNhikWyALfiE4iUvmIOFM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ieu+SvPICgfwX4pTGtRM2Rnia33/yGpv
-	CUV1eho2qnBaA7i0b+XazAfQedHYXUrxf/qMYp4x0GseTP1fFiCkq8x3r1QOaRgT
-	u8Y9ir6g8gwwpbqZLFCkdZM4vbGRqusR9JhT1gdM9cRpMs4d6pmrSLMgc0A+vbAG
-	ZwSUZx3NI30=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 468B12824;
-	Mon, 14 Mar 2011 03:31:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 446F92820; Mon, 14 Mar 2011
- 03:31:25 -0400 (EDT)
-In-Reply-To: <4D7B358A.5010101@gmail.com> (Piotr Krukowiecki's message of
- "Sat, 12 Mar 2011 09:57:46 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 13A2E054-4E0D-11E0-A91C-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754213Ab1CNLlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 07:41:22 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:38702 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753956Ab1CNLlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 07:41:22 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2EBeZm9014475
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 14 Mar 2011 07:40:40 -0400
+In-Reply-To: <7vtyf6hkpo.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=6
+	Fuz1=6 Fuz2=6
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p2EBeZm9014475
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1300707640.70529@4Q/ryDU0lXqmeyA4dT1moA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168985>
 
-Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
 
-> Subject: [PATCH] git stash: show status relative to current directory
->
-> git status shows modified paths relative to current directory, so it's
-> possible to copy&paste them directly, even if you're in a subdirectory.
->
-> But "git stash apply" always shows status from root of git repository.
-> This is misleading because you can't use the paths without modifications.
->
-> This is caused by changing directory to root of repository at the
-> beginning of git stash.
->
-> This patch makes git stash show status relative to current directory.
-> Instead of removing the "cd to toplevel", which would affect whole
-> script and might have other side-effects, the fix is to change directory
-> temporarily back to original dir just before displaying status.
->
-> Signed-off-by: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-> ---
+On Sun, 2011-03-13 at 12:41 -0700, Junio C Hamano wrote:
+> Drew Northup <drew.northup@maine.edu> writes:
+> 
+> > -The latter form is just a short-hand of `git checkout topic`
+> > -followed by `git rebase master`.
+> > +*NOTE:* The latter form is just a short-hand of `git checkout topic`
+> > +followed by `git rebase master`. If the rebase is aborted `topic` will 
+> > +remain the checked-out branch.
+> 
+> The behaviour is consistent between the case where "this on that" form
+> succeeds and it stops and gets aborted, and I think both are euqally
+> noteworthy.  So I'd suggest dropping "if aborted".
 
-Sensible. Thanks.
+So a synthetic look at that might be:
 
-Don't we want to protect this output with some tests?
+-If the rebase is aborted
++When rebase exits
+
+Comments?
+
+I'll see about re-rolling likewise (and on something with a more recent
+runtime!).
+
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
