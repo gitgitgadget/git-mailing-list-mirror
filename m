@@ -1,94 +1,69 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Question about used Workflows.
-Date: Tue, 15 Mar 2011 15:15:01 +0100
-Message-ID: <4D7F7465.8000307@op5.se>
-References: <20110315134331.GA5165@kudu.in-berlin.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [Support] Branch pointer does not move
+Date: Mon, 14 Mar 2011 16:24:52 +0100
+Message-ID: <AANLkTinDurbM0nd_WppA-KaVYdxZzT6593hneC4AK+91@mail.gmail.com>
+References: <op.vsb4lif0bl4hj1@metalltrottel.fritz.box> <AANLkTik5MGyw_6vnT8055Yap3Ca1pDQYpJ_RXiZQbwA4@mail.gmail.com>
+ <op.vsb95dilbl4hj1@metalltrottel.fritz.box> <AANLkTimW+01wriSjvEVEyQ8SE5RPxhGv_o2Rus9kw6ZQ@mail.gmail.com>
+ <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git-List <git@vger.kernel.org>
-To: Valentin Haenel <valentin@fsfe.org>
-X-From: git-owner@vger.kernel.org Tue Mar 15 15:15:23 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Franz Liedke <franz@develophp.org>
+X-From: git-owner@vger.kernel.org Mon Mar 14 16:25:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzV1u-0008IX-Pl
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 15:15:23 +0100
+	id 1Pz9eT-0002z5-Ra
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 16:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757906Ab1COOPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2011 10:15:15 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:46470 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757543Ab1COOPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2011 10:15:14 -0400
-Received: by fxm17 with SMTP id 17so605275fxm.19
-        for <git@vger.kernel.org>; Tue, 15 Mar 2011 07:15:13 -0700 (PDT)
-Received: by 10.223.76.147 with SMTP id c19mr3117668fak.55.1300198506344;
-        Tue, 15 Mar 2011 07:15:06 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id f16sm2035698faa.38.2011.03.15.07.15.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 15 Mar 2011 07:15:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7 ThunderGit/0.1a
-In-Reply-To: <20110315134331.GA5165@kudu.in-berlin.de>
+	id S1755837Ab1CNPZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 11:25:42 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:57937 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755531Ab1CNPZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 11:25:41 -0400
+Received: by gyf1 with SMTP id 1so919857gyf.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 08:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=3MfR7sZtX1VGYHp4c8Zx1qvpiD4dkVq830Ywx1ji15E=;
+        b=AA7izoTf8wevStLjCdBplbmnCOdO0M8cUMOXVrd7P69KZKEOtyQ2BLpvRKvqsFl8dl
+         Qb2hbvHWOxxN/UGB6wkCzS+7rY+XnTpskxdP3D93nEfzkUhCzSBquzuouM3J01PmuiPf
+         ARBcWkWgDqGpdjTMSWdYj1nmR0erFlxBLrMtw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=rNB1uTnL+zMzSeB1kiJJVm4BcAoeowbAGSefOW5AErm+rFM64cw0jW1Ij8/BlY15yj
+         QPprXRrze/RmQcx2JUauEbKtDUOB0MZohjixjU4tBlfyItX55d0fUJsd9mpsbaxod3/4
+         TFt8U8Io8TwLd0+c5Tsm3vKpSQeLee7nfsJ3k=
+Received: by 10.150.148.7 with SMTP id v7mr1156119ybd.49.1300116340377; Mon,
+ 14 Mar 2011 08:25:40 -0700 (PDT)
+Received: by 10.151.11.12 with HTTP; Mon, 14 Mar 2011 08:24:52 -0700 (PDT)
+In-Reply-To: <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169073>
 
-On 03/15/2011 02:43 PM, Valentin Haenel wrote:
-> Dear Git developers and contributors,
-> 
-> I was wondering what kind of workflow the Git project itself uses. From
-> what I gather much of the development takes place using the list, and
-> patches sent by mail.
+Heya,
 
-That's correct.
+On Mon, Mar 14, 2011 at 16:24, Franz Liedke <franz@develophp.org> wrote:
+> Oops, sorry I didn't make that clear. The branch pointer is still displayed
+> next to the old commit in SmartGit, the GUI I normally use.
 
-> Do any of the core contributers maintain public
-> developer repos?
+Have you tried turning it on and off again [0]? As in, did you close
+and start SmartGit and/or refresh it (if it has such an option)?
+Perhaps it keeps some sort of internal state.
 
-Some do, although most contributions are still sent as patches for
-public discussion and then taken from there by Junio who has some
-nifty routine for that already.
-
-Subpart maintainers, such as the gitk author Paul Mackerras (spelling?)
-have repos of their own from which Junio pulls on request. Normally
-that's in parts where Junio feels his knowledge lacking and he trusts
-the subpart maintainer. From what I've gathered, Tcl isn't Junio's
-strong point.
-
-> And how many developers on average have push privileges
-> to http://git.kernel.org/?p=git/git.git;a=summary?
-> 
-
-There's no "average" to it. Linus probably still has push access as
-he's the founding father and first maintainer. Junio ofcourse has it
-as the current maintainer. Shawn Pearce has taken over maintenance
-a few times when Junio has been absent for one reason or another. I
-doubt push privileges have been revoked in between absences. Oh, and
-ofcourse the kernel.org admin team have more or less implicit access
-to push, although the git community would certainly frown quite hard
-if they ever (ab)used their admin powers to do that.
-
-All that aside; By peer etiquette and for simplicity reasons, only
-the current maintainer ever pushes anything to kernel.org. Noone
-becomes maintainer (or kernel.org admin) without having invested a
-lot of time and shown a lot of devotion to the project.
-
-For some public credit, Junio's doing a great job both maintaining
-and choosing interim maintainers. I've rarely seen an opensource
-project where the maintainer so rarely (ever?) get annoyed at
-anything and keeps everything running smoothly.
+[0] http://www.youtube.com/watch?v=p85xwZ_OLX0
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Cheers,
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Sverre Rabbelier
