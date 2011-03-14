@@ -1,126 +1,60 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git stash: add --index-only, or --keep-index should not stash
- index?
-Date: Mon, 14 Mar 2011 17:21:54 -0500
-Message-ID: <4D7E9502.4060502@gmail.com>
-References: <4D7A6E37.8080104@gmail.com>
+From: Joseph Huttner <jhuttner@appnexus.com>
+Subject: Git workflow for beta/production
+Date: Mon, 14 Mar 2011 15:27:22 -0700
+Message-ID: <324BE2A8-5987-4324-AE27-D5CC01341710@appnexus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 23:22:08 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 14 23:37:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzG9P-0008HU-7w
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 23:22:07 +0100
+	id 1PzGOM-00064u-T1
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 23:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253Ab1CNWWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 18:22:01 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:37728 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932216Ab1CNWWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 18:22:00 -0400
-Received: by yia27 with SMTP id 27so2218787yia.19
-        for <git@vger.kernel.org>; Mon, 14 Mar 2011 15:22:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version
-         :newsgroups:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=skJRcFcqmj+ZdBxANSPbzeTF12mG0wUfNd0n9ixNYB8=;
-        b=ATS9lk5nnILme4ixnsFRBIPNckDEHmGZ7oW8WktsiCUlf2v4Exig4QyCn/uw9cMCIC
-         xPpso92AAHy+r9ao3j6aOXAN1N9y34tON3Msh5uxnjyELfaOt6Z7b4t1MSmpzV4PZ7e4
-         yjUOf+bWNSFIORZF7wpCbspy/x7ZhS1n83EyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=QUbj/CEIzpgmSHlfEk/9/9VMoGotl2nn/cm8CyPmfdl2sP182xJmF8AyifET/r9y4Y
-         /7k6/HmgYVN59MOj4Lqf416QE13w3wlK4rP2aWXA20jEDD6ysqB//+BgEcnypxs4QzvF
-         LWQ5xgiNlyLFF8y69jQFAdBtHvb0ruvc8GNwI=
-Received: by 10.90.199.19 with SMTP id w19mr2814090agf.19.1300141319764;
-        Mon, 14 Mar 2011 15:21:59 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id x31sm7125030ana.9.2011.03.14.15.21.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Mar 2011 15:21:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4D7A6E37.8080104@gmail.com>
+	id S1757433Ab1CNWh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 18:37:28 -0400
+Received: from exhub016-2.exch016.msoutlookonline.net ([207.5.72.164]:33702
+	"EHLO EXHUB016-2.exch016.msoutlookonline.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751593Ab1CNWh2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 18:37:28 -0400
+X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Mar 2011 18:37:28 EDT
+Received: from EXVMBX016-5.exch016.msoutlookonline.net ([207.5.72.175]) by
+ EXHUB016-2.exch016.msoutlookonline.net ([207.5.72.164]) with mapi; Mon, 14
+ Mar 2011 15:27:23 -0700
+Thread-Topic: Git workflow for beta/production
+Thread-Index: Acvilv0C1Aty+o1MRRqMeI5mISHJpA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169032>
 
-On 3/11/2011 12:47 PM, Piotr Krukowiecki wrote:
-> Hi,
->
-> I wanted to do something like "Testing partial commits" described in
-> git-stash documentation (see end of mail for reference). I think this
-> is a common scenario: you start working on some feature, then discover
-> a bug, start fixing it, but realize it needs more work. So now you have
-> two features that needs more work (both are not ready for committing).
->
-> The documentation says to use --keep-index in this case.
->
-> The problem is that --keep-index leaves changes in index intact, but at
-> the same time it saves them in stash. So if I edit those changes I'm likely
-> to get conflicts when applying the stash.
->
-> For example:
->
-> $ git init&&  echo a>  a&&  git add .&&  git commit -m a
-> $ echo x>  a&&  git add a&&  git stash save --keep-index
-> $ echo y>  a&&  git add a&&  git commit -m y
-> $ git stash pop
-> Auto-merging a
-> CONFLICT (content): Merge conflict in a
->
-> Maybe --keep-index should not stash staged changes? This would fix this
-> problem. And I can't  think of a situation when would want to stash changes
-> and at the same time keep them.
->
-> If --keep-index works correctly maybe a new option, for example --index-only
-> (or --cached-only?) could be introduced?
->
->
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
-> Testing partial commits::
->
-> You can use `git stash save --keep-index` when you want to make two or
-> more commits out of the changes in the work tree, and you want to test
-> each change before committing:
-> +
-> ----------------------------------------------------------------
-> # ... hack hack hack ...
-> $ git add --patch foo            # add just first part to the index
-> $ git stash save --keep-index    # save all other changes to the stash
-> $ edit/build/test first part
-> $ git commit -m 'First part'     # commit fully tested change
-> $ git stash pop                  # prepare to work on all other changes
-> # ... repeat above five steps until one commit remains ...
-> $ edit/build/test remaining parts
-> $ git commit foo -m 'Remaining parts'
-> ----------------------------------------------------------------
->
->
-behind-the-scenes, git stash saves your working tree as a commit and 
-your index as another commit.  "git-stash apply" and "git-stash pop" 
-only apply your stashed-index if you do "git-stash-apply --index".  The 
-default is to only apply your stashed-work-tree.  You can create new 
-branches from your stashes with "git-stash branch".  You may find that 
-much better to deal with for managing your work.  Stashes aren't really 
-intended to be the primary way to manage your work, but instead are a 
-supplement.  Branches are a better main tool for managing work.  You can 
-create a branch from your stash and when the branch is ready you can 
-merge it into your other branch.
+I am in search of a new Git workflow.  Previously, my team was essentially using using gitflow by Vincent Driessen (nvie).  It worked very well, but the needs of project have changed, so here are the new requirements:
 
-v/r,
-neal
+1.  A "Beta" environment that contains stable code for all features being considered for "Production."
+2.  A "Production" environment.  Rock-solid, well-tested code only.  
+
+The catch is that after a feature has been stomped on in Beta, it **may** go to Production, but only if Product Managers still think it is an important feature.  In other words, there is no guarantee that a feature in Beta will ever make it to Production.  It may be axed completely, in which case it would never get to Production and would be taken out of Beta.  Also, there is no guarantee that features that do make it to Production will go in in the order that they went in to Beta.  
+
+A few notes that may matter:
+
+a) Six developers on team and growing.  Will be 9 by the summer.
+b) Codebase is 110K in-house lines.
+c) Typically, a feature is worked on by 1-3 developers at a time.  Total development work on a feature can be anywhere from two hours to two months.  The median is about two weeks.
+d) Currently, per week, about 15 bug reports come in for today's equivalent of the Beta branch.
+
+Ideally, using the new workflow, releases to Beta would be a few times per week.  Releases to Production would be once per month.  This is the same as our current release cycle.
+
+I have been on the whiteboard trying to think about a Git workflow that suits my needs, but my head is spinning, which is a signal to me that I need help from more seasoned vets.  Any and all help is appreciated.
+
+-Joseph
