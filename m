@@ -1,87 +1,67 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: [PATCH v2] Clarify: rebase exit leaves <branch> checked-out
-Date: Mon, 14 Mar 2011 11:47:37 -0400
-Message-ID: <1300117657.5129.41.camel@drew-northup.unet.maine.edu>
-References: <7vtyf6hkpo.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [Support] Branch pointer does not move
+Date: Mon, 14 Mar 2011 16:48:22 +0100
+Message-ID: <4D7E38C6.4010804@drmicha.warpmail.net>
+References: <op.vsb4lif0bl4hj1@metalltrottel.fritz.box> <AANLkTik5MGyw_6vnT8055Yap3Ca1pDQYpJ_RXiZQbwA4@mail.gmail.com> <op.vsb95dilbl4hj1@metalltrottel.fritz.box> <AANLkTimW+01wriSjvEVEyQ8SE5RPxhGv_o2Rus9kw6ZQ@mail.gmail.com> <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	"Johannes E.Schindelin" <johannes.schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 16:48:28 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Franz Liedke <franz@develophp.org>
+X-From: git-owner@vger.kernel.org Mon Mar 14 16:52:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzA0R-0006QT-OU
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 16:48:28 +0100
+	id 1PzA3w-0000DX-5u
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 16:52:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515Ab1CNPsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 11:48:21 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:50230 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752154Ab1CNPsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 11:48:20 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2EFlfrG003543
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 14 Mar 2011 11:47:46 -0400
-In-Reply-To: <7vtyf6hkpo.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=6
-	Fuz1=6 Fuz2=6
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p2EFlfrG003543
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1300722468.28801@4cti6RbNJgA6Lh9qTpASWA
+	id S1755501Ab1CNPvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 11:51:55 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:37406 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752892Ab1CNPvy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2011 11:51:54 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D7B0120B93;
+	Mon, 14 Mar 2011 11:51:53 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 14 Mar 2011 11:51:53 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=u4zGsPTyZ88JVU/0JAQIO1ucei8=; b=lVbHHjIxpaf077jCPRIJN1IjFHAF/WmKk4gkbazj5I882yR65gm7AP8ivfOYLtyEwqSojtXiqQBAtpa9+0Qp+ETlxRR4JT4LTVgdSuCbl29oZGzVD1nT/sAiK7aZ9NAQZMFkFcO1yn5hmv1WLPF8HrB0YwNAyWSex47L9ywwWB4=
+X-Sasl-enc: qTDpYPAQVJFR9QGieFYDii2x3qgIAHXG4Tx7XTQczV60 1300117913
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3CD66441DE8;
+	Mon, 14 Mar 2011 11:51:53 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168995>
 
-This change makes it clearer that while the change
-to the history effected by executing
-'git rebase master' and 'git rebase master topic'
-(in the example given) will be the same the
-implicit checkout of the second form will always
-remain following the rebase.
+Franz Liedke venit, vidit, dixit 14.03.2011 16:24:
+> Oops, sorry I didn't make that clear. The branch pointer is still  
+> displayed next to the old commit in SmartGit, the GUI I normally use.
+> 
+> On Mon, 14 Mar 2011 16:19:39 +0100, Sverre Rabbelier  
+> <srabbelier@gmail.com> wrote:
+> 
+>> Heya,
+>>
+>> On Mon, Mar 14, 2011 at 16:18, Franz Liedke <franz@develophp.org> wrote:
+>>> "git status" and "git branch" both tell me I'm on my feature branch.
+>>
+>> And that one _is_ updating?
+>>
+>>> .git/packed-refs and .git/info/refs are both not updated.
+>>
+>> That's fine, don't worry about those.
+>>
 
-Signed-off-by: Drew Northup <drew.northup@maine.edu>
----
+So, taking a step back - when you "make a commit", do you mean using git
+or using smartgit? Have you been mixing git command line and smartgit
+actions (while smartgit was running)?
 
-This applies cleanly to both master and pu. Changed patch subject to
-better match the amended contents.
-
- Documentation/git-rebase.txt |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 96680c8..ac35894 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -66,8 +66,9 @@ would be:
-     D---E---F---G master
- ------------
- 
--The latter form is just a short-hand of `git checkout topic`
--followed by `git rebase master`.
-+*NOTE:* The latter form is just a short-hand of `git checkout topic`
-+followed by `git rebase master`. When rebase exits `topic` will
-+remain the checked-out branch.
- 
- If the upstream branch already contains a change you have made (e.g.,
- because you mailed a patch which was applied upstream), then that commit
--- 
-1.7.4
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Michael
