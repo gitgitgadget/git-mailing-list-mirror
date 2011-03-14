@@ -1,73 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] object.h: Remove obsolete struct object_refs
-Date: Mon, 14 Mar 2011 10:48:41 -0700
-Message-ID: <7voc5degp2.fsf@alter.siamese.dyndns.org>
-References: <4D7E4118.6060802@elegosoft.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] smart-http: Really never use Expect: 100-continue
+Date: Mon, 14 Mar 2011 11:28:17 -0700
+Message-ID: <1300127297-8025-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
-To: Jakob Pfender <jpfender@elegosoft.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 18:48:56 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 19:28:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzBt2-0007iO-0p
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 18:48:56 +0100
+	id 1PzCVG-0002BK-MG
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 19:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752757Ab1CNRsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 13:48:50 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63866 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751249Ab1CNRst (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 13:48:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F86C3397;
-	Mon, 14 Mar 2011 13:50:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0+uIdnS9PIrSeXhLLaQk59+azwQ=; b=uXqgqH
-	fYKJb4sQP/IYL1jbVGztenj9X3a1I5e3jvnYsMiJnWnemm/+qyX8TTpGDJEBynMV
-	/WirA3fjb2kYEPdnq5H5vJHc6IrnCu3q+ywQ/+yAMMpCYGXbi4bR5MAcBqKohlLe
-	/hRz8sV1lXgx89zIiRN8xGv9ivXEbWxuhbe/M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SaH1vU+L6pP0Ce2q0JEtruarnajt6AXi
-	UNBugkLm4aDMSLsVsxsffOac+JHP1A4ovQYwqYjGTQDJ6aVBTFF2ZgM1Dl2rz0W3
-	Skq72sFN9TunoRJ06QnvAY0ct57HrPMd4v4yz/5NMPhreSwm0e8/AXRHYMskvrdp
-	/qwe6mybHdg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6DC073395;
-	Mon, 14 Mar 2011 13:50:16 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 981BF3394; Mon, 14 Mar 2011
- 13:50:13 -0400 (EDT)
-In-Reply-To: <4D7E4118.6060802@elegosoft.com> (Jakob Pfender's message of
- "Mon, 14 Mar 2011 17:23:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 85248AC4-4E63-11E0-9CB0-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753484Ab1CNS2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 14:28:21 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:48433 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752328Ab1CNS2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 14:28:20 -0400
+Received: by ywj3 with SMTP id 3so2163132ywj.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 11:28:20 -0700 (PDT)
+Received: by 10.236.27.98 with SMTP id d62mr6527052yha.5.1300127300084;
+        Mon, 14 Mar 2011 11:28:20 -0700 (PDT)
+Received: from localhost (sop.mtv.corp.google.com [172.18.74.69])
+        by mx.google.com with ESMTPS id l65sm5471735yhn.39.2011.03.14.11.28.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 14 Mar 2011 11:28:19 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.1.408.gb6b16.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169004>
 
-Jakob Pfender <jpfender@elegosoft.com> writes:
+libcurl may choose to try and use Expect: 100-continue for
+any type of POST, not just a Transfer: chunked-encoding type.
+Force it to disable this feature, as not all proxy servers support
+100-continue and leaving it enabled can cause 1 second stalls during
+the negotiation phase of fetch-pack/upload-pack.
 
-> The struct object_refs in object.h is never used anywhere, so remove it.
->
-> Signed-off-by: Jakob Pfender <jpfender@elegosoft.com>
+In ("206b099d26 smart-http: Don't use Expect: 100-Continue") we
+tried to disable this for only large POST bodies, but it should be
+disabled for every POST body.
 
-Thanks; I'd rephrase the above like this (no need to resend):
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-	7914053 (Remove unused object-ref code, 2008-02-25) removed
-        all uses of the structure from the code, but forgot to remove
-        the type definition itself.
+ This should be applied onto the tip of sp/maint-smart-http-sans-100-continue.
 
-Thanks.
+ remote-curl.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-
-
-	
+diff --git a/remote-curl.c b/remote-curl.c
+index 256326a..1f41a90 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -453,12 +453,12 @@ static int post_rpc(struct rpc_state *rpc)
+ 
+ 	headers = curl_slist_append(headers, rpc->hdr_content_type);
+ 	headers = curl_slist_append(headers, rpc->hdr_accept);
++	headers = curl_slist_append(headers, "Expect:");
+ 
+ 	if (large_request) {
+ 		/* The request body is large and the size cannot be predicted.
+ 		 * We must use chunked encoding to send it.
+ 		 */
+-		headers = curl_slist_append(headers, "Expect:");
+ 		headers = curl_slist_append(headers, "Transfer-Encoding: chunked");
+ 		rpc->initial_buffer = 1;
+ 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
+-- 
+1.7.4.1.408.gb6b16.dirty
