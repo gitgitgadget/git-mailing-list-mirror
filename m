@@ -1,82 +1,72 @@
-From: Jakob Pfender <jpfender@elegosoft.com>
-Subject: [PATCH] revision.c: Clarify error message for missing objects
-Date: Mon, 14 Mar 2011 16:11:54 +0100
-Organization: elego Software Solutions GmbH
-Message-ID: <4D7E303A.5090605@elegosoft.com>
-References: <7vzkp1y0jr.fsf@alter.siamese.dyndns.org>
+From: "Franz Liedke" <franz@develophp.org>
+Subject: Re: [Support] Branch pointer does not move
+Date: Mon, 14 Mar 2011 16:24:31 +0100
+Organization: develoPHP
+Message-ID: <op.vscae5mbbl4hj1@metalltrottel.fritz.box>
+References: <op.vsb4lif0bl4hj1@metalltrottel.fritz.box>
+ <AANLkTik5MGyw_6vnT8055Yap3Ca1pDQYpJ_RXiZQbwA4@mail.gmail.com>
+ <op.vsb95dilbl4hj1@metalltrottel.fritz.box>
+ <AANLkTimW+01wriSjvEVEyQ8SE5RPxhGv_o2Rus9kw6ZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=iso-8859-15; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 14 16:21:12 2011
+Cc: git@vger.kernel.org
+To: "Sverre Rabbelier" <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 16:23:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pz9a1-0000VW-Ue
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 16:21:10 +0100
+	id 1Pz9bo-0001W7-BH
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 16:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226Ab1CNPVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 11:21:01 -0400
-Received: from mx0.elegosoft.com ([88.198.54.133]:43339 "EHLO
-	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752481Ab1CNPVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 11:21:00 -0400
-X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Mar 2011 11:21:00 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id AF3A51B4B97
-	for <git@vger.kernel.org>; Mon, 14 Mar 2011 16:12:46 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KJSjXLALXmxQ for <git@vger.kernel.org>;
-	Mon, 14 Mar 2011 16:12:01 +0100 (CET)
-Received: from [10.10.10.30] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 93C8E1B4B82
-	for <git@vger.kernel.org>; Mon, 14 Mar 2011 16:11:55 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
-In-Reply-To: <7vzkp1y0jr.fsf@alter.siamese.dyndns.org>
+	id S1752577Ab1CNPWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 11:22:54 -0400
+Received: from relay01.alfahosting-server.de ([80.86.191.88]:59077 "EHLO
+	relay01.alfahosting-server.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752426Ab1CNPWy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2011 11:22:54 -0400
+Received: by relay01.alfahosting-server.de (Postfix, from userid 1001)
+	id 10AE232C01BC; Mon, 14 Mar 2011 16:22:53 +0100 (CET)
+X-Spam-DCC: wuwien: relay01 1290; Body=1 Fuz1=1 Fuz2=1
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=7.0 tests=BAYES_50 autolearn=disabled
+	version=3.2.5
+Received: from alfa3007.alfahosting-server.de (alfa3007.alfahosting-server.de [82.197.146.14])
+	by relay01.alfahosting-server.de (Postfix) with ESMTP id 424D732C0041;
+	Mon, 14 Mar 2011 16:22:50 +0100 (CET)
+Received: from metalltrottel.fritz.box (sd-89-66.stud.uni-potsdam.de [141.89.89.66])
+	by alfa3007.alfahosting-server.de (Postfix) with ESMTPSA id 2AD712F04A83;
+	Mon, 14 Mar 2011 16:22:50 +0100 (CET)
+In-Reply-To: <AANLkTimW+01wriSjvEVEyQ8SE5RPxhGv_o2Rus9kw6ZQ@mail.gmail.com>
+User-Agent: Opera Mail/11.01 (Win32)
+X-Virus-Status: No
+X-Virus-Checker-Version: clamassassin 1.2.4 with ClamAV 0.97/12833/Mon Mar 14 09:09:46 2011
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168993>
 
-[Sorry Junio, accidentally sent this to just you the first time around]
+Oops, sorry I didn't make that clear. The branch pointer is still  
+displayed next to the old commit in SmartGit, the GUI I normally use.
 
-If "git show" is invoked on a hash for a file that doesn't exist, the
-produced error message was "fatal: bad object <hash>". This is
-misleading as the object isn't bad, but missing. As a matter of fact, if
-an object is bad, this error message is never produced, because
-parse_object() terminates with its own error message if the object is
-corrupt.
+On Mon, 14 Mar 2011 16:19:39 +0100, Sverre Rabbelier  
+<srabbelier@gmail.com> wrote:
 
-This patch introduces a check to see whether an object exists (with the
-appropriate error message if it doesn't) and removes the unnecessary and
-misleading original error message if parse_object() fails.
+> Heya,
+>
+> On Mon, Mar 14, 2011 at 16:18, Franz Liedke <franz@develophp.org> wrote:
+>> "git status" and "git branch" both tell me I'm on my feature branch.
+>
+> And that one _is_ updating?
+>
+>> .git/packed-refs and .git/info/refs are both not updated.
+>
+> That's fine, don't worry about those.
+>
 
-Signed-off-by: Jakob Pfender <jpfender@elegosoft.com>
----
-  revision.c |    4 ++--
-  1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 86d2470..085aac2 100644
---- a/revision.c
-+++ b/revision.c
-@@ -173,9 +173,9 @@ static struct object *get_reference(struct rev_info 
-*revs, const char *name, con
-  {
-      struct object *object;
-
-+    if (sha1_object_info(sha1, NULL) < 0)
-+        die("Not a valid object name %s", name);
-      object = parse_object(sha1);
--    if (!object)
--        die("bad object %s", name);
-      object->flags |= flags;
-      return object;
-  }
 -- 
-1.7.0.4
+Using Opera's revolutionary email client: http://www.opera.com/mail/
