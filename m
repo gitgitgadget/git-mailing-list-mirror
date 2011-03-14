@@ -1,87 +1,79 @@
-From: Drew Northup <drew.northup@maine.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: 'typechange' in the git-status output
-Date: Mon, 14 Mar 2011 14:59:21 -0400
-Message-ID: <1300129161.13980.4.camel@drew-northup.unet.maine.edu>
+Date: Mon, 14 Mar 2011 14:22:38 -0500
+Message-ID: <20110314192238.GA30378@elie>
 References: <AANLkTimWR0avW6mBWGa0ArVB8oZUM7nuvc5AYf=wgU-W@mail.gmail.com>
-	 <AANLkTikkHWFrjmrPMP_poxrkCwE34jqaFDbU1Roouw--@mail.gmail.com>
+ <AANLkTikkHWFrjmrPMP_poxrkCwE34jqaFDbU1Roouw--@mail.gmail.com>
+ <1300129161.13980.4.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Alexei Sholik <alcosholik@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 19:59:45 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexei Sholik <alcosholik@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 14 20:22:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzCzY-0008WU-6k
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 19:59:44 +0100
+	id 1PzDLx-0001wJ-2J
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 20:22:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221Ab1CNS7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 14:59:38 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:41917 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367Ab1CNS7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 14:59:37 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2EIxRQb016951
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 14 Mar 2011 14:59:27 -0400
-In-Reply-To: <AANLkTikkHWFrjmrPMP_poxrkCwE34jqaFDbU1Roouw--@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
-	Fuz2=3
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p2EIxRQb016951
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1300733968.50048@rmj9t2CdezrB2biDJYxE8Q
+	id S1755927Ab1CNTWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 15:22:47 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:47766 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753022Ab1CNTWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 15:22:46 -0400
+Received: by vxi39 with SMTP id 39so4663994vxi.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 12:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=1DpKD3vh5eM+V51vSUSnk/LzpDgPquZ50nhQw2igSmg=;
+        b=CpxPJU5XtOpY/CgHNI7LI0bL9Q/OG9x2wmzzvsBbocK2yYAU1/jwEfeeKSws7ATYFB
+         m+IQdZCHSVabDzLptPbjjdfMuFTCuUhUKef0Bb6e73AELOFiKHsmoMdm+2jbU4apwukH
+         aRT3EcRaNdZQ14hHvI3ev6wlL2bY9PJx41wdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ruesioVNwFjCYQtv+fllC7fqG7DCz7noDNBPW49IuaLz4uTEgYxecnLRMh5MXqdMXv
+         n1qekT8aRPi+z5/e1HbJIkIqlZ7Gf+a/RTiL3azzoI4n6Rc5wHTyc+Xo1o9xHNN7hVwp
+         Jyw+0zPMZcLYosSBb3d0xvibgIndCLxw8it10=
+Received: by 10.52.91.231 with SMTP id ch7mr6669572vdb.14.1300130566077;
+        Mon, 14 Mar 2011 12:22:46 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id c16sm1745629vdu.31.2011.03.14.12.22.43
+        (version=SSLv3 cipher=OTHER);
+        Mon, 14 Mar 2011 12:22:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1300129161.13980.4.camel@drew-northup.unet.maine.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169009>
 
+Hi,
 
-On Mon, 2011-03-14 at 20:39 +0200, Alexei Sholik wrote:
-> On 14 March 2011 20:29, Alexei Sholik <alcosholik@gmail.com> wrote:
-> > Hi git,
-> >
-> > I cloned git mirror from github[1]. When I run git-status in it's
-> > working directory, I see no output.
-> >
-> > But then, after copying the whole directory with 'cp -r' and running
-> > git-status in the newly created directory, I get the following:
+Drew Northup wrote:
 
+> As has been said more than a few times (and is probably somewhere in the
+> docs), if you really want to duplicate a git repo you should probably be
+> using git to do it.
 
-> Right, I've figured out the root of the change.
-> 
-> 'ls -l' on the original RelNotes outputs:
->   lrwxr-xr-x  1 alco  staff  32 Mar 14 20:35 RelNotes ->
-> Documentation/RelNotes/1.7.5.txt
-> 
-> 'ls -l' on the copied RelNotes outputs:
->   -rw-r--r--  1 alco  staff  1810 Mar 14 20:10 RelNotes
-> 
-> So the problem is with the cp, not git. But I wonder if it is
-> mentioned anywhere in the docs? Probably, git-clone's or git-status'
-> manpage would be a proper place?
+FWIW I don't agree with this advice.  "cp -a" works perfectly well and
+I think that's a valuable thing.
 
-Quoting Jeff King <peff@peff.net>:
+On the other hand, if you want to _back up_ or sneakernet a git repo,
+I agree that "git bundle create /path/to/backup.bundle --all" is
+better.
 
-> "cp -r" isn't an exact copy. You probably want "cp -a" or at least "cp
-> -rs".
-.....
-> Right. RelNotes is a symlink. But "cp -r" dereferences the symlink and
-> copies the file contents themselves.
+Perhaps the user manual could explain this somewhere.
 
-As has been said more than a few times (and is probably somewhere in the
-docs), if you really want to duplicate a git repo you should probably be
-using git to do it. No change to the manpages is required here.
-
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Hope that helps,
+Jonathan
