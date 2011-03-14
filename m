@@ -1,83 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] git-bisect.txt: example for bisecting with hotfix
-Date: Mon, 14 Mar 2011 14:47:20 +0100
-Message-ID: <cf85600a90cea6a0a751c674b821d17d85f34c66.1300109828.git.git@drmicha.warpmail.net>
-References: <20110314131623.119020@gmx.net>
-Cc: Jan Beulich <JBeulich@novell.com>, "H.J. Lu" <hjl.tools@gmail.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@elte.hu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 14 14:51:04 2011
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [Support] Branch pointer does not move
+Date: Mon, 14 Mar 2011 16:09:39 +0100
+Message-ID: <AANLkTik5MGyw_6vnT8055Yap3Ca1pDQYpJ_RXiZQbwA4@mail.gmail.com>
+References: <op.vsb4lif0bl4hj1@metalltrottel.fritz.box>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Franz Liedke <franz@develophp.org>
+X-From: git-owner@vger.kernel.org Mon Mar 14 16:10:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pz8Aq-0005Bi-4t
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 14:51:04 +0100
+	id 1Pz9Pe-00030h-Po
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Mar 2011 16:10:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752299Ab1CNNuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 09:50:54 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:44985 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751808Ab1CNNux (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2011 09:50:53 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7700A2069A;
-	Mon, 14 Mar 2011 09:50:52 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 14 Mar 2011 09:50:52 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=9greniw7Zl/6DNJY2m89PZBjz2k=; b=lzLO7+QKVARejj/t45witxopDtWX/5OyulNU9i8jrS4pvm/CbsY2xl7gxW+KE3XoX3rSK6TyjKTKNBcJHNNhx8EJcnIANfZz5eKgWchEMkxqUFd7E2cDvo9n62gEPEhPzSAavz6TMx0lJj64jXNzwFWYNnEL1duwrbeNgI8oWZ4=
-X-Sasl-enc: a8KptSRpnFs3KWYBg4rtV1UdoZvBjXeUosWcVkTxZTvK 1300110652
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id ED4764011EA;
-	Mon, 14 Mar 2011 09:50:51 -0400 (EDT)
-X-Mailer: git-send-email 1.7.4.1.404.g62d316
-In-Reply-To: <20110314131623.119020@gmx.net>
+	id S1751879Ab1CNPKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 11:10:21 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:59156 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751412Ab1CNPKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 11:10:20 -0400
+Received: by gwaa18 with SMTP id a18so1852652gwa.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 08:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=kiYdgwO4VI/et/S2qbPhYA5QAYbq4nB8YzBZcR0TIEs=;
+        b=VQHhrzdERtgzp6gIkQ43nTuO6snL7SsCkEwdLg57u/QsLDA00H8/fnUl2/Dh5lCmjw
+         YZMw8AvD0n1EfVBsFWd2eGlGTIsvg7X1VJvMr1/0D1ETu+4OoePdAG52z4KLpmvDCLrt
+         I0YyQirPj5bQdPc+6fyR54nIynJXob2028pgA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=mcJb0Ch3q8N6/pPBufcwFmRL5wei8/F6C8wLszayv4t2/XYDwIZrOXBnMxIpWY4NML
+         RblsG76FiFDwrKPvsp9IHByn88hHz+ne7XQnqZ9DjgfwNJWy7LGzAjqnMmZ09UsCyPY6
+         upUJG3yE45FTXv8mg2UzabTSoNjOvqr0g6Tjw=
+Received: by 10.150.204.19 with SMTP id b19mr5998088ybg.163.1300115419157;
+ Mon, 14 Mar 2011 08:10:19 -0700 (PDT)
+Received: by 10.151.11.12 with HTTP; Mon, 14 Mar 2011 08:09:39 -0700 (PDT)
+In-Reply-To: <op.vsb4lif0bl4hj1@metalltrottel.fritz.box>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/168989>
 
-Give an example on how to bisect when older revisions need a hotfix to
-build, run or test. Triggered by the binutils/kernel issue at
+Heya,
 
-http://thread.gmane.org/gmane.comp.gnu.binutils/52601/focus=1112779
+On Mon, Mar 14, 2011 at 14:18, Franz Liedke <franz@develophp.org> wrote:
+> I am currently having some trouble with a local Git branch.
+> It seems the branch pointer is not updated when I make new commits to that
+> particular branch.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Maybe this doc fix would do. Just tag the hotfix and tell people to cherry-pick it
-like this. I don't think "git bisect --with-fix=hotfix" would be much simpler.
-(culling kernel list from cc - don't apply this to the wrong tree :)
+You might not be on any branch/the branch you expect. What does 'git
+status' and 'git branch ' say?
 
- Documentation/git-bisect.txt |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index c39d957..25acf26 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -322,6 +322,17 @@ $ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
- +
- Does the same as the previous example, but on a single line.
- 
-+* Bisect with compatibility hotfix:
-++
-+------------
-+$ git bisect start HEAD HEAD~10 --   # culprit is among the last 10
-+$ git bisect run sh -c "git cherry-pick -n hotfix || exit 125; make || exit 125; ~/check_test_case.sh"
-+------------
-++
-+Does the same as the previous example, but applies an additional patch
-+before building. This is useful when your build or test environment changed so
-+that older revisions may need a fix which newer ones have already.
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
 -- 
-1.7.4.1.404.g62d316
+Cheers,
+
+Sverre Rabbelier
