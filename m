@@ -1,106 +1,88 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [PATCH] Document 'git bisect fix'.
-Date: Tue, 15 Mar 2011 11:16:20 +0100
-Organization: Bertin Technologies
-Message-ID: <20110315111620.73108597@chalon.bertin.fr>
-References: <20110314210001.GE4586@gmx.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFD] git stash over OpenBSD/Linux NFS - cp -p breakage
+Date: Tue, 15 Mar 2011 11:58:50 +0100
+Message-ID: <4D7F466A.4090508@viscovery.net>
+References: <4D7F3AA4.1080202@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git list <git@vger.kernel.org>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 15 11:35:51 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, casey@nrlssc.navy.mil, jon.seymour@gmail.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakob Pfender <jpfender@elegosoft.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 11:59:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzRbS-0000SG-S2
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 11:35:51 +0100
+	id 1PzRy0-0001WA-26
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 11:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757164Ab1COKfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2011 06:35:45 -0400
-Received: from blois.bertin.fr ([195.68.26.9]:41277 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756192Ab1COKfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2011 06:35:44 -0400
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 26F75542E8
-	for <git@vger.kernel.org>; Tue, 15 Mar 2011 11:35:43 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 01E3D542D5
-	for <git@vger.kernel.org>; Tue, 15 Mar 2011 11:35:43 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0LI300MLDHFII4B0@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Tue, 15 Mar 2011 11:35:42 +0100 (CET)
-In-reply-to: <20110314210001.GE4586@gmx.de>
-X-Mailer: Claws Mail 3.7.8 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.5.0.1024-18012.004
+	id S1757127Ab1COK67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2011 06:58:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:29397 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756239Ab1COK66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2011 06:58:58 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PzRxi-0001FA-Tg; Tue, 15 Mar 2011 11:58:51 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 9B81F1660F;
+	Tue, 15 Mar 2011 11:58:50 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <4D7F3AA4.1080202@elegosoft.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169061>
 
-Hi Ralf,
+Am 3/15/2011 11:08, schrieb Jakob Pfender:
+> We have an NFS setup with Linux machines mounting an NFS that is hosted on
+> an OpenBSD server. Recently, we discovered git-stash breaking with:
+> 
+> $ git stash
+> cp: preserving permissions for
+> `/home/jpfender/stashtest/.git/.git-stash.3056-index': Operation not
+> supported
+> Cannot save the current worktree state
+> 
+> This was discovered to be caused by a bug in cp that causes 'cp -p' to
+> fail in this particular NFS setup - preserving permissions in an NFS
+> shared across Linux and OpenBSD machines doesn't work.
+> 
+> I looked at git-stash.sh and could not discover a reason why it had to use
+> 'cp -p'. I patched it to use only cp without preserving permissions, and
+> everything seemed to work fine. All stash tests succeeded (bar two known
+> breakages).
+> 
+> So my question is: Does git-stash really need 'cp -p'? Is it safe to remove?
 
-Maybe you should have made it more obvious that this patch is a RFC
-for a proposed feature (say, in subject line).
+Yes. No.
 
->'git bisect fix' teaches bisect about when some known bug was
->introduced and when it was fixed, so that bisect can merge in
->the fix when needed into new test candidates.
+The timestamp of the index file is important. It is needed to discover
+racily-clean index entries. Therefore, the -p must remain.
 
-This sounds like a great idea.  I do have myself to do conditional
-cherry-picks from bisect scripts, to deal with this problem.
+You can also try the patch below. Warning: completely untested.
 
->If some bug was fixed by a merge only, the more general notation
->"f_1 ^b_1 ^b_1' ..." could apply.
+-- Hannes
 
-Some more precise example may make this case more clear.
-
-
-+Fixing up known bugs
-+~~~~~~~~~~~~~~~~~~~~
-+
-+If many revisions are broken due to some unrelated but known issue that
-+is easily fixed, you might want to prefer fixing it up temporarily.
-
-It seems natural for "bisect run" to use this mechanism.  What about
-the non-automated process ?  We may want to get the fixes applied, or
-to only list available fixes to the user so he can "git merge" them
-manually, or maybe an interactive selection mode ?  Probably something
-to be chosen via some config variable and flags, in a separate patch
-of the would-be series.  But what happens initially will be a good thing
-to document.
-
-+If `<commit1>` introduces a bug fixed by `<commit2>`, instruct bisect
-+to merge the latter before testing a commit that contains the former:
-+
-+------------
-+$ git bisect fix <commit1>..<commit2>
-+------------
-
-Usually, a bug also gets fixed by an official commit which does not
-fulfill the constraint of being branched at the faulty one.  In this
-case you don't want to merge the fix if such a fix is already included,
-and thus you will need a way to specify "alternate fixes" to control
-this.
-
-+A single `<commit>` acts as if `<commit>^..<commit>` was specified.
-+Fix statements can be repeated for every known bug, and are valid until
-+the bisection state is cleaned up with reset.
-
-That is on the safe side, but we may at some point want some sort of
-"repository of fixes", where this info gets stored for easy reuse on
-subsequent bisections.
-
-+Any bisect action that causes a new commit to be chosen will try to merge
-+the needed fixes and fail if they do not merge cleanly.
-
-maybe "... similar to what happens when a bisect-run script terminates with exit code
-greated than 127." ?
-
--- 
-Yann Dirson - Bertin Technologies
+diff --git a/git-stash.sh b/git-stash.sh
+index 7561b37..fa62135 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -82,10 +82,9 @@ create_stash () {
+ 		# state of the working tree
+ 		w_tree=$( (
+ 			rm -f "$TMP-index" &&
+-			cp -p ${GIT_INDEX_FILE-"$GIT_DIR/index"} "$TMP-index" &&
++			git read-tree --index-output="$TMP-index" -m $i_tree &&
+ 			GIT_INDEX_FILE="$TMP-index" &&
+ 			export GIT_INDEX_FILE &&
+-			git read-tree -m $i_tree &&
+ 			git diff --name-only -z HEAD | git update-index -z --add --remove --stdin &&
+ 			git write-tree &&
+ 			rm -f "$TMP-index"
