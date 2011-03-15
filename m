@@ -1,73 +1,50 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: [PATCH 3/3] git-p4: Fix error message crash in P4Sync.commit.
-Date: Tue, 15 Mar 2011 13:08:03 +0100
-Message-ID: <1300190883-31833-3-git-send-email-torarvid@gmail.com>
-References: <1300190883-31833-1-git-send-email-torarvid@gmail.com>
+From: Valentin Haenel <valentin@fsfe.org>
+Subject: Question about used Workflows.
+Date: Tue, 15 Mar 2011 14:43:31 +0100
+Message-ID: <20110315134331.GA5165@kudu.in-berlin.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Tor Arvid Lund <torarvid@gmail.com>
-To: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 14:08:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Valentin Haenel <valentin@fsfe.org>
+To: Git-List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 15 14:50:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzTzI-0001Aw-82
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 14:08:36 +0100
+	id 1PzUe2-0004RI-1y
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 14:50:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757723Ab1CONIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2011 09:08:24 -0400
-Received: from thalia-smout.broadpark.no ([80.202.8.21]:46152 "EHLO
-	thalia-smout.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757727Ab1CONIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2011 09:08:22 -0400
-Received: from terra-smin.broadpark.no ([80.202.8.13])
- by thalia-smout.broadpark.no
- (Sun Java(tm) System Messaging Server 7u3-15.01 64bit (built Feb 12 2010))
- with ESMTP id <0LI300DNBLPW7I40@thalia-smout.broadpark.no> for
- git@vger.kernel.org; Tue, 15 Mar 2011 13:08:20 +0100 (CET)
-Received: from exchange.qsystems.no ([84.49.55.106]) by terra-smin.broadpark.no
- (Sun Java(tm) System Messaging Server 7u3-15.01 64bit (built Feb 12 2010))
- with ESMTP id <0LI3008QSLPW7Z20@terra-smin.broadpark.no> for
- git@vger.kernel.org; Tue, 15 Mar 2011 13:08:20 +0100 (CET)
-Received: from pingvin1 ([192.168.223.6]) by exchange.qsystems.no with
- Microsoft SMTPSVC(6.0.3790.4675); Tue, 15 Mar 2011 13:08:20 +0100
-Received: by pingvin1 (Postfix, from userid 1000)	id 8DCB5240910; Tue,
- 15 Mar 2011 13:08:20 +0100 (CET)
-X-Mailer: git-send-email 1.7.3.1.68.g06779.dirty
-In-reply-to: <1300190883-31833-1-git-send-email-torarvid@gmail.com>
-X-OriginalArrivalTime: 15 Mar 2011 12:08:20.0656 (UTC)
- FILETIME=[ACFB6B00:01CBE309]
+	id S1757188Ab1CONuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2011 09:50:32 -0400
+Received: from kudu.in-berlin.de ([192.109.42.123]:41715 "EHLO
+	kudu.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754351Ab1CONub (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2011 09:50:31 -0400
+X-Greylist: delayed 417 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Mar 2011 09:50:31 EDT
+Received: from kudu.in-berlin.de (localhost [127.0.0.1])
+	by kudu.in-berlin.de (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p2FDhVIl017847;
+	Tue, 15 Mar 2011 14:43:31 +0100
+Received: (from esc@localhost)
+	by kudu.in-berlin.de (8.14.3/8.14.3/Submit) id p2FDhVo6017846;
+	Tue, 15 Mar 2011 14:43:31 +0100
+X-Authentication-Warning: kudu.in-berlin.de: esc set sender to valentin@fsfe.org using -f
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169071>
 
-There is an error message that crashes the script because of an invalid ref
-to the non-existing "path" variable. It is almost never printed, which
-would explain why nobody encountered this problem before... But anyway,
-this oneliner fixes it.
+Dear Git developers and contributors,
 
-Signed-off-by: Tor Arvid Lund <torarvid@gmail.com>
----
- contrib/fast-import/git-p4 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I was wondering what kind of workflow the Git project itself uses. From
+what I gather much of the development takes place using the list, and
+patches sent by mail. Do any of the core contributers maintain public
+developer repos? And how many developers on average have push privileges
+to http://git.kernel.org/?p=git/git.git;a=summary?
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index d47596f..47ba7ad 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1160,7 +1160,7 @@ class P4Sync(Command):
-             if [p for p in branchPrefixes if p4PathStartsWith(f['path'], p)]:
-                 new_files.append (f)
-             else:
--                sys.stderr.write("Ignoring file outside of prefix: %s\n" % path)
-+                sys.stderr.write("Ignoring file outside of prefix: %s\n" % f['path'])
- 
-         self.gitStream.write("commit %s\n" % branch)
- #        gitStream.write("mark :%s\n" % details["change"])
--- 
-1.7.3.1.68.g06779.dirty
+thanks
+
+Valentin
