@@ -1,129 +1,133 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 3/4] fetch-pack: Implement no-done capability
-Date: Mon, 14 Mar 2011 17:59:39 -0700
-Message-ID: <1300150780-7487-3-git-send-email-spearce@spearce.org>
+Subject: [PATCH 4/4] upload-pack: Implement no-done capability
+Date: Mon, 14 Mar 2011 17:59:40 -0700
+Message-ID: <1300150780-7487-4-git-send-email-spearce@spearce.org>
 References: <1300150780-7487-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 01:59:54 2011
+X-From: git-owner@vger.kernel.org Tue Mar 15 02:00:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzIc4-0003Mb-8Y
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 01:59:52 +0100
+	id 1PzIcH-0003TT-Ln
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 02:00:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756934Ab1COA7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 20:59:50 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:45156 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756907Ab1COA7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 20:59:48 -0400
-Received: by yxs7 with SMTP id 7so36294yxs.19
-        for <git@vger.kernel.org>; Mon, 14 Mar 2011 17:59:48 -0700 (PDT)
-Received: by 10.91.22.10 with SMTP id z10mr3999295agi.196.1300150788213;
-        Mon, 14 Mar 2011 17:59:48 -0700 (PDT)
+	id S1756977Ab1COA7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 20:59:53 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:43813 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756907Ab1COA7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 20:59:51 -0400
+Received: by yia27 with SMTP id 27so35737yia.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 17:59:50 -0700 (PDT)
+Received: by 10.236.195.5 with SMTP id o5mr3178052yhn.147.1300150790598;
+        Mon, 14 Mar 2011 17:59:50 -0700 (PDT)
 Received: from localhost (sop.mtv.corp.google.com [172.18.74.69])
-        by mx.google.com with ESMTPS id r8sm8828388ane.39.2011.03.14.17.59.47
+        by mx.google.com with ESMTPS id h30sm5714081yhm.0.2011.03.14.17.59.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Mar 2011 17:59:47 -0700 (PDT)
+        Mon, 14 Mar 2011 17:59:50 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.1.35.ga52fb.dirty
 In-Reply-To: <1300150780-7487-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169041>
 
-If enabled on the connection "multi_ack_detailed no-done" as a
-pair allows the remote upload-pack process to send a PACK down
-to the client as soon as a "ACK %s ready" message was also sent.
+If the client requests both multi_ack_detailed and no-done then
+upload-pack is free to immediately send a PACK following its first
+'ACK %s ready' message.  The upload-pack response actually winds
+up being:
 
-Over git:// and ssh:// where a bi-directional stream is in place
-this has very little difference over the classical version that
-waits for the client to send a "done\n" line by itself.  It does
-slightly reduce the latency involved to start the pack stream as
-there is one less round-trip from client->server required.
+  ACK %s common
+  ... (maybe more) ...
+  ACK %s ready
+  NAK
+  ACK %s
+  PACK.... the pack stream ....
 
-Over smart HTTP this avoids needing to send a final RPC that has
-all of the prior common objects.  Instead the server is able to
-return a pack as soon as its ready to.  For many common users the
-smart HTTP fetch is now just 2 requests: GET .../info/refs, and
-a POST .../git-upload-pack to not only negotiate but also receive
-the pack stream.  Only users who have more than 32 local unshared
-commits with the remote will need additional requests to negotiate
-a common merge base.
+For smart HTTP connections this saves one HTTP RPC, reducing
+the overall latency for a trivial fetch.  For git:// and ssh://
+a no-done option slightly reduces latency by removing one
+server->client->server round-trip at the end of the common
+ancestor negotiation.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin/fetch-pack.c |   18 +++++++++++++++---
- 1 files changed, 15 insertions(+), 3 deletions(-)
+ upload-pack.c |   20 ++++++++++++++++----
+ 1 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 5173dc9..59fbda5 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -14,6 +14,7 @@ static int transfer_unpack_limit = -1;
- static int fetch_unpack_limit = -1;
- static int unpack_limit = 100;
- static int prefer_ofs_delta = 1;
-+static int no_done = 0;
- static struct fetch_pack_args args = {
- 	/* .uploadpack = */ "git-upload-pack",
- };
-@@ -225,6 +226,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 	const unsigned char *sha1;
- 	unsigned in_vain = 0;
- 	int got_continue = 0;
-+	int got_ready = 0;
- 	struct strbuf req_buf = STRBUF_INIT;
- 	size_t state_len = 0;
+diff --git a/upload-pack.c b/upload-pack.c
+index 2a0f19e..e644dbe 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -27,6 +27,7 @@ static const char upload_pack_usage[] = "git upload-pack [--strict] [--timeout=<
+ static unsigned long oldest_have;
  
-@@ -262,6 +264,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 			struct strbuf c = STRBUF_INIT;
- 			if (multi_ack == 2)     strbuf_addstr(&c, " multi_ack_detailed");
- 			if (multi_ack == 1)     strbuf_addstr(&c, " multi_ack");
-+			if (no_done)            strbuf_addstr(&c, " no-done");
- 			if (use_sideband == 2)  strbuf_addstr(&c, " side-band-64k");
- 			if (use_sideband == 1)  strbuf_addstr(&c, " side-band");
- 			if (args.use_thin_pack) strbuf_addstr(&c, " thin-pack");
-@@ -379,8 +382,10 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 					retval = 0;
- 					in_vain = 0;
- 					got_continue = 1;
--					if (ack == ACK_ready)
-+					if (ack == ACK_ready) {
- 						rev_list = NULL;
-+						got_ready = 1;
-+					}
- 					break;
- 					}
+ static int multi_ack, nr_our_refs;
++static int no_done;
+ static int use_thin_pack, use_ofs_delta, use_include_tag;
+ static int no_progress, daemon_mode;
+ static int shallow_nr;
+@@ -431,6 +432,7 @@ static int get_common_commits(void)
+ 	char last_hex[41];
+ 	int got_common = 0;
+ 	int got_other = 0;
++	int sent_ready = 0;
+ 
+ 	save_commit_buffer = 0;
+ 
+@@ -440,10 +442,17 @@ static int get_common_commits(void)
+ 
+ 		if (!len) {
+ 			if (multi_ack == 2 && got_common
+-					&& !got_other && ok_to_give_up())
++					&& !got_other && ok_to_give_up()) {
++				sent_ready = 1;
+ 				packet_write(1, "ACK %s ready\n", last_hex);
++			}
+ 			if (have_obj.nr == 0 || multi_ack)
+ 				packet_write(1, "NAK\n");
++
++			if (no_done && sent_ready) {
++				packet_write(1, "ACK %s\n", last_hex);
++				return 0;
++			}
+ 			if (stateless_rpc)
+ 				exit(0);
+ 			got_common = 0;
+@@ -457,9 +466,10 @@ static int get_common_commits(void)
+ 				got_other = 1;
+ 				if (multi_ack && ok_to_give_up()) {
+ 					const char *hex = sha1_to_hex(sha1);
+-					if (multi_ack == 2)
++					if (multi_ack == 2) {
++						sent_ready = 1;
+ 						packet_write(1, "ACK %s ready\n", hex);
+-					else
++					} else
+ 						packet_write(1, "ACK %s continue\n", hex);
  				}
-@@ -394,8 +399,10 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 		}
- 	}
- done:
--	packet_buf_write(&req_buf, "done\n");
--	send_request(fd[1], &req_buf);
-+	if (!got_ready || !no_done) {
-+		packet_buf_write(&req_buf, "done\n");
-+		send_request(fd[1], &req_buf);
-+	}
- 	if (args.verbose)
- 		fprintf(stderr, "done\n");
- 	if (retval != 0) {
-@@ -698,6 +705,11 @@ static struct ref *do_fetch_pack(int fd[2],
- 		if (args.verbose)
- 			fprintf(stderr, "Server supports multi_ack_detailed\n");
- 		multi_ack = 2;
-+		if (server_supports("no-done")) {
-+			if (args.verbose)
-+				fprintf(stderr, "Server supports no-done\n");
+ 				break;
+@@ -535,6 +545,8 @@ static void receive_needs(void)
+ 			multi_ack = 2;
+ 		else if (strstr(line+45, "multi_ack"))
+ 			multi_ack = 1;
++		if (strstr(line+45, "no-done"))
 +			no_done = 1;
-+		}
- 	}
- 	else if (server_supports("multi_ack")) {
- 		if (args.verbose)
+ 		if (strstr(line+45, "thin-pack"))
+ 			use_thin_pack = 1;
+ 		if (strstr(line+45, "ofs-delta"))
+@@ -628,7 +640,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ {
+ 	static const char *capabilities = "multi_ack thin-pack side-band"
+ 		" side-band-64k ofs-delta shallow no-progress"
+-		" include-tag multi_ack_detailed";
++		" include-tag multi_ack_detailed no-done";
+ 	struct object *o = parse_object(sha1);
+ 
+ 	if (!o)
 -- 
 1.7.4.1.35.ga52fb.dirty
