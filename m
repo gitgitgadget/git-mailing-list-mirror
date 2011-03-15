@@ -1,83 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] stash: copy the index using --index-output instead of cp
- -p
-Date: Tue, 15 Mar 2011 13:37:52 +0100
-Message-ID: <4D7F5DA0.3030608@viscovery.net>
-References: <4D7F3AA4.1080202@elegosoft.com> <4D7F466A.4090508@viscovery.net> <4D7F54C2.5060500@elegosoft.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH 1/3] make_absolute_path: Don't try to copy a string to
+ itself
+Date: Tue, 15 Mar 2011 13:40:31 +0100
+Message-ID: <1300192832.19100.35.camel@bee.lab.cmartin.tk>
+References: <1300130318-11279-1-git-send-email-cmn@elego.de>
+	 <1300130318-11279-2-git-send-email-cmn@elego.de>
+	 <7v39mpcuv9.fsf@alter.siamese.dyndns.org>
+	 <1300140128.4320.39.camel@bee.lab.cmartin.tk>
+	 <7vpqptb976.fsf@alter.siamese.dyndns.org>
+	 <1300190396.19100.31.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, casey@nrlssc.navy.mil, jon.seymour@gmail.com,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakob Pfender <jpfender@elegosoft.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 13:38:17 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 13:40:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzTVn-0003lD-Cp
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 13:38:07 +0100
+	id 1PzTYK-0005Ek-Kh
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 13:40:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757634Ab1COMiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2011 08:38:00 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:54986 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757663Ab1COMh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2011 08:37:59 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PzTVZ-0001pa-3i; Tue, 15 Mar 2011 13:37:53 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CF1401660F;
-	Tue, 15 Mar 2011 13:37:52 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <4D7F54C2.5060500@elegosoft.com>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1757595Ab1COMkj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2011 08:40:39 -0400
+Received: from mx0.elegosoft.com ([88.198.54.133]:57727 "EHLO
+	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757570Ab1COMki (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2011 08:40:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id B37981B4BC9;
+	Tue, 15 Mar 2011 13:40:37 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vbKjINs1M4Ge; Tue, 15 Mar 2011 13:40:32 +0100 (CET)
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 1360A1B4BC8;
+	Tue, 15 Mar 2011 13:40:31 +0100 (CET)
+In-Reply-To: <1300190396.19100.31.camel@bee.lab.cmartin.tk>
+X-Mailer: Evolution 2.91.92 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169067>
 
-From: Johannes Sixt <j6t@kdbg.org>
+On mar, 2011-03-15 at 12:59 +0100, Carlos Mart=C3=ADn Nieto wrote:
+> On lun, 2011-03-14 at 15:58 -0700, Junio C Hamano wrote:
+> > Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+[...]
+> >=20
+> > >  There is however the extra functionality the function offers, na=
+mely
+> > > resolving links. It might be good to split it into two functions =
+so each
+> > > caller can specify what it wants.
+> >=20
+> > Probably.
+>=20
+>  With the changes mentioned earlier, if you want an absolute pathname=
+,
+> you'd call absolute_path/make_nonrelative_path and if you want to mak=
+e
+> sure you have the real path of the target file, you'd use real_path j=
+ust
+> as you'd use realpath on a sane system, with
 
-'git stash create' must operate with a temporary index. For this purpose,
-it used 'cp -p' to create a copy. -p is needed to preserve the timestamp
-of the index file. Now Jakob Pfender reported a certain combination of
-a Linux NFS client, OpenBSD NFS server, and cp implementation where this
-operation failed.
+ ... a comment on the functions and maybe some documentation in
+Documentation/techncal, as it doesn't seem to exist yet.
 
-Luckily, the first operation in git-stash after copying the index is to
-call 'git read-tree'. Therefore, use --index-output instead of 'cp -p'
-to write the copy of the index.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Tested-by: Jakob Pfender <jpfender@elegosoft.com>
----
- Here's a wrap-up. Acked-by is reserved for people whose area-of-expertise
- is touched by someone else. Tested-by is more appropriate here.
-
- git-stash.sh |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 7561b37..fa62135 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -82,10 +82,9 @@ create_stash () {
- 		# state of the working tree
- 		w_tree=$( (
- 			rm -f "$TMP-index" &&
--			cp -p ${GIT_INDEX_FILE-"$GIT_DIR/index"} "$TMP-index" &&
-+			git read-tree --index-output="$TMP-index" -m $i_tree &&
- 			GIT_INDEX_FILE="$TMP-index" &&
- 			export GIT_INDEX_FILE &&
--			git read-tree -m $i_tree &&
- 			git diff --name-only -z HEAD | git update-index -z --add --remove --stdin &&
- 			git write-tree &&
- 			rm -f "$TMP-index"
--- 
-1.7.4.rc3.76.gfb457d
+   cmn
