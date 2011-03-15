@@ -1,74 +1,83 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH 1/3] make_absolute_path: Don't try to copy a string to
- itself
-Date: Tue, 15 Mar 2011 13:40:31 +0100
-Message-ID: <1300192832.19100.35.camel@bee.lab.cmartin.tk>
-References: <1300130318-11279-1-git-send-email-cmn@elego.de>
-	 <1300130318-11279-2-git-send-email-cmn@elego.de>
-	 <7v39mpcuv9.fsf@alter.siamese.dyndns.org>
-	 <1300140128.4320.39.camel@bee.lab.cmartin.tk>
-	 <7vpqptb976.fsf@alter.siamese.dyndns.org>
-	 <1300190396.19100.31.camel@bee.lab.cmartin.tk>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: [PATCH 1/3] git-p4: Teach gitConfig method about arguments.
+Date: Tue, 15 Mar 2011 13:08:01 +0100
+Message-ID: <1300190883-31833-1-git-send-email-torarvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 13:40:45 2011
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: Tor Arvid Lund <torarvid@gmail.com>
+To: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 14:08:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzTYK-0005Ek-Kh
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 13:40:44 +0100
+	id 1PzTz5-000151-EK
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 14:08:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757595Ab1COMkj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2011 08:40:39 -0400
-Received: from mx0.elegosoft.com ([88.198.54.133]:57727 "EHLO
-	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757570Ab1COMki (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2011 08:40:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id B37981B4BC9;
-	Tue, 15 Mar 2011 13:40:37 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vbKjINs1M4Ge; Tue, 15 Mar 2011 13:40:32 +0100 (CET)
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 1360A1B4BC8;
-	Tue, 15 Mar 2011 13:40:31 +0100 (CET)
-In-Reply-To: <1300190396.19100.31.camel@bee.lab.cmartin.tk>
-X-Mailer: Evolution 2.91.92 
+	id S1757726Ab1CONIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2011 09:08:19 -0400
+Received: from thalia-smout.broadpark.no ([80.202.8.21]:46124 "EHLO
+	thalia-smout.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757595Ab1CONIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2011 09:08:18 -0400
+X-Greylist: delayed 3602 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Mar 2011 09:08:18 EDT
+Received: from terra-smin.broadpark.no ([80.202.8.13])
+ by thalia-smout.broadpark.no
+ (Sun Java(tm) System Messaging Server 7u3-15.01 64bit (built Feb 12 2010))
+ with ESMTP id <0LI300CRXLPRSID0@thalia-smout.broadpark.no> for
+ git@vger.kernel.org; Tue, 15 Mar 2011 13:08:15 +0100 (CET)
+Received: from exchange.qsystems.no ([84.49.55.106]) by terra-smin.broadpark.no
+ (Sun Java(tm) System Messaging Server 7u3-15.01 64bit (built Feb 12 2010))
+ with ESMTP id <0LI30075FLPQLUK0@terra-smin.broadpark.no> for
+ git@vger.kernel.org; Tue, 15 Mar 2011 13:08:15 +0100 (CET)
+Received: from pingvin1 ([192.168.223.6]) by exchange.qsystems.no with
+ Microsoft SMTPSVC(6.0.3790.4675); Tue, 15 Mar 2011 13:08:14 +0100
+Received: by pingvin1 (Postfix, from userid 1000)	id AEB52240910; Tue,
+ 15 Mar 2011 13:08:14 +0100 (CET)
+X-Mailer: git-send-email 1.7.3.1.68.g06779.dirty
+X-OriginalArrivalTime: 15 Mar 2011 12:08:14.0812 (UTC)
+ FILETIME=[A97FB1C0:01CBE309]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169068>
 
-On mar, 2011-03-15 at 12:59 +0100, Carlos Mart=C3=ADn Nieto wrote:
-> On lun, 2011-03-14 at 15:58 -0700, Junio C Hamano wrote:
-> > Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
-[...]
-> >=20
-> > >  There is however the extra functionality the function offers, na=
-mely
-> > > resolving links. It might be good to split it into two functions =
-so each
-> > > caller can specify what it wants.
-> >=20
-> > Probably.
->=20
->  With the changes mentioned earlier, if you want an absolute pathname=
-,
-> you'd call absolute_path/make_nonrelative_path and if you want to mak=
-e
-> sure you have the real path of the target file, you'd use real_path j=
-ust
-> as you'd use realpath on a sane system, with
+With this patch, it is possible to call the gitConfig method with an optional
+argument string, which will be passed to the "git config" executable. For
+instance:
 
- ... a comment on the functions and maybe some documentation in
-Documentation/techncal, as it doesn't seem to exist yet.
+gitConfig("core.ignorecase", "--bool")
 
-   cmn
+will ensure that you get the value "true", and won't have to check the returned
+value for [1, true, on, yes].
+
+Signed-off-by: Tor Arvid Lund <torarvid@gmail.com>
+---
+ contrib/fast-import/git-p4 |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 7cb479c..4425220 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -333,9 +333,13 @@ def gitBranchExists(branch):
+     return proc.wait() == 0;
+ 
+ _gitConfig = {}
+-def gitConfig(key):
++def gitConfig(key, args = None): # set args to "--bool", for instance
+     if not _gitConfig.has_key(key):
+-        _gitConfig[key] = read_pipe("git config %s" % key, ignore_error=True).strip()
++        argsFilter = ""
++        if args != None:
++            argsFilter = "%s " % args
++        cmd = "git config %s%s" % (argsFilter, key)
++        _gitConfig[key] = read_pipe(cmd, ignore_error=True).strip()
+     return _gitConfig[key]
+ 
+ def p4BranchesInGit(branchesAreInRemotes = True):
+-- 
+1.7.3.1.68.g06779.dirty
