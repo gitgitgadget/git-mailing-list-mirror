@@ -1,38 +1,38 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/2] fetch-pack: Finish negotation if remote replies "ACK %s ready"
-Date: Mon, 14 Mar 2011 16:48:38 -0700
-Message-ID: <1300146519-26508-1-git-send-email-spearce@spearce.org>
+Subject: [PATCH 1/4 v2] fetch-pack: Finish negotation if remote replies "ACK %s ready"
+Date: Mon, 14 Mar 2011 17:59:37 -0700
+Message-ID: <1300150780-7487-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 00:48:55 2011
+X-From: git-owner@vger.kernel.org Tue Mar 15 01:59:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzHVK-0006QM-Kf
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 00:48:51 +0100
+	id 1PzIc3-0003Mb-3L
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 01:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754168Ab1CNXsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2011 19:48:43 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:47093 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754081Ab1CNXsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2011 19:48:42 -0400
-Received: by pvg12 with SMTP id 12so8029pvg.19
-        for <git@vger.kernel.org>; Mon, 14 Mar 2011 16:48:42 -0700 (PDT)
-Received: by 10.142.9.9 with SMTP id 9mr10950195wfi.149.1300146521888;
-        Mon, 14 Mar 2011 16:48:41 -0700 (PDT)
+	id S1756712Ab1COA7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2011 20:59:44 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47557 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756234Ab1COA7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2011 20:59:44 -0400
+Received: by gwaa18 with SMTP id a18so34710gwa.19
+        for <git@vger.kernel.org>; Mon, 14 Mar 2011 17:59:43 -0700 (PDT)
+Received: by 10.150.148.21 with SMTP id v21mr6599009ybd.354.1300150783216;
+        Mon, 14 Mar 2011 17:59:43 -0700 (PDT)
 Received: from localhost (sop.mtv.corp.google.com [172.18.74.69])
-        by mx.google.com with ESMTPS id m10sm10896015wfl.11.2011.03.14.16.48.40
+        by mx.google.com with ESMTPS id q29sm5805316yba.14.2011.03.14.17.59.42
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Mar 2011 16:48:41 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.9.5.g6bd7.dirty
+        Mon, 14 Mar 2011 17:59:42 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.1.35.ga52fb.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169038>
 
 If multi_ack_detailed was selected in the protocol capabilities
 (both client and server are >= Git 1.6.6) the upload-pack side will
@@ -83,11 +83,14 @@ says it can construct a pack.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
+
+ Fixed bad indentation that appeared in v1.
+
  builtin/fetch-pack.c |    2 ++
  1 files changed, 2 insertions(+), 0 deletions(-)
 
 diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index b999413..dfacfdf 100644
+index b999413..5173dc9 100644
 --- a/builtin/fetch-pack.c
 +++ b/builtin/fetch-pack.c
 @@ -379,6 +379,8 @@ static int find_common(int fd[2], unsigned char *result_sha1,
@@ -95,9 +98,9 @@ index b999413..dfacfdf 100644
  					in_vain = 0;
  					got_continue = 1;
 +					if (ack == ACK_ready)
-+					  rev_list = NULL;
++						rev_list = NULL;
  					break;
  					}
  				}
 -- 
-1.7.0.9.5.g6bd7.dirty
+1.7.4.1.35.ga52fb.dirty
