@@ -1,67 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] tests: suppress global and system gitattributes
-Date: Tue, 15 Mar 2011 03:16:25 -0400
-Message-ID: <20110315071625.GA11754@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/3] tests: scrub environment of GIT_* variables
+Date: Tue, 15 Mar 2011 03:37:18 -0400
+Message-ID: <20110315073718.GB11754@sigill.intra.peff.net>
 References: <20110315064909.GA25738@elie>
- <20110315065643.GB29530@elie>
+ <20110315070445.GC29530@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Petr Onderka <gsvick@gmail.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 08:17:55 2011
+X-From: git-owner@vger.kernel.org Tue Mar 15 08:37:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzOVu-0005C3-L2
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 08:17:55 +0100
+	id 1PzOox-0002Gs-Cn
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Mar 2011 08:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754457Ab1COHQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2011 03:16:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38075
+	id S1754699Ab1COHhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2011 03:37:21 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38775
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754389Ab1COHQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2011 03:16:27 -0400
-Received: (qmail 19617 invoked by uid 107); 15 Mar 2011 07:16:59 -0000
+	id S1753093Ab1COHhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2011 03:37:20 -0400
+Received: (qmail 19729 invoked by uid 107); 15 Mar 2011 07:37:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Mar 2011 03:16:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Mar 2011 03:16:25 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 Mar 2011 03:37:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Mar 2011 03:37:18 -0400
 Content-Disposition: inline
-In-Reply-To: <20110315065643.GB29530@elie>
+In-Reply-To: <20110315070445.GC29530@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169050>
 
-On Tue, Mar 15, 2011 at 01:56:43AM -0500, Jonathan Nieder wrote:
+On Tue, Mar 15, 2011 at 02:04:45AM -0500, Jonathan Nieder wrote:
 
-> Set GIT_ATTR_NOGLOBAL and GIT_ATTR_NOSYSTEM in test-lib to make
-> tests more reliable in two ways:
+> Variables from the inherited environment that are meaningful to git
+> can break tests in undesirable ways.  For example,
 > 
->  - an invalid GIT_ATTR_NOGLOBAL or GIT_ATTR_NOSYSTEM setting
->    should not cause tests to fail with
+>  GIT_PAGER=more sh t5400-send-pack.sh -v -i
 > 
-> 	fatal: bad config value for 'GIT_ATTR_NOGLOBAL'
+> hangs.  So unset them in test-lib.
 > 
->  - /etc/gitattributes should not change the outcome of tests.
+> The variables to unset were found with 'git grep -F -e '"GIT_'.
 
-We already munge $HOME, as you note in 1/3, I don't know that there is
-much point in setting GIT_ATTR_NOGLOBAL. The alternative would be to
-drop your 1/3 and unset GIT_ATTR_NOGLOBAL in test-lib.sh.
+Thanks. I fixed a few of these in a1231de recently, but was too lazy to
+do an exhaustive search. Your list and your method look sane to me.
 
-I don't care much either way. Having it set prevents others tests from
-accidentally triggering global attributes (since we have the odd case of
-$HOME and the repo in the same directory). But IIRC, they'd have to set
-core.attributesfile anyway, so that is not likely to happen.
+> Exception: leave the GIT_USE_LOOKUP variable from v1.5.6-rc0~134^2~1
+> (sha1-lookup: more memory efficient search in sorted list of SHA-1,
+> 2007-12-29) alone, since it is about trying an alternate
+> implementation strategy rather than changing semantics and it can be
+> useful to compare performance with and without it set.
 
-And what you're doing at least matches what GIT_CONFIG_* does (I think
-GIT_CONFIG_NOGLOBAL is also redundant in the tests at this point).
+Makes sense to me.
 
-So I'm fine with either strategy. But definitely it should be protected,
-so thanks for looking into it.
+> Longer term, it would be nice to just unset all GIT_* variables (with
+> exceptions like GIT_TRACE and GIT_USE_LOOKUP) with some magic using
+> the "env" command.  That is less straightforward than one might hope
+> because the values of environment variables can contain embedded
+> newlines and equal signs and "env -0" is not portable.
+
+According to posix, just running "set" provides an unambiguous,
+parseable output. The problem is that it's actual shell, so it's a
+little tricky to parse (it's single-quoted, and you have to follow
+values across embedded newlines). So it's probably not worth the
+headache.
+
+Having a big list of "clear these variables" is probably not the end of
+the world.  If it breaks somebody's test run, they'll probably report it
+and we'll fix it. We don't add variables like this all that often.
 
 -Peff
