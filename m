@@ -1,112 +1,210 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH 2-3/3] Name make_*_path functions more accurately
-Date: Wed, 16 Mar 2011 19:17:44 +0100
-Message-ID: <1300299469.3995.10.camel@centaur>
-References: <1300294266-26875-1-git-send-email-cmn@elego.de>
-	 <4D80EC57.4050704@drmicha.warpmail.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 8/8] diff --submodule: split into bite-sized pieces
+Date: Wed, 16 Mar 2011 19:43:40 +0100
+Message-ID: <4D8104DC.2010700@web.de>
+References: <20110316024959.GA24932@elie> <20110316065256.GA5988@elie> <20110316071411.GI5988@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <benji@silverinsanity.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Mar 16 19:18:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 19:44:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzvII-0002b5-GN
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 19:18:02 +0100
+	id 1PzvhM-0007nQ-Gk
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 19:43:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402Ab1CPSR6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 14:17:58 -0400
-Received: from mx0.elegosoft.com ([88.198.54.133]:59926 "EHLO
-	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752517Ab1CPSR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 14:17:56 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 8C3111B4B09;
-	Wed, 16 Mar 2011 19:17:55 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SiteHm9V+B20; Wed, 16 Mar 2011 19:17:49 +0100 (CET)
-Received: from [192.168.1.21] (brln-4dbc728c.pool.mediaWays.net [77.188.114.140])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 516D11B4B08;
-	Wed, 16 Mar 2011 19:17:49 +0100 (CET)
-In-Reply-To: <4D80EC57.4050704@drmicha.warpmail.net>
-X-Mailer: Evolution 2.91.92 
+	id S1753194Ab1CPSnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 14:43:52 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:35336 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483Ab1CPSnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 14:43:50 -0400
+Received: from smtp06.web.de  ( [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id DD0CA19A761B9;
+	Wed, 16 Mar 2011 19:43:43 +0100 (CET)
+Received: from [93.240.101.75] (helo=[192.168.178.43])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Pzvh9-00019z-00; Wed, 16 Mar 2011 19:43:43 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <20110316071411.GI5988@elie>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+28cqa6bb/dqBcXI2QQpFmCuf9LIUJFrFMRxk6
+	g7wOdc6hw7/fGV06UdqqjnFUuYtP8+wEfOsdcSQeQWDBgC9uef
+	nU9rj0HAjIqux9A4nXCA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169181>
 
-On Wed, 2011-03-16 at 17:59 +0100, Michael J Gruber wrote:
-> Carlos Mart=C3=ADn Nieto venit, vidit, dixit 16.03.2011 17:51:
->>[...]
-> > -const char *make_nonrelative_path(const char *path)
-> > +/*
-> > + * Use this to get an absolute path from a relative one. If you wa=
-nt
-> > + * to resolve links, you should use real_path.
-> > + *
-> > + * If the path is already absolute, then return path. As the user =
-is
-> > + * never meant to free the return value, we're safe.
-> > + */
-> > +const char *absolute_path(const char *path)
-> >  {
-> >  	static char buf[PATH_MAX + 1];
-> > =20
-> >  	if (is_absolute_path(path)) {
-> > -		if (strlcpy(buf, path, PATH_MAX) >=3D PATH_MAX)
-> > +		if (strlen(path) >=3D PATH_MAX)
-> >  			die("Too long path: %.*s", 60, path);
-> > +		else
-> > +			return path;
-> >  	} else {
-> >  		size_t len;
-> >  		const char *fmt;
->=20
-> This is not simply a renaming change that you're sneaking in here. Wh=
-at
-> is it about?
+Am 16.03.2011 08:14, schrieb Jonathan Nieder:
+> Introduce two functions:
+> 
+>  - prepare_submodule_summary prepares the revision walker
+>    to list changes in a submodule.  That is, it:
+> 
+>    * finds merge bases between the commits pointed to this
+>      path from before ("left") and after ("right") the change;
+>    * checks whether this is a fast-forward or fast-backward;
+>    * prepares a revision walk to list commits in the symmetric
+>      difference between the commits at each endpoint.
+> 
+>    It returns nonzero on error.
+> 
+>  - print_submodule_summary runs the revision walk and saves
+>    the result to a strbuf in --left-right format.
+> 
+> The goal is just readability.  No functional change intended.
 
- Gah, I've been staring at this patch too long. This is related another
-thread where Junio said it'd be a good idea to change the semantics so
-we centralise checking wether we already have an absolute path. See
-http://thread.gmane.org/gmane.comp.version-control.git/169012/focus=3D1=
-69063 (Message-ID: <7vpqptb976.fsf@alter.siamese.dyndns.org>).
+Ack, looks good and makes sense to me.
 
->>[...]
-> > diff --git a/dir.c b/dir.c
-> > index 570b651..5a9372a 100644
-> > --- a/dir.c
-> > +++ b/dir.c
-> > @@ -1023,8 +1023,8 @@ char *get_relative_cwd(char *buffer, int size=
-, const char *dir)
-> >  	if (!getcwd(buffer, size))
-> >  		die_errno("can't find the current directory");
-> > =20
-> > -	if (!is_absolute_path(dir))
-> > -		dir =3D make_absolute_path(dir);
-> > +	/* getcwd resolves links and gives us the real path */
-> > +	dir =3D real_path(dir);
->=20
-> Why remove the check? Again, this is not just renaming.
 
- Semantics change. Same as above. The one below (snipped) is the same.
-
->>[...]
-> I think you should strictly separate the renaming issue from other
-> patches (and describe/motivate the latter). It's fine to have a large
-> patch with mechanical changes (renaming) if you stick to just those.
-
- Unfortunately I introduced some modifications trying to reduce the
-number of times we call make_absolute_path/real_path and they snuck in.
-Sorry.
-
-   cmn
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  submodule.c |  103 +++++++++++++++++++++++++++++++++++------------------------
+>  1 files changed, 61 insertions(+), 42 deletions(-)
+> 
+> diff --git a/submodule.c b/submodule.c
+> index 6f1c107..e9f2b19 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -152,17 +152,69 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+>  		die("bad --ignore-submodules argument: %s", arg);
+>  }
+>  
+> +static int prepare_submodule_summary(struct rev_info *rev, const char *path,
+> +		struct commit *left, struct commit *right,
+> +		int *fast_forward, int *fast_backward)
+> +{
+> +	struct commit_list *merge_bases, *list;
+> +
+> +	init_revisions(rev, NULL);
+> +	setup_revisions(0, NULL, rev, NULL);
+> +	rev->left_right = 1;
+> +	rev->first_parent_only = 1;
+> +	left->object.flags |= SYMMETRIC_LEFT;
+> +	add_pending_object(rev, &left->object, path);
+> +	add_pending_object(rev, &right->object, path);
+> +	merge_bases = get_merge_bases(left, right, 1);
+> +	if (merge_bases) {
+> +		if (merge_bases->item == left)
+> +			*fast_forward = 1;
+> +		else if (merge_bases->item == right)
+> +			*fast_backward = 1;
+> +	}
+> +	for (list = merge_bases; list; list = list->next) {
+> +		list->item->object.flags |= UNINTERESTING;
+> +		add_pending_object(rev, &list->item->object,
+> +			sha1_to_hex(list->item->object.sha1));
+> +	}
+> +	return prepare_revision_walk(rev);
+> +}
+> +
+> +static void print_submodule_summary(struct rev_info *rev, FILE *f,
+> +		const char *del, const char *add, const char *reset)
+> +{
+> +	static const char format[] = "  %m %s";
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct commit *commit;
+> +
+> +	while ((commit = get_revision(rev))) {
+> +		struct pretty_print_context ctx = {0};
+> +		ctx.date_mode = rev->date_mode;
+> +		strbuf_setlen(&sb, 0);
+> +		if (commit->object.flags & SYMMETRIC_LEFT) {
+> +			if (del)
+> +				strbuf_addstr(&sb, del);
+> +		}
+> +		else if (add)
+> +			strbuf_addstr(&sb, add);
+> +		format_commit_message(commit, format, &sb, &ctx);
+> +		if (reset)
+> +			strbuf_addstr(&sb, reset);
+> +		strbuf_addch(&sb, '\n');
+> +		fprintf(f, "%s", sb.buf);
+> +	}
+> +	strbuf_release(&sb);
+> +}
+> +
+>  void show_submodule_summary(FILE *f, const char *path,
+>  		unsigned char one[20], unsigned char two[20],
+>  		unsigned dirty_submodule,
+>  		const char *del, const char *add, const char *reset)
+>  {
+>  	struct rev_info rev;
+> -	struct commit *commit, *left = left, *right = right;
+> -	struct commit_list *merge_bases, *list;
+> +	struct commit *left = left, *right = right;
+>  	const char *message = NULL;
+>  	struct strbuf sb = STRBUF_INIT;
+> -	static const char *format = "  %m %s";
+>  	int fast_forward = 0, fast_backward = 0;
+>  
+>  	if (is_null_sha1(two))
+> @@ -175,29 +227,10 @@ void show_submodule_summary(FILE *f, const char *path,
+>  		 !(right = lookup_commit_reference(two)))
+>  		message = "(commits not present)";
+>  
+> -	if (!message) {
+> -		init_revisions(&rev, NULL);
+> -		setup_revisions(0, NULL, &rev, NULL);
+> -		rev.left_right = 1;
+> -		rev.first_parent_only = 1;
+> -		left->object.flags |= SYMMETRIC_LEFT;
+> -		add_pending_object(&rev, &left->object, path);
+> -		add_pending_object(&rev, &right->object, path);
+> -		merge_bases = get_merge_bases(left, right, 1);
+> -		if (merge_bases) {
+> -			if (merge_bases->item == left)
+> -				fast_forward = 1;
+> -			else if (merge_bases->item == right)
+> -				fast_backward = 1;
+> -		}
+> -		for (list = merge_bases; list; list = list->next) {
+> -			list->item->object.flags |= UNINTERESTING;
+> -			add_pending_object(&rev, &list->item->object,
+> -				sha1_to_hex(list->item->object.sha1));
+> -		}
+> -		if (prepare_revision_walk(&rev))
+> -			message = "(revision walker failed)";
+> -	}
+> +	if (!message &&
+> +	    prepare_submodule_summary(&rev, path, left, right,
+> +					&fast_forward, &fast_backward))
+> +		message = "(revision walker failed)";
+>  
+>  	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+>  		fprintf(f, "Submodule %s contains untracked content\n", path);
+> @@ -221,25 +254,11 @@ void show_submodule_summary(FILE *f, const char *path,
+>  	fwrite(sb.buf, sb.len, 1, f);
+>  
+>  	if (!message) {
+> -		while ((commit = get_revision(&rev))) {
+> -			struct pretty_print_context ctx = {0};
+> -			ctx.date_mode = rev.date_mode;
+> -			strbuf_setlen(&sb, 0);
+> -			if (commit->object.flags & SYMMETRIC_LEFT) {
+> -				if (del)
+> -					strbuf_addstr(&sb, del);
+> -			}
+> -			else if (add)
+> -				strbuf_addstr(&sb, add);
+> -			format_commit_message(commit, format, &sb, &ctx);
+> -			if (reset)
+> -				strbuf_addstr(&sb, reset);
+> -			strbuf_addch(&sb, '\n');
+> -			fprintf(f, "%s", sb.buf);
+> -		}
+> +		print_submodule_summary(&rev, f, del, add, reset);
+>  		clear_commit_marks(left, ~0);
+>  		clear_commit_marks(right, ~0);
+>  	}
+> +
+>  	strbuf_release(&sb);
+>  }
+>  
