@@ -1,8 +1,7 @@
 From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH 1/3] make_absolute_path: return the input path if it points to our buffer
-Date: Wed, 16 Mar 2011 17:06:17 +0100
-Message-ID: <1300291579-25852-2-git-send-email-cmn@elego.de>
-References: <1300291579-25852-1-git-send-email-cmn@elego.de>
+Subject: [PATCH 0/3] Rename make_*_path with clearer names
+Date: Wed, 16 Mar 2011 17:06:16 +0100
+Message-ID: <1300291579-25852-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -15,53 +14,53 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PztEy-0005Dk-PD
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:06:29 +0100
+	id 1PztEy-0005Dk-5e
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:06:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751757Ab1CPQGY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:06:24 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:42450 "EHLO kimmy.cmartin.tk"
+	id S1751422Ab1CPQGW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:06:22 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:42448 "EHLO kimmy.cmartin.tk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751580Ab1CPQGU (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751200Ab1CPQGU (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 16 Mar 2011 12:06:20 -0400
 Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 587AD460FF;
-	Wed, 16 Mar 2011 17:06:14 +0100 (CET)
-Received: (nullmailer pid 25893 invoked by uid 1000);
-	Wed, 16 Mar 2011 16:06:20 -0000
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 06112460FD;
+	Wed, 16 Mar 2011 17:06:13 +0100 (CET)
+Received: (nullmailer pid 25890 invoked by uid 1000);
+	Wed, 16 Mar 2011 16:06:19 -0000
 X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1300291579-25852-1-git-send-email-cmn@elego.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169164>
 
-Some codepaths call make_absolute_path with its own return value as
-input. In such a cases, return the path immediately.
+The first patch in this series is in fact a memory-access, but they
+together logically as enhancements to make_*_path. Just say so if
+it'd be better to split them up.
 
-This fixes a valgrind-discovered error, whereby we tried to copy a
-string onto itself.
+The calls have been converted 1-to-1 to use the new names, as the real
+resolved path is what is needed most of the time.
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
- abspath.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+Carlos Mart=C3=ADn Nieto (3):
+  make_absolute_path: return the input path if it points to our buffer
+  Name make_*_path functions more accurately
+  Use the new {real,absolute}_path function names
 
-diff --git a/abspath.c b/abspath.c
-index 91ca00f..ff14068 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -24,6 +24,10 @@ const char *make_absolute_path(const char *path)
- 	char *last_elem =3D NULL;
- 	struct stat st;
-=20
-+	/* We've already done it */
-+	if (path =3D=3D buf || path =3D=3D next_buf)
-+		return path;
-+
- 	if (strlcpy(buf, path, PATH_MAX) >=3D PATH_MAX)
- 		die ("Too long path: %.*s", 60, path);
-=20
+ abspath.c              |   26 +++++++++++++++++++++++---
+ builtin/clone.c        |   12 ++++++------
+ builtin/init-db.c      |    8 ++++----
+ builtin/receive-pack.c |    2 +-
+ cache.h                |    6 +++---
+ dir.c                  |    4 ++--
+ environment.c          |    4 ++--
+ exec_cmd.c             |    2 +-
+ lockfile.c             |    4 ++--
+ path.c                 |    2 +-
+ setup.c                |   14 ++++++--------
+ t/t0000-basic.sh       |   10 +++++-----
+ test-path-utils.c      |    4 ++--
+ 13 files changed, 58 insertions(+), 40 deletions(-)
+
 --=20
 1.7.4.1
