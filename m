@@ -1,106 +1,156 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git-reset HEAD --permissions-only
-Date: Tue, 15 Mar 2011 20:06:19 -0500
-Message-ID: <4D800D0B.2000307@gmail.com>
-References: <illts0$c6q$1@dough.gmane.org> <20110315013223.GB31865@sigill.intra.peff.net>
+From: Kevin Cernekee <cernekee@gmail.com>
+Subject: [PATCH 1/2] gitweb: fix #patchNN anchors when path_info is enabled
+Date: Tue, 15 Mar 2011 19:15:54 -0700
+Message-ID: <3ef1af6874437043a4451bfbcae59b2b@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 02:06:39 2011
+X-From: git-owner@vger.kernel.org Wed Mar 16 03:31:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzfC9-0001Z1-Ar
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 02:06:37 +0100
+	id 1PzgVx-0001YX-Ca
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 03:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755Ab1CPBGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2011 21:06:33 -0400
-Received: from lo.gmane.org ([80.91.229.12]:57916 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752388Ab1CPBGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2011 21:06:33 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PzfC3-0001XX-D8
-	for git@vger.kernel.org; Wed, 16 Mar 2011 02:06:31 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 02:06:31 +0100
-Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 02:06:31 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110315013223.GB31865@sigill.intra.peff.net>
+	id S1751482Ab1CPCbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2011 22:31:03 -0400
+Received: from [69.28.251.93] ([69.28.251.93]:56913 "EHLO b32.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751188Ab1CPCbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2011 22:31:01 -0400
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Mar 2011 22:31:01 EDT
+Received: (qmail 31783 invoked from network); 16 Mar 2011 02:24:19 -0000
+Received: from localhost (HELO vps-1001064-677.cp.jvds.com) (127.0.0.1)
+  by localhost with (DHE-RSA-AES128-SHA encrypted) SMTP; 16 Mar 2011 02:24:19 -0000
+Received: by vps-1001064-677.cp.jvds.com (sSMTP sendmail emulation); Tue, 15 Mar 2011 19:24:17 -0700
+User-Agent: vim 7.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169096>
 
-On 3/14/2011 8:32 PM, Jeff King wrote:
-> On Mon, Mar 14, 2011 at 03:29:51PM -0500, Neal Kreitzinger wrote:
->
->> Is there a way to only reset the file permissions of the
->> working-tree to match HEAD file permissions without resetting the
->> content of the files?
->
-> Not directly, but you could munge a patch to do so and apply it in
-> reverse. For example:
->
-> git diff "$@" | perl -ne ' if (/^diff/) { $diff = $_ } elsif (/^old
-> mode/) { print $diff, $_ } elsif (/^new mode/) { print $_ } ' | git
-> apply -R
->
-> Which seems a little more complicated than it needs to be, but we
-> don't (AFAIK) have a way to say "show me only the mode changes from
-> this diff in an applicable form". The closest would be "git diff
-> --summary", but you cannot directly apply it (and I would hesitate to
-> recommend parsing it).
->
-> You could also use "git checkout -p", which is designed for exactly
-> this sort of picking-apart of a patch, but it has no way to specify
-> "say yes to all of the mode changes, no to everything else"; you have
-> to manually approve each hunk. Which doesn't work if you have a lot
-> of these files.
->
-> I guess for mode changes, you don't care if you chmod something that
-> is already fine. So yet another way to do it would be:
->
-> git ls-files -sz | perl -0ne ' /100(\d+).*?\t(.*)/ or next; -e $2 or
-> next; chmod(oct($1), $2) or die "chmod failed: $!"; '
->
-You are right about git checkout -p because there are alot of code
-changes to alot of files.  I haven't used git patches and I don't know 
-perl.  However, your reasoning about the last example seems the most 
-straight-forward so I used it.  I symptomatically validated my re-keying 
-of the syntax as follows since TTBOMK I couldn't copy+paste your example 
-due to whitespace:
+My configuration is as follows:
 
-git ls-files -sz | perl -0ne '/100(\d+).*?\t(.*)/
-  or next; -e $2 or next; chmod(oct($1), $2) or die "chmod failed: $!";'
+$feature{'pathinfo'}{'default'} = [1];
 
-(0) repo contains bad modes in working tree only.
-(1) make a copy of the repo (cp -rp repo repoX)
-(2) add and commit (via superuser and git-commit --no-verify) the "bad" 
-modes.
-(3) make another copy of the repo (repoY)
-(4) run your perl script on repoY working-tree
-(5) git diff | grep "old mode" (shows no occurences)
-(6) commit "good" modes.
-(7) make repox "bad" modes branch a remote of repoy and fetched the bad 
-modes commit (git remote add -t bad-mode-branch repo-X /opt/me/repoX).
-(8) diffed the bad modes commit vs the good modes commit and saw that 
-only the modes differed.
+<Location /gitweb>
+        Options ExecCGI
+        SetHandler cgi-script
+</Location>
 
-Thanks!
+GITWEB_{JS,CSS,LOGO,...} all start with gitweb-static/
 
-v/r,
-neal
+gitweb.cgi renamed to /var/www/html/gitweb
+
+This gives me simple, easy-to-read URLs that look like:
+
+http://HOST/gitweb/myproject.git/commitdiff/0faa4a6ef921d8a233f30d66f9a3e1b24e8ec906
+
+The problem is that in this configuration, PATH_INFO is used to set the
+base URL:
+
+<base href="http://HOST/gitweb">
+
+This breaks the "patch" anchor links seen on the commitdiff pages,
+because they are computed relative to the base URL:
+
+http://HOST/gitweb#patch1
+
+My solution is to add an "anchor" parameter to href(), so that the full
+path is included in the patchNN links.
+
+Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
+---
+ gitweb/gitweb.perl |   31 +++++++++++++++++++++++++------
+ 1 files changed, 25 insertions(+), 6 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1b9369d..3b6a90d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1199,6 +1199,7 @@ if (defined caller) {
+ # -full => 0|1      - use absolute/full URL ($my_uri/$my_url as base)
+ # -replay => 1      - start from a current view (replay with modifications)
+ # -path_info => 0|1 - don't use/use path_info URL (if possible)
++# -anchor           - add #ANCHOR to end of URL
+ sub href {
+ 	my %params = @_;
+ 	# default is to use -absolute url() i.e. $my_uri
+@@ -1314,6 +1315,10 @@ sub href {
+ 	# final transformation: trailing spaces must be escaped (URI-encoded)
+ 	$href =~ s/(\s+)$/CGI::escape($1)/e;
+ 
++	if (defined($params{'anchor'})) {
++		$href .= "#".esc_param($params{'anchor'});
++	}
++
+ 	return $href;
+ }
+ 
+@@ -4334,8 +4339,10 @@ sub git_difftree_body {
+ 			if ($action eq 'commitdiff') {
+ 				# link to patch
+ 				$patchno++;
+-				print "<td class=\"link\">" .
+-				      $cgi->a({-href => "#patch$patchno"}, "patch") .
++				print $cgi->a({-href =>
++				      href(action=>"commitdiff",
++				      hash=>$hash, anchor=>"patch$patchno")},
++				      "patch") .
+ 				      " | " .
+ 				      "</td>\n";
+ 			}
+@@ -4432,7 +4439,10 @@ sub git_difftree_body {
+ 			if ($action eq 'commitdiff') {
+ 				# link to patch
+ 				$patchno++;
+-				print $cgi->a({-href => "#patch$patchno"}, "patch");
++				print $cgi->a({-href =>
++				      href(action=>"commitdiff",
++				      hash=>$hash, anchor=>"patch$patchno")},
++				      "patch");
+ 				print " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+@@ -4452,7 +4462,10 @@ sub git_difftree_body {
+ 			if ($action eq 'commitdiff') {
+ 				# link to patch
+ 				$patchno++;
+-				print $cgi->a({-href => "#patch$patchno"}, "patch");
++				print $cgi->a({-href =>
++				      href(action=>"commitdiff",
++				      hash=>$hash, anchor=>"patch$patchno")},
++				      "patch");
+ 				print " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'from_id'},
+@@ -4494,7 +4507,10 @@ sub git_difftree_body {
+ 			if ($action eq 'commitdiff') {
+ 				# link to patch
+ 				$patchno++;
+-				print $cgi->a({-href => "#patch$patchno"}, "patch") .
++				print $cgi->a({-href =>
++				      href(action=>"commitdiff",
++				      hash=>$hash, anchor=>"patch$patchno")},
++				      "patch") .
+ 				      " | ";
+ 			} elsif ($diff->{'to_id'} ne $diff->{'from_id'}) {
+ 				# "commit" view and modified file (not onlu mode changed)
+@@ -4539,7 +4555,10 @@ sub git_difftree_body {
+ 			if ($action eq 'commitdiff') {
+ 				# link to patch
+ 				$patchno++;
+-				print $cgi->a({-href => "#patch$patchno"}, "patch") .
++				print $cgi->a({-href =>
++				      href(action=>"commitdiff",
++				      hash=>$hash, anchor=>"patch$patchno")},
++				      "patch") .
+ 				      " | ";
+ 			} elsif ($diff->{'to_id'} ne $diff->{'from_id'}) {
+ 				# "commit" view and modified file (not only pure rename or copy)
+-- 
+1.7.4.1
