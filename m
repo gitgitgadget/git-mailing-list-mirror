@@ -1,84 +1,71 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] valgrind: ignore SSE-based strlen invalid reads
-Date: Wed, 16 Mar 2011 12:10:14 +0100
-Message-ID: <1300273819.7214.12.camel@bee.lab.cmartin.tk>
-References: <20110316095632.GA8277@elie>
-	 <1300272453-25891-1-git-send-email-cmn@elego.de>
-	 <20110316105214.GB8277@elie>
+From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+Subject: git submodule status during merge
+Date: Wed, 16 Mar 2011 10:32:57 +0100
+Message-ID: <4D8083C9.4070300@morey-chaisemartin.com>
+Reply-To: devel-git@morey-chaisemartin.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 12:10:41 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 16 12:20:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzoce-0006XB-9r
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 12:10:36 +0100
+	id 1Pzom3-0002Io-9G
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 12:20:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648Ab1CPLK3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 07:10:29 -0400
-Received: from mx0.elegosoft.com ([88.198.54.133]:59168 "EHLO
-	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751686Ab1CPLK2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 07:10:28 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id E394C1B4A6D;
-	Wed, 16 Mar 2011 12:10:26 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nQtbXBGKfRSl; Wed, 16 Mar 2011 12:10:19 +0100 (CET)
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 36EDC1B4B14;
-	Wed, 16 Mar 2011 12:10:19 +0100 (CET)
-In-Reply-To: <20110316105214.GB8277@elie>
-X-Mailer: Evolution 2.91.92 
+	id S1752641Ab1CPLUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 07:20:13 -0400
+Received: from 3.27.mail-out.ovh.net ([46.105.56.209]:42872 "HELO
+	27.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751686Ab1CPLUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 07:20:12 -0400
+X-Greylist: delayed 6000 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Mar 2011 07:20:11 EDT
+Received: (qmail 1532 invoked by uid 503); 16 Mar 2011 10:27:10 -0000
+Received: from b9.ovh.net (HELO mail193.ha.ovh.net) (213.186.33.59)
+  by 27.mail-out.ovh.net with SMTP; 16 Mar 2011 10:26:55 -0000
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 16 Mar 2011 11:32:59 +0200
+Received: from mailhost.kalray.eu (HELO sat.lin.mbt.kalray.eu) (devel-git@morey-chaisemartin.com@217.108.237.233)
+  by ns0.ovh.net with SMTP; 16 Mar 2011 11:32:59 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b2 Thunderbird/3.1.7
+X-Ovh-Tracer-Id: 9496402764590407646
+X-Ovh-Remote: 217.108.237.233 (mailhost.kalray.eu)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-Spam-Check: DONE|U 0.5/N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169138>
 
-On mi=C3=A9, 2011-03-16 at 05:52 -0500, Jonathan Nieder wrote:
-> Carlos Mart=C3=ADn Nieto wrote:
->=20
-> > The GNU C Library (glibc) uses SSE instructions to make strlen (amo=
-ng
-> > others) faster, loading 4 bytes at a time and reading past the end =
-of
-> > the allocated memory. This read is safe and when the strlen functio=
-n
-> > is inlined, it is (obviously) not replaced by valgrind, which repor=
-ts
-> > a false-possitive.
->=20
-> This still makes no sense to me.  How is it possible to inline a
-> function from glibc?  When I look in /usr/include/string.h, I see
->=20
-> extern size_t strlen (__const char *__s)
->      __THROW __attribute_pure__ __nonnull ((1));
+Hi,
 
- Looking at that header, strlen is one of the few functions not being
-replaced by its __builtin version, and I only see __builtin_strlen in
-the C++ patches. I'll rephrase to something like "Some versions of
-strlen use SSE which then get inlined" to avoid blaming anyone in
-particular, though thinking about it, it does seem logical that it's
-GCC's builtin strlen.
+While I was trying to merge a superproject with tons of submodule (conflicting) I noticed that several submodules show 3 times when running "git submodule status"
 
->=20
-> > Tell valgrind to ignore this particular error, as the read is, in
-> > fact, safe.
->=20
-> I'm happy to see a workaround.  I would be even happier if it came
-> with documentation about which versions of valgrind need it.
+Ex:
++c31377d713fa3ef03960de6672ce69d2a1e7317e gdb (reverse-20080717-branchpoint-7820-gc31377d)
++c31377d713fa3ef03960de6672ce69d2a1e7317e gdb (reverse-20080717-branchpoint-7820-gc31377d)
++c31377d713fa3ef03960de6672ce69d2a1e7317e gdb (reverse-20080717-branchpoint-7820-gc31377d)
 
- I think 3.6.1 doesn't need it, as Debian's 1:3.5.0+3.6.0svn20100609-1
-version is reportedly fixed. I'll see if I can find more information in
-the valgrind bug tracker.
+After a quick investigation, it appears this is due to module_list in git-submodule which uses
+        git ls-files --error-unmatch --stage -- "$@" | sane_grep '^160000 '
+to retrieve a list of all available submodules.
 
- Cheers,
-   cmn
+As there is a conflict, the submodules show in 3 different stages.
+The status command later uses
+    cd "$path" && git rev-parse --verify HEAD
+so the same SHA1 is displayed for the 3 times the submodule appears.
+
+Although it is not a big issue, it is quite puzzling for most people.
+So here are the few questions:
+    * Is this an expected behaviour and if yes, why?
+    * If not, is module_list the place to fix it?
+It does not seem that any of the git commands are using the stage information yet. So I suppose keeping only one of the entries should not be too problematic.
+Simply filtering with something like awk '{ if ($3 == 0 || $3 == 1) print $0}'  seems to solve the problem
+
+Thanks in advance
+
+Nicolas Morey-Chaisemartin
