@@ -1,94 +1,78 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] valgrind: ignore SSE-based strlen invalid reads
-Date: Wed, 16 Mar 2011 21:44:11 +0100
-Message-ID: <1300308252.7214.62.camel@bee.lab.cmartin.tk>
-References: <20110316112547.GA15739@elie>
-	 <1300275961-5798-1-git-send-email-cmn@elego.de>
-	 <7vr5a67rb7.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2-3/3] Name make_*_path functions more accurately
+Date: Wed, 16 Mar 2011 13:48:19 -0700
+Message-ID: <7vei667pws.fsf@alter.siamese.dyndns.org>
+References: <1300294266-26875-1-git-send-email-cmn@elego.de>
+ <4D80EC57.4050704@drmicha.warpmail.net> <1300299469.3995.10.camel@centaur>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 21:44:24 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Brian Gernhardt <benji@silverinsanity.com>
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Mar 16 21:48:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzxZv-0003Ua-F6
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 21:44:23 +0100
+	id 1Pzxe5-0005ce-GX
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 21:48:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753181Ab1CPUoT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 16:44:19 -0400
-Received: from mx0.elegosoft.com ([88.198.54.133]:54348 "EHLO
-	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753028Ab1CPUoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 16:44:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 7F63F1B4B16;
-	Wed, 16 Mar 2011 21:44:17 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dJlLNHV4ygPU; Wed, 16 Mar 2011 21:44:12 +0100 (CET)
-Received: from [192.168.1.16] (brln-4dbc728c.pool.mediaWays.net [77.188.114.140])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 1A3EB1B4B15;
-	Wed, 16 Mar 2011 21:44:12 +0100 (CET)
-In-Reply-To: <7vr5a67rb7.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.91.92 
+	id S1752936Ab1CPUsh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 16:48:37 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57874 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751757Ab1CPUsf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 16:48:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 249064CAF;
+	Wed, 16 Mar 2011 16:50:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=fcULMwmR+8YF
+	qtARIK63ysC8ptE=; b=RCuEkU8dh5I2qjA9z0C/L9gMcJtL1Wi2Q6o1maTCSjVU
+	LI+i6ceQcYDEqsZ/Vtk0CNd4rZuOyqtqBUmNYyPPVSLD41HYoR5U/XU4G/yjLUFN
+	USXy0ii2opKkuhk8Tu/Ob25P1P83y5ASmQROw+h0fMLTbBmzrmRB32brSap9I0U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kks9Ds
+	iMLxGS+KrQqXEDAaVgmoVb3FheMAk1AHgGbkxn7MBGtLA9B54v6JuxWXhSuB132n
+	k9uj9K6UN3TTOsEOx8GjtFXaU3r+oYq4JepgtoCRbd/11aMRqqgF8l3CW6I4a5vX
+	YBq4pOqSUjTs+QdNTcdg42MlLoU8PlnkYKAIA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BB0934CA7;
+	Wed, 16 Mar 2011 16:50:01 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 08D1D4CA4; Wed, 16 Mar 2011
+ 16:49:54 -0400 (EDT)
+In-Reply-To: <1300299469.3995.10.camel@centaur> ("Carlos =?utf-8?Q?Mart?=
+ =?utf-8?Q?=C3=ADn?= Nieto"'s message of "Wed, 16 Mar 2011 19:17:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F6835EBE-500E-11E0-9984-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169192>
 
-On mi=C3=A9, 2011-03-16 at 13:18 -0700, Junio C Hamano wrote:
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
-> > Some versions of strlen use SSE to speed up the calculation and loa=
-d 4
-> > bytes at a time, even if it means reading past the end of the
-> > allocated memory. This read is safe and when the strlen function is
-> > inlined, it is not replaced by valgrind, which reports a
-> > false-possitive.
-> >
-> > Tell valgrind to ignore this particular error, as the read is, in
-> > fact, safe. Current upstream-released version 2.6.1 is affected. So=
-me
-> > distributions have this fixed in their latest versions.
-> >
-> > Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
-> > ---
-> >
-> >>>  I think 3.6.1 doesn't need it, as Debian's 1:3.5.0+3.6.0svn20100=
-609-1
-> >>> version is reportedly fixed.
-> >>
-> >>Ah, nice.  A phrase like "some versions of valgrind before 3.6.1"
-> >>would be fine with me fwiw. :)
-> >
-> > I just downloaded and compiled the upstream release 2.6.1 and it's
-> > still affected (it does fix some other related
-> > false-positives). Fedorea rawhide has the fix in, according to thei=
-r
-> > bug tracker. I haven't tested the reportedly-fixed version in Debia=
-n
-> > yet.
->=20
-> I take it that you meant 3.6.1 in both places above?
->=20
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
- Yeah, I blame the kernel ;)
+> On Wed, 2011-03-16 at 17:59 +0100, Michael J Gruber wrote:
+>> Why remove the check? Again, this is not just renaming.
+>
+>  Semantics change. Same as above. The one below (snipped) is the same=
+=2E
+>>>[...]
+>> I think you should strictly separate the renaming issue from other
+>> patches (and describe/motivate the latter). It's fine to have a larg=
+e
+>> patch with mechanical changes (renaming) if you stick to just those.
+>
+>  Unfortunately I introduced some modifications trying to reduce the
+> number of times we call make_absolute_path/real_path and they snuck i=
+n.
 
-> This somehow reminds me of my past life where I saw a buggy implement=
-ation
-> of strlen() in the C library loaded one word too many from memory, an=
-d
-> segfaulted even when the string ended before the end of a mapped page=
- when
-> the next page was unmapped.
->=20
-> Anyway, nice digging.
-
- If all else fails, google will point you to the bug tracker :)
+Michael, thanks for helping with good eyes.
