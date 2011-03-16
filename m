@@ -1,223 +1,141 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 8/8] diff --submodule: split into bite-sized pieces
-Date: Wed, 16 Mar 2011 02:14:11 -0500
-Message-ID: <20110316071411.GI5988@elie>
-References: <20110316024959.GA24932@elie>
- <20110316065256.GA5988@elie>
+Subject: [PATCH v2] run-command: prettify -D_FORTIFY_SOURCE workaround
+Date: Wed, 16 Mar 2011 02:32:39 -0500
+Message-ID: <20110316073239.GJ5988@elie>
+References: <d2e97e801001291438k21a652cakb05ec34fc8bee227@mail.gmail.com>
+ <20110316035135.GA30348@elie>
+ <7v7hbzaan9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 08:14:22 2011
+Cc: git@vger.kernel.org, Michael Wookey <michaelwookey@gmail.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 08:32:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzkw2-0001EO-7o
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 08:14:22 +0100
+	id 1PzlDw-0006mS-RZ
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 08:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997Ab1CPHOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 03:14:18 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:41630 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751710Ab1CPHOQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 03:14:16 -0400
-Received: by yxs7 with SMTP id 7so545796yxs.19
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 00:14:16 -0700 (PDT)
+	id S1752155Ab1CPHcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 03:32:45 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:38229 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752083Ab1CPHco (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 03:32:44 -0400
+Received: by gwaa18 with SMTP id a18so547450gwa.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 00:32:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=5PvBazJiv/pg8/a3C/+jI6VovmfyTmp3wwTCvtAm3Og=;
-        b=QbhbPpzCs+CEwXwBwD3/TER3CGJHc+eb6g1XGuJqxCJ+Nc4nLaulVr4/w/cpIpZ/8T
-         9MMivWRmbYpwJDQS/BNGRF64m7uw36bnxvLJ9TEjPtg+kSJiPJsZLgxni9Eu9yHg6rNz
-         11i7WZqhojzGE+nL4mXDcmT1aqcGeMvYvq2QE=
+        bh=l4/kxNyXoex1KuGBSuyMjpcxGqkXCRouXor9g8I8838=;
+        b=JAPv3qz1TV7Uzv16j33jpRCi5tQoYOljdWJAQtF47eUdpT2mtHy9H5E4IjA3XJrm2s
+         ewlDifEBrjyVCybFcO4y2CH4kYGitX+4BJJmZGd68DnqmNKhpQFW2cqemUZp3r+/j/vZ
+         Ltt6AkdawWj5R0efjm6ws3zquiCL2FNGQS9zQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=POaJLTSVgouWZM8F8WIhwuWbR7IXFN+F1a2JInQpV1lMkNMZCZ6zJyE582zhjmj/1y
-         ZahEGBgVdFEHf0X2J4pCuQYcN3kLDROZxuIQcCEcEbru/YQWbkju0RDbLwcSxVfJbsQ9
-         xEv9Kp7c8dgSF0M4MkHNABnFjQen67cX2IovM=
-Received: by 10.150.32.13 with SMTP id f13mr1019014ybf.211.1300259656031;
-        Wed, 16 Mar 2011 00:14:16 -0700 (PDT)
+        b=VW2qZZvY6+EhLiCE5N5hEhkiZjeNDF835FgpoPKrSVGCj3rXdIj5YooR3iMBYDlEqz
+         b7XexsaJse7fJl6PlPECmqJCgtWF0x0aOGMI+JMZ6Kgir3HxjdfLvbNiSb4jYft2WvN2
+         4izHF7SKs3Zi8JKXl1F5hM43UisPhPAgExdPQ=
+Received: by 10.150.114.7 with SMTP id m7mr969310ybc.383.1300260763605;
+        Wed, 16 Mar 2011 00:32:43 -0700 (PDT)
 Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
-        by mx.google.com with ESMTPS id f2sm563979ybh.19.2011.03.16.00.14.14
+        by mx.google.com with ESMTPS id y21sm445129yhc.18.2011.03.16.00.32.41
         (version=SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2011 00:14:15 -0700 (PDT)
+        Wed, 16 Mar 2011 00:32:42 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110316065256.GA5988@elie>
+In-Reply-To: <7v7hbzaan9.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169117>
 
-Introduce two functions:
+Current gcc + glibc with -D_FORTIFY_SOURCE try very aggressively to
+protect against a programming style which uses write(...) without
+checking the return value for errors.  Even the usual hint of casting
+to (void) does not suppress the warning.
 
- - prepare_submodule_summary prepares the revision walker
-   to list changes in a submodule.  That is, it:
+Sometimes when there is an output error, especially right before exit,
+there really is nothing to be done.  The obvious solution, adopted in
+v1.7.0.3~20^2 (run-command.c: fix build warnings on Ubuntu,
+2010-01-30), is to save the return value to a dummy variable:
 
-   * finds merge bases between the commits pointed to this
-     path from before ("left") and after ("right") the change;
-   * checks whether this is a fast-forward or fast-backward;
-   * prepares a revision walk to list commits in the symmetric
-     difference between the commits at each endpoint.
+	ssize_t dummy;
+	dummy = write(...);
 
-   It returns nonzero on error.
+But that (1) is ugly and (2) triggers -Wunused-but-set-variable
+warnings with gcc-4.6 -Wall, so we are not much better off than when
+we started.
 
- - print_submodule_summary runs the revision walk and saves
-   the result to a strbuf in --left-right format.
+Instead, use an "if" statement with an empty body to make the intent
+clear.
 
-The goal is just readability.  No functional change intended.
+	if (write(...))
+		; /* yes, yes, there was an error. */
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Improved-by: Junio C Hamano <gitster@pobox.com>
 ---
- submodule.c |  103 +++++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 61 insertions(+), 42 deletions(-)
+Junio C Hamano wrote:
 
-diff --git a/submodule.c b/submodule.c
-index 6f1c107..e9f2b19 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -152,17 +152,69 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 		die("bad --ignore-submodules argument: %s", arg);
+>               The unusual "if ()" whose condition is solely for its side
+> effect, with an empty body, is a strong enough sign to any reader that
+> there is something fishy going on, and it would be helpful to the reader
+> to hint _why_ such an unusual construct is there.  It would be much better
+> for the longer term maintainability to say at least "gcc" in the comment,
+> i.e.
+> 
+> 	if (write(...))
+>         	; /* we know we are ignoring the error, mr gcc! */
+
+Very true.  Some comments to that effect below.
+
+ run-command.c |   17 +++++++++++------
+ 1 files changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index 3206d61..ecd9d1c 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -67,21 +67,26 @@ static int child_notifier = -1;
+ 
+ static void notify_parent(void)
+ {
+-	ssize_t unused;
+-	unused = write(child_notifier, "", 1);
++	/*
++	 * execvp failed.  If possible, we'd like to let start_command
++	 * know, so failures like ENOENT can be handled right away; but
++	 * otherwise, finish_command will still report the error.
++	 */
++	if (write(child_notifier, "", 1))
++		; /* yes, dear gcc -D_FORTIFY_SOURCE, there was an error. */
  }
  
-+static int prepare_submodule_summary(struct rev_info *rev, const char *path,
-+		struct commit *left, struct commit *right,
-+		int *fast_forward, int *fast_backward)
-+{
-+	struct commit_list *merge_bases, *list;
-+
-+	init_revisions(rev, NULL);
-+	setup_revisions(0, NULL, rev, NULL);
-+	rev->left_right = 1;
-+	rev->first_parent_only = 1;
-+	left->object.flags |= SYMMETRIC_LEFT;
-+	add_pending_object(rev, &left->object, path);
-+	add_pending_object(rev, &right->object, path);
-+	merge_bases = get_merge_bases(left, right, 1);
-+	if (merge_bases) {
-+		if (merge_bases->item == left)
-+			*fast_forward = 1;
-+		else if (merge_bases->item == right)
-+			*fast_backward = 1;
-+	}
-+	for (list = merge_bases; list; list = list->next) {
-+		list->item->object.flags |= UNINTERESTING;
-+		add_pending_object(rev, &list->item->object,
-+			sha1_to_hex(list->item->object.sha1));
-+	}
-+	return prepare_revision_walk(rev);
-+}
-+
-+static void print_submodule_summary(struct rev_info *rev, FILE *f,
-+		const char *del, const char *add, const char *reset)
-+{
-+	static const char format[] = "  %m %s";
-+	struct strbuf sb = STRBUF_INIT;
-+	struct commit *commit;
-+
-+	while ((commit = get_revision(rev))) {
-+		struct pretty_print_context ctx = {0};
-+		ctx.date_mode = rev->date_mode;
-+		strbuf_setlen(&sb, 0);
-+		if (commit->object.flags & SYMMETRIC_LEFT) {
-+			if (del)
-+				strbuf_addstr(&sb, del);
-+		}
-+		else if (add)
-+			strbuf_addstr(&sb, add);
-+		format_commit_message(commit, format, &sb, &ctx);
-+		if (reset)
-+			strbuf_addstr(&sb, reset);
-+		strbuf_addch(&sb, '\n');
-+		fprintf(f, "%s", sb.buf);
-+	}
-+	strbuf_release(&sb);
-+}
-+
- void show_submodule_summary(FILE *f, const char *path,
- 		unsigned char one[20], unsigned char two[20],
- 		unsigned dirty_submodule,
- 		const char *del, const char *add, const char *reset)
+ static NORETURN void die_child(const char *err, va_list params)
  {
- 	struct rev_info rev;
--	struct commit *commit, *left = left, *right = right;
--	struct commit_list *merge_bases, *list;
-+	struct commit *left = left, *right = right;
- 	const char *message = NULL;
- 	struct strbuf sb = STRBUF_INIT;
--	static const char *format = "  %m %s";
- 	int fast_forward = 0, fast_backward = 0;
+ 	char msg[4096];
+-	ssize_t unused;
+ 	int len = vsnprintf(msg, sizeof(msg), err, params);
+ 	if (len > sizeof(msg))
+ 		len = sizeof(msg);
  
- 	if (is_null_sha1(two))
-@@ -175,29 +227,10 @@ void show_submodule_summary(FILE *f, const char *path,
- 		 !(right = lookup_commit_reference(two)))
- 		message = "(commits not present)";
- 
--	if (!message) {
--		init_revisions(&rev, NULL);
--		setup_revisions(0, NULL, &rev, NULL);
--		rev.left_right = 1;
--		rev.first_parent_only = 1;
--		left->object.flags |= SYMMETRIC_LEFT;
--		add_pending_object(&rev, &left->object, path);
--		add_pending_object(&rev, &right->object, path);
--		merge_bases = get_merge_bases(left, right, 1);
--		if (merge_bases) {
--			if (merge_bases->item == left)
--				fast_forward = 1;
--			else if (merge_bases->item == right)
--				fast_backward = 1;
--		}
--		for (list = merge_bases; list; list = list->next) {
--			list->item->object.flags |= UNINTERESTING;
--			add_pending_object(&rev, &list->item->object,
--				sha1_to_hex(list->item->object.sha1));
--		}
--		if (prepare_revision_walk(&rev))
--			message = "(revision walker failed)";
--	}
-+	if (!message &&
-+	    prepare_submodule_summary(&rev, path, left, right,
-+					&fast_forward, &fast_backward))
-+		message = "(revision walker failed)";
- 
- 	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
- 		fprintf(f, "Submodule %s contains untracked content\n", path);
-@@ -221,25 +254,11 @@ void show_submodule_summary(FILE *f, const char *path,
- 	fwrite(sb.buf, sb.len, 1, f);
- 
- 	if (!message) {
--		while ((commit = get_revision(&rev))) {
--			struct pretty_print_context ctx = {0};
--			ctx.date_mode = rev.date_mode;
--			strbuf_setlen(&sb, 0);
--			if (commit->object.flags & SYMMETRIC_LEFT) {
--				if (del)
--					strbuf_addstr(&sb, del);
--			}
--			else if (add)
--				strbuf_addstr(&sb, add);
--			format_commit_message(commit, format, &sb, &ctx);
--			if (reset)
--				strbuf_addstr(&sb, reset);
--			strbuf_addch(&sb, '\n');
--			fprintf(f, "%s", sb.buf);
--		}
-+		print_submodule_summary(&rev, f, del, add, reset);
- 		clear_commit_marks(left, ~0);
- 		clear_commit_marks(right, ~0);
- 	}
-+
- 	strbuf_release(&sb);
+-	unused = write(child_err, "fatal: ", 7);
+-	unused = write(child_err, msg, len);
+-	unused = write(child_err, "\n", 1);
++	if (write(child_err, "fatal: ", 7) ||
++	    write(child_err, msg, len) ||
++	    write(child_err, "\n", 1))
++		; /* yes, gcc -D_FORTIFY_SOURCE, we know there was an error. */
+ 	exit(128);
  }
  
 -- 
