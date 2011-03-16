@@ -1,317 +1,120 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git stash: add --index-only, or --keep-index should not stash
- index?
-Date: Wed, 16 Mar 2011 18:06:36 -0500
-Message-ID: <4D81427C.1020603@gmail.com>
-References: <4D7A6E37.8080104@gmail.com>	<4D7E9502.4060502@gmail.com>	<AANLkTikU0xCBzDya3vyfoH4PwzmRi6qmotxNoVc61b=W@mail.gmail.com>	<4D80F9F4.9090304@gmail.com> <AANLkTing5ZQKF4PXtX1peynx2uuc8s+aeBP=fbJWXvWw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] diff --quiet: disable optimization when --diff-filter=X is
+ used
+Date: Wed, 16 Mar 2011 16:09:50 -0700
+Message-ID: <7vmxku64sh.fsf_-_@alter.siamese.dyndns.org>
+References: <4D80EBC1.7010105@elegosoft.com>
+ <7v62ri7oqm.fsf@alter.siamese.dyndns.org>
+ <7vwrjy670r.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 00:06:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakob Pfender <jpfender@elegosoft.com>, Jens.Lehmann@web.de,
+	johannes.schindelin@gmx.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 17 00:10:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzznm-0000uQ-4f
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 00:06:50 +0100
+	id 1Pzzr0-0002KJ-8a
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 00:10:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677Ab1CPXGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 19:06:44 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:64354 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752215Ab1CPXGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 19:06:42 -0400
-Received: by gwaa18 with SMTP id a18so879488gwa.19
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 16:06:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version
-         :newsgroups:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=769yr5VDV0ZdCJ92B34kZYR4r415YoYE4yA8HFbNJ9s=;
-        b=lwxKqVT8VIm48SdbkGzYltldZs/HEZmDTfHeKQkq7nDac36S40h3O8IvRtAe4nvjxb
-         LHQ4RFsYh62Kmo0pDPc+jTcbvNpJCkyctLXKm2+S1bTz5fPbLt8KZmlY14aLR6i3lJSa
-         WqvKXIv4zIofq/MJYDEv9eFp6guhQ19ZVBXog=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=uW2wQmYQ3w8rbxYGgjlxwccCV2Mn33bAtfPwCYOy4u0tHjkl93CkwJOHXi+bSbkXL7
-         QgtpSqksUDb5piZAkl5qajADJORMdSxQgpN1I7nMLciw6v+2O05BADA7kxdFtfxsRSyG
-         kqTc9Mp7/Eo7oW6iyKvQPkIOjCaXJPr+j8GeA=
-Received: by 10.236.139.233 with SMTP id c69mr617648yhj.141.1300316801154;
-        Wed, 16 Mar 2011 16:06:41 -0700 (PDT)
-Received: from [172.25.2.144] ([67.63.162.200])
-        by mx.google.com with ESMTPS id z10sm875409yhc.47.2011.03.16.16.06.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2011 16:06:40 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <AANLkTing5ZQKF4PXtX1peynx2uuc8s+aeBP=fbJWXvWw@mail.gmail.com>
+	id S1752476Ab1CPXKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 19:10:06 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41371 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751561Ab1CPXKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 19:10:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9342842FE;
+	Wed, 16 Mar 2011 19:11:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cWAnZCdBu8YiiKm8Lw3YRQB1qDY=; b=YoB8DV
+	Yed9XP+zB7CO4tviYXogGdnwVI7En8+SVyvWyyY6bANcP7PkxuPYCc2yG0ub3Y5W
+	hDGUQcbpvgwn9s9jyB9YfbDETJhLpjiwtIgqK7cWdRBapSRRHcaTFXHARE6jdNvB
+	HIR293d536zC9GP02u6fggtLplJyhCXY+gytg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o3aaIfmm8jgT8MvMw5ovYdFKd8BZwXB3
+	G3cO/8fpqEFdfOzhFzJsWCrU1ncVVSQRPUYQIpWUr/bbTC9reJTLmDYrQ4c1ysxr
+	bWhC97U9UvNWuSe0q6liiP4slqwJhe82a3y6q8S3H41J75GYSnG8C4oBdbr1k0ub
+	wP0OntpTSXY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A41B42F8;
+	Wed, 16 Mar 2011 19:11:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E4E0842F1; Wed, 16 Mar 2011
+ 19:11:24 -0400 (EDT)
+In-Reply-To: <7vwrjy670r.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 16 Mar 2011 15:21:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BA15FC5C-5022-11E0-A008-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169208>
 
-On 3/16/2011 4:37 PM, Piotr Krukowiecki wrote:
-> On Wed, Mar 16, 2011 at 6:57 PM, Neal Kreitzinger
-> <nkreitzinger@gmail.com>  wrote:
->> On 3/15/2011 2:48 PM, Piotr Krukowiecki wrote:
->>>
->>> On Mon, Mar 14, 2011 at 11:21 PM, Neal Kreitzinger
->>> <nkreitzinger@gmail.com>    wrote:
->>>>
->>>> On 3/11/2011 12:47 PM, Piotr Krukowiecki wrote:
->>>>>
->>>>> Hi,
->>>>>
->>>>> I wanted to do something like "Testing partial commits" described in
->>>>> git-stash documentation (see end of mail for reference). I think this
->>>>> is a common scenario: you start working on some feature, then discover
->>>>> a bug, start fixing it, but realize it needs more work. So now you have
->>>>> two features that needs more work (both are not ready for committing).
->>>>>
->>>>> The documentation says to use --keep-index in this case.
->>>>>
->>>>> The problem is that --keep-index leaves changes in index intact, but at
->>>>> the same time it saves them in stash. So if I edit those changes I'm
->>>>> likely
->>>>> to get conflicts when applying the stash.
->>>>>
->>>>> For example:
->>>>>
->>>>> $ git init&&      echo a>      a&&      git add .&&      git commit -m a
->>>>> $ echo x>      a&&      git add a&&      git stash save --keep-index
->>>>> $ echo y>      a&&      git add a&&      git commit -m y
->>>>> $ git stash pop
->>>>> Auto-merging a
->>>>> CONFLICT (content): Merge conflict in a
->>>>>
->>>>> Maybe --keep-index should not stash staged changes? This would fix this
->>>>> problem. And I can't  think of a situation when would want to stash
->>>>> changes
->>>>> and at the same time keep them.
->>>>>
->>>>> If --keep-index works correctly maybe a new option, for example
->>>>> --index-only
->>>>> (or --cached-only?) could be introduced?
->>>>>
->>>>>
->>>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>>>>
->>>>> Testing partial commits::
->>>>>
->>>>> You can use `git stash save --keep-index` when you want to make two or
->>>>> more commits out of the changes in the work tree, and you want to test
->>>>> each change before committing:
->>>>> +
->>>>> ----------------------------------------------------------------
->>>>> # ... hack hack hack ...
->>>>> $ git add --patch foo            # add just first part to the index
->>>>> $ git stash save --keep-index    # save all other changes to the stash
->>>>> $ edit/build/test first part
->>>>> $ git commit -m 'First part'     # commit fully tested change
->>>>> $ git stash pop                  # prepare to work on all other changes
->>>>> # ... repeat above five steps until one commit remains ...
->>>>> $ edit/build/test remaining parts
->>>>> $ git commit foo -m 'Remaining parts'
->>>>> ----------------------------------------------------------------
->>>>>
->>>>>
->>>> behind-the-scenes, git stash saves your working tree as a commit and your
->>>> index as another commit.  "git-stash apply" and "git-stash pop" only
->>>> apply
->>>> your stashed-index if you do "git-stash-apply --index".  The default is
->>>> to
->>>> only apply your stashed-work-tree.  You can create new branches from your
->>>> stashes with "git-stash branch".  You may find that much better to deal
->>>> with
->>>> for managing your work.  Stashes aren't really intended to be the primary
->>>> way to manage your work, but instead are a supplement.  Branches are a
->>>> better main tool for managing work.  You can create a branch from your
->>>> stash
->>>> and when the branch is ready you can merge it into your other branch.
->>>
->>> Thanks for explanation, I understand there is not much pressure on
->>> improving it.
->>>
->>> But it still does not explain how leaving code in index (with
->>> --keep-index) while
->>> still stashing it might be helpful?
->>>
->>> I would understand the use of --index-only (I gave an example of use
->>> case),
->>> or even --workdir-only, but not --keep-index. If I'm missing something
->>> please
->>> correct me.
->>>
->>>
->> Keep in mind that a key to his workflow is "git-add --patch" method (which
->> you did not include in your example).
->
-> I did - in my first mail.
->
->
->> The workflow of the manpage assumes
->> you will have to resolve conflicts in such a case.  If you look at the
->> "Pulling into a dirty tree" workflow of the same manpage its obvious that
->> this workflow will almost always get conflicts, but they don't explicitly
->> include conflict resolution in the example.
->
-> ok, for this workflow, when you stash away your changes to do a pull,
-> you can't do anything to avoid conflicts.
->
-> I mean this case:
->
->> You could resolve the conflicts
->> for "Testing partial commits" in this way:
->>
->> Neal's Version of Testing partial commits::
->> ----------------------------------------------------------------
->> # ... hack hack hack ...
->> $ git add --patch foo            # add just first part to the index
->> $ git stash save --keep-index    # save all other changes to the stash
->> $ edit/build/test first part
->> $ git commit -m 'First part'     # commit fully tested change
->> $ git stash pop                  # prepare to work on all other changes
->>    (conflict resolution)
->>    $ edit conflicted file        # keep new version of the hunk already
->>                                  # committed in prior iteration
->>    $ git reset HEAD -- foo       # clear conflict from index
->>    $ git reset HEAD -- foo       # (again) reset index to match HEAD
->> # ... repeat above five (or eight) steps until one commit remains ...
->> $ edit/build/test remaining parts
->> $ git commit foo -m 'Remaining parts'
->> ----------------------------------------------------------------
->>
->> Maybe there's a better way to do this.  Hope this helps.
->
-> How about following workflow?
->
->     # ... hack hack hack ...
->     $ git add --patch foo
->     $ git stash save --keep-index
->     $ build/test first part         # note I have removed the "edit" part
->
-> There are two possibilities now:
->
-> 1. You're happy with the result - you commit your changes:
->
->     $ git commit -m 'First part'
->     $ git stash pop
->
-> Important: there will be no conflicts in this case, and committed
-> changes won't be reverted/applied/conflicted, because you have
-> not edited them!
->
-> I wasn't fully aware of this before (looks like I'm still new to git).
->
->
-> 2. You're not happy with the result - maybe something does not
-> build and you need to stage more changes, or maybe fix is not
-> working yet.
->
-> You should first pop your stashed changes! This way you'll avoid
-> conflicts, you'll be able to stage/modify other changes. So the
-> next steps are like this:
->
->     $ git stash pop
->     $ edit/add -p
->     $ git stash save --keep-index
->
-> and now you're back to the "build/test" part.
->
->
->>    (conflict resolution)
->>    $ edit conflicted file        # keep new version of the hunk already
->>                                  # committed in prior iteration
->>    $ git reset HEAD -- foo       # clear conflict from index
->>    $ git reset HEAD -- foo       # (again) reset index to match HEAD
->
-> I'm not really sure why/how this works :/
->
-example:
-(1) I've added this code:
-if me then
-   echo me
-endif
-if you then
-   echo you
-endif
-if them then
-   echo them
-endif
+The code notices that the caller does not want any detail of the changes
+and only wants to know if there is a change or not by specifying --quiet.
+And it breaks out of the loop when it knows it already found any change.
 
-(2) via git-add --patch I only add the first "if" to the index:
-if me then
-   echo me
-endif
+When you have a post-process filter (e.g. --diff-filter), however, the
+path we found to be different in the previous round and set HAS_CHANGES
+bit may end up being uninteresting, and there may be no output at the end.
+The optimization needs to be disabled for such case.
 
-(3) git stash --keep-index:
-puts all 3 "if" statements in stash, but keeps only the first "if" in my 
-working-tree and index.
+Note that the f245194 (diff: change semantics of "ignore whitespace"
+options, 2009-05-22) already disables this optimization by refraining
+from setting HAS_CHANGES when post-process filters that need to inspect
+the contents of the files (e.g. -S, -w) in diff_change() function.
 
-(4) I test the first "If" and decide to modify it:
-if me or mine then
-   echo "all mine"
-endif
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-(5) I add and commit this change.
+ * This time with tests, on top of 90b1994 (diff: Rename QUIET internal
+   option to QUICK, 2009-05-23), which was the last commit in the series
+   that introduced the incorrect optimization in the first place.
 
-(6) git stash pop: generates conflict on the first "if".
+   Note that the test script was renamed to t/t4040 in today's codebase,
+   but it merges cleanly.
 
-(7) I edit the file and keep the new version of the first "if" and 
-delete the old version of the first "if":
-if me or mine then
-   echo "all mine"
-endif
-if you then
-   echo you
-endif
-if them then
-   echo them
-endif
+ diff-lib.c                   |    3 ++-
+ t/t4037-whitespace-status.sh |    7 +++++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
 
-(8) git status still shows this file as conflicted, because I haven't 
-"added" it yet.  However, I don't want to add the whole thing, but just 
-a patch of the second "if".  I'm not ready for the 3rd "if" yet.  I 
-can't do git-add --patch on a conflicted item.  So I clear the conflict 
-with "git reset HEAD --foo".
-
-(9) the first git reset only cleared the conflict -- it did not actually 
-reset the foo in index to match the foo in HEAD.  therefore, git status 
-still shows foo as being modified.  therefore, i do another git-reset to 
-reset the index foo to match the HEAD foo.
-
-(10) now i can do git-add --patch and add the second "if":
-if me or mine then
-   echo "all mine"
-endif
-if you then
-   echo you
-endif
-
-(repeat steps 3 thru 10)
-
-If you are new to git then maybe some clarification about the index will 
-be helpful.  In a nutshell, the index is the staging area in-between 
-your working-tree and the object-store.  Changes in your working-tree 
-first go to the index and then to the commit (object store).  The index 
-holds what is going to be committed.  It also is the go-between in the 
-opposite direction.  In order to get an object from the object-store to 
-your work-tree it goes from the object-store to your index and then to 
-your worktree.  when you checkout out a commit from the object-store it 
-goes into your index and then from the index into the working tree.  The 
-main thing to remember is that you have to put stuff in the index before 
-you can commit it.  Another thing to remember is that in order to put 
-stuff from the object-store into your working-tree, git first has to put 
-in in the index.  the index is the middle-man between the work-tree and 
-object-store, AND between the object-store and the work-tree.
-
-v/r,
-neal
+diff --git a/diff-lib.c b/diff-lib.c
+index b7813af..bfa6503 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -74,7 +74,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		int changed;
+ 
+ 		if (DIFF_OPT_TST(&revs->diffopt, QUICK) &&
+-			DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
++		    !revs->diffopt.filter &&
++		    DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
+ 			break;
+ 
+ 		if (!ce_path_match(ce, revs->prune_data))
+diff --git a/t/t4037-whitespace-status.sh b/t/t4037-whitespace-status.sh
+index a30b03b..abc4934 100755
+--- a/t/t4037-whitespace-status.sh
++++ b/t/t4037-whitespace-status.sh
+@@ -60,4 +60,11 @@ test_expect_success 'diff-files -b -p --exit-code' '
+ 	git diff-files -b -p --exit-code
+ '
+ 
++test_expect_success 'diff-files --diff-filter --quiet' '
++	git reset --hard &&
++	rm a/d &&
++	echo x >>b/e &&
++	test_must_fail git diff-files --diff-filter=M --quiet
++'
++
+ test_done
+-- 
+1.7.4.1.430.g5aa4d
