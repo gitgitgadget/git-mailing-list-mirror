@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/2] mktag: avoid %td in format string
-Date: Wed, 16 Mar 2011 00:14:22 -0500
-Message-ID: <20110316051422.GB1932@elie>
+Subject: [PATCH 2/2] unbreak and eliminate NO_C99_FORMAT
+Date: Wed, 16 Mar 2011 00:15:31 -0500
+Message-ID: <20110316051531.GC1932@elie>
 References: <27484.1172021696@lotus.CS.Berkeley.EDU>
  <20110316051232.GA1932@elie>
 Mime-Version: 1.0
@@ -10,45 +10,45 @@ Cc: Jason Riedy <jason@acm.org>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 06:14:37 2011
+X-From: git-owner@vger.kernel.org Wed Mar 16 06:15:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzj45-0004rs-1O
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 06:14:33 +0100
+	id 1Pzj5C-0005Fx-GA
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 06:15:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288Ab1CPFO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 01:14:28 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:63820 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750939Ab1CPFO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 01:14:27 -0400
-Received: by gyf1 with SMTP id 1so513227gyf.19
-        for <git@vger.kernel.org>; Tue, 15 Mar 2011 22:14:26 -0700 (PDT)
+	id S1751176Ab1CPFPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 01:15:38 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:51997 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750939Ab1CPFPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 01:15:36 -0400
+Received: by yia27 with SMTP id 27so519183yia.19
+        for <git@vger.kernel.org>; Tue, 15 Mar 2011 22:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=2sT766WfCRXCDP+dYxuTNXBAcDg+6PBlwlxxS3lqQ+c=;
-        b=vqYc/0icEYMuHYsqBevok65XPlnHVbuY4Lr9HPQPzUCjm8m17jGpJchH40rV7zXRf9
-         9QdO2q8MfL6w5OjNr8mIvvlrYbwVRa1M9+CuqlFeTVgFknQRuWS4KBx+UiZTyawj2EMf
-         1k/XfchUfF70ADsknQV6vRnZKJuo5pKcjX76U=
+        bh=+fb/U3OOYEcjZ07e03OeicAukVjd6CxNemOvCuo2r+I=;
+        b=aj/ek2nUYltFD9pUUAEmeX1xbg+Ya0P8sTgDgquv1tKRETPFZjp1bsagw9B3VhhOr9
+         fQyFibIknR+3xdHwh48L4dsha+DKAIfZizMu8ufMGJtQiwg9FFfaoVgt4oFrkUay7DUV
+         soxPVzTpu0qYT8WQ/EAy2tOjv8GrJm/V/ICPI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=HEJLRNL5i3WSwKrmtuuB9KOY1XkQ2+2lNsiVNmy/u+nKMTqD+SZz6TjW64Fu+z50n1
-         Cn7m0UV2RJ9nFw8ceOgTen0gKqCZvlpEQ02rh8lAvZrLzZnaE9uyVwrM5Vi+h82am5l+
-         MyRDEU0Yi8YM07CypzUSe+tgYFWgPEsTPfIho=
-Received: by 10.100.235.2 with SMTP id i2mr212440anh.164.1300252466587;
-        Tue, 15 Mar 2011 22:14:26 -0700 (PDT)
+        b=jC7dOykXUo8XDHkINfqaUPO5NAf/H9o8AvN1xufbqziqvVvqyNB2w1ge57OsaILtPv
+         pTSqSSqcYeqiqBMk3Ly8+YLqohOU2Z1OCHqPZNi3g0rcCp2qp++zP6mdOpKW/xyBI6v0
+         GKXCWmG691Th4+n2CWn333wyD+joprlhPdwaI=
+Received: by 10.150.246.6 with SMTP id t6mr897146ybh.251.1300252535597;
+        Tue, 15 Mar 2011 22:15:35 -0700 (PDT)
 Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
-        by mx.google.com with ESMTPS id x37sm708052ana.28.2011.03.15.22.14.25
+        by mx.google.com with ESMTPS id w15sm3318787ybk.13.2011.03.15.22.15.33
         (version=SSLv3 cipher=OTHER);
-        Tue, 15 Mar 2011 22:14:25 -0700 (PDT)
+        Tue, 15 Mar 2011 22:15:35 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20110316051232.GA1932@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -56,147 +56,194 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169103>
 
-Since v1.7.0-rc0~34 (make "mktag" a built-in, 2010-01-22), git mktag
-uses the C99-style %td format to print ptrdiff_t values.  It falls
-back to %d when NO_C99_FORMAT is set, on the assumption that pre-C99
-systems probably are using 32-bit pointers.
+In the spirit of v1.5.0.2~21 (Check for PRIuMAX rather than
+NO_C99_FORMAT in fast-import.c, 2007-02-20), use PRIuMAX from
+git-compat-util.h on all platforms instead of C99-specific formats
+like %zu with dangerous fallbacks to %u or %lu.
 
-But many modern systems are 64-bit and
+So now C99-challenged platforms can build git without provoking
+warnings or errors from printf, even if pointers do not have the same
+size as an int or long.
 
- * sometimes one wants to test the NO_C99_FORMAT fallbacks using a
-   modern development platform;
- * some platforms (I'm looking at you, msvc) have not gotten with the
-   program and are still C89-only.
-
-These ptrdiff_t values are offsets from the beginning of a buffer, so
-a size_t or uintmax_t would work about as well.  Use the latter so we
-can take advantage of the PRIuMAX fallback in git-compat-util.h, even
-on C99-challenged systems with 64-bit pointers.
+The need for a fallback PRIuMAX is detected in git-compat-util.h with
+"#ifndef PRIuMAX".  So while at it, simplify the Makefile and configure
+script by eliminating the NO_C99_FORMAT knob altogether.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-These two patches apply to maint.
+ Makefile      |   14 --------------
+ alloc.c       |   11 ++---------
+ config.mak.in |    1 -
+ configure.ac  |   24 ------------------------
+ sha1_file.c   |    9 ++-------
+ 5 files changed, 4 insertions(+), 55 deletions(-)
 
- builtin/mktag.c |   48 ++++++++++++++++++++++--------------------------
- 1 files changed, 22 insertions(+), 26 deletions(-)
-
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 1cb0f3f..bc05227 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -35,12 +35,6 @@ static int verify_object(const unsigned char *sha1, const char *expected_type)
- 	return ret;
- }
+diff --git a/Makefile b/Makefile
+index 775ee83..d9243aa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -45,11 +45,6 @@ all::
+ # Define NO_D_TYPE_IN_DIRENT if your platform defines DT_UNKNOWN but lacks
+ # d_type in struct dirent (Cygwin 1.5, fixed in Cygwin 1.7).
+ #
+-# Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
+-# do not support the 'size specifiers' introduced by C99, namely ll, hh,
+-# j, z, t. (representing long long int, char, intmax_t, size_t, ptrdiff_t).
+-# some C compilers supported these specifiers prior to C99 as an extension.
+-#
+ # Define NO_STRCASESTR if you don't have strcasestr.
+ #
+ # Define NO_MEMMEM if you don't have memmem.
+@@ -870,7 +865,6 @@ ifeq ($(uname_S),SunOS)
+ 		NO_UNSETENV = YesPlease
+ 		NO_SETENV = YesPlease
+ 		NO_STRLCPY = YesPlease
+-		NO_C99_FORMAT = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+ 	endif
+@@ -881,21 +875,18 @@ ifeq ($(uname_S),SunOS)
+ 		NO_UNSETENV = YesPlease
+ 		NO_SETENV = YesPlease
+ 		NO_STRLCPY = YesPlease
+-		NO_C99_FORMAT = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+ 	endif
+ 	ifeq ($(uname_R),5.8)
+ 		NO_UNSETENV = YesPlease
+ 		NO_SETENV = YesPlease
+-		NO_C99_FORMAT = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+ 	endif
+ 	ifeq ($(uname_R),5.9)
+ 		NO_UNSETENV = YesPlease
+ 		NO_SETENV = YesPlease
+-		NO_C99_FORMAT = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+ 	endif
+@@ -1074,7 +1065,6 @@ ifeq ($(uname_S),Windows)
+ 	NO_MEMMEM = YesPlease
+ 	# NEEDS_LIBICONV = YesPlease
+ 	NO_ICONV = YesPlease
+-	NO_C99_FORMAT = YesPlease
+ 	NO_STRTOUMAX = YesPlease
+ 	NO_STRTOULL = YesPlease
+ 	NO_MKDTEMP = YesPlease
+@@ -1151,7 +1141,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_MEMMEM = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	OLD_ICONV = YesPlease
+-	NO_C99_FORMAT = YesPlease
+ 	NO_STRTOUMAX = YesPlease
+ 	NO_MKDTEMP = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+@@ -1354,9 +1343,6 @@ endif
+ ifdef NO_NSEC
+ 	BASIC_CFLAGS += -DNO_NSEC
+ endif
+-ifdef NO_C99_FORMAT
+-	BASIC_CFLAGS += -DNO_C99_FORMAT
+-endif
+ ifdef SNPRINTF_RETURNS_BOGUS
+ 	COMPAT_CFLAGS += -DSNPRINTF_RETURNS_BOGUS
+ 	COMPAT_OBJS += compat/snprintf.o
+diff --git a/alloc.c b/alloc.c
+index 6ef6753..aeae55c 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -51,19 +51,12 @@ DEFINE_ALLOCATOR(commit, struct commit)
+ DEFINE_ALLOCATOR(tag, struct tag)
+ DEFINE_ALLOCATOR(object, union any_object)
  
 -#ifdef NO_C99_FORMAT
--#define PD_FMT "%d"
+-#define SZ_FMT "%u"
 -#else
--#define PD_FMT "%td"
+-#define SZ_FMT "%zu"
 -#endif
 -
- static int verify_tag(char *buffer, unsigned long size)
+ static void report(const char *name, unsigned int count, size_t size)
  {
- 	int typelen;
-@@ -70,15 +64,18 @@ static int verify_tag(char *buffer, unsigned long size)
- 	/* Verify tag-line */
- 	tag_line = strchr(type_line, '\n');
- 	if (!tag_line)
--		return error("char" PD_FMT ": could not find next \"\\n\"", type_line - buffer);
-+		return error("char%"PRIuMAX": could not find next \"\\n\"",
-+				(uintmax_t) (type_line - buffer));
- 	tag_line++;
- 	if (memcmp(tag_line, "tag ", 4) || tag_line[4] == '\n')
--		return error("char" PD_FMT ": no \"tag \" found", tag_line - buffer);
-+		return error("char%"PRIuMAX": no \"tag \" found",
-+				(uintmax_t) (tag_line - buffer));
- 
- 	/* Get the actual type */
- 	typelen = tag_line - type_line - strlen("type \n");
- 	if (typelen >= sizeof(type))
--		return error("char" PD_FMT ": type too long", type_line+5 - buffer);
-+		return error("char%"PRIuMAX": type too long",
-+				(uintmax_t) (type_line+5 - buffer));
- 
- 	memcpy(type, type_line+5, typelen);
- 	type[typelen] = 0;
-@@ -95,15 +92,16 @@ static int verify_tag(char *buffer, unsigned long size)
- 			break;
- 		if (c > ' ')
- 			continue;
--		return error("char" PD_FMT ": could not verify tag name", tag_line - buffer);
-+		return error("char%"PRIuMAX": could not verify tag name",
-+				(uintmax_t) (tag_line - buffer));
- 	}
- 
- 	/* Verify the tagger line */
- 	tagger_line = tag_line;
- 
- 	if (memcmp(tagger_line, "tagger ", 7))
--		return error("char" PD_FMT ": could not find \"tagger \"",
--			tagger_line - buffer);
-+		return error("char%"PRIuMAX": could not find \"tagger \"",
-+			(uintmax_t) (tagger_line - buffer));
- 
- 	/*
- 	 * Check for correct form for name and email
-@@ -115,44 +113,42 @@ static int verify_tag(char *buffer, unsigned long size)
- 	if (!(lb = strstr(tagger_line, " <")) || !(rb = strstr(lb+2, "> ")) ||
- 		strpbrk(tagger_line, "<>\n") != lb+1 ||
- 		strpbrk(lb+2, "><\n ") != rb)
--		return error("char" PD_FMT ": malformed tagger field",
--			tagger_line - buffer);
-+		return error("char%"PRIuMAX": malformed tagger field",
-+			(uintmax_t) (tagger_line - buffer));
- 
- 	/* Check for author name, at least one character, space is acceptable */
- 	if (lb == tagger_line)
--		return error("char" PD_FMT ": missing tagger name",
--			tagger_line - buffer);
-+		return error("char%"PRIuMAX": missing tagger name",
-+			(uintmax_t) (tagger_line - buffer));
- 
- 	/* timestamp, 1 or more digits followed by space */
- 	tagger_line = rb + 2;
- 	if (!(len = strspn(tagger_line, "0123456789")))
--		return error("char" PD_FMT ": missing tag timestamp",
--			tagger_line - buffer);
-+		return error("char%"PRIuMAX": missing tag timestamp",
-+			(uintmax_t) (tagger_line - buffer));
- 	tagger_line += len;
- 	if (*tagger_line != ' ')
--		return error("char" PD_FMT ": malformed tag timestamp",
--			tagger_line - buffer);
-+		return error("char%"PRIuMAX": malformed tag timestamp",
-+			(uintmax_t) (tagger_line - buffer));
- 	tagger_line++;
- 
- 	/* timezone, 5 digits [+-]hhmm, max. 1400 */
- 	if (!((tagger_line[0] == '+' || tagger_line[0] == '-') &&
- 	      strspn(tagger_line+1, "0123456789") == 4 &&
- 	      tagger_line[5] == '\n' && atoi(tagger_line+1) <= 1400))
--		return error("char" PD_FMT ": malformed tag timezone",
--			tagger_line - buffer);
-+		return error("char%"PRIuMAX": malformed tag timezone",
-+			(uintmax_t) (tagger_line - buffer));
- 	tagger_line += 6;
- 
- 	/* Verify the blank line separating the header from the body */
- 	if (*tagger_line != '\n')
--		return error("char" PD_FMT ": trailing garbage in tag header",
--			tagger_line - buffer);
-+		return error("char%"PRIuMAX": trailing garbage in tag header",
-+			(uintmax_t) (tagger_line - buffer));
- 
- 	/* The actual stuff afterwards we don't care about.. */
- 	return 0;
+-    fprintf(stderr, "%10s: %8u (" SZ_FMT " kB)\n", name, count, size);
++	fprintf(stderr, "%10s: %8u (%"PRIuMAX" kB)\n",
++			name, count, (uintmax_t) size);
  }
  
--#undef PD_FMT
+-#undef SZ_FMT
 -
- int cmd_mktag(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
+ #define REPORT(name)	\
+     report(#name, name##_allocs, name##_allocs*sizeof(struct name) >> 10)
+ 
+diff --git a/config.mak.in b/config.mak.in
+index 9614973..e378534 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -43,7 +43,6 @@ NO_D_INO_IN_DIRENT=@NO_D_INO_IN_DIRENT@
+ NO_D_TYPE_IN_DIRENT=@NO_D_TYPE_IN_DIRENT@
+ NO_SOCKADDR_STORAGE=@NO_SOCKADDR_STORAGE@
+ NO_IPV6=@NO_IPV6@
+-NO_C99_FORMAT=@NO_C99_FORMAT@
+ NO_HSTRERROR=@NO_HSTRERROR@
+ NO_STRCASESTR=@NO_STRCASESTR@
+ NO_STRTOK_R=@NO_STRTOK_R@
+diff --git a/configure.ac b/configure.ac
+index 20039c5..dd07907 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -686,30 +686,6 @@ AC_CHECK_TYPE([struct addrinfo],[
+ ])
+ AC_SUBST(NO_IPV6)
+ #
+-# Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
+-# do not support the 'size specifiers' introduced by C99, namely ll, hh,
+-# j, z, t. (representing long long int, char, intmax_t, size_t, ptrdiff_t).
+-# some C compilers supported these specifiers prior to C99 as an extension.
+-AC_CACHE_CHECK([whether formatted IO functions support C99 size specifiers],
+- [ac_cv_c_c99_format],
+-[# Actually git uses only %z (%zu) in alloc.c, and %t (%td) in mktag.c
+-AC_RUN_IFELSE(
+-	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
+-		[[char buf[64];
+-		if (sprintf(buf, "%lld%hhd%jd%zd%td", (long long int)1, (char)2, (intmax_t)3, (size_t)4, (ptrdiff_t)5) != 5)
+-		  return 1;
+-		else if (strcmp(buf, "12345"))
+-		  return 2;]])],
+-	[ac_cv_c_c99_format=yes],
+-	[ac_cv_c_c99_format=no])
+-])
+-if test $ac_cv_c_c99_format = no; then
+-	NO_C99_FORMAT=YesPlease
+-else
+-	NO_C99_FORMAT=
+-fi
+-AC_SUBST(NO_C99_FORMAT)
+-#
+ # Define NO_REGEX if you have no or inferior regex support in your C library.
+ AC_CACHE_CHECK([whether the platform regex can handle null bytes],
+  [ac_cv_c_excellent_regex], [
+diff --git a/sha1_file.c b/sha1_file.c
+index 27730c3..ea99f6f 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -25,13 +25,8 @@
+ #endif
+ #endif
+ 
+-#ifdef NO_C99_FORMAT
+-#define SZ_FMT "lu"
+-static unsigned long sz_fmt(size_t s) { return (unsigned long)s; }
+-#else
+-#define SZ_FMT "zu"
+-static size_t sz_fmt(size_t s) { return s; }
+-#endif
++#define SZ_FMT PRIuMAX
++static inline uintmax_t sz_fmt(size_t s) { return s; }
+ 
+ const unsigned char null_sha1[20];
+ 
 -- 
 1.7.4.1
