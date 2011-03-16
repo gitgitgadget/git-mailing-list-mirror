@@ -1,73 +1,76 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
-Date: Wed, 16 Mar 2011 21:40:51 +0700
-Message-ID: <AANLkTintr3szKMhbegeUgu+KHGtBGTRyQ3Y4pOwfwhEr@mail.gmail.com>
-References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com>
- <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
- <20110121222440.GA1837@sigill.intra.peff.net> <20110123141417.GA6133@mew.padd.com>
- <4D793C7D.1000502@miseler.de> <20110310222443.GC15828@sigill.intra.peff.net>
- <AANLkTimpbhaGEfxW1wwRc14tpV6qnPDiZYnXp_tvA3Ft@mail.gmail.com>
- <20110313025258.GA10452@sigill.intra.peff.net> <4D7D1BFE.2030008@miseler.de> <20110314193254.GA21581@sigill.intra.peff.net>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [RFD] Gitweb: Source configuration from file separate from the
+	CGI script
+Date: Wed, 16 Mar 2011 10:44:10 -0400
+Message-ID: <1300286650.28805.29.camel@drew-northup.unet.maine.edu>
+References: <1300285582.28805.25.camel@drew-northup.unet.maine.edu>
+	 <20110316143420.GA15371@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Alexander Miseler <alexander@miseler.de>,
-	Eric Montellese <emontellese@gmail.com>,
-	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	schacon@gmail.com, joey@kitenet.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 16 15:41:28 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 15:44:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzrui-0001JQ-4x
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 15:41:28 +0100
+	id 1Pzrxx-0003NL-9R
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 15:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752967Ab1CPOlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 10:41:24 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:44436 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751137Ab1CPOlW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 10:41:22 -0400
-Received: by wwa36 with SMTP id 36so2221471wwa.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 07:41:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=CwmXIwmWAKgte93yHRu2mElRlWJvHx81MX1t7spTXe8=;
-        b=spPv1FaXLyo8hZVncOs4I6pwZzEJdbScsUMYi79wmjlGy+Iyv+iiSmhDNjaJBj/mvi
-         WLJbuoAyFOw1VXpWiMfEchktXovO99Mag4u5fiHmqET8HpuS1Px+xBs0C6j5eCHMvYzd
-         3blJF+NwsjMWh/ADFj0E3zgprdSjn1UKCtBYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=kicinPLn1+izjkTXCnOJnSC+kSALjKv6mWv95MpHndjN8daQZtv+uQIJfU2st9HgQW
-         jw2/vVxDRwdfKKoMNlLvU2OecxPcS0JszpbORiMq3zn7r6lUatDOjxSyhljnzXUEulc3
-         cmT8u06GXy37K6xrBCcRp7vdw5BKuymqcyfIM=
-Received: by 10.216.157.68 with SMTP id n46mr161532wek.111.1300286481372; Wed,
- 16 Mar 2011 07:41:21 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Wed, 16 Mar 2011 07:40:51 -0700 (PDT)
-In-Reply-To: <20110314193254.GA21581@sigill.intra.peff.net>
+	id S1753196Ab1CPOog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 10:44:36 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:49980 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751131Ab1CPOo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 10:44:27 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2GEiDw5024539
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 16 Mar 2011 10:44:14 -0400
+In-Reply-To: <20110316143420.GA15371@elie>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
+	Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p2GEiDw5024539
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1300891455.7392@K2GlyZHNU766p537//+jgg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169159>
 
-On Tue, Mar 15, 2011 at 2:32 AM, Jeff King <peff@peff.net> wrote:
-> That being said, I'm not sure how much this optimization will buy us.
-> There are times when being able to mmap() the file directly, or point an
-> external program directly at the original blob will be helpful. But we
-> will still have to copy, for example on checkout.
 
-Sparse checkout code may help. If those large files are not always
-needed, they can be marked skip-checkout based on
-core.bigFileThreshold and won't be checked out until explictly
-requested. This use may conflict with sparse checkout because it sets
-skip-checkout bits automatically from $GIT_DIR/info/sparsecheckout
-though.
+On Wed, 2011-03-16 at 09:34 -0500, Jonathan Nieder wrote:
+> Hi,
+> 
+> Drew Northup wrote:
+> 
+> > I just upgraded my Gitweb package (I'm testing the EPEL RHEL5 latest;
+> > I'm not too happy with them tweaking the paths) and as I should have
+> > expected all of my Gitweb configuration is now gone.
+> 
+> In gitweb/README, I see:
+> 
+> | You can adjust gitweb behaviour using the file specified in `GITWEB_CONFIG`
+> | (defaults to 'gitweb_config.perl' in the same directory as the CGI), and
+> | as a fallback `GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf).
+> 
+> Hope that helps,
+> Jonathan
+
+I apparently missed that. Alas, I didn't see it in the code when I was
+setting my values so I assumed that it wasn't available. Perhaps we can
+make this a little more obvious? I'll go try that out and see if I can
+make it break--putting it in the same directory definitely wouldn't have
+helped this time.
+
 -- 
-Duy
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
