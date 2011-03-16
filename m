@@ -1,56 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC] reflog: silence -O3 -Wuninitialized warning
-Date: Wed, 16 Mar 2011 10:54:09 +0100
-Message-ID: <4D8088C1.5050901@viscovery.net>
-References: <20110316024959.GA24932@elie> <7vfwqnabbi.fsf@alter.siamese.dyndns.org> <4D807E66.40504@viscovery.net> <20110316094639.GA8180@elie>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] valgrind: ignore SSE-based strlen invalid reads
+Date: Wed, 16 Mar 2011 04:56:32 -0500
+Message-ID: <20110316095632.GA8277@elie>
+References: <1300267874-15365-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 10:54:19 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Mar 16 10:56:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PznQo-0001WR-MQ
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 10:54:19 +0100
+	id 1PznTA-0002ZO-Ue
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 10:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752409Ab1CPJyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 05:54:14 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:10979 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752003Ab1CPJyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 05:54:13 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PznQf-0002Jx-Pv; Wed, 16 Mar 2011 10:54:09 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7568D1660F;
-	Wed, 16 Mar 2011 10:54:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110316094639.GA8180@elie>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1752552Ab1CPJ4k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 05:56:40 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:45516 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752370Ab1CPJ4j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 05:56:39 -0400
+Received: by gwaa18 with SMTP id a18so582458gwa.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 02:56:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ZzaGmks+vJS4oAD9TWy8RxdKp44rxoVFWwJuXkHrNIE=;
+        b=Tug3+nuSIUm0uwIPmoLcIzKmzm8RJ+NP9a1iPVi4h2kApljJAx5QD0IiSEag6e16yR
+         ytjeKpnyN9RnovhNPtJhW/eEZoKPO09Un0YYzXq7R7i1IY/LGh81/bkzO8vjy3xAwZWs
+         Vk1DmmfN3wqdSw42v5CHK/r2f9NhWfjhlyRCk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Z0j59g2s99Z9spUkXCq/HSXzvMwlxIdMuszD6Cb/BjKQEp217VsPOA3rkvD9bRzLTw
+         hrGtvXzWRPCBjjG8wOLiFwipweq/UJ4ca7l6FMI3qlNNLGnn7Fh/wJ7++ZFdIubr/O6Y
+         zLuQxGwytb1d6Bt3vYjf8tbu+jNK8tJrMUNbs=
+Received: by 10.151.77.4 with SMTP id e4mr1122766ybl.147.1300269398456;
+        Wed, 16 Mar 2011 02:56:38 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
+        by mx.google.com with ESMTPS id q18sm3468110ybk.23.2011.03.16.02.56.37
+        (version=SSLv3 cipher=OTHER);
+        Wed, 16 Mar 2011 02:56:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1300267874-15365-1-git-send-email-cmn@elego.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169131>
 
-Am 3/16/2011 10:47, schrieb Jonathan Nieder:
-> Since the makefile already controls what options are passed to msvc,
-> is there some simple way to suppress the warning from "expire =
-> expire"?
+Hi Carlos,
 
-I don't think so. This is not a special warning, but just
+Carlos Mart=C3=ADn Nieto wrote:
 
-	warning C4700: uninitialized local variable 'expire' used
+> The C library uses SSE instructions to make strlen (among others)
+> faster, loading 4 bytes at a time and reading past the end of the
+> allocated memory. This read is safe and when the strlen function is
+> inlined, it is (obviously) not replaced by valgrind, which reports a
+> false-possitive.
 
-That is, if you disable it, you also disable it for locations where the
-warning would be justified. That's not something that I would like to do.
+It would be GCC rather than the C library if the strlen is inlined, I
+think.  Is this a distinct bug from
+<http://bugs.kde.org/show_bug.cgi?id=3D266961>?  Has it been filed
+with the valgrind maintainers?
 
--- Hannes
+Thanks,
+Jonathan
