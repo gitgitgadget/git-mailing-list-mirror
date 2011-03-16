@@ -1,99 +1,83 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/8] compat: make gcc bswap an inline function
-Date: Wed, 16 Mar 2011 04:31:08 -0500
-Message-ID: <20110316093108.GB7886@elie>
+Subject: Re: [PATCH/RFC] reflog: silence -O3 -Wuninitialized warning
+Date: Wed, 16 Mar 2011 04:47:03 -0500
+Message-ID: <20110316094639.GA8180@elie>
 References: <20110316024959.GA24932@elie>
- <20110316065256.GA5988@elie>
- <20110316070049.GC5988@elie>
- <4D808126.8070706@viscovery.net>
+ <7vfwqnabbi.fsf@alter.siamese.dyndns.org>
+ <4D807E66.40504@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 16 10:31:20 2011
+X-From: git-owner@vger.kernel.org Wed Mar 16 10:47:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzn4Z-00006R-Rn
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 10:31:20 +0100
+	id 1PznK7-00070A-Kh
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 10:47:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270Ab1CPJbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 05:31:15 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49935 "EHLO
+	id S1752445Ab1CPJrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 05:47:11 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:62117 "EHLO
 	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752167Ab1CPJbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 05:31:13 -0400
-Received: by ywj3 with SMTP id 3so577638ywj.19
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 02:31:13 -0700 (PDT)
+	with ESMTP id S1752270Ab1CPJrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 05:47:10 -0400
+Received: by ywj3 with SMTP id 3so581802ywj.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 02:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=M0B7eON6F408hEWvEFWVqtOeieXdh09o6MecrBXJFcc=;
-        b=BLDbakI0wM383vQitnjURGugG1WqRxsb9LbGOjQGt+tHunV4J1B0hU4X3zJO8ASkbk
-         Yd+FcYvtYohZ885qsXOG6/ziNJNqdgY0Tzzri9Odv721PFuOFql6nSPNPfzvIuEu08jb
-         6R2weXzHYXk77F7z+VrfRBWU4SMLLEk0YwkOA=
+        bh=DcZT/w2SWtf8QSsr+WP7b4UQVEi/KZ1WzedpFcVeBOo=;
+        b=XrXI7qgd6Tkg5obas6gdYBw+o3lMl+DlFjrSE3zp3IS8LqxlbYBjHYZiLfC8gCwBGv
+         TbNkKJBRvw3bFcbN+P1BCjdXQidmqHl6nqrlytcxRZLBZTv7pdO4aG1zMbwbQ+nrzu6g
+         Qduz5AMz3BnnWEpJkGoktS2evWI2KbT5uCddw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=NzD4fjQ31mj7oAEGjezdTsmOysrtKC+aZpbHCg0xNzHp6xR/9RfyZGxzzHjoNLxcB6
-         evMbTN/gE05ZXFAa0puxMA2cMFCwfmZ/MpoajlYaouxHEQBsdkCY+UzCJ7z1L0ex8f3G
-         HDkJX9yNj9Hls36BzUgslBLsNX9TCt7RjLxmI=
-Received: by 10.236.25.194 with SMTP id z42mr447790yhz.312.1300267873172;
-        Wed, 16 Mar 2011 02:31:13 -0700 (PDT)
-Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
-        by mx.google.com with ESMTPS id x37sm501624yhn.3.2011.03.16.02.31.11
+        b=PM/JN3mDL8YSAx0AeBPGJeudZishNRAzSVJH3uNcwoPCO2a2rnHHQ73TYaQpbh2nBK
+         3JGtGAwcEXnhjwWIshYo9JpSzJSKQCB2vu8ApaCkCXCxT2TJc3rxMqxelMeSUZzkT5D2
+         b/PoSdm9qzajMFaGXXtQGvO5Ifc0Mke8sBIr4=
+Received: by 10.91.209.3 with SMTP id l3mr1170487agq.29.1300268829099;
+        Wed, 16 Mar 2011 02:47:09 -0700 (PDT)
+Received: from elie ([69.209.56.53])
+        by mx.google.com with ESMTPS id x32sm1019014ana.12.2011.03.16.02.47.07
         (version=SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2011 02:31:12 -0700 (PDT)
+        Wed, 16 Mar 2011 02:47:08 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4D808126.8070706@viscovery.net>
+In-Reply-To: <4D807E66.40504@viscovery.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169128>
 
 Johannes Sixt wrote:
-> Am 3/16/2011 8:00, schrieb Jonathan Nieder:
 
->> +static inline uint32_t git_bswap32(uint32_t x)
->> +{
->> +	uint32_t result;
->> +	if (__builtin_constant_p(x))
->
-> Can this predicate ever be true? Isn't it false even if the function is
-> inlined?
+> 	unsigned long expire = 0;
 
-It's true if x is a constant.
+The main downside is that that prevents valgrind from discovering when
+the variable really is used uninitialized.  But I do agree that
 
-$ cat test.c
-#if 0
-gcc -Wall -W -O -o tryit "$0"
-exec ./tryit
-#else
-#include <stdio.h>
-#include <stdint.h>
+	unsigned long expire = expire;
 
-#ifdef __GNUC__
-static inline int constant(uint32_t x)
-{
-	return __builtin_constant_p(x);
-}
-#else
-static inline int constant(uint32_t x) { return 0; }
-#endif
+is ugly, which is part of why I did not use the latter workaround in
+this patch.
 
-int main(void)
-{
-	printf("%d\n", constant(3 + 5));
-	return 0;
-}
-#endif
-$ ./test.c
-1
+Since the makefile already controls what options are passed to msvc,
+is there some simple way to suppress the warning from "expire =
+expire"?  If not, I would find it tempting to make this and similar
+examples look like "unsigned long expire;", treat the warning as
+evidence that either
+
+ - the code is too complicated or does not give sufficient hints
+   to the compiler about control flow, or
+ - the compiler has a bug
+
+and use -Wno-uninitialized for -Werror builds.
