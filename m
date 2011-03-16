@@ -1,88 +1,154 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Document 'git bisect fix'.
-Date: Wed, 16 Mar 2011 12:47:07 +0100
-Message-ID: <4D80A33B.8020006@drmicha.warpmail.net>
-References: <20110311165802.GA3508@intel.com>	<4D7A64670200007800035F4C@vpn.id2.novell.com>	<AANLkTikG8wa1Em0bEUddbYpYs2TzFFTDb95qWFJ3xSbv@mail.gmail.com>	<4D7DE39302000078000362E6@vpn.id2.novell.com>	<20110314095534.GB18058@elte.hu>	<20110314104131.GG6275@bubble.grove.modra.org>	<20110314122342.GA26825@elte.hu>	<20110314131623.119020@gmx.net>	<20110314210001.GE4586@gmx.de> <AANLkTimAaL-C_oH9X3QFUc+JOaSi7xVe93KYJuL0VEyR@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] Allow git mv FileA fILEa when core.ignorecase = true
+Date: Wed, 16 Mar 2011 14:18:28 +0100
+Message-ID: <AANLkTikvkzUKBCqygGJoUG3qXNDArXpEX0RM5_5dbnBD@mail.gmail.com>
+References: <201103042240.38969.tboegi@web.de> <AANLkTin2s_=TVaKx6yv+nDvXB41BxebWHX4iaDYSGd-e@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
-	Jan Beulich <JBeulich@novell.com>,
-	"H.J. Lu" <hjl.tools@gmail.com>, "H. Peter Anvin" <hpa@zytor.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 12:50:59 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Mar 16 14:20:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzpFW-0007rU-TW
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 12:50:47 +0100
+	id 1PzqeS-0007w3-Tw
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 14:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063Ab1CPLum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 07:50:42 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:59840 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751437Ab1CPLul (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 07:50:41 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 973ED20A64;
-	Wed, 16 Mar 2011 07:50:40 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 16 Mar 2011 07:50:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=nuWJAyfRUwGVnHdTOfnPBmHGAec=; b=ipJ/qxb59FpRC/C69fB9gNIsv6oQIq/cg3pXzaigrutmDew3bl/R7w/S0cxfngNgQPHL42XOh6Ht1Pam7QpP/RswmIs3F9oCfV+TUNG8TmCx8y7+hXWsOjgyxtydgXaQIzOVOD+S6drEDb5qjkibnhUjIGWNw+58N6/aBZtsrHU=
-X-Sasl-enc: gB+dbTy2Zhg7H8zjMwl7ctjWOfY1E5UdUe8yVm4dPJqW 1300276240
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 25ADF440452;
-	Wed, 16 Mar 2011 07:50:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <AANLkTimAaL-C_oH9X3QFUc+JOaSi7xVe93KYJuL0VEyR@mail.gmail.com>
+	id S1752826Ab1CPNUc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 09:20:32 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:35630 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752791Ab1CPNUa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 09:20:30 -0400
+Received: by fxm17 with SMTP id 17so1636020fxm.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 06:20:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PqkThXY0a/ShKVKccA1KEkZ3QqMQPFKtYio1bVeSx+8=;
+        b=UaFsN46HQvNvQjkIm0SezxGsVH8JNt5WwTOF67d5cbMjGYPjtv/myU2N/4/axy6KLK
+         umhgpq3H1/8uWU0rCaw55TwDPyVhMfNDoBj1Txw/lU46XlN/RhzfIwQOOsaZlWuGbUu8
+         jqf2Pm4UehafGCBicVV3dsOmEv787M5cxxE+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=Lt96RUlAIUNlGn7VeUkKkYGVHX8FXyPM+gBVdNV3IImugMaplMMRzhh9J+HTR0Qlf4
+         SlA1BcPKKVLW/SkbxZLnu5H2qGgmhO4rd2gN14WznjVY6DH3th04Orx3wFWjewxTvNza
+         0j1pHIKwB0t2gRxEUSeFuc/gDIyCO7Z/xG+ns=
+Received: by 10.223.56.220 with SMTP id z28mr975232fag.11.1300281628442; Wed,
+ 16 Mar 2011 06:20:28 -0700 (PDT)
+Received: by 10.223.117.78 with HTTP; Wed, 16 Mar 2011 06:18:28 -0700 (PDT)
+In-Reply-To: <AANLkTin2s_=TVaKx6yv+nDvXB41BxebWHX4iaDYSGd-e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169150>
 
-Christian Couder venit, vidit, dixit 16.03.2011 10:52:
-> Hi,
-> 
-> On Mon, Mar 14, 2011 at 10:00 PM, Ralf Wildenhues
-> <Ralf.Wildenhues@gmx.de> wrote:
->> git bisect is sometimes less effective than it could be in projects
->> with long-lived but simple bugs (e.g., little-tested configurations).
->> Rather than skipping vast revision ranges, it might be easier to fix
->> them up from known bugfix branches.
-> 
-> It's already possible to deal with this problem by creating a new
-> branch where the bug is fixed, and then using "git replace", so that
-> the new branch is used instead of the old one.
-> Please search for "git replace" in this doc:
-> 
-> http://www.kernel.org/pub/software/scm/git/docs/git-bisect-lk2009.html
-> 
->> 'git bisect fix' teaches bisect about when some known bug was
->> introduced and when it was fixed, so that bisect can merge in
->> the fix when needed into new test candidates.
-> 
-> Perhaps some people would find it easier to use what you suggest but
-> using git replace may be nicer because you have to create the new
-> branch once, so you need to fix merge or rebase problems only once.
-> And the new branch may be useful not only for bisecting, for example
-> to recreate old versions.
+2011/3/16 Erik Faye-Lund <kusmabite@gmail.com>:
+> 2011/3/4 Torsten B=F6gershausen <tboegi@web.de>:
+>> =A0 =A0The typical use case is when a file "FileA" should be renamed=
+ into fILEa
+>> =A0 =A0and we are on a case insenstive file system (system core.igno=
+recase =3D true).
+>> =A0 =A0Source and destination are the same file, it can be accessed =
+under both names.
+>> =A0 =A0This makes git think that the destination file exists.
+>> =A0 =A0Unless used with --forced, git will refuse the "git mv FileA =
+fILEa".
+>> =A0 =A0This change will allow "git mv FileA fILEa", when core.ignore=
+case =3D true
+>> =A0 =A0and source and destination filenames only differ in case and =
+the file length
+>> =A0 =A0is identical.
+>> =A0 =A0On Linux/Unix/Mac OS X the mv is allowed when the inode of th=
+e source and
+>> =A0 =A0destination are equal.
+>> =A0 =A0On =A0this allows renames of M=C4RCHEN into M=E4rchen on Mac =
+OS X.
+>> =A0 =A0(As a side effect, a file can be renamed to a name which is a=
+lready
+>> =A0 =A0hard-linked to the same inode)
+>>
+>> Signed-off-by: Torsten B=F6gershausen <tboegi@web.de>
+>> ---
+>> =A0builtin/mv.c =A0| =A0 20 +++++++++++++++-----
+>> =A0t/t7001-mv.sh | =A0 29 +++++++++++++++++++++++++++++
+>> =A02 files changed, 44 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/builtin/mv.c b/builtin/mv.c
+>> index 93e8995..e0aad62 100644
+>> --- a/builtin/mv.c
+>> +++ b/builtin/mv.c
+>> @@ -62,7 +62,7 @@ int cmd_mv(int argc, const char **argv, const char=
+ *prefix)
+>> =A0 =A0 =A0 =A0};
+>> =A0 =A0 =A0 =A0const char **source, **destination, **dest_path;
+>> =A0 =A0 =A0 =A0enum update_mode { BOTH =3D 0, WORKING_DIRECTORY, IND=
+EX } *modes;
+>> - =A0 =A0 =A0 struct stat st;
+>> + =A0 =A0 =A0 struct stat st, st_dst;
+>> =A0 =A0 =A0 =A0struct string_list src_for_dst =3D STRING_LIST_INIT_N=
+ODUP;
+>>
+>> =A0 =A0 =A0 =A0git_config(git_default_config, NULL);
+>> @@ -164,15 +164,25 @@ int cmd_mv(int argc, const char **argv, const =
+char *prefix)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0} else if (cache_name_pos(src, length=
+) < 0)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0bad =3D "not under ve=
+rsion control";
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 else if (lstat(dst, &st) =3D=3D 0) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 else if (lstat(dst, &st_dst) =3D=3D 0)=
+ {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 int allow_force =3D fo=
+rce;
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0bad =3D "destination =
+exists";
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (force) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Allow when src and =
+dst have the same inode (Mac OS X) */
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Allow when ignore_c=
+ase and same file length (Windows) */
+>
+> Wait, what? Same file length is sufficient to trigger overwriting
+> without -f? I find this to be a very dubious heuristic...
+>
+> Shouldn't you be checking something like nFileIndexLow/High from
+> BY_HANDLE_FILE_INFORMATION instead? (ref:
+> http://msdn.microsoft.com/en-us/library/aa363788(v=3DVS.85).aspx)
+>
+> Sure, we'd need some API to check that, but if we assume that this
+> code path is rare-ish we could do something like this (note,
+> untested):
+>
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 6750e67..fee4113 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -299,6 +299,21 @@ void mingw_mark_as_git_dir(const char *dir)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "dotGitOnly" : "true"));
+> =A0}
+>
+> +int is_same_file(const char *a, const char *b)
+> +{
+> + =A0 =A0 =A0 BY_HANDLE_FILE_INFORMATION hia, hib;
+> + =A0 =A0 =A0 HANDLE ha =3D OpenFileA(a, NULL, OF_READ),
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0hb =3D OpenFileA(b, NULL, OF_READ);
+> + =A0 =A0 =A0 if (!ha || !hb ||
+> + =A0 =A0 =A0 =A0 =A0 !GetFileInformationByHandle(ha) ||
+> + =A0 =A0 =A0 =A0 =A0 !GetFileInformationByHandle(hb))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+> +
 
-I'd say the replace method is perfect for transporting an existing fix
-"back in time" when the range of non-bisectable commits is limited. But
-since you have to replace the right (most recent) commit in that range
-it is less convenient when you have a fix due to a changed/exotic build
-environment or such which you do not want in your mainline.
-
-Also, you have to rebase the whole history back to the commit which
-introduced the problem - and that could be the root commit if the bisect
-problems arise from a changed toolchain, like here.
-
-Michael
-P.S.: Did you cull cc on purpose or did gmane mess up? Readding AM, LT, TG
+And if couse:
+CloseHandle(ha);
+CloseHandle(hb);
