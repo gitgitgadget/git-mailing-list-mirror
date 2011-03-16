@@ -1,85 +1,63 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] system_path: use a static buffer
-Date: Wed, 16 Mar 2011 17:33:03 +0100
-Message-ID: <1300293183-26354-1-git-send-email-cmn@elego.de>
-References: <AANLkTinEMzezKdfGUrwKv7sJ+tSK5duYM6XZMvBa-yj3@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 3/3] Use the new {real,absolute}_path function names
+Date: Wed, 16 Mar 2011 17:24:49 +0100
+Message-ID: <AANLkTikvb0-XJKwNmaJGeJiZQzYC=_k9_MChyOgvkE1o@mail.gmail.com>
+References: <1300291579-25852-1-git-send-email-cmn@elego.de> <1300291579-25852-4-git-send-email-cmn@elego.de>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
+Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 17:33:29 2011
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Mar 16 17:35:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pztf6-000383-Cw
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:33:28 +0100
+	id 1PzthK-0004Rh-03
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752298Ab1CPQdJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:33:09 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:38124 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752348Ab1CPQdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 12:33:05 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 8D60D460FD;
-	Wed, 16 Mar 2011 17:32:57 +0100 (CET)
-Received: (nullmailer pid 26388 invoked by uid 1000);
-	Wed, 16 Mar 2011 16:33:03 -0000
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <AANLkTinEMzezKdfGUrwKv7sJ+tSK5duYM6XZMvBa-yj3@mail.gmail.com>
+	id S1752495Ab1CPQfl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:35:41 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:34913 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472Ab1CPQfk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 12:35:40 -0400
+Received: by fxm17 with SMTP id 17so1842936fxm.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 09:35:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=eDoNambxIYjUg67DsbG9Shwkg3KedZWA3et9jwSd4GM=;
+        b=ogek4Vb8QxNpTpZu4ujVJqHPEvO8MEu/YyzOckWeYmo0QMC8R8IrZDI+0RYKwpy1DP
+         VqVZy4zfBfbV9bDGXELsfTTJMlZz29lTty3W8uhv9Le4v1bb5pUo6Ltzo4UTsJrJB8/x
+         dmqlCBLE1stJovtitxzKmYpRkVCu3aQlnEMng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=W3p76hlmqC3J94xPa2S8+0eNRA3gk+2/Dmr/Ixz05KpPPGfVxcaKDkkWkhVlaquHj6
+         dYoIfUawmFq6Ca0nBKsU8eOyShiP4GqUOQSkKhurCNA4v8L+LP5/6Ru187yt4KoF+3GO
+         3P+pAQmr1by9kb0dMaJAaN+Ti+XslQaEn9Z+M=
+Received: by 10.223.77.16 with SMTP id e16mr193574fak.87.1300292737701; Wed,
+ 16 Mar 2011 09:25:37 -0700 (PDT)
+Received: by 10.223.117.78 with HTTP; Wed, 16 Mar 2011 09:24:49 -0700 (PDT)
+In-Reply-To: <1300291579-25852-4-git-send-email-cmn@elego.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169171>
 
-Make system_path behave like the other path functions by using a
-static buffer, fixing a memory leak.
+On Wed, Mar 16, 2011 at 5:06 PM, Carlos Mart=EDn Nieto <cmn@elego.de> w=
+rote:
+> Use the new names for path functions in the code. Replace uses of
+> make_absolute_path with real_path, make_nonrelative_path with
+> absolute_path and make_relative_path with relative_path.
 
-Also make sure the prefix pointer is always initialized to either
-PREFIX or NULL.
-
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
- exec_cmd.c |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 38545e8..5686952 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -9,11 +9,11 @@ static const char *argv0_path;
- const char *system_path(const char *path)
- {
- #ifdef RUNTIME_PREFIX
--	static const char *prefix;
-+	static const char *prefix =3D NULL;
- #else
- 	static const char *prefix =3D PREFIX;
- #endif
--	struct strbuf d =3D STRBUF_INIT;
-+	static char buf[PATH_MAX];
-=20
- 	if (is_absolute_path(path))
- 		return path;
-@@ -33,9 +33,10 @@ const char *system_path(const char *path)
- 	}
- #endif
-=20
--	strbuf_addf(&d, "%s/%s", prefix, path);
--	path =3D strbuf_detach(&d, NULL);
--	return path;
-+	if (snprintf(buf, sizeof(buf), "%s/%s", prefix, path) >=3D sizeof(buf=
-))
-+		die("system path too long for %s", path);
-+
-+	return buf;
- }
-=20
- const char *git_extract_argv0_path(const char *argv0)
---=20
-1.7.4.1
+Shouldn't these changes be squashed into the previous two commits so
+it'll be possible to bisect across it without getting a broken build?
