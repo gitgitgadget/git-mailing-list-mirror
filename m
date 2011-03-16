@@ -1,72 +1,85 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH 2/3] Name make_*_path functions more accurately
-Date: Wed, 16 Mar 2011 12:29:52 -0400
-Message-ID: <D7B7C57A-B4DB-4CDC-B079-77537D8E8EFD@silverinsanity.com>
-References: <1300291579-25852-1-git-send-email-cmn@elego.de> <1300291579-25852-3-git-send-email-cmn@elego.de>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=iso-8859-1
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] system_path: use a static buffer
+Date: Wed, 16 Mar 2011 17:33:03 +0100
+Message-ID: <1300293183-26354-1-git-send-email-cmn@elego.de>
+References: <AANLkTinEMzezKdfGUrwKv7sJ+tSK5duYM6XZMvBa-yj3@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Wed Mar 16 17:30:07 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 16 17:33:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pztbm-0001K0-JW
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:30:02 +0100
+	id 1Pztf6-000383-Cw
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:33:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751917Ab1CPQ35 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:29:57 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:60635 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751628Ab1CPQ34 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 12:29:56 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id A87891FFC193; Wed, 16 Mar 2011 16:29:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [129.21.60.132] (unknown [129.21.60.132])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id C74CE1FFC191;
-	Wed, 16 Mar 2011 16:29:50 +0000 (UTC)
-In-Reply-To: <1300291579-25852-3-git-send-email-cmn@elego.de>
-X-Mailer: Apple Mail (2.1082)
+	id S1752298Ab1CPQdJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:33:09 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:38124 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752348Ab1CPQdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 12:33:05 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 8D60D460FD;
+	Wed, 16 Mar 2011 17:32:57 +0100 (CET)
+Received: (nullmailer pid 26388 invoked by uid 1000);
+	Wed, 16 Mar 2011 16:33:03 -0000
+X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <AANLkTinEMzezKdfGUrwKv7sJ+tSK5duYM6XZMvBa-yj3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169170>
 
+Make system_path behave like the other path functions by using a
+static buffer, fixing a memory leak.
 
-On Mar 16, 2011, at 12:06 PM, Carlos Mart=EDn Nieto wrote:
+Also make sure the prefix pointer is always initialized to either
+PREFIX or NULL.
 
-> Rename the make_*_path functions so it's clearer what they do, in
-> particlar make clear what the differnce between make_absolute_path an=
-d
-> make_nonrelative_path is by renaming them real_path and absolute_path
-> respectively. make_relative_path has an understandable name and is
-> renamed to relative_path to maintain the name convention.
->=20
-> Signed-off-by: Carlos Mart=EDn Nieto <cmn@elego.de>
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
+ exec_cmd.c |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
-I didn't try it, but it looks like 2/3 horribly breaks the code and 3/3=
- fixes it.  I personally (and I think others) prefer patches that are e=
-ach useful on their own.  Especially since a code-breaking patch like t=
-his makes bisecting harder.
-
-I would suggest doing one of the following:
-
-1) Squashing 2/3 and 3/3 so all the renaming occurs at once.
-2) Adding wrappers from the old name to the new in 2/3 and removing the=
-m in 3/3.
-
-That said, I'm not sure the renaming is useful although the documentati=
-on comments definitely are.
-
-~~ Brian
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 38545e8..5686952 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -9,11 +9,11 @@ static const char *argv0_path;
+ const char *system_path(const char *path)
+ {
+ #ifdef RUNTIME_PREFIX
+-	static const char *prefix;
++	static const char *prefix =3D NULL;
+ #else
+ 	static const char *prefix =3D PREFIX;
+ #endif
+-	struct strbuf d =3D STRBUF_INIT;
++	static char buf[PATH_MAX];
+=20
+ 	if (is_absolute_path(path))
+ 		return path;
+@@ -33,9 +33,10 @@ const char *system_path(const char *path)
+ 	}
+ #endif
+=20
+-	strbuf_addf(&d, "%s/%s", prefix, path);
+-	path =3D strbuf_detach(&d, NULL);
+-	return path;
++	if (snprintf(buf, sizeof(buf), "%s/%s", prefix, path) >=3D sizeof(buf=
+))
++		die("system path too long for %s", path);
++
++	return buf;
+ }
+=20
+ const char *git_extract_argv0_path(const char *argv0)
+--=20
+1.7.4.1
