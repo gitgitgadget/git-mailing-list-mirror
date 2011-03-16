@@ -1,74 +1,95 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git bisect code 125 - "WFT?"
-Date: Wed, 16 Mar 2011 23:06:32 +0100
-Message-ID: <AANLkTikRttGnxex1CYSQnSg4PgctFj0-qNjf5un+fL0W@mail.gmail.com>
-References: <AANLkTikZ3Po-YdhO-qCn5usVkt4J196eFF6YdbAeMG_X@mail.gmail.com>
-	<7v1v267no9.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [PATCH] diff-lib.c: Fix diff-files --diff-filter --quiet exit
+ code
+Date: Wed, 16 Mar 2011 15:21:40 -0700
+Message-ID: <7vwrjy670r.fsf_-_@alter.siamese.dyndns.org>
+References: <4D80EBC1.7010105@elegosoft.com>
+ <7v62ri7oqm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 23:06:40 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de,
+	johannes.schindelin@gmx.de
+To: Jakob Pfender <jpfender@elegosoft.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 23:22:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzyrX-0006zN-55
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 23:06:39 +0100
+	id 1Pzz6N-0006TP-S3
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 23:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077Ab1CPWGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 18:06:34 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:37347 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751859Ab1CPWGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 18:06:33 -0400
-Received: by vws1 with SMTP id 1so2233307vws.19
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 15:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=7fvB1CDjF2LAStb5d4LGepc9NgwUXS4rwlwXC5Nz8Pk=;
-        b=rJbRP30/q1S7fjlVcuTh98dfSlTP9mFl4I4B/AvzswzZ5j0GxObq8MiYZrLNrR2q00
-         TEiGxTRf3CUPArOMNEZoz9VyZC2dJ8K8PjJkJlgqRByGjoWNmJx2lP+k7naWdBlUbuVb
-         fgaA+4Ee43WGMBJ06P4UVcW8U+Ylgs3zYlak8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=j1qjuSlP8Gg1Rc2hrGY0IB+XmVKjM601pMiF0oMT7GO4D9dPC5A9rufT55HzLYTLRX
-         4J2PCSF+su7MhvTo8jyTKH+ZgScB28222rIZWst4Gusuh4mfk2QDeyaWHiwCjPlcRtON
-         4dn1ZxJGICCz3Af+CgzycWwyLtxSgti+tDwg0=
-Received: by 10.220.7.142 with SMTP id d14mr150168vcd.59.1300313192398; Wed,
- 16 Mar 2011 15:06:32 -0700 (PDT)
-Received: by 10.220.202.140 with HTTP; Wed, 16 Mar 2011 15:06:32 -0700 (PDT)
-In-Reply-To: <7v1v267no9.fsf@alter.siamese.dyndns.org>
+	id S1752154Ab1CPWVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 18:21:55 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61542 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751997Ab1CPWVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 18:21:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6A6723B18;
+	Wed, 16 Mar 2011 18:23:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dBRbpBuytU3MdFC+8WdLoTQwncY=; b=JBkX/L
+	zcWgOEFFKCWNbcWCPAvtztEAPHZrX8RqDUIMAovuoO/KNc8qG4luKMuPshozeOeI
+	KCbbDTzOPDzyoBYqI1LfjeN3qZPa/2ZxZFe7ESOL8MNnAzE8FbkMOaKj5K3rQ5G/
+	erfdO2DydctUE7mdKjSsu82GOf8WAX41HbUT0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yDcsTJHs8TtZv96kYKsf2ZOozwUypdD2
+	mlThgWYJGeg+3wbozPJ6jtYA18NRpqxcsA2AUkkFsAsD22u49TUX7uumw7sXTBuf
+	bE7TU522jYOkO0ZstXPO0yWeosb7UbzjBspJ5+vqfnAwyccwX9wxRFiXgYM9jeI0
+	SB3RCsHLMO8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 285C13B13;
+	Wed, 16 Mar 2011 18:23:21 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CFB8B3B0F; Wed, 16 Mar 2011
+ 18:23:15 -0400 (EDT)
+In-Reply-To: <7v62ri7oqm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 16 Mar 2011 14:13:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 00078958-501C-11E0-AB98-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169202>
 
-On Wed, Mar 16, 2011 at 10:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> The code notices that the caller, by specifying --quiet, does not want any
+> details of the changes and instead wants to know if there is a change or
+> not.  And it breaks out of the loop because it already found what it
+> wanted to know, namely, there is a change.
 >
->> Opinions? Would it be possible to change the meaning of the codes now
->> (in 1.8.0)?
->
-> How about just documenting why it is a bad idea to use 126 or 127 as you
-> found out somewhere, and stopping there, iow, without changing the code to
-> use 126/127 that we consider it is a bad idea to use and avoided using so
-> far?
+> When you have a post-process filter (like -w or -S), the path we found to
+> be different here may be uninteresting and there may be no output (hence
+> we should exit with status 0).  So it is true that the optimization you
+> are removing needs to be disabled in _some_ situations, and the current
+> code doesn't, and it needs fixing.
 
-Documenting it won't help. If you get 126 code, you won't know if user
-returned it to mark the code as bad, or if bash returned it to say
-that it can't
-execute a command.
+What I was hinting at was perhaps to do it something like the attached; it
+is totally untested, and merely for illustration purposes.
 
-Of course if changing the meaning is out of option it's better to document
-then not to document.
+I didn't even try to cover -w/-S which may or may not involve inspecting
+DIFF_FROM_CONTENTS bit in the options.
 
--- 
-Piotr Krukowiecki
+ diff-lib.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index 1e22992..2870de4 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -103,7 +103,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		unsigned dirty_submodule = 0;
+ 
+ 		if (DIFF_OPT_TST(&revs->diffopt, QUICK) &&
+-			DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
++		    !revs->diffopt.filter &&
++		    DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
+ 			break;
+ 
+ 		if (!ce_path_match(ce, &revs->prune_data))
