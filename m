@@ -1,71 +1,93 @@
-From: Ilya Furmanov <furious-i@yandex.ru>
-Subject: git-cvsserver pserver username propagation
-Date: Wed, 16 Mar 2011 18:55:39 +0000 (UTC)
-Message-ID: <loom.20110316T194158-206@post.gmane.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 8/8] diff --submodule: split into bite-sized pieces
+Date: Wed, 16 Mar 2011 14:33:50 -0500
+Message-ID: <20110316193350.GA8179@elie>
+References: <20110316024959.GA24932@elie>
+ <20110316065256.GA5988@elie>
+ <20110316071411.GI5988@elie>
+ <4D8104DC.2010700@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 20:00:29 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Mar 16 20:34:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzvxL-0007Nh-Dc
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 20:00:27 +0100
+	id 1PzwTw-0001JO-F3
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 20:34:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775Ab1CPTAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 15:00:10 -0400
-Received: from lo.gmane.org ([80.91.229.12]:50022 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753239Ab1CPTAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 15:00:07 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Pzvx0-0007g9-Fr
-	for git@vger.kernel.org; Wed, 16 Mar 2011 20:00:06 +0100
-Received: from alaintech.corbina.net ([alaintech.corbina.net])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 20:00:06 +0100
-Received: from furious-i by alaintech.corbina.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 20:00:06 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 89.179.144.142 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.134 Safari/534.16)
+	id S1753570Ab1CPTeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 15:34:00 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:40438 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753239Ab1CPTd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 15:33:58 -0400
+Received: by qyk7 with SMTP id 7so3751952qyk.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 12:33:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=tXNuSqO6nQIUORiE2x/D1ynMbQjE2ZLBAPwNezkce0w=;
+        b=TN70dsGDS4Z2wwKzfGQr+Uo3r0BLPd7jYbvXAnSzSSGCoTGe6SDCx/MxfCRPxmrB1y
+         IZKXdBok9tRsjsmGHOgYYQqvX9kVl7Qm0Jd9Rd6KO5xuZkHoZ9+x8Kv9psl1auSiuTQA
+         1eChgX8aKs4YrKP/2Cm3VvlOhcQDglJZIVNdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xnDgdMAdT1MgJq6xMLFUtd8h2cBmhfc63gJN04ubfpQ7u3wWGzRUhKftl85C1THy4P
+         BlxYR1Hou1/SqzWC40btVJ4pYwVpEuTb+CyfyfWBqtT/ku4Kj5xtiEJ4tHtF/SsZiOtu
+         3Rx2cJgvLHKHROzfWdO0DwtHoLowW0Smg2DEY=
+Received: by 10.229.66.151 with SMTP id n23mr352950qci.268.1300304038162;
+        Wed, 16 Mar 2011 12:33:58 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id y17sm920040qci.33.2011.03.16.12.33.54
+        (version=SSLv3 cipher=OTHER);
+        Wed, 16 Mar 2011 12:33:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D8104DC.2010700@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169183>
 
-Hello All!
+Jens Lehmann wrote:
+> Am 16.03.2011 08:14, schrieb Jonathan Nieder:
 
-For some specific workflow issues at my company, I need to allow some users work 
-with CVS, while main repository is under git.
+>> Introduce two functions:
+>> 
+>>  - prepare_submodule_summary prepares the revision walker
+>>    to list changes in a submodule.  That is, it:
+>> 
+>>    * finds merge bases between the commits pointed to this
+>>      path from before ("left") and after ("right") the change;
 
-I've chosen git-cvsserver as implementation for this task.
+pointed to at this path before [missing "at", spurious "from"]
 
-I set up git repository, enabled it for gitcvs and setup a pserver simulation on 
-xinetd. Everything works fine, I can work with this repository from cvs client, 
-authenticating against passwd file I created through pserver emulation.
+>>    * checks whether this is a fast-forward or fast-backward;
+>>    * prepares a revision walk to list commits in the symmetric
+>>      difference between the commits at each endpoint.
+>>
+>>    It returns nonzero on error.
+>>
+>>  - print_submodule_summary runs the revision walk and saves
+>>    the result to a strbuf in --left-right format.
 
-My problem is that commits that I make through CVS are shown under user who runs 
-xinetd, not under user I authenticate against passwd.
+runs the revision walk and prints the result in --left-right format
+[the strbuf is an implementation detail; not sure how it snuck into
+the commit message]
 
-i.e. I commit to CVS as user 'foo', I successfully authenticate through pserver, 
-but when I look at git history of commits for this repo, i see that commit has 
-been made by user 'root'.
+>> The goal is just readability.  No functional change intended.
+>
+> Ack, looks good and makes sense to me.
 
-
-I looked through source of git-cvsserver (http://git.kernel.org/?
-p=git/git.git;a=blob;f=git-cvsserver.perl) and it seems that CVS login is used 
-only for authentication, not for actual committing.
-Records in SQLite database contain 'root' username too, not 'foo'
-
-
-Do you have any ideas how I can propagate CVS login to git username?
+Thanks, Jens.  Looking back over the commit message I see I left in
+some typos but the patch still looks good to me fwiw.
