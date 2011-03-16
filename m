@@ -1,64 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH nd/struct-pathspec] declare 1-bit bitfields to be
- unsigned
-Date: Tue, 15 Mar 2011 22:38:54 -0700
-Message-ID: <7vzkov8w0h.fsf@alter.siamese.dyndns.org>
-References: <20110316024959.GA24932@elie> <20110316034232.GA26027@elie>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] reflog: silence -O3 -Wuninitialized warning
+Date: Wed, 16 Mar 2011 01:28:48 -0500
+Message-ID: <20110316062831.GA5252@elie>
+References: <20110316024959.GA24932@elie>
+ <7vfwqnabbi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 06:39:12 2011
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 07:29:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzjRu-0002Bv-Ld
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 06:39:11 +0100
+	id 1PzkE9-0006Dw-Kz
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 07:29:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356Ab1CPFjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 01:39:06 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35979 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751060Ab1CPFjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 01:39:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EA07C2408;
-	Wed, 16 Mar 2011 01:40:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=MkXcFE8Znsw64yJHHmm4Xi8+Oy0=; b=fpcAIj/LZDHdkqicWcA4
-	rSQ+u1/1K64VdfSDKkxi5ZnHwR7TNf7H3D09KIPvOdj4JxLSYAZGhzvsHc0mv8mm
-	dcDExjeFQDu55rZ7UCSKQuAyeKoKt6FZiH3V0+NRUxZDGi79Wi4hfDpAAAJ4UVCE
-	2Iv0GUArHbQSHYJ+QODIiBg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=d1r+lr3ZCobz/Hsq16h3Gk3Y0JoTNS8RwndXNoqs8eTyzQ
-	jO87cb0AblpkAcdKT1uE+vkzLtP+x1GO2OqIKc66cm56K5IREH88ynSPUAMgcMuy
-	8qbV9MP0FaoSFJv8i/VhvaKj/HG6b4WxE/fSyFId1jHUhpH9jo+UQkVLAhSjs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B93B52407;
-	Wed, 16 Mar 2011 01:40:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AB50923FC; Wed, 16 Mar 2011
- 01:40:28 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8DC36F2-4F8F-11E0-AE09-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751521Ab1CPG24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 02:28:56 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:52364 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951Ab1CPG2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 02:28:54 -0400
+Received: by gwaa18 with SMTP id a18so533603gwa.19
+        for <git@vger.kernel.org>; Tue, 15 Mar 2011 23:28:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=7TvsTzkWieLHbHryG5smZHtjQryWMlaY349v/x+wceY=;
+        b=jiJ19cn0hxWUJS7jmmKX7xwIDZlKmCMu/xuWFGKYrbznkJv+/w4SXmRCzI28o595b/
+         ovSqgkz1eoSEY0NsXgk2Wq6zGmY/Enb1yqZnhsfj2tkVKql+PKLW5e2KyTDSmKC4mf5U
+         2eHCcuxfM8SCT3vSy/bhjpswK3pmoAXYbSt4Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=QOFKk/4OuTURIQRfPumN7GmKWhNw3rwEPUnTLM+OfnBRUPtJAWI1ikxeswEckV6yyz
+         BW0mJzW57hM3668qHvecBqICb7tmSIxxW+mH+mDAIrDEha2N5f6BDQC1NxqxzFN/5aCl
+         VoO/HAGpI/qeC35OjVJ0LXHmOoxc/BnUph0Pk=
+Received: by 10.236.194.73 with SMTP id l49mr328691yhn.132.1300256934391;
+        Tue, 15 Mar 2011 23:28:54 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id i60sm414827yhj.17.2011.03.15.23.28.52
+        (version=SSLv3 cipher=OTHER);
+        Tue, 15 Mar 2011 23:28:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vfwqnabbi.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169107>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
 
-> As "gcc -pedantic" notices, a two's complement 1-bit signed integer
-> cannot represent the value '1'.
+> We could obviously do (2) or (3), but the thing is, I don't think we can
+> have much confidence on -Wuninitialized warnings from this compiler once
+> we go down that route.  Is it _guaranteed_ that the compiler bug _always_
+> err on the false-positive side?
+>
+> IOW, I'd very much prefer (1) for this particular case and if somebody
+> really cares (2).
 
-Thanks; this is one of the things I try to be reasonably careful about
-when I eyeball patches, but apparently I didn't spot it.
+*nod*.  The tricky heuristics here are that (A) a call to the function
 
-Perhaps I should start compiling with -Woverflow.
+ extern void foo(int *var);
+
+is assumed to initialize *var (to support idioms like strbuf_init), while
+(B) no assumption is made about the return value of a call to the function
+
+ extern int bar(void);
+
+The assumption (B) is the scourge of -Wuninitialized users.  It is
+always going produce a lot of false positives --- the compiler simply
+doesn't have enough information to completely analyze the flow through
+a function.  (Even if it did have enough information, completely
+solving the problem is Turing-complete.)
+
+Problems from (A) are more rare.  -Wuninitialized will produce _some_
+false negatives, but problems it misses would typically be due to
+failure to check for errors and return early, which is not what
+-Wuninitialized is about.
+
+I don't mind the warning, especially since it only appears with -O3.
+What makes this interesting to me is that it is a reminder that the
+compiler has very little information about the flow of control.  A
+simple
+
+ #define error(...) (report_error(__VA_ARGS__), -1)
+
+could open the door to some nice micro-optimizations.
