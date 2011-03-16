@@ -1,89 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 6/6] fast-import: suppress -Wuninitialized warning by
- initializing to NULL
-Date: Wed, 16 Mar 2011 06:38:42 -0500
-Message-ID: <20110316113842.GH15739@elie>
-References: <20110316024959.GA24932@elie>
- <7vfwqnabbi.fsf@alter.siamese.dyndns.org>
- <4D807E66.40504@viscovery.net>
- <20110316094639.GA8180@elie>
- <4D8088C1.5050901@viscovery.net>
- <20110316105709.GC8277@elie>
- <20110316113540.GB15739@elie>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] valgrind: ignore SSE-based strlen invalid reads
+Date: Wed, 16 Mar 2011 12:46:01 +0100
+Message-ID: <1300275961-5798-1-git-send-email-cmn@elego.de>
+References: <20110316112547.GA15739@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 16 12:38:53 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 16 12:46:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzp40-00027q-Ao
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 12:38:52 +0100
+	id 1PzpB3-0005Jm-8Y
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 12:46:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752780Ab1CPLis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 07:38:48 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:40583 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752530Ab1CPLir (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 07:38:47 -0400
-Received: by gyf1 with SMTP id 1so607374gyf.19
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 04:38:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=UpH17/iOy6aw+XvqOPOD+fyh2aQ3rkwFk87eM/XwVFg=;
-        b=ZKhFVRDqTO+0klVqUbfXiquUdrF3b6DXqEw48K63sC9qKki8//9P/+1AcJLTfHqNiG
-         HxvMJd8e8vuQCsLK2Z1mYX7iBuogJAO7nNKoLx8Sl7jzHj33W/wc4OdDotLjirjMnPl5
-         cKVr+NYXLElTvQ7tjGmRA0EnzS5F4RvqAbhD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=U9XJ/8LG/HhQM7HBuWnum61YnZYxGTwEl+IY+UdGCuTNkE/2TWjn2saNqptLMe9Y7a
-         wOBYs4uLXt8G75ju1RWwC5ddiWCIoOsdcH5F0Wc0nQGOi4L1ukR6B2ca1P85RNmf/M3+
-         FkPqsx9wC+q8bPixyqPB3XlVJGDsJT7UTQR1k=
-Received: by 10.91.199.7 with SMTP id b7mr1219922agq.116.1300275526582;
-        Wed, 16 Mar 2011 04:38:46 -0700 (PDT)
-Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
-        by mx.google.com with ESMTPS id c17sm1140135anc.15.2011.03.16.04.38.45
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2011 04:38:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110316113540.GB15739@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751593Ab1CPLqF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 07:46:05 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:44963 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751116Ab1CPLqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 07:46:02 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 7A3A7460FD;
+	Wed, 16 Mar 2011 12:45:55 +0100 (CET)
+Received: (nullmailer pid 5859 invoked by uid 1000);
+	Wed, 16 Mar 2011 11:46:01 -0000
+X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <20110316112547.GA15739@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169148>
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Some versions of strlen use SSE to speed up the calculation and load 4
+bytes at a time, even if it means reading past the end of the
+allocated memory. This read is safe and when the strlen function is
+inlined, it is not replaced by valgrind, which reports a
+false-possitive.
+
+Tell valgrind to ignore this particular error, as the read is, in
+fact, safe. Current upstream-released version 2.6.1 is affected. Some
+distributions have this fixed in their latest versions.
+
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
 ---
-That's the end. :)
 
-Good night.
+>>  I think 3.6.1 doesn't need it, as Debian's 1:3.5.0+3.6.0svn20100609=
+-1
+>> version is reportedly fixed.
+>
+>Ah, nice.  A phrase like "some versions of valgrind before 3.6.1"
+>would be fine with me fwiw. :)
 
- fast-import.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I just downloaded and compiled the upstream release 2.6.1 and it's
+still affected (it does fix some other related
+false-positives). Fedorea rawhide has the fix in, according to their
+bug tracker. I haven't tested the reportedly-fixed version in Debian
+yet.
 
-diff --git a/fast-import.c b/fast-import.c
-index 565d895..75405af 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2196,7 +2196,7 @@ static void file_change_m(struct branch *b)
- 	const char *p = command_buf.buf + 2;
- 	static struct strbuf uq = STRBUF_INIT;
- 	const char *endp;
--	struct object_entry *oe;
-+	struct object_entry *oe = NULL;
- 	unsigned char sha1[20];
- 	uint16_t mode, inline_data = 0;
- 
--- 
+ t/valgrind/default.supp |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/t/valgrind/default.supp b/t/valgrind/default.supp
+index 9e013fa..327478c 100644
+--- a/t/valgrind/default.supp
++++ b/t/valgrind/default.supp
+@@ -43,3 +43,9 @@
+ 	fun:write_buffer
+ 	fun:write_loose_object
+ }
++
++{
++	ignore-sse-strlen-invalid-read-size
++	Memcheck:Addr4
++	fun:copy_ref
++}
+\ No newline at end of file
+--=20
 1.7.4.1
