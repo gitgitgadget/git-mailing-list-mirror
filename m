@@ -1,7 +1,8 @@
 From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
 Subject: [PATCH 2-3/3] Name make_*_path functions more accurately
-Date: Wed, 16 Mar 2011 17:51:06 +0100
-Message-ID: <1300294266-26875-1-git-send-email-cmn@elego.de>
+Date: Wed, 16 Mar 2011 17:52:29 +0100
+Message-ID: <1300294349-26946-1-git-send-email-cmn@elego.de>
+References: <1300291579-25852-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -9,32 +10,33 @@ Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Brian Gernhardt <benji@silverinsanity.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 17:51:19 2011
+X-From: git-owner@vger.kernel.org Wed Mar 16 17:52:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PztwL-0004f8-Tq
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:51:18 +0100
+	id 1Pztxb-0005V9-OW
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 17:52:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608Ab1CPQvK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:51:10 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:40362 "EHLO kimmy.cmartin.tk"
+	id S1752298Ab1CPQwa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 12:52:30 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:33343 "EHLO kimmy.cmartin.tk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751986Ab1CPQvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 12:51:07 -0400
+	id S1751917Ab1CPQw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 12:52:29 -0400
 Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 4B7F1460FD;
-	Wed, 16 Mar 2011 17:51:00 +0100 (CET)
-Received: (nullmailer pid 26934 invoked by uid 1000);
-	Wed, 16 Mar 2011 16:51:06 -0000
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 958DF460FF;
+	Wed, 16 Mar 2011 17:52:22 +0100 (CET)
+Received: (nullmailer pid 26994 invoked by uid 1000);
+	Wed, 16 Mar 2011 16:52:29 -0000
 X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <1300291579-25852-1-git-send-email-cmn@elego.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169175>
 
 Rename the make_*_path functions so it's clearer what they do, in
 particlar make clear what the differnce between make_absolute_path and
@@ -47,7 +49,9 @@ The function calls have been replaced 1-to-1 in their usage.
 Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
 ---
 
-This supercedes the 2/3 and 3/3 patches.=20
+Sorry, I sent the other one without in-reply-to information
+
+This supercedes the 2/3 and 3/3 patches.
 
  abspath.c              |   22 +++++++++++++++++++---
  builtin/clone.c        |   12 ++++++------
