@@ -1,70 +1,71 @@
-From: Stefan Sperling <stsp@stsp.name>
-Subject: [PATCH] Include headers for getrlimit() in sha1_file.c
-Date: Wed, 16 Mar 2011 11:37:59 +0100
-Message-ID: <1300271879-2050-1-git-send-email-stsp@stsp.name>
-Cc: Stefan Sperling <stsp@stsp.name>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 11:39:03 2011
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH] valgrind: ignore SSE-based strlen invalid reads
+Date: Wed, 16 Mar 2011 11:41:33 +0100
+Message-ID: <1300272098.7214.5.camel@bee.lab.cmartin.tk>
+References: <1300267874-15365-1-git-send-email-cmn@elego.de>
+	 <20110316095632.GA8277@elie>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 11:41:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzo86-0002Fr-B6
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 11:39:02 +0100
+	id 1PzoAq-0003Pl-V9
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 11:41:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752602Ab1CPKih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 06:38:37 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:58550 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752521Ab1CPKic (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 06:38:32 -0400
-X-Envelope-From: stsp@stsp.name
-Received: from jack.stsp.name (jack.stsp.name [217.197.84.35])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p2GAcS2h000965
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 16 Mar 2011 11:38:30 +0100
-Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
-	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id p2GAcSMq005197;
-	Wed, 16 Mar 2011 11:38:28 +0100 (CET)
-Received: (from stsp@localhost)
-	by jack.stsp.name (8.14.3/8.14.3/Submit) id p2GAcRZV029182;
-	Wed, 16 Mar 2011 11:38:27 +0100 (CET)
-X-Mailer: git-send-email 1.7.3.5
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751853Ab1CPKls convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 06:41:48 -0400
+Received: from mx0.elegosoft.com ([88.198.54.133]:40778 "EHLO
+	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751315Ab1CPKlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 06:41:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 1EBA61B4B15;
+	Wed, 16 Mar 2011 11:41:46 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OgX2UmexopKV; Wed, 16 Mar 2011 11:41:38 +0100 (CET)
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 37F911B4B14;
+	Wed, 16 Mar 2011 11:41:38 +0100 (CET)
+In-Reply-To: <20110316095632.GA8277@elie>
+X-Mailer: Evolution 2.91.92 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169133>
 
-Fixes compilation error on OpenBSD:
-sha1_file.c: In function 'open_packed_git_1':
-sha1_file.c:718: error: storage size of 'lim' isn't known
-sha1_file.c:721: warning: implicit declaration of function 'getrlimit'
-sha1_file.c:721: error: 'RLIMIT_NOFILE' undeclared (first use in this function)
-sha1_file.c:718: warning: unused variable 'lim'
+On mi=C3=A9, 2011-03-16 at 04:56 -0500, Jonathan Nieder wrote:
+> Hi Carlos,
+>=20
+> Carlos Mart=C3=ADn Nieto wrote:
+>=20
+> > The C library uses SSE instructions to make strlen (among others)
+> > faster, loading 4 bytes at a time and reading past the end of the
+> > allocated memory. This read is safe and when the strlen function is
+> > inlined, it is (obviously) not replaced by valgrind, which reports =
+a
+> > false-possitive.
+>=20
+> It would be GCC rather than the C library if the strlen is inlined, I
+> think.  Is this a distinct bug from
 
-Signed-off-by: Stefan Sperling <stsp@stsp.name>
----
- sha1_file.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ The strlen definition comes from the C library, as far as I know, but
+I'll amend to say it's the GNU C Library that's doing weird things.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index b4fcca8..f969b10 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -18,6 +18,10 @@
- #include "pack-revindex.h"
- #include "sha1-lookup.h"
- 
-+#include <sys/types.h>
-+#include <sys/time.h>
-+#include <sys/resource.h>
-+
- #ifndef O_NOATIME
- #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
- #define O_NOATIME 01000000
--- 
-1.7.3.5
+> <http://bugs.kde.org/show_bug.cgi?id=3D266961>?  Has it been filed
+> with the valgrind maintainers?
+
+ It looks like the same issue, which should also be
+https://bugzilla.redhat.com/show_bug.cgi?id=3D518247 and
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D590640 which have
+patches available. Newer versions of valgrind do not have this "bug".
+
+   cmn
