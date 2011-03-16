@@ -1,76 +1,109 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [RFD] Gitweb: Source configuration from file separate from the
-	CGI script
-Date: Wed, 16 Mar 2011 10:44:10 -0400
-Message-ID: <1300286650.28805.29.camel@drew-northup.unet.maine.edu>
-References: <1300285582.28805.25.camel@drew-northup.unet.maine.edu>
-	 <20110316143420.GA15371@elie>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH 1/3] make_absolute_path: Don't try to copy a string to
+ itself
+Date: Wed, 16 Mar 2011 15:49:30 +0100
+Message-ID: <1300286976.7214.27.camel@bee.lab.cmartin.tk>
+References: <1300130318-11279-1-git-send-email-cmn@elego.de>
+	 <1300130318-11279-2-git-send-email-cmn@elego.de>
+	 <7v39mpcuv9.fsf@alter.siamese.dyndns.org>
+	 <1300140128.4320.39.camel@bee.lab.cmartin.tk>
+	 <7vpqptb976.fsf@alter.siamese.dyndns.org>
+	 <1300190396.19100.31.camel@bee.lab.cmartin.tk>
+	 <1300192832.19100.35.camel@bee.lab.cmartin.tk>
+	 <7vd3lsb9m3.fsf@alter.siamese.dyndns.org>
+	 <1300210062.19100.46.camel@bee.lab.cmartin.tk>
+	 <AANLkTimQ81mwYhWLzGunimQzapEUkMmvKj47PuPWPgm0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 15:44:53 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 15:49:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzrxx-0003NL-9R
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 15:44:49 +0100
+	id 1Pzs2t-0006JF-6N
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 15:49:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196Ab1CPOog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 10:44:36 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:49980 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751131Ab1CPOo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 10:44:27 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2GEiDw5024539
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 16 Mar 2011 10:44:14 -0400
-In-Reply-To: <20110316143420.GA15371@elie>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p2GEiDw5024539
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1300891455.7392@K2GlyZHNU766p537//+jgg
+	id S1753212Ab1CPOtm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 10:49:42 -0400
+Received: from mx0.elegosoft.com ([88.198.54.133]:39869 "EHLO
+	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752997Ab1CPOtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 10:49:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id B92411B4B01;
+	Wed, 16 Mar 2011 15:49:40 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OaxLiETforba; Wed, 16 Mar 2011 15:49:35 +0100 (CET)
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 2302E1B4B00;
+	Wed, 16 Mar 2011 15:49:35 +0100 (CET)
+In-Reply-To: <AANLkTimQ81mwYhWLzGunimQzapEUkMmvKj47PuPWPgm0@mail.gmail.com>
+X-Mailer: Evolution 2.91.92 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169160>
 
+On mi=C3=A9, 2011-03-16 at 21:16 +0700, Nguyen Thai Ngoc Duy wrote:
+> 2011/3/16 Carlos Mart=C3=ADn Nieto <cmn@elego.de>:
+> > I've been changing this a bit, trying to make all the paths normali=
+zed,
+> > but it'll take a bit longer. I'll send a partial patch when I've
+> > finished something worth seeing (for the moment, the test fail if t=
+here
+> > is a symlink somewhere in the tree, as I've mixed
+> > real_path/make_absolute_path and absolute_path/make_nonrelative_pat=
+h a
+> > bit).
+> >
+> >  Is it a good idea to normalize the paths? Otherwise, everything co=
+uld
+> > be replaced by real_path/make_absolute_path (as most calls already =
+are).
+> > As it's transitive and these paths aren't stored permanently (other=
+ than
+> > with clone), as long as we agree on one representation, it should b=
+e
+> > fine.
+>=20
+> I think the question is whether it's _necessary_ to do that. Any gain=
+?
+> make_absolute_path() calls are not in critical path, I don't think we
+> should bother much, unless there are bugs like one you fixed in your
+> patch.
 
-On Wed, 2011-03-16 at 09:34 -0500, Jonathan Nieder wrote:
-> Hi,
-> 
-> Drew Northup wrote:
-> 
-> > I just upgraded my Gitweb package (I'm testing the EPEL RHEL5 latest;
-> > I'm not too happy with them tweaking the paths) and as I should have
-> > expected all of my Gitweb configuration is now gone.
-> 
-> In gitweb/README, I see:
-> 
-> | You can adjust gitweb behaviour using the file specified in `GITWEB_CONFIG`
-> | (defaults to 'gitweb_config.perl' in the same directory as the CGI), and
-> | as a fallback `GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf).
-> 
-> Hope that helps,
-> Jonathan
+ I was under the wrong impression that non-normalized paths were what
+was causing is_inside_dir not to recognize the paths (this with a patch
+using non-resolved absolute paths as given by make_nonrelative_path
+rather than make_absolute_path).
+ As it turns out, getcwd resolves the links for us, so is_inside_dir
+would say e.g. that /home/cmn/two/git/t wasn't under /home/cmn/two/git,
+because getcwd said the cwd was /home/cmn/one/git (two is a symlink to
+one).
 
-I apparently missed that. Alas, I didn't see it in the code when I was
-setting my values so I assumed that it wasn't available. Perhaps we can
-make this a little more obvious? I'll go try that out and see if I can
-make it break--putting it in the same directory definitely wouldn't have
-helped this time.
+ At any rate, I think make_absolute_path is mis-named and it should be
+called real_path (or make_real_path). The difference between
+make_nonrelative_path and make_absolute_path is certainly not clear
+without looking at the implementation.
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+>=20
+> >  Is there a performance hit if we resolve links all the time? If we=
+ run
+> > everything through normalize_path(_copy), is it slower than resolvi=
+ng
+> > links?
+>=20
+> What paths are you talking about? If they are inside $GIT_DIR, we
+> touch them quite often. But there are not many of them (unless you
+> spread loose objects all over the place), resolving links should not
+> be an issue.
+
+ There aren't in fact that many calls to these functions, so resolving
+should be fine. More on this as an answer to your other mail.
