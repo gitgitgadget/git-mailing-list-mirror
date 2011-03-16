@@ -1,54 +1,52 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/8] enums: omit trailing comma for portability
-Date: Wed, 16 Mar 2011 01:59:10 -0500
-Message-ID: <20110316065910.GB5988@elie>
+Subject: [PATCH 2/8] compat: make gcc bswap an inline function
+Date: Wed, 16 Mar 2011 02:00:49 -0500
+Message-ID: <20110316070049.GC5988@elie>
 References: <20110316024959.GA24932@elie>
  <20110316065256.GA5988@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	"Gary V. Vaughan" <git@mlists.thewrittenword.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 07:59:35 2011
+X-From: git-owner@vger.kernel.org Wed Mar 16 08:01:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzkhi-0005Hp-VT
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 07:59:35 +0100
+	id 1Pzkj5-0005eA-Qy
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 08:01:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864Ab1CPG7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 02:59:24 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:37429 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751852Ab1CPG7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 02:59:15 -0400
-Received: by yxs7 with SMTP id 7so542344yxs.19
-        for <git@vger.kernel.org>; Tue, 15 Mar 2011 23:59:15 -0700 (PDT)
+	id S1751792Ab1CPHAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 03:00:55 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:39215 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751704Ab1CPHAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 03:00:54 -0400
+Received: by gxk21 with SMTP id 21so539835gxk.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 00:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=Ky6IlmwY+HXsNVCDVRpNjEJo0ZXMJVDokP4KOTVV5Fg=;
-        b=bygqaTSCVMhHJtY8fqJdK92SprgwS45HwGBJOZegoPTHHyINJTf48QLTIWxGlSYj5Q
-         QCQi78shRUlStQfaE0gGk+GSuUbr0kyhif0dL1hekCUGiVZFzdHi2FlEjkswLSjyhIKf
-         3TLmBPFjgmiiFVrRqSsykBbr6Buoj+JLWq4XA=
+        bh=zKjGqRPcIMcMuDuBUDSaB7V+TsEYyOqCAA1bSyxeMiY=;
+        b=SZ1KYlx2BHT9hQL+JSYp+juoP4vfA8beOY1gtoTMLQu8x1JNMrPly6vg4fl6L+Pion
+         xZtTuLOSvt9JxwoH1T/vqJpa3Li2hshoPFx9QFxZho6Os1+2pLkZvGirgRckKTnLSRo3
+         q/CptZIvG7QJuh8b6cN/Np5iQHBkbDx3Xo3Xs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=RYczZUZSwPhDkrj+fTAwijToc5dRK6+hMeW3DewplH15KMQo1m2qIZgfF4tdqdUC8Z
-         nYLIbKSnKRJyyAwX/eIaWHw4T/MUQiQEwbFmEatpK1Bn2gmw/WDQiZxlkVRy3KpKYqh4
-         fPPtDLY0YC4nC8HxVR6alIvW/9zfJ1+xFmBOo=
-Received: by 10.150.74.7 with SMTP id w7mr967788yba.160.1300258755129;
-        Tue, 15 Mar 2011 23:59:15 -0700 (PDT)
+        b=SNwcCAimA1csKYXHoD/7c1bEKoQuEO/hR7NLMqkZTSxJ9wgfiLew3aEt9Sy1qMDW3g
+         EoEX6pL9GBmlKdD1i3ceoTvdq5VdYYrcA/io/++yubRqNZC48eXNTT2HuwMpH3Qpc27M
+         ALDElKS5QrxscChizubVpUuRs1/tJkgE0oFdA=
+Received: by 10.150.58.4 with SMTP id g4mr968286yba.155.1300258853774;
+        Wed, 16 Mar 2011 00:00:53 -0700 (PDT)
 Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
-        by mx.google.com with ESMTPS id o2sm3331095ybn.18.2011.03.15.23.59.13
+        by mx.google.com with ESMTPS id p23sm3369925ybk.9.2011.03.16.00.00.52
         (version=SSLv3 cipher=OTHER);
-        Tue, 15 Mar 2011 23:59:14 -0700 (PDT)
+        Wed, 16 Mar 2011 00:00:53 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20110316065256.GA5988@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -56,52 +54,48 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169110>
 
-Since v1.7.2-rc0~23^2~2 (Add per-repository eol normalization,
-2010-05-19), building with gcc -std=gnu89 -pedantic produces warnings
-like the following:
+Without this change, gcc -pedantic warns:
 
- convert.c:21:11: warning: comma at end of enumerator list [-pedantic]
+ cache.h: In function 'ce_to_dtype':
+ cache.h:270:21: warning: ISO C forbids braced-groups within expressions [-pedantic]
 
-gcc is right to complain --- these commas are not permitted in C89.
-In the spirit of v1.7.2-rc0~32^2~16 (2010-05-14), remove them.
+An inline function is more readable anyway.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-At first, I was worried that the fixes from the series v1.7.2-rc0~32
-had been in vain, but in reality it seems that there are only a few
-new C89-compatibility tweaks to make like this one.
+ compat/bswap.h |   18 ++++++++++--------
+ 1 files changed, 10 insertions(+), 8 deletions(-)
 
- cache.h   |    2 +-
- convert.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index c4ef999..80f1236 100644
---- a/cache.h
-+++ b/cache.h
-@@ -585,7 +585,7 @@ extern enum safe_crlf safe_crlf;
- enum auto_crlf {
- 	AUTO_CRLF_FALSE = 0,
- 	AUTO_CRLF_TRUE = 1,
--	AUTO_CRLF_INPUT = -1,
-+	AUTO_CRLF_INPUT = -1
- };
+diff --git a/compat/bswap.h b/compat/bswap.h
+index 54756db..5061214 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -21,14 +21,16 @@ static inline uint32_t default_swab32(uint32_t val)
  
- extern enum auto_crlf auto_crlf;
-diff --git a/convert.c b/convert.c
-index d5aebed..7eb51b1 100644
---- a/convert.c
-+++ b/convert.c
-@@ -18,7 +18,7 @@ enum action {
- 	CRLF_TEXT,
- 	CRLF_INPUT,
- 	CRLF_CRLF,
--	CRLF_AUTO,
-+	CRLF_AUTO
- };
+ #if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
  
- struct text_stat {
+-#define bswap32(x) ({ \
+-	uint32_t __res; \
+-	if (__builtin_constant_p(x)) { \
+-		__res = default_swab32(x); \
+-	} else { \
+-		__asm__("bswap %0" : "=r" (__res) : "0" ((uint32_t)(x))); \
+-	} \
+-	__res; })
++#define bswap32 git_bswap32
++static inline uint32_t git_bswap32(uint32_t x)
++{
++	uint32_t result;
++	if (__builtin_constant_p(x))
++		result = default_swab32(x);
++	else
++		__asm__("bswap %0" : "=r" (result) : "0" (x));
++	return result;
++}
+ 
+ #elif defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+ 
 -- 
 1.7.4.1
