@@ -1,73 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] valgrind: ignore SSE-based strlen invalid reads
-Date: Wed, 16 Mar 2011 06:25:47 -0500
-Message-ID: <20110316112547.GA15739@elie>
-References: <20110316095632.GA8277@elie>
- <1300272453-25891-1-git-send-email-cmn@elego.de>
- <20110316105214.GB8277@elie>
- <1300273819.7214.12.camel@bee.lab.cmartin.tk>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] system_path: use a static buffer
+Date: Wed, 16 Mar 2011 12:26:10 +0100
+Message-ID: <1300274770-4798-1-git-send-email-cmn@elego.de>
+References: <20110314200958.GC22602@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Wed Mar 16 12:25:58 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 16 12:26:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzorW-0004zf-96
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 12:25:58 +0100
+	id 1Pzoro-00058m-PU
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 12:26:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752670Ab1CPLZy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 07:25:54 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:35634 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751853Ab1CPLZx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 07:25:53 -0400
-Received: by mail-gy0-f174.google.com with SMTP id 1so603585gyf.19
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 04:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=9RgPUfXC3C/k2OupsTGQGP2OdRmKcJVanWa6/iqgsuE=;
-        b=xzz0oDLWsNQzrePj3jr15zGI7eFVirlPmW4SCsjOVN4kKsTzxYS19o8Fku2ePJzqsw
-         MCh4MFyH61W7bm1mN+66Xyv9L8PBg4REeMMx5A0AHKw7P0mozgUqxnsm4zZWSwR5nHF9
-         yNddITRIvZAvbjoaBFacp850UWulwGna2QJWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=K1rbMF+0nMmfh83mR+cOYQuZV1JdGmVO8SR5DzZOazcaFMrcDyQS1sH6X4+WzYFvFF
-         qwAKXcdhPKsmW8221xeMIrKRs3S86Y1hDLIxV11DBfnzhunkSgnbVW7hWkenDnpuIy5R
-         1ChGR4ei1ODmXSM/QsSnSti603mhfI1FWCNPY=
-Received: by 10.236.125.226 with SMTP id z62mr585722yhh.24.1300274752773;
-        Wed, 16 Mar 2011 04:25:52 -0700 (PDT)
-Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
-        by mx.google.com with ESMTPS id k29sm553862yhk.14.2011.03.16.04.25.51
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2011 04:25:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1300273819.7214.12.camel@bee.lab.cmartin.tk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752700Ab1CPL0M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 07:26:12 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:43527 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751853Ab1CPL0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 07:26:11 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id D4D30460FD;
+	Wed, 16 Mar 2011 12:26:04 +0100 (CET)
+Received: (nullmailer pid 4846 invoked by uid 1000);
+	Wed, 16 Mar 2011 11:26:10 -0000
+X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <20110314200958.GC22602@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169140>
 
-Carlos Mart=C3=ADn Nieto wrote:
+Make system_path behave like the other path functions by using a
+static buffer, fixing a memory leak.
 
->  I think 3.6.1 doesn't need it, as Debian's 1:3.5.0+3.6.0svn20100609-=
-1
-> version is reportedly fixed.
+Also make sure the prefix pointer is always initialized to either
+PREFIX or NULL.
 
-Ah, nice.  A phrase like "some versions of valgrind before 3.6.1"
-would be fine with me fwiw. :)
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
 
-Sorry for the fuss.
-Jonathan
+This fixes the leak I was trying to fix with my original patch, but
+this seems much cleaner
+
+ exec_cmd.c |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 38545e8..12ce017 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -9,11 +9,11 @@ static const char *argv0_path;
+ const char *system_path(const char *path)
+ {
+ #ifdef RUNTIME_PREFIX
+-	static const char *prefix;
++	static const char *prefix =3D NULL;
+ #else
+ 	static const char *prefix =3D PREFIX;
+ #endif
+-	struct strbuf d =3D STRBUF_INIT;
++	static char buf[PATH_MAX+1];
+=20
+ 	if (is_absolute_path(path))
+ 		return path;
+@@ -33,9 +33,8 @@ const char *system_path(const char *path)
+ 	}
+ #endif
+=20
+-	strbuf_addf(&d, "%s/%s", prefix, path);
+-	path =3D strbuf_detach(&d, NULL);
+-	return path;
++	snprintf(buf, PATH_MAX, "%s/%s", prefix, path);
++	return buf;
+ }
+=20
+ const char *git_extract_argv0_path(const char *argv0)
+--=20
+1.7.4.1
