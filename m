@@ -1,95 +1,64 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] make_absolute_path: Don't try to copy a string to itself
-Date: Wed, 16 Mar 2011 21:16:35 +0700
-Message-ID: <AANLkTimQ81mwYhWLzGunimQzapEUkMmvKj47PuPWPgm0@mail.gmail.com>
-References: <1300130318-11279-1-git-send-email-cmn@elego.de>
- <1300130318-11279-2-git-send-email-cmn@elego.de> <7v39mpcuv9.fsf@alter.siamese.dyndns.org>
- <1300140128.4320.39.camel@bee.lab.cmartin.tk> <7vpqptb976.fsf@alter.siamese.dyndns.org>
- <1300190396.19100.31.camel@bee.lab.cmartin.tk> <1300192832.19100.35.camel@bee.lab.cmartin.tk>
- <7vd3lsb9m3.fsf@alter.siamese.dyndns.org> <1300210062.19100.46.camel@bee.lab.cmartin.tk>
+Subject: Re: [PATCH nd/struct-pathspec] declare 1-bit bitfields to be unsigned
+Date: Wed, 16 Mar 2011 21:20:43 +0700
+Message-ID: <AANLkTi=0ifczJw-Thr-XD7JX0YbQbvczSYrWOTB-Pru9@mail.gmail.com>
+References: <20110316024959.GA24932@elie> <20110316034232.GA26027@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Wed Mar 16 15:17:16 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 15:21:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzrXG-0003xt-Ni
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 15:17:15 +0100
+	id 1PzrbE-000754-K5
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 15:21:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752834Ab1CPORK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 10:17:10 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45628 "EHLO
+	id S1752446Ab1CPOVQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 10:21:16 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:44909 "EHLO
 	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752791Ab1CPORI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 10:17:08 -0400
-Received: by wya21 with SMTP id 21so1672979wya.19
-        for <git@vger.kernel.org>; Wed, 16 Mar 2011 07:17:07 -0700 (PDT)
+	with ESMTP id S1751137Ab1CPOVP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 10:21:15 -0400
+Received: by wya21 with SMTP id 21so1677421wya.19
+        for <git@vger.kernel.org>; Wed, 16 Mar 2011 07:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=KA+A35Ddab1mOdzNTJs/4aXc7TLbuVhY3wSaYX+KJgQ=;
-        b=Ti/4YFtxeQZCCVTViIqmPwLfkDTCToniCB0L/PS2QmWniPGILs0yWUAtGKHjJfbpt9
-         ZqM6Bk7zxfs2fOrqa8UC/uurNtGzDTrdv4ZT8i4Jx1Scw9yLz9AmboJEcYi5TXeddV7e
-         ryhr1XdfjlvVJcQstJfJ4gdKSCwUq85csgodk=
+        bh=OCQ+bAmC+sp79NOo6/qfjZl1VQUt8j5S3FkW/ftBcHw=;
+        b=GYXt5z3NuAoDJ1n1hc60kFSJ1NK85Lntx0FvoCidTKH8SHqLI2MojpFv2ZDfusBSA+
+         atY1yulHOfxU+wnaqtwY7ZrVkBgiCYoiwGqCnooMS89oUjTVmDV74CHkCSrcTLTcyph3
+         nCEmzPb9/yVpJbezSwnVuOM/JrT9WNbW7rvuI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=hcOwhTbuPnOtlV8qd9omQiUndbH2xjOQaZE+PKc7PtucVVU7P4mgLpPtDTjFtlQaor
-         Wd/yEBRBg9LOzG4C9XrR4DO2neMficdLhHDGdEPkNvoHHwqjJVrhL/UURUy8NwFodD5v
-         Ff8EgaREA98Ro8ih21wVVoz8+sld/NyBpg5JA=
-Received: by 10.216.120.129 with SMTP id p1mr14652weh.81.1300285026693; Wed,
- 16 Mar 2011 07:17:06 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Wed, 16 Mar 2011 07:16:35 -0700 (PDT)
-In-Reply-To: <1300210062.19100.46.camel@bee.lab.cmartin.tk>
+        b=C2OLSYRrM7kl+9OdyJ1QwdZzu8VvPlaMiRm3uxZdQuvFY1HHHrzM2yT6SkADnjbA8+
+         FleVLwwVtSLRLxPJkr5r6xSOzPRNjjVZCOT8fRBhoheR6+0FeMmNjZ1XJjfmJzrx5cUV
+         74zawMVS8DcfyzT97ixxsg1edfhhWI7bE+NW8=
+Received: by 10.216.66.131 with SMTP id h3mr1079wed.111.1300285274079; Wed, 16
+ Mar 2011 07:21:14 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Wed, 16 Mar 2011 07:20:43 -0700 (PDT)
+In-Reply-To: <20110316034232.GA26027@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169155>
 
-2011/3/16 Carlos Mart=C3=ADn Nieto <cmn@elego.de>:
-> I've been changing this a bit, trying to make all the paths normalize=
-d,
-> but it'll take a bit longer. I'll send a partial patch when I've
-> finished something worth seeing (for the moment, the test fail if the=
-re
-> is a symlink somewhere in the tree, as I've mixed
-> real_path/make_absolute_path and absolute_path/make_nonrelative_path =
-a
-> bit).
+2011/3/16 Jonathan Nieder <jrnieder@gmail.com>:
+> As "gcc -pedantic" notices, a two's complement 1-bit signed integer
+> cannot represent the value '1'.
 >
-> =C2=A0Is it a good idea to normalize the paths? Otherwise, everything=
- could
-> be replaced by real_path/make_absolute_path (as most calls already ar=
-e).
-> As it's transitive and these paths aren't stored permanently (other t=
-han
-> with clone), as long as we agree on one representation, it should be
-> fine.
+> =C2=A0dir.c: In function 'init_pathspec':
+> =C2=A0dir.c:1291:4: warning: overflow in implicit constant conversion=
+ [-Woverflow]
 
-I think the question is whether it's _necessary_ to do that. Any gain?
-make_absolute_path() calls are not in critical path, I don't think we
-should bother much, unless there are bugs like one you fixed in your
-patch.
-
-> =C2=A0Is there a performance hit if we resolve links all the time? If=
- we run
-> everything through normalize_path(_copy), is it slower than resolving
-> links?
-
-What paths are you talking about? If they are inside $GIT_DIR, we
-touch them quite often. But there are not many of them (unless you
-spread loose objects all over the place), resolving links should not
-be an issue.
-
-If they are inside worktree, maybe. Though I'm not sure if we want to
-normalize all of them.
+Thanks. I think I was aware of this but neglected because they are
+used as booleans, 1 or -1 does not matter. Good fix anyway.
 --=20
 Duy
