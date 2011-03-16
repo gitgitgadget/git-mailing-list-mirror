@@ -1,59 +1,98 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Sharing a massive distributed merge
-Date: Wed, 16 Mar 2011 14:12:46 -0600
-Message-ID: <4D8119BE.2090208@workspacewhiz.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] valgrind: ignore SSE-based strlen invalid reads
+Date: Wed, 16 Mar 2011 13:18:04 -0700
+Message-ID: <7vr5a67rb7.fsf@alter.siamese.dyndns.org>
+References: <20110316112547.GA15739@elie>
+ <1300275961-5798-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 16 21:13:00 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Mar 16 21:18:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzx5S-0003of-He
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 21:12:54 +0100
+	id 1PzxAm-0006hs-Kl
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 21:18:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788Ab1CPUMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 16:12:49 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:38799 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752483Ab1CPUMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 16:12:48 -0400
-Received: (qmail 24790 invoked by uid 399); 16 Mar 2011 14:12:46 -0600
-Received: from unknown (HELO ?192.168.1.12?) (jjensen@workspacewhiz.com@50.8.99.117)
-  by hsmail.qwknetllc.com with ESMTPAM; 16 Mar 2011 14:12:46 -0600
-X-Originating-IP: 50.8.99.117
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b3pre Thunderbird/3.1.9
+	id S1753974Ab1CPUST convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2011 16:18:19 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42224 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753880Ab1CPUSS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 16:18:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8E068488D;
+	Wed, 16 Mar 2011 16:19:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=pdxcY2B+mLYG
+	GQJrO8V+vRRmpX0=; b=NImP++sucfRyRHrNyHWDg/NuigHSouJS4K7kUs7sFxMc
+	tT6uOgV5RCnlpdcQSs3EWfMolU69uowqQcXxlSSzcNdZZZ9YSa9t75FhDJMu9xB9
+	FJkm7I8C1RYZwCl5xitnPG3+UtX4r1SQ2F4Z51vqAM/Vus+GR59twmlCimOPQns=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=i0mmKK
+	qrF0HB1BLizCVOBQRoxnlsB3FsG3QJQXwXgfvdHGhQUN6tL7AlRE/OW9vTmzKMEO
+	vXJuVaixu4MUsgGzNn0drGfTJOpXjoQOik9BhyfurMtuMRTgSiWpwvagFPF9GHXl
+	6TS8yCcQGGrte5e7LLmI9/wRu9m6FC5SjcU9I=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5BA48488C;
+	Wed, 16 Mar 2011 16:19:44 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 300D14889; Wed, 16 Mar 2011
+ 16:19:39 -0400 (EDT)
+In-Reply-To: <1300275961-5798-1-git-send-email-cmn@elego.de> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Wed, 16 Mar 2011 12:46:01
+ +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BB463A1E-500A-11E0-B629-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169188>
 
-We have two codelines that diverged quite a while back, and we are now 
-bringing them back together.  More than 800 files are in conflict, but 
-it is very possible that the automatic non-conflicting merge is not 
-correcting.  This means thousands of files need to be examined.
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-Git doesn't support distribution of a merge (although that would be 
-extraordinarily cool), so the next best thing seemed to be force adding 
-all files with conflict markers and then committing the merge.  We then 
-publish the conflicting branch and have each person fix their files.  
-Given that the conflict markers are already in place, they can't use 
-their favorite graphical merge tool.
+> Some versions of strlen use SSE to speed up the calculation and load =
+4
+> bytes at a time, even if it means reading past the end of the
+> allocated memory. This read is safe and when the strlen function is
+> inlined, it is not replaced by valgrind, which reports a
+> false-possitive.
+>
+> Tell valgrind to ignore this particular error, as the read is, in
+> fact, safe. Current upstream-released version 2.6.1 is affected. Some
+> distributions have this fixed in their latest versions.
+>
+> Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+> ---
+>
+>>>  I think 3.6.1 doesn't need it, as Debian's 1:3.5.0+3.6.0svn2010060=
+9-1
+>>> version is reportedly fixed.
+>>
+>>Ah, nice.  A phrase like "some versions of valgrind before 3.6.1"
+>>would be fine with me fwiw. :)
+>
+> I just downloaded and compiled the upstream release 2.6.1 and it's
+> still affected (it does fix some other related
+> false-positives). Fedorea rawhide has the fix in, according to their
+> bug tracker. I haven't tested the reportedly-fixed version in Debian
+> yet.
 
-What I want to be able to do is have each person perform the merge 
-locally, stage only the files they care about in that session, reset all 
-other files, and commit as a regular commit, not a merge commit.  The 
-user can take advantage of whatever tools they want in the in progress 
-merge.  When everyone has finished this process, we run git merge and 
-keep our local changes.
+I take it that you meant 3.6.1 in both places above?
 
-I have had no success in doing the above.  Is there a fancy way to pull 
-this off with Git?
+This somehow reminds me of my past life where I saw a buggy implementat=
+ion
+of strlen() in the C library loaded one word too many from memory, and
+segfaulted even when the string ended before the end of a mapped page w=
+hen
+the next page was unmapped.
 
-Thanks.
-
-Josh
+Anyway, nice digging.
