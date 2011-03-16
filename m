@@ -1,67 +1,82 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 1/2] git-p4: fix sync new branch regression
-Date: Wed, 16 Mar 2011 16:52:46 -0400
-Message-ID: <20110316205246.GA23387@arf.padd.com>
+Subject: [PATCH 2/2] git-p4: test sync new branch
+Date: Wed, 16 Mar 2011 16:53:53 -0400
+Message-ID: <20110316205353.GB23387@arf.padd.com>
 References: <20110316205008.GA22702@arf.padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Michael Horowitz <michael.horowitz@ieee.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 21:52:59 2011
+X-From: git-owner@vger.kernel.org Wed Mar 16 21:54:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PzxiB-0007mH-Qe
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 21:52:56 +0100
+	id 1PzxjI-0008LL-PQ
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Mar 2011 21:54:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636Ab1CPUwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 16:52:51 -0400
-Received: from honk.padd.com ([74.3.171.149]:43583 "EHLO honk.padd.com"
+	id S1754083Ab1CPUyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 16:54:00 -0400
+Received: from honk.padd.com ([74.3.171.149]:52775 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751757Ab1CPUwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 16:52:50 -0400
+	id S1753512Ab1CPUx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2011 16:53:59 -0400
 Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
-	by honk.padd.com (Postfix) with ESMTPSA id 7738D20B9;
-	Wed, 16 Mar 2011 13:52:49 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id 1BA2D20B9;
+	Wed, 16 Mar 2011 13:53:58 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id D6EA05AB92; Wed, 16 Mar 2011 16:52:46 -0400 (EDT)
+	id 1FD005AB92; Wed, 16 Mar 2011 16:53:53 -0400 (EDT)
 Content-Disposition: inline
 In-Reply-To: <20110316205008.GA22702@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169197>
 
-e32e00d (git-p4: better message for "git-p4 sync" when not
-cloned, 2011-02-19) broke another use case, that of using
-"git-p4 sync" to import a new branch into an existing repository.
+Add two new unit tests.  One to test the feature that that
+was added in e32e00d, and another to test the regression
+that was fixed in the parent to this commit.
 
-Refine the fix again, on top of the fix in ac34efc.
-
-Reported-by: Michael Horowitz <michael.horowitz@ieee.org>
 Signed-off-by: Pete Wyckoff <pw@padd.com>
-Tested-by: Michael Horowitz <michael.horowitz@ieee.org>
 ---
- contrib/fast-import/git-p4 |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ t/t9800-git-p4.sh |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 7cb479c..2eacb95 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1763,7 +1763,9 @@ class P4Sync(Command):
+diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
+index abe7c64..a523473 100755
+--- a/t/t9800-git-p4.sh
++++ b/t/t9800-git-p4.sh
+@@ -61,6 +61,29 @@ test_expect_success 'git-p4 clone @all' '
+ 	rm -rf "$git" && mkdir "$git"
+ '
  
-                 changes.sort()
-             else:
--                if not isinstance(self, P4Clone) and not self.p4BranchesInGit:
-+                # catch "git-p4 sync" with no new branches, in a repo that
-+                # does not have any existing git-p4 branches
-+                if len(args) == 0 and not self.p4BranchesInGit:
-                     die("No remote p4 branches.  Perhaps you never did \"git p4 clone\" in here.");
-                 if self.verbose:
-                     print "Getting p4 changes for %s...%s" % (', '.join(self.depotPaths),
++test_expect_success 'git-p4 sync uninitialized repo' '
++	test_create_repo "$git" &&
++	cd "$git" &&
++	test_must_fail "$GITP4" sync &&
++	rm -rf "$git" && mkdir "$git"
++'
++
++#
++# Create a git repo by hand.  Add a commit so that HEAD is valid.
++# Test imports a new p4 repository into a new git branch.
++#
++test_expect_success 'git-p4 sync new branch' '
++	test_create_repo "$git" &&
++	cd "$git" &&
++	test_commit head &&
++	"$GITP4" sync --branch=refs/remotes/p4/depot //depot@all &&
++	git log --oneline p4/depot >lines &&
++	cat lines &&
++	test_line_count = 2 lines &&
++	cd .. &&
++	rm -rf "$git" && mkdir "$git"
++'
++
+ test_expect_success 'exit when p4 fails to produce marshaled output' '
+ 	badp4dir="$TRASH_DIRECTORY/badp4dir" &&
+ 	mkdir -p "$badp4dir" &&
 -- 
 1.7.4.1
