@@ -1,68 +1,94 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git bisect code 125 - "WFT?"
-Date: Thu, 17 Mar 2011 07:55:06 +0100
-Message-ID: <4D81B04A.1010802@viscovery.net>
-References: <AANLkTikZ3Po-YdhO-qCn5usVkt4J196eFF6YdbAeMG_X@mail.gmail.com>	<7v1v267no9.fsf@alter.siamese.dyndns.org> <AANLkTikRttGnxex1CYSQnSg4PgctFj0-qNjf5un+fL0W@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] Add Author and Documentation sections to
+ git-for-each-ref.txt
+Date: Thu, 17 Mar 2011 02:59:55 -0400
+Message-ID: <20110317065955.GE11931@sigill.intra.peff.net>
+References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com>
+ <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
+ <4D773570.4010803@drmicha.warpmail.net>
+ <7voc5k9hfy.fsf@alter.siamese.dyndns.org>
+ <20110310223732.GE15828@sigill.intra.peff.net>
+ <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com>
+ <20110313030214.GB10452@sigill.intra.peff.net>
+ <7vsjuril5r.fsf@alter.siamese.dyndns.org>
+ <20110313064710.GA13135@sigill.intra.peff.net>
+ <7vd3lviie7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 07:55:32 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Alexei Sholik <alcosholik@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 08:00:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q077L-00042z-2f
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 07:55:31 +0100
+	id 1Q07Bi-0005Nk-Ud
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 08:00:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846Ab1CQGzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 02:55:16 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:10271 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751544Ab1CQGzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 02:55:14 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Q076x-0005Fo-Dh; Thu, 17 Mar 2011 07:55:08 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 134F61660F;
-	Thu, 17 Mar 2011 07:55:06 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <AANLkTikRttGnxex1CYSQnSg4PgctFj0-qNjf5un+fL0W@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1751846Ab1CQG76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 02:59:58 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55458
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751689Ab1CQG75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 02:59:57 -0400
+Received: (qmail 20976 invoked by uid 107); 17 Mar 2011 07:00:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 17 Mar 2011 03:00:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Mar 2011 02:59:55 -0400
+Content-Disposition: inline
+In-Reply-To: <7vd3lviie7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169214>
 
-Am 3/16/2011 23:06, schrieb Piotr Krukowiecki:
-> On Wed, Mar 16, 2011 at 10:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
->>
->>> Opinions? Would it be possible to change the meaning of the codes now
->>> (in 1.8.0)?
->>
->> How about just documenting why it is a bad idea to use 126 or 127 as you
->> found out somewhere, and stopping there, iow, without changing the code to
->> use 126/127 that we consider it is a bad idea to use and avoided using so
->> far?
+On Sat, Mar 12, 2011 at 11:33:52PM -0800, Junio C Hamano wrote:
+
+> > Git-cherry sort of does this, but patch-ids miss a lot of cases: patches
+> > tweaked in transit, patches applied on a different commit, or even
+> > patches taken partially or split up. So I rebase frequently, and as
+> > patches get picked up in master, the branches dwindle to empty.
+> > Suggestions welcome if anybody else has figured out something clever.
 > 
-> Documenting it won't help. If you get 126 code, you won't know if user
-> returned it to mark the code as bad, or if bash returned it to say
-> that it can't
-> execute a command.
+> A solution to string different iterations of the same patch together,
+> perhaps using notes as the storage media, that makes it easier to view the
+> changes between different iterations?  I think Shawn does something like
+> that in Gerrit code review.
 
-Huh? Why should the user's script return 126 or 127, particularly if the
-documentation says "don't do that"? Moreover, any decent (shell)
-programmer will know that these two values are reserved by POSIX for
-particular purposes (they are _not_ specific to bash):
+I don't necessarily care about different iterations of the patch on my
+end. Usually when I discard an old version I don't go back to it, and in
+the rare case that I do, it is simple enough to pull it from the reflog
+or from the mailing list.
 
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01_01
+What I mean is lining up what I have locally (and what I send) with what
+ends up in your repository. Which can have arbitrary changes from the
+original. I don't think there is a general solution. In theory you could
+take a single patch of mine, split it into two, then mark up each half.
+I know you have the sense not to do this, but there are simpler cases
+that still cause problems.
 
--- Hannes
+For example, in my recent trace-sifter series, you took some squashes
+from other people on the early bits, and those impacted the text of
+later bits. So there was no way for patch-id to link up the patches.
+
+Rebasing at least faces me with the conflicts over the rewrite, and I
+can manually check each conflict and say "OK, it looks like he took my
+patch, but this part had to be rewritten". And then I can either accept
+your rewrite (by resolving in favor of you), or I can rework my patch to
+do what I think should be done on top of yours, and then submit my new
+one on top.
+
+I could also use Jay's suggested "loose patch id", and link things up by
+commit author and message. Unless you do something drastic like
+splitting a patch in two (or merging two patches into one), then I can
+create the correlation. But it makes me a little nervous, because the
+content of your version may not be the same as mine. And probably I
+should be reviewing it before throwing away my version in favor of
+yours.
+
+-Peff
