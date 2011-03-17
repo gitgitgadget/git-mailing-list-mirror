@@ -1,153 +1,95 @@
-From: Thomas Egerer <thomas.egerer@secunet.com>
-Subject: [PATCH] pretty.c: Make user defined format honor color option
-Date: Thu, 17 Mar 2011 09:33:05 +0100
-Message-ID: <4D81C741.8060108@secunet.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Sharing a massive distributed merge
+Date: Thu, 17 Mar 2011 09:53:21 +0100
+Message-ID: <AANLkTimTKbKWmf80u-kgnvQ2gT8hx2KTm6HGbWejt3eg@mail.gmail.com>
+References: <4D8119BE.2090208@workspacewhiz.com> <AANLkTim0TL5X8rKoBceK3nLA4JrtuftqkJDkRi0Lok0A@mail.gmail.com>
+ <20110317063816.GD11931@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010508040705060600050006"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 09:33:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 17 09:53:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q08dk-0007Nd-Cg
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 09:33:04 +0100
+	id 1Q08xr-0007WS-OW
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 09:53:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961Ab1CQIc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 04:32:58 -0400
-Received: from a.mx.secunet.com ([195.81.216.161]:47426 "EHLO a.mx.secunet.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751482Ab1CQIc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 04:32:56 -0400
-Received: from localhost (alg1 [127.0.0.1])
-	by a.mx.secunet.com (Postfix) with ESMTP id 9216E1A0071
-	for <git@vger.kernel.org>; Thu, 17 Mar 2011 09:23:53 +0100 (CET)
-X-Virus-Scanned: by secunet
-Received: from mail-srv1.secumail.de (unknown [10.53.40.200])
-	by a.mx.secunet.com (Postfix) with ESMTP id 998E91A005D
-	for <git@vger.kernel.org>; Thu, 17 Mar 2011 09:23:52 +0100 (CET)
-Received: from [10.182.7.178] ([10.182.7.178]) by mail-srv1.secumail.de with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 17 Mar 2011 09:32:53 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20101227 Icedove/3.0.11
-X-Enigmail-Version: 1.0.1
-X-OriginalArrivalTime: 17 Mar 2011 08:32:53.0970 (UTC) FILETIME=[E8E72B20:01CBE47D]
+	id S1752568Ab1CQIxr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2011 04:53:47 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47445 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751936Ab1CQIxp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Mar 2011 04:53:45 -0400
+Received: by gyf1 with SMTP id 1so1015767gyf.19
+        for <git@vger.kernel.org>; Thu, 17 Mar 2011 01:53:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=xcczzBoJSkqaQtoGTFkU+Yc3VHTyMueQcOiupo/3vh8=;
+        b=jtgOjIcE69GW7xF9rt/JZeGP3+WfQqkAD0oBooucy7Qcxc2leU2PM0rkJ4t7vDKQdy
+         Opk0FP0GUWpFmLUeqbxYTtnq30aF0rNpXK8jCXLlNYAKB3K5CRNMFJf5FQBQWu7ZmmUT
+         WK+GNh1lIA1Po88yS0YrvuVdVzQaw5cm1/eWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=vV3+hxe7c8c82x9RdsIKvPvc+rCDXm7raLWPLwZgYk4Z8F7G9cHKnU/vFzoPIR1jYd
+         ktBSWe196rlQrLNGr7zwMcapA7jDnZmjdDzvppveCNE2Z6+21lpY82droqk3Lmboh7/j
+         hcShgCTUY5sDeP36GXZrv77BnuVwDOTHvKnk8=
+Received: by 10.90.250.2 with SMTP id x2mr1098867agh.202.1300352024578; Thu,
+ 17 Mar 2011 01:53:44 -0700 (PDT)
+Received: by 10.90.223.11 with HTTP; Thu, 17 Mar 2011 01:53:21 -0700 (PDT)
+In-Reply-To: <20110317063816.GD11931@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169226>
 
-This is a multi-part message in MIME format.
---------------010508040705060600050006
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+On Thu, Mar 17, 2011 at 07:38, Jeff King <peff@peff.net> wrote:
+> I don't think you need to do anything so drastic. You can just have
+> everybody do the partial merge, commit, and then push their result. =C2=
+=A0And
+> then as you suggest below, one person does the real merge, uses check=
+out
+> to install the desired result state from each person's partial tree, =
+and
+> then everybody throws away their partial merges.
+>
+> The trick is that each person will resolve some conflicts and commit,
+> but you need to know which ones they resolved. They can't leave thing=
+s
+> unmerged in the final commit. So they would have to provide such a li=
+st
+> to you; one way is in the commit message[1].
+>
+> So let's say you have three devs, Alice, Bob, and Charlie, and one
+> integrator, Matt, who will do the merge. Each of the developers does:
+>
+> =C2=A0git checkout -b partial-merge
+> =C2=A0git merge old-topic
+> =C2=A0git mergetool ;# or manually resolve and git add
+>
+> Eventually they get tired of the conflicts and give up. So they recor=
+d
+> the list of resolved paths, either manually or with something like[2]=
+:
+>
+=2E..
+>
+> And then they stage the rest of it (knowing it will be ignored by Mat=
+t)
+> and commit:
+>
 
-
-This patch fixes that the pretty-formats tformat and format ignore
-git's color option.
-
-Signed-off-by: Thomas Egerer <thomas.egerer@secunet.com>
----
- commit.h   |    1 +
- log-tree.c |    1 +
- pretty.c   |   29 +++++++++++++++++------------
- 3 files changed, 19 insertions(+), 12 deletions(-)
-
-
-
---------------010508040705060600050006
-Content-Type: text/x-patch;
- name="0001-pretty.c-Make-user-defined-format-honor-color-option.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename*0="0001-pretty.c-Make-user-defined-format-honor-color-option.pa";
- filename*1="tch"
-
-diff --git a/commit.h b/commit.h
-index 659c87c..d23bf99 100644
---- a/commit.h
-+++ b/commit.h
-@@ -78,6 +78,7 @@ struct pretty_print_context
- 	int show_notes;
- 	struct reflog_walk_info *reflog_info;
- 	const char *output_encoding;
-+	unsigned colorize:1;
- };
- 
- struct userformat_want {
-diff --git a/log-tree.c b/log-tree.c
-index b46ed3b..63017d2 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -505,6 +505,7 @@ void show_log(struct rev_info *opt)
- 	ctx.abbrev = opt->diffopt.abbrev;
- 	ctx.after_subject = extra_headers;
- 	ctx.reflog_info = opt->reflog_info;
-+	ctx.colorize = (DIFF_OPT_TST(&opt->diffopt, COLOR_DIFF) != 0);
- 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
- 
- 	if (opt->add_signoff)
-diff --git a/pretty.c b/pretty.c
-index 8549934..3c3467f 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -743,7 +743,10 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 	struct format_commit_context *c = context;
- 	const struct commit *commit = c->commit;
- 	const char *msg = c->message;
-+	char cbuf[COLOR_MAXLEN];
- 	struct commit_list *p;
-+	size_t consumed = 0;
-+	char *color = NULL;
- 	int h1, h2;
- 
- 	/* these are independent of the commit */
-@@ -751,29 +754,31 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 	case 'C':
- 		if (placeholder[1] == '(') {
- 			const char *end = strchr(placeholder + 2, ')');
--			char color[COLOR_MAXLEN];
- 			if (!end)
- 				return 0;
- 			color_parse_mem(placeholder + 2,
- 					end - (placeholder + 2),
--					"--pretty format", color);
--			strbuf_addstr(sb, color);
--			return end - placeholder + 1;
-+					"--pretty format", cbuf);
-+			consumed = end - placeholder + 1;
-+			color = cbuf;
- 		}
- 		if (!prefixcmp(placeholder + 1, "red")) {
--			strbuf_addstr(sb, GIT_COLOR_RED);
--			return 4;
-+			color = GIT_COLOR_RED;
-+			consumed = 4;
- 		} else if (!prefixcmp(placeholder + 1, "green")) {
--			strbuf_addstr(sb, GIT_COLOR_GREEN);
--			return 6;
-+			color = GIT_COLOR_GREEN;
-+			consumed = 6;
- 		} else if (!prefixcmp(placeholder + 1, "blue")) {
--			strbuf_addstr(sb, GIT_COLOR_BLUE);
--			return 5;
-+			color = GIT_COLOR_BLUE;
-+			consumed = 5;
- 		} else if (!prefixcmp(placeholder + 1, "reset")) {
--			strbuf_addstr(sb, GIT_COLOR_RESET);
--			return 6;
-+			color = GIT_COLOR_RESET;
-+			consumed = 6;
- 		} else
- 			return 0;
-+		if (color && (c->pretty_ctx->colorize == 1))
-+			strbuf_addstr(sb, color);
-+		return consumed;
- 	case 'n':		/* newline */
- 		strbuf_addch(sb, '\n');
- 		return 1;
-
-
---------------010508040705060600050006--
+What if they just revert the rest? Reset the files to their states befo=
+re
+merge. Than Matt can just collect the partial merges with a merge on
+his side and take care of the conflicts left, which should be fewer.
