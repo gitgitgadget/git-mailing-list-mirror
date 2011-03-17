@@ -1,135 +1,65 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] system_path: use a static buffer
-Date: Thu, 17 Mar 2011 15:24:13 +0100
-Message-ID: <1300371853-8965-1-git-send-email-cmn@elego.de>
-References: <1300359664-6230-1-git-send-email-cmn@elego.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Sharing a massive distributed merge
+Date: Thu, 17 Mar 2011 15:54:44 +0100
+Message-ID: <AANLkTikfp_d00zrtU8kuvyUk81gGMkOXEVDNXr-hRhBU@mail.gmail.com>
+References: <4D8119BE.2090208@workspacewhiz.com> <AANLkTim0TL5X8rKoBceK3nLA4JrtuftqkJDkRi0Lok0A@mail.gmail.com>
+ <20110317063816.GD11931@sigill.intra.peff.net> <AANLkTimTKbKWmf80u-kgnvQ2gT8hx2KTm6HGbWejt3eg@mail.gmail.com>
+ <AANLkTi=25=99Gh9hGUxEuvB9Xvv=f8uJxThaMxaAQKbq@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	=?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 15:24:36 2011
+Cc: Jeff King <peff@peff.net>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 15:55:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0E7w-0002K8-7Y
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 15:24:36 +0100
+	id 1Q0EbX-0002vW-QF
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 15:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753848Ab1CQOYT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2011 10:24:19 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:46842 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753746Ab1CQOYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 10:24:14 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 3116F460FD;
-	Thu, 17 Mar 2011 15:24:07 +0100 (CET)
-Received: (nullmailer pid 9064 invoked by uid 1000);
-	Thu, 17 Mar 2011 14:24:13 -0000
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1300359664-6230-1-git-send-email-cmn@elego.de>
+	id S1754168Ab1CQOzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 10:55:07 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:49062 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753816Ab1CQOzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 10:55:04 -0400
+Received: by yxs7 with SMTP id 7so1142512yxs.19
+        for <git@vger.kernel.org>; Thu, 17 Mar 2011 07:55:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=/fEpeW/PUZ/Uvjje3vxb0Sp0/Z2O2TcOmTLS5inuy1o=;
+        b=PGsHZQZuWUUB/bbagrZ69UVHIj538R+1lWLaDYK4hgvD77H5icNz1lA3LmOGa6N7hX
+         eYUA6NoTlxTDpm62xHXRKAs8DxGIcjHEceVsaOa8sbImQHFQ6A04ukIYu0Zr4UoFSkom
+         LmwwH+NW8UEbXx+BJoSdCfr/LA8jbcordBxcc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=cDFs3arFbkJHKPVEW/x01c6ymRFfEgfH+sgRLGozxKe1u/13ZD9CVLS2ipbn0hEFuO
+         8pVpBk+hcdOtf7W6bQle2coSeH5Y3RpXgFcNhxe9Y+unNHThdRhBi8ZqaPMoaJPMzrfJ
+         f0dFJycdD3Rmrz5h7oZ8EQFn/CUsNs73SM3bE=
+Received: by 10.90.250.2 with SMTP id x2mr1459967agh.202.1300373704172; Thu,
+ 17 Mar 2011 07:55:04 -0700 (PDT)
+Received: by 10.90.223.11 with HTTP; Thu, 17 Mar 2011 07:54:44 -0700 (PDT)
+In-Reply-To: <AANLkTi=25=99Gh9hGUxEuvB9Xvv=f8uJxThaMxaAQKbq@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169246>
 
-Make system_path behave like the other path functions by using a
-static buffer, fixing a memory leak.
+On Thu, Mar 17, 2011 at 15:10, Jay Soffian <jaysoffian@gmail.com> wrote:
+> On Thu, Mar 17, 2011 at 4:53 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
+>> What if they just revert the rest? Reset the files to their states before
+>> merge.
+>
+> That's the same as checkout --ours which is sometimes a valid
+> resolution for a file. So I think "I resolved this file" needs to be
+> recorded either way.
 
-Also make sure the prefix pointer is always initialized to either
-PREFIX or NULL.
-
-git_etc_gitattributes and git_etc_gitconfig are the only users who are
-affected by this change. Make them use a static buffer, which fits
-their use better as well.
-
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
-
-It was pointed out that one should always check for an encoding error
-(-1) with the printf family. I'm not sure how likely this is to
-happen, but this should make the code extra portable :)
-
- attr.c     |    6 +++---
- config.c   |    6 +++---
- exec_cmd.c |   15 ++++++++++-----
- 3 files changed, 16 insertions(+), 11 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 6aff695..64d803f 100644
---- a/attr.c
-+++ b/attr.c
-@@ -467,9 +467,9 @@ static void drop_attr_stack(void)
-=20
- const char *git_etc_gitattributes(void)
- {
--	static const char *system_wide;
--	if (!system_wide)
--		system_wide =3D system_path(ETC_GITATTRIBUTES);
-+	static char system_wide[PATH_MAX];
-+	if (!system_wide[0])
-+		strlcpy(system_wide, system_path(ETC_GITATTRIBUTES), PATH_MAX);
- 	return system_wide;
- }
-=20
-diff --git a/config.c b/config.c
-index 822ef83..cd1c295 100644
---- a/config.c
-+++ b/config.c
-@@ -808,9 +808,9 @@ int git_config_from_file(config_fn_t fn, const char=
- *filename, void *data)
-=20
- const char *git_etc_gitconfig(void)
- {
--	static const char *system_wide;
--	if (!system_wide)
--		system_wide =3D system_path(ETC_GITCONFIG);
-+	static char system_wide[PATH_MAX];
-+	if (!system_wide[0])
-+		strlcpy(system_wide, system_path(ETC_GITCONFIG), PATH_MAX);
- 	return system_wide;
- }
-=20
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 38545e8..35d5cd8 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -9,11 +9,12 @@ static const char *argv0_path;
- const char *system_path(const char *path)
- {
- #ifdef RUNTIME_PREFIX
--	static const char *prefix;
-+	static const char *prefix =3D NULL;
- #else
- 	static const char *prefix =3D PREFIX;
- #endif
--	struct strbuf d =3D STRBUF_INIT;
-+	static char buf[PATH_MAX];
-+	int ret;
-=20
- 	if (is_absolute_path(path))
- 		return path;
-@@ -33,9 +34,13 @@ const char *system_path(const char *path)
- 	}
- #endif
-=20
--	strbuf_addf(&d, "%s/%s", prefix, path);
--	path =3D strbuf_detach(&d, NULL);
--	return path;
-+	ret =3D snprintf(buf, sizeof(buf), "%s/%s", prefix, path);
-+	if (ret >=3D sizeof(buf))
-+		die("system path too long for %s", path);
-+	else if (ret < 0)
-+		die_errno("encoding error");
-+
-+	return buf;
- }
-=20
- const char *git_extract_argv0_path(const char *argv0)
---=20
-1.7.4.1
+But it is recorded: the file is different now!
