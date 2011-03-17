@@ -1,79 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] gitweb: fix #patchNN anchors when path_info is
- enabled
-Date: Thu, 17 Mar 2011 13:55:17 -0700
-Message-ID: <7v8vwd31sa.fsf@alter.siamese.dyndns.org>
-References: <3ef1af6874437043a4451bfbcae59b2b@localhost>
- <m3hbb258pw.fsf@localhost.localdomain>
- <7v62rh4ml1.fsf@alter.siamese.dyndns.org>
- <201103172020.05055.jnareb@gmail.com>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [RFD] Expanded Pretty Format Placeholders Proposal
+Date: Thu, 17 Mar 2011 20:57:34 +0000
+Message-ID: <1300395454.2004.9.camel@walleee>
+References: <1299804441.6220.1.camel@walleee>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 21:55:34 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 17 21:57:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0KEH-00053s-Ll
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 21:55:34 +0100
+	id 1Q0KGQ-0005yX-CZ
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 21:57:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424Ab1CQUza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 16:55:30 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55699 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755196Ab1CQUz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 16:55:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A244433C;
-	Thu, 17 Mar 2011 16:57:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G1OevaiK1iynsZuP0RZUelI+Mj4=; b=AJ+n5t
-	xRu/gNkkyqg9/ODOkYpkjJiNiitMibrLF7KxJA5Xeoe+hmTynbgpSrDq1nALWZlB
-	xaB10HXT4qlUj4x0A1xJGbX2QNqmdfbI5YQkefpdzqr6f1hNS6/UnW6tSy3butIX
-	xP0ZjoHepjGUxltCEmwuPQULoNz0O4v8NhSW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uPFyGiGcxMwCktt89104NATyStps7xxx
-	xJlOKCLyo6AseQKyj4OKp26oAx1MHwu4+Cl7/PvY+pVDQTJkob/TC6prQZSP1c48
-	157Wx7J3xXN98/cc1Xjf3/5jld4cN06TQZ02c9zodoLFEFcfLKOfxz+Ouke6+1Id
-	Hu+1oScD6JY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0EE85433B;
-	Thu, 17 Mar 2011 16:56:59 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BAECF4338; Thu, 17 Mar 2011
- 16:56:53 -0400 (EDT)
-In-Reply-To: <201103172020.05055.jnareb@gmail.com> (Jakub Narebski's message
- of "Thu, 17 Mar 2011 20:19:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 19AA5404-50D9-11E0-9B04-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755424Ab1CQU5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 16:57:41 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:43104 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755196Ab1CQU5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 16:57:40 -0400
+Received: by wwk4 with SMTP id 4so502142wwk.1
+        for <git@vger.kernel.org>; Thu, 17 Mar 2011 13:57:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:from:to:in-reply-to:references
+         :content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=plui1gCvKKdA7c9HnO7R+3C67sbbz+b+FFKcTTnl6Iw=;
+        b=pvNz/EBLkY7XnjHcxLAfe8Ufl7n9L7bi/Bgvyfdg0nSD5+jwp9zEJEPQM/SBblNFUB
+         J+/hGc7AR8kP2pDLjBa2xSu8t7vVYGxkB14Tp6MLembL8tNFO1GbVse395pW8KSivp8n
+         3Hvn5yG7JGPNZl7kKI0D9XuNEM1yzjJIRm+YI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:in-reply-to:references:content-type:date:message-id
+         :mime-version:x-mailer:content-transfer-encoding;
+        b=ND9KCzArF6QnByqJUuacTRKQhEMNPt5Jyte5oRGvmropmKreLxpSFho3HMJ9SagdUe
+         Rr4QM1HR1QJoQQB5OZp15eD5hBbY8873TQa2pUVqO2eKoIgOadd2o2HaaeauzfqC+uvs
+         AqSEXT4dU5UezNGAhIpMnip4TkOB36GPCHXhw=
+Received: by 10.216.144.205 with SMTP id n55mr1397351wej.5.1300395458573;
+        Thu, 17 Mar 2011 13:57:38 -0700 (PDT)
+Received: from [192.168.0.2] (5acc3aad.bb.sky.com [90.204.58.173])
+        by mx.google.com with ESMTPS id r57sm1280827wes.25.2011.03.17.13.57.36
+        (version=SSLv3 cipher=OTHER);
+        Thu, 17 Mar 2011 13:57:36 -0700 (PDT)
+In-Reply-To: <1299804441.6220.1.camel@walleee>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169278>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, 2011-03-11 at 00:47 +0000, Will Palmer wrote:
+..snip
+> For my own purposes (conditional formats), I'd like to see the ability
+> to embed an entire sub-format within a placeholder. Clearly this would
+> complicate the parser quite a bit (we wouldn't be able to just look for
+> a closing ")", for example), but I think the flexibility makes it work
+> it. To achieve this in terms of a specification to shoot for, we can
+> simply say that any embedded "%(" must be terminated by its own ")" to
+> be valid. eg:
+> 	%(foo-condition: %(format: %H, aka %h), %H )
 
->>> or even make it so 'href(-anchor=>"ANCHOR")' implies '-replay => 1'.
->> 
->> I don't see why "or even" is an improvement, given the following
->> implementation.
->
-> Well, 
->
->   -href => href(-anchor=>"patch$patchno")
->
-> is closer in spirit to
->
->   -href => "#patch$patchno"
->
-> that is currently used, and does not work with path_info.
 
-I questioned "implies '-replay => 1'" part, not the use of href(...) part.
+of course, this conflicts with the need to embed a literal ")" within a
+sub-format. The simplest option for this would be to either allow %) as
+an escape, as with %%. Even simpler, of course, would be %x29, but this
+seems needlessly obscure. The only objection I have to %) is "It's
+ugly". To me, %(format: "this is a paren: )") is easier to read, but
+that would just be moving the problem around, adding the necessity of
+the just-as-ugly-or-moreso %", or alternatively C-style \" and \\.
+So I think that %) will be the best option.
+
+
+> 
+> -- Will
+> 
