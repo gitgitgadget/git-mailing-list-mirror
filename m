@@ -1,120 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/2] gitweb: fix #patchNN anchors when path_info is enabled
-Date: Thu, 17 Mar 2011 20:19:59 +0100
-Message-ID: <201103172020.05055.jnareb@gmail.com>
-References: <3ef1af6874437043a4451bfbcae59b2b@localhost> <m3hbb258pw.fsf@localhost.localdomain> <7v62rh4ml1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFD 0/2] revision.c: --merges, --no-merges and
+ --merges-only
+Date: Thu, 17 Mar 2011 12:23:05 -0700
+Message-ID: <7vwrjx361y.fsf@alter.siamese.dyndns.org>
+References: <cover.1300359256.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 20:20:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 17 20:23:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0IkD-000817-AD
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 20:20:25 +0100
+	id 1Q0In4-0001LP-0Z
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 20:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753726Ab1CQTUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 15:20:21 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:42246 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751572Ab1CQTUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 15:20:19 -0400
-Received: by bwz15 with SMTP id 15so2748189bwz.19
-        for <git@vger.kernel.org>; Thu, 17 Mar 2011 12:20:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Ei+zXOPus+uVri3mwf6El4chx/DFMyyowDnGaoRJAYI=;
-        b=EyHpYZ/LKYYGANUITyA9VnCT++gfdQftqzVOZS0pzM17Td6rzX3jYZe8X1XXm03Wr6
-         dKFDmlX0Z45z8qFPuuUVMs97zX3MNtgeQaxutx3v7h/zAL3D/8rixN5WQ0oZbIkZSCxh
-         QS2KaPx3l2JqLASbTDaq7MzczoW5+ZGzfoEGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ubrw5OibrnmPel0K8B7MC8dktewmofv6DOHwYz2KelfppeW2KZrCJRdrQctxelEKFO
-         2xZ/g6mB2F6577ogP+0byVjRHnoTbPai2msKhbZPp3JWhcrz5FJnNnv2Su6POF3PJo5K
-         AMgVZfWhH2yJP5GACZVFtkqfDOY4GD2Tpx7C8=
-Received: by 10.204.233.15 with SMTP id jw15mr165983bkb.48.1300389618357;
-        Thu, 17 Mar 2011 12:20:18 -0700 (PDT)
-Received: from [192.168.1.13] (aeho51.neoplus.adsl.tpnet.pl [79.186.196.51])
-        by mx.google.com with ESMTPS id t1sm1599256bkx.19.2011.03.17.12.20.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 17 Mar 2011 12:20:17 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v62rh4ml1.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755273Ab1CQTXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 15:23:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50747 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754937Ab1CQTXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 15:23:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8AC9436D9;
+	Thu, 17 Mar 2011 15:24:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6WViKFgXUd2ir3lfyk7foZfaOCU=; b=fkhVZe
+	HOj7NGSEPrJEflhN+7I9sKmegQqj5xlNSThGiAYHW56+QKJByZ8z31KyufzEpfUi
+	JCC5mPlExrsfQexZ1/26gEVPKiYj1hjXPysVlifddnQJO6LxguSuWDtW9jcOBWQJ
+	ilN/5olxggojsvpHsEPO2/32buh1bLUlpMk3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BEvPzbqIrtq/zUpZUoJf3lAidhTJlLLf
+	9iWusoXN9xCvnZQT0m9LojgTPLH/FnzPNphXrsYewRgF+HfMYzpOc2VPsygfBndn
+	2YtFaviIGCXFtrYGt6MbGgYdtuf5ThEZUXBRg53bsOa4FPWk0+6HqVzYvD/6i5ed
+	2MBiSQ+KzGg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6784C36D8;
+	Thu, 17 Mar 2011 15:24:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 73DF736D5; Thu, 17 Mar 2011
+ 15:24:40 -0400 (EDT)
+In-Reply-To: <cover.1300359256.git.git@drmicha.warpmail.net> (Michael J.
+ Gruber's message of "Thu, 17 Mar 2011 12:33:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 362AACE4-50CC-11E0-8DD8-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169260>
 
-On Thu, 17 Mar 2011, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> It would be better (less error prone) and easier to use '-replay'
->> option to href(), i.e. write
->>
->>> +				print $cgi->a({-href => href(-replay=>1, -anchor=>"patch$patchno")},
->>> +				              "patch") .
->>
->> or even make it so 'href(-anchor=>"ANCHOR")' implies '-replay => 1'.
-> 
-> I don't see why "or even" is an improvement, given the following
-> implementation.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Well, 
+> This mini series makes it so that --no-merges undoes --merges
+> and vice versa, as the user should be able to expect,
+> and that --merges-only is a separate option.
 
-  -href => href(-anchor=>"patch$patchno")
+Nice to see the series marked as RFD, but it would have been much better
+what aspect of the series you wanted to be discussed.
 
-is closer in spirit to
+I know that you have been here long enough to know that an outright
+breakage of backward compatibility does not deserve a discussion, and that
+you are feeling to see if people consider it is worth to design and
+implement a migration path that is not fully specified by this series to
+eventually give us the end result that is hinted by this series.
 
-  -href => "#patch$patchno"
+But I suspect some other readers on the list don't (and that is why I am
+spelling it out).
 
-that is currently used, and does not work with path_info.
- 
-> >   @@ -1310,6 +1310,7 @@ sub href {
-> >   
-> >   	$params{'project'} = $project unless exists $params{'project'};
-> >   
-> >  -	if ($params{-replay}) {
-> >  +	if ($params{-replay} ||
-> >  +	    ($params{-anchor} && keys %params == 1)) {
-> >   		while (my ($name, $symbol) = each %cgi_param_mapping) {
-> >   			if (!exists $params{$name}) {
-> >   				$params{$name} = $input_params{$name};
-> 
-> I don't share your intuition that "anchor" is so special that this part
-> will not grow into a long chain of "(I want an implicit replay too) ||".
-> 
-> Implicitly enabling it in certain obvious cases is perfectly fine, but the
-> logic to do so should be in a separate place.  Wouldn't it better to have
-> a separate code that sets 'replay' under this and that condition so that
-> other people can later add to it at the very beginning of "sub href"?
-> 
-> Unless we do so, if there are other places that need to change the
-> behaviour based on 'replay', they need to duplicate the "implicit" logic.
+As to the eventual goal, I think two modes "show me only merge commits",
+"show me only commits that are not merges" are absolute nesessity no
+matter how they are named, and as a uniformity bonus, "earlier I might
+have said 'show me only merges' but I take it back" and its counterpart
+might be good things to have.
 
-So you would prefer to have something like this:
+But.
 
- 	# implicit -replay
- 	if (keys %params == 1 && $params{-anchor}) {
- 		# href(-anchor=>"ANCHOR") works like "#ANCHOR", 
- 		# correctly if base href is set (for path_info URLs)
- 		$params{-replay} = 1;
- 	}
+If a script writer wants to futureproof his script against later
+introduction of configuration variables to trigger 'no-merges' and/or
+'merges-only', what should she say?  "git log --no-merges-only --merges"?
 
-set above 'if ($params{-replay}) {'?
+Shouldn't the choice offered by the eventual end result of this topic,
+perhaps two years down the road after migration period, not two seemingly
+independent options as hinted with the series, but an enum with three
+values (any commit, non-merge commit only, merge commit only)?
 
--- 
-Jakub Narebski
-Poland
+IOW, wouldn't it be a more logical thing to do to add a new option with
+three values --show-commit={all,merges,no-merges}, if we were adding the
+feature to filter commits by number of parents?
+
+If we come up with a nicer name for the --show-commit example above (both
+the name of the variable and the enum value) and promote it, the migration
+would go smoothly without giving much pain to the existing users and
+scripts, as it will not _have to_ involve touching the existing merges and
+no-merges options at all, even though we can make them less visible.
