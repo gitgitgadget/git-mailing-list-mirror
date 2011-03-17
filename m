@@ -1,94 +1,66 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Add Author and Documentation sections to
- git-for-each-ref.txt
-Date: Thu, 17 Mar 2011 02:59:55 -0400
-Message-ID: <20110317065955.GE11931@sigill.intra.peff.net>
-References: <1299590170-30799-1-git-send-email-alcosholik@gmail.com>
- <1299590170-30799-3-git-send-email-alcosholik@gmail.com>
- <4D773570.4010803@drmicha.warpmail.net>
- <7voc5k9hfy.fsf@alter.siamese.dyndns.org>
- <20110310223732.GE15828@sigill.intra.peff.net>
- <AANLkTinzJ7C_Eym20Y3rP3d7hiviPBiCAfdwXGFa4P54@mail.gmail.com>
- <20110313030214.GB10452@sigill.intra.peff.net>
- <7vsjuril5r.fsf@alter.siamese.dyndns.org>
- <20110313064710.GA13135@sigill.intra.peff.net>
- <7vd3lviie7.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 1/2] fetch-pack: Finish negotation if remote replies "ACK
+ %s ready"
+Date: Thu, 17 Mar 2011 03:15:12 -0400
+Message-ID: <20110317071512.GF11931@sigill.intra.peff.net>
+References: <1300146519-26508-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Alexei Sholik <alcosholik@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 08:00:03 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 17 08:15:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q07Bi-0005Nk-Ud
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 08:00:03 +0100
+	id 1Q07Qd-0002Lf-Ve
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 08:15:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846Ab1CQG76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 02:59:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55458
+	id S1751670Ab1CQHPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 03:15:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48435
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751689Ab1CQG75 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 02:59:57 -0400
-Received: (qmail 20976 invoked by uid 107); 17 Mar 2011 07:00:32 -0000
+	id S1750851Ab1CQHPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 03:15:15 -0400
+Received: (qmail 21095 invoked by uid 107); 17 Mar 2011 07:15:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 17 Mar 2011 03:00:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Mar 2011 02:59:55 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 17 Mar 2011 03:15:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Mar 2011 03:15:12 -0400
 Content-Disposition: inline
-In-Reply-To: <7vd3lviie7.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1300146519-26508-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169215>
 
-On Sat, Mar 12, 2011 at 11:33:52PM -0800, Junio C Hamano wrote:
+On Mon, Mar 14, 2011 at 04:48:38PM -0700, Shawn O. Pearce wrote:
 
-> > Git-cherry sort of does this, but patch-ids miss a lot of cases: patches
-> > tweaked in transit, patches applied on a different commit, or even
-> > patches taken partially or split up. So I rebase frequently, and as
-> > patches get picked up in master, the branches dwindle to empty.
-> > Suggestions welcome if anybody else has figured out something clever.
-> 
-> A solution to string different iterations of the same patch together,
-> perhaps using notes as the storage media, that makes it easier to view the
-> changes between different iterations?  I think Shawn does something like
-> that in Gerrit code review.
+> Upon receiving "ACK %s ready" there is no point in looking at
+> the remaining commits inside of rev_list.  Sending additional
+> "have %s" lines to the remote will not construct a smaller pack.
+> It is unlikely a commit older than the current cut point will have
+> a better delta base than the cut point itself has.
+> [...]
+> Assuming the client is only following the remote (and does not make
+> its own local commits), the client needs 11 rounds to spin through
+> the entire list of tags (32 commits per round, ceil(339/32) == 11).
+> Unfortunately the server knows on the first "have %s" line that
+> it can produce a good pack, and does not need to see the remaining
+> 320 tags in the other 10 rounds.
 
-I don't necessarily care about different iterations of the patch on my
-end. Usually when I discard an old version I don't go back to it, and in
-the rare case that I do, it is simple enough to pull it from the reflog
-or from the mailing list.
+Does this optimization help in that case? From looking at the code, it
+seems that we offer "ACK %s ready" only in the case that the client
+has something we do not. I.e., they _are_ building local commits on top.
 
-What I mean is lining up what I have locally (and what I send) with what
-ends up in your repository. Which can have arbitrary changes from the
-original. I don't think there is a general solution. In theory you could
-take a single patch of mine, split it into two, then mark up each half.
-I know you have the sense not to do this, but there are simpler cases
-that still cause problems.
+> Over smart HTTP, the client must do an additional 10 HTTP POST
+> requests, each of which incurs round-trip latency, and must upload
+> the entire state vector of all known common objects.  On the final
+> POST request, this is 16 KiB worth of data.
 
-For example, in my recent trace-sifter series, you took some squashes
-from other people on the early bits, and those impacted the text of
-later bits. So there was no way for patch-id to link up the patches.
-
-Rebasing at least faces me with the conflicts over the rewrite, and I
-can manually check each conflict and say "OK, it looks like he took my
-patch, but this part had to be rewritten". And then I can either accept
-your rewrite (by resolving in favor of you), or I can rework my patch to
-do what I think should be done on top of yours, and then submit my new
-one on top.
-
-I could also use Jay's suggested "loose patch id", and link things up by
-commit author and message. Unless you do something drastic like
-splitting a patch in two (or merging two patches into one), then I can
-create the correlation. But it makes me a little nervous, because the
-content of your version may not be the same as mine. And probably I
-should be reviewing it before throwing away my version in favor of
-yours.
+This optimization aside, I wonder if it is worth bumping up the number
+of haves we send in a chunk from 32 to something higher.
 
 -Peff
