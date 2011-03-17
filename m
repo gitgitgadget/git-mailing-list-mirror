@@ -1,120 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] diff --quiet: disable optimization when --diff-filter=X is
- used
-Date: Wed, 16 Mar 2011 16:09:50 -0700
-Message-ID: <7vmxku64sh.fsf_-_@alter.siamese.dyndns.org>
-References: <4D80EBC1.7010105@elegosoft.com>
- <7v62ri7oqm.fsf@alter.siamese.dyndns.org>
- <7vwrjy670r.fsf_-_@alter.siamese.dyndns.org>
+Subject: [BUG] merge-recursive triggered "BUG"
+Date: Wed, 16 Mar 2011 17:39:07 -0700
+Message-ID: <7v4o7260no.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakob Pfender <jpfender@elegosoft.com>, Jens.Lehmann@web.de,
-	johannes.schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 00:10:14 2011
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 01:39:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pzzr0-0002KJ-8a
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 00:10:10 +0100
+	id 1Q01FK-0005Dx-LZ
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 01:39:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476Ab1CPXKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2011 19:10:06 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41371 "EHLO
+	id S1752118Ab1CQAjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2011 20:39:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36218 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561Ab1CPXKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2011 19:10:04 -0400
+	with ESMTP id S1751211Ab1CQAjQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2011 20:39:16 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9342842FE;
-	Wed, 16 Mar 2011 19:11:35 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 259094FB2;
+	Wed, 16 Mar 2011 20:40:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cWAnZCdBu8YiiKm8Lw3YRQB1qDY=; b=YoB8DV
-	Yed9XP+zB7CO4tviYXogGdnwVI7En8+SVyvWyyY6bANcP7PkxuPYCc2yG0ub3Y5W
-	hDGUQcbpvgwn9s9jyB9YfbDETJhLpjiwtIgqK7cWdRBapSRRHcaTFXHARE6jdNvB
-	HIR293d536zC9GP02u6fggtLplJyhCXY+gytg=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=WKAbgSzshZbUGgrlY6vBzCSDy
+	dI=; b=JycjpVmVRwUoZkMQ4ajjebebQdBRl4IuEQ3S3OSgp1elxfbwkWUpehhmK
+	zNGJ/BocZalODqpNzIY/MJAzlJRNEDu2pbDucGkqcTDSfEjNdOYOHxnUxShgdtVE
+	BzQwA72ItHKcM86RorAhY+lOsM3j+vWUCUcqsDQOcGZurk/P5A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o3aaIfmm8jgT8MvMw5ovYdFKd8BZwXB3
-	G3cO/8fpqEFdfOzhFzJsWCrU1ncVVSQRPUYQIpWUr/bbTC9reJTLmDYrQ4c1ysxr
-	bWhC97U9UvNWuSe0q6liiP4slqwJhe82a3y6q8S3H41J75GYSnG8C4oBdbr1k0ub
-	wP0OntpTSXY=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=ugov0B5ZdAXj3gkYnis
+	KSYt9OtnvCgb6JcxyCaSjwUMW0qGrmQYXwbaDY5+h2ZWo3HJce7GsFlQ9NTaHXct
+	hgH/LP0IvhJuKizYsGXBr8gB5lpixS1sHgsQzZlRTdYegOHNfZ7oI+OSwH5yhxgz
+	WHgvdReuIhrbi/EFIUXE8jKw=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A41B42F8;
-	Wed, 16 Mar 2011 19:11:30 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0423B4FB1;
+	Wed, 16 Mar 2011 20:40:44 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E4E0842F1; Wed, 16 Mar 2011
- 19:11:24 -0400 (EDT)
-In-Reply-To: <7vwrjy670r.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 16 Mar 2011 15:21:40 -0700")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0ADCE4FA5; Wed, 16 Mar 2011
+ 20:40:41 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BA15FC5C-5022-11E0-A008-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 31BEE956-502F-11E0-B516-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169209>
 
-The code notices that the caller does not want any detail of the changes
-and only wants to know if there is a change or not by specifying --quiet.
-And it breaks out of the loop when it knows it already found any change.
+As a part of my today's merge, I used 'next' that contains b2c8c0a
+(merge-recursive: When we detect we can skip an update, actually skip it,
+2011-02-28) to merge 'maint' into 'master' to propagate older releases up.
 
-When you have a post-process filter (e.g. --diff-filter), however, the
-path we found to be different in the previous round and set HAS_CHANGES
-bit may end up being uninteresting, and there may be no output at the end.
-The optimization needs to be disabled for such case.
+It triggered a "BUG" per merged path, and I bisected this breakage down to
+the said commit. Luckily 'master' is not contaminated with the breakage,
+so I used it to finish today's work.
 
-Note that the f245194 (diff: change semantics of "ignore whitespace"
-options, 2009-05-22) already disables this optimization by refraining
-from setting HAS_CHANGES when post-process filters that need to inspect
-the contents of the files (e.g. -S, -w) in diff_change() function.
+When I push out the result from today, you can reproduce it with
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+    git checkout 0631623 ;# master to acquire changes from maint
+    git merge [-s recursive] fbcda3c
 
- * This time with tests, on top of 90b1994 (diff: Rename QUIET internal
-   option to QUICK, 2009-05-23), which was the last commit in the series
-   that introduced the incorrect optimization in the first place.
+I suspect that the new codepath introduced by b2c8c0a needs to pay
+attention to the merge depth (for example, does it make any sense at all
+to run lstat() when you are doing recursive common parent synthesis?), but
+I didn't dig into it.
 
-   Note that the test script was renamed to t/t4040 in today's codebase,
-   but it merges cleanly.
+The command fails with this output:
 
- diff-lib.c                   |    3 ++-
- t/t4037-whitespace-status.sh |    7 +++++++
- 2 files changed, 9 insertions(+), 1 deletions(-)
+error: addinfo_cache failed for path 'builtin/add.c'
+error: addinfo_cache failed for path 'builtin/apply.c'
+error: addinfo_cache failed for path 'builtin/branch.c'
+error: addinfo_cache failed for path 'builtin/checkout.c'
+error: addinfo_cache failed for path 'builtin/commit.c'
+error: addinfo_cache failed for path 'builtin/config.c'
+error: addinfo_cache failed for path 'builtin/diff-files.c'
+error: addinfo_cache failed for path 'builtin/diff.c'
+error: addinfo_cache failed for path 'builtin/fast-export.c'
+error: addinfo_cache failed for path 'builtin/grep.c'
+error: addinfo_cache failed for path 'builtin/hash-object.c'
+error: addinfo_cache failed for path 'builtin/init-db.c'
+error: addinfo_cache failed for path 'builtin/log.c'
+error: addinfo_cache failed for path 'builtin/merge.c'
+error: addinfo_cache failed for path 'builtin/push.c'
+error: addinfo_cache failed for path 'builtin/rerere.c'
+error: addinfo_cache failed for path 'builtin/update-index.c'
+error: addinfo_cache failed for path 't/t7810-grep.sh'
+BUG: There are unmerged index entries:
+BUG: 1 builtin/add.cBUG: 2 builtin/add.cBUG: 3 builtin/add.cBUG: 1 builtin/apply.cBUG: 2 builtin/apply.cBUG: 3 builtin/apply.cBUG: 1 builtin/branch.cBUG: 2 builtin/branch.cBUG: 3 builtin/branch.cBUG: 1 builtin/checkout.cBUG: 2 builtin/checkout.cBUG: 3 builtin/checkout.cBUG: 1 builtin/commit.cBUG: 2 builtin/commit.cBUG: 3 builtin/commit.cBUG: 1 builtin/config.cBUG: 2 builtin/config.cBUG: 3 builtin/config.cBUG: 1 builtin/diff-files.cBUG: 2 builtin/diff-files.cBUG: 3 builtin/diff-files.cBUG: 1 builtin/diff.cBUG: 2 builtin/diff.cBUG: 3 builtin/diff.cBUG: 1 builtin/fast-export.cBUG: 2 builtin/fast-export.cBUG: 3 builtin/fast-export.cBUG: 1 builtin/grep.cBUG: 2 builtin/grep.cBUG: 3 builtin/grep.cBUG: 1 builtin/hash-object.cBUG: 2 builtin/hash-object.cBUG: 3 builtin/hash-object.cBUG: 1 builtin/in
+ it-db.cBUG: 2 builtin/init-db.cBUG: 3 builtin/init-db.cBUG: 1 builtin/log.cBUG: 2 builtin/log.cBUG: 3 builtin/log.cBUG: 1 builtin/merge.cBUG: 2 builtin/merge.cBUG: 3 builtin/merge.cBUG: 1 builtin/push.cBUG: 2 builtin/push.cBUG: 3 builtin/push.cBUG: 1 builtin/rerere.cBUG: 2 builtin/rerere.cBUG: 3 builtin/rerere.cBUG: 1 builtin/update-index.cBUG: 2 builtin/update-index.cBUG: 3 builtin/update-index.cBUG: 1 t/t7810-grep.shBUG: 2 t/t7810-grep.shBUG: 3 t/t7810-grep.shfatal: Bug in merge-recursive.c
 
-diff --git a/diff-lib.c b/diff-lib.c
-index b7813af..bfa6503 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -74,7 +74,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 		int changed;
- 
- 		if (DIFF_OPT_TST(&revs->diffopt, QUICK) &&
--			DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
-+		    !revs->diffopt.filter &&
-+		    DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
- 			break;
- 
- 		if (!ce_path_match(ce, revs->prune_data))
-diff --git a/t/t4037-whitespace-status.sh b/t/t4037-whitespace-status.sh
-index a30b03b..abc4934 100755
---- a/t/t4037-whitespace-status.sh
-+++ b/t/t4037-whitespace-status.sh
-@@ -60,4 +60,11 @@ test_expect_success 'diff-files -b -p --exit-code' '
- 	git diff-files -b -p --exit-code
- '
- 
-+test_expect_success 'diff-files --diff-filter --quiet' '
-+	git reset --hard &&
-+	rm a/d &&
-+	echo x >>b/e &&
-+	test_must_fail git diff-files --diff-filter=M --quiet
-+'
-+
- test_done
--- 
-1.7.4.1.430.g5aa4d
+
+Thanks.
