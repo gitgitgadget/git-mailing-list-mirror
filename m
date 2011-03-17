@@ -1,86 +1,115 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: [PATCH] pretty.c: Make user defined format honor color option
-Date: Thu, 17 Mar 2011 09:39:51 +0000
-Message-ID: <1300354791.3269.19.camel@wpalmer.simply-domain>
-References: <4D81C741.8060108@secunet.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git blame --follow
+Date: Thu, 17 Mar 2011 02:59:22 -0700 (PDT)
+Message-ID: <m3tyf25arl.fsf@localhost.localdomain>
+References: <201103151644.44360.wolfgang@rohdewald.de>
+	<7vy64g9tqs.fsf@alter.siamese.dyndns.org>
+	<201103151926.58449.wolfgang@rohdewald.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Thomas Egerer <thomas.egerer@secunet.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 10:41:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Wolfgang Rohdewald <wolfgang@rohdewald.de>
+X-From: git-owner@vger.kernel.org Thu Mar 17 10:59:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q09hX-00038f-0m
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 10:41:03 +0100
+	id 1Q09zQ-0003gu-OK
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 10:59:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753258Ab1CQJkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 05:40:01 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:54633 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753242Ab1CQJj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 05:39:57 -0400
-Received: by wya21 with SMTP id 21so2561492wya.19
-        for <git@vger.kernel.org>; Thu, 17 Mar 2011 02:39:56 -0700 (PDT)
+	id S1753082Ab1CQJ70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 05:59:26 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:60331 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846Ab1CQJ7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 05:59:24 -0400
+Received: by fxm17 with SMTP id 17so2513675fxm.19
+        for <git@vger.kernel.org>; Thu, 17 Mar 2011 02:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
-         :content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=BRwxp1c3G2zakrMvUNsRnHU6UhdusZDLkXwIPDhypaQ=;
-        b=MB5dXiX+krv3rD3zGUKqEXZ37j8jcA/hPHRsCdduah8g9Sxh8vqpB+W703lQBX+xr1
-         T81tvIdrKUF+BGh4v4K2IuKGgsgL220syN2GKbR+KBaFYlQj7kjodVagC2Dg+0qZw/Hq
-         gOuaSRv8zac6dyRxZkd3pcXDqlR5zg854ivY4=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=asvOD764e01AkcjrFB2hLQruRP0TnD2D4WFdxssDh/Y=;
+        b=pwBtFBcmCizIEJbL5Ckp+yZe7IDjzPppzB+Ac76b46hpZBwHO5ZwR3eR6e8I82Pdx2
+         O9a1vBdTOSFwN3tIxdjiIVB37QeABuyymvkQdDdSh86rCBGJSPXAOYACHX6qiS58P9fa
+         JFK1MYGxJ1Cds7zkHynXcqSYEAjhxDfv3tAiY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Z2qTCIfXOzLDyzcmBXBvpiJ17d/tBW9f05kkF11MKgBHkZ9BrRr/U6r/ihQWV4KA/Z
-         bSAVvCNitlAmxStyPyZdnbC8+y8rgGRclwdq8wI83i5qtFZFk87612dZuS++JB4VgoSd
-         WlMeviI00dNGgToW7ZRz2C6vlkp5n+p056Q/8=
-Received: by 10.227.149.73 with SMTP id s9mr1146697wbv.156.1300354796537;
-        Thu, 17 Mar 2011 02:39:56 -0700 (PDT)
-Received: from [192.168.2.64] (tontine65c.demon.co.uk [80.176.141.31])
-        by mx.google.com with ESMTPS id bd8sm528816wbb.18.2011.03.17.02.39.52
-        (version=SSLv3 cipher=OTHER);
-        Thu, 17 Mar 2011 02:39:53 -0700 (PDT)
-In-Reply-To: <4D81C741.8060108@secunet.com>
-X-Mailer: Evolution 2.28.3 
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=wwfkwCzwgmVKVmAej0QQ7lF9lXRkbQU6wvRJhEYvS3eLNl/81nse4Jx1EZEnXb7SAI
+         MdHjh0+GE/tLxc/GraRNODQKV7pLzsp6n69HfK5tYb3IEKZ1CBfKZ+CcF4P69PEE/Afd
+         NhNEMNWXe9n9M+CE7tmlrrmCB1vsy34FNG3kk=
+Received: by 10.223.149.70 with SMTP id s6mr1238554fav.66.1300355963580;
+        Thu, 17 Mar 2011 02:59:23 -0700 (PDT)
+Received: from localhost.localdomain (abvc119.neoplus.adsl.tpnet.pl [83.8.200.119])
+        by mx.google.com with ESMTPS id j13sm410718faa.3.2011.03.17.02.59.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Mar 2011 02:59:22 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p2H9wha0007652;
+	Thu, 17 Mar 2011 10:58:53 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p2H9wMC8007620;
+	Thu, 17 Mar 2011 10:58:22 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <201103151926.58449.wolfgang@rohdewald.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169228>
 
-On Thu, 2011-03-17 at 09:33 +0100, Thomas Egerer wrote:
-> This patch fixes that the pretty-formats tformat and format ignore
-> git's color option.
+Wolfgang Rohdewald <wolfgang@rohdewald.de> writes:
 
-It is my understanding that this is intentional, the logic being: If you
-normally don't want color, but have specified it directly on the
-command-line, you probably want color.
+> But with my repository (which I cannot share),
+> this does not happen. git blame attributes everything to 
+> the renaming commit. If I checkout the commit before, git
+> blame shows everything correctly.
 
-It is arguable that this logic does not hold for format aliases, of
-course. (and personally I've never agreed with the above logic anyway)
+"git blame" manpage says:
 
-iirc, there are a couple of other places beyond log-tree.c which need to
-propagate COLOR_DIFF into the pretty context if you want to respect the
-colour option in user-specified formats. Skimming my own diffs:
-rev-list.c and shortlog.c
+       -M|<num>|
+              Detect  moved  or copied lines within a file. [...]
+              [...]
+              <num> is optional [...]
 
-Of course, explicitly propagating "diff_opts" settings like this just
-shows off how poorly named these things are if we're going to use them
-for this sort of thing. That's probably a place for another patch,
-though.
+       -C|<num>|
+              In  addition  to  -M,  detect lines moved or copied from other files
+              that were modified in the same commit.
 
-I've got a patch to add support for conditional formats, including such
-things as: %(opt-color: %Cred%h%Creset, %h). I'm currently in the
-process of re-rolling just the "long options" part of that into
-something more-manageable, but honestly that's the bulk of the change,
-so if that gets accepted then adding %(opt-color...) would be pretty
-trivial.
+Sidenote: I wonder why we use '-M|<num>|' and not '-M[<num>]' here.
 
---Will
+So you probably want to run "git blame -C -C <file>", not "git blame <file>".
+Note that it is the same option name to turn on rename detection as is
+used for for "git diff".
+
+Note that "git gui blame" shows _two_ commits for each line: one is
+result of "git blame" (and it would show commit that did code
+movement, or renamed file), the other is result of "git blame -C -C -w",
+which would show commit that changed line, disregarding whitespace-only
+change (like e.g. reindent caused by extracting code into separate
+function).
+
+I wonder if it would be possible to generate result of "git blame"
+and of "git blame -C -C -w" in a single run (with --porcelain or
+--incremental)...
+
+[...]
+> And - for directories below the renamed one git log --follow 
+> cannot cross this barrier either but if the "follow" logic
+> is different I suppose this is not related
+
+The implementation of "git log --follow <file>" is a bolted-on hack,
+and it doesn't work in all cases; for example it doesn't cross
+boundaries of subtree merge, IIRC.  Try "git log --follow gitweb/gitweb.perl"
+in git repository itself...
+
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
