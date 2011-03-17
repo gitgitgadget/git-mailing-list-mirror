@@ -1,32 +1,32 @@
 From: Kevin Cernekee <cernekee@gmail.com>
-Subject: [PATCH v2 2/3] gitweb: introduce localtime feature
-Date: Thu, 17 Mar 2011 12:38:30 -0700
-Message-ID: <e160457138c1166ffa6faf1c58ea170e@localhost>
+Subject: [PATCH 3/3] gitweb: show alternate author/committer times
+Date: Thu, 17 Mar 2011 12:38:31 -0700
+Message-ID: <64c70e95e767572e5be732dc7e17815b@localhost>
 References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 20:47:39 2011
+X-From: git-owner@vger.kernel.org Thu Mar 17 20:47:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0JAW-0004Bj-5y
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 20:47:36 +0100
+	id 1Q0JAW-0004Bj-R9
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 20:47:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755000Ab1CQTrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 15:47:20 -0400
-Received: from [69.28.251.93] ([69.28.251.93]:42670 "EHLO b32.net"
+	id S1755044Ab1CQTrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 15:47:23 -0400
+Received: from [69.28.251.93] ([69.28.251.93]:42702 "EHLO b32.net"
 	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754979Ab1CQTrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 15:47:17 -0400
-Received: (qmail 13433 invoked from network); 17 Mar 2011 19:47:16 -0000
+	id S1754935Ab1CQTrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 15:47:21 -0400
+Received: (qmail 13594 invoked from network); 17 Mar 2011 19:47:19 -0000
 Received: from localhost (HELO vps-1001064-677.cp.jvds.com) (127.0.0.1)
-  by localhost with (DHE-RSA-AES128-SHA encrypted) SMTP; 17 Mar 2011 19:47:16 -0000
-Received: by vps-1001064-677.cp.jvds.com (sSMTP sendmail emulation); Thu, 17 Mar 2011 12:47:15 -0700
+  by localhost with (DHE-RSA-AES128-SHA encrypted) SMTP; 17 Mar 2011 19:47:19 -0000
+Received: by vps-1001064-677.cp.jvds.com (sSMTP sendmail emulation); Thu, 17 Mar 2011 12:47:19 -0700
 In-Reply-To: <c8621826e0576e3e31240b0205e7e3d0@localhost>
 User-Agent: vim 7.2
 Content-Disposition: inline
@@ -34,72 +34,77 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169266>
 
-With this feature enabled, all timestamps are shown in the local
-timezone instead of GMT.  The timezone is taken from the appropriate
-timezone string stored in the commit object.
+On the commit/commitdiff views, show the author/committer times as
+follows:
 
-Affected views include:
+If $feature{'localtime'} is disabled, display the RFC 2822 date/time in
+GMT, then print (HH:MM -TZ) in the author's/committer's local timezone.
+(i.e. no change to the current behavior)
 
-summary page, last change field (commit time from latest change)
-commit page, author/committer
-commitdiff page, author/committer
-log page, author time
-
-No change to:
-
-relative timestamps
-patch page
+If $feature{'localtime'} is enabled, display the RFC 2822 date/time in
+the author's/committer's local timezone, then print (HH:MM +0000) in GMT.
 
 Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
 ---
- gitweb/gitweb.perl |   21 ++++++++++++++++++++-
- 1 files changed, 20 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |   24 ++++++++++++++----------
+ 1 files changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 57a3caf..bf341cb 100755
+index 578edc0..6b8f9a7 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -504,6 +504,19 @@ our %feature = (
- 		'sub' => sub { feature_bool('remote_heads', @_) },
- 		'override' => 0,
- 		'default' => [0]},
-+
-+	# Use the author/commit localtime rather than GMT for all timestamps.
-+	# Disabled by default.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'localtime'}{'default'} = [1];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'localtime'}{'override'} = 1;
-+	# and in project config gitweb.localtime = 0|1;
-+	'localtime' => {
-+		'sub' => sub { feature_bool('localtime', @_) },
-+		'override' => 0,
-+		'default' => [0]},
- );
- 
- sub gitweb_get_feature {
-@@ -2928,6 +2941,12 @@ sub parse_date {
- 	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
- 	                          1900+$year, $mon+1, $mday,
- 	                          $hour, $min, $sec, $tz);
-+
-+	if (gitweb_check_feature('localtime')) {
-+		$date{'rfc2822'}   = sprintf "%s, %d %s %4d %02d:%02d:%02d $tz",
-+				     $days[$wday], $mday, $months[$mon],
-+				     1900+$year, $hour ,$min, $sec;
-+	}
- 	return %date;
+@@ -3953,22 +3953,27 @@ sub git_print_section {
+ 	print $cgi->end_div;
  }
  
-@@ -3990,7 +4009,7 @@ sub git_print_authorship_rows {
+-sub print_local_time {
+-	print format_local_time(@_);
+-}
+-
+-sub format_local_time {
++# If localtime is disabled, show the server's local time in parentheses.
++# If localtime is enabled, show GMT in parentheses.
++sub print_alt_time {
+ 	my $localtime = '';
+ 	my %date = @_;
++	my ($h, $m, $tz) = ($date{'hour_local'}, $date{'minute_local'},
++		$date{'tz_local'});
++
++	if (gitweb_check_feature('localtime')) {
++		($h, $m, $tz) = ($date{'hour'}, $date{'minute'}, "+0000");
++	}
++
+ 	if ($date{'hour_local'} < 6) {
+ 		$localtime .= sprintf(" (<span class=\"atnight\">%02d:%02d</span> %s)",
+-			$date{'hour_local'}, $date{'minute_local'}, $date{'tz_local'});
++			$h, $m, $tz);
+ 	} else {
+ 		$localtime .= sprintf(" (%02d:%02d %s)",
+-			$date{'hour_local'}, $date{'minute_local'}, $date{'tz_local'});
++			$h, $m, $tz);
+ 	}
+ 
+-	return $localtime;
++	print $localtime;
+ }
+ 
+ # Outputs the author name and date in long form
+@@ -3982,7 +3987,6 @@ sub git_print_authorship {
+ 	print "<$tag class=\"author_date\">" .
+ 	      format_search_author($author, "author", esc_html($author)) .
+ 	      " [$ad{'rfc2822'}";
+-	print_local_time(%ad) if ($opts{-localtime});
+ 	print "]" . git_get_avatar($co->{'author_email'}, -pad_before => 1)
+ 		  . "</$tag>\n";
+ }
+@@ -4009,7 +4013,7 @@ sub git_print_authorship_rows {
  		      "</td></tr>\n" .
  		      "<tr>" .
  		      "<td></td><td> $wd{'rfc2822'}";
--		print_local_time(%wd);
-+		print_local_time(%wd) if !gitweb_check_feature('localtime');
+-		print_local_time(%wd) if !gitweb_check_feature('localtime');
++		print_alt_time(%wd);
  		print "</td>" .
  		      "</tr>\n";
  	}
