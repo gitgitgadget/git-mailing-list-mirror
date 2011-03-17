@@ -1,159 +1,146 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] system_path: use a static buffer
-Date: Thu, 17 Mar 2011 12:01:04 +0100
-Message-ID: <1300359664-6230-1-git-send-email-cmn@elego.de>
-References: <7vipvi7q5g.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] gitweb: introduce localtime feature
+Date: Thu, 17 Mar 2011 04:01:18 -0700 (PDT)
+Message-ID: <m3d3lq57vw.fsf@localhost.localdomain>
+References: <3ef1af6874437043a4451bfbcae59b2b@localhost>
+	<e272fa98ecab9d30edb4457e2e215688@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 12:01:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kevin Cernekee <cernekee@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 12:01:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0Ax8-0007sM-0b
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 12:01:14 +0100
+	id 1Q0AxM-00082Y-2c
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Mar 2011 12:01:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596Ab1CQLBI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2011 07:01:08 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:33552 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753257Ab1CQLBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 07:01:07 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 8BD3F460FD;
-	Thu, 17 Mar 2011 12:00:59 +0100 (CET)
-Received: (nullmailer pid 6311 invoked by uid 1000);
-	Thu, 17 Mar 2011 11:01:04 -0000
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <7vipvi7q5g.fsf@alter.siamese.dyndns.org>
+	id S1753766Ab1CQLBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 07:01:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:49950 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753755Ab1CQLBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 07:01:22 -0400
+Received: by fxm17 with SMTP id 17so2556300fxm.19
+        for <git@vger.kernel.org>; Thu, 17 Mar 2011 04:01:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=zFzsYDyXj/HxgA+/Zo2tptr2gGk5AdIfhGLFvwelJx0=;
+        b=buNmZOJsQGGcLtFn4pqcQgIy/aOS+RFF3rTo71Mm/+k/69Jd83F/Em0MZEtNyH8dmF
+         MW8SY20mX+nyc9PoAPqXdtik6VSXCrzmDWY/8BIKj59CcTnxs/YXpEE04Z3oFmrQXAgX
+         VTrjSSGBNTF+lBm7N2FGLuW7BgpPUHOxFoX8Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=qHcbd06k32c/G8ll93EW/2JxDe7i227F9wfBTnjqfylGlbz3fMsv8ZopqJj/CeEOlT
+         w9iCHvRt0iE9hNwHsLo8AelwaRm562TNeB1g74mT1c9wikfHH2leHkn6l2+NGQmM2fa+
+         qHYhS0jTefRJ3JT26j8X+Apb4PFVvaFvtYZWI=
+Received: by 10.223.6.11 with SMTP id 11mr98015fax.100.1300359679964;
+        Thu, 17 Mar 2011 04:01:19 -0700 (PDT)
+Received: from localhost.localdomain (aeho51.neoplus.adsl.tpnet.pl [79.186.196.51])
+        by mx.google.com with ESMTPS id e23sm851982faa.18.2011.03.17.04.01.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Mar 2011 04:01:18 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p2HB0pDh008199;
+	Thu, 17 Mar 2011 12:01:01 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p2HB0aKT008195;
+	Thu, 17 Mar 2011 12:00:36 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <e272fa98ecab9d30edb4457e2e215688@localhost>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169234>
 
-Make system_path behave like the other path functions by using a
-static buffer, fixing a memory leak.
+Kevin Cernekee <cernekee@gmail.com> writes:
 
-Also make sure the prefix pointer is always initialized to either
-PREFIX or NULL.
+> With this feature enabled, all timestamps are shown in the machine's
+> local timezone instead of GMT.
 
-git_etc_gitattributes and git_etc_gitconfig are the only users who are
-affected by this change. Make them use a static buffer, which fits
-their use better as well.
+This does not describe why would one want such way of displaying
+timestamps, and which views would be affected.
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
+BTW. should it be timezone of web server (machine where gitweb is
+run), or local time of author / committer / tagger as described in the
+timezone part of git timestamp?
+ 
+> Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
+> ---
+>  gitweb/gitweb.perl |   14 +++++++++++++-
+>  1 files changed, 13 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 3b6a90d..d171ad5 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -504,6 +504,12 @@ our %feature = (
+>  		'sub' => sub { feature_bool('remote_heads', @_) },
+>  		'override' => 0,
+>  		'default' => [0]},
+> +
+> +	# Use localtime rather than GMT for all timestamps.  Disabled
+> +	# by default.  Project specific override is not supported.
+> +	'localtime' => {
+> +		'override' => 0,
+> +		'default' => [0]},
 
-On mi=C3=A9, 2011-03-16 at 13:43 -0700, Junio C Hamano wrote:
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
-> > Make system_path behave like the other path functions by using a
-> > static buffer, fixing a memory leak.
-> >
-> > Also make sure the prefix pointer is always initialized to either
-> > PREFIX or NULL.
-> >
-> > Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
-> > ---
->=20
-> Have you made sure all the callers are Ok with this change?
->=20
-> If somebody called system_path(GIT_EXEC_PATH), saved the result in a
-> variable without copying, and then called system_path(ETC_GITATTRIBUT=
-ES),
-> his variable may now have a value unrelated to GIT_EXEC_PATH, and you
-> would fix all such callers to save the value away with strdup().
+Why project specific override is not supported?  I think it might make
+sense to enable this feature on project-by-project basis; some
+projects might be dispersed geographically, some might not.
 
+It is not as if this feature affect only non-project views, or doesn't
+make sense on less that site-wide basis, like other nonoverridable
+features.
 
-I checked again, and except for the ones changed in this patch, the
-rest copy it to their own buffer or pass it to puts, setenv or
-strbuf_addstr.
+>  );
+>  
+>  sub gitweb_get_feature {
+> @@ -2927,6 +2933,12 @@ sub parse_date {
+>  	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
+>  	                          1900+$year, $mon+1, $mday,
+>  	                          $hour, $min, $sec, $tz);
+> +
+> +	if (gitweb_check_feature('localtime')) {
+> +		$date{'rfc2822'}   = sprintf "%s, %d %s %4d %02d:%02d:%02d $tz",
+> +				     $days[$wday], $mday, $months[$mon],
+> +				     1900+$year, $hour ,$min, $sec;
+> +	}
 
-The way these functions are used suggest the caller expects them to
-deal with their own memory, so that's what I've done.
+Is it still an RFC 2822 conformant date?  If it is not, then above
+change is invalid, and we have to implement this feature in different
+way.
 
-TBH, valgrind only reports a win of ~6-7kB when doing git log on
-git.git, but it's a step in the right direction (and adds consistency
-to system_path, which is the main win).
+>  	return %date;
+>  }
+>  
+> @@ -3989,7 +4001,7 @@ sub git_print_authorship_rows {
+>  		      "</td></tr>\n" .
+>  		      "<tr>" .
+>  		      "<td></td><td> $wd{'rfc2822'}";
+> -		print_local_time(%wd);
+> +		print_local_time(%wd) if !gitweb_check_feature('localtime');
 
- attr.c     |    6 +++---
- config.c   |    6 +++---
- exec_cmd.c |   11 ++++++-----
- 3 files changed, 12 insertions(+), 11 deletions(-)
+Hmmm... I wonder if it wouldn't be better to print both times (perhaps
+reversed) in this case...
 
-diff --git a/attr.c b/attr.c
-index 6aff695..64d803f 100644
---- a/attr.c
-+++ b/attr.c
-@@ -467,9 +467,9 @@ static void drop_attr_stack(void)
-=20
- const char *git_etc_gitattributes(void)
- {
--	static const char *system_wide;
--	if (!system_wide)
--		system_wide =3D system_path(ETC_GITATTRIBUTES);
-+	static char system_wide[PATH_MAX];
-+	if (!system_wide[0])
-+		strlcpy(system_wide, system_path(ETC_GITATTRIBUTES), PATH_MAX);
- 	return system_wide;
- }
-=20
-diff --git a/config.c b/config.c
-index 822ef83..cd1c295 100644
---- a/config.c
-+++ b/config.c
-@@ -808,9 +808,9 @@ int git_config_from_file(config_fn_t fn, const char=
- *filename, void *data)
-=20
- const char *git_etc_gitconfig(void)
- {
--	static const char *system_wide;
--	if (!system_wide)
--		system_wide =3D system_path(ETC_GITCONFIG);
-+	static char system_wide[PATH_MAX];
-+	if (!system_wide[0])
-+		strlcpy(system_wide, system_path(ETC_GITCONFIG), PATH_MAX);
- 	return system_wide;
- }
-=20
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 38545e8..5686952 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -9,11 +9,11 @@ static const char *argv0_path;
- const char *system_path(const char *path)
- {
- #ifdef RUNTIME_PREFIX
--	static const char *prefix;
-+	static const char *prefix =3D NULL;
- #else
- 	static const char *prefix =3D PREFIX;
- #endif
--	struct strbuf d =3D STRBUF_INIT;
-+	static char buf[PATH_MAX];
-=20
- 	if (is_absolute_path(path))
- 		return path;
-@@ -33,9 +33,10 @@ const char *system_path(const char *path)
- 	}
- #endif
-=20
--	strbuf_addf(&d, "%s/%s", prefix, path);
--	path =3D strbuf_detach(&d, NULL);
--	return path;
-+	if (snprintf(buf, sizeof(buf), "%s/%s", prefix, path) >=3D sizeof(buf=
-))
-+		die("system path too long for %s", path);
-+
-+	return buf;
- }
-=20
- const char *git_extract_argv0_path(const char *argv0)
---=20
-1.7.4.1
+>  		print "</td>" .
+>  		      "</tr>\n";
+>  	}
+> -- 
+> 1.7.4.1
+> 
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
