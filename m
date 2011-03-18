@@ -1,81 +1,150 @@
-From: =?UTF-8?Q?Carl_F=C3=BCrstenberg?= <azatoth@gmail.com>
-Subject: Re: gut submodule update and merge
-Date: Fri, 18 Mar 2011 15:13:24 +0100
-Message-ID: <AANLkTinK_ftV7rCHM2Q0PNRZQXLwCRzfoqogb=dkzXZM@mail.gmail.com>
-References: <AANLkTimneYSkr11yDt1eL5d-r6pJrt2EMLGEOBfOxOoD@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH v3 2/3] gitweb: introduce localtime feature
+Date: Fri, 18 Mar 2011 15:40:01 +0100
+Message-ID: <201103181540.03431.jnareb@gmail.com>
+References: <c8621826e0576e3e31240b0205e7e3d0@localhost> <e160457138c1166ffa6faf1c58ea170e@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 18 15:13:31 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kevin Cernekee <cernekee@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 15:40:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0aQk-0007kW-UU
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 15:13:31 +0100
+	id 1Q0aqo-0008KL-MF
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 15:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436Ab1CRON1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 10:13:27 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45465 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756506Ab1CRONZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 10:13:25 -0400
-Received: by wya21 with SMTP id 21so3875019wya.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 07:13:24 -0700 (PDT)
+	id S1756734Ab1CROkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 10:40:20 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39173 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756502Ab1CROkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 10:40:15 -0400
+Received: by fxm17 with SMTP id 17so3744196fxm.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 07:40:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=G388sROPEtnZBjypfRqm0Tr6yY8NAFcM7VVl+MwyGmg=;
-        b=NMoBeyGPZtmNqRBFlnv5gfMo4kmOkpLiK2FRXEa5aLriUtr0fzVFTP4lcC1NNKAtlX
-         grw2iWNfFE8DtmXanMZ5RWNV4EjVXI9au2Mv9CCqy+EP94/jHIcpvL3CYtdJOd1tv8g6
-         tMrRp2zAmTN3Gx2YXEJOKNVHhrqS8Pvt+kRAo=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Q0z2uJ13ZEqcxJS5JheAYnnU0CpmMP2AAZGtCjINwK0=;
+        b=I+lfDFAJfjVIHZb8vAmMysCIo7O/JxY6rOAxTwLimIz7EDrv1iJNvxAEUnhkD3tdK9
+         D0KL9WLFFoEcax6ECtaoSykwhlF9SxOgw8s0+sEzbUVMhu8TdcOus6ZR8Jb2xzyOD9na
+         uOocsSBbHGbgcQX1h4+Jj5j50hwjkFPgposc4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=QPGAmOWW/dQff9dHkUvj0pE9r3DMArXtBDJebbmjkkpw1jJXoTM2ypujeYcgfcPxTC
-         ZOhIa+OtAKwPf2BHRtZr2ZUjT4HUsC7aEze2tqm4GUSkPCWFwmibLsK8V2Mxd7Y2D6FB
-         ki3AIFoO2YF2XM0Hf5+gj1m6zNHnrzNS4bP08=
-Received: by 10.216.229.22 with SMTP id g22mr1377876weq.45.1300457604360; Fri,
- 18 Mar 2011 07:13:24 -0700 (PDT)
-Received: by 10.216.170.211 with HTTP; Fri, 18 Mar 2011 07:13:24 -0700 (PDT)
-In-Reply-To: <AANLkTimneYSkr11yDt1eL5d-r6pJrt2EMLGEOBfOxOoD@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=bH8Q6ykJijnmpLxR0KIIraRaxq5qNPtMFv/O1bbE0O4puFXTMDvx6EjaDZaIVJ6Hn5
+         0upFb1HavycuMBtjbKYwovasT/O8RpSakHZ3uCjzGh+Ke7AZbXr5d4Z3Kqj0jAyZL3pK
+         bTvJ0NZkeivWkddpxCPcDv8deJvnlxGMNAaBI=
+Received: by 10.223.97.1 with SMTP id j1mr1367523fan.86.1300459208383;
+        Fri, 18 Mar 2011 07:40:08 -0700 (PDT)
+Received: from [192.168.1.13] (abuz4.neoplus.adsl.tpnet.pl [83.8.197.4])
+        by mx.google.com with ESMTPS id o12sm1219193fav.30.2011.03.18.07.40.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2011 07:40:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <e160457138c1166ffa6faf1c58ea170e@localhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169322>
 
-2011/3/17 Carl F=C3=BCrstenberg <azatoth@gmail.com>:
-> Hello,
->
-> I've tried to setup in a n makefile a way to easy initialize and
-> update submodules and at the same time keep eventual changes in the
-> submodules. I though an "git submodule update --init --recursive
-> --merge" would work,
-> but =C2=A0this i notices created strange result if the submodules had=
-n't
-> been checked out in the first place. the result then was that it
-> marked in index all files to be deleted.
->
-> This behavior wasn't what I had in mind, and it resulted in I did
-> following "fix" to resolve the issue (ugly):
-> https://github.com/azatoth/jquery/commit/9977732a26820dd7f3ced2ce4554=
-edadd62ae52c
->
-> Is this the intended behavior? logically I think an clean "git
-> submodule update --init --merge" should not try to merge if there
-> wasn't anything to begin with.
->
-> /Carl
->
+From: Kevin Cernekee <cernekee@gmail.com>
 
-If my question wasn't clear I'm sorry, All I'm wondering is if using
---merge when cloning an new submodule should behave this way or not. I
-don't think most peoples intentions when using merge on an
-non-existent repo should be to delete all file :)
+With this feature enabled, all timestamps are shown in the local
+timezone instead of GMT.  The timezone is taken from the appropriate
+timezone string stored in the commit object.
 
-/Carl
+This is useful if most of contributors (to a project) are based in a
+single office, all within the same timezone.  In such case local time
+is more useful than GMT / UTC time that gitweb uses by default, and
+which is better choice for geographically scattered contributors.
+
+This change does not affect relative timestamps (e.g. "5 hours ago"),
+and neither does it affect 'patch' and 'patches' views which already
+use localtime because they are generated by "git format-patch".
+
+Affected views include:
+* 'summary' view, "last change" field (commit time from latest change)
+* 'log' view, author time
+* 'commit' and 'commitdiff' views, author/committer time
+* 'tag' view, tagger time
+
+In the case of 'commit', 'commitdiff' and 'tag' views gitweb used to
+print both GMT time and time in timezone of author/tagger/comitter,
+marking localtime with "atnight" as appropriate; after this commit
+gitweb shows only local time.  Marking localtime with "atnight" when
+needed is left for subsequent commit.
+
+Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Changes from original v2 version by Kevin Cernekee:
+
+* Expanded commit message, explaining "whys" behind introducing this new
+  feature (why and when can it be useful), as per
+
+    http://thread.gmane.org/gmane.comp.version-control.git/169096/focus=169284
+
+* Minor whitespace changes
+
+ gitweb/gitweb.perl |   21 ++++++++++++++++++++-
+ 1 files changed, 20 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 3960d34..1df3652 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -504,6 +504,19 @@ our %feature = (
+ 		'sub' => sub { feature_bool('remote_heads', @_) },
+ 		'override' => 0,
+ 		'default' => [0]},
++
++	# Use the author/commit localtime rather than GMT for all timestamps.
++	# Disabled by default.
++
++	# To enable system wide have in $GITWEB_CONFIG
++	# $feature{'localtime'}{'default'} = [1];
++	# To have project specific config enable override in $GITWEB_CONFIG
++	# $feature{'localtime'}{'override'} = 1;
++	# and in project config gitweb.localtime = 0|1;
++	'localtime' => {
++		'sub' => sub { feature_bool('localtime', @_) },
++		'override' => 0,
++		'default' => [0]},
+ );
+ 
+ sub gitweb_get_feature {
+@@ -2930,6 +2943,12 @@ sub parse_date {
+ 	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
+ 	                          1900+$year, $mon+1, $mday,
+ 	                          $hour, $min, $sec, $tz);
++
++	if (gitweb_check_feature('localtime')) {
++		$date{'rfc2822'} = sprintf "%s, %d %s %4d %02d:%02d:%02d $tz",
++		                   $days[$wday], $mday, $months[$mon],
++		                   1900+$year, $hour ,$min, $sec;
++	}
+ 	return %date;
+ }
+ 
+@@ -3992,7 +4011,7 @@ sub git_print_authorship_rows {
+ 		      "</td></tr>\n" .
+ 		      "<tr>" .
+ 		      "<td></td><td> $wd{'rfc2822'}";
+-		print_local_time(%wd);
++		print_local_time(%wd) if !gitweb_check_feature('localtime');
+ 		print "</td>" .
+ 		      "</tr>\n";
+ 	}
+-- 
+1.7.3
