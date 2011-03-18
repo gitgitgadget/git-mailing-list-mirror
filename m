@@ -1,153 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] revision.c: introduce --min-parents and --max-parents
-Date: Fri, 18 Mar 2011 15:48:54 -0500
-Message-ID: <20110318204854.GA23331@elie>
-References: <cover.1300459016.git.git@drmicha.warpmail.net>
- <7f2a7d979cd8f6b9fce577994c82f50421575d58.1300459017.git.git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git submodule update and the --merge flag when submodule is yet
+ to be checked out
+Date: Fri, 18 Mar 2011 14:01:18 -0700
+Message-ID: <7vipvgw3c1.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikJo_pjSAmVV3wjWi04io4zWb-_P5p81TYj9tq6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 18 21:49:15 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Spencer E. Olson" <olsonse@umich.edu>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Carl =?utf-8?Q?F=C3=BCrstenberg?= <azatoth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 22:01:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0gbh-0003VF-VU
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 21:49:14 +0100
+	id 1Q0gnh-0001BQ-E3
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757330Ab1CRUtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 16:49:09 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:34731 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756949Ab1CRUtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 16:49:06 -0400
-Received: by gyf1 with SMTP id 1so1735838gyf.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 13:49:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=eBMm2MyMV/o3rZkwF+TXnH5YbsT7zMHVguENDmAat8M=;
-        b=xB5hHw22UeAz7eRQmIaa9SO9pyBSnuqzMxK+rkGoCGbm4d74lhwkXZniYHrTtifkWz
-         bmjkE4Ua8wmfTfvVpKoOFxfgQFU6pQ0V0/ml2/+qcAPUb51DMzXecDJAHUnCO939a9mi
-         dxAkCepBs7bZApAa5PQUoZ1cVcrnFtSQOLHyY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZSD3eR3Dlxy7dEtriEyAVVag/zYagkdiZ/w0wjsqh9bhNuQ6rGuRgFbb2P30ieAINT
-         3sfNHn+g7dWRcv6t6LLbirtKXKINpHEOlqHt9V8Wy4bsXJgt4Nz+6PG4IBDaa0wvxgWO
-         AYxLp4zfecxu0Sk1NfYHgJMwTui7oobMR4/LQ=
-Received: by 10.236.20.131 with SMTP id p3mr2204894yhp.189.1300481345961;
-        Fri, 18 Mar 2011 13:49:05 -0700 (PDT)
-Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
-        by mx.google.com with ESMTPS id 46sm1373729yhl.60.2011.03.18.13.49.04
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Mar 2011 13:49:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7f2a7d979cd8f6b9fce577994c82f50421575d58.1300459017.git.git@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757387Ab1CRVBd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 17:01:33 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756949Ab1CRVBb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 17:01:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C349418B;
+	Fri, 18 Mar 2011 17:03:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=K0T7G4iPo4Zu
+	+QHEyvEmW8DOkCM=; b=uRZ/yfbTCdgWd6svC22zw8Q8AIeYJBqeXNwxPK+ff7up
+	WAt7u5obpT3VTHWbGmJ+pp5+PcYXgVYhBKd061bAMAtHH+njPXosBqogjkplf8R/
+	fzP8LTloAKqkPUohVAJ1xJXyo9GoVteePJTWIwG0A3bbdDQLgZW0/PM5uN3IgWw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ucy45Q
+	7kllNlCyj7vvj7MuQnfw3ihPGgsG5Vzo2KB2vC6Gf7t/eD9sLuAWebl1PeRrakSO
+	09Paqyezdb+/yowcus6qJdFPz4vXb9XG75Q82VtU+uRpyGwfhPf+YfQ7+SrdtN+8
+	PqZUq2hDAyzIWi3r2hpNwHO0bTdXzMpYE88Yo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 47D3B4182;
+	Fri, 18 Mar 2011 17:03:00 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F06774175; Fri, 18 Mar 2011
+ 17:02:54 -0400 (EDT)
+In-Reply-To: <AANLkTikJo_pjSAmVV3wjWi04io4zWb-_P5p81TYj9tq6@mail.gmail.com>
+ ("Carl =?utf-8?Q?F=C3=BCrstenberg=22's?= message of "Fri, 18 Mar 2011
+ 19:25:39 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B62FC86-51A3-11E0-A3F7-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169358>
 
-Hi,
+Carl F=C3=BCrstenberg <azatoth@gmail.com> writes:
 
-Michael J Gruber wrote:
+> Sorry for re-posting the question but I though I should explain the
+> issue better and to fix the subject line.
+> sub
+> When you are cloning repository containing submodules, and you are
+> using the --merge flag to "git submodule update" the first time, then
+> the submodule instance in question will assume you want to delete all
+> files present in the module.
 
-> --max-parents=1: no merges
-> --min-parents=2: merges only
-> --max-parents=0: only roots
-> --min-parents=3: only octopusses
+Is this something we fixed last month?
 
-This is growing on me.  Thanks for inventing it.
+commit 1b4735d9f3e0b7ea62c7c22f0afcb45e10c46c7e
+Author: Spencer E. Olson <olsonse@umich.edu>
+Date:   Thu Feb 17 09:18:45 2011 -0700
 
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1061,7 +1061,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  	rev.commit_format = CMIT_FMT_EMAIL;
->  	rev.verbose_header = 1;
->  	rev.diff = 1;
-> -	rev.no_merges = 1;
-> +	rev.max_parents = MAX_PARENTS(1);
-
-Is there a reason not to choose a convention for which
-
-	rev.max_parents = 1;
-
-works?
-
-What does --no-merges --merges do?  I would find it most intuitive to
-error out (since some people would want the last choice to win and
-others want --merges-only --nonmerges-only to select the empty set),
-but this patch does the backward-compatible thing, which is to show
-zero commits.  Maybe it deserves a test case?
-
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1277,9 +1277,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  	} else if (!strcmp(arg, "--remove-empty")) {
->  		revs->remove_empty_trees = 1;
->  	} else if (!strcmp(arg, "--merges")) {
-> -		revs->merges_only = 1;
-> +		revs->min_parents = MIN_PARENTS(2);
-
-Why not "revs->min_parents = 2;"?
-
->  	} else if (!strcmp(arg, "--no-merges")) {
-> -		revs->no_merges = 1;
-> +		revs->max_parents = MAX_PARENTS(1);
-> +	} else if (!prefixcmp(arg, "--min-parents=")) {
-> +		revs->min_parents = MIN_PARENTS(atoi(arg+14));
-> +	} else if (!prefixcmp(arg, "--max-parents=")) {
-> +		revs->max_parents = MAX_PARENTS(atoi(arg+14));
-
-It would be nicer to error out for malformed numbers.  That's
-a separate topic, though --- you have plenty of company.
-
-> @@ -2029,10 +2033,15 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
->  		return commit_ignore;
->  	if (revs->min_age != -1 && (commit->date > revs->min_age))
->  		return commit_ignore;
-> -	if (revs->no_merges && commit->parents && commit->parents->next)
-> -		return commit_ignore;
-> -	if (revs->merges_only && !(commit->parents && commit->parents->next))
-> -		return commit_ignore;
-> +	if (revs->min_parents || revs->max_parents) {
-> +		int n = 0;
-> +		struct commit_list *p;
-> +		for (p = commit->parents; p; p = p->next)
-> +			n++;
-> +		if ((MIN_PARENTS(n) < revs->min_parents) ||
-> +		    (MAX_PARENTS(n) < revs->max_parents)) /* max is inv. */
-> +			return commit_ignore;
-
-Sane.  If we feared enormous parent lists we could do
-
-	for (p = commit->parents; p && n <= 7 - revs->max_parents; p = p->next)
-		n++;
-
-but I suspect that's slower.
-
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -20,6 +20,11 @@
->  #define DECORATE_SHORT_REFS	1
->  #define DECORATE_FULL_REFS	2
->  
-> +/* limit to used range */
-> +#define MIN_PARENTS(m)	({ unsigned int __n = (m); (__n < 0) ? 0 : (__n > 7) ? 7 : __n; })
-> +/* invert fox MAX so that default = 0 -> infinity */
-> +#define MAX_PARENTS(m)	({ unsigned int __n = (m); (__n < 0) ? 7 : (__n > 7) ? 0 : 7 - __n;})
-
-Statement expressions don't work in most non-gcc compilers (but
-inline functions do).
-
-Hope that helps,
-Jonathan
+    submodule: no [--merge|--rebase] when newly cloned
+   =20
+    "git submodule update" can be run with either the "--merge" or "--r=
+ebase"
+    option, or submodule.<name>.update configuration variable can be se=
+t to
+    "merge" or "rebase, to cause local work to get integrated when upda=
+ting
+    the submodule.
+   =20
+    When a submodule is newly cloned, however, it does not have a check=
+ out
+    when a rebase or merge is attempted, leading to a failure.  For new=
+ly
+    cloned submodules, simply check out the appropriate revision.  Ther=
+e is no
+    local work to integrate with for them.
+   =20
+    Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
+    Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
