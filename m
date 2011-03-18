@@ -1,107 +1,88 @@
-From: Raul Dias <raul@dias.com.br>
-Subject: Re: same files on different paths on different branches
-Date: Fri, 18 Mar 2011 10:12:37 -0300
-Message-ID: <4D835A45.4070902@dias.com.br>
-References: <4D82A1F4.4060801@dias.com.br> <1300440036.4261.29.camel@bee.lab.cmartin.tk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Fri Mar 18 14:11:13 2011
+From: Alexei Sholik <alcosholik@gmail.com>
+Subject: [PATCH] docs: fix grammar in gitattributes.txt
+Date: Fri, 18 Mar 2011 15:14:27 +0200
+Message-ID: <1300454067-9934-1-git-send-email-alcosholik@gmail.com>
+Cc: Alexei Sholik <alcosholik@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 18 14:12:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0ZSR-0002eK-Dr
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 14:11:11 +0100
+	id 1Q0ZTE-00038v-UL
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 14:12:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932091Ab1CRNLA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 09:11:00 -0400
-Received: from rack.swi.com.br ([66.216.97.12]:34315 "EHLO rack.swi.com.br"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756500Ab1CRNK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 09:10:56 -0400
-X-Received-SPF: no SPF record found
-X-Received-SPF: no SPF record found
-Received: from [10.1.1.3] (unknown [187.112.180.199])
-	(Authenticated sender: raul@dias.com.br)
-	by rack.swi.com.br (Postfix) with ESMTPA id E66C131380C8;
-	Fri, 18 Mar 2011 13:10:54 +0000 (UTC)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Lightning/1.0b2 Thunderbird/3.1.8
-In-Reply-To: <1300440036.4261.29.camel@bee.lab.cmartin.tk>
+	id S1756402Ab1CRNL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 09:11:56 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45966 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755758Ab1CRNLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 09:11:55 -0400
+Received: by bwz15 with SMTP id 15so3321216bwz.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 06:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Vo4X3twY+WbbNhV8DjM5CBW2VKdLOx0hS1oDxcnO/Q8=;
+        b=s4gmNyaAyCem0wXUReKz+rC1JnMYbDCK9Vs43q0B3kxKptwkDWK5lBrYeNj9mEPAuQ
+         /bNT0IaWue6LzRTPR0ST+UYRJhDXUANxzYK71SP5WwpV9Ok1FsS5NVqUGh/IgFB84zOM
+         7N+RVErtwB3YKG0T/xyUMe5aLAtx0E3qz0Fqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=CZ6tykhctjr5+FQEE9ykcteJKGQZ61ebVvIgmcyiu7Sc8B4Qdzin3fJrmEb5k3k9r/
+         lI7FsM23gOa9buE5XFUzK6Zlth5zvSUdiG2sYP2Hc4s1OsG0osUoTDOhFTXWt7T2nG2W
+         SClO4NsqbKcRXOPrf0YPgndivbyrOoo7eb8P8=
+Received: by 10.204.19.6 with SMTP id y6mr902006bka.159.1300453914062;
+        Fri, 18 Mar 2011 06:11:54 -0700 (PDT)
+Received: from localhost.localdomain ([193.254.233.10])
+        by mx.google.com with ESMTPS id t1sm2132364bkx.19.2011.03.18.06.11.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2011 06:11:53 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169316>
 
-On 03/18/2011 06:20 AM, Carlos Mart=C3=ADn Nieto wrote:
-> On jue, 2011-03-17 at 21:06 -0300, Raul Dias wrote:
->> Hi,
->>
->> I want to know if the following is possible to accomplish with git.
->> (please reply to me too)
->>
->> A project is composed of many sub-modules (not in git sense).
->> These sub-modules are developed independently of the main project.
->> They need to be reattached to the projects' tree.
->>
->> The problems:
->>     1 - a sub-module's tree does not have any projects file.
->>     2 - when a sub-module is re-attached to the main project, its fi=
-les
->> are spread in many places (different from the the sub-module layout)=
-=2E
->>
->>
->> Ideally the project would understand which files are the same, even =
-on
->> different places and apply the changes in the right files.
->> This way a merge/cherry picking would keep the history information.
->>
->> Is it possible to accomplish something similar to this?
->> I understand that this is not how a git super-project works.
->> I don't think it is possible with different git repositories.
->>
->> I tried with a empty branch technique.=20
->> Created an empty branch with no history.
->> Started a sub-module (non git) there and tried to propagate the chan=
-ges.
->> Git almost did the right thing.
->> A change in branch submodule's
->>     /foo/a.txt
->> should have gone to branch master's
->>     /bar/foo/a.txt
->> but instead it went to
->>     /bar/somethingelse/a.txt (which is the same as /bar/foo/a.txt)
->  If the problem you are seeing here is that git reports the physical
-> path instead of the logical one (compare `pwd -P` and `pwd -l`), then=
- it
-> shouldn't really represent a problem, as the data is being written in
-> the right places.
->
->> So is it possible to get closer to this with git  in a way or anothe=
-r?
->  git uses almost exclusively physical paths internally, which is why =
-the
-> user sees them. For example, this also happens:
->
->    carlos@bee:~/apps$ mkdir one
->    carlos@bee:~/apps$ ln -s one two
->    carlos@bee:~/apps$ ln -s two three
->    carlos@bee:~/apps$ cd three
->    carlos@bee:~/apps/three$ git init
->    Initialized empty Git repository in /home/carlos/apps/one/.git/
->
->  Notice how git is reporting the "right" path.
->
->  Is this the effect you're seeing? Above it's not clear whether you'r=
-e
-> using symlinks in your file system or why /bar/somethingelse/a.txt is
-> the same as /foo/a.txt.
-No they are completely different files that happened to have the same
-content at that point.
+Signed-off-by: Alexei Sholik <alcosholik@gmail.com>
+---
+ Documentation/gitattributes.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
--rsd
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 7e7e121..c151657 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -632,7 +632,7 @@ Performing a three-way merge
+ `merge`
+ ^^^^^^^
+ 
+-The attribute `merge` affects how three versions of a file is
++The attribute `merge` affects how three versions of a file are
+ merged when a file-level merge is necessary during `git merge`,
+ and other commands such as `git revert` and `git cherry-pick`.
+ 
+@@ -646,15 +646,15 @@ Unset::
+ 
+ 	Take the version from the current branch as the
+ 	tentative merge result, and declare that the merge has
+-	conflicts.  This is suitable for binary files that does
++	conflicts.  This is suitable for binary files that do
+ 	not have a well-defined merge semantics.
+ 
+ Unspecified::
+ 
+ 	By default, this uses the same built-in 3-way merge
+-	driver as is the case the `merge` attribute is set.
++	driver as is the case when the `merge` attribute is set.
+ 	However, `merge.default` configuration variable can name
+-	different merge driver to be used for paths to which the
++	different merge driver to be used with paths for which the
+ 	`merge` attribute is unspecified.
+ 
+ String::
+-- 
+1.7.2.3
