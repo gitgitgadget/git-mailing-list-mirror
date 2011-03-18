@@ -1,105 +1,136 @@
-From: Kevin Cernekee <cernekee@gmail.com>
-Subject: Re: [PATCH 3/3 (alternate)] gitweb: Mark "atnight" author/committer
- times also for 'localtime'
-Date: Fri, 18 Mar 2011 12:07:43 -0700
-Message-ID: <AANLkTi=4wyph4fp7sbtw01+eb7FV=WVN4+dGcYiov35v@mail.gmail.com>
-References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
-	<64c70e95e767572e5be732dc7e17815b@localhost>
-	<201103181846.04979.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] revision.c: introduce --min-parents and --max-parents
+Date: Fri, 18 Mar 2011 15:34:02 -0400
+Message-ID: <20110318193401.GA27825@sigill.intra.peff.net>
+References: <cover.1300459016.git.git@drmicha.warpmail.net>
+ <7f2a7d979cd8f6b9fce577994c82f50421575d58.1300459017.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 20:07:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 20:34:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0f1a-00045S-Ef
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 20:07:50 +0100
+	id 1Q0fR8-0008Ig-TH
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 20:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756600Ab1CRTHp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 15:07:45 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50152 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755609Ab1CRTHo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 15:07:44 -0400
-Received: by fxm17 with SMTP id 17so3994468fxm.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 12:07:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6Mm+IxqbSlvc2of1IKmbSHYAaQ2qtzD4p8akbDG0f1s=;
-        b=FkdejDsO48rskAx9GEfz/vhYWh1ZcKwZThvXAbZtb1buiqiuSvql/LQxVCnbkLv1kB
-         qIoBoKUNgPif6EhORZHMmmUbzL8bFU98+pobPMDZ0lu0g4LsFIijFgHGhiLjNaFwA+Ct
-         H0fXWHyO0JPXTaVgDb7n891TviFL4dJtoSyME=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jBsrtCtceq2ghayhAF+bRpRDbBJvBzNiWdM3kf7sSABaoES7w7aqliY+DvxFLFTcSS
-         5PJUbTw+7/CAB9loPeoPgCqCByZZJqmafefZ3+cb6mt2IS7QCqY7z0D20GzNTuvUnU0x
-         9ymryOaGR+r6aGli3E26/9IJinkZ/K/ua/CpI=
-Received: by 10.223.143.5 with SMTP id s5mr1723985fau.60.1300475263255; Fri,
- 18 Mar 2011 12:07:43 -0700 (PDT)
-Received: by 10.223.61.83 with HTTP; Fri, 18 Mar 2011 12:07:43 -0700 (PDT)
-In-Reply-To: <201103181846.04979.jnareb@gmail.com>
+	id S1756898Ab1CRTeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 15:34:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43680
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756818Ab1CRTeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 15:34:07 -0400
+Received: (qmail 5322 invoked by uid 107); 18 Mar 2011 19:34:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 Mar 2011 15:34:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Mar 2011 15:34:02 -0400
+Content-Disposition: inline
+In-Reply-To: <7f2a7d979cd8f6b9fce577994c82f50421575d58.1300459017.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169348>
 
-On Fri, Mar 18, 2011 at 10:46 AM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
-> Kevin, how about something like this instead? =C2=A0This preserves _i=
-ntent_
-> for why there is local time beside GMT time when 'localtime' is disab=
-led
-> better, I think.
+On Fri, Mar 18, 2011 at 03:50:23PM +0100, Michael J Gruber wrote:
 
-=46ine with me.  I had to dig around for a while before I could find an
-"atnight" commit, so I don't think this is something that is likely to
-occur often in my environment.  But I can see how it would be useful
-to preserve the existing functionality.
+> Introduce --min-parents and --max-parents which take values 0,...,7 and
+> limit the revisions to those commits which have at least resp. at most
+> that many commits, where --max-parents=8 denotes --max-parents=infinity
+> (i.e. no upper limit). In fact, 7 (or any negative number) does, but 8
+> is infinity sideways 8-)
 
-I applied your patch and verified it in both localtime=3D0 and
-localtime=3D1 cases.  So:
+In practice, I don't think anybody is all that interested in
+differentiating octopus merges by their numbers of parents. But the
+choice of "7" as a maximum seems kind of arbitrary. There are commits in
+linux-2.6 with up to 31 parents (once upon a time we had an arbitrary
+limit of 16 parents, but that was lifted in v1.6.0).
 
-Tested-by: Kevin Cernekee <cernekee@gmail.com>
+You mention below that this fits in three 3 bits in rev_info. I don't
+think bits are precious in rev_info, though, as they are in other
+revision-related structs. We only have one such struct per walk.
 
-> Junio and Kevin, I am not sure if authorship should remain with Kevin=
-,
-> or should it revert to me; the solution is quite different.
+If it were just an implementation issue, I would say fine, we can tweak
+it later if somebody really cares. But we are cementing "7" as the value
+for infinity in the user-facing interface. Wouldn't a value like "-1" or
+"infinity" be more appropriate?
 
-I would suggest reverting it to you.
+> In particular:
+> 
+> --max-parents=1: no merges
+> --min-parents=2: merges only
+> --max-parents=0: only roots
+> --min-parents=3: only octopusses
+> 
+> --min-parents=n --max-parents=m with n>m gives you what you ask for
+> (nothing) just like --merges --no-merges does, but at least for an
+> obvious reason.
 
-> @@ -4003,15 +4003,23 @@ sub git_print_authorship_rows {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my %wd =3D par=
-se_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0print "<tr><td=
->$who</td><td>" .
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0format_search_author($co->{"${who}_name"}, $who,
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0esc_html($co->{"${who}_name"})) . " =
-" .
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0esc_html($co->{"${who}_name"})) . " " .
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0format_search_author($co->{"${who}_email"}, $who,
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0esc_html("<" . $co->{"${who}_email"}=
- . ">")) .
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0esc_html("<" . $co->{"${who}_email"} . ">")) .
+I like this. It's much more natural than the list syntax I suggested
+earlier, and it handles ranges in an obvious way. It doesn't allow
+selecting, e.g., root commits and merges, but not regular commits. But I
+really don't see the point in supporting that.
 
-=46WIW, this does create a few >80 character lines.  But
-CodingGuidelines doesn't say whether that limit applies to Perl
-scripts or just C.
+> @@ -2029,10 +2033,15 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
+>  		return commit_ignore;
+>  	if (revs->min_age != -1 && (commit->date > revs->min_age))
+>  		return commit_ignore;
+> -	if (revs->no_merges && commit->parents && commit->parents->next)
+> -		return commit_ignore;
+> -	if (revs->merges_only && !(commit->parents && commit->parents->next))
+> -		return commit_ignore;
+> +	if (revs->min_parents || revs->max_parents) {
+> +		int n = 0;
+> +		struct commit_list *p;
+> +		for (p = commit->parents; p; p = p->next)
+> +			n++;
+> +		if ((MIN_PARENTS(n) < revs->min_parents) ||
+> +		    (MAX_PARENTS(n) < revs->max_parents)) /* max is inv. */
+> +			return commit_ignore;
+> +	}
+
+You did the obvious optimization not to count parents if we don't care
+about min/max. You could also do something like:
+
+  switch (revs->max_parents) {
+  case 0:
+          if (commit->parents)
+                  return commit_ignore;
+          break;
+  case 1:
+          if (commit->parents && commit->parents->next)
+                  return commit_ignore;
+          break;
+  default:
+          if (count_parents(commit) > commit->max_parents)
+                  return commit_ignore;
+          break;
+  }
+
+which more closely matches the original code (you would also need to do
+the same for min_parents, and obviously this code ignores the
+max-parents-is-inverted thing).
+
+I'm not sure it would buy much in practice, though. Commits with more
+than 2 parents are rare, so unnecessarily counting all of them just to
+find out something is a merge is probably not going to create a
+measurable slowdown.
+
+> +/* limit to used range */
+> +#define MIN_PARENTS(m)	({ unsigned int __n = (m); (__n < 0) ? 0 : (__n > 7) ? 7 : __n; })
+> +/* invert fox MAX so that default = 0 -> infinity */
+> +#define MAX_PARENTS(m)	({ unsigned int __n = (m); (__n < 0) ? 7 : (__n > 7) ? 0 : 7 - __n;})
+
+Hmm. You assign the input to an unsigned int, and then compare it to 0.
+Won't that always be false?
+
+The inversion trick is clever to make a bzero'd rev_info work, but I
+think the code would be more obvious without it. And you really have to
+call init_revisions() anyway, so initializing it to a maximum there (or
+-1) would be acceptable (e.g., see how max_age and min_age work).
+
+-Peff
