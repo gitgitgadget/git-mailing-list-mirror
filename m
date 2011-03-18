@@ -1,128 +1,105 @@
-From: =?UTF-8?Q?Carl_F=C3=BCrstenberg?= <azatoth@gmail.com>
-Subject: Git submodule update and the --merge flag when submodule is yet to be
- checked out
-Date: Fri, 18 Mar 2011 19:25:39 +0100
-Message-ID: <AANLkTikJo_pjSAmVV3wjWi04io4zWb-_P5p81TYj9tq6@mail.gmail.com>
+From: Kevin Cernekee <cernekee@gmail.com>
+Subject: Re: [PATCH 3/3 (alternate)] gitweb: Mark "atnight" author/committer
+ times also for 'localtime'
+Date: Fri, 18 Mar 2011 12:07:43 -0700
+Message-ID: <AANLkTi=4wyph4fp7sbtw01+eb7FV=WVN4+dGcYiov35v@mail.gmail.com>
+References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
+	<64c70e95e767572e5be732dc7e17815b@localhost>
+	<201103181846.04979.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0016e6dd966bb4595b049ec5e79b
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 18 19:25:48 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 20:07:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0eMt-00066J-7O
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 19:25:47 +0100
+	id 1Q0f1a-00045S-Ef
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 20:07:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756570Ab1CRSZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 14:25:42 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:36296 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753937Ab1CRSZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 14:25:41 -0400
-Received: by wwa36 with SMTP id 36so5216193wwa.1
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 11:25:40 -0700 (PDT)
+	id S1756600Ab1CRTHp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 15:07:45 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50152 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755609Ab1CRTHo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 15:07:44 -0400
+Received: by fxm17 with SMTP id 17so3994468fxm.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 12:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=H4jLyg4AYHCu4BjUjQKcTPw9EcnbX9iwt8mNRUMOxDo=;
-        b=cqv7jMLPWQLQWtn0ny9PQcJdDXh8BDZF9NrA2BHxLL/3vR48fe0rJEwiZH79Dz9akw
-         NNtTqJXMfR9pKLuPz75HaWESwqi1cvjW4NbK5BfZ7biut8okuRMdMLKz6snw7gWZ2yck
-         5ls9Eq5BbTXIh4l+jck0orshcHSWiWCRELh+w=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6Mm+IxqbSlvc2of1IKmbSHYAaQ2qtzD4p8akbDG0f1s=;
+        b=FkdejDsO48rskAx9GEfz/vhYWh1ZcKwZThvXAbZtb1buiqiuSvql/LQxVCnbkLv1kB
+         qIoBoKUNgPif6EhORZHMmmUbzL8bFU98+pobPMDZ0lu0g4LsFIijFgHGhiLjNaFwA+Ct
+         H0fXWHyO0JPXTaVgDb7n891TviFL4dJtoSyME=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=V9GTDjP/R+RPdEri8kBInnHI6hUoZ2q00eYyY7EA3Jzdosr7ndYj7UpTOLD0rDv1Ua
-         HDXbrovSJWgMW/iOgoU12FPx5LDJjmht4vZdXpIAQ161foygdz5oViGLjnx5KB5RxiH8
-         AVUeQU/6osXqAmiIz+erUn6aDaVNDpxDbmCAE=
-Received: by 10.216.82.18 with SMTP id n18mr86188wee.45.1300472739944; Fri, 18
- Mar 2011 11:25:39 -0700 (PDT)
-Received: by 10.216.170.211 with HTTP; Fri, 18 Mar 2011 11:25:39 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jBsrtCtceq2ghayhAF+bRpRDbBJvBzNiWdM3kf7sSABaoES7w7aqliY+DvxFLFTcSS
+         5PJUbTw+7/CAB9loPeoPgCqCByZZJqmafefZ3+cb6mt2IS7QCqY7z0D20GzNTuvUnU0x
+         9ymryOaGR+r6aGli3E26/9IJinkZ/K/ua/CpI=
+Received: by 10.223.143.5 with SMTP id s5mr1723985fau.60.1300475263255; Fri,
+ 18 Mar 2011 12:07:43 -0700 (PDT)
+Received: by 10.223.61.83 with HTTP; Fri, 18 Mar 2011 12:07:43 -0700 (PDT)
+In-Reply-To: <201103181846.04979.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169347>
 
---0016e6dd966bb4595b049ec5e79b
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, Mar 18, 2011 at 10:46 AM, Jakub Narebski <jnareb@gmail.com> wro=
+te:
+> Kevin, how about something like this instead? =C2=A0This preserves _i=
+ntent_
+> for why there is local time beside GMT time when 'localtime' is disab=
+led
+> better, I think.
 
-Sorry for re-posting the question but I though I should explain the
-issue better and to fix the subject line.
-sub
-When you are cloning repository containing submodules, and you are
-using the --merge flag to "git submodule update" the first time, then
-the submodule instance in question will assume you want to delete all
-files present in the module.
+=46ine with me.  I had to dig around for a while before I could find an
+"atnight" commit, so I don't think this is something that is likely to
+occur often in my environment.  But I can see how it would be useful
+to preserve the existing functionality.
 
-Please look at attachment for a testcase and how the result might look like=
-.
-Unless this is not the intended behavior, then I would suggest
-changing --merge (and possible --rebase) to not assume a non-existent
-repository
-to be a empty one.
+I applied your patch and verified it in both localtime=3D0 and
+localtime=3D1 cases.  So:
 
-The man pages says "Merge the commit recorded in the superproject into
-the current branch of the submodule", but we have no current branch of
-the
-submodule.
+Tested-by: Kevin Cernekee <cernekee@gmail.com>
 
-I would be happy for any reply, and sorry again for the repost.
+> Junio and Kevin, I am not sure if authorship should remain with Kevin=
+,
+> or should it revert to me; the solution is quite different.
 
-/Carl F=C3=BCrstenberg
+I would suggest reverting it to you.
 
---0016e6dd966bb4595b049ec5e79b
-Content-Type: application/x-sh; name="submodule_merge_test.sh"
-Content-Disposition: attachment; filename="submodule_merge_test.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_glffq2rt0
+> @@ -4003,15 +4003,23 @@ sub git_print_authorship_rows {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my %wd =3D par=
+se_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0print "<tr><td=
+>$who</td><td>" .
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0format_search_author($co->{"${who}_name"}, $who,
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0esc_html($co->{"${who}_name"})) . " =
+" .
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0esc_html($co->{"${who}_name"})) . " " .
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0format_search_author($co->{"${who}_email"}, $who,
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0esc_html("<" . $co->{"${who}_email"}=
+ . ">")) .
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0esc_html("<" . $co->{"${who}_email"} . ">")) .
 
-IyEvYmluL2Jhc2gKCnNldCAteApta2RpciAtcCB0ZXN0L2Jhc2UgdGVzdC9zdWJwcm9qCigKY2Qg
-dGVzdC9zdWJwcm9qCmdpdCBpbml0CmVjaG8gYSA+IGZpbGUKZ2l0IGFkZCBmaWxlCmdpdCBjb21t
-aXQgLW0gJ0FkZGVkIGZpbGUnCikKCigKY2QgdGVzdC9iYXNlCmdpdCBpbml0CmdpdCBzdWJtb2R1
-bGUgYWRkIGZpbGU6Ly8kUFdELy4uL3N1YnByb2ogc3ViCmdpdCBjb21taXQgLW0gJ0FkZGVkIHN1
-YnByb2onCikKCigKY2QgdGVzdApnaXQgY2xvbmUgYmFzZSBjbG9uZWQKY2QgY2xvbmVkCmdpdCBz
-dWJtb2R1bGUgc3RhdHVzCmdpdCBzdWJtb2R1bGUgdXBkYXRlIC0taW5pdCAtLW1lcmdlCmdpdCBz
-dWJtb2R1bGUgc3RhdHVzCmdpdCBzdGF0dXMKY2Qgc3ViCmdpdCBzdGF0dXMKKQoKcm0gLXJmIHRl
-c3QvYmFzZSB0ZXN0L3N1YnByb2ogdGVzdC9jbG9uZWQKcm1kaXIgdGVzdAo=
---0016e6dd966bb4595b049ec5e79b
-Content-Type: application/octet-stream; name=test_output
-Content-Disposition: attachment; filename=test_output
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_glffrz5l1
-
-KyBta2RpciAtcCB0ZXN0L2Jhc2UgdGVzdC9zdWJwcm9qCisgY2QgdGVzdC9zdWJwcm9qCisgZ2l0
-IGluaXQKSW5pdGlhbGl6ZWQgZW1wdHkgR2l0IHJlcG9zaXRvcnkgaW4gL2hvbWUvYXphdG90aC90
-bXAvc3VibWVyZ2UvdGVzdC9zdWJwcm9qLy5naXQvCisgZWNobyBhCisgZ2l0IGFkZCBmaWxlCisg
-Z2l0IGNvbW1pdCAtbSAnQWRkZWQgZmlsZScKW21hc3RlciAocm9vdC1jb21taXQpIDlkODU3NmVd
-IEFkZGVkIGZpbGUKIDEgZmlsZXMgY2hhbmdlZCwgMSBpbnNlcnRpb25zKCspLCAwIGRlbGV0aW9u
-cygtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IGZpbGUKKyBjZCB0ZXN0L2Jhc2UKKyBnaXQgaW5pdApJ
-bml0aWFsaXplZCBlbXB0eSBHaXQgcmVwb3NpdG9yeSBpbiAvaG9tZS9hemF0b3RoL3RtcC9zdWJt
-ZXJnZS90ZXN0L2Jhc2UvLmdpdC8KKyBnaXQgc3VibW9kdWxlIGFkZCBmaWxlOi8vL2hvbWUvYXph
-dG90aC90bXAvc3VibWVyZ2UvdGVzdC9iYXNlLy4uL3N1YnByb2ogc3ViCkNsb25pbmcgaW50byBz
-dWIuLi4KKyBnaXQgY29tbWl0IC1tICdBZGRlZCBzdWJwcm9qJwpbbWFzdGVyIChyb290LWNvbW1p
-dCkgYWNhYjRiZF0gQWRkZWQgc3VicHJvagogMiBmaWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMo
-KyksIDAgZGVsZXRpb25zKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgLmdpdG1vZHVsZXMKIGNyZWF0
-ZSBtb2RlIDE2MDAwMCBzdWIKKyBjZCB0ZXN0CisgZ2l0IGNsb25lIGJhc2UgY2xvbmVkCkNsb25p
-bmcgaW50byBjbG9uZWQuLi4KZG9uZS4KKyBjZCBjbG9uZWQKKyBnaXQgc3VibW9kdWxlIHN0YXR1
-cwotOWQ4NTc2ZWRhMThkZDBhMjczNjgyMWQ5ZjYwYmQzNDkxNWZkZDYxYyBzdWIKKyBnaXQgc3Vi
-bW9kdWxlIHVwZGF0ZSAtLWluaXQgLS1tZXJnZQpTdWJtb2R1bGUgJ3N1YicgKGZpbGU6Ly8vaG9t
-ZS9hemF0b3RoL3RtcC9zdWJtZXJnZS90ZXN0L2Jhc2UvLi4vc3VicHJvaikgcmVnaXN0ZXJlZCBm
-b3IgcGF0aCAnc3ViJwpDbG9uaW5nIGludG8gc3ViLi4uCkFscmVhZHkgdXAtdG8tZGF0ZS4KU3Vi
-bW9kdWxlIHBhdGggJ3N1Yic6IG1lcmdlZCBpbiAnOWQ4NTc2ZWRhMThkZDBhMjczNjgyMWQ5ZjYw
-YmQzNDkxNWZkZDYxYycKKyBnaXQgc3VibW9kdWxlIHN0YXR1cwogOWQ4NTc2ZWRhMThkZDBhMjcz
-NjgyMWQ5ZjYwYmQzNDkxNWZkZDYxYyBzdWIgKGhlYWRzL21hc3RlcikKKyBnaXQgc3RhdHVzCiMg
-T24gYnJhbmNoIG1hc3RlcgojIENoYW5nZXMgbm90IHN0YWdlZCBmb3IgY29tbWl0OgojICAgKHVz
-ZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIHVwZGF0ZSB3aGF0IHdpbGwgYmUgY29tbWl0dGVkKQoj
-ICAgKHVzZSAiZ2l0IGNoZWNrb3V0IC0tIDxmaWxlPi4uLiIgdG8gZGlzY2FyZCBjaGFuZ2VzIGlu
-IHdvcmtpbmcgZGlyZWN0b3J5KQojICAgKGNvbW1pdCBvciBkaXNjYXJkIHRoZSB1bnRyYWNrZWQg
-b3IgbW9kaWZpZWQgY29udGVudCBpbiBzdWJtb2R1bGVzKQojCiMJbW9kaWZpZWQ6ICAgc3ViICht
-b2RpZmllZCBjb250ZW50KQojCm5vIGNoYW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2UgImdpdCBh
-ZGQiIGFuZC9vciAiZ2l0IGNvbW1pdCAtYSIpCisgY2Qgc3ViCisgZ2l0IHN0YXR1cwojIE9uIGJy
-YW5jaCBtYXN0ZXIKIyBDaGFuZ2VzIHRvIGJlIGNvbW1pdHRlZDoKIyAgICh1c2UgImdpdCByZXNl
-dCBIRUFEIDxmaWxlPi4uLiIgdG8gdW5zdGFnZSkKIwojCWRlbGV0ZWQ6ICAgIGZpbGUKIworIHJt
-IC1yZiB0ZXN0L2Jhc2UgdGVzdC9zdWJwcm9qIHRlc3QvY2xvbmVkCisgcm1kaXIgdGVzdAo=
---0016e6dd966bb4595b049ec5e79b--
+=46WIW, this does create a few >80 character lines.  But
+CodingGuidelines doesn't say whether that limit applies to Perl
+scripts or just C.
