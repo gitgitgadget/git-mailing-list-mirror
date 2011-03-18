@@ -1,108 +1,87 @@
-From: =?UTF-8?Q?Carl_F=C3=BCrstenberg?= <azatoth@gmail.com>
-Subject: Re: Git submodule update and the --merge flag when submodule is yet
- to be checked out
-Date: Fri, 18 Mar 2011 22:06:31 +0100
-Message-ID: <AANLkTi=PgB_QYoVip8_O1ga30KR7R8pJX_8KqsHLjAJV@mail.gmail.com>
-References: <AANLkTikJo_pjSAmVV3wjWi04io4zWb-_P5p81TYj9tq6@mail.gmail.com>
-	<7vipvgw3c1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Question about "branch.<name>.merge"
+Date: Fri, 18 Mar 2011 14:13:09 -0700
+Message-ID: <7vei64w2sa.fsf@alter.siamese.dyndns.org>
+References: <AANLkTin-96TK_8MjAM7MB4CCyZ0ZSvD=ZanaYWLiXsvC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Spencer E. Olson" <olsonse@umich.edu>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 22:06:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Josh Ralburton <josh.ralburton@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 22:13:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0gsY-0003oN-TP
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:06:39 +0100
+	id 1Q0gzA-0007Ej-Be
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757442Ab1CRVGe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 17:06:34 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38901 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757399Ab1CRVGd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 17:06:33 -0400
-Received: by wya21 with SMTP id 21so4241121wya.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 14:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=iaVwvJvrZBvHuLZrukCgwnvpvaiYJ3JELK7J4c/wcek=;
-        b=mhNyOFv6Mq/Q7n5KYsTJiJqhczIYB2KVfshmaQ7fN7O6QSWifSvw/7SUm9oYH+eJxa
-         ji39Pw/euXV7EzKxz9jA7tBaWF58Uy6iqo/yqVFtYE2JjMA1qmkX3NhG2agV8iYEReWz
-         IUdE3VsrgUInC8Nt4cK9+tUsCaPpQCOBxYSXA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lZ9IWuITHg+bfgh8viXzX/wFSovaVe1biBpF/04y8ctPM6w+myTa5NxOfXKvpxIk1G
-         ofP9izwo0i8vypt1Whk49P6pRRKYlag0NdQZlZqmsBbuvMDHcpUqVewGK99YV5br0iDK
-         bzwYinLKa6FT9zjM2aS4Epqu+nH3AX0xZ4mO0=
-Received: by 10.217.3.69 with SMTP id q47mr1792384wes.15.1300482391898; Fri,
- 18 Mar 2011 14:06:31 -0700 (PDT)
-Received: by 10.216.170.211 with HTTP; Fri, 18 Mar 2011 14:06:31 -0700 (PDT)
-In-Reply-To: <7vipvgw3c1.fsf@alter.siamese.dyndns.org>
+	id S1757463Ab1CRVNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 17:13:24 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59283 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757368Ab1CRVNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 17:13:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2FB1342F4;
+	Fri, 18 Mar 2011 17:14:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rei/AJ3wHHxvh1NNRkcObGLskoQ=; b=rZRpTT
+	+ugtR5eh/sxIbDDtndKX+xhP3Oz9uNm96vTNZWkDkVGOIv9BVX/ZZ2t6zq0Ipq7C
+	IUgELAufaCgyrSU2LJZWCqYL1ASKtxmwUYRzf3WPwjl3Kd3ohnlpw/L1fjIedhzJ
+	0BXMCpvTyfverK6rZVXirmF8pfb0QIR38r/b4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NgLwl5VNpWkfmo7sVMLSAC5/LFPuuOSZ
+	VyyZs7l5lKiUj+9z8MfqjyunNq6yR9masKvPQIcYx//mU08hV5ojQH0BWZl74SNc
+	x18iOwgB7j3zdQI4R8K5p+yVG1kV9t787uSkRBYhqnQUy6bpkFkl1MmqGPD9Pql1
+	fct7tc9cYwE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0CF0B42DC;
+	Fri, 18 Mar 2011 17:14:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2544C42DB; Fri, 18 Mar 2011
+ 17:14:44 -0400 (EDT)
+In-Reply-To: <AANLkTin-96TK_8MjAM7MB4CCyZ0ZSvD=ZanaYWLiXsvC@mail.gmail.com>
+ (Josh Ralburton's message of "Fri, 18 Mar 2011 12:35:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C13D8F30-51A4-11E0-AFA4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169360>
 
-2011/3/18 Junio C Hamano <gitster@pobox.com>:
-> Carl F=C3=BCrstenberg <azatoth@gmail.com> writes:
->
->> Sorry for re-posting the question but I though I should explain the
->> issue better and to fix the subject line.
->> sub
->> When you are cloning repository containing submodules, and you are
->> using the --merge flag to "git submodule update" the first time, the=
-n
->> the submodule instance in question will assume you want to delete al=
-l
->> files present in the module.
->
-> Is this something we fixed last month?
->
-> commit 1b4735d9f3e0b7ea62c7c22f0afcb45e10c46c7e
-> Author: Spencer E. Olson <olsonse@umich.edu>
-> Date: =C2=A0 Thu Feb 17 09:18:45 2011 -0700
->
-> =C2=A0 =C2=A0submodule: no [--merge|--rebase] when newly cloned
->
-> =C2=A0 =C2=A0"git submodule update" can be run with either the "--mer=
-ge" or "--rebase"
-> =C2=A0 =C2=A0option, or submodule.<name>.update configuration variabl=
-e can be set to
-> =C2=A0 =C2=A0"merge" or "rebase, to cause local work to get integrate=
-d when updating
-> =C2=A0 =C2=A0the submodule.
->
-> =C2=A0 =C2=A0When a submodule is newly cloned, however, it does not h=
-ave a check out
-> =C2=A0 =C2=A0when a rebase or merge is attempted, leading to a failur=
-e. =C2=A0For newly
-> =C2=A0 =C2=A0cloned submodules, simply check out the appropriate revi=
-sion. =C2=A0There is no
-> =C2=A0 =C2=A0local work to integrate with for them.
->
-> =C2=A0 =C2=A0Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
-> =C2=A0 =C2=A0Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
-> =C2=A0 =C2=A0Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Josh Ralburton <josh.ralburton@gmail.com> writes:
 
+> This is a typical section from a .git config file:
+>
+> [remote "origin"]
+>     fetch = +refs/heads/*:refs/remotes/origin/*
+>     url = git://git.kernel.org/pub/scm/git/git.git
+> [branch "master"]
+>     remote = origin
+>     merge = refs/heads/master
+>
+> I am curious why "branch.master.merge=refs/heads/master"  was
+> implemented to refer to the remote branch (refs/heads/master) rather
+> than the local branch (refs/remotes/origin/master).
 
-Ah, I see, thank you, I was using 1.7.4 and I assume this is for next.
+Because conceptually you are merging with the refs/heads/master branch
+that exists at the "origin" repository, not merging with a remote tracking
+branch that the "origin" repository may have to track its upstream.
 
---=20
-Carl F=C3=BCrstenberg
+It is immaterial that you happen to have a copy of it at your own remote
+tracking branch (i.e. refs/remotes/origin/master).  If you don't need
+tracking branches, you can even do something like this:
+
+	[remote "origin"]
+                url = git://...there
+        [branch "master"]
+		remote = origin
+                merge = refs/heads/master
+
+Notice that you are telling git not to create any remote tracking branches
+with this configuration.
