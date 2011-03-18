@@ -1,82 +1,78 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 0/3] rev-list and friends: --min-parents, --max-parents
-Date: Fri, 18 Mar 2011 15:54:32 +0100
-Message-ID: <4D837228.4070102@drmicha.warpmail.net>
-References: <20110318085616.GA16703@sigill.intra.peff.net> <cover.1300459016.git.git@drmicha.warpmail.net>
+From: Mick Ken <micks80@gmail.com>
+Subject: Git issue with connection keep-alive
+Date: Fri, 18 Mar 2011 10:59:16 -0400
+Message-ID: <AANLkTik==xnTxhOY-CoE5_oNkE-gdfSDBzBOgOgJGTbt@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Mar 18 15:58:09 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 18 15:59:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0b7w-00035m-Br
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 15:58:08 +0100
+	id 1Q0b98-0003gO-H6
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 15:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754184Ab1CRO6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 10:58:01 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:37415 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750953Ab1CRO6A (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 10:58:00 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B7CC020432;
-	Fri, 18 Mar 2011 10:57:59 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Fri, 18 Mar 2011 10:57:59 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=yJ+dBB/amQnmAcIuyCzuBUZ2A3E=; b=FYsr/g5qigdkl4LzoZ+lNKKquc4il+7X7y3Lu1uQX2alHWkMRLXBPB+cVd0gPYCzTgcEXAzpWjLFbZlYfWXUTAvfaBf7zO0PFWRIV4Co4T1jDjtBDUOR+BbhJG2lFZAm/04BLSxymhOY5bnYcKY4uu2yhf3US61KlT6DB3fojLY=
-X-Sasl-enc: 7cFOOzsBm64sgy///2jLehujrvc9n+We74Ytz7qYg44K 1300460279
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F1891444CE5;
-	Fri, 18 Mar 2011 10:57:58 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <cover.1300459016.git.git@drmicha.warpmail.net>
+	id S1756257Ab1CRO7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 10:59:19 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:49469 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953Ab1CRO7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 10:59:17 -0400
+Received: by iwn34 with SMTP id 34so4061195iwn.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 07:59:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=2WPJFcw535+sZg9b707u+JRaxiwkGZea7QPOLoN5Mug=;
+        b=t99aqVsQBl+QqVquln9JvOwWtMIwC5KBqCzmCscDcBGhNCEq7haaZxlGMlPX1ca1Hw
+         yDYOxRIPNb1i3Z/fTXQwhLOdcuu7lAbr3ro0kmz/WkPHm8kG+nfpkZB2nFMb3GLBqCqo
+         xrc/McoYapu6ptW8srP97ITrDqh4dkmYZKacE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=FwaQVkN34dQDJeEt9sWM5Y/WPEqllYfX9ykwe4Y7MWTSmBgo0vlZ9O7joLgKb4g0Dv
+         TGcNFoxwmUYwNj2nuzD3MUanWzmWubpUoKVTT/OSi0mXQJRFuQalxGgaLBsXMNamvfUs
+         jnYEcgLg4JewUxY/U8E205eP5SpdoKaCwu+AE=
+Received: by 10.42.131.10 with SMTP id x10mr1647578ics.206.1300460356886; Fri,
+ 18 Mar 2011 07:59:16 -0700 (PDT)
+Received: by 10.42.178.67 with HTTP; Fri, 18 Mar 2011 07:59:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169329>
 
-Michael J Gruber venit, vidit, dixit 18.03.2011 15:50:
-> As opposed to the RFD it replaces, this is a real patch series with
-> documentation and tests, and it even comes with boiler plate. It should
-> make all of Jeff's and Junio's dreams come true (as far as revision
-> limiting by parent number goes).
-> 
-> 1/3 introduces the new options (and has a proper commit message)
-> 2/3 I noted along the way and could be applied earlier
-> 3/3 depends on 1 and 2 and is the candy (doc, tests, completion)
-> 
-> *** BLURB HERE ***
+Hi,
+I am experiencing an issue with Git plugin in Jenkins. I have already
+posted the issue at the Jenkins mailing list but did not heard much in
+the last couple of days, so I thought of posting it here incase
+someone can help:
 
-Hmpf. I guess this should say "NO MORE BLURB HERE". Gosh!
+Jenkins mailing list thread -
+http://groups.google.com/group/jenkinsci-users/browse_thread/thread/6f9d685d6aef4c49?hl=en
 
-This comes from filling in the cover letter by using
+In short, the issue is that when the Git plugin is trying to clone a
+repo it's failing but "Tortoise Git" on the same server is able to
+successfully able to clone the repo. After some debugging it looks
+like the Git calls are different, here's the internal Git call from
+Jenkins that's failing:
 
-:r! git notes show ref:HEAD
+C:\workspace>git clone http://<server_url>/project.git C:\Projects\
+trace: built-in: git 'clone' 'http://<server_url>/project.git' 'C:
+\Projects\'
+trace: run_command: 'git-remote-http' 'origin' 'http://<server_url>/
+project.git'
+Cloning into C:\Projects\...
+trace: run_command: 'fetch-pack' '--stateless-rpc' '--lock-pack' '--
+thin' '--no-progress' 'http://<server_url>/project.git' 'refs/heads/
+master' 'refs/heads/m3/master'
 
-in vim and partially failing to delete the place holders. Longing for
-that format-patch option "--note-cover".
+Whereas, the tortoise git is just passing the "--progress -v"
+parameters and it's successful.
 
-> 
-> Michael J Gruber (3):
->   revision.c: introduce --min-parents and --max-parents
->   t6009: use test_commit() from test-lib.sh
->   rev-list --min-parents,--max-parents: doc and test and completion
-> 
->  Documentation/git-rev-list.txt         |    2 +
->  Documentation/rev-list-options.txt     |   13 +++++
->  builtin/log.c                          |    2 +-
->  builtin/rev-list.c                     |    2 +
->  builtin/rev-parse.c                    |    2 +
->  contrib/completion/git-completion.bash |    1 +
->  revision.c                             |   23 ++++++---
->  revision.h                             |    9 +++-
->  t/t6009-rev-list-parent.sh             |   85 +++++++++++++++++++++++++++-----
->  9 files changed, 117 insertions(+), 22 deletions(-)
-> 
+Any ideas why the Git call from Jenkins is dropping the connection?
+
+Thanks
