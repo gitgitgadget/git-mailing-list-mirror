@@ -1,149 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3 (alternate)] gitweb: Mark "atnight" author/committer
- times also for 'localtime'
-Date: Fri, 18 Mar 2011 13:48:35 -0700
-Message-ID: <7vmxksw3x8.fsf@alter.siamese.dyndns.org>
-References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
- <64c70e95e767572e5be732dc7e17815b@localhost>
- <201103181846.04979.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] revision.c: introduce --min-parents and --max-parents
+Date: Fri, 18 Mar 2011 15:48:54 -0500
+Message-ID: <20110318204854.GA23331@elie>
+References: <cover.1300459016.git.git@drmicha.warpmail.net>
+ <7f2a7d979cd8f6b9fce577994c82f50421575d58.1300459017.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 21:49:04 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 21:49:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0gbX-0003S7-LX
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 21:49:04 +0100
+	id 1Q0gbh-0003VF-VU
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 21:49:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757278Ab1CRUst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 16:48:49 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63842 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756932Ab1CRUss (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 16:48:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 231F34FCB;
-	Fri, 18 Mar 2011 16:50:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mSDp489M88/xHS2TgtMtGHnVnXk=; b=XW7EP4
-	GO/GxCJZUbA8rtcwoYchunXLHEHHX3veyZlWN/vhryrKOSm/BuglLN+qoVoAnxrx
-	DYt9lUXv5qTYoj8kjLlGyl5QJbRvuwPHWXy26bTLu9ihlqI4/ih9hzxVje1/LC6J
-	DL676amhMrmSmfWuI+KzNHxvahI5/OpV/xTLo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gjdmmB5LUZKx9hRUTHZFpE2WxIuL/i8X
-	VwmMnD9Tkn3Io4inyIWLqJwYadkmeHxiYI3qDWAewdQhU1UyjMiqyNjEGgKOyeEJ
-	pz3aq02uBq5lqJkASFAUpp09rTpZRZKmCGOSQiVgomRnRELByLcRs/b0okCaS97m
-	BszINpTu1/I=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E24684FC7;
-	Fri, 18 Mar 2011 16:50:16 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B9D364FC3; Fri, 18 Mar 2011
- 16:50:11 -0400 (EDT)
-In-Reply-To: <201103181846.04979.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 18 Mar 2011 18:46:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 54622C5C-51A1-11E0-A1A4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1757330Ab1CRUtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 16:49:09 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:34731 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756949Ab1CRUtG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 16:49:06 -0400
+Received: by gyf1 with SMTP id 1so1735838gyf.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 13:49:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=eBMm2MyMV/o3rZkwF+TXnH5YbsT7zMHVguENDmAat8M=;
+        b=xB5hHw22UeAz7eRQmIaa9SO9pyBSnuqzMxK+rkGoCGbm4d74lhwkXZniYHrTtifkWz
+         bmjkE4Ua8wmfTfvVpKoOFxfgQFU6pQ0V0/ml2/+qcAPUb51DMzXecDJAHUnCO939a9mi
+         dxAkCepBs7bZApAa5PQUoZ1cVcrnFtSQOLHyY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ZSD3eR3Dlxy7dEtriEyAVVag/zYagkdiZ/w0wjsqh9bhNuQ6rGuRgFbb2P30ieAINT
+         3sfNHn+g7dWRcv6t6LLbirtKXKINpHEOlqHt9V8Wy4bsXJgt4Nz+6PG4IBDaa0wvxgWO
+         AYxLp4zfecxu0Sk1NfYHgJMwTui7oobMR4/LQ=
+Received: by 10.236.20.131 with SMTP id p3mr2204894yhp.189.1300481345961;
+        Fri, 18 Mar 2011 13:49:05 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
+        by mx.google.com with ESMTPS id 46sm1373729yhl.60.2011.03.18.13.49.04
+        (version=SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2011 13:49:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7f2a7d979cd8f6b9fce577994c82f50421575d58.1300459017.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169357>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> Kevin, how about something like this instead?  This preserves _intent_
-> for why there is local time beside GMT time when 'localtime' is disabled
-> better, I think.
->
-> Junio and Kevin, I am not sure if authorship should remain with Kevin,
-> or should it revert to me; the solution is quite different.
-> About no-change to git_print_authorship: alternate solution would be
-> to remove support for -localtime option, like in original patches.
+Michael J Gruber wrote:
 
-I don't think it is worth anything to keep dead code that anybody
-exercises to support -localtime option that nobody asks.
+> --max-parents=1: no merges
+> --min-parents=2: merges only
+> --max-parents=0: only roots
+> --min-parents=3: only octopusses
 
-I thought we were getting closer (especially if you consider my suggestion
-to the earlier round, but obviously I am biased), but this looks far worse
-than your previous clean-up of Kevin's patch.  What is the point of
-duplicating the atnight logic her?  Why not kill the useless helper
-function "print-local-time", and instead enhance "format-local-time" so
-that whatever this added code does is performed there when the caller asks?
+This is growing on me.  Thanks for inventing it.
 
-Then the caller here would look more or less like:
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1061,7 +1061,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  	rev.commit_format = CMIT_FMT_EMAIL;
+>  	rev.verbose_header = 1;
+>  	rev.diff = 1;
+> -	rev.no_merges = 1;
+> +	rev.max_parents = MAX_PARENTS(1);
 
-	print "<tr><td>$who</td>" .
-              "... author name, email, avatar ..." .
-	      "<td></td><td>" .
-              format_timestamp(\%wd, gitweb_check_feature('localtime')) .
-	      "</td></tr>\n";
+Is there a reason not to choose a convention for which
 
-and format_timestamp would be like
+	rev.max_parents = 1;
 
-	sub format_timestamp {
-		my %date = %$_[0];
-                my $use_localtime = $_[1];
-		my $localtime, $ret, $nite;
+works?
 
-		$nite = ($date{'hour_local'} < 6);
+What does --no-merges --merges do?  I would find it most intuitive to
+error out (since some people would want the last choice to win and
+others want --merges-only --nonmerges-only to select the empty set),
+but this patch does the backward-compatible thing, which is to show
+zero commits.  Maybe it deserves a test case?
 
-		if ($use_localtime) {
-			$ret = $date{'rfc2822_local'};
-                        if ($nite) {
-                        	$ret = sprintf("<span class='atnight'>%s</span>", $ret);
-			}
-		} else {
-			... what the current format_local_time does to set
-	                ... including the spanning part
-                        $ret = "$date{'rfc2822'} ($localtime)";
-		}
-		return $ret;
-	}
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1277,9 +1277,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>  	} else if (!strcmp(arg, "--remove-empty")) {
+>  		revs->remove_empty_trees = 1;
+>  	} else if (!strcmp(arg, "--merges")) {
+> -		revs->merges_only = 1;
+> +		revs->min_parents = MIN_PARENTS(2);
 
-Wouldn't it be much cleaner?  You can then clean up the other call site of
-print_local_time in git_print_authorship using the same helper function
-(presumably you would always pass 0 to $use_localtime there), no?
+Why not "revs->min_parents = 2;"?
 
->  gitweb/gitweb.perl |   16 ++++++++++++----
->  1 files changed, 12 insertions(+), 4 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index cdc2a96..5bda0a8 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -4003,15 +4003,23 @@ sub git_print_authorship_rows {
->  		my %wd = parse_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
->  		print "<tr><td>$who</td><td>" .
->  		      format_search_author($co->{"${who}_name"}, $who,
-> -			       esc_html($co->{"${who}_name"})) . " " .
-> +		                           esc_html($co->{"${who}_name"})) . " " .
->  		      format_search_author($co->{"${who}_email"}, $who,
-> -			       esc_html("<" . $co->{"${who}_email"} . ">")) .
-> +		                           esc_html("<" . $co->{"${who}_email"} . ">")) .
->  		      "</td><td rowspan=\"2\">" .
->  		      git_get_avatar($co->{"${who}_email"}, -size => 'double') .
->  		      "</td></tr>\n" .
->  		      "<tr>" .
-> -		      "<td></td><td> $wd{'rfc2822'}";
-> -		print_local_time(%wd) if !gitweb_check_feature('localtime');
-> +		      "<td></td><td> ";
-> +		if (gitweb_check_feature('localtime')) {
-> +			if ($wd{'hour_local'} < 6) {
-> +				print "<span class=\"atnight\">$wd{'rfc2822'}</span>";
-> +			} else {
-> +				print $wd{'rfc2822'};
-> +			}
-> +		} else {
-> +			print $wd{'rfc2822'} . format_local_time(%wd);
-> +		}
->  		print "</td>" .
->  		      "</tr>\n";
->  	}
+>  	} else if (!strcmp(arg, "--no-merges")) {
+> -		revs->no_merges = 1;
+> +		revs->max_parents = MAX_PARENTS(1);
+> +	} else if (!prefixcmp(arg, "--min-parents=")) {
+> +		revs->min_parents = MIN_PARENTS(atoi(arg+14));
+> +	} else if (!prefixcmp(arg, "--max-parents=")) {
+> +		revs->max_parents = MAX_PARENTS(atoi(arg+14));
+
+It would be nicer to error out for malformed numbers.  That's
+a separate topic, though --- you have plenty of company.
+
+> @@ -2029,10 +2033,15 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
+>  		return commit_ignore;
+>  	if (revs->min_age != -1 && (commit->date > revs->min_age))
+>  		return commit_ignore;
+> -	if (revs->no_merges && commit->parents && commit->parents->next)
+> -		return commit_ignore;
+> -	if (revs->merges_only && !(commit->parents && commit->parents->next))
+> -		return commit_ignore;
+> +	if (revs->min_parents || revs->max_parents) {
+> +		int n = 0;
+> +		struct commit_list *p;
+> +		for (p = commit->parents; p; p = p->next)
+> +			n++;
+> +		if ((MIN_PARENTS(n) < revs->min_parents) ||
+> +		    (MAX_PARENTS(n) < revs->max_parents)) /* max is inv. */
+> +			return commit_ignore;
+
+Sane.  If we feared enormous parent lists we could do
+
+	for (p = commit->parents; p && n <= 7 - revs->max_parents; p = p->next)
+		n++;
+
+but I suspect that's slower.
+
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -20,6 +20,11 @@
+>  #define DECORATE_SHORT_REFS	1
+>  #define DECORATE_FULL_REFS	2
+>  
+> +/* limit to used range */
+> +#define MIN_PARENTS(m)	({ unsigned int __n = (m); (__n < 0) ? 0 : (__n > 7) ? 7 : __n; })
+> +/* invert fox MAX so that default = 0 -> infinity */
+> +#define MAX_PARENTS(m)	({ unsigned int __n = (m); (__n < 0) ? 7 : (__n > 7) ? 0 : 7 - __n;})
+
+Statement expressions don't work in most non-gcc compilers (but
+inline functions do).
+
+Hope that helps,
+Jonathan
