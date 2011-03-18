@@ -1,79 +1,108 @@
-From: "Spencer E. Olson" <olsonse@umich.edu>
-Subject: Re: Git submodule update and the --merge flag when submodule is yet to be checked out
-Date: Fri, 18 Mar 2011 14:24:40 -0700
-Message-ID: <201103181524.40521.olsonse@umich.edu>
-References: <AANLkTikJo_pjSAmVV3wjWi04io4zWb-_P5p81TYj9tq6@mail.gmail.com> <7vipvgw3c1.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Q: rebasing (moving) a whole tree (not just one branch)
+Date: Fri, 18 Mar 2011 16:34:18 -0500
+Message-ID: <20110318213417.GB23407@elie>
+References: <4D83BB0A.8070307@dirk.my1.cc>
+ <20110318202637.GA23255@elie>
+ <7vaagsw2qb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Carl =?utf-8?q?F=C3=BCrstenberg?= <azatoth@gmail.com>,
-	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+Cc: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 22:24:55 2011
+X-From: git-owner@vger.kernel.org Fri Mar 18 22:34:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0hAE-0004V9-L0
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:24:55 +0100
+	id 1Q0hJb-0000VR-HQ
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:34:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757503Ab1CRVYu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 17:24:50 -0400
-Received: from smtp.mail.umich.edu ([141.211.12.86]:39484 "EHLO
-	tombraider.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757428Ab1CRVYt convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 17:24:49 -0400
-Received: FROM localhost (cadash.gpcc.itd.umich.edu [141.211.2.218])
-	By tombraider.mr.itd.umich.edu ID 4D83CD9D.6C7F7.28704 ;
-	Authuser olsonse;
-	18 Mar 2011 17:24:45 EDT
-User-Agent: KMail/1.9.4
-In-Reply-To: <7vipvgw3c1.fsf@alter.siamese.dyndns.org>
+	id S932582Ab1CRVe2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 17:34:28 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:44587 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932472Ab1CRVeZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 17:34:25 -0400
+Received: by gwaa18 with SMTP id a18so1755220gwa.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 14:34:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=/UJf2KqckojKMPII3hS8BWA4cF2vRA6nL2/8jKH3/wE=;
+        b=RWXfxyinqpRSlE/f8u8WJt5sPSzYJtAiGaEmnbrZZ+gsNCFlMae8sYsgAQUu7vIjks
+         E13clxADw4a/bgldvd7YYMkwT0LNhZVRjJUtbn5EYcqhOSKRc6XHIBN0JFTDve/r4QKX
+         UD8ZDhtdYqxmSfdCyEgVy4awrDrNqz/Pej9Do=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=C6QTnA6ooAKsytFhv9nvlG72UuvKCNU0aQvst3Rci8tqW3BrLNSugo0yvUTFITattl
+         XLGgNI+jtlNnwQa554iUD24j9l7HPgbrNBKCSNjsE9I+IVqQrvvtiLDVFBf6ESlvzfl/
+         l3PmEDhvROxCQOR3/bWpB2b/VP7XXwRKiFNYI=
+Received: by 10.150.215.16 with SMTP id n16mr1683618ybg.224.1300484063695;
+        Fri, 18 Mar 2011 14:34:23 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id t5sm248123ybe.29.2011.03.18.14.34.21
+        (version=SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2011 14:34:22 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <7vaagsw2qb.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169365>
 
-Yes, this was the intent of this fix last month
+Junio C Hamano wrote:
+>> Dirk S=C3=BCsserott wrote:
 
-On Friday 18 March 2011 15:01, Junio C Hamano wrote:
-> Carl F=C3=BCrstenberg <azatoth@gmail.com> writes:
-> > Sorry for re-posting the question but I though I should explain the
-> > issue better and to fix the subject line.
-> > sub
-> > When you are cloning repository containing submodules, and you are
-> > using the --merge flag to "git submodule update" the first time, th=
-en
-> > the submodule instance in question will assume you want to delete a=
-ll
-> > files present in the module.
->
-> Is this something we fixed last month?
->
-> commit 1b4735d9f3e0b7ea62c7c22f0afcb45e10c46c7e
-> Author: Spencer E. Olson <olsonse@umich.edu>
-> Date:   Thu Feb 17 09:18:45 2011 -0700
->
->     submodule: no [--merge|--rebase] when newly cloned
->
->     "git submodule update" can be run with either the "--merge" or
-> "--rebase" option, or submodule.<name>.update configuration variable =
-can be
-> set to "merge" or "rebase, to cause local work to get integrated when
-> updating the submodule.
->
->     When a submodule is newly cloned, however, it does not have a che=
-ck out
->     when a rebase or merge is attempted, leading to a failure.  For n=
-ewly
->     cloned submodules, simply check out the appropriate revision.  Th=
-ere is
-> no local work to integrate with for them.
->
->     Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
->     Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>> I'd like to rebase a whole tree from A to B. Not just a single
+>>> branch, but a whole tree. Let's say I have the following history:
+>>>
+>>> --- A --- B
+>>>     |
+>>>     + -- C -- D
+>>>          |
+>>>          + E -- F
+>>>=20
+>>> I'd like to rebase C and its descendants from A to B
+[...]
+> I am not a huge fan of filter-branch, but shouldn't you be able to
+> filter-branch D and F (and no other branch) on top of B?
+
+Yes, something like
+
+	git filter-branch \
+		--commit-filter '
+			if test "$GIT_COMMIT" =3D '"$(git rev-parse A^{commit})"'
+			then
+				git rev-parse B^{commit}
+			else
+				git_commit_non_empty_tree "$@"
+			fi
+		' \
+		--index-filter '
+			if test -n "$(git rev-list -1 "$GIT_COMMIT"..A)"
+			then
+				# descends from A
+				git merge-recursive A -- "$GIT_COMMIT" B
+			fi
+		' -- --all --not A^
+
+might do it, assuming the diff from A to B is simple enough for a
+fully automatic rebase.
+
+But in practice, something may well be much better.  It depends why we
+are performing this mass-rebasing --- do A and B have the same content
+in the moment and different histories?  How did the topics we are
+rebasing get tangled, and is their history going to remain meaningful
+after this operation?
+
+Jonathan
