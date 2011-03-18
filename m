@@ -1,76 +1,75 @@
-From: Raul Dias <raul@dias.com.br>
-Subject: same files on different paths on different branches
-Date: Thu, 17 Mar 2011 21:06:12 -0300
-Message-ID: <4D82A1F4.4060801@dias.com.br>
+From: Johan Herland <johan@herland.net>
+Subject: Re: git filter-branch --filter-notes/--post-rewrite?
+Date: Fri, 18 Mar 2011 01:16:14 +0100
+Message-ID: <201103180116.14754.johan@herland.net>
+References: <hbf.20110317iwua@bombur.uio.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 18 01:13:49 2011
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Fri Mar 18 01:16:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0NK8-0006Dg-KQ
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 01:13:48 +0100
+	id 1Q0NMf-0007G1-Fw
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 01:16:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755078Ab1CRANf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2011 20:13:35 -0400
-Received: from rack.swi.com.br ([66.216.97.12]:39495 "EHLO rack.swi.com.br"
+	id S1755982Ab1CRAQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2011 20:16:19 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:54382 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754333Ab1CRANe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2011 20:13:34 -0400
-X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Mar 2011 20:13:34 EDT
-X-Received-SPF: no SPF record found
-Received: from [10.1.1.3] (unknown [187.112.180.199])
-	(Authenticated sender: raul@dias.com.br)
-	by rack.swi.com.br (Postfix) with ESMTPA id 47A8031380B7
-	for <git@vger.kernel.org>; Fri, 18 Mar 2011 00:04:36 +0000 (UTC)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Lightning/1.0b2 Thunderbird/3.1.8
+	id S1754333Ab1CRAQS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2011 20:16:18 -0400
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LI8002RR8R3JP80@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 18 Mar 2011 01:16:15 +0100 (MET)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 72E2B1EEF30C_D82A44FB	for <git@vger.kernel.org>; Fri,
+ 18 Mar 2011 00:16:15 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 425E81EEF2F6_D82A44FF	for <git@vger.kernel.org>; Fri,
+ 18 Mar 2011 00:16:15 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LI800KE08R3H920@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 18 Mar 2011 01:16:15 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
+In-reply-to: <hbf.20110317iwua@bombur.uio.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169288>
 
-Hi,
+On Thursday 17 March 2011, Hallvard B Furuseth wrote:
+> Is there a git version where filter-branch can copy notes, or with a
+> post-rewrite hook?  I found an old discussion of that on WWW, but
+> nothing seems to have come of that yet.  Currently I remove the 'rm
+> -rf "$tempdir"' in git-filter-branch.sh so the info is available
+> for a separate script.
 
-I want to know if the following is possible to accomplish with git.
-(please reply to me too)
+No, AFAIK notes copying (or post-rewrite hook) has not yet been implemented 
+in filter-branch. However, it shouldn't be very difficult to add support for 
+this:
 
-A project is composed of many sub-modules (not in git sense).
-These sub-modules are developed independently of the main project.
-They need to be reattached to the projects' tree.
-
-The problems:
-    1 - a sub-module's tree does not have any projects file.
-    2 - when a sub-module is re-attached to the main project, its files
-are spread in many places (different from the the sub-module layout).
-
-
-Ideally the project would understand which files are the same, even on
-different places and apply the changes in the right files.
-This way a merge/cherry picking would keep the history information.
-
-Is it possible to accomplish something similar to this?
-I understand that this is not how a git super-project works.
-I don't think it is possible with different git repositories.
-
-I tried with a empty branch technique. 
-Created an empty branch with no history.
-Started a sub-module (non git) there and tried to propagate the changes.
-Git almost did the right thing.
-A change in branch submodule's
-    /foo/a.txt
-should have gone to branch master's
-    /bar/foo/a.txt
-but instead it went to
-    /bar/somethingelse/a.txt (which is the same as /bar/foo/a.txt)
+Looking at git-rebase.sh (where it _is_ implemented), it seems to be a 
+matter of feeding "old_sha1 new_sha1" pairs into a "rewritten" file, and 
+then passing that file to the stdin of "git notes copy --for-rewrite=filter-
+branch" (followed by passing the same file to the "post-rewrite" hook).
 
 
-So is it possible to get closer to this with git  in a way or another?
+Have fun! :)
 
+...Johan
 
-Thanks
--rsd
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
