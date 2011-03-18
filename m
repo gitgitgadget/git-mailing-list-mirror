@@ -1,158 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] gitweb: introduce localtime feature
-Date: Fri, 18 Mar 2011 11:24:36 -0700
-Message-ID: <7vy64cwal7.fsf@alter.siamese.dyndns.org>
-References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
- <e160457138c1166ffa6faf1c58ea170e@localhost>
- <201103181540.03431.jnareb@gmail.com>
+From: =?UTF-8?Q?Carl_F=C3=BCrstenberg?= <azatoth@gmail.com>
+Subject: Git submodule update and the --merge flag when submodule is yet to be
+ checked out
+Date: Fri, 18 Mar 2011 19:25:39 +0100
+Message-ID: <AANLkTikJo_pjSAmVV3wjWi04io4zWb-_P5p81TYj9tq6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 19:24:58 2011
+Content-Type: multipart/mixed; boundary=0016e6dd966bb4595b049ec5e79b
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 18 19:25:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0eM4-0005i8-MN
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 19:24:57 +0100
+	id 1Q0eMt-00066J-7O
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 19:25:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828Ab1CRSYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 14:24:52 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52257 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755403Ab1CRSYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 14:24:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0C9814CD7;
-	Fri, 18 Mar 2011 14:26:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1PdI6Ix7z2TFg/0kq7M0SOS+Po8=; b=ufcfkI
-	UvWYZDeqVhtGdvONVxFAdiXsTfCjRVoyG1UF+laJLcbs+EJTgeOjnsbwtpgi1QyV
-	68s3yIBc8ayFoWnMBs0UMobUoXQ1jK5KBIvuxZDAaCj5K44DVGXgeuGn1sIS/tX6
-	qBy4MYdfwOn3KgD6VCd3lgnYIv6BtJkE8Nh0g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PQcsJ0HYLC7/o5/hTZ7gdvfWITTZa1vV
-	ShamMIiSDu33gKwUzjm7gldETg67r2Y0o7BnO2TbTVRUGOH1TCjumUlA+QdG5yss
-	jfwHSxU9h/8xH9zZCYucl/C0v+xo8t4DZ9Wkw+/2XuJfJgiMEAyGVcHjAWpSAMt9
-	yzaIe/6WCLk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CDCAA4CD4;
-	Fri, 18 Mar 2011 14:26:17 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8BA024CD3; Fri, 18 Mar 2011
- 14:26:13 -0400 (EDT)
-In-Reply-To: <201103181540.03431.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 18 Mar 2011 15:40:01 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 371720A8-518D-11E0-99A9-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1756570Ab1CRSZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 14:25:42 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:36296 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753937Ab1CRSZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 14:25:41 -0400
+Received: by wwa36 with SMTP id 36so5216193wwa.1
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 11:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=H4jLyg4AYHCu4BjUjQKcTPw9EcnbX9iwt8mNRUMOxDo=;
+        b=cqv7jMLPWQLQWtn0ny9PQcJdDXh8BDZF9NrA2BHxLL/3vR48fe0rJEwiZH79Dz9akw
+         NNtTqJXMfR9pKLuPz75HaWESwqi1cvjW4NbK5BfZ7biut8okuRMdMLKz6snw7gWZ2yck
+         5ls9Eq5BbTXIh4l+jck0orshcHSWiWCRELh+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=V9GTDjP/R+RPdEri8kBInnHI6hUoZ2q00eYyY7EA3Jzdosr7ndYj7UpTOLD0rDv1Ua
+         HDXbrovSJWgMW/iOgoU12FPx5LDJjmht4vZdXpIAQ161foygdz5oViGLjnx5KB5RxiH8
+         AVUeQU/6osXqAmiIz+erUn6aDaVNDpxDbmCAE=
+Received: by 10.216.82.18 with SMTP id n18mr86188wee.45.1300472739944; Fri, 18
+ Mar 2011 11:25:39 -0700 (PDT)
+Received: by 10.216.170.211 with HTTP; Fri, 18 Mar 2011 11:25:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169346>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+--0016e6dd966bb4595b049ec5e79b
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> From: Kevin Cernekee <cernekee@gmail.com>
->
-> With this feature enabled, all timestamps are shown in the local
-> timezone instead of GMT.  The timezone is taken from the appropriate
-> timezone string stored in the commit object.
->
-> This is useful if most of contributors (to a project) are based in a
-> single office, all within the same timezone.  In such case local time
-> is more useful than GMT / UTC time that gitweb uses by default, and
-> which is better choice for geographically scattered contributors.
->
-> This change does not affect relative timestamps (e.g. "5 hours ago"),
-> and neither does it affect 'patch' and 'patches' views which already
-> use localtime because they are generated by "git format-patch".
->
-> Affected views include:
-> * 'summary' view, "last change" field (commit time from latest change)
-> * 'log' view, author time
-> * 'commit' and 'commitdiff' views, author/committer time
-> * 'tag' view, tagger time
->
-> In the case of 'commit', 'commitdiff' and 'tag' views gitweb used to
-> print both GMT time and time in timezone of author/tagger/comitter,
-> marking localtime with "atnight" as appropriate; after this commit
-> gitweb shows only local time.  Marking localtime with "atnight" when
-> needed is left for subsequent commit.
->
-> Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Sorry for re-posting the question but I though I should explain the
+issue better and to fix the subject line.
+sub
+When you are cloning repository containing submodules, and you are
+using the --merge flag to "git submodule update" the first time, then
+the submodule instance in question will assume you want to delete all
+files present in the module.
 
-Thanks for moving the explanation up into the log message.  Much easier to
-understand the motivation.
+Please look at attachment for a testcase and how the result might look like=
+.
+Unless this is not the intended behavior, then I would suggest
+changing --merge (and possible --rebase) to not assume a non-existent
+repository
+to be a empty one.
 
-> @@ -2930,6 +2943,12 @@ sub parse_date {
->  	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
->  	                          1900+$year, $mon+1, $mday,
->  	                          $hour, $min, $sec, $tz);
-> +
-> +	if (gitweb_check_feature('localtime')) {
-> +		$date{'rfc2822'} = sprintf "%s, %d %s %4d %02d:%02d:%02d $tz",
-> +		                   $days[$wday], $mday, $months[$mon],
-> +		                   1900+$year, $hour ,$min, $sec;
-> +	}
->  	return %date;
->  }
+The man pages says "Merge the commit recorded in the superproject into
+the current branch of the submodule", but we have no current branch of
+the
+submodule.
 
-Two comments (hint: when reviewing, look a bit wider outside the context
-provided by the patch):
+I would be happy for any reply, and sorry again for the repost.
 
- - This gets seconds-since-epoch and returns a bag of pieces of formatted
-   timestamp (some are mere elements like "hour", some are full timestamp
-   like "iso-8601").  Doesn't sound like "parse"-date, does it?
+/Carl F=C3=BCrstenberg
 
- - It looks somewhat ugly to unconditionally assign to 'rfc2822' first
-   (before the context of the hunk) and then overwrite it.  Wouldn't it be
-   more useful later to have a separate 'rfc2822_local' field, just like
-   existing 'hour_local' and 'minute_local' are counterparts for 'hour'
-   and 'minute'?
+--0016e6dd966bb4595b049ec5e79b
+Content-Type: application/x-sh; name="submodule_merge_test.sh"
+Content-Disposition: attachment; filename="submodule_merge_test.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_glffq2rt0
 
-> @@ -3992,7 +4011,7 @@ sub git_print_authorship_rows {
->  		      "</td></tr>\n" .
->  		      "<tr>" .
->  		      "<td></td><td> $wd{'rfc2822'}";
-> -		print_local_time(%wd);
-> +		print_local_time(%wd) if !gitweb_check_feature('localtime');
->  		print "</td>" .
->  		      "</tr>\n";
->  	}
+IyEvYmluL2Jhc2gKCnNldCAteApta2RpciAtcCB0ZXN0L2Jhc2UgdGVzdC9zdWJwcm9qCigKY2Qg
+dGVzdC9zdWJwcm9qCmdpdCBpbml0CmVjaG8gYSA+IGZpbGUKZ2l0IGFkZCBmaWxlCmdpdCBjb21t
+aXQgLW0gJ0FkZGVkIGZpbGUnCikKCigKY2QgdGVzdC9iYXNlCmdpdCBpbml0CmdpdCBzdWJtb2R1
+bGUgYWRkIGZpbGU6Ly8kUFdELy4uL3N1YnByb2ogc3ViCmdpdCBjb21taXQgLW0gJ0FkZGVkIHN1
+YnByb2onCikKCigKY2QgdGVzdApnaXQgY2xvbmUgYmFzZSBjbG9uZWQKY2QgY2xvbmVkCmdpdCBz
+dWJtb2R1bGUgc3RhdHVzCmdpdCBzdWJtb2R1bGUgdXBkYXRlIC0taW5pdCAtLW1lcmdlCmdpdCBz
+dWJtb2R1bGUgc3RhdHVzCmdpdCBzdGF0dXMKY2Qgc3ViCmdpdCBzdGF0dXMKKQoKcm0gLXJmIHRl
+c3QvYmFzZSB0ZXN0L3N1YnByb2ogdGVzdC9jbG9uZWQKcm1kaXIgdGVzdAo=
+--0016e6dd966bb4595b049ec5e79b
+Content-Type: application/octet-stream; name=test_output
+Content-Disposition: attachment; filename=test_output
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_glffrz5l1
 
-Very confusing.  "Ok, we print local time. --ah, wait, only when localtime
-feature is not used???"
-
-It turns out that the hijacking of $wd{'rfc2822'} made above already gives
-us the local time so this patch turns the meaning of print-local-time used
-here into additionally-print-local-time.
-
-Both call sites to print_local_time() follow this pattern:
-
-	print "... some string ..." .
-        	"... that is sometimes long ..." .
-                "... and more but ends with $bag{'rfc2822'}";
-	print_local_time(%bag); # perhaps if "some condition";
-	print "... more string ...";
-
-I am referring to "if (${opts-localtime})" in the existing code and
-"if !gitweb_c_f('localtime')" in this patch as "some condition".
-
-It appears to me that it may be a better idea to hide the "rfc2822" part
-as an implementation detail behind a helper function, to make the above
-pattern to look perhaps like this:
-
-	print "... some string ..." .
-        	"... that is sometimes long ..." .
-                "... and more but ends with " .
-		timestamp_string(%bag, "some condition") .
-	        "... more string ...";
-
-Hmm?
+KyBta2RpciAtcCB0ZXN0L2Jhc2UgdGVzdC9zdWJwcm9qCisgY2QgdGVzdC9zdWJwcm9qCisgZ2l0
+IGluaXQKSW5pdGlhbGl6ZWQgZW1wdHkgR2l0IHJlcG9zaXRvcnkgaW4gL2hvbWUvYXphdG90aC90
+bXAvc3VibWVyZ2UvdGVzdC9zdWJwcm9qLy5naXQvCisgZWNobyBhCisgZ2l0IGFkZCBmaWxlCisg
+Z2l0IGNvbW1pdCAtbSAnQWRkZWQgZmlsZScKW21hc3RlciAocm9vdC1jb21taXQpIDlkODU3NmVd
+IEFkZGVkIGZpbGUKIDEgZmlsZXMgY2hhbmdlZCwgMSBpbnNlcnRpb25zKCspLCAwIGRlbGV0aW9u
+cygtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IGZpbGUKKyBjZCB0ZXN0L2Jhc2UKKyBnaXQgaW5pdApJ
+bml0aWFsaXplZCBlbXB0eSBHaXQgcmVwb3NpdG9yeSBpbiAvaG9tZS9hemF0b3RoL3RtcC9zdWJt
+ZXJnZS90ZXN0L2Jhc2UvLmdpdC8KKyBnaXQgc3VibW9kdWxlIGFkZCBmaWxlOi8vL2hvbWUvYXph
+dG90aC90bXAvc3VibWVyZ2UvdGVzdC9iYXNlLy4uL3N1YnByb2ogc3ViCkNsb25pbmcgaW50byBz
+dWIuLi4KKyBnaXQgY29tbWl0IC1tICdBZGRlZCBzdWJwcm9qJwpbbWFzdGVyIChyb290LWNvbW1p
+dCkgYWNhYjRiZF0gQWRkZWQgc3VicHJvagogMiBmaWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMo
+KyksIDAgZGVsZXRpb25zKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgLmdpdG1vZHVsZXMKIGNyZWF0
+ZSBtb2RlIDE2MDAwMCBzdWIKKyBjZCB0ZXN0CisgZ2l0IGNsb25lIGJhc2UgY2xvbmVkCkNsb25p
+bmcgaW50byBjbG9uZWQuLi4KZG9uZS4KKyBjZCBjbG9uZWQKKyBnaXQgc3VibW9kdWxlIHN0YXR1
+cwotOWQ4NTc2ZWRhMThkZDBhMjczNjgyMWQ5ZjYwYmQzNDkxNWZkZDYxYyBzdWIKKyBnaXQgc3Vi
+bW9kdWxlIHVwZGF0ZSAtLWluaXQgLS1tZXJnZQpTdWJtb2R1bGUgJ3N1YicgKGZpbGU6Ly8vaG9t
+ZS9hemF0b3RoL3RtcC9zdWJtZXJnZS90ZXN0L2Jhc2UvLi4vc3VicHJvaikgcmVnaXN0ZXJlZCBm
+b3IgcGF0aCAnc3ViJwpDbG9uaW5nIGludG8gc3ViLi4uCkFscmVhZHkgdXAtdG8tZGF0ZS4KU3Vi
+bW9kdWxlIHBhdGggJ3N1Yic6IG1lcmdlZCBpbiAnOWQ4NTc2ZWRhMThkZDBhMjczNjgyMWQ5ZjYw
+YmQzNDkxNWZkZDYxYycKKyBnaXQgc3VibW9kdWxlIHN0YXR1cwogOWQ4NTc2ZWRhMThkZDBhMjcz
+NjgyMWQ5ZjYwYmQzNDkxNWZkZDYxYyBzdWIgKGhlYWRzL21hc3RlcikKKyBnaXQgc3RhdHVzCiMg
+T24gYnJhbmNoIG1hc3RlcgojIENoYW5nZXMgbm90IHN0YWdlZCBmb3IgY29tbWl0OgojICAgKHVz
+ZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIHVwZGF0ZSB3aGF0IHdpbGwgYmUgY29tbWl0dGVkKQoj
+ICAgKHVzZSAiZ2l0IGNoZWNrb3V0IC0tIDxmaWxlPi4uLiIgdG8gZGlzY2FyZCBjaGFuZ2VzIGlu
+IHdvcmtpbmcgZGlyZWN0b3J5KQojICAgKGNvbW1pdCBvciBkaXNjYXJkIHRoZSB1bnRyYWNrZWQg
+b3IgbW9kaWZpZWQgY29udGVudCBpbiBzdWJtb2R1bGVzKQojCiMJbW9kaWZpZWQ6ICAgc3ViICht
+b2RpZmllZCBjb250ZW50KQojCm5vIGNoYW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2UgImdpdCBh
+ZGQiIGFuZC9vciAiZ2l0IGNvbW1pdCAtYSIpCisgY2Qgc3ViCisgZ2l0IHN0YXR1cwojIE9uIGJy
+YW5jaCBtYXN0ZXIKIyBDaGFuZ2VzIHRvIGJlIGNvbW1pdHRlZDoKIyAgICh1c2UgImdpdCByZXNl
+dCBIRUFEIDxmaWxlPi4uLiIgdG8gdW5zdGFnZSkKIwojCWRlbGV0ZWQ6ICAgIGZpbGUKIworIHJt
+IC1yZiB0ZXN0L2Jhc2UgdGVzdC9zdWJwcm9qIHRlc3QvY2xvbmVkCisgcm1kaXIgdGVzdAo=
+--0016e6dd966bb4595b049ec5e79b--
