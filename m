@@ -1,92 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] Documentation/remote-helpers: explain capabilities
- first
-Date: Fri, 18 Mar 2011 17:21:07 -0500
-Message-ID: <20110318222107.GD23407@elie>
-References: <20110318174504.GA22332@elie>
- <AANLkTimfZM6muiU3vPMgx3NnRdb4H0t4E2DMXt1233LP@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/3] fetch-pack: factor out hardcoded handshake window size
+Date: Fri, 18 Mar 2011 15:26:58 -0700
+Message-ID: <7v7hbwt68d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Tomas Carnecky <tom@dbservice.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 23:21:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 18 23:27:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0i2u-0004ek-St
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 23:21:25 +0100
+	id 1Q0i8Y-0006yt-IW
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 23:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932976Ab1CRWVU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 18:21:20 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:51573 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932837Ab1CRWVT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 18:21:19 -0400
-Received: by ywj3 with SMTP id 3so1774009ywj.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 15:21:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=scvc3ZgpWlw12xn2loPZXBm0X6V2qjBczDi2RdM3y5o=;
-        b=U0sr96nh+UnUqVZ3NSpht5sUPEbDzIatC/wWpAKZ3A813c/jeStHaM6tLoDz9oKDu8
-         E5Jf3WsChu2zaiLTwfX0rYK7aQKL5eHDlKUAnN892lTBNUuW8QZk9hDA3j85ST2Qxfv/
-         LK8ef3sdnnZ6JwSz+qtV/Q8hKMx1rufz1OnnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=wtLHT2FkSxYngN3EAUpAhBjLh4Ft1c09PBVW3xHqPrtfDReQakKuQkjCM6UOYZ/83s
-         NyT9lQp8LCsLVpcrUpUs8DqSi69Y+kvipAcBjGtbKNPqXAN5RXqqZsEkea8Aq8qIm5pm
-         dd2qAMds8yQyUKeaKHLZMmaJ4zd+HdtVw7+wE=
-Received: by 10.150.65.3 with SMTP id n3mr1790791yba.39.1300486878746;
-        Fri, 18 Mar 2011 15:21:18 -0700 (PDT)
-Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
-        by mx.google.com with ESMTPS id u29sm1413507yhn.71.2011.03.18.15.21.12
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Mar 2011 15:21:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimfZM6muiU3vPMgx3NnRdb4H0t4E2DMXt1233LP@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932975Ab1CRW1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 18:27:10 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49805 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932917Ab1CRW1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 18:27:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E01E74C72;
+	Fri, 18 Mar 2011 18:28:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=M
+	P3DRX35XmTQeUCfE/cB9DiwPxQ=; b=VKhQYwgTeXG64KunHd0lqmTcEPNvTWV4A
+	7oO7G0zpKbkY9yoQ16XuyPp6lM+SEpyxgjVScPJZzWeMwe11QGYauJKYLNm8HhVF
+	yGaOJ66SSO7MesY/b9GobYEkmxPNvrtxhtSIPeJeOYp4DsBArc+FkPVhOLFaHThD
+	vKqAamdWnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=HnzLH41XikrA1Dkti9zQKLJnDwTbAFRTNLonkXX+ZTRFHMBHPs7pIjtR
+	Xa1QMv4hvftrxtW34arSKbBi7W76yka0g6kZaRo13hs6B+S2e4H9oQV2zJt+d8C3
+	CEsCRyxLWAQ8xOF4XuAhOVcG60Ymg4VVl43uQH5N8/rinrzjG7g=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BE4164C71;
+	Fri, 18 Mar 2011 18:28:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C62EA4C6F; Fri, 18 Mar 2011
+ 18:28:34 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 119197E2-51AF-11E0-9A6E-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169370>
 
-Sverre Rabbelier wrote:
-> On Fri, Mar 18, 2011 at 18:45, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
+The "git fetch" client presents the most recent 32 commits it has to the
+server and gives a chance to the server to say "ok, we heard enough", and
+continues reporting what it has in chunks of 32 commits, digging its
+history down to older commits.
 
->> No documentation for "export" ... yet
->
-> Which is for the better, since I think the current interface is
-> broken. It'll be easier to justify changing it if it's not documented
-> ;).
+Move the hardcoded size of the handshake window outside the code, so that
+we can tweak it more easily.
 
-Thanks for explaining.  FWIW I'd be interested in your thoughts on this
-sometime (not now necessarily, just some time before the svn push
-support project is on the front burner :)).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
->> (by the way: would it
->> make sense to export the GIT_DIR environment variable so a round tri=
-p
->> for the 'gitdir' capability would eventually be unnecessary?).
->
-> Yes, that makes a lot of sense.
->
->> The current documentation left me lost, so I wrote this (which still
->> probably leaves one lost). =C2=A0Thoughts?
->
-> I think it makes sense.
+ * I don't want to be stepping on your toes, but the first step was very
+   trivial.  Goes on top of the sp/maint-fetch-pack-stop-early topic.
 
-Glad to hear it.  (The GIT_DIR idea is Tom's iirc.)
+ builtin/fetch-pack.c |   14 +++++++++++---
+ 1 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 59fbda5..20e30f5 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -218,11 +218,18 @@ static void send_request(int fd, struct strbuf *buf)
+ 		safe_write(fd, buf->buf, buf->len);
+ }
+ 
++#define INITIAL_FLUSH 32
++
++static int next_flush(int count)
++{
++	return INITIAL_FLUSH + count;
++}
++
+ static int find_common(int fd[2], unsigned char *result_sha1,
+ 		       struct ref *refs)
+ {
+ 	int fetching;
+-	int count = 0, flushes = 0, retval;
++	int count = 0, flushes = 0, flush_at = INITIAL_FLUSH, retval;
+ 	const unsigned char *sha1;
+ 	unsigned in_vain = 0;
+ 	int got_continue = 0;
+@@ -335,19 +342,20 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 		if (args.verbose)
+ 			fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
+ 		in_vain++;
+-		if (!(31 & ++count)) {
++		if (flush_at <= ++count) {
+ 			int ack;
+ 
+ 			packet_buf_flush(&req_buf);
+ 			send_request(fd[1], &req_buf);
+ 			strbuf_setlen(&req_buf, state_len);
+ 			flushes++;
++			flush_at = next_flush(count);
+ 
+ 			/*
+ 			 * We keep one window "ahead" of the other side, and
+ 			 * will wait for an ACK only on the next one
+ 			 */
+-			if (!args.stateless_rpc && count == 32)
++			if (!args.stateless_rpc && count == INITIAL_FLUSH)
+ 				continue;
+ 
+ 			consume_shallow_list(fd[0]);
+-- 
+1.7.4.1.496.ga3201
