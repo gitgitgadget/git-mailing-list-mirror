@@ -1,66 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git submodule update and the --merge flag when submodule is yet
- to be checked out
-Date: Fri, 18 Mar 2011 14:35:15 -0700
-Message-ID: <7vwrjwun70.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikJo_pjSAmVV3wjWi04io4zWb-_P5p81TYj9tq6@mail.gmail.com>
- <7vipvgw3c1.fsf@alter.siamese.dyndns.org>
- <201103181524.40521.olsonse@umich.edu>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Deleting a Bare Repo
+Date: Fri, 18 Mar 2011 16:36:41 -0500
+Message-ID: <4D83D069.1050206@gmail.com>
+References: <AANLkTimaQ3dyXDJgY_Ys19jpNXx07vK2qNLQ_8Cp8NKi@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Carl =?utf-8?Q?F=C3=BCrstenberg?= <azatoth@gmail.com>,
-	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: "Spencer E. Olson" <olsonse@umich.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 18 22:35:40 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Sean B. Palmer" <sean@miscoranda.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 22:36:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0hKc-00010r-GH
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:35:38 +0100
+	id 1Q0hLn-0001d0-5R
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932607Ab1CRVfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 17:35:32 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:32892 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932131Ab1CRVfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 17:35:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8A52045F5;
-	Fri, 18 Mar 2011 17:37:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aaE+u2pYj7xyIpW8LfIfaQ8JwAY=; b=rsVR6V
-	fU6j2ohjch2Nk4CUKOPPBXQ4H4syo/2ZLDHXfFo9anjkB/+j7ZLkH1J4x/6zpEXP
-	J32j1yIDmggJh2OS1BSc7ynBIzFrO/qgNCvBccPjIE4JAzNRC44itw8ZxqBaxaCd
-	Oxw5NEW2NDzoTOWwf2zudBFAe1YTIOLjy7qS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vIL0xU9c9ogfiwBW5aVfT8a3FZ+NidLL
-	xiHPecRnTw0tKrVIk+OOOUN1LT2wTxkasZOP0TrkoHqueznd3xn1SiydEvz9EVAq
-	xcxQpxXtEjGh2WrK2V2rnoomHBFbvn11JSz2Q3iTbfKPzQ3YKcN7eLZIFksztOBS
-	h0L1y2LbU1o=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D7A245F3;
-	Fri, 18 Mar 2011 17:36:58 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A61C545ED; Fri, 18 Mar 2011
- 17:36:51 -0400 (EDT)
-In-Reply-To: <201103181524.40521.olsonse@umich.edu> (Spencer E. Olson's
- message of "Fri, 18 Mar 2011 14:24:40 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DA1B4698-51A7-11E0-B451-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932515Ab1CRVgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 17:36:47 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:42613 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932131Ab1CRVgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 17:36:46 -0400
+Received: by yxs7 with SMTP id 7so1763384yxs.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 14:36:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version
+         :newsgroups:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=cwN9mMrmEBMjWgFyUNgnvVugt/Qz45ZVEgOwtbJXLtU=;
+        b=daqJV9TfaIEzzpW49CUMO0o8v8IUkFhYn+mma8XeOYPLH/EyqV9PWKSPMrmxOQqS/s
+         uWplalkg7uDHz8K06PWGaehT8Nf+DCgZOf7OA1BbyLjQvlao67aEV8uPESXc8rAGyZmE
+         qZN2TvH8sVtllj4sGxlQVtR4QuXTsk09gTgQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=MY1v4ZX8pCZ1bRxwtmA4HU+4gvJyXnzgZsAStwCHcBtz1QKcKcGMq6tD5W6OyBnndi
+         WFwaazlZqJzhrlpdMWF197IjwLUprdmmcL7ns86fC8sU4KUvngg4WlqU8Yh2phDUm1hw
+         yJ3THJMix4O4vG3Gv37f7HHbhVaQbgJ7l3+7s=
+Received: by 10.90.9.26 with SMTP id 26mr1726043agi.50.1300484205754;
+        Fri, 18 Mar 2011 14:36:45 -0700 (PDT)
+Received: from [172.25.2.144] ([67.63.162.200])
+        by mx.google.com with ESMTPS id 6sm507556anx.20.2011.03.18.14.36.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2011 14:36:44 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <AANLkTimaQ3dyXDJgY_Ys19jpNXx07vK2qNLQ_8Cp8NKi@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169367>
 
-"Spencer E. Olson" <olsonse@umich.edu> writes:
+On 3/18/2011 10:26 AM, Sean B. Palmer wrote:
+> I'd like to delete a bare git repo, but I want to check that (a) it's
+> being used as the actual git bare repo, e.g. if $GIT_DIR is set, and
+> (b) that it is actually a git repo. Using rm -rf .git/ doesn't seem
+> safe for these reasons, so is there a command in git itself to do
+> this?
+>
+> I've been going through the man pages without success.
+>
+here is a partial list of considerations and inqueries:
+* there is not a git command to delete a repo.  rm -rf is how you do it.
+* git repo's are not aware of who has cloned from them and/or is 
+pulling/fetching from them.
+* if there is a git-daemon-export-ok then that means it was setup to be 
+pull-from via the git:// protocol.  however, that doesn't mean anyone is 
+actually pulling from it.
+* check the config file and see if its setup as a mirror.  if so, 
+investigate its mirror.
 
-> Yes, this was the intent of this fix last month
+if you are talking about manual deletion you could:
+* cd to the bare repo and do a git-status.  if it returns a status then 
+it's a working repo (not necessarily a referenced repo).
+* analyze it in gitk and see if anyone has pushed to it recently.
+* rename it and see if anyone complains.
 
-Thanks.
+v/r,
+neal
