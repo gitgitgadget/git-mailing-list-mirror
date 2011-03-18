@@ -1,63 +1,57 @@
-From: Josh Ralburton <josh.ralburton@gmail.com>
-Subject: Question about "branch.<name>.merge"
-Date: Fri, 18 Mar 2011 12:35:15 -0700
-Message-ID: <AANLkTin-96TK_8MjAM7MB4CCyZ0ZSvD=ZanaYWLiXsvC@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] rev-list and friends: --min-parents, --max-parents
+Date: Fri, 18 Mar 2011 15:41:13 -0400
+Message-ID: <20110318194113.GA2215@sigill.intra.peff.net>
+References: <20110318085616.GA16703@sigill.intra.peff.net>
+ <cover.1300459016.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 18 20:39:32 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 20:41:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0fWC-0002Yr-JC
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 20:39:28 +0100
+	id 1Q0fYC-0003Zx-0K
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 20:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757181Ab1CRTjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 15:39:22 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:52837 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932465Ab1CRTfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 15:35:17 -0400
-Received: by pzk9 with SMTP id 9so501931pzk.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 12:35:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=N2NY/jJgqK25kBXVcNpb0MFNpNvHyCWaVm8IpIJ4unQ=;
-        b=OAJcy/ohRuG6zAGHk6KQOV/5uxPESWpZ1+qecsUcY+GeqMuVlElM+jLPwKxDSgtJPS
-         3ovW5E1tUqV/Ez2//wkrQxkRF1L5BVpUBMG0+G4ubOeCS2qVJDGKtX9uyEcw/qHsjJSO
-         4fg1yBkVEOM7LC4ZkwrF0cDoXYQh1xKzFFLb0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Qdisv1rO3b2c918mSC2liBZNGOJ55tvMHFJKKh3sC13GwsmJ1ZaG67uDOMlaK69Xi6
-         HAlKeQbl7z3edSNeoANvmqFWza0YzJV3H646HWUD1g1lfbTRckhiBU3szCAokJdP/uPD
-         2gndEjQn1bxU2UsgCDWXJbELGaE/B3EScFocw=
-Received: by 10.142.248.28 with SMTP id v28mr358681wfh.81.1300476915318; Fri,
- 18 Mar 2011 12:35:15 -0700 (PDT)
-Received: by 10.142.47.15 with HTTP; Fri, 18 Mar 2011 12:35:15 -0700 (PDT)
+	id S932564Ab1CRTl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 15:41:29 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46764
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932469Ab1CRTlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 15:41:15 -0400
+Received: (qmail 5448 invoked by uid 107); 18 Mar 2011 19:41:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 Mar 2011 15:41:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Mar 2011 15:41:13 -0400
+Content-Disposition: inline
+In-Reply-To: <cover.1300459016.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169350>
 
-This is a typical section from a .git config file:
+On Fri, Mar 18, 2011 at 03:50:22PM +0100, Michael J Gruber wrote:
 
-[remote "origin"]
-    fetch = +refs/heads/*:refs/remotes/origin/*
-    url = git://git.kernel.org/pub/scm/git/git.git
-[branch "master"]
-    remote = origin
-    merge = refs/heads/master
+> As opposed to the RFD it replaces, this is a real patch series with
+> documentation and tests, and it even comes with boiler plate. It should
+> make all of Jeff's and Junio's dreams come true (as far as revision
+> limiting by parent number goes).
+> 
+> 1/3 introduces the new options (and has a proper commit message)
+> 2/3 I noted along the way and could be applied earlier
+> 3/3 depends on 1 and 2 and is the candy (doc, tests, completion)
 
-I am curious why "branch.master.merge=refs/heads/master"  was
-implemented to refer to the remote branch (refs/heads/master) rather
-than the local branch (refs/remotes/origin/master).
+I didn't see it mentioned anywhere, but I assume this applies on
+mg/rev-list-one-side-only (b1b4755). It has conflicts when applied on
+master.
 
-Thanks.
+(I know you probably know that, but it is for the benefit of other
+reviewers).
 
-Josh
+-Peff
