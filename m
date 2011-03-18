@@ -1,89 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] system_path: use a static buffer
-Date: Fri, 18 Mar 2011 17:34:07 +0700
-Message-ID: <AANLkTikms3Ek1CgQHg+gT8Eqs2K6PCvOB-kWZ-aqGawg@mail.gmail.com>
-References: <1300359664-6230-1-git-send-email-cmn@elego.de> <1300371853-8965-1-git-send-email-cmn@elego.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: PATH_MAX (Re: [PATCH] system_path: use a static buffer)
+Date: Fri, 18 Mar 2011 06:38:18 -0500
+Message-ID: <20110318113818.GA6049@elie>
+References: <1300359664-6230-1-git-send-email-cmn@elego.de>
+ <1300371853-8965-1-git-send-email-cmn@elego.de>
+ <AANLkTikms3Ek1CgQHg+gT8Eqs2K6PCvOB-kWZ-aqGawg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Erik Faye-Lund <kusmabite@gmail.com>
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Fri Mar 18 11:40:04 2011
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 12:38:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0X68-00005n-U1
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 11:40:01 +0100
+	id 1Q0Y0l-00005M-IO
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 12:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724Ab1CRKj4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 06:39:56 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:60097 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338Ab1CRKjy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 06:39:54 -0400
-Received: by yxs7 with SMTP id 7so1505822yxs.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 03:39:54 -0700 (PDT)
+	id S1753295Ab1CRLi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 07:38:27 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:63633 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752183Ab1CRLi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 07:38:26 -0400
+Received: by yia27 with SMTP id 27so1520700yia.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 04:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=L5mwbM8l6IT8cpKk0bSGrYyff3Irr6TdNef/B0hKCx0=;
-        b=cCIe6jC8qANHH9hxxpMoSALMJL2C3zs0u5D+HQgIJuHt0yligsGq5zROgk/g8r7iN2
-         PYlglzRjBhTnz1JBhVXbMPJAaFoS4E2VMP/K0w9nTz9t1U1yWwC3QT7JxUbvU8ZD0wBE
-         qyNtdWhy5OPpZzbxfnxkw2+zVYM6gsnONveMg=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=6ffwcybBtvtd6Z9J1cGtr+Pn5rehUWtKsYPjp89/8Qo=;
+        b=ikmNo/t5hsBbjxgwl7rOsP5s1aWMgy0PEBGNt7P5400YGksJFe+Hd9ehT3YYNPSdGk
+         PZOFwIM5lEFuCORcuzboKrcHcC0/iHF9ENsTAYf82E+ZSLcU01VWSaeh4ze4pF/NvTJa
+         aXcuTX1G+VbZJxcEtvTg1FEBwCPDFvpqDMdXg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=i4aERpKf+AOuck+uIl8y+HLPyo86+NcpdrimVVxtfI59yF6lGwytwMnjJrzNaF0jJZ
-         2rqRBTz6sng6d1fYPryv+BtFKbI3H7xtkDbLxg+qCncuidrP3y2tUMaqrD6CQjuu2uxr
-         IYLk/LvPlA7R8SiOj8LvH5fERuslNzz3LtPjw=
-Received: by 10.150.169.3 with SMTP id r3mr1054408ybe.331.1300444477181; Fri,
- 18 Mar 2011 03:34:37 -0700 (PDT)
-Received: by 10.150.220.14 with HTTP; Fri, 18 Mar 2011 03:34:07 -0700 (PDT)
-In-Reply-To: <1300371853-8965-1-git-send-email-cmn@elego.de>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Ah0/iLqQh4qfLJ01DJjVwsBAKUezUMo+sMQAXJDn0qc4LT2sPA/EGzjeRuueKUQSa9
+         0sMvfp/ILG1l64NyTK26GWlx4wkeuj02zsX6vbOOXwUGzVJxhlRDNFj9oy+Ly9hL/d90
+         a8MXcAbwqIyEmfD0mog0q84sZ2ZDxvQMQHVl0=
+Received: by 10.236.77.104 with SMTP id c68mr1495754yhe.7.1300448305425;
+        Fri, 18 Mar 2011 04:38:25 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id f9sm1775481yhc.4.2011.03.18.04.38.23
+        (version=SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2011 04:38:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikms3Ek1CgQHg+gT8Eqs2K6PCvOB-kWZ-aqGawg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169310>
 
-On Thu, Mar 17, 2011 at 9:24 PM, Carlos Mart=C3=ADn Nieto <cmn@elego.de=
-> wrote:
-> - =C2=A0 =C2=A0 =C2=A0 static const char *system_wide;
-> - =C2=A0 =C2=A0 =C2=A0 if (!system_wide)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 system_wide =3D sy=
-stem_path(ETC_GITATTRIBUTES);
-> + =C2=A0 =C2=A0 =C2=A0 static char system_wide[PATH_MAX];
+Hi,
 
-=2E..
+Nguyen Thai Ngoc Duy wrote:
 
-> - =C2=A0 =C2=A0 =C2=A0 static const char *system_wide;
-> - =C2=A0 =C2=A0 =C2=A0 if (!system_wide)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 system_wide =3D sy=
-stem_path(ETC_GITCONFIG);
-> + =C2=A0 =C2=A0 =C2=A0 static char system_wide[PATH_MAX];
+> It was pointed out elsewhere [1] that PATH_MAX only specifies max
+> length of a path element, not full path. I think we'd need to stay
+> away from preallocated PATH_MAX-sized arrays.
 
-=2E..
+No, PATH_MAX is actually the maximum length of a path, and when you
+use, say, open(2), it will fail if your path is longer than that.  The
+maximum length of a path component on most filesytems is 255 or 256;
+PATH_MAX on Linux is 4096.
 
-> =C2=A0#ifdef RUNTIME_PREFIX
-> - =C2=A0 =C2=A0 =C2=A0 static const char *prefix;
-> + =C2=A0 =C2=A0 =C2=A0 static const char *prefix =3D NULL;
-> =C2=A0#else
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0static const char *prefix =3D PREFIX;
-> =C2=A0#endif
-> - =C2=A0 =C2=A0 =C2=A0 struct strbuf d =3D STRBUF_INIT;
-> + =C2=A0 =C2=A0 =C2=A0 static char buf[PATH_MAX];
-> + =C2=A0 =C2=A0 =C2=A0 int ret;
+It is indeed possible to have paths with length longer than that.  The
+way to support that is to use relative paths wherever possible, which
+does sound to me like an interesting long-term goal (mostly because I
+suspect the result would be easier to read and, especially, to reason
+about with respect to race conditions).
 
-It was pointed out elsewhere [1] that PATH_MAX only specifies max
-length of a path element, not full path. I think we'd need to stay
-away from preallocated PATH_MAX-sized arrays.
-
-[1] http://mid.gmane.org/AANLkTikXvx7-Q8B_dqG5mMHGK_Rw-dFaeQdXi0zW98SD@=
-mail.gmail.com
---=20
-Duy
+Hope that helps,
+Jonathan
