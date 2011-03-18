@@ -1,75 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFD] Gitweb: Source configuration from file separate from the
- CGI script
-Date: Fri, 18 Mar 2011 12:54:10 -0500
-Message-ID: <20110318175311.GA22421@elie>
-References: <1300285582.28805.25.camel@drew-northup.unet.maine.edu>
- <m3lj0e59ps.fsf@localhost.localdomain>
- <1300361067.3010.1.camel@drew-northup.unet.maine.edu>
- <201103171641.29021.jnareb@gmail.com>
- <1300457243.12245.13.camel@drew-northup.unet.maine.edu>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC/PATCH] Documentation/remote-helpers: explain capabilities first
+Date: Fri, 18 Mar 2011 19:07:35 +0100
+Message-ID: <AANLkTimfZM6muiU3vPMgx3NnRdb4H0t4E2DMXt1233LP@mail.gmail.com>
+References: <20110318174504.GA22332@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 18 18:54:30 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 19:08:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0dsW-00071F-Bk
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 18:54:24 +0100
+	id 1Q0e62-0005eK-0z
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 19:08:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348Ab1CRRyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 13:54:19 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:58815 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932130Ab1CRRyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 13:54:18 -0400
-Received: by yxs7 with SMTP id 7so1682407yxs.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 10:54:17 -0700 (PDT)
+	id S1755534Ab1CRSIR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 14:08:17 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:57625 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753427Ab1CRSIP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 14:08:15 -0400
+Received: by yia27 with SMTP id 27so1684766yia.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 11:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=F3nCtK1GxkO5yrrXNiqjV1SwCdmbzzhZ///QqC3Ol3Y=;
-        b=j5JvaRcyABjB5wr6ii6BaJVVToz3EjeXtTpz6bn/oI316FSXsSwltnVXsDPn64NIcF
-         A8mt1avsHRt7+2FsWwpUPrYP8T3iOmFmkz/YHRe8uboKLlxE6LBKIzq52FZnLrFFSgoR
-         OcRKmCdyh9wn0dL0HoX1Y5h3Ci+pJkCfAX5rY=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=KX1MTEapSwamHopWfLI2yp82vQQ0piGpS818jZQid1s=;
+        b=Og+kWQ894gYOvSDqgbkCkuhyDLuDw9oYRvzxbqCj9T3cxBxrWe96SMxEfm6M03PIZ8
+         dL/siqGksGyaG0PRMcHKb40BpgsQbBF2LKWmNXxcFIv0Nefu2qBUzQVpJ1YlCY6+rNSM
+         vi27lGFb1LyWQ74PEZLDZ7Sjz+3JbFwiEDnqU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=spKW2XLRxH/Tvhtd8bYQNfnlnR212berP2KcOoH7VdRce1Uv268LaIcJo5diEC9tRE
-         qzJ+PzCBh0AtnslA6dHTS8ViXgX0w8po7DIBBCMyIKGsziKHpbUvqRLsxeq+oOcL9peE
-         3W0Prqsiwz4y3gmE/WQtxiYcbECLeMa3WB754=
-Received: by 10.101.26.27 with SMTP id d27mr1065133anj.24.1300470857515;
-        Fri, 18 Mar 2011 10:54:17 -0700 (PDT)
-Received: from elie ([69.209.56.53])
-        by mx.google.com with ESMTPS id c18sm310965ana.27.2011.03.18.10.54.15
-        (version=SSLv3 cipher=OTHER);
-        Fri, 18 Mar 2011 10:54:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1300457243.12245.13.camel@drew-northup.unet.maine.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=n6u8v5CxEwa/2refyw/RO2kesXiOfUXPS7P78wa03DfI9yLVfhEBkwOd3pcawiGJox
+         ydkqoMqxYDdzna3KDa2rAqk/MisvUxw3CEMfI8JkfTYodyKhaFs4QtLkSj8GfSPXYWDY
+         h3CV8w56a23XLvtB0DXt5s2z9DQ+yBAfx/jDo=
+Received: by 10.151.88.32 with SMTP id q32mr1107569ybl.145.1300471695126; Fri,
+ 18 Mar 2011 11:08:15 -0700 (PDT)
+Received: by 10.151.44.10 with HTTP; Fri, 18 Mar 2011 11:07:35 -0700 (PDT)
+In-Reply-To: <20110318174504.GA22332@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169344>
 
-Drew Northup wrote:
+Heya,
 
-> At the very least I'm considering making a man page for the
-> configuration file. I don't know off-hand how much that will be
-> seemingly repetitive of the README, but I suspect I'm not the only one
-> who often finds monolithic files tucked away in /usr/share/doc
+On Fri, Mar 18, 2011 at 18:45, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> No documentation for "export" ... yet
 
-Yes, please!  I'd say, beyond that: please feel free to replace large
-chunks of the README with "See the manpage (or <source file for the
-manpage>) for further information.".
+Which is for the better, since I think the current interface is
+broken. It'll be easier to justify changing it if it's not documented
+;).
 
-Happily,
-Jonathan
+> (by the way: would it
+> make sense to export the GIT_DIR environment variable so a round trip
+> for the 'gitdir' capability would eventually be unnecessary?).
+
+Yes, that makes a lot of sense.
+
+> The current documentation left me lost, so I wrote this (which still
+> probably leaves one lost). =C2=A0Thoughts?
+
+I think it makes sense.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
