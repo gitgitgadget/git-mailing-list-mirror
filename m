@@ -1,81 +1,158 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC/PATCH] Documentation/remote-helpers: explain capabilities first
-Date: Fri, 18 Mar 2011 19:07:35 +0100
-Message-ID: <AANLkTimfZM6muiU3vPMgx3NnRdb4H0t4E2DMXt1233LP@mail.gmail.com>
-References: <20110318174504.GA22332@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/3] gitweb: introduce localtime feature
+Date: Fri, 18 Mar 2011 11:24:36 -0700
+Message-ID: <7vy64cwal7.fsf@alter.siamese.dyndns.org>
+References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
+ <e160457138c1166ffa6faf1c58ea170e@localhost>
+ <201103181540.03431.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Tomas Carnecky <tom@dbservice.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 19:08:22 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 19:24:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0e62-0005eK-0z
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 19:08:22 +0100
+	id 1Q0eM4-0005i8-MN
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 19:24:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755534Ab1CRSIR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 14:08:17 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:57625 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753427Ab1CRSIP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 14:08:15 -0400
-Received: by yia27 with SMTP id 27so1684766yia.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 11:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=KX1MTEapSwamHopWfLI2yp82vQQ0piGpS818jZQid1s=;
-        b=Og+kWQ894gYOvSDqgbkCkuhyDLuDw9oYRvzxbqCj9T3cxBxrWe96SMxEfm6M03PIZ8
-         dL/siqGksGyaG0PRMcHKb40BpgsQbBF2LKWmNXxcFIv0Nefu2qBUzQVpJ1YlCY6+rNSM
-         vi27lGFb1LyWQ74PEZLDZ7Sjz+3JbFwiEDnqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=n6u8v5CxEwa/2refyw/RO2kesXiOfUXPS7P78wa03DfI9yLVfhEBkwOd3pcawiGJox
-         ydkqoMqxYDdzna3KDa2rAqk/MisvUxw3CEMfI8JkfTYodyKhaFs4QtLkSj8GfSPXYWDY
-         h3CV8w56a23XLvtB0DXt5s2z9DQ+yBAfx/jDo=
-Received: by 10.151.88.32 with SMTP id q32mr1107569ybl.145.1300471695126; Fri,
- 18 Mar 2011 11:08:15 -0700 (PDT)
-Received: by 10.151.44.10 with HTTP; Fri, 18 Mar 2011 11:07:35 -0700 (PDT)
-In-Reply-To: <20110318174504.GA22332@elie>
+	id S1755828Ab1CRSYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 14:24:52 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52257 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755403Ab1CRSYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 14:24:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0C9814CD7;
+	Fri, 18 Mar 2011 14:26:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1PdI6Ix7z2TFg/0kq7M0SOS+Po8=; b=ufcfkI
+	UvWYZDeqVhtGdvONVxFAdiXsTfCjRVoyG1UF+laJLcbs+EJTgeOjnsbwtpgi1QyV
+	68s3yIBc8ayFoWnMBs0UMobUoXQ1jK5KBIvuxZDAaCj5K44DVGXgeuGn1sIS/tX6
+	qBy4MYdfwOn3KgD6VCd3lgnYIv6BtJkE8Nh0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PQcsJ0HYLC7/o5/hTZ7gdvfWITTZa1vV
+	ShamMIiSDu33gKwUzjm7gldETg67r2Y0o7BnO2TbTVRUGOH1TCjumUlA+QdG5yss
+	jfwHSxU9h/8xH9zZCYucl/C0v+xo8t4DZ9Wkw+/2XuJfJgiMEAyGVcHjAWpSAMt9
+	yzaIe/6WCLk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CDCAA4CD4;
+	Fri, 18 Mar 2011 14:26:17 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8BA024CD3; Fri, 18 Mar 2011
+ 14:26:13 -0400 (EDT)
+In-Reply-To: <201103181540.03431.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri, 18 Mar 2011 15:40:01 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 371720A8-518D-11E0-99A9-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169345>
 
-Heya,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Fri, Mar 18, 2011 at 18:45, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> No documentation for "export" ... yet
+> From: Kevin Cernekee <cernekee@gmail.com>
+>
+> With this feature enabled, all timestamps are shown in the local
+> timezone instead of GMT.  The timezone is taken from the appropriate
+> timezone string stored in the commit object.
+>
+> This is useful if most of contributors (to a project) are based in a
+> single office, all within the same timezone.  In such case local time
+> is more useful than GMT / UTC time that gitweb uses by default, and
+> which is better choice for geographically scattered contributors.
+>
+> This change does not affect relative timestamps (e.g. "5 hours ago"),
+> and neither does it affect 'patch' and 'patches' views which already
+> use localtime because they are generated by "git format-patch".
+>
+> Affected views include:
+> * 'summary' view, "last change" field (commit time from latest change)
+> * 'log' view, author time
+> * 'commit' and 'commitdiff' views, author/committer time
+> * 'tag' view, tagger time
+>
+> In the case of 'commit', 'commitdiff' and 'tag' views gitweb used to
+> print both GMT time and time in timezone of author/tagger/comitter,
+> marking localtime with "atnight" as appropriate; after this commit
+> gitweb shows only local time.  Marking localtime with "atnight" when
+> needed is left for subsequent commit.
+>
+> Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 
-Which is for the better, since I think the current interface is
-broken. It'll be easier to justify changing it if it's not documented
-;).
+Thanks for moving the explanation up into the log message.  Much easier to
+understand the motivation.
 
-> (by the way: would it
-> make sense to export the GIT_DIR environment variable so a round trip
-> for the 'gitdir' capability would eventually be unnecessary?).
+> @@ -2930,6 +2943,12 @@ sub parse_date {
+>  	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
+>  	                          1900+$year, $mon+1, $mday,
+>  	                          $hour, $min, $sec, $tz);
+> +
+> +	if (gitweb_check_feature('localtime')) {
+> +		$date{'rfc2822'} = sprintf "%s, %d %s %4d %02d:%02d:%02d $tz",
+> +		                   $days[$wday], $mday, $months[$mon],
+> +		                   1900+$year, $hour ,$min, $sec;
+> +	}
+>  	return %date;
+>  }
 
-Yes, that makes a lot of sense.
+Two comments (hint: when reviewing, look a bit wider outside the context
+provided by the patch):
 
-> The current documentation left me lost, so I wrote this (which still
-> probably leaves one lost). =C2=A0Thoughts?
+ - This gets seconds-since-epoch and returns a bag of pieces of formatted
+   timestamp (some are mere elements like "hour", some are full timestamp
+   like "iso-8601").  Doesn't sound like "parse"-date, does it?
 
-I think it makes sense.
+ - It looks somewhat ugly to unconditionally assign to 'rfc2822' first
+   (before the context of the hunk) and then overwrite it.  Wouldn't it be
+   more useful later to have a separate 'rfc2822_local' field, just like
+   existing 'hour_local' and 'minute_local' are counterparts for 'hour'
+   and 'minute'?
 
---=20
-Cheers,
+> @@ -3992,7 +4011,7 @@ sub git_print_authorship_rows {
+>  		      "</td></tr>\n" .
+>  		      "<tr>" .
+>  		      "<td></td><td> $wd{'rfc2822'}";
+> -		print_local_time(%wd);
+> +		print_local_time(%wd) if !gitweb_check_feature('localtime');
+>  		print "</td>" .
+>  		      "</tr>\n";
+>  	}
 
-Sverre Rabbelier
+Very confusing.  "Ok, we print local time. --ah, wait, only when localtime
+feature is not used???"
+
+It turns out that the hijacking of $wd{'rfc2822'} made above already gives
+us the local time so this patch turns the meaning of print-local-time used
+here into additionally-print-local-time.
+
+Both call sites to print_local_time() follow this pattern:
+
+	print "... some string ..." .
+        	"... that is sometimes long ..." .
+                "... and more but ends with $bag{'rfc2822'}";
+	print_local_time(%bag); # perhaps if "some condition";
+	print "... more string ...";
+
+I am referring to "if (${opts-localtime})" in the existing code and
+"if !gitweb_c_f('localtime')" in this patch as "some condition".
+
+It appears to me that it may be a better idea to hide the "rfc2822" part
+as an implementation detail behind a helper function, to make the above
+pattern to look perhaps like this:
+
+	print "... some string ..." .
+        	"... that is sometimes long ..." .
+                "... and more but ends with " .
+		timestamp_string(%bag, "some condition") .
+	        "... more string ...";
+
+Hmm?
