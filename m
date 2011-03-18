@@ -1,87 +1,180 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question about "branch.<name>.merge"
-Date: Fri, 18 Mar 2011 14:13:09 -0700
-Message-ID: <7vei64w2sa.fsf@alter.siamese.dyndns.org>
-References: <AANLkTin-96TK_8MjAM7MB4CCyZ0ZSvD=ZanaYWLiXsvC@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] rev-list --min-parents,--max-parents: doc and test
+ and completion
+Date: Fri, 18 Mar 2011 16:14:19 -0500
+Message-ID: <20110318211418.GA23407@elie>
+References: <cover.1300459016.git.git@drmicha.warpmail.net>
+ <182c5ece22835559a9762e242adb701547cf6575.1300459017.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Josh Ralburton <josh.ralburton@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 22:13:29 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 22:14:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0gzA-0007Ej-Be
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:13:28 +0100
+	id 1Q0h0C-0007lD-Oz
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 22:14:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757463Ab1CRVNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 17:13:24 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59283 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757368Ab1CRVNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 17:13:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2FB1342F4;
-	Fri, 18 Mar 2011 17:14:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rei/AJ3wHHxvh1NNRkcObGLskoQ=; b=rZRpTT
-	+ugtR5eh/sxIbDDtndKX+xhP3Oz9uNm96vTNZWkDkVGOIv9BVX/ZZ2t6zq0Ipq7C
-	IUgELAufaCgyrSU2LJZWCqYL1ASKtxmwUYRzf3WPwjl3Kd3ohnlpw/L1fjIedhzJ
-	0BXMCpvTyfverK6rZVXirmF8pfb0QIR38r/b4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NgLwl5VNpWkfmo7sVMLSAC5/LFPuuOSZ
-	VyyZs7l5lKiUj+9z8MfqjyunNq6yR9masKvPQIcYx//mU08hV5ojQH0BWZl74SNc
-	x18iOwgB7j3zdQI4R8K5p+yVG1kV9t787uSkRBYhqnQUy6bpkFkl1MmqGPD9Pql1
-	fct7tc9cYwE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0CF0B42DC;
-	Fri, 18 Mar 2011 17:14:48 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2544C42DB; Fri, 18 Mar 2011
- 17:14:44 -0400 (EDT)
-In-Reply-To: <AANLkTin-96TK_8MjAM7MB4CCyZ0ZSvD=ZanaYWLiXsvC@mail.gmail.com>
- (Josh Ralburton's message of "Fri, 18 Mar 2011 12:35:15 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C13D8F30-51A4-11E0-AFA4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1757474Ab1CRVO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 17:14:29 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:45252 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757366Ab1CRVO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 17:14:27 -0400
+Received: by yia27 with SMTP id 27so1753316yia.19
+        for <git@vger.kernel.org>; Fri, 18 Mar 2011 14:14:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=pWhj8b9Z9R5g+mzbFHRszBRVGRZjWRoqV0lV6N3T+W8=;
+        b=BYGCJnY9RzFKQYlRIXotOMaYuX8lznPIL8AM6MVJiE+dX/IFg9TOc1ly5N/np8SnIq
+         0t6t+OF4TvsCo706j7M7ucsYEWA3kFcXvc5EjKdpZ2QMc0m8xOzEChLBA00Udg0Gw3Y4
+         QFVbihDNxlPloUqbQI/htkv4fxIpdBXiJfOzA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kl+vybtCTql1aexWzHc0p6bbK0AS6eSLgZ0VsC+/diLe+J/9QKfRuUk+OFTTXsPkb0
+         /XLv8CSVDXTSg4+FR9AM0L7/8BLyEcdb2Wi8OY57QBoW0eN0Bm506Erb0wHolThBiai5
+         FdKvSjkU0PrS4A/Dm94iuucmIboxyAPeSLkfc=
+Received: by 10.150.254.1 with SMTP id b1mr1677724ybi.324.1300482867032;
+        Fri, 18 Mar 2011 14:14:27 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id p33sm235092ybk.17.2011.03.18.14.14.25
+        (version=SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2011 14:14:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <182c5ece22835559a9762e242adb701547cf6575.1300459017.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169361>
 
-Josh Ralburton <josh.ralburton@gmail.com> writes:
+Hi,
 
-> This is a typical section from a .git config file:
+Michael J Gruber wrote:
+
+> [Subject: rev-list --min-parents,--max-parents: doc and test and completion]
 >
-> [remote "origin"]
->     fetch = +refs/heads/*:refs/remotes/origin/*
->     url = git://git.kernel.org/pub/scm/git/git.git
-> [branch "master"]
->     remote = origin
->     merge = refs/heads/master
->
-> I am curious why "branch.master.merge=refs/heads/master"  was
-> implemented to refer to the remote branch (refs/heads/master) rather
-> than the local branch (refs/remotes/origin/master).
+> This also adds test for "--merges" and "--no-merges" which we did not
+> have so far.
 
-Because conceptually you are merging with the refs/heads/master branch
-that exists at the "origin" repository, not merging with a remote tracking
-branch that the "origin" repository may have to track its upstream.
+Minor nit: the life of reviewers is easier when the documentation and
+tests are squashed with the implementation (or if anything, the
+documentation comes first) so they can look at what the code tries to
+do before seeing how it does it.
 
-It is immaterial that you happen to have a copy of it at your own remote
-tracking branch (i.e. refs/remotes/origin/master).  If you don't need
-tracking branches, you can even do something like this:
+> --- a/t/t6009-rev-list-parent.sh
+> +++ b/t/t6009-rev-list-parent.sh
+> @@ -1,6 +1,6 @@
+[...]
+> -test_description='properly cull all ancestors'
+> +test_description='ancestor culling and limitting by parent number'
 
-	[remote "origin"]
-                url = git://...there
-        [branch "master"]
-		remote = origin
-                merge = refs/heads/master
+sp: limiting
 
-Notice that you are telling git not to create any remote tracking branches
-with this configuration.
+Thanks for updating the description.  It's easy to forget.
+
+> @@ -28,4 +28,72 @@ test_expect_success 'one is ancestor of others and should not be shown' '
+[...]
+> +check_revlist () {
+> +	> expect &&
+> +	for c in $2; do echo "$c" >> expect; done &&
+> +	git rev-list $1 master | git name-rev --name-only --tags --stdin >actual &&
+> +	test_cmp expect actual
+> +}
+
+Pedantic nits:
+
+ * if global functions are defined before all test_expect_success stanzas,
+    (1) it is easier to reuse them in tests throughout the script;
+    (2) it is easy to see at a glance what primitives a test script
+        will be using when getting acquainted with it and what
+        syntax might be worth lifting to test-lib or other test
+        scripts when shopping for that
+ * style: no space between >redirection operators and their argument
+   for consistency (maybe because > &2 is a syntax error)
+ * might be simpler to pass one rev per argument.  Like so:
+
+	rev_list_args=$1 &&
+	shift &&
+	printf '%s\n' "$@" >expect &&
+	git rev-list $rev_list_args master ...
+
+   Avoiding the for loop means errors from 'echo' before the last
+   iteration are not ignored; a more verbose way to write the same
+   thing is
+
+	for commit
+	do
+		printf '%s\n' "$commit" ||
+		return
+	done >expect &&
+	git rev-list ...
+ * this does not catch errors from rev-list!  how about
+
+	git rev-list $rev_list_args master >rev-list &&
+	git name-rev ... <rev-list >actual &&
+	test_cmp expect actual
+
+   Junio will probably complain that this is not meant to be a test
+   for name-rev; indeed, filling "expect" by computing commit names
+   might be even better (because faster).
+
+> +test_expect_success 'rev-list roots' '
+> +test_expect_success 'rev-list no merges' '
+> +test_expect_success 'rev-list no octopusses' '
+> +test_expect_success 'rev-list no roots' '
+> +test_expect_success 'rev-list merges' '
+
+Neat. :)
+
+
+> +test_expect_success 'rev-list octopus' '
+> +
+> +	check_revlist "--min-parents=3" "octopus"
+> +'
+
+Might make sense to check a dodecapus (with --min-parents=3 still) as
+well.
+
+> +test_expect_success 'rev-list override and infinities' '
+
+Ah, here's the test I suggested in reply to patch 1.  But this is not
+about overriding but the lack thereof, no?  So I'd be happier reading
+something like
+
+	test_expect_success '--no-merges --merges yields the empty set' '
+		check_revlist "--no-merges --merges" &&
+		check_revlist "--min-parents=2 --no-merges"
+	'
+
+	test_expect_success 'last --max-parents wins' '
+		check_revlist "--min-parents=2 --no-merges --max-parents=3" octopus normalmerge &&
+		check_revlist "--min-parents=2 --max-parents=3 --no-merges" ...
+	'
+
+	test_expect_success '--max-parents=infinity' '
+		...
+	'
+
+	test_expect_success '--min-parents=infinity' '
+		...
+	'
+
+	test_expect_failure '--max-parents=gobbledegood errors out' '
+		...
+	'
+
+Thanks for your attention to detail, and hope that helps.
+
+Ciao,
+Jonathan
