@@ -1,150 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH v3 2/3] gitweb: introduce localtime feature
-Date: Fri, 18 Mar 2011 15:40:01 +0100
-Message-ID: <201103181540.03431.jnareb@gmail.com>
-References: <c8621826e0576e3e31240b0205e7e3d0@localhost> <e160457138c1166ffa6faf1c58ea170e@localhost>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] docs: fix grammar in gitattributes.txt
+Date: Fri, 18 Mar 2011 10:40:37 -0400
+Message-ID: <4D836EE5.7060003@xiplink.com>
+References: <1300454067-9934-1-git-send-email-alcosholik@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 15:40:30 2011
+Cc: git@vger.kernel.org
+To: Alexei Sholik <alcosholik@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 15:42:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0aqo-0008KL-MF
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 15:40:27 +0100
+	id 1Q0asq-0001RL-1G
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 15:42:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756734Ab1CROkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 10:40:20 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:39173 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756502Ab1CROkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 10:40:15 -0400
-Received: by fxm17 with SMTP id 17so3744196fxm.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 07:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Q0z2uJ13ZEqcxJS5JheAYnnU0CpmMP2AAZGtCjINwK0=;
-        b=I+lfDFAJfjVIHZb8vAmMysCIo7O/JxY6rOAxTwLimIz7EDrv1iJNvxAEUnhkD3tdK9
-         D0KL9WLFFoEcax6ECtaoSykwhlF9SxOgw8s0+sEzbUVMhu8TdcOus6ZR8Jb2xzyOD9na
-         uOocsSBbHGbgcQX1h4+Jj5j50hwjkFPgposc4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=bH8Q6ykJijnmpLxR0KIIraRaxq5qNPtMFv/O1bbE0O4puFXTMDvx6EjaDZaIVJ6Hn5
-         0upFb1HavycuMBtjbKYwovasT/O8RpSakHZ3uCjzGh+Ke7AZbXr5d4Z3Kqj0jAyZL3pK
-         bTvJ0NZkeivWkddpxCPcDv8deJvnlxGMNAaBI=
-Received: by 10.223.97.1 with SMTP id j1mr1367523fan.86.1300459208383;
-        Fri, 18 Mar 2011 07:40:08 -0700 (PDT)
-Received: from [192.168.1.13] (abuz4.neoplus.adsl.tpnet.pl [83.8.197.4])
-        by mx.google.com with ESMTPS id o12sm1219193fav.30.2011.03.18.07.40.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 18 Mar 2011 07:40:06 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <e160457138c1166ffa6faf1c58ea170e@localhost>
-Content-Disposition: inline
+	id S1756742Ab1CROm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 10:42:27 -0400
+Received: from smtp142.iad.emailsrvr.com ([207.97.245.142]:52524 "EHLO
+	smtp142.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756694Ab1CROm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 10:42:26 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp44.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 2AA4712820E;
+	Fri, 18 Mar 2011 10:42:25 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp44.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id A7E2C1282BF;
+	Fri, 18 Mar 2011 10:42:20 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+In-Reply-To: <1300454067-9934-1-git-send-email-alcosholik@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169323>
 
-From: Kevin Cernekee <cernekee@gmail.com>
+On 11-03-18 09:14 AM, Alexei Sholik wrote:
+> Signed-off-by: Alexei Sholik <alcosholik@gmail.com>
+> ---
+>  Documentation/gitattributes.txt |    8 ++++----
+>  1 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index 7e7e121..c151657 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -632,7 +632,7 @@ Performing a three-way merge
+>  `merge`
+>  ^^^^^^^
+>  
+> -The attribute `merge` affects how three versions of a file is
+> +The attribute `merge` affects how three versions of a file are
+>  merged when a file-level merge is necessary during `git merge`,
+>  and other commands such as `git revert` and `git cherry-pick`.
+>  
+> @@ -646,15 +646,15 @@ Unset::
+>  
+>  	Take the version from the current branch as the
+>  	tentative merge result, and declare that the merge has
+> -	conflicts.  This is suitable for binary files that does
+> +	conflicts.  This is suitable for binary files that do
+>  	not have a well-defined merge semantics.
+>  
+>  Unspecified::
+>  
+>  	By default, this uses the same built-in 3-way merge
+> -	driver as is the case the `merge` attribute is set.
+> +	driver as is the case when the `merge` attribute is set.
+>  	However, `merge.default` configuration variable can name
+> -	different merge driver to be used for paths to which the
+> +	different merge driver to be used with paths for which the
+>  	`merge` attribute is unspecified.
 
-With this feature enabled, all timestamps are shown in the local
-timezone instead of GMT.  The timezone is taken from the appropriate
-timezone string stored in the commit object.
+That last sentence should really start like this:
 
-This is useful if most of contributors (to a project) are based in a
-single office, all within the same timezone.  In such case local time
-is more useful than GMT / UTC time that gitweb uses by default, and
-which is better choice for geographically scattered contributors.
+- 	However, `merge.default` configuration variable can name
++ 	However, the `merge.default` configuration variable can name a
 
-This change does not affect relative timestamps (e.g. "5 hours ago"),
-and neither does it affect 'patch' and 'patches' views which already
-use localtime because they are generated by "git format-patch".
-
-Affected views include:
-* 'summary' view, "last change" field (commit time from latest change)
-* 'log' view, author time
-* 'commit' and 'commitdiff' views, author/committer time
-* 'tag' view, tagger time
-
-In the case of 'commit', 'commitdiff' and 'tag' views gitweb used to
-print both GMT time and time in timezone of author/tagger/comitter,
-marking localtime with "atnight" as appropriate; after this commit
-gitweb shows only local time.  Marking localtime with "atnight" when
-needed is left for subsequent commit.
-
-Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Changes from original v2 version by Kevin Cernekee:
-
-* Expanded commit message, explaining "whys" behind introducing this new
-  feature (why and when can it be useful), as per
-
-    http://thread.gmane.org/gmane.comp.version-control.git/169096/focus=169284
-
-* Minor whitespace changes
-
- gitweb/gitweb.perl |   21 ++++++++++++++++++++-
- 1 files changed, 20 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 3960d34..1df3652 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -504,6 +504,19 @@ our %feature = (
- 		'sub' => sub { feature_bool('remote_heads', @_) },
- 		'override' => 0,
- 		'default' => [0]},
-+
-+	# Use the author/commit localtime rather than GMT for all timestamps.
-+	# Disabled by default.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'localtime'}{'default'} = [1];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'localtime'}{'override'} = 1;
-+	# and in project config gitweb.localtime = 0|1;
-+	'localtime' => {
-+		'sub' => sub { feature_bool('localtime', @_) },
-+		'override' => 0,
-+		'default' => [0]},
- );
- 
- sub gitweb_get_feature {
-@@ -2930,6 +2943,12 @@ sub parse_date {
- 	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
- 	                          1900+$year, $mon+1, $mday,
- 	                          $hour, $min, $sec, $tz);
-+
-+	if (gitweb_check_feature('localtime')) {
-+		$date{'rfc2822'} = sprintf "%s, %d %s %4d %02d:%02d:%02d $tz",
-+		                   $days[$wday], $mday, $months[$mon],
-+		                   1900+$year, $hour ,$min, $sec;
-+	}
- 	return %date;
- }
- 
-@@ -3992,7 +4011,7 @@ sub git_print_authorship_rows {
- 		      "</td></tr>\n" .
- 		      "<tr>" .
- 		      "<td></td><td> $wd{'rfc2822'}";
--		print_local_time(%wd);
-+		print_local_time(%wd) if !gitweb_check_feature('localtime');
- 		print "</td>" .
- 		      "</tr>\n";
- 	}
--- 
-1.7.3
+		M.
