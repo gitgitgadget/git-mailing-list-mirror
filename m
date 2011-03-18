@@ -1,78 +1,87 @@
-From: Mick Ken <micks80@gmail.com>
-Subject: Git issue with connection keep-alive
-Date: Fri, 18 Mar 2011 10:59:16 -0400
-Message-ID: <AANLkTik==xnTxhOY-CoE5_oNkE-gdfSDBzBOgOgJGTbt@mail.gmail.com>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: [PATCH] completion: Add space to PS1 when showing upstream
+Date: Fri, 18 Mar 2011 11:02:22 -0400
+Message-ID: <20110318150222.GB26236@inocybe.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andrew Sayers <andrew-git@pileofstuff.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 18 15:59:24 2011
+X-From: git-owner@vger.kernel.org Fri Mar 18 16:02:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0b98-0003gO-H6
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 15:59:22 +0100
+	id 1Q0bCK-0005NZ-5k
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Mar 2011 16:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756257Ab1CRO7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 10:59:19 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:49469 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953Ab1CRO7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 10:59:17 -0400
-Received: by iwn34 with SMTP id 34so4061195iwn.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 07:59:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=2WPJFcw535+sZg9b707u+JRaxiwkGZea7QPOLoN5Mug=;
-        b=t99aqVsQBl+QqVquln9JvOwWtMIwC5KBqCzmCscDcBGhNCEq7haaZxlGMlPX1ca1Hw
-         yDYOxRIPNb1i3Z/fTXQwhLOdcuu7lAbr3ro0kmz/WkPHm8kG+nfpkZB2nFMb3GLBqCqo
-         xrc/McoYapu6ptW8srP97ITrDqh4dkmYZKacE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=FwaQVkN34dQDJeEt9sWM5Y/WPEqllYfX9ykwe4Y7MWTSmBgo0vlZ9O7joLgKb4g0Dv
-         TGcNFoxwmUYwNj2nuzD3MUanWzmWubpUoKVTT/OSi0mXQJRFuQalxGgaLBsXMNamvfUs
-         jnYEcgLg4JewUxY/U8E205eP5SpdoKaCwu+AE=
-Received: by 10.42.131.10 with SMTP id x10mr1647578ics.206.1300460356886; Fri,
- 18 Mar 2011 07:59:16 -0700 (PDT)
-Received: by 10.42.178.67 with HTTP; Fri, 18 Mar 2011 07:59:16 -0700 (PDT)
+	id S1756402Ab1CRPCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 11:02:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62773 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753295Ab1CRPCe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 11:02:34 -0400
+X-Greylist: delayed 638 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Mar 2011 11:02:34 EDT
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7E6D27F7;
+	Fri, 18 Mar 2011 11:02:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:mime-version:content-type; s=sasl; bh=zXi
+	TCEa4BlriQks/bt/Ah0pHSI4=; b=ZTXgWehLJttQpcTocJEioWoqC096abJpat0
+	KfWPg9OBRaVd5lnybOaH0XlnHNHC/KJ7vxX+0eizRNENJdWzrUOvdygIr9OpP0px
+	Qs4xWrg/c69UyA3vurqg+agwNZAccz3zpD0bcIgu/hQOItlkmHIryScJJbTljm4r
+	GO9WRUa4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	YnEAd3iK2+nGuUr8j1A9W4eXYbgyKkwIHqpW9tl539Ht/SVpLR/qQd1MV2iQQKug
+	pqsg8GVgotjxwrY0nWwAQezZBY/BMaFpCcEvDXokWLGhEUOIJk5Aa0AgSXtjUj+t
+	KfH6IARC2ACvYHnc0N7n3vFRTYv3a483aa1//Zbvy3U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D34127F6;
+	Fri, 18 Mar 2011 11:02:28 -0400 (EDT)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CFF3F27F4; Fri, 18 Mar 2011
+ 11:02:24 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Pobox-Relay-ID: BDCD1048-5170-11E0-8A5C-C1F4E168B6F2-09356542!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169330>
 
-Hi,
-I am experiencing an issue with Git plugin in Jenkins. I have already
-posted the issue at the Jenkins mailing list but did not heard much in
-the last couple of days, so I thought of posting it here incase
-someone can help:
+Depending on whether other changes were present or displayed in PS1, the
+prompt may have lacked a space between the branch and the upstream
+marker.  Add this space as needed so the branch name and upstream state
+aren't confusingly mixed.
 
-Jenkins mailing list thread -
-http://groups.google.com/group/jenkinsci-users/browse_thread/thread/6f9d685d6aef4c49?hl=en
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+ contrib/completion/git-completion.bash |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-In short, the issue is that when the Git plugin is trying to clone a
-repo it's failing but "Tortoise Git" on the same server is able to
-successfully able to clone the repo. After some debugging it looks
-like the Git calls are different, here's the internal Git call from
-Jenkins that's failing:
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0b0b913..e5af5f6 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -312,6 +312,7 @@ __git_ps1 ()
+ 		fi
+ 
+ 		local f="$w$i$s$u"
++		[[ -z $f ]] && p="${p:+ $p}"
+ 		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r$p"
+ 	fi
+ }
+-- 
+1.7.4.1
 
-C:\workspace>git clone http://<server_url>/project.git C:\Projects\
-trace: built-in: git 'clone' 'http://<server_url>/project.git' 'C:
-\Projects\'
-trace: run_command: 'git-remote-http' 'origin' 'http://<server_url>/
-project.git'
-Cloning into C:\Projects\...
-trace: run_command: 'fetch-pack' '--stateless-rpc' '--lock-pack' '--
-thin' '--no-progress' 'http://<server_url>/project.git' 'refs/heads/
-master' 'refs/heads/m3/master'
-
-Whereas, the tortoise git is just passing the "--progress -v"
-parameters and it's successful.
-
-Any ideas why the Git call from Jenkins is dropping the connection?
-
-Thanks
+-- 
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Giving money and power to government is like giving whiskey and car
+keys to teenage boys.
+    -- P.J. O'Rourke
