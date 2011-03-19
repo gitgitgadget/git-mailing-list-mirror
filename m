@@ -1,49 +1,148 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: brtfs COW links and git
-Date: Sat, 19 Mar 2011 16:15:32 -0400
-Message-ID: <20110319201532.GA6862@cthulhu>
+From: Kevin Cernekee <cernekee@gmail.com>
+Subject: [PATCH v2 1/3] gitweb: rename parse_date() to format_date()
+Date: Sat, 19 Mar 2011 13:48:25 -0700
+Message-ID: <4f21902cf5f72b30a96465cf911d13aa@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 19 21:21:35 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 21:54:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q12eU-0003Wy-P1
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 21:21:35 +0100
+	id 1Q13Ah-00071H-P9
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 21:54:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757475Ab1CSUVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 16:21:30 -0400
-Received: from static-72-66-21-34.washdc.fios.verizon.net ([72.66.21.34]:38628
-	"EHLO cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757286Ab1CSUV3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 16:21:29 -0400
-X-Greylist: delayed 354 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Mar 2011 16:21:28 EDT
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id 66D1F8220FC; Sat, 19 Mar 2011 16:15:32 -0400 (EDT)
+	id S1757512Ab1CSUyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 16:54:47 -0400
+Received: from [69.28.251.93] ([69.28.251.93]:34863 "EHLO b32.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1757476Ab1CSUyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 16:54:46 -0400
+Received: (qmail 3300 invoked from network); 19 Mar 2011 20:54:44 -0000
+Received: from localhost (HELO vps-1001064-677.cp.jvds.com) (127.0.0.1)
+  by localhost with (DHE-RSA-AES128-SHA encrypted) SMTP; 19 Mar 2011 20:54:44 -0000
+Received: by vps-1001064-677.cp.jvds.com (sSMTP sendmail emulation); Sat, 19 Mar 2011 13:54:43 -0700
+User-Agent: vim 7.2
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169461>
 
+One might reasonably expect a function named parse_date() to be used
+for something along these lines:
 
-I wish git could use COW links.  I wish I could put a large binary into git and
-have the only underlying filesystem operation be to cp --reflink and to save the
-metadata.  There are a few complications:
+$unix_time_t = parse_date("2011-03-19");
 
-How does it know which files to reflink?  attributes?  a size limit?
+But instead, gitweb's parse_date works more like:
 
-What does git gc do with reflinks?
+&parse_date(1300505805, "-0800") = {
+        'hour' => 3,
+        'minute' => 36,
+        ...
+        'rfc2822' => 'Sat, 19 Mar 2011 03:36:45 +0000',
+        ...
+}
 
-Should diff-delta be reflink-aware?  Perhaps it could query the fs for
-blocklists.
+Rename the function to improve clarity.  No change to functionality.
 
-Before I dive into implementing this, I'd like to get your comments and advice,
-to maximize the chances of success.  
+Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
+---
 
-Thanks!
+v2: Add "-0800" to the commit message.  No code changes.
+
+ gitweb/gitweb.perl |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b04ab8c..57ef08c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2893,7 +2893,7 @@ sub git_get_rev_name_tags {
+ ## ----------------------------------------------------------------------
+ ## parse to hash functions
+ 
+-sub parse_date {
++sub format_date {
+ 	my $epoch = shift;
+ 	my $tz = shift || "-0000";
+ 
+@@ -3953,7 +3953,7 @@ sub git_print_authorship {
+ 	my $tag = $opts{-tag} || 'div';
+ 	my $author = $co->{'author_name'};
+ 
+-	my %ad = parse_date($co->{'author_epoch'}, $co->{'author_tz'});
++	my %ad = format_date($co->{'author_epoch'}, $co->{'author_tz'});
+ 	print "<$tag class=\"author_date\">" .
+ 	      format_search_author($author, "author", esc_html($author)) .
+ 	      " [$ad{'rfc2822'}";
+@@ -3973,7 +3973,7 @@ sub git_print_authorship_rows {
+ 	my @people = @_;
+ 	@people = ('author', 'committer') unless @people;
+ 	foreach my $who (@people) {
+-		my %wd = parse_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
++		my %wd = format_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
+ 		print "<tr><td>$who</td><td>" .
+ 		      format_search_author($co->{"${who}_name"}, $who,
+ 			       esc_html($co->{"${who}_name"})) . " " .
+@@ -4906,7 +4906,7 @@ sub git_log_body {
+ 		next if !%co;
+ 		my $commit = $co{'id'};
+ 		my $ref = format_ref_marker($refs, $commit);
+-		my %ad = parse_date($co{'author_epoch'});
++		my %ad = format_date($co{'author_epoch'});
+ 		git_print_header_div('commit',
+ 		               "<span class=\"age\">$co{'age_string'}</span>" .
+ 		               esc_html($co{'title'}) . $ref,
+@@ -5369,7 +5369,7 @@ sub git_project_index {
+ sub git_summary {
+ 	my $descr = git_get_project_description($project) || "none";
+ 	my %co = parse_commit("HEAD");
+-	my %cd = %co ? parse_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
++	my %cd = %co ? format_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
+ 	my $head = $co{'id'};
+ 	my $remote_heads = gitweb_check_feature('remote_heads');
+ 
+@@ -5674,7 +5674,7 @@ sub git_blame_common {
+ 			my $short_rev = substr($full_rev, 0, 8);
+ 			my $author = $meta->{'author'};
+ 			my %date =
+-				parse_date($meta->{'author-time'}, $meta->{'author-tz'});
++				format_date($meta->{'author-time'}, $meta->{'author-tz'});
+ 			my $date = $date{'iso-tz'};
+ 			if ($group_size) {
+ 				$current_color = ($current_color + 1) % $num_colors;
+@@ -6702,7 +6702,7 @@ sub git_commitdiff {
+ 			-charset => 'utf-8',
+ 			-expires => $expires,
+ 			-content_disposition => 'inline; filename="' . "$filename" . '"');
+-		my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
++		my %ad = format_date($co{'author_epoch'}, $co{'author_tz'});
+ 		print "From: " . to_utf8($co{'author'}) . "\n";
+ 		print "Date: $ad{'rfc2822'} ($ad{'tz_local'})\n";
+ 		print "Subject: " . to_utf8($co{'title'}) . "\n";
+@@ -7064,7 +7064,7 @@ sub git_feed {
+ 	if (defined($commitlist[0])) {
+ 		%latest_commit = %{$commitlist[0]};
+ 		my $latest_epoch = $latest_commit{'committer_epoch'};
+-		%latest_date   = parse_date($latest_epoch);
++		%latest_date   = format_date($latest_epoch);
+ 		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
+ 		if (defined $if_modified) {
+ 			my $since;
+@@ -7195,7 +7195,7 @@ XML
+ 		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
+ 			last;
+ 		}
+-		my %cd = parse_date($co{'author_epoch'});
++		my %cd = format_date($co{'author_epoch'});
+ 
+ 		# get list of changed files
+ 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-- 
+1.7.4.1
