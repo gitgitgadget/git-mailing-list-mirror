@@ -1,96 +1,94 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
-Date: Sat, 19 Mar 2011 16:50:24 +0100
-Message-ID: <4D84D0C0.7080808@lsrfire.ath.cx>
-References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com> <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] git-init.txt: move description section up
+Date: Sat, 19 Mar 2011 16:55:56 +0100
+Message-ID: <vpqbp17hzoz.fsf@bauges.imag.fr>
+References: <1300547816-4768-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?cnllbnVzIOKXhw==?= <ryenus@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 16:50:50 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 16:59:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0yQT-0002E2-Ur
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 16:50:50 +0100
+	id 1Q0yYc-0005oN-Ks
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 16:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755466Ab1CSPui convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 11:50:38 -0400
-Received: from india601.server4you.de ([85.25.151.105]:58240 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753391Ab1CSPuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 11:50:37 -0400
-Received: from [192.168.2.103] (p4FFDB4FC.dip.t-dialin.net [79.253.180.252])
-	by india601.server4you.de (Postfix) with ESMTPSA id CEDCB2F8067;
-	Sat, 19 Mar 2011 16:50:35 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
+	id S1756084Ab1CSP7J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 11:59:09 -0400
+Received: from imag.imag.fr ([129.88.30.1]:34204 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755888Ab1CSP7I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 11:59:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p2JFtvmL020457
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 19 Mar 2011 16:55:57 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Q0yVR-0002Gf-C4; Sat, 19 Mar 2011 16:55:57 +0100
+In-Reply-To: <1300547816-4768-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 19
+ Mar 2011 22:16:55 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 19 Mar 2011 16:55:57 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169442>
 
-Am 19.03.2011 13:18, schrieb Nguyen Thai Ngoc Duy:
-> On Sat, Mar 19, 2011 at 7:08 PM, ryenus =E2=97=87<ryenus@gmail.com>  =
-wrote:
->> -               for e in `cd "$PACKDIR"&&  find . -type f -name '*.p=
-ack' \
->> +               for e in `cd "$PACKDIR"&&  /usr/bin/find . -type f
->=20
-> I'd rather have something like in test-lib.sh (with conditions)
->=20
-> find() {
-> /usr/bin/find "$@"
-> }
->=20
-> Even better, rewrite this script to C.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-That's a good idea, but it's a lot more involved than the original
-patch.
+>  - The text mentioning git-init-db is dropped. init-db is
+>    deprecated, no need to confuse new users
 
-Do we need to support pack files in subdirectories of $PACKDIR?  If
-not -- and I don't immediately see why, except that the current code
-does with its find call -- then the following patch might be a quick
-bandaid.  Untested, please be careful.
+Shouldn't we add something like this then?
 
-Ren=C3=A9
+=46rom 86b8daa4bf4c7cd376335570e5f1663c6d6cde01 Mon Sep 17 00:00:00 200=
+1
+=46rom: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Sat, 19 Mar 2011 16:54:43 +0100
+Subject: [PATCH] shorten git-init-db.txt to only point to git-init.txt
+
+---
+ Documentation/git-init-db.txt |    8 +-------
+ 1 files changed, 1 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-db.=
+txt
+index 2c4c716..b2b959e 100644
+--- a/Documentation/git-init-db.txt
++++ b/Documentation/git-init-db.txt
+@@ -3,13 +3,7 @@ git-init-db(1)
+=20
+ NAME
+ ----
+-git-init-db - Creates an empty git repository
+-
+-
+-SYNOPSIS
+---------
+-'git init-db' [-q | --quiet] [--bare] [--template=3D<template_director=
+y>] [--shared[=3D<permissions>]]
+-
++git-init-db - Deprecated alias for linkgit:git-init[1]
+=20
+ DESCRIPTION
+ -----------
+--=20
+1.7.4.1.293.g8414b
 
 
- git-repack.sh |   19 ++++++++++---------
- 1 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/git-repack.sh b/git-repack.sh
-index 624feec..4e49079 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -64,15 +64,16 @@ case ",$all_into_one," in
- ,t,)
- 	args=3D existing=3D
- 	if [ -d "$PACKDIR" ]; then
--		for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
--			| sed -e 's/^\.\///' -e 's/\.pack$//'`
--		do
--			if [ -e "$PACKDIR/$e.keep" ]; then
--				: keep
--			else
--				existing=3D"$existing $e"
--			fi
--		done
-+		existing=3D$(
-+			cd "$PACKDIR" &&
-+			for e in *.pack
-+			do
-+				if test -f "$e" -a ! -e "${e%.pack}.keep"
-+				then
-+					echo "${e%.pack}"
-+				fi
-+			done
-+		)
- 		if test -n "$existing" -a -n "$unpack_unreachable" -a \
- 			-n "$remove_redundant"
- 		then
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
