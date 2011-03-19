@@ -1,125 +1,81 @@
-From: Kevin Cernekee <cernekee@gmail.com>
-Subject: Re: [PATCH v4 2/2] gitweb: introduce localtime feature
-Date: Sat, 19 Mar 2011 14:22:21 -0700
-Message-ID: <AANLkTikw7_9Q0MgVZZxX_dXvcxoXfx5VEmRQkVH_k1YC@mail.gmail.com>
-References: <ab54ba2199cc7487e383a31e3aa65885@localhost>
-	<7v39mjro38.fsf@alter.siamese.dyndns.org>
-	<AANLkTimssscn+STEPyM7NbXF5ddFApPBsgXfqz-9SSNs@mail.gmail.com>
-	<201103192209.29759.jnareb@gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: [PATCH] git status: fix grammar when in detached head
+Date: Sat, 19 Mar 2011 22:33:29 +0100
+Message-ID: <4D852129.7050205@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 22:22:32 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 19 22:34:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q13bR-0008In-Cb
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 22:22:29 +0100
+	id 1Q13n2-0003pr-Dy
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 22:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757563Ab1CSVWX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 17:22:23 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63529 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757513Ab1CSVWW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 17:22:22 -0400
-Received: by fxm17 with SMTP id 17so4595633fxm.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 14:22:21 -0700 (PDT)
+	id S1757580Ab1CSVeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 17:34:19 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57573 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757562Ab1CSVeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 17:34:17 -0400
+Received: by bwz15 with SMTP id 15so4208196bwz.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 14:34:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ld3gY4cC9Ayxlnp4mDKbjWmQ+ImEdq03EA1uoR9YF+g=;
-        b=pL3xhdlzbAWRAnUlwOGaR+54CsPLv/StX+l/eG6w9o8d3z7/g/df5uZyJpJ1wbHoPe
-         dz3B4QVGTTDYgXs6lOgaJi2jvgH7VjZlRYP2ckEIRSODm2WAk8iANA4tXXDCKt3ofqTw
-         TVp/uW/eR9Dfcg0D6pDHhB3dzPAKr7z4hHhIs=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:content-type:content-transfer-encoding;
+        bh=Er3P3dWFY3lwyu98DtFUMnGW4avKvA48+lHhTAmSBwI=;
+        b=naF76+bovyq5p8l5OI57EMA7hB/0Jx7km1a09y6Io75hLBpdj+vLOChLKLo6kP5u7a
+         9ATfsxkD65eN9SWSbhnossLFHL9i6+1a44WR2xt4hlUtmWWaiVu98zh7Tc/E+KL2FlD5
+         EMhDddP80re8gIulbqn/HVT/sUfh1uAou909E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=I0BncnZTqdZDTFITCDY+SkgO2pK+C/5qDix22/g+CnEZzvdEgooQemroYrpaTBnN3d
-         Oigrq3TM5aDr0oeddDQrULxV1szB5wSCHu09CubTWQMdejAKFB9x/pwd/SOCQH7/uFPr
-         KN1MjNAKaKDQ+52QRIDcyb4txdEXS4bN905Oo=
-Received: by 10.223.143.5 with SMTP id s5mr2989459fau.60.1300569741164; Sat,
- 19 Mar 2011 14:22:21 -0700 (PDT)
-Received: by 10.223.61.83 with HTTP; Sat, 19 Mar 2011 14:22:21 -0700 (PDT)
-In-Reply-To: <201103192209.29759.jnareb@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=rB+OKKNB//mVWrhPlsIJNZKwYlrUZeXYrGZarmL9mR+acfmF+x3fAS/dr2WdAKORyP
+         Tk3kN+kd4OwuihFpzDqS+x0Ubux7fEAQDxjMtI/4T16WgrR34jvDEWCrW3E32AvAzETJ
+         Zqh8Ptz3XgFXB1au3OVAcjqGUrDIs2CoaQFvU=
+Received: by 10.204.73.206 with SMTP id r14mr2128979bkj.181.1300570417163;
+        Sat, 19 Mar 2011 14:33:37 -0700 (PDT)
+Received: from [192.168.1.101] (app184.neoplus.adsl.tpnet.pl [83.26.149.184])
+        by mx.google.com with ESMTPS id z18sm812361bkf.8.2011.03.19.14.33.35
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Mar 2011 14:33:36 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169466>
 
-On Sat, Mar 19, 2011 at 2:09 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
->> For the $feature{'localtime'} disabled case, the coloring is the sam=
-e as before.
->
-> No, it is not the same. =C2=A0It used to be
->
-> =C2=A0Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^^^^^
->
-> and now it is
->
-> =C2=A0Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^^^^^^^^^^^^^
-> which is I also think improvement,... but should be mentioned in the
-> commit message.
 
-Oh OK, I did not notice this or intend to change the formatting.  My ba=
-d.
+Signed-off-by: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+---
+ wt-status.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
->> I will paint the whole line in the next spin, and mention it in the
->> commit message.
->
-> I think current solution of using
->
-> =C2=A0Wed, 16 Mar 2011 02:02:42 -0500 (07:02:42 +0000)
-> =C2=A0^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->
-> when 'localtime' feature is enabled is better than painting the whole=
-:
-> you are now painting the _local_ part, i.e the part responsible for
-> "atnight" warning.
+Not a native English speaker, but IMO the previous version isn't 
+correct.
 
-I can fix up v4 if Junio thinks this is a better way to go...
+diff --git a/wt-status.c b/wt-status.c
+index 4daa8bb..3214f52 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -643,7 +643,7 @@ void wt_status_print(struct wt_status *s)
+ 		else if (!strcmp(branch_name, "HEAD")) {
+ 			branch_name = "";
+ 			branch_status_color = color(WT_STATUS_NOBRANCH, s);
+-			on_what = "Not currently on any branch.";
++			on_what = "Not on any branch currently.";
+ 		}
+ 		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "# ");
+ 		color_fprintf(s->fp, branch_status_color, "%s", on_what);
+-- 
+1.7.4.1.295.ged435
 
-It does make the code a little more complicated, though.  If we paint
-the entire string, it can be done once toward the end of the function,
-rather than twice (two different ways) inside the localtime /
-no-localtime clauses.
-
-I am largely indifferent to how "atnight" is handled but it would be
-good to arrive at a consensus.
-
->> Also, is there a cleaner way of writing this?
->>
->> sub timestamp_html {
->> =C2=A0 =C2=A0 my %date =3D %{$_[0]};
->> =C2=A0 =C2=A0 shift;
->> =C2=A0 =C2=A0 my %opts =3D @_;
->
-> =C2=A0sub timestamp_html {
-> =C2=A0 =C2=A0 =C2=A0my %date =3D %{ shift };
-> =C2=A0 =C2=A0 =C2=A0my %opts =3D @_;
-
-This did not work for me.  It interprets "shift" as a variable name.
-
-> Or just use hash reference for $date:
->
-> =C2=A0sub timestamp_html {
-> =C2=A0 =C2=A0 =C2=A0my ($date, %opts) =3D @_;
->
-> and use $date->{'sth'}.
-
-That is what I did on the latest 3/3 (change "atnight" highlighting)
-patch.  Seemed to work OK.
-
-Thanks.
+-- 
+Piotr Krukowiecki
