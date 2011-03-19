@@ -1,99 +1,96 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: [PATCH 2/2] bisect documentation: exit codes 126,127 abort bisect
-Date: Sat, 19 Mar 2011 16:20:15 +0100
-Message-ID: <4D84C9AF.2020900@gmail.com>
-References: <AANLkTikZ3Po-YdhO-qCn5usVkt4J196eFF6YdbAeMG_X@mail.gmail.com> <7v1v267no9.fsf@alter.siamese.dyndns.org> <AANLkTikRttGnxex1CYSQnSg4PgctFj0-qNjf5un+fL0W@mail.gmail.com> <4D81B04A.1010802@viscovery.net> <20110317072723.GH11931@sigill.intra.peff.net> <7vei654omv.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
+Date: Sat, 19 Mar 2011 16:50:24 +0100
+Message-ID: <4D84D0C0.7080808@lsrfire.ath.cx>
+References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com> <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 16:20:26 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?cnllbnVzIOKXhw==?= <ryenus@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 16:50:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0xx3-00077h-A9
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 16:20:25 +0100
+	id 1Q0yQT-0002E2-Ur
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 16:50:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778Ab1CSPUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 11:20:20 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55727 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754087Ab1CSPUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 11:20:19 -0400
-Received: by fxm17 with SMTP id 17so4466287fxm.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 08:20:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=KmW/DwCWfJKEE2fq10UiNmcGor49/6xPHXSK5MJTp1Q=;
-        b=bexi4lrI0uirSdZrT4+pubqz1UELRxIkdhYDrJmso1Mf+T4mPh81Fb6TiAc2/uXdo6
-         vojOKStBnGc1qPK8kG0rpYc89ygh/l+W5XTEJL/Auy7QohjEQsjN8n5O7iBp5RQjcpgY
-         KNGe78tPCqWTHypPyjtL2F2y9Vc0Q0Ol31u0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=bF0bNI5Cm5T/REN/Zd0wSMN6mQ7wOJZbOeWJKcPQhPMngamEcjEXNrukr6elJIaUXI
-         ixyRBQYXIeaUpzarARLX5IEpnbHR9nKcdIx5bgfbn75oy7N0gR4pdlahj1ISfgOV9Ulh
-         BjSBpdg7WwvVLMYvU4kcCQYHCQ5Iyy5hYtI98=
-Received: by 10.223.87.217 with SMTP id x25mr2738142fal.133.1300548018297;
-        Sat, 19 Mar 2011 08:20:18 -0700 (PDT)
-Received: from [192.168.1.101] (aapp186.neoplus.adsl.tpnet.pl [83.5.149.186])
-        by mx.google.com with ESMTPS id l2sm1188798fam.29.2011.03.19.08.20.16
-        (version=SSLv3 cipher=OTHER);
-        Sat, 19 Mar 2011 08:20:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
-In-Reply-To: <7vei654omv.fsf@alter.siamese.dyndns.org>
+	id S1755466Ab1CSPui convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 11:50:38 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58240 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753391Ab1CSPuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 11:50:37 -0400
+Received: from [192.168.2.103] (p4FFDB4FC.dip.t-dialin.net [79.253.180.252])
+	by india601.server4you.de (Postfix) with ESMTPSA id CEDCB2F8067;
+	Sat, 19 Mar 2011 16:50:35 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169441>
 
-Update documentation after meaning of those exit codes changed
-from "mark as bad code" to "abort bisect run".
+Am 19.03.2011 13:18, schrieb Nguyen Thai Ngoc Duy:
+> On Sat, Mar 19, 2011 at 7:08 PM, ryenus =E2=97=87<ryenus@gmail.com>  =
+wrote:
+>> -               for e in `cd "$PACKDIR"&&  find . -type f -name '*.p=
+ack' \
+>> +               for e in `cd "$PACKDIR"&&  /usr/bin/find . -type f
+>=20
+> I'd rather have something like in test-lib.sh (with conditions)
+>=20
+> find() {
+> /usr/bin/find "$@"
+> }
+>=20
+> Even better, rewrite this script to C.
 
-Signed-off-by: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
----
- Documentation/git-bisect.txt |   11 +++++------
- 1 files changed, 5 insertions(+), 6 deletions(-)
+That's a good idea, but it's a lot more involved than the original
+patch.
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index a1e47d6..70d8807 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -232,17 +232,16 @@ $ git bisect run my_script arguments
- 
- Note that the script (`my_script` in the above example) should
- exit with code 0 if the current source code is good, and exit with a
--code between 1 and 127 (inclusive), except 125, if the current
--source code is bad.
-+code between 1 and 124 (inclusive) if the current source code is bad.
-+
-+Exit code 125 should be used when the current source code cannot be
-+tested. If the script exits with this code, the current revision will
-+be skipped (see `git bisect skip` above).
- 
- Any other exit code will abort the bisect process. It should be noted
- that a program that terminates via "exit(-1)" leaves $? = 255, (see the
- exit(3) manual page), as the value is chopped with "& 0377".
- 
--The special exit code 125 should be used when the current source code
--cannot be tested. If the script exits with this code, the current
--revision will be skipped (see `git bisect skip` above).
--
- You may often find that during a bisect session you want to have
- temporary modifications (e.g. s/#define DEBUG 0/#define DEBUG 1/ in a
- header file, or "revision that does not have this commit needs this
--- 
-1.7.1
+Do we need to support pack files in subdirectories of $PACKDIR?  If
+not -- and I don't immediately see why, except that the current code
+does with its find call -- then the following patch might be a quick
+bandaid.  Untested, please be careful.
 
--- 
-Piotr Krukowiecki
+Ren=C3=A9
+
+
+ git-repack.sh |   19 ++++++++++---------
+ 1 files changed, 10 insertions(+), 9 deletions(-)
+
+diff --git a/git-repack.sh b/git-repack.sh
+index 624feec..4e49079 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -64,15 +64,16 @@ case ",$all_into_one," in
+ ,t,)
+ 	args=3D existing=3D
+ 	if [ -d "$PACKDIR" ]; then
+-		for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
+-			| sed -e 's/^\.\///' -e 's/\.pack$//'`
+-		do
+-			if [ -e "$PACKDIR/$e.keep" ]; then
+-				: keep
+-			else
+-				existing=3D"$existing $e"
+-			fi
+-		done
++		existing=3D$(
++			cd "$PACKDIR" &&
++			for e in *.pack
++			do
++				if test -f "$e" -a ! -e "${e%.pack}.keep"
++				then
++					echo "${e%.pack}"
++				fi
++			done
++		)
+ 		if test -n "$existing" -a -n "$unpack_unreachable" -a \
+ 			-n "$remove_redundant"
+ 		then
