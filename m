@@ -1,86 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
-Date: Sat, 19 Mar 2011 11:17:04 -0700
-Message-ID: <7vsjujq8kf.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com>
- <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
- <AANLkTinxyp=PbvzRkyyxXin5aOFm1NP4Be6U2Dv0aD6d@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v2] Allow git mv FileA fILEa on case ignore file systems
+Date: Sat, 19 Mar 2011 19:20:38 +0100
+Message-ID: <AANLkTimfk8bb-V8Br+KKpoLbA3G3y9HxyfjA=NrsgR0v@mail.gmail.com>
+References: <201103191528.34646.tboegi@web.de>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: ryenus =?iso-2022-jp?B?GyRCIX4bKEI=?= <ryenus@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 19:17:35 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Mar 19 19:21:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q10iS-0003vL-Es
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 19:17:32 +0100
+	id 1Q10lt-0005Ii-Pr
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 19:21:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757289Ab1CSSRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 14:17:18 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44559 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757269Ab1CSSRP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 14:17:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6F69E3FCC;
-	Sat, 19 Mar 2011 14:18:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9reNMnGlR97pO5RhEGHrpiVlRBo=; b=iw438J
-	ZfbLNKV0pZSqsihZJcSAEESRnyqxtgp/BiOCPX/K9sZnqHytnwR8bxnz6UDN8Tdk
-	d1NXQfru9UG+P/c+gDzleZR2I2oPyR4nWWKm60jIL3yoPXsCZ9qVhqAYc8JSZXSY
-	lQwtEnTDfy25EHXLtYnE4t3u7mjU05Pz9mzo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LS/a2TzMVg4Aku4aEW/BAoTkA65MKR3w
-	f+Th1k9Xu/nOtHoQIX8eouHQ76FWM3dp/8I7qd8sShK70nATKlh+bUvKbHZ21b0I
-	r/1Zm0380C8i5AQD6GkwV/4hw2c6o85684q0FuvWqxkcaiRy7stmbq/0dkMQ0lHd
-	1MxS6CBAiwA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 37B703FC8;
-	Sat, 19 Mar 2011 14:18:47 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0DCC43FC7; Sat, 19 Mar 2011
- 14:18:42 -0400 (EDT)
-In-Reply-To: <AANLkTinxyp=PbvzRkyyxXin5aOFm1NP4Be6U2Dv0aD6d@mail.gmail.com>
- ("ryenus =?iso-2022-jp?B?GyRCIX4bKEIiJ3M=?= message of "Sun, 20 Mar 2011
- 00:32:47 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 54E8622C-5255-11E0-AD43-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1757210Ab1CSSVB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 14:21:01 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55428 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757134Ab1CSSU7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 14:20:59 -0400
+Received: by fxm17 with SMTP id 17so4535611fxm.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 11:20:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3s3tUmAaBfJxRVmLHGfIZahWxiSuj9CPsvNYaj1KiZo=;
+        b=iHxOsCIKNAHjPfILMwe+oc9I3z5DisuzEdpgOElCEJ8boU+sUIel6jnindRX6y1MUW
+         MRddA6yYG15ssm5a8Qeis2E5p36T0PZgy3xQhMlfdiwUbElJG1aJQHk2eN46pEZJzP/J
+         Cebm+dwLiHbA1z8Ys5K5ircIeqNxpetdPwA9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=qP1wzVmZiuCHc0gZ6fLWFlhHJtqAD0zlc+yija1O3CtehNxI+dkf2XyqAq/jo0lqLO
+         kqyiK0V9hR2Bd0Ch8N0Nxnk/T2gLaCv3d+0nPzycoc/iUF2lr9DtRZJr654QdPkQQ1oO
+         rqremrG7JYjISU1a8R0B9K4cGjajzIdhl9hB8=
+Received: by 10.223.77.16 with SMTP id e16mr2799049fak.87.1300558858161; Sat,
+ 19 Mar 2011 11:20:58 -0700 (PDT)
+Received: by 10.223.117.78 with HTTP; Sat, 19 Mar 2011 11:20:38 -0700 (PDT)
+In-Reply-To: <201103191528.34646.tboegi@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169454>
 
-ryenus ◇ <ryenus@gmail.com> writes:
+2011/3/19 Torsten B=F6gershausen <tboegi@web.de>:
+> diff --git a/compat/win32/same-file.c b/compat/win32/same-file.c
+> new file mode 100644
+> index 0000000..bb1a791
+> --- /dev/null
+> +++ b/compat/win32/same-file.c
+> @@ -0,0 +1,26 @@
+> +#include "../../git-compat-util.h"
+> +#include "../win32.h"
+> +
+> +int win_is_same_file(const char *a, const char *b)
 
-> Thank you, Duy, you're almost right, I just checked git-sh-setup.sh,
-> in the bottom, sort and find are defined as functions like what you
-> pointed out, but only for MinGW, therefore a better fix is to check
-> for cygwin as well:
->
-> ---
->  git-sh-setup.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index aa16b83..5c52ae4 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -227,7 +227,7 @@ fi
->
->  # Fix some commands on Windows
->  case $(uname -s) in
-> -*MINGW*)
-> +*MINGW*|*CYGWIN*)
+The compat/win32-folder is usually used to provide implementations of
+POSIX APIs lacking on Windows. I don't think this is appropriate
+functionality to be put there...
 
-This looks like a more sensible alternative than forbidding the use of
-"find", privided if the new pattern is an appropriate one to catch cygwin.
+> +{
+> + =A0 =A0 =A0 BY_HANDLE_FILE_INFORMATION hia, hib;
+> + =A0 =A0 =A0 HANDLE h;
+> +
+> + =A0 =A0 =A0 h =3D CreateFile(a, GENERIC_READ, FILE_SHARE_READ, NULL=
+, OPEN_EXISTING, 0, NULL);
+> + =A0 =A0 =A0 if (INVALID_HANDLE_VALUE =3D=3D h)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+> + =A0 =A0 =A0 if (!(GetFileInformationByHandle(h,&hia)))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+> + =A0CloseHandle(h);
 
-I don't have any Windows boxes, so I cannot verify, but the patch smells
-correct.
+Indentation-slip?
+
+> +
+> + =A0 =A0 =A0 h =3D CreateFile(b, GENERIC_READ, FILE_SHARE_READ, NULL=
+, OPEN_EXISTING, 0, NULL);
+> + =A0 =A0 =A0 if (INVALID_HANDLE_VALUE =3D=3D h)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+> + =A0 =A0 =A0 if (!(GetFileInformationByHandle(h,&hib)))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+> + =A0CloseHandle(h);
+> +
+
+Same as above...?
+
+> +#if defined (WIN32) || defined(__CYGWIN__)
+> +/* MinGW or MSVC or cygwin */
+> +int win_is_same_file(const char *a, const char *b);
+> +#define is_same_file(a,b) win_is_same_file((a),(b))
+> +#else
+> +static inline int is_same_file(const char *a, const char *b)
+> +{
+> + =A0 =A0 =A0 struct stat sta, stb;
+> + =A0 =A0 =A0 if (lstat(a, &sta) ||
+> + =A0 =A0 =A0 =A0 =A0 lstat(b, &stb))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+> + =A0 =A0 =A0 return sta.st_ino && sta.st_dev =3D=3D stb.st_dev && st=
+a.st_ino =3D=3D stb.st_ino;
+> +}
+> +#endif
+
+This isn't how we usually do things like this. We usually define stuff
+in compat/mingw.h (which should really be called compat/win32.h
+instead, since it's used by our MSVC builds as well. But that's a
+different discussion), and check if it's defined near the bottom of
+git-compat-util.h.
