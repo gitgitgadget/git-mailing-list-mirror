@@ -1,61 +1,96 @@
-From: =?ISO-8859-2?Q?Micha=B3_=A3owicki?= <mlowicki@gmail.com>
-Subject: gsoc - Better git log --follow support
-Date: Sat, 19 Mar 2011 20:24:20 +0100
-Message-ID: <AANLkTi=n7e70UqYU+6wpG4cu95fsg39tVM6=7fpfdZFz@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [PATCH v2] Allow git mv FileA fILEa on case ignore file systems
+Date: Sat, 19 Mar 2011 20:30:46 +0100
+Message-ID: <4D850466.8040909@gmail.com>
+References: <201103191528.34646.tboegi@web.de> <AANLkTimfk8bb-V8Br+KKpoLbA3G3y9HxyfjA=NrsgR0v@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 19 20:24:46 2011
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Sat Mar 19 20:31:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q11lN-0007PB-KP
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 20:24:38 +0100
+	id 1Q11rc-00026v-Kb
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 20:31:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757241Ab1CSTYW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 15:24:22 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:58167 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757142Ab1CSTYV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 15:24:21 -0400
-Received: by iyb26 with SMTP id 26so5119549iyb.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 12:24:21 -0700 (PDT)
+	id S1757299Ab1CSTa7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 15:30:59 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57664 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757162Ab1CSTa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 15:30:58 -0400
+Received: by bwz15 with SMTP id 15so4168595bwz.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 12:30:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=0vwA/G54S5tCS0ai/kGrOTjNKhTcujtpsc0/gyDB19U=;
-        b=sLXCze0ccDw4qFM/CtuAdsI7tWxy1O/YWzgacbw4weFp8l3DJKj87WDVBxPp4d1Ta3
-         fvEwX9DYPms//fYrfVELViHQWIbvOtT+wdoIWn6AoMBrGbJwYVMSbKgk5mgPHAaoHO7Y
-         wGL7ilzGLLG6ZGJ6UfyG7NjXBf0qO070UiTW4=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Jf/RV/iVRXuzg9u3fYrpLQgj+LRH1jSOxHuHh4aInqw=;
+        b=czaPLIOtZ/2kIjr5xSzFJNFO+O5EQdL1wUEaq2MttWenp3N5ppJRZcMTaHArDqrTOh
+         wSUB3IhojriBDQVYVzIAwYRdcXKBqfvQYQT1V9pvjfhy9b5tMJdwx9NO7lc+5+6MBoQg
+         v/K81J+NOF9d7pV5Yw64HcPzJVQbSJXURXMUo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Pg7Je+cD46AqRvuNlc0SzvQbO9BFMyfSFvxC2BHeJIIiU23yRHU4AroN/7lOCPDIXT
-         ukS4i7s/k5w+nkPfNPzZWUgTDFKnb0R7JGg88wxUhxgMqVFMDuzFJg3FLoxjAET+ugH5
-         Uc2BmLghM9T9ypvI9j+RI1ayuNRtPgJEixots=
-Received: by 10.42.135.2 with SMTP id n2mr3867606ict.251.1300562660806; Sat,
- 19 Mar 2011 12:24:20 -0700 (PDT)
-Received: by 10.42.227.136 with HTTP; Sat, 19 Mar 2011 12:24:20 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=kLExOmw/vegIzsgahQFuydoVbty5/Hn2g12Rs8YyeLX4/y6/pq4D9Vf89HnQNNMv5Y
+         9U1MfV/grImsqfJDx1Dst0y8qd+U+HBFjh85ne/fALKCyZ5SR2jKIYSj2uVJBKcvEhnc
+         MtX/ZkTUhlYfO4CgU78ed8oqBaol1moxEPlgw=
+Received: by 10.204.7.3 with SMTP id b3mr2151823bkb.160.1300563057164;
+        Sat, 19 Mar 2011 12:30:57 -0700 (PDT)
+Received: from [192.168.1.101] (app184.neoplus.adsl.tpnet.pl [83.26.149.184])
+        by mx.google.com with ESMTPS id k5sm3105697bku.4.2011.03.19.12.30.52
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Mar 2011 12:30:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+In-Reply-To: <AANLkTimfk8bb-V8Br+KKpoLbA3G3y9HxyfjA=NrsgR0v@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169457>
 
-Hi!
+W dniu 19.03.2011 19:20, Erik Faye-Lund pisze:
+> 2011/3/19 Torsten B=F6gershausen <tboegi@web.de>:
+>> +       if (!(GetFileInformationByHandle(h,&hia)))
+>> +               return 0;
+>> +  CloseHandle(h);
+>=20
+> Indentation-slip?
 
-I'm looking at idea about better git log --follow support from
-https://git.wiki.kernel.org/index.php/SoC2011Ideas .There is something
-like this - "[.. ] it does not interact well with git's usual history
-simplification [...]". Can someone elaborate this? I've found History
-Simplification in git rev-list man but don't know yet about issues
-with --follow.
+I suspect so. CloseHandle line does not use tabs.
+
+Out of curiosity I've roughly counted number of lines that have
+correct and incorrect indentation.=20
+
+About 8% (~12600 out of 151000 indented lines) are incorrectly indented=
+=2E
+Don't know if that good or bad :)
+
+
+I have used following to get the numbers:
+
+Bad indentation (includes "Correctly indented comments"):
+git$ TAB=3D"`echo -e '\t'`" && grep -E "^[ $TAB]* [ $TAB]*[^ $TAB]" *.s=
+h *.[ch] */*.sh */*.[ch] | wc -l
+22495
+
+Correctly indented comments:
+git$ TAB=3D"`echo -e '\t'`" && grep -E "^[ $TAB]* [*]" *.sh *.[ch] */*.=
+sh */*.[ch] | wc -l
+9911
+
+Good indentation (does not include "Correctly indented comments"):
+git$ TAB=3D"`echo -e '\t'`" && grep -E "^$TAB+[^ $TAB]" *.sh *.[ch] */*=
+=2Esh */*.[ch] | wc -l
+128173
+
 
 --=20
-BR,
-Micha=B3 =A3owicki
+Piotr Krukowiecki
