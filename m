@@ -1,7 +1,7 @@
 From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 6/9] vcs-svn: drop string_pool
-Date: Sat, 19 Mar 2011 18:03:48 +1100
-Message-ID: <1300518231-20008-7-git-send-email-david.barr@cordelta.com>
+Subject: [PATCH 8/9] vcs-svn: drop obj_pool.h
+Date: Sat, 19 Mar 2011 18:03:50 +1100
+Message-ID: <1300518231-20008-9-git-send-email-david.barr@cordelta.com>
 References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -16,24 +16,24 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0qLE-0004uk-DW
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:12:52 +0100
+	id 1Q0qLF-0004uk-4v
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:12:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753693Ab1CSHMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 03:12:31 -0400
-Received: from [119.15.97.146] ([119.15.97.146]:53168 "EHLO mailhost.cordelta"
+	id S1754903Ab1CSHMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 03:12:33 -0400
+Received: from [119.15.97.146] ([119.15.97.146]:60191 "EHLO mailhost.cordelta"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753280Ab1CSHMM (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753503Ab1CSHMM (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 19 Mar 2011 03:12:12 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id D0C22C04F;
-	Sat, 19 Mar 2011 18:00:38 +1100 (EST)
+	by mailhost.cordelta (Postfix) with ESMTP id D70A9C040;
+	Sat, 19 Mar 2011 18:00:39 +1100 (EST)
 X-Virus-Scanned: amavisd-new at mailhost.cordelta
 Received: from mailhost.cordelta ([127.0.0.1])
 	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KA-bvlXkXqQA; Sat, 19 Mar 2011 18:00:33 +1100 (EST)
+	with ESMTP id 7effVa+hBVk3; Sat, 19 Mar 2011 18:00:33 +1100 (EST)
 Received: from dba.cordelta (unknown [192.168.123.140])
-	by mailhost.cordelta (Postfix) with ESMTP id 8767AC051;
+	by mailhost.cordelta (Postfix) with ESMTP id B9F1FC053;
 	Sat, 19 Mar 2011 18:00:28 +1100 (EST)
 X-Mailer: git-send-email 1.7.3.2.846.gf4b062
 In-Reply-To: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
@@ -41,330 +41,327 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169390>
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
- .gitignore              |    1 -
- Makefile                |   12 ++---
- t/t0080-vcs-svn.sh      |   16 -------
- test-string-pool.c      |   31 -------------
- vcs-svn/string_pool.c   |  113 -----------------------------------------------
- vcs-svn/string_pool.h   |   12 -----
- vcs-svn/string_pool.txt |   43 ------------------
- 7 files changed, 4 insertions(+), 224 deletions(-)
- delete mode 100644 test-string-pool.c
- delete mode 100644 vcs-svn/string_pool.c
- delete mode 100644 vcs-svn/string_pool.h
- delete mode 100644 vcs-svn/string_pool.txt
+ .gitignore         |    1 -
+ Makefile           |    2 -
+ t/t0080-vcs-svn.sh |   79 -----------------------------------
+ test-obj-pool.c    |  116 ----------------------------------------------------
+ vcs-svn/obj_pool.h |   61 ---------------------------
+ 5 files changed, 0 insertions(+), 259 deletions(-)
+ delete mode 100755 t/t0080-vcs-svn.sh
+ delete mode 100644 test-obj-pool.c
+ delete mode 100644 vcs-svn/obj_pool.h
 
 diff --git a/.gitignore b/.gitignore
-index c460c66..215e842 100644
+index aa94ff1..789f922 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -177,7 +177,6 @@
+@@ -171,7 +171,6 @@
+ /test-line-buffer
+ /test-match-trees
+ /test-mktemp
+-/test-obj-pool
+ /test-parse-options
+ /test-path-utils
  /test-run-command
- /test-sha1
- /test-sigchain
--/test-string-pool
- /test-subprocess
- /test-svn-fe
- /test-treap
 diff --git a/Makefile b/Makefile
-index ade7923..f8182e5 100644
+index 2d56ab9..6165609 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -430,7 +430,6 @@ TEST_PROGRAMS_NEED_X += test-path-utils
+@@ -424,7 +424,6 @@ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-genrandom
+ TEST_PROGRAMS_NEED_X += test-line-buffer
+ TEST_PROGRAMS_NEED_X += test-match-trees
+-TEST_PROGRAMS_NEED_X += test-obj-pool
+ TEST_PROGRAMS_NEED_X += test-parse-options
+ TEST_PROGRAMS_NEED_X += test-path-utils
  TEST_PROGRAMS_NEED_X += test-run-command
- TEST_PROGRAMS_NEED_X += test-sha1
- TEST_PROGRAMS_NEED_X += test-sigchain
--TEST_PROGRAMS_NEED_X += test-string-pool
- TEST_PROGRAMS_NEED_X += test-subprocess
- TEST_PROGRAMS_NEED_X += test-svn-fe
- TEST_PROGRAMS_NEED_X += test-treap
-@@ -1838,10 +1837,9 @@ ifndef NO_CURL
- endif
- XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
- 	xdiff/xmerge.o xdiff/xpatience.o
--VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o \
--	vcs-svn/repo_tree.o vcs-svn/fast_export.o vcs-svn/svndump.o
--VCSSVN_TEST_OBJS = test-obj-pool.o test-string-pool.o \
--	test-line-buffer.o test-treap.o
-+VCSSVN_OBJS = vcs-svn/line_buffer.o vcs-svn/repo_tree.o \
-+	vcs-svn/fast_export.o vcs-svn/svndump.o
-+VCSSVN_TEST_OBJS = test-obj-pool.o test-line-buffer.o test-treap.o
- OBJECTS := $(GIT_OBJS) $(XDIFF_OBJS) $(VCSSVN_OBJS)
- 
- dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
-@@ -1965,7 +1963,7 @@ xdiff-interface.o $(XDIFF_OBJS): \
+@@ -1962,7 +1961,6 @@ xdiff-interface.o $(XDIFF_OBJS): \
  	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
  
  $(VCSSVN_OBJS) $(VCSSVN_TEST_OBJS): $(LIB_H) \
--	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h \
-+	vcs-svn/obj_pool.h vcs-svn/trp.h \
+-	vcs-svn/obj_pool.h \
  	vcs-svn/line_buffer.h vcs-svn/repo_tree.h vcs-svn/fast_export.h \
  	vcs-svn/svndump.h
  
-@@ -2133,8 +2131,6 @@ test-line-buffer$X: vcs-svn/lib.a
- 
- test-parse-options$X: parse-options.o
- 
--test-string-pool$X: vcs-svn/lib.a
--
- test-svn-fe$X: vcs-svn/lib.a
- 
- .PRECIOUS: $(TEST_OBJS)
 diff --git a/t/t0080-vcs-svn.sh b/t/t0080-vcs-svn.sh
-index 99a314b..ce02c58 100755
+deleted file mode 100755
+index 3f29496..0000000
 --- a/t/t0080-vcs-svn.sh
-+++ b/t/t0080-vcs-svn.sh
-@@ -76,22 +76,6 @@ test_expect_success 'obj pool: high-water mark' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'string pool' '
--	echo a does not equal b >expected.differ &&
--	echo a equals a >expected.match &&
--	echo equals equals equals >expected.matchmore &&
++++ /dev/null
+@@ -1,79 +0,0 @@
+-#!/bin/sh
 -
--	test-string-pool "a,--b" >actual.differ &&
--	test-string-pool "a,a" >actual.match &&
--	test-string-pool "equals-equals" >actual.matchmore &&
--	test_must_fail test-string-pool a,a,a &&
--	test_must_fail test-string-pool a &&
+-test_description='check infrastructure for svn importer'
 -
--	test_cmp expected.differ actual.differ &&
--	test_cmp expected.match actual.match &&
--	test_cmp expected.matchmore actual.matchmore
+-. ./test-lib.sh
+-uint32_max=4294967295
+-
+-test_expect_success 'obj pool: store data' '
+-	cat <<-\EOF >expected &&
+-	0
+-	1
+-	EOF
+-
+-	test-obj-pool <<-\EOF >actual &&
+-	alloc one 16
+-	set one 13
+-	test one 13
+-	reset one
+-	EOF
+-	test_cmp expected actual
 -'
 -
- test_expect_success 'treap sort' '
- 	cat <<-\EOF >unsorted &&
- 	68
-diff --git a/test-string-pool.c b/test-string-pool.c
+-test_expect_success 'obj pool: NULL is offset ~0' '
+-	echo "$uint32_max" >expected &&
+-	echo null one | test-obj-pool >actual &&
+-	test_cmp expected actual
+-'
+-
+-test_expect_success 'obj pool: out-of-bounds access' '
+-	cat <<-EOF >expected &&
+-	0
+-	0
+-	$uint32_max
+-	$uint32_max
+-	16
+-	20
+-	$uint32_max
+-	EOF
+-
+-	test-obj-pool <<-\EOF >actual &&
+-	alloc one 16
+-	alloc two 16
+-	offset one 20
+-	offset two 20
+-	alloc one 5
+-	offset one 20
+-	free one 1
+-	offset one 20
+-	reset one
+-	reset two
+-	EOF
+-	test_cmp expected actual
+-'
+-
+-test_expect_success 'obj pool: high-water mark' '
+-	cat <<-\EOF >expected &&
+-	0
+-	0
+-	10
+-	20
+-	20
+-	20
+-	EOF
+-
+-	test-obj-pool <<-\EOF >actual &&
+-	alloc one 10
+-	committed one
+-	alloc one 10
+-	commit one
+-	committed one
+-	alloc one 10
+-	free one 20
+-	committed one
+-	reset one
+-	EOF
+-	test_cmp expected actual
+-'
+-
+-test_done
+diff --git a/test-obj-pool.c b/test-obj-pool.c
 deleted file mode 100644
-index c5782e6..0000000
---- a/test-string-pool.c
+index 5018863..0000000
+--- a/test-obj-pool.c
 +++ /dev/null
-@@ -1,31 +0,0 @@
+@@ -1,116 +0,0 @@
 -/*
-- * test-string-pool.c: code to exercise the svn importer's string pool
+- * test-obj-pool.c: code to exercise the svn importer's object pool
 - */
 -
--#include "git-compat-util.h"
--#include "vcs-svn/string_pool.h"
+-#include "cache.h"
+-#include "vcs-svn/obj_pool.h"
+-
+-enum pool { POOL_ONE, POOL_TWO };
+-obj_pool_gen(one, int, 1)
+-obj_pool_gen(two, int, 4096)
+-
+-static uint32_t strtouint32(const char *s)
+-{
+-	char *end;
+-	uintmax_t n = strtoumax(s, &end, 10);
+-	if (*s == '\0' || (*end != '\n' && *end != '\0'))
+-		die("invalid offset: %s", s);
+-	return (uint32_t) n;
+-}
+-
+-static void handle_command(const char *command, enum pool pool, const char *arg)
+-{
+-	switch (*command) {
+-	case 'a':
+-		if (!prefixcmp(command, "alloc ")) {
+-			uint32_t n = strtouint32(arg);
+-			printf("%"PRIu32"\n",
+-				pool == POOL_ONE ?
+-				one_alloc(n) : two_alloc(n));
+-			return;
+-		}
+-	case 'c':
+-		if (!prefixcmp(command, "commit ")) {
+-			pool == POOL_ONE ? one_commit() : two_commit();
+-			return;
+-		}
+-		if (!prefixcmp(command, "committed ")) {
+-			printf("%"PRIu32"\n",
+-				pool == POOL_ONE ?
+-				one_pool.committed : two_pool.committed);
+-			return;
+-		}
+-	case 'f':
+-		if (!prefixcmp(command, "free ")) {
+-			uint32_t n = strtouint32(arg);
+-			pool == POOL_ONE ? one_free(n) : two_free(n);
+-			return;
+-		}
+-	case 'n':
+-		if (!prefixcmp(command, "null ")) {
+-			printf("%"PRIu32"\n",
+-				pool == POOL_ONE ?
+-				one_offset(NULL) : two_offset(NULL));
+-			return;
+-		}
+-	case 'o':
+-		if (!prefixcmp(command, "offset ")) {
+-			uint32_t n = strtouint32(arg);
+-			printf("%"PRIu32"\n",
+-				pool == POOL_ONE ?
+-				one_offset(one_pointer(n)) :
+-				two_offset(two_pointer(n)));
+-			return;
+-		}
+-	case 'r':
+-		if (!prefixcmp(command, "reset ")) {
+-			pool == POOL_ONE ? one_reset() : two_reset();
+-			return;
+-		}
+-	case 's':
+-		if (!prefixcmp(command, "set ")) {
+-			uint32_t n = strtouint32(arg);
+-			if (pool == POOL_ONE)
+-				*one_pointer(n) = 1;
+-			else
+-				*two_pointer(n) = 1;
+-			return;
+-		}
+-	case 't':
+-		if (!prefixcmp(command, "test ")) {
+-			uint32_t n = strtouint32(arg);
+-			printf("%d\n", pool == POOL_ONE ?
+-				*one_pointer(n) : *two_pointer(n));
+-			return;
+-		}
+-	default:
+-		die("unrecognized command: %s", command);
+-	}
+-}
+-
+-static void handle_line(const char *line)
+-{
+-	const char *arg = strchr(line, ' ');
+-	enum pool pool;
+-
+-	if (arg && !prefixcmp(arg + 1, "one"))
+-		pool = POOL_ONE;
+-	else if (arg && !prefixcmp(arg + 1, "two"))
+-		pool = POOL_TWO;
+-	else
+-		die("no pool specified: %s", line);
+-
+-	handle_command(line, pool, arg + strlen("one "));
+-}
 -
 -int main(int argc, char *argv[])
 -{
--	const uint32_t unequal = pool_intern("does not equal");
--	const uint32_t equal = pool_intern("equals");
--	uint32_t buf[3];
--	uint32_t n;
+-	struct strbuf sb = STRBUF_INIT;
+-	if (argc != 1)
+-		usage("test-obj-str < script");
 -
--	if (argc != 2)
--		usage("test-string-pool <string>,<string>");
--
--	n = pool_tok_seq(3, buf, ",-", argv[1]);
--	if (n >= 3)
--		die("too many strings");
--	if (n <= 1)
--		die("too few strings");
--
--	buf[2] = buf[1];
--	buf[1] = (buf[0] == buf[2]) ? equal : unequal;
--	pool_print_seq(3, buf, ' ', stdout);
--	fputc('\n', stdout);
--
--	pool_reset();
+-	while (strbuf_getline(&sb, stdin, '\n') != EOF)
+-		handle_line(sb.buf);
+-	strbuf_release(&sb);
 -	return 0;
 -}
-diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
+diff --git a/vcs-svn/obj_pool.h b/vcs-svn/obj_pool.h
 deleted file mode 100644
-index be43598..0000000
---- a/vcs-svn/string_pool.c
+index deb6eb8..0000000
+--- a/vcs-svn/obj_pool.h
 +++ /dev/null
-@@ -1,113 +0,0 @@
+@@ -1,61 +0,0 @@
 -/*
 - * Licensed under a two-clause BSD-style license.
 - * See LICENSE for details.
 - */
 -
+-#ifndef OBJ_POOL_H_
+-#define OBJ_POOL_H_
+-
 -#include "git-compat-util.h"
--#include "quote.h"
--#include "trp.h"
--#include "obj_pool.h"
--#include "string_pool.h"
 -
--static struct trp_root tree = { ~0 };
+-#define MAYBE_UNUSED __attribute__((__unused__))
 -
--struct node {
--	uint32_t offset;
--	struct trp_node children;
--};
--
--/* Two memory pools: one for struct node, and another for strings */
--obj_pool_gen(node, struct node, 4096)
--obj_pool_gen(string, char, 4096)
--
--static char *node_value(struct node *node)
--{
--	return node ? string_pointer(node->offset) : NULL;
+-#define obj_pool_gen(pre, obj_t, initial_capacity) \
+-static struct { \
+-	uint32_t committed; \
+-	uint32_t size; \
+-	uint32_t capacity; \
+-	obj_t *base; \
+-} pre##_pool = {0, 0, 0, NULL}; \
+-static MAYBE_UNUSED uint32_t pre##_alloc(uint32_t count) \
+-{ \
+-	uint32_t offset; \
+-	if (pre##_pool.size + count > pre##_pool.capacity) { \
+-		while (pre##_pool.size + count > pre##_pool.capacity) \
+-			if (pre##_pool.capacity) \
+-				pre##_pool.capacity *= 2; \
+-			else \
+-				pre##_pool.capacity = initial_capacity; \
+-		pre##_pool.base = realloc(pre##_pool.base, \
+-					pre##_pool.capacity * sizeof(obj_t)); \
+-	} \
+-	offset = pre##_pool.size; \
+-	pre##_pool.size += count; \
+-	return offset; \
+-} \
+-static MAYBE_UNUSED void pre##_free(uint32_t count) \
+-{ \
+-	pre##_pool.size -= count; \
+-} \
+-static MAYBE_UNUSED uint32_t pre##_offset(obj_t *obj) \
+-{ \
+-	return obj == NULL ? ~0 : obj - pre##_pool.base; \
+-} \
+-static MAYBE_UNUSED obj_t *pre##_pointer(uint32_t offset) \
+-{ \
+-	return offset >= pre##_pool.size ? NULL : &pre##_pool.base[offset]; \
+-} \
+-static MAYBE_UNUSED void pre##_commit(void) \
+-{ \
+-	pre##_pool.committed = pre##_pool.size; \
+-} \
+-static MAYBE_UNUSED void pre##_reset(void) \
+-{ \
+-	free(pre##_pool.base); \
+-	pre##_pool.base = NULL; \
+-	pre##_pool.size = 0; \
+-	pre##_pool.capacity = 0; \
+-	pre##_pool.committed = 0; \
 -}
--
--static int node_cmp(struct node *a, struct node *b)
--{
--	return strcmp(node_value(a), node_value(b));
--}
--
--/* Build a Treap from the node structure (a trp_node w/ offset) */
--trp_gen(static, tree_, struct node, children, node, node_cmp);
--
--const char *pool_fetch(uint32_t entry)
--{
--	return node_value(node_pointer(entry));
--}
--
--uint32_t pool_intern(const char *key)
--{
--	/* Canonicalize key */
--	struct node *match = NULL, *node;
--	uint32_t key_len;
--	if (key == NULL)
--		return ~0;
--	key_len = strlen(key) + 1;
--	node = node_pointer(node_alloc(1));
--	node->offset = string_alloc(key_len);
--	strcpy(node_value(node), key);
--	match = tree_search(&tree, node);
--	if (!match) {
--		tree_insert(&tree, node);
--	} else {
--		node_free(1);
--		string_free(key_len);
--		node = match;
--	}
--	return node_offset(node);
--}
--
--uint32_t pool_tok_r(char *str, const char *delim, char **saveptr)
--{
--	char *token = strtok_r(str, delim, saveptr);
--	return token ? pool_intern(token) : ~0;
--}
--
--void pool_print_seq(uint32_t len, const uint32_t *seq, char delim, FILE *stream)
--{
--	uint32_t i;
--	for (i = 0; i < len && ~seq[i]; i++) {
--		fputs(pool_fetch(seq[i]), stream);
--		if (i < len - 1 && ~seq[i + 1])
--			fputc(delim, stream);
--	}
--}
--
--void pool_print_seq_q(uint32_t len, const uint32_t *seq, char delim, FILE *stream)
--{
--	uint32_t i;
--	for (i = 0; i < len && ~seq[i]; i++) {
--		quote_c_style(pool_fetch(seq[i]), NULL, stream, 1);
--		if (i < len - 1 && ~seq[i + 1])
--			fputc(delim, stream);
--	}
--}
--
--uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, char *str)
--{
--	char *context = NULL;
--	uint32_t token = ~0;
--	uint32_t length;
--
--	if (sz == 0)
--		return ~0;
--	if (str)
--		token = pool_tok_r(str, delim, &context);
--	for (length = 0; length < sz; length++) {
--		seq[length] = token;
--		if (token == ~0)
--			return length;
--		token = pool_tok_r(NULL, delim, &context);
--	}
--	seq[sz - 1] = ~0;
--	return sz;
--}
--
--void pool_reset(void)
--{
--	node_reset();
--	string_reset();
--}
-diff --git a/vcs-svn/string_pool.h b/vcs-svn/string_pool.h
-deleted file mode 100644
-index 96e501d..0000000
---- a/vcs-svn/string_pool.h
-+++ /dev/null
-@@ -1,12 +0,0 @@
--#ifndef STRING_POOL_H_
--#define STRING_POOL_H_
--
--uint32_t pool_intern(const char *key);
--const char *pool_fetch(uint32_t entry);
--uint32_t pool_tok_r(char *str, const char *delim, char **saveptr);
--void pool_print_seq(uint32_t len, const uint32_t *seq, char delim, FILE *stream);
--void pool_print_seq_q(uint32_t len, const uint32_t *seq, char delim, FILE *stream);
--uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, char *str);
--void pool_reset(void);
 -
 -#endif
-diff --git a/vcs-svn/string_pool.txt b/vcs-svn/string_pool.txt
-deleted file mode 100644
-index 1b41f15..0000000
---- a/vcs-svn/string_pool.txt
-+++ /dev/null
-@@ -1,43 +0,0 @@
--string_pool API
--===============
--
--The string_pool API provides facilities for replacing strings
--with integer keys that can be more easily compared and stored.
--The facilities are designed so that one could teach Git without
--too much trouble to store the information needed for these keys to
--remain valid over multiple executions.
--
--Functions
-----------
--
--pool_intern::
--	Include a string in the string pool and get its key.
--	If that string is already in the pool, retrieves its
--	existing key.
--
--pool_fetch::
--	Retrieve the string associated to a given key.
--
--pool_tok_r::
--	Extract the key of the next token from a string.
--	Interface mimics strtok_r.
--
--pool_print_seq::
--	Print a sequence of strings named by key to a file, using the
--	specified delimiter to separate them.
--
--	If NULL (key ~0) appears in the sequence, the sequence ends
--	early.
--
--pool_tok_seq::
--	Split a string into tokens, storing the keys of segments
--	into a caller-provided array.
--
--	Unless sz is 0, the array will always be ~0-terminated.
--	If there is not enough room for all the tokens, the
--	array holds as many tokens as fit in the entries before
--	the terminating ~0.  Return value is the index after the
--	last token, or sz if the tokens did not fit.
--
--pool_reset::
--	Deallocate storage for the string pool.
 -- 
 1.7.3.2.846.gf4b062
