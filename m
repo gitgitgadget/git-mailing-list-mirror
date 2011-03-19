@@ -1,9 +1,9 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/9] vcs-svn: implement perfect hash for top-level keys
-Date: Sat, 19 Mar 2011 03:57:37 -0500
-Message-ID: <20110319085737.GC6706@elie>
+Subject: Re: [PATCH 5/9] vcs-svn: factor out usage of string_pool
+Date: Sat, 19 Mar 2011 04:08:21 -0500
+Message-ID: <20110319090821.GD6706@elie>
 References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
- <1300518231-20008-5-git-send-email-david.barr@cordelta.com>
+ <1300518231-20008-6-git-send-email-david.barr@cordelta.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
@@ -12,82 +12,105 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
 	Tomas Carnecky <tom@dbservice.com>
 To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 09:57:54 2011
+X-From: git-owner@vger.kernel.org Sat Mar 19 10:08:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0ryr-0004VU-Jm
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 09:57:53 +0100
+	id 1Q0s9F-0007UL-Ll
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 10:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754929Ab1CSI5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 04:57:49 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:39724 "EHLO
+	id S1755444Ab1CSJId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 05:08:33 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:37638 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754564Ab1CSI5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 04:57:48 -0400
-Received: by iyb26 with SMTP id 26so4786314iyb.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 01:57:47 -0700 (PDT)
+	with ESMTP id S1754564Ab1CSJIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 05:08:32 -0400
+Received: by iyb26 with SMTP id 26so4791521iyb.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 02:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=7aJQBDXEbeof4Zohn3LQUYa39GkLpjoGQiorHvhgRaw=;
-        b=LjUylUk1X94KwFrvalYbzxw6NWdtkR9c2FYNo330PaXtttA+VtcdSC81AfLgLDC5Rd
-         ZA0Yic7he9uZKY6fA4HLWKCsqAatyafXIu5UnmnZg8RaSK9nRHou1JiDoDCmeH7ZQ2ip
-         2XZcvnZKJg1D3Q67KBBConkr3KS4rrabxt4VI=
+        bh=qBrH90LoZBionccI9Gr2LqRGnUq+zDRJchxhIiFNzdo=;
+        b=L+mgOyneARpuEg5ypwgUCMxOIhjykBWyvSdsl5ArTYuae/khKItCfqoa5+bY7FoXG+
+         Xq84ATjk52iVU7HZbLQwhWcGMuwCj13jV4GGT0b6BqdRsU9Y6QNrcuMWJPujQpOdw8Ww
+         SJZzfL8WZWMry/DJnW8sfYbz8TF/GTeaAJ6Bo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=rfL7mwQb5FtBtCvpnk4NvUaF38w2rhyLTzUiL2f/Tjltgz9hmxlQkEvvyywrmYyVSL
-         chHsF6nz1xTstxfLTckGN3uHLlOCY/cyO7Wvdu5zE1kEQ/zcDhIXKBKxQ00NqaeaaJTa
-         lVXmrVbQes2/qWG1HhuWZJYhR7+bUvVP6oDS8=
-Received: by 10.42.137.130 with SMTP id y2mr504919ict.486.1300525067765;
-        Sat, 19 Mar 2011 01:57:47 -0700 (PDT)
-Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
-        by mx.google.com with ESMTPS id vr5sm235262icb.12.2011.03.19.01.57.42
+        b=ek+6DyqncLCPDmCwSKxMO5vxueFJHV/iFkX6yDTXMJq0lklRum1b1OjtmconKT6mtL
+         V1NF50hE+BPQvOs+W4Ayan0V8veltUVDDgJ0uV9S4s44xA3VYL7e6LbM0HhB9VO1wkZI
+         +m4npkCNATIR43xfdLzh8Al7u1UJ1YGyGI+pw=
+Received: by 10.42.74.70 with SMTP id v6mr3126967icj.190.1300525710999;
+        Sat, 19 Mar 2011 02:08:30 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
+        by mx.google.com with ESMTPS id wt14sm2451699icb.4.2011.03.19.02.08.26
         (version=SSLv3 cipher=OTHER);
-        Sat, 19 Mar 2011 01:57:46 -0700 (PDT)
+        Sat, 19 Mar 2011 02:08:30 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1300518231-20008-5-git-send-email-david.barr@cordelta.com>
+In-Reply-To: <1300518231-20008-6-git-send-email-david.barr@cordelta.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169419>
 
 David Barr wrote:
 
-> --- a/vcs-svn/svndump.c
-> +++ b/vcs-svn/svndump.c
-> @@ -323,16 +296,25 @@ void svndump_read(const char *url)
->  			continue;
->  		*val++ = '\0';
->  		*val++ = '\0';
-> -		key = pool_intern(t);
+> [Subject: vcs-svn: factor out usage of string_pool]
+
+This actually means something like: use strbufs and strings instead of
+interned strings for values of rev, dump, and node fields that happen
+to be strings.  After this change, there are no more users of the
+string-pool library left.
+
+> @@ -71,14 +71,16 @@ static void reset_rev_ctx(uint32_t revision)
+>  	rev_ctx.revision = revision;
+>  	rev_ctx.timestamp = 0;
+>  	strbuf_reset(&rev_ctx.log);
+> -	rev_ctx.author = ~0;
+> +	strbuf_reset(&rev_ctx.author);
+
+Side note: should the default timestamp really be the epoch?  I'd
+rather the default timestamp be the timestamp of the parent revision,
+to make out-of-order dates a little less likely.
+
+>  }
 >  
-> -		if (key == keys.svn_fs_dump_format_version) {
-> +		/* strlen(key) */
-> +		switch (val - t - 2) { 
-> +		case 26:
-> +			if (memcmp(t, "SVN-fs-dump-format-version", 26))
-> +				continue;
+> -static void reset_dump_ctx(uint32_t url)
+> +static void reset_dump_ctx(const char *url)
+>  {
+> -	dump_ctx.url = url;
+> +	strbuf_reset(&dump_ctx.url);
+> +	if (url)
+> +		strbuf_addstr(&dump_ctx.url, url);
 
-Same comments as the previous patch apply here.
+Good, we keep our own copy of the url still.
 
-Might make sense to split out the loop body (or at least the giant
-switch statement) as a separate function for easier contemplation.
+> @@ -91,13 +93,15 @@ static void handle_property(const char *key, const char *val, uint32_t len,
+>  			break;
+>  		if (!val)
+>  			die("invalid dump: unsets svn:log");
+> -		/* Value length excludes terminating nul. */
+> -		strbuf_add(&rev_ctx.log, val, len + 1);
+> +		strbuf_reset(&rev_ctx.log);
+> +		strbuf_add(&rev_ctx.log, val, len);
 
-[...]
-> -		} else if (key == keys.content_length) {
-> +			break;
-> +		case 14:
-> +			if (memcmp(t, "Content-length", 14))
-> +				continue;
->  			len = atoi(val);
+What is this change about?
 
-Thanks for a very clean patch.
+> @@ -447,5 +456,4 @@ void svndump_reset(void)
+>  {
+>  	fast_export_reset();
+>  	buffer_reset(&input);
+> -	pool_reset();
+
+strbuf_release(&dump_ctx.url)?
+
+Likewise for dump_ctx.uuid and the other one.
+
+Thanks; except as noted above this looks good.
