@@ -1,77 +1,102 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] find_unique_abbrev(): honor caller-supplied "len" better
-Date: Fri, 18 Mar 2011 21:22:30 -0400
-Message-ID: <AANLkTimH6ZKkTZ0MiJWzHpZywSy6Hk3caLQ5S+rE0uqg@mail.gmail.com>
-References: <E1PBKT9-0004Uk-Sm@tytso-glaptop> <20101028075631.GA7690@elte.hu>
- <AANLkTi=8SbOZizWpxLg=Bgp7atdgr8MsR6tnRDYr1+eW@mail.gmail.com>
- <20101028163854.GA15450@elte.hu> <AANLkTin62vAwJxcsrFk6Yn7Q6tzr-D=EmKKwPazuAJ11@mail.gmail.com>
- <7veiba9ev2.fsf@alter.siamese.dyndns.org> <7vhbba38mm.fsf_-_@alter.siamese.dyndns.org>
- <AANLkTimH9=OWD4+dPsdYaL2VPdDkTsUG_N3GBf168XqD@mail.gmail.com>
- <7vzkp21ocm.fsf@alter.siamese.dyndns.org> <AANLkTikPxSspRFQWke4=u55cmmHw8NsyizeH2gL1kD0y@mail.gmail.com>
- <7vmxl21lwr.fsf@alter.siamese.dyndns.org> <7vipvq1hpw.fsf@alter.siamese.dyndns.org>
- <7vvczpff89.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3 (alternate)] gitweb: Mark "atnight" author/committer
+ times also for 'localtime'
+Date: Fri, 18 Mar 2011 18:25:39 -0700
+Message-ID: <7vaagrsxyk.fsf@alter.siamese.dyndns.org>
+References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
+ <201103181846.04979.jnareb@gmail.com>
+ <7vmxksw3x8.fsf@alter.siamese.dyndns.org>
+ <201103182328.19141.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Namhyung Kim <namhyung@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 02:23:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 02:25:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0ksl-0002ZR-DH
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 02:23:07 +0100
+	id 1Q0kvV-0003UZ-32
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 02:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757278Ab1CSBXC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2011 21:23:02 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35764 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757043Ab1CSBXB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2011 21:23:01 -0400
-Received: by vws1 with SMTP id 1so4122501vws.19
-        for <git@vger.kernel.org>; Fri, 18 Mar 2011 18:23:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=PgT6DlHZG/juGe5IfGAc9xQIPZCWuJsJhskDwXb1GIA=;
-        b=ShaoaWvmzK6h25H/QNNp4I9EEytljqRJUqzi1aBtM/yaX/kaEKJtpmRFwqEwPrcN+0
-         BUlPqoojf5Kat5mUIhob495pd4/03JkK3tXD2w0QwcIT/M1C4lNZxLy/xJbjdpE2xHn5
-         guIZoFoh9ulzVnb190mUI84IoAjYG8qe0TmS8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ombL6IfuNoMVbsUXk9hEWjxyLtLkI/sYV4iJxE6vPwDfO6lryAnf49INs5A8zMUmQq
-         hidPyiC0buoPU+mtKNqpQlIJRYVTFyHvS84t4+HpVv8rSypAFF1wbB0Gy3FzvlvFNB5A
-         3E4y9EuTVy0nMmCGqRrU8Ag9unVe89PoYNK20=
-Received: by 10.220.199.133 with SMTP id es5mr510984vcb.19.1300497780107; Fri,
- 18 Mar 2011 18:23:00 -0700 (PDT)
-Received: by 10.220.166.78 with HTTP; Fri, 18 Mar 2011 18:22:30 -0700 (PDT)
-In-Reply-To: <7vvczpff89.fsf@alter.siamese.dyndns.org>
+	id S1757181Ab1CSBZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2011 21:25:52 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57847 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756600Ab1CSBZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2011 21:25:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9DC64403D;
+	Fri, 18 Mar 2011 21:27:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rYOBUEOW4Qa4YY+1siAlG8QRB/M=; b=PBdHZm
+	b3Yq4LxN4oEfbUNjUh5Z0AY0MiYkAB6ch37M5MKUcWsZTe0ZeRV1YsOj8pyxcxGS
+	GPWO3fKmCJZIxZrtBXYGM0VcSYe90NDDiBFRtUaRoCXH7L72D9KYNJfitNVwWqRy
+	YSe7lLjrRL4qg8Sg7kn1UQ0Ibs62lfHQ6FDoY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hE0YSTF0hzEhVoelQaiQp0iZk2M0RL3y
+	wjdoy/lEoRBRXJ1Knc5mIBixdp5Ka5ltQ/FZXs97TCLcQhERiHdj1+f5ljiJf+lp
+	A1vrcCLh3DtGSR225s+C+WnXnguATy8UNADnV4hqGQDv3WDqHfvCV3Hmd5qEoe6o
+	zVNXTfbNhak=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6BF254038;
+	Fri, 18 Mar 2011 21:27:22 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 462F44030; Fri, 18 Mar 2011
+ 21:27:18 -0400 (EDT)
+In-Reply-To: <201103182328.19141.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri, 18 Mar 2011 23:28:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 09F6FF72-51C8-11E0-B948-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169383>
 
-On Fri, Mar 11, 2011 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> +core.abbrevLength::
-> + =C2=A0 =C2=A0 =C2=A0 Set the length object names are abbreviated to=
-=2E =C2=A0If unspecified,
-> + =C2=A0 =C2=A0 =C2=A0 many commands abbreviate to 7 hexdigits, which=
- may not be enough
-> + =C2=A0 =C2=A0 =C2=A0 for abbreviated object names to stay unique fo=
-r sufficiently long
-> + =C2=A0 =C2=A0 =C2=A0 time.
-> +
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Isn't this the minimum length though? i.e. a longer length is used as
-needed for uniqueness. If so, at least the description is misleading,
-and I'd argue the option name too. Perhaps core.abbrevMinLength?
+> Junio C Hamano wrote:
+> ...
+>> and format_timestamp would be like
+>> 
+>> 	sub format_timestamp {
+>> 		my %date = %$_[0];
+>>       	my $use_localtime = $_[1];
+>> 		my $localtime, $ret, $nite;
+>> 
+>> 		$nite = ($date{'hour_local'} < 6);
+>> 
+>> 		if ($use_localtime) {
+>> 			$ret = $date{'rfc2822_local'};
+>>       		if ($nite) {
+>>                         	$ret = sprintf("<span class='atnight'>%s</span>", $ret);
+>> 			}
+>> 		} else {
+>> 			... what the current format_local_time does to set
+>> 	        	... including the spanning part
+>>               	$ret = "$date{'rfc2822'} ($localtime)";
+>> 		}
+>> 		return $ret;
+>> 	}
+>
+> Well, if we go this route, and assuming that parse_date does only parsing
+> and we use separate subroutine for generating date in an rfc2822 format,
+> then we could mark only time with "atnight" also when 'localtime' feature
+> is enabled.
+>  
+>> Wouldn't it be much cleaner?  You can then clean up the other call site of
+>> print_local_time in git_print_authorship using the same helper function
+>> (presumably you would always pass 0 to $use_localtime there), no?
+>
+> Right.  Well, I'd have to think a bit about API for format_timestamp,
+> but it looks like good direction.
 
-j.
+I don't think there is much to think about for format_timestamp, as I was
+suggesting to keep what comes in %date more or less the same as what the
+current parse_date() generates.  I was only hinting that parse_date() is
+misnamed.
