@@ -1,7 +1,7 @@
 From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 8/9] vcs-svn: drop obj_pool.h
-Date: Sat, 19 Mar 2011 18:03:50 +1100
-Message-ID: <1300518231-20008-9-git-send-email-david.barr@cordelta.com>
+Subject: [PATCH 4/9] vcs-svn: implement perfect hash for top-level keys
+Date: Sat, 19 Mar 2011 18:03:46 +1100
+Message-ID: <1300518231-20008-5-git-send-email-david.barr@cordelta.com>
 References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -16,24 +16,24 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0qLF-0004uk-4v
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:12:53 +0100
+	id 1Q0qLG-0004uk-7S
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:12:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754903Ab1CSHMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 03:12:33 -0400
-Received: from [119.15.97.146] ([119.15.97.146]:60191 "EHLO mailhost.cordelta"
+	id S1755251Ab1CSHMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 03:12:39 -0400
+Received: from [119.15.97.146] ([119.15.97.146]:60437 "EHLO mailhost.cordelta"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753503Ab1CSHMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 03:12:12 -0400
+	id S1753891Ab1CSHMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 03:12:13 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id D70A9C040;
-	Sat, 19 Mar 2011 18:00:39 +1100 (EST)
+	by mailhost.cordelta (Postfix) with ESMTP id 05893C050;
+	Sat, 19 Mar 2011 18:00:37 +1100 (EST)
 X-Virus-Scanned: amavisd-new at mailhost.cordelta
 Received: from mailhost.cordelta ([127.0.0.1])
 	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7effVa+hBVk3; Sat, 19 Mar 2011 18:00:33 +1100 (EST)
+	with ESMTP id hNu78HRZFcAv; Sat, 19 Mar 2011 18:00:32 +1100 (EST)
 Received: from dba.cordelta (unknown [192.168.123.140])
-	by mailhost.cordelta (Postfix) with ESMTP id B9F1FC053;
+	by mailhost.cordelta (Postfix) with ESMTP id 603D5C04F;
 	Sat, 19 Mar 2011 18:00:28 +1100 (EST)
 X-Mailer: git-send-email 1.7.3.2.846.gf4b062
 In-Reply-To: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
@@ -41,327 +41,196 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169391>
+
+This eliminates one more dependency on string_pool.
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
- .gitignore         |    1 -
- Makefile           |    2 -
- t/t0080-vcs-svn.sh |   79 -----------------------------------
- test-obj-pool.c    |  116 ----------------------------------------------------
- vcs-svn/obj_pool.h |   61 ---------------------------
- 5 files changed, 0 insertions(+), 259 deletions(-)
- delete mode 100755 t/t0080-vcs-svn.sh
- delete mode 100644 test-obj-pool.c
- delete mode 100644 vcs-svn/obj_pool.h
+ vcs-svn/svndump.c |  110 +++++++++++++++++++++++++++++------------------------
+ 1 files changed, 60 insertions(+), 50 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index aa94ff1..789f922 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -171,7 +171,6 @@
- /test-line-buffer
- /test-match-trees
- /test-mktemp
--/test-obj-pool
- /test-parse-options
- /test-path-utils
- /test-run-command
-diff --git a/Makefile b/Makefile
-index 2d56ab9..6165609 100644
---- a/Makefile
-+++ b/Makefile
-@@ -424,7 +424,6 @@ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
- TEST_PROGRAMS_NEED_X += test-genrandom
- TEST_PROGRAMS_NEED_X += test-line-buffer
- TEST_PROGRAMS_NEED_X += test-match-trees
--TEST_PROGRAMS_NEED_X += test-obj-pool
- TEST_PROGRAMS_NEED_X += test-parse-options
- TEST_PROGRAMS_NEED_X += test-path-utils
- TEST_PROGRAMS_NEED_X += test-run-command
-@@ -1962,7 +1961,6 @@ xdiff-interface.o $(XDIFF_OBJS): \
- 	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index 49fb6db..03f916d 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -51,14 +51,6 @@ static struct {
+ 	uint32_t version, uuid, url;
+ } dump_ctx;
  
- $(VCSSVN_OBJS) $(VCSSVN_TEST_OBJS): $(LIB_H) \
--	vcs-svn/obj_pool.h \
- 	vcs-svn/line_buffer.h vcs-svn/repo_tree.h vcs-svn/fast_export.h \
- 	vcs-svn/svndump.h
+-static struct {
+-	uint32_t uuid, revision_number, node_path, node_kind, node_action,
+-		node_copyfrom_path, node_copyfrom_rev, text_content_length,
+-		prop_content_length, content_length, svn_fs_dump_format_version,
+-		/* version 3 format */
+-		text_delta, prop_delta;
+-} keys;
+-
+ static void reset_node_ctx(char *fname)
+ {
+ 	node_ctx.type = 0;
+@@ -89,24 +81,6 @@ static void reset_dump_ctx(uint32_t url)
+ 	dump_ctx.uuid = ~0;
+ }
  
-diff --git a/t/t0080-vcs-svn.sh b/t/t0080-vcs-svn.sh
-deleted file mode 100755
-index 3f29496..0000000
---- a/t/t0080-vcs-svn.sh
-+++ /dev/null
-@@ -1,79 +0,0 @@
--#!/bin/sh
--
--test_description='check infrastructure for svn importer'
--
--. ./test-lib.sh
--uint32_max=4294967295
--
--test_expect_success 'obj pool: store data' '
--	cat <<-\EOF >expected &&
--	0
--	1
--	EOF
--
--	test-obj-pool <<-\EOF >actual &&
--	alloc one 16
--	set one 13
--	test one 13
--	reset one
--	EOF
--	test_cmp expected actual
--'
--
--test_expect_success 'obj pool: NULL is offset ~0' '
--	echo "$uint32_max" >expected &&
--	echo null one | test-obj-pool >actual &&
--	test_cmp expected actual
--'
--
--test_expect_success 'obj pool: out-of-bounds access' '
--	cat <<-EOF >expected &&
--	0
--	0
--	$uint32_max
--	$uint32_max
--	16
--	20
--	$uint32_max
--	EOF
--
--	test-obj-pool <<-\EOF >actual &&
--	alloc one 16
--	alloc two 16
--	offset one 20
--	offset two 20
--	alloc one 5
--	offset one 20
--	free one 1
--	offset one 20
--	reset one
--	reset two
--	EOF
--	test_cmp expected actual
--'
--
--test_expect_success 'obj pool: high-water mark' '
--	cat <<-\EOF >expected &&
--	0
--	0
--	10
--	20
--	20
--	20
--	EOF
--
--	test-obj-pool <<-\EOF >actual &&
--	alloc one 10
--	committed one
--	alloc one 10
--	commit one
--	committed one
--	alloc one 10
--	free one 20
--	committed one
--	reset one
--	EOF
--	test_cmp expected actual
--'
--
--test_done
-diff --git a/test-obj-pool.c b/test-obj-pool.c
-deleted file mode 100644
-index 5018863..0000000
---- a/test-obj-pool.c
-+++ /dev/null
-@@ -1,116 +0,0 @@
--/*
-- * test-obj-pool.c: code to exercise the svn importer's object pool
-- */
--
--#include "cache.h"
--#include "vcs-svn/obj_pool.h"
--
--enum pool { POOL_ONE, POOL_TWO };
--obj_pool_gen(one, int, 1)
--obj_pool_gen(two, int, 4096)
--
--static uint32_t strtouint32(const char *s)
+-static void init_keys(void)
 -{
--	char *end;
--	uintmax_t n = strtoumax(s, &end, 10);
--	if (*s == '\0' || (*end != '\n' && *end != '\0'))
--		die("invalid offset: %s", s);
--	return (uint32_t) n;
+-	keys.uuid = pool_intern("UUID");
+-	keys.revision_number = pool_intern("Revision-number");
+-	keys.node_path = pool_intern("Node-path");
+-	keys.node_kind = pool_intern("Node-kind");
+-	keys.node_action = pool_intern("Node-action");
+-	keys.node_copyfrom_path = pool_intern("Node-copyfrom-path");
+-	keys.node_copyfrom_rev = pool_intern("Node-copyfrom-rev");
+-	keys.text_content_length = pool_intern("Text-content-length");
+-	keys.prop_content_length = pool_intern("Prop-content-length");
+-	keys.content_length = pool_intern("Content-length");
+-	keys.svn_fs_dump_format_version = pool_intern("SVN-fs-dump-format-version");
+-	/* version 3 format (Subversion 1.1.0) */
+-	keys.text_delta = pool_intern("Text-delta");
+-	keys.prop_delta = pool_intern("Prop-delta");
 -}
 -
--static void handle_command(const char *command, enum pool pool, const char *arg)
--{
--	switch (*command) {
--	case 'a':
--		if (!prefixcmp(command, "alloc ")) {
--			uint32_t n = strtouint32(arg);
--			printf("%"PRIu32"\n",
--				pool == POOL_ONE ?
--				one_alloc(n) : two_alloc(n));
--			return;
--		}
--	case 'c':
--		if (!prefixcmp(command, "commit ")) {
--			pool == POOL_ONE ? one_commit() : two_commit();
--			return;
--		}
--		if (!prefixcmp(command, "committed ")) {
--			printf("%"PRIu32"\n",
--				pool == POOL_ONE ?
--				one_pool.committed : two_pool.committed);
--			return;
--		}
--	case 'f':
--		if (!prefixcmp(command, "free ")) {
--			uint32_t n = strtouint32(arg);
--			pool == POOL_ONE ? one_free(n) : two_free(n);
--			return;
--		}
--	case 'n':
--		if (!prefixcmp(command, "null ")) {
--			printf("%"PRIu32"\n",
--				pool == POOL_ONE ?
--				one_offset(NULL) : two_offset(NULL));
--			return;
--		}
--	case 'o':
--		if (!prefixcmp(command, "offset ")) {
--			uint32_t n = strtouint32(arg);
--			printf("%"PRIu32"\n",
--				pool == POOL_ONE ?
--				one_offset(one_pointer(n)) :
--				two_offset(two_pointer(n)));
--			return;
--		}
--	case 'r':
--		if (!prefixcmp(command, "reset ")) {
--			pool == POOL_ONE ? one_reset() : two_reset();
--			return;
--		}
--	case 's':
--		if (!prefixcmp(command, "set ")) {
--			uint32_t n = strtouint32(arg);
--			if (pool == POOL_ONE)
--				*one_pointer(n) = 1;
--			else
--				*two_pointer(n) = 1;
--			return;
--		}
--	case 't':
--		if (!prefixcmp(command, "test ")) {
--			uint32_t n = strtouint32(arg);
--			printf("%d\n", pool == POOL_ONE ?
--				*one_pointer(n) : *two_pointer(n));
--			return;
--		}
--	default:
--		die("unrecognized command: %s", command);
--	}
--}
--
--static void handle_line(const char *line)
--{
--	const char *arg = strchr(line, ' ');
--	enum pool pool;
--
--	if (arg && !prefixcmp(arg + 1, "one"))
--		pool = POOL_ONE;
--	else if (arg && !prefixcmp(arg + 1, "two"))
--		pool = POOL_TWO;
--	else
--		die("no pool specified: %s", line);
--
--	handle_command(line, pool, arg + strlen("one "));
--}
--
--int main(int argc, char *argv[])
--{
--	struct strbuf sb = STRBUF_INIT;
--	if (argc != 1)
--		usage("test-obj-str < script");
--
--	while (strbuf_getline(&sb, stdin, '\n') != EOF)
--		handle_line(sb.buf);
--	strbuf_release(&sb);
--	return 0;
--}
-diff --git a/vcs-svn/obj_pool.h b/vcs-svn/obj_pool.h
-deleted file mode 100644
-index deb6eb8..0000000
---- a/vcs-svn/obj_pool.h
-+++ /dev/null
-@@ -1,61 +0,0 @@
--/*
-- * Licensed under a two-clause BSD-style license.
-- * See LICENSE for details.
-- */
--
--#ifndef OBJ_POOL_H_
--#define OBJ_POOL_H_
--
--#include "git-compat-util.h"
--
--#define MAYBE_UNUSED __attribute__((__unused__))
--
--#define obj_pool_gen(pre, obj_t, initial_capacity) \
--static struct { \
--	uint32_t committed; \
--	uint32_t size; \
--	uint32_t capacity; \
--	obj_t *base; \
--} pre##_pool = {0, 0, 0, NULL}; \
--static MAYBE_UNUSED uint32_t pre##_alloc(uint32_t count) \
--{ \
--	uint32_t offset; \
--	if (pre##_pool.size + count > pre##_pool.capacity) { \
--		while (pre##_pool.size + count > pre##_pool.capacity) \
--			if (pre##_pool.capacity) \
--				pre##_pool.capacity *= 2; \
--			else \
--				pre##_pool.capacity = initial_capacity; \
--		pre##_pool.base = realloc(pre##_pool.base, \
--					pre##_pool.capacity * sizeof(obj_t)); \
--	} \
--	offset = pre##_pool.size; \
--	pre##_pool.size += count; \
--	return offset; \
--} \
--static MAYBE_UNUSED void pre##_free(uint32_t count) \
--{ \
--	pre##_pool.size -= count; \
--} \
--static MAYBE_UNUSED uint32_t pre##_offset(obj_t *obj) \
--{ \
--	return obj == NULL ? ~0 : obj - pre##_pool.base; \
--} \
--static MAYBE_UNUSED obj_t *pre##_pointer(uint32_t offset) \
--{ \
--	return offset >= pre##_pool.size ? NULL : &pre##_pool.base[offset]; \
--} \
--static MAYBE_UNUSED void pre##_commit(void) \
--{ \
--	pre##_pool.committed = pre##_pool.size; \
--} \
--static MAYBE_UNUSED void pre##_reset(void) \
--{ \
--	free(pre##_pool.base); \
--	pre##_pool.base = NULL; \
--	pre##_pool.size = 0; \
--	pre##_pool.capacity = 0; \
--	pre##_pool.committed = 0; \
--}
--
--#endif
+ static void handle_property(const char *key, const char *val, uint32_t len,
+ 				uint32_t *type_set)
+ {
+@@ -314,7 +288,6 @@ void svndump_read(const char *url)
+ 	char *t;
+ 	uint32_t active_ctx = DUMP_CTX;
+ 	uint32_t len;
+-	uint32_t key;
+ 
+ 	reset_dump_ctx(pool_intern(url));
+ 	while ((t = buffer_read_line(&input))) {
+@@ -323,16 +296,25 @@ void svndump_read(const char *url)
+ 			continue;
+ 		*val++ = '\0';
+ 		*val++ = '\0';
+-		key = pool_intern(t);
+ 
+-		if (key == keys.svn_fs_dump_format_version) {
++		/* strlen(key) */
++		switch (val - t - 2) { 
++		case 26:
++			if (memcmp(t, "SVN-fs-dump-format-version", 26))
++				continue;
+ 			dump_ctx.version = atoi(val);
+ 			if (dump_ctx.version > 3)
+ 				die("expected svn dump format version <= 3, found %"PRIu32,
+ 				    dump_ctx.version);
+-		} else if (key == keys.uuid) {
++			break;
++		case 4:
++			if (memcmp(t, "UUID", 4))
++				continue;
+ 			dump_ctx.uuid = pool_intern(val);
+-		} else if (key == keys.revision_number) {
++			break;
++		case 15:
++			if (memcmp(t, "Revision-number", 15))
++				continue;
+ 			if (active_ctx == NODE_CTX)
+ 				handle_node();
+ 			if (active_ctx == REV_CTX)
+@@ -341,21 +323,31 @@ void svndump_read(const char *url)
+ 				end_revision();
+ 			active_ctx = REV_CTX;
+ 			reset_rev_ctx(atoi(val));
+-		} else if (key == keys.node_path) {
+-			if (active_ctx == NODE_CTX)
+-				handle_node();
+-			if (active_ctx == REV_CTX)
+-				begin_revision();
+-			active_ctx = NODE_CTX;
+-			reset_node_ctx(val);
+-		} else if (key == keys.node_kind) {
++			break;
++		case 9:
++			if (prefixcmp(t, "Node-"))
++				continue;
++			if (!memcmp(t + strlen("Node-"), "path", 4)) {
++				if (active_ctx == NODE_CTX)
++					handle_node();
++				if (active_ctx == REV_CTX)
++					begin_revision();
++				active_ctx = NODE_CTX;
++				reset_node_ctx(val);
++				break;
++			}
++			if (memcmp(t + strlen("Node-"), "kind", 4))
++				continue;
+ 			if (!strcmp(val, "dir"))
+ 				node_ctx.type = REPO_MODE_DIR;
+ 			else if (!strcmp(val, "file"))
+ 				node_ctx.type = REPO_MODE_BLB;
+ 			else
+ 				fprintf(stderr, "Unknown node-kind: %s\n", val);
+-		} else if (key == keys.node_action) {
++			break;
++		case 11:
++			if (memcmp(t, "Node-action", 11))
++				continue;
+ 			if (!strcmp(val, "delete")) {
+ 				node_ctx.action = NODEACT_DELETE;
+ 			} else if (!strcmp(val, "add")) {
+@@ -368,20 +360,39 @@ void svndump_read(const char *url)
+ 				fprintf(stderr, "Unknown node-action: %s\n", val);
+ 				node_ctx.action = NODEACT_UNKNOWN;
+ 			}
+-		} else if (key == keys.node_copyfrom_path) {
++			break;
++		case 18:
++			if (memcmp(t, "Node-copyfrom-path", 18))
++				continue;
+ 			strbuf_reset(&node_ctx.src);
+ 			strbuf_addstr(&node_ctx.src, val);
+-		} else if (key == keys.node_copyfrom_rev) {
++			break;
++		case 17:
++			if (memcmp(t, "Node-copyfrom-rev", 17))
++				continue;
+ 			node_ctx.srcRev = atoi(val);
+-		} else if (key == keys.text_content_length) {
+-			node_ctx.textLength = atoi(val);
+-		} else if (key == keys.prop_content_length) {
++			break;
++		case 19:
++			if (!memcmp(t, "Text-content-length", 19)) {
++				node_ctx.textLength = atoi(val);
++				break;
++			}
++			if (memcmp(t, "Prop-content-length", 19))
++				continue;
+ 			node_ctx.propLength = atoi(val);
+-		} else if (key == keys.text_delta) {
+-			node_ctx.text_delta = !strcmp(val, "true");
+-		} else if (key == keys.prop_delta) {
++			break;
++		case 10:
++			if (!memcmp(t, "Text-delta", 10)) {
++				node_ctx.text_delta = !strcmp(val, "true");
++				break;
++			}
++			if (memcmp(t, "Prop-delta", 10))
++				continue;
+ 			node_ctx.prop_delta = !strcmp(val, "true");
+-		} else if (key == keys.content_length) {
++			break;
++		case 14:
++			if (memcmp(t, "Content-length", 14))
++				continue;
+ 			len = atoi(val);
+ 			buffer_read_line(&input);
+ 			if (active_ctx == REV_CTX) {
+@@ -414,7 +425,6 @@ int svndump_init(const char *filename)
+ 	reset_dump_ctx(~0);
+ 	reset_rev_ctx(0);
+ 	reset_node_ctx(NULL);
+-	init_keys();
+ 	return 0;
+ }
+ 
 -- 
 1.7.3.2.846.gf4b062
