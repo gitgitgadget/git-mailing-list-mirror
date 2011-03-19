@@ -1,105 +1,172 @@
-From: Ilyes Gouta <ilyes.gouta@gmail.com>
-Subject: Question: How to rebase my changes on a new base (ref)?
-Date: Sat, 19 Mar 2011 09:50:37 +0100
-Message-ID: <AANLkTinnGw-u-snLwTUzry2PRmTUD7oDGjedJLhkJGoh@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/9] vcs-svn: implement perfect hash for node-prop keys
+Date: Sat, 19 Mar 2011 03:51:38 -0500
+Message-ID: <20110319085138.GB6706@elie>
+References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
+ <1300518231-20008-4-git-send-email-david.barr@cordelta.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 19 09:51:20 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 09:51:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0rsV-0002dt-56
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 09:51:19 +0100
+	id 1Q0rt7-0002zz-AT
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 09:51:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754479Ab1CSIvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 04:51:00 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:63290 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753622Ab1CSIu6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 04:50:58 -0400
-Received: by vxi39 with SMTP id 39so4171026vxi.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 01:50:57 -0700 (PDT)
+	id S1754564Ab1CSIvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 04:51:53 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61190 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753891Ab1CSIvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 04:51:51 -0400
+Received: by iyb26 with SMTP id 26so4783603iyb.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 01:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=OFmNeXkqZ65PkxEndmPsswwoZFidTdVlxVBqDpymo1E=;
-        b=uai4vC2gerLEA9C5xrUD5EA2HBynDvA18uxbQW2v4xlZuVgX7aChK1DLpvLXB6Bt6z
-         LF3KqEsQ94LLNFmGipdL637gkBHbmo8UP0VGVWn9gpXVeMk1Y5yCD5G39tq54aac7HsD
-         Aun+A7hFtp62tP90+carG8FYyAaKSiy9/gphA=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=YcQWfdT/vVINEQ0fYjTe3P7ttsjvg9Tbosq8wWUKAog=;
+        b=fPXjDLVpOvKgMwvgRmylL62q9bu2cG3kFY05ivi6l6wuNG/607T0TnX0nAubsa0uLI
+         UISqc7GjABiUVMKq9xV2gZXEdMX0o3QWrNubpQ5GzA+tEAVMkDBIM40xnkyxBpGRraak
+         9/I7G5Zr1DhZT60z75+ckflR7U8VRv2VMv1ys=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=EtQM6bJezQ4O34QHSolGIWcmYTQ3ZS4OU2TlyBU6pOsdPYCru0xRorCwYC6mvVlXix
-         pDQRTMAgVo5f3R1w9rcszVLBeMr6H7ehd+Z67PkOLjC47rjN/EHtk+Z64msvsmGoSwcf
-         uS1MHaEPuxgPNiw1Uif7Vs61/rvel5rahFLcE=
-Received: by 10.52.0.37 with SMTP id 5mr2665838vdb.269.1300524657740; Sat, 19
- Mar 2011 01:50:57 -0700 (PDT)
-Received: by 10.52.169.163 with HTTP; Sat, 19 Mar 2011 01:50:37 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=gF+75F/nfYaJAEsFGG1KkThy/NtTmO8oQ5fwzLZo8RfIdahQ5s7Gu9Qu73VMlKItyk
+         v/B0eX7heKzfU+mwN3IDs7vFdDYZLZV1YX5NbaR6Z5fauWKczOKgVuKwnpWgXr5ZwuXP
+         AvQwS/5nxr0MPq5p6Nu9YyLTbiq/KyE3BeRuQ=
+Received: by 10.42.75.137 with SMTP id a9mr3127183ick.194.1300524710819;
+        Sat, 19 Mar 2011 01:51:50 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id g4sm2439972ick.11.2011.03.19.01.51.45
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Mar 2011 01:51:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1300518231-20008-4-git-send-email-david.barr@cordelta.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169416>
 
-Hi,
+David Barr wrote:
 
-I've been tracking a project, via the master branch, customizing
-certain aspects and applying my changes into a separate local branch
-B. In the mean time, there is this new remote branch
-origin/release_2.1, that was created for releasing a certain version.
-It happened that I merge entirely that master branch into my local
-branch, periodically, in order to get the latest change sets. It also
-happens in that projects, that commits from branch C get merged into
-the project's origin/master.
+>  vcs-svn/svndump.c |   50 ++++++++++++++++++++++++++++++++------------------
+>  1 files changed, 32 insertions(+), 18 deletions(-)
 
-I'd like to do the following: Take all the those changes I made
-against origin/master, checkout a local branch based on
-origin/release_2.1 and apply them on it. This way I can get my
-customizations re-based against that particular branch (stream)
-instead of origin/master being the parent/upstream.
+Alas.  But it's probably worth it for the chance to get rid of
+knowledge of how to intern strings.
 
-Is it possible to achieve that? does it involves a kind of git
-rebasing (--onto ?). So far, I used exclusively a merge flow to
-maintain my private branch B in sync with origin/master and that right
-now that code base is more recent than origin/release_2.1.
+> --- a/vcs-svn/svndump.c
+> +++ b/vcs-svn/svndump.c
+[...]
+> @@ -113,22 +107,38 @@ static void init_keys(void)
+>  	keys.prop_delta = pool_intern("Prop-delta");
+>  }
+>  
+> -static void handle_property(uint32_t key, const char *val, uint32_t len,
+> +static void handle_property(const char *key, const char *val, uint32_t len,
+>  				uint32_t *type_set)
+>  {
+> -	if (key == keys.svn_log) {
+> +	const int key_len = strlen(key);
+> +	switch (key_len) {
+> +	case 7:
+> +		if (memcmp(key, "svn:log", 7))
+> +			break;
 
-Here is the structure, in ASCII, of the project: (best viewed with a
-proportional font)
+Crazy idea: to make it visible at a glance when the numbers are wrong,
+one can do:
 
-origin/master
-|
-|
-|  |  |
-|  |  |
-|  |  |
-+--|--\ (sometimes commits in origin/release_2.1 go into origin/master)
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  +  | (git merge origin/master into my_private_branch)
-| /|  |
-+  |  |
-|  |  |
-|  |  |
-|  +  | (git merge origin/master into my_private_branch)
-| /|  |
-+  |  |
-|  |  | origin/release_2.1
-|  |  /
-+--|-/
-|  |
-|  | my_private_branch (git checkout -b)
-|  /
-+/
-|
-|
+	switch (key_len + 1) {
+	case sizeof("svn:log"):
+		if (memcmp(key, "svn:log", strlen("svn:log")))
+			break;
 
-Regards,
+This only makes the redundancy more obvious, of course.  It could
+be reduced a little with something like
 
--Ilyes
+ static int prefixcmp_len(const char *str, size_t str_len,
+			  const char *prefix, size_t prefix_len)
+ {
+	if (prefix_len > str_len)
+		return 1;
+	return memcmp(str, prefix, prefix_len);
+ }
+
+but that's probably not worth the cognitive load.
+
+[...]
+> -	} else if (key == keys.svn_executable || key == keys.svn_special) {
+> +		break;
+> +	case 14:
+> +		if (memcmp(key, "svn:executable", 14))
+> +			break;
+> +	case 11:
+> +		if (key_len == 11 && memcmp(key, "svn:special", 11))
+> +			break;
+
+Maybe, to avoid an unnecessary /* fall through */:
+
+	case sizeof("svn:executable"):
+	case sizeof("svn:special"):
+		if (key_len == strlen("svn:executable") &&
+		    memcmp(key, "svn:executable", strlen(...)))
+			break;
+		if (key_len == strlen("svn:special") &&
+		    memcmp(key, "svn:special", strlen("svn:special")))
+			break;
+
+>  		if (*type_set) {
+[...]
+> @@ -147,7 +157,7 @@ static void handle_property(uint32_t key, const char *val, uint32_t len,
+>  
+>  static void read_props(void)
+>  {
+> -	uint32_t key = ~0;
+> +	char key[16] = {0};
+
+Probably warrants a comment:
+
+	/* the longest key we pay attention to is "<whatever>" */
+
+>  	const char *t;
+>  	/*
+>  	 * NEEDSWORK: to support simple mode changes like
+> @@ -175,16 +185,20 @@ static void read_props(void)
+>  
+>  		switch (type) {
+>  		case 'K':
+> -			key = pool_intern(val);
+> -			continue;
+>  		case 'D':
+> -			key = pool_intern(val);
+> +			if (len < sizeof(key))
+> +				memcpy(key, val, len + 1);
+
+What happens on I/O error, when val is NULL?  How about early EOF
+or malformed input, when strlen(val) < len?
+
+Some tests would also be a comfort.
+
+I'm not so happy with the table of (at first glance) magic-seeming
+numbers and the error handling looks a little tricky but aside from
+those details this seems like a reasonable way to avoid some
+complication without sacrificing speed.
+
+Speaking of which, any hints for people who want to time this patch
+(and other patches in the series)?
+
+Thanks.
+Jonathan
