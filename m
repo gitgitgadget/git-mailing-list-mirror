@@ -1,81 +1,84 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: [PATCH] git status: fix grammar when in detached head
-Date: Sat, 19 Mar 2011 22:33:29 +0100
-Message-ID: <4D852129.7050205@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v4 2/2] gitweb: introduce localtime feature
+Date: Sat, 19 Mar 2011 22:41:13 +0100
+Message-ID: <201103192241.13589.jnareb@gmail.com>
+References: <ab54ba2199cc7487e383a31e3aa65885@localhost> <201103192209.29759.jnareb@gmail.com> <AANLkTikw7_9Q0MgVZZxX_dXvcxoXfx5VEmRQkVH_k1YC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 19 22:34:28 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kevin Cernekee <cernekee@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 22:41:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q13n2-0003pr-Dy
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 22:34:28 +0100
+	id 1Q13tl-0006LM-1f
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 22:41:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580Ab1CSVeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 17:34:19 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57573 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757562Ab1CSVeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 17:34:17 -0400
-Received: by bwz15 with SMTP id 15so4208196bwz.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 14:34:16 -0700 (PDT)
+	id S1757649Ab1CSVlS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 17:41:18 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:40369 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757637Ab1CSVlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 17:41:16 -0400
+Received: by fxm17 with SMTP id 17so4600938fxm.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 14:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:content-type:content-transfer-encoding;
-        bh=Er3P3dWFY3lwyu98DtFUMnGW4avKvA48+lHhTAmSBwI=;
-        b=naF76+bovyq5p8l5OI57EMA7hB/0Jx7km1a09y6Io75hLBpdj+vLOChLKLo6kP5u7a
-         9ATfsxkD65eN9SWSbhnossLFHL9i6+1a44WR2xt4hlUtmWWaiVu98zh7Tc/E+KL2FlD5
-         EMhDddP80re8gIulbqn/HVT/sUfh1uAou909E=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=OxXrFlUrAs6Ou0lDCr5MTK0x4kmjBcjYwiqWjhBc378=;
+        b=UWl3GnVS2uDgd7l7bQiyh7VjxAu0eiXpinJj0ZQ5dmEHnR/l4caYKE4jSh9873u72G
+         CwsxGrYyIMdKub9PMraXz/dw30jHxOVht+/fBiwyB7n3Ybp6ZjutHpz3eH3x3ltmGsiP
+         63LzuA6s8OGTSmoX7Bruy/RjvlJrfVLmrQYVc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=rB+OKKNB//mVWrhPlsIJNZKwYlrUZeXYrGZarmL9mR+acfmF+x3fAS/dr2WdAKORyP
-         Tk3kN+kd4OwuihFpzDqS+x0Ubux7fEAQDxjMtI/4T16WgrR34jvDEWCrW3E32AvAzETJ
-         Zqh8Ptz3XgFXB1au3OVAcjqGUrDIs2CoaQFvU=
-Received: by 10.204.73.206 with SMTP id r14mr2128979bkj.181.1300570417163;
-        Sat, 19 Mar 2011 14:33:37 -0700 (PDT)
-Received: from [192.168.1.101] (app184.neoplus.adsl.tpnet.pl [83.26.149.184])
-        by mx.google.com with ESMTPS id z18sm812361bkf.8.2011.03.19.14.33.35
-        (version=SSLv3 cipher=OTHER);
-        Sat, 19 Mar 2011 14:33:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=foFIlMJF8tVqfWyyuzeox8PJrwcdSlszUI+tC1JZc5rPCE+UOcq94GodFVz+oAhCWb
+         CTgu8rkEh3s+g6QfttCW0YFJWiHBEJOHzWoAWcoL26VKoVrfen8fxzlXA97xB3C/V24g
+         MWIGFX6pjsFAAtEv4UfgOxLFLW96IDAi0Iods=
+Received: by 10.223.6.198 with SMTP id a6mr2918665faa.126.1300570875752;
+        Sat, 19 Mar 2011 14:41:15 -0700 (PDT)
+Received: from [192.168.1.13] (abrz59.neoplus.adsl.tpnet.pl [83.8.119.59])
+        by mx.google.com with ESMTPS id o12sm1692512fav.30.2011.03.19.14.41.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 19 Mar 2011 14:41:14 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTikw7_9Q0MgVZZxX_dXvcxoXfx5VEmRQkVH_k1YC@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169467>
 
+Kevin Cernekee wrote:
+> On Sat, Mar 19, 2011 at 2:09 PM, Jakub Narebski <jnareb@gmail.com> wr=
+ote:
 
-Signed-off-by: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
----
- wt-status.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> > =C2=A0sub timestamp_html {
+> > =C2=A0 =C2=A0 =C2=A0my %date =3D %{ shift };
+> > =C2=A0 =C2=A0 =C2=A0my %opts =3D @_;
+>=20
+> This did not work for me. =C2=A0It interprets "shift" as a variable n=
+ame.
 
-Not a native English speaker, but IMO the previous version isn't 
-correct.
+Damn autoquoting ('shift' is taken as bareword here).
 
-diff --git a/wt-status.c b/wt-status.c
-index 4daa8bb..3214f52 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -643,7 +643,7 @@ void wt_status_print(struct wt_status *s)
- 		else if (!strcmp(branch_name, "HEAD")) {
- 			branch_name = "";
- 			branch_status_color = color(WT_STATUS_NOBRANCH, s);
--			on_what = "Not currently on any branch.";
-+			on_what = "Not on any branch currently.";
- 		}
- 		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "# ");
- 		color_fprintf(s->fp, branch_status_color, "%s", on_what);
--- 
-1.7.4.1.295.ged435
+Either
 
--- 
-Piotr Krukowiecki
+        my %date =3D %{ shift @_ };
+
+or
+
+        my %date =3D %{ +shift };
+
+works.  Not that it matter much...
+--=20
+Jakub Narebski
+Poland
