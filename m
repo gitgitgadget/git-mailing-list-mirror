@@ -1,102 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3 (alternate)] gitweb: Mark "atnight" author/committer
- times also for 'localtime'
-Date: Fri, 18 Mar 2011 18:25:39 -0700
-Message-ID: <7vaagrsxyk.fsf@alter.siamese.dyndns.org>
-References: <c8621826e0576e3e31240b0205e7e3d0@localhost>
- <201103181846.04979.jnareb@gmail.com>
- <7vmxksw3x8.fsf@alter.siamese.dyndns.org>
- <201103182328.19141.jnareb@gmail.com>
+From: Kevin Cernekee <cernekee@gmail.com>
+Subject: [PATCH 1/2] gitweb: rename parse_date() to format_date()
+Date: Fri, 18 Mar 2011 22:39:33 -0700
+Message-ID: <ab54ba2199cc7487e383a31e3aa65885@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 02:25:57 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 06:44:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0kvV-0003UZ-32
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 02:25:57 +0100
+	id 1Q0oxU-0001ca-78
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 06:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757181Ab1CSBZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2011 21:25:52 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57847 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756600Ab1CSBZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2011 21:25:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9DC64403D;
-	Fri, 18 Mar 2011 21:27:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rYOBUEOW4Qa4YY+1siAlG8QRB/M=; b=PBdHZm
-	b3Yq4LxN4oEfbUNjUh5Z0AY0MiYkAB6ch37M5MKUcWsZTe0ZeRV1YsOj8pyxcxGS
-	GPWO3fKmCJZIxZrtBXYGM0VcSYe90NDDiBFRtUaRoCXH7L72D9KYNJfitNVwWqRy
-	YSe7lLjrRL4qg8Sg7kn1UQ0Ibs62lfHQ6FDoY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hE0YSTF0hzEhVoelQaiQp0iZk2M0RL3y
-	wjdoy/lEoRBRXJ1Knc5mIBixdp5Ka5ltQ/FZXs97TCLcQhERiHdj1+f5ljiJf+lp
-	A1vrcCLh3DtGSR225s+C+WnXnguATy8UNADnV4hqGQDv3WDqHfvCV3Hmd5qEoe6o
-	zVNXTfbNhak=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6BF254038;
-	Fri, 18 Mar 2011 21:27:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 462F44030; Fri, 18 Mar 2011
- 21:27:18 -0400 (EDT)
-In-Reply-To: <201103182328.19141.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 18 Mar 2011 23:28:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09F6FF72-51C8-11E0-B948-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753693Ab1CSFoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 01:44:11 -0400
+Received: from [69.28.251.93] ([69.28.251.93]:46140 "EHLO b32.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753280Ab1CSFoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 01:44:09 -0400
+Received: (qmail 1327 invoked from network); 19 Mar 2011 05:44:07 -0000
+Received: from localhost (HELO vps-1001064-677.cp.jvds.com) (127.0.0.1)
+  by localhost with (DHE-RSA-AES128-SHA encrypted) SMTP; 19 Mar 2011 05:44:07 -0000
+Received: by vps-1001064-677.cp.jvds.com (sSMTP sendmail emulation); Fri, 18 Mar 2011 22:44:07 -0700
+User-Agent: vim 7.2
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169384>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+One might reasonably expect a function named parse_date() to be used
+for something along these lines:
 
-> Junio C Hamano wrote:
-> ...
->> and format_timestamp would be like
->> 
->> 	sub format_timestamp {
->> 		my %date = %$_[0];
->>       	my $use_localtime = $_[1];
->> 		my $localtime, $ret, $nite;
->> 
->> 		$nite = ($date{'hour_local'} < 6);
->> 
->> 		if ($use_localtime) {
->> 			$ret = $date{'rfc2822_local'};
->>       		if ($nite) {
->>                         	$ret = sprintf("<span class='atnight'>%s</span>", $ret);
->> 			}
->> 		} else {
->> 			... what the current format_local_time does to set
->> 	        	... including the spanning part
->>               	$ret = "$date{'rfc2822'} ($localtime)";
->> 		}
->> 		return $ret;
->> 	}
->
-> Well, if we go this route, and assuming that parse_date does only parsing
-> and we use separate subroutine for generating date in an rfc2822 format,
-> then we could mark only time with "atnight" also when 'localtime' feature
-> is enabled.
->  
->> Wouldn't it be much cleaner?  You can then clean up the other call site of
->> print_local_time in git_print_authorship using the same helper function
->> (presumably you would always pass 0 to $use_localtime there), no?
->
-> Right.  Well, I'd have to think a bit about API for format_timestamp,
-> but it looks like good direction.
+$unix_time_t = parse_date("2011-03-19");
 
-I don't think there is much to think about for format_timestamp, as I was
-suggesting to keep what comes in %date more or less the same as what the
-current parse_date() generates.  I was only hinting that parse_date() is
-misnamed.
+But instead, gitweb's parse_date works more like:
+
+&parse_date(1300505805) = {
+        'hour' => 3,
+        'minute' => 36,
+        ...
+        'rfc2822' => 'Sat, 19 Mar 2011 03:36:45 +0000',
+        ...
+}
+
+Rename the function to improve clarity.  No change to functionality.
+
+Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
+---
+ gitweb/gitweb.perl |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b04ab8c..57ef08c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2893,7 +2893,7 @@ sub git_get_rev_name_tags {
+ ## ----------------------------------------------------------------------
+ ## parse to hash functions
+ 
+-sub parse_date {
++sub format_date {
+ 	my $epoch = shift;
+ 	my $tz = shift || "-0000";
+ 
+@@ -3953,7 +3953,7 @@ sub git_print_authorship {
+ 	my $tag = $opts{-tag} || 'div';
+ 	my $author = $co->{'author_name'};
+ 
+-	my %ad = parse_date($co->{'author_epoch'}, $co->{'author_tz'});
++	my %ad = format_date($co->{'author_epoch'}, $co->{'author_tz'});
+ 	print "<$tag class=\"author_date\">" .
+ 	      format_search_author($author, "author", esc_html($author)) .
+ 	      " [$ad{'rfc2822'}";
+@@ -3973,7 +3973,7 @@ sub git_print_authorship_rows {
+ 	my @people = @_;
+ 	@people = ('author', 'committer') unless @people;
+ 	foreach my $who (@people) {
+-		my %wd = parse_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
++		my %wd = format_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
+ 		print "<tr><td>$who</td><td>" .
+ 		      format_search_author($co->{"${who}_name"}, $who,
+ 			       esc_html($co->{"${who}_name"})) . " " .
+@@ -4906,7 +4906,7 @@ sub git_log_body {
+ 		next if !%co;
+ 		my $commit = $co{'id'};
+ 		my $ref = format_ref_marker($refs, $commit);
+-		my %ad = parse_date($co{'author_epoch'});
++		my %ad = format_date($co{'author_epoch'});
+ 		git_print_header_div('commit',
+ 		               "<span class=\"age\">$co{'age_string'}</span>" .
+ 		               esc_html($co{'title'}) . $ref,
+@@ -5369,7 +5369,7 @@ sub git_project_index {
+ sub git_summary {
+ 	my $descr = git_get_project_description($project) || "none";
+ 	my %co = parse_commit("HEAD");
+-	my %cd = %co ? parse_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
++	my %cd = %co ? format_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
+ 	my $head = $co{'id'};
+ 	my $remote_heads = gitweb_check_feature('remote_heads');
+ 
+@@ -5674,7 +5674,7 @@ sub git_blame_common {
+ 			my $short_rev = substr($full_rev, 0, 8);
+ 			my $author = $meta->{'author'};
+ 			my %date =
+-				parse_date($meta->{'author-time'}, $meta->{'author-tz'});
++				format_date($meta->{'author-time'}, $meta->{'author-tz'});
+ 			my $date = $date{'iso-tz'};
+ 			if ($group_size) {
+ 				$current_color = ($current_color + 1) % $num_colors;
+@@ -6702,7 +6702,7 @@ sub git_commitdiff {
+ 			-charset => 'utf-8',
+ 			-expires => $expires,
+ 			-content_disposition => 'inline; filename="' . "$filename" . '"');
+-		my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
++		my %ad = format_date($co{'author_epoch'}, $co{'author_tz'});
+ 		print "From: " . to_utf8($co{'author'}) . "\n";
+ 		print "Date: $ad{'rfc2822'} ($ad{'tz_local'})\n";
+ 		print "Subject: " . to_utf8($co{'title'}) . "\n";
+@@ -7064,7 +7064,7 @@ sub git_feed {
+ 	if (defined($commitlist[0])) {
+ 		%latest_commit = %{$commitlist[0]};
+ 		my $latest_epoch = $latest_commit{'committer_epoch'};
+-		%latest_date   = parse_date($latest_epoch);
++		%latest_date   = format_date($latest_epoch);
+ 		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
+ 		if (defined $if_modified) {
+ 			my $since;
+@@ -7195,7 +7195,7 @@ XML
+ 		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
+ 			last;
+ 		}
+-		my %cd = parse_date($co{'author_epoch'});
++		my %cd = format_date($co{'author_epoch'});
+ 
+ 		# get list of changed files
+ 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-- 
+1.7.4.1
