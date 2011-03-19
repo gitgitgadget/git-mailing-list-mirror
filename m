@@ -1,119 +1,93 @@
-From: Ilyes Gouta <ilyes.gouta@gmail.com>
-Subject: Re: Question: How to rebase my changes on a new base (ref)?
-Date: Sat, 19 Mar 2011 09:54:18 +0100
-Message-ID: <AANLkTi=8hbaMZDhrdC1pppk5OBejTuaMSpG4BCr_TpGs@mail.gmail.com>
-References: <AANLkTinnGw-u-snLwTUzry2PRmTUD7oDGjedJLhkJGoh@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/9] vcs-svn: implement perfect hash for top-level keys
+Date: Sat, 19 Mar 2011 03:57:37 -0500
+Message-ID: <20110319085737.GC6706@elie>
+References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
+ <1300518231-20008-5-git-send-email-david.barr@cordelta.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 19 09:54:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 09:57:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0rvo-0003oP-5M
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 09:54:44 +0100
+	id 1Q0ryr-0004VU-Jm
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 09:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754609Ab1CSIyk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 04:54:40 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:40164 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754479Ab1CSIyj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 04:54:39 -0400
-Received: by vws1 with SMTP id 1so4242547vws.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 01:54:38 -0700 (PDT)
+	id S1754929Ab1CSI5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 04:57:49 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39724 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754564Ab1CSI5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 04:57:48 -0400
+Received: by iyb26 with SMTP id 26so4786314iyb.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 01:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=Lh65PlcIwbaTo3B/5/ajdnjdCUwsJStEp6q8+sL8cJ8=;
-        b=Q9b8PqCfD70FZA0SwmrON5Yp8X5IAXP9NGm4SlctNpMjm1TUn+oe6Qjw7DdN+crP3o
-         DYPQS3mm0g80TyJaZZwaKyGSZdeSvdcRnmKIrmUbbq64XFtp2Uixn2rqfpVNXbr6BK3A
-         dCBCCZjU+uQ6glGdh/7Bwazb4RQFzps7emmLM=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=7aJQBDXEbeof4Zohn3LQUYa39GkLpjoGQiorHvhgRaw=;
+        b=LjUylUk1X94KwFrvalYbzxw6NWdtkR9c2FYNo330PaXtttA+VtcdSC81AfLgLDC5Rd
+         ZA0Yic7he9uZKY6fA4HLWKCsqAatyafXIu5UnmnZg8RaSK9nRHou1JiDoDCmeH7ZQ2ip
+         2XZcvnZKJg1D3Q67KBBConkr3KS4rrabxt4VI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=So9FizqmDh7zgvOssEOtTBwagwfVKnRfzfKMBJrX8qZniLhV/RxwnVRQ+Wx/JeG6OK
-         bTM5zasxhK5buAO5/no5HLb/2KxxL+HuJqvNQWE1Ui6dN8PQn0p0xT9hAVbi9X/cp65B
-         HeLYqwpAb83aARWxHSRbVBXeTNvqzGEQuOhZw=
-Received: by 10.52.65.52 with SMTP id u20mr2695756vds.309.1300524878212; Sat,
- 19 Mar 2011 01:54:38 -0700 (PDT)
-Received: by 10.52.169.163 with HTTP; Sat, 19 Mar 2011 01:54:18 -0700 (PDT)
-In-Reply-To: <AANLkTinnGw-u-snLwTUzry2PRmTUD7oDGjedJLhkJGoh@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=rfL7mwQb5FtBtCvpnk4NvUaF38w2rhyLTzUiL2f/Tjltgz9hmxlQkEvvyywrmYyVSL
+         chHsF6nz1xTstxfLTckGN3uHLlOCY/cyO7Wvdu5zE1kEQ/zcDhIXKBKxQ00NqaeaaJTa
+         lVXmrVbQes2/qWG1HhuWZJYhR7+bUvVP6oDS8=
+Received: by 10.42.137.130 with SMTP id y2mr504919ict.486.1300525067765;
+        Sat, 19 Mar 2011 01:57:47 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id vr5sm235262icb.12.2011.03.19.01.57.42
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Mar 2011 01:57:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1300518231-20008-5-git-send-email-david.barr@cordelta.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169418>
 
-Please CC me in the reply. I'm not registered to the mailing-list. Than=
-ks!
+David Barr wrote:
 
--Ilyes
+> --- a/vcs-svn/svndump.c
+> +++ b/vcs-svn/svndump.c
+> @@ -323,16 +296,25 @@ void svndump_read(const char *url)
+>  			continue;
+>  		*val++ = '\0';
+>  		*val++ = '\0';
+> -		key = pool_intern(t);
+>  
+> -		if (key == keys.svn_fs_dump_format_version) {
+> +		/* strlen(key) */
+> +		switch (val - t - 2) { 
+> +		case 26:
+> +			if (memcmp(t, "SVN-fs-dump-format-version", 26))
+> +				continue;
 
-On Sat, Mar 19, 2011 at 9:50 AM, Ilyes Gouta <ilyes.gouta@gmail.com> wr=
-ote:
-> Hi,
->
-> I've been tracking a project, via the master branch, customizing
-> certain aspects and applying my changes into a separate local branch
-> B. In the mean time, there is this new remote branch
-> origin/release_2.1, that was created for releasing a certain version.
-> It happened that I merge entirely that master branch into my local
-> branch, periodically, in order to get the latest change sets. It also
-> happens in that projects, that commits from branch C get merged into
-> the project's origin/master.
->
-> I'd like to do the following: Take all the those changes I made
-> against origin/master, checkout a local branch based on
-> origin/release_2.1 and apply them on it. This way I can get my
-> customizations re-based against that particular branch (stream)
-> instead of origin/master being the parent/upstream.
->
-> Is it possible to achieve that? does it involves a kind of git
-> rebasing (--onto ?). So far, I used exclusively a merge flow to
-> maintain my private branch B in sync with origin/master and that righ=
-t
-> now that code base is more recent than origin/release_2.1.
->
-> Here is the structure, in ASCII, of the project: (best viewed with a
-> proportional font)
->
-> origin/master
-> |
-> |
-> | =A0| =A0|
-> | =A0| =A0|
-> | =A0| =A0|
-> +--|--\ (sometimes commits in origin/release_2.1 go into origin/maste=
-r)
-> | =A0| =A0|
-> | =A0| =A0|
-> | =A0| =A0|
-> | =A0| =A0|
-> | =A0| =A0|
-> | =A0+ =A0| (git merge origin/master into my_private_branch)
-> | /| =A0|
-> + =A0| =A0|
-> | =A0| =A0|
-> | =A0| =A0|
-> | =A0+ =A0| (git merge origin/master into my_private_branch)
-> | /| =A0|
-> + =A0| =A0|
-> | =A0| =A0| origin/release_2.1
-> | =A0| =A0/
-> +--|-/
-> | =A0|
-> | =A0| my_private_branch (git checkout -b)
-> | =A0/
-> +/
-> |
-> |
->
-> Regards,
->
-> -Ilyes
->
+Same comments as the previous patch apply here.
+
+Might make sense to split out the loop body (or at least the giant
+switch statement) as a separate function for easier contemplation.
+
+[...]
+> -		} else if (key == keys.content_length) {
+> +			break;
+> +		case 14:
+> +			if (memcmp(t, "Content-length", 14))
+> +				continue;
+>  			len = atoi(val);
+
+Thanks for a very clean patch.
