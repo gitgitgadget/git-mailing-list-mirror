@@ -1,187 +1,215 @@
-From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 13/16] vcs-svn: let deltas use data from postimage
-Date: Sat, 19 Mar 2011 18:20:51 +1100
-Message-ID: <1300519254-20201-14-git-send-email-david.barr@cordelta.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/9] vcs-svn: pass paths through to fast-import
+Date: Sat, 19 Mar 2011 02:50:28 -0500
+Message-ID: <20110319075028.GB4063@elie>
 References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
- <1300519254-20201-1-git-send-email-david.barr@cordelta.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+ <1300518231-20008-2-git-send-email-david.barr@cordelta.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
-	Tomas Carnecky <tom@dbservice.com>,
-	David Barr <david.barr@cordelta.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 19 08:22:25 2011
+	Tomas Carnecky <tom@dbservice.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 08:50:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0qUQ-0007jt-77
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:22:22 +0100
+	id 1Q0qvq-00068F-7B
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:50:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754491Ab1CSHWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 03:22:05 -0400
-Received: from [119.15.97.146] ([119.15.97.146]:55904 "EHLO mailhost.cordelta"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754564Ab1CSHVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 03:21:32 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id CE9E7C058;
-	Sat, 19 Mar 2011 18:17:58 +1100 (EST)
-X-Virus-Scanned: amavisd-new at mailhost.cordelta
-Received: from mailhost.cordelta ([127.0.0.1])
-	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aBZ7KyXUNzPG; Sat, 19 Mar 2011 18:17:47 +1100 (EST)
-Received: from dba.cordelta (unknown [192.168.123.140])
-	by mailhost.cordelta (Postfix) with ESMTP id 68B11C059;
-	Sat, 19 Mar 2011 18:17:43 +1100 (EST)
-X-Mailer: git-send-email 1.7.3.2.846.gf4b062
-In-Reply-To: <1300519254-20201-1-git-send-email-david.barr@cordelta.com>
+	id S1753891Ab1CSHuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 03:50:37 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:36168 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753395Ab1CSHug (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 03:50:36 -0400
+Received: by iwn34 with SMTP id 34so4754856iwn.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 00:50:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=dwjx0ePROqKCQFI16KT7eSntX37RerFdM8DVj6azHoE=;
+        b=Qj4TUc2aMU//SJvIoSk9DBvyawep7sv1Qo0+SMSkeHTCcqsvNPnGRdl0JzCFuPQCHS
+         Q/wsK0GSxl6bTIWhJs3Mh2/fiLBStpuutwJefPMYpFALckLf1xrNafDfCQij1BQFgS3H
+         kFNgyx9G2xVkZZE102IjHe9DWpRhNO2VoSFz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=FZSr+PVmtbIERm1UK9YQn/YtKZD9RaXuwxHz4lt4YSB0+gglIA4c9Bf6OjRVuMaH95
+         vRpDS+/2Dw8AoXtNUavHGT1ZZIGqVOKImpVetnGIuFd85XM0QEAw35IocezFpLXZXbP4
+         GZ2AZj97Vehp0RoZhgodJQPr9TTmw2/auyWI4=
+Received: by 10.42.132.198 with SMTP id e6mr2873899ict.328.1300521035443;
+        Sat, 19 Mar 2011 00:50:35 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
+        by mx.google.com with ESMTPS id s40sm2061976ibg.43.2011.03.19.00.50.32
+        (version=SSLv3 cipher=OTHER);
+        Sat, 19 Mar 2011 00:50:34 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1300518231-20008-2-git-send-email-david.barr@cordelta.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169413>
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+Hi,
 
-The copyfrom_target instruction copies appends data that is already
-present in the current output view to the end of output.  (The offset
-argument is relative to the beginning of output produced in the
-current window.)
+David Barr wrote:
 
-The region copied is allowed to run past the end of the existing
-output.  To support that case, copy one character at a time rather
-than calling memcpy or memmove.  This allows copyfrom_target to be
-used once to repeat a string many times.  For example:
+>  vcs-svn/fast_export.c |   47 ++++++++++++++++++------------------
+>  vcs-svn/fast_export.h |    9 +++----
+>  vcs-svn/repo_tree.c   |   20 +++++++-------
+>  vcs-svn/repo_tree.h   |   13 ++++------
+>  vcs-svn/svndump.c     |   63 +++++++++++++++++++++----------------------------
+>  5 files changed, 70 insertions(+), 82 deletions(-)
 
-	COPYFROM_DATA 2
-	COPYFROM_OUTPUT 10, 0
-	DATA "ab"
+Hoorah!  Simpler and more idiomatic.
 
-would produce the output "ababababababababababab".
+> +++ b/vcs-svn/fast_export.c
+> @@ -32,30 +34,30 @@ void fast_export_reset(void)
+[...]
+>  	buffer_reset(&report_buffer);
+>  }
+>  
+> -void fast_export_delete(uint32_t depth, const uint32_t *path)
+> +void fast_export_delete(const char *path)
+>  {
+> -	printf("D \"");
+> -	pool_print_seq_q(depth, path, '/', stdout);
+> -	printf("\"\n");
+> +	putchar('D');
+> +	putchar(' ');
+> +	quote_c_style(path, NULL, stdout, 0);
+> +	putchar('\n');
+>  }
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Acked-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: David Barr <david.barr@cordelta.com>
----
- t/t9011-svn-da.sh |   42 ++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/svndiff.c |   28 ++++++++++++++++++++++++++--
- 2 files changed, 68 insertions(+), 2 deletions(-)
+Functional change: if the path doesn't need quoting, this won't
+surround it with quotation marks.  Luckily fast-import doesn't
+mind.
 
-diff --git a/t/t9011-svn-da.sh b/t/t9011-svn-da.sh
-index 7f422ca..d13115a 100755
---- a/t/t9011-svn-da.sh
-+++ b/t/t9011-svn-da.sh
-@@ -170,4 +170,46 @@ test_expect_success 'catch attempt to copy missing data' '
- 	test_must_fail test-svn-fe -d preimage copy.incomplete $len
- '
- 
-+test_expect_success 'copyfrom target to repeat data' '
-+	printf foofoo >expect &&
-+	printf "SVNQ%b%b%s" "QQ\006\004\003" "\0203\0100\003Q" "foo" |
-+		q_to_nul >copytarget.repeat &&
-+	len=$(wc -c <copytarget.repeat) &&
-+	test-svn-fe -d preimage copytarget.repeat $len >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'copyfrom target out of order' '
-+	printf foooof >expect &&
-+	printf "SVNQ%b%b%s" \
-+		"QQ\006\007\003" "\0203\0101\002\0101\001\0101Q" "foo" |
-+		q_to_nul >copytarget.reverse &&
-+	len=$(wc -c <copytarget.reverse) &&
-+	test-svn-fe -d preimage copytarget.reverse $len >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'catch copyfrom future' '
-+	printf "SVNQ%b%b%s" "QQ\004\004\003" "\0202\0101\002\0201" "XYZ" |
-+		q_to_nul >copytarget.infuture &&
-+	len=$(wc -c <copytarget.infuture) &&
-+	test_must_fail test-svn-fe -d preimage copytarget.infuture $len
-+'
-+
-+test_expect_success 'copy to sustain' '
-+	printf XYXYXYXYXYXZ >expect &&
-+	printf "SVNQ%b%b%s" "QQ\014\004\003" "\0202\0111Q\0201" "XYZ" |
-+		q_to_nul >copytarget.sustain &&
-+	len=$(wc -c <copytarget.sustain) &&
-+	test-svn-fe -d preimage copytarget.sustain $len >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'catch copy that overflows' '
-+	printf "SVNQ%b%b%s" "QQ\003\003\001" "\0201\0177Q" X |
-+		q_to_nul >copytarget.overflow &&
-+	len=$(wc -c <copytarget.overflow) &&
-+	test_must_fail test-svn-fe -d preimage copytarget.overflow $len
-+'
-+
- test_done
-diff --git a/vcs-svn/svndiff.c b/vcs-svn/svndiff.c
-index 6b505dc..f4c5dae 100644
---- a/vcs-svn/svndiff.c
-+++ b/vcs-svn/svndiff.c
-@@ -21,7 +21,12 @@
-  *   | packed_view_selector int
-  *   | packed_copyfrom_data
-  *   ;
-+ * view_selector ::= copyfrom_source
-+ *   | copyfrom_target
-+ *   ;
-+ * copyfrom_target ::= # binary 01 000000;
-  * copyfrom_data ::= # binary 10 000000;
-+ * packed_view_selector ::= # view_selector OR-ed with 6 bit value;
-  * packed_copyfrom_data ::= # copyfrom_data OR-ed with 6 bit value;
-  * int ::= highdigit* lowdigit;
-  * highdigit ::= # binary 1000 0000 OR-ed with 7 bit value;
-@@ -29,6 +34,7 @@
-  */
- 
- #define INSN_MASK	0xc0
-+#define INSN_COPYFROM_TARGET	0x40
- #define INSN_COPYFROM_DATA	0x80
- #define OPERAND_MASK	0x3f
- 
-@@ -155,6 +161,19 @@ static int read_length(struct line_buffer *in, size_t *result, off_t *len)
- 	return 0;
- }
- 
-+static int copyfrom_target(struct window *ctx, const char **instructions,
-+			   size_t nbytes, const char *instructions_end)
-+{
-+	size_t offset;
-+	if (parse_int(instructions, &offset, instructions_end))
-+		return -1;
-+	if (offset >= ctx->out.len)
-+		return error("invalid delta: copies from the future.");
-+	for (; nbytes > 0; nbytes--)
-+		strbuf_addch(&ctx->out, ctx->out.buf[offset++]);
-+	return 0;
-+}
-+
- static int copyfrom_data(struct window *ctx, size_t *data_pos, size_t nbytes)
- {
- 	const size_t pos = *data_pos;
-@@ -189,9 +208,14 @@ static int execute_one_instruction(struct window *ctx,
- 	instruction = (unsigned char) **instructions;
- 	if (parse_first_operand(instructions, &nbytes, insns_end))
- 		return -1;
--	if ((instruction & INSN_MASK) != INSN_COPYFROM_DATA)
-+	switch (instruction & INSN_MASK) {
-+	case INSN_COPYFROM_TARGET:
-+		return copyfrom_target(ctx, instructions, nbytes, insns_end);
-+	case INSN_COPYFROM_DATA:
-+		return copyfrom_data(ctx, data_pos, nbytes);
-+	default:
- 		return error("Unknown instruction %x", instruction);
--	return copyfrom_data(ctx, data_pos, nbytes);
-+	}
- }
- 
- static int apply_window_in_core(struct window *ctx)
--- 
-1.7.3.2.846.gf4b062
+[...]
+> -	printf("M %06"PRIo32" %s \"", mode, dataref);
+> -	pool_print_seq_q(depth, path, '/', stdout);
+> -	printf("\"\n");
+> +	printf("M %06"PRIo32" %s ", mode, dataref);
+> +	quote_c_style(path, NULL, stdout, 0);
+> +	putchar('\n');
+[...]
+> -	printf("ls :%"PRIu32" \"", rev);
+> -	pool_print_seq_q(depth, path, '/', stdout);
+> -	printf("\"\n");
+> +	printf("ls :%"PRIu32" ", rev);
+> +	quote_c_style(path, NULL, stdout, 0);
+> +	putchar('\n');
+
+Likewise.
+
+[...]
+> -static void ls_from_active_commit(uint32_t depth, const uint32_t *path)
+> +static void ls_from_active_commit(const char *path)
+>  {
+>  	/* ls "path/to/file" */
+>  	printf("ls \"");
+> -	pool_print_seq_q(depth, path, '/', stdout);
+> +	quote_c_style(path, NULL, stdout, 1);
+>  	printf("\"\n");
+
+Single-argument 'ls': quotes always present.  Phew.
+
+[...]
+> --- a/vcs-svn/repo_tree.h
+> +++ b/vcs-svn/repo_tree.h
+> @@ -8,15 +8,12 @@
+>  #define REPO_MODE_EXE 0100755
+>  #define REPO_MODE_LNK 0120000
+>  
+> -#define REPO_MAX_PATH_LEN 4096
+> -#define REPO_MAX_PATH_DEPTH 1000
+
+Yes.
+
+> --- a/vcs-svn/svndump.c
+> +++ b/vcs-svn/svndump.c
+> @@ -11,8 +11,8 @@
+>  #include "repo_tree.h"
+>  #include "fast_export.h"
+>  #include "line_buffer.h"
+> -#include "obj_pool.h"
+>  #include "string_pool.h"
+> +#include "strbuf.h"
+>  
+>  #define REPORT_FILENO 3
+>  
+> @@ -31,32 +31,20 @@
+>  #define LENGTH_UNKNOWN (~0)
+>  #define DATE_RFC2822_LEN 31
+>  
+> -/* Create memory pool for log messages */
+> -obj_pool_gen(log, char, 4096)
+> -
+
+Not a path. :)  Snuck in from a separate patch?
+
+>  static struct line_buffer input = LINE_BUFFER_INIT;
+>  
+>  #define REPORT_FILENO 3
+>  
+> -static char *log_copy(uint32_t length, const char *log)
+> -{
+[...]
+> -}
+
+Likewise.
+
+[...]
+>  static struct {
+>  	uint32_t revision, author;
+>  	unsigned long timestamp;
+> -	char *log;
+> +	struct strbuf log;
+>  } rev_ctx;
+
+Likewise.
+
+[... etc ...]
+> @@ -406,6 +395,9 @@ int svndump_init(const char *filename)
+>  	if (buffer_init(&input, filename))
+>  		return error("cannot open %s: %s", filename, strerror(errno));
+>  	fast_export_init(REPORT_FILENO);
+> +	strbuf_init(&rev_ctx.log, 4096);
+> +	strbuf_init(&node_ctx.src, 4096);
+> +	strbuf_init(&node_ctx.dst, 4096);
+
+4096 because PATH_MAX or some other reason?
+
+> @@ -415,11 +407,13 @@ int svndump_init(const char *filename)
+>
+>  void svndump_deinit(void)
+>  {
+> -	log_reset();
+>  	fast_export_deinit();
+>  	reset_dump_ctx(~0);
+>  	reset_rev_ctx(0);
+>  	reset_node_ctx(NULL);
+> +	strbuf_release(&rev_ctx.log);
+> +	strbuf_release(&node_ctx.src);
+> +	strbuf_release(&node_ctx.dst);
+
+Side note: it's often not clear what should go in the "prepare for next
+user" routine and what should go in the "shutting down for good".  I
+suppose these should use strbuf_reset and the memory would be finally
+freed in svndump_reset?  Does it make sense to have two distinct
+routines like this without a user to demonstrate the trade-offs?
+
+Except as noted above,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks; I like where this is going.
