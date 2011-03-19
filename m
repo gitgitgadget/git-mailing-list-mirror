@@ -1,145 +1,125 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Kevin Cernekee <cernekee@gmail.com>
 Subject: Re: [PATCH v4 2/2] gitweb: introduce localtime feature
-Date: Sat, 19 Mar 2011 22:09:27 +0100
-Message-ID: <201103192209.29759.jnareb@gmail.com>
-References: <ab54ba2199cc7487e383a31e3aa65885@localhost> <7v39mjro38.fsf@alter.siamese.dyndns.org> <AANLkTimssscn+STEPyM7NbXF5ddFApPBsgXfqz-9SSNs@mail.gmail.com>
+Date: Sat, 19 Mar 2011 14:22:21 -0700
+Message-ID: <AANLkTikw7_9Q0MgVZZxX_dXvcxoXfx5VEmRQkVH_k1YC@mail.gmail.com>
+References: <ab54ba2199cc7487e383a31e3aa65885@localhost>
+	<7v39mjro38.fsf@alter.siamese.dyndns.org>
+	<AANLkTimssscn+STEPyM7NbXF5ddFApPBsgXfqz-9SSNs@mail.gmail.com>
+	<201103192209.29759.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 22:09:59 2011
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 22:22:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q13PH-0003de-CU
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 22:09:55 +0100
+	id 1Q13bR-0008In-Cb
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 22:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757539Ab1CSVJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 17:09:40 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48025 "EHLO
+	id S1757563Ab1CSVWX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 17:22:23 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63529 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757508Ab1CSVJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 17:09:39 -0400
-Received: by fxm17 with SMTP id 17so4591908fxm.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 14:09:38 -0700 (PDT)
+	with ESMTP id S1757513Ab1CSVWW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 17:22:22 -0400
+Received: by fxm17 with SMTP id 17so4595633fxm.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 14:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Eg2/ikKKMXFXRmIULVPEmRdAmuTXKETc3BrLQTVUXMI=;
-        b=WXpa2eOs6BFclKFOnxwzQoeLNr82dZytE/6B9s57WZtMIpi+L0L9nsdME4xcJFh0qZ
-         c0RVHJ0mgpPxh7MhHnh8ffwkiP/i/OKum2bK4OzvnxBb3EsaOHwFoqIy3m8Fc4EDS//R
-         UA2jdqDxwaeUtRpVecjpq2vwWTC6t33ByxfGw=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ld3gY4cC9Ayxlnp4mDKbjWmQ+ImEdq03EA1uoR9YF+g=;
+        b=pL3xhdlzbAWRAnUlwOGaR+54CsPLv/StX+l/eG6w9o8d3z7/g/df5uZyJpJ1wbHoPe
+         dz3B4QVGTTDYgXs6lOgaJi2jvgH7VjZlRYP2ckEIRSODm2WAk8iANA4tXXDCKt3ofqTw
+         TVp/uW/eR9Dfcg0D6pDHhB3dzPAKr7z4hHhIs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=mtKAuCfUVJk3USa0b14Tw2KLvoGWJI9VzN58qkiQVNGXx2iAM0EdSaB6+m2K7DUGI+
-         mwSth1VhmTm+t08Im6KQZ/TiN5AHmjlCv3RvLggPDvFYhJwFTJ1dZ0MNhlPk6tTY20Fg
-         elbLdzEIggVVY2Oxntb/FO7eu0BcLUcntUqz4=
-Received: by 10.223.127.210 with SMTP id h18mr2944516fas.71.1300568978073;
-        Sat, 19 Mar 2011 14:09:38 -0700 (PDT)
-Received: from [192.168.1.13] (abrz59.neoplus.adsl.tpnet.pl [83.8.119.59])
-        by mx.google.com with ESMTPS id b18sm1662162fak.8.2011.03.19.14.09.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 Mar 2011 14:09:36 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTimssscn+STEPyM7NbXF5ddFApPBsgXfqz-9SSNs@mail.gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=I0BncnZTqdZDTFITCDY+SkgO2pK+C/5qDix22/g+CnEZzvdEgooQemroYrpaTBnN3d
+         Oigrq3TM5aDr0oeddDQrULxV1szB5wSCHu09CubTWQMdejAKFB9x/pwd/SOCQH7/uFPr
+         KN1MjNAKaKDQ+52QRIDcyb4txdEXS4bN905Oo=
+Received: by 10.223.143.5 with SMTP id s5mr2989459fau.60.1300569741164; Sat,
+ 19 Mar 2011 14:22:21 -0700 (PDT)
+Received: by 10.223.61.83 with HTTP; Sat, 19 Mar 2011 14:22:21 -0700 (PDT)
+In-Reply-To: <201103192209.29759.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169465>
 
-On Sat, 19 Mar 2011, Kevin Cernekee wrote:
-> On Sat, Mar 19, 2011 at 10:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
-
-> > Looks like we used to only paint HH:MM part but...
-> > ... we now paint the whole line, which I personally think is a friendly
-> > move for color challenged people (me included---a larger span of text
-> > painted in different colors tends to help you still notice it better using
-> > value/brightness difference, even if your hue perception is weaker than
-> > other people). But it is a change from the old behaviour and might be
-> > worth stating in the log message.
-> 
-> For the $feature{'localtime'} disabled case, the coloring is the same as before.
-
-No, it is not the same.  It used to be
-
-  Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
-                                   ^^^^^
-
-and now it is
-
-  Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
-                                  ^^^^^^^^^^^^^
-
-which is I also think improvement,... but should be mentioned in the
-commit message.
- 
-> I will paint the whole line in the next spin, and mention it in the
+On Sat, Mar 19, 2011 at 2:09 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+>> For the $feature{'localtime'} disabled case, the coloring is the sam=
+e as before.
+>
+> No, it is not the same. =C2=A0It used to be
+>
+> =C2=A0Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^^^^^
+>
+> and now it is
+>
+> =C2=A0Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^^^^^^^^^^^^^
+> which is I also think improvement,... but should be mentioned in the
 > commit message.
 
-I think current solution of using
+Oh OK, I did not notice this or intend to change the formatting.  My ba=
+d.
 
-  Wed, 16 Mar 2011 02:02:42 -0500 (07:02:42 +0000)
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>> I will paint the whole line in the next spin, and mention it in the
+>> commit message.
+>
+> I think current solution of using
+>
+> =C2=A0Wed, 16 Mar 2011 02:02:42 -0500 (07:02:42 +0000)
+> =C2=A0^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+> when 'localtime' feature is enabled is better than painting the whole=
+:
+> you are now painting the _local_ part, i.e the part responsible for
+> "atnight" warning.
 
-when 'localtime' feature is enabled is better than painting the whole:
-you are now painting the _local_ part, i.e the part responsible for
-"atnight" warning.
+I can fix up v4 if Junio thinks this is a better way to go...
 
+It does make the code a little more complicated, though.  If we paint
+the entire string, it can be done once toward the end of the function,
+rather than twice (two different ways) inside the localtime /
+no-localtime clauses.
 
-[...]
-> $use_localtime indicates whether or not to add the " (hh:mm -zzzz)" at
-> the end.  This also enables the atnight coloring.
-> 
-> This argument name was suggested in an earlier post and I guess I took
-> it a little too literally...
-> 
-> Do you think it would be a good idea to take two separate options:
-> -atnight for the variable coloring, and -alt_time (or some other name)
-> to show " (hh:mm -zzzz)" after the RFC 2822 string?
+I am largely indifferent to how "atnight" is handled but it would be
+good to arrive at a consensus.
 
-Perhaps name this parameter -long.  Or simply always use the long form.
+>> Also, is there a cleaner way of writing this?
+>>
+>> sub timestamp_html {
+>> =C2=A0 =C2=A0 my %date =3D %{$_[0]};
+>> =C2=A0 =C2=A0 shift;
+>> =C2=A0 =C2=A0 my %opts =3D @_;
+>
+> =C2=A0sub timestamp_html {
+> =C2=A0 =C2=A0 =C2=A0my %date =3D %{ shift };
+> =C2=A0 =C2=A0 =C2=A0my %opts =3D @_;
 
-> Or maybe take one option, named something like "-commitpage", to
-> indicate that it is a format specific to that view?  If it is not
-> specified, the caller gets back an uncolored RFC 2822 date.
-> 
-> Also, is there a cleaner way of writing this?
-> 
-> sub timestamp_html {
->     my %date = %{$_[0]};
->     shift;
->     my %opts = @_;
+This did not work for me.  It interprets "shift" as a variable name.
 
-  sub timestamp_html {
-      my %date = %{ shift };
-      my %opts = @_;
+> Or just use hash reference for $date:
+>
+> =C2=A0sub timestamp_html {
+> =C2=A0 =C2=A0 =C2=A0my ($date, %opts) =3D @_;
+>
+> and use $date->{'sth'}.
 
+That is what I did on the latest 3/3 (change "atnight" highlighting)
+patch.  Seemed to work OK.
 
-> 
-> Or should I pass in the options as a hash reference, more like $cgi->a():
-> 
-> sub timestamp_html {
->     my %date = %{$_[0]};
->     my %opts = %{$_[1]};
-
-Or just use hash reference for $date:
-
-  sub timestamp_html {
-      my ($date, %opts) = @_;
-
-and use $date->{'sth'}.
-
--- 
-Jakub Narebski
-Poland
+Thanks.
