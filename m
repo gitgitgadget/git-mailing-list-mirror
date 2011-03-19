@@ -1,218 +1,145 @@
-From: Kevin Cernekee <cernekee@gmail.com>
-Subject: [PATCH v5 2/3] gitweb: introduce localtime feature
-Date: Sat, 19 Mar 2011 13:48:26 -0700
-Message-ID: <d0b137d3ad11b997ed0964354bd9017a@localhost>
-References: <4f21902cf5f72b30a96465cf911d13aa@localhost>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v4 2/2] gitweb: introduce localtime feature
+Date: Sat, 19 Mar 2011 22:09:27 +0100
+Message-ID: <201103192209.29759.jnareb@gmail.com>
+References: <ab54ba2199cc7487e383a31e3aa65885@localhost> <7v39mjro38.fsf@alter.siamese.dyndns.org> <AANLkTimssscn+STEPyM7NbXF5ddFApPBsgXfqz-9SSNs@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 21:55:04 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kevin Cernekee <cernekee@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 22:09:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q13Aq-00074O-9c
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 21:55:00 +0100
+	id 1Q13PH-0003de-CU
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 22:09:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757537Ab1CSUyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 16:54:50 -0400
-Received: from [69.28.251.93] ([69.28.251.93]:33166 "EHLO b32.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1757476Ab1CSUyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 16:54:49 -0400
-Received: (qmail 3469 invoked from network); 19 Mar 2011 20:54:48 -0000
-Received: from localhost (HELO vps-1001064-677.cp.jvds.com) (127.0.0.1)
-  by localhost with (DHE-RSA-AES128-SHA encrypted) SMTP; 19 Mar 2011 20:54:48 -0000
-Received: by vps-1001064-677.cp.jvds.com (sSMTP sendmail emulation); Sat, 19 Mar 2011 13:54:48 -0700
-In-Reply-To: <4f21902cf5f72b30a96465cf911d13aa@localhost>
-User-Agent: vim 7.2
+	id S1757539Ab1CSVJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 17:09:40 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48025 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757508Ab1CSVJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 17:09:39 -0400
+Received: by fxm17 with SMTP id 17so4591908fxm.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 14:09:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Eg2/ikKKMXFXRmIULVPEmRdAmuTXKETc3BrLQTVUXMI=;
+        b=WXpa2eOs6BFclKFOnxwzQoeLNr82dZytE/6B9s57WZtMIpi+L0L9nsdME4xcJFh0qZ
+         c0RVHJ0mgpPxh7MhHnh8ffwkiP/i/OKum2bK4OzvnxBb3EsaOHwFoqIy3m8Fc4EDS//R
+         UA2jdqDxwaeUtRpVecjpq2vwWTC6t33ByxfGw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=mtKAuCfUVJk3USa0b14Tw2KLvoGWJI9VzN58qkiQVNGXx2iAM0EdSaB6+m2K7DUGI+
+         mwSth1VhmTm+t08Im6KQZ/TiN5AHmjlCv3RvLggPDvFYhJwFTJ1dZ0MNhlPk6tTY20Fg
+         elbLdzEIggVVY2Oxntb/FO7eu0BcLUcntUqz4=
+Received: by 10.223.127.210 with SMTP id h18mr2944516fas.71.1300568978073;
+        Sat, 19 Mar 2011 14:09:38 -0700 (PDT)
+Received: from [192.168.1.13] (abrz59.neoplus.adsl.tpnet.pl [83.8.119.59])
+        by mx.google.com with ESMTPS id b18sm1662162fak.8.2011.03.19.14.09.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 19 Mar 2011 14:09:36 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTimssscn+STEPyM7NbXF5ddFApPBsgXfqz-9SSNs@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169464>
 
-With this feature enabled, all timestamps are shown in the local
-timezone instead of GMT.  The timezone is taken from the appropriate
-timezone string stored in the commit object.
+On Sat, 19 Mar 2011, Kevin Cernekee wrote:
+> On Sat, Mar 19, 2011 at 10:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-This improves usability if the majority of a project's contributors are
-based in a single office, all within the same timezone.  It also makes
-the interface more friendly to non-developers who may need to track
-updates, such as program managers and supervisors.
+> > Looks like we used to only paint HH:MM part but...
+> > ... we now paint the whole line, which I personally think is a friendly
+> > move for color challenged people (me included---a larger span of text
+> > painted in different colors tends to help you still notice it better using
+> > value/brightness difference, even if your hue perception is weaker than
+> > other people). But it is a change from the old behaviour and might be
+> > worth stating in the log message.
+> 
+> For the $feature{'localtime'} disabled case, the coloring is the same as before.
 
-This change does not affect relative timestamps (e.g. "5 hours ago"),
-nor does it affect 'patch' and 'patches' views which already use
-localtime because they are generated by "git format-patch".
+No, it is not the same.  It used to be
 
-Affected views include:
-* 'summary' view, "last change" field (commit time from latest change)
-* 'log' view, author time
-* 'commit' and 'commitdiff' views, author/committer time
-* 'tag' view, tagger time
+  Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
+                                   ^^^^^
 
-In the case of 'commit', 'commitdiff' and 'tag' views, gitweb used to
-print both GMT time and time in timezone of author/tagger/committer:
+and now it is
 
-   Fri, 18 Mar 2011 01:28:57 +0000 (18:28 -0700)
+  Wed, 16 Mar 2011 07:02:42 +0000 (02:02 -0500)
+                                  ^^^^^^^^^^^^^
 
-With localtime enabled, the times will be swapped:
-
-   Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)
-
-When the local time is between 00:00 and 05:59, inclusive, the entire
-date string will be printed in red ("atnight" style) on the commit and
-commitdiff views.  This is a change from the current behavior, in which
-only the parenthesized time/tz is colored red.  This simplifies the
-code, and makes the special coloring easier to notice.
-
-Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-
-v5: Change "$use_localtime" to "$commit_view" for clarity.  Apply
-"atnight" style to the entire timestamp string, not just the
-" (hh:mm -zzzz)" portion.  Update commit message to reflect the
-latter change.
-
- gitweb/gitweb.perl |   84 +++++++++++++++++++++++++++++++++++++--------------
- 1 files changed, 61 insertions(+), 23 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 57ef08c..aa038bd 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -504,6 +504,19 @@ our %feature = (
- 		'sub' => sub { feature_bool('remote_heads', @_) },
- 		'override' => 0,
- 		'default' => [0]},
-+
-+	# Use the author/commit localtime rather than GMT for all timestamps.
-+	# Disabled by default.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'localtime'}{'default'} = [1];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'localtime'}{'override'} = 1;
-+	# and in project config gitweb.localtime = 0|1;
-+	'localtime' => {
-+		'sub' => sub { feature_bool('localtime', @_) },
-+		'override' => 0,
-+		'default' => [0]},
- );
+which is I also think improvement,... but should be mentioned in the
+commit message.
  
- sub gitweb_get_feature {
-@@ -2919,6 +2932,10 @@ sub format_date {
- 	$date{'hour_local'} = $hour;
- 	$date{'minute_local'} = $min;
- 	$date{'tz_local'} = $tz;
-+	$date{'rfc2822_local'} = sprintf "%s, %d %s %4d %02d:%02d:%02d $tz",
-+	                         $days[$wday], $mday, $months[$mon],
-+	                         1900+$year, $hour ,$min, $sec;
-+
- 	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
- 	                          1900+$year, $mon+1, $mday,
- 	                          $hour, $min, $sec, $tz);
-@@ -3928,22 +3945,43 @@ sub git_print_section {
- 	print $cgi->end_div;
- }
- 
--sub print_local_time {
--	print format_local_time(@_);
--}
--
--sub format_local_time {
--	my $localtime = '';
--	my %date = @_;
--	if ($date{'hour_local'} < 6) {
--		$localtime .= sprintf(" (<span class=\"atnight\">%02d:%02d</span> %s)",
--			$date{'hour_local'}, $date{'minute_local'}, $date{'tz_local'});
-+# Returns a timestamp string, which may contain HTML.
-+# If $commit_view is 0, the string looks like:
-+#   Fri, 18 Mar 2011 01:28:57 +0000                [localtime disabled]
-+#   Thu, 17 Mar 2011 18:28:57 -0700                [localtime enabled]
-+# If $commit_view is 1, the string looks like:
-+#   Fri, 18 Mar 2011 01:28:57 +0000 (18:28 -0700)  [localtime disabled]
-+#   Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)  [localtime enabled]
-+# If $commit_view is 1, the entire string will use the "atnight" class
-+# (red text) if the local time is between 00:00 and 05:59 inclusive.
-+# This helps to flag commits made in the wee hours of the morning.
-+sub timestamp_html {
-+	my ($date, $commit_view) = @_;
-+	my $timestamp;
-+	my $alt_time;
-+
-+	if (gitweb_check_feature('localtime')) {
-+		$timestamp = $date->{'rfc2822_local'};
-+		$alt_time = sprintf(" (%02d:%02d %s)",
-+		                    $date->{'hour'},
-+		                    $date->{'minute'},
-+		                    "+0000");
- 	} else {
--		$localtime .= sprintf(" (%02d:%02d %s)",
--			$date{'hour_local'}, $date{'minute_local'}, $date{'tz_local'});
-+		$timestamp = $date->{'rfc2822'};
-+		$alt_time = sprintf(" (%02d:%02d %s)",
-+		                    $date->{'hour_local'},
-+		                    $date->{'minute_local'},
-+		                    $date->{'tz_local'});
- 	}
--
--	return $localtime;
-+	if ($commit_view) {
-+		$timestamp .= $alt_time;
-+		if ($date->{'hour_local'} < 6) {
-+			$timestamp = "<span class=\"atnight\">" .
-+			             $timestamp .
-+			             "</span>";
-+		}
-+	}
-+	return $timestamp;
- }
- 
- # Outputs the author name and date in long form
-@@ -3956,10 +3994,9 @@ sub git_print_authorship {
- 	my %ad = format_date($co->{'author_epoch'}, $co->{'author_tz'});
- 	print "<$tag class=\"author_date\">" .
- 	      format_search_author($author, "author", esc_html($author)) .
--	      " [$ad{'rfc2822'}";
--	print_local_time(%ad) if ($opts{-localtime});
--	print "]" . git_get_avatar($co->{'author_email'}, -pad_before => 1)
--		  . "</$tag>\n";
-+	      " [" . timestamp_html(\%ad, 0) . "] ".
-+	      git_get_avatar($co->{'author_email'}, -pad_before => 1) .
-+	      "</$tag>\n";
- }
- 
- # Outputs table rows containing the full author or committer information,
-@@ -3983,9 +4020,9 @@ sub git_print_authorship_rows {
- 		      git_get_avatar($co->{"${who}_email"}, -size => 'double') .
- 		      "</td></tr>\n" .
- 		      "<tr>" .
--		      "<td></td><td> $wd{'rfc2822'}";
--		print_local_time(%wd);
--		print "</td>" .
-+		      "<td></td><td> " .
-+		      timestamp_html(\%wd, 1) .
-+		      "</td>" .
- 		      "</tr>\n";
- 	}
- }
-@@ -5395,8 +5432,9 @@ sub git_summary {
- 	print "<table class=\"projects_list\">\n" .
- 	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
- 	      "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
--	if (defined $cd{'rfc2822'}) {
--		print "<tr id=\"metadata_lchange\"><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
-+	if (keys %cd) {
-+		print "<tr id=\"metadata_lchange\"><td>last change</td><td>" .
-+		      timestamp_html(\%cd, 0) . "</td></tr>\n";
- 	}
- 
- 	# use per project git URL list in $projectroot/$project/cloneurl
+> I will paint the whole line in the next spin, and mention it in the
+> commit message.
+
+I think current solution of using
+
+  Wed, 16 Mar 2011 02:02:42 -0500 (07:02:42 +0000)
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+when 'localtime' feature is enabled is better than painting the whole:
+you are now painting the _local_ part, i.e the part responsible for
+"atnight" warning.
+
+
+[...]
+> $use_localtime indicates whether or not to add the " (hh:mm -zzzz)" at
+> the end.  This also enables the atnight coloring.
+> 
+> This argument name was suggested in an earlier post and I guess I took
+> it a little too literally...
+> 
+> Do you think it would be a good idea to take two separate options:
+> -atnight for the variable coloring, and -alt_time (or some other name)
+> to show " (hh:mm -zzzz)" after the RFC 2822 string?
+
+Perhaps name this parameter -long.  Or simply always use the long form.
+
+> Or maybe take one option, named something like "-commitpage", to
+> indicate that it is a format specific to that view?  If it is not
+> specified, the caller gets back an uncolored RFC 2822 date.
+> 
+> Also, is there a cleaner way of writing this?
+> 
+> sub timestamp_html {
+>     my %date = %{$_[0]};
+>     shift;
+>     my %opts = @_;
+
+  sub timestamp_html {
+      my %date = %{ shift };
+      my %opts = @_;
+
+
+> 
+> Or should I pass in the options as a hash reference, more like $cgi->a():
+> 
+> sub timestamp_html {
+>     my %date = %{$_[0]};
+>     my %opts = %{$_[1]};
+
+Or just use hash reference for $date:
+
+  sub timestamp_html {
+      my ($date, %opts) = @_;
+
+and use $date->{'sth'}.
+
 -- 
-1.7.4.1
+Jakub Narebski
+Poland
