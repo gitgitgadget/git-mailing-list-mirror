@@ -1,107 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH -1/3 (amend)] gitweb: Always call parse_date with timezone parameter
-Date: Sat, 19 Mar 2011 23:53:55 +0100
-Message-ID: <201103192353.56841.jnareb@gmail.com>
-References: <4f21902cf5f72b30a96465cf911d13aa@localhost> <201103192318.45925.jnareb@gmail.com>
+From: Kevin Cernekee <cernekee@gmail.com>
+Subject: Re: [PATCH -1/3] gitweb: Always call parse_date with timezone parameter
+Date: Sat, 19 Mar 2011 15:56:04 -0700
+Message-ID: <AANLkTimV7vvD0PTMejydiyW_CeUH0cuQ-2+PnRqjzob5@mail.gmail.com>
+References: <4f21902cf5f72b30a96465cf911d13aa@localhost>
+	<201103192318.45925.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 23:54:12 2011
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 23:56:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q152B-0004hV-Jx
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 23:54:11 +0100
+	id 1Q1548-0005L3-9m
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 23:56:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751041Ab1CSWyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 18:54:06 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:41769 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750716Ab1CSWyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 18:54:05 -0400
-Received: by wwa36 with SMTP id 36so6121414wwa.1
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 15:54:03 -0700 (PDT)
+	id S1751204Ab1CSW4H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 18:56:07 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62351 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941Ab1CSW4G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 18:56:06 -0400
+Received: by fxm17 with SMTP id 17so4621126fxm.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 15:56:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=4gt97MoaPlQk5syuzCey2EZaSI1zEsB+Azac1lIhYR8=;
-        b=rOpjDwFzTQ4KWtCR5wFnvMrjmLDu3sgOJXnE2wk9gnEf8XNxtWvwcjovHdcyaEsINy
-         ZIg2DVTH+WtMVhZiAcZe512oSFlj36VAtoPq6jAWYLXqY1TFOKA3c02y7j/wrHqgU33J
-         BpdxAojlet3p3Evqui8ba+LD7y+iP4IJzF8Gk=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JW+SnrwYGp4Zt2fygv+pxsF/OER0Urko5shYoPUjKeQ=;
+        b=qSVzV8EnWOtMH30zjq5wHFXDjZmzl5157GrazQGxwkXfXZqQt1kTAyCNjtGeXHjFbN
+         K+Hx56/xdw5qcvsWb5E90x1Oho4qVanqhD+DHjg+DLKtGZUMl+nW9JkrSCrribTVI+7O
+         H4T5X3ZDCn/YjssPy8De+ci5D/+xDrHUrYm9E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=N1ZPZ+9XZV8fd8dy3aLG40CRgE0J+Sz22L2+RRvD6N3z9GgUR1WL8bH3zduKa3lcst
-         x1AGrlOA5JYJQM99D3YiJfXB5XX/tUIWJo++IZLPBiFS6YbTojgJd97GC35LK9uQcF81
-         iegbREYIpBzpQcgGI2eTJydQM6tLE/M8cSEDc=
-Received: by 10.216.131.230 with SMTP id m80mr2706489wei.48.1300575243180;
-        Sat, 19 Mar 2011 15:54:03 -0700 (PDT)
-Received: from [192.168.1.13] (abrz59.neoplus.adsl.tpnet.pl [83.8.119.59])
-        by mx.google.com with ESMTPS id b54sm2061780wer.21.2011.03.19.15.54.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 Mar 2011 15:54:02 -0700 (PDT)
-User-Agent: KMail/1.9.3
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wZJ5kpq6EcBW/NbHVYkOjLW4mHdzo9PlkOS48ul1zhSauRLGhoEoOHzjH7pIoeXXR8
+         oWCqtRnlQtpGBiWQy45P7kNyB345HlOozePGEDZnwe9wmYYc/ZlNQui7cCeZeFA56nr0
+         sYF0QVgVHPqH8zYOkeuIyG5W7ung0PJcEZTP8=
+Received: by 10.223.74.136 with SMTP id u8mr1160795faj.136.1300575364497; Sat,
+ 19 Mar 2011 15:56:04 -0700 (PDT)
+Received: by 10.223.61.83 with HTTP; Sat, 19 Mar 2011 15:56:04 -0700 (PDT)
 In-Reply-To: <201103192318.45925.jnareb@gmail.com>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169475>
 
-Timezone is required to correctly set local time, which would be needed
-for future 'localtime' feature.
+On Sat, Mar 19, 2011 at 3:18 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> @@ -4906,7 +4906,7 @@ sub git_log_body {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0next if !%co;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my $commit =3D=
+ $co{'id'};
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my $ref =3D fo=
+rmat_ref_marker($refs, $commit);
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 my %ad =3D parse_d=
+ate($co{'author_epoch'});
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 my %ad =3D parse_d=
+ate($co{'author_epoch'}, $co{'athor_tz'});
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-I am very sorry, a typo snuck in in previous version
+Should be 'author_tz'
 
-BTW. Kevin, when there is series of patches which are dependent on each
-other and create together a logical whole, it is recommended to provide
-cover letter for such "true series".
+Looking at the master branch, I don't see %ad actually getting used
+anywhere?  Maybe it is safe to delete the line entirely, since
+git_print_authorship() calls parse_date() itself.
 
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+> @@ -7064,7 +7064,7 @@ sub git_feed {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (defined($commitlist[0])) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0%latest_commit=
+ =3D %{$commitlist[0]};
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my $latest_epo=
+ch =3D $latest_commit{'committer_epoch'};
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 %latest_date =C2=A0=
+ =3D parse_date($latest_epoch);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 %latest_date =C2=A0=
+ =3D parse_date($latest_epoch, $latest_commit{'comitter_tz'});
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b04ab8c..16abd4c 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -4906,7 +4906,7 @@ sub git_log_body {
- 		next if !%co;
- 		my $commit = $co{'id'};
- 		my $ref = format_ref_marker($refs, $commit);
--		my %ad = parse_date($co{'author_epoch'});
-+		my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
- 		git_print_header_div('commit',
- 		               "<span class=\"age\">$co{'age_string'}</span>" .
- 		               esc_html($co{'title'}) . $ref,
-@@ -7064,7 +7064,7 @@ sub git_feed {
- 	if (defined($commitlist[0])) {
- 		%latest_commit = %{$commitlist[0]};
- 		my $latest_epoch = $latest_commit{'committer_epoch'};
--		%latest_date   = parse_date($latest_epoch);
-+		%latest_date   = parse_date($latest_epoch, $latest_commit{'comitter_tz'});
- 		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
- 		if (defined $if_modified) {
- 			my $since;
-@@ -7195,7 +7195,7 @@ XML
- 		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
- 			last;
- 		}
--		my %cd = parse_date($co{'author_epoch'});
-+		my %cd = parse_date($co{'author_epoch'}, $co{'author_tz'});
- 
- 		# get list of changed files
- 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--- 
-1.7.3
+Should be 'committer_tz'
+
+I would agree that it isn't such a good thing for
+$latest_date{'rfc2822_local'} to be set to GMT in this case.  Although
+the feeds don't need local times for anything, since RSS/Atom readers
+seem to do their own timezone translations.
+
+It probably makes sense to add this argument so that nobody gets bit
+later when they try to use the rfc2822_local field.
+
+Am I correct in interpreting "PATCH -1/3" as: "apply this before
+Kevin's set of 3 patches?"
