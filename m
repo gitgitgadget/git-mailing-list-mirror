@@ -1,199 +1,146 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v4 2/2] gitweb: introduce localtime feature
-Date: Sat, 19 Mar 2011 16:18:26 +0100
-Message-ID: <201103191618.29826.jnareb@gmail.com>
-References: <ab54ba2199cc7487e383a31e3aa65885@localhost> <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/2] git-init.txt: move description section up
+Date: Sat, 19 Mar 2011 22:16:55 +0700
+Message-ID: <1300547816-4768-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 16:18:53 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 16:19:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0xvV-0006Sv-9d
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 16:18:49 +0100
+	id 1Q0xw4-0006iX-W2
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 16:19:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754237Ab1CSPSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 11:18:45 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62989 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753391Ab1CSPSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 11:18:43 -0400
-Received: by fxm17 with SMTP id 17so4465672fxm.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 08:18:42 -0700 (PDT)
+	id S1755346Ab1CSPTQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 11:19:16 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:58239 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753600Ab1CSPTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 11:19:13 -0400
+Received: by mail-iy0-f174.google.com with SMTP id 26so4984416iyb.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 08:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=QobBUSEI9E3MqaAB68czvkb1BD/fu2TcXLPKk9TcP9s=;
-        b=Ep1siQ+vC1eaQvFO5W8Lw/27DJI/NVSL0mkSQJoQguoMb/sYaY34RrD+KEK2cy7hmb
-         0SLSXYsPM4Mm7cvfukXIx2znPVSvsENCZdOgUZCFiCr6EjrMcgFU1l1HuMFisV25XKz+
-         zwhNCJEwKdEd/Xb6jvygKD+gwSbinkG7kN/Og=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=EHPf2v2iPkqbq30ngziQSJsxO3/qpoL0UF460SSTfpw=;
+        b=kL2hESXo6/g+OfcvGtlTEp917TL9FCarqUoq409C3Ja39EYIQXg4TcUB9XcFsaxICC
+         YUuxyOkR8O2XlY4unKtSDvjAM002pCSiH+3wrQDyUBljSgU61UyVuEUMpL1jMt38Ad6p
+         bLjT8TViNV7xdmJ3gaGZnKOvBSgYTF24Yd1x4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=T3i3V1c5jrluOKfc6M8PBaRvx/sUpRqxch0mC4cZqbf6DfN+IBsjEPyprjb20n04Ma
-         J70PYMJ9j3KmKd6jtUFH6iNhd1YJFnUCx3PEqOTt0+IlzgMoOSDNCWjRx0Fl9zDylIuF
-         O4zu9Rlwh43x45TC0nNF62G3j1MZqK2uC3SkY=
-Received: by 10.223.14.137 with SMTP id g9mr2696799faa.2.1300547921923;
-        Sat, 19 Mar 2011 08:18:41 -0700 (PDT)
-Received: from [192.168.1.13] (abrz59.neoplus.adsl.tpnet.pl [83.8.119.59])
-        by mx.google.com with ESMTPS id k5sm1591027faa.15.2011.03.19.08.18.39
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=cfagSNB8Ssg2CwJazgS9Vog2JsJJS6ZElYPZr9CSBICB5OW+G4Fd2VSA0V+wDSZuDD
+         +vPiljWPpLOeXwgNBfx89i4KnMdDuDLiX0bgCrSxrCtJFyaw8fxeRCGeAB/ViZZoimDj
+         0pQoaCPN11ejf74qzg7aGYWmZFs94jNsKFHLY=
+Received: by 10.231.199.71 with SMTP id er7mr2161008ibb.146.1300547953688;
+        Sat, 19 Mar 2011 08:19:13 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.209.201])
+        by mx.google.com with ESMTPS id 41sm2296810ibi.61.2011.03.19.08.19.09
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 Mar 2011 08:18:40 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost>
-Content-Disposition: inline
+        Sat, 19 Mar 2011 08:19:12 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 19 Mar 2011 22:16:57 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169437>
 
-On Sat, 19 Mar 2011, Kevin Cernekee wrote:
+It's more or less standard that synopsis is followed by description,
+then options.
 
-> With this feature enabled, all timestamps are shown in the local
-> timezone instead of GMT.  The timezone is taken from the appropriate
-> timezone string stored in the commit object.
+This is not just a clean move though:
 
-[...]
-> In the case of 'commit', 'commitdiff' and 'tag' views, gitweb used to
-> print both GMT time and time in timezone of author/tagger/committer:
-> 
->    Fri, 18 Mar 2011 01:28:57 +0000 (18:28 -0700)
-> 
-> With localtime enabled, the times will be swapped:
-> 
->    Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)
+ - The paragraphs are realigned a bit
+ - The text mentioning git-init-db is dropped. init-db is
+   deprecated, no need to confuse new users
 
-First, currently the localtime part is needed only to have "atnight"
-warning.  I wonder if with 'localtime' feature enabled gitweb should
-show GMT time, or is it not necessary.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-init.txt |   46 +++++++++++++++++++-----------------=
+-------
+ 1 files changed, 20 insertions(+), 26 deletions(-)
 
-With 'localtime' it could simply be
-
-     Thu, 17 Mar 2011 18:28:57 -0700
-
-either marked with "atnight" as whole, or only time (see below).
-
-> Local times between 00:00 and 05:59, inclusive, will still be printed
-> in red ("atnight" style) in these views.
-
-Second, from above description it is not clear which part of date is
-marked with "atnight" style when 'localtime' feature is enabled.
-
-Is the whole localtime part marked, and GMT left not marked:
-
-     Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Or perhaps only the local _time_ is marked with "atnight" style:
-
-     Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)
-                      ^^^^^^^^
-
-Or perhaps whole date now uses "atnight" style:
-
-     Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-[...]
-> @@ -3928,22 +3945,48 @@ sub git_print_section {
->  	print $cgi->end_div;
->  }
->  
-> -sub print_local_time {
-> -	print format_local_time(@_);
-> -}
-> -
-> -sub format_local_time {
-> -	my $localtime = '';
-> -	my %date = @_;
-> -	if ($date{'hour_local'} < 6) {
-> -		$localtime .= sprintf(" (<span class=\"atnight\">%02d:%02d</span> %s)",
-> -			$date{'hour_local'}, $date{'minute_local'}, $date{'tz_local'});
-> +# Returns an RFC 2822 timestamp string, which may contain HTML.
-
-I'm not sure if we need to write about it being RFC2822-like format;
-it is just implementation detail.
-
-Perhaps
-
-  +# Returns formatted date and time, outputs HTML.
-
-It is important if it is HTML or not, to know if it needs to be esc_html
-or not.
-
-> +# If $use_localtime is 0, don't do anything special.
-> +# If $use_localtime is 1, add an alternate HH:MM timestamp in parentheses at
-> +# the end.
-
-See comment below.
-
->             If $feature{'localtime'} is enabled this looks like: 
-> +#   Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)
-> +# Otherwise, it looks like:
-> +#   Fri, 18 Mar 2011 01:28:57 +0000 (18:28 -0700)
-> +# If $use_localtime is 1, this will also apply the "atnight" style to
-> +# local times between 00:00 and 05:59.
-
-I would really prefer to split this patch in two: first refactor 
-date-printing code, introducing and using timestamp_html subroutine,
-with no changes in output, and leave introducing 'localtime' feature
-for a second patch.
-
-> +sub timestamp_html {
-> +	my %date = %{$_[0]};
-> +	my $use_localtime = $_[1];
-
-Why not use
-
-   	my ($date, $use_localtime) = @_;
-
-and $date->{'rfc2822_local'} instead of $date{'rfc2822_local'}?
-
-
-Also with current code the calling convention for timestamp_html (or 
-format_timestamp_html, or format_date_html) looks like this:
-
-  print     " [" . timestamp_html(\%ad, 0) . "] "
-
-or
-
-  print     timestamp_html(\%wd, 1)
-
-This would require anyone who stumbles upon on a calling site to have
-to refer to definition of this function to understand it.
-
-In many other places we use "named parameters" for such boolean flags;
-then the calling convention could be
-
-  timestamp_html(\%date)
-
-or
-
-  timestamp_html(\%date, -long=>1)
-
-(or -localtime=>1, or -atnight=>1, etc.).  
-
-We can also/instead provide timestamp_short_html and timestamp_long_html
-so one can write
-
-  timestamp_short_html(%date)
-
-and
-
-  timestamp_long_html(%date)
-
--- 
-Jakub Narebski
-Poland
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 5931925..0a4a20e 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -11,6 +11,26 @@ SYNOPSIS
+ 'git init' [-q | --quiet] [--bare] [--template=3D<template_directory>]=
+ [--shared[=3D<permissions>]] [directory]
+=20
+=20
++DESCRIPTION
++-----------
++
++This command creates an empty git repository - basically a `.git`
++directory with subdirectories for `objects`, `refs/heads`,
++`refs/tags`, and template files.  An initial `HEAD` file that
++references the HEAD of the master branch is also created.
++
++If the `$GIT_DIR` environment variable is set then it specifies a path
++to use instead of `./.git` for the base of the repository.
++
++If the object storage directory is specified via the
++`$GIT_OBJECT_DIRECTORY` environment variable then the sha1 directories
++are created underneath - otherwise the default `$GIT_DIR/objects`
++directory is used.
++
++Running 'git init' in an existing repository is safe. It will not
++overwrite things that are already there. The primary reason for
++rerunning 'git init' is to pick up newly added templates.
++
+ OPTIONS
+ -------
+=20
+@@ -74,32 +94,6 @@ line, the command is run inside the directory (possi=
+bly after creating it).
+ --
+=20
+=20
+-DESCRIPTION
+------------
+-This command creates an empty git repository - basically a `.git` dire=
+ctory
+-with subdirectories for `objects`, `refs/heads`, `refs/tags`, and
+-template files.
+-An initial `HEAD` file that references the HEAD of the master branch
+-is also created.
+-
+-If the `$GIT_DIR` environment variable is set then it specifies a path
+-to use instead of `./.git` for the base of the repository.
+-
+-If the object storage directory is specified via the `$GIT_OBJECT_DIRE=
+CTORY`
+-environment variable then the sha1 directories are created underneath =
+-
+-otherwise the default `$GIT_DIR/objects` directory is used.
+-
+-Running 'git init' in an existing repository is safe. It will not over=
+write
+-things that are already there. The primary reason for rerunning 'git i=
+nit'
+-is to pick up newly added templates.
+-
+-Note that 'git init' is the same as 'git init-db'.  The command
+-was primarily meant to initialize the object database, but over
+-time it has become responsible for setting up the other aspects
+-of the repository, such as installing the default hooks and
+-setting the configuration variables.  The old name is retained
+-for backward compatibility reasons.
+-
+ TEMPLATE DIRECTORY
+ ------------------
+=20
+--=20
+1.7.4.74.g639db
