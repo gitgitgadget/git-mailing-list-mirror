@@ -1,7 +1,7 @@
 From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 3/9] vcs-svn: implement perfect hash for node-prop keys
-Date: Sat, 19 Mar 2011 18:03:45 +1100
-Message-ID: <1300518231-20008-4-git-send-email-david.barr@cordelta.com>
+Subject: [PATCH 2/9] vcs-svn: avoid using ls command twice
+Date: Sat, 19 Mar 2011 18:03:44 +1100
+Message-ID: <1300518231-20008-3-git-send-email-david.barr@cordelta.com>
 References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -10,30 +10,31 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Tomas Carnecky <tom@dbservice.com>,
 	David Barr <david.barr@cordelta.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 19 08:12:32 2011
+X-From: git-owner@vger.kernel.org Sat Mar 19 08:12:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0qKs-0004lS-32
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:12:30 +0100
+	id 1Q0qKr-0004lS-IX
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 08:12:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754500Ab1CSHM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 03:12:27 -0400
-Received: from [119.15.97.146] ([119.15.97.146]:55415 "EHLO mailhost.cordelta"
+	id S1754479Ab1CSHMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 03:12:24 -0400
+Received: from [119.15.97.146] ([119.15.97.146]:55249 "EHLO mailhost.cordelta"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753609Ab1CSHMM (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752629Ab1CSHMM (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 19 Mar 2011 03:12:12 -0400
+X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Mar 2011 03:12:11 EDT
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id CD405C058;
+	by mailhost.cordelta (Postfix) with ESMTP id 1154FC056;
 	Sat, 19 Mar 2011 18:00:31 +1100 (EST)
 X-Virus-Scanned: amavisd-new at mailhost.cordelta
 Received: from mailhost.cordelta ([127.0.0.1])
 	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0vQkd0goUqzO; Sat, 19 Mar 2011 18:00:28 +1100 (EST)
+	with ESMTP id llpijuZiB68d; Sat, 19 Mar 2011 18:00:28 +1100 (EST)
 Received: from dba.cordelta (unknown [192.168.123.140])
-	by mailhost.cordelta (Postfix) with ESMTP id 2D6F7C04D;
+	by mailhost.cordelta (Postfix) with ESMTP id 10998C04C;
 	Sat, 19 Mar 2011 18:00:28 +1100 (EST)
 X-Mailer: git-send-email 1.7.3.2.846.gf4b062
 In-Reply-To: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
@@ -41,129 +42,92 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169387>
-
-This eliminates one more dependency on string_pool.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169388>
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
- vcs-svn/svndump.c |   50 ++++++++++++++++++++++++++++++++------------------
- 1 files changed, 32 insertions(+), 18 deletions(-)
+ vcs-svn/repo_tree.c |   24 ++++--------------------
+ vcs-svn/repo_tree.h |    3 +--
+ vcs-svn/svndump.c   |    3 +--
+ 3 files changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 15b173e..49fb6db 100644
---- a/vcs-svn/svndump.c
-+++ b/vcs-svn/svndump.c
-@@ -52,8 +52,7 @@ static struct {
- } dump_ctx;
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
+index f2466bc..67d27f0 100644
+--- a/vcs-svn/repo_tree.c
++++ b/vcs-svn/repo_tree.c
+@@ -8,39 +8,23 @@
+ #include "repo_tree.h"
+ #include "fast_export.h"
  
- static struct {
--	uint32_t svn_log, svn_author, svn_date, svn_executable, svn_special, uuid,
--		revision_number, node_path, node_kind, node_action,
-+	uint32_t uuid, revision_number, node_path, node_kind, node_action,
- 		node_copyfrom_path, node_copyfrom_rev, text_content_length,
- 		prop_content_length, content_length, svn_fs_dump_format_version,
- 		/* version 3 format */
-@@ -92,11 +91,6 @@ static void reset_dump_ctx(uint32_t url)
- 
- static void init_keys(void)
+-const char *repo_read_path(const char *path)
++const char *repo_read_path(const char *path, uint32_t *mode_out)
  {
--	keys.svn_log = pool_intern("svn:log");
--	keys.svn_author = pool_intern("svn:author");
--	keys.svn_date = pool_intern("svn:date");
--	keys.svn_executable = pool_intern("svn:executable");
--	keys.svn_special = pool_intern("svn:special");
- 	keys.uuid = pool_intern("UUID");
- 	keys.revision_number = pool_intern("Revision-number");
- 	keys.node_path = pool_intern("Node-path");
-@@ -113,22 +107,38 @@ static void init_keys(void)
- 	keys.prop_delta = pool_intern("Prop-delta");
+ 	int err;
+-	uint32_t dummy;
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+ 	strbuf_reset(&buf);
+-	err = fast_export_ls(path, &dummy, &buf);
++	err = fast_export_ls(path, mode_out, &buf);
+ 	if (err) {
+ 		if (errno != ENOENT)
+ 			die_errno("BUG: unexpected fast_export_ls error");
++		/* Treat missing paths as directories. */
++		*mode_out = REPO_MODE_DIR;
+ 		return NULL;
+ 	}
+ 	return buf.buf;
  }
  
--static void handle_property(uint32_t key, const char *val, uint32_t len,
-+static void handle_property(const char *key, const char *val, uint32_t len,
- 				uint32_t *type_set)
+-uint32_t repo_read_mode(const char *path)
+-{
+-	int err;
+-	uint32_t result;
+-	static struct strbuf dummy = STRBUF_INIT;
+-
+-	strbuf_reset(&dummy);
+-	err = fast_export_ls(path, &result, &dummy);
+-	if (err) {
+-		if (errno != ENOENT)
+-			die_errno("BUG: unexpected fast_export_ls error");
+-		/* Treat missing paths as directories. */
+-		return REPO_MODE_DIR;
+-	}
+-	return result;
+-}
+-
+ void repo_copy(uint32_t revision, const char *src, const char *dst)
  {
--	if (key == keys.svn_log) {
-+	const int key_len = strlen(key);
-+	switch (key_len) {
-+	case 7:
-+		if (memcmp(key, "svn:log", 7))
-+			break;
- 		if (!val)
- 			die("invalid dump: unsets svn:log");
- 		/* Value length excludes terminating nul. */
- 		strbuf_add(&rev_ctx.log, val, len + 1);
--	} else if (key == keys.svn_author) {
-+		break;
-+	case 10:
-+		if (memcmp(key, "svn:author", 10))
-+			break;
- 		rev_ctx.author = pool_intern(val);
--	} else if (key == keys.svn_date) {
-+		break;
-+	case 8:
-+		if (memcmp(key, "svn:date", 8))
-+			break;
- 		if (!val)
- 			die("invalid dump: unsets svn:date");
- 		if (parse_date_basic(val, &rev_ctx.timestamp, NULL))
- 			warning("invalid timestamp: %s", val);
--	} else if (key == keys.svn_executable || key == keys.svn_special) {
-+		break;
-+	case 14:
-+		if (memcmp(key, "svn:executable", 14))
-+			break;
-+	case 11:
-+		if (key_len == 11 && memcmp(key, "svn:special", 11))
-+			break;
- 		if (*type_set) {
- 			if (!val)
- 				return;
-@@ -139,7 +149,7 @@ static void handle_property(uint32_t key, const char *val, uint32_t len,
- 			return;
- 		}
- 		*type_set = 1;
--		node_ctx.type = key == keys.svn_executable ?
-+		node_ctx.type = key_len == strlen("svn:executable") ?
- 				REPO_MODE_EXE :
- 				REPO_MODE_LNK;
- 	}
-@@ -147,7 +157,7 @@ static void handle_property(uint32_t key, const char *val, uint32_t len,
- 
- static void read_props(void)
- {
--	uint32_t key = ~0;
-+	char key[16] = {0};
- 	const char *t;
- 	/*
- 	 * NEEDSWORK: to support simple mode changes like
-@@ -175,16 +185,20 @@ static void read_props(void)
- 
- 		switch (type) {
- 		case 'K':
--			key = pool_intern(val);
--			continue;
- 		case 'D':
--			key = pool_intern(val);
-+			if (len < sizeof(key))
-+				memcpy(key, val, len + 1);
-+			else	/* nonstandard key. */
-+				*key = '\0';
-+			if (type == 'K')
-+				continue;
-+			assert(type == 'D');
- 			val = NULL;
- 			len = 0;
- 			/* fall through */
- 		case 'V':
- 			handle_property(key, val, len, &type_set);
--			key = ~0;
-+			*key = '\0';
- 			continue;
- 		default:
- 			die("invalid property line: %s\n", t);
+ 	int err;
+diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
+index af2415c..eb003e6 100644
+--- a/vcs-svn/repo_tree.h
++++ b/vcs-svn/repo_tree.h
+@@ -11,8 +11,7 @@
+ uint32_t next_blob_mark(void);
+ void repo_copy(uint32_t revision, const char *src, const char *dst);
+ void repo_add(const char *path, uint32_t mode, uint32_t blob_mark);
+-const char *repo_read_path(const char *path);
+-uint32_t repo_read_mode(const char *path);
++const char *repo_read_path(const char *path, uint32_t *mode_out);
+ void repo_delete(const char *path);
+ void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
+ 		 uint32_t url, long unsigned timestamp);
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index afdfc63..15b173e 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -236,8 +236,7 @@ static void handle_node(void)
+ 		old_data = NULL;
+ 	} else if (node_ctx.action == NODEACT_CHANGE) {
+ 		uint32_t mode;
+-		old_data = repo_read_path(node_ctx.dst.buf);
+-		mode = repo_read_mode(node_ctx.dst.buf);
++		old_data = repo_read_path(node_ctx.dst.buf, &mode);
+ 		if (mode == REPO_MODE_DIR && type != REPO_MODE_DIR)
+ 			die("invalid dump: cannot modify a directory into a file");
+ 		if (mode != REPO_MODE_DIR && type == REPO_MODE_DIR)
 -- 
 1.7.3.2.846.gf4b062
