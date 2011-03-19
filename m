@@ -1,96 +1,98 @@
-From: Kevin Cernekee <cernekee@gmail.com>
-Subject: Re: [PATCH -1/3] gitweb: Always call parse_date with timezone parameter
-Date: Sat, 19 Mar 2011 15:56:04 -0700
-Message-ID: <AANLkTimV7vvD0PTMejydiyW_CeUH0cuQ-2+PnRqjzob5@mail.gmail.com>
-References: <4f21902cf5f72b30a96465cf911d13aa@localhost>
-	<201103192318.45925.jnareb@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: EOL conversion nits
+Date: Sat, 19 Mar 2011 19:10:17 -0400
+Message-ID: <AANLkTimML1Q-2Eyy=F_y+Z0qy6VrnqtwCUQN-23nuPD8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 23:56:13 2011
+Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 20 00:11:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1548-0005L3-9m
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 23:56:12 +0100
+	id 1Q15IW-0001eN-OT
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 00:11:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751204Ab1CSW4H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 18:56:07 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62351 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750941Ab1CSW4G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 18:56:06 -0400
-Received: by fxm17 with SMTP id 17so4621126fxm.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 15:56:04 -0700 (PDT)
+	id S1751161Ab1CSXKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 19:10:49 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41139 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751007Ab1CSXKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 19:10:47 -0400
+Received: by iyb26 with SMTP id 26so5231404iyb.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 16:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JW+SnrwYGp4Zt2fygv+pxsF/OER0Urko5shYoPUjKeQ=;
-        b=qSVzV8EnWOtMH30zjq5wHFXDjZmzl5157GrazQGxwkXfXZqQt1kTAyCNjtGeXHjFbN
-         K+Hx56/xdw5qcvsWb5E90x1Oho4qVanqhD+DHjg+DLKtGZUMl+nW9JkrSCrribTVI+7O
-         H4T5X3ZDCn/YjssPy8De+ci5D/+xDrHUrYm9E=
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=ndGy5gHLvmprO0NaIPpv4dZh3iYypOvtVI2HXFGPW/4=;
+        b=ch91WKHTaH+qZJqLp4ZnrYgjvG2HZWTPk3yavztppGda/vUTUg3/KooULyitgU0Nzj
+         Cf812DUCFYXawLU/zq+tKzW7ltcvepiviuvaGhZAXQlnhg8dDzAT1XrVLXCRRTkIMJ4Y
+         wZKyIKPvhOhg/1q66NVElyVMDS+I8BrVuySSE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wZJ5kpq6EcBW/NbHVYkOjLW4mHdzo9PlkOS48ul1zhSauRLGhoEoOHzjH7pIoeXXR8
-         oWCqtRnlQtpGBiWQy45P7kNyB345HlOozePGEDZnwe9wmYYc/ZlNQui7cCeZeFA56nr0
-         sYF0QVgVHPqH8zYOkeuIyG5W7ung0PJcEZTP8=
-Received: by 10.223.74.136 with SMTP id u8mr1160795faj.136.1300575364497; Sat,
- 19 Mar 2011 15:56:04 -0700 (PDT)
-Received: by 10.223.61.83 with HTTP; Sat, 19 Mar 2011 15:56:04 -0700 (PDT)
-In-Reply-To: <201103192318.45925.jnareb@gmail.com>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=pFymFiX6yrtJG8JYl7q5eh3MzWEC08Ue5DMRXlbeRbW8UHyYvdJzhbj+lbqM/Hwt9m
+         YJojt0WeSsvYejt0vNDblXWCqM+o1Cxa0ScRWL0Sxgx2+JIVRybArfJxDem3zTgM7bzj
+         3W/9Kr6Pf46HuHLe4IV1V1X0INe9NAv89vXO0=
+Received: by 10.231.141.133 with SMTP id m5mr2499228ibu.107.1300576247135;
+ Sat, 19 Mar 2011 16:10:47 -0700 (PDT)
+Received: by 10.231.34.7 with HTTP; Sat, 19 Mar 2011 16:10:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169476>
 
-On Sat, Mar 19, 2011 at 3:18 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> @@ -4906,7 +4906,7 @@ sub git_log_body {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0next if !%co;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my $commit =3D=
- $co{'id'};
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my $ref =3D fo=
-rmat_ref_marker($refs, $commit);
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 my %ad =3D parse_d=
-ate($co{'author_epoch'});
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 my %ad =3D parse_d=
-ate($co{'author_epoch'}, $co{'athor_tz'});
+Create a repo with a single DOS EOL file:
 
-Should be 'author_tz'
+  git init foo && cd foo &&
+  printf 'foo\r\nbar\r\n' > foobar &&
+  git add foobar &&
+  git commit -m foobar
 
-Looking at the master branch, I don't see %ad actually getting used
-anywhere?  Maybe it is safe to delete the line entirely, since
-git_print_authorship() calls parse_date() itself.
+Normalize the repo:
 
-> @@ -7064,7 +7064,7 @@ sub git_feed {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (defined($commitlist[0])) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0%latest_commit=
- =3D %{$commitlist[0]};
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my $latest_epo=
-ch =3D $latest_commit{'committer_epoch'};
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 %latest_date =C2=A0=
- =3D parse_date($latest_epoch);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 %latest_date =C2=A0=
- =3D parse_date($latest_epoch, $latest_commit{'comitter_tz'});
+  echo 'foobar eol=lf' > .gitattributes &&
+  rm .git/index && git reset
+  Unstaged changes after reset:
+  M	foobar
 
-Should be 'committer_tz'
+Commit the changes:
 
-I would agree that it isn't such a good thing for
-$latest_date{'rfc2822_local'} to be set to GMT in this case.  Although
-the feeds don't need local times for anything, since RSS/Atom readers
-seem to do their own timezone translations.
+  $ git add .gitattributes foobar
+  warning: CRLF will be replaced by LF in foobar.
+  The file will have its original line endings in your working directory.
 
-It probably makes sense to add this argument so that nobody gets bit
-later when they try to use the rfc2822_local field.
+  $ git commit -m normalize
+  warning: CRLF will be replaced by LF in foobar.
+  The file will have its original line endings in your working directory.
+  [master f86ff53] normalize
+  warning: CRLF will be replaced by LF in foobar.
+  The file will have its original line endings in your working directory.
+   2 files changed, 3 insertions(+), 2 deletions(-)
+   create mode 100644 .gitattributes
 
-Am I correct in interpreting "PATCH -1/3" as: "apply this before
-Kevin's set of 3 patches?"
+So, there's a few issues here:
+
+1. Why is git warning me three times about the EOL conversion?
+Shouldn't once, on commit, be sufficient?
+
+2. Shouldn't the message use "working tree", not "working directory"?
+
+3. The git attributes help doesn't say how to convert the line endings
+in the working tree, which I guess is:
+
+  $ rm .git/index && git reset --hard
+
+4. I wonder why git's keeping the original line endings in the working
+tree post-normalization, but minimally, I think it should provide a
+friendlier way to update the working tree line endings to match what
+you'd get from a fresh checkout, honoring whatever your EOL settings
+are.
+
+Thoughts?
+
+j.
