@@ -1,68 +1,75 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
-Date: Sat, 19 Mar 2011 19:18:52 +0700
-Message-ID: <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
-References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com>
+From: Alexey Homyakov <alexey.homyakov@gmail.com>
+Subject: The way to make work with git a bit more easier.
+Date: Sat, 19 Mar 2011 14:20:12 +0200
+Message-ID: <AANLkTimrYGXQ_wWrj-Sr3UB9YbddW613oebddUoLat7b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=KOI8-R
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: =?UTF-8?B?cnllbnVzIOKXhw==?= <ryenus@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 13:19:38 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 19 13:20:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0v86-0004RU-EX
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 13:19:38 +0100
+	id 1Q0v8k-0004kN-3S
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 13:20:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637Ab1CSMTY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 08:19:24 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:48813 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751465Ab1CSMTX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 08:19:23 -0400
-Received: by wya21 with SMTP id 21so4583536wya.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 05:19:22 -0700 (PDT)
+	id S1751672Ab1CSMUO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 08:20:14 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:63106 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751465Ab1CSMUM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 08:20:12 -0400
+Received: by pzk9 with SMTP id 9so568677pzk.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 05:20:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=pf3eeYGQ4ZIYFAeSLZ7gOOqi+vP7/XrSZp2RQVbZ9po=;
-        b=RWTTy5u5SgqFdS8BgNk/5gQ5VMCAI+fD6S7yi4v14VBFkKSlahOF0sc+TK/7jjxwMS
-         I2WKNKWt1Vbkvy7DBB0COi6bszjj17TIzBdqPGErMMfMISS00obcR4ZekFVba+JF/ZUR
-         xBLC1gUisQktiHQ1csiQlSy+CV1JkqYZCEt6U=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=zL+FIxfkJnshn6+bppeV591fQHzTOX3OV+ucwVhldDE=;
+        b=NLNLv+rbrlx5SRT8CXCIjvmFMhY5gET03hZAqQ5icTtGexYSKC0aoszCflfdelY7fw
+         io7gXAHZ/2BIOsvcp9Dmjqa1IgkaWoathdoIX5LCSwk+5z/M1RCV1DOMMz+hx+TMdjiD
+         7nma9sMxE+ncpOho9W2r636cXMyspWMCdgrw8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=tE5sW1oD8HNf20TzSEg3EQQfvf1UcFtNX3AU3VkXF0PmaVVTFizrdPzzXz3CgDSmX8
-         ZdYuGewp7tRsDDk2jYtuc8jK0RC9QLgTusuk0JXtv0rhVFsrezIKcU8LC5mnNHLP0/Xp
-         hs9BFPOQqKQMRRVUR6WGRtJx0swTBg9/n7cqw=
-Received: by 10.216.120.129 with SMTP id p1mr2283762weh.81.1300537162150; Sat,
- 19 Mar 2011 05:19:22 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Sat, 19 Mar 2011 05:18:52 -0700 (PDT)
-In-Reply-To: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=bPQLwkE2I+8L9j7yWlpa02YpP8dOs2ccPMqRmDQDYF+34NhbAtjIyWfvNBMi4SEpm8
+         ++YncmsxTizjAmXlBkSRQA4Iue03OE2Sv7FgbCJeSKRwXO2VUF0fiviSNA5HND7bh9Nt
+         YBALOYDZZYmgovsV6HiMZSz/7T75GvDhD2tBM=
+Received: by 10.142.174.18 with SMTP id w18mr1037858wfe.415.1300537212222;
+ Sat, 19 Mar 2011 05:20:12 -0700 (PDT)
+Received: by 10.143.166.20 with HTTP; Sat, 19 Mar 2011 05:20:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169428>
 
-On Sat, Mar 19, 2011 at 7:08 PM, ryenus =E2=97=87 <ryenus@gmail.com> wr=
-ote:
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for e in `cd "$PAC=
-KDIR" && find . -type f -name '*.pack' \
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for e in `cd "$PAC=
-KDIR" && /usr/bin/find . -type f
+Hi, guys, i'm enjoy to work with git, but think it's possibly to make
+one of the operation more easier.
+What do you mean about mark a parts of files which don't need to be
+tracked by git once instead using interactive adding each time?
+=46or example using statement in comments like this:
 
-I'd rather have something like in test-lib.sh (with conditions)
+=2E...............
+tracked part
+=2E..............
+//@git off
+=2E..............
+untracked part
+=2E..............
+//@git on
+=2E...............
+track again
+=2E...............
 
-find() {
-/usr/bin/find "$@"
-}
 
-Even better, rewrite this script to C.
+It's easy to make git understand all possibly comments definitions.
+
+Thanx.
+
 --=20
-Duy
+=F3 =D5=D7=C1=D6=C5=CE=C9=C5=CD,
+=E1=CC=C5=CB=D3=C5=CA.
