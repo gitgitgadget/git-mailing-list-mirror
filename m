@@ -1,90 +1,97 @@
-From: =?UTF-8?B?cnllbnVzIOKXhw==?= <ryenus@gmail.com>
-Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
-Date: Sun, 20 Mar 2011 00:43:23 +0800
-Message-ID: <AANLkTi=EQhtOM3dR8V5dxP=AfNxWuSFoTbvzL36q3rXL@mail.gmail.com>
-References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com>
- <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com> <AANLkTinxyp=PbvzRkyyxXin5aOFm1NP4Be6U2Dv0aD6d@mail.gmail.com>
+From: "Mr.Pt. Lee" <infobank8@aol.com>
+Subject: Hello
+Date: Sat, 19 Mar 2011 17:39:56 +0100
+Message-ID: <201103191642.p2JGg61N027914@auth3.smtp.vt.edu>
+Reply-To: <petercleejp@yahoo.cn>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 17:43:49 2011
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Mar 19 17:44:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0zFl-0007EK-5u
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 17:43:49 +0100
+	id 1Q0zGj-0007VD-KT
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 17:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756733Ab1CSQnp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 12:43:45 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37934 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755277Ab1CSQnn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 12:43:43 -0400
-Received: by ywj3 with SMTP id 3so1942394ywj.19
-        for <git@vger.kernel.org>; Sat, 19 Mar 2011 09:43:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=BPt/6iTNcMxNb1Zf+fZCTCPYgMZlsPH+vigSayHJqdg=;
-        b=RCVUSYap5xjH8OgnChKUqamYmUieSUOkjBO0bp4u2o5Xu33BhgdIcHhpbWw65r9DPS
-         lgs3i1Kwna6rM5K+GhUanRHDMzX+M7jPAkyYOTjXpNAhp3diICzyo0Hn4ROtS+dKOFaC
-         DHh4banSEmD2Seciy2Qjgo5l1/o/brDSAckKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=AEmpLtlbROwoPZroX4MmajuOyMprRA3yXY2HhFMhvW0Zi0aC1cu/jQXw9UgvpP1sMz
-         N8gWdMMqvJ7aSygPcsL5UvSQzg6mNd3MRSaO0qB39ZmZf1pAGOx88xNBN5bJaw/kHFut
-         0EpjDt9vLgYLbdeaYDitzxIDSLkQjFYtppiGk=
-Received: by 10.100.193.12 with SMTP id q12mr1835771anf.7.1300553023110; Sat,
- 19 Mar 2011 09:43:43 -0700 (PDT)
-Received: by 10.100.121.3 with HTTP; Sat, 19 Mar 2011 09:43:23 -0700 (PDT)
-In-Reply-To: <AANLkTinxyp=PbvzRkyyxXin5aOFm1NP4Be6U2Dv0aD6d@mail.gmail.com>
+	id S1756787Ab1CSQoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 12:44:46 -0400
+Received: from lennier.cc.vt.edu ([198.82.162.213]:51872 "EHLO
+	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755277Ab1CSQoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 12:44:44 -0400
+Received: from steiner.cc.vt.edu (steiner.cc.vt.edu [198.82.163.51])
+	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2JGgdAe015645;
+	Sat, 19 Mar 2011 12:42:39 -0400
+Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
+	by steiner.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
+	with ESMTP id OAR65067;
+	Sat, 19 Mar 2011 12:42:39 -0400 (EDT)
+Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
+	(authenticated bits=0)
+	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2JGg61N027914
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 19 Mar 2011 12:42:09 -0400
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1081
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+X-Antivirus: avast! (VPS 110318-1, 03/18/2011), Outbound message
+X-Antivirus-Status: Clean
+X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu infobank8@aol.com 1 neutral
+X-Mirapoint-IP-Reputation: reputation=neutral-1,
+	source=Fixed,
+	refid=n/a,
+	actions=MAILHURDLE SPF TAG
+X-Junkmail: UCE(50)
+X-Junkmail-Status: score=50/50, host=steiner.cc.vt.edu
+X-Junkmail-Signature-Raw: score=bulk(0),
+	refid=str=0001.0A020208.4D84DCFF.0094,ss=3,pt=113349,fgs=0,
+	ip=213.46.147.88,
+	so=2010-07-22 22:03:31,
+	dmn=2009-09-10 00:05:08,
+	mode=single engine
+X-Junkmail-IWF: false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169448>
+X-Spam-Report: 11.3 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4979]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
+ *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  1.2 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+ *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169449>
 
-OK, I've been away for a while and didn't notice latest replies :-) do
-you mean find is not used elsewhere in git?
+Hello 
+   
+It is understandable that you might be a bit apprehensive because you do not know, but I have a lucrative business proposal of mutual interest to share with you. I got your reference in my search for someone who suits my proposed business relationship. 
+    
+I am Mr P. Lee of South Korea, happily married with children, and I am Director of Hang Seng Bank Ltd., in charge of the International Remittance Department. I have a confidential business proposal for you. I need you to assist me in implementing a business project from Hong Kong to your country. It is the transfer of large sums of money. Everything about this transaction shall be legally done without hitch. Please try to observe utmost discretion in all matters concerning this issue. 
+   
+After funds have been successfully transferred into your account, we will share in proportion to both of us agreed. I prefer you to me on my private e-mail address (petercleejp@yahoo.cn) and then after that I will give you more information about this operation. If you're interested, send me the following urgently: 
 
-Anyway, looks like checking for both MinGW and Cygwin still applies.
-
-Thanks
-
-On Sun, Mar 20, 2011 at 00:32, ryenus =E2=97=87 <ryenus@gmail.com> wrot=
-e:
-> Thank you, Duy, you're almost right, I just checked git-sh-setup.sh,
-> in the bottom, sort and find are defined as functions like what you
-> pointed out, but only for MinGW, therefore a better fix is to check
-> for cygwin as well:
->
-> ---
-> =C2=A0git-sh-setup.sh | =C2=A0 =C2=A02 +-
-> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index aa16b83..5c52ae4 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -227,7 +227,7 @@ fi
->
-> =C2=A0# Fix some commands on Windows
-> =C2=A0case $(uname -s) in
-> -*MINGW*)
-> +*MINGW*|*CYGWIN*)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Windows has its own (incompatible) sort =
-and find
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0sort () {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/usr/bin/sort =
-"$@"
-> --
-> 1.7.4
->
+1st Names and surnames 
+2nd Occupation 
+3rd Private phone number 
+4th Current contact address 
+   
+Please, if you do not want to delete this e-mail and do not hunt, because I am putting my career and life of my family at stake with this venture. Although nothing ventured nothing gained. 
+   
+Your earliest response to this letter will be appreciated. 
+    
+Sincerely, 
+   
+Mr.Pt. Lee 
+Hang Seng Bank Limited 
+Hong Kong. () Asian 
+E-mail: - petercleejp@yahoo.cn
