@@ -1,99 +1,135 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 4/3] gitweb: Always call format_date with timezone parameter
-Date: Sun, 20 Mar 2011 11:37:17 +0100
-Message-ID: <201103201137.18619.jnareb@gmail.com>
-References: <4f21902cf5f72b30a96465cf911d13aa@localhost> <b599dae39131b90d0970a1ef63e6599b@localhost>
+From: "Pavel Raiskup" <xraisk00@gmail.com>
+Subject: Histogram diff, libgit2 enhancement, libgit2 => git merge (GSOC)
+Date: Sun, 20 Mar 2011 11:55:31 +0100
+Message-ID: <op.vsm1yszq2m56ex@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 11:37:46 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 20 11:56:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1G13-0001cd-Si
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 11:37:46 +0100
+	id 1Q1GIi-0007ra-2a
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 11:56:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab1CTKhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 06:37:36 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35648 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751618Ab1CTKhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 06:37:34 -0400
-Received: by fxm17 with SMTP id 17so4778838fxm.19
-        for <git@vger.kernel.org>; Sun, 20 Mar 2011 03:37:33 -0700 (PDT)
+	id S1751842Ab1CTKz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 06:55:56 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51876 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751618Ab1CTKzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 06:55:54 -0400
+Received: by bwz15 with SMTP id 15so4394348bwz.19
+        for <git@vger.kernel.org>; Sun, 20 Mar 2011 03:55:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=42vNT9AFyDmyYEpIBRJPQDzu/m5ZhiOk+wmMq6A/ISg=;
-        b=BrxbQwve3V4tGRYSU0MrdjhYjtNJeBdkkciTDuZ+Fbtw4DIqzadhgk/8sCyoA0w+Xv
-         yPhr8U0B10bJGXlOr5tCo26lNXwMdUgMJWLYOV4fkFQ4G8bL0FKvTXXCmPAM0fF0nKmb
-         pMhdFvUCePpaPKNoputtJCCbLgaZNQJSIG6go=
+        h=domainkey-signature:content-type:date:to:subject:mime-version
+         :content-transfer-encoding:from:message-id:user-agent;
+        bh=Lyl+hSgtXgMtqOkDLhGC/tApeRaFXvc4411n9DG+tYs=;
+        b=Rlh8UQOV4X8q1YWA20VQ76eqGU95VwSzh9f/TmDzX8xSX7qos0llZ+9XzqvkQooKOD
+         WLA/YZKCZE3cIwntzRRV7DTgsIOqxhZAQkacit+lgud+kKwiETg7P4VX9guw99ywEkc/
+         Vo2In+wntQBA35V1NFJGSQLeNZeZYpwL9s2VM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=WzsoQLjLUsiWmlGQgEqjHX1Gi5+vM9aI8k5Ibjwp96re4z8JbvCYdyVGw0D4q97Hza
-         ir4DTuXWFG1GG+K/6fFGeAsUeKnd6zAaGaXwmRdTSSXEv93SBT2F1rtcdMWao1hf0Xxd
-         lMgklunzQqhRbNxMbvpFA0+u+HpFyPCgkRgF0=
-Received: by 10.223.126.130 with SMTP id c2mr3457660fas.39.1300617453605;
-        Sun, 20 Mar 2011 03:37:33 -0700 (PDT)
-Received: from [192.168.1.13] (abwj177.neoplus.adsl.tpnet.pl [83.8.233.177])
-        by mx.google.com with ESMTPS id o17sm2030090fal.1.2011.03.20.03.37.30
+        h=content-type:date:to:subject:mime-version:content-transfer-encoding
+         :from:message-id:user-agent;
+        b=BP0Tg+ckXq84PT6DrOO+v7dzPJOlabFiD6PDu/SP1Ou2XPOpy1978jWWDw4mMMCIzm
+         /PAbZ7wsg8WUokWJfggXJbROUEY5jnlw13Rr3XH8U1V5spzkPU6cWV4tmgLWKguOELb6
+         dR/n/mNuJbL4Qjm59yvBQQsDhoyeg4tq8kMRU=
+Received: by 10.204.29.21 with SMTP id o21mr2656658bkc.97.1300618551996;
+        Sun, 20 Mar 2011 03:55:51 -0700 (PDT)
+Received: from localhost.localdomain (skola.mikroo.uh.cz [80.251.252.132])
+        by mx.google.com with ESMTPS id y9sm267901faj.2.2011.03.20.03.55.45
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 20 Mar 2011 03:37:31 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <b599dae39131b90d0970a1ef63e6599b@localhost>
-Content-Disposition: inline
+        Sun, 20 Mar 2011 03:55:48 -0700 (PDT)
+User-Agent: Opera Mail/11.01 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169498>
 
-On Sun, 20 Mar 2011, Kevin Cernekee wrote:
-> From: Jakub Narebski <jnareb@gmail.com>
-> 
-> Make the timezone parameter mandatory.  This ensures that the *_local
-> fields are always populated with accurate information.
+Hi Git's community!
 
-That is better commit message that what I came with.
- 
-> Also, delete an unnecessary call to format_date().
-> 
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
-> ---
-> 
-> v2: Fix typos.  Remove unnecessary call.
+I'd like to ask you for some details about "histogram diff" and "libgit"
+enhancement/git-merge tasks for this year's GSOC.
 
-Thanks.
+Histogram diff:
+There is no mentor mentioned in [1]. Does it mean that there is no person
+who can be a mentor for this task or is that assignment possible to be
+mentored by everyone mentioned in other tasks? I'd like to do this task  
+very
+much. After doing a small observing around source code of git/jgit it looks
+feasible for me.
+There is a goal "Get this feature merged to the upstream git." -- but I  
+have
+one theoretical question -- what if the benchmarking/study of histogram  
+diff
+leads to conclusion that this algorithm will not be useful for upstream?
+Does it mean "fail" in terms of GSOC? I have to think about it even if it
+looks that there should be speedup quite obvious. I don't want to fail
+a priory :).
 
-> Remove default "-0000" tz value.
+libgit2:
+I really like the concept of libraries for to be binding-able from dozens  
+of
+languages - this leads to expanding functionality among masses users
+almost everywhere. In this part I like the idea of implementing new  
+features
+inside library (diff, config file parsing) but also maybe the task of  
+merging
+libgit2 into git upstream. Basically I don't know much about that.. and
+you wrote that this task is more difficult then others, so I probably need
+to study git's and libgit's architecture very precisely beforehand .. but
+could you tell me some details about that? Is it impossible to do it before
+GSOC deadline and is it worth making a serious big efforts to this task
+(from your point of view onto project objectives)? How big are requirements
+for this task in term of GSOC?
 
-Hmmm... I wonder if default value for timezone might have been intended
-to handle case of malformed date, without timezone.
+Now it is quite hectic time because of my study :) it's been a long time
+since I've had time for myself but I'd like to prepare some patch for to
+proof my interests and abilities.
 
-This fragment
+====
+And now not so important part of message (you can skip).. I plan to write
+this informations later on to google-melange more precisely.
 
-        my $epoch = shift;
-        my $tz = shift || "-0000";
+Something about me || I am:
+-- I like C language but there is no problem to study more deeply other
+    commonly used languages (I need only little brainstorming),
+-- interested in Open Source in general, programming (especially in
+    parallel), chess playing and challenges,
+-- student of master's degree BUT (CZ), penultimate year of study, my last
+    summer :(
+-- a fan of Git because of many reasons, I'd like to become a contributor  
+even
+    if the GSOC opportunity wont come.
+-- not so good English speaker so sometimes my messages could be a little
+    harder to understand.
 
-is from very beginnings of gitweb... and "v042" is a bit uninformative
-as a commit message.  991910a (v042, 2005-08-07).
+Experiences:
+In most cases I have only school projects experiences (even if programming
+projects are some kind of evergreen here in Brno). But I've had one Open
+Source experience -- enhancement for Daniel Stenberg's libcurl [2] followed
+with some continuing patches. The main patch implements shell-like wildcard
+pattern matching functionality for FTP protocol and makes an enhancement of
+API to allow implementing of this functionality among other protocols.
+(I've done implementation of wildcard "*.txt, [a-z]???.txt" compiler, auto
+testing script, enhancement for testing FTP server inside libcurl, man  
+pages,
+.. )
+The most difficult part was to understand how it works inside curl library
+-- but now I think I'm better in that aspect so I think I can make some  
+useful
+work for Git too.
+====
 
-> Rebase on top of my patch 3/3 (as applying -1/3 then 1/3 would create a
-> merge conflict).
+Don't worry please, my next messages will be much briefer :)
 
-You are right, that is better solution.
+Pavel
 
--- 
-Jakub Narebski
-Poland
+[1] https://git.wiki.kernel.org/index.php/SoC2011Ideas
+[2]  
+https://github.com/bagder/curl/commit/0825cd80a62c21725fb3615f1fdd3aa6cc5f0f34
