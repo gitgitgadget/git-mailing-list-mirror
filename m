@@ -1,97 +1,78 @@
-From: "Mr.Pt. Lee" <infobank8@aol.com>
-Subject: Hello
-Date: Sun, 20 Mar 2011 04:33:16 +0100
-Message-ID: <201103200335.p2K3Zn8K031597@auth3.smtp.vt.edu>
-Reply-To: <petercleejp@yahoo.cn>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: dependable submodules
+Date: Sat, 19 Mar 2011 21:27:58 -0700
+Message-ID: <7vd3lmv2k1.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=JVO+KhnLKR-PvNQQFaZLhUmiVbKFxuytYEpmc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Mar 20 04:38:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Daniel <daniel@netwalk.org>
+X-From: git-owner@vger.kernel.org Sun Mar 20 05:28:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q19TQ-000286-MB
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 04:38:37 +0100
+	id 1Q1AFd-000436-Lj
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 05:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391Ab1CTDiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 23:38:21 -0400
-Received: from lennier.cc.vt.edu ([198.82.162.213]:33556 "EHLO
-	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751362Ab1CTDiU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 23:38:20 -0400
-Received: from dagger.cc.vt.edu (dagger.cc.vt.edu [198.82.163.114])
-	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3ZJNq027618;
-	Sat, 19 Mar 2011 23:36:02 -0400
-Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
-	by dagger.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
-	with ESMTP id PZL10172;
-	Sat, 19 Mar 2011 23:35:59 -0400 (EDT)
-Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
-	(authenticated bits=0)
-	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3Zn8K031597
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 19 Mar 2011 23:35:51 -0400
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
-X-Antivirus: avast! (VPS 110319-1, 03/19/2011), Outbound message
-X-Antivirus-Status: Clean
-X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu infobank8@aol.com 1 neutral
-X-Mirapoint-IP-Reputation: reputation=neutral-1,
-	source=Fixed,
-	refid=n/a,
-	actions=MAILHURDLE SPF TAG
-X-Junkmail: UCE(50)
-X-Junkmail-Status: score=50/50, host=dagger.cc.vt.edu
-X-Junkmail-Signature-Raw: score=bulk(0),
-	refid=str=0001.0A020201.4D857621.0080,ss=3,pt=113349,fgs=0,
-	ip=213.46.147.88,
-	so=2010-07-22 22:03:31,
-	dmn=2009-09-10 00:05:08,
-	mode=single engine
-X-Junkmail-IWF: false
+	id S1751146Ab1CTE2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 00:28:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48713 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750918Ab1CTE2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 00:28:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1E52331E1;
+	Sun, 20 Mar 2011 00:29:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ddFOtFBPVOD5HwNMMRthfN6KcjE=; b=mvjc0L
+	ADHzfR6EtvEJ0Cf3aj/wCNsR4eqvx3t6GlFuxAnh42IGqOnbslLs91eXBJwC1MHQ
+	hEZiFQ/zYCsSiH9hu/3ueXOaCoZ639p77fta84gIwZnvp/IsfFDVmvrB74RW52UZ
+	KZS3STnAUfN6MQnNC3nWlDrgO81YygdAHtQzQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KHwHWo2yTzEiC10eA9Uyy4E0xfBu1Owt
+	K5VZbYZDtFUC2XTm7WAm1KqE/ZhWsUJvIvoXedpVC5MgnmbC+NqYLZGgkHFhaPDF
+	CcKSAs34eKd/72TFJhHZNLVHHGIcnRqmcjv3dzLmioBck2/R0V81HyovdKfA1Ijd
+	vKlv45Xhoz8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EED4A31E0;
+	Sun, 20 Mar 2011 00:29:40 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EC1D731DF; Sun, 20 Mar 2011
+ 00:29:37 -0400 (EDT)
+In-Reply-To: <AANLkTi=JVO+KhnLKR-PvNQQFaZLhUmiVbKFxuytYEpmc@mail.gmail.com>
+ (daniel@netwalk.org's message of "Sat, 19 Mar 2011 17:53:26 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AC3FDE92-52AA-11E0-A8EF-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.3 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4950]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
- *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  1.2 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
- *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169485>
 
-Hello 
-   
-It is understandable that you might be a bit apprehensive because you do not know, but I have a lucrative business proposal of mutual interest to share with you. I got your reference in my search for someone who suits my proposed business relationship. 
-    
-I am Mr P. Lee of South Korea, happily married with children, and I am Director of Hang Seng Bank Ltd., in charge of the International Remittance Department. I have a confidential business proposal for you. I need you to assist me in implementing a business project from Hong Kong to your country. It is the transfer of large sums of money. Everything about this transaction shall be legally done without hitch. Please try to observe utmost discretion in all matters concerning this issue. 
-   
-After funds have been successfully transferred into your account, we will share in proportion to both of us agreed. I prefer you to me on my private e-mail address (petercleejp@yahoo.cn) and then after that I will give you more information about this operation. If you're interested, send me the following urgently: 
+Daniel <daniel@netwalk.org> writes:
 
-1st Names and surnames 
-2nd Occupation 
-3rd Private phone number 
-4th Current contact address 
-   
-Please, if you do not want to delete this e-mail and do not hunt, because I am putting my career and life of my family at stake with this venture. Although nothing ventured nothing gained. 
-   
-Your earliest response to this letter will be appreciated. 
-    
-Sincerely, 
-   
-Mr.Pt. Lee 
-Hang Seng Bank Limited 
-Hong Kong. () Asian 
-E-mail: - petercleejp@yahoo.cn
+> IOW, I may have
+>
+>     myrepo/somefile.txt
+>     myrepo/another_project/.git/...
+>     myrepo/another_project/another_project_file.txt
+>
+> and I'd like to, when I clone repo, to be able to get all files from
+> repo independently of the remote repo's existence.
+
+Cloned repositories from your repository can say where they get from
+"another_project" embedded in it in .git/config of the clone of the
+superproject. The supermodule may have .gitmodules that points at github
+or whereever your original upstream repository resided, but that is
+supposed to be used to only give you the default.
+
+When "another_project" you borrowed really dies and becomes useless for
+anybody, you may update its entry in .gitmodules of the superproject to
+point at the public repository that inherited that submodule project.
+The project might be simply abandoned, in which case you end up being
+that inheritor.
