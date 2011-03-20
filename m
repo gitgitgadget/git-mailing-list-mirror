@@ -1,63 +1,58 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH 9/9] branch: add --column
-Date: Sun, 20 Mar 2011 21:52:36 +0200
-Message-ID: <87oc557env.fsf@mithlond.arda>
-References: <1300625873-18435-1-git-send-email-pclouds@gmail.com>
-	<1300625873-18435-10-git-send-email-pclouds@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: What's cooking in git.git (Mar 2011, #02; Sun, 20)
+Date: Sun, 20 Mar 2011 21:43:11 +0100
+Message-ID: <4D8666DF.3050401@web.de>
+References: <7vy649vah1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 20:52:47 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 21:43:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1Og9-0004AD-SZ
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 20:52:46 +0100
+	id 1Q1PTF-0007kI-0c
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 21:43:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303Ab1CTTwm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 15:52:42 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:51458 "EHLO kirsi1.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752240Ab1CTTwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 15:52:41 -0400
-Received: from mithlond.arda (84.251.132.215) by kirsi1.inet.fi (8.5.133)
-        id 4D072CA704827067; Sun, 20 Mar 2011 21:52:39 +0200
-Received: from dtw by mithlond.arda with local (Exim 4.72)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1Q1Og0-0005MP-Qn; Sun, 20 Mar 2011 21:52:36 +0200
-In-Reply-To: <1300625873-18435-10-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 20
- Mar 2011 19:57:53 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1752433Ab1CTUnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 16:43:24 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:46533 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752358Ab1CTUnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 16:43:23 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 5AE4E18B1F577;
+	Sun, 20 Mar 2011 21:43:11 +0100 (CET)
+Received: from [93.240.106.29] (helo=[192.168.178.43])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Q1PSx-0007cn-00; Sun, 20 Mar 2011 21:43:11 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <7vy649vah1.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18df+aoOhJjgKiV+379Q/DHKTeilN3my0gKm9hf
+	642UublLeFSQs4FDii98sbxgBMYTtDthNrmOnJFnFUWqMJEfjW
+	Jhw1utHclqsCsjTgmVBg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169522>
 
-* 2011-03-20 19:57 (+0700), Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy w=
-rote:
+Am 20.03.2011 20:49, schrieb Junio C Hamano:
+> * jl/submodule-fetch-on-demand (2011-03-06) 7 commits
+>  - fetch/pull: Describe --recurse-submodule restrictions in the BUGS section
+>  - submodule update: Don't fetch when the submodule commit is already present
+>  - fetch/pull: Don't recurse into a submodule when commits are already present
+>  - Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule' option
+>  - config: teach the fetch.recurseSubmodules option the 'on-demand' value
+>  - fetch/pull: Add the 'on-demand' value to the --recurse-submodules option
+>  - fetch/pull: recurse into submodules when necessary
+> 
+> Is this ready to move forward?
 
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.=
-txt
-> index 9106d38..a7bf4a8 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-
-> +--column[=3D<options>]::
-> +--no-column::
-> +	Override column.ui settings. See linkgit:git-config.txt[1] for
-> +	syntax. `--column` and `--no-column` without options are
-> +	equivalent to 'always' and 'never' respectively. This option
-> +	is only applicable if `git tag` is used to list tags without
-> +	annotation lines.
-> +
-                               =20
-I admit that I have not been following the development of this feature
-but I'll confirm this anyway: Do you really mean to speak of "git tag"
-in the man page of "git branch"?
+I'm not aware of any issues with that series, so I'd say yes. (The change in
+behavior and that we support disconnected operation for submodules way better
+than before should of course be mentioned in the release notes)
