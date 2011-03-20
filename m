@@ -1,103 +1,200 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 0/9] column output v3
-Date: Sun, 20 Mar 2011 19:57:44 +0700
-Message-ID: <1300625873-18435-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/9] Move term_columns() to pager.c and save terminal width before pager
+Date: Sun, 20 Mar 2011 19:57:45 +0700
+Message-ID: <1300625873-18435-2-git-send-email-pclouds@gmail.com>
+References: <1300625873-18435-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 20 13:58:13 2011
+X-From: git-owner@vger.kernel.org Sun Mar 20 13:58:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1ICz-0002jT-7w
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 13:58:13 +0100
+	id 1Q1ID6-0002ky-U1
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 13:58:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211Ab1CTM6I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 08:58:08 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:50802 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752129Ab1CTM6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 08:58:06 -0400
-Received: by iwn34 with SMTP id 34so5553777iwn.19
-        for <git@vger.kernel.org>; Sun, 20 Mar 2011 05:58:05 -0700 (PDT)
+	id S1752231Ab1CTM6Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 08:58:16 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65408 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752226Ab1CTM6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 08:58:14 -0400
+Received: by iyb26 with SMTP id 26so5551836iyb.19
+        for <git@vger.kernel.org>; Sun, 20 Mar 2011 05:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=1Qljzwu4LQyrqKQPPiHMUQTYKy5ee37WPI4ytKCier0=;
-        b=eS9GGVf7jlEodGstKvAnhYNgB0gE7bloURwHAVnHLIvDEx/V/pePMYHlImcfAalIuN
-         7gQxAjGDfVY1W7sV2I0fLiUUyWj20SGDW48xDf0AA/uCCjivmtVMT7eKGQLqy3lA/hF4
-         vbvudnC/0OD7ji/xtF0pfM6nMnzGlFDgNrpvM=
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=0BywgxrpglgR0qV6R5NgPL+Z33xUifHOgvuUpBXjU8E=;
+        b=p4Tb6yY0Z23sKDzsnDH5p1NUfDmU3xFENo/SwEdCzmE7E/xymjoZKaCcf3WqY9Pkhn
+         xPZxr38uztW/YjFBnvVpIBzaptGoCTWHoUtFhkk7IyO6G8aK/n44IgS/ur+azW2qX4JC
+         Pg+0aDkW2wh+NUFpGYBJyAr5GtdqCAnKBcBNA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=LZMc6sQk2QOGN05f+XIdLb/TA+LIr18oEWryBnQPue6EMUBV4akyfmdMalp8n7RzGg
-         YRENozLRI4uQri73geJjNA1B06z7Zh5Hzm6yD1lEO0ujfJdHebIXyoi01EMCRxYrJF7P
-         EaizGLvEAMCrqq2q4rLmmkup5Pb5RB8+tQd2Y=
-Received: by 10.42.96.4 with SMTP id h4mr5125803icn.136.1300625884179;
-        Sun, 20 Mar 2011 05:58:04 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=N+7VO2krJuO9VPYSiUV9d3nirdr2CAjgqrjhCIfkFu0aW82jizlPEx3xZotFbKrPuP
+         z/wWPJngfySU6AN9om2ILnya5+uqAoxY7KcxKQoRWO25ym9kJhaH+65x4Jd0yQKzTU9u
+         8Gsx9tTiAt5+S1RCuZjdpnWbwyDV7GiajgN0Q=
+Received: by 10.42.96.67 with SMTP id i3mr5175248icn.83.1300625894518;
+        Sun, 20 Mar 2011 05:58:14 -0700 (PDT)
 Received: from tre ([115.73.209.201])
-        by mx.google.com with ESMTPS id d10sm2961729ibb.17.2011.03.20.05.57.59
+        by mx.google.com with ESMTPS id wt14sm3261392icb.4.2011.03.20.05.58.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 20 Mar 2011 05:58:03 -0700 (PDT)
-Received: by tre (sSMTP sendmail emulation); Sun, 20 Mar 2011 19:57:53 +0700
+        Sun, 20 Mar 2011 05:58:13 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Sun, 20 Mar 2011 19:58:04 +0700
 X-Mailer: git-send-email 1.7.4.74.g639db
+In-Reply-To: <1300625873-18435-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169503>
 
-Compared to v2 [1]. It's quite ready for consumption:
+term_columns() checks for terminal width via ioctl(2). After
+redirecting, stdin is no longer terminal to get terminal width.
 
- - dense mode works better (and consumes more cpu cycles, but not much)
- - there should be no impact when it's not activated (i.e. no
-   output buffering)
- - column.ui is used for default settings. Not sure if I should go for
-   column.branch and column.tag
- - --[no-]column can be used to override column.ui
+Check terminal width and save it before redirect stdin in setup_pager()
+and let term_columns() reuse the value.
 
-[1] http://mid.gmane.org/1297254284-3729-1-git-send-email-pclouds@gmail=
-=2Ecom
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (9):
-  Move term_columns() to pager.c and save terminal width before pager
-  Add display_columns() to display in columnar layout
-  column: add functions to parse column settings
-  display_columns: add COL_MODE_{COLUMN,ROW} mode
-  display_columns: add COL_DENSE to do unequal column layout
-  column: add column.ui for default column output settings
-  help: reuse display_columns() for help -a
-  tag: add --column
-  branch: add --column
-
- .gitignore                   |    1 +
- Documentation/config.txt     |   24 +++
- Documentation/git-branch.txt |    9 +
- Documentation/git-tag.txt    |   11 +-
- Makefile                     |    3 +
- builtin/branch.c             |   23 ++-
- builtin/tag.c                |   21 ++-
- column.c                     |  378 ++++++++++++++++++++++++++++++++++=
-++++++++
- column.h                     |   22 +++
- help.c                       |   53 +-----
- pager.c                      |   33 ++++
- parse-options.h              |    2 +
- t/t9002-column.sh            |  135 +++++++++++++++
- test-column.c                |   39 +++++
- 14 files changed, 701 insertions(+), 53 deletions(-)
- create mode 100644 column.c
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Makefile |    1 +
+ column.h |    6 ++++++
+ help.c   |   23 +----------------------
+ pager.c  |   33 +++++++++++++++++++++++++++++++++
+ 4 files changed, 41 insertions(+), 22 deletions(-)
  create mode 100644 column.h
- create mode 100755 t/t9002-column.sh
- create mode 100644 test-column.c
 
+diff --git a/Makefile b/Makefile
+index 775ee83..6007f68 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1956,6 +1956,7 @@ builtin/prune.o builtin/reflog.o reachable.o: rea=
+chable.h
+ builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
+ builtin/tar-tree.o archive-tar.o: tar.h
+ connect.o transport.o http-backend.o: url.h
++help.o pager.o: column.h
+ http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
+h
+ http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
+l.h
+=20
+diff --git a/column.h b/column.h
+new file mode 100644
+index 0000000..55d8067
+--- /dev/null
++++ b/column.h
+@@ -0,0 +1,6 @@
++#ifndef COLUMN_H
++#define COLUMN_H
++
++extern int term_columns(void);
++
++#endif
+diff --git a/help.c b/help.c
+index 7654f1b..768f64c 100644
+--- a/help.c
++++ b/help.c
+@@ -4,28 +4,7 @@
+ #include "levenshtein.h"
+ #include "help.h"
+ #include "common-cmds.h"
+-
+-/* most GUI terminals set COLUMNS (although some don't export it) */
+-static int term_columns(void)
+-{
+-	char *col_string =3D getenv("COLUMNS");
+-	int n_cols;
+-
+-	if (col_string && (n_cols =3D atoi(col_string)) > 0)
+-		return n_cols;
+-
+-#ifdef TIOCGWINSZ
+-	{
+-		struct winsize ws;
+-		if (!ioctl(1, TIOCGWINSZ, &ws)) {
+-			if (ws.ws_col)
+-				return ws.ws_col;
+-		}
+-	}
+-#endif
+-
+-	return 80;
+-}
++#include "column.h"
+=20
+ void add_cmdname(struct cmdnames *cmds, const char *name, int len)
+ {
+diff --git a/pager.c b/pager.c
+index dac358f..dad6329 100644
+--- a/pager.c
++++ b/pager.c
+@@ -12,6 +12,19 @@
+  */
+=20
+ static int spawned_pager;
++static int max_columns;
++
++static int retrieve_terminal_width(void)
++{
++#ifdef TIOCGWINSZ
++	struct winsize ws;
++	if (ioctl(1, TIOCGWINSZ, &ws))  /* e.g., ENOSYS */
++		return 0;
++	return ws.ws_col;
++#else
++	return 0;
++#endif
++}
+=20
+ #ifndef WIN32
+ static void pager_preexec(void)
+@@ -74,12 +87,17 @@ const char *git_pager(int stdout_is_tty)
+ void setup_pager(void)
+ {
+ 	const char *pager =3D git_pager(isatty(1));
++	int width;
+=20
+ 	if (!pager)
+ 		return;
+=20
+ 	spawned_pager =3D 1; /* means we are emitting to terminal */
+=20
++	width =3D retrieve_terminal_width();
++	if (width)
++		max_columns =3D width;
++
+ 	/* spawn the pager */
+ 	pager_argv[0] =3D pager;
+ 	pager_process.use_shell =3D 1;
+@@ -116,3 +134,18 @@ int pager_in_use(void)
+ 	env =3D getenv("GIT_PAGER_IN_USE");
+ 	return env ? git_config_bool("GIT_PAGER_IN_USE", env) : 0;
+ }
++
++int term_columns()
++{
++	char *col_string =3D getenv("COLUMNS");
++	int n_cols;
++
++	if (col_string && (n_cols =3D atoi(col_string)) > 0)
++		return n_cols;
++
++	if (spawned_pager && max_columns)
++		return max_columns;
++
++	n_cols =3D retrieve_terminal_width();
++	return n_cols ? n_cols : 80;
++}
 --=20
 1.7.4.74.g639db
