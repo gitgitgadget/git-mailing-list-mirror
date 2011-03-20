@@ -1,83 +1,92 @@
-From: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: git filter-branch --filter-notes/--post-rewrite?
-Date: Sun, 20 Mar 2011 23:55:59 +0100
-Message-ID: <hbf.20110320kak3@bombur.uio.no>
-References: <hbf.20110317iwua@bombur.uio.no>
-	<201103180116.14754.johan@herland.net>
-	<201103181053.58969.trast@student.ethz.ch>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 3/3] fetch-pack: use smaller handshake window for initial request
+Date: Sun, 20 Mar 2011 16:12:43 -0700
+Message-ID: <AANLkTinpv-kvzoPiFrge95JKHSFAOWvcE11MAjVywwwq@mail.gmail.com>
+References: <7vsjukrrmc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Mar 20 23:56:24 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 00:13:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1RXr-0003EP-3D
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 23:56:23 +0100
+	id 1Q1Ro6-00013p-Sh
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 00:13:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506Ab1CTW4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 18:56:04 -0400
-Received: from mail-out2.uio.no ([129.240.10.58]:41955 "EHLO mail-out2.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751385Ab1CTW4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 18:56:03 -0400
-Received: from mail-mx2.uio.no ([129.240.10.30])
-	by mail-out2.uio.no with esmtp (Exim 4.74)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1Q1RXU-0005UJ-Lt; Sun, 20 Mar 2011 23:56:00 +0100
-Received: from bombur.uio.no ([129.240.6.233])
-	by mail-mx2.uio.no with esmtp  (Exim 4.72)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1Q1RXU-0005AZ-9b; Sun, 20 Mar 2011 23:56:00 +0100
-Received: from hbf by bombur.uio.no with local (Exim 4.72)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1Q1RXT-0006Ur-NR; Sun, 20 Mar 2011 23:55:59 +0100
-In-Reply-To: <201103181053.58969.trast@student.ethz.ch>
-X-Mailer: VM 7.18 under Emacs 22.2.1
-X-UiO-Ratelimit-Test: rcpts/h 7 msgs/h 2 sum rcpts/h 9 sum msgs/h 2 total rcpts 1014 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 4F105C69FB0E6A476B69621F70367FE90DDF9571
-X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -49 maxlevel 80 minaction 1 bait 0 mail/h: 2 total 435 max/h 5 blacklist 0 greylist 0 ratelimit 0
+	id S1751632Ab1CTXNF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 19:13:05 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:61983 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751385Ab1CTXNE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2011 19:13:04 -0400
+Received: by vws1 with SMTP id 1so4897864vws.19
+        for <git@vger.kernel.org>; Sun, 20 Mar 2011 16:13:03 -0700 (PDT)
+Received: by 10.52.165.134 with SMTP id yy6mr4613599vdb.312.1300662783196;
+ Sun, 20 Mar 2011 16:13:03 -0700 (PDT)
+Received: by 10.52.164.105 with HTTP; Sun, 20 Mar 2011 16:12:43 -0700 (PDT)
+In-Reply-To: <7vsjukrrmc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169533>
 
-Thomas Rast writes:
->Johan Herland wrote:
->
->> Looking at git-rebase.sh (where it _is_ implemented), it seems to be a 
->> matter of feeding "old_sha1 new_sha1" pairs into a "rewritten" file, and 
->> then passing that file to the stdin of "git notes copy --for-rewrite=filter-
->> branch" (followed by passing the same file to the "post-rewrite" hook).
+On Fri, Mar 18, 2011 at 15:27, Junio C Hamano <junio@pobox.com> wrote:
+> Start the initial request small by halving the INITIAL_FLUSH (we will=
+ try
+> to stay one window ahead of the server, so we would end up giving twi=
+ce as
+> many "have" in flight at the very beginning). =A0We may want to tweak=
+ these
+> values even more, taking MTU into account.
 
-That appends to the notes history instead of replacing it, which seems
-broken to me.  So I'm doing fast-export <notes> | edit; fast-import.
+Thanks Junio, this patch series looks good to me.
 
-> I had a patch for this back when post-rewrite was invented,
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/139919/focus=139917
-> 
-> but Hannes replied that it should grow a real notes filter, and while
-> I dropped it there, I tend to agree with him.  Feel free to pick it up
-> again.
+I keep thinking about trying to maximize to the MTU, but this is
+difficult. If we only consider the anonymous git:// over TCP case,
+clients start the conversation with their "want" list, which includes
+the capability list after the first want line. Because the want list
+isn't regular in size (clients request different branches based on
+what the server has offered, and what it is behind on, and what the
+user may have asked for on the command line) and the capability list
+isn't either (clients request a lot of capabilities these days) sizing
+the initial "have" list to round out to fill an MTU is difficult to do
+with a static constant. The best way to size the initial transfer to
+an MTU boundary is to keep a running counter of bytes written thus
+far, write *at least* 16 (or whatever our INITIAL_FLUSH is), and then
+write additional "have" lines until we cannot fit another one in the
+current MTU.
 
-A notes filter would be nice, but I don't understand why there's no
-post-rewrite hook or option to let us get at the rewrite info before
-it is deleted.  For one thing a notes filter might not do just what is
-intended (as above), but one might want the mapping info for other
-things too.  E.g. just to save it in case there are mailings floating
-around which refer to old commit IDs.
+=46or subsequent rounds, yes, we can statically size to an MTU, but
+there isn't much benefit to doing a static size here if we have the
+code to dynamically size the first batch based on the capability list
+and the wants.
 
+=46or smart HTTP however, sizing to an MTU is much more difficult. The
+HTTP headers sent by libcurl are difficult to predict, and go in front
+of the want list. And subsequent rounds include not just the HTTP
+headers, but also the prior want list and any prior have lines that
+received back ACK %s common from the remote peer. So we probably have
+to use a dynamic size for the subsequent rounds too. To make things
+more difficult, smart HTTP usually gzips the POST body before
+transmission, which compresses the want/have list somewhat and makes
+it even harder to predict where an MTU would be full.
 
-In any case, thanks for the answers.  I guess I can live with copying
-the git-filter-branch script when needed, it's not as if I run that
-every day.
+Long story short, I'm not sure its worth trying to optimize to fill an
+MTU. But if I'm right, doubling the size of the window on each round
+will reduce the number of round-trips involved. Over git:// this might
+not be very noticeable since the server is already sending you TCP ACK
+messages, and the Git-level ACK/NAKs can be piggy-backed into the TCP
+ACKs. But over http:// I think its a big win because the Git-level
+ACK/NAKs cannot be used until the entire HTTP request has been
+processed. It might not seem like a lot, but if your HTTP client is
+behind 2 HTTP proxies (e.g. your local LAN proxy, and then the remote
+server is actually a reverse proxy), the HTTP processing can really
+start to dominate the round-trip time.
 
--- 
-Hallvard
+--=20
+Shawn.
