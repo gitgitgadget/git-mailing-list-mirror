@@ -1,92 +1,209 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] fetch-pack: use smaller handshake window for initial request
-Date: Sun, 20 Mar 2011 16:12:43 -0700
-Message-ID: <AANLkTinpv-kvzoPiFrge95JKHSFAOWvcE11MAjVywwwq@mail.gmail.com>
-References: <7vsjukrrmc.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 9/9] branch: add --column
+Date: Mon, 21 Mar 2011 06:26:31 +0700
+Message-ID: <1300663591-28102-1-git-send-email-pclouds@gmail.com>
+References: <87oc557env.fsf@mithlond.arda>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 00:13:12 2011
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Mon Mar 21 00:26:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1Ro6-00013p-Sh
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 00:13:11 +0100
+	id 1Q1S1H-0005oF-JO
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 00:26:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab1CTXNF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 19:13:05 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:61983 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751385Ab1CTXNE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2011 19:13:04 -0400
-Received: by vws1 with SMTP id 1so4897864vws.19
-        for <git@vger.kernel.org>; Sun, 20 Mar 2011 16:13:03 -0700 (PDT)
-Received: by 10.52.165.134 with SMTP id yy6mr4613599vdb.312.1300662783196;
- Sun, 20 Mar 2011 16:13:03 -0700 (PDT)
-Received: by 10.52.164.105 with HTTP; Sun, 20 Mar 2011 16:12:43 -0700 (PDT)
-In-Reply-To: <7vsjukrrmc.fsf@alter.siamese.dyndns.org>
+	id S1751632Ab1CTX0n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 19:26:43 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:56469 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751480Ab1CTX0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 19:26:41 -0400
+Received: by iyb26 with SMTP id 26so5869563iyb.19
+        for <git@vger.kernel.org>; Sun, 20 Mar 2011 16:26:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=hMps7bA3+rWFs82O8WUAEzEduV7eid0lXdU9pKY7t34=;
+        b=CN9kM6utVgWOlD23h0lF863pIPC23fRilhnTMUI8+bqlxMwPiX9QLMp85Hi3gVyN4V
+         H68K8/UqaQTRoQEiDLHRf2CVJ5S2Y07ZxHYuR+oTTlLzI7e/3vw13PNZiK/HdLsBQKwB
+         B7Ud6NqP9tLna3riaQGN1/CtombhEdHlZws1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=GxB+kZIWTK/DrOrHHGkHovJhhUlhCVvB8UQsd8dYmmK53sfWvNAFCwMY634Y3Eckx0
+         tYdVsuxUzSMMvsADGIjbaijDihzd/dlh1aq0GR2RZVaQxuoNjxaufD99K1GF1D57VZoA
+         F4LTWXRQK4L2o4Moey4HbXaNAOqpNp4EeUTWg=
+Received: by 10.42.66.7 with SMTP id n7mr5899329ici.20.1300663600786;
+        Sun, 20 Mar 2011 16:26:40 -0700 (PDT)
+Received: from tre ([115.73.209.201])
+        by mx.google.com with ESMTPS id vr5sm1355415icb.12.2011.03.20.16.26.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 20 Mar 2011 16:26:39 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Mon, 21 Mar 2011 06:26:33 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
+In-Reply-To: <87oc557env.fsf@mithlond.arda>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169534>
 
-On Fri, Mar 18, 2011 at 15:27, Junio C Hamano <junio@pobox.com> wrote:
-> Start the initial request small by halving the INITIAL_FLUSH (we will=
- try
-> to stay one window ahead of the server, so we would end up giving twi=
-ce as
-> many "have" in flight at the very beginning). =A0We may want to tweak=
- these
-> values even more, taking MTU into account.
 
-Thanks Junio, this patch series looks good to me.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ 2011/3/21 Teemu Likonen <tlikonen@iki.fi>:
+ > I admit that I have not been following the development of this featu=
+re
+ > but I'll confirm this anyway: Do you really mean to speak of "git ta=
+g"
+ > in the man page of "git branch"?
+ >
 
-I keep thinking about trying to maximize to the MTU, but this is
-difficult. If we only consider the anonymous git:// over TCP case,
-clients start the conversation with their "want" list, which includes
-the capability list after the first want line. Because the want list
-isn't regular in size (clients request different branches based on
-what the server has offered, and what it is behind on, and what the
-user may have asked for on the command line) and the capability list
-isn't either (clients request a lot of capabilities these days) sizing
-the initial "have" list to round out to fill an MTU is difficult to do
-with a static constant. The best way to size the initial transfer to
-an MTU boundary is to keep a running counter of bytes written thus
-far, write *at least* 16 (or whatever our INITIAL_FLUSH is), and then
-write additional "have" lines until we cannot fit another one in the
-current MTU.
+ Copy/paste error. Fixed
 
-=46or subsequent rounds, yes, we can statically size to an MTU, but
-there isn't much benefit to doing a static size here if we have the
-code to dynamically size the first batch based on the capability list
-and the wants.
+ Documentation/git-branch.txt |    8 ++++++++
+ Makefile                     |    2 +-
+ builtin/branch.c             |   23 +++++++++++++++++++----
+ 3 files changed, 28 insertions(+), 5 deletions(-)
 
-=46or smart HTTP however, sizing to an MTU is much more difficult. The
-HTTP headers sent by libcurl are difficult to predict, and go in front
-of the want list. And subsequent rounds include not just the HTTP
-headers, but also the prior want list and any prior have lines that
-received back ACK %s common from the remote peer. So we probably have
-to use a dynamic size for the subsequent rounds too. To make things
-more difficult, smart HTTP usually gzips the POST body before
-transmission, which compresses the want/have list somewhat and makes
-it even harder to predict where an MTU would be full.
-
-Long story short, I'm not sure its worth trying to optimize to fill an
-MTU. But if I'm right, doubling the size of the window on each round
-will reduce the number of round-trips involved. Over git:// this might
-not be very noticeable since the server is already sending you TCP ACK
-messages, and the Git-level ACK/NAKs can be piggy-backed into the TCP
-ACKs. But over http:// I think its a big win because the Git-level
-ACK/NAKs cannot be used until the entire HTTP request has been
-processed. It might not seem like a lot, but if your HTTP client is
-behind 2 HTTP proxies (e.g. your local LAN proxy, and then the remote
-server is actually a reverse proxy), the HTTP processing can really
-start to dominate the round-trip time.
-
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
+t
+index 9106d38..f129339 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -9,6 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git branch' [--color[=3D<when>] | --no-color] [-r | -a]
++	[--column[=3D<options>] | --no-column]
+ 	[-v [--abbrev=3D<length> | --no-abbrev]]
+ 	[(--merged | --no-merged | --contains) [<commit>]]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branch=
+name> [<start-point>]
+@@ -99,6 +100,13 @@ OPTIONS
+ 	default to color output.
+ 	Same as `--color=3Dnever`.
+=20
++--column[=3D<options>]::
++--no-column::
++	Override column.ui settings. See linkgit:git-config.txt[1] for
++	syntax. `--column` and `--no-column` without options are
++	equivalent to 'always' and 'never' respectively. This option
++	is only applicable in non-verbose mode.
++
+ -r::
+ 	List or delete (if used with -d) the remote-tracking branches.
+=20
+diff --git a/Makefile b/Makefile
+index e1823dd..92c49ac 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1958,7 +1958,7 @@ builtin/prune.o builtin/reflog.o reachable.o: rea=
+chable.h
+ builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
+ builtin/tar-tree.o archive-tar.o: tar.h
+ connect.o transport.o http-backend.o: url.h
+-builtin/tag.o column.o help.o pager.o: column.h
++builtin/branch.o builtin/tag.o column.o help.o pager.o: column.h
+ http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
+h
+ http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
+l.h
+=20
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 9e546e4..ff94192 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -15,6 +15,8 @@
+ #include "branch.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "string-list.h"
++#include "column.h"
+=20
+ static const char * const builtin_branch_usage[] =3D {
+ 	"git branch [options] [-r | -a] [--merged | --no-merged]",
+@@ -53,6 +55,9 @@ static enum merge_filter {
+ } merge_filter;
+ static unsigned char merge_filter_ref[20];
+=20
++static struct string_list output =3D STRING_LIST_INIT_DUP;
++static int column_mode;
++
+ static int parse_branch_color_slot(const char *var, int ofs)
+ {
+ 	if (!strcasecmp(var+ofs, "plain"))
+@@ -83,7 +88,7 @@ static int git_branch_config(const char *var, const c=
+har *value, void *cb)
+ 		color_parse(value, var, branch_colors[slot]);
+ 		return 0;
+ 	}
+-	return git_color_default_config(var, value, cb);
++	return git_column_default_config(var, value, cb);
+ }
+=20
+ static const char *branch_get_color(enum color_branch ix)
+@@ -451,7 +456,7 @@ static void print_ref_item(struct ref_item *item, i=
+nt maxwidth, int verbose,
+ 		strbuf_release(&stat);
+ 		strbuf_release(&subject);
+ 	}
+-	printf("%s\n", out.buf);
++	add_to_columns(&output, column_mode, out.buf);
+ 	strbuf_release(&name);
+ 	strbuf_release(&out);
+ }
+@@ -660,6 +665,7 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+ 			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
+ 			opt_parse_merge_filter, (intptr_t) "HEAD",
+ 		},
++		OPT_COLUMN(0, "column", &column_mode, "list branches in columns" ),
+ 		OPT_END(),
+ 	};
+=20
+@@ -686,6 +692,8 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+ 	}
+ 	hashcpy(merge_filter_ref, head_sha1);
+=20
++	column_mode =3D git_core_column | COL_ANSI;
++
+ 	argc =3D parse_options(argc, argv, prefix, options, builtin_branch_us=
+age,
+ 			     0);
+ 	if (!!delete + !!rename + !!force_create > 1)
+@@ -693,8 +701,15 @@ int cmd_branch(int argc, const char **argv, const =
+char *prefix)
+=20
+ 	if (delete)
+ 		return delete_branches(argc, argv, delete > 1, kinds);
+-	else if (argc =3D=3D 0)
+-		return print_ref_list(kinds, detached, verbose, abbrev, with_commit)=
+;
++	else if (argc =3D=3D 0) {
++		int ret;
++		if (verbose)
++			column_mode =3D 0;
++
++		ret =3D print_ref_list(kinds, detached, verbose, abbrev, with_commit=
+);
++		display_columns(&output, column_mode, term_columns(), 1, "");
++		return ret;
++	}
+ 	else if (rename && (argc =3D=3D 1))
+ 		rename_branch(head, argv[0], rename > 1);
+ 	else if (rename && (argc =3D=3D 2))
 --=20
-Shawn.
+1.7.4.74.g639db
