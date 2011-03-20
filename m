@@ -1,58 +1,69 @@
-From: =?iso-8859-1?Q?Dag_Henning_Liodden_S=F8rb=F8?= 
-	<daghenningsorbo@yahoo.no>
-Subject: SoC
-Date: Mon, 21 Mar 2011 00:21:38 +0000 (GMT)
-Message-ID: <833222.84718.qm@web28607.mail.ukl.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] Work around broken ln on solaris as used in t8006
+Date: Sun, 20 Mar 2011 19:59:46 -0400
+Message-ID: <1300665586-24512-1-git-send-email-bwalton@artsci.utoronto.ca>
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 21 01:21:47 2011
+X-From: git-owner@vger.kernel.org Mon Mar 21 01:27:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1SsS-0007aw-Tz
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 01:21:45 +0100
+	id 1Q1Sxs-0000ta-Nd
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 01:27:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752200Ab1CUAVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 20:21:41 -0400
-Received: from nm14.bullet.mail.ukl.yahoo.com ([217.146.183.188]:46257 "HELO
-	nm14.bullet.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752057Ab1CUAVk convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 20:21:40 -0400
-Received: from [217.146.183.211] by nm14.bullet.mail.ukl.yahoo.com with NNFMP; 21 Mar 2011 00:21:39 -0000
-Received: from [217.146.183.42] by tm4.bullet.mail.ukl.yahoo.com with NNFMP; 21 Mar 2011 00:21:39 -0000
-Received: from [127.0.0.1] by omp1027.mail.ukl.yahoo.com with NNFMP; 21 Mar 2011 00:21:39 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 76312.18475.bm@omp1027.mail.ukl.yahoo.com
-Received: (qmail 91231 invoked by uid 60001); 21 Mar 2011 00:21:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.no; s=s1024; t=1300666898; bh=whHiblYOqOBFbnBXADtvbuv5745UThkZa3VVpQZMWo8=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=Utj1DYoCXPxpKuiIXdEssf/pG/+Ro92DaIxlhUxHbAQuSKOHToa8wcAZT34lzwi76PMdsnL3I0kIFx2nmeML3ZMt2zu9wyhS5hRX9T390fsveo35k26o1nGzy7x4RBAx/uH2GTyMzd3THJYdI25nPwQk8PnPcIh5BQET1gHT8Jc=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.no;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=hYtScuzO6Ord6IRlsYJJ1fgP0n1wAV0Pv6UXGsEz8nwKCjeFrObIiLdExacwCFe4ZH1U94x2o7XFCnWK5JNtUshtOZUzBZF2CHymxmdawhH+huIwLc852/eheMQP1Ds0HiLwJKgDK6/htFKzE5CcZUPXzAXoUbtHbgMoYYZjGBE=;
-X-YMail-OSG: Ici1rSMVM1l5KSC368R2SNpbPrZ6d0b3YuMMs.0OHX.jyRM
- h8W9S6IVaLnPhm5uv0ZObvMKQDDOK8jrc0k.ZLzE8pziiTWdpEeGpNgaGVZv
- XaXA5npjaRl1ZLqqYtutNhys3Rgf.G.HkUScitLdktHEjqFINW4QeGi2754M
- F3Vvlq_pb4Mnl_MNO3Vkk71mO9hCzpzVS8oL73fM.uIpx4ZMLPOSOYHEMGPD
- .kwJ5c2FSKSw_fNS5dpL7opN7uyBVlGYSaJTgy2QEVlBK1m7GHjuJ6vbZMgu
- iLbtiWVTr
-Received: from [84.215.67.82] by web28607.mail.ukl.yahoo.com via HTTP; Mon, 21 Mar 2011 00:21:38 GMT
-X-Mailer: YahooMailClassic/12.0.2 YahooMailWebService/0.8.109.295617
+	id S1752290Ab1CUA1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 20:27:09 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:50910 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752223Ab1CUA1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 20:27:08 -0400
+X-Greylist: delayed 1634 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Mar 2011 20:27:08 EDT
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:55469 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1Q1SXJ-0000hj-J1; Sun, 20 Mar 2011 19:59:53 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Q1SXJ-0006Nz-I5; Sun, 20 Mar 2011 19:59:53 -0400
+X-Mailer: git-send-email 1.7.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169540>
 
-Hi. I just have some questions. I've taken interest in the "Port histogram =
-diff from jgit" SoC task and I'm just wondering what this task would requir=
-e from a student like myself? I would say that my C programming skills are =
-quite good, but I have not worked on any big projects (other than universit=
-y assignments) and I am therefore quite curious about what skills are neede=
-d. I would be glad if someone could give me some hints :)
+The test setup in t8006-blame-textconv.sh used ln -sf to overwrite an
+existing symlink.  Unfortunately, both /usr/bin/ln and
+/usr/xpg4/bin/ln on solaris 9 don't properly handle -f when -s is
+used.  This caused the test setup to fail which caused subsequent
+checks to also fail.
 
-Dag Henning
+This patch uses changes the first check in the test to rm the symlink
+and then create the new symlink using only -s.
+
+The upstream Solaris bug (fixed in 10, but not 9) is documented here:
+http://bugs.opensolaris.org/view_bug.do?bug_id=4372462
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ t/t8006-blame-textconv.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
+index ea64cd8..c5362d9 100755
+--- a/t/t8006-blame-textconv.sh
++++ b/t/t8006-blame-textconv.sh
+@@ -24,8 +24,9 @@ test_expect_success 'setup ' '
+ 	GIT_AUTHOR_NAME=Number1 git commit -a -m First --date="2010-01-01 18:00:00" &&
+ 	echo "bin: test 1 version 2" >one.bin &&
+ 	echo "bin: test number 2 version 2" >>two.bin &&
++	rm symlink.bin &&
+ 	if test_have_prereq SYMLINKS; then
+-		ln -sf two.bin symlink.bin
++		ln -s two.bin symlink.bin
+ 	fi &&
+ 	GIT_AUTHOR_NAME=Number2 git commit -a -m Second --date="2010-01-01 20:00:00"
+ '
+-- 
+1.7.1
