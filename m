@@ -1,94 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH -1/3] gitweb: Always call parse_date with timezone
- parameter
-Date: Sat, 19 Mar 2011 17:27:50 -0700
-Message-ID: <7v39miws8p.fsf@alter.siamese.dyndns.org>
-References: <4f21902cf5f72b30a96465cf911d13aa@localhost>
- <201103192318.45925.jnareb@gmail.com>
- <AANLkTimV7vvD0PTMejydiyW_CeUH0cuQ-2+PnRqjzob5@mail.gmail.com>
+From: =?UTF-8?B?cnllbnVzIOKXhw==?= <ryenus@gmail.com>
+Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
+Date: Sun, 20 Mar 2011 08:31:38 +0800
+Message-ID: <AANLkTinPCeg3NU2bRvk8rwWSWnu4b0PHwya9+PWAc3DB@mail.gmail.com>
+References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com>
+ <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
+ <AANLkTinxyp=PbvzRkyyxXin5aOFm1NP4Be6U2Dv0aD6d@mail.gmail.com> <7vsjujq8kf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 01:28:11 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 01:32:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q16V8-0007N7-MJ
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 01:28:11 +0100
+	id 1Q16Yu-0008LR-CI
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 01:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751287Ab1CTA2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 20:28:06 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64205 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234Ab1CTA2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 20:28:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9652F4144;
-	Sat, 19 Mar 2011 20:29:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=daf66pS/aUWHf4N7gvIvD80RMG8=; b=Mfk8LL
-	hMoqh852qBfZE7qfYRk1ejJXXSeDef0EibvSqkyqR1ehZPI4wde950h11xS/luSs
-	C6NX+NawvFUv44bk2nCaGEDdXq2fGCz5ybMhHzHm1XKyS0unJtYVUc2kGTHu4b/d
-	YI9+oi891YMqX7vSrLBx2PlvhVU2OqE94qvbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JmpL5ccO5AvX2ITinatK4H7eO5CpjIWu
-	Sa61tHWEZIivuyZ33tfOIeFae6SKngCPv41bZ5jjVdizFL+eRqSzz8LaqVcIEwiO
-	slK5BbEAZWVOQKfoil8CbnVUGgw7QxP71etv8AbjEW0G0SRtX3hOvv8B6mwoB57q
-	iqJ86Dguc64=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 63D684143;
-	Sat, 19 Mar 2011 20:29:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 025664141; Sat, 19 Mar 2011
- 20:29:27 -0400 (EDT)
-In-Reply-To: <AANLkTimV7vvD0PTMejydiyW_CeUH0cuQ-2+PnRqjzob5@mail.gmail.com>
- (Kevin Cernekee's message of "Sat, 19 Mar 2011 15:56:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2012F8D0-5289-11E0-B103-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751339Ab1CTAcA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2011 20:32:00 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:45753 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751297Ab1CTAb7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2011 20:31:59 -0400
+Received: by yia27 with SMTP id 27so2006506yia.19
+        for <git@vger.kernel.org>; Sat, 19 Mar 2011 17:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=96odGact8qZ219F/JSI7goqROzKslGzvyxYHO8hRqmU=;
+        b=iBXdF5ZF1yLQ+9m6ZGDtIM4a7+M9FmjIqtul7YuOiUmPT3EPyp413zsvXFFBf+/Wlg
+         kmzAz+wv4J6wtLidRkCZyFq19X1cRVA5uhUO31VutyauOzsCYLrO0ith2btZox0fZYFe
+         OIxpeUU4gFXC9EVN2W9c5yFvU41Da7ZCltP98=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=BlU4t4JsVwKjpAA5lH0sEGxPSi1GzF7/exg7jX4G8anwhZ0u/JVjClM7NOAuXZF6Wq
+         6q63XeBircucxLjhJ+mAMRCb4r7yigp8g07/XnMEtpyc8Z4mCDspI/i8XR6tM9BEIi3i
+         ex5H3lTkns6wn9oTRqew2jjFjP5jGPHQpDunQ=
+Received: by 10.101.116.19 with SMTP id t19mr1858693anm.161.1300581118209;
+ Sat, 19 Mar 2011 17:31:58 -0700 (PDT)
+Received: by 10.100.121.3 with HTTP; Sat, 19 Mar 2011 17:31:38 -0700 (PDT)
+In-Reply-To: <7vsjujq8kf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169479>
 
-Kevin Cernekee <cernekee@gmail.com> writes:
+I'm not sure if there's a set of tests for Cygwin/MinGW among all the
+test cases in GIT, here is a simple one:
 
-> On Sat, Mar 19, 2011 at 3:18 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> ...
-> Should be 'author_tz'
+#!/bin/sh
+echo $(uname -s)
+case $(uname -s) in
+*MINGW*|*CYGWIN*)
+  echo "detected MinGW/Cygwin"
+  ;;
+*MinGW*)
+  echo "detected MinGW"
+  ;;
+*Cygwin*)
+  echo "detected Cygwin"
+  ;;
+esac
+
+Run with dash, the output is
+
+CYGWIN_NT-6.1
+detected MinGW/Cygwin
+
+While I don't have MinGW, so someone has it please give it a shot.
+
+Thanks
+
+2011/3/20 Junio C Hamano <gitster@pobox.com>:
+> ryenus =E2=97=87 <ryenus@gmail.com> writes:
 >
-> Looking at the master branch, I don't see %ad actually getting used
-> anywhere?  Maybe it is safe to delete the line entirely, since
-> git_print_authorship() calls parse_date() itself.
-
-Thanks for being careful, I agree "while at it, remove an unnecessary
-call" would be better.
-
->> @@ -7064,7 +7064,7 @@ sub git_feed {
-> ...
-> Should be 'committer_tz'
+>> Thank you, Duy, you're almost right, I just checked git-sh-setup.sh,
+>> in the bottom, sort and find are defined as functions like what you
+>> pointed out, but only for MinGW, therefore a better fix is to check
+>> for cygwin as well:
+>>
+>> ---
+>> =C2=A0git-sh-setup.sh | =C2=A0 =C2=A02 +-
+>> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+>> index aa16b83..5c52ae4 100644
+>> --- a/git-sh-setup.sh
+>> +++ b/git-sh-setup.sh
+>> @@ -227,7 +227,7 @@ fi
+>>
+>> =C2=A0# Fix some commands on Windows
+>> =C2=A0case $(uname -s) in
+>> -*MINGW*)
+>> +*MINGW*|*CYGWIN*)
 >
-> I would agree that it isn't such a good thing for
-> $latest_date{'rfc2822_local'} to be set to GMT in this case.
-
-I would say it isn't good in _any_ case.
-
-If the localtime conversion logic _were_ very expensive, and if the
-function that fills 'rfc2822_local' _were_ written to allow callers that
-do not need local time by passing undef to its tz parameter to avoid the
-computation cost, it may make sense to allow 'rfc2822_local' to be undef,
-but neither is true.  This callsite was simply buggy.
-
-> Am I correct in interpreting "PATCH -1/3" as: "apply this before
-> Kevin's set of 3 patches?"
-
-I had the same reaction; judging from the contents, I now realize that is
-what was meant by "minus one", but originally I read that hyphen as "I
-don't know how many iterations we had so instead of writing v$N I am just
-striking it out" ;-)
+> This looks like a more sensible alternative than forbidding the use o=
+f
+> "find", privided if the new pattern is an appropriate one to catch cy=
+gwin.
+>
+> I don't have any Windows boxes, so I cannot verify, but the patch sme=
+lls
+> correct.
+>
+>
+>
