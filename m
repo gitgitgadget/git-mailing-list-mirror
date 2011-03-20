@@ -1,99 +1,97 @@
-From: Kevin Cernekee <cernekee@gmail.com>
-Subject: [PATCH v2 4/3] gitweb: Always call format_date with timezone parameter
-Date: Sat, 19 Mar 2011 19:11:16 -0700
-Message-ID: <b599dae39131b90d0970a1ef63e6599b@localhost>
-References: <4f21902cf5f72b30a96465cf911d13aa@localhost>
+From: "Mr.Pt. Lee" <infobank8@aol.com>
+Subject: Hello
+Date: Sun, 20 Mar 2011 04:33:16 +0100
+Message-ID: <201103200335.p2K3Zn8K031597@auth3.smtp.vt.edu>
+Reply-To: <petercleejp@yahoo.cn>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 03:18:13 2011
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sun Mar 20 04:38:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q18Dc-00009f-L6
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 03:18:13 +0100
+	id 1Q19TQ-000286-MB
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 04:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300Ab1CTCR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 22:17:59 -0400
-Received: from [69.28.251.93] ([69.28.251.93]:40959 "EHLO b32.net"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751245Ab1CTCR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 22:17:58 -0400
-Received: (qmail 17897 invoked from network); 20 Mar 2011 02:17:56 -0000
-Received: from localhost (HELO vps-1001064-677.cp.jvds.com) (127.0.0.1)
-  by localhost with (DHE-RSA-AES128-SHA encrypted) SMTP; 20 Mar 2011 02:17:56 -0000
-Received: by vps-1001064-677.cp.jvds.com (sSMTP sendmail emulation); Sat, 19 Mar 2011 19:17:56 -0700
-In-Reply-To: <4f21902cf5f72b30a96465cf911d13aa@localhost>
-User-Agent: vim 7.2
-Content-Disposition: inline
+	id S1751391Ab1CTDiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 23:38:21 -0400
+Received: from lennier.cc.vt.edu ([198.82.162.213]:33556 "EHLO
+	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751362Ab1CTDiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 23:38:20 -0400
+Received: from dagger.cc.vt.edu (dagger.cc.vt.edu [198.82.163.114])
+	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3ZJNq027618;
+	Sat, 19 Mar 2011 23:36:02 -0400
+Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
+	by dagger.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
+	with ESMTP id PZL10172;
+	Sat, 19 Mar 2011 23:35:59 -0400 (EDT)
+Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
+	(authenticated bits=0)
+	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3Zn8K031597
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 19 Mar 2011 23:35:51 -0400
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1081
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+X-Antivirus: avast! (VPS 110319-1, 03/19/2011), Outbound message
+X-Antivirus-Status: Clean
+X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu infobank8@aol.com 1 neutral
+X-Mirapoint-IP-Reputation: reputation=neutral-1,
+	source=Fixed,
+	refid=n/a,
+	actions=MAILHURDLE SPF TAG
+X-Junkmail: UCE(50)
+X-Junkmail-Status: score=50/50, host=dagger.cc.vt.edu
+X-Junkmail-Signature-Raw: score=bulk(0),
+	refid=str=0001.0A020201.4D857621.0080,ss=3,pt=113349,fgs=0,
+	ip=213.46.147.88,
+	so=2010-07-22 22:03:31,
+	dmn=2009-09-10 00:05:08,
+	mode=single engine
+X-Junkmail-IWF: false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169483>
+X-Spam-Report: 11.3 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4950]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
+ *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  1.2 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+ *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169484>
 
-From: Jakub Narebski <jnareb@gmail.com>
+Hello 
+   
+It is understandable that you might be a bit apprehensive because you do not know, but I have a lucrative business proposal of mutual interest to share with you. I got your reference in my search for someone who suits my proposed business relationship. 
+    
+I am Mr P. Lee of South Korea, happily married with children, and I am Director of Hang Seng Bank Ltd., in charge of the International Remittance Department. I have a confidential business proposal for you. I need you to assist me in implementing a business project from Hong Kong to your country. It is the transfer of large sums of money. Everything about this transaction shall be legally done without hitch. Please try to observe utmost discretion in all matters concerning this issue. 
+   
+After funds have been successfully transferred into your account, we will share in proportion to both of us agreed. I prefer you to me on my private e-mail address (petercleejp@yahoo.cn) and then after that I will give you more information about this operation. If you're interested, send me the following urgently: 
 
-Make the timezone parameter mandatory.  This ensures that the *_local
-fields are always populated with accurate information.
-
-Also, delete an unnecessary call to format_date().
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-Signed-off-by: Kevin Cernekee <cernekee@gmail.com>
----
-
-v2: Fix typos.  Remove unnecessary call.  Remove default "-0000" tz value.
-Rebase on top of my patch 3/3 (as applying -1/3 then 1/3 would create a
-merge conflict).
-
- gitweb/gitweb.perl |    9 ++++-----
- 1 files changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 2d4349f..485ebd0 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2907,8 +2907,7 @@ sub git_get_rev_name_tags {
- ## parse to hash functions
- 
- sub format_date {
--	my $epoch = shift;
--	my $tz = shift || "-0000";
-+	my ($epoch, $tz) = @_;
- 
- 	my %date;
- 	my @months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-@@ -4943,7 +4942,6 @@ sub git_log_body {
- 		next if !%co;
- 		my $commit = $co{'id'};
- 		my $ref = format_ref_marker($refs, $commit);
--		my %ad = format_date($co{'author_epoch'});
- 		git_print_header_div('commit',
- 		               "<span class=\"age\">$co{'age_string'}</span>" .
- 		               esc_html($co{'title'}) . $ref,
-@@ -7102,7 +7100,8 @@ sub git_feed {
- 	if (defined($commitlist[0])) {
- 		%latest_commit = %{$commitlist[0]};
- 		my $latest_epoch = $latest_commit{'committer_epoch'};
--		%latest_date   = format_date($latest_epoch);
-+		%latest_date   = format_date($latest_epoch,
-+		                             $latest_commit{'committer_tz'});
- 		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
- 		if (defined $if_modified) {
- 			my $since;
-@@ -7233,7 +7232,7 @@ XML
- 		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
- 			last;
- 		}
--		my %cd = format_date($co{'author_epoch'});
-+		my %cd = format_date($co{'author_epoch'}, $co{'author_tz'});
- 
- 		# get list of changed files
- 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--- 
-1.7.4.1
+1st Names and surnames 
+2nd Occupation 
+3rd Private phone number 
+4th Current contact address 
+   
+Please, if you do not want to delete this e-mail and do not hunt, because I am putting my career and life of my family at stake with this venture. Although nothing ventured nothing gained. 
+   
+Your earliest response to this letter will be appreciated. 
+    
+Sincerely, 
+   
+Mr.Pt. Lee 
+Hang Seng Bank Limited 
+Hong Kong. () Asian 
+E-mail: - petercleejp@yahoo.cn
