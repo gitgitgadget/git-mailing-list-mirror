@@ -1,62 +1,154 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: What's cooking in git.git (Mar 2011, #02; Sun, 20)
-Date: Sun, 20 Mar 2011 22:36:12 +0100
-Message-ID: <vpqlj09a303.fsf@bauges.imag.fr>
-References: <7vy649vah1.fsf@alter.siamese.dyndns.org>
-	<7vtyexv6wl.fsf@alter.siamese.dyndns.org>
-	<7vpqplv65o.fsf@alter.siamese.dyndns.org>
+From: "J.H." <warthog9@eaglescrag.net>
+Subject: Re: [PATCH v4 2/2] gitweb: introduce localtime feature
+Date: Sun, 20 Mar 2011 15:38:07 -0700
+Message-ID: <4D8681CF.3060005@eaglescrag.net>
+References: <ab54ba2199cc7487e383a31e3aa65885@localhost> <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 22:36:27 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Kevin Cernekee <cernekee@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 23:38:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1QIU-0003gm-NX
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 22:36:27 +0100
+	id 1Q1RGY-0004uQ-Iz
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 23:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751349Ab1CTVgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 17:36:19 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58031 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751458Ab1CTVgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 17:36:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p2KLaAUI008605
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 20 Mar 2011 22:36:10 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Q1QIG-0007cq-FI; Sun, 20 Mar 2011 22:36:12 +0100
-In-Reply-To: <7vpqplv65o.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 20 Mar 2011 14:22:27 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 20 Mar 2011 22:36:10 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p2KLaAUI008605
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1301261771.82641@1yC1OlzATJGYZeLQVMRdXA
+	id S1751480Ab1CTWiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 18:38:15 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:33800 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043Ab1CTWiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 18:38:14 -0400
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p2KMc7Y0009612
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Sun, 20 Mar 2011 15:38:08 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sun, 20 Mar 2011 15:38:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169531>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hey all,
 
-> Unfortunately
-> we do not have a good way to let people who have already heard
-> about the transition to squelch it yet.
+Sorry for not jumping in on this earlier, too much travel / real world
+going on here the past couple of weeks.
 
-How about an advice.addWithoutPath config variable to disable it?
+> With this feature enabled, all timestamps are shown in the local
+> timezone instead of GMT.  The timezone is taken from the appropriate
+> timezone string stored in the commit object.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I'd argue there are two types of "local" time that anyone using gitweb
+would be looking for (particularly if this is called local time)
+
+1) Time Local to the observer:  Specifically I don't care where every
+other commit has taken place, I want to know what time it was in my
+preferred time zone (local time zone likely)
+
+2) Time local to the project:  There will be instances where a project
+is based in a specific time zone (home office perhaps?) and you will
+want to see the commits from that perspective.
+
+The patch itself (as a commit in gitweb) shows the time + TZ (which is
+somewhat useful), but there is something quite useful about the rest of
+gitweb only handling a single timezone (GMT/UTC) from the backend (I'll
+come back to this point), if for no other reason it makes for uniform
+handling of time overall.
+
+> This improves usability if the majority of a project's contributors are
+> based in a single office, all within the same timezone.  It also makes
+> the interface more friendly to non-developers who may need to track
+> updates, such as program managers and supervisors.
+
+I'd agree, having multiple different timezones, or trying to think in
+UTC/GMT when your not used to it is a pain, and is a valid use case of
+gitweb.
+
+> This change does not affect relative timestamps (e.g. "5 hours ago"),
+> nor does it affect 'patch' and 'patches' views which already use
+> localtime because they are generated by "git format-patch".
+
+Agreed.
+
+> 
+> Affected views include:
+> * 'summary' view, "last change" field (commit time from latest change)
+> * 'log' view, author time
+> * 'commit' and 'commitdiff' views, author/committer time
+> * 'tag' view, tagger time
+> 
+> In the case of 'commit', 'commitdiff' and 'tag' views, gitweb used to
+> print both GMT time and time in timezone of author/tagger/committer:
+> 
+>    Fri, 18 Mar 2011 01:28:57 +0000 (18:28 -0700)
+> 
+> With localtime enabled, the times will be swapped:
+> 
+>    Thu, 17 Mar 2011 18:28:57 -0700 (01:28 +0000)
+> 
+> Local times between 00:00 and 05:59, inclusive, will still be printed
+> in red ("atnight" style) in these views.
+
+Ok, while I agree with the use case(s) I think the solution is barking
+up completely the wrong tree.  My basic complaint is that this is a
+change that effects the backend and ties the backend to a specific TZ,
+when this is a front facing / client issue.
+
+While I don't always like JavaScript, this is a situation where I think
+it would be a much better solution than doing some extensive changes to
+time handling in gitweb.
+
+Basically the change would leave things alone should this be disabled
+(you are already doing this, which is good), however should this be
+enabled a couple of minor things change:
+
+	1) By default gitweb will continue to display things in UTC.
+	   This is a good fallback, and a reasonably safe thing to do
+	   should someone have JavaScript disabled.  The reality is
+	   most users with it disabled will know or understand what to
+	   do with UTC times
+
+	2) Keep the original TZ marked in the html, somewhere hidden on
+	   the page is fine
+
+	3) Once a page is loaded attempt to execute the Javascript,
+	   which will just cycle through the page and update the Date /
+	   Times based on a set of possible (though user choosable
+	   options):
+		- Local Time (could easily default to this and
+		  JavaScript can detect that from the browser)
+		- Specific Timezone
+		- Default / UTC
+		- Original Timezone (from author / commit)
+
+	   Could easily include the original timestamp / utc if
+	   Javascript modifies it.  Easy enough to just automatically
+	   store the choice (should one be made) in a cookie in the
+	   browser, and give the maintainer of the site and easy way
+	   to set a rational default given their specific environment.
+
+The obvious advantages:
+	- Doesn't give weird data to people behind caching proxies
+	- Ability for people working diverse timezones to see things
+	  in their local time zone pretty trivially
+	- If a site is using gitweb-caching they can take advantage
+	  of the feature
+	- Won't break bots / scripts that may be crawling the pages or
+	  reading the rss feeds (because the timestamps will all be the
+	  same assuming it doesn't try to render the javascript)
+
+If you are interested I can bang that out tomorrow (shouldn't take
+long), but I would *MUCH* rather see this done via JavaScript than to
+muddy up the backend with multiple timezones and such.
+
+- John 'Warthog9' Hawley
