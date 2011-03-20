@@ -1,209 +1,115 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 9/9] branch: add --column
-Date: Mon, 21 Mar 2011 06:26:31 +0700
-Message-ID: <1300663591-28102-1-git-send-email-pclouds@gmail.com>
-References: <87oc557env.fsf@mithlond.arda>
+From: Kevin Cernekee <cernekee@gmail.com>
+Subject: Re: [PATCH v4 2/2] gitweb: introduce localtime feature
+Date: Sun, 20 Mar 2011 16:44:54 -0700
+Message-ID: <AANLkTikSDAuvq-Bbw4T8KaenXQu11+HyVs0oA8K=0q5r@mail.gmail.com>
+References: <ab54ba2199cc7487e383a31e3aa65885@localhost>
+	<dab08d0ff27b0f571a17ed4f1ab0f39b@localhost>
+	<4D8681CF.3060005@eaglescrag.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Mon Mar 21 00:26:48 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Mon Mar 21 00:45:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1S1H-0005oF-JO
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 00:26:48 +0100
+	id 1Q1SIv-0003Ql-Bc
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 00:45:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab1CTX0n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 19:26:43 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56469 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480Ab1CTX0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 19:26:41 -0400
-Received: by iyb26 with SMTP id 26so5869563iyb.19
-        for <git@vger.kernel.org>; Sun, 20 Mar 2011 16:26:40 -0700 (PDT)
+	id S1752114Ab1CTXo5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 19:44:57 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44194 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751849Ab1CTXoz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2011 19:44:55 -0400
+Received: by fxm17 with SMTP id 17so5051414fxm.19
+        for <git@vger.kernel.org>; Sun, 20 Mar 2011 16:44:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=hMps7bA3+rWFs82O8WUAEzEduV7eid0lXdU9pKY7t34=;
-        b=CN9kM6utVgWOlD23h0lF863pIPC23fRilhnTMUI8+bqlxMwPiX9QLMp85Hi3gVyN4V
-         H68K8/UqaQTRoQEiDLHRf2CVJ5S2Y07ZxHYuR+oTTlLzI7e/3vw13PNZiK/HdLsBQKwB
-         B7Ud6NqP9tLna3riaQGN1/CtombhEdHlZws1E=
+        bh=PPbVM5ChznyE4DAdZd0oASNHDp1Oqp+wTgKo3S3kdIc=;
+        b=iQ37YfKrDU1HKKWZ/jmDqxLEpAdQGbCJW+igU7oDHzPoClmYWaHtI7x5Zb+1dO3ZlT
+         bRDRcTbcxgomAeoAx6vhBri6ppsrUehzna/0clAho+jZnXis2il2eeZ50VtynD+t+lQZ
+         JWkRT11ASXdV+zOo9/4/bCpxvlSKoIYzX2rbA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=GxB+kZIWTK/DrOrHHGkHovJhhUlhCVvB8UQsd8dYmmK53sfWvNAFCwMY634Y3Eckx0
-         tYdVsuxUzSMMvsADGIjbaijDihzd/dlh1aq0GR2RZVaQxuoNjxaufD99K1GF1D57VZoA
-         F4LTWXRQK4L2o4Moey4HbXaNAOqpNp4EeUTWg=
-Received: by 10.42.66.7 with SMTP id n7mr5899329ici.20.1300663600786;
-        Sun, 20 Mar 2011 16:26:40 -0700 (PDT)
-Received: from tre ([115.73.209.201])
-        by mx.google.com with ESMTPS id vr5sm1355415icb.12.2011.03.20.16.26.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 20 Mar 2011 16:26:39 -0700 (PDT)
-Received: by tre (sSMTP sendmail emulation); Mon, 21 Mar 2011 06:26:33 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <87oc557env.fsf@mithlond.arda>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=q3bMWuZOmrzdNuSYp4YOKHIgIsTGJ/x2Po9ENaKH1+RxgCa3zeP+3wnush/EEMunl6
+         TvSXwFOTcCwTUwooRVWrUQRsLa1bx/J5s5v1BR02wLvn2onnYtwMJiYUqx93BoHrDUbg
+         Osw9239iTK2fKCWiQtD7etvbcP3yjpOKZdd6A=
+Received: by 10.223.7.73 with SMTP id c9mr447263fac.117.1300664694450; Sun, 20
+ Mar 2011 16:44:54 -0700 (PDT)
+Received: by 10.223.61.83 with HTTP; Sun, 20 Mar 2011 16:44:54 -0700 (PDT)
+In-Reply-To: <4D8681CF.3060005@eaglescrag.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169535>
 
+On Sun, Mar 20, 2011 at 3:38 PM, J.H. <warthog9@eaglescrag.net> wrote:
+> I'd argue there are two types of "local" time that anyone using gitwe=
+b
+> would be looking for (particularly if this is called local time)
+>
+> 1) Time Local to the observer: =C2=A0Specifically I don't care where =
+every
+> other commit has taken place, I want to know what time it was in my
+> preferred time zone (local time zone likely)
+>
+> 2) Time local to the project: =C2=A0There will be instances where a p=
+roject
+> is based in a specific time zone (home office perhaps?) and you will
+> want to see the commits from that perspective.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- 2011/3/21 Teemu Likonen <tlikonen@iki.fi>:
- > I admit that I have not been following the development of this featu=
-re
- > but I'll confirm this anyway: Do you really mean to speak of "git ta=
-g"
- > in the man page of "git branch"?
- >
+That is probably true for distributed projects, but many software
+projects are handled entirely at one location so there is only one
+timezone of interest.  My goal was to make it easy to support this
+case.
 
- Copy/paste error. Fixed
+I have no particular objection to implementing a more comprehensive
+solution, but my gut feeling is that it would be harder to push the
+changes upstream (and would have no direct benefit for my local gitweb
+installation).
 
- Documentation/git-branch.txt |    8 ++++++++
- Makefile                     |    2 +-
- builtin/branch.c             |   23 +++++++++++++++++++----
- 3 files changed, 28 insertions(+), 5 deletions(-)
+I also figured that if nobody had done this by now, the demand is weak
+and it maybe doesn't warrant a huge amount of effort.
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
-t
-index 9106d38..f129339 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git branch' [--color[=3D<when>] | --no-color] [-r | -a]
-+	[--column[=3D<options>] | --no-column]
- 	[-v [--abbrev=3D<length> | --no-abbrev]]
- 	[(--merged | --no-merged | --contains) [<commit>]]
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branch=
-name> [<start-point>]
-@@ -99,6 +100,13 @@ OPTIONS
- 	default to color output.
- 	Same as `--color=3Dnever`.
-=20
-+--column[=3D<options>]::
-+--no-column::
-+	Override column.ui settings. See linkgit:git-config.txt[1] for
-+	syntax. `--column` and `--no-column` without options are
-+	equivalent to 'always' and 'never' respectively. This option
-+	is only applicable in non-verbose mode.
-+
- -r::
- 	List or delete (if used with -d) the remote-tracking branches.
-=20
-diff --git a/Makefile b/Makefile
-index e1823dd..92c49ac 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1958,7 +1958,7 @@ builtin/prune.o builtin/reflog.o reachable.o: rea=
-chable.h
- builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
- builtin/tar-tree.o archive-tar.o: tar.h
- connect.o transport.o http-backend.o: url.h
--builtin/tag.o column.o help.o pager.o: column.h
-+builtin/branch.o builtin/tag.o column.o help.o pager.o: column.h
- http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
-h
- http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
-l.h
-=20
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 9e546e4..ff94192 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -15,6 +15,8 @@
- #include "branch.h"
- #include "diff.h"
- #include "revision.h"
-+#include "string-list.h"
-+#include "column.h"
-=20
- static const char * const builtin_branch_usage[] =3D {
- 	"git branch [options] [-r | -a] [--merged | --no-merged]",
-@@ -53,6 +55,9 @@ static enum merge_filter {
- } merge_filter;
- static unsigned char merge_filter_ref[20];
-=20
-+static struct string_list output =3D STRING_LIST_INIT_DUP;
-+static int column_mode;
-+
- static int parse_branch_color_slot(const char *var, int ofs)
- {
- 	if (!strcasecmp(var+ofs, "plain"))
-@@ -83,7 +88,7 @@ static int git_branch_config(const char *var, const c=
-har *value, void *cb)
- 		color_parse(value, var, branch_colors[slot]);
- 		return 0;
- 	}
--	return git_color_default_config(var, value, cb);
-+	return git_column_default_config(var, value, cb);
- }
-=20
- static const char *branch_get_color(enum color_branch ix)
-@@ -451,7 +456,7 @@ static void print_ref_item(struct ref_item *item, i=
-nt maxwidth, int verbose,
- 		strbuf_release(&stat);
- 		strbuf_release(&subject);
- 	}
--	printf("%s\n", out.buf);
-+	add_to_columns(&output, column_mode, out.buf);
- 	strbuf_release(&name);
- 	strbuf_release(&out);
- }
-@@ -660,6 +665,7 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
- 			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
- 			opt_parse_merge_filter, (intptr_t) "HEAD",
- 		},
-+		OPT_COLUMN(0, "column", &column_mode, "list branches in columns" ),
- 		OPT_END(),
- 	};
-=20
-@@ -686,6 +692,8 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
- 	}
- 	hashcpy(merge_filter_ref, head_sha1);
-=20
-+	column_mode =3D git_core_column | COL_ANSI;
-+
- 	argc =3D parse_options(argc, argv, prefix, options, builtin_branch_us=
-age,
- 			     0);
- 	if (!!delete + !!rename + !!force_create > 1)
-@@ -693,8 +701,15 @@ int cmd_branch(int argc, const char **argv, const =
-char *prefix)
-=20
- 	if (delete)
- 		return delete_branches(argc, argv, delete > 1, kinds);
--	else if (argc =3D=3D 0)
--		return print_ref_list(kinds, detached, verbose, abbrev, with_commit)=
-;
-+	else if (argc =3D=3D 0) {
-+		int ret;
-+		if (verbose)
-+			column_mode =3D 0;
-+
-+		ret =3D print_ref_list(kinds, detached, verbose, abbrev, with_commit=
-);
-+		display_columns(&output, column_mode, term_columns(), 1, "");
-+		return ret;
-+	}
- 	else if (rename && (argc =3D=3D 1))
- 		rename_branch(head, argv[0], rename > 1);
- 	else if (rename && (argc =3D=3D 2))
---=20
-1.7.4.74.g639db
+>               - Local Time (could easily default to this and
+>                 JavaScript can detect that from the browser)
+
+In my case it would be best to have a way to default to the browser's
+local time.  Would there be a way to set this default on the server
+side?
+
+My group has switched to Git, but most other groups in the company are
+using other SCM systems.  I frequently send gitweb links to non-Git
+users, and want to make their experience as intuitive as possible.
+So, it would be best if the correct timezone was automatically
+selected.
+
+>       - Won't break bots / scripts that may be crawling the pages or
+>         reading the rss feeds (because the timestamps will all be the
+>         same assuming it doesn't try to render the javascript)
+
+=46WIW, my latest patches did not change the format of the RSS/Atom fee=
+ds.
+
+If we are worried about breaking bots that scrape the regular HTML
+pages, that ties our hands in a lot of other ways.
+
+> If you are interested I can bang that out tomorrow (shouldn't take
+> long), but I would *MUCH* rather see this done via JavaScript than to
+> muddy up the backend with multiple timezones and such.
+
+OK.  I can help test/improve the implementation if you post a prototype=
+=2E
+
+Thanks.
