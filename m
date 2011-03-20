@@ -1,122 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] checkout: clear commit marks after detached-orphan check
-Date: Sun, 20 Mar 2011 05:09:18 -0400
-Message-ID: <20110320090918.GB15948@sigill.intra.peff.net>
-References: <20110320090111.GA15641@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git fails to detect subcommand when hook is symlinked to a
+ builtin
+Date: Sun, 20 Mar 2011 04:09:37 -0500
+Message-ID: <20110320090937.GA13167@elie>
+References: <20110318151415.GC26236@inocybe.localdomain>
+ <7vhbb0rkv4.fsf@alter.siamese.dyndns.org>
+ <20110319011445.GL26236@inocybe.localdomain>
+ <7voc56rj9f.fsf@alter.siamese.dyndns.org>
+ <20110320082020.GA12663@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 10:09:27 2011
+X-From: git-owner@vger.kernel.org Sun Mar 20 10:09:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1Eda-0005VU-7w
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 10:09:26 +0100
+	id 1Q1Ee0-0005em-IU
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 10:09:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637Ab1CTJJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 05:09:22 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50161
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751580Ab1CTJJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 05:09:20 -0400
-Received: (qmail 24675 invoked by uid 107); 20 Mar 2011 09:09:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 20 Mar 2011 05:09:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Mar 2011 05:09:18 -0400
+	id S1751652Ab1CTJJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 05:09:49 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:43524 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751643Ab1CTJJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 05:09:47 -0400
+Received: by iwn34 with SMTP id 34so5464820iwn.19
+        for <git@vger.kernel.org>; Sun, 20 Mar 2011 02:09:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=KY4SiSXwT2IJTClI9YB2UKAQawA6Sk4AthdtFXOkoVE=;
+        b=V8826Bp9hE85uQdtBOrIrHK+3OhSFCiqWdPkj+kqFHbrDc9n9ye1QDQxnX/hkeyaam
+         E+2karaoXJxCFkUxTs2/C+CvI4Hvk35/ZZHfTyxkMj5xNq/+BaHLj2toBWeN4cDUGt67
+         ZkLV3sfjWD6FeASOPcHYrBhUThCG9Y1UMZlt8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=HtKcxSQo9KExdvos+2u/ACURLW/Gzm97vPh/Y2ogrTduON0qyAI//hWoH6sV4p3YA2
+         vjfgDUUJzhWwqBKVv3yvtzE2miD5zRL37LisxoGJaFn+EEnvBh4wiknj+IX58KV+3/M9
+         K/i2tnXEn7Qg5XT7IjtUqG0HuD4KkwHIdvK58=
+Received: by 10.231.33.8 with SMTP id f8mr2940001ibd.22.1300612185312;
+        Sun, 20 Mar 2011 02:09:45 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
+        by mx.google.com with ESMTPS id c1sm2853295ibe.49.2011.03.20.02.09.43
+        (version=SSLv3 cipher=OTHER);
+        Sun, 20 Mar 2011 02:09:44 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110320090111.GA15641@sigill.intra.peff.net>
+In-Reply-To: <20110320082020.GA12663@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169495>
 
-When leaving a detached HEAD, we do a revision walk to make
-sure the commit we are leaving isn't being orphaned.
-However, this leaves crufty marks in the commit objects
-which can confuse later walkers, like the one in
-stat_tracking_info.
+Jonathan Nieder wrote:
 
-Let's clean up after ourselves to prevent this conflict.
+> Instead, the rule is:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This uses for_each_ref to re-find the list of commits we touched in our
-traversal, which feels a little hacky. prepare_revision_walk already
-generates the exact list of tips, but unfortunately writes it
-into revs->commits, which then gets munged by limit_list in the second
-half of prepare_revision_walk. I wonder if it should keep a copy
-elsewhere in revs, and then we could add:
+Sorry, that came out a muddle.  Teemu Likonen explains the rule[1]
+better.  And Linus explains the rationale[2].  The main reason I found
+this interesting enough to chime in is that I was considering
+proposing changing the beginning of git scripts to
 
-  clear_all_commit_marks(&revs);
+ . "$(git --exec-path)/git-sh-setup"
 
-to let callers clean up after themselves easily.
+to set a good example, which would be a regression in git's ability
+to complain when used in a fragile way.
 
-I also just clear all marks; we could do just the ones that the revision
-walker marks, but this seemed more future-proof to me than a set list of
-marks.
+So, Todd: thanks for a very useful reminder.
 
- builtin/checkout.c         |   13 +++++++++++++
- t/t2020-checkout-detach.sh |   13 +++++++++++++
- 2 files changed, 26 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2bf02f2..f88d2c8 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -603,6 +603,16 @@ static int add_one_ref_to_rev_list_arg(const char *refname,
- 	return 0;
- }
- 
-+static int clear_commit_marks_from_one_ref(const char *refname,
-+				      const unsigned char *sha1,
-+				      int flags,
-+				      void *cb_data)
-+{
-+	struct commit *commit = lookup_commit_reference_gently(sha1, 1);
-+	if (commit)
-+		clear_commit_marks(commit, -1);
-+	return 0;
-+}
- 
- static void describe_one_orphan(struct strbuf *sb, struct commit *commit)
- {
-@@ -674,6 +684,9 @@ static void orphaned_commit_warning(struct commit *commit)
- 		suggest_reattach(commit, &revs);
- 	else
- 		describe_detached_head("Previous HEAD position was", commit);
-+
-+	clear_commit_marks(commit, -1);
-+	for_each_ref(clear_commit_marks_from_one_ref, NULL);
- }
- 
- static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
-diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index bfeb2a6..569b27f 100755
---- a/t/t2020-checkout-detach.sh
-+++ b/t/t2020-checkout-detach.sh
-@@ -126,4 +126,17 @@ test_expect_success 'checkout does not warn leaving reachable commit' '
- 	check_no_orphan_warning stderr
- '
- 
-+cat >expect <<'EOF'
-+Your branch is behind 'master' by 1 commit, and can be fast-forwarded.
-+EOF
-+test_expect_success 'tracking count is accurate after orphan check' '
-+	reset &&
-+	git branch child master^ &&
-+	git config branch.child.remote . &&
-+	git config branch.child.merge refs/heads/master &&
-+	git checkout child^ &&
-+	git checkout child >stdout &&
-+	test_cmp expect stdout
-+'
-+
- test_done
--- 
-1.7.2.5.10.g62fe7
+[1] http://thread.gmane.org/gmane.comp.version-control.git/94378
+[2] http://thread.gmane.org/gmane.comp.version-control.git/93825
