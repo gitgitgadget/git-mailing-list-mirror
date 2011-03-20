@@ -1,103 +1,72 @@
-From: =?UTF-8?B?cnllbnVzIOKXhw==?= <ryenus@gmail.com>
-Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
-Date: Sun, 20 Mar 2011 16:42:20 +0800
-Message-ID: <AANLkTim+sijuHidJNWyqC75yTFVo0YX67J3AXnPJVsoc@mail.gmail.com>
-References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com>
- <AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
- <AANLkTinxyp=PbvzRkyyxXin5aOFm1NP4Be6U2Dv0aD6d@mail.gmail.com>
- <7vsjujq8kf.fsf@alter.siamese.dyndns.org> <AANLkTinPCeg3NU2bRvk8rwWSWnu4b0PHwya9+PWAc3DB@mail.gmail.com>
- <AANLkTinFFnm7-TKcbTdbzJHx4i4L8rdi4xogr3R7=7s1@mail.gmail.com> <vpqlj0ajkqa.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [bug] git checkout lies about number of ahead commits when
+ switching from detached HEAD
+Date: Sun, 20 Mar 2011 05:01:11 -0400
+Message-ID: <20110320090111.GA15641@sigill.intra.peff.net>
+References: <4D8525C9.2060203@gmail.com>
+ <20110319222852.GB7116@sigill.intra.peff.net>
+ <20110319224726.GC7116@sigill.intra.peff.net>
+ <7vy64avdba.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Mar 20 09:42:49 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 10:01:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1EDo-0006ew-8h
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 09:42:48 +0100
+	id 1Q1EVk-0002sk-IL
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 10:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568Ab1CTImn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 04:42:43 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:42688 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498Ab1CTImm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2011 04:42:42 -0400
-Received: by yxs7 with SMTP id 7so2063643yxs.19
-        for <git@vger.kernel.org>; Sun, 20 Mar 2011 01:42:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=N3uoSKzX6+z5XRToqsHVkF9taETIhgW6BfZmIENDo1c=;
-        b=YAMTbN2sIYmcOjqOiRiDYeQX1OvEtwLHpavST5BLrBQfWD7oOU06UsXrxgDr8XRozw
-         RGvnMd5k8t1YOgkeZAMYfNzVJ+0FoWRRjMALUWqV/F/WwNE2cL9NqBaasxXxhhlAXJBw
-         +1PnprP5XSr8M0CVoZ4GVNTcPD7KZ5COKeQ+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=XZbx4OFytPl3DTOZUqnyFQZedS8WuwSXx7yy1CAOifgTfL/xhteqGlUIJM3b4+cnlz
-         FAekdpKMEqywIl+ALyDmESumGFonrAd+XuWeTpx9wl8wWfrBmDAAal5SACIbYJCBcYaL
-         fjeFM0psbAEfIEL4KSpcAgVMPfkxWhRx961d4=
-Received: by 10.100.193.12 with SMTP id q12mr2153545anf.7.1300610560214; Sun,
- 20 Mar 2011 01:42:40 -0700 (PDT)
-Received: by 10.100.121.3 with HTTP; Sun, 20 Mar 2011 01:42:20 -0700 (PDT)
-In-Reply-To: <vpqlj0ajkqa.fsf@bauges.imag.fr>
+	id S1751596Ab1CTJBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 05:01:15 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59860
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751592Ab1CTJBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 05:01:14 -0400
+Received: (qmail 24486 invoked by uid 107); 20 Mar 2011 09:01:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 20 Mar 2011 05:01:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Mar 2011 05:01:11 -0400
+Content-Disposition: inline
+In-Reply-To: <7vy64avdba.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169492>
 
-Hey Matthieu,
+On Sat, Mar 19, 2011 at 05:35:37PM -0700, Junio C Hamano wrote:
 
-Yes, I mean it.
+> Jeff King <peff@peff.net> writes:
+> 
+> > but I'm not quite sure if this is the right place. Is it the
+> > responsibility of the checkout-orphan-warning code to clean up after
+> > itself, or is it the responsibility of a revision walker to clean up
+> > before itself?
+> 
+> Usually it is the former; the latter is generally impossible (unless it is
+> willing to clear everything), but the former knows where it started
+> traversal from.
 
-The purpose of this test script is to testify that "*MINGW*|*CYGWIN*"
-will match MinGW and/or Cygwin, so that it won't fall down to the next
-2 cases.
+For the case of 2 traversals, I suspect that clearing everything between
+is not so different from clearing from the tips, since most everything
+parsed was probably from the first traversal. But as we lib-ify more, we
+may end up with more and more traversals in a single program, so it's
+probably better to go the more efficient route from the beginning.
 
+So how about this?
 
-On Sun, Mar 20, 2011 at 15:48, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> ryenus =E2=97=87 <ryenus@gmail.com> writes:
->
->> oops, corrected the script with the test strings in upper cases
->>
->> #!/bin/sh
->> echo $(uname -s)
->> case $(uname -s) in
->> *MINGW*|*CYGWIN*)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^
-> This "|" means "or" in a case statement...
->
->> =C2=A0 echo "detected MinGW/Cygwin"
->> =C2=A0 ;;
->> *MINGW*)
->
-> ...so I can see no way to reach this point: if the string matches
-> *MINGW*, it also matches *MINGW*|*CYGWIN*.
->
->> =C2=A0 echo "detected MinGW"
->> =C2=A0 ;;
->> *CYGWIN*)
->> =C2=A0 echo "detected Cygwin"
->> =C2=A0 ;;
->> esac
->
-> But you've just showed that $(uname -s) of Cygwin did contain upper-c=
-ase
-> CYGWIN, which I think was the point to verify :-).
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
->
+  [1/3]: checkout: add basic tests for detached-orphan warning
+  [2/3]: checkout: clear commit marks after detached-orphan check
+  [3/3]: checkout: tweak detached-orphan warning format
+
+3/3 is only somewhat related, but I had been meaning to do it anyway. We
+can break it off into a separate topic if there's a lot of discussion
+around the 2nd patch.
+
+-Peff
