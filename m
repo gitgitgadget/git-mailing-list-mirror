@@ -1,58 +1,63 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: What's cooking in git.git (Mar 2011, #02; Sun, 20)
-Date: Sun, 20 Mar 2011 21:43:11 +0100
-Message-ID: <4D8666DF.3050401@web.de>
-References: <7vy649vah1.fsf@alter.siamese.dyndns.org>
+From: Kevin Cernekee <cernekee@gmail.com>
+Subject: Re: [PATCH v2 4/3] gitweb: Always call format_date with timezone parameter
+Date: Sun, 20 Mar 2011 13:47:52 -0700
+Message-ID: <AANLkTi=R+03BQZxh+8pcvxKRjO00_8Eo8FJ31buWZ6rb@mail.gmail.com>
+References: <4f21902cf5f72b30a96465cf911d13aa@localhost>
+	<b599dae39131b90d0970a1ef63e6599b@localhost>
+	<201103201137.18619.jnareb@gmail.com>
+	<201103201207.56639.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 21:43:29 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 21:48:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1PTF-0007kI-0c
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 21:43:29 +0100
+	id 1Q1PXq-0001C5-Ol
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 21:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752433Ab1CTUnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 16:43:24 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:46533 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752358Ab1CTUnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 16:43:23 -0400
-Received: from smtp05.web.de  ( [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 5AE4E18B1F577;
-	Sun, 20 Mar 2011 21:43:11 +0100 (CET)
-Received: from [93.240.106.29] (helo=[192.168.178.43])
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Q1PSx-0007cn-00; Sun, 20 Mar 2011 21:43:11 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <7vy649vah1.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18df+aoOhJjgKiV+379Q/DHKTeilN3my0gKm9hf
-	642UublLeFSQs4FDii98sbxgBMYTtDthNrmOnJFnFUWqMJEfjW
-	Jhw1utHclqsCsjTgmVBg==
+	id S1752472Ab1CTUsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 16:48:10 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47217 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752384Ab1CTUsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 16:48:09 -0400
+Received: by fxm17 with SMTP id 17so4992227fxm.19
+        for <git@vger.kernel.org>; Sun, 20 Mar 2011 13:48:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=d3UAJa1VwTzjwikJS6jiahTj16wKmYPQecrIgIxpg2Q=;
+        b=rmV5dIXnzea9J+djH8QqF+kiTxPz5ijyCkFVJoh+O6RRWiXtG5F4BE3b7cxhP+SwEY
+         UAC1xZUx9pl+TNbWEfRW2ZsUlU0AHMLxnfl3UOmj0rjcvbeb+8555xsOKyqkWbTz0edk
+         VUqdaQgaVP3qyt3D1Qr0WN9F10tx29hjTadVg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=KuG7ewv7TFbr964GM6V8ibIIr4xCP8KKVWpL9WqMx5Ipgg5BNCmAPAyasTqAfVEC0a
+         TxkYqSqk8sIXrTNH/jWUZ3N6SfigGMKHIXIRVKk5ofThS6EJZtL0STk/sxfOb7iGBKi5
+         m529S81SotnYYE8EUC9zBg9hQU/ivFhQhXy3w=
+Received: by 10.223.102.129 with SMTP id g1mr4073394fao.3.1300654072689; Sun,
+ 20 Mar 2011 13:47:52 -0700 (PDT)
+Received: by 10.223.61.83 with HTTP; Sun, 20 Mar 2011 13:47:52 -0700 (PDT)
+In-Reply-To: <201103201207.56639.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169523>
 
-Am 20.03.2011 20:49, schrieb Junio C Hamano:
-> * jl/submodule-fetch-on-demand (2011-03-06) 7 commits
->  - fetch/pull: Describe --recurse-submodule restrictions in the BUGS section
->  - submodule update: Don't fetch when the submodule commit is already present
->  - fetch/pull: Don't recurse into a submodule when commits are already present
->  - Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule' option
->  - config: teach the fetch.recurseSubmodules option the 'on-demand' value
->  - fetch/pull: Add the 'on-demand' value to the --recurse-submodules option
->  - fetch/pull: recurse into submodules when necessary
-> 
-> Is this ready to move forward?
+On Sun, Mar 20, 2011 at 4:07 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> But it takes bugfix hostage to applying new feature series.
 
-I'm not aware of any issues with that series, so I'd say yes. (The change in
-behavior and that we support disconnected operation for submodules way better
-than before should of course be mentioned in the release notes)
+I can reorder and resubmit if needed...
+
+But, since the bug isn't actually showing any symptoms in the existing
+code, and since the fix only depends on patch 1/3 ("rename parse_date"
+cleanup) rather than 2/3 + 3/3 (localtime + atnight features), I'm
+hoping this won't be a major point of contention.
