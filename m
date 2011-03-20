@@ -1,60 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] mktag: avoid %td in format string
-Date: Sat, 19 Mar 2011 23:03:54 -0700
-Message-ID: <7vlj0atjjp.fsf@alter.siamese.dyndns.org>
-References: <27484.1172021696@lotus.CS.Berkeley.EDU>
- <20110316051232.GA1932@elie> <20110316051422.GB1932@elie>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] repack: find -> /usr/bin/find, as for cygwin
+Date: Sun, 20 Mar 2011 08:48:29 +0100
+Message-ID: <vpqlj0ajkqa.fsf@bauges.imag.fr>
+References: <AANLkTimHof_MNSGbU2KGX=7Q3MQpjkzXK+xyGGVjbngR@mail.gmail.com>
+	<AANLkTimPbz2s=Maafhqg-7wOk_TT4fFSh7AQ-3rWY0A3@mail.gmail.com>
+	<AANLkTinxyp=PbvzRkyyxXin5aOFm1NP4Be6U2Dv0aD6d@mail.gmail.com>
+	<7vsjujq8kf.fsf@alter.siamese.dyndns.org>
+	<AANLkTinPCeg3NU2bRvk8rwWSWnu4b0PHwya9+PWAc3DB@mail.gmail.com>
+	<AANLkTinFFnm7-TKcbTdbzJHx4i4L8rdi4xogr3R7=7s1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jason Riedy <jason@acm.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 07:04:19 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: ryenus =?utf-8?Q?=E2=97=87?= <ryenus@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 08:51:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1BkM-0006SX-Hj
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 07:04:14 +0100
+	id 1Q1DQS-0002pE-A7
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 08:51:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751236Ab1CTGEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 02:04:09 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35071 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069Ab1CTGEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 02:04:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 09120387B;
-	Sun, 20 Mar 2011 02:05:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5DrLaH3fws+5NydS16YKKXfEhFA=; b=uA7qJZ
-	wIF09rqHssrNGu/HclNpIKMEo550zoIlkdVYMjXVmVcIBE/t1Koz6vdTTgviGQeS
-	1XgVsWJqHI3QNCy1CRoRlO+CVF9Wyg3hJ1BpkOx8feidx+qHjYP29YKZhFfWRztT
-	G06Ao23SNaQ0Bm1yScXNDfG459nubSmGK6Wgw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q++EccLaISWBCrrYkiFvhl6vPCnQLWOO
-	pAoe5ORhIO+AwpBaYX2EdoKo4yz0i0olTsyLqHFaUp4FIrmEVNqrgBm7oo6IoZUV
-	4OsT1lRwb/1j153ExIQkp8dfeTpYRSDMIjQ89AYOVmjE9RH7AQpsZNA/YjPw7qvH
-	j6+stv8KSyo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BCCEA387A;
-	Sun, 20 Mar 2011 02:05:39 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4A9243879; Sun, 20 Mar 2011
- 02:05:33 -0400 (EDT)
-In-Reply-To: <20110316051422.GB1932@elie> (Jonathan Nieder's message of "Wed,
- 16 Mar 2011 00:14:22 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14C36B34-52B8-11E0-AD36-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751498Ab1CTHvn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2011 03:51:43 -0400
+Received: from imag.imag.fr ([129.88.30.1]:37133 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751151Ab1CTHvm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2011 03:51:42 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p2K7mTuZ028356
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 20 Mar 2011 08:48:30 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Q1DNF-0000a0-RI; Sun, 20 Mar 2011 08:48:29 +0100
+In-Reply-To: <AANLkTinFFnm7-TKcbTdbzJHx4i4L8rdi4xogr3R7=7s1@mail.gmail.com>
+	("ryenus =?utf-8?Q?=E2=97=87=22's?= message of "Sun, 20 Mar 2011 08:35:51
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 20 Mar 2011 08:48:30 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169489>
 
-Unfortunate but sensible and correct.  Thanks.
+ryenus =E2=97=87 <ryenus@gmail.com> writes:
+
+> oops, corrected the script with the test strings in upper cases
+>
+> #!/bin/sh
+> echo $(uname -s)
+> case $(uname -s) in
+> *MINGW*|*CYGWIN*)
+         ^
+This "|" means "or" in a case statement...
+
+>   echo "detected MinGW/Cygwin"
+>   ;;
+> *MINGW*)
+
+=2E..so I can see no way to reach this point: if the string matches
+*MINGW*, it also matches *MINGW*|*CYGWIN*.
+
+>   echo "detected MinGW"
+>   ;;
+> *CYGWIN*)
+>   echo "detected Cygwin"
+>   ;;
+> esac
+
+But you've just showed that $(uname -s) of Cygwin did contain upper-cas=
+e
+CYGWIN, which I think was the point to verify :-).
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
