@@ -1,135 +1,80 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: "git rm" is not a valid merge resolution?
-Date: Mon, 21 Mar 2011 20:56:41 +0100
-Message-ID: <4D87AD79.5000806@gmail.com>
-References: <4D879882.4070608@gmail.com> <vpqpqpk724l.fsf@bauges.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: cherry-pick applies some other changes than the specified one?
+Date: Mon, 21 Mar 2011 14:58:46 -0500
+Message-ID: <20110321195846.GA4277@elie>
+References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
+ <7vwrjssbfk.fsf@alter.siamese.dyndns.org>
+ <4D877FAD.9000807@viscovery.net>
+ <4D879516.3060204@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:56:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:59:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1lDk-00042g-Nz
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:56:57 +0100
+	id 1Q1lFk-00053g-NO
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:59:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754286Ab1CUT4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 15:56:51 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40933 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754277Ab1CUT4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 15:56:50 -0400
-Received: by bwz15 with SMTP id 15so5317822bwz.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 12:56:48 -0700 (PDT)
+	id S1754337Ab1CUT64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 15:58:56 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:44307 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754313Ab1CUT6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 15:58:55 -0400
+Received: by yxs7 with SMTP id 7so2585712yxs.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 12:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=F2u9+7yU0QYZTG0P8FdeoxYTwv0Km0IohpCPlFASrbU=;
-        b=a1qjdUyb00n+4DsjklLNJgcs/60xfBmIFx5sGgpscUGmOdJk47XZ/6PqZkawBu4b1F
-         ieoK7oUROpm9zicRISowbj6ZOci5gHEgtIRHnyMMg18sGurvKNzy47gv1f8hhfpLeeZU
-         Ak0qIptI6gt097KLHsZqvqOHqYFGvEeIN6X3s=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=koofN056iRwiiJ2sZaMjHmOkOYzbQ4o9R2gpseFME1c=;
+        b=lYnNGa71kKNxnMJW2ZGE1nWnrF4bMStM2F3Ii9pmSCrufVfKv9PonZHBK+twoWO4bN
+         gEkQEAkeRhw1fbumEcE1BAUs8rJijBeh23j1Ik91i0K0NTKjnYXBd7QCjPgUOwCPAy57
+         tJA2CbkGf4KlBRA0Y2+5ELUW9PKQu79HKTnnw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=uc9HHVEvoSD1e061CDTU3+PKUQXTnVw/RQZbvBMiOt0mLUw2R0YWBJD1IlvIvVIYYa
-         sb9tdTkOEwPU/kvUoWJQqCnTcQIG9hmGO45gwObPyCNkPrZWAAuv3JABCjcE57wJaVyq
-         Ku5fnW+EWfmXixmCsBQYSB02YXAvvvhg7X+bk=
-Received: by 10.204.10.81 with SMTP id o17mr4220248bko.94.1300737408840;
-        Mon, 21 Mar 2011 12:56:48 -0700 (PDT)
-Received: from [192.168.1.101] (aadh98.neoplus.adsl.tpnet.pl [83.4.85.98])
-        by mx.google.com with ESMTPS id c11sm4600694bkc.14.2011.03.21.12.56.47
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=OY0JlQqj9FksfuqXvqBTUpD1ki9l8PPhKCV4YV7rVjsP6KmKm/72bb1jUy08kEPs1U
+         7BQ43hK8H3w4NnFNiD3equvDd+rPWTIEJgmvfzBCfAhX/mw7nsTJOr0Lv8hqYU1nagPo
+         Rdw46nLOs6dEQQgftkIp2SwljXanCi7WkhCI4=
+Received: by 10.236.79.193 with SMTP id i41mr5925110yhe.204.1300737533787;
+        Mon, 21 Mar 2011 12:58:53 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id x53sm3159629yhc.34.2011.03.21.12.58.51
         (version=SSLv3 cipher=OTHER);
-        Mon, 21 Mar 2011 12:56:48 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
-In-Reply-To: <vpqpqpk724l.fsf@bauges.imag.fr>
+        Mon, 21 Mar 2011 12:58:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D879516.3060204@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169656>
 
-W dniu 21.03.2011 19:35, Matthieu Moy pisze:
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
-> 
->> Hi,
->>
->> git-status shows a hint that says
->>     use "git add/rm <file>..." as appropriate to mark resolution
->>  
->> But if I "git rm file" the file gets deleted. Is this really the 
->> appropriate merge resolution?
-> 
-> In most cases, no, but when you have a modify/delete conflict for
-> example, "git rm" is one of the candidates to resolve the conflict. The
-> hint gives the general case.
+Piotr Krukowiecki wrote:
 
-I think this is not completely true. You can stage removal of a file with
-git add, but it's harder than use of git rm.
+> I think I even suspected this might have something to do with the merge
+> conflict and tried to make git-diff show me exact change between working
+> tree and index/HEAD (ignoring the merge), so I can verify the file indeed
+> only have the change I did, but I could not find such option.
+> Does it exists? 
 
-This is something I don't understand. Why is there a difference between
-removing files and (adding files or removing content)?
+Sure.  The index contains multiple competing versions, which you can
+see with "git ls-files -u".  To compare the working tree and one of
+those use "git diff --base / --ours / --theirs" (or -1 / -2 / -3).
 
-You must use special flags to "git add" to remove files, while you don't
-need such flags to add file or remove content.
+To view changes relative to a particular commit, use "git diff <commit>".
+For example, "git diff HEAD".  The git-diff(1) manpage (shown by
+"git diff --help") explains.
 
-All changes are tracked. You won't loose your data if you remove the
-file by mistake. It is the same as remove some content by mistake.
-
-
-Is it caused by the name of the command ("add")? Some people would be
-surprised if "git add" marked removed file for removal. But I think
-some would be already surprised that you have to "add" your changes.
-
-Or maybe it is caused by the fact that "git tracks content" (if I
-remember correctly)? I don't see a problem here. The command just
-tells git what content it should track. "git add" does not say
-"track this change (file path addition/file deletion)" but
-"track this file path content", so if the file got deleted there
-is nothing to track.
-
-
-Maybe the command should be named "stage". You should stage your
-changes. Add the file deletion is the same change as file addition.
-
-You would do
-   
-    git stage addedfile
-    git stage deletedfile
-    git stage changedfile
-
-This would be consistent.
-
-(For me it doesn't need to be "stage" name. It could be handled by
-"add").
-
-
-Currently it works like this:
-
-   git add untracked # Adds untracked file 
-   git add . # Adds all untracked files
-
-   rm tracked
-   git add tracked # Does not stage the delete
-   git add . # Does not stage the delete
-   git add -A tracked # This works - stages deletion of tracked file
-
-   git add -u # Stages all tracked changes, also new/deleted tracked files
-   git add -A # Stages all changes, also new/deleted untracked files
-
-   # No way to do following (without listing files explicitly):
-
-   # 1. Added several new files, but has also several tracked files changed
-   #    and want to only add new files
-
-   # 2. Removed several tracked files, but has also several other tracked
-   #    files changed and want to only remove deleted files. 
-
--- 
-Piotr Krukowiecki
+Hope that helps,
+Jonathan
