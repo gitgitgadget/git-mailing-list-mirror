@@ -1,69 +1,73 @@
-From: Vicent Marti <vicent@github.com>
-Subject: Re: Histogram diff, libgit2 enhancement, libgit2 => git merge (GSOC)
-Date: Mon, 21 Mar 2011 02:38:17 +0200
-Message-ID: <AANLkTimBCH1FhzoUjP-sA2zM2DhVLiPRbLa3JLZg_Ma=@mail.gmail.com>
-References: <op.vsm1yszq2m56ex@localhost.localdomain> <AANLkTi=Fu5v-5E2dSAA74f0juUQNjNjus5XFWqMb9v9k@mail.gmail.com>
- <20110320234420.GA1919@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Pavel Raiskup <xraisk00@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@github.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 01:38:44 2011
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] Work around broken ln on solaris as used in t8006
+Date: Sun, 20 Mar 2011 20:45:06 -0400
+Message-ID: <1300668306-25662-1-git-send-email-bwalton@artsci.utoronto.ca>
+References: <1300665586-24512-1-git-send-email-bwalton@artsci.utoronto.ca>
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 21 01:45:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1T8t-0004Vo-Sx
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 01:38:44 +0100
+	id 1Q1TFj-0006dH-11
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 01:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752384Ab1CUAij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2011 20:38:39 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40012 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752353Ab1CUAii (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2011 20:38:38 -0400
-Received: by wya21 with SMTP id 21so5338331wya.19
-        for <git@vger.kernel.org>; Sun, 20 Mar 2011 17:38:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=ZdNwBywKpE28H2YoqxJ2nIwjurIDnOdReYduhnNvZAY=;
-        b=izeYqNZxh+UKnRZqxscrrUlnbFpz6rGJxFlrE88hJVRucrKU4KWamWuQt3akYu+6D8
-         m45T9ERxPLysIso0DTVf6RKl2NJmK73c0uCtOFqfEthqNf7HPGMQmY1JceCGXCBCsiON
-         RAtpBzBdIesPGjFhKZN3ssi3AmkBFvTcg4qdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        b=aQ4061mLEX1QimahwS9DNxtpH0VVAsDLjDSBNGY+0IzIvrOo2aOiuwIlsqJE8RZpLW
-         suYIOAICCT7T8SWUOXZe2EthJhaGGxeWrvoI3wo+U/qLsNvSrQ9Btft7LF7kZjEclPpI
-         0u7F3QE6K/0IaydzuV2IeeGr2yTbdHJt08lN4=
-Received: by 10.216.238.194 with SMTP id a44mr3444462wer.51.1300667917098;
- Sun, 20 Mar 2011 17:38:37 -0700 (PDT)
-Received: by 10.216.243.7 with HTTP; Sun, 20 Mar 2011 17:38:17 -0700 (PDT)
-In-Reply-To: <20110320234420.GA1919@sigill.intra.peff.net>
-X-Google-Sender-Auth: sOPLikaMblZLEUFiBEPNBk9QSO4
+	id S1752393Ab1CUApm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2011 20:45:42 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:50938 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751849Ab1CUApl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2011 20:45:41 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:35733 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1Q1TFc-0000p1-Lt; Sun, 20 Mar 2011 20:45:40 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Q1TFc-0006gN-Ko; Sun, 20 Mar 2011 20:45:40 -0400
+X-Mailer: git-send-email 1.7.3.3
+In-Reply-To: <1300665586-24512-1-git-send-email-bwalton@artsci.utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169542>
 
-On Mon, Mar 21, 2011 at 1:44 AM, Jeff King <peff@github.com> wrote:
-> Yeah, I would be happy to mentor or co-mentor with Vicent on a project
-> like that. Not only might it be useful to actually _use_, but my secret
-> motive is that I'd like to start testing libgit2 using some of the
-> regular git tests, both for interoperability and for performance.
+The test setup in t8006-blame-textconv.sh used ln -sf to overwrite an
+existing symlink.  Unfortunately, both /usr/bin/ln and
+/usr/xpg4/bin/ln on solaris 9 don't properly handle -f when -s is
+used.  This caused the test setup to fail which caused subsequent
+checks to also fail.
 
-Right on! I've just added this task to the wiki so other prospective
-students can take it into account, and listed you as a possible
-mentor.
+This patch changes the first check in the test to rm the symlink
+and then create the new symlink using only -s.
 
-While I'm at it, I removed the "merge libgit2 into mainstream" task
-from there. Feel free to re-add it again if you find a suitable mentor
--- I'm getting diarrhea just by thinking about it.
+The upstream Solaris bug (fixed in 10, but not 9) is documented here:
+http://bugs.opensolaris.org/view_bug.do?bug_id=4372462
 
-Cheers,
-Vicent
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+
+Fixed typo in the original submission...
+
+ t/t8006-blame-textconv.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
+index ea64cd8..c5362d9 100755
+--- a/t/t8006-blame-textconv.sh
++++ b/t/t8006-blame-textconv.sh
+@@ -24,8 +24,9 @@ test_expect_success 'setup ' '
+ 	GIT_AUTHOR_NAME=Number1 git commit -a -m First --date="2010-01-01 18:00:00" &&
+ 	echo "bin: test 1 version 2" >one.bin &&
+ 	echo "bin: test number 2 version 2" >>two.bin &&
++	rm symlink.bin &&
+ 	if test_have_prereq SYMLINKS; then
+-		ln -sf two.bin symlink.bin
++		ln -s two.bin symlink.bin
+ 	fi &&
+ 	GIT_AUTHOR_NAME=Number2 git commit -a -m Second --date="2010-01-01 20:00:00"
+ '
+-- 
+1.7.1
