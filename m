@@ -1,105 +1,65 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [WIP PATCH 0/5] support --exclude for diff/log commands
-Date: Mon, 21 Mar 2011 11:02:02 +0700
-Message-ID: <AANLkTimWPoMEYdLCwTTit6AeuJegOc96gE1JsO8B4fh=@mail.gmail.com>
-References: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
- <7vmxl37bdp.fsf@alter.siamese.dyndns.org> <7vvczr5pw6.fsf@alter.siamese.dyndns.org>
- <AANLkTimsv9bO+Go6Mqrrp_1-AZ=sC3ndyAuskPYLVbkv@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Work around broken ln on solaris as used in t8006
+Date: Sun, 20 Mar 2011 22:00:11 -0700
+Message-ID: <7v4o6xukys.fsf@alter.siamese.dyndns.org>
+References: <1300669724-sup-450@pinkfloyd.chass.utoronto.ca>
+ <1300669946-26326-1-git-send-email-bwalton@artsci.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 05:02:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Mon Mar 21 06:00:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1WKJ-0006ei-FH
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 05:02:43 +0100
+	id 1Q1XEB-00051K-Ox
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 06:00:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750805Ab1CUECg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 00:02:36 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55826 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750717Ab1CUECe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 00:02:34 -0400
-Received: by wya21 with SMTP id 21so5421269wya.19
-        for <git@vger.kernel.org>; Sun, 20 Mar 2011 21:02:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=NLbj3teROy++ndf7guYXHxR0RxBVReCzg/qB9DehRoE=;
-        b=w76nYusczdfXeSwswOqsQIoLS60AM3fDLhXJD/t+JORXkCq7dIvtZwG1Gnyx4xpYV3
-         pFea7cN7iHE4GA8dBewRmbYKqLiw39wF0GG2W+3l4RF3q+FcjCOnJHoxzcMpFjb8lgp6
-         iJtdw8dLD7gMs3px73XAr6IpArgpPdVSJD3wI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=xCzQUSsOXd58Ea618bfAWcKU6Ejuv8uNGWeInJLiyxfH4fM8r2eOa8WRyqbOFPXibn
-         a7QBCVH3z6WteXOvhseW4pBKXapbSdm1wSJPm+DqarGVlMBdtHPRCKgpt4BuLLOPATxl
-         dEusMJuOcyqlNRio1RZ2BR13OxS4M454A6w+4=
-Received: by 10.216.66.131 with SMTP id h3mr3854565wed.111.1300680153238; Sun,
- 20 Mar 2011 21:02:33 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Sun, 20 Mar 2011 21:02:02 -0700 (PDT)
-In-Reply-To: <AANLkTimsv9bO+Go6Mqrrp_1-AZ=sC3ndyAuskPYLVbkv@mail.gmail.com>
+	id S1752319Ab1CUFAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 01:00:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62169 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751805Ab1CUFAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 01:00:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8EEA13505;
+	Mon, 21 Mar 2011 01:01:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lj5qAi5yuoUpavhYty6C4LteZRw=; b=sLUrI7
+	Q06elxbJ+4yrA5Kh1DxY04SjAnjUHJyIS2fGDyED2CCTGnmt31+E/6+iRkKm5GDR
+	Cfexn1v8pfqVt8VZ+ghH2rVPKYPipzmPoJucbpBj9O5ahFyZshjc0itV49i/5X8j
+	9Ksb6MYgRzb4ibcucz1RYaFxohRa8Hi8616Ng=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mS9BX1reFDqww7jDnZZDyVLTbCqcCE9m
+	DBXVFnMOCefQLedVV2byMF4gIORvL4Dm0W9M8DPUEUhe4UmrUJXWX3mZ/e/jn3RT
+	CZAHvEYLT/PNmtTUqwJiJSV2hYVPZkYitROLvoh5SrD31YOZXZbpFIq7SpmM8GG5
+	83mY32Q9jvg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6CAEF3500;
+	Mon, 21 Mar 2011 01:01:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 806F834FE; Mon, 21 Mar 2011
+ 01:01:50 -0400 (EDT)
+In-Reply-To: <1300669946-26326-1-git-send-email-bwalton@artsci.utoronto.ca>
+ (Ben Walton's message of "Sun, 20 Mar 2011 21:12:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 567FF126-5378-11E0-8AB4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169554>
 
-On Thu, Mar 10, 2011 at 5:05 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
-m> wrote:
-> 2011/3/10 Junio C Hamano <gitster@pobox.com>:
->> Let's step back a bit.
->>
->> We chose to use ":/<regexp>" as one new form of extended SHA-1 expre=
-ssion
->> to name an object for two reasons: (1) no normal <ref> can have a co=
-lon in
->> it, because of check-ref-format restriction; (2) ":" is an unlikely =
-letter
->> to appear at the beginning of a pathname, and people with such a pat=
-h can
->> work around by saying "./:frotz" or "\:xyzzy".
->>
->> There is a disambiguation logic to check a list of arguments that la=
-cks an
->> explicit "--" separator to make sure that each element early on the =
-list
->> can only be interpreted as an object name but not as a pathname that
->> exists on the filesystem, and all the remaining elements are pathnam=
-es
->> that exist on the filesystem.
->>
->> If we introduce an extended syntax for pathspec and make the prefix =
-magic
->> character ":", and if we choose to use ":/" as one kind of magic, I =
-was a
->> bit worried that this may affect the disambiguation. =C2=A0The users=
- must use
->> an explicit "--" when feeding a pathspec with the magic so that the =
-parser
->> knows which kind of magic (either object name magic or pathspec magi=
-c)
->> they are talking about.
->
-> Or.. we can consider this ':' a special form of wildcard and interpre=
-t
-> the same way:
->
-> =C2=A0- first try exact match. If it matches, the leading ':' is
-> interpreted literally as part of file name.
-> =C2=A0- magic.
+Ben Walton <bwalton@artsci.utoronto.ca> writes:
 
-One thing that makes it different from Michael's approach is, :/foo
-will match ':/foo' literally in every directories and foo at top-tree.
-I feel mildly uncomfortable with it, but it makes it consistent with
-other wildcards. If no one objects, I'll try to make a patch with this
-approach.
---=20
-Duy
+> The upstream Solaris bug (fixed in 10, but not 9) is documented here:
+> http://bugs.opensolaris.org/view_bug.do?bug_id=4372462
+>
+> Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+
+Thanks; will queue.
