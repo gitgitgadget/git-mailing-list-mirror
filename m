@@ -1,88 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Weird behavior of shell variables in git aliases
-Date: Mon, 21 Mar 2011 17:53:10 -0400
-Message-ID: <20110321215310.GA2122@sigill.intra.peff.net>
-References: <d9c38309-c433-476c-bba3-f2c5b7e94a89@k15g2000prk.googlegroups.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 2/2] Fix sparse warnings
+Date: Mon, 21 Mar 2011 14:58:25 -0700
+Message-ID: <7vd3lknnjy.fsf@alter.siamese.dyndns.org>
+References: <7voc54sb41.fsf@alter.siamese.dyndns.org>
+ <1300730506-6582-1-git-send-email-bebarino@gmail.com>
+ <7vzkoop912.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 22:53:23 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 22:58:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1n2O-0004ll-1k
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 22:53:20 +0100
+	id 1Q1n7a-0006yq-RJ
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 22:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754506Ab1CUVxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 17:53:15 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57500
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753564Ab1CUVxO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 17:53:14 -0400
-Received: (qmail 18727 invoked by uid 107); 21 Mar 2011 21:53:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 17:53:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 17:53:10 -0400
-Content-Disposition: inline
-In-Reply-To: <d9c38309-c433-476c-bba3-f2c5b7e94a89@k15g2000prk.googlegroups.com>
+	id S1754521Ab1CUV6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 17:58:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45426 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754330Ab1CUV6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 17:58:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3F088540A;
+	Mon, 21 Mar 2011 18:00:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z4yoXvZNuPTDnE5bAsErHSna8Bg=; b=cwCn2y
+	cau0BdBQHQnI/4Fw8GaKjU68Tr+PqlipElbJ2BXaxcs/FZk0XyBF3cvdUJFTtkgT
+	eQD6xQB85tC390WdctKUrpxHq2zOD3Km5hUfKzvt51JPYwzobTvyANy84Y4jDl2t
+	vG1XlWGV1HJTnFLLS/zj235ocxovGQSzCCiXw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KWEz1NDEpDop1IYG/1RwEXSXi0BknVIy
+	5OBLabfrMboD2ftKEXBXiQROlxC4mFt9hnrjENSJsXjXPDK08HeqlQbR5Y5+o/jn
+	rmBzFenoXq3RJftsP11EnhhAvVNj53vIDRKlGi9Enz58vx7O/O55AdqCxiFONgpk
+	JiDRcM3Hk8M=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0AEE85409;
+	Mon, 21 Mar 2011 18:00:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 78AAC5405; Mon, 21 Mar 2011
+ 18:00:06 -0400 (EDT)
+In-Reply-To: <7vzkoop912.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 21 Mar 2011 12:29:13 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 981BC856-5406-11E0-AAC7-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169676>
 
-On Mon, Mar 21, 2011 at 09:39:43AM -0700, Dun Peal wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> It seems that a variable is available only once?!  How can the
-> following shell session be explained:
-> 
->     $ git config alias.test0
->     !echo $1
->     $ git test0 foo
->     foo
->     $ git config alias.test1
->     !echo $1 && echo $1
->     $ git test1 foo
-> 
->     foo
->     $ git config alias.test2
->     !BRANCH=$1 && echo $BRANCH && echo $BRANCH
->     $ git test2 foo
-> 
->     foo
+> Still yeek...
+>
+> What I meant was more like at the minimum:
+> ...
+> or much more preferably:
+>
+>  - These files use symbols without declaring, because they do not include
+>    "builtin.h":
+>
+>     builtin/clone.c (cmd_clone), builtin/fetch-pack.c (cmd_fetch_pack), ...
+>
+>  - These files define extern symbols without declaring, and they can be
+>    file scope static:
+>
+>     builtin/fmt-merge-msg.c (init_src_data), ...
+>
+>  - These callsites pass literal integer 0 where they mean to pass a NULL
+>    pointer:
+>
+>    builtin/notes.c (resolve_ref), ...
+>
+> The patch text itself look more or less Ok, but I see you have builtin.h
+> not as the first include in builtin/pack-redundant.c.
+>
+> Thanks.
 
-Because in v1.7.4 and earlier, we literally just tack the arguments
-(shell-quoted) onto the end of the string. So your alias ends up
-expanding to:
+I spotted these two.  thread-utils.h already includes pthread.h, and
+builtin.h should come before (though technically exec_cmd.h does not
+depend on any external types, so this is just a conformity issue, not
+correctness one).
 
-  /bin/sh -c "!echo $1 && echo $1 'foo'"
+Again, thanks.
 
-So the first echo is empty, and then the second one echos foo. And what
-you are trying to do doesn't work with a straight alias (at the bottom
-I'll show you what you want).
+ builtin/pack-redundant.c |    2 +-
+ thread-utils.c           |    1 -
+ 2 files changed, 1 insertions(+), 2 deletions(-)
 
-But interestingly, that's _not_ the behavior as of Erik's 7f51f8b
-(alias: use run_command api to execute aliases, 2011-01-07), which is in
-master but not yet released. With that, we end up executing:
-
-  sh -c 'echo $1 && echo $1 "$@"' 'echo $1 && echo $1' 'foo'
-
-which prints "foo foo". So it is technically a regression. I don't know
-how much we care; using positional parameters like this was already
-nonsensical, as shown above.
-
-For reference, what you actually want (in either system) is:
-
-  $ git config alias.test1
-  !sh -c 'echo $1 && echo $1' -
-  $ git test1 foo
-  foo
-  foo
-
-Make sure to include the "-" (or some other string) which ends up as $0.
-
--Peff
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 760b377..a15e366 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -6,8 +6,8 @@
+ *
+ */
+ 
+-#include "exec_cmd.h"
+ #include "builtin.h"
++#include "exec_cmd.h"
+ 
+ #define BLKSIZE 512
+ 
+diff --git a/thread-utils.c b/thread-utils.c
+index 2c8c1e3..7f4b76a 100644
+--- a/thread-utils.c
++++ b/thread-utils.c
+@@ -1,5 +1,4 @@
+ #include "cache.h"
+-#include <pthread.h>
+ #include "thread-utils.h"
+ 
+ #if defined(hpux) || defined(__hpux) || defined(_hpux)
