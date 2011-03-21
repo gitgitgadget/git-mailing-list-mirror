@@ -1,102 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] update $GIT_INDEX_FILE when there are racily clean
- entries
-Date: Mon, 21 Mar 2011 10:18:19 -0700
-Message-ID: <7voc54qtmf.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikV4S51DXLADiRXWqjXdTD1OBLSdKjEWALZ9Ebh@mail.gmail.com>
- <7vipvcs9xt.fsf@alter.siamese.dyndns.org>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Weird behavior of shell variables in git aliases
+Date: Mon, 21 Mar 2011 09:39:43 -0700 (PDT)
+Message-ID: <d9c38309-c433-476c-bba3-f2c5b7e94a89@k15g2000prk.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lasse Makholm <lasse.makholm@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 21 18:19:23 2011
+X-From: git-owner@vger.kernel.org Mon Mar 21 18:25:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1ilE-0008Ly-AO
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 18:19:20 +0100
+	id 1Q1irE-0003Kt-2d
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 18:25:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753654Ab1CURTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 13:19:13 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39599 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753537Ab1CURTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 13:19:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ED45A4DB3;
-	Mon, 21 Mar 2011 13:20:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=UMTxCsnRb2U6FHGGwNLmEvV5T/0=; b=AqKzpFIDMP4GXUScsT3l
-	Y3s97TDi15YoPRvnK3HVQGAwBHW0uLOaGHRtnvhHJsZD6kWaoadMa7iF57q1D8Kn
-	YFH117cGzbRVjG0ArEtBnNB62yB1uGt02JShjuqMdLvppfWBZdcYxB/O/0jYcTYQ
-	RQRua6PNSDGimj+XJakRRnA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=fDXQr6IQ+eBELgBAX9z+UUfH+orX2vnmz76NxjvYh6g8K5
-	cfhGOByMPL2j+vtl5fDDQFlluqEyuVLnxNOytCRPBwSmZjFHrpMeFCjiOOWuEBOW
-	Zzwp2DMRrVu6NPwHkLcWEMBZEtA3xaGI1/1lr8ndn6xssSZcD0hdJImgcJCSw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CABA24DB1;
-	Mon, 21 Mar 2011 13:20:46 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C62814DAC; Mon, 21 Mar 2011
- 13:20:43 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8F4364C2-53DF-11E0-801E-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753867Ab1CURZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 13:25:27 -0400
+Received: from mail-yx0-f184.google.com ([209.85.213.184]:45925 "EHLO
+	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752933Ab1CURZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 13:25:26 -0400
+Received: by yxn35 with SMTP id 35so5924449yxn.1
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 10:25:25 -0700 (PDT)
+Received: by 10.91.33.25 with SMTP id l25mr619519agj.47.1300725583632; Mon, 21
+ Mar 2011 09:39:43 -0700 (PDT)
+Received: by k15g2000prk.googlegroups.com with HTTP; Mon, 21 Mar 2011 09:39:43
+ -0700 (PDT)
+X-IP: 66.250.141.150
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US;
+ rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15,gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169615>
 
-Traditional "opportunistic index update" done by read-only "diff" and
-"status" was about updating cached lstat(2) information in the index for
-the next round.  We missed another obvious optimization opportunity to
-when there are racily clean entries that will ceas to be racily clean
-by updating $GIT_INDEX_FILE.
+It seems that a variable is available only once?!  How can the
+following shell session be explained:
 
-Noticed by Lasse Makholm by stracing "git status" in a fresh checkout and
-counting the number of open(2) calls.
+    $ git config alias.test0
+    !echo $1
+    $ git test0 foo
+    foo
+    $ git config alias.test1
+    !echo $1 && echo $1
+    $ git test1 foo
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- read-cache.c |   15 ++++++++++++++-
- 1 files changed, 14 insertions(+), 1 deletions(-)
+    foo
+    $ git config alias.test2
+    !BRANCH=$1 && echo $BRANCH && echo $BRANCH
+    $ git test2 foo
 
-diff --git a/read-cache.c b/read-cache.c
-index 561dc66..971e277 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1545,12 +1545,25 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce)
- 	return result;
- }
- 
-+static int has_racy_timestamp(struct index_state *istate)
-+{
-+	int entries = istate->cache_nr;
-+	int i;
-+
-+	for (i = 0; i < entries; i++) {
-+		struct cache_entry *ce = istate->cache[i];
-+		if (is_racy_timestamp(istate, ce))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- /*
-  * Opportunisticly update the index but do not complain if we can't
-  */
- void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
- {
--	if (istate->cache_changed) &&
-+	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
- 	    !write_index(istate, lockfile->fd))
- 		commit_locked_index(lockfile);
- 	else
--- 
-1.7.4.1.554.gfdad8
+    foo
+
+Thanks, D.
