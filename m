@@ -1,7 +1,7 @@
 From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 06/11] vcs-svn: use switch rather than cascading ifs
-Date: Tue, 22 Mar 2011 10:49:55 +1100
-Message-ID: <1300751400-7427-7-git-send-email-david.barr@cordelta.com>
+Subject: [PATCH 03/11] vcs-svn: avoid using ls command twice
+Date: Tue, 22 Mar 2011 10:49:52 +1100
+Message-ID: <1300751400-7427-4-git-send-email-david.barr@cordelta.com>
 References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
  <1300751400-7427-1-git-send-email-david.barr@cordelta.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
@@ -11,30 +11,30 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Tomas Carnecky <tom@dbservice.com>,
 	David Barr <david.barr@cordelta.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 22 00:50:40 2011
+X-From: git-owner@vger.kernel.org Tue Mar 22 00:50:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1orv-0006bP-VY
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 00:50:40 +0100
+	id 1Q1orx-0006bP-N9
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 00:50:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755887Ab1CUXu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 19:50:29 -0400
-Received: from mailhost.cordelta.com ([119.15.97.146]:54480 "EHLO
+	id S1755669Ab1CUXud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 19:50:33 -0400
+Received: from mailhost.cordelta.com ([119.15.97.146]:60282 "EHLO
 	mailhost.cordelta" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755906Ab1CUXuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 19:50:21 -0400
+	with ESMTP id S1754880Ab1CUXuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 19:50:17 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id 20DDFC066;
-	Tue, 22 Mar 2011 10:46:54 +1100 (EST)
+	by mailhost.cordelta (Postfix) with ESMTP id 371DBC065;
+	Tue, 22 Mar 2011 10:46:46 +1100 (EST)
 X-Virus-Scanned: amavisd-new at mailhost.cordelta
 Received: from mailhost.cordelta ([127.0.0.1])
 	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Tv3Bw39oRcf8; Tue, 22 Mar 2011 10:46:46 +1100 (EST)
+	with ESMTP id v6WWcqchLcAc; Tue, 22 Mar 2011 10:46:38 +1100 (EST)
 Received: from dba.cordelta (unknown [192.168.123.140])
-	by mailhost.cordelta (Postfix) with ESMTP id 91C33C057;
+	by mailhost.cordelta (Postfix) with ESMTP id 3572EC055;
 	Tue, 22 Mar 2011 10:46:38 +1100 (EST)
 X-Mailer: git-send-email 1.7.3.2.846.gf4b062
 In-Reply-To: <1300751400-7427-1-git-send-email-david.barr@cordelta.com>
@@ -42,76 +42,94 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169683>
-
-In the spirit of the last two changes:
-Switch on length and use constcmp for parsing headers with restricted values.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169684>
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: David Barr <david.barr@cordelta.com>
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
- vcs-svn/svndump.c |   40 ++++++++++++++++++++++++++++++----------
- 1 files changed, 30 insertions(+), 10 deletions(-)
+ vcs-svn/repo_tree.c |   24 ++++--------------------
+ vcs-svn/repo_tree.h |    3 +--
+ vcs-svn/svndump.c   |    3 +--
+ 3 files changed, 6 insertions(+), 24 deletions(-)
 
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
+index f2466bc..67d27f0 100644
+--- a/vcs-svn/repo_tree.c
++++ b/vcs-svn/repo_tree.c
+@@ -8,39 +8,23 @@
+ #include "repo_tree.h"
+ #include "fast_export.h"
+ 
+-const char *repo_read_path(const char *path)
++const char *repo_read_path(const char *path, uint32_t *mode_out)
+ {
+ 	int err;
+-	uint32_t dummy;
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+ 	strbuf_reset(&buf);
+-	err = fast_export_ls(path, &dummy, &buf);
++	err = fast_export_ls(path, mode_out, &buf);
+ 	if (err) {
+ 		if (errno != ENOENT)
+ 			die_errno("BUG: unexpected fast_export_ls error");
++		/* Treat missing paths as directories. */
++		*mode_out = REPO_MODE_DIR;
+ 		return NULL;
+ 	}
+ 	return buf.buf;
+ }
+ 
+-uint32_t repo_read_mode(const char *path)
+-{
+-	int err;
+-	uint32_t result;
+-	static struct strbuf dummy = STRBUF_INIT;
+-
+-	strbuf_reset(&dummy);
+-	err = fast_export_ls(path, &result, &dummy);
+-	if (err) {
+-		if (errno != ENOENT)
+-			die_errno("BUG: unexpected fast_export_ls error");
+-		/* Treat missing paths as directories. */
+-		return REPO_MODE_DIR;
+-	}
+-	return result;
+-}
+-
+ void repo_copy(uint32_t revision, const char *src, const char *dst)
+ {
+ 	int err;
+diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
+index af2415c..eb003e6 100644
+--- a/vcs-svn/repo_tree.h
++++ b/vcs-svn/repo_tree.h
+@@ -11,8 +11,7 @@
+ uint32_t next_blob_mark(void);
+ void repo_copy(uint32_t revision, const char *src, const char *dst);
+ void repo_add(const char *path, uint32_t mode, uint32_t blob_mark);
+-const char *repo_read_path(const char *path);
+-uint32_t repo_read_mode(const char *path);
++const char *repo_read_path(const char *path, uint32_t *mode_out);
+ void repo_delete(const char *path);
+ void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
+ 		 uint32_t url, long unsigned timestamp);
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 3ad48e5..7b5b5ec 100644
+index afdfc63..15b173e 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -343,25 +343,45 @@ void svndump_read(const char *url)
- 			}
- 			if (constcmp(t + strlen("Node-"), "kind"))
- 				continue;
--			if (!strcmp(val, "dir"))
-+			switch (strlen(val) + 1) {
-+			case sizeof("dir"):
-+				if (constcmp(val, "dir"))
-+					break;
- 				node_ctx.type = REPO_MODE_DIR;
--			else if (!strcmp(val, "file"))
-+				break;
-+			case sizeof("file"):
-+				if (constcmp(val, "file"))
-+					break;
- 				node_ctx.type = REPO_MODE_BLB;
--			else
-+				break;
-+			default:
- 				fprintf(stderr, "Unknown node-kind: %s\n", val);
-+			}
- 			break;
- 		case sizeof("Node-action"):
- 			if (constcmp(t, "Node-action"))
- 				continue;
--			if (!strcmp(val, "delete")) {
--				node_ctx.action = NODEACT_DELETE;
--			} else if (!strcmp(val, "add")) {
-+			switch (strlen(val) + 1) {
-+			case sizeof("add"):
-+				if (constcmp(val, "add"))
-+					break;
- 				node_ctx.action = NODEACT_ADD;
--			} else if (!strcmp(val, "change")) {
--				node_ctx.action = NODEACT_CHANGE;
--			} else if (!strcmp(val, "replace")) {
-+				break;
-+			case sizeof("change"):
-+				if (!constcmp(val, "change")) {
-+					node_ctx.action = NODEACT_CHANGE;
-+					break;
-+				}
-+				if (constcmp(val, "delete"))
-+					break;
-+				node_ctx.action = NODEACT_DELETE;
-+				break;
-+			case sizeof("replace"):
-+				if (constcmp(val, "replace"))
-+					break;
- 				node_ctx.action = NODEACT_REPLACE;
--			} else {
-+				break;
-+			default:
- 				fprintf(stderr, "Unknown node-action: %s\n", val);
- 				node_ctx.action = NODEACT_UNKNOWN;
- 			}
+@@ -236,8 +236,7 @@ static void handle_node(void)
+ 		old_data = NULL;
+ 	} else if (node_ctx.action == NODEACT_CHANGE) {
+ 		uint32_t mode;
+-		old_data = repo_read_path(node_ctx.dst.buf);
+-		mode = repo_read_mode(node_ctx.dst.buf);
++		old_data = repo_read_path(node_ctx.dst.buf, &mode);
+ 		if (mode == REPO_MODE_DIR && type != REPO_MODE_DIR)
+ 			die("invalid dump: cannot modify a directory into a file");
+ 		if (mode != REPO_MODE_DIR && type == REPO_MODE_DIR)
 -- 
 1.7.3.2.846.gf4b062
