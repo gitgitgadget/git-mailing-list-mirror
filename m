@@ -1,88 +1,90 @@
-From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-Subject: Re: [PATCH] git-submodule: Remove duplicate entries during merge
- with conflict
-Date: Mon, 21 Mar 2011 22:34:31 +0100
-Message-ID: <4D87C467.3090907@morey-chaisemartin.com>
-References: <4D81C1AA.5010008@morey-chaisemartin.com> <7v1v254ma7.fsf@alter.siamese.dyndns.org> <7vhbb1320t.fsf@alter.siamese.dyndns.org> <4D87B51A.4060609@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-completion: Add git help completion for aliases
+Date: Mon, 21 Mar 2011 14:48:10 -0700
+Message-ID: <7vhbawno11.fsf@alter.siamese.dyndns.org>
+References: <4D871972.7080008@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 21 22:41:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
+	lee.marlow@gmail.com, markus.heidelberg@web.de, szeder@ira.uka.de,
+	spearce@spearce.org, bebarino@gmail.com, ted@tedpavlic.com,
+	tlikonen@iki.fi, trast@student.ethz.ch
+To: Jakob Pfender <jpfender@elegosoft.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 22:48:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1mr3-0007GX-3Y
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 22:41:37 +0100
+	id 1Q1my1-0002U4-Q1
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 22:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576Ab1CUVlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 17:41:32 -0400
-Received: from 63.mail-out.ovh.net ([91.121.185.56]:45084 "HELO
-	63.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754399Ab1CUVlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 17:41:31 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Mar 2011 17:41:30 EDT
-Received: (qmail 7561 invoked by uid 503); 21 Mar 2011 22:21:41 -0000
-Received: from b9.ovh.net (HELO mail189.ha.ovh.net) (213.186.33.59)
-  by 63.mail-out.ovh.net with SMTP; 21 Mar 2011 22:21:41 -0000
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 21 Mar 2011 23:34:48 +0200
-Received: from mut38-4-82-233-116-185.fbx.proxad.net (HELO ?10.0.2.12?) (nicolas@morey-chaisemartin.com@82.233.116.185)
-  by ns0.ovh.net with SMTP; 21 Mar 2011 23:34:47 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
-In-Reply-To: <4D87B51A.4060609@web.de>
-X-Ovh-Tracer-Id: 14156783955579625399
-X-Ovh-Remote: 82.233.116.185 (mut38-4-82-233-116-185.fbx.proxad.net)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|U 0.500006/N
+	id S1754648Ab1CUVsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 17:48:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34354 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754583Ab1CUVsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 17:48:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7F60952E0;
+	Mon, 21 Mar 2011 17:50:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TUmd5us+ezORmnyQief6QDdx8mY=; b=FT1W4h
+	oleGwe2eEAuf4m+436Qy+wv7VA0bGhs9P5S7GMV0CxmR45xNgzV2lSM2FEoMKhHp
+	0wnAntr3cTZkgQKdBPaCxi9bXCPrhKQPCie7mIxtvTlUgPVXLNlxcRTHjM+awX/H
+	swOMXOrX5n/PBGhYBEdynYxsMM1o0qmywwDDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sHe/eZ9ZNNc2ZIGqER5uv99c53LDovAw
+	Xn9B0/LPqIkfpBJdMtlf/8I51PFsmYM62YnBn/uY/MRUbnm4oCDSnY5+CbjmYLm7
+	SZDu3tWt57HUqlH5sxDeP8XBExYYI0T28+1TJDpjoqYgWcoDyJgg2bEf3LXq4xtM
+	k7B/8XwHgSo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C62CA52DB;
+	Mon, 21 Mar 2011 17:50:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D9A7352D6; Mon, 21 Mar 2011
+ 17:49:51 -0400 (EDT)
+In-Reply-To: <4D871972.7080008@elegosoft.com> (Jakob Pfender's message of
+ "Mon, 21 Mar 2011 10:25:06 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2EC35E7E-5405-11E0-8EAD-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169674>
 
-On 21/03/2011 21:29, Jens Lehmann wrote:
-> 
->>  - Update should refrain from touching the submodule itself. It may want
->>    to recurse into the submodule of the unmerged one, but people involved
->>    in submodule work should think things through;
-> 
-> I don't think recursing would make any sense here. It might be unknown
-> to what commit the sub-submodules should be updated to if their commits
-> differ in the unmerged branches. So I'd vote for not recursing at all in
-> this case (which is what your patch does).
-> 
+Jakob Pfender <jpfender@elegosoft.com> writes:
 
-After a bit of thinking about the way we use git at my company, there is something that could be done here. It may be completely useless for most people (or maybe even stupid and feel free to enlighten me!)
-We work with continuous integration on two level of git (1 integration which only has submodules and lots of source repositories).
-The usual thing when a user want to push its diff is:
-- commit in the submodules on his branch
-- Update the submodules refs in the integration repo on his branch
-- Pull master 
-- See there are conflicts
-- Blindly pull master in all the conflicted submodules. Push the merge
-- Commit in the integration repo and pray it works !
+> Enable bash completion for "git help <alias>", analogous to "git
+> <alias>", which was already implemented.
+>
+> Signed-off-by: Jakob Pfender <jpfender@elegosoft.com>
+> ---
+>  contrib/completion/git-completion.bash |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash
+> b/contrib/completion/git-completion.bash
+> index 893b771..f9a74d3 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1506,7 +1506,7 @@ _git_help ()
+>  		;;
+>  	esac
+>  	__git_compute_all_commands
+> -	__gitcomp "$__git_all_commands
+> +	__gitcomp "$__git_all_commands $(__git_aliases)
+>  		attributes cli core-tutorial cvs-migration
+>  		diffcore gitk glossary hooks ignore modules
+>  		repository-layout tutorial tutorial-2
 
-Although in the scheme git submodule update by itself does not make much sense. What people actually do is pretty much a git submodule update --merge of the conflicting SHA1 for each submodule.
+This patch may not be _wrong_ per-se, but it it useful in practice?
 
-For the moment we used either ruby scripts or a list of commands that users blindly follows without understanding much of it, and seeing something like that (there's probably a nicest way to do it) in git would be great.
+I dunno.
 
->>  - Status does not have anything to report for an unmerged submodule. It
->>    may want to recurse into the submodule of the unmerged one, but people
->>    involved in submodule work should think things through; and
-> 
-> I do think status does have something to report here. First its job is to
-> list all submodules, so currently unmerged submodules should show up too,
-> and then it tells the user something about the state of the submodule. So
-> I would propose to print a line for the submodule starting with a special
-> character that tells the user the submodule has a merge conflict. We
-> could e.g. use a '*' here (additionally to '-' for uninitialized and '+'
-> for those submodules where the HEAD differs from the commit recorded in
-> the superproject).
-> 
-Being a big user of __git_ps1, my brain now considers '*' has uncached diff and '+' has cached diff. I'd rather have something as 'U' that stands outs. But I like the idea any way !
-
-Nicolas Morey-Chaisemartin
+Don't people usually use aliases so that they do not have to type long
+command names that would need completion?
