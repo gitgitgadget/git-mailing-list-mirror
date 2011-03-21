@@ -1,90 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: brtfs COW links and git
-Date: Mon, 21 Mar 2011 08:00:51 -0400
-Message-ID: <20110321120051.GG16334@sigill.intra.peff.net>
-References: <20110319201532.GA6862@cthulhu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 3/3] rev-list --min-parents,--max-parents: doc and test
+ and completion
+Date: Mon, 21 Mar 2011 13:06:46 +0100
+Message-ID: <4D873F56.1060803@drmicha.warpmail.net>
+References: <cover.1300459016.git.git@drmicha.warpmail.net> <182c5ece22835559a9762e242adb701547cf6575.1300459017.git.git@drmicha.warpmail.net> <20110318194802.GB27825@sigill.intra.peff.net> <4D871401.6020900@drmicha.warpmail.net> <20110321105431.GB16334@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Larry D'Anna <larry@elder-gods.org>
-X-From: git-owner@vger.kernel.org Mon Mar 21 13:01:02 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 21 13:06:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1dnA-0002uc-V9
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:01:01 +0100
+	id 1Q1dsp-0004xd-Tq
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:06:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229Ab1CUMAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 08:00:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50138
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752335Ab1CUMAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 08:00:54 -0400
-Received: (qmail 12576 invoked by uid 107); 21 Mar 2011 12:01:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 08:01:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 08:00:51 -0400
-Content-Disposition: inline
-In-Reply-To: <20110319201532.GA6862@cthulhu>
+	id S1753270Ab1CUMGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 08:06:48 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:55221 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753167Ab1CUMGq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 08:06:46 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BB8B7207EE;
+	Mon, 21 Mar 2011 08:06:45 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Mon, 21 Mar 2011 08:06:45 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ZFaucAprSrC7EgMb2DLpMxO3sBk=; b=DaWpsRph6YACBQ746+XFRY2szxq2TSB1yIbcHNl5i/4vNmmqmhMlnmf+4jMVCxJiNvnWWtyCYBVAFbSllA9NKeYCU/C42LqiD3qzC3eCsF+PsKro/FaOkRNYQ3omr9FDQrqJWqMAvFMvxrbRp9GGoemDgUOlKNx0E8RAWRkffdI=
+X-Sasl-enc: gA8Q344aEnZuUgiAwPHF8+7Cw46VXvgXDdjbWTDlWwo8 1300709205
+Received: from localhost.localdomain (p548593A3.dip0.t-ipconnect.de [84.133.147.163])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E036C4417D3;
+	Mon, 21 Mar 2011 08:06:44 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <20110321105431.GB16334@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169587>
 
-On Sat, Mar 19, 2011 at 04:15:32PM -0400, Larry D'Anna wrote:
+Jeff King venit, vidit, dixit 21.03.2011 11:54:
+> On Mon, Mar 21, 2011 at 10:01:53AM +0100, Michael J Gruber wrote:
+> 
+>>>> +	Show only commits which have at least resp. at most that many
+>>>> +	commits, where `--max-parents=8` denotes infinity (i.e. no upper
+>>>> +	limit). In fact, 7 (or any negative number) does, but 8 is
+>>>> +	infinity sideways 8-)
+>>>
+>>> I didn't quite parse this "resp." in the middle.
+>>
+>> Well, there are two options (--min-parents, --max-parents) which we
+>> describe in one paragraph. Sooo...
+> 
+> I figured out what you were trying to say. I just had never seen the
+> abbreviation "resp." before. I guessed it meant "respectively", but the
+> syntax is all wrong.
+> 
+> Digging around via google, I was able to find that it is a mathematical
+> term with a specific syntax, but one I had never seen before. Maybe I am
+> just clueless and sheltered, but after 30-odd years of reading English
+> (12 of which involved reading academic computer science papers!), I
+> can't help but think it is not all that common and may confuse other
+> readers. Add on top that it is usually used in parentheses, which helps
+> make it more obvious what is going on.
 
-> I wish git could use COW links.  I wish I could put a large binary into git and
-> have the only underlying filesystem operation be to cp --reflink and to save the
-> metadata.  There are a few complications:
+In my community it is very common, which may partly be due to the fact
+that there is a strong proportion of non-native speakers. It took it for
+granted that it's a standard expression.
 
-I have never used reflink, but my understanding is that the proposed
-system call just lets us reflink one entire file. So basically the
-useful points would be:
+> 
+> I really think "Show only commits which have at least (or at most,
+> respectively) that many commits" says the same thing, but is way more
+> accessible.
 
-  1. on "git add", we could reflink the file into the object db
+Sounds good, I'm happy with that. Resend or squash on apply?
 
-  2. on "git checkout", we could reflink the object into the working
-     tree
+> 
+>>> That way it is obvious that "--merges" cancels a previous --min-parents
+>>> on the command line (maybe the text should be "this is an alias for..."
+>>> to make it clear that doing it is exactly the same).
+>>
+>> Yes, that is helpful. I have doubts about "alias" for. Without wanting
+>> to sound elitist or something, I have the impression that we start
+>> catering for users who understand "equivalent" more reliably than "alias".
+> 
+> I just wanted to make sure people didn't think "equivalent" meant "has a
+> similar effect to" as opposed to "is exactly as if you did". But reading
+> it again, I think "equivalent" is fine, and I see you picked it up in
+> the latest series.
 
-The biggest stumbling block is that the object db does not currently
-hold unadorned files. They have an object type and size header at the
-beginning, and I believe even uncompressed files are stored with a zlib
-header. So it would require a completely new section of the object db to
-store these files (as opposed to the current loose objects and
-packfiles).
+I may be wrong about what is common in this case, too. For me, "alias"
+is foremost a technical term, and I would guess that many non-native
+speaker know "alias" either in the technical sense or not at all, but
+not so much in the common English sense. But either way is fine.
 
-Note also that during "git add" we will need to get the sha1 of the
-data. So you'll still have to pull all the data from disk, though not
-making a copy will save some space and time.
-
-I'm not very knowledgeable on the current state of such things, but
-is there any automatic de-duplication in btrfs? If so, does it depend on
-data being at the same offsets within files?
-
-> How does it know which files to reflink?  attributes?  a size limit?
-
-Probably supporting both would make sense.
-
-> What does git gc do with reflinks?
-
-If we had a "giant literal blobs" section of the object database, we
-would not want to pack those objects during a regular gc. It would kill
-your reflink, but also there's just no point in copying some gigantic
-file into a pack where it won't actually be delta-compressed.
-
-> Should diff-delta be reflink-aware?  Perhaps it could query the fs for
-> blocklists.
-
-Wouldn't it just be sharing underlying data between the working tree and
-the object database? How would that help us make deltas between objects?
-
-> Before I dive into implementing this, I'd like to get your comments and advice,
-> to maximize the chances of success.
-
-I'm not exactly clear on what you want to implement.
-
--Peff
+Michael
