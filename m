@@ -1,78 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] bisect: visualize with git-log if gitk is unavailable
-Date: Mon, 21 Mar 2011 09:14:22 -0400
-Message-ID: <20110321131422.GA24382@sigill.intra.peff.net>
-References: <AANLkTinS87obXcgbcFZ8L-UjZUQL96SzpHp84Y6-yX6v@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Getting started with git
+Date: Mon, 21 Mar 2011 08:59:31 -0500
+Message-ID: <20110321135931.GA3367@elie>
+References: <AANLkTinkuSJBvftDCh8++UyV5Wc=sMRr1+vc8WbeFYMs@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Maxin john <maxin@maxinbjohn.info>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 14:14:31 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Kalle Launiala <kalle.launiala@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 14:59:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1ewJ-0002Cj-8T
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 14:14:31 +0100
+	id 1Q1fe4-0007Aq-AC
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 14:59:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385Ab1CUNO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 09:14:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56935
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753334Ab1CUNOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 09:14:25 -0400
-Received: (qmail 13550 invoked by uid 107); 21 Mar 2011 13:15:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 09:15:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 09:14:22 -0400
+	id S1752924Ab1CUN7j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 09:59:39 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:34859 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751173Ab1CUN7i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 09:59:38 -0400
+Received: by mail-iy0-f174.google.com with SMTP id 26so6403220iyb.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 06:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=toTmHrbLnmIoSnfkmRxuKVOFsREawgCGwJMuuQpkq8c=;
+        b=xGu+8g2ydWFqwxR/vs4WYJrpSav8K3C9SkaeR4OIJm/gGed6EJz9p4fz6Zknff7lKT
+         fGThZhcUgukg3EFTDLNdCOPDldMfUFi5fya1wqUWiRLlPql6I3ZhQK6WcvF+vFW4bzki
+         ps3UhuhNBp70iIAvDhua94w0LpwZiMrTzfZ0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Iq0QKQjzlU1A0qGwsKIrcBJzWrV+jsJrZNydxGATh6Ynfun/AnyBSD/rykyhQb7KuC
+         88v/xWGBWeGVsICft+Op/c7GCjoT0dVynLBbqF7YlkjUacdcJIoOMAicweluEJFk8KGp
+         cb24K5EfBsq6fQELZYU62TSNKO2PmbY45K2T8=
+Received: by 10.42.221.196 with SMTP id id4mr6897873icb.141.1300715977128;
+        Mon, 21 Mar 2011 06:59:37 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id wf3sm3993539icb.21.2011.03.21.06.59.35
+        (version=SSLv3 cipher=OTHER);
+        Mon, 21 Mar 2011 06:59:36 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTinS87obXcgbcFZ8L-UjZUQL96SzpHp84Y6-yX6v@mail.gmail.com>
+In-Reply-To: <AANLkTinkuSJBvftDCh8++UyV5Wc=sMRr1+vc8WbeFYMs@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169594>
 
-If gitk is not available in the PATH, bisect ends up
-exiting with the shell's 127 error code, confusing the git
-wrapper into thinking that bisect is not a git command.
+Hi!
 
-We already fallback to git-log if there doesn't seem to be a
-graphical display available. We should do the same if gitk
-is not available in our PATH at all. This not only fixes the
-ugly error message, but is a much more sensible default than
-failing to show the user anything.
+Kalle Launiala wrote:
 
-Reported by Maxin John.
+> [Subject: Industrywide breakthrough innovation - Git as a key role of=
+ distribution]
+[30 lines of filler]
+> =3D=3D=C2=A0End of Disclaimer.
 
-Tested-by: Maxin B. John <maxin@maxinbjohn.info>
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-bisect.sh |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+Please don't do that.  Most of your audience isn't going to get
+past that.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index c21e33c..415a8d0 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -288,10 +288,12 @@ bisect_visualize() {
- 
- 	if test $# = 0
- 	then
--		case "${DISPLAY+set}${SESSIONNAME+set}${MSYSTEM+set}${SECURITYSESSIONID+set}" in
--		'')	set git log ;;
--		set*)	set gitk ;;
--		esac
-+		if test -n "${DISPLAY+set}${SESSIONNAME+set}${MSYSTEM+set}${SECURITYSESSIONID+set}" &&
-+		   type gitk >/dev/null 2>&1; then
-+			set gitk
-+		else
-+			set git log
-+		fi
- 	else
- 		case "$1" in
- 		git*|tig) ;;
--- 
-1.7.2.5.22.g853c5
+> However in this post I am simply asking help to understand Git
+> properly
+
+Are you a programmer?  I'd recommend starting with
+
+ http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html
+
+and moving on to
+
+ http://www.kernel.org/pub/software/scm/git/docs/gittutorial-2.html
+
+and
+
+ http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#hacki=
+ng-git
+
+Hope that helps,
+Jonathan
