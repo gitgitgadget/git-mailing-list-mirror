@@ -1,78 +1,186 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-submodule: Remove duplicate entries during merge
- with conflict
-Date: Mon, 21 Mar 2011 21:53:27 +0100
-Message-ID: <4D87BAC7.4010505@web.de>
-References: <4D81C1AA.5010008@morey-chaisemartin.com> <7v1v254ma7.fsf@alter.siamese.dyndns.org> <7vhbb1320t.fsf@alter.siamese.dyndns.org> <4D870FAB.4050307@morey-chaisemartin.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: cherry-pick applies some other changes than the specified one?
+Date: Mon, 21 Mar 2011 13:54:31 -0700
+Message-ID: <7vsjugnqig.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
+ <7vwrjssbfk.fsf@alter.siamese.dyndns.org> <4D877FAD.9000807@viscovery.net>
+ <4D879516.3060204@gmail.com> <20110321195846.GA4277@elie>
+ <4D87B00D.2010905@gmail.com> <7v62rcp6m6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: devel-git@morey-chaisemartin.com
-X-From: git-owner@vger.kernel.org Mon Mar 21 21:53:43 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 21 21:55:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1m6d-0007h1-2i
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 21:53:39 +0100
+	id 1Q1m7q-0008Iy-RB
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 21:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754289Ab1CUUxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 16:53:35 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:40114 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753609Ab1CUUxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 16:53:33 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 6B34B18A3A3E6;
-	Mon, 21 Mar 2011 21:53:27 +0100 (CET)
-Received: from [93.240.120.88] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Q1m6R-0005fX-00; Mon, 21 Mar 2011 21:53:27 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <4D870FAB.4050307@morey-chaisemartin.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19Bz3JfGzCLp871FSgE+D8WBUjsb0yucfmqWOJY
-	QrT/GTGJBiNn9YTInZnGMOlApbYnO3bQ/NVlTlXoVgQkBr3N7q
-	KPzaI2MEREfMpzywjsng==
+	id S1754529Ab1CUUyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 16:54:49 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36711 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754313Ab1CUUyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 16:54:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6B1294C52;
+	Mon, 21 Mar 2011 16:56:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w/tZcDOZD+lMfsqKDLk81QR510w=; b=Dxfzro
+	/xBFcPerNfDGHO0qR655MwAfVEPe9R+qrk1irZsqAurThCyqNS0riij7bgOOcjD9
+	GKX9iXZHy6UTC/82SQ9NpofO1DSjyxHe0IQpzMB6qvoVhRM7ERinAVIBuKX5iBVa
+	pkK0zKFWzrVKNLU8xzaAc6LqxizdYxh+kgTrE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rHHXzVx8+lDWnE6sKGzQywicYB16yKrc
+	/WjoqKAg0nXu+WSy4t/BCS63NnGS+XU4lD0hiPgdvMEi6MUbrWzks+mLSUYb0O2W
+	tMyXZRaF8H1GaTFHEq2zEL+bnwtLczTmg7hoqi9SzUO94Occ35NypHcTMBg7i9fP
+	dhtontkyq6E=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 27D274C4D;
+	Mon, 21 Mar 2011 16:56:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 834704C4A; Mon, 21 Mar 2011
+ 16:56:12 -0400 (EDT)
+In-Reply-To: <7v62rcp6m6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 21 Mar 2011 13:21:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AAEF12B6-53FD-11E0-8AA3-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169670>
 
-Am 21.03.2011 09:43, schrieb Nicolas Morey-Chaisemartin:
-> I agree that the actual behavior of status is definitely wrong and it should be changed.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yup.
+>> Thanks, didn't know about that (and it's not documented in diff man page).
+>
+> These "compare a particular stage against working tree file" modes
+> only make sense when you are comparing the index and the working tree, so
+> the description is in "git diff-files" manpage but hasn't been ported to
+> the documentation of generic "git diff" frontend.
+>
+> Perhaps we should.
 
-> But I think there needs to be a simple way for a user to know whats happening to a conflicted submodule.
-> When merging a file, editing the conflicting area in the code is often enough.
-> For a submodule, I think the user needs an easy access to which branch used what SHA1.
+And here is a quick attempt to do so.
 
-You can see the sha1s using "git diff":
+This just leaves the details of what -c/--cc are about to the combined
+diff format section in diff-generate-patch.txt, which I updated in the
+separate patch.
 
-diff --cc submod
-index bd4cfe7,7128fbd..0000000
---- a/submod
-+++ b/submod
+ Documentation/diff-options.txt   |   31 +++++++++++++++++++++++++++++++
+ Documentation/git-diff-files.txt |   19 -------------------
+ Documentation/git-diff-tree.txt  |   20 --------------------
+ 3 files changed, 31 insertions(+), 39 deletions(-)
 
-(But the sha1s don't tell you much about what differing commits you
-have in the submodule branches, which would be really helpful for
-deciding how to solve the merge conflict. Unfortunately "git diff
---submodule" doesn't work for merge conflicts yet, another issue on
-my ToDo-list ...)
-
-> Git submodule status is probably not the right place to do that.
-
-I agree.
-
-> git ls-files --stage allows that but it's not part of the standard porcelain commands...
-
-And it shows you three sha1s, one of them being the current state of
-the submodule. Me thinks the output of "git diff" is easier to digest.
-
-> I'll check/test the patch you proposed as soon as possible and repost it if it's allright !
-
-Cool!
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index c93124b..19ce302 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -24,6 +24,37 @@ ifndef::git-format-patch[]
+ --patch::
+ 	Generate patch (see section on generating patches).
+ 	{git-diff? This is the default.}
++
++-1 --base::
++-2 --ours::
++-3 --theirs::
++-0::
++	These make sense only when comparing the index and the working
++	tree (i.e. `git diff-files` or `git diff <path>...`) and compares
++	against the "base" version, "our branch" or "their
++	branch" respectively.  With these options, diffs for
++	merged entries are not shown.
+++
++The default is to diff against our branch (-2) and the
++cleanly resolved paths.  The option -0 can be given to
++omit diff output for unmerged entries and just show "Unmerged".
++
++-c::
++--cc::
++	Produce "combined diff" (and "dense combined diff" showing how the
++	result is different compared to more than one original.
+++
++When used in showing a merge commit (i.e. `git show <merge>`, 
++`git diff-tree <merge>` or when feeding a merge commit
++to `git diff-tree --stdin`), compare the parent commits of the
++merge with the merge commit.
+++
++When used in comparison between the index and the working tree
++(i.e. `git diff` during a conflicted merge or rebase),
++compare stage 2 (our branch), stage 3 (their
++branch) and the working tree file and outputs a combined
++diff.
++
+ endif::git-format-patch[]
+ 
+ -U<n>::
+diff --git a/Documentation/git-diff-files.txt b/Documentation/git-diff-files.txt
+index 8d48194..82d2e2e 100644
+--- a/Documentation/git-diff-files.txt
++++ b/Documentation/git-diff-files.txt
+@@ -21,25 +21,6 @@ OPTIONS
+ -------
+ include::diff-options.txt[]
+ 
+--1 --base::
+--2 --ours::
+--3 --theirs::
+--0::
+-	Diff against the "base" version, "our branch" or "their
+-	branch" respectively.  With these options, diffs for
+-	merged entries are not shown.
+-+
+-The default is to diff against our branch (-2) and the
+-cleanly resolved paths.  The option -0 can be given to
+-omit diff output for unmerged entries and just show "Unmerged".
+-
+--c::
+---cc::
+-	This compares stage 2 (our branch), stage 3 (their
+-	branch) and the working tree file and outputs a combined
+-	diff, similar to the way 'diff-tree' shows a merge
+-	commit with these flags.
+-
+ -q::
+ 	Remain silent even on nonexistent files
+ 
+diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
+index 4e5f127..ebcfcfb 100644
+--- a/Documentation/git-diff-tree.txt
++++ b/Documentation/git-diff-tree.txt
+@@ -88,26 +88,6 @@ include::pretty-options.txt[]
+ 	'git diff-tree' outputs a line with the commit ID when
+ 	applicable.  This flag suppressed the commit ID output.
+ 
+--c::
+-	This flag changes the way a merge commit is displayed
+-	(which means it is useful only when the command is given
+-	one <tree-ish>, or '--stdin').  It shows the differences
+-	from each of the parents to the merge result simultaneously
+-	instead of showing pairwise diff between a parent and the
+-	result one at a time (which is what the '-m' option does).
+-	Furthermore, it lists only files which were modified
+-	from all parents.
+-
+---cc::
+-	This flag changes the way a merge commit patch is displayed,
+-	in a similar way to the '-c' option. It implies the '-c'
+-	and '-p' options and further compresses the patch output
+-	by omitting uninteresting hunks whose the contents in the parents
+-	have only two variants and the merge result picks one of them
+-	without modification.  When all hunks are uninteresting, the commit
+-	itself and the commit log message is not shown, just like in any other
+-	"empty diff" case.
+-
+ --always::
+ 	Show the commit itself and the commit log message even
+ 	if the diff itself is empty.
