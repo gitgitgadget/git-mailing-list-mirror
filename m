@@ -1,132 +1,83 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [bug] git checkout lies about number of ahead commits when
- switching from detached HEAD
-Date: Mon, 21 Mar 2011 06:35:49 -0400
-Message-ID: <20110321103549.GA16334@sigill.intra.peff.net>
-References: <4D8525C9.2060203@gmail.com>
- <20110319222852.GB7116@sigill.intra.peff.net>
- <20110319224726.GC7116@sigill.intra.peff.net>
- <7vy64avdba.fsf@alter.siamese.dyndns.org>
- <20110320090111.GA15641@sigill.intra.peff.net>
- <7vd3llwrah.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 3/3] rev-list --min-parents,--max-parents: doc and test
+ and completion
+Date: Mon, 21 Mar 2011 06:54:31 -0400
+Message-ID: <20110321105431.GB16334@sigill.intra.peff.net>
+References: <cover.1300459016.git.git@drmicha.warpmail.net>
+ <182c5ece22835559a9762e242adb701547cf6575.1300459017.git.git@drmicha.warpmail.net>
+ <20110318194802.GB27825@sigill.intra.peff.net>
+ <4D871401.6020900@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 11:35:58 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 21 11:54:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1cSr-0007eB-DY
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 11:35:57 +0100
+	id 1Q1cl1-0007PS-23
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 11:54:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869Ab1CUKfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 06:35:53 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41420
+	id S1753171Ab1CUKyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 06:54:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52288
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752521Ab1CUKfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 06:35:51 -0400
-Received: (qmail 11910 invoked by uid 107); 21 Mar 2011 10:36:28 -0000
+	id S1753087Ab1CUKyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 06:54:37 -0400
+Received: (qmail 12049 invoked by uid 107); 21 Mar 2011 10:55:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 06:36:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 06:35:49 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 06:55:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 06:54:31 -0400
 Content-Disposition: inline
-In-Reply-To: <7vd3llwrah.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <4D871401.6020900@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169580>
 
-On Sun, Mar 20, 2011 at 12:00:38PM -0700, Junio C Hamano wrote:
+On Mon, Mar 21, 2011 at 10:01:53AM +0100, Michael J Gruber wrote:
 
-> "Let the one that has more information to do the clearing" is not about
-> performance but about correctness and reusability potential.
+> >> +	Show only commits which have at least resp. at most that many
+> >> +	commits, where `--max-parents=8` denotes infinity (i.e. no upper
+> >> +	limit). In fact, 7 (or any negative number) does, but 8 is
+> >> +	infinity sideways 8-)
+> > 
+> > I didn't quite parse this "resp." in the middle.
 > 
-> When you insert a new traversal B in the existing codeflow before another
-> traversal C, B knows not just which commits it started from (hence knows
-> which commits were marked by it), but more importantly it also knows what
-> mark bits were potentially modified. If the existing codeflow had another
-> traversal A before you added B, and C took the marks A left on the objects
-> into account while doing its work, the only sensible clean-up is to clear
-> marks B touched (and no other marks) immediately after B, and we obviously
-> do not want C (and any later traversals in other codepaths that we may
-> later want to insert B) to have too much knowledge of which marks may have
-> been clobbered by B.
+> Well, there are two options (--min-parents, --max-parents) which we
+> describe in one paragraph. Sooo...
 
-I see what you are saying, but from a software engineering perspective,
-I doubt it works very well in practice. The commit flags are basically
-global variables. So imagine you have two traversals, A and C, and C
-cares about some intermediate result from A. You want to add a new one,
-B, in between the two, and have it clean up after itself. This is going
-to work only if one of the two is the case:
+I figured out what you were trying to say. I just had never seen the
+abbreviation "resp." before. I guessed it meant "respectively", but the
+syntax is all wrong.
 
-  1. B does not use any of the same marks as A. Otherwise, it will end
-     up clearing part of A's result during cleanup (not to mention that
-     it may get a bogus result because of what was left from A).
+Digging around via google, I was able to find that it is a mathematical
+term with a specific syntax, but one I had never seen before. Maybe I am
+just clueless and sheltered, but after 30-odd years of reading English
+(12 of which involved reading academic computer science papers!), I
+can't help but think it is not all that common and may confuse other
+readers. Add on top that it is usually used in parentheses, which helps
+make it more obvious what is going on.
 
-  2. B works on a totally disjoint set of history from A and C.
+I really think "Show only commits which have at least (or at most,
+respectively) that many commits" says the same thing, but is way more
+accessible.
 
-I don't think (1) is that realistic in the general case. Sure, you might
-only want to use TMP_MARK. But the revision walker behind the scenes is
-using SEEN and UNINTERESTING, which is going to bring you into conflict.
-
-For (2), there are cases where it works. In this recent bug, for
-example, it would sometimes produce the correct results depending on the
-exact traversal done in the orphan-warning (e.g., if you were exploring
-way back in history near a tag, the traversal wouldn't come near the
-commits needed to get the tracking info for the new branch).
-
-But you can only know that it's a reasonable thing to do if you manually
-analyze A, B, and C as a set, and even then only if you can know pretty
-specifically what the inputs are. So there's no modularity, and in any
-reasonably complex case you are not going to have enough control of the
-inputs to be sure it isn't buggy.
-
-So in my mind, the only way to keep sanity is to never insert a "B"
-between an A and C who care about each other's results. And unless you
-are specifically depending on a previous walk, each walk will want all
-marks cleared (whether it's because the previous walker cleaned up, or
-because we are clearing them before starting).
-
-
-This whole global marks thing is really pretty nasty when you come right
-down to it. I know why we do it; it's faster to dereference the pointer
-rather than looking up the flags in some external per-revision-walker
-hash table. But I wonder if we could come up with something else close
-to it in speed that would allow per-walker flags.
-
-We allocate commits from a custom allocator pool. I wonder if we could
-use the offset from the commit pointer to the pool base to assign an
-index to each commit, and then use that index to access an array of
-flags in struct rev_info. There are a few problems:
-
-  1. Our allocator has many pools, and we don't know which one is the
-     right base. So I don't think the offset thing works, and we would
-     be stuck assigning some index into each allocated object.
-
-  2. We'd have to grow the rev_info array dynamically. The growth itself
-     is probably not a huge deal, as its amortized constant effort. But
-     on each flag access we'd have to do a bounds-check. I don't know if
-     that would be measurable or not.
-
-> > So how about this?
-> >
-> >   [1/3]: checkout: add basic tests for detached-orphan warning
-> >   [2/3]: checkout: clear commit marks after detached-orphan check
-> >   [3/3]: checkout: tweak detached-orphan warning format
+> > That way it is obvious that "--merges" cancels a previous --min-parents
+> > on the command line (maybe the text should be "this is an alias for..."
+> > to make it clear that doing it is exactly the same).
 > 
-> Looks very sensible, except for the clear_marks(-1) that clears everything
-> I have a slight doubt about.
+> Yes, that is helpful. I have doubts about "alias" for. Without wanting
+> to sound elitist or something, I have the impression that we start
+> catering for users who understand "equivalent" more reliably than "alias".
 
-I can change it to UNINTERESTING. As far as I can tell, that is the only
-one set by prepare_revision_walk. It just felt like a leaky abstraction
-for this code to have to know which flags might get set by the
-underlying code. But obviously callers do need to know and care which
-flags might be set and when.
+I just wanted to make sure people didn't think "equivalent" meant "has a
+similar effect to" as opposed to "is exactly as if you did". But reading
+it again, I think "equivalent" is fine, and I see you picked it up in
+the latest series.
 
 -Peff
