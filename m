@@ -1,122 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH ] "git bisect visualize" results in an invalid error if
- "gitk" is not installed
-Date: Mon, 21 Mar 2011 07:29:32 -0400
-Message-ID: <20110321112932.GF16334@sigill.intra.peff.net>
-References: <AANLkTi=HJjqrvv-PFO3VjhrHzBsLZmAbN0yU47WScWd_@mail.gmail.com>
+Subject: Re: brtfs COW links and git
+Date: Mon, 21 Mar 2011 08:00:51 -0400
+Message-ID: <20110321120051.GG16334@sigill.intra.peff.net>
+References: <20110319201532.GA6862@cthulhu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Maxin john <maxin@maxinbjohn.info>
-X-From: git-owner@vger.kernel.org Mon Mar 21 12:29:49 2011
+Cc: git@vger.kernel.org
+To: Larry D'Anna <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Mon Mar 21 13:01:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1dIu-0006Qp-3o
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 12:29:44 +0100
+	id 1Q1dnA-0002uc-V9
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:01:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196Ab1CUL3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 07:29:40 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58814
+	id S1753229Ab1CUMAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 08:00:54 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50138
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752628Ab1CUL3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 07:29:38 -0400
-Received: (qmail 12327 invoked by uid 107); 21 Mar 2011 11:30:12 -0000
+	id S1752335Ab1CUMAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 08:00:54 -0400
+Received: (qmail 12576 invoked by uid 107); 21 Mar 2011 12:01:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 07:30:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 07:29:32 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 08:01:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 08:00:51 -0400
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=HJjqrvv-PFO3VjhrHzBsLZmAbN0yU47WScWd_@mail.gmail.com>
+In-Reply-To: <20110319201532.GA6862@cthulhu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169586>
 
-On Sun, Mar 20, 2011 at 11:10:55PM +0200, Maxin john wrote:
+On Sat, Mar 19, 2011 at 04:15:32PM -0400, Larry D'Anna wrote:
 
-> While using "git bisect visualize" on my PC running Ubuntu 10.10, I
-> came across this error:
-> 
-> $ git bisect visualize
-> eval: 1: gitk: not found
-> git: 'bisect' is not a git command. See 'git --help'.
-> 
-> Did you mean this?
-> 	bisect
-> $
+> I wish git could use COW links.  I wish I could put a large binary into git and
+> have the only underlying filesystem operation be to cp --reflink and to save the
+> metadata.  There are a few complications:
 
-Yuck. Definitely non-optimal.
+I have never used reflink, but my understanding is that the proposed
+system call just lets us reflink one entire file. So basically the
+useful points would be:
 
-> diff --git a/git-bisect.sh b/git-bisect.sh
-> index c21e33c..fefe212 100755
-> --- a/git-bisect.sh
-> +++ b/git-bisect.sh
-> @@ -290,7 +290,8 @@ bisect_visualize() {
->         then
->                 case
-> "${DISPLAY+set}${SESSIONNAME+set}${MSYSTEM+set}${SECURITYSESSIONID+set}"
-> in
->                 '')     set git log ;;
-> -               set*)   set gitk ;;
-> +               set*)   is_gitk_present
-> +                       set gitk ;;
->                 esac
+  1. on "git add", we could reflink the file into the object db
 
-The point of this code is to use "gitk" if we can (i.e., if we have a
-grahpical display of some sort), and "git log" otherwise. Shouldn't "we
-are missing gitk" also cause us to fallback to using "git log"? IOW,
-something like:
+  2. on "git checkout", we could reflink the object into the working
+     tree
 
-  if test -n "${DISPLAY+set}..." && is_gitk_present; then
-    set gitk
-  else
-    set git log
-  fi
+The biggest stumbling block is that the object db does not currently
+hold unadorned files. They have an object type and size header at the
+beginning, and I believe even uncompressed files are stored with a zlib
+header. So it would require a completely new section of the object db to
+store these files (as opposed to the current loose objects and
+packfiles).
 
-> +is_gitk_present () {
-> +       GIT_GITK=$(which gitk)
-> +       test -n "$GIT_GITK" || {
-> +               echo >&2 "Cannot find 'gitk' in the PATH"
-> +               exit 1
-> +       }
-> +}
+Note also that during "git add" we will need to get the sha1 of the
+data. So you'll still have to pull all the data from disk, though not
+making a copy will save some space and time.
 
-I don't think this is a portable use of which. In particular, I seem to
-recall SunOS which printing some junk to stderr like "no foo in /bin
-/usr/bin etc...". I think it even then returns a successful exit code,
-just to make it totally useless.
+I'm not very knowledgeable on the current state of such things, but
+is there any automatic de-duplication in btrfs? If so, does it depend on
+data being at the same offsets within files?
 
-I think we tend to use the shell's "type" builtin for this, which has a
-usable exit code.
+> How does it know which files to reflink?  attributes?  a size limit?
 
-So the patch would look like:
+Probably supporting both would make sense.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index c21e33c..3b3156f 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -288,10 +288,12 @@ bisect_visualize() {
- 
- 	if test $# = 0
- 	then
--		case "${DISPLAY+set}${SESSIONNAME+set}${MSYSTEM+set}${SECURITYSESSIONID+set}" in
--		'')	set git log ;;
--		set*)	set gitk ;;
--		esac
-+		if test -n "${DISPLAY+set}${SESSIONNAME+set}${MSYSTEM+set}${SECURITYSESSIONID+set}" &&
-+		   type gitk >/dev/null 2>&1; then
-+			set gitk
-+		else
-+			set git log
-+		fi
- 	else
- 		case "$1" in
- 		git*|tig) ;;
+> What does git gc do with reflinks?
 
-but I didn't test it at all.
+If we had a "giant literal blobs" section of the object database, we
+would not want to pack those objects during a regular gc. It would kill
+your reflink, but also there's just no point in copying some gigantic
+file into a pack where it won't actually be delta-compressed.
+
+> Should diff-delta be reflink-aware?  Perhaps it could query the fs for
+> blocklists.
+
+Wouldn't it just be sharing underlying data between the working tree and
+the object database? How would that help us make deltas between objects?
+
+> Before I dive into implementing this, I'd like to get your comments and advice,
+> to maximize the chances of success.
+
+I'm not exactly clear on what you want to implement.
 
 -Peff
