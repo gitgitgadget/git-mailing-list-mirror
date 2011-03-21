@@ -1,74 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 2/3] revision.c: introduce --min-parents and
- --max-parents
-Date: Mon, 21 Mar 2011 10:45:53 -0700
-Message-ID: <7v8vw8qsdq.fsf@alter.siamese.dyndns.org>
-References: <4D870157.2070309@drmicha.warpmail.net>
- <41d12c53966faa9c9cb5acc7646e9098dcd911ea.1300702130.git.git@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] rev-list --min-parents,--max-parents: doc and test
+ and completion
+Date: Mon, 21 Mar 2011 12:49:17 -0500
+Message-ID: <20110321174917.GA8202@elie>
+References: <cover.1300459016.git.git@drmicha.warpmail.net>
+ <182c5ece22835559a9762e242adb701547cf6575.1300459017.git.git@drmicha.warpmail.net>
+ <20110318211418.GA23407@elie>
+ <4D8711DD.2040407@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Mar 21 18:46:15 2011
+X-From: git-owner@vger.kernel.org Mon Mar 21 18:49:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1jBF-0005oo-MG
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 18:46:14 +0100
+	id 1Q1jEQ-0007Kf-T9
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 18:49:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425Ab1CURqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 13:46:08 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38345 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751693Ab1CURqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 13:46:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BA7494186;
-	Mon, 21 Mar 2011 13:47:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZsUGlCyU8I+LgzobauAIGgngBco=; b=GkQq9H
-	Qv7LB+8kofqkotvZ81DXeTqBmZBIDmfSX4Kh/EPFs34xuJ3WpJAKN41F/LmaEjpZ
-	Di4yaSdXmA4ANhFAZQO0qG8HQt4VZQpyqe646MSju/H01uclETgKGGJJUDk359uN
-	+gUR3JWEHjphBre17tCURT4whCUJHiErkbdWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GBbeKEnKutgYgP8+jUwneW/XoV0Kqe7B
-	EfEx8D9QmckNuT9JHNhD1pohrnOJNXKiZx1gGK2/hc09KlgCPli9CouWwvRa+rbR
-	vzgkVk+Zi+oPtdqR72tJuQVtMxUz9Lb/Ga8DTZgstxDqqhNZrziwj7fkm3nHtfbx
-	/lzHEF4MJ9Y=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 76EC44182;
-	Mon, 21 Mar 2011 13:47:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2AEF24180; Mon, 21 Mar 2011
- 13:47:32 -0400 (EDT)
-In-Reply-To: <41d12c53966faa9c9cb5acc7646e9098dcd911ea.1300702130.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Mon, 21 Mar 2011 11:14:06 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4FE307CA-53E3-11E0-B5C2-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1752348Ab1CURt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 13:49:26 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:59978 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752604Ab1CURtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 13:49:25 -0400
+Received: by yia27 with SMTP id 27so2531368yia.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 10:49:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=2738CaekVyCWXidOIuV5C4r9/ZC7/rq6Ou7zu+O3RtQ=;
+        b=axvXvPZslGNAP6dT4SsEPOo7f2X1LgRTcMQqknYVhyVNbaLTqcAaJsQicoHlw69ad/
+         DQfEZVQUxU6sfp3wZLH6mFYTBoBn6A+4obv4Y3yKA1q1fIqBCBEdRJPXnhLE04VjyCxy
+         KsoOfo6HGp9zorXoUreooZL3dSfTO+WjP5nQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XLY/MsTyEjGpE0/XwmzTH2GMXfc5PwvbhgBK54kvSXqId82//PHfoSGQNzZEHFVm+w
+         q5nt963Xy34uJI9xPA3OTOWYxrM/jI4mPvvXL0IJ3UVscgxEeMJQy75aFPVLfnx3nQeC
+         TmqCzoMNdOQ83JhVMbSB+oA6my6uPLNRtDQxQ=
+Received: by 10.90.19.40 with SMTP id 40mr4114729ags.77.1300729763316;
+        Mon, 21 Mar 2011 10:49:23 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.ameritech.net [69.209.56.53])
+        by mx.google.com with ESMTPS id w6sm7758270anf.6.2011.03.21.10.49.21
+        (version=SSLv3 cipher=OTHER);
+        Mon, 21 Mar 2011 10:49:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D8711DD.2040407@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169619>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Michael J Gruber wrote:
 
-> Implementation note:
+> Come on, with a cover-letter saying doc and tests are in 3/3, how much
+> effort is it to read that before 1/3 if you care?
+
+Nonzero.  Now multiply that by the number of people who are going to
+look at the history over the years.
+
+> The tests are bogus before the code and the doc pointless before it.
 >
-> We compute the number of parents only when we limit by that, so there
-> is no performance impact when there are no limiters.
+> Squashing 1 and 3 is okay, of course. For my own digestion, smaller
+> bites are better.
 
-Only about 16% of the commits in git.git (and 7% in the kernel) are two
-parent merges and the rest are mostly single strand of pearls, so even the
-cost of counting all the parents in a loop that does not exit early when
-it reaches max-parents limit should be negligible, and checking against
-max-parents in each iteration would probably costs even more.
+The reason I mentioned the possibility of docs and tests before
+implementation is that that can be a good way to get feedback on the
+design of something when the implementation is not even ready yet.
+Which doesn't apply hear, of course.
 
-So I think this is a good to go.
+Anyway, I don't care too much about this, but I wanted to make the
+convention clear (if I have understood it correctly, at least).
 
-Thanks.
+>>    Avoiding the for loop means errors from 'echo' before the last
+>>    iteration are not ignored; a more verbose way to write the same
+>
+> Do we really need to safe-guard echo and prints?
+
+No; sorry about that.  I get worried about for loops because they
+have a tendency to start using git commands later, but I shouldn't
+have mentioned it.
+
+> Thanks for both of the above, that makes things much better. Although I
+> have to treat the case with empty rev-list specially now, or use the
+> verbose version.
+
+Sorry I missed it; good catch.  I don't recommend
+
+	printf ${1+'%s\n' "$@"}
+
+> Dodeka, really? I leave that to you.
+> I might add a tetrapus, though.
+
+I meant "greater than eight", since it seemed like a test that in
+some alternate universe could fail.  I'll write a test on top.
+
+(Dodecapus comes from [1].)
+http://thread.gmane.org/gmane.comp.version-control.git/15486 )I mentioned dodecapus
+
+> wins against? Against itself, i.e. it overrides previous occurences. But
+> I'll separate these.
+
+Thanks.  The details weren't important.
+
+>> 	test_expect_failure '--max-parents=gobbledegood errors out' '
+>> 		...
+>> 	'
+>
+> I don't really want to parse for the string "infinity" nor go for strtol
+> instead of atoi. Why shouldn't something "unparseable" be 0?
+
+Three reasons:
+
+ 1) why shouldn't it be -1 or 27?  When in doubt, it's best to let
+    the operator know so she can specify what is wanted unambiguously.
+ 2) to catch typos on the commandline and bugs in scripts
+ 3) less importantly, erroring out makes it less likely someone is
+    going to rely on it (since we didn't point out their typo) and
+    thus makes future extensions easier
+
+Thanks again.  Now to look at v2. :)
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/15486
