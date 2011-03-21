@@ -1,84 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Meaning of double + and - in Gitk's diff pane
-Date: Mon, 21 Mar 2011 12:37:38 -0700
-Message-ID: <7vr5a0p8n1.fsf@alter.siamese.dyndns.org>
-References: <4D879B25.9090300@dirk.my1.cc>
+Subject: Re: [PATCH 1/2] diff/status: refactor opportunistic index update
+Date: Mon, 21 Mar 2011 12:39:35 -0700
+Message-ID: <7vmxkop8js.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikV4S51DXLADiRXWqjXdTD1OBLSdKjEWALZ9Ebh@mail.gmail.com>
+ <7vipvcs9xt.fsf@alter.siamese.dyndns.org>
+ <7vtyewqtmk.fsf@alter.siamese.dyndns.org>
+ <AANLkTinUqzgpiX_X+kpUuOSxNqRVp+OC1HOreEkF6yhX@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:37:55 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Lasse Makholm <lasse.makholm@gmail.com>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:39:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1kvJ-0002oH-7b
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:37:53 +0100
+	id 1Q1kxE-0003rb-CJ
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754069Ab1CUThs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 15:37:48 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46602 "EHLO
+	id S1754182Ab1CUTjs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 15:39:48 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48354 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753957Ab1CUThr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 15:37:47 -0400
+	with ESMTP id S1753697Ab1CUTjr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 15:39:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1443441AE;
-	Mon, 21 Mar 2011 15:39:26 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D4C44203;
+	Mon, 21 Mar 2011 15:41:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=rlIkb9zLF4ND
-	Naxh1tjSX1xKAP0=; b=hbGhfZG2ALng8RyCr+DbniMKBxaBqvoApvTLsEVH9qjo
-	E/YSo+Olx6gjEuJGgBWQOsuIS4nLzV1wRNVytbsbCef/rveya/Bw9joykqKe9qc1
-	PjLs7dpSTbmuD5QI+9dMafV0bh9u56D3TyDDKNJf3yV/rEo9NsV7Ux8rdSixgQM=
+	:content-type:content-transfer-encoding; s=sasl; bh=8dMoBVryX5si
+	LOr6WgGSbK/8Pjo=; b=di0q9lXj6IzF/43ZDVW0OSe5PdseZwcSiTBKy8exoe1T
+	lkAzXJmDExcW55QS7S1LC0y4fxLKr6nQdLxz+WXVj+zS/FHFWr/NrdavmIjpQWhF
+	MUyUJtT7Ha8mKtIcduwUHbt0zL+GoLq+kB9/ptzGSv29fI4rW1iwU9hAaamkBmE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=E4mEvR
-	RaoFAb+KEqfgisvjmh6wL6IKo2WI1A36QcX5K5ac690mhfOr5ecxy+jpN5eTsNCF
-	bpFpQTsdALdUkFFRvHbPD6hN2u+aU8Y+50qpNAkzFEcAqN0LeiiNMnmoM+R1/GpN
-	l6MyLHJFQ8C8SUROqFgQiu8ZYrcbovE3ga1J4=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Wg9GBG
+	R0Ew8ep6ppfu0aTCXqE0K/z1eGI0Y058WsjF284mOJo40SLpjpyGAHQHWwKGw551
+	IHwJjyBCTiXcEBNsIiuhaVoaT/tQJFXUt7sZzD4i12zJtJf7j29/bebgJpjdSUjt
+	7iKYuQ1EwTDGXtYWuE3rnMjVe7Z9S1bFCJGPw=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E6F6841AD;
-	Mon, 21 Mar 2011 15:39:22 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F13A54201;
+	Mon, 21 Mar 2011 15:41:21 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 003FB4196; Mon, 21 Mar 2011
- 15:39:19 -0400 (EDT)
-In-Reply-To: <4D879B25.9090300@dirk.my1.cc> ("Dirk =?utf-8?Q?S=C3=BCsserot?=
- =?utf-8?Q?t=22's?= message of "Mon, 21 Mar 2011 19:38:29 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A41D441FF; Mon, 21 Mar 2011
+ 15:41:16 -0400 (EDT)
+In-Reply-To: <AANLkTinUqzgpiX_X+kpUuOSxNqRVp+OC1HOreEkF6yhX@mail.gmail.com>
+ (Piotr Krukowiecki's message of "Mon, 21 Mar 2011 19:46:22 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC0E5B5E-53F2-11E0-A3DD-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 330245D4-53F3-11E0-A043-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169648>
 
-Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
 
-> I regularly use gitk to get an overview. Great tool.
-> But sometimes it shows me in the diff pane lines preceeded
-> with two + or - signs or they are colored in blue or black
-> or printed in bold. I think this is true for merge commits
-> with conflicts.
+> On Mon, Mar 21, 2011 at 6:16 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> +void update_index_if_able(struct index_state *istate, struct lock_f=
+ile *lockfile)
+>> +{
+>> + =C2=A0 =C2=A0 =C2=A0 if (istate->cache_changed) &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !write_index(istate, lockfile->=
+fd))
+>
+> Mismatched parenthesis? Should be sth like
+>
+> + =C2=A0 =C2=A0 =C2=A0 if (istate->cache_changed &&
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !write_index(istate, lockfile->f=
+d))
 
-Look at the bottom summary of this message for a brief summary:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/15486/focus=3D=
-15527
-
-If you want to know more about how the multi-way diff is condensed, you
-would find this message from Linus in the same thread illuminating:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/15486/focus=3D=
-15600
-
-(Ignore the bottom part where Linus complains about gitk output---the o=
-ld
-implementation in gitk has gone long time ago).
-
-And also this one, again from Linus:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/15486/focus=3D=
-15491
+Yeah, "rebase -i" gotcha.  Applying [2/2] should get rid of it anyway.
