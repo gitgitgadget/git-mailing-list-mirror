@@ -1,82 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/2] Fix sparse warnings
-Date: Mon, 21 Mar 2011 09:12:36 -0700
-Message-ID: <7vsjugsb9n.fsf@alter.siamese.dyndns.org>
+Date: Mon, 21 Mar 2011 09:15:58 -0700
+Message-ID: <7voc54sb41.fsf@alter.siamese.dyndns.org>
 References: <1300700704-22674-1-git-send-email-bebarino@gmail.com>
  <1300700704-22674-2-git-send-email-bebarino@gmail.com>
- <4D872420.8080501@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Mar 21 17:12:52 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 17:16:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1hit-0007qS-Ix
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 17:12:51 +0100
+	id 1Q1hmB-00019w-1M
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 17:16:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220Ab1CUQMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 12:12:47 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33221 "EHLO
+	id S1753800Ab1CUQQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 12:16:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36009 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751287Ab1CUQMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 12:12:46 -0400
+	with ESMTP id S1753777Ab1CUQQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 12:16:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C6923449C;
-	Mon, 21 Mar 2011 12:14:23 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B006E4507;
+	Mon, 21 Mar 2011 12:17:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U/YvM0HE4Vw1OuWaKV8G6Dp8ipM=; b=b9DlDk
-	3EYdOjK1M+/vj+vs35GyEz/y5bNkX5PgdamuDqYJNObB6oF0cDZAd4ynaZkUBfka
-	VkwZdHvPNW+A4d4pfqifwDM6syNNx7yhswHpzjLfyVHdaJb9To90QHb07JQcW3ke
-	hVH1hOxj20K9UAXkD9AXqBdhWtZiw0KD6goYQ=
+	:content-type; s=sasl; bh=jGXfLj+x2USNHQTQfUDuHqtMeJc=; b=tc/q4O
+	7vXcdp94LThL/eZyYoVblX6vaYNawNQCfDksxe79rxjNuRbKQN+d5Do7hmc5uorP
+	pJTb8I+4wnRUMhDBq/D9ZzjaqB0olKIwAH2RcmgRSDLwugM9c+43c6BVC9Gf62NC
+	csoE3Kw6PJiQ+tJ0iBo/i1EtI7nl9qn4m5+Jw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nE+Jpo1EcPHxnEhDFjzuADf6rY4Nh9nP
-	FmsD+W8AT8kDVRc3zvqt/Uawm8GGiCuFjmZRcGK6CEuGDEGmrNNwMzhMupIo24O0
-	78N63VAC7u+Eb5USZ+TDMU6TfYHHrWI949eFFDdBRSxcpwmu2iAcx38RPAfJNGT9
-	i33rxcOvhQY=
+	:content-type; q=dns; s=sasl; b=aaPld1nUU5xpeuCdlp4SsltwKey/8wFy
+	5IX/Fh6msrUDOt7lsNzPnjXwSVuCxyGjVIpra1eRmxc1SLUWrC0fht0zS7p9p1mG
+	l0ERKDZv+jpee0A4B95W3OuvJhShHFbvCM1fBNyppTytl8Fia4BnTTbpxgzPk9ga
+	invXKq1xKYs=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 95E38448D;
-	Mon, 21 Mar 2011 12:14:19 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8EA454503;
+	Mon, 21 Mar 2011 12:17:42 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7580E4489; Mon, 21 Mar 2011
- 12:14:15 -0400 (EDT)
-In-Reply-To: <4D872420.8080501@viscovery.net> (Johannes Sixt's message of
- "Mon, 21 Mar 2011 11:10:40 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 48D0A44FC; Mon, 21 Mar 2011
+ 12:17:38 -0400 (EDT)
+In-Reply-To: <1300700704-22674-2-git-send-email-bebarino@gmail.com> (Stephen
+ Boyd's message of "Mon, 21 Mar 2011 02:45:04 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 46B2BD1A-53D6-11E0-94EA-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: BFAD2FCA-53D6-11E0-9694-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169608>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Stephen Boyd <bebarino@gmail.com> writes:
 
-> Am 3/21/2011 10:45, schrieb Stephen Boyd:
->> diff --git a/daemon.c b/daemon.c
->> index 347fd0c..4c8346d 100644
->> --- a/daemon.c
->> +++ b/daemon.c
->> @@ -660,7 +660,7 @@ static void check_dead_children(void)
->>  static char **cld_argv;
->>  static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
->>  {
->> -	struct child_process cld = { 0 };
->> +	struct child_process cld = { NULL };
+> Fix warnings from 'make check'.
 >
-> IMO this change is not good.
->
-> The purpose of { 0} is not to initialize (only) the first member, but
-> rather to serve as a visual marker that says "We want the complete struct
-> zero-initialized".
+> diff.c:631:25: warning: symbol 'diff_words_styles' was not declared.
+> Should it be static?
+> notes-merge.c:362:73: warning: Using plain integer as NULL pointer
+> parse-options.c:564:6: error: symbol 'usage_with_options' redeclared
+> with different type (originally declared at parse-options.h:158) -
+> different modifiers
+> parse-options.c:571:6: error: symbol 'usage_msg_opt' redeclared with
+> different type (originally declared at parse-options.h:161) - different
+> modifiers
+> ...
 
-Huh?  News to me.
+Yuck.  Could you summarize the errors by grouping them by type or
+something in the log?  One mega-patch we can swallow, but the log is
+unreadble.
 
-The first element of type const char ** is initialized to a NULL pointer
-and the rest if filled with NUL bytes either way.
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 02547ad..53ea012 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -23,6 +23,7 @@
+>  #include "branch.h"
+>  #include "remote.h"
+>  #include "run-command.h"
+> +#include "builtin.h"
+
+Documentation/CodingGuidelines suggests to move this to the top, probably
+replacing '#include "cache.h"' we have there:
+
+ - The first #include in C files, except in platform specific
+   compat/ implementations, should be git-compat-util.h or another
+   header file that includes it, such as cache.h or builtin.h.
