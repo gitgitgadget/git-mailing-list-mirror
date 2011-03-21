@@ -1,73 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cherry-pick applies some other changes than the specified one?
-Date: Mon, 21 Mar 2011 12:47:17 -0700
-Message-ID: <7vei60p86y.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
- <7vwrjssbfk.fsf@alter.siamese.dyndns.org> <4D877FAD.9000807@viscovery.net>
- <4D879516.3060204@gmail.com>
-Mime-Version: 1.0
+From: Trevor Harmon <trevor@vocaro.com>
+Subject: Re: remote.origin.*pack settings are not honored when repository is specified
+Date: Mon, 21 Mar 2011 12:48:04 -0700
+Message-ID: <BBA93ABD-C146-4866-AFB9-6E07717AE541@vocaro.com>
+References: <982706A6-A00E-43B3-9002-41C8DC084EC9@vocaro.com> <AANLkTina56vfqidyyB0DgkAP2upvkCuW8OshnxzuNVjy@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082.1)
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:47:43 2011
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:48:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1l4o-0007vF-1E
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:47:42 +0100
+	id 1Q1l5I-00089V-5l
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:48:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218Ab1CUTrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 15:47:32 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57297 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753425Ab1CUTr3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 15:47:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50AC34329;
-	Mon, 21 Mar 2011 15:49:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nKEpjILmekx/tJ4J5fu/Cfr8qbg=; b=OqbxQW
-	+fAw40r5JMI1CZAFz3eTZV8Rye4hKZ2TsGqBCC/Z6vu+132iQptbZidDah9e64e1
-	fmbAG+zy/wDnJK+ZpOZHIkXZJOOchLA77b9etaeJNXAQNBNENFoP62EfRTAxKFkp
-	AW780tpIMKdI9DRE57RMO7R2+uu3wfPGmyziw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZwUfBJ4Mu8rk7QQtBibHdVisMo4aLd7Z
-	cc3iBf9fr5FI/Ivt9ll5EH7OQka65pUDgQm2TgzU9kpO0s/73fXKCmj+WISq+4wp
-	gLOv885Fc2qQY8+OvDqn1CNehTj0ac2WRiE7aQzDeQfXdhEcRQSIliU0eqeeXi+9
-	1ZKN2EOOdHg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 204F54328;
-	Mon, 21 Mar 2011 15:49:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B98AF4327; Mon, 21 Mar 2011
- 15:48:58 -0400 (EDT)
-In-Reply-To: <4D879516.3060204@gmail.com> (Piotr Krukowiecki's message of
- "Mon, 21 Mar 2011 19:12:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4676F3E8-53F4-11E0-BD0D-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754271Ab1CUTrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 15:47:49 -0400
+Received: from caiajhbdcaib.dreamhost.com ([208.97.132.81]:54229 "EHLO
+	homiemail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754274Ab1CUTrr convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 15:47:47 -0400
+X-Greylist: delayed 4615 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Mar 2011 15:47:47 EDT
+Received: from homiemail-a18.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a18.g.dreamhost.com (Postfix) with ESMTP id 9EE1A250071;
+	Mon, 21 Mar 2011 12:47:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=vocaro.com; h=subject
+	:mime-version:content-type:from:in-reply-to:date:cc
+	:content-transfer-encoding:message-id:references:to; q=dns; s=
+	vocaro.com; b=mqGKPQl3xKMkQs7dw4PgQgkETG45HQuvtss5qTYnaadHoRkkxu
+	ZUon33sh1r1trD4n9QsRA0WmeHuw1NIoR2l0D50kUdNAiQMgkkih/pvqKky5eDo/
+	dczXaw67kvJpt1BzpnfzGDMzNmgRP9YvTvfUq9MPazM8jf9NjMNjyxYsc=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=vocaro.com; h=subject
+	:mime-version:content-type:from:in-reply-to:date:cc
+	:content-transfer-encoding:message-id:references:to; s=
+	vocaro.com; bh=zwvhZOnNC2ToTDSWuT0/SAEAvzM=; b=Z/XEfvuhy7NASZ4ZX
+	Qko92vTB/s8v0zSo0mi0KFFinJNPM2LbBT4arsfdxJBAP4+e08n1ZIcC50GNDZF7
+	YuW+N44SyVoubI0xy4FU2OraHGx5uvlkAuMhAX/Odv7CrZa0T2zZsNYDz/2Yehs2
+	Oy03lAAID0sK0XspLVDEE+7Nhg=
+Received: from [10.244.200.81] (outbound4.ebay.com [216.113.168.128])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: trevor@vocaro.com)
+	by homiemail-a18.g.dreamhost.com (Postfix) with ESMTPSA id 8137B250065;
+	Mon, 21 Mar 2011 12:47:46 -0700 (PDT)
+In-Reply-To: <AANLkTina56vfqidyyB0DgkAP2upvkCuW8OshnxzuNVjy@mail.gmail.com>
+X-Mailer: Apple Mail (2.1082.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169652>
 
-Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+On Mar 21, 2011, at 12:25 PM, Erik Faye-Lund wrote:
 
-> I think I even suspected this might have something to do with the merge
-> conflict and tried to make git-diff show me exact change between working
-> tree and index/HEAD (ignoring the merge).
+> You could use the --upload-pack option when pulling
+...
+> You should probably look into getting
+> it fixed in the external tool, if possible.
 
-Doesn't "git diff HEAD" show the difference between HEAD and working tree
-without the higher stages for the path getting in the way?
+Yes, probably the best course of action is to modify the tool so it can accept arbitrary Git parameters as options for its push command, then specify --receive-pack as one of those options. Thanks for your help,
 
-The difference between the index and the working tree is "git diff" which
-is condensed.  I think you can force it to uncondense it by giving "-c"
-option, but I haven't tried (didn't find a need/use for it for a long
-time).
+Trevor
