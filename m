@@ -1,102 +1,104 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: remote.origin.*pack settings are not honored when repository is specified
-Date: Mon, 21 Mar 2011 20:25:47 +0100
-Message-ID: <AANLkTina56vfqidyyB0DgkAP2upvkCuW8OshnxzuNVjy@mail.gmail.com>
-References: <982706A6-A00E-43B3-9002-41C8DC084EC9@vocaro.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 2/2] Fix sparse warnings
+Date: Mon, 21 Mar 2011 12:29:13 -0700
+Message-ID: <7vzkoop912.fsf@alter.siamese.dyndns.org>
+References: <7voc54sb41.fsf@alter.siamese.dyndns.org>
+ <1300730506-6582-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Trevor Harmon <trevor@vocaro.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:26:21 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:29:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1kk7-0005Vc-Uv
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:26:20 +0100
+	id 1Q1knD-000712-Cc
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754075Ab1CUT0O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 15:26:14 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50405 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754047Ab1CUT0N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 15:26:13 -0400
-Received: by bwz15 with SMTP id 15so5294875bwz.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 12:26:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PIso8rwYcWOlXCKEr7aVEH6C6YJIN04uf0tlLJPS4N4=;
-        b=eWASBTKd2vI3haWRpQ4xg0QkjhI5Lfv6rdO/YkZOfrRkEgLDKvGt4RrzyiMQLSGNmR
-         6B4iut2TgtRRkUmvUYUm6zZbSKXLtOFiEGqKk/2Dsdnv8Y8yilM1x1m/AhKtr94WkCOo
-         HEOqxKCDr8/BZFea4sDGgKBZYMzj13wZWmyLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=J8ngrn5ZVGs/iF2WrbpApUPzlQy8dnYqb2mteNe/d36Mqe0NfOHI18EShqrEjnQFD2
-         zw4C8fF9cGDDZb+xYgZIt5lVsveOfA3NCXJEql5tS/5c3d9y2c88QK74+hu7s8EInazS
-         PcVa23KFbytfduDImQJe6wcvvkHrMbQNG3wOM=
-Received: by 10.205.24.9 with SMTP id rc9mr4165018bkb.92.1300735571780; Mon,
- 21 Mar 2011 12:26:11 -0700 (PDT)
-Received: by 10.204.97.201 with HTTP; Mon, 21 Mar 2011 12:25:47 -0700 (PDT)
-In-Reply-To: <982706A6-A00E-43B3-9002-41C8DC084EC9@vocaro.com>
+	id S1753564Ab1CUT31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 15:29:27 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39127 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751803Ab1CUT30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 15:29:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 26471400A;
+	Mon, 21 Mar 2011 15:31:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RdZ9rcQJO/xvS16xyNuoFneTLzk=; b=rUZxx6
+	oU9YyFc4Lepe26F/ef9QOkqR/VAU2kqrYZzSudTCpwZU/n9WNBNZw7dgNbB8WNZu
+	LFZ6f5s2BmAZ6bZaJkywbNIy5r6cMyTVvqqG1fvCIW0KPTb2cPCzznxLxjS5OfQR
+	fLZnHIuLqZUDle4sstTK6tJ2lRiwPFzYKFzRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nVfKIaT67w6/1tN7HR+GaYXkzAaM5ANu
+	Ij+NNcB7xJj6wY+tuck5y2+edzgnU4tPqA9AXXGQVAV61m2aeZ/kDlq9+cM440A1
+	nVxkj3YC+bBvD0LIz0t6N8ITpHZyPRF79d0t327++QSR1u6WZiTpyQ2w9VKQhRVl
+	Hd/XZttV1NA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E2F254009;
+	Mon, 21 Mar 2011 15:30:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 69E654008; Mon, 21 Mar 2011
+ 15:30:54 -0400 (EDT)
+In-Reply-To: <1300730506-6582-1-git-send-email-bebarino@gmail.com> (Stephen
+ Boyd's message of "Mon, 21 Mar 2011 11:01:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C0383AC8-53F1-11E0-8D10-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169645>
 
-On Mon, Mar 21, 2011 at 7:31 PM, Trevor Harmon <trevor@vocaro.com> wrot=
-e:
-> Hi,
->
-> I'm trying to set up a remote repository on a shared hosting provider=
-=2E The provider doesn't have Git on their system, so I installed it to=
- a custom location: ~/opt. That should be sufficient to allow external =
-clients to use the repository, but there's a snag: The provider prevent=
-s users from modifying the PATH variable for non-interactive shells, wh=
-ich means I can't add ~/opt/bin to the server's PATH for SSH sessions. =
-As a result, users who attempt to clone the repository get an error:
->
-> =A0bash: git-upload-pack: command not found
->
-> Luckily, users can work around this issue by providing Git with the c=
-ommand's location:
->
-> =A0git clone -u /home/[user]/opt/bin/git-upload-pack [repository]
->
-> but a subsequent "git pull" on the working copy also fails for the sa=
-me reason, though that's also easily remedied:
->
-> =A0git config remote.origin.uploadpack '/home/[user]/opt/bin/git-uplo=
-ad-pack'
->
-> However, there's one last problem I can't find a workaround for... Sp=
-ecifying the repository explicitly when doing a "git pull", such as:
->
-> =A0git pull someguy@somewhere.com:git/some-repository.git
->
-> still gives a "git-upload-pack: command not found" error. It seems th=
-at Git isn't honoring the remote.origin.uploadpack value here.
+Stephen Boyd <bebarino@gmail.com> writes:
 
-remote.origin.* applies to the configured remote called "origin". If
-you specify a remote-url then you're not using the configured remote.
-
-You could use the --upload-pack option when pulling (unless you're
-using Windows and MSYS/CYGWIN, because bash will end up translating
-the path to a win32-path...)
-
-> This is a problem because I'm using a third-party automated tool for =
-handling pushes, and it's hard-coded to always specify the repository i=
-n the command (as opposed to the default from the remotes list).
+> Fix warnings from 'make check'.
+> ...
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> ---
 >
-> Is this a bug in Git? Thanks,
+> On 03/21/11 09:15, Junio C Hamano wrote:
+>> 
+>> Yuck.  Could you summarize the errors by grouping them by type or
+>> something in the log?  One mega-patch we can swallow, but the log is
+>> unreadble.
+>
+> Sure. Both comments addressed.
 
-No, this is expected behavior. You should probably look into getting
-it fixed in the external tool, if possible.
+Still yeek...
+
+What I meant was more like at the minimum:
+
+ - "warning: symbol 'x' was not declared. Should it be static?"
+   builtin/clone.c:365, builtin/fetch-pack.c:797, ...
+
+ - "error: symbol 'x' redeclared with different type'
+   parse-options.c:564, ...
+
+or much more preferably:
+
+ - These files use symbols without declaring, because they do not include
+   "builtin.h":
+
+    builtin/clone.c (cmd_clone), builtin/fetch-pack.c (cmd_fetch_pack), ...
+
+ - These files define extern symbols without declaring, and they can be
+   file scope static:
+
+    builtin/fmt-merge-msg.c (init_src_data), ...
+
+ - These callsites pass literal integer 0 where they mean to pass a NULL
+   pointer:
+
+   builtin/notes.c (resolve_ref), ...
+
+The patch text itself look more or less Ok, but I see you have builtin.h
+not as the first include in builtin/pack-redundant.c.
+
+Thanks.
