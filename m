@@ -1,70 +1,50 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [PATCH 1/2] diff/status: refactor opportunistic index update
-Date: Mon, 21 Mar 2011 19:46:22 +0100
-Message-ID: <AANLkTinUqzgpiX_X+kpUuOSxNqRVp+OC1HOreEkF6yhX@mail.gmail.com>
-References: <AANLkTikV4S51DXLADiRXWqjXdTD1OBLSdKjEWALZ9Ebh@mail.gmail.com>
-	<7vipvcs9xt.fsf@alter.siamese.dyndns.org>
-	<7vtyewqtmk.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Is there some env variable like GIT_LANG (like LANG)?
+Date: Mon, 21 Mar 2011 19:50:57 +0100
+Message-ID: <4D879E11.6040609@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Lasse Makholm <lasse.makholm@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 19:46:28 2011
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 21 19:51:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1k7Y-000397-2K
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 19:46:28 +0100
+	id 1Q1kC4-0005aQ-Tm
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 19:51:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753115Ab1CUSqY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 14:46:24 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:53446 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511Ab1CUSqW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 14:46:22 -0400
-Received: by vws1 with SMTP id 1so5304812vws.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 11:46:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=t5spNjxWiR5PJ8AEwLLnQC3AZdg9wqbLXe0UaJQr3sQ=;
-        b=iq7rFXKPlfjim7NV2PIryDeYOsv//kdW3an9KQ2lGj2sfq8bEgKyHIGVKXF0D98sNH
-         wwA79F+ac4fMQrk63lQySnY5grX8EP3Laqi4htGil39Eo0SDj6/iWssTcqaSbI+X3vwd
-         MFedjxqFWk0gnHH05vJ2P9CstinA97EmWPL1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=kGV0W/bPlwBpPY7fo4QAKhFxW2YCO4pLXzesM1SOTxRLheocadr1Zi8bkv0P7mOx7Z
-         iJnlFNFSgmh1g7Nrwa10FNwzNTDoIUI3xXmQ/lxL+NysG6CrMvX7r9DLQ6RKn5zd/2Ug
-         nU4QrwfcyxYB9h9G+NlRmzA8jlZYbJdJU97gc=
-Received: by 10.220.37.13 with SMTP id v13mr1282566vcd.31.1300733182052; Mon,
- 21 Mar 2011 11:46:22 -0700 (PDT)
-Received: by 10.220.210.16 with HTTP; Mon, 21 Mar 2011 11:46:22 -0700 (PDT)
-In-Reply-To: <7vtyewqtmk.fsf@alter.siamese.dyndns.org>
+	id S1753855Ab1CUSvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 14:51:03 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.27]:51438 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753344Ab1CUSvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 14:51:02 -0400
+Received: from [84.176.60.154] (helo=[192.168.2.100])
+	by smtprelay04.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1Q1kBv-0001U1-9p
+	for git@vger.kernel.org; Mon, 21 Mar 2011 19:50:59 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169643>
 
-On Mon, Mar 21, 2011 at 6:16 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> +void update_index_if_able(struct index_state *istate, struct lock_fi=
-le *lockfile)
-> +{
-> + =A0 =A0 =A0 if (istate->cache_changed) &&
-> + =A0 =A0 =A0 =A0 =A0 !write_index(istate, lockfile->fd))
+Hello list,
 
-Mismatched parenthesis? Should be sth like
+I'm from Germany, but nevertheless I prefer my Git to talk English, esp.
+Gitk and Git Gui. I appreciate that people translate it into
+so many languages, but personally I'm totally helpless with a German git 
+gui.
 
-+ =A0 =A0 =A0 if (istate->cache_changed &&
-+ =A0 =A0 =A0 =A0 =A0 !write_index(istate, lockfile->fd))
+I know I can set LANG=en_US (that's what I actually do), but that
+affects other applications as well. Is there some environment variable
+like GIT_LANG or so? According to the manpages, there isn't.
 
---=20
-Piotr Krukowiecki
+What would you think of it?
+
+Dirk
