@@ -1,81 +1,88 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: The way to make work with git a bit more easier.
-Date: Mon, 21 Mar 2011 13:33:30 +0100
-Message-ID: <4D87459A.1040307@drmicha.warpmail.net>
-References: <AANLkTimrYGXQ_wWrj-Sr3UB9YbddW613oebddUoLat7b@mail.gmail.com> <AANLkTik3_tE6DdCQkS5ssqB9OBBNSvj5KO3WK=0Vj4YG@mail.gmail.com>
+From: Lasse Makholm <lasse.makholm@gmail.com>
+Subject: Re: PATH_MAX (Re: [PATCH] system_path: use a static buffer)
+Date: Mon, 21 Mar 2011 13:37:20 +0100
+Message-ID: <AANLkTinh4K0Crhs39wuZpKhmxcZkSGhKdZNarmHoimoH@mail.gmail.com>
+References: <1300359664-6230-1-git-send-email-cmn@elego.de>
+	<1300371853-8965-1-git-send-email-cmn@elego.de>
+	<AANLkTikms3Ek1CgQHg+gT8Eqs2K6PCvOB-kWZ-aqGawg@mail.gmail.com>
+	<20110318113818.GA6049@elie>
+	<1300700875.2583.8.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alexey Homyakov <alexey.homyakov@gmail.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 13:33:48 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 21 13:37:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1eIt-0000Gc-Kn
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:33:47 +0100
+	id 1Q1eMT-0001uV-4N
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:37:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825Ab1CUMdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 08:33:32 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:53608 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752686Ab1CUMdb (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 08:33:31 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7DBFA207F7;
-	Mon, 21 Mar 2011 08:33:30 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 21 Mar 2011 08:33:30 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=giy2+FjIEo4ivuwUlgYp0zTR/K0=; b=q9nk/a5thkxjhAfkcLkGQPAq2ViNeZChwmjUuj6kTx29cPXAbbVliIupYfWoCLazCkOQ+eZ0UDNDfwpVvbsBlAPO1yAdBqUDMfDDjfQQr8awYg8sPjRivH9nWBjWgo6lUxq+XEtpA0RMfv5Eg8laQ6amOUKjuwNqnoyrIAoaqPM=
-X-Sasl-enc: 4oCGmzUnWPHEjnZ0NtRrNJ3V/GPV8eKEONRet22qkKlo 1300710810
-Received: from localhost.localdomain (p548593A3.dip0.t-ipconnect.de [84.133.147.163])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B5595445328;
-	Mon, 21 Mar 2011 08:33:29 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <AANLkTik3_tE6DdCQkS5ssqB9OBBNSvj5KO3WK=0Vj4YG@mail.gmail.com>
+	id S1753287Ab1CUMhY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 08:37:24 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:52834 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752833Ab1CUMhW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 08:37:22 -0400
+Received: by bwz15 with SMTP id 15so4968283bwz.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 05:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type:content-transfer-encoding;
+        bh=xm9CQShGTmim/+WQpWlAHj9zr/XDpJL2aVBgf2zzirE=;
+        b=iYstxjaUL5pkrPIKMy04hywcfVT7fp4To2uq6jxBmwBJMNMFenNtJrP20Stf3Tgc7e
+         e53qONIxyYUEbMdf3O5OTeihHLb1s4u9wbbO6XjAmnFhBVzbbEifuoicvClrQZwEqlLI
+         pN12Dz/xYtgs5KlF/qup0YHkLG63P4DLWjeCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=FaGvQUHyINl0ap6axCih8yXFuj3NxkB5BQJqbl25//hwUC3oeNf2XVtZ3F0F9Way41
+         zMXtqL5coiTJuQYFuknLzxNSRKXa+IxsvkTUtYr5iHiC6HHBBPiFEhRH9bMNfcDAFMe9
+         iPMm7/hAOoCG7Ol4fQLNvvJkCyXHwL4L5jpOc=
+Received: by 10.204.154.74 with SMTP id n10mr3566117bkw.33.1300711040802; Mon,
+ 21 Mar 2011 05:37:20 -0700 (PDT)
+Received: by 10.204.114.207 with HTTP; Mon, 21 Mar 2011 05:37:20 -0700 (PDT)
+In-Reply-To: <1300700875.2583.8.camel@bee.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169591>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 19.03.2011 13:30:
-> 2011/3/19 Alexey Homyakov <alexey.homyakov@gmail.com>:
->> Hi, guys, i'm enjoy to work with git, but think it's possibly to make
->> one of the operation more easier.
->> What do you mean about mark a parts of files which don't need to be
->> tracked by git once instead using interactive adding each time?
->> For example using statement in comments like this:
+On 21 March 2011 10:47, Carlos Mart=EDn Nieto <cmn@elego.de> wrote:
+> On vie, 2011-03-18 at 06:38 -0500, Jonathan Nieder wrote:
+>> Hi,
 >>
->> ................
->> tracked part
->> ...............
->> //@git off
->> ...............
->> untracked part
->> ...............
->> //@git on
->> ................
->> track again
->> ................
-> 
-> That's interesting, provided that this is only enabled by command
-> argument (i.e. never activated by default). Another option is to make
-> "git add -p" only show chunks that match a pattern.
+>> Nguyen Thai Ngoc Duy wrote:
+>>
+>> > It was pointed out elsewhere [1] that PATH_MAX only specifies max
+>> > length of a path element, not full path. I think we'd need to stay
+>> > away from preallocated PATH_MAX-sized arrays.
+>>
+>> No, PATH_MAX is actually the maximum length of a path, and when you
+>> use, say, open(2), it will fail if your path is longer than that. =A0=
+The
+>> maximum length of a path component on most filesytems is 255 or 256;
+>> PATH_MAX on Linux is 4096.
+>>
+>> It is indeed possible to have paths with length longer than that. =A0=
+The
+>> way to support that is to use relative paths wherever possible, whic=
+h
+>
+> =A0So what PATH_MAX describes is the maximum length of a string
+> representing a path, but not necessarily the length of the path itsel=
+f.
 
-This can be done using a "clean" filter already. For example, for
-tracking my global git configuration, I use
+According to this at least, PATH_MAX is bogus:
+http://insanecoding.blogspot.com/2007/11/pathmax-simply-isnt.html
 
-[filter "dotgitk"]
-        clean = fgrep -v geometry
+I think the sane thing would be to never rely on a fixed max path lengt=
+h.
 
-and specify
-
-.gitk   filter=dotgitk
-
-for the attributes.
-
-Cheers,
-Michael
+--
+/Lasse
