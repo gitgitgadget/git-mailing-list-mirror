@@ -1,78 +1,118 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: SoC
-Date: Mon, 21 Mar 2011 09:15:50 +0100
-Message-ID: <AANLkTinB8kqxkdoaEK1w07KSSo5RiEAz_67v4-EH=3a2@mail.gmail.com>
-References: <833222.84718.qm@web28607.mail.ukl.yahoo.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Warnings from asciidoc (in parallel compilation?)
+Date: Mon, 21 Mar 2011 09:24:16 +0100
+Message-ID: <AANLkTikY+dWX-=ci8_hG6e5RNW-0sZ30R-2G7YUEWVv8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Dag_Henning_Liodden_S=C3=B8rb=C3=B8?= 
-	<daghenningsorbo@yahoo.no>
-X-From: git-owner@vger.kernel.org Mon Mar 21 09:16:38 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 21 09:24:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1aI1-0003hD-Nf
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 09:16:38 +0100
+	id 1Q1aPX-0006Zs-80
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 09:24:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751381Ab1CUIQc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 04:16:32 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:58919 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826Ab1CUIQa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 04:16:30 -0400
-Received: by ywj3 with SMTP id 3so2303618ywj.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 01:16:30 -0700 (PDT)
+	id S1752193Ab1CUIYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 04:24:19 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37517 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751435Ab1CUIYR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 04:24:17 -0400
+Received: by vws1 with SMTP id 1so5015859vws.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 01:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=Rvn4J0q0UnkxbCF2RY9NKZR/3HeGtdVhRXzgtzSBPB8=;
-        b=a/Xzix2Yec4WFStjs9CNP6gpg5WGQiT3Me1FLTOvBrtXb7g5UpX3iwrbH/q57zs6bs
-         416Hfmmz6hUEb4qwq9PvAjAsko9qdYQxMBdDAWdCnXWzWclEOzTyd5nMJvnan8saM6Hl
-         3y0o7mW16nFQ+K40hFYPYjdFR/Zr8Ar96UNeA=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=rA2CK4P1W9leY/creWtVUtTGlFNKFgUEkqU7zOVc/Go=;
+        b=CVf6K/4NNvNSQgYCdGYfMh5et4jQ5gM8+1e7flyJQmVhbVygAbNG94IkYzvVlxI3D5
+         ATsEMnW3BQiK8qsbLM3gW2egyhXjpcINbiAKuLRGWZGQTRexcocB77mC5M0sbDKep6rf
+         +zz4xdK92kDW94Ae67+z+4sCKtUnDdtyOJnCY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=nglZENxao6JDdpko+Vw2s+6lmHqbZvtMRYKjtgyb9B7PbachkPUda5INSP/D8Qyg3n
-         q7zTlPfkGPhvjognwB+KU3YFuJBDFs7++jOR/wSPRI0qbjV1riy8lDBITSZ8U34a9xoK
-         ydgmM0L65XnxS+0sbUgWGdbZL/OInWTvgio/Q=
-Received: by 10.151.135.21 with SMTP id m21mr3463132ybn.373.1300695390202;
- Mon, 21 Mar 2011 01:16:30 -0700 (PDT)
-Received: by 10.151.44.10 with HTTP; Mon, 21 Mar 2011 01:15:50 -0700 (PDT)
-In-Reply-To: <833222.84718.qm@web28607.mail.ukl.yahoo.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=NxGbGF4dWWT8hz5OiFpn0lhzj86LILt+YEXj9eNe675bFkmJV/nHRx2xboGmk+TjL4
+         VQj0DzELqe7mGPKh0hlOn6L0kgtW5sMmj1H3l3mkMxf7UVmaOWyBwewjzufbo3X+RMX/
+         MZ5azWGNr0CXyxkVe+DHqPgXajVF0sfd3xIhk=
+Received: by 10.220.37.13 with SMTP id v13mr1076002vcd.31.1300695856649; Mon,
+ 21 Mar 2011 01:24:16 -0700 (PDT)
+Received: by 10.220.210.16 with HTTP; Mon, 21 Mar 2011 01:24:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169559>
 
-Heya,
+Hi,
 
-On Mon, Mar 21, 2011 at 01:21, Dag Henning Liodden S=C3=B8rb=C3=B8
-<daghenningsorbo@yahoo.no> wrote:
-> Hi. I just have some questions. I've taken interest in the "Port hist=
-ogram =3D
-> diff from jgit" SoC task and I'm just wondering what this task would =
-requir=3D
-> e from a student like myself? I would say that my C programming skill=
-s are =3D
-> quite good, but I have not worked on any big projects (other than uni=
-versit=3D
-> y assignments) and I am therefore quite curious about what skills are=
- neede=3D
-> d. I would be glad if someone could give me some hints :)
+I'm compiling master and I'm getting some warnings from documentation.
+Some might be connected with parallel compilation - for example
+Documentation/cmds-* are autogenerated.
 
-See [0] and neighboring threads.
+My command line was:
+make -j3 prefix=/usr/local/stow/git-master all doc info
 
-http://thread.gmane.org/gmane.comp.version-control.git/169498/focus=3D1=
-69516
+[...]
+    ASCIIDOC gitk.html
+    ASCIIDOC git.html
+    ASCIIDOC git-svn.xml
+asciidoc: WARNING: git.txt: line 350: include file not found:
+/usr/local/src/git/git/Documentation/cmds-mainporcelain.txt
+asciidoc: WARNING: git.txt: line 356: include file not found:
+/usr/local/src/git/git/Documentation/cmds-ancillarymanipulators.txt
+    ASCIIDOC git-symbolic-ref.xml
+asciidoc: WARNING: git.txt: line 360: include file not found:
+/usr/local/src/git/git/Documentation/cmds-ancillaryinterrogators.txt
+asciidoc: WARNING: git.txt: line 369: include file not found:
+/usr/local/src/git/git/Documentation/cmds-foreignscminterface.txt
+asciidoc: WARNING: git.txt: line 398: include file not found:
+/usr/local/src/git/git/Documentation/cmds-plumbingmanipulators.txt
+asciidoc: WARNING: git.txt: line 404: include file not found:
+/usr/local/src/git/git/Documentation/cmds-plumbinginterrogators.txt
+asciidoc: WARNING: git.txt: line 413: include file not found:
+/usr/local/src/git/git/Documentation/cmds-synchingrepositories.txt
+asciidoc: WARNING: git.txt: line 418: include file not found:
+/usr/local/src/git/git/Documentation/cmds-synchelpers.txt
+asciidoc: WARNING: git.txt: line 427: include file not found:
+/usr/local/src/git/git/Documentation/cmds-purehelpers.txt
+    LINK test-genrandom
+    ASCIIDOC gitattributes.html
+[...]
+    ASCIIDOC technical/api-diff.html
+    ASCIIDOC technical/api-directory-listing.html
+    LN/CP git-remote-ftps
+    ASCIIDOC technical/api-gitattributes.html
+    ASCIIDOC git.xml
+docbook2texi:/book: no description for directory entry
+    ASCIIDOC technical/api-grep.html
+    ASCIIDOC technical/api-hash.html
+    ASCIIDOC technical/api-history-graph.html
+[...]
+    XMLTO git-daemon.1
+    XMLTO git-describe.1
+    XMLTO git-diff-files.1
+    MAKEINFO gitman.info
+gitman.texi:6910: warning: @strong{Note...} produces a spurious
+cross-reference in Info; reword to avoid that.
+gitman.texi:26398: warning: @strong{Note...} produces a spurious
+cross-reference in Info; reword to avoid that.
+make[1]: Leaving directory `/usr/local/src/git/git/Documentation'
+    XMLTO git-diff-index.1
+    XMLTO git-difftool.1
+    XMLTO git-diff-tree.1
+[...]
+    XMLTO git-name-rev.1
+    XMLTO git-notes.1
+    XMLTO git-pack-objects.1
+Warn: endnote  #1 : Bad: footnote[1] in source                     git-notes
+Note: endnote  #1 : Has: footnote/simpara                          git-notes
+Note: endnote  #1 : Fix: footnote/para/simpara                     git-notes
+    XMLTO git-pack-redundant.1
+    XMLTO git-pack-refs.1
+    XMLTO git-parse-remote.1
 
---=20
-Cheers,
 
-Sverre Rabbelier
+-- 
+Piotr Krukowiecki
