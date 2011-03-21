@@ -1,93 +1,135 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-submodule: Remove duplicate entries during merge
- with conflict
-Date: Mon, 21 Mar 2011 23:01:40 +0100
-Message-ID: <4D87CAC4.2010001@web.de>
-References: <4D81C1AA.5010008@morey-chaisemartin.com> <7v1v254ma7.fsf@alter.siamese.dyndns.org> <7vhbb1320t.fsf@alter.siamese.dyndns.org> <4D87B51A.4060609@web.de> <4D87C467.3090907@morey-chaisemartin.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCHv2 2/2] Fix sparse warnings
+Date: Mon, 21 Mar 2011 15:04:32 -0700
+Message-ID: <AANLkTinYCqK6zm17O_HedOFtbN6VRhYQbFj-YNk+JrV1@mail.gmail.com>
+References: <7voc54sb41.fsf@alter.siamese.dyndns.org> <1300730506-6582-1-git-send-email-bebarino@gmail.com>
+ <7vzkoop912.fsf@alter.siamese.dyndns.org> <7vd3lknnjy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 23:01:54 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 23:04:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1nAg-0008PE-1r
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 23:01:54 +0100
+	id 1Q1nDZ-0001Oa-J6
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 23:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754687Ab1CUWBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 18:01:48 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:46391 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754583Ab1CUWBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 18:01:47 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate03.web.de (Postfix) with ESMTP id A2BCB18A3AB1E;
-	Mon, 21 Mar 2011 23:01:40 +0100 (CET)
-Received: from [93.240.120.88] (helo=[192.168.178.43])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Q1nAS-0007hP-00; Mon, 21 Mar 2011 23:01:40 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <4D87C467.3090907@morey-chaisemartin.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+aZOCEw7NWM/N3koIYPunOsO9OaaRIIjeP52pC
-	XFEA62No6AAD1dSRnYNk24QgZNTs4YeaTt+ETbZvZfZN1goZNf
-	DssySZbgHyZTAgYN2fSg==
+	id S1754652Ab1CUWEt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 18:04:49 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:37301 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754567Ab1CUWEs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 18:04:48 -0400
+Received: by gwaa18 with SMTP id a18so2618386gwa.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 15:04:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=d/q9bAPfTN2+Q0/l6gshd68/lgwNWTHn4EJfN/OIrB8=;
+        b=WzYBGCi8dQ+3Z2yvh8B3h+QSV2pze85zOFkM6Ej7CJNuQe6LqZMst5y+Bqcw2s9rX7
+         14GXHI6CyBzNM0VEYXLWXTNGTtQ8j51yPz1ZRUI6Xr9D4EoX016Jmd8SrCGJzmlKLiNi
+         uwgdZScfozMYB4ktNlK6Xq/cwDnqTmxc8Z6V4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=EijCM9JdgihUjnbswuZD9SJcTPIPVG1DpTkjuRkEiGrhfPniWeuYH+bLiCV1DU2PSD
+         LWX8cghrs3iDy+v1kFT/qkieY19LFA1QJJGh8wrB2Q3yuuj23IyPgby48AgsO6QtatjQ
+         kLTZDb8jOSd+0RcGpf80eG1r5NZMUgo3HPKWM=
+Received: by 10.236.190.132 with SMTP id e4mr5899868yhn.374.1300745087132;
+ Mon, 21 Mar 2011 15:04:47 -0700 (PDT)
+Received: by 10.236.105.141 with HTTP; Mon, 21 Mar 2011 15:04:32 -0700 (PDT)
+In-Reply-To: <7vd3lknnjy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169678>
 
-Am 21.03.2011 22:34, schrieb Nicolas Morey-Chaisemartin:
-> On 21/03/2011 21:29, Jens Lehmann wrote:
+On Mon, Mar 21, 2011 at 2:58 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Still yeek...
 >>
->>>  - Update should refrain from touching the submodule itself. It may want
->>>    to recurse into the submodule of the unmerged one, but people involved
->>>    in submodule work should think things through;
+>> What I meant was more like at the minimum:
+>> ...
+>> or much more preferably:
 >>
->> I don't think recursing would make any sense here. It might be unknown
->> to what commit the sub-submodules should be updated to if their commits
->> differ in the unmerged branches. So I'd vote for not recursing at all in
->> this case (which is what your patch does).
+>> =C2=A0- These files use symbols without declaring, because they do n=
+ot include
+>> =C2=A0 =C2=A0"builtin.h":
 >>
-> 
-> After a bit of thinking about the way we use git at my company, there is something that could be done here. It may be completely useless for most people (or maybe even stupid and feel free to enlighten me!)
-> We work with continuous integration on two level of git (1 integration which only has submodules and lots of source repositories).
-> The usual thing when a user want to push its diff is:
-> - commit in the submodules on his branch
-> - Update the submodules refs in the integration repo on his branch
-> - Pull master 
-> - See there are conflicts
-> - Blindly pull master in all the conflicted submodules. Push the merge
-> - Commit in the integration repo and pray it works !
-> 
-> Although in the scheme git submodule update by itself does not make much sense. What people actually do is pretty much a git submodule update --merge of the conflicting SHA1 for each submodule.
-> 
-> For the moment we used either ruby scripts or a list of commands that users blindly follows without understanding much of it, and seeing something like that (there's probably a nicest way to do it) in git would be great.
+>> =C2=A0 =C2=A0 builtin/clone.c (cmd_clone), builtin/fetch-pack.c (cmd=
+_fetch_pack), ...
+>>
+>> =C2=A0- These files define extern symbols without declaring, and the=
+y can be
+>> =C2=A0 =C2=A0file scope static:
+>>
+>> =C2=A0 =C2=A0 builtin/fmt-merge-msg.c (init_src_data), ...
+>>
+>> =C2=A0- These callsites pass literal integer 0 where they mean to pa=
+ss a NULL
+>> =C2=A0 =C2=A0pointer:
+>>
+>> =C2=A0 =C2=A0builtin/notes.c (resolve_ref), ...
+>>
+>> The patch text itself look more or less Ok, but I see you have built=
+in.h
+>> not as the first include in builtin/pack-redundant.c.
+>>
 
-Hmm, I'm not sure if I fully understand your use case. Maybe being able
-to tell pull to run a "git merge <sha1-from-upstream>" in submodules
-where the superproject's merge produced conflicts would help you?
+Ah ok, I can do that.
 
->>>  - Status does not have anything to report for an unmerged submodule. It
->>>    may want to recurse into the submodule of the unmerged one, but people
->>>    involved in submodule work should think things through; and
->>
->> I do think status does have something to report here. First its job is to
->> list all submodules, so currently unmerged submodules should show up too,
->> and then it tells the user something about the state of the submodule. So
->> I would propose to print a line for the submodule starting with a special
->> character that tells the user the submodule has a merge conflict. We
->> could e.g. use a '*' here (additionally to '-' for uninitialized and '+'
->> for those submodules where the HEAD differs from the commit recorded in
->> the superproject).
->>
-> Being a big user of __git_ps1, my brain now considers '*' has uncached diff and '+' has cached diff. I'd rather have something as 'U' that stands outs.
+>
+> I spotted these two. =C2=A0thread-utils.h already includes pthread.h,=
+ and
+> builtin.h should come before (though technically exec_cmd.h does not
+> depend on any external types, so this is just a conformity issue, not
+> correctness one).
+>
+> Again, thanks.
+>
+> =C2=A0builtin/pack-redundant.c | =C2=A0 =C2=A02 +-
+> =C2=A0thread-utils.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0=
+1 -
+> =C2=A02 files changed, 1 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+> index 760b377..a15e366 100644
+> --- a/builtin/pack-redundant.c
+> +++ b/builtin/pack-redundant.c
+> @@ -6,8 +6,8 @@
+> =C2=A0*
+> =C2=A0*/
+>
+> -#include "exec_cmd.h"
+> =C2=A0#include "builtin.h"
+> +#include "exec_cmd.h"
+>
+> =C2=A0#define BLKSIZE 512
+>
+> diff --git a/thread-utils.c b/thread-utils.c
+> index 2c8c1e3..7f4b76a 100644
+> --- a/thread-utils.c
+> +++ b/thread-utils.c
+> @@ -1,5 +1,4 @@
+> =C2=A0#include "cache.h"
+> -#include <pthread.h>
+> =C2=A0#include "thread-utils.h"
+>
+> =C2=A0#if defined(hpux) || defined(__hpux) || defined(_hpux)
+>
 
-That is a good argument against '*'. I don't have strong feelings about
-that, I just came up with '*' because "git submodule status" already uses
-'-' and '+' in it's output. But anyways, 'U' is fine for me too.
+Ok, I'll squash these in and resend tonight when I get home.
+
+Also, I don't think exec_cmd.h is actually used in some of the builtin
+C files (due to some setup fallouts) so I think we can probably just
+remove the exec_cmd.h includes if they're within contex and unused.
+I'll do that next round.
