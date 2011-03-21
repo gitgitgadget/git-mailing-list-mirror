@@ -1,100 +1,78 @@
-From: Lasse Makholm <lasse.makholm@gmail.com>
-Subject: Re: Is there some env variable like GIT_LANG (like LANG)?
-Date: Mon, 21 Mar 2011 21:48:55 +0100
-Message-ID: <AANLkTi=wwFw09QkrttvxvuEoHyuQ+61wa0YMysDQC05D@mail.gmail.com>
-References: <4D879E11.6040609@dirk.my1.cc>
-	<7vipvcp8e3.fsf@alter.siamese.dyndns.org>
-	<4D87ABA5.1030609@dirk.my1.cc>
-	<AANLkTikXsYONY5rUSF5138bQ=R4gCopOO8fu=3np+c98@mail.gmail.com>
-	<4D87B6D4.3040601@dirk.my1.cc>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] git-submodule: Remove duplicate entries during merge
+ with conflict
+Date: Mon, 21 Mar 2011 21:53:27 +0100
+Message-ID: <4D87BAC7.4010505@web.de>
+References: <4D81C1AA.5010008@morey-chaisemartin.com> <7v1v254ma7.fsf@alter.siamese.dyndns.org> <7vhbb1320t.fsf@alter.siamese.dyndns.org> <4D870FAB.4050307@morey-chaisemartin.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Mon Mar 21 21:49:07 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: devel-git@morey-chaisemartin.com
+X-From: git-owner@vger.kernel.org Mon Mar 21 21:53:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1m2A-0004wS-CN
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 21:49:02 +0100
+	id 1Q1m6d-0007h1-2i
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 21:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754441Ab1CUUs6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 16:48:58 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40549 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754376Ab1CUUs4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 16:48:56 -0400
-Received: by bwz15 with SMTP id 15so5354295bwz.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 13:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=q51zB3ZleNNV7h2Fxw9va1rbcB26Emzxp0Rm+JSDxu0=;
-        b=qRWTbTJnOj9h/WHWRIb448r0cja61L7DhksiTaxTLp6GJQYkDvZIfbxm/yIpqvwy+r
-         CAmvuI9OFg15RbqaWR2fsoysKFc4Y4xeOXOezDAc8Vt5TOX2L1hYjNfIQBvAXLyMdnVQ
-         f1UjCGkAmd1lldsh9RwcTWozUq6QajULM/bMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xhYdCQiw19O61w2DuiJy3Ej/bd2NJfE0cO1IQOvz8a1JA6kZGnFt5uahAzDwvpfK4N
-         2rLLulT49ddmtt6f7FPIvks0bdl/nBp1H7KaqFOR0etrms86O6Tt1+RiybtBAWfkPu0g
-         mjra0cqOBrFNZN/CtK37GxUwVQFW44DzHS/9k=
-Received: by 10.204.80.29 with SMTP id r29mr4137669bkk.195.1300740535348; Mon,
- 21 Mar 2011 13:48:55 -0700 (PDT)
-Received: by 10.204.114.207 with HTTP; Mon, 21 Mar 2011 13:48:55 -0700 (PDT)
-In-Reply-To: <4D87B6D4.3040601@dirk.my1.cc>
+	id S1754289Ab1CUUxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 16:53:35 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:40114 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753609Ab1CUUxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 16:53:33 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 6B34B18A3A3E6;
+	Mon, 21 Mar 2011 21:53:27 +0100 (CET)
+Received: from [93.240.120.88] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Q1m6R-0005fX-00; Mon, 21 Mar 2011 21:53:27 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <4D870FAB.4050307@morey-chaisemartin.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19Bz3JfGzCLp871FSgE+D8WBUjsb0yucfmqWOJY
+	QrT/GTGJBiNn9YTInZnGMOlApbYnO3bQ/NVlTlXoVgQkBr3N7q
+	KPzaI2MEREfMpzywjsng==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169669>
 
-2011/3/21 Dirk S=FCsserott <newsletter@dirk.my1.cc>:
-> Am 21.03.2011 21:30 schrieb Lasse Makholm:
->>
->> 2011/3/21 Dirk S=FCsserott<newsletter@dirk.my1.cc>:
->>>
->>> Am 21.03.2011 20:43 schrieb Junio C Hamano:
->>>>
->>>> Dirk S=FCsserott<newsletter@dirk.my1.cc> =A0 =A0writes:
->>>>
->>>>> What would you think of it?
->>>>
->>>> Strongly negative. =A0I don't want force people to set GIT_LANG HG=
-_LANG
->>>> CVS_LANG and 47 different FROTZ_LANG environment variables.
->>>>
->>>> I would rather just set LANG=3DC LC_ALL=3DC in the terminal I use =
-git in and
->>>> leave everything else in whatever locale the rest of the system is=
- in.
->>>>
->>>
->>> Ok. Accepted. Was just a question. I see your point.
->>
->> Alternatively, you might like something like the following in your
->> .bashrc:
->>
->> function git
->> {
->> =A0 =A0 LANG=3DC command git "$@"
->> }
->>
->
-> Hmm. Looks interesting. I'll try it out. I'm not so shell'ish (more
-> perl'ish) but I expect that to "rename"/"alias" git to the given comm=
-and. If
-> it works, it's great. Thank you.
+Am 21.03.2011 09:43, schrieb Nicolas Morey-Chaisemartin:
+> I agree that the actual behavior of status is definitely wrong and it should be changed.
 
-Just make sure you include the "command" part or the function will
-call itself indefinitely...
+Yup.
 
---=20
-/Lasse
+> But I think there needs to be a simple way for a user to know whats happening to a conflicted submodule.
+> When merging a file, editing the conflicting area in the code is often enough.
+> For a submodule, I think the user needs an easy access to which branch used what SHA1.
+
+You can see the sha1s using "git diff":
+
+diff --cc submod
+index bd4cfe7,7128fbd..0000000
+--- a/submod
++++ b/submod
+
+(But the sha1s don't tell you much about what differing commits you
+have in the submodule branches, which would be really helpful for
+deciding how to solve the merge conflict. Unfortunately "git diff
+--submodule" doesn't work for merge conflicts yet, another issue on
+my ToDo-list ...)
+
+> Git submodule status is probably not the right place to do that.
+
+I agree.
+
+> git ls-files --stage allows that but it's not part of the standard porcelain commands...
+
+And it shows you three sha1s, one of them being the current state of
+the submodule. Me thinks the output of "git diff" is easier to digest.
+
+> I'll check/test the patch you proposed as soon as possible and repost it if it's allright !
+
+Cool!
