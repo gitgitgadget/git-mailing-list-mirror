@@ -1,88 +1,109 @@
 From: Lasse Makholm <lasse.makholm@gmail.com>
-Subject: Re: PATH_MAX (Re: [PATCH] system_path: use a static buffer)
-Date: Mon, 21 Mar 2011 13:37:20 +0100
-Message-ID: <AANLkTinh4K0Crhs39wuZpKhmxcZkSGhKdZNarmHoimoH@mail.gmail.com>
-References: <1300359664-6230-1-git-send-email-cmn@elego.de>
-	<1300371853-8965-1-git-send-email-cmn@elego.de>
-	<AANLkTikms3Ek1CgQHg+gT8Eqs2K6PCvOB-kWZ-aqGawg@mail.gmail.com>
-	<20110318113818.GA6049@elie>
-	<1300700875.2583.8.camel@bee.lab.cmartin.tk>
+Subject: git status reads too many files
+Date: Mon, 21 Mar 2011 13:40:21 +0100
+Message-ID: <AANLkTikV4S51DXLADiRXWqjXdTD1OBLSdKjEWALZ9Ebh@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 21 13:37:30 2011
+X-From: git-owner@vger.kernel.org Mon Mar 21 13:40:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1eMT-0001uV-4N
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:37:29 +0100
+	id 1Q1ePO-0003DO-Iv
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:40:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287Ab1CUMhY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 08:37:24 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:52834 "EHLO
+	id S1753297Ab1CUMkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2011 08:40:25 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62301 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752833Ab1CUMhW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 08:37:22 -0400
-Received: by bwz15 with SMTP id 15so4968283bwz.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 05:37:21 -0700 (PDT)
+	with ESMTP id S1753010Ab1CUMkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 08:40:23 -0400
+Received: by bwz15 with SMTP id 15so4970453bwz.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 05:40:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=xm9CQShGTmim/+WQpWlAHj9zr/XDpJL2aVBgf2zzirE=;
-        b=iYstxjaUL5pkrPIKMy04hywcfVT7fp4To2uq6jxBmwBJMNMFenNtJrP20Stf3Tgc7e
-         e53qONIxyYUEbMdf3O5OTeihHLb1s4u9wbbO6XjAmnFhBVzbbEifuoicvClrQZwEqlLI
-         pN12Dz/xYtgs5KlF/qup0YHkLG63P4DLWjeCs=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=UKUAO1BTOhGrh3s+7kFyUQufpDib0EiJ5DbKmGJoP9Q=;
+        b=R++iQfx3z9GxnsnxgW5ZBT5ksGyosGtlbqpqTUwdBDuvIdp9qu3DOQIBzfcg4ZpBJj
+         uzfvMKTHCNtLG6kq3iTeJObo1W5+xFdGZ0qSi44g9iQ6n7vViRIoxz0OAyx4yXC5yFD/
+         v3HWeSxsbiKFZ920HqeDPdC9Xqo5+ImtICFEA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=FaGvQUHyINl0ap6axCih8yXFuj3NxkB5BQJqbl25//hwUC3oeNf2XVtZ3F0F9Way41
-         zMXtqL5coiTJuQYFuknLzxNSRKXa+IxsvkTUtYr5iHiC6HHBBPiFEhRH9bMNfcDAFMe9
-         iPMm7/hAOoCG7Ol4fQLNvvJkCyXHwL4L5jpOc=
-Received: by 10.204.154.74 with SMTP id n10mr3566117bkw.33.1300711040802; Mon,
- 21 Mar 2011 05:37:20 -0700 (PDT)
-Received: by 10.204.114.207 with HTTP; Mon, 21 Mar 2011 05:37:20 -0700 (PDT)
-In-Reply-To: <1300700875.2583.8.camel@bee.lab.cmartin.tk>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=boo3aMivL02HXgArezmP9cj5HaQqJ1ogsSVp3frMYs3y8NVc8noWzT//bbu6NIr5DM
+         XRU9asdvDl5L23NGTfL2hht5zmIbIvgDOYRIbQK+rAYL9liUHxAVU9b88Z2cEKA9ZoeG
+         eYC69uYKEQrxqpWnH9c/+QxH89+iNK5tjdZTY=
+Received: by 10.204.126.148 with SMTP id c20mr3619833bks.87.1300711221860;
+ Mon, 21 Mar 2011 05:40:21 -0700 (PDT)
+Received: by 10.204.114.207 with HTTP; Mon, 21 Mar 2011 05:40:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169592>
 
-On 21 March 2011 10:47, Carlos Mart=EDn Nieto <cmn@elego.de> wrote:
-> On vie, 2011-03-18 at 06:38 -0500, Jonathan Nieder wrote:
->> Hi,
->>
->> Nguyen Thai Ngoc Duy wrote:
->>
->> > It was pointed out elsewhere [1] that PATH_MAX only specifies max
->> > length of a path element, not full path. I think we'd need to stay
->> > away from preallocated PATH_MAX-sized arrays.
->>
->> No, PATH_MAX is actually the maximum length of a path, and when you
->> use, say, open(2), it will fail if your path is longer than that. =A0=
-The
->> maximum length of a path component on most filesytems is 255 or 256;
->> PATH_MAX on Linux is 4096.
->>
->> It is indeed possible to have paths with length longer than that. =A0=
-The
->> way to support that is to use relative paths wherever possible, whic=
-h
->
-> =A0So what PATH_MAX describes is the maximum length of a string
-> representing a path, but not necessarily the length of the path itsel=
-f.
+After a git checkout, git status has a tendency to read all the files
+that were updated during the checkout. In git.git for example:
 
-According to this at least, PATH_MAX is bogus:
-http://insanecoding.blogspot.com/2007/11/pathmax-simply-isnt.html
+$ git checkout -b here v1.7.4
+Switched to a new branch 'here'
+$ git checkout -b there v1.7.4.1
+Switched to a new branch 'there'
+$ strace -o /tmp/trace1 git status
+# On branch there
+nothing to commit (working directory clean)
+$ grep ^open /tmp/trace1 | wc -l
+414
+$ git diff --name-only here..there | tail -1
+wrapper.c
+$ grep -A2 wrapper.c /tmp/trace1
+lstat("wrapper.c", {st_mode=S_IFREG|0644, st_size=7617, ...}) = 0
+open("wrapper.c", O_RDONLY)             = 3
+read(3, "/*\n * Various trivial helper wra"..., 7617) = 7617
+close(3)                                = 0
+$
 
-I think the sane thing would be to never rely on a fixed max path lengt=
-h.
+This persistent across multiple runs of git status:
 
---
+$ strace -o /tmp/trace2 git status
+# On branch there
+nothing to commit (working directory clean)
+$ grep ^open /tmp/trace2 | wc -l
+414
+$
+
+...until the index is touched:
+
+$ touch .git/index
+$ strace -o /tmp/trace3 git status
+# On branch there
+nothing to commit (working directory clean)
+$ grep ^open /tmp/trace3 | wc -l
+362
+$
+
+This happening at least with 1.7.0.4 and 1.7.4.1.343.ga91df (master as
+of now)...
+
+Further scrutiny reveals that when this happens, the index and the
+newly updated files in the working tree have identical modification
+times, so I guess git status is reading all files which are not older
+than the index...
+
+Discussing this with Mr. Schindelin last week, my first thought was
+that checkout should ensure that the index is newer than any of the
+files in the working tree but Johannes seems to think that instead,
+the first git status run should touch the index, thus preventing the
+next run from reading the files again.
+
+I'm not familiar enough with the semantics of the index to say which
+way is correct or intended, but surely the current behaviour is not
+desirable.
+
+Bug?
+
+-- 
 /Lasse
