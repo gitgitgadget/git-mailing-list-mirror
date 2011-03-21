@@ -1,67 +1,54 @@
-From: Trevor Harmon <trevor@vocaro.com>
-Subject: Re: remote.origin.*pack settings are not honored when repository is specified
-Date: Mon, 21 Mar 2011 12:48:04 -0700
-Message-ID: <BBA93ABD-C146-4866-AFB9-6E07717AE541@vocaro.com>
-References: <982706A6-A00E-43B3-9002-41C8DC084EC9@vocaro.com> <AANLkTina56vfqidyyB0DgkAP2upvkCuW8OshnxzuNVjy@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1082.1)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:48:17 2011
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: Is there some env variable like GIT_LANG (like LANG)?
+Date: Mon, 21 Mar 2011 20:48:53 +0100
+Message-ID: <4D87ABA5.1030609@dirk.my1.cc>
+References: <4D879E11.6040609@dirk.my1.cc> <7vipvcp8e3.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:49:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1l5I-00089V-5l
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:48:12 +0100
+	id 1Q1l66-00006T-VY
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 20:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271Ab1CUTrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2011 15:47:49 -0400
-Received: from caiajhbdcaib.dreamhost.com ([208.97.132.81]:54229 "EHLO
-	homiemail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754274Ab1CUTrr convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 15:47:47 -0400
-X-Greylist: delayed 4615 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Mar 2011 15:47:47 EDT
-Received: from homiemail-a18.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a18.g.dreamhost.com (Postfix) with ESMTP id 9EE1A250071;
-	Mon, 21 Mar 2011 12:47:46 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=vocaro.com; h=subject
-	:mime-version:content-type:from:in-reply-to:date:cc
-	:content-transfer-encoding:message-id:references:to; q=dns; s=
-	vocaro.com; b=mqGKPQl3xKMkQs7dw4PgQgkETG45HQuvtss5qTYnaadHoRkkxu
-	ZUon33sh1r1trD4n9QsRA0WmeHuw1NIoR2l0D50kUdNAiQMgkkih/pvqKky5eDo/
-	dczXaw67kvJpt1BzpnfzGDMzNmgRP9YvTvfUq9MPazM8jf9NjMNjyxYsc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=vocaro.com; h=subject
-	:mime-version:content-type:from:in-reply-to:date:cc
-	:content-transfer-encoding:message-id:references:to; s=
-	vocaro.com; bh=zwvhZOnNC2ToTDSWuT0/SAEAvzM=; b=Z/XEfvuhy7NASZ4ZX
-	Qko92vTB/s8v0zSo0mi0KFFinJNPM2LbBT4arsfdxJBAP4+e08n1ZIcC50GNDZF7
-	YuW+N44SyVoubI0xy4FU2OraHGx5uvlkAuMhAX/Odv7CrZa0T2zZsNYDz/2Yehs2
-	Oy03lAAID0sK0XspLVDEE+7Nhg=
-Received: from [10.244.200.81] (outbound4.ebay.com [216.113.168.128])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: trevor@vocaro.com)
-	by homiemail-a18.g.dreamhost.com (Postfix) with ESMTPSA id 8137B250065;
-	Mon, 21 Mar 2011 12:47:46 -0700 (PDT)
-In-Reply-To: <AANLkTina56vfqidyyB0DgkAP2upvkCuW8OshnxzuNVjy@mail.gmail.com>
-X-Mailer: Apple Mail (2.1082.1)
+	id S1754220Ab1CUTs7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 15:48:59 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.96]:47489 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753783Ab1CUTs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2011 15:48:57 -0400
+Received: from [84.176.60.154] (helo=[192.168.2.100])
+	by smtprelay06.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1Q1l5z-0007ZR-40; Mon, 21 Mar 2011 20:48:55 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
+In-Reply-To: <7vipvcp8e3.fsf@alter.siamese.dyndns.org>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169653>
 
-On Mar 21, 2011, at 12:25 PM, Erik Faye-Lund wrote:
+Am 21.03.2011 20:43 schrieb Junio C Hamano:
+> Dirk S=C3=BCsserott<newsletter@dirk.my1.cc>  writes:
+>
+>> What would you think of it?
+>
+> Strongly negative.  I don't want force people to set GIT_LANG HG_LANG
+> CVS_LANG and 47 different FROTZ_LANG environment variables.
+>
+> I would rather just set LANG=3DC LC_ALL=3DC in the terminal I use git=
+ in and
+> leave everything else in whatever locale the rest of the system is in=
+=2E
+>
 
-> You could use the --upload-pack option when pulling
-...
-> You should probably look into getting
-> it fixed in the external tool, if possible.
-
-Yes, probably the best course of action is to modify the tool so it can accept arbitrary Git parameters as options for its push command, then specify --receive-pack as one of those options. Thanks for your help,
-
-Trevor
+Ok. Accepted. Was just a question. I see your point.
