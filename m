@@ -1,124 +1,153 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gsoc - Better git log --follow support
-Date: Mon, 21 Mar 2011 08:24:07 -0400
-Message-ID: <20110321122407.GH16334@sigill.intra.peff.net>
-References: <AANLkTi=n7e70UqYU+6wpG4cu95fsg39tVM6=7fpfdZFz@mail.gmail.com>
+From: Maxin john <maxin@maxinbjohn.info>
+Subject: Re: [PATCH ] "git bisect visualize" results in an invalid error if
+ "gitk" is not installed
+Date: Mon, 21 Mar 2011 13:26:33 +0100
+Message-ID: <AANLkTinS87obXcgbcFZ8L-UjZUQL96SzpHp84Y6-yX6v@mail.gmail.com>
+References: <AANLkTi=HJjqrvv-PFO3VjhrHzBsLZmAbN0yU47WScWd_@mail.gmail.com>
+	<20110321112932.GF16334@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Micha=C5=82_=C5=81owicki?= <mlowicki@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 13:24:24 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 21 13:26:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1e9g-0004kI-Rf
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:24:17 +0100
+	id 1Q1eBz-0005pn-Vu
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 13:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508Ab1CUMYM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 08:24:12 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39887
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751563Ab1CUMYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 08:24:10 -0400
-Received: (qmail 12793 invoked by uid 107); 21 Mar 2011 12:24:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Mar 2011 08:24:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2011 08:24:08 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=n7e70UqYU+6wpG4cu95fsg39tVM6=7fpfdZFz@mail.gmail.com>
+	id S1753008Ab1CUM0f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 08:26:35 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:57657 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751167Ab1CUM0e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 08:26:34 -0400
+Received: by yxs7 with SMTP id 7so2375237yxs.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 05:26:33 -0700 (PDT)
+Received: by 10.236.67.9 with SMTP id i9mr5061696yhd.306.1300710393107; Mon,
+ 21 Mar 2011 05:26:33 -0700 (PDT)
+Received: by 10.236.105.137 with HTTP; Mon, 21 Mar 2011 05:26:33 -0700 (PDT)
+X-Originating-IP: [192.100.120.41]
+In-Reply-To: <20110321112932.GF16334@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169589>
 
-On Sat, Mar 19, 2011 at 08:24:20PM +0100, Micha=C5=82 =C5=81owicki wrot=
-e:
+Hi Jeff,
 
-> I'm looking at idea about better git log --follow support from
-> https://git.wiki.kernel.org/index.php/SoC2011Ideas .There is somethin=
-g
-> like this - "[.. ] it does not interact well with git's usual history
-> simplification [...]". Can someone elaborate this? I've found History
-> Simplification in git rev-list man but don't know yet about issues
-> with --follow.
+I have tested the patch and it works like a charm!.
 
-In short, history simplification is a way of looking at a subset of the
-commit history graph, but in a way that makes it look like a complete
-graph. Imagine I have a linear history like this:
+Tested-by: Maxin B. John <maxin@maxinbjohn.info>
 
-  A--B--C
 
-where "A" modifies "file1", "B" modifies "file2", and "C" modifies
-"file1" again. If I ask for the history of "file1" with "git log file1"=
+On Mon, Mar 21, 2011 at 12:29 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Mar 20, 2011 at 11:10:55PM +0200, Maxin john wrote:
+>
+>> While using "git bisect visualize" on my PC running Ubuntu 10.10, I
+>> came across this error:
+>>
+>> $ git bisect visualize
+>> eval: 1: gitk: not found
+>> git: 'bisect' is not a git command. See 'git --help'.
+>>
+>> Did you mean this?
+>> =A0 =A0 =A0 bisect
+>> $
+>
+> Yuck. Definitely non-optimal.
+>
+>> diff --git a/git-bisect.sh b/git-bisect.sh
+>> index c21e33c..fefe212 100755
+>> --- a/git-bisect.sh
+>> +++ b/git-bisect.sh
+>> @@ -290,7 +290,8 @@ bisect_visualize() {
+>> =A0 =A0 =A0 =A0 then
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 case
+>> "${DISPLAY+set}${SESSIONNAME+set}${MSYSTEM+set}${SECURITYSESSIONID+s=
+et}"
+>> in
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 '') =A0 =A0 set git log ;;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 set*) =A0 set gitk ;;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 set*) =A0 is_gitk_present
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 set gitk ;;
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 esac
+>
+> The point of this code is to use "gitk" if we can (i.e., if we have a
+> grahpical display of some sort), and "git log" otherwise. Shouldn't "=
+we
+> are missing gitk" also cause us to fallback to using "git log"? IOW,
+> something like:
+>
+> =A0if test -n "${DISPLAY+set}..." && is_gitk_present; then
+> =A0 =A0set gitk
+> =A0else
+> =A0 =A0set git log
+> =A0fi
+>
+
+Yes. it is much better than just exiting if "gitk" is not present.
+
+>> +is_gitk_present () {
+>> + =A0 =A0 =A0 GIT_GITK=3D$(which gitk)
+>> + =A0 =A0 =A0 test -n "$GIT_GITK" || {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo >&2 "Cannot find 'gitk' in the PA=
+TH"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
+>> + =A0 =A0 =A0 }
+>> +}
+>
+> I don't think this is a portable use of which. In particular, I seem =
+to
+> recall SunOS which printing some junk to stderr like "no foo in /bin
+> /usr/bin etc...". I think it even then returns a successful exit code=
 ,
-then git will pretend as if the graph looks like:
+> just to make it totally useless.
+>
+> I think we tend to use the shell's "type" builtin for this, which has=
+ a
+> usable exit code.
 
-  A--C
+"type" seems to be a better choice than using "which" for this case.
 
-including rewriting the parent of "C" to point to "A" (because the
-parent pointer is basically an edge in the graph).
+> So the patch would look like:
+>
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index c21e33c..3b3156f 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -288,10 +288,12 @@ bisect_visualize() {
+>
+> =A0 =A0 =A0 =A0if test $# =3D 0
+> =A0 =A0 =A0 =A0then
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 case "${DISPLAY+set}${SESSIONNAME+set}$=
+{MSYSTEM+set}${SECURITYSESSIONID+set}" in
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 '') =A0 =A0 set git log ;;
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 set*) =A0 set gitk ;;
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 esac
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test -n "${DISPLAY+set}${SESSIONNAME=
++set}${MSYSTEM+set}${SECURITYSESSIONID+set}" &&
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0type gitk >/dev/null 2>&1; then
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 set gitk
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 else
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 set git log
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
+> =A0 =A0 =A0 =A0else
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0case "$1" in
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0git*|tig) ;;
+>
+> but I didn't test it at all.
+>
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
 
-If you are just doing a straight "git log", the actual parentage is not
-that interesting. We either show commits or we don't, and we don't show
-links between them. But try "git log --graph" or "gitk", which do care
-about the edges. They want to show you a whole connected graph.
-
-Now consider --follow. It doesn't happen during the commit limiting
-phase, but instead it happens while we're showing commits. And if it
-decides a commit isn't interesting, we don't show it. That works OK for
-"git log", but it makes the graph for other things disjointed.
-
-You can see it in this example:
-
-  # make the A-B-C repo we mentioned above
-  git init repo && cd repo
-  echo content >file1 && git add file1 && git commit -m one
-  echo content >file2 && git add file2 && git commit -m two
-  echo content >>file1 && git add file1 && git commit -m three
-
-  # Now look at it in gitk; we see a nice linear graph.
-  gitk
-
-  # Now let's try it with path limiting. We see a nice subgraph that
-  # pretends to be linear, because we "squished" out the uninteresting
-  # nodes.
-  gitk file1
-
-  # Now let's make some more commits with a rename.
-  echo content >>file2 && git commit -a -m four
-  git mv file1 newfile && git commit -m five
-  echo content >>newfile && git commit -a -m six
-
-  # If we use path limiting, we'll only see the two most recent commits=
-=2E
-  # We get stopped at the rename because path limiting is just about th=
-e
-  # pathname.
-  gitk newfile
-
-  # So we can use --follow to follow the rename. First let's try simple
-  # output. You should see commits 1, 3, 5, and 6, which touched either
-  # newfile or its rename source, file1.=20
-  git log --oneline --follow newfile
-
-  # But now look at it in gitk. Commit 4 is included as a boundary
-  # commit, but we fail to notice that it connects to three. And we
-  # don't see commit 3 connecting to anything, and commit 1 is missing
-  # entirely.
-  gitk --follow newfile
-
-Obviously this a pretty simplistic example. But you can imagine in a
-history with a lot of branching how useful this simplification is to
-understanding what happened to a subset of the tree.
-
-Jakub mentioned another example with gitweb's subtree merge not being
-found by --follow. I haven't looked into that case, but it may be
-related (or it may simply be a defect in follow finding the right
-source).
-
--Peff
+Warm Regards,
+Maxin B. John
