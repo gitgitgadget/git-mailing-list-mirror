@@ -1,72 +1,96 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: Is there some env variable like GIT_LANG (like LANG)?
-Date: Mon, 21 Mar 2011 21:36:36 +0100
-Message-ID: <4D87B6D4.3040601@dirk.my1.cc>
-References: <4D879E11.6040609@dirk.my1.cc>	<7vipvcp8e3.fsf@alter.siamese.dyndns.org>	<4D87ABA5.1030609@dirk.my1.cc> <AANLkTikXsYONY5rUSF5138bQ=R4gCopOO8fu=3np+c98@mail.gmail.com>
+From: Lasse Makholm <lasse.makholm@gmail.com>
+Subject: Re: git status reads too many files
+Date: Mon, 21 Mar 2011 21:39:32 +0100
+Message-ID: <AANLkTikPL7Dx5AphGnd1TVAyLNgNh2WVd__Yom134VXb@mail.gmail.com>
+References: <AANLkTikV4S51DXLADiRXWqjXdTD1OBLSdKjEWALZ9Ebh@mail.gmail.com>
+	<7vipvcs9xt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Lasse Makholm <lasse.makholm@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 21:36:57 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 21:39:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1lqP-0006cc-Rb
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 21:36:54 +0100
+	id 1Q1lt5-00081y-CU
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Mar 2011 21:39:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956Ab1CUUgm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 16:36:42 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.104]:57096 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500Ab1CUUgl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2011 16:36:41 -0400
-Received: from [84.176.60.154] (helo=[192.168.2.100])
-	by smtprelay06.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1Q1lqA-0001Hi-JX; Mon, 21 Mar 2011 21:36:38 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
-In-Reply-To: <AANLkTikXsYONY5rUSF5138bQ=R4gCopOO8fu=3np+c98@mail.gmail.com>
-X-Df-Sender: 757646
+	id S1754414Ab1CUUjf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2011 16:39:35 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33312 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754188Ab1CUUjd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2011 16:39:33 -0400
+Received: by bwz15 with SMTP id 15so5347976bwz.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 13:39:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rY4AXFqGbLaHEGeHibJ5mRNsrRbe+fmPm0yms6hW5Rc=;
+        b=obmMu3cp/auCh7RgF37xnX0k6GrEZzjU9dBY+L3GOOxiEsEVFrVRnv6t6I1bB3vGdv
+         QQYNX9w1JWxkyAxTHw5tZFT8YusBOJRtN11/Et/0CwHWw2SGw3cPn/6HXl6/ccWC46Gz
+         VHPsutCWNT1KY442xpXzY0bqNNJMiDYN2v0Ls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kBByHGTjkRtSwTLuuuf/nxiK3Czf5SFLsgfu+QP3oCQQhojXSS2uVFxXrp2kYn77wV
+         jAuRqTUUE2899PkWfq4xZj218a+JcE5rI27YstemgY4W7Vux+NKLo5MYLcMbwu70xl4w
+         rl2GM5p0zyVChsNGvKRQnX7MTAiRatUYmKyzk=
+Received: by 10.204.80.29 with SMTP id r29mr4130554bkk.195.1300739972514; Mon,
+ 21 Mar 2011 13:39:32 -0700 (PDT)
+Received: by 10.204.114.207 with HTTP; Mon, 21 Mar 2011 13:39:32 -0700 (PDT)
+In-Reply-To: <7vipvcs9xt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169666>
 
-Am 21.03.2011 21:30 schrieb Lasse Makholm:
-> 2011/3/21 Dirk S=FCsserott<newsletter@dirk.my1.cc>:
->> Am 21.03.2011 20:43 schrieb Junio C Hamano:
->>>
->>> Dirk S=FCsserott<newsletter@dirk.my1.cc>    writes:
->>>
->>>> What would you think of it?
->>>
->>> Strongly negative.  I don't want force people to set GIT_LANG HG_LA=
-NG
->>> CVS_LANG and 47 different FROTZ_LANG environment variables.
->>>
->>> I would rather just set LANG=3DC LC_ALL=3DC in the terminal I use g=
-it in and
->>> leave everything else in whatever locale the rest of the system is =
-in.
->>>
+On 21 March 2011 17:41, Junio C Hamano <gitster@pobox.com> wrote:
+> Lasse Makholm <lasse.makholm@gmail.com> writes:
+>
+>> This persistent across multiple runs of git status:
 >>
->> Ok. Accepted. Was just a question. I see your point.
+>> $ strace -o /tmp/trace2 git status
+>> # On branch there
+>> nothing to commit (working directory clean)
+>> $ grep ^open /tmp/trace2 | wc -l
+>> 414
+>> $
+>>
+>> ...until the index is touched:
+>>
+>> $ touch .git/index
 >
-> Alternatively, you might like something like the following in your .b=
-ashrc:
->
-> function git
-> {
->      LANG=3DC command git "$@"
-> }
->
+> Don't do this; you are breaking the racy-git protection.
 
-Hmm. Looks interesting. I'll try it out. I'm not so shell'ish (more=20
-perl'ish) but I expect that to "rename"/"alias" git to the given=20
-command. If it works, it's great. Thank you.
+Yeah, I know, I was just proving a point... git reset (--hard?) HEAD
+would achieve the same thing...
+
+> I think we opportunistically update the .git/index file in "git statu=
+s" to
+> refresh the stat bits (but we don't error out when we cannot write a =
+new
+> index, as you may be only browsing somebody else's repository with on=
+ly a
+> read access to it). =A0It probably should be just the matter of addin=
+g a bit
+> of logic to notice that your index is racily clean.
+
+I figured as much... My original thought of checkout ensuring an index
+newer than any working file is stupid, of course, for a multitude of
+reasons -- one of which is that the "next" timestamp may be a full 2
+seconds away...
+
+> Let me cook something real quick.
+
+Sweet, thanks...
+
+--=20
+/Lasse
