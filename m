@@ -1,105 +1,105 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [PATCH] git-completion: Add git help completion for aliases
-Date: Tue, 22 Mar 2011 10:18:30 +0100
-Message-ID: <AANLkTimg74nh5C74tTXNQeK1nZnQVhGfH=gh8t1Nwr4j@mail.gmail.com>
+Date: Tue, 22 Mar 2011 10:23:42 +0100
+Message-ID: <4D886A9E.6050405@drmicha.warpmail.net>
 References: <4D871972.7080008@elegosoft.com> <7vhbawno11.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1103212302000.1561@bonsai2> <7v4o6vmvzs.fsf@alter.siamese.dyndns.org>
- <20110322085027.GF14520@neumann> <AANLkTi=zbsNxLSCcWQorZCnRFuDPujqYzW7B0xJx2FHp@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakob Pfender <jpfender@elegosoft.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, lee.marlow@gmail.com,
-	markus.heidelberg@web.de, spearce@spearce.org, bebarino@gmail.com,
-	ted@tedpavlic.com, tlikonen@iki.fi, trast@student.ethz.ch
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Mar 22 10:18:57 2011
+Content-Transfer-Encoding: 7bit
+Cc: Jakob Pfender <jpfender@elegosoft.com>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, lee.marlow@gmail.com,
+	markus.heidelberg@web.de, szeder@ira.uka.de, spearce@spearce.org,
+	bebarino@gmail.com, ted@tedpavlic.com, tlikonen@iki.fi,
+	trast@student.ethz.ch
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 10:27:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1xjs-0000Ef-VR
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 10:18:57 +0100
+	id 1Q1xs1-0004tC-Jc
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 10:27:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196Ab1CVJSw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 05:18:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35671 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751707Ab1CVJSv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 05:18:51 -0400
-Received: by fxm17 with SMTP id 17so6226369fxm.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 02:18:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZgTk4ppjP13578/7HLYziOdaqUfztrTzjBdC0JEG1Fw=;
-        b=Q484ifF6+2kSFt0fFkJfwXXMbTfBvbvkVIRTt+KXx/Ct1AqlANMT8891BJlYA5kxS4
-         5IymVKHU9u2uT/p1Jwc9njpsLbIfIDpUnXhWnHa3KuSyQinMEuvZ1jXxuQRzjMHg22VB
-         HFrMIkM4XWBJAFEuPqK/Nqyq3lz2xq06w3Uo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=snlnsBoHSggQ1fEhcx8JeICm/Kwvpi+FOnGqxnUBmLdFl4BMhfZ3AUaWM1NMq0SS2G
-         yfagCUS9SlsdwM53HyUc8UaNjPjJM/tPEJwLdl6qqFqEnnjhPRXu19eSiipHvCzizXWU
-         3ERiqka5az8QCvdCqvEsIe3J4j8rYB/QPiESs=
-Received: by 10.223.78.138 with SMTP id l10mr3308882fak.106.1300785530092;
- Tue, 22 Mar 2011 02:18:50 -0700 (PDT)
-Received: by 10.223.117.78 with HTTP; Tue, 22 Mar 2011 02:18:30 -0700 (PDT)
-In-Reply-To: <AANLkTi=zbsNxLSCcWQorZCnRFuDPujqYzW7B0xJx2FHp@mail.gmail.com>
+	id S1751932Ab1CVJ1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 05:27:17 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:41008 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751268Ab1CVJ1P (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 05:27:15 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A4503202E4;
+	Tue, 22 Mar 2011 05:27:14 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 22 Mar 2011 05:27:14 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=cJEQrgjeGA+qjRQg6iji7acXiUw=; b=Epz22D2QunfV6ULn4nRVimmzavvSCbGmGOqHMtsO5ZzbwMo/q1GwRwaARTEkmaqcNiPmPo39POlGw/Fijw08qzGP2ZYv0tuuFyfi71dyNNXLElTcH/YQsslQwepdppS2+TSIsyzXtSqArOxhZfoWXsJlGa7EXxTlRnRx0VArO5g=
+X-Sasl-enc: PaeImX0dGk89SbgRQP9FZZjV9zc8yWojXdLM4HPzoB9G 1300786034
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5E5D644019D;
+	Tue, 22 Mar 2011 05:27:12 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <7vhbawno11.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169715>
 
-2011/3/22 Erik Faye-Lund <kusmabite@gmail.com>:
-> 2011/3/22 SZEDER G=E1bor <szeder@ira.uka.de>:
->> On Tue, Mar 22, 2011 at 12:53:43AM -0700, Junio C Hamano wrote:
->>> This is a constructive tangent but if we are going to run $(__git_a=
-liases)
->>> every time we run _git_help, perhaps it would want a hack similar t=
-o the
->>> way the value for $__git_all_commands is generated just once?
+Junio C Hamano venit, vidit, dixit 21.03.2011 22:48:
+> Jakob Pfender <jpfender@elegosoft.com> writes:
+> 
+>> Enable bash completion for "git help <alias>", analogous to "git
+>> <alias>", which was already implemented.
 >>
->> I think this is not necessary. =A0We already run __git_aliases() eve=
-ry
->> time after 'git <TAB>', and it was not an issue so far. =A0And indee=
-d, I
->> just created 50 aliases, and the time required for __git_aliases()
->> seems to be negligible:
+>> Signed-off-by: Jakob Pfender <jpfender@elegosoft.com>
+>> ---
+>>  contrib/completion/git-completion.bash |    2 +-
+>>  1 files changed, 1 insertions(+), 1 deletions(-)
 >>
->> =A0$ time __git_aliases
->> =A0<bunch of aliases>
->>
->> =A0real =A0 =A00m0.028s
->> =A0user =A0 =A00m0.016s
->> =A0sys =A0 =A0 0m0.004s
->>
->
-> Unfortunately, the situation is not quite so good on Windows:
-> $ time __git_aliases
-> <bunch of aliases>
->
-> real =A0 =A00m0.112s
-> user =A0 =A00m0.030s
-> sys =A0 =A0 0m0.015s
->
-> This is with 50 aliases, with 0 aliases I get this:
-> $ time __git_aliases
-> test
->
-> real =A0 =A00m0.063s
-> user =A0 =A00m0.015s
-> sys =A0 =A0 0m0.015s
->
+>> diff --git a/contrib/completion/git-completion.bash
+>> b/contrib/completion/git-completion.bash
+>> index 893b771..f9a74d3 100755
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1506,7 +1506,7 @@ _git_help ()
+>>  		;;
+>>  	esac
+>>  	__git_compute_all_commands
+>> -	__gitcomp "$__git_all_commands
+>> +	__gitcomp "$__git_all_commands $(__git_aliases)
+>>  		attributes cli core-tutorial cvs-migration
+>>  		diffcore gitk glossary hooks ignore modules
+>>  		repository-layout tutorial tutorial-2
+> 
+> This patch may not be _wrong_ per-se, but it it useful in practice?
+> 
+> I dunno.
+> 
+> Don't people usually use aliases so that they do not have to type long
+> command names that would need completion?
 
-OK, apparently I have a dummy alias around from some time earlier, so
-this was for 51 and 1 alias. But the point remains, it's actually a
-bit of a problem on Windows.
+I'd say this would be a perfect argument for "do not suggest aliases for
+'git <cmd>'"; independent of that, we could still suggest aliases for
+'git help <cmd>' since, presumably, you use commands more often than you
+look up help...
+
+But currently, we do it the other way round, and even worse:
+
+git for<TAB>
+for-each-ref-do   format-patch
+
+git help for<TAB>
+for-each-ref   format-patch
+
+That is, git command completion lists aliases (for-each-ref-do) and
+common commands, and git help completion lists no aliases and all commands.
+
+The patch makes it so that the suggestions for git command are a subset
+of those for git help command, which is a good thing. (Not completing
+aliases for 'git <cmd>' would be good also, on top of that.)
+
+And yes, I use git help <alias> a lot, because I don't like git config
+--get alias.<alias>, and our config files tend to grow in ugliness over
+time. (We need git config --broomstick or git config --vacuum.)
+
+Michael
