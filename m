@@ -1,196 +1,114 @@
-From: jari.aalto@cante.net
-Subject: [PATCH] git.el: Add new user functions for push, pull, fetch.
-Date: Tue, 22 Mar 2011 15:30:51 +0200
-Organization: Private
-Message-ID: <1300800651-12502-1-git-send-email-jari.aalto@cante.net>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: Jari Aalto <jari.aalto@cante.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 22 14:38:09 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: Weird behavior of shell variables in git aliases
+Date: Tue, 22 Mar 2011 09:43:58 -0400
+Message-ID: <20110322134358.GA19064@sigill.intra.peff.net>
+References: <d9c38309-c433-476c-bba3-f2c5b7e94a89@k15g2000prk.googlegroups.com>
+ <20110321215310.GA2122@sigill.intra.peff.net>
+ <7v8vw8nmh2.fsf@alter.siamese.dyndns.org>
+ <7v4o6wnlxm.fsf@alter.siamese.dyndns.org>
+ <20110322111844.GA32446@sigill.intra.peff.net>
+ <20110322132820.GA14559@sigill.intra.peff.net>
+ <AANLkTin3fXkGaC5cTVny5adU=FusQV0WAcPHLUEeEzLi@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Dun Peal <dunpealer@gmail.com>, git@vger.kernel.org
+To: Lasse Makholm <lasse.makholm@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 14:44:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q21mh-0000qU-4S
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 14:38:07 +0100
+	id 1Q21sZ-0004NG-4W
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 14:44:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756167Ab1CVNiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 09:38:01 -0400
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:41776 "EHLO
-	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754320Ab1CVNiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 09:38:00 -0400
-X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Mar 2011 09:37:59 EDT
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 1FDEFEB9D1
-	for <git@vger.kernel.org>; Tue, 22 Mar 2011 15:30:53 +0200 (EET)
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A05CD51D4FC; Tue, 22 Mar 2011 15:30:53 +0200
-Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 01BA92BD44
-	for <git@vger.kernel.org>; Tue, 22 Mar 2011 15:30:51 +0200 (EET)
-Received: from db.cante.net ([192.168.1.5] helo=picasso.cante.net)
-	by picasso.cante.net with esmtp (Exim 4.74)
-	(envelope-from <jari.aalto@cante.net>)
-	id 1Q21ff-0003G4-Hu; Tue, 22 Mar 2011 15:30:51 +0200
-X-Mailer: git-send-email 1.7.2.3
-X-SA-Exim-Connect-IP: 192.168.1.5
-X-SA-Exim-Mail-From: jari.aalto@cante.net
-X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
-X-Antivirus: VAMS
+	id S932094Ab1CVNoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 09:44:05 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59019
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932081Ab1CVNoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 09:44:04 -0400
+Received: (qmail 24744 invoked by uid 107); 22 Mar 2011 13:44:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Mar 2011 09:44:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Mar 2011 09:43:58 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTin3fXkGaC5cTVny5adU=FusQV0WAcPHLUEeEzLi@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169737>
 
-From: Jari Aalto <jari.aalto@cante.net>
+On Tue, Mar 22, 2011 at 02:35:10PM +0100, Lasse Makholm wrote:
 
+> On 22 March 2011 14:28, Jeff King <peff@peff.net> wrote:
+> > But I think that is a little too magic for my taste. Although the false
+> > positives ("!echo 'literal $#'") and false negatives (you want "!foo" to
+> > _ignore_ its parameters) are pretty obscure, I would prefer to keep
+> > things simple.
+> 
+> Then how about simply:
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 6468a68..8097480 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -586,9 +586,16 @@ If the alias expansion is prefixed with an
+> exclamation point,
+>  it will be treated as a shell command.  For example, defining
+>  "alias.new = !gitk --all --not ORIG_HEAD", the invocation
+>  "git new" is equivalent to running the shell command
+> -"gitk --all --not ORIG_HEAD".  Note that shell commands will be
+> -executed from the top-level directory of a repository, which may
+> -not necessarily be the current directory.
+> +"gitk --all --not ORIG_HEAD". Note that any arguments you pass
+> +when running aliases are simply appended to the shell command.
+> +This means that "alias.foo = !echo $# args: $1, $2 and $3" will
+> +not do what you expect. To use alias arguments as positional
+> +parameters, wrap your command in a shell function:
+> +"alias.foo = !foo () { echo $# args: $1, $2 and $3; }; foo"
+> ++
+> +Shell commands will be executed from the top-level directory
+> +of a repository, which may not necessarily be the current
+> +directory.
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- contrib/emacs/git.el |   75 ++++++++++++++++++++++++++++++++++++++++++++=
-+++++-
- 1 files changed, 74 insertions(+), 1 deletions(-)
+Yeah, that certainly improves the situation.
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 214930a..20a3b2c 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -1,6 +1,7 @@
- ;;; git.el --- A user interface for git
-=20
- ;; Copyright (C) 2005, 2006, 2007, 2008, 2009 Alexandre Julliard <jullia=
-rd@winehq.org>
-+;; Copyright (C) 2010 Jari Aalto <jari.aalto@cante.net>
-=20
- ;; Version: 1.0
-=20
-@@ -33,11 +34,14 @@
- ;;
- ;; To start: `M-x git-status'
- ;;
-+;; RUDIMENTARY
-+;; - fetch/pull. Be sure to start gpg-agent, ssh-agent prior emacs
-+;;   to access ssh Git remotes.
-+;;
- ;; TODO
- ;;  - diff against other branch
- ;;  - renaming files from the status buffer
- ;;  - creating tags
--;;  - fetch/pull
- ;;  - revlist browser
- ;;  - git-show-branch browser
- ;;
-@@ -1520,6 +1524,7 @@ amended version of it."
-=20
- (unless git-status-mode-map
-   (let ((map (make-keymap))
-+        (remote-map (make-sparse-keymap))
-         (commit-map (make-sparse-keymap))
-         (diff-map (make-sparse-keymap))
-         (toggle-map (make-sparse-keymap)))
-@@ -1547,6 +1552,7 @@ amended version of it."
-     (define-key map "P"   'git-prev-unmerged-file)
-     (define-key map "q"   'git-status-quit)
-     (define-key map "r"   'git-remove-file)
-+    (define-key map "R"   remote-map)
-     (define-key map "t"    toggle-map)
-     (define-key map "T"   'git-toggle-all-marks)
-     (define-key map "u"   'git-unmark-file)
-@@ -1555,6 +1561,13 @@ amended version of it."
-     (define-key map "x"   'git-remove-handled)
-     (define-key map "\C-?" 'git-unmark-file-up)
-     (define-key map "\M-\C-?" 'git-unmark-all)
-+    ; remotes
-+    (define-key remote-map "\C-a" 'git-push)
-+    (define-key remote-map "R" 'git-pull)  ; retrieve "RR"
-+    (define-key remote-map "r" 'git-pull)  ; retrieve "Rr" (synonym)
-+    (define-key remote-map "p" 'git-push)
-+    (define-key remote-map "f" 'git-fetch)
-+    (define-key remote-map "\C-a" 'git-fetch)
-     ; the commit submap
-     (define-key commit-map "\C-a" 'git-amend-commit)
-     (define-key commit-map "\C-b" 'git-branch)
-@@ -1607,6 +1620,10 @@ amended version of it."
-       ["Interactive Diff File" git-diff-file-idiff t]
-       ["Log" git-log-file t]
-       "--------"
-+      ["Push" git-push t]
-+      ["Pull" git-pull t]
-+      ["Fetch" git-fetch t]
-+      "--------"
-       ["Mark" git-mark-file t]
-       ["Mark All" git-mark-all t]
-       ["Unmark" git-unmark-file t]
-@@ -1689,6 +1706,62 @@ Meant to be used in `after-save-hook'."
-             (git-call-process nil "add" "--refresh" "--" filename)
-             (git-update-status-files (list filename))))))))
-=20
-+(defun git-ask-remote (message)
-+  "Return remote."
-+  (let ((ret
-+	 (completing-read
-+	  "Push to remote: "
-+	  '(("origin" 1))		;FIXME read all remotes
-+	  (not 'predicate)
-+	  (not 'match)
-+	  "origin")))
-+    (if (not (string-match "[^ \t]" ret))
-+	"origin"
-+      ret)))
-+
-+(defun git-push (&optional remote)
-+  "Pull to REMOTE. Use \\[current-prefix-arg] to interactively set REMOT=
-E."
-+  (interactive
-+   (list (or (and current-prefix-arg
-+		  (git-ask-remote "Push to remote: "))
-+	     "origin")))
-+  ;; FIXME: could colled some status data for display
-+  (git-call-process-display-error "push" remote)
-+  (git-update-status-files)
-+  (message "Pushed to remote: %s" remote))
-+
-+(defun git-fetch (&optional remote)
-+  "Fetch from REMOTE. Use \\[current-prefix-arg] to interactively set RE=
-MOTE."
-+  (interactive
-+   (list (or (and current-prefix-arg
-+		  (git-ask-remote "Fetch from remote: "))
-+	     "origin")))
-+  ;; FIXME: could colled some status data for display
-+  (git-call-process-display-error "fetch" remote)
-+  (git-update-status-files)
-+  (message "Fetched from remote: %s" remote))
-+
-+(defun git-pull (&optional remote)
-+  "Pull from REMOTE. Use \\[current-prefix-arg] to interactively set REM=
-OTE."
-+  (interactive
-+   (list (or (and current-prefix-arg
-+		  (git-ask-remote "Pull from remote: "))
-+	     "origin")))
-+  (let ((not-clean
-+	 (ewoc-collect git-status (lambda (info &optional state)
-+				    (setq state (git-fileinfo->state info))
-+				    (or (eq state 'modified)
-+					(eq state 'added)
-+					(eq state 'deleted)
-+					(eq state 'unmerged))))))
-+    (if not-clean
-+	(error "Error: Can't pull while in unclean state (commit all first)."))
-+    (unless git-status (error "Not in git-status buffer."))
-+    ;; FIXME: could colled some status data for display
-+    (git-call-process-display-error "pull" remote)
-+    (git-update-status-files)
-+    (message "Pushed to remote: %s" remote)))
-+
- (defun git-help ()
-   "Display help for Git mode."
-   (interactive)
---=20
-1.7.2.3
+A small formatting nit: Those long commands with punctuation get hard to
+read in the middle of a paragraph. Maybe something like this on top:
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3916665..d2b7515 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -582,10 +582,18 @@ it will be treated as a shell command.  For example, defining
+ "git new" is equivalent to running the shell command
+ "gitk --all --not ORIG_HEAD". Note that any arguments you pass
+ when running aliases are simply appended to the shell command.
+-This means that "alias.foo = !echo $# args: $1, $2 and $3" will
+-not do what you expect. To use alias arguments as positional
++This means that
+++
++----------------------
++alias.foo = !echo $# args: $1, $2 and $3
++----------------------
+++
++will not do what you expect. To use alias arguments as positional
+ parameters, wrap your command in a shell function:
+-"alias.foo = !foo () { echo $# args: $1, $2 and $3; }; foo"
+++
++----------------------
++alias.foo = !foo () { echo $# args: $1, $2 and $3; }; foo
++----------------------
+ +
+ Shell commands will be executed from the top-level directory
+ of a repository, which may not necessarily be the current
+
+-Peff
+
+PS Your patch was wrapped on the @@ line. You might want to check your
+   mailer settings.
