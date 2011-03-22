@@ -1,112 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cherry-pick applies some other changes than the specified one?
-Date: Mon, 21 Mar 2011 23:37:45 -0700
-Message-ID: <7vlj07mzie.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
- <7vwrjssbfk.fsf@alter.siamese.dyndns.org> <4D877FAD.9000807@viscovery.net>
- <4D879516.3060204@gmail.com> <20110321195846.GA4277@elie>
- <4D87B00D.2010905@gmail.com> <7v62rcp6m6.fsf@alter.siamese.dyndns.org>
- <7vsjugnqig.fsf@alter.siamese.dyndns.org> <20110322052742.GA7637@elie>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 3/3] rev-list --min-parents,--max-parents: doc and test
+ and completion
+Date: Tue, 22 Mar 2011 08:38:34 +0100
+Message-ID: <4D8851FA.3040100@drmicha.warpmail.net>
+References: <cover.1300459016.git.git@drmicha.warpmail.net> <182c5ece22835559a9762e242adb701547cf6575.1300459017.git.git@drmicha.warpmail.net> <20110318211418.GA23407@elie> <4D8711DD.2040407@drmicha.warpmail.net> <20110321174917.GA8202@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 07:38:09 2011
+X-From: git-owner@vger.kernel.org Tue Mar 22 08:42:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1vEE-0006s8-K4
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 07:38:06 +0100
+	id 1Q1wEI-0006Qi-0V
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 08:42:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754494Ab1CVGiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 02:38:01 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38535 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884Ab1CVGiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 02:38:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6CBE72255;
-	Tue, 22 Mar 2011 02:39:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bng9yLclcEtj//xGSRVe3vhwc84=; b=XDVx6J
-	QBCxign2H2WQtjE+V8LkUFNGb6EL9mK08fn3aR3ZQXq+I9hK7lXHEo7nIy83seZb
-	5eXdbjSDo1v37of/I+1vqLhtroON1wikBsp4Uvy3WmULyES5LAk6A4n/qmNB47zD
-	a4Eudk1j/bxprRdMw7MU4Tm10geTlzI7+zQDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RuCSt4eGc+aolgJ5MAc6Zz5uYV/t00c6
-	aIzbBvuUIlLFCnYtudCL2Q+nxRqAK4GTBTX4NgwN0ZqhKVY74W4VtzzIkY9VBRI3
-	7IfcK8/81AE4tD6hR95vcnnWkeFkFUvDlnFwk7vwzp9Wk/cPZqaU0VmFdjMQspPs
-	a9FPZI9+lps=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 19B152254;
-	Tue, 22 Mar 2011 02:39:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A46272253; Tue, 22 Mar 2011
- 02:39:25 -0400 (EDT)
-In-Reply-To: <20110322052742.GA7637@elie> (Jonathan Nieder's message of "Tue,
- 22 Mar 2011 00:27:43 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 245990B2-544F-11E0-942E-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754879Ab1CVHmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 03:42:08 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33054 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754456Ab1CVHmH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 03:42:07 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 085FA20178;
+	Tue, 22 Mar 2011 03:42:06 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Tue, 22 Mar 2011 03:42:06 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=LMKMea6YGt/vOnXpy4/RVzLk4hk=; b=FjvKYZetYuwQTO544LXr7sDXWfwgXBKHn5eoR4xfXeLFfuFfj5A1bCPBixGhgNQU+6vwLg0zlseZgaG1bfkxXp5+/0w6r93MN4S157TmkjAQQFn/t7jLlCtme8EDRtL85q+NUGblXHYu4jUDW67vDrFFOcmhaJeYx6jBhviBpF0=
+X-Sasl-enc: +2hciyFYCprGEKEo8zFMBTUGYeRBLlGGMftEHJ13Wd+G 1300779725
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2FD2F405CC2;
+	Tue, 22 Mar 2011 03:42:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <20110321174917.GA8202@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169703>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jonathan Nieder venit, vidit, dixit 21.03.2011 18:49:
+> Michael J Gruber wrote:
+> 
+>> Come on, with a cover-letter saying doc and tests are in 3/3, how much
+>> effort is it to read that before 1/3 if you care?
+> 
+> Nonzero.  Now multiply that by the number of people who are going to
+> look at the history over the years.
+> 
+>> The tests are bogus before the code and the doc pointless before it.
+>>
+>> Squashing 1 and 3 is okay, of course. For my own digestion, smaller
+>> bites are better.
+> 
+> The reason I mentioned the possibility of docs and tests before
+> implementation is that that can be a good way to get feedback on the
+> design of something when the implementation is not even ready yet.
+> Which doesn't apply hear, of course.
+> 
+> Anyway, I don't care too much about this, but I wanted to make the
+> convention clear (if I have understood it correctly, at least).
 
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -24,6 +24,37 @@ ifndef::git-format-patch[]
->>  --patch::
->>  	Generate patch (see section on generating patches).
->>  	{git-diff? This is the default.}
->> +
->> +-1 --base::
->> +-2 --ours::
->> +-3 --theirs::
->> +-0::
->> +	These make sense only when comparing the index and the working
->> +	tree (i.e. `git diff-files` or `git diff <path>...`) and compares
->> +	against the "base" version, "our branch" or "their
->> +	branch" respectively.  With these options, diffs for
->> +	merged entries are not shown.
->> ++
->> +The default is to diff against our branch (-2) and the
->> +cleanly resolved paths.  The option -0 can be given to
->> +omit diff output for unmerged entries and just show "Unmerged".
->
-> I am not sure what this comment about the default means.  Isn't the
-> default to use --cc?
+Maybe we should clarify this. No, I don't mean by taking it outside ;)
 
-Depends on where this is included.  That passage originally came from
-diff-files, for which "-2 if exists otherwise -0" has been the default.
-When included in "diff" (and perhaps "show"), --cc is used by default.
-So we would need the "ifdef::git-diff-files[]/endif::git-diff-files[]"
-around it.
+If there's a different convention I'll try and follow that, of course.
+I'm very used to seeing "1/2 implementation" and "2/2 doc and tests",
+the other way round you would introduce failing tests (for new
+features). So I took that as a convention. You could always squash
+these, of course (just like my 2 and 3 in v2).
 
->> +
->> +-c::
->> +--cc::
->> +	Produce "combined diff" (and "dense combined diff" showing how the
->> +	result is different compared to more than one original.
+I actually have to keep myself from feeling annoyed when I see
+documentation patches without any implementation, because a patch
+creates the impression that something has been done, but without any
+attempt at implementation it's hard to tell whether it's doable at all.
+This does not apply to pure RFD/design questions, of course.
 
-Similarly, we would need "ifdef::defaults-to-cc[]/endif" around a sentence
-here to say that this is the default when showing unmerged entry.
-
-> Missing an article after "Produce" (produce a combined diff) and a
-> closing parenthesis after "dense combined diff", I think.
->
-> More importantly, it might be nice to say
->
-> 	See the section "diff format for merges" of
-> 	linkgit:git-diff[1] for details.
-
-Thanks.
+Cheers,
+Michael
