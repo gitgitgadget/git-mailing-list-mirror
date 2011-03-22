@@ -1,111 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: cherry-pick applies some other changes than the specified one?
-Date: Tue, 22 Mar 2011 00:27:43 -0500
-Message-ID: <20110322052742.GA7637@elie>
-References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
- <7vwrjssbfk.fsf@alter.siamese.dyndns.org>
- <4D877FAD.9000807@viscovery.net>
- <4D879516.3060204@gmail.com>
- <20110321195846.GA4277@elie>
- <4D87B00D.2010905@gmail.com>
- <7v62rcp6m6.fsf@alter.siamese.dyndns.org>
- <7vsjugnqig.fsf@alter.siamese.dyndns.org>
+From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+Subject: Re: [PATCH] git-submodule: Remove duplicate entries during merge
+ with conflict
+Date: Tue, 22 Mar 2011 07:28:04 +0100
+Message-ID: <4D884174.6070700@morey-chaisemartin.com>
+References: <4D81C1AA.5010008@morey-chaisemartin.com> <7v1v254ma7.fsf@alter.siamese.dyndns.org> <7vhbb1320t.fsf@alter.siamese.dyndns.org> <4D87B51A.4060609@web.de> <4D87C467.3090907@morey-chaisemartin.com> <4D87CAC4.2010001@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 06:27:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 22 07:28:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1u8L-00084w-NQ
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 06:27:58 +0100
+	id 1Q1v5G-0003dt-2R
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 07:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753884Ab1CVF1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 01:27:52 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63535 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753692Ab1CVF1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 01:27:51 -0400
-Received: by iyb26 with SMTP id 26so7088639iyb.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 22:27:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=zgxL75//Qtv5IWIr9ki+D7tNOe9HTKHvZo4/dLfRl5o=;
-        b=L9cliwUpUnyiFyj3E0gl7RMs271AHGzvVbQeGFxOZfs043uu5Rp3sx1G4Gd7d34VyD
-         /uWSDijfku4UsKbifcRUB/5GS39vRvFTE6LNvuw4PiNEayA1jOA/bDJAQXptSfZRAnxT
-         oWS/Wnbxl8fEz0MLHphO6PLTDT6EMioSxa7bg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=HP2kHq/U5z+zCB9nylshInfNeTaz9zIsCw9wcRFRsIa+/8EKI116I6xuJpoNmjlsxB
-         tUhb2oC4OGs5Hg7pIoGTkqjz4x2pncuTq3LnI44E1Cus8X5UjHmvqPM39voXqb0yC3/e
-         4qyI19CT3oiAo65EtdvAlsTj8OxUEvIfNyNV0=
-Received: by 10.42.74.70 with SMTP id v6mr8357231icj.190.1300771670838;
-        Mon, 21 Mar 2011 22:27:50 -0700 (PDT)
-Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
-        by mx.google.com with ESMTPS id g4sm4409085ick.23.2011.03.21.22.27.48
-        (version=SSLv3 cipher=OTHER);
-        Mon, 21 Mar 2011 22:27:49 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vsjugnqig.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754426Ab1CVG2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 02:28:40 -0400
+Received: from 63.mail-out.ovh.net ([91.121.185.56]:34159 "HELO
+	63.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754298Ab1CVG2i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 02:28:38 -0400
+Received: (qmail 11282 invoked by uid 503); 22 Mar 2011 07:15:32 -0000
+Received: from b9.ovh.net (HELO mail189.ha.ovh.net) (213.186.33.59)
+  by 63.mail-out.ovh.net with SMTP; 22 Mar 2011 07:15:32 -0000
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 22 Mar 2011 08:28:36 +0200
+Received: from mut38-4-82-233-116-185.fbx.proxad.net (HELO ?10.0.2.12?) (nicolas@morey-chaisemartin.com@82.233.116.185)
+  by ns0.ovh.net with SMTP; 22 Mar 2011 08:28:35 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
+In-Reply-To: <4D87CAC4.2010001@web.de>
+X-Ovh-Tracer-Id: 4725120434678194103
+X-Ovh-Remote: 82.233.116.185 (mut38-4-82-233-116-185.fbx.proxad.net)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-Spam-Check: DONE|U 0.5/N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169701>
 
-Junio C Hamano wrote:
+On 21/03/2011 23:01, Jens Lehmann wrote:
+> Hmm, I'm not sure if I fully understand your use case. Maybe being able
+> to tell pull to run a "git merge <sha1-from-upstream>" in submodules
+> where the superproject's merge produced conflicts would help you?
+> 
 
-> This just leaves the details of what -c/--cc are about to the combined
-> diff format section in diff-generate-patch.txt, which I updated in the
-> separate patch.
+In short yes. And if it could be recursive (if a conflicting submodules has conflicting submodules) that would be great !
+And yes git-merge is probably a better place to do something like that than git submodule update.
 
-Thanks; this looks pretty good.  A few nitpicks:
+> That is a good argument against '*'. I don't have strong feelings about
+> that, I just came up with '*' because "git submodule status" already uses
+> '-' and '+' in it's output. But anyways, 'U' is fine for me too.
+> 
 
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -24,6 +24,37 @@ ifndef::git-format-patch[]
->  --patch::
->  	Generate patch (see section on generating patches).
->  	{git-diff? This is the default.}
-> +
-> +-1 --base::
-> +-2 --ours::
-> +-3 --theirs::
-> +-0::
-> +	These make sense only when comparing the index and the working
-> +	tree (i.e. `git diff-files` or `git diff <path>...`) and compares
-> +	against the "base" version, "our branch" or "their
-> +	branch" respectively.  With these options, diffs for
-> +	merged entries are not shown.
-> ++
-> +The default is to diff against our branch (-2) and the
-> +cleanly resolved paths.  The option -0 can be given to
-> +omit diff output for unmerged entries and just show "Unmerged".
+OK. I'll integrate that with the patch Junio proposed then.
 
-I am not sure what this comment about the default means.  Isn't the
-default to use --cc?
-
-> +
-> +-c::
-> +--cc::
-> +	Produce "combined diff" (and "dense combined diff" showing how the
-> +	result is different compared to more than one original.
-
-Missing an article after "Produce" (produce a combined diff) and a
-closing parenthesis after "dense combined diff", I think.
-
-More importantly, it might be nice to say
-
-	See the section "diff format for merges" of
-	linkgit:git-diff[1] for details.
+Nicolas
