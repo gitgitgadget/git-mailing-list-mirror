@@ -1,102 +1,179 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-completion: Add git help completion for aliases
-Date: Tue, 22 Mar 2011 00:53:43 -0700
-Message-ID: <7v4o6vmvzs.fsf@alter.siamese.dyndns.org>
-References: <4D871972.7080008@elegosoft.com>
- <7vhbawno11.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1103212302000.1561@bonsai2>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2 3/3] rev-list --min-parents,--max-parents: doc and test
+ and completion
+Date: Tue, 22 Mar 2011 08:55:00 +0100
+Message-ID: <4D8855D4.6080804@drmicha.warpmail.net>
+References: <cover.1300702130.git.git@drmicha.warpmail.net> <8bad49d4e4897be623b7af3096498a5803dbbd89.1300702130.git.git@drmicha.warpmail.net> <20110321184514.GA1850@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, lee.marlow@gmail.com,
-	markus.heidelberg@web.de, szeder@ira.uka.de, spearce@spearce.org,
-	bebarino@gmail.com, ted@tedpavlic.com, tlikonen@iki.fi,
-	trast@student.ethz.ch
-To: Jakob Pfender <jpfender@elegosoft.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 22 08:54:21 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 08:58:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1wQ0-0003FS-Sw
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 08:54:21 +0100
+	id 1Q1wU8-0004tG-O9
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 08:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754999Ab1CVHyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 03:54:17 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33508 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754748Ab1CVHyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 03:54:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A48BA291B;
-	Tue, 22 Mar 2011 03:55:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VqWWg5u2XVReq/y/vbVOxGFUqQA=; b=o/JJei
-	atZAl44JmkM2m8DLmf+oaCM/INZZrdKDmQFfa36+Mc5TXzlmz+tUUSYZXWBUS9G0
-	bcTsjXe0qzV0hNEoZTnKhKA6etbauSDLIks1Dby+SRuwWJkIIZFFc4/trG+5FnAH
-	zB/YBGerWzqVY8VKC2KXSkoHgw/czMmbxYL0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Nj6hehh9N3SFhqpmSZMW+Lmt8/YqpszO
-	1xAHwIZw0yRZ24Y5mFFtCxjjnvFvAe2kt602fI8UuuEMWzr9gMFGhqLPCg71QxA3
-	cv0dlG5c67Xy09ZE8DwfapJFn2NYTKW2dspgoqlGpCx0/xfYalldQCgaXE/jzav4
-	kzuvFUzzts0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EE60B2919;
-	Tue, 22 Mar 2011 03:55:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 270C62915; Tue, 22 Mar 2011
- 03:55:22 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.1103212302000.1561@bonsai2> (Johannes
- Schindelin's message of "Mon, 21 Mar 2011 23:07:15 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C5D3FAEA-5459-11E0-9E6C-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755039Ab1CVH6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 03:58:32 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:40102 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751048Ab1CVH6b (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 03:58:31 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 97E0720C65;
+	Tue, 22 Mar 2011 03:58:30 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 22 Mar 2011 03:58:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=1w9AUxX2faG8Tz58tA/W7kRWHso=; b=LaLHHX/ikBcBlywvv/DbC7YfAfcuDkeUKyjU5fUDlXbC6LNypqvYkJ7VhDw9phlFt2LQff/saV7GkrYGsWYK22xtP5Eb4sXVMll+iBskiQLaozkDxuBfFWXkLiotSYVhoPpThgpkgc2vM0G6oVhZQH8SylRkaznzdTaBUC+Lucg=
+X-Sasl-enc: Rpfy0jJVgd1pkZmorv+zLloVY8yIqOXgWI7JERyp4i8R 1300780710
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7F6EE440B34;
+	Tue, 22 Mar 2011 03:58:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <20110321184514.GA1850@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169706>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jonathan Nieder venit, vidit, dixit 21.03.2011 19:45:
+> Michael J Gruber wrote:
+> 
+>> Based on mg/rev-list-one-side-only (in next) to save Junio a build conflict
+>> resolution.
+> 
+> Not a serious problem, but I wish it hadn't been.  What particular
 
->> > diff --git a/contrib/completion/git-completion.bash
->> > b/contrib/completion/git-completion.bash
->> > index 893b771..f9a74d3 100755
->> > --- a/contrib/completion/git-completion.bash
->> > +++ b/contrib/completion/git-completion.bash
->> > @@ -1506,7 +1506,7 @@ _git_help ()
->> >  		;;
->> >  	esac
->> >  	__git_compute_all_commands
->> > -	__gitcomp "$__git_all_commands
->> > +	__gitcomp "$__git_all_commands $(__git_aliases)
->> >  		attributes cli core-tutorial cvs-migration
->> >  		diffcore gitk glossary hooks ignore modules
->> >  		repository-layout tutorial tutorial-2
->> 
->> This patch may not be _wrong_ per-se, but it it useful in practice?
->> 
->> I dunno.
->> 
->> Don't people usually use aliases so that they do not have to type long
->> command names that would need completion?
->
-> Yes. And if you use a lot of aliases, or a lot of machines with evolving 
-> aliases, the easiest way to inspect the alias is "git help <alias>". Not 
-> seeing it completed is an unexpected behavior.
+But why? Basing it on something earlier would have served no purpose
+(that I know of) at all.
 
-I've queued the patch and I already said that this is not wrong, but I
-think your argument cuts it both ways.
+I should have mentioned the dependency in v1.
 
-I have "co" aliased to "checkout", but with this change "git help co<TAB>"
-now will interfere with my expectation that it would complete to commit,
-config and the like, but exclude an alias that I myself defined and know
-how to spell but forgot what its exact definition was, in order to avoid
-cluttering the choices offered.
+> functionality from that branch does this use?
+> 
+> Ah, now that I check it seems that that is to change a use of
+> no_merges in the implementation of --cherry to use the new API?  Makes
+> sense (and good catch).  With that hunk skipped, the patches apply to
+> master.
 
-This is a constructive tangent but if we are going to run $(__git_aliases)
-every time we run _git_help, perhaps it would want a hack similar to the
-way the value for $__git_all_commands is generated just once?
+Yes, revs->no_merges and revs->merges are gone, so a series based on
+master would produce a compile failure when applied to next.
+
+> 
+>> --- a/Documentation/rev-list-options.txt
+>> +++ b/Documentation/rev-list-options.txt
+>> @@ -72,11 +72,24 @@ endif::git-rev-list[]
+>>  
+>>  --merges::
+>>  
+>> -	Print only merge commits.
+>> +	Print only merge commits. This is equivalent to `--min-parents=2`.
+>>  
+>>  --no-merges::
+>>  
+>> -	Do not print commits with more than one parent.
+>> +	Do not print commits with more than one parent. This is
+>> +	equivalent to `--max-parents=1`.
+>> +
+>> +--min-parents::
+>> +--max-parents::
+>> +
+>> +	Show only commits which have at least resp. at most that many
+> 
+> ENOPARSE.  I guess parentheses around "resp. at most" would work as
+> a minimal fix, but it might be better to say:
+> 
+>  --min-parents=<n>::
+> 	Show only commits which have at least <n> parents.
+> 
+>  --max-parents=<n>::
+> 	Show only commits which have at least <n> parents.
+> 
+> and perhaps to put
+> 
+>  git log --max-parents=0::
+> 	Lists all root commits.
+> 
+>  git log --min-parents=3::
+> 	Lists all octopus merges.
+> 
+> under EXAMPLES.
+> 
+
+Well, we discussed this under the v1 thread (after v2 was sent). Junio,
+should I do a v3 with that or this?
+
+>> +	commits, where negative parameters for `--max-parents=` denote
+>> +	infinity (i.e. no upper	limit).
+> 
+> Seems hackish.  Maybe --no-max-parents could denote infinity?
+
+For me, "-1" is a quite natural way to reset a count type parameter, and
+you don't even have to think "unsigned" or "mod max_int" for that.
+
+There is no problem parsing for "--max-parents=infinity" and/or
+"--no-max-parents" or even (better?) "--max-parents=" without number,
+it's only a matter of bike shedding decisions.
+
+>> ++
+>> +In particular, `--max-parents=1` is `--no-merges`, `--min-parents=2` is
+>> +`--merges` (only), `--max-parents=0` gives all root commits and
+>> +`--min-parents=3` all octopuses.
+>> +
+>>  
+>>  --first-parent::
+> 
+> It seems there is an extra newline here.
+> 
+>> --- a/t/t6009-rev-list-parent.sh
+>> +++ b/t/t6009-rev-list-parent.sh
+>> @@ -1,9 +1,17 @@
+>>  #!/bin/sh
+>>  
+>> -test_description='properly cull all ancestors'
+>> +test_description='ancestor culling and limiting by parent number'
+>>  
+>>  . ./test-lib.sh
+>>  
+>> +check_revlist () {
+>> +	rev_list_args="$1" &&
+>> +	shift &&
+>> +	git rev-parse "$@" >expect &&
+>> +	git rev-list $rev_list_args --all >actual &&
+>> +	test_cmp expect actual
+>> +}
+>> + 
+> 
+> "git am" warns about trailing whitespace on the line after the closing
+> brace (nothing that --whitespace=fix can't fix, though).
+
+Hmmm, are there whitespace issues which am warns about and diff does
+not, or have I missed a warning?
+
+> 
+> Thanks for factoring this out btw.  It makes the tests themselves
+> very easy to read.
+> 
+>> +test_expect_success 'rev-list override and infinities' '
+>> +
+>> +	check_revlist "--min-parents=2 --max-parents=1 --max-parents=3" tripus normalmerge &&
+>> +	check_revlist "--min-parents=1 --min-parents=2 --max-parents=7" tetrapus tripus normalmerge &&
+>> +	check_revlist "--min-parents=2 --max-parents=8" tetrapus tripus normalmerge &&
+>> +	check_revlist "--min-parents=2 --max-parents=-1" tetrapus tripus normalmerge
+>> +'
+> 
+> 7 and 8 don't mean infinity any more, do they?  What is this test
+> checking?
+
+The test checks "override and infinities", where the plural indicates
+the fact that it tests different ways of spelling (practical) infinity
+such as the very suggestive "8" which nobody cares about but me.
+
+Michael
