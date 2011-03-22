@@ -1,89 +1,196 @@
-From: "Information Technology" <JHiebert@newcap.ca>
-Subject: Update Your E-Mail Details Account
-Date: Tue, 22 Mar 2011 14:35:48 +0100
-Message-ID: <201103221335.p2MDZnXp004183@auth3.smtp.vt.edu>
-Reply-To: <financialcons729@aol.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Mar 22 14:37:21 2011
+From: jari.aalto@cante.net
+Subject: [PATCH] git.el: Add new user functions for push, pull, fetch.
+Date: Tue, 22 Mar 2011 15:30:51 +0200
+Organization: Private
+Message-ID: <1300800651-12502-1-git-send-email-jari.aalto@cante.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Jari Aalto <jari.aalto@cante.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 22 14:38:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q21lw-0000No-Rw
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 14:37:21 +0100
+	id 1Q21mh-0000qU-4S
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 14:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756151Ab1CVNhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 09:37:15 -0400
-Received: from lennier.cc.vt.edu ([198.82.162.213]:56071 "EHLO
-	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756144Ab1CVNhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 09:37:13 -0400
-Received: from vivi.cc.vt.edu (vivi.cc.vt.edu [198.82.163.43])
-	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2MDZeBh009527;
-	Tue, 22 Mar 2011 09:36:06 -0400
-Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
-	by vivi.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
-	with ESMTP id QKC22212;
-	Tue, 22 Mar 2011 09:36:04 -0400 (EDT)
-Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
-	(authenticated bits=0)
-	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2MDZnXp004183
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 22 Mar 2011 09:35:54 -0400
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-Antivirus: avast! (VPS 110322-0, 03/22/2011), Outbound message
-X-Antivirus-Status: Clean
-X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu JHiebert@newcap.ca 5 none
-X-Mirapoint-IP-Reputation: reputation=neutral-1,
-	source=Fixed,
-	refid=n/a,
-	actions=MAILHURDLE SPF TAG
-X-Junkmail: UCE(56)
-X-Junkmail-Status: score=56/50, host=vivi.cc.vt.edu
-X-Junkmail-Signature-Raw: score=bulk(6),
-	refid=str=0001.0A010208.4D889E70.0006,ss=3,sh,fgs=0,
-	ip=213.46.147.88,
-	so=2010-07-22 22:03:31,
-	dmn=2009-09-10 00:05:08,
-	mode=single engine
-X-Junkmail-IWF: false
+	id S1756167Ab1CVNiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 09:38:01 -0400
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:41776 "EHLO
+	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754320Ab1CVNiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 09:38:00 -0400
+X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Mar 2011 09:37:59 EDT
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 1FDEFEB9D1
+	for <git@vger.kernel.org>; Tue, 22 Mar 2011 15:30:53 +0200 (EET)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A05CD51D4FC; Tue, 22 Mar 2011 15:30:53 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 01BA92BD44
+	for <git@vger.kernel.org>; Tue, 22 Mar 2011 15:30:51 +0200 (EET)
+Received: from db.cante.net ([192.168.1.5] helo=picasso.cante.net)
+	by picasso.cante.net with esmtp (Exim 4.74)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1Q21ff-0003G4-Hu; Tue, 22 Mar 2011 15:30:51 +0200
+X-Mailer: git-send-email 1.7.2.3
+X-SA-Exim-Connect-IP: 192.168.1.5
+X-SA-Exim-Mail-From: jari.aalto@cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.8 points;
- * -1.1 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
- *      [score: 0.0320]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169736>
 
-Confirm Your E-Mail Details
-                                     
-Dear Email User
-This message is from Information Technology Services of This EMAIL to all our Staff. We are currently upgrading our database and e-mail center and this is our final notification to you.we have sent several messages to you without response.
-We are deleting all unused Mail account to create space for new accounts. In order not to be suspended, you will have to update your account by providing the information listed below:
+From: Jari Aalto <jari.aalto@cante.net>
 
-Confirm Your E-Mail Details..
-Email.......................
-User name: ..................
-Password:..............
-Re Confirm Password:.............
 
-If you fail to confirm your continuous usage of our services by confirming your email password now, your account will be disable and you will not be able to access your email.
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ contrib/emacs/git.el |   75 ++++++++++++++++++++++++++++++++++++++++++++=
++++++-
+ 1 files changed, 74 insertions(+), 1 deletions(-)
 
-You should immediately reply this email:  upgrading2010@mail.md   and enter your password in the above password column.
-Thanks for your understanding.
-
-Regard,
-IT Services
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 214930a..20a3b2c 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -1,6 +1,7 @@
+ ;;; git.el --- A user interface for git
+=20
+ ;; Copyright (C) 2005, 2006, 2007, 2008, 2009 Alexandre Julliard <jullia=
+rd@winehq.org>
++;; Copyright (C) 2010 Jari Aalto <jari.aalto@cante.net>
+=20
+ ;; Version: 1.0
+=20
+@@ -33,11 +34,14 @@
+ ;;
+ ;; To start: `M-x git-status'
+ ;;
++;; RUDIMENTARY
++;; - fetch/pull. Be sure to start gpg-agent, ssh-agent prior emacs
++;;   to access ssh Git remotes.
++;;
+ ;; TODO
+ ;;  - diff against other branch
+ ;;  - renaming files from the status buffer
+ ;;  - creating tags
+-;;  - fetch/pull
+ ;;  - revlist browser
+ ;;  - git-show-branch browser
+ ;;
+@@ -1520,6 +1524,7 @@ amended version of it."
+=20
+ (unless git-status-mode-map
+   (let ((map (make-keymap))
++        (remote-map (make-sparse-keymap))
+         (commit-map (make-sparse-keymap))
+         (diff-map (make-sparse-keymap))
+         (toggle-map (make-sparse-keymap)))
+@@ -1547,6 +1552,7 @@ amended version of it."
+     (define-key map "P"   'git-prev-unmerged-file)
+     (define-key map "q"   'git-status-quit)
+     (define-key map "r"   'git-remove-file)
++    (define-key map "R"   remote-map)
+     (define-key map "t"    toggle-map)
+     (define-key map "T"   'git-toggle-all-marks)
+     (define-key map "u"   'git-unmark-file)
+@@ -1555,6 +1561,13 @@ amended version of it."
+     (define-key map "x"   'git-remove-handled)
+     (define-key map "\C-?" 'git-unmark-file-up)
+     (define-key map "\M-\C-?" 'git-unmark-all)
++    ; remotes
++    (define-key remote-map "\C-a" 'git-push)
++    (define-key remote-map "R" 'git-pull)  ; retrieve "RR"
++    (define-key remote-map "r" 'git-pull)  ; retrieve "Rr" (synonym)
++    (define-key remote-map "p" 'git-push)
++    (define-key remote-map "f" 'git-fetch)
++    (define-key remote-map "\C-a" 'git-fetch)
+     ; the commit submap
+     (define-key commit-map "\C-a" 'git-amend-commit)
+     (define-key commit-map "\C-b" 'git-branch)
+@@ -1607,6 +1620,10 @@ amended version of it."
+       ["Interactive Diff File" git-diff-file-idiff t]
+       ["Log" git-log-file t]
+       "--------"
++      ["Push" git-push t]
++      ["Pull" git-pull t]
++      ["Fetch" git-fetch t]
++      "--------"
+       ["Mark" git-mark-file t]
+       ["Mark All" git-mark-all t]
+       ["Unmark" git-unmark-file t]
+@@ -1689,6 +1706,62 @@ Meant to be used in `after-save-hook'."
+             (git-call-process nil "add" "--refresh" "--" filename)
+             (git-update-status-files (list filename))))))))
+=20
++(defun git-ask-remote (message)
++  "Return remote."
++  (let ((ret
++	 (completing-read
++	  "Push to remote: "
++	  '(("origin" 1))		;FIXME read all remotes
++	  (not 'predicate)
++	  (not 'match)
++	  "origin")))
++    (if (not (string-match "[^ \t]" ret))
++	"origin"
++      ret)))
++
++(defun git-push (&optional remote)
++  "Pull to REMOTE. Use \\[current-prefix-arg] to interactively set REMOT=
+E."
++  (interactive
++   (list (or (and current-prefix-arg
++		  (git-ask-remote "Push to remote: "))
++	     "origin")))
++  ;; FIXME: could colled some status data for display
++  (git-call-process-display-error "push" remote)
++  (git-update-status-files)
++  (message "Pushed to remote: %s" remote))
++
++(defun git-fetch (&optional remote)
++  "Fetch from REMOTE. Use \\[current-prefix-arg] to interactively set RE=
+MOTE."
++  (interactive
++   (list (or (and current-prefix-arg
++		  (git-ask-remote "Fetch from remote: "))
++	     "origin")))
++  ;; FIXME: could colled some status data for display
++  (git-call-process-display-error "fetch" remote)
++  (git-update-status-files)
++  (message "Fetched from remote: %s" remote))
++
++(defun git-pull (&optional remote)
++  "Pull from REMOTE. Use \\[current-prefix-arg] to interactively set REM=
+OTE."
++  (interactive
++   (list (or (and current-prefix-arg
++		  (git-ask-remote "Pull from remote: "))
++	     "origin")))
++  (let ((not-clean
++	 (ewoc-collect git-status (lambda (info &optional state)
++				    (setq state (git-fileinfo->state info))
++				    (or (eq state 'modified)
++					(eq state 'added)
++					(eq state 'deleted)
++					(eq state 'unmerged))))))
++    (if not-clean
++	(error "Error: Can't pull while in unclean state (commit all first)."))
++    (unless git-status (error "Not in git-status buffer."))
++    ;; FIXME: could colled some status data for display
++    (git-call-process-display-error "pull" remote)
++    (git-update-status-files)
++    (message "Pushed to remote: %s" remote)))
++
+ (defun git-help ()
+   "Display help for Git mode."
+   (interactive)
+--=20
+1.7.2.3
