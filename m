@@ -1,179 +1,103 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 3/3] rev-list --min-parents,--max-parents: doc and test
- and completion
-Date: Tue, 22 Mar 2011 08:55:00 +0100
-Message-ID: <4D8855D4.6080804@drmicha.warpmail.net>
-References: <cover.1300702130.git.git@drmicha.warpmail.net> <8bad49d4e4897be623b7af3096498a5803dbbd89.1300702130.git.git@drmicha.warpmail.net> <20110321184514.GA1850@elie>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: cherry-pick applies some other changes than the specified one?
+Date: Tue, 22 Mar 2011 09:04:34 +0100
+Message-ID: <AANLkTimHEHQzV4B7beraEuT9Ta8+MBeyPPmSGkBWD+76@mail.gmail.com>
+References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
+	<7vwrjssbfk.fsf@alter.siamese.dyndns.org>
+	<4D877FAD.9000807@viscovery.net>
+	<4D879516.3060204@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 08:58:37 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 22 09:04:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1wU8-0004tG-O9
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 08:58:37 +0100
+	id 1Q1wa3-0007jD-J6
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 09:04:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755039Ab1CVH6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 03:58:32 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:40102 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751048Ab1CVH6b (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 03:58:31 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 97E0720C65;
-	Tue, 22 Mar 2011 03:58:30 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 22 Mar 2011 03:58:30 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=1w9AUxX2faG8Tz58tA/W7kRWHso=; b=LaLHHX/ikBcBlywvv/DbC7YfAfcuDkeUKyjU5fUDlXbC6LNypqvYkJ7VhDw9phlFt2LQff/saV7GkrYGsWYK22xtP5Eb4sXVMll+iBskiQLaozkDxuBfFWXkLiotSYVhoPpThgpkgc2vM0G6oVhZQH8SylRkaznzdTaBUC+Lucg=
-X-Sasl-enc: Rpfy0jJVgd1pkZmorv+zLloVY8yIqOXgWI7JERyp4i8R 1300780710
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7F6EE440B34;
-	Tue, 22 Mar 2011 03:58:29 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <20110321184514.GA1850@elie>
+	id S1755185Ab1CVIEh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 04:04:37 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65035 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755182Ab1CVIEe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 04:04:34 -0400
+Received: by iyb26 with SMTP id 26so7186301iyb.19
+        for <git@vger.kernel.org>; Tue, 22 Mar 2011 01:04:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AbSQyePnQoIAsNLyEGalrVNyHKpyLmnxnhpG8XSx4WI=;
+        b=FcbTDoXNqRiUj0+ny0BdyvJzom5J2uElsDKhIPUHflrKx/euS2N9Bu1qdbr3Zukpvk
+         7TiOiyq6OnYa6sTarOEJbU+UaQiA+2H7lirX9gw35YTowVKmZjfcov3O4w9K7FiSwwr/
+         zurgez9GM3yddYcnR1z0PyDEJBRwCmp6/LfZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tC4rohUTOKWEm5+69g3a77UO7NAzjc1WaOJZFyr8Ib66pHM+iBbl90mFcTiBYSRXpg
+         ZOowFgaRb3njDNWu9z2NnGSB9HzipFcevfq8vuL2HZWyI+pAR4aIgxLccZ2CKrXce3En
+         Y7LRCxqfor3T8SYNJYFsolwj5XsvjhZVfC5bw=
+Received: by 10.42.156.6 with SMTP id x6mr8736997icw.90.1300781074087; Tue, 22
+ Mar 2011 01:04:34 -0700 (PDT)
+Received: by 10.42.225.138 with HTTP; Tue, 22 Mar 2011 01:04:34 -0700 (PDT)
+In-Reply-To: <4D879516.3060204@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169707>
 
-Jonathan Nieder venit, vidit, dixit 21.03.2011 19:45:
-> Michael J Gruber wrote:
-> 
->> Based on mg/rev-list-one-side-only (in next) to save Junio a build conflict
->> resolution.
-> 
-> Not a serious problem, but I wish it hadn't been.  What particular
+On Mon, Mar 21, 2011 at 7:12 PM, Piotr Krukowiecki
+<piotr.krukowiecki@gmail.com> wrote:
+> W dniu 21.03.2011 17:41, Johannes Sixt pisze:
+>> Assuming you did not 'git add' the file yet, you are looking at the
+>> "condensed combined diff" after manually resolving the conflict by d=
+oing
+>> the "+line" manually that the cherry-pick should have brought in. Of
+>> course, a lot of context is visible here if both sides have diverged
+>> considerably in this area.
+>>
+>> I.e. the diff will look something like
+>>
+>> =A0+line from HEAD
+>> =A0+line from HEAD
+>> + line from cherry-picked
+>> =A0+line from HEAD
+>> ...
+>>
+>> Notice the double columns before the content lines. This sort of dif=
+f
+>> extens above and below the conflicting section until there is a "gap=
+" of 3
+>> lines that changed neither on the HEAD side nor on the cherry-picked=
+ side
+>> since the merge base.
+>
+> Hm that might be possible! I'll check it tomorrow @work.
 
-But why? Basing it on something earlier would have served no purpose
-(that I know of) at all.
+You were right - the line I've added manually have two "++", and the ot=
+her
+lines shown with differences only have "-" and "+" in the second column=
+=2E
 
-I should have mentioned the dependency in v1.
+I'm still not clear what is exactly compared when I use plain diff or
+-c version.
+It might be I need to read more docs. I'll ask if I'm still in doubt
+after reading
+more.
 
-> functionality from that branch does this use?
-> 
-> Ah, now that I check it seems that that is to change a use of
-> no_merges in the implementation of --cherry to use the new API?  Makes
-> sense (and good catch).  With that hunk skipped, the patches apply to
-> master.
+Thanks again for explaining this to me - saved me from a lot of PITA re=
+searching
+:)
 
-Yes, revs->no_merges and revs->merges are gone, so a series based on
-master would produce a compile failure when applied to next.
 
-> 
->> --- a/Documentation/rev-list-options.txt
->> +++ b/Documentation/rev-list-options.txt
->> @@ -72,11 +72,24 @@ endif::git-rev-list[]
->>  
->>  --merges::
->>  
->> -	Print only merge commits.
->> +	Print only merge commits. This is equivalent to `--min-parents=2`.
->>  
->>  --no-merges::
->>  
->> -	Do not print commits with more than one parent.
->> +	Do not print commits with more than one parent. This is
->> +	equivalent to `--max-parents=1`.
->> +
->> +--min-parents::
->> +--max-parents::
->> +
->> +	Show only commits which have at least resp. at most that many
-> 
-> ENOPARSE.  I guess parentheses around "resp. at most" would work as
-> a minimal fix, but it might be better to say:
-> 
->  --min-parents=<n>::
-> 	Show only commits which have at least <n> parents.
-> 
->  --max-parents=<n>::
-> 	Show only commits which have at least <n> parents.
-> 
-> and perhaps to put
-> 
->  git log --max-parents=0::
-> 	Lists all root commits.
-> 
->  git log --min-parents=3::
-> 	Lists all octopus merges.
-> 
-> under EXAMPLES.
-> 
-
-Well, we discussed this under the v1 thread (after v2 was sent). Junio,
-should I do a v3 with that or this?
-
->> +	commits, where negative parameters for `--max-parents=` denote
->> +	infinity (i.e. no upper	limit).
-> 
-> Seems hackish.  Maybe --no-max-parents could denote infinity?
-
-For me, "-1" is a quite natural way to reset a count type parameter, and
-you don't even have to think "unsigned" or "mod max_int" for that.
-
-There is no problem parsing for "--max-parents=infinity" and/or
-"--no-max-parents" or even (better?) "--max-parents=" without number,
-it's only a matter of bike shedding decisions.
-
->> ++
->> +In particular, `--max-parents=1` is `--no-merges`, `--min-parents=2` is
->> +`--merges` (only), `--max-parents=0` gives all root commits and
->> +`--min-parents=3` all octopuses.
->> +
->>  
->>  --first-parent::
-> 
-> It seems there is an extra newline here.
-> 
->> --- a/t/t6009-rev-list-parent.sh
->> +++ b/t/t6009-rev-list-parent.sh
->> @@ -1,9 +1,17 @@
->>  #!/bin/sh
->>  
->> -test_description='properly cull all ancestors'
->> +test_description='ancestor culling and limiting by parent number'
->>  
->>  . ./test-lib.sh
->>  
->> +check_revlist () {
->> +	rev_list_args="$1" &&
->> +	shift &&
->> +	git rev-parse "$@" >expect &&
->> +	git rev-list $rev_list_args --all >actual &&
->> +	test_cmp expect actual
->> +}
->> + 
-> 
-> "git am" warns about trailing whitespace on the line after the closing
-> brace (nothing that --whitespace=fix can't fix, though).
-
-Hmmm, are there whitespace issues which am warns about and diff does
-not, or have I missed a warning?
-
-> 
-> Thanks for factoring this out btw.  It makes the tests themselves
-> very easy to read.
-> 
->> +test_expect_success 'rev-list override and infinities' '
->> +
->> +	check_revlist "--min-parents=2 --max-parents=1 --max-parents=3" tripus normalmerge &&
->> +	check_revlist "--min-parents=1 --min-parents=2 --max-parents=7" tetrapus tripus normalmerge &&
->> +	check_revlist "--min-parents=2 --max-parents=8" tetrapus tripus normalmerge &&
->> +	check_revlist "--min-parents=2 --max-parents=-1" tetrapus tripus normalmerge
->> +'
-> 
-> 7 and 8 don't mean infinity any more, do they?  What is this test
-> checking?
-
-The test checks "override and infinities", where the plural indicates
-the fact that it tests different ways of spelling (practical) infinity
-such as the very suggestive "8" which nobody cares about but me.
-
-Michael
+--=20
+Piotr Krukowiecki
