@@ -1,97 +1,65 @@
-From: Jeff King <peff@github.com>
-Subject: Re: Histogram diff, libgit2 enhancement, libgit2 => git merge (GSOC)
-Date: Tue, 22 Mar 2011 14:47:37 -0400
-Message-ID: <20110322184737.GB22534@sigill.intra.peff.net>
-References: <op.vsm1yszq2m56ex@localhost.localdomain>
- <AANLkTi=Fu5v-5E2dSAA74f0juUQNjNjus5XFWqMb9v9k@mail.gmail.com>
- <20110320234420.GA1919@sigill.intra.peff.net>
- <op.vsq9o4mz2m56ex@localhost.localdomain>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: dependable submodules
+Date: Tue, 22 Mar 2011 19:56:31 +0100
+Message-ID: <4D88F0DF.8080808@web.de>
+References: <AANLkTi=JVO+KhnLKR-PvNQQFaZLhUmiVbKFxuytYEpmc@mail.gmail.com>	<7vd3lmv2k1.fsf@alter.siamese.dyndns.org>	<AANLkTin8Mr5xLtLqHSVuEOzzfmqnR2LU5vDdVfPprNXn@mail.gmail.com>	<4D877A70.8070907@jku.at>	<AANLkTikv+Wf_nSt0GZj0WgPjpbk6Kr_WG-ueO6US9bUM@mail.gmail.com>	<201103221428.p2MESAkG018553@no.baka.org> <AANLkTinrvg=UkZJWCQt3hZXpAAgW=manhGPvk9s9KsCs@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vicent Marti <vicent@github.com>, git@vger.kernel.org
-To: Pavel Raiskup <xraisk00@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 19:47:45 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: in-gitvger@baka.org, Robert Pollak <robert.pollak@jku.at>,
+	git <git@vger.kernel.org>, apenwarr@gmail.com
+To: Daniel <daniel@netwalk.org>
+X-From: git-owner@vger.kernel.org Tue Mar 22 19:56:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q26cL-0000aa-A8
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 19:47:45 +0100
+	id 1Q26l4-0006Fx-Ny
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 19:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984Ab1CVSrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 14:47:41 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38177
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752704Ab1CVSrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 14:47:39 -0400
-Received: (qmail 27337 invoked by uid 107); 22 Mar 2011 18:48:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Mar 2011 14:48:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Mar 2011 14:47:37 -0400
-Content-Disposition: inline
-In-Reply-To: <op.vsq9o4mz2m56ex@localhost.localdomain>
+	id S1752263Ab1CVS4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 14:56:42 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:33570 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750969Ab1CVS4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 14:56:40 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 7D4E318B37027;
+	Tue, 22 Mar 2011 19:56:34 +0100 (CET)
+Received: from [93.240.123.209] (helo=[192.168.178.43])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Q26ks-0006eh-00; Tue, 22 Mar 2011 19:56:34 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <AANLkTinrvg=UkZJWCQt3hZXpAAgW=manhGPvk9s9KsCs@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19CLobEGpdSWtw8FeRcF1062NSig6h72AlDs40u
+	YCUKjUoSXrcD7XKL41mcIN9KUfibP2wABPg+lnSjIatAjUIdBH
+	/nlZaaIWg6m+IYJStg0A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169763>
 
-On Tue, Mar 22, 2011 at 06:32:54PM +0100, Pavel Raiskup wrote:
+Am 22.03.2011 15:55, schrieb Daniel:
+> My current setup is that I'm simply versioning my home directory with
+> mercurial. Some vim plugins are under git and since it's a different
+> version control system I can check in the plugins easily. When I need
+> to update those plugins, I just run git update, and check them into
+> mercurial again. No problem, very easy.  I'm looking into what it
+> would take to convert my repo to be completely git, and so far I have
+> no exact way of dealing with those vim plugins since via submodules I
+> have to rely on the external repos being present when I clone my
+> homedir repo. Granted, if the repos have gone away a decade from now
+> and my vim plugins are not present, it won't be the end of the world,
+> but I want to see how close I can get to my current functionality when
+> using git instead of mercurial.
 
-> >Yeah, I would be happy to mentor or co-mentor with Vicent on a project
-> >like that. Not only might it be useful to actually _use_, but my secret
-> >motive is that I'd like to start testing libgit2 using some of the
-> >regular git tests, both for interoperability and for performance.
-> 
-> Do you mean git tests in directory "/t"?
-
-Yes.
-
-> Could you give me a list of possible reusable unit tests? After a quick
-> overview of test suite in git it looks quite complex to reuse. I haven't
-> spent a lot of time studying test-suite, but calling:
-> 
-> test_expect_success 'plain' 'command && command && ..'
-> 
-> reinterprets chain of commands given in (2nd) string and in this
-> commands is often called git as utility with arguments. Even in this
-> very easy test feature is expected some command-line-interface behavior
-> from tested utility.. Is this the way how do you want to test this new
-> libgit2-like tool? So this standalone utility is going to have the
-> same interface as git has -- kind of substitution of git with "git2"
-> inside test suite?
-
-Exactly. My plan was to implement a few of the simpler git commands (or
-at least the basic parts of them) using libgit2, and then test them with
-unmodified scripts from git's t/ directory.
-
-Of course, many of the tests won't pass because of obscure features that
-we haven't implemented. But that's OK. Even getting a partial list of
-passing tests will be useful. And tests known not to work because of
-unimplemented features can often be skipped (see the description of
-GIT_SKIP_TESTS in t/README). Part of the project would be sorting out
-which tests will be useful.
-
-It may also be necessary to use a mixture of git and libgit2 commands to
-finish tests. For example, a test which is really about checking "log"
-might use "commit", but "commit" hasn't been implemented yet. But it is
-still useful information if we cheat and use regular git's "commit", but
-test the libgit2 log command.
-
-As far as which commands to start with, I would start with plumbing
-commands like "update-index", "commit-tree", "update-ref", "rev-list",
-etc.  Those are basic building blocks that have reasonably simple
-interfaces, and they're easy to test. And once you start, I think it
-will become more obvious where to go next (because some of the commands
-build on the results of others).
-
-> This probably will lead to some test suite changes, is it truth?
-
-There may be modifications necessary to the test suite to make this
-easier to do. But rather than forking the test suite and changing the
-tests, I would much rather see whatever support is needed done in a
-generalized way and merged to regular git.
-
--Peff
+You could add the .git directories of the vim plugin direcories that
+are under git to the .gitignore in your home directory. Then you can
+just continue to do what you are used to: Go into the vim plugin dir,
+run git update there, go back into your home directory and commit the
+new files and push everything to your remote. You'll lose the pointers
+from the vim plugin directories to their origins that way, but that
+doesn't seem to be a problem for you.
