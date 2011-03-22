@@ -1,81 +1,89 @@
-From: Lasse Makholm <lasse.makholm@gmail.com>
-Subject: Re: Weird behavior of shell variables in git aliases
-Date: Tue, 22 Mar 2011 14:53:29 +0100
-Message-ID: <AANLkTin_qX2S+orrj25=GjB6kf8B6GRSE+HVFUAkDGSb@mail.gmail.com>
-References: <d9c38309-c433-476c-bba3-f2c5b7e94a89@k15g2000prk.googlegroups.com>
-	<20110321215310.GA2122@sigill.intra.peff.net>
-	<7v8vw8nmh2.fsf@alter.siamese.dyndns.org>
-	<7v4o6wnlxm.fsf@alter.siamese.dyndns.org>
-	<20110322111844.GA32446@sigill.intra.peff.net>
-	<20110322132820.GA14559@sigill.intra.peff.net>
-	<AANLkTin3fXkGaC5cTVny5adU=FusQV0WAcPHLUEeEzLi@mail.gmail.com>
-	<20110322134358.GA19064@sigill.intra.peff.net>
+From: "Information Technology" <laura.miehlich@cilla.de>
+Subject: Update Your E-Mail Details Account
+Date: Tue, 22 Mar 2011 15:22:48 +0100
+Message-ID: <201103221422.p2MEMrPF022715@auth3.smtp.vt.edu>
+Reply-To: <financialcons729@aol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Dun Peal <dunpealer@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 22 14:53:44 2011
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Mar 22 15:24:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q221n-0001ml-4M
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 14:53:43 +0100
+	id 1Q22VD-0002uE-W7
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 15:24:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928Ab1CVNxc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 09:53:32 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64517 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752453Ab1CVNxa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 09:53:30 -0400
-Received: by bwz15 with SMTP id 15so5846407bwz.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 06:53:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9OeSlZgLtC293k0cQxymg240mzpDQboUx7g2HW3R/FE=;
-        b=bWwe8UeLWvg4TLrdou8PZ36Hth5Vim667SHuPSCZ64D5p9R+ulklRR4Fgynnxchiz+
-         ApzplTlEYpchSWPRSsx6RlbUKrnw0eDKm0Zlz1siaA4VO2QpsVG/q7VpfXg+3kPL7u9U
-         4Gad2UhIlF3PY1aGEmc5lsEVF2UBwibp39Df8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HSMAHSl7wqwFhZ8BQB+Ac7XMsohtteeguL8+wmupI0TtBR/KNlbuJVmWsuQMcfQjgy
-         j8Xw/mgTmvouGoz/ZFMpgtnn6xBTZptNgbON49doPHzTEEajvjwYUjc4GSyFsuzByGt2
-         /Ka7bE0NQ+lcURJN1kE4mLKTtnUZkTIOlU62Q=
-Received: by 10.204.154.199 with SMTP id p7mr4884260bkw.114.1300802009257;
- Tue, 22 Mar 2011 06:53:29 -0700 (PDT)
-Received: by 10.204.114.207 with HTTP; Tue, 22 Mar 2011 06:53:29 -0700 (PDT)
-In-Reply-To: <20110322134358.GA19064@sigill.intra.peff.net>
+	id S1752042Ab1CVOYC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 10:24:02 -0400
+Received: from lennier.cc.vt.edu ([198.82.162.213]:59281 "EHLO
+	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751409Ab1CVOYA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 10:24:00 -0400
+Received: from dagger.cc.vt.edu (dagger.cc.vt.edu [198.82.163.114])
+	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2MEMhhk003713;
+	Tue, 22 Mar 2011 10:23:06 -0400
+Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
+	by dagger.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
+	with ESMTP id QAG19879;
+	Tue, 22 Mar 2011 10:23:04 -0400 (EDT)
+Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
+	(authenticated bits=0)
+	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2MEMrPF022715
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 22 Mar 2011 10:22:55 -0400
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-Antivirus: avast! (VPS 110322-0, 03/22/2011), Outbound message
+X-Antivirus-Status: Clean
+X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu laura.miehlich@cilla.de 5 none
+X-Mirapoint-IP-Reputation: reputation=neutral-1,
+	source=Fixed,
+	refid=n/a,
+	actions=MAILHURDLE SPF TAG
+X-Junkmail: UCE(56)
+X-Junkmail-Status: score=56/50, host=dagger.cc.vt.edu
+X-Junkmail-Signature-Raw: score=bulk(6),
+	refid=str=0001.0A02020A.4D889EFF.015B,ss=3,sh,fgs=0,
+	ip=213.46.147.88,
+	so=2010-07-22 22:03:31,
+	dmn=2009-09-10 00:05:08,
+	mode=single engine
+X-Junkmail-IWF: false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169738>
+X-Spam-Report: 5.8 points;
+ * -1.1 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
+ *      [score: 0.0189]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169739>
 
-On 22 March 2011 14:43, Jeff King <peff@peff.net> wrote:
->
-> Yeah, that certainly improves the situation.
->
-> A small formatting nit: Those long commands with punctuation get hard=
- to
-> read in the middle of a paragraph. Maybe something like this on top:
+Confirm Your E-Mail Details
+                                     
+Dear Email User
+This message is from Information Technology Services of This EMAIL to all our Staff. We are currently upgrading our database and e-mail center and this is our final notification to you.we have sent several messages to you without response.
+We are deleting all unused Mail account to create space for new accounts. In order not to be suspended, you will have to update your account by providing the information listed below:
 
-Thought about it but wasn't sure of the asciidoc formatting... I'll
-fix it and submit a proper patch...
+Confirm Your E-Mail Details..
+Email.......................
+User name: ..................
+Password:..............
+Re Confirm Password:.............
 
-> PS Your patch was wrapped on the @@ line. You might want to check you=
-r
-> =A0 mailer settings.
+If you fail to confirm your continuous usage of our services by confirming your email password now, your account will be disable and you will not be able to access your email.
 
-Yeah, gmail is sucky in that regard... :-/
+You should immediately reply this email:  upgrading2010@mail.md   and enter your password in the above password column.
+Thanks for your understanding.
 
---=20
-/Lasse
+Regard,
+IT Services
