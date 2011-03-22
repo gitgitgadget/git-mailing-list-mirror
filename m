@@ -1,93 +1,89 @@
-From: Lasse Makholm <lasse.makholm@gmail.com>
-Subject: Re: Weird behavior of shell variables in git aliases
-Date: Tue, 22 Mar 2011 14:35:10 +0100
-Message-ID: <AANLkTin3fXkGaC5cTVny5adU=FusQV0WAcPHLUEeEzLi@mail.gmail.com>
-References: <d9c38309-c433-476c-bba3-f2c5b7e94a89@k15g2000prk.googlegroups.com>
-	<20110321215310.GA2122@sigill.intra.peff.net>
-	<7v8vw8nmh2.fsf@alter.siamese.dyndns.org>
-	<7v4o6wnlxm.fsf@alter.siamese.dyndns.org>
-	<20110322111844.GA32446@sigill.intra.peff.net>
-	<20110322132820.GA14559@sigill.intra.peff.net>
+From: "Information Technology" <JHiebert@newcap.ca>
+Subject: Update Your E-Mail Details Account
+Date: Tue, 22 Mar 2011 14:35:48 +0100
+Message-ID: <201103221335.p2MDZnXp004183@auth3.smtp.vt.edu>
+Reply-To: <financialcons729@aol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Dun Peal <dunpealer@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 22 14:35:40 2011
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Mar 22 14:37:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q21kJ-0007qZ-7y
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 14:35:39 +0100
+	id 1Q21lw-0000No-Rw
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 14:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756190Ab1CVNfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 09:35:13 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:45076 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756072Ab1CVNfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 09:35:11 -0400
-Received: by bwz15 with SMTP id 15so5830891bwz.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 06:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=CKB8NZ4v9yAlh6HBZzQdveI+UW6Ic3lx+1zojWGa/zA=;
-        b=rN65FwRBKiOldrSHjr3rC9upvFyoELy7EuVAx/XFJV2xDX2+P+Qi+0ATiuz+gMf5F1
-         pl3Yhi0JqKPJDFpLU/sXljoXLdWKZH/uOoncXdhL4Q7xbNe7bYHce697SSu2rlBWC2Zp
-         PNTUmEgno3an8ox9M5XF4Un00m4qHmfRt648o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=cletRjy5DYpQw6RffBfaSZsCjU0e7f2dfwAiDEO40eOd3ARk2d542cGXaCjB9fdzEX
-         GaQmsQLhP2upioodwxr6fckX4il3EFgw5o8yoyYy2b7fHG34Qjbee/mBmE25QCzuGzmt
-         1Cou7PYyOnXpMyhs1aj69//idJtGF0UR7aTQY=
-Received: by 10.204.166.66 with SMTP id l2mr4901199bky.6.1300800910420; Tue,
- 22 Mar 2011 06:35:10 -0700 (PDT)
-Received: by 10.204.114.207 with HTTP; Tue, 22 Mar 2011 06:35:10 -0700 (PDT)
-In-Reply-To: <20110322132820.GA14559@sigill.intra.peff.net>
+	id S1756151Ab1CVNhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 09:37:15 -0400
+Received: from lennier.cc.vt.edu ([198.82.162.213]:56071 "EHLO
+	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756144Ab1CVNhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 09:37:13 -0400
+Received: from vivi.cc.vt.edu (vivi.cc.vt.edu [198.82.163.43])
+	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2MDZeBh009527;
+	Tue, 22 Mar 2011 09:36:06 -0400
+Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
+	by vivi.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
+	with ESMTP id QKC22212;
+	Tue, 22 Mar 2011 09:36:04 -0400 (EDT)
+Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
+	(authenticated bits=0)
+	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2MDZnXp004183
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 22 Mar 2011 09:35:54 -0400
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-Antivirus: avast! (VPS 110322-0, 03/22/2011), Outbound message
+X-Antivirus-Status: Clean
+X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu JHiebert@newcap.ca 5 none
+X-Mirapoint-IP-Reputation: reputation=neutral-1,
+	source=Fixed,
+	refid=n/a,
+	actions=MAILHURDLE SPF TAG
+X-Junkmail: UCE(56)
+X-Junkmail-Status: score=56/50, host=vivi.cc.vt.edu
+X-Junkmail-Signature-Raw: score=bulk(6),
+	refid=str=0001.0A010208.4D889E70.0006,ss=3,sh,fgs=0,
+	ip=213.46.147.88,
+	so=2010-07-22 22:03:31,
+	dmn=2009-09-10 00:05:08,
+	mode=single engine
+X-Junkmail-IWF: false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169734>
+X-Spam-Report: 5.8 points;
+ * -1.1 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
+ *      [score: 0.0320]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169735>
 
-On 22 March 2011 14:28, Jeff King <peff@peff.net> wrote:
-> But I think that is a little too magic for my taste. Although the false
-> positives ("!echo 'literal $#'") and false negatives (you want "!foo" to
-> _ignore_ its parameters) are pretty obscure, I would prefer to keep
-> things simple.
+Confirm Your E-Mail Details
+                                     
+Dear Email User
+This message is from Information Technology Services of This EMAIL to all our Staff. We are currently upgrading our database and e-mail center and this is our final notification to you.we have sent several messages to you without response.
+We are deleting all unused Mail account to create space for new accounts. In order not to be suspended, you will have to update your account by providing the information listed below:
 
-Then how about simply:
+Confirm Your E-Mail Details..
+Email.......................
+User name: ..................
+Password:..............
+Re Confirm Password:.............
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6468a68..8097480 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -586,9 +586,16 @@ If the alias expansion is prefixed with an
-exclamation point,
- it will be treated as a shell command.  For example, defining
- "alias.new = !gitk --all --not ORIG_HEAD", the invocation
- "git new" is equivalent to running the shell command
--"gitk --all --not ORIG_HEAD".  Note that shell commands will be
--executed from the top-level directory of a repository, which may
--not necessarily be the current directory.
-+"gitk --all --not ORIG_HEAD". Note that any arguments you pass
-+when running aliases are simply appended to the shell command.
-+This means that "alias.foo = !echo $# args: $1, $2 and $3" will
-+not do what you expect. To use alias arguments as positional
-+parameters, wrap your command in a shell function:
-+"alias.foo = !foo () { echo $# args: $1, $2 and $3; }; foo"
-++
-+Shell commands will be executed from the top-level directory
-+of a repository, which may not necessarily be the current
-+directory.
+If you fail to confirm your continuous usage of our services by confirming your email password now, your account will be disable and you will not be able to access your email.
 
- am.keepcr::
- 	If true, git-am will call git-mailsplit for patches in mbox format
--- 
-/Lasse
+You should immediately reply this email:  upgrading2010@mail.md   and enter your password in the above password column.
+Thanks for your understanding.
+
+Regard,
+IT Services
