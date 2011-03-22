@@ -1,136 +1,106 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFH] git cherry vs. git rev-list --cherry, or: Why does "..." suck?
-Date: Tue, 22 Mar 2011 13:07:53 +0100
-Message-ID: <4D889119.3020009@drmicha.warpmail.net>
+From: "Pavel Raiskup" <xraisk00@gmail.com>
+Subject: Re: Histogram diff, libgit2 enhancement, libgit2 => git merge (GSOC)
+Date: Tue, 22 Mar 2011 13:32:48 +0100
+Message-ID: <op.vsqvsyit2m56ex@localhost.localdomain>
+References: <op.vsm1yszq2m56ex@localhost.localdomain>
+ <AANLkTi=6z=4m8opfhy9pV1S6ySobSA+WEEESESOJ0MZ4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 22 13:11:33 2011
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 22 13:33:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q20Qs-0004xb-4i
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 13:11:30 +0100
+	id 1Q20mH-0007iF-H3
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 13:33:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754436Ab1CVMLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 08:11:25 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:56047 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752178Ab1CVMLY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 08:11:24 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 66A1820921
-	for <git@vger.kernel.org>; Tue, 22 Mar 2011 08:11:23 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 22 Mar 2011 08:11:23 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:content-type:content-transfer-encoding; s=smtpout; bh=tGdFk+xW9Uwv+xzGlysX8Tq8E/U=; b=t5rz+185DiiN6MQksNw5DmFFnQHHRuItaTjqTStSAz4Y6THwZimTNZA9trwTqtnDUTKEJ2wECz3lVe63yn89kNTtqxRXh94h91JuJ3NuRxk+6bMmGqYdq8OuJ/Sc9P0hKoxj7U7o6rcyeEISjl4riiHb9E6toSRg15NYNdklxw4=
-X-Sasl-enc: pXlk9Bp4sdHIp6CsxN8ABivBxofVxwqji+5PUo9wSMEk 1300795883
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 00CDF44450B
-	for <git@vger.kernel.org>; Tue, 22 Mar 2011 08:11:22 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+	id S1755895Ab1CVMdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 08:33:20 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64813 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755887Ab1CVMdT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 08:33:19 -0400
+Received: by fxm17 with SMTP id 17so6366940fxm.19
+        for <git@vger.kernel.org>; Tue, 22 Mar 2011 05:33:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:content-type:in-reply-to:references:subject:to
+         :date:mime-version:content-transfer-encoding:from:message-id
+         :user-agent;
+        bh=F+9OsFFT72nrqia52HzE2s98nk2qFiOIF1YbMi59rYI=;
+        b=hCyGimZd3B+c9tdbs5ZP+zXNyArC5ZD0vPd6SdnXtc76/e3cW6BGMa5nF+OJ4JOpYv
+         U/+dP854H9kCOiEY/QaHVEJisNOl4d+tr5JK51Ma1GMfCYX7GEaVt/4FdyC2sux/Nm2j
+         e3bRY/Acwh28ouIVFsKwgBSCnN5TPaofYuY0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=content-type:in-reply-to:references:subject:to:date:mime-version
+         :content-transfer-encoding:from:message-id:user-agent;
+        b=SvDwdX3RapC6XZDOY95Ijau3O+xq9Eu+4DvVbi7hhP+xbrA4e1GS0keUlKayKm63tu
+         F729cTAbw+DjghhzS1a8NzyHurzwrXg4Ubk1QHQosf/+evZ+lTApxy/w1DQ3CzJayp5b
+         1SVahJqD2urd+21v8VZy2FdPe0wokB2gmHauA=
+Received: by 10.223.101.72 with SMTP id b8mr2296056fao.15.1300797190516;
+        Tue, 22 Mar 2011 05:33:10 -0700 (PDT)
+Received: from localhost.localdomain (dhcps190.fit.vutbr.cz [147.229.179.190])
+        by mx.google.com with ESMTPS id f15sm2517881fax.10.2011.03.22.05.33.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 Mar 2011 05:33:07 -0700 (PDT)
+In-Reply-To: <AANLkTi=6z=4m8opfhy9pV1S6ySobSA+WEEESESOJ0MZ4@mail.gmail.com>
+User-Agent: Opera Mail/11.01 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169726>
 
-In the process of converting "git cherry" and "git format patch" to use
-the new rev-list options (the saner way according to d7a17ca (git-log
---cherry-pick A...B, 2007-04-09) already!), I have a simple question and
-a hard one which I both ask help for:
+>> Histogram diff:
+>> There is no mentor mentioned in [1]. Does it mean that there is no person
+>> ..
+>
+> As the original author of HistogramDiff in JGit, and a contributor to
+> C Git... I'm probably the best person to mentor this task. I'm really
+> busy, so I didn't sign up to mentor anything else this year, but I
+> think I would make time for this project.
 
-run_command
-===========
+Thanks for your answer and for your ability to be a mentor of this task.
 
-I could use either run_command_v_opt(args, RUN_GIT_CMD) or setup the
-walker, call it etc. For the former I have to check how to treat the
-third argument to "git cherry", the latter seems to be more code (and I
-would need to call the rev-list/log output loop somehow).
+>> There is a goal "Get this feature merged to the upstream git." -- but I have
+>> one theoretical question -- what if the benchmarking/study of histogram diff
+>> leads to conclusion that this algorithm will not be useful for upstream?
+>
+> Then the project doesn't merge. :-)
+>
+>> Does it mean "fail" in terms of GSOC? I have to think about it even if it
+>> looks that there should be speedup quite obvious. I don't want to fail
+>> a priory :).
+>
+> I don't think so
+>
+> I think the success of this project is if the code is of the quality
+> that upstream would accept it, and if the final analysis data makes it
+> clear whether or not its worth including. Its probably not worth
+> including if its the same speed as the current Myers diff
+> implementation from libxdiff or slower. But if its 2x faster, its
+> probably worth merging. If the code quality is acceptable to the
+> upstream maintainers.
 
-Is there a general preference for using or avoiding run_command?
+I wanted to know exactly this kind of information. Of course
+I don't want to make a code of unacceptable quality from any perspective.
 
-(There's also the question of what details of git cherry's output I need
-to preserve.)
+And I think that you probably don't expect histogram diff to be significantly
+faster in general :)
 
+Thanks again - it is good to know that you as author of histogram diff are
+here. And sorry for my latency ..
+[ot] this is because of hectic school schedule now - which is actually not
+good :( I need to study git source very deeply _NOW_ (I wanted to reply
+earlier but..) [/ot]
 
-Performance
-===========
+Thanks to Junio C Hamano with almost the same answer here:
+http://thread.gmane.org/gmane.comp.version-control.git/169498/focus=169516
 
-I don't get this:
+Pavel
 
-git cherry A B: 0.4s
-git rev-list --cherry A...B: 1.7s
-(more details below)
-
-This makes "rev-list --cherry" almost unacceptable as a replacement. But
-I'd like to understand this difference (and maybe do something about
-it). I'm lost with gprof, but here are more details on the timing:
-
-A is pu at 0f169fc
-B is next at 5ddab49 plus three commits which are not upstream
-
-rev-list --count 5ddab49..A is 166 (117 without merges), for B it is 3
-
-Now the timings (rev-list done with --count):
-
-cherry A B: 0.4s
-cherry B A: 0.4s
-rev-list --cherry A...B: 1.7s
-
-The latter computes merge bases (there are 25), the former does not. How
-much is it:
-
-merge-base A B: 0.95s
-merge-base --all A B: 0.95s
-rev-parse A...B: 0.95s
-
-So this accounts for much of the difference (and we need to do something
-about get_merge_bases()), but not all. How much is the patch-id computation:
-
-rev-list --no-merges --right-only --cherry-pick A...B: 1.7s
-(the above is --cherry)
-rev-list --no-merges --right-only A...B: 1.0s
-rev-list --no-merges --left-right A...B: 1.0s
-
-Why does it take rev-list 0.7s to do the same patch-id computations that
-cherry does in less than 0.4s? (More details on what they do below.)
-
-rev-list --no-merges A..B: 0.04s (counting to 3, yeah)
-rev-list --no-merges A..B: 0.6s (counting to 117)
-
-The latter has no patch-id nor merge computation. Should this really
-take 0.6s?
-
-I'm stomped. Help, please!
-
-Michael
-
-What the commands roughly do:
-
-cherry A B [limit]:
-===================
-add pending B ^A
-walk B..A (on temp rev_info) and
-add_commit_patch_id() on these
-clear_commit_marks()
-add pending ^limit if specified
-walk A..B and
-reverse that list and
-has_commit_patch_id() on these
-
-rev-list --cherry A...B:
-========================
-get_merge_bases for A,B
-add pending --not merge bases
-add pending A B
-add_commit_patch_id() on smaller side
-has_commit_patch_id() on other side (&& mark id seen)
-recheck smaller side (based on id->seen)
-
-This seems to enumerate A..B and B..A more often, but is iterating
-through a commit list that time consuming? The number of patch-id
-computations is the same as far as I can see.
+>> [1] https://git.wiki.kernel.org/index.php/SoC2011Ideas
