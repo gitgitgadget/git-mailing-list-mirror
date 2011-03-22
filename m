@@ -1,77 +1,58 @@
-From: Mathieu Malaterre <mathieu.malaterre@gmail.com>
-Subject: /usr/lib/git-core/git-rebase: 590: cannot open /home/mathieu/dummy/.git/rebase-merge/rewritten:
- No such file
-Date: Tue, 22 Mar 2011 16:18:30 +0100
-Message-ID: <AANLkTikn30scXd2F3z1QqntROyqfcvEBF4gEFtHyU=9c@mail.gmail.com>
-References: <AANLkTinx1bDaChNwrn6pQjxbyZ-rH6TZ_5JuWszY1LTE@mail.gmail.com>
+From: Matt Ryan <matt@devaldez.com>
+Subject: Re: [RFD] Gitweb: Source configuration from file separate from the CGI script
+Date: Tue, 22 Mar 2011 16:01:20 +0000 (UTC)
+Message-ID: <loom.20110322T165315-910@post.gmane.org>
+References: <1300285582.28805.25.camel@drew-northup.unet.maine.edu> <20110316143420.GA15371@elie> <1300286650.28805.29.camel@drew-northup.unet.maine.edu> <m3lj0e59ps.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 22 16:24:43 2011
+X-From: git-owner@vger.kernel.org Tue Mar 22 17:25:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q23Rp-0005h0-L7
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 16:24:41 +0100
+	id 1Q24OX-0008NN-14
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 17:25:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755882Ab1CVPYi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 11:24:38 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:32890 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754525Ab1CVPYg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 11:24:36 -0400
-Received: by gyf1 with SMTP id 1so2334441gyf.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 08:24:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=LnY3rcvHe6tlqaG1bPd21BmwyJZIZLP8u+wYciIwaKE=;
-        b=GtyD87nteTddg+exP5SRQfG8aGVjIwg26HtWmbAapvcOFTxitnsyUBIUd9kBJzpDIS
-         WmrgWkiiHteTGNUUuX3fYB+S8HUnU9WJiI/jOEVDxxJRl2N7H8zAoMvMkLwLcr0CxaNB
-         1sUyhjaYDJcnPbYVC1nbkbr/bPHVTLp33DZ84=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=afp4CjFM+fUqEuSzW8a648GsnOcpgvTOZgkYHIaBpa7rw4YUpXNwkoz0L2XFhQxGeh
-         kkuP9dIrYa+10CFO5JC068umpvzcvp1xcDlQuF4pj/iPnzmT/IbuDev4b1EBZ1JmCH0s
-         v+LzgVBKhQPTeiKYlrKFC0Z43fNdDxFF2Chis=
-Received: by 10.91.151.9 with SMTP id d9mr5196889ago.176.1300807475866; Tue,
- 22 Mar 2011 08:24:35 -0700 (PDT)
-Received: by 10.90.51.11 with HTTP; Tue, 22 Mar 2011 08:18:30 -0700 (PDT)
-In-Reply-To: <AANLkTinx1bDaChNwrn6pQjxbyZ-rH6TZ_5JuWszY1LTE@mail.gmail.com>
+	id S1751268Ab1CVQZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 12:25:15 -0400
+Received: from lo.gmane.org ([80.91.229.12]:41459 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750824Ab1CVQZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 12:25:06 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Q24OG-0008Dp-Td
+	for git@vger.kernel.org; Tue, 22 Mar 2011 17:25:05 +0100
+Received: from cpe-98-14-28-137.nyc.res.rr.com ([98.14.28.137])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 Mar 2011 17:25:04 +0100
+Received: from matt by cpe-98-14-28-137.nyc.res.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 Mar 2011 17:25:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 98.14.28.137 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.151 Safari/534.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169746>
 
-Dear all,
+Hey, I don't mean to contribute to the confusion. 
+But, after adding a gitweb_config.perl in the 
+same directory as the cgi I haven't seen all the 
+changes take place. I tried something simple to start like so:
 
-=A0I tried a rebase of my local branch (say 'local') against master.
-Here is what I did:
+$feature{'blame'}{'override'} = [1];
+$feature{'forks'}{'default'} = [1];
+$feature{'avatar'}{'default'} = ['gravatar'];
 
-$ git checkout local
-$ git rebase -s ours master
-=2E..
-Already applied: 0017 smore more work
-/usr/lib/git-core/git-rebase: 590: cannot open
-/home/mathieu/dummy/.git/rebase-merge/rewritten: No such file
-All done.
-
-I have no idea on how to get back to the initial state. Where did my
-'local' branch go ? Using git 1.7.2.3
-
-I can find some references:
-
-$ cd .git && grep -lr "smore more work" *
-logs/refs/heads/progresscallback
-logs/HEAD
-
-Thanks a bunch !
---=20
-Mathieu
+Gravtar is now working, but I haven't seen 
+the blame or forks added. Any help would be appreciated, 
+thanks!
