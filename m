@@ -1,166 +1,120 @@
-From: =?ISO-8859-2?Q?Micha=B3_=A3owicki?= <mlowicki@gmail.com>
-Subject: Re: gsoc - Better git log --follow support
-Date: Wed, 23 Mar 2011 00:23:45 +0100
-Message-ID: <AANLkTi=woLeveur6gKnSXTRzmS8nB0o4M9HegJ+GNUCa@mail.gmail.com>
-References: <AANLkTi=n7e70UqYU+6wpG4cu95fsg39tVM6=7fpfdZFz@mail.gmail.com>
-	<20110321122407.GH16334@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [WIP PATCH 0/5] support --exclude for diff/log commands
+Date: Tue, 22 Mar 2011 16:59:58 -0700
+Message-ID: <7v7hbqk8ox.fsf@alter.siamese.dyndns.org>
+References: <1299726819-5576-1-git-send-email-pclouds@gmail.com>
+ <7vmxl37bdp.fsf@alter.siamese.dyndns.org>
+ <7vvczr5pw6.fsf@alter.siamese.dyndns.org>
+ <AANLkTimsv9bO+Go6Mqrrp_1-AZ=sC3ndyAuskPYLVbkv@mail.gmail.com>
+ <AANLkTimWPoMEYdLCwTTit6AeuJegOc96gE1JsO8B4fh=@mail.gmail.com>
+ <4D871E51.8090106@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 23 00:23:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Mar 23 01:00:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2AvY-0008Az-Fv
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 00:23:52 +0100
+	id 1Q2BV5-0008Nr-Sy
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 01:00:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755643Ab1CVXXs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 19:23:48 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:64497 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755783Ab1CVXXq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 19:23:46 -0400
-Received: by iyb26 with SMTP id 26so7959441iyb.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 16:23:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pytTobNNC9Ic/lF5tfN/l50bokKCaxNra7WtwD8+vzI=;
-        b=Fgl5aVdSNqiQcxA4RMM+jy8NpIQIL3D1jozvuwd06Xai+bBCjCVoxldJdGw3udhjQS
-         x1GOE93G6gIgC2uzZyNTcYeorN9ZbsW2icS8KVQlhmd2jLa0kqS50jqJjnyfKHdP8Wda
-         YfvIYRrIgnm4xgjuZSl5sWzh54yQqYUHGvhTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gPMLEphE0eo1PST7kVQw1tcaHD/ufRtQ6lE/aiuwEyvtrdnSFUxtnRQYfAshL+W+XV
-         sWRCg85GElHHEYl5w9vP0y8m3CfwtJ4CDMNW2jB5e1QySmNwoyFsIb4jeDuVq46LhaAD
-         GJxDedCibUMPESRhvopuDuqOsOV1dZSPlNX/c=
-Received: by 10.42.115.73 with SMTP id j9mr9690730icq.117.1300836225998; Tue,
- 22 Mar 2011 16:23:45 -0700 (PDT)
-Received: by 10.42.227.136 with HTTP; Tue, 22 Mar 2011 16:23:45 -0700 (PDT)
-In-Reply-To: <20110321122407.GH16334@sigill.intra.peff.net>
+	id S1755784Ab1CWAAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 20:00:18 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60647 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755125Ab1CWAAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 20:00:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 978634489;
+	Tue, 22 Mar 2011 20:01:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Lr5T7z+zlbsRh1f28qOqptd+Sbw=; b=UCZFsL
+	yRhw9+hTio5K6Khp0ah06i12USfFY1VBMIAVL3+OkS1EJRpUpjXELjKOpVyYgF74
+	05bNIddKhcIVKuydbo1Lco0XOoZoxceFVoBfrKC7Adh/ult96PBFjXKjtJWi3ynf
+	0nP+RKQYd1RfzJB+ll0FzSLxSilBEKmVgPHIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x9bVyABwy7eq4fwhv6VZBmL57X9Fxj83
+	W4LNkkqqIOsL11fhZHYag9pJkrYw3peH03F3rE+8c5UplUgAxnrpe8dDUz0OdYMK
+	qiFEtDTPYz4uAtQb4PqhLq4+XQQsOkU7M7O3bZpz6LyRhFNrU4jM3eMFB4/EaTvY
+	WTodHenZ65k=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 64D4C447B;
+	Tue, 22 Mar 2011 20:01:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2B193446C; Tue, 22 Mar 2011
+ 20:01:40 -0400 (EDT)
+In-Reply-To: <4D871E51.8090106@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Mon, 21 Mar 2011 10:45:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BEE5C25E-54E0-11E0-B371-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169787>
 
-W dniu 21 marca 2011 13:24 u=BFytkownik Jeff King <peff@peff.net> napis=
-a=B3:
-> On Sat, Mar 19, 2011 at 08:24:20PM +0100, Micha=B3 =A3owicki wrote:
->
->> I'm looking at idea about better git log --follow support from
->> https://git.wiki.kernel.org/index.php/SoC2011Ideas .There is somethi=
-ng
->> like this - "[.. ] it does not interact well with git's usual histor=
-y
->> simplification [...]". Can someone elaborate this? I've found Histor=
-y
->> Simplification in git rev-list man but don't know yet about issues
->> with --follow.
->
-> In short, history simplification is a way of looking at a subset of t=
-he
-> commit history graph, but in a way that makes it look like a complete
-> graph. Imagine I have a linear history like this:
->
-> =A0A--B--C
->
-> where "A" modifies "file1", "B" modifies "file2", and "C" modifies
-> "file1" again. If I ask for the history of "file1" with "git log file=
-1",
-> then git will pretend as if the graph looks like:
->
-> =A0A--C
->
-> including rewriting the parent of "C" to point to "A" (because the
-> parent pointer is basically an edge in the graph).
->
-> If you are just doing a straight "git log", the actual parentage is n=
-ot
-> that interesting. We either show commits or we don't, and we don't sh=
-ow
-> links between them. But try "git log --graph" or "gitk", which do car=
-e
-> about the edges. They want to show you a whole connected graph.
->
-> Now consider --follow. It doesn't happen during the commit limiting
-> phase, but instead it happens while we're showing commits. And if it
-> decides a commit isn't interesting, we don't show it. That works OK f=
-or
-> "git log", but it makes the graph for other things disjointed.
->
-> You can see it in this example:
->
-> =A0# make the A-B-C repo we mentioned above
-> =A0git init repo && cd repo
-> =A0echo content >file1 && git add file1 && git commit -m one
-> =A0echo content >file2 && git add file2 && git commit -m two
-> =A0echo content >>file1 && git add file1 && git commit -m three
->
-> =A0# Now look at it in gitk; we see a nice linear graph.
-> =A0gitk
->
-> =A0# Now let's try it with path limiting. We see a nice subgraph that
-> =A0# pretends to be linear, because we "squished" out the uninteresti=
-ng
-> =A0# nodes.
-> =A0gitk file1
->
-> =A0# Now let's make some more commits with a rename.
-> =A0echo content >>file2 && git commit -a -m four
-> =A0git mv file1 newfile && git commit -m five
-> =A0echo content >>newfile && git commit -a -m six
->
-> =A0# If we use path limiting, we'll only see the two most recent comm=
-its.
-> =A0# We get stopped at the rename because path limiting is just about=
- the
-> =A0# pathname.
-> =A0gitk newfile
->
-> =A0# So we can use --follow to follow the rename. First let's try sim=
-ple
-> =A0# output. You should see commits 1, 3, 5, and 6, which touched eit=
-her
-> =A0# newfile or its rename source, file1.
-> =A0git log --oneline --follow newfile
->
-> =A0# But now look at it in gitk. Commit 4 is included as a boundary
-> =A0# commit, but we fail to notice that it connects to three. And we
-> =A0# don't see commit 3 connecting to anything, and commit 1 is missi=
-ng
-> =A0# entirely.
-> =A0gitk --follow newfile
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Why commit 4 is displayed here (changes only file2) ?
-
-# git log with graph works here OK. It displays six -- five .. --
-three .. - one .In this case results shouldn't be similar to gitk ?
-git log --graph --follow newfile
-
+>> One thing that makes it different from Michael's approach is, :/foo
+>> will match ':/foo' literally in every directories and foo at top-tree.
+>> I feel mildly uncomfortable with it, but it makes it consistent with
+>> other wildcards. If no one objects, I'll try to make a patch with this
+>> approach.
 >
-> Obviously this a pretty simplistic example. But you can imagine in a
-> history with a lot of branching how useful this simplification is to
-> understanding what happened to a subset of the tree.
->
-> Jakub mentioned another example with gitweb's subtree merge not being
-> found by --follow. I haven't looked into that case, but it may be
-> related (or it may simply be a defect in follow finding the right
-> source).
->
-> -Peff
->
+> Maybe I misunderstand which topic you are referring to. I have a patch
+> for ":" (to denote repo-root in pathspecs), there's no need to make
+> another one for ":/". (I would really prefer to do it myself since I
+> brought it up.) I was just waiting for agreement to settle in about
+> which prefix to use.
 
+I am not sure if there is any disagreement in the desired semantics
+between the two.
 
+Let's clarify by dumping my understanding of what we aim to achieve.
 
---=20
-Pozdrawiam,
-Micha=B3 =A3owicki
+ - The user gives ':/<frotz>' and '<xyzzy>' from the command line, in a
+   subdirectory.
+
+ - Internally we chdir() up to the top of the working tree, and the prefix
+   is set to the path to the subdirectory (with trailing slash);
+   get_pathspec(prefix, pathspec) is called, where pathspec is often a
+   later part of argv[] we got from the command line.
+
+ - Currently, get_pathspec() gives either:
+
+    - the same as incoming pathspec, if <prefix> is NULL (this happens at
+      the root of the working tree);
+
+    - { <prefix>, NULL }, if the incoming pathspec array is empty; or
+
+    - an array of strings taken from pathspec, each prefixed with <prefix>.
+
+   The list of the resulting strings is the pathspec, relative to the root
+   of the working tree, and is used to determine if a path matches the
+   given pathspec.  The match traditionally had two semantics (diff-tree
+   family and everybody else, only the latter group knew about globs), but
+   an earlier work by Nguyen has taught globs to everybody (at least it
+   aimed to; we might have leftover cases that we haven't uncovered).
+
+Both the ":/<path>" proposal (or your ":<path>" proposal) changes only a
+very small part of the above, namely, "each prefixed with '<prefix>'" is
+changed to if the element in original pathspec has the magic colon prefix,
+the magic is stripped away, and the remainder becomes the element in the
+resulting pathspec array without additional <prefix> in front.
+
+If Nguyen's proposal is to also match ":/<path>" (or ":<path>") literally,
+that part should be scrapped.  If somebody wants to match such an unusual
+path component, it can always be expressed by quoting it as a glob,
+i.e. "[:]/<path>" (or "[:]<path").
+
+I am slightly in favor of ":<path>" syntax (than ":/<path>"), but I do not
+care too deeply.  Either has the same problem that it will be confusing
+with existing and well-established syntax (the former would conflict with
+"name of the blob in the index", the latter with "name of the commit that
+match the regexp).
