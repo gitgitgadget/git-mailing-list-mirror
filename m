@@ -1,103 +1,104 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: cherry-pick applies some other changes than the specified one?
-Date: Tue, 22 Mar 2011 09:04:34 +0100
-Message-ID: <AANLkTimHEHQzV4B7beraEuT9Ta8+MBeyPPmSGkBWD+76@mail.gmail.com>
-References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
-	<7vwrjssbfk.fsf@alter.siamese.dyndns.org>
-	<4D877FAD.9000807@viscovery.net>
-	<4D879516.3060204@gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] git-completion: Add git help completion for aliases
+Date: Tue, 22 Mar 2011 09:23:55 +0100
+Message-ID: <20110322082355.GE14520@neumann>
+References: <4D871972.7080008@elegosoft.com>
+	<7vhbawno11.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 22 09:04:48 2011
+Cc: Jakob Pfender <jpfender@elegosoft.com>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, lee.marlow@gmail.com,
+	markus.heidelberg@web.de, spearce@spearce.org, bebarino@gmail.com,
+	ted@tedpavlic.com, tlikonen@iki.fi, trast@student.ethz.ch
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 09:24:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1wa3-0007jD-J6
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 09:04:43 +0100
+	id 1Q1wtD-0000WG-Lq
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 09:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755185Ab1CVIEh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 04:04:37 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:65035 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755182Ab1CVIEe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 04:04:34 -0400
-Received: by iyb26 with SMTP id 26so7186301iyb.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 01:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AbSQyePnQoIAsNLyEGalrVNyHKpyLmnxnhpG8XSx4WI=;
-        b=FcbTDoXNqRiUj0+ny0BdyvJzom5J2uElsDKhIPUHflrKx/euS2N9Bu1qdbr3Zukpvk
-         7TiOiyq6OnYa6sTarOEJbU+UaQiA+2H7lirX9gw35YTowVKmZjfcov3O4w9K7FiSwwr/
-         zurgez9GM3yddYcnR1z0PyDEJBRwCmp6/LfZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tC4rohUTOKWEm5+69g3a77UO7NAzjc1WaOJZFyr8Ib66pHM+iBbl90mFcTiBYSRXpg
-         ZOowFgaRb3njDNWu9z2NnGSB9HzipFcevfq8vuL2HZWyI+pAR4aIgxLccZ2CKrXce3En
-         Y7LRCxqfor3T8SYNJYFsolwj5XsvjhZVfC5bw=
-Received: by 10.42.156.6 with SMTP id x6mr8736997icw.90.1300781074087; Tue, 22
- Mar 2011 01:04:34 -0700 (PDT)
-Received: by 10.42.225.138 with HTTP; Tue, 22 Mar 2011 01:04:34 -0700 (PDT)
-In-Reply-To: <4D879516.3060204@gmail.com>
+	id S1754683Ab1CVIY0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 04:24:26 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:63841 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753875Ab1CVIYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 04:24:23 -0400
+Received: from localhost6.localdomain6 (p5B130955.dip0.t-ipconnect.de [91.19.9.85])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MNezy-1Q4ftm3DKc-007H4h; Tue, 22 Mar 2011 09:23:57 +0100
+Content-Disposition: inline
+In-Reply-To: <7vhbawno11.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:QdlOjHvcOZmEJD003QJtfJSgjzASVvjQZ4KQvKQXose
+ szBOFZyDOYENn4bLYeo+XgzRAy0oLgg18jB3XQNortKADcU0xB
+ IxBHKiWVMU3hYUzi3MJ3RtTFTt/H2BK3ac+6ntPClPM4QAeNi2
+ YyygzqZbMI3u9D1dsxSdIGSyd7pVYutzkP0kdxLA37H0FourUn
+ bMzxoTNe7NQNa5K2X6gBA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169708>
 
-On Mon, Mar 21, 2011 at 7:12 PM, Piotr Krukowiecki
-<piotr.krukowiecki@gmail.com> wrote:
-> W dniu 21.03.2011 17:41, Johannes Sixt pisze:
->> Assuming you did not 'git add' the file yet, you are looking at the
->> "condensed combined diff" after manually resolving the conflict by d=
-oing
->> the "+line" manually that the cherry-pick should have brought in. Of
->> course, a lot of context is visible here if both sides have diverged
->> considerably in this area.
->>
->> I.e. the diff will look something like
->>
->> =A0+line from HEAD
->> =A0+line from HEAD
->> + line from cherry-picked
->> =A0+line from HEAD
->> ...
->>
->> Notice the double columns before the content lines. This sort of dif=
-f
->> extens above and below the conflicting section until there is a "gap=
-" of 3
->> lines that changed neither on the HEAD side nor on the cherry-picked=
- side
->> since the merge base.
->
-> Hm that might be possible! I'll check it tomorrow @work.
+On Mon, Mar 21, 2011 at 02:48:10PM -0700, Junio C Hamano wrote:
+> Jakob Pfender <jpfender@elegosoft.com> writes:
+>=20
+> > Enable bash completion for "git help <alias>", analogous to "git
+> > <alias>", which was already implemented.
+> >
+> > Signed-off-by: Jakob Pfender <jpfender@elegosoft.com>
+> > ---
+> >  contrib/completion/git-completion.bash |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >
+> > diff --git a/contrib/completion/git-completion.bash
+> > b/contrib/completion/git-completion.bash
+> > index 893b771..f9a74d3 100755
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1506,7 +1506,7 @@ _git_help ()
+> >  		;;
+> >  	esac
+> >  	__git_compute_all_commands
+> > -	__gitcomp "$__git_all_commands
+> > +	__gitcomp "$__git_all_commands $(__git_aliases)
+> >  		attributes cli core-tutorial cvs-migration
+> >  		diffcore gitk glossary hooks ignore modules
+> >  		repository-layout tutorial tutorial-2
+>=20
+> This patch may not be _wrong_ per-se, but it it useful in practice?
+>=20
+> I dunno.
 
-You were right - the line I've added manually have two "++", and the ot=
-her
-lines shown with differences only have "-" and "+" in the second column=
-=2E
+I think most people use 'git help <cmd>' to bring up the man page of
+given git command.  Since my aliases don't have a man page (and I
+doubt that any alias will have one), I would never run 'git help
+<alias>' myself, because it would only lead to a 'man page not
+available' error.  Well, at least so I thought, because I never knew
+that 'git help <alias>' actually prints the definition of the alias.
+It's definitely shorter and easier than 'git config --get
+alias.<alias>', but on the other hand it clutters 'git help <TAB>
+output, especially if you have a lot of aliases.  If I had aliases
+like 'ci' or 'co' instead of 'commit' and 'checkout', then I would
+definitely not want to see them after 'git help <TAB>'.
 
-I'm still not clear what is exactly compared when I use plain diff or
--c version.
-It might be I need to read more docs. I'll ask if I'm still in doubt
-after reading
-more.
+So I don't know either.
 
-Thanks again for explaining this to me - saved me from a lot of PITA re=
-searching
-:)
+Sidenote: the completion for 'git help' already lists custom git
+commands (i.e. a script named 'git-<cmd>' somewhere in $PATH'), and
+those are likely not documented either.
+
+> Don't people usually use aliases so that they do not have to type lon=
+g
+> command names that would need completion?
+
+I mostly use aliases for a command and a couple of options (e.g. a
+custom log format), and give them meaningful names.
 
 
---=20
-Piotr Krukowiecki
+Best,
+G=E1bor
