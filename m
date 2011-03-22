@@ -1,68 +1,94 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Summer of Code project ideas
-Date: Tue, 22 Mar 2011 21:31:57 +0100
-Message-ID: <20110322203157.GA21163@book.hvoigt.net>
-References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com> <20110303185918.GA18503@sigill.intra.peff.net> <AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com> <20110303203323.GA21102@sigill.intra.peff.net> <20110309174956.GA22683@sigill.intra.peff.net> <AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com> <20110309215841.GC4400@sigill.intra.peff.net> <m37hbx5ncw.fsf_-_@localhost.localdomain>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: How to remove a git subtree and its history?
+Date: Tue, 22 Mar 2011 13:44:53 -0700
+Message-ID: <AANLkTiktAUeOkX0MZh+JbQb1z-JiN=Qet6_AuWavsNk=@mail.gmail.com>
+References: <4D88A1CB.2000500@jku.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
-	"J.H." <warthog9@eaglescrag.net>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Paul Mackerras <paulus@samba.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 21:32:14 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Robert Pollak <robert.pollak@jku.at>
+X-From: git-owner@vger.kernel.org Tue Mar 22 21:45:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q28FS-0002Ql-6T
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 21:32:14 +0100
+	id 1Q28S8-00026n-MA
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 21:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158Ab1CVUcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 16:32:03 -0400
-Received: from darksea.de ([83.133.111.250]:51348 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755150Ab1CVUb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 16:31:59 -0400
-Received: (qmail 12725 invoked from network); 22 Mar 2011 21:31:57 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 22 Mar 2011 21:31:57 +0100
-Content-Disposition: inline
-In-Reply-To: <m37hbx5ncw.fsf_-_@localhost.localdomain>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S932169Ab1CVUpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 16:45:15 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:42726 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932110Ab1CVUpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 16:45:13 -0400
+Received: by vxi39 with SMTP id 39so5894713vxi.19
+        for <git@vger.kernel.org>; Tue, 22 Mar 2011 13:45:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=ZeuB5BHN35/RVCEpfIOCEXMe+M0tG3HWDC9NrNbDIo0=;
+        b=vHTxKqUuqn1xUQpiFgkz8HEuflUreEhuElHYRAbdMIziAmLWq+lcJc9lOKhiDOFTkx
+         0SwZC2Htba0xNYVpKnUMRWmLw/SisPRd24cUrrjOg6ffCOPT+6Q0RYAivld6WM6G7clR
+         SHs6E+MMKOtgxvbriA3Qs76HzkkEB5cIOrW6Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Psf/jzGnbMof1hF/WJhKKAwYM8hFgQSMEkNZ7xMsl0nGa/l0Z8W/YTCNFunmkNOtqk
+         qXyf3XUcQag4D7AqVsX1gSe4oM8lS4ZoSJ7/17BK8fxdLjGn3AoxXeBShBYF6wuezi+7
+         zduhtShFo2rUFfNVnIMyyQNAZhXozBlHvab+k=
+Received: by 10.52.179.69 with SMTP id de5mr5527030vdc.304.1300826713150; Tue,
+ 22 Mar 2011 13:45:13 -0700 (PDT)
+Received: by 10.52.155.74 with HTTP; Tue, 22 Mar 2011 13:44:53 -0700 (PDT)
+In-Reply-To: <4D88A1CB.2000500@jku.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169774>
 
-Hi,
+On Tue, Mar 22, 2011 at 6:19 AM, Robert Pollak <robert.pollak@jku.at> wrote:
+> in the git repository of my project I have successfully replaced a git
+> submodule by a subtree, essentially by using
+>
+> $git subtree add --prefix=mySubtree mySubmodule/master
+>
+> with your git-subtree.sh .
+>
+> Before accepting my change, my project partners want to be sure that
+> removing this new subtree and its history at some later point in time
+> stays possible. How can I achieve this? I have unsuccessfully tried "git
+> filter-branch" as described by pgs and fmarc in
+> http://stackoverflow.com/questions/955793#955793 .
 
-On Thu, Mar 17, 2011 at 04:40:44PM -0700, Jakub Narebski wrote:
-> * embedding graphical diff and graphical merge tool in git-gui, e.g. as
->   "git gui diff".  I think that we can use xxdiff; the license is 
->   compatibile.
-> 
->   Pat and Shawn, is it something worth doing?  Does it look like a good
->   project for GSoC2011, or is it too small of a project for this?  Would
->   we be able to find mentor for this idea?
-> 
-> * splitting gitk, common library (Tcl/Tk bindings) for gitk and git-gui
-> 
->   Pat and Paul, do you think it is right scope, or is it too large project
->   to put as an GSoC idea?
+Well, you can certainly remove anything you want with git
+filter-branch.  Are you concerned about shrinking the size of your
+repo, or just getting files out of the way in your tree, or removing
+stuff from the git history?
 
-I would be interested in mentoring those projects. I do not know whether
-we can reach consensus how to split up things. The last time we
-discussed a possible approach[1] to share code between gitk and git gui
-we did not reach one.
+If you want to avoid cluttering the git history, you should use git
+subtree with the --squash option.  That makes it quite painless.
 
-Cheers Heiko
+If you want to just get the files out of your tree someday in the
+future (for example, to switch back to submodules), then simply 'git
+rm -r' the directory.  Rewriting history is massive overkill for this.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/166663/focus=166695
+If you want to be able to shrink your repository size later, well,
+then you need git filter-branch.  I've never tried to do this since
+the history rewrite you'd be doing in this case would completely
+invalidate all your old history: by removing the subtree in all past
+revisions, you make all those past revisions unbuildable, which seems
+like missing the point of version control.  Nevertheless, I'm sure you
+could make it happen if you wanted; you can do pretty much anything
+you want by filtering git history.
+
+> (Be free to CC git@vger.kernel.org if you reply, if you think that's
+> appropriate for archiving the info.)
+
+I don't understand why you didn't cc: the git list yourself then.  But okay :)
+
+Have fun,
+
+Avery
