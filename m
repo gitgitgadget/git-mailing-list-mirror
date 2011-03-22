@@ -1,54 +1,96 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: calculating a git packfile sha1 checksum in java
-Date: Tue, 22 Mar 2011 17:10:26 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1103221708370.11889@xanadu.home>
-References: <1300786044816-6195501.post@n2.nabble.com>
- <AANLkTimWt4P3qtR3b6YfRJ=Tx69EL+9+oXhD_2c9O6JX@mail.gmail.com>
- <AANLkTiniKOzzwZhJ5GN4nf8AWRTsT6bbMeK4s5XqvH42@mail.gmail.com>
- <1300827506173-6197923.post@n2.nabble.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] git-completion: Add git help completion for aliases
+Date: Tue, 22 Mar 2011 22:21:31 +0100
+Message-ID: <20110322212131.GB30604@neumann>
+References: <4D871972.7080008@elegosoft.com>
+	<7vhbawno11.fsf@alter.siamese.dyndns.org>
+	<alpine.DEB.1.00.1103212302000.1561@bonsai2>
+	<7v4o6vmvzs.fsf@alter.siamese.dyndns.org>
+	<20110322085027.GF14520@neumann>
+	<7vsjufkqxl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: madmarcos <fru574@my.utsa.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 22 22:10:34 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakob Pfender <jpfender@elegosoft.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	<git@vger.kernel.org>, <lee.marlow@gmail.com>,
+	<markus.heidelberg@web.de>, <spearce@spearce.org>,
+	<bebarino@gmail.com>, <ted@tedpavlic.com>, <tlikonen@iki.fi>,
+	<trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 22:21:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q28qX-0000HQ-B9
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 22:10:33 +0100
+	id 1Q291I-00079W-Tl
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 22:21:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288Ab1CVVK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 17:10:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:58008 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932216Ab1CVVK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 17:10:27 -0400
-Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LIH00L0V9GLGRA0@vl-mh-mrz21.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 22 Mar 2011 17:09:57 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1300827506173-6197923.post@n2.nabble.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755219Ab1CVVVf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 17:21:35 -0400
+Received: from ex-e-2.perimeter.fzi.de ([141.21.8.251]:18413 "EHLO
+	ex-e-2.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753654Ab1CVVVe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 17:21:34 -0400
+Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by ex-e-2.perimeter.fzi.de
+ (141.21.8.251) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 22 Mar
+ 2011 22:21:30 +0100
+Received: from localhost6.localdomain6 (141.21.7.126) by ex-ca-ht-1.fzi.de
+ (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 22 Mar
+ 2011 22:21:31 +0100
+Content-Disposition: inline
+In-Reply-To: <7vsjufkqxl.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169777>
 
-On Tue, 22 Mar 2011, madmarcos wrote:
+On Tue, Mar 22, 2011 at 10:25:58AM -0700, Junio C Hamano wrote:
+> SZEDER G=E1bor <szeder@ira.uka.de> writes:
+>=20
+> > I think this is not necessary.  We already run __git_aliases() ever=
+y
+> > time after 'git <TAB>', and it was not an issue so far.
+>=20
+> If we allow that line of reasoning, the cached $__git_all_commands th=
+at
+> can go stale needs to be removed, no?  I think folks running bash on
+> windows wanted it and it would be helping them.
 
-> Hi Shawn,
-> Thanks for the response!
-> I looked at the JGit API. will it allow me to read a packfile, alter its
-> contents, and repack it?
+Well, Shawn wrote that it was your request ;)
 
-Why would you want to do that?  Altering a pack file in place is not a 
-trivial affair.  There is also the corresponding pack index which has to 
-be rebuilt, etc.
+  http://thread.gmane.org/gmane.comp.version-control.git/32444
+  http://thread.gmane.org/gmane.comp.version-control.git/32438
+
+But there was indeed a remark shortly before that about bad fork-exec
+performance under Cygwin on an other topic.
+
+> One valid looking argument against caching aliases but still caching
+> commands is that the former could change on the end user's whim while=
+ the
+> latter is more or less stable across releases,
+
+Agreed.
+
+> but people can throw their
+> own "git-frotz" in their path and run it as "git frotz"
+
+Also agreed, and been annoyed by it not being recognized
+automatically.  In fact I've even tried to make the completion script
+detect user's commands on the fly but still without that huge loop
+over the 'git help -a' output in __git_list_porcelain_commands(), but
+couldn't come up with anything acceptable so far.  And simply
+re-sourcing the completion script is not all that difficult,  which
+will also take care of refreshing cached aliases, so...
+
+> so that is not
+> entirely a valid argument, either.
+
+agreed here, too.
 
 
-Nicolas
+Best,
+G=E1bor
