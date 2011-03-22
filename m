@@ -1,124 +1,58 @@
-From: "Pavel Raiskup" <xraisk00@gmail.com>
-Subject: Re: Histogram diff, libgit2 enhancement, libgit2 => git merge (GSOC)
-Date: Tue, 22 Mar 2011 17:43:42 +0100
-Message-ID: <op.vsq7e4og2m56ex@localhost.localdomain>
-References: <op.vsm1yszq2m56ex@localhost.localdomain>
- <AANLkTi=Fu5v-5E2dSAA74f0juUQNjNjus5XFWqMb9v9k@mail.gmail.com>
- <20110321012708.GA18323@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 2/2] Fix sparse warnings
+Date: Tue, 22 Mar 2011 10:18:37 -0700
+Message-ID: <7vwrjrkr9u.fsf@alter.siamese.dyndns.org>
+References: <7vzkoop912.fsf@alter.siamese.dyndns.org>
+ <1300780265-5698-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>,
-	"Ramkumar Ramachandra" <artagnon@gmail.com>
-To: "Vicent Marti" <vicent@github.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 17:44:23 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 18:19:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q24gs-0002wA-FO
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 17:44:18 +0100
+	id 1Q25EQ-0006dZ-Qe
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 18:18:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755185Ab1CVQoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 12:44:14 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53769 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750852Ab1CVQoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 12:44:12 -0400
-Received: by bwz15 with SMTP id 15so5996166bwz.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 09:44:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:content-type:cc:references:subject:to:date
-         :mime-version:content-transfer-encoding:from:message-id:in-reply-to
-         :user-agent;
-        bh=z42ISG/ikP+Km93C0CT7/eh1JE70ju9mvrO+24tTzx4=;
-        b=mKezS7o8kFE4eyjjSw88kihesDl3H1Hum61a7F1TxQIhdmpVp0Yd5CwpvArxBkLw8F
-         WX59AATJvizqCm3VK3V02lrBtJMFvIYw98L8rWGMbfDM8sc6MA32Gmo26OEaSX7L+1pR
-         /7+H1rHDXM37e6vuMZuuwiAYbopaEFt9Go4HE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=content-type:cc:references:subject:to:date:mime-version
-         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
-        b=C+9y2G8WJGq5h8xFsP3eSnjR6UJy1xGZl1QWcp40OyqPcTiCczGUGZWoQjkrAF4odj
-         2g+nxQrkw4h7p+Af2KCpGAzB84zdHWfi+1txszsDb4XHBnhLjAcntQNVJS+EmilmApVE
-         zn1j+INZ5eaJcyHaUWoYm1yE/S2p6WPxbRpnY=
-Received: by 10.204.231.66 with SMTP id jp2mr5180301bkb.134.1300812251211;
-        Tue, 22 Mar 2011 09:44:11 -0700 (PDT)
-Received: from localhost.localdomain (ip-89-103-132-159.net.upcbroadband.cz [89.103.132.159])
-        by mx.google.com with ESMTPS id k5sm5266205bku.16.2011.03.22.09.44.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Mar 2011 09:44:02 -0700 (PDT)
-In-Reply-To: <20110321012708.GA18323@elie>
-User-Agent: Opera Mail/11.01 (Linux)
+	id S1756321Ab1CVRSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 13:18:53 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56776 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755819Ab1CVRSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 13:18:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 284B944DA;
+	Tue, 22 Mar 2011 13:20:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=DOgIES
+	yRKNAeRYxQe4DbCK4HLWC75mOFJjcQ7f74eHZotXv26aXQkPi8glA/QvcyWh30zd
+	SfealidW+L+d05QitME18zRuu/+BEwiBF5dinKIg/IsHvQpzdrdBP9JEOwhvIjtz
+	5FATu50ZYwKlPey5q8xHIotRy2QOYjcNS2YTM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AqJPMvJ/f/10UnlRl/sM4x3iAZOzfWDF
+	TKQwqbuJ++ct+wLw3vd5XZBi3aiqPw+5v8hKiBQuPT01f5aLrgMukGnRLkosGgxR
+	hSgdLrMBxpMWA45yaua1VgiKJDfCLLF4neVmO76AJL0+zO6X9mUsiCoRPZ1P6aFy
+	pnmzEZvfYfs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E6C4444D6;
+	Tue, 22 Mar 2011 13:20:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D3E5544D1; Tue, 22 Mar 2011
+ 13:20:18 -0400 (EDT)
+In-Reply-To: <1300780265-5698-1-git-send-email-bebarino@gmail.com> (Stephen
+ Boyd's message of "Tue, 22 Mar 2011 00:51:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ACA19790-54A8-11E0-9640-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169749>
 
-Hello,
-
-Jonathan Nieder wrote:
-
-> Vicent Marti wrote:
->
->> -- I'm
->> personally doubtful of anybody succeeding on doing that project during
->> the SoC,
->
-> ...
-> If someone wants to work on this, I'd be glad to talk over what would
-> be needed to make a realistic proposal.
->
->> so I have very little interest on mentoring the task.
->
-> That's okay, of course.  What's probably important for people
-> considering this project is: would you be willing to answer questions
-> and consider patches from a person working on this?  That is, do you
-> consider the goal even worthwhile?
->
-> I am probably not the best person to mentor this but if no one else
-> wants to then I would be interested.
-
-As I can see now, it could be quite too heavy for me to produce
-results as good as would be needed. This is probably quite difficult
-task for starting with git contributing. Rather considering the other
-git-topics for now (but I'm not rejecting this idea yet).
-
-> A good place to start is the initial commit e83c516 (Initial revision
-> of "git", the information manager from hell, 2005-04-07).
-> ........
-> Heh, probably I didn't choose the best example. :)  A short article
-> about this in Documentation/technical certainly wouldn't be a bad
-> thing.
->
-> In addition to "git log -S" as used above, I tend to find "git blame -L"
-> helpful FWIW.  And people on the list can be helpful, too.
-
-This "short" article is very helpful, thank you for that! I think
-it can help all contributors (not only students) at the beginning
-of their git journey.
-
->> b) Write a minimal Git client using libgit2. Peff keeps bringing this
->> up and I think it's a bangin' good idea. Write something small and
->> 100% self contained in a C executable that runs everywhere with 0
->> dependencies -- don't aim for full feature completion, just the basic
->> stuff to interoperate with a Git repository.
->
-> I agree that this would be very neat, too.
-
-The idea of git client based on libgit2 sounds VERY interesting. I'm
-going to ask for some details in neighboring sub-thread.
-
->> Best of luck with your application process with whatever project you decide,
->> Vicent
->
-> Seconded. :)
-
-Thank you both, I'm not going to try other projects, there is not enough
-time now for researching other projects and git is my only choice and desire.
-
-Pavel
+Thanks.
