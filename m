@@ -1,79 +1,97 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] git-am.txt: advertise 'git am --abort' instead of 'rm
-	.git/rebase-apply'
-Date: Tue, 22 Mar 2011 19:42:25 +0100
-Message-ID: <1300819345-28279-1-git-send-email-szeder@ira.uka.de>
+From: Jeff King <peff@github.com>
+Subject: Re: Histogram diff, libgit2 enhancement, libgit2 => git merge (GSOC)
+Date: Tue, 22 Mar 2011 14:47:37 -0400
+Message-ID: <20110322184737.GB22534@sigill.intra.peff.net>
+References: <op.vsm1yszq2m56ex@localhost.localdomain>
+ <AANLkTi=Fu5v-5E2dSAA74f0juUQNjNjus5XFWqMb9v9k@mail.gmail.com>
+ <20110320234420.GA1919@sigill.intra.peff.net>
+ <op.vsq9o4mz2m56ex@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 22 19:42:46 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Vicent Marti <vicent@github.com>, git@vger.kernel.org
+To: Pavel Raiskup <xraisk00@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 19:47:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q26XS-00061a-Ad
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 19:42:42 +0100
+	id 1Q26cL-0000aa-A8
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 19:47:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185Ab1CVSmh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 14:42:37 -0400
-Received: from ex-e-1.perimeter.fzi.de ([141.21.8.250]:51002 "EHLO
-	EX-E-1.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751750Ab1CVSmg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 14:42:36 -0400
-Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by EX-E-1.perimeter.fzi.de
- (141.21.8.250) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 22 Mar
- 2011 19:42:29 +0100
-Received: from localhost6.localdomain6 (141.21.7.126) by ex-ca-ht-1.fzi.de
- (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 22 Mar
- 2011 19:42:31 +0100
-X-Mailer: git-send-email 1.7.4.1.372.g95585
+	id S1752984Ab1CVSrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 14:47:41 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38177
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752704Ab1CVSrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 14:47:39 -0400
+Received: (qmail 27337 invoked by uid 107); 22 Mar 2011 18:48:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Mar 2011 14:48:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Mar 2011 14:47:37 -0400
+Content-Disposition: inline
+In-Reply-To: <op.vsq9o4mz2m56ex@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169762>
 
-'git am --abort' is around for quite a long time now, and users should
-normally not poke around inside the .git directory, yet the
-documentation of 'git am' still recommends the following:
+On Tue, Mar 22, 2011 at 06:32:54PM +0100, Pavel Raiskup wrote:
 
-  ... if you decide to start over from scratch,
-  run `rm -f -r .git/rebase-apply` ...
+> >Yeah, I would be happy to mentor or co-mentor with Vicent on a project
+> >like that. Not only might it be useful to actually _use_, but my secret
+> >motive is that I'd like to start testing libgit2 using some of the
+> >regular git tests, both for interoperability and for performance.
+> 
+> Do you mean git tests in directory "/t"?
 
-Suggest 'git am --abort' instead.
+Yes.
 
-It's not quite the same as the original, because 'git am --abort' will
-restore the original branch, while simply removing '.git/rebase-apply'
-won't, but that's rather a thinko in the original wording, because
-that won't actually "start over _from scratch_".
+> Could you give me a list of possible reusable unit tests? After a quick
+> overview of test suite in git it looks quite complex to reuse. I haven't
+> spent a lot of time studying test-suite, but calling:
+> 
+> test_expect_success 'plain' 'command && command && ..'
+> 
+> reinterprets chain of commands given in (2nd) string and in this
+> commands is often called git as utility with arguments. Even in this
+> very easy test feature is expected some command-line-interface behavior
+> from tested utility.. Is this the way how do you want to test this new
+> libgit2-like tool? So this standalone utility is going to have the
+> same interface as git has -- kind of substitution of git with "git2"
+> inside test suite?
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- Documentation/git-am.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+Exactly. My plan was to implement a few of the simpler git commands (or
+at least the basic parts of them) using libgit2, and then test them with
+unmodified scripts from git's t/ directory.
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 621b720..03fb214 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -173,9 +173,9 @@ aborts in the middle.  You can recover from this in=
- one of two ways:
-   the index file to bring it into a state that the patch should
-   have produced.  Then run the command with the '--resolved' option.
-=20
--The command refuses to process new mailboxes while the `.git/rebase-ap=
-ply`
--directory exists, so if you decide to start over from scratch,
--run `rm -f -r .git/rebase-apply` before running the command with mailb=
-ox
-+The command refuses to process new mailboxes before the current
-+operation isn't finished, so if you decide to start over from scratch,
-+run `git am --abort` before running the command with mailbox
- names.
-=20
- Before any patches are applied, ORIG_HEAD is set to the tip of the
---=20
-1.7.4.1.372.g95585
+Of course, many of the tests won't pass because of obscure features that
+we haven't implemented. But that's OK. Even getting a partial list of
+passing tests will be useful. And tests known not to work because of
+unimplemented features can often be skipped (see the description of
+GIT_SKIP_TESTS in t/README). Part of the project would be sorting out
+which tests will be useful.
+
+It may also be necessary to use a mixture of git and libgit2 commands to
+finish tests. For example, a test which is really about checking "log"
+might use "commit", but "commit" hasn't been implemented yet. But it is
+still useful information if we cheat and use regular git's "commit", but
+test the libgit2 log command.
+
+As far as which commands to start with, I would start with plumbing
+commands like "update-index", "commit-tree", "update-ref", "rev-list",
+etc.  Those are basic building blocks that have reasonably simple
+interfaces, and they're easy to test. And once you start, I think it
+will become more obvious where to go next (because some of the commands
+build on the results of others).
+
+> This probably will lead to some test suite changes, is it truth?
+
+There may be modifications necessary to the test suite to make this
+easier to do. But rather than forking the test suite and changing the
+tests, I would much rather see whatever support is needed done in a
+generalized way and merged to regular git.
+
+-Peff
