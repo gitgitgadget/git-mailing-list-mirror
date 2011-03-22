@@ -1,123 +1,124 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-completion: Add git help completion for aliases
-Date: Tue, 22 Mar 2011 17:38:58 +0100
-Message-ID: <4D88D0A2.7020003@drmicha.warpmail.net>
-References: <4D871972.7080008@elegosoft.com> <7vhbawno11.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1103212302000.1561@bonsai2> <7v4o6vmvzs.fsf@alter.siamese.dyndns.org> <20110322085027.GF14520@neumann> <AANLkTi=zbsNxLSCcWQorZCnRFuDPujqYzW7B0xJx2FHp@mail.gmail.com> <20110322100903.GG14520@neumann> <AANLkTik8BaAJCnCRdDNTdu=nV1Q7cFLiwOuV_4wdXUE6@mail.gmail.com>
+From: "Pavel Raiskup" <xraisk00@gmail.com>
+Subject: Re: Histogram diff, libgit2 enhancement, libgit2 => git merge (GSOC)
+Date: Tue, 22 Mar 2011 17:43:42 +0100
+Message-ID: <op.vsq7e4og2m56ex@localhost.localdomain>
+References: <op.vsm1yszq2m56ex@localhost.localdomain>
+ <AANLkTi=Fu5v-5E2dSAA74f0juUQNjNjus5XFWqMb9v9k@mail.gmail.com>
+ <20110321012708.GA18323@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakob Pfender <jpfender@elegosoft.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, lee.marlow@gmail.com,
-	markus.heidelberg@web.de, spearce@spearce.org, bebarino@gmail.com,
-	ted@tedpavlic.com, tlikonen@iki.fi, trast@student.ethz.ch
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 22 17:42:42 2011
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>,
+	"Ramkumar Ramachandra" <artagnon@gmail.com>
+To: "Vicent Marti" <vicent@github.com>,
+	"Jonathan Nieder" <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 17:44:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q24fF-0001rU-EV
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 17:42:37 +0100
+	id 1Q24gs-0002wA-FO
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 17:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755358Ab1CVQmc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 12:42:32 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38550 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755069Ab1CVQmb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2011 12:42:31 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 44FFE20704;
-	Tue, 22 Mar 2011 12:42:30 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 22 Mar 2011 12:42:30 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=4AzsNlTAWa3J43ZZN+coryxt8NU=; b=kZYJ+9XQrAQllu3wenq5C/5LGe1ZgkdYRdSV/9NfeI9Ke8MP9/mqz9Kke0ap8tcH3zLoIJ5CncFIdw+60gs4761ZoE1+B02wp9lACUtp90/GgjnrsWwswWALJhTnhuQOXR/TzP/2GQdOps8iTE5f33eMGTtGouu5llSAsLF/LbM=
-X-Sasl-enc: HFbKpJSVooigVvPy0MMDcW4lkELTYb+0X3RjInbCdKWZ 1300812149
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6C3AA446BA8;
-	Tue, 22 Mar 2011 12:42:28 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <AANLkTik8BaAJCnCRdDNTdu=nV1Q7cFLiwOuV_4wdXUE6@mail.gmail.com>
+	id S1755185Ab1CVQoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 12:44:14 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53769 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750852Ab1CVQoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 12:44:12 -0400
+Received: by bwz15 with SMTP id 15so5996166bwz.19
+        for <git@vger.kernel.org>; Tue, 22 Mar 2011 09:44:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:content-type:cc:references:subject:to:date
+         :mime-version:content-transfer-encoding:from:message-id:in-reply-to
+         :user-agent;
+        bh=z42ISG/ikP+Km93C0CT7/eh1JE70ju9mvrO+24tTzx4=;
+        b=mKezS7o8kFE4eyjjSw88kihesDl3H1Hum61a7F1TxQIhdmpVp0Yd5CwpvArxBkLw8F
+         WX59AATJvizqCm3VK3V02lrBtJMFvIYw98L8rWGMbfDM8sc6MA32Gmo26OEaSX7L+1pR
+         /7+H1rHDXM37e6vuMZuuwiAYbopaEFt9Go4HE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=content-type:cc:references:subject:to:date:mime-version
+         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
+        b=C+9y2G8WJGq5h8xFsP3eSnjR6UJy1xGZl1QWcp40OyqPcTiCczGUGZWoQjkrAF4odj
+         2g+nxQrkw4h7p+Af2KCpGAzB84zdHWfi+1txszsDb4XHBnhLjAcntQNVJS+EmilmApVE
+         zn1j+INZ5eaJcyHaUWoYm1yE/S2p6WPxbRpnY=
+Received: by 10.204.231.66 with SMTP id jp2mr5180301bkb.134.1300812251211;
+        Tue, 22 Mar 2011 09:44:11 -0700 (PDT)
+Received: from localhost.localdomain (ip-89-103-132-159.net.upcbroadband.cz [89.103.132.159])
+        by mx.google.com with ESMTPS id k5sm5266205bku.16.2011.03.22.09.44.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 Mar 2011 09:44:02 -0700 (PDT)
+In-Reply-To: <20110321012708.GA18323@elie>
+User-Agent: Opera Mail/11.01 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169748>
 
-Erik Faye-Lund venit, vidit, dixit 22.03.2011 11:28:
-> 2011/3/22 SZEDER G=E1bor <szeder@ira.uka.de>:
->> On Tue, Mar 22, 2011 at 10:16:16AM +0100, Erik Faye-Lund wrote:
->>> 2011/3/22 SZEDER G=E1bor <szeder@ira.uka.de>:
->>>> On Tue, Mar 22, 2011 at 12:53:43AM -0700, Junio C Hamano wrote:
->>>>> This is a constructive tangent but if we are going to run $(__git=
-_aliases)
->>>>> every time we run _git_help, perhaps it would want a hack similar=
- to the
->>>>> way the value for $__git_all_commands is generated just once?
->>>>
->>>> I think this is not necessary.  We already run __git_aliases() eve=
-ry
->>>> time after 'git <TAB>', and it was not an issue so far.  And indee=
-d, I
->>>> just created 50 aliases, and the time required for __git_aliases()
->>>> seems to be negligible:
->>>>
->>>>  $ time __git_aliases
->>>>  <bunch of aliases>
->>>>
->>>>  real    0m0.028s
->>>>  user    0m0.016s
->>>>  sys     0m0.004s
->>>>
->>>
->>> Unfortunately, the situation is not quite so good on Windows:
->>> $ time __git_aliases
->>> <bunch of aliases>
->>>
->>> real    0m0.112s
->>> user    0m0.030s
->>> sys     0m0.015s
->>>
->>> This is with 50 aliases, with 0 aliases I get this:
->>> $ time __git_aliases
->>> test
->>>
->>> real    0m0.063s
->>> user    0m0.015s
->>> sys     0m0.015s
->>
->> I see.  However, on Windows everything git-related tends to be slow,
->> so this is nothing new.
->=20
-> That's not the case. Every thing Git-related isn't slow on Windows,
-> but there are some things in Git that is.
->=20
->> The question is whether the slowness of a known slow platform would
->> justify the regression on all platforms.
->>
->=20
-> Windows isn't slow. Get over this way of thinking, it's just wrong.
-> Windows has some different performance characteristics for some
-> operations than e.g Linux, but saying that it's slow is just wrong.
-> However, _Bash for Windows_ is quite slow, much due to Windows' lack
-> of fork(), which means that some very involved emulation needs to be
-> performed.
->=20
-> But even so, at least 25% of the git user base is on Windows,
-> according to the latest Git User Survey. That makes this stuff matter=
-=2E
+Hello,
 
-[Disclaimer: No, I don't like Win nor MS, but:]
+Jonathan Nieder wrote:
 
-Exactly, and the attitude which you criticise is a self-fulling prophec=
-y
-if one follows it. We may break (or make things worse for) Git on
-Windows accidentally (because the percentage among developers is low),
-but should never do so knowingly. And we may even try and watch out for
-things which may be troublesome for Git on Win, and consult with our
-brave Git on Win developers.
+> Vicent Marti wrote:
+>
+>> -- I'm
+>> personally doubtful of anybody succeeding on doing that project during
+>> the SoC,
+>
+> ...
+> If someone wants to work on this, I'd be glad to talk over what would
+> be needed to make a realistic proposal.
+>
+>> so I have very little interest on mentoring the task.
+>
+> That's okay, of course.  What's probably important for people
+> considering this project is: would you be willing to answer questions
+> and consider patches from a person working on this?  That is, do you
+> consider the goal even worthwhile?
+>
+> I am probably not the best person to mentor this but if no one else
+> wants to then I would be interested.
 
-Michael
+As I can see now, it could be quite too heavy for me to produce
+results as good as would be needed. This is probably quite difficult
+task for starting with git contributing. Rather considering the other
+git-topics for now (but I'm not rejecting this idea yet).
+
+> A good place to start is the initial commit e83c516 (Initial revision
+> of "git", the information manager from hell, 2005-04-07).
+> ........
+> Heh, probably I didn't choose the best example. :)  A short article
+> about this in Documentation/technical certainly wouldn't be a bad
+> thing.
+>
+> In addition to "git log -S" as used above, I tend to find "git blame -L"
+> helpful FWIW.  And people on the list can be helpful, too.
+
+This "short" article is very helpful, thank you for that! I think
+it can help all contributors (not only students) at the beginning
+of their git journey.
+
+>> b) Write a minimal Git client using libgit2. Peff keeps bringing this
+>> up and I think it's a bangin' good idea. Write something small and
+>> 100% self contained in a C executable that runs everywhere with 0
+>> dependencies -- don't aim for full feature completion, just the basic
+>> stuff to interoperate with a Git repository.
+>
+> I agree that this would be very neat, too.
+
+The idea of git client based on libgit2 sounds VERY interesting. I'm
+going to ask for some details in neighboring sub-thread.
+
+>> Best of luck with your application process with whatever project you decide,
+>> Vicent
+>
+> Seconded. :)
+
+Thank you both, I'm not going to try other projects, there is not enough
+time now for researching other projects and git is my only choice and desire.
+
+Pavel
