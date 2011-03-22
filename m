@@ -1,96 +1,78 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] git-completion: Add git help completion for aliases
-Date: Tue, 22 Mar 2011 22:21:31 +0100
-Message-ID: <20110322212131.GB30604@neumann>
-References: <4D871972.7080008@elegosoft.com>
-	<7vhbawno11.fsf@alter.siamese.dyndns.org>
-	<alpine.DEB.1.00.1103212302000.1561@bonsai2>
-	<7v4o6vmvzs.fsf@alter.siamese.dyndns.org>
-	<20110322085027.GF14520@neumann>
-	<7vsjufkqxl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git-submodule.sh: Handle submodules with merge
+ conflicts
+Date: Tue, 22 Mar 2011 14:41:26 -0700
+Message-ID: <7voc52kf3t.fsf@alter.siamese.dyndns.org>
+References: <4D886430.3080300@kalray.eu> <4D88F6EF.3020804@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakob Pfender <jpfender@elegosoft.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	<git@vger.kernel.org>, <lee.marlow@gmail.com>,
-	<markus.heidelberg@web.de>, <spearce@spearce.org>,
-	<bebarino@gmail.com>, <ted@tedpavlic.com>, <tlikonen@iki.fi>,
-	<trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 22:21:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Morey-Chaisemartin <nmorey@kalray.eu>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 22 22:41:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q291I-00079W-Tl
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 22:21:41 +0100
+	id 1Q29Kh-0002H7-Rw
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 22:41:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755219Ab1CVVVf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2011 17:21:35 -0400
-Received: from ex-e-2.perimeter.fzi.de ([141.21.8.251]:18413 "EHLO
-	ex-e-2.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753654Ab1CVVVe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 17:21:34 -0400
-Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by ex-e-2.perimeter.fzi.de
- (141.21.8.251) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 22 Mar
- 2011 22:21:30 +0100
-Received: from localhost6.localdomain6 (141.21.7.126) by ex-ca-ht-1.fzi.de
- (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 22 Mar
- 2011 22:21:31 +0100
-Content-Disposition: inline
-In-Reply-To: <7vsjufkqxl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932326Ab1CVVlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 17:41:39 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45336 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755210Ab1CVVli (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 17:41:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 710C2455F;
+	Tue, 22 Mar 2011 17:43:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UjFVUNlCp4BGW5xt4CJJoUAgcKA=; b=akBYR1
+	Bln5qw3g7n5Sv2b06553DYDMkwIEoHYcEjcSxqundOUISjnsWDWwfAKMuq4WdOcA
+	V/JY0SGSNU6YmGhcpSjzPm5sU3N7Hoev2w9vr8hT8z3PBM6fkTbz0rs/dYBT9AIw
+	JwQe5rqAFV0CPS8nhpxpnjTJk48rClnksyXDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=e9x3XfXoxYK+o4s+nRs5mlPu26v1Pi/I
+	vHNtiUtyQhCIdbjuv4lJtehZIBbQmLZGBuJX7ah4Vm4p5WkBXBe4Kxljih6d/3ZD
+	a8HwU1eQGcr6gPiA21/5SxF6Ia0KVcbxhmT0hSTrqjUoMeWzSo0swELu/QIbrDDa
+	n2CSqy1DD8o=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3FE8D455E;
+	Tue, 22 Mar 2011 17:43:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 37573455D; Tue, 22 Mar 2011
+ 17:43:06 -0400 (EDT)
+In-Reply-To: <4D88F6EF.3020804@web.de> (Jens Lehmann's message of "Tue, 22
+ Mar 2011 20:22:23 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6216F16E-54CD-11E0-B9AD-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169778>
 
-On Tue, Mar 22, 2011 at 10:25:58AM -0700, Junio C Hamano wrote:
-> SZEDER G=E1bor <szeder@ira.uka.de> writes:
->=20
-> > I think this is not necessary.  We already run __git_aliases() ever=
-y
-> > time after 'git <TAB>', and it was not an issue so far.
->=20
-> If we allow that line of reasoning, the cached $__git_all_commands th=
-at
-> can go stale needs to be removed, no?  I think folks running bash on
-> windows wanted it and it would be helping them.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Well, Shawn wrote that it was your request ;)
+> Thanks, that fixes it nicely!
+>
+> Am 22.03.2011 09:56, schrieb Nicolas Morey-Chaisemartin:
+>> During a merge with conflict on a submodule, the submodule appears 3 times in git ls-files (stage 1,2,3) which caused the submodule to be used 3 times in git submodule init, sync, update and status command.
+>> This patch filters the results of git ls-files to generate a single entry for conflicting submodules with a 0 SHA1 and 'U' as stage.
+>
+> Nit: Usually we wrap commit messages at about 72 characters.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/32444
-  http://thread.gmane.org/gmane.comp.version-control.git/32438
+Also it is very dissapointing to see that none of the careful thinking
+that was needed while deciding what each subcommand should do was copied
+from <7vhbb1320t.fsf@alter.siamese.dyndns.org> -- did I just waste my
+time trying to guide this topic forward?
 
-But there was indeed a remark shortly before that about bad fork-exec
-performance under Cygwin on an other topic.
-
-> One valid looking argument against caching aliases but still caching
-> commands is that the former could change on the end user's whim while=
- the
-> latter is more or less stable across releases,
-
-Agreed.
-
-> but people can throw their
-> own "git-frotz" in their path and run it as "git frotz"
-
-Also agreed, and been annoyed by it not being recognized
-automatically.  In fact I've even tried to make the completion script
-detect user's commands on the fly but still without that huge loop
-over the 'git help -a' output in __git_list_porcelain_commands(), but
-couldn't come up with anything acceptable so far.  And simply
-re-sourcing the completion script is not all that difficult,  which
-will also take care of refreshing cached aliases, so...
-
-> so that is not
-> entirely a valid argument, either.
-
-agreed here, too.
-
-
-Best,
-G=E1bor
+>> After this patch:
+>> - init and sync behave as previously but only once per submodule
+>> - update skips submodule with merge conflicts
+>> - status now display a null SHA1 prefixed by 'U' for submodule with merge conflicts
+>
+> A test case would be nice (t7405 looks like the right spot for one).
