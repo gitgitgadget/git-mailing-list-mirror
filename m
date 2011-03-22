@@ -1,101 +1,111 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: dependable submodules
-Date: Mon, 21 Mar 2011 22:13:20 -0700
-Message-ID: <AANLkTi=yb24MDN8JzBa0WFaZ+g4iF5a=OQNw0yOM0k73@mail.gmail.com>
-References: <AANLkTi=JVO+KhnLKR-PvNQQFaZLhUmiVbKFxuytYEpmc@mail.gmail.com>
- <7vd3lmv2k1.fsf@alter.siamese.dyndns.org> <AANLkTin8Mr5xLtLqHSVuEOzzfmqnR2LU5vDdVfPprNXn@mail.gmail.com>
- <4D877A70.8070907@jku.at> <AANLkTikv+Wf_nSt0GZj0WgPjpbk6Kr_WG-ueO6US9bUM@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: cherry-pick applies some other changes than the specified one?
+Date: Tue, 22 Mar 2011 00:27:43 -0500
+Message-ID: <20110322052742.GA7637@elie>
+References: <AANLkTikE5AqJyShN+GfFYe0kBS=ShGnKQcnwbarNZrjm@mail.gmail.com>
+ <7vwrjssbfk.fsf@alter.siamese.dyndns.org>
+ <4D877FAD.9000807@viscovery.net>
+ <4D879516.3060204@gmail.com>
+ <20110321195846.GA4277@elie>
+ <4D87B00D.2010905@gmail.com>
+ <7v62rcp6m6.fsf@alter.siamese.dyndns.org>
+ <7vsjugnqig.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Robert Pollak <robert.pollak@jku.at>, git <git@vger.kernel.org>
-To: Daniel <daniel@netwalk.org>
-X-From: git-owner@vger.kernel.org Tue Mar 22 06:13:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 06:27:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q1tud-0003RO-Bj
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 06:13:47 +0100
+	id 1Q1u8L-00084w-NQ
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Mar 2011 06:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753623Ab1CVFNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 01:13:42 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:47996 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753602Ab1CVFNl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 01:13:41 -0400
-Received: by qwk3 with SMTP id 3so4741543qwk.19
-        for <git@vger.kernel.org>; Mon, 21 Mar 2011 22:13:40 -0700 (PDT)
+	id S1753884Ab1CVF1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 01:27:52 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:63535 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753692Ab1CVF1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 01:27:51 -0400
+Received: by iyb26 with SMTP id 26so7088639iyb.19
+        for <git@vger.kernel.org>; Mon, 21 Mar 2011 22:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=9fSAXxYdU3LwYpsktpG701qqqyC4Ze0Ub5k64A7qN4s=;
-        b=vMSIkka5Ttfz54D6wBrMeRgKBpTbmmDYw7ec9Sf/332J0xuspycZzwpYJJwS2PByJC
-         ms29SrH2PKwC+LIX4AVs9K27C2MJzRJmFtKn8Z4xoTWjRSPR1l6/3q8w/DvsBqD3bFze
-         Q+NpAGQCRtj0Eg+QinUinbAZeVzSV/lBZC9NU=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=zgxL75//Qtv5IWIr9ki+D7tNOe9HTKHvZo4/dLfRl5o=;
+        b=L9cliwUpUnyiFyj3E0gl7RMs271AHGzvVbQeGFxOZfs043uu5Rp3sx1G4Gd7d34VyD
+         /uWSDijfku4UsKbifcRUB/5GS39vRvFTE6LNvuw4PiNEayA1jOA/bDJAQXptSfZRAnxT
+         oWS/Wnbxl8fEz0MLHphO6PLTDT6EMioSxa7bg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Tcp2qby8LsltydJGtsWY0iK+ufa1uGXaSzoABwLg3oFceIX1WwIXsBLqi/MKnG8L/q
-         M5oAx12ysS84zBYxfw1/ctE5hSX2HDGCrZb5bzDwurmDE+Vmt1Jw45TMLDXgi+vZwsDf
-         x4vnFxQQjFkcPCdPgoYNee8QiLPO11tisIZVo=
-Received: by 10.224.181.139 with SMTP id by11mr4263985qab.138.1300770820158;
- Mon, 21 Mar 2011 22:13:40 -0700 (PDT)
-Received: by 10.52.155.74 with HTTP; Mon, 21 Mar 2011 22:13:20 -0700 (PDT)
-In-Reply-To: <AANLkTikv+Wf_nSt0GZj0WgPjpbk6Kr_WG-ueO6US9bUM@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=HP2kHq/U5z+zCB9nylshInfNeTaz9zIsCw9wcRFRsIa+/8EKI116I6xuJpoNmjlsxB
+         tUhb2oC4OGs5Hg7pIoGTkqjz4x2pncuTq3LnI44E1Cus8X5UjHmvqPM39voXqb0yC3/e
+         4qyI19CT3oiAo65EtdvAlsTj8OxUEvIfNyNV0=
+Received: by 10.42.74.70 with SMTP id v6mr8357231icj.190.1300771670838;
+        Mon, 21 Mar 2011 22:27:50 -0700 (PDT)
+Received: from elie (adsl-69-209-56-53.dsl.chcgil.sbcglobal.net [69.209.56.53])
+        by mx.google.com with ESMTPS id g4sm4409085ick.23.2011.03.21.22.27.48
+        (version=SSLv3 cipher=OTHER);
+        Mon, 21 Mar 2011 22:27:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vsjugnqig.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169700>
 
-On Mon, Mar 21, 2011 at 8:56 PM, Daniel <daniel@netwalk.org> wrote:
-> I tried git-subtree. thanks but this is not what I wanted. This
-> removed the .git dir for the subtree and hence updating the subtree is
-> not easy.
->
-> I want the functionality of git submodule except that I don't want the
-> version checked in as part of the superproject to have to be fetched
-> remotely.
+Junio C Hamano wrote:
 
-Well, as the logic goes, you commit to the imported project a lot more
-often than you submit upstream, so git-subtree makes the common part
-much easier and the less-common part slightly harder, which is a
-better tradeoff than git submodules.  But it does seem to be a matter
-of preference.
+> This just leaves the details of what -c/--cc are about to the combined
+> diff format section in diff-generate-patch.txt, which I updated in the
+> separate patch.
 
-If you just want the submodule's commit to be auto-fetched from the
-same repo as the supermodule, I've been experimenting with a tool I've
-created called 'git tie' that makes this possible.  It's not yet ready
-for prime time, but you can use the same trick yourself if you're in a
-hurry.  The idea is simple enough: just maintain a branch named
-refs/heads/tie that is a continually updated "merge -s ours" of all
-your submodule commits, all jammed together in a single branch that
-nobody will ever look at.
+Thanks; this looks pretty good.  A few nitpicks:
 
-Then when you 'git fetch origin', it'll fetch both the 'tie' branch
-and all your other branches, which have references to the commits in
-the 'tie' branch.  The 'tie' branch is what makes it so they'll get
-auto-downloaded.  (Don't forget to push it, too, when you push
-master.)
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -24,6 +24,37 @@ ifndef::git-format-patch[]
+>  --patch::
+>  	Generate patch (see section on generating patches).
+>  	{git-diff? This is the default.}
+> +
+> +-1 --base::
+> +-2 --ours::
+> +-3 --theirs::
+> +-0::
+> +	These make sense only when comparing the index and the working
+> +	tree (i.e. `git diff-files` or `git diff <path>...`) and compares
+> +	against the "base" version, "our branch" or "their
+> +	branch" respectively.  With these options, diffs for
+> +	merged entries are not shown.
+> ++
+> +The default is to diff against our branch (-2) and the
+> +cleanly resolved paths.  The option -0 can be given to
+> +omit diff output for unmerged entries and just show "Unmerged".
 
-The tool I'm working on is basically just one that will auto-maintain
-the 'tie' branch for you.
+I am not sure what this comment about the default means.  Isn't the
+default to use --cc?
 
-Oh, and the second half of this is to just use '.' in your .gitmodules
-as the path to your submodule repo.  It would be nice if 'git
-submodule update' would use the alternates mechanism (git clone
---reference) to get all objects from your subproject's local repo,
-since we know they're there anyway.  I was going to make 'git tie' do
-this part right too, so you wouldn't even need a .gitmodules file.
-But either way, you'll survive, it might just be slower than optimal
-if it downloads everything twice.
+> +
+> +-c::
+> +--cc::
+> +	Produce "combined diff" (and "dense combined diff" showing how the
+> +	result is different compared to more than one original.
 
-And there you go... I've now told you my secrets and regaled you with
-vapourware.  Hope that helps more than it hurts :)
+Missing an article after "Produce" (produce a combined diff) and a
+closing parenthesis after "dense combined diff", I think.
 
-Have fun,
+More importantly, it might be nice to say
 
-Avery
+	See the section "diff format for merges" of
+	linkgit:git-diff[1] for details.
