@@ -1,73 +1,80 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFH] git cherry vs. git rev-list --cherry, or: Why does "..."
- suck?
-Date: Wed, 23 Mar 2011 17:46:05 +0100
-Message-ID: <4D8A23CD.9030203@drmicha.warpmail.net>
-References: <4D889119.3020009@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] diffcore-rename: fall back to -C when -C -C busts
+ the rename limit
+Date: Wed, 23 Mar 2011 12:50:40 -0400
+Message-ID: <20110323165040.GA4068@sigill.intra.peff.net>
+References: <7vk4fqkewo.fsf@alter.siamese.dyndns.org>
+ <1300830649-22830-1-git-send-email-gitster@pobox.com>
+ <1300830649-22830-3-git-send-email-gitster@pobox.com>
+ <20110323155854.GB30337@sigill.intra.peff.net>
+ <7vfwqdg574.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 23 17:49:46 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 17:50:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2RFh-0000sJ-JR
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 17:49:45 +0100
+	id 1Q2RGi-0001b4-E8
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 17:50:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364Ab1CWQtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 12:49:40 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38952 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751755Ab1CWQtk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 12:49:40 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8F9E8201DD
-	for <git@vger.kernel.org>; Wed, 23 Mar 2011 12:49:39 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Wed, 23 Mar 2011 12:49:39 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=0TO9kASBVoznvDweaYZOw6TU7Zg=; b=uJX2JhOSZKxD0bPJ03/r76fG3IcFg6hPYzCGUCgVTo5fUKyao+uXZ9IcmJ+we32qzpDfHn5PMfRYShN8pJ70rFsB5Q4ITRQOCzTbs48EHqTOw6v5MWagGwlsveRfbvYZ20Q392JRvXDqGjLL5oyd5Z+f9e7khTztk2wIIzGIe2k=
-X-Sasl-enc: iUvGwgvAwwzIfbJezVwLHs1efyPibzb9Dg0cxuE09B9g 1300898979
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 339B540C459
-	for <git@vger.kernel.org>; Wed, 23 Mar 2011 12:49:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <4D889119.3020009@drmicha.warpmail.net>
+	id S1753529Ab1CWQun (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 12:50:43 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51178
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753108Ab1CWQum (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 12:50:42 -0400
+Received: (qmail 6436 invoked by uid 107); 23 Mar 2011 16:51:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Mar 2011 12:51:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2011 12:50:40 -0400
+Content-Disposition: inline
+In-Reply-To: <7vfwqdg574.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169853>
 
-Adding some recent insight:
+On Wed, Mar 23, 2011 at 09:41:19AM -0700, Junio C Hamano wrote:
 
-Michael J Gruber venit, vidit, dixit 22.03.2011 13:07:
-> Performance
-> ===========
+> Jeff King <peff@peff.net> writes:
 > 
-> I don't get this:
+> > "find the highest limit needed and report once" strategy you used above?
 > 
-> git cherry A B: 0.4s
-> git rev-list --cherry A...B: 1.7s
-> (more details below)
+> Wasn't "find the highest limit" your invention in merge-recursive?  The
 
-I can get the latter down to 0.95s and this
+Hmm, you're right. I was thinking the code you were modifying was called
+per-diff, but it's not. Though looking at it again, I think we could
+technically still warn several times, one for each recursive call to
+merge_recursive. Your call to show() does fix that (because it checks
+o->call_depth).
 
-> merge-base A B: 0.95s
-> merge-base --all A B: 0.95s
-> rev-parse A...B: 0.95s
+So I think the code after your patch does the right thing.
 
-to 0.16s each. The downside is that merge-base may give a few
-unneccessary candidates (commits which are ancestors of other commits it
-returns), but this does not change the results for rev-list, of course.
+> As to the warnings in "log" output, I actually prefer leaving saved_* out
+> and showing the warning per internal diff invocation. My initial iteration
+> was indeed coded that way, and I did the "find the highest" only to mimic
+> what was already in merge-recursive.
 
-I get this dramatic speedup by removing the check for duplicates from
-get_merge_bases_many() in commit.c. After a first merge_bases_many()
-run, returning N commits, that check calls merge_bases_many() again for
-each pair (N choose 2) to check whether one is contained in the other.
-Quite a bottleneck. Removing it works great. But can we live with a few
-additional merge bases?
+I think they are two different cases, because the user never gets to see
+the intermediate results of merge-recursive. That is, at the end of the
+merge we tell them "here's the result, and by the way, we limited
+renames." But for something like "log" or "diff-tree --stdin", it is
+about doing N independent diffs, and the user gets to see the result of
+each. So if we can match the warnings to the actual diffs in the output,
+that is much more useful.
 
-Michael
+But in the case of something like:
+
+  git rev-list HEAD | git diff-tree --stdin >foo.out
+
+I don't think there is a way to match the warnings to their respective
+commits. They are on two different streams, and putting the warning to
+stdout would pollute the output.
+
+-Peff
