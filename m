@@ -1,131 +1,96 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] pathspec: reserve some letters after a colon pathspec
-Date: Wed, 23 Mar 2011 22:32:33 +0700
-Message-ID: <1300894353-19386-1-git-send-email-pclouds@gmail.com>
-References: <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Relative ls-files
+Date: Wed, 23 Mar 2011 22:41:47 +0700
+Message-ID: <AANLkTin=y=THaQEzgMhyBVLBriJBCa-pVvONXDnzUmew@mail.gmail.com>
+References: <AANLkTi=fP+jBpLuxst2rv02pYRmj4HOkv8Yenc-dR-N_@mail.gmail.com>
+ <4D89D052.5030801@drmicha.warpmail.net> <AANLkTimc7gNKbh3C2hyMtFK6D1OWNALD+GvzmhG5cZrn@mail.gmail.com>
+ <AANLkTimdLGgGXGRNVH5+X-cnhK2NWfWx9k0apt-6rr1Z@mail.gmail.com>
+ <4D89DCBE.3060400@drmicha.warpmail.net> <AANLkTi=BrgZe47Bt5evr_qFzKBL=MY-6NmH22gsRurVV@mail.gmail.com>
+ <7v7hbqgc7g.fsf@alter.siamese.dyndns.org> <AANLkTi=OJ_o2WQ2W6d30HXQZrg7=W70+fZWrbQPrAs=s@mail.gmail.com>
+ <7v39mdhni3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Mar 23 16:32:56 2011
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	demerphq <demerphq@gmail.com>, John Tapsell <johnflux@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 16:42:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2Q3J-0004VZ-Ep
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 16:32:53 +0100
+	id 1Q2QCW-0002Wt-NH
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 16:42:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933112Ab1CWPcs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 11:32:48 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38892 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933043Ab1CWPcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2011 11:32:47 -0400
-Received: by iwn34 with SMTP id 34so8675558iwn.19
-        for <git@vger.kernel.org>; Wed, 23 Mar 2011 08:32:46 -0700 (PDT)
+	id S1753633Ab1CWPmT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 11:42:19 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:32921 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752504Ab1CWPmS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 11:42:18 -0400
+Received: by wya21 with SMTP id 21so7765797wya.19
+        for <git@vger.kernel.org>; Wed, 23 Mar 2011 08:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=0M57bzMhEbVRqQP+fGHurNTRBZTIHics57RIv+wkK1I=;
-        b=jJhgiDfl3i5nVbCdx3f4qR9w/AV/syBqSVrXoLFiI/RdOMS3tk7yME/7WK7bq4UrGo
-         QBaClKLbWnu41L55PDIReAt6+4sFCRcibT+X+a8cmidIpcKkVGLPWmi9T5stm2bpvKx+
-         EE7nU5/1hm8cfgje43gLffkvyj1vnuCPzXNOA=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=QOPb+ifMa6pUvHHbGwQkJyWcmT7Lo5O5Cy2ZMN/ObeI=;
+        b=vYLZv1qCb0o8iiQt5766jBAkWFqDoD7O+Jy9kC4U7NCgBsDBmkD1GXTch3FFRDpaSx
+         HhcCs1srEznWxbU7q6vAHoGpM0qf0cbjH5AjL/QKzkIg6wSKK+MiGhqyRj/5oQiuFS72
+         6l6NSeKSIJKcDT3uH+T6dCT0lm+WaR+ftLOLI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=XoixInZRyvJPpZE/ler4fl5IFaCdT6mvOQfsv/ewRI/kb9uZSqjvoSi27NX30XHySL
-         PNemwlRN0v04tBi2+UW3p6jLeh/SgxMIKN2EMhUA0QFtEKxVf7v02+aK4QIeioSmpLsp
-         DoDDG9XIHiiTpxEtvnQH6D/1C6btnHLBgzyYE=
-Received: by 10.43.70.193 with SMTP id yh1mr5930508icb.129.1300894365926;
-        Wed, 23 Mar 2011 08:32:45 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.209.201])
-        by mx.google.com with ESMTPS id vr5sm3146941icb.0.2011.03.23.08.32.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 23 Mar 2011 08:32:44 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 23 Mar 2011 22:32:34 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Wp/JhI1K+CqoRjEQbV2E00IwXiC7YCm6Tvynbh5Gxa7pcD9gp1yN8N6RCNRvgXY4n/
+         DoAtuDvj+dMTIGHMeSXRu+YrcBMqKvi1V9K0uAX+f4bf5Y25B4BEJDrhHknEThvXHRHB
+         mpD8zmWNqxApSScq/bkqvBL8FG7x4a+NTQDRg=
+Received: by 10.216.242.134 with SMTP id i6mr1294990wer.81.1300894937153; Wed,
+ 23 Mar 2011 08:42:17 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Wed, 23 Mar 2011 08:41:47 -0700 (PDT)
+In-Reply-To: <7v39mdhni3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169843>
 
-Pathspec ':something' means 'something' at top directory. Limit it a
-bit so that ':<non-alnum>something' can be reserved for future
-extensions. ':\<non-alnum>something' can be used to achieve
-':something' before this patch.
+On Wed, Mar 23, 2011 at 10:20 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>
+>> (off topic?)
+>>
+>> "ls-tree -r" does not understand wildcards. Maybe it should not, but=
+ I
+>> think read_tree_recursive() should use tree_entry_interesting(). The
+>> function it uses for matching, match_tree_entry, looks like another
+>> variant of t_e_interesting.
+>
+> I thought that you already did that within the scope of your earlier
+> topic.
+>
+> "ls-tree" is quite a low-level plumbing, and until we absolutely know=
+ that
+> all the old scripts people wrote relying on its original behaviour ar=
+e
+> extinct, we shouldn't touch it without a reasonable breakage protecti=
+on.
+>
+> It is Ok to give it a command line option to make it in line with oth=
+er
+> pathspec users, namely, that causes the command to missing pathspec s=
+hould
+> automatically mean the whole tree and to honor globs. =C2=A0No existi=
+ng script
+> would be using that option, so that is a safe thing to do.
 
-All non-alphanumeric chars on the en_US keyboard, except \ and ., are
-currently reserved.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- This is the better, non-whitespace-damaged version. While I mark
- colon_pathspec_type() static, you can export it to use in git-attr.c
-
- setup.c |   31 +++++++++++++++++++++++++++++--
- 1 files changed, 29 insertions(+), 2 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index 3bbb01a..684abb5 100644
---- a/setup.c
-+++ b/setup.c
-@@ -123,6 +123,27 @@ void verify_non_filename(const char *prefix, const=
- char *arg)
- 	    "Use '--' to separate filenames from revisions", arg);
- }
-=20
-+static int colon_pathspec_type(const char **pathspec)
-+{
-+	const char *reserved =3D "~`!@#$%^&*()-_=3D+[{]}|;:'\",<>/?";
-+	const char *s =3D *pathspec;
-+	int ret;
-+
-+	if (*s++ !=3D ':')
-+		return -1;
-+	if (*s =3D=3D '\\') {
-+		s++;
-+		ret =3D 0;
-+	}
-+	else if (*s && strchr(reserved, *s))
-+		ret =3D -1;
-+	else
-+		ret =3D 0;
-+
-+	*pathspec =3D s;
-+	return ret;
-+}
-+
- const char **get_pathspec(const char *prefix, const char **pathspec)
- {
- 	const char *entry =3D *pathspec;
-@@ -145,8 +166,14 @@ const char **get_pathspec(const char *prefix, cons=
-t char **pathspec)
- 	prefixlen =3D prefix ? strlen(prefix) : 0;
- 	while (*src) {
- 		const char *p;
--		if ((*src)[0] =3D=3D ':')
--			p =3D prefix_path(NULL, 0, (*src)+1);
-+
-+		if ((*src)[0] =3D=3D ':') {
-+			const char **s =3D src;
-+			if (colon_pathspec_type(s) !=3D 0)
-+				die("Pathspec syntax ':%c' is not supported. %s"
-+				    "Quote it for literally match.", (*s)[0], *s);
-+			p =3D prefix_path(NULL, 0, *s);
-+		}
- 		else
- 			p =3D prefix_path(prefix, prefixlen, *src);
- 		*(dst++) =3D p;
+This read_tree_recursive() affects 'archive' and 'checkout -- paths'
+(ie. no wildcard awareness). I will probably move match_tree_entry()
+to ls-tree.c to preserve its behavior, then change
+read_tree_recursive() to use tree_entry_interesting().
 --=20
-1.7.4.74.g639db
+Duy
