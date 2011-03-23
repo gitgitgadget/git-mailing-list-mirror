@@ -1,95 +1,105 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] pager: save the original stderr when redirecting to pager
-Date: Wed, 23 Mar 2011 14:18:53 -0400
-Message-ID: <20110323181853.GA17533@sigill.intra.peff.net>
+Subject: [PATCH 2/3] progress: use pager's original_stderr if available
+Date: Wed, 23 Mar 2011 14:19:06 -0400
+Message-ID: <20110323181906.GB17533@sigill.intra.peff.net>
 References: <20110323181756.GA17415@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 19:19:02 2011
+X-From: git-owner@vger.kernel.org Wed Mar 23 19:19:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2Se4-0005C1-UY
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 19:19:01 +0100
+	id 1Q2SeJ-0005OA-NN
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 19:19:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756462Ab1CWSS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 14:18:56 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39347
+	id S932427Ab1CWSTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 14:19:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39350
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756166Ab1CWSSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2011 14:18:55 -0400
-Received: (qmail 8325 invoked by uid 107); 23 Mar 2011 18:19:34 -0000
+	id S932080Ab1CWSTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 14:19:08 -0400
+Received: (qmail 8354 invoked by uid 107); 23 Mar 2011 18:19:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Mar 2011 14:19:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2011 14:18:53 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Mar 2011 14:19:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2011 14:19:06 -0400
 Content-Disposition: inline
 In-Reply-To: <20110323181756.GA17415@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169865>
 
-When we redirect stdout to the pager, we also redirect
-stderr (if it would otherwise go to the terminal) so that
-error messages do not get overwritten by the pager.
-
-However, some stderr output may still want to go to the
-terminal, because they are time-sensitive (like progress
-reports) and should be overwritten by the pager.
-
-This patch stashes away the original stderr descriptor and
-creates a new stdio buffer for it.
+If we are outputting to a pager, stderr is redirected to the
+pager. However, progress messages should not be part of that
+stream, as they are time-sensitive and should end up being
+hidden once we actually have output.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache.h |    2 ++
- pager.c |    7 ++++++-
- 2 files changed, 8 insertions(+), 1 deletions(-)
+ progress.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 872bc9b..a6ce524 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1067,6 +1067,8 @@ extern int pager_use_color;
- extern const char *editor_program;
- extern const char *askpass_program;
- extern const char *excludes_file;
-+extern FILE *original_stderr;
-+extern int original_stderr_fd;
+diff --git a/progress.c b/progress.c
+index 3971f49..bc7d3a3 100644
+--- a/progress.c
++++ b/progress.c
+@@ -10,6 +10,7 @@
  
- /* base85 */
- int decode_85(char *dst, const char *line, int linelen);
-diff --git a/pager.c b/pager.c
-index dac358f..701926f 100644
---- a/pager.c
-+++ b/pager.c
-@@ -12,6 +12,8 @@
-  */
+ #include "git-compat-util.h"
+ #include "progress.h"
++#include "cache.h"
  
- static int spawned_pager;
-+FILE *original_stderr;
-+int original_stderr_fd = -1;
+ #define TP_IDX_MAX      8
  
- #ifndef WIN32
- static void pager_preexec(void)
-@@ -97,8 +99,11 @@ void setup_pager(void)
+@@ -71,6 +72,7 @@ static void clear_progress_signal(void)
  
- 	/* original process continues, but writes to the pipe */
- 	dup2(pager_process.in, 1);
--	if (isatty(2))
-+	if (isatty(2)) {
-+		original_stderr_fd = dup(2);
-+		original_stderr = fdopen(original_stderr_fd, "w");
- 		dup2(pager_process.in, 2);
-+	}
- 	close(pager_process.in);
+ static int display(struct progress *progress, unsigned n, const char *done)
+ {
++	FILE *out = original_stderr ? original_stderr : stderr;
+ 	const char *eol, *tp;
  
- 	/* this makes sure that the parent terminates after the pager */
+ 	if (progress->delay) {
+@@ -95,16 +97,16 @@ static int display(struct progress *progress, unsigned n, const char *done)
+ 		unsigned percent = n * 100 / progress->total;
+ 		if (percent != progress->last_percent || progress_update) {
+ 			progress->last_percent = percent;
+-			fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
++			fprintf(out, "%s: %3u%% (%u/%u)%s%s",
+ 				progress->title, percent, n,
+ 				progress->total, tp, eol);
+-			fflush(stderr);
++			fflush(out);
+ 			progress_update = 0;
+ 			return 1;
+ 		}
+ 	} else if (progress_update) {
+-		fprintf(stderr, "%s: %u%s%s", progress->title, n, tp, eol);
+-		fflush(stderr);
++		fprintf(out, "%s: %u%s%s", progress->title, n, tp, eol);
++		fflush(out);
+ 		progress_update = 0;
+ 		return 1;
+ 	}
+@@ -211,11 +213,12 @@ int display_progress(struct progress *progress, unsigned n)
+ struct progress *start_progress_delay(const char *title, unsigned total,
+ 				       unsigned percent_treshold, unsigned delay)
+ {
++	FILE *out = original_stderr ? original_stderr : stderr;
+ 	struct progress *progress = malloc(sizeof(*progress));
+ 	if (!progress) {
+ 		/* unlikely, but here's a good fallback */
+-		fprintf(stderr, "%s...\n", title);
+-		fflush(stderr);
++		fprintf(out, "%s...\n", title);
++		fflush(out);
+ 		return NULL;
+ 	}
+ 	progress->title = title;
 -- 
 1.7.4.39.ge4c30
