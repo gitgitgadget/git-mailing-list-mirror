@@ -1,110 +1,77 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: How to remove a git subtree and its history?
-Date: Wed, 23 Mar 2011 10:09:21 -0700
-Message-ID: <AANLkTi=WX+jD-Vz0wtorHgMBQLQ4=ycHVzZeUt8goxyL@mail.gmail.com>
-References: <4D88A1CB.2000500@jku.at> <AANLkTiktAUeOkX0MZh+JbQb1z-JiN=Qet6_AuWavsNk=@mail.gmail.com>
- <4D89B6F4.2050209@jku.at>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 0/5]rev-list and friends: --min-parents, --max-parents
+Date: Wed, 23 Mar 2011 10:12:47 -0700
+Message-ID: <7v4o6tg3qo.fsf@alter.siamese.dyndns.org>
+References: <20110321105628.GC16334@sigill.intra.peff.net>
+ <cover.1300872923.git.git@drmicha.warpmail.net>
+ <20110323144835.GA30337@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Robert Pollak <robert.pollak@jku.at>
-X-From: git-owner@vger.kernel.org Wed Mar 23 18:09:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 23 18:13:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2RZ5-00072E-SE
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 18:09:48 +0100
+	id 1Q2RcP-0001Fo-Eo
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 18:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753597Ab1CWRJn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 13:09:43 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:34818 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751219Ab1CWRJm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 13:09:42 -0400
-Received: by vxi39 with SMTP id 39so6288887vxi.19
-        for <git@vger.kernel.org>; Wed, 23 Mar 2011 10:09:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=KxDbBCbD5Q1fqfDrSf98pNxq7IWnCjnsOt4owTaotPQ=;
-        b=XmJlFKfL77WTayziTNqIoRvIzkj58ubYeDWPB+PjXjRPX2GiKY1lIqxAstBCgANU48
-         9f65e0uT1x2ZJfDJVHA4C+0KIn0htv52njOVsb1j+1rWaf5q4Pm3UKl1Fwe06fzLRalX
-         V+yXNwDaJsKEXSoyWlJQF0yhEXIIt8K+j9T68=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=bS7XgGK41w8mhS1d9OQ3jXzIsbMnHj4MwXPVOvL8BPIh34oMpNhZOKezWusI7JKDCa
-         Zy+AICgis4j8kSSL/t+XL7RQym4ai8fJqXg+4gjsZVsayc/jTPUs47jhZK/fJTiE866+
-         fCvGmBsgKbxbh5S6J/NsSeto0D34eIsZujJYA=
-Received: by 10.52.89.18 with SMTP id bk18mr7163240vdb.270.1300900181142; Wed,
- 23 Mar 2011 10:09:41 -0700 (PDT)
-Received: by 10.52.161.132 with HTTP; Wed, 23 Mar 2011 10:09:21 -0700 (PDT)
-In-Reply-To: <4D89B6F4.2050209@jku.at>
+	id S1754203Ab1CWRNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 13:13:08 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44156 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752255Ab1CWRNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 13:13:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 77D094463;
+	Wed, 23 Mar 2011 13:14:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WK+aNCysUL+X54HvFUr8A0sRtRE=; b=BGr4lB
+	RuFXjmg84S9KFPw/TRdUcSC7WQu94dCUrP+zisAecgBklMSf6VML8nRAc9hsp9QO
+	Hr3IrqfQHIrM6Z6xCe5ctbuJFUATuJgtFEvLI1lvuuqvfowjh9dUtzdcYW4m2bbl
+	WKKMYloDi1mP62J2uRCi2lRWLGjYlckbJ6n9w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Edl58hbPieWyeS0LEXSgGNQag7N2zq86
+	FdxGI+NXNs15iJuU7OJ7kHPY7aCVkeQZ8ye+28dZSkhmuEh7i2qnZ+6OEyZ8vKn1
+	4FXa1ylzBP87yUmG6Cd45UzM7TDFoZTGDGqaHRSpKKGU1jeAsefZ1toE/m+lqniR
+	S+zn/y9iSog=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 37B234462;
+	Wed, 23 Mar 2011 13:14:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D5078445D; Wed, 23 Mar 2011
+ 13:14:30 -0400 (EDT)
+In-Reply-To: <20110323144835.GA30337@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 23 Mar 2011 10:48:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 085F6BAC-5571-11E0-86F0-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169857>
 
-On Wed, Mar 23, 2011 at 2:01 AM, Robert Pollak <robert.pollak@jku.at> w=
-rote:
-> Am 22.03.2011 21:44, schrieb Avery Pennarun:
->> I've never tried to do this since
->> the history rewrite you'd be doing in this case would completely
->> invalidate all your old history: by removing the subtree in all past
->> revisions, you make all those past revisions unbuildable, which seem=
-s
->> like missing the point of version control. =A0Nevertheless, I'm sure=
- you
->> could make it happen if you wanted; you can do pretty much anything
->> you want by filtering git history.
+Jeff King <peff@peff.net> writes:
+
+>> Junio, please let me/us know whether sending an amended series in this way
+>> (which I've seen before) is actually convenient for you or not. !squash
+>> commits require a message edit, for example. OTOH, I don't know any (other?)
+>> good inter diff solution.
 >
-> I see. As quite a git newbie I hoped you had done this already and co=
-uld
-> help me with the necessary git filter-branch command line.
-
-I don't really have time to decode it all for you, but there are
-basically two things you need to do here:
-
-1) filter out the subtree merge commits
-2) filter out the actual files.
-
-You didn't really say which part of git-filter-branch *didn't* work
-for you.  I'm assuming you were successful at #2, since that part
-comes straight out of the filter-branch documentation, and you ended
-up with some leftover git history (ie. log entries from the parent
-project) that you don't want to see.
-
-The easiest way I know to remove commits from the middle of history
-(other than rebase, but that's too painful when there are merges) is
-to use grafts: https://git.wiki.kernel.org/index.php/GraftPoint
-
-Or maybe 'git replace' is easier than grafts nowadays.
-
-After replacing the offending merge commits, run filter-branch one
-more time to make the changes permanent.
-
->>> (Be free to CC git@vger.kernel.org if you reply, if you think that'=
-s
->>> appropriate for archiving the info.)
->>
->> I don't understand why you didn't cc: the git list yourself then. =A0=
-But okay :)
+> As a reviewer, I find it is usually most convenient to just have the
+> submitter do the squash, and then write below the "---" (or in a cover
+> letter like this) a brief explanation of the differences.
 >
-> I was not sure whether discussion of git-subtree belongs there, since=
- it
-> is not part of git (yet?).
+> Yeah, I end up reading the whole patch again, including bits I already
+> read, but that is probably a good thing. A good patch is hopefully not
+> too long, and it is easier (to me, anyway) to review it as a whole and
+> not as an interdiff.
 
-The git list seems to be used for discussion of git side projects
-sometimes.  As it happens, I'm not subscribed to the list anymore
-(nothing personal; I just can't handle the volume right now), so it's
-important to leave me on the cc: list though if you want me to see it.
-
-Have fun,
-
-Avery
+Yes.  And that would also make it easier for people who didn't read the
+earlier round to double check.
