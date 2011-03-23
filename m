@@ -1,72 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gsoc - Better git log --follow support
-Date: Wed, 23 Mar 2011 14:22:49 -0400
-Message-ID: <20110323182249.GA17490@sigill.intra.peff.net>
-References: <AANLkTi=n7e70UqYU+6wpG4cu95fsg39tVM6=7fpfdZFz@mail.gmail.com>
- <20110321122407.GH16334@sigill.intra.peff.net>
- <AANLkTi=woLeveur6gKnSXTRzmS8nB0o4M9HegJ+GNUCa@mail.gmail.com>
- <20110323162023.GC30337@sigill.intra.peff.net>
- <7v8vw5g4f0.fsf@alter.siamese.dyndns.org>
- <20110323170655.GA4392@sigill.intra.peff.net>
- <7vk4fpemei.fsf@alter.siamese.dyndns.org>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: git merge strategy for cherry picks
+Date: Wed, 23 Mar 2011 13:06:20 -0600
+Message-ID: <4D8A44AC.20505@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?Q?Micha=C5=82_=C5=81owicki?= <mlowicki@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 19:22:57 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 23 20:06:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2Sht-0007zW-8K
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 19:22:57 +0100
+	id 1Q2TO2-000429-OF
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 20:06:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803Ab1CWSWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 14:22:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42370
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753635Ab1CWSWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2011 14:22:51 -0400
-Received: (qmail 8545 invoked by uid 107); 23 Mar 2011 18:23:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Mar 2011 14:23:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2011 14:22:49 -0400
-Content-Disposition: inline
-In-Reply-To: <7vk4fpemei.fsf@alter.siamese.dyndns.org>
+	id S1756511Ab1CWTGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 15:06:25 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:56079 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756158Ab1CWTGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 15:06:24 -0400
+Received: (qmail 3951 invoked by uid 399); 23 Mar 2011 13:06:20 -0600
+Received: from unknown (HELO ?192.168.1.100?) (jjensen@workspacewhiz.com@50.8.99.117)
+  by hsmail.qwknetllc.com with ESMTPAM; 23 Mar 2011 13:06:20 -0600
+X-Originating-IP: 50.8.99.117
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b3pre Thunderbird/3.1.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169869>
 
-On Wed, Mar 23, 2011 at 11:12:37AM -0700, Junio C Hamano wrote:
+In this thread, the question was asked about a merge with cherry picks 
+and the reapplication of lines that had been removed: 
+http://kerneltrap.org/mailarchive/git/2010/2/19/23857/thread
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Obviously a solution that always provides an exact right answer is
-> > preferable to "pretty good results", but we'd have to keep in mind the
-> > performance difference.
-> 
-> And that is why the current --follow hack was declared to be good enough
-> to give "pretty good results" by its inventor, no?
+Consider this scenario:
 
-Absolutely. I just think we can make "pretty good" slightly better with
-just a little more effort.
+     line line  line re-added
+      +    -    +!!
+A -- B -- C -- F  master
+   \  |        /
+    - B' --...-    milestone
 
-> I still agree with it personally, and if we _were_ to improve it out of
-> "hack" status, we should aim to do the right thing (provided if there is a
-> "right thing" exists).
 
-Right. The problem is that I'm not sure we want to pay the performance
-penalty to take it out of "hack" status. But that doesn't mean we can't
-make it as good a hack as possible. :)
+I branch the milestone branch from A.
 
-Actually, I think the non-hack version of it is not really --follow at
-all, but more like Bo's line-level browser. But I think that still
-leaves room for a solution like --follow that is perhaps a bit faster
-and provides a pretty good answer.
+There is a fix, B, that needs to go in the milestone.  I cleanly 
+cherry-pick it as B'; there are no conflicts.
 
--Peff
+The fix is decided to be bad and is removed in C.
+
+Later, I merge the milestone branch back to master.  The B 'fix' is 
+re-added without conflict.
+
+How can I correctly merge milestone into master without reintroducing 
+the B 'fix'?
+
+In contrast, if I run, say, 'gitk --cherry-pick master...milestone', I 
+see that B' is not considered a difference between master and milestone.
+
+Thanks.
+
+Josh
