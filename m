@@ -1,99 +1,85 @@
-From: Lasse Makholm <lasse.makholm@gmail.com>
-Subject: Re: git svn perl issues
-Date: Wed, 23 Mar 2011 23:19:46 +0100
-Message-ID: <AANLkTim3yK2=MjO1NbpQ2pu4tV7=hwR-Z9UbixdfAkm=@mail.gmail.com>
-References: <AANLkTikowuFsXFwLL14oS0zzHh3RiHOrGTVHXgyy8dLw@mail.gmail.com>
-	<521251622.25680.1300916735091.JavaMail.root@tahiti.vyatta.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Relative ls-files
+Date: Wed, 23 Mar 2011 15:44:12 -0700
+Message-ID: <7vaaglcv9f.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=fP+jBpLuxst2rv02pYRmj4HOkv8Yenc-dR-N_@mail.gmail.com>
+ <4D89D052.5030801@drmicha.warpmail.net>
+ <AANLkTimc7gNKbh3C2hyMtFK6D1OWNALD+GvzmhG5cZrn@mail.gmail.com>
+ <AANLkTimdLGgGXGRNVH5+X-cnhK2NWfWx9k0apt-6rr1Z@mail.gmail.com>
+ <4D89DCBE.3060400@drmicha.warpmail.net>
+ <AANLkTi=BrgZe47Bt5evr_qFzKBL=MY-6NmH22gsRurVV@mail.gmail.com>
+ <7v7hbqgc7g.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=OJ_o2WQ2W6d30HXQZrg7=W70+fZWrbQPrAs=s@mail.gmail.com>
+ <7v39mdhni3.fsf@alter.siamese.dyndns.org>
+ <AANLkTin=y=THaQEzgMhyBVLBriJBCa-pVvONXDnzUmew@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Stephen Hemminger <stephen.hemminger@vyatta.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 23:19:56 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 23:44:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2WPC-0000Id-6S
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 23:19:55 +0100
+	id 1Q2Wn1-0005wZ-UA
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 23:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756725Ab1CWWTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 18:19:49 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:59445 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756703Ab1CWWTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2011 18:19:48 -0400
-Received: by bwz15 with SMTP id 15so7061636bwz.19
-        for <git@vger.kernel.org>; Wed, 23 Mar 2011 15:19:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=8bceekDmg9U9OakXMPo+pM3Fie3WyvqtGaBq5ieTkY4=;
-        b=J8SuLk30HUjfSBbGUKWraJ0FOw71wsPB/fl6SEwMl24ZYk+bWv7aJExB22uOKejNq6
-         s90FYEVPutVkpvGnaPPgJtuAKece//afXvziNR/WnNe74Sz6ogfjctrh8fIyS3qYuW5E
-         rap22CerKRsMjivCVDq7QQ/UnZYhtRqDuL40s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=rLju0e3SZUMDBsZmf85Ct6cKoHg9PisR/tQlJATZDuZFiqhv/RxX9fbfZxiclm2GZ8
-         rgFaQpHwa0C9g85bM5R3/wvzp4xEPt5CrPuC+U0HNzD5GXn1UWXvSHkZuYafKZBVqzMC
-         NuRgPnHoUJ7tUjxyomilGErdqOjNedOQPeCuQ=
-Received: by 10.204.80.29 with SMTP id r29mr6690259bkk.195.1300918786999; Wed,
- 23 Mar 2011 15:19:46 -0700 (PDT)
-Received: by 10.204.114.207 with HTTP; Wed, 23 Mar 2011 15:19:46 -0700 (PDT)
-In-Reply-To: <521251622.25680.1300916735091.JavaMail.root@tahiti.vyatta.com>
+	id S932880Ab1CWWo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 18:44:26 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33403 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932870Ab1CWWoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 18:44:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A401419A;
+	Wed, 23 Mar 2011 18:46:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UbqLDvtvLQLWQYm+aFJrrdPnkI4=; b=G+yQUc
+	PKNGyoCyuxI/g1sZmkAwrMMJsDMjvFMAIfybZv7q75KHzAO6i3xRsnKrjB3T2FRR
+	c5oy9NlSSJgc1mhXXbnYc8oqJPk7PzpkyXoCPltNo10yxM0g7kZfynvoNzB604T4
+	zUsoEkstsCJKTMAE6zb1lBJFvosWSFCeBoRU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gLnWXOAZgyD/gFLjImMHn5YHujWeR4q1
+	fG3ugKZ05W+p5+u8qX0GWc+KasdxZtzHVK6OvZDSWP6EU5a0YtWSiawwhfWcl05k
+	KjSmTkaCz570kui2zvDyCc92HjRrLzPeqDRtpU6meux3KqNGadSMAPF7tExO+iCC
+	K6OdOJKMv00=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F226A4199;
+	Wed, 23 Mar 2011 18:45:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 54AD34198; Wed, 23 Mar 2011
+ 18:45:54 -0400 (EDT)
+In-Reply-To: <AANLkTin=y=THaQEzgMhyBVLBriJBCa-pVvONXDnzUmew@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Wed, 23 Mar 2011 22:41:47 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 52D607F8-559F-11E0-A441-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169878>
 
-On 23 March 2011 22:45, Stephen Hemminger <stephen.hemminger@vyatta.com> wrote:
->
->> On 23 March 2011 16:52, Stephen Hemminger <shemminger@vyatta.com>
->> wrote:
->> > 1. The following needs to be fixed:
->> >
->> > $ git svn clone
->> > Use of uninitialized value $_[0] in substitution (s///) at
->> > /usr/share/perl/5.10.1/File/Basename.pm line 341.
->> > fileparse(): need a valid pathname at /usr/lib/git-core/git-svn line
->> > 403
->>
->> While noisy and ugly, uninitialized warnings are usually pretty
->> harmless...
->
-> User should never see perl splat, it is sloppy.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Agreed.
+> This read_tree_recursive() affects 'archive' and 'checkout -- paths'
+> (ie. no wildcard awareness). I will probably move match_tree_entry()
+> to ls-tree.c to preserve its behavior, then change
+> read_tree_recursive() to use tree_entry_interesting().
 
->> > 2. The git-svn perl script does not follow Perl Best Practices.
->> > If you run the perlcritic script on it, all the following
->> > warnings/errors
->> > are generated:
->>
->> Some of these are undoubtedly valid complaints, but the so called best
->> practices that the perl critic policies implement are, in my opinion,
->> not widely accepted as such by the perl community. At least not all of
->> them. I wouldn't go following them blindly - especially in working
->> production code...
->
-> Some of them are crap, but like sparse warnings it is trivial to
-> fix them and make it clean so why not.
+[jc: culled people other than those in the "magic pathspec" discussion
+from CC list]
 
-Well, personally I don't think they all add any value but that's a bit
-beside the point here...
+Wouldn't it be more sensible to add a bit ("is this a glob or are we
+expected to match it literally") to each element in the pathspec array,
+and pass a pathspec whose elements are all marked as "literal" down from
+ls-tree?
 
-> If you don't maintain code it just rots.
-
-True enough. That said, I haven't actually looked into the git-svn
-code oh my god why do people write 6K line scripts... *sigh*
-
-My first suggestion would be to split it... :-) It's already 75%
-classes anyway...
-
-[forgot to reply all, sorry for the spam Stephen...]
--- 
-/Lasse
+The internal matcher (and traversal optimizer) would need to become aware
+of "not a glob" match (and possibly different kinds of matches like "**/"
+support) sooner or later, and when that happens you would need something
+like the above on the caller side in ls-tree.
