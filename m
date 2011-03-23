@@ -1,73 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: duplicated Working tree
-Date: Wed, 23 Mar 2011 14:38:13 +0100
-Message-ID: <4D89F7C5.6000900@drmicha.warpmail.net>
-References: <002701cbe949$e957f050$bc07d0f0$@go-eknowledge.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Relative ls-files
+Date: Wed, 23 Mar 2011 09:54:45 -0400
+Message-ID: <AANLkTi=BrgZe47Bt5evr_qFzKBL=MY-6NmH22gsRurVV@mail.gmail.com>
+References: <AANLkTi=fP+jBpLuxst2rv02pYRmj4HOkv8Yenc-dR-N_@mail.gmail.com>
+ <4D89D052.5030801@drmicha.warpmail.net> <AANLkTimc7gNKbh3C2hyMtFK6D1OWNALD+GvzmhG5cZrn@mail.gmail.com>
+ <AANLkTimdLGgGXGRNVH5+X-cnhK2NWfWx9k0apt-6rr1Z@mail.gmail.com> <4D89DCBE.3060400@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1256
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Samy Louis <Samy.seif@go-eknowledge.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 14:41:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: demerphq <demerphq@gmail.com>, John Tapsell <johnflux@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Mar 23 14:55:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2OJu-0003OZ-Fc
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 14:41:54 +0100
+	id 1Q2OWp-0004aA-Eg
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 14:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756263Ab1CWNlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 09:41:47 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:52968 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755551Ab1CWNlq (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 09:41:46 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 4CC64202BE;
-	Wed, 23 Mar 2011 09:41:46 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Wed, 23 Mar 2011 09:41:46 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=i+RywEVsxK7M8hkR38aQZnS8L8w=; b=IMRdQ8nzYpy8wQ8zzgaiEIaAAxFtZ5Z2w/X0jB3ZfAuxTQTGKXJfx9Ha9rT0JgKhy3HZbSdQvTGFys6EiW1WysLVUwyk+2QCvghmjhPRWL7vsJV2kZq9bI/n0klsJvkueVzun6ODdlhCn3Vja8bDbPiuJsLVDXuoTBurZNRSDjs=
-X-Sasl-enc: CRabLjhfCb7ZE/Imz8PoBa9p7vXG/7nqvo7Ft9oGewLw 1300887706
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 818FE408F28;
-	Wed, 23 Mar 2011 09:41:45 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <002701cbe949$e957f050$bc07d0f0$@go-eknowledge.com>
+	id S932413Ab1CWNzH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 09:55:07 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:57258 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754946Ab1CWNzG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 09:55:06 -0400
+Received: by gwaa18 with SMTP id a18so3336787gwa.19
+        for <git@vger.kernel.org>; Wed, 23 Mar 2011 06:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=mpmVPC4CLBCcJ9rxsD4whI/IoOIb30lgmnxxX1aGNqA=;
+        b=akeuhs6uVZM44bgFOFoOm8IeKbvNbvMzU85XS4rQGG5yY5x6wgiTrMfwKgA+O+8477
+         4HXZr8w+jxCmGIIXkvh9FSkblywDVjgmHuLg+d6KgpLCQSNgJnxN60+9ek4VnHdImsKh
+         AWN0zg+NDJT/sH513RKOPABNUslDRBONu2MFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Apx2a8Pwmnqm59kou8izF1AXCaRj/20U5fQxeo9xpk1pgxdQO7ofD0alkWfYXvySRm
+         1/XdiuOQ3Fs7oYRvnrz8uSMXWMhHBK2SIzrnL5zI2YFYVmzSuBN2uaC+FruFPIMRFNao
+         vgUkar/tjjCtK7sB2hvYWRPFCYSok5ytQ9BWM=
+Received: by 10.91.164.27 with SMTP id r27mr6375414ago.204.1300888505107; Wed,
+ 23 Mar 2011 06:55:05 -0700 (PDT)
+Received: by 10.90.74.2 with HTTP; Wed, 23 Mar 2011 06:54:45 -0700 (PDT)
+In-Reply-To: <4D89DCBE.3060400@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169831>
 
-Samy Louis venit, vidit, dixit 23.03.2011 12:03:
-> 
-> Hi,
-> 
-> I have a strange problem and need your support if possible.
-> 
-> When I clone a  remote GIT repository (LAN)  to  local machine,  I get two
-> working  folder one at the GIT local folder (normal) and the other in
->  original path of where the remote repository had been created before it was
-> cloned  to remote network.
-> 
-> How can I overcome this issue to only have one local working folder.
-> 
-> 
-> Step to  reproduce it:
-> 
-> 1- Create a local GIT repo.  (D:\repositoies\projectname)
-> 2- Clone the GIT repo. to network path ( \\server\GIT\ projectname) use a
-> bare flag.
-> 3- Clone the remote repo ( \\server\GIT\ projectname) to other machine in
-> path (C:\GIT\projectname) and create working tree
-> 4- We will fine two working tree one at C:\GIT\projectname and the other at
-> D:\repositoies\projectname.
-> 
-> Thanks in advance .
+On Wed, Mar 23, 2011 at 7:42 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Of course ":" has a meaning. "git show HEAD:" lists all files at the
+> top-level of the tree at HEAD.
 
-Didn't you create a working tree at D:\repositoies\projectname in step 1
-already?
+I got excited for a moment... now tested it and there isn't a recursive=
+ flag :-(
 
-Michael
+I've been pining for something easy and intuitive like git ls-files
+<treeish>. You can do git ls-files --with-tree=3D<treeish> but I find i=
+t
+very counter-intuitive.
+
+Context: in some projects, I need to ask
+
+ - is this file in branch foo?
+ - has this file moved in branch foo?
+ - what files with extension .zoo exist in branch foo?
+
+and the answer is git ls-files --with-tree=3D<treeish> | grep <regex> .
+But the --with-tree param is so counterintuitive to me that I read the
+manpage, everytime.
+
+Not sure whether the bug is in me or in git, but it sure hits some
+cognitive dissonance.
+
+
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
