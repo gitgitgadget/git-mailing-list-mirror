@@ -1,80 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] diffcore-rename: fall back to -C when -C -C busts
- the rename limit
-Date: Wed, 23 Mar 2011 12:50:40 -0400
-Message-ID: <20110323165040.GA4068@sigill.intra.peff.net>
-References: <7vk4fqkewo.fsf@alter.siamese.dyndns.org>
- <1300830649-22830-1-git-send-email-gitster@pobox.com>
- <1300830649-22830-3-git-send-email-gitster@pobox.com>
- <20110323155854.GB30337@sigill.intra.peff.net>
- <7vfwqdg574.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: gsoc - Better git log --follow support
+Date: Wed, 23 Mar 2011 09:58:11 -0700
+Message-ID: <7v8vw5g4f0.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=n7e70UqYU+6wpG4cu95fsg39tVM6=7fpfdZFz@mail.gmail.com>
+ <20110321122407.GH16334@sigill.intra.peff.net>
+ <AANLkTi=woLeveur6gKnSXTRzmS8nB0o4M9HegJ+GNUCa@mail.gmail.com>
+ <20110323162023.GC30337@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 17:50:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Micha=C5=82_=C5=81owicki?= <mlowicki@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 23 17:58:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2RGi-0001b4-E8
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 17:50:48 +0100
+	id 1Q2ROC-0006vW-4O
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 17:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab1CWQun (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 12:50:43 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51178
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753108Ab1CWQum (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2011 12:50:42 -0400
-Received: (qmail 6436 invoked by uid 107); 23 Mar 2011 16:51:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Mar 2011 12:51:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2011 12:50:40 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfwqdg574.fsf@alter.siamese.dyndns.org>
+	id S1754508Ab1CWQ61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 12:58:27 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60270 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753417Ab1CWQ60 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 12:58:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 08AD24267;
+	Wed, 23 Mar 2011 13:00:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tDjeuxL2bHfOT14SFmiLamWwaWY=; b=vvGVk3
+	szrl/h7IPqnV4Be9npO32KxuuytUMwflEJMQ1lxmk8Ad/Y8FCmJZxNcNovRyPaPT
+	/mY0Egk4JsPlCzkj49Cf9/DyN7bvtAWNczN23Q36+9JChwTXcZ1ayJmZxPkaoh8b
+	jEiIOsLK0JWK1fYsEZbK9twSSgUNopP9JN/Qs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d4SsJLucK3mhR6HcUgDGCeBJsLsFXFnY
+	9G31xt+m3Bl32I4apiqQlUhCPojxZFvW6QsVm7Ai0zOyXhdRPCyY97gvWqlQZYoy
+	Q1FcYy3S2nb3NI7YnfV7gBRVQY3ddTCKUTlL+WJpsEWTzOMGahd28IpYY45oX2CV
+	cx8UdHlUUOk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B4C014264;
+	Wed, 23 Mar 2011 13:00:00 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id ED7C54262; Wed, 23 Mar 2011
+ 12:59:54 -0400 (EDT)
+In-Reply-To: <20110323162023.GC30337@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 23 Mar 2011 12:20:23 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FD55642A-556E-11E0-8B2A-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169854>
 
-On Wed, Mar 23, 2011 at 09:41:19AM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > "find the highest limit needed and report once" strategy you used above?
-> 
-> Wasn't "find the highest limit" your invention in merge-recursive?  The
+>   # Now try it with --follow. Not so pretty.
+>   git log --oneline --graph --follow builtin/add.c
 
-Hmm, you're right. I was thinking the code you were modifying was called
-per-diff, but it's not. Though looking at it again, I think we could
-technically still warn several times, one for each recursive call to
-merge_recursive. Your call to show() does fix that (because it checks
-o->call_depth).
+Is that an artifact of history simplification?
 
-So I think the code after your patch does the right thing.
+I've always thought that it was because --follow hack used a single global
+pathspec that flipped at a rename boundary,regardless of which part of the
+history (i.e. the branch that was before the rename or after the rename)
+it is following.  So if you have two branches merged together:
 
-> As to the warnings in "log" output, I actually prefer leaving saved_* out
-> and showing the warning per internal diff invocation. My initial iteration
-> was indeed coded that way, and I did the "find the highest" only to mimic
-> what was already in merge-recursive.
+        o---o---o---o---o---x---x---x
+       /                   / 
+   ...o---o---o---x---x---x
 
-I think they are two different cases, because the user never gets to see
-the intermediate results of merge-recursive. That is, at the end of the
-merge we tell them "here's the result, and by the way, we limited
-renames." But for something like "log" or "diff-tree --stdin", it is
-about doing N independent diffs, and the user gets to see the result of
-each. So if we can match the warnings to the actual diffs in the output,
-that is much more useful.
-
-But in the case of something like:
-
-  git rev-list HEAD | git diff-tree --stdin >foo.out
-
-I don't think there is a way to match the warnings to their respective
-commits. They are on two different streams, and putting the warning to
-stdout would pollute the output.
-
--Peff
+where commits marked with 'x' has it under the new path while commits
+marked with 'o' has it under the old path, and start to dig the history
+from the rightmost commit, the hack notices the rename at the transition
+between the "o---x" on the upper branch and from then on keep digging the
+history using the old path as the pathspec.  The commit history traversal
+goes reverse-chronologically, so when inspecting the next commit, which is
+the rightmost commit on the lower branch, the hack fails because it uses a
+wrong pathspec (at that point it should still be using the new path as the
+pathspec, but it already has switched to the old path).
