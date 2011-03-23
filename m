@@ -1,89 +1,80 @@
-From: "Samy Louis" <Samy.seif@go-eknowledge.com>
-Subject: RE: duplicated Working tree
-Date: Wed, 23 Mar 2011 16:00:45 +0200
-Message-ID: <002801cbe962$b4d313f0$1e793bd0$@go-eknowledge.com>
-References: <002701cbe949$e957f050$bc07d0f0$@go-eknowledge.com> <4D89F7C5.6000900@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] add: make "add -u/-A" update full tree without pathspec
+ (step 3)
+Date: Wed, 23 Mar 2011 21:02:46 +0700
+Message-ID: <AANLkTikBQg_pT2NX9vQc+DcB+4HA35VXBpQyRtAU_ewG@mail.gmail.com>
+References: <7vy649vah1.fsf@alter.siamese.dyndns.org> <7vtyexv6wl.fsf@alter.siamese.dyndns.org>
+ <7vpqplv65o.fsf@alter.siamese.dyndns.org> <vpqlj09a303.fsf@bauges.imag.fr>
+ <7vhbaxuyk7.fsf@alter.siamese.dyndns.org> <20110321111643.GE16334@sigill.intra.peff.net>
+ <7vtyeuiu07.fsf@alter.siamese.dyndns.org> <7v7hbqifej.fsf_-_@alter.siamese.dyndns.org>
+ <7v1v1yifc9.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Michael J Gruber'" <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Mar 23 14:57:43 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 15:07:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2OZC-0006Hx-4D
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 14:57:42 +0100
+	id 1Q2OiO-00048z-Ow
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 15:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756199Ab1CWN5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 09:57:37 -0400
-Received: from out6.tedata.net.eg ([213.158.162.171]:43253 "EHLO
-	out.tedata.net.eg" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756103Ab1CWN5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2011 09:57:36 -0400
-Received: (qmail 30173 invoked from network); 23 Mar 2011 13:57:34 -0000
-Received: by simscan 1.4.0 ppid: 30145, pid: 30148, t: 5.4534s
-         scanners: regex: 1.4.0 clamav: 0.96/m:52/d:11148 spam: 3.2.3
-X-Spam-TE-Data-out-Scanned: Yes
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on SMTP-Out6
-X-Spam-Status: No, score=3.2 required=10.0 tests=AWL,DNS_FROM_OPENWHOIS,
-	RDNS_DYNAMIC autolearn=no version=3.2.3
-Received: from host-213.158.171.58.tedata.net (HELO sls) (technology.know@[213.158.171.58])
-          (envelope-sender <Samy.seif@go-eknowledge.com>)
-          by out6.tedata.net.eg (qmail-ldap-1.03) with SMTP
-          for <git@drmicha.warpmail.net>; 23 Mar 2011 13:57:28 -0000
-In-Reply-To: <4D89F7C5.6000900@drmicha.warpmail.net>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQLgdPRB4e9CkqcAh/RmwWDiSUkwlAH27A0VkgIja7A=
-Content-Language: en-us
+	id S1756383Ab1CWOHD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 10:07:03 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:36527 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755244Ab1CWOHB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 10:07:01 -0400
+Received: by wya21 with SMTP id 21so7681243wya.19
+        for <git@vger.kernel.org>; Wed, 23 Mar 2011 07:07:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=HWU5WisSMFX9RkGSjJ5DHOj1Mjos0NpdFzHzM+lXZFU=;
+        b=rACPi35tMaO6ZQ5drWzX44AqG7g+NPOYnqc4Ldm9KX1CpOZ89IRIxDBLat6eG67RW2
+         RpStBhzLHqCjzPKIqDyyemPQJtBNjYgwBJX37mf0S1qY9VuMNcSnu/NoBEC/BXHN/C35
+         h5Bs30134oIFo63+McxV6gKblyljcthsGLcFU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=rWopnuhnYPf/widXsIrqQ0bqVqLL+MKCx27AhQK9f+fjoDpc2OzgEugx8NMS8axmD9
+         uLZW5grGNelWEnCAfeRBBhM1X5qYVzPSzNHDaJ4/rqmqvGPlm3pMBtn1atIe4OB9PDFt
+         SnYeWKzwynqfUt2v29YaM/S0N/kji1+0fvm6U=
+Received: by 10.216.243.195 with SMTP id k45mr6802826wer.66.1300888996367;
+ Wed, 23 Mar 2011 07:03:16 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Wed, 23 Mar 2011 07:02:46 -0700 (PDT)
+In-Reply-To: <7v1v1yifc9.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169833>
 
-Yes I created it in local machine before I clone it to the remote machine ,
-but  the issue appears   when I clone the remote repo to another machine to
-different path.
-Samy
+2011/3/23 Junio C Hamano <gitster@pobox.com>:
+> Now long after 1.8.0 happened, people should have got used to the
+> new default behaviour and it is no longer necessary to give the
+> migration advice anymore.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+> =C2=A0* And this concludes the two-year long series from the future ;=
+-)
 
------Original Message-----
-From: Michael J Gruber [mailto:git@drmicha.warpmail.net] 
-Sent: Wednesday, March 23, 2011 3:38 PM
-To: Samy Louis
-Cc: git@vger.kernel.org
-Subject: Re: duplicated Working tree
+Beautiful.
 
-Samy Louis venit, vidit, dixit 23.03.2011 12:03:
-> 
-> Hi,
-> 
-> I have a strange problem and need your support if possible.
-> 
-> When I clone a  remote GIT repository (LAN)  to  local machine,  I get 
-> two working  folder one at the GIT local folder (normal) and the other 
-> in  original path of where the remote repository had been created 
-> before it was cloned  to remote network.
-> 
-> How can I overcome this issue to only have one local working folder.
-> 
-> 
-> Step to  reproduce it:
-> 
-> 1- Create a local GIT repo.  (D:\repositoies\projectname)
-> 2- Clone the GIT repo. to network path ( \\server\GIT\ projectname) 
-> use a bare flag.
-> 3- Clone the remote repo ( \\server\GIT\ projectname) to other machine 
-> in path (C:\GIT\projectname) and create working tree
-> 4- We will fine two working tree one at C:\GIT\projectname and the 
-> other at D:\repositoies\projectname.
-> 
-> Thanks in advance .
+I'd expect you kill add.treewideupdate too. Say one year after this
+patch, we can start to annoy users asking them to remove
+add.treewideupdate and switch to new behavior. Another year goes by,
+we refuse to work with those who still keep add.treewideupdate config.
 
-Didn't you create a working tree at D:\repositoies\projectname in step 1
-already?
-
-Michael
+A consistent default behavior is a good thing. If I help a git user
+and later realize "git add -u" on their machine does not work as I
+expect it to be, it'd be less pleasant.
+--=20
+Duy
