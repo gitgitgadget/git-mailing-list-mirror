@@ -1,123 +1,152 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git cherry improvements suggestions
-Date: Wed, 23 Mar 2011 20:28:02 +0100
-Message-ID: <AANLkTi=7=QDh0Pe9W4bRcGY5Krg7sBqRcZ2C1YonJSRN@mail.gmail.com>
-References: <AANLkTimk0bkOGVy2W+XddHRuf-1xw+d0RwzPhnk40vi8@mail.gmail.com>
-	<4D89CF8E.4070100@drmicha.warpmail.net>
-	<AANLkTinXh_Y9ft5Pd5SxOEXvKNm3HLmsiut8WrvFZrdQ@mail.gmail.com>
-	<4D89F6BC.2040902@drmicha.warpmail.net>
-	<AANLkTin7Du5RYt946hNjP-y53puNykebCjiKk5Ju_igr@mail.gmail.com>
-	<4D8A0741.9000506@drmicha.warpmail.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] git-gui: provide question helper for retry fallback on
+	Windows
+Date: Wed, 23 Mar 2011 21:31:19 +0100
+Message-ID: <20110323203119.GA23905@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Mar 23 20:28:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 21:31:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2Tj1-0000t1-5y
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 20:28:11 +0100
+	id 1Q2UiG-0006Vt-VK
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 21:31:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932688Ab1CWT2F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 15:28:05 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:54634 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932628Ab1CWT2E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 15:28:04 -0400
-Received: by vws1 with SMTP id 1so5921637vws.19
-        for <git@vger.kernel.org>; Wed, 23 Mar 2011 12:28:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=YHaVuP46zPdAKxCGhOJ2rh8mkhXATc/AI9SQs7GUbwY=;
-        b=iIYFQMcHRBRLx3DfaLIT7albeuYkn1jzdlcJksQQoxAY1g3jISrE/4k1nTidgTxyxz
-         AG6npHK2jFjJi0iPCN8i642U1NooUnqXQm9ojqGey0VzcZ1KT2+7YSLa9C0BmAoQmgtx
-         vmBtsRom81AVa0+cr9iy45rbTMlXdizgoRFrk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QCG6TIt0b6WKZMPp3JdvKhUXiSRgGyKMCDKhddp5JY0ccFY+8+rxw6jNSuSLtPCDpa
-         84F+Mu0rqof0ABO68fN9mksRmnnpbs9H5rKhsyoSOj/LBBEb6h72kwchK1jBM/n9IGWq
-         nCjUd61JWntyaD4+tJXebUyu1944OV3tcSSxQ=
-Received: by 10.220.193.129 with SMTP id du1mr1667755vcb.66.1300908482708;
- Wed, 23 Mar 2011 12:28:02 -0700 (PDT)
-Received: by 10.220.210.16 with HTTP; Wed, 23 Mar 2011 12:28:02 -0700 (PDT)
-In-Reply-To: <4D8A0741.9000506@drmicha.warpmail.net>
+	id S933283Ab1CWUbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 16:31:23 -0400
+Received: from darksea.de ([83.133.111.250]:41173 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933145Ab1CWUbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 16:31:22 -0400
+Received: (qmail 19296 invoked from network); 23 Mar 2011 21:31:19 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 23 Mar 2011 21:31:19 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169871>
 
-On Wed, Mar 23, 2011 at 3:44 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 15:43:
->> On Wed, Mar 23, 2011 at 2:33 PM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 14:23:
->>>> Just some stats:
->>>>
->>>> =A0 =A0git log --cherry-mark --left-right --oneline --date-order b=
-ranch...trunk
->>>>
->>>> lists 1004 commits, takes about 20s and memory peaks to about 670M=
-B
->>>> twice during the run (I'm on linux with AMD Phenom II X4 945)
->>>>
->>>> With limit it prints X last commits (the limiting seems to take pl=
-ace after all
->>>> work, on the output list only).
->>>>
->>>> branch..trunk is 551 commits, the other way is 453 commits.
->>>> 710 commits are found to be "=3D", 98 "<", 196 ">".
->>>>
->>>> Note, I'm not saying it's too slow, or that it's working incorrect=
-ly, I'm just
->>>> giving real-life stats if anyone was interested.
->>>> I suspect such checks won't be done frequently.
->>>
->>> You don't need to say it's slow - I've said so already :(
->>>
->>> http://permalink.gmane.org/gmane.comp.version-control.git/169725
->>
->> In the link above:
->> =A0 git cherry A B: 0.4s
->> =A0 git rev-list --cherry A...B: 1.7s
->>
->> So rev-list is 4.25x slower.
->>
->> In my case it's only 1.23x slower:
->>
->> =A0 =A0$ time git rev-list --cherry branch...trunk =A0> /tmp/rev-lis=
-t
->> =A0 =A0real =A0 =A0 =A0 0m18.627s
->> =A0 =A0user =A0 =A0 =A0 0m17.710s
->> =A0 =A0sys =A0 =A0 =A0 =A00m0.900s
->>
->> =A0 =A0$ time git cherry =A0branch trunk =A0> /tmp/cherry
->> =A0 =A0real =A0 =A0 =A0 0m15.345s
->> =A0 =A0user =A0 =A0 =A0 0m14.310s
->> =A0 =A0sys =A0 =A0 =A0 =A00m1.020s
->>
->>
->
-> How's that with > /dev/null (or with --count for rev-list)? Also, how
-> many merge bases do you have:
->
-> git merge-base --all branch trunk | wc -l
+Make use of the new environment variable GIT_ASK_YESNO to support the
+recently implemented fallback in case unlink, rename or rmdir fail for
+files in use on Windows. The added dialog will present a yes/no question
+to the the user which will currently be used by the windows compat layer
+to let the user retry a failed file operation.
 
-I expect only one - there should be no merges between those two
-branches.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
 
-I will do measurements tomorrow.
+Since the infrastructure for this is now in Junio's master lets also add
+it to git-gui. This patch contains a fix of the question helper which
+correctly wraps long lines in questions. I also disabled the
+resizeability of the dialog because the text would not be rewrapped
+anyway.
 
+Cheers Heiko
 
---=20
-Piotr Krukowiecki
+ Makefile                  |    2 +
+ git-gui.sh                |    3 ++
+ git-gui/git-gui--askyesno |   52 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 57 insertions(+), 0 deletions(-)
+ create mode 100755 git-gui/git-gui--askyesno
+
+diff --git a/Makefile b/Makefile
+index e22ba5c..d50b455 100644
+--- a/Makefile
++++ b/Makefile
+@@ -290,6 +290,7 @@ install: all
+ 	$(QUIET)$(INSTALL_D0)'$(DESTDIR_SQ)$(gitexecdir_SQ)' $(INSTALL_D1)
+ 	$(QUIET)$(INSTALL_X0)git-gui $(INSTALL_X1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(QUIET)$(INSTALL_X0)git-gui--askpass $(INSTALL_X1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
++	$(QUIET)$(INSTALL_X0)git-gui--askyesno $(INSTALL_X1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(QUIET)$(foreach p,$(GITGUI_BUILT_INS), $(INSTALL_L0)'$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' $(INSTALL_L1)'$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' $(INSTALL_L2)'$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' $(INSTALL_L3) &&) true
+ ifdef GITGUI_WINDOWS_WRAPPER
+ 	$(QUIET)$(INSTALL_R0)git-gui.tcl $(INSTALL_R1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+@@ -308,6 +309,7 @@ uninstall:
+ 	$(QUIET)$(CLEAN_DST) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui $(REMOVE_F1)
+ 	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui--askpass $(REMOVE_F1)
++	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui--askyesno $(REMOVE_F1)
+ 	$(QUIET)$(foreach p,$(GITGUI_BUILT_INS), $(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/$p $(REMOVE_F1) &&) true
+ ifdef GITGUI_WINDOWS_WRAPPER
+ 	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui.tcl $(REMOVE_F1)
+diff --git a/git-gui.sh b/git-gui.sh
+index d96df63..049bc70 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1158,6 +1158,9 @@ set have_tk85 [expr {[package vcompare $tk_version "8.5"] >= 0}]
+ if {![info exists env(SSH_ASKPASS)]} {
+ 	set env(SSH_ASKPASS) [gitexec git-gui--askpass]
+ }
++if {![info exists env(GIT_ASK_YESNO)]} {
++	set env(GIT_ASK_YESNO) [gitexec git-gui--askyesno]
++}
+ 
+ ######################################################################
+ ##
+diff --git a/git-gui/git-gui--askyesno b/git-gui/git-gui--askyesno
+new file mode 100755
+index 0000000..7604610
+--- /dev/null
++++ b/git-gui/git-gui--askyesno
+@@ -0,0 +1,52 @@
++#!/bin/sh
++# Tcl ignores the next line -*- tcl -*- \
++exec wish "$0" -- "$@"
++
++# This is an implementation of a simple yes no dialog
++# which is injected into the git commandline by git gui
++# in case a yesno question needs to be answered.
++
++set NS {}
++set use_ttk [package vsatisfies [package provide Tk] 8.5]
++if {$use_ttk} {
++	set NS ttk
++}
++
++if {$argc < 1} {
++	puts stderr "Usage: $argv0 <question>"
++	exit 1
++} else {
++	set prompt [join $argv " "]
++}
++
++${NS}::frame .t
++${NS}::label .t.m -text $prompt -justify left -width 40
++pack .t.m -side top -fill x -padx 20 -pady 20 -expand 1
++pack .t -side top -fill x -ipadx 20 -ipady 20 -expand 1
++bind .t.m <Map> {.t.m configure -wraplength [winfo width .t.m]}
++
++${NS}::frame .b
++${NS}::frame .b.left -width 200
++${NS}::button .b.yes -text Yes -command yes
++${NS}::button .b.no  -text No  -command no
++
++
++pack .b.left -side left -expand 1 -fill x
++pack .b.yes -side left -expand 1
++pack .b.no -side right -expand 1 -ipadx 5
++pack .b -side bottom -fill x -ipadx 20 -ipady 15
++
++bind . <Key-Return> {exit 0}
++bind . <Key-Escape> {exit 1}
++
++proc no {} {
++	exit 1
++}
++
++proc yes {} {
++	exit 0
++}
++
++wm title . "Question?"
++wm resizable . 0 0
++tk::PlaceWindow .
+-- 
+1.7.4.rc3.9.gbf3bd
