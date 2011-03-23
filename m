@@ -1,116 +1,126 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PULL svn-fe] vcs-svn: simplifications, error handling improvements
-Date: Tue, 22 Mar 2011 19:32:40 -0500
-Message-ID: <20110323003240.GA4949@elie>
-References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
- <1300751400-7427-1-git-send-email-david.barr@cordelta.com>
+Subject: Re: [PATCHv2 3/3] rev-list --min-parents,--max-parents: doc and test
+ and completion
+Date: Tue, 22 Mar 2011 19:47:30 -0500
+Message-ID: <20110323004730.GA10014@elie>
+References: <cover.1300702130.git.git@drmicha.warpmail.net>
+ <8bad49d4e4897be623b7af3096498a5803dbbd89.1300702130.git.git@drmicha.warpmail.net>
+ <20110321184514.GA1850@elie>
+ <4D8855D4.6080804@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 01:33:30 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Mar 23 01:47:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2C0t-0005kH-MO
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 01:33:28 +0100
+	id 1Q2CEi-0004Lm-AM
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 01:47:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986Ab1CWAdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2011 20:33:16 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60497 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899Ab1CWAdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2011 20:33:14 -0400
-Received: by ywj3 with SMTP id 3so3133719ywj.19
-        for <git@vger.kernel.org>; Tue, 22 Mar 2011 17:33:13 -0700 (PDT)
+	id S1752116Ab1CWArj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2011 20:47:39 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:45174 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444Ab1CWAri (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2011 20:47:38 -0400
+Received: by gxk21 with SMTP id 21so3140386gxk.19
+        for <git@vger.kernel.org>; Tue, 22 Mar 2011 17:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=XvpyATlZ6jp+KaHm6l0AIHbK8Ubx3++w+QKPZHkrZrs=;
-        b=AqjL1U6YlIetkkiUphrhlG+kDHIL+6dbmdSVF7Bj+fWR6rhGI99TU1GcmIeLPwEtHi
-         QPbNx5sRYo67adwJb/SOL834qKGB8T6qvdNUnTZrLfCedX4JNPoDeu/5SyHncwzX/vCi
-         Nggm2kKLba/dXamOpBYiLN6qnhF/NlYo2ziQc=
+        bh=5icH8V7EORp+gnY68zO5AOQ49LA5KPWLXlg9yzJ/hMc=;
+        b=D22+ecyJNQhxHCj4N2gYjv7KySvAUjNG6PayFOm5E8dpEx3xV3t4sTDWhJ+CHQEk9T
+         KZxmc/Q83Mj5PJpOQC4EL8xaVRmdtChD1qUDgbdoGaRn6CNwSn2wPviYqOdJc8TkQI8h
+         2IbqYk8Ql1RFVWmlhCco4+13q1vniHWbRpi6A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=fMUSRGj0gGVnt5syxTDt8fnmmTp2NIcrxb+dznouHdO5y+xiGr2M95Toog21G9Sbif
-         kLUNJh3OMSuIU593s4kMEWhX84qFYEOFep4ejkgk/wWXdu9xM6zfguW5yhXp5FqxAL+/
-         pPgoSRddGb7LnhUHkgO7BrvH9fZ7uSbSLoXQk=
-Received: by 10.151.95.16 with SMTP id x16mr6081424ybl.46.1300840392728;
-        Tue, 22 Mar 2011 17:33:12 -0700 (PDT)
+        b=WnQLii91dlXEgjUuNZyktc/3R2k5pB3ckDIHjEt1gldOy1cs8h4CYOso5yGpBJ+t1t
+         jBL7p8/ptLwSYLhWykxu5cCPm3TT4QO4RID6l/UK/Svwqs7Nh65HG3urqNcqv3z+FL4K
+         IQxjGx5XaQS0c0UbBlwKdyEP33u/SUMShR818=
+Received: by 10.100.112.20 with SMTP id k20mr4142266anc.163.1300841257797;
+        Tue, 22 Mar 2011 17:47:37 -0700 (PDT)
 Received: from elie (adsl-68-255-102-141.dsl.chcgil.ameritech.net [68.255.102.141])
-        by mx.google.com with ESMTPS id p41sm1984431ybk.29.2011.03.22.17.33.06
+        by mx.google.com with ESMTPS id r8sm5103465ane.45.2011.03.22.17.47.34
         (version=SSLv3 cipher=OTHER);
-        Tue, 22 Mar 2011 17:33:07 -0700 (PDT)
+        Tue, 22 Mar 2011 17:47:35 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1300751400-7427-1-git-send-email-david.barr@cordelta.com>
+In-Reply-To: <4D8855D4.6080804@drmicha.warpmail.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169791>
 
-(culled cc list)
-Hi Junio,
+Michael J Gruber wrote:
+> Jonathan Nieder venit, vidit, dixit 21.03.2011 19:45:
+>> Michael J Gruber wrote:
 
-Please pull
+>>> Based on mg/rev-list-one-side-only (in next) to save Junio a build conflict
+>>> resolution.
+>>
+>> Not a serious problem, but I wish it hadn't been.  What particular
+>
+> But why? Basing it on something earlier would have served no purpose
+> (that I know of) at all.
+>
+> I should have mentioned the dependency in v1.
 
-  git://repo.or.cz/git/jrn.git svn-fe
+*nod*  Sorry, I was just confused before --- I hadn't understood why
+you were doing it.  Giving a heads up like you did about interaction
+between topics is indeed very useful.
 
-to get the following changes on top of master.
+To answer your question about why: basing it on master would mean
+that Junio could merge it to master without merging
+mg/rev-list-one-side-only first.  Similarly, I had wanted to test
+against master because master is what I use day-to-day so applying
+it there would avoid confusing unrelated changes.
 
-These are the patches from David's recent code-purge series that do
-not require incremental import support.  I'd like to push out
-incremental import support soon, too, but since that makes svn-fe
-require feedback from fast-import as it runs, it would be nice to
-provide some simple wrapper script to set everything up at the same
-time to avoid inconveniencing users too much.
+>> Seems hackish.  Maybe --no-max-parents could denote infinity?
+>
+> For me, "-1" is a quite natural way to reset a count type parameter
 
-The main impact of the patches currently in svn-fe should be to
-improve error handling a little.
+Natural to me in code, but not on the command line.  I can write a
+separate patch for --no-max-parents if you'd like.
 
-David Barr wrote:
+> There is no problem parsing for "--max-parents=infinity" and/or
+> "--no-max-parents" or even (better?) "--max-parents=" without number,
+> it's only a matter of bike shedding decisions.
 
-> Patch 6 follows the spirit of patches 4 and 5, for a consistent
-> approach to switching on constant strings.
+Well, if it doesn't matter what color it is, I guess I shouldn't have
+mentioned it then?
 
-I've skipped this one and applied the rest.  You can see the result
-in the svn-fe-pu branch.
+> Hmmm, are there whitespace issues which am warns about and diff does
+> not, or have I missed a warning?
 
-Thoughts, suggestions, improvements welcome as always.
+Yep, diff doesn't warn about anything without --check.
 
-David Barr (5):
-      vcs-svn: use strbuf for revision log
-      vcs-svn: use strbuf for author, UUID, and URL
-      vcs-svn: implement perfect hash for node-prop keys
-      vcs-svn: implement perfect hash for top-level keys
-      vcs-svn: use strchr to find RFC822 delimiter
+>>> +test_expect_success 'rev-list override and infinities' '
+>>> +
+>>> +	check_revlist "--min-parents=2 --max-parents=1 --max-parents=3" tripus normalmerge &&
+>>> +	check_revlist "--min-parents=1 --min-parents=2 --max-parents=7" tetrapus tripus normalmerge &&
+>>> +	check_revlist "--min-parents=2 --max-parents=8" tetrapus tripus normalmerge &&
+>>> +	check_revlist "--min-parents=2 --max-parents=-1" tetrapus tripus normalmerge
+>>> +'
+>> 
+>> 7 and 8 don't mean infinity any more, do they?  What is this test
+>> checking?
+>
+> The test checks "override and infinities", where the plural indicates
+> the fact that it tests different ways of spelling (practical) infinity
+> such as the very suggestive "8" which nobody cares about but me.
 
-Jonathan Nieder (9):
-      vcs-svn: introduce repo_read_path to check the content at a path
-      vcs-svn: handle_node: use repo_read_path
-      vcs-svn: simplify repo_modify_path and repo_copy
-      vcs-svn: allow input errors to be detected promptly
-      vcs-svn: improve support for reading large files
-      vcs-svn: make buffer_skip_bytes return length read
-      vcs-svn: make buffer_copy_bytes return length read
-      vcs-svn: improve reporting of input errors
-      Merge branch 'db/length-as-hash' into svn-fe
+Ah, so that's what you meant.  git.git has very few octopus merges,
+so even "4" is a practical infinity there (well, technically there's
+an early 6-parent commit).
 
- vcs-svn/fast_export.c   |   27 +++--
- vcs-svn/fast_export.h   |    5 +-
- vcs-svn/line_buffer.c   |   36 ++++---
- vcs-svn/line_buffer.h   |    6 +-
- vcs-svn/line_buffer.txt |    3 +-
- vcs-svn/repo_tree.c     |   43 ++++---
- vcs-svn/repo_tree.h     |   10 +-
- vcs-svn/svndump.c       |  307 +++++++++++++++++++++++++++++------------------
- 8 files changed, 265 insertions(+), 172 deletions(-)
+Regards,
+Jonathan
