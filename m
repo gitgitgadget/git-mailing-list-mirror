@@ -1,75 +1,77 @@
-From: "Samy Louis" <Samy.seif@go-eknowledge.com>
-Subject: duplicated Working tree
-Date: Wed, 23 Mar 2011 13:03:15 +0200
-Message-ID: <002701cbe949$e957f050$bc07d0f0$@go-eknowledge.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: Relative ls-files
+Date: Wed, 23 Mar 2011 11:27:05 +0000
+Message-ID: <AANLkTimc7gNKbh3C2hyMtFK6D1OWNALD+GvzmhG5cZrn@mail.gmail.com>
+References: <AANLkTi=fP+jBpLuxst2rv02pYRmj4HOkv8Yenc-dR-N_@mail.gmail.com>
+	<4D89D052.5030801@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1256
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 23 12:00:22 2011
+Cc: Git List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Mar 23 12:27:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2LnT-0007JL-LJ
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 12:00:16 +0100
+	id 1Q2MDZ-0006BT-AY
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 12:27:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932453Ab1CWLAI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 07:00:08 -0400
-Received: from out6.tedata.net.eg ([213.158.162.171]:45936 "EHLO
-	out.tedata.net.eg" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932413Ab1CWLAH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 07:00:07 -0400
-Received: (qmail 22519 invoked from network); 23 Mar 2011 11:00:05 -0000
-Received: by simscan 1.4.0 ppid: 22485, pid: 22500, t: 5.5455s
-         scanners: regex: 1.4.0 clamav: 0.96/m:52/d:11148 spam: 3.2.3
-X-Spam-TE-Data-out-Scanned: Yes
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on SMTP-Out6
-X-Spam-Status: No, score=3.2 required=10.0 tests=AWL,DNS_FROM_OPENWHOIS,
-	RDNS_DYNAMIC autolearn=no version=3.2.3
-Received: from host-213.158.171.58.tedata.net (HELO sls) (technology.know@[213.158.171.58])
-          (envelope-sender <Samy.seif@go-eknowledge.com>)
-          by out6.tedata.net.eg (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 23 Mar 2011 10:59:59 -0000
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AcvpSd/pNJ/9MHV5RIy7nm53Ck7p9g==
-Content-Language: en-us
+	id S932627Ab1CWL1H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 07:27:07 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36156 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932501Ab1CWL1G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 07:27:06 -0400
+Received: by iyb26 with SMTP id 26so8454822iyb.19
+        for <git@vger.kernel.org>; Wed, 23 Mar 2011 04:27:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QgJO9Dg0p8PMECXhOx/fQIEQC8uRGAEYVCuUctECNFU=;
+        b=pxPkql3leWokwrL+MUfIc2T8wpkEboqqYgRSmrS2qRVCCVaY7r9HOg4jOt04n44zRR
+         TVGNP0mvUkGrldUx74DZr/q5VCgtuY3yloB9nNuvkXAn/ZAVaIzZT1eWoxwNH4yeEhxm
+         mwB0PToSgVY4YkHHLa1UspSJEjgbHXjFmCY7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WCOWUXYTQZI0AH11B/zmroBv2fhwYSDgeB9WW2BXo7BksU6d1KsfoBucVxNgGW27VP
+         X0Cm8RoR/YjOKmGgxNQOd9sR3HZ8sD3Mmaj0xyxF4ADQC/Z95fbWcXy/0NfBDx6j6q7Q
+         /TIr7raquv/0kdfwZxv5KdEuWY/e140gs1OxI=
+Received: by 10.42.135.9 with SMTP id n9mr11217641ict.42.1300879625317; Wed,
+ 23 Mar 2011 04:27:05 -0700 (PDT)
+Received: by 10.42.220.1 with HTTP; Wed, 23 Mar 2011 04:27:05 -0700 (PDT)
+In-Reply-To: <4D89D052.5030801@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169817>
+
+On 23 March 2011 10:49, Michael J Gruber <git@drmicha.warpmail.net> wro=
+te:
+> John Tapsell venit, vidit, dixit 23.03.2011 11:33:
+>> Hi,
+>>
+>> =C2=A0 Could someone add a feature to =C2=A0ls-files =C2=A0to list a=
+ll the files in
+>> the repository, but relative to the current path? =C2=A0It would be =
+useful
+>> for many different aliases, such as "git locate".
+>
+> That is in the works, we just have to decide between two suggested
+> notations:
+>
+> git ls-files :
+> git ls-files :/
 
 
-Hi,
+What's wrong with --relative  or something?
 
-I have a strange problem and need your support if possible.
+I've never liked magical strange notations.  ":" already has a meaning.
 
-When I clone a=A0 remote GIT repository (LAN) =A0to =A0local machine, =A0=
-I get two
-working=A0 folder one at the GIT local folder (normal) and the other in
-=A0original path of where the remote repository had been created before=
- it was
-cloned =A0to remote network.
-
-How can I overcome this issue to only have one local working folder.
-
-
-Step to =A0reproduce it:
-
-1- Create a local GIT repo.=A0 (D:\repositoies\projectname)
-2- Clone the GIT repo. to network path ( \\server\GIT\ projectname) use=
- a
-bare flag.
-3- Clone the remote repo ( \\server\GIT\ projectname) to other machine =
-in
-path (C:\GIT\projectname) and create working tree
-4- We will fine two working tree one at C:\GIT\projectname and the othe=
-r at
-D:\repositoies\projectname.
-
-Thanks in advance .
-
-Regards
-Samy Louis
+John
