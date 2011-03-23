@@ -1,87 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gsoc - Better git log --follow support
-Date: Wed, 23 Mar 2011 13:06:55 -0400
-Message-ID: <20110323170655.GA4392@sigill.intra.peff.net>
-References: <AANLkTi=n7e70UqYU+6wpG4cu95fsg39tVM6=7fpfdZFz@mail.gmail.com>
- <20110321122407.GH16334@sigill.intra.peff.net>
- <AANLkTi=woLeveur6gKnSXTRzmS8nB0o4M9HegJ+GNUCa@mail.gmail.com>
- <20110323162023.GC30337@sigill.intra.peff.net>
- <7v8vw5g4f0.fsf@alter.siamese.dyndns.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: How to remove a git subtree and its history?
+Date: Wed, 23 Mar 2011 10:09:21 -0700
+Message-ID: <AANLkTi=WX+jD-Vz0wtorHgMBQLQ4=ycHVzZeUt8goxyL@mail.gmail.com>
+References: <4D88A1CB.2000500@jku.at> <AANLkTiktAUeOkX0MZh+JbQb1z-JiN=Qet6_AuWavsNk=@mail.gmail.com>
+ <4D89B6F4.2050209@jku.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?Q?Micha=C5=82_=C5=81owicki?= <mlowicki@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 18:07:06 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Robert Pollak <robert.pollak@jku.at>
+X-From: git-owner@vger.kernel.org Wed Mar 23 18:09:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2RWR-00056z-Nd
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 18:07:04 +0100
+	id 1Q2RZ5-00072E-SE
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 18:09:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108Ab1CWRG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2011 13:06:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53984
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752597Ab1CWRG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2011 13:06:57 -0400
-Received: (qmail 6695 invoked by uid 107); 23 Mar 2011 17:07:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Mar 2011 13:07:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2011 13:06:55 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8vw5g4f0.fsf@alter.siamese.dyndns.org>
+	id S1753597Ab1CWRJn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 13:09:43 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:34818 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751219Ab1CWRJm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 13:09:42 -0400
+Received: by vxi39 with SMTP id 39so6288887vxi.19
+        for <git@vger.kernel.org>; Wed, 23 Mar 2011 10:09:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=KxDbBCbD5Q1fqfDrSf98pNxq7IWnCjnsOt4owTaotPQ=;
+        b=XmJlFKfL77WTayziTNqIoRvIzkj58ubYeDWPB+PjXjRPX2GiKY1lIqxAstBCgANU48
+         9f65e0uT1x2ZJfDJVHA4C+0KIn0htv52njOVsb1j+1rWaf5q4Pm3UKl1Fwe06fzLRalX
+         V+yXNwDaJsKEXSoyWlJQF0yhEXIIt8K+j9T68=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=bS7XgGK41w8mhS1d9OQ3jXzIsbMnHj4MwXPVOvL8BPIh34oMpNhZOKezWusI7JKDCa
+         Zy+AICgis4j8kSSL/t+XL7RQym4ai8fJqXg+4gjsZVsayc/jTPUs47jhZK/fJTiE866+
+         fCvGmBsgKbxbh5S6J/NsSeto0D34eIsZujJYA=
+Received: by 10.52.89.18 with SMTP id bk18mr7163240vdb.270.1300900181142; Wed,
+ 23 Mar 2011 10:09:41 -0700 (PDT)
+Received: by 10.52.161.132 with HTTP; Wed, 23 Mar 2011 10:09:21 -0700 (PDT)
+In-Reply-To: <4D89B6F4.2050209@jku.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169856>
 
-On Wed, Mar 23, 2011 at 09:58:11AM -0700, Junio C Hamano wrote:
+On Wed, Mar 23, 2011 at 2:01 AM, Robert Pollak <robert.pollak@jku.at> w=
+rote:
+> Am 22.03.2011 21:44, schrieb Avery Pennarun:
+>> I've never tried to do this since
+>> the history rewrite you'd be doing in this case would completely
+>> invalidate all your old history: by removing the subtree in all past
+>> revisions, you make all those past revisions unbuildable, which seem=
+s
+>> like missing the point of version control. =A0Nevertheless, I'm sure=
+ you
+>> could make it happen if you wanted; you can do pretty much anything
+>> you want by filtering git history.
+>
+> I see. As quite a git newbie I hoped you had done this already and co=
+uld
+> help me with the necessary git filter-branch command line.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >   # Now try it with --follow. Not so pretty.
-> >   git log --oneline --graph --follow builtin/add.c
-> 
-> Is that an artifact of history simplification?
+I don't really have time to decode it all for you, but there are
+basically two things you need to do here:
 
-I think it's a combination of factors. The lack of history
-simplification is why the graph is all choppy. The insanely wide
-results, though, are probably due to the problem you mention below.
+1) filter out the subtree merge commits
+2) filter out the actual files.
 
-> I've always thought that it was because --follow hack used a single global
-> pathspec that flipped at a rename boundary,regardless of which part of the
-> history (i.e. the branch that was before the rename or after the rename)
-> it is following.  So if you have two branches merged together:
-> 
->         o---o---o---o---o---x---x---x
->        /                   / 
->    ...o---o---o---x---x---x
-> 
-> where commits marked with 'x' has it under the new path while commits
-> marked with 'o' has it under the old path, and start to dig the history
-> from the rightmost commit, the hack notices the rename at the transition
-> between the "o---x" on the upper branch and from then on keep digging the
-> history using the old path as the pathspec.  The commit history traversal
-> goes reverse-chronologically, so when inspecting the next commit, which is
-> the rightmost commit on the lower branch, the hack fails because it uses a
-> wrong pathspec (at that point it should still be using the new path as the
-> pathspec, but it already has switched to the old path).
+You didn't really say which part of git-filter-branch *didn't* work
+for you.  I'm assuming you were successful at #2, since that part
+comes straight out of the filter-branch documentation, and you ended
+up with some leftover git history (ie. log entries from the parent
+project) that you don't want to see.
 
-When I prototyped the multi-file --follow last summer, I added newly
-found source paths to the pathspec list instead of replacing them.
-Strictly speaking, this can add unwanted commits when the names are
-re-used for unrelated files (either the source name is used on a
-parallel side branch, or the destination name is used in an earlier
-file). But in practice it generates pretty good results, because those
-corner cases don't tend to happen much. 
+The easiest way I know to remove commits from the middle of history
+(other than rebase, but that's too painful when there are merges) is
+to use grafts: https://git.wiki.kernel.org/index.php/GraftPoint
 
-Obviously a solution that always provides an exact right answer is
-preferable to "pretty good results", but we'd have to keep in mind the
-performance difference.
+Or maybe 'git replace' is easier than grafts nowadays.
 
--Peff
+After replacing the offending merge commits, run filter-branch one
+more time to make the changes permanent.
+
+>>> (Be free to CC git@vger.kernel.org if you reply, if you think that'=
+s
+>>> appropriate for archiving the info.)
+>>
+>> I don't understand why you didn't cc: the git list yourself then. =A0=
+But okay :)
+>
+> I was not sure whether discussion of git-subtree belongs there, since=
+ it
+> is not part of git (yet?).
+
+The git list seems to be used for discussion of git side projects
+sometimes.  As it happens, I'm not subscribed to the list anymore
+(nothing personal; I just can't handle the volume right now), so it's
+important to leave me on the cc: list though if you want me to see it.
+
+Have fun,
+
+Avery
