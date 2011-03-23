@@ -1,80 +1,72 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] add: make "add -u/-A" update full tree without pathspec
- (step 3)
-Date: Wed, 23 Mar 2011 21:02:46 +0700
-Message-ID: <AANLkTikBQg_pT2NX9vQc+DcB+4HA35VXBpQyRtAU_ewG@mail.gmail.com>
-References: <7vy649vah1.fsf@alter.siamese.dyndns.org> <7vtyexv6wl.fsf@alter.siamese.dyndns.org>
- <7vpqplv65o.fsf@alter.siamese.dyndns.org> <vpqlj09a303.fsf@bauges.imag.fr>
- <7vhbaxuyk7.fsf@alter.siamese.dyndns.org> <20110321111643.GE16334@sigill.intra.peff.net>
- <7vtyeuiu07.fsf@alter.siamese.dyndns.org> <7v7hbqifej.fsf_-_@alter.siamese.dyndns.org>
- <7v1v1yifc9.fsf_-_@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Relative ls-files
+Date: Wed, 23 Mar 2011 07:09:55 -0700
+Message-ID: <7v7hbqgc7g.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=fP+jBpLuxst2rv02pYRmj4HOkv8Yenc-dR-N_@mail.gmail.com>
+ <4D89D052.5030801@drmicha.warpmail.net>
+ <AANLkTimc7gNKbh3C2hyMtFK6D1OWNALD+GvzmhG5cZrn@mail.gmail.com>
+ <AANLkTimdLGgGXGRNVH5+X-cnhK2NWfWx9k0apt-6rr1Z@mail.gmail.com>
+ <4D89DCBE.3060400@drmicha.warpmail.net>
+ <AANLkTi=BrgZe47Bt5evr_qFzKBL=MY-6NmH22gsRurVV@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 15:07:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	demerphq <demerphq@gmail.com>, John Tapsell <johnflux@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 15:10:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2OiO-00048z-Ow
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 15:07:13 +0100
+	id 1Q2OlS-0006Nq-Qe
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Mar 2011 15:10:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756383Ab1CWOHD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 10:07:03 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:36527 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755244Ab1CWOHB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 10:07:01 -0400
-Received: by wya21 with SMTP id 21so7681243wya.19
-        for <git@vger.kernel.org>; Wed, 23 Mar 2011 07:07:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=HWU5WisSMFX9RkGSjJ5DHOj1Mjos0NpdFzHzM+lXZFU=;
-        b=rACPi35tMaO6ZQ5drWzX44AqG7g+NPOYnqc4Ldm9KX1CpOZ89IRIxDBLat6eG67RW2
-         RpStBhzLHqCjzPKIqDyyemPQJtBNjYgwBJX37mf0S1qY9VuMNcSnu/NoBEC/BXHN/C35
-         h5Bs30134oIFo63+McxV6gKblyljcthsGLcFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=rWopnuhnYPf/widXsIrqQ0bqVqLL+MKCx27AhQK9f+fjoDpc2OzgEugx8NMS8axmD9
-         uLZW5grGNelWEnCAfeRBBhM1X5qYVzPSzNHDaJ4/rqmqvGPlm3pMBtn1atIe4OB9PDFt
-         SnYeWKzwynqfUt2v29YaM/S0N/kji1+0fvm6U=
-Received: by 10.216.243.195 with SMTP id k45mr6802826wer.66.1300888996367;
- Wed, 23 Mar 2011 07:03:16 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Wed, 23 Mar 2011 07:02:46 -0700 (PDT)
-In-Reply-To: <7v1v1yifc9.fsf_-_@alter.siamese.dyndns.org>
+	id S1752395Ab1CWOKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 10:10:15 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60532 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750721Ab1CWOKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 10:10:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 46CE44D08;
+	Wed, 23 Mar 2011 10:11:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CSglU8OfUE5vDIyHz9fvoFHAQ4U=; b=C2UB8H
+	PvKJeJyIXjY+l8z+CeNW30w+a9G7xAJ4SGL2Y2Ux6Yau4hkLP8vhurlzWOY17AwC
+	WLF6aoRk08jzpvwmiV+i/uhRsdZJ+xvToI8O/Q9hl8XH5/p5AAyNhkDPmyjp/xwT
+	cc+DQ+S2azILbUYbQRtOp9LSnkocEGQrhv50U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Mh0+lbBPjmy5iuM7GmJruN9es9TdvPWt
+	bORSoUY8Hr+1AZmRlpvZf+yfCFG2q1wKryWpfGlw+BdKVkCABgxZ/MBtEHntjy54
+	PkBikC/4QObu3sxgfufVTUGUScr81S/ppyy5vyGpoQVN74ws/afcW3wo7TCqD/XB
+	wh6yzCUUpIg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E68654D04;
+	Wed, 23 Mar 2011 10:11:44 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6D0554D01; Wed, 23 Mar 2011
+ 10:11:38 -0400 (EDT)
+In-Reply-To: <AANLkTi=BrgZe47Bt5evr_qFzKBL=MY-6NmH22gsRurVV@mail.gmail.com>
+ (Martin Langhoff's message of "Wed, 23 Mar 2011 09:54:45 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7BCC67D0-5557-11E0-B8A8-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169834>
 
-2011/3/23 Junio C Hamano <gitster@pobox.com>:
-> Now long after 1.8.0 happened, people should have got used to the
-> new default behaviour and it is no longer necessary to give the
-> migration advice anymore.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
-> =C2=A0* And this concludes the two-year long series from the future ;=
--)
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-Beautiful.
+> and the answer is git ls-files --with-tree=<treeish> | grep <regex> .
+> But the --with-tree param is so counterintuitive to me that I read the
+> manpage, everytime.
 
-I'd expect you kill add.treewideupdate too. Say one year after this
-patch, we can start to annoy users asking them to remove
-add.treewideupdate and switch to new behavior. Another year goes by,
-we refuse to work with those who still keep add.treewideupdate config.
+Because --with-tree nor ls-files is the tool that was designed for.
 
-A consistent default behavior is a good thing. If I help a git user
-and later realize "git add -u" on their machine does not work as I
-expect it to be, it'd be less pleasant.
---=20
-Duy
+If you want to find out about a branch, why aren't you using "ls-tree -r"?
