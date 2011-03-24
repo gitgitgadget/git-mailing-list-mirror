@@ -1,61 +1,88 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] Test failure when spaces in git root
-Date: Thu, 24 Mar 2011 21:46:02 +0100
-Message-ID: <201103242146.02728.trast@student.ethz.ch>
-References: <1300925506-20378-1-git-send-email-cmskog@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: merge recursive and code movement
+Date: Thu, 24 Mar 2011 17:18:20 -0400
+Message-ID: <AANLkTi=h6jUsjqXofd0QeWbNBjc9DeodJJ3FN7caW4XC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Carl Michael Skog <cmskog@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 21:46:14 2011
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:19:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2rQ5-0005ux-Im
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 21:46:14 +0100
+	id 1Q2rvl-0006sA-Qx
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 22:18:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934188Ab1CXUqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 16:46:07 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:21951 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932184Ab1CXUqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 16:46:05 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 24 Mar
- 2011 21:46:02 +0100
-Received: from thomas.inf.ethz.ch (217.162.250.31) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 24 Mar
- 2011 21:46:03 +0100
-User-Agent: KMail/1.13.6 (Linux/2.6.37.4-17-desktop; KDE/4.6.0; x86_64; ; )
-In-Reply-To: <1300925506-20378-1-git-send-email-cmskog@gmail.com>
-X-Originating-IP: [217.162.250.31]
+	id S1756567Ab1CXVSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2011 17:18:51 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:59867 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752419Ab1CXVSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2011 17:18:50 -0400
+Received: by iyb26 with SMTP id 26so372538iyb.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 14:18:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=JlxXUpoHYwui0lg3o1RHQupYvLXHBUTqU1eBgJb4yD8=;
+        b=afoJlWTZ17NPNcELkff+cmyCeSn5/VoaW9BTBx/euWaTO++dWrGg4dq7Mb03E7T08f
+         kuyo3kBOoYj/l1aPltLxKS/qSKBwrDEHgUDuA+w80EgA3wdB28SWirMowaWEqF6E/URu
+         oSmHrukvWYzPhIyc5mv/pGiB4OvO/+WyIfp+A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=Q1JhMVwS2DyZFrrgDZQA527WChvZ//zH6hE4YkUWPoNE6iyQk5aaElThklVVf3umeC
+         Hw+pgVk5Z7n7Pc1gNXY2kfhm/eYpYi4vLwCgCcZbd3ztGq8TL9vhAgWDSSJiWrLkfxq/
+         MYB6lRPDZ7DsScXPeTftEfyRjkNRE7CmCPiPo=
+Received: by 10.42.75.137 with SMTP id a9mr1754996ick.194.1301001530206; Thu,
+ 24 Mar 2011 14:18:50 -0700 (PDT)
+Received: by 10.231.181.91 with HTTP; Thu, 24 Mar 2011 14:18:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169944>
 
-Carl Michael Skog wrote:
-> Some of the svn related tests would break when the git root path had
-> spaces in it.
-[...]
-> -quoted_svnrepo="$(echo $svnrepo | sed 's/ /%20/')"
-> +quoted_svnrepo="$(echo $svnrepo | sed 's/ /%20/g')"
+There's a use case that merge recursive doesn't seem to handle, and I
+wonder how difficult it would be to add.
 
-If you're already fixing this, shouldn't it be
+Say you have a merge between OURS and THEIRS, with common ancestor BASE.
 
-  $(echo "$svnrepo" | ...)
+Between BASE and THEIRS, a file named header.h has the following changes:
 
-to stop the expansion process from converting arbitrary series of
-whitespace into a single space?
+  # Rename header.h to header_new.h
+  git mv header.h header_new.h
 
-However, any other (than space) character that needs %-quoting would
-probably also break the test.  Maybe some more complicated mangling
-would be in order.
+  # Minor edits to account for the rename such as fixing the
+  # include guard:
+  perl -pi -e 's/HEADER_H_/HEADER_NEW_H_/' header_new.h
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+  # Drop a compatibility header.h in place till we can fix all the
+  # files which include header.h
+  cat > header.h <<-__EOF__
+	#ifndef HEADER_H_
+	#define HEADER_H_
+	#include "header_hew.h"
+	#endif // HEADER_H_
+  __EOF__
+
+  git add header.h header_new.h
+  git commit -m 'rename header.h to header_new.h'
+
+Meanwhile, between BASE and OURS, a few minor changes are made to
+header.h. This could be as little as a single line change in the
+middle of the header.h.
+
+Now you merge THEIRS to OURS. Git will just show header.h in conflict.
+99% of the time I can do the following:
+
+  git diff MERGE_BASE... header.h | patch header_new.h
+  git checkout --theirs header.h
+  git add header.h header_new.h
+
+But it would seem like this is something merge recursive should be
+capable of handling on its own.
+
+j.
