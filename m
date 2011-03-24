@@ -1,211 +1,169 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] merge: merge with the default upstream with no argument
-Date: Thu, 24 Mar 2011 00:39:44 -0700
-Message-ID: <7vd3lharwf.fsf_-_@alter.siamese.dyndns.org>
-References: <7v62r9csqr.fsf@alter.siamese.dyndns.org>
- <7vpqphasbr.fsf@alter.siamese.dyndns.org>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git cherry improvements suggestions
+Date: Thu, 24 Mar 2011 08:40:39 +0100
+Message-ID: <AANLkTi=7NKn4FrCqFaGH+XTHRw3oLCv=aKPWAJfNsgD_@mail.gmail.com>
+References: <AANLkTimk0bkOGVy2W+XddHRuf-1xw+d0RwzPhnk40vi8@mail.gmail.com>
+	<4D89CF8E.4070100@drmicha.warpmail.net>
+	<AANLkTinXh_Y9ft5Pd5SxOEXvKNm3HLmsiut8WrvFZrdQ@mail.gmail.com>
+	<4D89F6BC.2040902@drmicha.warpmail.net>
+	<AANLkTin7Du5RYt946hNjP-y53puNykebCjiKk5Ju_igr@mail.gmail.com>
+	<4D8A0741.9000506@drmicha.warpmail.net>
+	<AANLkTi=7=QDh0Pe9W4bRcGY5Krg7sBqRcZ2C1YonJSRN@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jared Hance <jaredhance@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 08:39:59 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 24 08:40:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2f9D-0005Z5-7J
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:39:59 +0100
+	id 1Q2fA6-00065f-AX
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933509Ab1CXHjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 03:39:54 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47487 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933338Ab1CXHjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 03:39:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A2D583D01;
-	Thu, 24 Mar 2011 03:41:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LqK4rGorXAmQaWf6PEfPIDFXx7c=; b=IrSVVa
-	LLJ61gaXy7o2xBoz8J4fk3+/DOXX0f+9HHnKrqXLQcX5MucgFEmysaGFoZCERX2K
-	d8fGEjw+PTHtgm7TnNy5B4V/1lo4BdLY8Deqy3ytdk+NGReSP4ro7VKDSY4jMcRr
-	Y3pD6o3lTFl07IR2Z85TY9HDK/ztyPobziKvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FBRAYDx1FGh8k1qqEGVA8DmwgpFR+vAo
-	zY5rzv2Nhyw9OMq0nhWIsPg7rPYMzsFNejtrWUYBgIfna4PmGlAs67h69cyLKdry
-	P585XcL7d/E3bpaFy+zKkPEkilozsUdCGhBRVOrCWvzfj3axamj7Jsn4HHciwRto
-	wMu9LM/SU0I=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7F2133D00;
-	Thu, 24 Mar 2011 03:41:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 321623CFF; Thu, 24 Mar 2011
- 03:41:26 -0400 (EDT)
-In-Reply-To: <7vpqphasbr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 24 Mar 2011 00:30:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2220F8FC-55EA-11E0-85E6-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S933604Ab1CXHkm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 03:40:42 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:45427 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933550Ab1CXHkk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 03:40:40 -0400
+Received: by vws1 with SMTP id 1so6271024vws.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 00:40:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=r8rnr5GkJvln3HmKl/b15x3f5plwJW4oTf/xEpMhdKg=;
+        b=wNcPlCS33e375hik+f3jEgcfLnmMTmIrW8mtAlGSGFz5ffiWUOhajZSLlI4+Z8syy6
+         z6UgN2DuJEG8mKUHIKMWPZCPqTS6kmwcM1Zy94cNCtOOkFUwwRLplK2eCQbqpzuD30gz
+         AF0P04wTwiBGLvMCEiu79PfLzJW/9RnmBAC3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EcdilCID6Y9/qFbcuC6qn4QjqDNhE/VGGBOc5mTeFBtYwXZbElNcBldhN4Lm5P6gfD
+         mi9G5ouYi1tWC6FnUTBCcSC5eGsxYBToApcuzDFgwMaPydhrS1qUnw891TigD+vOEWXq
+         Vp6bmgMORPYaWzQDUCAbKkEgY36TguEFjEEtg=
+Received: by 10.52.95.135 with SMTP id dk7mr85652vdb.93.1300952439189; Thu, 24
+ Mar 2011 00:40:39 -0700 (PDT)
+Received: by 10.220.210.16 with HTTP; Thu, 24 Mar 2011 00:40:39 -0700 (PDT)
+In-Reply-To: <AANLkTi=7=QDh0Pe9W4bRcGY5Krg7sBqRcZ2C1YonJSRN@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169900>
 
-"git merge" without specifying any commit is a no-op by default.
+On Wed, Mar 23, 2011 at 8:28 PM, Piotr Krukowiecki
+<piotr.krukowiecki@gmail.com> wrote:
+> On Wed, Mar 23, 2011 at 3:44 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 15:43:
+>>> On Wed, Mar 23, 2011 at 2:33 PM, Michael J Gruber
+>>> <git@drmicha.warpmail.net> wrote:
+>>>> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 14:23:
+>>>>> Just some stats:
+>>>>>
+>>>>> =A0 =A0git log --cherry-mark --left-right --oneline --date-order =
+branch...trunk
+>>>>>
+>>>>> lists 1004 commits, takes about 20s and memory peaks to about 670=
+MB
+>>>>> twice during the run (I'm on linux with AMD Phenom II X4 945)
+>>>>>
+>>>>> With limit it prints X last commits (the limiting seems to take p=
+lace after all
+>>>>> work, on the output list only).
+>>>>>
+>>>>> branch..trunk is 551 commits, the other way is 453 commits.
+>>>>> 710 commits are found to be "=3D", 98 "<", 196 ">".
+>>>>>
+>>>>> Note, I'm not saying it's too slow, or that it's working incorrec=
+tly, I'm just
+>>>>> giving real-life stats if anyone was interested.
+>>>>> I suspect such checks won't be done frequently.
+>>>>
+>>>> You don't need to say it's slow - I've said so already :(
+>>>>
+>>>> http://permalink.gmane.org/gmane.comp.version-control.git/169725
+>>>
+>>> In the link above:
+>>> =A0 git cherry A B: 0.4s
+>>> =A0 git rev-list --cherry A...B: 1.7s
+>>>
+>>> So rev-list is 4.25x slower.
+>>>
+>>> In my case it's only 1.23x slower:
+>>>
+>>> =A0 =A0$ time git rev-list --cherry branch...trunk =A0> /tmp/rev-li=
+st
+>>> =A0 =A0real =A0 =A0 =A0 0m18.627s
+>>> =A0 =A0user =A0 =A0 =A0 0m17.710s
+>>> =A0 =A0sys =A0 =A0 =A0 =A00m0.900s
+>>>
+>>> =A0 =A0$ time git cherry =A0branch trunk =A0> /tmp/cherry
+>>> =A0 =A0real =A0 =A0 =A0 0m15.345s
+>>> =A0 =A0user =A0 =A0 =A0 0m14.310s
+>>> =A0 =A0sys =A0 =A0 =A0 =A00m1.020s
+>>>
+>>>
+>>
+>> How's that with > /dev/null (or with --count for rev-list)? Also, ho=
+w
+>> many merge bases do you have:
+>>
+>> git merge-base --all branch trunk | wc -l
+>
+> I expect only one - there should be no merges between those two
+> branches.
+>
+> I will do measurements tomorrow.
 
-A new option merge.defaultupstream can be set to true to cause such an
-invocation of the command to merge the upstream branches configured for
-the current branch by using their last observed values stored in their
-remote tracking branches.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * This is more or less total rewrite, so I am taking the authorship
-   from Jared, i.e. the bugs and blames are mine.
+Branches might change a bit since yesterday so the exact numbers
+might be a bit different.
 
- Documentation/git-merge.txt    |   11 ++++++++---
- Documentation/merge-config.txt |   10 ++++++++++
- builtin/merge.c                |   39 ++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 56 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index c1efaaa..cc8f424 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git merge' [-n] [--stat] [--no-commit] [--squash]
- 	[-s <strategy>] [-X <strategy-option>]
--	[--[no-]rerere-autoupdate] [-m <msg>] <commit>...
-+	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
- 'git merge' <msg> HEAD <commit>...
- 'git merge' --abort
- 
-@@ -95,8 +95,13 @@ commit or stash your changes before running 'git merge'.
- 
- <commit>...::
- 	Commits, usually other branch heads, to merge into our branch.
--	You need at least one <commit>.  Specifying more than one
--	<commit> obviously means you are trying an Octopus.
-+	Specifying more than one commit will create a merge with
-+	more than two parents (affectionately called an Octopus merge).
-++
-+If no commit is given from the command line, and if `merge.defaultToUpstream`
-+configuration variable is set, merge the remote tracking branches
-+that the current branch is configured to use as its upstream.
-+See also the configuration section of this manual page.
- 
- 
- PRE-MERGE CHECKS
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 1e5c22c..83dba63 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -6,6 +6,16 @@ merge.conflictstyle::
- 	a `>>>>>>>` marker.  An alternate style, "diff3", adds a `|||||||`
- 	marker and the original text before the `=======` marker.
- 
-+merge.defaultToUpstream::
-+	If merge is called without any commit argument, merge the upstream
-+	branches configured for the current branch by using their last
-+	observed values stored in their remote tracking branches.
-+	The values of the `branch.<current branch>.merge` that name the
-+	branches at the remote named by `branch.<current branch>.remote`
-+	are consulted, and then they are mapped via `remote.<remote>.fetch`
-+	to their corresponding remote tracking branches, and the tips of
-+	these tracking branches are merged.
-+
- merge.log::
- 	In addition to branch names, populate the log message with at
- 	most the specified number of one-line descriptions from the
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a2105ef..309bdd4 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -25,6 +25,7 @@
- #include "help.h"
- #include "merge-recursive.h"
- #include "resolve-undo.h"
-+#include "remote.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -37,7 +38,7 @@ struct strategy {
- };
- 
- static const char * const builtin_merge_usage[] = {
--	"git merge [options] <commit>...",
-+	"git merge [options] [<commit>...]",
- 	"git merge [options] <msg> HEAD <commit>",
- 	"git merge --abort",
- 	NULL
-@@ -59,6 +60,7 @@ static int option_renormalize;
- static int verbosity;
- static int allow_rerere_auto;
- static int abort_current_merge;
-+static int default_to_upstream;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -537,6 +539,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 		if (is_bool && shortlog_len)
- 			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 		return 0;
-+	} else if (!strcmp(k, "merge.defaulttoupstream")) {
-+		default_to_upstream = git_config_bool(k, v);
-+		return 0;
- 	}
- 	return git_diff_ui_config(k, v, cb);
- }
-@@ -912,6 +917,35 @@ static int evaluate_result(void)
- 	return cnt;
- }
- 
-+/*
-+ * Pretend as if the user told us to merge with the tracking
-+ * branch we have for the upstream of the current branch
-+ */
-+static int setup_with_upstream(const char ***argv)
-+{
-+	struct branch *branch = branch_get(NULL);
-+	int i;
-+	const char **args;
-+
-+	if (!branch)
-+		die("No current branch.");
-+	if (!branch->remote)
-+		die("No remote for the current branch.");
-+	if (!branch->merge_nr)
-+		die("No default upstream defined for the current branch.");
-+
-+	args = xcalloc(branch->merge_nr + 1, sizeof(char *));
-+	for (i = 0; i < branch->merge_nr; i++) {
-+		if (!branch->merge[i]->dst)
-+			die("No remote tracking branch for %s from %s",
-+			    branch->merge[i]->src, branch->remote_name);
-+		args[i] = branch->merge[i]->dst;
-+	}
-+	args[i] = NULL;
-+	*argv = args;
-+	return i;
-+}
-+
- int cmd_merge(int argc, const char **argv, const char *prefix)
- {
- 	unsigned char result_tree[20];
-@@ -984,6 +1018,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	if (!allow_fast_forward && fast_forward_only)
- 		die("You cannot combine --no-ff with --ff-only.");
- 
-+	if (!argc && !abort_current_merge && default_to_upstream)
-+		argc = setup_with_upstream(&argv);
-+
- 	if (!argc)
- 		usage_with_options(builtin_merge_usage,
- 			builtin_merge_options);
--- 
-1.7.4.1.433.gcd306
+$ time git cherry  branch trunk  > /dev/null
+
+real	0m15.246s
+user	0m14.260s
+sys	0m0.970s
+
+
+$ time git rev-list --cherry branch...trunk  > /dev/null
+
+real	0m18.801s
+user	0m17.980s
+sys	0m0.800s
+
+
+$ time git rev-list --cherry --count branch...trunk
+556
+
+real	0m18.825s
+user	0m18.010s
+sys	0m0.770s
+
+
+$ time git merge-base --all branch trunk  | wc -l
+2
+
+real	0m0.538s
+user	0m0.490s
+sys	0m0.040s
+
+
+I expected one merge base, but it appears our history is
+seriously fscked, either by past svn operations or by
+git-svn clone :)
+
+(I'm not saying there's an error somewhere, just that the
+history is ... complicated)
+
+
+--=20
+Piotr Krukowiecki
