@@ -1,58 +1,69 @@
-From: Harald Welte <laforge@gnumonks.org>
-Subject: Re: Unable to clone via git protocol / early EOF / index-pack
- failed
-Date: Thu, 24 Mar 2011 11:30:49 +0100
-Message-ID: <20110324103049.GI4534@prithivi.gnumonks.org>
-References: <20110324102703.GH4534@prithivi.gnumonks.org>
+From: Eli Barzilay <eli@barzilay.org>
+Subject: `*' gitignores and nested ignores
+Date: Thu, 24 Mar 2011 06:10:00 -0400
+Message-ID: <19851.6264.179471.935771@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 11:44:38 2011
+X-From: git-owner@vger.kernel.org Thu Mar 24 12:13:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2i1s-0002lS-TR
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 11:44:37 +0100
+	id 1Q2iUI-0008EP-4b
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 12:13:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756759Ab1CXKod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 06:44:33 -0400
-Received: from ganesha.gnumonks.org ([213.95.27.120]:51476 "EHLO
-	ganesha.gnumonks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754560Ab1CXKoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 06:44:32 -0400
-Received: from uucp by ganesha.gnumonks.org with local-bsmtp (Exim 4.69)
-	(envelope-from <laforge@gnumonks.org>)
-	id 1Q2i1n-0006bY-Ve
-	for git@vger.kernel.org; Thu, 24 Mar 2011 11:44:31 +0100
-Received: from laforge by nataraja.de.gnumonks.org with local (Exim 4.72)
-	(envelope-from <laforge@gnumonks.org>)
-	id 1Q2hoY-0001Ux-0N
-	for git@vger.kernel.org; Thu, 24 Mar 2011 11:30:50 +0100
-Content-Disposition: inline
-In-Reply-To: <20110324102703.GH4534@prithivi.gnumonks.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752933Ab1CXLNx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 07:13:53 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:34429 "EHLO
+	winooski.ccs.neu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751458Ab1CXLNw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 07:13:52 -0400
+X-Greylist: delayed 3830 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Mar 2011 07:13:52 EDT
+Received: from winooski.ccs.neu.edu (localhost.localdomain [127.0.0.1])
+	by winooski.ccs.neu.edu (8.14.4/8.14.4) with ESMTP id p2OAA14B027923
+	for <git@vger.kernel.org>; Thu, 24 Mar 2011 06:10:01 -0400
+Received: (from eli@localhost)
+	by winooski.ccs.neu.edu (8.14.4/8.14.4/Submit) id p2OAA07r027919;
+	Thu, 24 Mar 2011 06:10:00 -0400
+X-Mailer: VM 8.1.93a under 23.2.1 (x86_64-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169913>
 
-Hi again,
+According to the man page, a .gitignore file that is deeper has higher
+precedence, and a `!' line overrides lower precedence ignores.  I
+tried that, and it works in cases like the last "vmlinux*" example.
 
-> since a couple of days ago, I'm encountering a very strange problem regarding
-> one of my git-daemon installations. 
+But it doesn't work if the lower precedence directory has a "*"
+pattern.  If the last example from the man page is changed to:
 
-What I forgot to mention:  The same repositories work fine using the
-'ssh' transport, we can clone, fetch, update, push without any problems
-at all.  So I am quite sure the problem is not related to the repository
-data/metadata, but specifically related to git-daemon.
+               $ cat .gitignore
+               *
+               $ ls arch/foo/kernel/vm*
+               arch/foo/kernel/vmlinux.lds.S
+               $ echo =C2=B4!/vmlinux*=C2=B4 >arch/foo/kernel/.gitignor=
+e
 
-Thanks again,
-	Harald
--- 
-- Harald Welte <laforge@gnumonks.org>           http://laforge.gnumonks.org/
-============================================================================
-"Privacy in residential applications is a desirable marketing option."
-                                                  (ETSI EN 300 175-7 Ch. A6)
+then -- IIUC -- the second ignore should work the same, but it
+doesn't.  This also happens if the first pattern is "/*".
+
+Is this a bug?
+
+
+BTW, my use case is to track random stuff in a directory that has lots
+of junk.  I wanted to do this by having a toplevel "/*" ignore and add
+files explicitly when I want to.  But there are some directories that
+should be tracked, and I was trying to achieve this effect by adding a
+"!/*" pattern in them.  Is there a more convenient (or saner) way of
+doing this?
+
+--=20
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay=
+:
+                    http://barzilay.org/                   Maze is Life=
+!
