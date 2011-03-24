@@ -1,87 +1,58 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] exec_cmd: remove unused extern
-Date: Thu, 24 Mar 2011 11:44:04 +0100
-Message-ID: <AANLkTimgYHGAebKeZyqnM99UBw=_ML0AVHY2oZgy+08o@mail.gmail.com>
-References: <1294696849-1428-1-git-send-email-kusmabite@gmail.com> <AANLkTinhknijHo9Qo=rqik3ksjT27AVSLhcac-tGByx9@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Harald Welte <laforge@gnumonks.org>
+Subject: Re: Unable to clone via git protocol / early EOF / index-pack
+ failed
+Date: Thu, 24 Mar 2011 11:30:49 +0100
+Message-ID: <20110324103049.GI4534@prithivi.gnumonks.org>
+References: <20110324102703.GH4534@prithivi.gnumonks.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 11:44:37 2011
+X-From: git-owner@vger.kernel.org Thu Mar 24 11:44:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2i1s-0002lS-Cb
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 11:44:36 +0100
+	id 1Q2i1s-0002lS-TR
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 11:44:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756288Ab1CXKob convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 06:44:31 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62292 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754560Ab1CXKoa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 06:44:30 -0400
-Received: by fxm17 with SMTP id 17so8271305fxm.19
-        for <git@vger.kernel.org>; Thu, 24 Mar 2011 03:44:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=zTD6pYnb6/tKG24YCgKaMtxyRtF2FFo2fPrnF7gk0PU=;
-        b=uN2av4NUNcK7nA29InlRD0x6fS4IPvLIXKyTTRNu2rDq0STP7ibhK+B4WZ0QQMAdoJ
-         k2wA+TZfpYXkmRQ7wrr2nknAd3jV0OyUShGgvC6vRPilSsZpvtyGh5nrZpQf5nrUBp44
-         u0BGk7uC2MptrBw/3IotDFSvZESu2qPVxB8cI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        b=SHdw04Z78gQzSeYitS8fhlBvKUVx1yewjFwfAxQci2HrxPda0kw5DG33+/FxKbv8w4
-         otjkGcakJhDeG9Ubcw5jp3u6CbHo8mEsdL0wWDwXTuroRDxdAOYmZGb5CStVRfBp2Zzw
-         acZYLc/wsfy+xWIFLPxJkfBwX7rX2NvbwGNsg=
-Received: by 10.223.56.220 with SMTP id z28mr1043265fag.11.1300963464100; Thu,
- 24 Mar 2011 03:44:24 -0700 (PDT)
-Received: by 10.223.117.78 with HTTP; Thu, 24 Mar 2011 03:44:04 -0700 (PDT)
-In-Reply-To: <AANLkTinhknijHo9Qo=rqik3ksjT27AVSLhcac-tGByx9@mail.gmail.com>
+	id S1756759Ab1CXKod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2011 06:44:33 -0400
+Received: from ganesha.gnumonks.org ([213.95.27.120]:51476 "EHLO
+	ganesha.gnumonks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754560Ab1CXKoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2011 06:44:32 -0400
+Received: from uucp by ganesha.gnumonks.org with local-bsmtp (Exim 4.69)
+	(envelope-from <laforge@gnumonks.org>)
+	id 1Q2i1n-0006bY-Ve
+	for git@vger.kernel.org; Thu, 24 Mar 2011 11:44:31 +0100
+Received: from laforge by nataraja.de.gnumonks.org with local (Exim 4.72)
+	(envelope-from <laforge@gnumonks.org>)
+	id 1Q2hoY-0001Ux-0N
+	for git@vger.kernel.org; Thu, 24 Mar 2011 11:30:50 +0100
+Content-Disposition: inline
+In-Reply-To: <20110324102703.GH4534@prithivi.gnumonks.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169912>
 
-On Thu, Mar 24, 2011 at 11:39 AM, Erik Faye-Lund <kusmabite@gmail.com> =
-wrote:
-> On Mon, Jan 10, 2011 at 11:00 PM, Erik Faye-Lund <kusmabite@gmail.com=
-> wrote:
->> This definition was added by commit 77cb17e9, but it's left unused s=
-ince
->> commit 511707d. Remove the left-over definition.
->>
->> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
->> ---
->>
->> Just a left-over definition I found while looking through some code.
->>
->> =A0exec_cmd.c | =A0 =A01 -
->> =A01 files changed, 0 insertions(+), 1 deletions(-)
->>
->> diff --git a/exec_cmd.c b/exec_cmd.c
->> index bf22570..38545e8 100644
->> --- a/exec_cmd.c
->> +++ b/exec_cmd.c
->> @@ -3,7 +3,6 @@
->> =A0#include "quote.h"
->> =A0#define MAX_ARGS =A0 =A0 =A0 32
->>
->> -extern char **environ;
->> =A0static const char *argv_exec_path;
->> =A0static const char *argv0_path;
->>
->
-> Bump? Or is this just too insignificant?
->
+Hi again,
 
-Sorry for the noise. This has already been applied, I just experienced
-a brain fart while checking.
+> since a couple of days ago, I'm encountering a very strange problem regarding
+> one of my git-daemon installations. 
+
+What I forgot to mention:  The same repositories work fine using the
+'ssh' transport, we can clone, fetch, update, push without any problems
+at all.  So I am quite sure the problem is not related to the repository
+data/metadata, but specifically related to git-daemon.
+
+Thanks again,
+	Harald
+-- 
+- Harald Welte <laforge@gnumonks.org>           http://laforge.gnumonks.org/
+============================================================================
+"Privacy in residential applications is a desirable marketing option."
+                                                  (ETSI EN 300 175-7 Ch. A6)
