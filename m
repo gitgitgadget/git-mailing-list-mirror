@@ -1,81 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] show: turn on rename detection progress reporting
-Date: Thu, 24 Mar 2011 16:35:37 -0700
-Message-ID: <7vzkok6qie.fsf@alter.siamese.dyndns.org>
-References: <20110324174556.GA30661@sigill.intra.peff.net>
- <20110324174916.GC30685@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/1] gitweb: javascript ability to adjust time based on timezone
+Date: Fri, 25 Mar 2011 00:36:46 +0100
+Message-ID: <201103250036.49662.jnareb@gmail.com>
+References: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost> <201103242119.40214.jnareb@gmail.com> <4D8BCE0D.3080504@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 25 00:35:56 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org,
+	Junio Hamano <gitster@pobox.com>
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Fri Mar 25 00:37:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2u4J-0006tL-On
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 00:35:56 +0100
+	id 1Q2u5R-0007NE-0x
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 00:37:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934373Ab1CXXfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 19:35:50 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63985 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934337Ab1CXXft (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 19:35:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 799DF4FF9;
-	Thu, 24 Mar 2011 19:37:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OX/ImXbN2qQkGsJwAQr5XgywUBs=; b=x+D7x5
-	FDaYDBHoZwKSO3RtEYP4eLDhSe2AMWQt8oksd4XppgL40ocTl/bl6csLKWpxDhEx
-	GIdmVrnw6Vi5Lv85dxDvaTISdVn8rlxU1e+Hm1Y+/HKn6n5GsnX8tsNvTTdBq4Me
-	kXKCn7/xmZHB/L83ub+NZenYAgW+g3QQJblgQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y4/3b9g2CRjz1rA7OZJd26eskmVx6EM6
-	yObT5bje5IEed0/s+dxgX9DY0nfxeeVOfylf2vKKcqW4NRTis85mmmqVqc6VN/sQ
-	Fc3gQUMpN5qGWh6EcEWtibibCjhw3Ey3AsCk+bO863Pfd7B3FdIJwxUOxdy7LunH
-	IuIsCpO7d04=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 582524FF6;
-	Thu, 24 Mar 2011 19:37:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 491884FF5; Thu, 24 Mar 2011
- 19:37:21 -0400 (EDT)
-In-Reply-To: <20110324174916.GC30685@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 24 Mar 2011 13:49:16 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC46E692-566F-11E0-9781-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S934374Ab1CXXg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2011 19:36:59 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:60084 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934354Ab1CXXg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2011 19:36:58 -0400
+Received: by wya21 with SMTP id 21so474338wya.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 16:36:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=6guNfmisPmzPCclH2hPg76AixsBngnltccJwrmRB8TM=;
+        b=qXkWF1LMFDqYvAkEgBxLntf9W8IKq+oGmAZaRiCqk9hJiQzphcefTD8yBeftNekE4R
+         PtrdGQnxTMXWkXSaeYp+TIghEvZUTSYUNlxGMix8Id9GnsTvEUP8Sp4xDkwIwiOsfgZw
+         F4WRukNPmlezA/5R7s0WC2W8UpQ+96SK/DopM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Mb1rW/59fKeXKAlRGUjMFSIwiYJX33FS6rbU1Bsq9hU59hDiQpDKwME7Cmz2ywSBr2
+         MoA/lE5DlpJEfvYnam9I/zMSXL8LXQ+apMlxqka2U6sUHlZYXS8GuPCMa0yHxoOOPGNf
+         tV3EEGU7XCuTAdLSneAKW31dDBFBZ/a27P/Rs=
+Received: by 10.227.9.20 with SMTP id j20mr68497wbj.116.1301009817027;
+        Thu, 24 Mar 2011 16:36:57 -0700 (PDT)
+Received: from [192.168.1.13] (abwk172.neoplus.adsl.tpnet.pl [83.8.234.172])
+        by mx.google.com with ESMTPS id x1sm191156wbh.19.2011.03.24.16.36.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2011 16:36:56 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4D8BCE0D.3080504@eaglescrag.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169955>
 
-Jeff King <peff@peff.net> writes:
+On Fri, 25 Mar 2011, J.H. wrote:
+> On 03/24/2011 01:19 PM, Jakub Narebski wrote:
+>> On Thu, 24 Mar 2011, Kevin Cernekee wrote:
 
->  	while ((commit = get_revision(rev)) != NULL) {
-> -		if (!log_tree_commit(rev, commit) &&
-> +		int showed = log_tree_commit(rev, commit);
-> +		if (showed &&
->  		    rev->max_count >= 0)
->  			/*
->  			 * We decremented max_count in get_revision,
->  			 * but we didn't actually show the commit.
->  			 */
->  			rev->max_count++;
-> +		/* Once we have output, progress will clutter the terminal. */
-> +		if (showed)
-> +			rev->diffopt.show_rename_progress = 0;
+>>> 4) IE6 does not seem to like ISO 8601 format:
+>>>
+>>> x = new Date("2011-03-09T03:29:09Z");
+>>>
+>>> This sets all fields to NaN.  I suspect that getTime() values
+>>> (milliseconds since 1970-01-01) are more portable.
+>> 
+>> Do you mean using epoch in title attribute, or fallback to parsing
+>> ISO 8601 UTC format with regexps?
+> 
+> Parsing it with regexps is doable if completely inelegant, that said
+> this is Javascript...
+> 
+> Looky that MS provides Virtual PC images for compat testing for IE6
+> http://www.microsoft.com/downloads/en/details.aspx?FamilyID=21eabb90-958f-4b64-b5f1-73d0a413c8ef&displaylang=en
+> 
+> Ok reading through the documentation I can find for MS and their
+> Date.parse (
+> http://msdn.microsoft.com/en-us/library/dctx55bc(v=VS7.1).aspx ) and
+> some quick experimentation:
+> 
+> 2011-03-09 - breaks
+> 2011/03/09 - works
 
-After looking at the implementation of log_tree_commit(), shouldn't this
-part be more like this?
+I really don't like using '/' as a separator; not only this is not
+ISO-8601, but it is easy to confuse with insane American way of
+writing dates with MM/DD/YYYY (day in the middle).
+ 
+> 2011/03/09T01:01:01  - works, sorta - the hour comes out as 10 vs. 01
+> 2011/03/09 01:01:01  - works, hour is correct
+> 2011/03/09 01:01:01Z - works and seems to get the TZ correct
+> 2011/03/09T01:01:01Z - breaks
 
-	int shown = log_tree_commit(rev, commit);
-        if (!shown && rev->max_count >=0)
-        	rev->max_count++;
-	if (shown)
-        	rev->diffopt.show_rename_progress = 0;
+If it worked in all (or almost all) web browsers with
+
+  2011-03-09 01:01:01Z - works and seems to get the TZ correct
+
+then I would say go for it - this variant of ISO-8601 with ' ' instead
+of 'T' to separate date part from time part is more human-readable.
+ 
+> Not really sure what the "right" way to fix this is going to end up
+> being.  Suppose our options are:
+> 
+> 1) Try and find a format that is generally accepted and parseable on all
+> the browsers
+> 2) Declare IE6 an unsupported browser
+> 3) Trap what browser we are on and do a regex parsing of the string and
+> do appropriate sets or a more verbose format that works everywhere
+
+If web browser returned undefined value if they can't parse date, then
+we could do regexp parsing based on this, not on user-string (which is
+in most cases wrong solution).
+
+> 4) Use a regex and sets for every browser.
+> 5) Switch all the embedded times over to epochs in the title=""'s
+> 
+> 4 is probably the "most" right that I can see of those options, and
+> avoids possible other browser inconsistencies with respect to date
+> parsing.  I'm going to code that up (it shouldn't be terribly
+> complicated), unless someone likes one of the other ideas better.
+> Suppose we could even go down the more complicate microformat route and
+> just write some code to parse that, just more complicated all the way
+> around.
+
+Right.
+
+> 5 has the appeal that everything handles the epoch correctly, but it
+> does have the downside of being less readable in the html code (and
+> shifts us slightly further away from the accepted "standard" of the
+> microcode formats)
+
+Well, we could always use non-standard 'epoch' attribute, or something...
+ 
+-- 
+Jakub Narebski
+Poland
