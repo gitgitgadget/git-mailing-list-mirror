@@ -1,84 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Relative ls-files
-Date: Thu, 24 Mar 2011 07:47:14 -0700
-Message-ID: <7v7hboa83x.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=fP+jBpLuxst2rv02pYRmj4HOkv8Yenc-dR-N_@mail.gmail.com>
- <4D89D052.5030801@drmicha.warpmail.net>
- <AANLkTimc7gNKbh3C2hyMtFK6D1OWNALD+GvzmhG5cZrn@mail.gmail.com>
- <AANLkTimdLGgGXGRNVH5+X-cnhK2NWfWx9k0apt-6rr1Z@mail.gmail.com>
- <4D89DCBE.3060400@drmicha.warpmail.net>
- <AANLkTi=BrgZe47Bt5evr_qFzKBL=MY-6NmH22gsRurVV@mail.gmail.com>
- <7v7hbqgc7g.fsf@alter.siamese.dyndns.org>
- <AANLkTi=OJ_o2WQ2W6d30HXQZrg7=W70+fZWrbQPrAs=s@mail.gmail.com>
- <7v39mdhni3.fsf@alter.siamese.dyndns.org>
- <AANLkTin=y=THaQEzgMhyBVLBriJBCa-pVvONXDnzUmew@mail.gmail.com>
- <7vaaglcv9f.fsf@alter.siamese.dyndns.org>
- <AANLkTinYB=ZUTe29Y9ibLVL5z3KhiYmnCpCGcHx=18RJ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] Convert read_tree{,_recursive} to support struct
+ pathspec
+Date: Thu, 24 Mar 2011 21:49:52 +0700
+Message-ID: <20110324144952.GA24388@do>
+References: <AANLkTinYB=ZUTe29Y9ibLVL5z3KhiYmnCpCGcHx=18RJ@mail.gmail.com>
+ <1300977675-6243-1-git-send-email-pclouds@gmail.com>
+ <1300977675-6243-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 15:47:37 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 24 15:50:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2lp3-0005DP-2h
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 15:47:37 +0100
+	id 1Q2lre-0006hG-TG
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 15:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756972Ab1CXOr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 10:47:26 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58921 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756968Ab1CXOrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 10:47:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D032E461A;
-	Thu, 24 Mar 2011 10:49:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=NCVK6hmyrdPRwffzYw4JBuynQ/M=; b=KuxkN6w2Yh6muH+kEvvq
-	6A3bWENR4UC949H9tkFmxHaCc/GlRb132WKQw+iFEXTRQvgh3aKxk085zGolhe8q
-	RP3A9WUJe8TyuPcRsfU3qGzEmZXkjjFyUGPu6tDAr7vPXX6wuONh2LrKV+AAH61I
-	Jjrhy0IDqY2FpfWcBPYGnlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=DltFDGfWlrkyw4qsHqeq0XpD53TX7QFtTv6B6/wNCgf+9o
-	ybDKs6UiwYKgAGlWblr1oB9gJDNA37PRdOlT1dnWcgfcHU5gfBwoZ9l9QKMtJ8r9
-	RhwOZ0ytraIMNdPczUoVWJVjXujs03IQshiZPM+zXlY7bLkQBgPhKmxoljmxo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 940BD45F5;
-	Thu, 24 Mar 2011 10:49:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 58FF845F0; Thu, 24 Mar 2011
- 10:48:57 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DB5B48C8-5625-11E0-9B1D-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S933029Ab1CXOuH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 10:50:07 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37907 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932726Ab1CXOuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2011 10:50:04 -0400
+Received: by iwn34 with SMTP id 34so14053iwn.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 07:50:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=CFrDx4sALFUIf/HlyVfbCPMw7/t/naJHirC8dQ5uh9Y=;
+        b=MsCcPakdbXb2oudykvWhNX5GM4CrvNFxZuyVZxTmOBXoErIG8ktOnb2su47GzgLP4m
+         DsiNNABNN2+J1jWPtz0L0sqCUH/dtHk1Q8OS333KAofTAEC1wAcTgTj32qLEiF4wdEoC
+         FryS7wbCZTJG3sZD0DiXGeYDVBFGT4zbeNIHI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=tx4zh7rjpa3EwSqSk7EhPAkpLgFNV+zT3gwVSfHcawxYihUxAgVnKzfxXm4XZRyH+3
+         mxBoVnTtZHaT7iDW0p0OwaEDjlZSX45Qv8b4t2tTQrDgwrybJ4SXnYY2daHT6jbKyrdW
+         TRB3Zzk4FpWxbuU/EZGoqMge3nqavoams2YhI=
+Received: by 10.42.18.67 with SMTP id w3mr5350836ica.470.1300978203510;
+        Thu, 24 Mar 2011 07:50:03 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.209.201])
+        by mx.google.com with ESMTPS id c1sm5860119ibe.15.2011.03.24.07.49.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2011 07:50:02 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 24 Mar 2011 21:49:52 +0700
+Content-Disposition: inline
+In-Reply-To: <1300977675-6243-2-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169921>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Thu, Mar 24, 2011 at 09:41:15PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+> All callers are updated.
 
-> On Thu, Mar 24, 2011 at 5:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Wouldn't it be more sensible to add a bit ("is this a glob or are we
->> expected to match it literally") to each element in the pathspec array,
->> and pass a pathspec whose elements are all marked as "literal" down from
->> ls-tree?
->>
->> The internal matcher (and traversal optimizer) would need to become aware
->> of "not a glob" match (and possibly different kinds of matches like "**/"
->> support) sooner or later, and when that happens you would need something
->> like the above on the caller side in ls-tree.
->
-> I think it's possible even now. fnmatch() is only used if
-> pathspec_item.has_wildcard is true. So ls-tree.c only needs to clear
-> this field for all pathspecs and they will be treated literally. Let
-> me try..
+Jeez.. I made last minute changes and it broke something. This should
+be squashed in, because tree_entry_interesting() does not like struct
+pathspec* =3D=3D NULL.
 
-Thanks, that would be good.
+--8<--
+diff --git a/builtin/log.c b/builtin/log.c
+index 796e9e5..cff39cf 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -396,6 +396,7 @@ int cmd_show(int argc, const char **argv, const cha=
+r *prefix)
+ 	struct rev_info rev;
+ 	struct object_array_entry *objects;
+ 	struct setup_revision_opt opt;
++	struct pathspec match_all;
+ 	int i, count, ret =3D 0;
+=20
+ 	git_config(git_log_config, NULL);
+@@ -403,6 +404,7 @@ int cmd_show(int argc, const char **argv, const cha=
+r *prefix)
+ 	if (diff_use_color_default =3D=3D -1)
+ 		diff_use_color_default =3D git_use_color_default;
+=20
++	init_pathspec(&match_all, NULL);
+ 	init_revisions(&rev, prefix);
+ 	rev.diff =3D 1;
+ 	rev.always_show_header =3D 1;
+@@ -449,7 +451,7 @@ int cmd_show(int argc, const char **argv, const cha=
+r *prefix)
+ 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
+ 					name,
+ 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
+-			read_tree_recursive((struct tree *)o, "", 0, 0, NULL,
++			read_tree_recursive((struct tree *)o, "", 0, 0, &match_all,
+ 					show_tree_object, NULL);
+ 			rev.shown_one =3D 1;
+ 			break;
+--8<--
+--=20
+Duy
