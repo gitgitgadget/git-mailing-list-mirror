@@ -1,73 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Convert read_tree{,_recursive} to support struct
- pathspec
-Date: Thu, 24 Mar 2011 12:58:20 -0700
-Message-ID: <7vhbas8f4z.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinYB=ZUTe29Y9ibLVL5z3KhiYmnCpCGcHx=18RJ@mail.gmail.com>
- <1300977675-6243-1-git-send-email-pclouds@gmail.com>
- <1300977675-6243-2-git-send-email-pclouds@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/1] gitweb: javascript ability to adjust time based on timezone
+Date: Thu, 24 Mar 2011 21:19:30 +0100
+Message-ID: <201103242119.40214.jnareb@gmail.com>
+References: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost> <1300925335-3212-2-git-send-email-warthog9@eaglescrag.net> <AANLkTincAcVQQtH+T9+K7tyBd0P5S=8YxXpsfrQ=68gE@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 20:58:50 2011
+Cc: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
+	git@vger.kernel.org, Junio Hamano <gitster@pobox.com>
+To: Kevin Cernekee <cernekee@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 21:20:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2qgA-00042v-BQ
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 20:58:46 +0100
+	id 1Q2r1J-0007sm-IB
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 21:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934090Ab1CXT6g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 15:58:36 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33321 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934011Ab1CXT6b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 15:58:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CF91D423E;
-	Thu, 24 Mar 2011 16:00:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=IzUzTepQQ0aO
-	tNwmg6giXiye5gs=; b=GbOrHeKY+RG+fjxBlUB0QiBb5IByvzhnhOpt4krNGnY1
-	EG80EKABpJ3Kg/yWYo5MZPNJNC24j5pltr0IT0BYjSvxODQplnt2oQKTuvrnIqXz
-	rQXvRKOkqNiJ5bKP8IHLXlvRX9wXgOTZ3dctvMpUH2fTR1sfh17vjeJMYS8LO0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JNkTvV
-	CKGtFUgdAPHrgvgVSXETocpHQrF2XbWVXRSJWdQDNnXIWL+imrHU+K2BS/WYMn37
-	Tkq+CurRT/ZQmeAw36Xcly9aOtaT9CNDQ7C6kLr5mD6J7neN6j3NWmqsmHsQzh3Z
-	Xm+qUDxX8cWKjbpiuWl7bU7jhC1DUkemHx/Wc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9E183423A;
-	Thu, 24 Mar 2011 16:00:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D4E74238; Thu, 24 Mar 2011
- 16:00:04 -0400 (EDT)
-In-Reply-To: <1300977675-6243-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 24 Mar
- 2011 21:41:15 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 51C9F1BE-5651-11E0-AFF4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S934176Ab1CXUU3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 16:20:29 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38217 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934147Ab1CXUUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2011 16:20:22 -0400
+Received: by fxm17 with SMTP id 17so399773fxm.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 13:20:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=UHnCeU3dzAql+uQiEe6Q6WQdpU1MdflrSbGmXN3Qm24=;
+        b=M5Y8D0hR5xa5wQ3w+G8oTbjSqEsRlPQtSHZbHbNlmvHozlJjBUwMQRhPSs4GztxYTf
+         g2Fgu2MpI92DT7uQqIxo7jvES3lCX6kxQogHgJxXyHFI5MUGLTkXFGzJiqN/fosf6/1S
+         TRwuaqIC5wgxaRSYxfS5WQsS+VW6Kxyyr+B80=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=LSJk2i6aOG7XzPXWcXIUCxdyxeHE+nGC0DjDlC5q4yq8kq2hfWqLFmmxAUAgJ7UitX
+         hErPhlWCILZftfbvJJ99ISuw24WiDk7jDQ+3fIpmD3JNb7K+pKgzqgNnJA0BUlbJgAqg
+         uoIDLnjppktlNWindzLnDNnlCtEBTbSIxgp5U=
+Received: by 10.223.57.5 with SMTP id a5mr1586813fah.90.1300997990927;
+        Thu, 24 Mar 2011 13:19:50 -0700 (PDT)
+Received: from [192.168.1.13] (abwk172.neoplus.adsl.tpnet.pl [83.8.234.172])
+        by mx.google.com with ESMTPS id n7sm123970fam.35.2011.03.24.13.19.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2011 13:19:48 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTincAcVQQtH+T9+K7tyBd0P5S=8YxXpsfrQ=68gE@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169941>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Thu, 24 Mar 2011, Kevin Cernekee wrote:
+> On Wed, Mar 23, 2011 at 5:08 PM, John 'Warthog9' Hawley
+> <warthog9@eaglescrag.net> wrote:
 
-> This patch changes behavior of the two functions. Previously it does
-> prefix matching only. Now it can also do wildcard matching.
+> > This patch takes the same basic goal, display the appropriate times
+> > in a given timezone, and implements it in Javascript. =A0This requi=
+res
+> > adding / using a new class, dtcommit, which is based on the
+> > dtstart/dtend microformats. =A0Appropriate commit dates are wrapped=
+ in
+> > a span with this class, and a title of the time in ISO8601 format.
+>=20
+> John,
+>=20
+> Thanks for coding this up.  I tested it on a couple of different
+> browsers and wanted to share my observations with you.
 
-The most important in this change is that it finally starts passing
-pathspec, not "char **", down the callchain.
+I wonder if there is any site that allows to check JavaScript for
+compatibility with different browsers...
 
-Except that variables should be called pathspec not pathspecs, I think
-this is basically in very good shape.
+>=20
+> First, the easy stuff:
+>=20
+> 1) "git am" complains about whitespace violations
 
-Thanks.
+It would be more helpful if you wrote here what are those whitespace
+violations.
+
+>=20
+> 2) HH:MM:SS times need zero padding; otherwise you see:
+>=20
+> Tue, 8 Mar 2011 20:29:9 -0700
+
+There is even padLeft function in gitweb.js ready to be (re)used...
+
+[...]=20
+> 4) IE6 does not seem to like ISO 8601 format:
+>=20
+> x =3D new Date("2011-03-09T03:29:09Z");
+>=20
+> This sets all fields to NaN.  I suspect that getTime() values
+> (milliseconds since 1970-01-01) are more portable.
+
+Do you mean using epoch in title attribute, or fallback to parsing
+ISO 8601 UTC format with regexps?
+
+> I have attached a trivial patch for these four items; it applies on
+> top of your original submission.
+
+It would be much, much easier to review your patch if you either
+put it inline at the end of your email, separating it from the rest
+of email with e.g. "-- >8 --" separator (so called 'scissors'),
+or at least using 'text/plain' as mimetype, '8bit' and not 'base64'
+encoding, and perhaps 'disposition=3Dinline' rather than=20
+'disposition=3Dattachement'.
+
+[...]
+> 6) Most U.S. timezones honor daylight savings, so they could be
+> something like -0700 for part of the year, and -0800 for the rest of
+> the year.  Picking the "local" option would automatically adjust for
+> this, but DST limits the usefulness of permanently storing a fixed TZ
+> offset in the cookie.
+
+Dealing with DST (zoneinfo library) is simply too hard for JavaScript=20
+IMHO.  What we could do is to store "local" in cookie, not a fixed TZ
+offset (or perhaps store both as to not recalculate it).
+
+
+> 8) The " + " popup menu is a little quirky.  On FF 3.6 it partially
+> collapses after selecting a value from the dropdown.  On IE6 it shows
+> "Error in parsing value for 'display'" and does not render.  On Opera
+> 11 it seemed to work OK.
+>=20
+> Firefox breakage: http://img217.imageshack.us/f/firefoxa.png/
+>=20
+> I'm wondering if there might be a better place on the page to put the
+> TZ selection.  It isn't immediately obvious to the user what the extr=
+a
+> " + " does, and it seems to cause some issues.
+
+Hmmm... perhaps a 'config' page?
+
+--=20
+Jakub Narebski
+Poland
