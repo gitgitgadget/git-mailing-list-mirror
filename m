@@ -1,120 +1,156 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] pathspec: reserve some letters after a colon pathspec
-Date: Thu, 24 Mar 2011 14:49:20 +0700
-Message-ID: <AANLkTinjdi3+qcQxcBYj8SdQgbZYP=KiLwxM3Vq0c1Er@mail.gmail.com>
-References: <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net>
- <1300894353-19386-1-git-send-email-pclouds@gmail.com> <7vvcz9emrn.fsf@alter.siamese.dyndns.org>
- <4D8AEF9B.9050001@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git cherry improvements suggestions
+Date: Thu, 24 Mar 2011 08:47:11 +0100
+Message-ID: <4D8AF6FF.4080209@drmicha.warpmail.net>
+References: <AANLkTimk0bkOGVy2W+XddHRuf-1xw+d0RwzPhnk40vi8@mail.gmail.com>	<4D89CF8E.4070100@drmicha.warpmail.net>	<AANLkTinXh_Y9ft5Pd5SxOEXvKNm3HLmsiut8WrvFZrdQ@mail.gmail.com>	<4D89F6BC.2040902@drmicha.warpmail.net>	<AANLkTin7Du5RYt946hNjP-y53puNykebCjiKk5Ju_igr@mail.gmail.com>	<4D8A0741.9000506@drmicha.warpmail.net>	<AANLkTi=7=QDh0Pe9W4bRcGY5Krg7sBqRcZ2C1YonJSRN@mail.gmail.com> <AANLkTi=7NKn4FrCqFaGH+XTHRw3oLCv=aKPWAJfNsgD_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 24 08:49:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 08:50:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2fIr-0001VA-LM
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:49:58 +0100
+	id 1Q2fJl-0001uC-I4
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:50:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756306Ab1CXHtw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 03:49:52 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:49907 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754373Ab1CXHtv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 03:49:51 -0400
-Received: by wwa36 with SMTP id 36so11208959wwa.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2011 00:49:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=a1R2Uqzf9dRJSM4VEOoBKYqmUY9szNbfYijKenH4sp8=;
-        b=YI36uh6lmh0jyBl3yP9foasWrezY65rK4wN5SjwNCcXBpu9Lz5VDIYsDvV7PGW67xu
-         IWx45Ctlz//WWXXRo0/B78CDc115OEE5c+HK95jR0iHR1m37sYFq1K7ZV30Go2q4cGve
-         jpsz4P8vlOb93gg2cUckIUSG4fZX7HQISCaJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=XFJV4CMOFfb+8znKn6H/ZTm+SzrHkgIIJlGBmOxWmPpaW3Chl5k77DFik/wgaoiuta
-         KdSyVxsTN2OKzLedcPN1S5YB8Pddgf+eYpZUCXVw+YqRC4KVHAUi524zLSfQmJ7aausU
-         D7wiEQgwxem7fEMR3raHBI27LDoucDJ3NxbQ0=
-Received: by 10.216.66.131 with SMTP id h3mr7787510wed.111.1300952990134; Thu,
- 24 Mar 2011 00:49:50 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Thu, 24 Mar 2011 00:49:20 -0700 (PDT)
-In-Reply-To: <4D8AEF9B.9050001@drmicha.warpmail.net>
+	id S932802Ab1CXHus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2011 03:50:48 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:59124 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754946Ab1CXHus (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 03:50:48 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6C6BB20C2F;
+	Thu, 24 Mar 2011 03:50:47 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 24 Mar 2011 03:50:47 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=mCnZ6AE/V/7+E+gdWYrixTRCd1Q=; b=JWuqhI35T51B0Q2z5+v8yxku6WViq6YGUxBN1musUWn+Yb8qRDvfRENjxnPNptUfYgji06wbVXH5OgUObVjgfTcp4K49gcHPGg4s5+jcLr2ztl3QDw9e1XHgFiGGmI/xbFbe3CBcgCkHAEeRguaTshXQACxgX+1U9/I89esCBlw=
+X-Sasl-enc: 54sy+jIIgyRjeW6WcAjFMMK+JwSj9hvtEia8anSRPBjB 1300953046
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B038A444378;
+	Thu, 24 Mar 2011 03:50:46 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <AANLkTi=7NKn4FrCqFaGH+XTHRw3oLCv=aKPWAJfNsgD_@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169903>
 
-2011/3/24 Michael J Gruber <git@drmicha.warpmail.net>:
->> Here is a weather-baloon. =C2=A0I will use colon below as the magic =
-introducer,
->> as I don't care very deeply about the choice of it.
+Piotr Krukowiecki venit, vidit, dixit 24.03.2011 08:40:
+> On Wed, Mar 23, 2011 at 8:28 PM, Piotr Krukowiecki
+> <piotr.krukowiecki@gmail.com> wrote:
+>> On Wed, Mar 23, 2011 at 3:44 PM, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 15:43:
+>>>> On Wed, Mar 23, 2011 at 2:33 PM, Michael J Gruber
+>>>> <git@drmicha.warpmail.net> wrote:
+>>>>> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 14:23:
+>>>>>> Just some stats:
+>>>>>>
+>>>>>>    git log --cherry-mark --left-right --oneline --date-order branch...trunk
+>>>>>>
+>>>>>> lists 1004 commits, takes about 20s and memory peaks to about 670MB
+>>>>>> twice during the run (I'm on linux with AMD Phenom II X4 945)
+>>>>>>
+>>>>>> With limit it prints X last commits (the limiting seems to take place after all
+>>>>>> work, on the output list only).
+>>>>>>
+>>>>>> branch..trunk is 551 commits, the other way is 453 commits.
+>>>>>> 710 commits are found to be "=", 98 "<", 196 ">".
+>>>>>>
+>>>>>> Note, I'm not saying it's too slow, or that it's working incorrectly, I'm just
+>>>>>> giving real-life stats if anyone was interested.
+>>>>>> I suspect such checks won't be done frequently.
+>>>>>
+>>>>> You don't need to say it's slow - I've said so already :(
+>>>>>
+>>>>> http://permalink.gmane.org/gmane.comp.version-control.git/169725
+>>>>
+>>>> In the link above:
+>>>>   git cherry A B: 0.4s
+>>>>   git rev-list --cherry A...B: 1.7s
+>>>>
+>>>> So rev-list is 4.25x slower.
+>>>>
+>>>> In my case it's only 1.23x slower:
+>>>>
+>>>>    $ time git rev-list --cherry branch...trunk  > /tmp/rev-list
+>>>>    real       0m18.627s
+>>>>    user       0m17.710s
+>>>>    sys        0m0.900s
+>>>>
+>>>>    $ time git cherry  branch trunk  > /tmp/cherry
+>>>>    real       0m15.345s
+>>>>    user       0m14.310s
+>>>>    sys        0m1.020s
+>>>>
+>>>>
+>>>
+>>> How's that with > /dev/null (or with --count for rev-list)? Also, how
+>>> many merge bases do you have:
+>>>
+>>> git merge-base --all branch trunk | wc -l
 >>
->> =C2=A0- "^:([^\w\d]+)(.*)$", that is "a magic introducer followed by=
- a sequence
->> =C2=A0 =C2=A0of non-alnum followed by the remainder" means that the =
-part that is
->> =C2=A0 =C2=A0given to the matching engine is $2, and each gibberish =
-character in $1
->> =C2=A0 =C2=A0determines what magic is requested when the matching en=
-gine does its
->> =C2=A0 =C2=A0work. =C2=A0Among the gibberish that can be in $1, we c=
-urrently would want
->> =C2=A0 =C2=A0to support:
+>> I expect only one - there should be no merges between those two
+>> branches.
 >>
->> =C2=A0 =C2=A0 . '/' denotes that $2 is relative to root of the worki=
-ng tree, i.e. do
->> =C2=A0 =C2=A0 =C2=A0 not add 'prefix' to it at the left.
->>
->> =C2=A0 =C2=A0 . '!' denotes that the matching with $2 should not hon=
-or globbing.
->>
+>> I will do measurements tomorrow.
+> 
+> 
+> Branches might change a bit since yesterday so the exact numbers
+> might be a bit different.
+> 
+> 
+> $ time git cherry  branch trunk  > /dev/null
+> 
+> real	0m15.246s
+> user	0m14.260s
+> sys	0m0.970s
+> 
+> 
+> $ time git rev-list --cherry branch...trunk  > /dev/null
+> 
+> real	0m18.801s
+> user	0m17.980s
+> sys	0m0.800s
+> 
+> 
+> $ time git rev-list --cherry --count branch...trunk
+> 556
+> 
+> real	0m18.825s
+> user	0m18.010s
+> sys	0m0.770s
+> 
+> 
+> $ time git merge-base --all branch trunk  | wc -l
+> 2
+> 
+> real	0m0.538s
+> user	0m0.490s
+> sys	0m0.040s
+> 
+> 
+> I expected one merge base, but it appears our history is
+> seriously fscked, either by past svn operations or by
+> git-svn clone :)
+> 
+> (I'm not saying there's an error somewhere, just that the
+> history is ... complicated)
+> 
+> 
 
-And maybe:
+Thanks for the timings. In your case with only 2 merge bases, the merge
+base calculation (or rather: simplification) does not make much of a
+difference, at most 0.5s as we see. I'm still wondering where the rest
+of the 3.5s difference (between cherry and --cherry) is spent, but at
+least the ratio 18.8/15.2 is more bearable than in my case.
+Unfortunately, this confirms my suspicion that there is more than 1 area
+which would need improvement to match cherry's speed.
 
-    . ':' to reach the superproject if user's inside a subproject. So
-'::/foo' means foo at superproject while ':/foo' means foo in the
-current project, both at root.
-
->> =C2=A0...
->
-> I like this a lot, especially the fact that we would have descriptive
-> long names as well as short versions for a subset!
-
-I'll leave it to you to come up with something we can test :)
-
-> Two remarks:
->
-> :(symlink|submodule|directory|file): would fit into that scheme (for =
-use
-> in .gitattributes), though I'm not sure we want that for general
-> pathspecs. We probably want textconv applied to :file: only by defaul=
-t,
-> attributes to match with :file only?
-
-It does not hurt to have generic support for everything. 'git ls-files
--- :executable:' would be nice, though I'm not sure if I will ever use
-it.
-
-> We already have ":./cdwfile" as in "commit:./cwdfile", and this looks
-> like a preexisting instance, although it is not ("commit:" gets strip=
-ped
-> and "./cwdfile" is the pathspec). People will probably try something
-> like "commit:/rootfile", and we may or may not want to support this.
-> That particular one is easy, but "commit:full-tree:name" has a define=
-d
-> meaning now...
-
-I think we should leave this one out. It's to address a single path.
-If you bring full pathspec support to it, a pathspec may resolve to
-multiple paths, which is unwanted. If people want pathspecs, they can
-do "git cmd commit -- pathspecs" most of the time.
---=20
-Duy
+Michael
