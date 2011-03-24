@@ -1,128 +1,192 @@
-From: Motiejus =?utf-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>
-Subject: git2 cli (GSOC)
-Date: Thu, 24 Mar 2011 02:02:32 +0000
-Message-ID: <20110324020232.GA10441@jakstys.lt>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 03:02:42 2011
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH v2] diffcore-rename: don't consider unmerged path as source
+Date: Wed, 23 Mar 2011 22:41:01 -0400
+Message-ID: <1300934461-28867-1-git-send-email-martin.von.zweigbergk@gmail.com>
+References: <1300412548-1724-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: git@vger.kernel.org,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 03:42:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2Zso-0000sD-3S
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 03:02:42 +0100
+	id 1Q2aVG-0007vb-2C
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 03:42:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754853Ab1CXCCg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2011 22:02:36 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:58589 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277Ab1CXCCf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2011 22:02:35 -0400
-Received: by wwa36 with SMTP id 36so10870486wwa.1
-        for <git@vger.kernel.org>; Wed, 23 Mar 2011 19:02:34 -0700 (PDT)
+	id S1755581Ab1CXCmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2011 22:42:06 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:62562 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755273Ab1CXCmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2011 22:42:04 -0400
+Received: by vws1 with SMTP id 1so6164743vws.19
+        for <git@vger.kernel.org>; Wed, 23 Mar 2011 19:42:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :user-agent;
-        bh=EDvvB8eNij6ImaDvFwixP/JHrIWXau82Z+y9a7RHNWw=;
-        b=te1pGQw1UFvhunSvIy1gHosxMSvCJ59vcb51a8BfYnojoAKmfnpLbGi5aQ0WumZaDl
-         VIjqy8Ih/YXZSKXE95IhbMQd65PKauoMKZOIX0DmklGScxTqAptQc0DwFA397KJX2Msj
-         ETv5VpcuZfUqtol7cIYWVdkmeBVoV4IaTbOrA=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=Iyv1fg6PZVqHyaEHwocDRo1/mi+WODyu9lm/iKRkT9Q=;
+        b=OE5Zz77j9veXlWXga5wL5mCJcTM9K+sTbhABIoKiTk+iftZ0bG8301YcJvF/B3DFb/
+         IWf79elwL5tQbLJsekDZLFFKqCea5dRuj1Q3vdU5HVvgYbAGu3toTygw0mZIazFoYfT6
+         ct4lilo6T6/t51x/2Xgkgtc+kxz6p8vJYPTFc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=dBN5XpyGeAZpg9g9OZKSGivoM2v6G8TdDsyHjpgz5Ahw2CYdSBXgRZSBm+mbUSfpLR
-         icAi3lau0JDP9dbvK8+X15qP33ey/c7WOoBH3sxlVJxuVYqRa/CdPAJsi4Qtcd2zDneV
-         xJuit+AQrQS0rsIwpVgE6768gV1JQ12QEfeic=
-Received: by 10.216.145.154 with SMTP id p26mr169414wej.11.1300932154260;
-        Wed, 23 Mar 2011 19:02:34 -0700 (PDT)
-Received: from localhost ([109.246.247.245])
-        by mx.google.com with ESMTPS id h11sm4080925wbc.60.2011.03.23.19.02.32
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=JUyJ1NKr5UrgkVIphWKVHR1kyJMcdsLM7A7cl+R/UzWPGUeujpsupeHZzhB5VKNfke
+         O0cZbxPIDWJs77NraeERUR48z6ZjDXPjKrRaLzGjUPTaNNiyxXoRSYInDshV9lhPAXT4
+         CmvmY8ZUEoOUeDicsSmyckfY6WnFLNYRKwVS8=
+Received: by 10.52.88.136 with SMTP id bg8mr388822vdb.78.1300934507912;
+        Wed, 23 Mar 2011 19:41:47 -0700 (PDT)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id w26sm1908239vcf.21.2011.03.23.19.41.45
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 23 Mar 2011 19:02:33 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Wed, 23 Mar 2011 19:41:46 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.79.gcbe20
+In-Reply-To: <1300412548-1724-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169887>
 
-Hello folks,
+Since e9c8409 (diff-index --cached --raw: show tree entry on the LHS for
+unmerged entries., 2007-01-05), an unmerged entry should be detected by
+using DIFF_PAIR_UNMERGED(p), not by noticing both one and two sides of
+the filepair records mode=0 entries. However, it forgot to update some
+parts of the rename detection logic.
 
-IMHO libgit2 is the best thing happening in Git world. Why? In world of
-good software:
+This only makes difference in the "diff --cached" codepath where an
+unmerged filepair carries information on the entries that came from the
+tree.  It probably hasn't been noticed for a long time because nobody
+would run "diff -M" during a conflict resolution, but "git status" uses
+rename detection when it internally runs "diff-index" and "diff-files"
+and gives nonsense results.
 
-1) You implement a prototype of a thing (e83c516 probably)
-2) See it's cool
-3) Make it work and and all others start using it
-4) Clean it up
-5) Make it run on your watch.
+In an unmerged pair, "one" side can have a valid filespec to record the
+tree entry (e.g. what's in HEAD) when running "diff --cached". This can
+be used as a rename source to other paths in the index that are not
+unmerged. The path that is unmerged by definition does not have the
+final content yet (i.e. "two" side cannot have a valid filespec), so it
+can never be a rename destination.
 
-libgit started git's way to (4). Note: I'm not saying git is "bad". It
-has just hell too many dependencies for a watch.  When libgit2 and git2
-are mature enough, it will run on Android and my watch.
+Use the DIFF_PAIR_UNMERGED() to detect unmerged filepair correctly, and
+allow the valid "one" side of an unmerged filepair to be considered a
+potential rename source, but never to be considered a rename destination.
 
-There were some ideas in this mailing list about merging libgit2 to git
-a couple of days ago. I think that's pointless, it should be the other
-way around. Git features should get to libgit2 and git2.
+Commit message and first two test cases by Junio, the rest by Martin.
 
-Working is better than talking, so I created a git2 cli prototype[1]. I=
-t
-has one feature, which is (should be?) equivalent to:
-    $ git rev-list HEAD
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+---
+I think I mean something slightly different when I say "don't consider
+unmerged path as source" than you do when you say "allow the valid
+"one" side of an unmerged filepair to be considered a potential rename
+source". I mean that they shouldn't show up on the LHS of a "copied: A
+-> B" line in git-status output. I think you mean that they should be
+registered as rename sources, even though the destination will always
+be the file itself, so other files will only end up having status
+COPIED. I didn't know how phrase the subject line in a better way, but
+feel free to change it as you like.
 
-You can run it like this:
-    $ git2 rev-list <anything>
 
-I created a very, very rough draft of git2.c. Thanks Jeff King for
-advise[3] starting with a basic plumbing command. Those couple of hours
-were quite interesting, because none of the human-readable API
-documentation examples[4] I've tried actually worked. :)
+ diffcore-rename.c   |    7 ++++-
+ t/t7060-wtstatus.sh |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+), 2 deletions(-)
 
-We have some architecture questions to answer before getting started.
-Are we aiming for a distributed 100s of executables architecture
-(current git), or single huge binary (linux/busybox)? I would count for
-single executable due to higher portability. However, plugging git2 for
-git unit tests should require more thought.
-
-Build configuration. Git-send-email is not really a must-have for an
-embedded device, so we should be able to specify these features in
-configure-time. How do you think it should be taken care of?
-1) <buildtool> configure  --disable-everything --enable-email
-2) make menuconfig and enjoy the blue screen of choice
-3) ?
-
-Build tool. I am not against waf (I've chosen waf for SoundPatty), I've
-been using it, but it's too clumsy for me. Is it me that lacks
-experience and it's a great tool, or am I not the only one who sometime=
-s
-feels confused and pissed off when trying to do some really simple
-things? Should I stick to waf because libgit2 uses waf?
-
-I want to do this hell a lot. I'm a student and I have C++
-experience[2]. Actually I think it's not really my taste, since it is
-too high-level for me. I love C and currently I am a full-time Python
-web developer (django/friends)... I couldn't sleep for the last two
-nights because libgit2 peaked my interest and my performance at work wa=
-s
-quite terrible. I see you are + for this tool as I am, so we might have
-some great work together. Anyone would like to be a mentor?
-
-About me.. I already told quite a lot, but you can find more info
-(probably that means only CV) in my personal websites[5][6].
-
-[1] https://github.com/Motiejus/git2/
-[2] https://github.com/Motiejus/SoundPatty/
-[3] http://marc.info/?l=3Dgit&m=3D130081966214059&w=3D4
-[4] http://libgit2.github.com/api.html
-[5] http://m.jakstys.lt/
-[6] https://github.com/Motiejus/ :-)
-
-Regards,
-Motiejus Jak=C5=A1tys
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 0cd4c13..c53ca36 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -464,7 +464,7 @@ void diffcore_rename(struct diff_options *options)
+ 			else
+ 				locate_rename_dst(p->two, 1);
+ 		}
+-		else if (!DIFF_FILE_VALID(p->two)) {
++		else if (!DIFF_PAIR_UNMERGED(p) && !DIFF_FILE_VALID(p->two)) {
+ 			/*
+ 			 * If the source is a broken "delete", and
+ 			 * they did not really want to get broken,
+@@ -575,7 +575,10 @@ void diffcore_rename(struct diff_options *options)
+ 		struct diff_filepair *p = q->queue[i];
+ 		struct diff_filepair *pair_to_free = NULL;
+ 
+-		if (!DIFF_FILE_VALID(p->one) && DIFF_FILE_VALID(p->two)) {
++		if (DIFF_PAIR_UNMERGED(p)) {
++			diff_q(&outq, p);
++		}
++		else if (!DIFF_FILE_VALID(p->one) && DIFF_FILE_VALID(p->two)) {
+ 			/*
+ 			 * Creation
+ 			 *
+diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+index fcac472..48b751e 100755
+--- a/t/t7060-wtstatus.sh
++++ b/t/t7060-wtstatus.sh
+@@ -56,4 +56,63 @@ test_expect_success 'M/D conflict does not segfault' '
+ 	)
+ '
+ 
++test_expect_success 'rename & unmerged setup' '
++	git rm -f -r . &&
++	cat "$TEST_DIRECTORY/README" >ONE &&
++	git add ONE &&
++	test_tick &&
++	git commit -m "One commit with ONE" &&
++
++	echo Modified >TWO &&
++	cat ONE >>TWO &&
++	cat ONE >>THREE &&
++	git add TWO THREE &&
++	sha1=$(git rev-parse :ONE) &&
++	git rm --cached ONE &&
++	(
++		echo "100644 $sha1 1	ONE" &&
++		echo "100644 $sha1 2	ONE" &&
++		echo "100644 $sha1 3	ONE"
++	) | git update-index --index-info &&
++	echo Further >>THREE
++'
++
++test_expect_success 'rename & unmerged status' '
++	git status -suno >actual &&
++	cat >expect <<-EOF &&
++	UU ONE
++	AM THREE
++	A  TWO
++	EOF
++	test_cmp expect actual
++'
++
++cat >expected <<\EOF
++U	ONE
++A	THREE
++A	TWO
++EOF
++
++test_expect_success 'git diff-index --cached shows 2 added + 1 unmerged' '
++	git diff-index --cached --name-status HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'git diff-index --cached -M shows 2 added + 1 unmerged' '
++	git diff-index --cached --name-status HEAD >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<\EOF
++U	ONE
++C	ONE	THREE
++C	ONE	TWO
++EOF
++
++test_expect_success 'git diff-index --cached -C shows 2 copies + 1 unmerged' '
++	git diff-index --cached -C --name-status HEAD |
++		sed "s/^C[0-9]*/C/g" >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+-- 
+1.7.4.79.gcbe20
