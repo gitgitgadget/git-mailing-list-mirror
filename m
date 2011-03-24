@@ -1,146 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] diff: turn on rename detection progress reporting
-Date: Thu, 24 Mar 2011 13:51:24 -0400
-Message-ID: <20110324175124.GD30685@sigill.intra.peff.net>
-References: <20110324174556.GA30661@sigill.intra.peff.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] warn use of "git diff A..B"
+Date: Thu, 24 Mar 2011 14:11:34 -0400
+Message-ID: <AANLkTikjN_90UApfD2rRksDk8qXyE6pJHhd00Aw-Qe7Y@mail.gmail.com>
+References: <7voc51cydw.fsf@alter.siamese.dyndns.org> <7vei5xcxzm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 18:51:40 2011
+X-From: git-owner@vger.kernel.org Thu Mar 24 19:12:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2oh7-0001l6-Bu
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 18:51:37 +0100
+	id 1Q2p13-0005aQ-Pe
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 19:12:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756896Ab1CXRva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 13:51:30 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34976
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754352Ab1CXRv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 13:51:27 -0400
-Received: (qmail 4265 invoked by uid 107); 24 Mar 2011 17:52:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Mar 2011 13:52:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Mar 2011 13:51:24 -0400
-Content-Disposition: inline
-In-Reply-To: <20110324174556.GA30661@sigill.intra.peff.net>
+	id S1752162Ab1CXSMI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 14:12:08 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45444 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751263Ab1CXSME convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 14:12:04 -0400
+Received: by iyb26 with SMTP id 26so213167iyb.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 11:12:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=mz+EZZSkx2/6ZtcugwyGgOkauSuhya6Fp4YhXCVC4/g=;
+        b=ZF6TFlHZIMwQ0kWdmakgmpg5TJkv6GoWmYiAM7yy6DgMCO2DUFUH5Se0/kKciuasC1
+         DVk+AYRa0C1wIegrWVQKKBIGtKm7EMERWKvtkxnYkakvy4/6iHoopSfeL9bxfoU5KUqB
+         /ShoIWZQ9j3Q6Dq5Dusb7bJiPKLU2SZALJfJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=A+yR0xCbVQofhABMigndTYPpSRQ1iV8omOdwBrSW0aWpweL2QZZBZVvz3H6gATjTo3
+         DDQis0e+yDojXJlWpktzdMruP8vmeBVOV8de8lmudtGS3vbyImvVPDEfy1uP5RL6/1vn
+         VIeBXKjCz/qM2CEgzpc1PDN1JV7dzzx11AE2I=
+Received: by 10.42.131.137 with SMTP id z9mr14014633ics.60.1300990324210; Thu,
+ 24 Mar 2011 11:12:04 -0700 (PDT)
+Received: by 10.231.181.91 with HTTP; Thu, 24 Mar 2011 11:11:34 -0700 (PDT)
+In-Reply-To: <7vei5xcxzm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169934>
 
-Since all of the progress happens before we generate any
-output, this looks OK, even when output goes to a pager.
-We do the usual --progress/--no-progress options and check
-isatty(2) to enable the feature.
+On Wed, Mar 23, 2011 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> New people can be trained not to say "git diff A..B" when they mean t=
+o
+> compare two endpoints with "git diff A B", and that would reduce the
+> confusion greatly.
 
-The argument parsing is a little ad-hoc, but we currently
-have no parse-options infrastructure here at all.  However,
-it should be safe to parse like this, because the prior
-call to setup_revisions will have removed any options that
-take an argument, and our parsing removes --progress from
-argv for later parsers. The one exception is diff_no_index,
-which may get called early, and needs to learn to ignore
---progress.
+I think this is ill-advised because...
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-New since the last iteration.
+> Warn the use of "git diff A..B" syntax when "git diff A B" equally wo=
+rks
+> well, is shorter, and is much more clear what the command is comparin=
+g
+> (i.e. two endpoints).
 
-I'm not happy about the option parsing, but converting the whole of "git
-diff" to a saner parsing structure is more than I want to take on for
-this series. One thing that would make it easier is if the diff parser
-understood --progress and stored the result for the caller to check. I
-was tempted to do that because the code ends up cleaner, but it feels
-wrong.
+=2E.. this is not consistent ...
 
- Documentation/git-diff.txt |    7 +++++++
- builtin/diff.c             |   28 ++++++++++++++++++++++++++++
- diff-no-index.c            |    2 ++
- 3 files changed, 37 insertions(+), 0 deletions(-)
+> The new code does not issue a warning against "git diff ..B" that is =
+used
+> as a shorthand for "git diff HEAD B", and "git diff A.." that is used=
+ as a
+> shorthand for "git diff A HEAD", respectively. =C2=A0These are shorte=
+r to type
+> and are often useful.
 
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index f8d0819..dbebc93 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -87,6 +87,13 @@ OPTIONS
- :git-diff: 1
- include::diff-options.txt[]
- 
-+--no-progress::
-+--progress::
-+	Disable or enable progress reporting during long computations;
-+	the default is to enable progress reporting when stderr is a
-+	terminal. Currently the only computation with progress support
-+	is inexact rename detection.
-+
- <path>...::
- 	The <paths> parameters, when given, are used to limit
- 	the diff to the named paths (you can give directory
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 4c9deb2..82ecc1d 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -255,6 +255,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	struct blobinfo blob[2];
- 	int nongit;
- 	int result = 0;
-+	int progress = -1;
-+	int unknown_argc, parsed_argc;
- 
- 	/*
- 	 * We could get N tree-ish in the rev.pending_objects list.
-@@ -307,6 +309,32 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 			die("diff_setup_done failed");
- 	}
- 
-+	parsed_argc = 0;
-+	for (unknown_argc = i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		if (!strcmp(arg, "--") || arg[0] != '-') {
-+			int j;
-+			for (j = i; j < argc; j++)
-+				argv[unknown_argc++] = argv[j];
-+			break;
-+		}
-+		else if (!strcmp(argv[i], "--progress"))
-+			progress = 1;
-+		else if (!strcmp(argv[i], "--no-progress"))
-+			progress = 0;
-+		else {
-+			argv[unknown_argc++] = argv[i];
-+			continue;
-+		}
-+		parsed_argc++;
-+	}
-+	argc -= parsed_argc;
-+
-+	if (progress == -1)
-+		progress = isatty(2);
-+	if (progress)
-+		rev.diffopt.show_rename_progress = 1;
-+
- 	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
- 
- 	/*
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 3a36144..42cb413 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -212,6 +212,8 @@ void diff_no_index(struct rev_info *revs,
- 			options |= DIFF_SILENT_ON_REMOVED;
- 			i++;
- 		}
-+		else if (!strcmp(argv[i], "--progress"))
-+			; /* handled elsewhere */
- 		else if (!strcmp(argv[i], "--"))
- 			i++;
- 		else {
--- 
-1.7.4.41.g423da
+=2E..with this.
+
+I don't think telling newbies "Use diff A B instead of diff A..B, but
+A.. and ..B are okay" reduces confusion any. i.e., this makes more
+sense to me:
+
+(1) One sided '..' implies HEAD on the other side with both git log and=
+ git diff
+(2) "diff A..B" is the same as "diff A B"
+
+Therefor:
+
+- "diff A.." is the same as "diff A..HEAD" (1) is the same as "diff A H=
+EAD" (2).
+- "diff ..B" is the same as "diff HEAD..B" (1) is the same as "diff HEA=
+D B" (2).
+
+Also, the fact that a one-sided '..' implies HEAD on the other side
+
+
+> +static void check_useless_use_of_range(struct object_array_entry *en=
+t)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 if (!(ent[0].item->flags & UNINTERESTING) ||
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ent[1].item->flags & UNINTERESTI=
+NG)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return; /* not a r=
+ange made by "A..B" notation */
+> +
+> + =C2=A0 =C2=A0 =C2=A0 if ((ent[0].name =3D=3D dotdot_default_HEAD) |=
+|
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (ent[1].name =3D=3D dotdot_defau=
+lt_HEAD))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return; /* "A.." o=
+r "..B" */
+> +
+> + =C2=A0 =C2=A0 =C2=A0 warning("Do not write 'git diff A..B' but writ=
+e 'git diff A B'");
+> + =C2=A0 =C2=A0 =C2=A0 warning("diff is about two endpoints!");
+> +}
+> +
+
+I use diff A..B all the time, because I've often just used log A..B,
+or I'm about to, and it's one less part of the command line to change.
+Please make this warning squelch-able at least.
+
+j.
