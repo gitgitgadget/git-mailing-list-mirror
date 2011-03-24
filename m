@@ -1,71 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pathspec: reserve some letters after a colon pathspec
-Date: Thu, 24 Mar 2011 01:12:55 -0700
-Message-ID: <7vsjud9bso.fsf@alter.siamese.dyndns.org>
-References: <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net> <1300894353-19386-1-git-send-email-pclouds@gmail.com> <7vvcz9emrn.fsf@alter.siamese.dyndns.org> <4D8AEF9B.9050001@drmicha.warpmail.net> <AANLkTinjdi3+qcQxcBYj8SdQgbZYP=KiLwxM3Vq0c1Er@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv3 0/5]rev-list and friends: --min-parents, --max-parents
+Date: Thu, 24 Mar 2011 03:21:24 -0500
+Message-ID: <20110324082108.GA30196@elie>
+References: <20110321105628.GC16334@sigill.intra.peff.net>
+ <cover.1300872923.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 09:13:17 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 24 09:21:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2ffR-0003W5-2n
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 09:13:17 +0100
+	id 1Q2fnW-0007id-TT
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 09:21:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933665Ab1CXINK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 04:13:10 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60619 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933659Ab1CXINH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 04:13:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E1B243F5D;
-	Thu, 24 Mar 2011 04:14:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+RdQOEzt4C41x7bdorvOKsvYLuA=; b=DrjX7w
-	4rOpx94mKDe71O0WwYJQ11ORONpBnW1++HhPzOSO8p4kqQx+ljiiae5x1UCDUrST
-	zk/Y0B7x54qEWrHC+f6DQa8Esit+XhSOmmBARUzTPXIMVpZCviELbjmyPPjG2nbK
-	dq683LzYmPbaIYlpGkYk+Cc8u2i/bF/FD3byE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eMOuEVsGIk2viTKq644FqxcdcMyEEQn6
-	ZbU3tA7XG0MmVpohThZI/nsZRlTY+RMbBTCO0W4mUfaqPECEW+8fxA81xEfVFC8Q
-	OMmA6XjuC/etNCoWTrp4yNk7gRIR/8D9DttZuMtT27LGYISVa5UvuqTO/Usunwmm
-	XaWTo4nyLBo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B168F3F5C;
-	Thu, 24 Mar 2011 04:14:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9730C3F5B; Thu, 24 Mar 2011
- 04:14:38 -0400 (EDT)
-In-Reply-To: <AANLkTinjdi3+qcQxcBYj8SdQgbZYP=KiLwxM3Vq0c1Er@mail.gmail.com>
- (Nguyen Thai Ngoc Duy's message of "Thu, 24 Mar 2011 14:49:20 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C5938BC2-55EE-11E0-952E-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S933676Ab1CXIVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2011 04:21:32 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40594 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932228Ab1CXIVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2011 04:21:30 -0400
+Received: by iwn34 with SMTP id 34so9418989iwn.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 01:21:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mFfQiWNi9oivD0n7WeHsTrDQuYxQtUkCIBxq+x5ZWJI=;
+        b=ftDCTLA5yBA2dHUVIoM/P+fla2a3WqnYhnnlwjB0ch+0xOZKK7Dey/vv7I+jEv4Nry
+         jRMARl0/ptHBQUVzL8IuZ8woGj9WjdIOLLlbk08bLKqvT0+BAgzJR0w0fuhnCZ29dhvO
+         8nwNoJARS9XuS/gKpIzznjayLy2ZWdrWdo7E8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pIrtdxTs9cSMIpDX9N+SnUzjjR6AFqoIeuaXPl8ry4rAvWB3oTWCMqdpMfG0NLTKVX
+         jn5JHPIUNjIA+eG6rg2Gx7lJHGlsIu23iMgERDHwNg19bpZ4vi7IUvosuX79AksKvTPz
+         iE/cjYrAoDBotdOEJrwLX/uvF6tvlBfRlsGaU=
+Received: by 10.231.113.42 with SMTP id y42mr1411760ibp.68.1300954889963;
+        Thu, 24 Mar 2011 01:21:29 -0700 (PDT)
+Received: from elie ([68.255.102.141])
+        by mx.google.com with ESMTPS id he40sm5659940ibb.33.2011.03.24.01.21.28
+        (version=SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2011 01:21:28 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <cover.1300872923.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169906>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Michael J Gruber wrote:
 
-> And maybe:
->
->     . ':' to reach the superproject if user's inside a subproject. So
-> '::/foo' means foo at superproject while ':/foo' means foo in the
-> current project, both at root.
+> Compared to what is currently in pu (which is v2+eps), v3 has:
 
-A magic with that meaning may be fine (or may be not---I don't care too
-much about "because we could" at this point), but if you are going to use
-':' as the magic introducer, you cannot use ':' as one of the magic
-signatures, as it would make it ambiguous when you said '::'.  Did you
-write a long-form with 0 spelled-out magic (perhaps to defeat some other
-future settings like --option or config)?  Or did you mean that magic
-signature?
+Thanks.  I reviewed this by looking at what Junio queued in pu; it
+looks very good.  With the following patch, it passes tests.
+
+The use of "return" was surprising.  It seems this style has been
+intended to work ever since v0.99.5~24^2~4 (Trapping exit in tests,
+using return for errors, 2005-08-10).
+
+It interacts poorly with test_when_finished but since these tests do
+not use that function, they should be safe.  test_when_finished could
+use some fixes to avoid future surprises but that's another story.
+
+-- 8< --
+Subject: tests: avoid nonportable {foo,bar} glob
+
+Unlike bash and ksh, dash and busybox ash do not support brace
+expansion (as in 'echo {hello,world}').  So when dash is sh,
+t6009.13 (set up dodecapus) ends up pass a string beginning with
+"root{1,2," to "git merge" verbatim and the test fails.
+
+Fix it by introducing a variable to hold the list of parents for
+the dodecapus and populating it in a more low-tech way.
+
+While at it, simplify a little by combining this setup code with the
+test it sets up for.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ t/t6009-rev-list-parent.sh |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/t/t6009-rev-list-parent.sh b/t/t6009-rev-list-parent.sh
+index fc89d6d..3050740 100755
+--- a/t/t6009-rev-list-parent.sh
++++ b/t/t6009-rev-list-parent.sh
+@@ -112,20 +112,20 @@ test_expect_success 'rev-list override and infinities' '
+ 	check_revlist "--max-parents=0 --min-parents=1 --no-min-parents" one five
+ '
+ 
+-test_expect_success 'set up dodecapus' '
++test_expect_success 'dodecapus' '
+ 
++	roots= &&
+ 	for i in 1 2 3 4 5 6 7 8 9 10 11
+ 	do
+-		git checkout -b root$i five || return
+-		test_commit $i || return
++		git checkout -b root$i five &&
++		test_commit $i &&
++		roots="$roots root$i" ||
++		return
+ 	done &&
+ 	git checkout master &&
+ 	test_tick &&
+-	git merge -m dodecapus root{1,2,3,4,5,6,7,8,9,10,11} &&
+-	git tag dodecapus
+-'
+-
+-test_expect_success 'test with dodecapus' '
++	git merge -m dodecapus $roots &&
++	git tag dodecapus &&
+ 
+ 	check_revlist "--min-parents=4" dodecapus tetrapus &&
+ 	check_revlist "--min-parents=8" dodecapus &&
+-- 
+1.7.4.1
