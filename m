@@ -1,75 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2011, #04; Wed, 23)
-Date: Wed, 23 Mar 2011 22:24:15 -0700
-Message-ID: <7vy645ay68.fsf@alter.siamese.dyndns.org>
-References: <7v62r9csqr.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.00.1103232015390.30954@debian>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Announce: git-number
+Date: Thu, 24 Mar 2011 12:46:35 +0700
+Message-ID: <AANLkTi==8_hssWSHkR0DTynibtT83iUEq-M_nPO5gN1m@mail.gmail.com>
+References: <AANLkTinJTy5OkcU+L=nFVwGMNBepuYgAr-+Jk=OVmG6P@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 06:24:34 2011
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 06:47:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2d29-000303-GX
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 06:24:33 +0100
+	id 1Q2dO6-00039c-2y
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 06:47:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665Ab1CXFY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 01:24:28 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62989 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751489Ab1CXFY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 01:24:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 87955330B;
-	Thu, 24 Mar 2011 01:26:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VPRBpgtHuD1qFdhFqmJ4q2vjb94=; b=XIIsRm
-	KmXMxspeltygjYgoVcQ7booseB2x0EvMI9/9/GynRqysF+WeD0wlNIOoakF2D6rD
-	6OfpKzSvUuVQg5PHSP6LyySQIMIvSgaIEEWO5jUhBsVnni0f9epdiIxRLfnk/XMf
-	YhYQoTJfx8lK2RcTA0jm7Fl78HmdsNBg/UidQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LuBjGIyzTGQrBXnK4TBOOYuAguhQWaAU
-	CNnYZEw7TYTa38cF6EUJk0BQTuhKSTZcJ9/iyZ0JAJTJ4+EyHfx/dTY0H9NW9u9V
-	rcX/CvSgsrex2ml+D+U1GUrSiZCJNPutyXIYwa1En6toNYAqLW+co8pVwXiP/Wgl
-	70HqVxBQaDI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 42EBE330A;
-	Thu, 24 Mar 2011 01:26:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5415C3309; Thu, 24 Mar 2011
- 01:25:59 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.00.1103232015390.30954@debian> (Martin von
- Zweigbergk's message of "Wed, 23 Mar 2011 20:39:09 -0400 (EDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 35505282-55D7-11E0-8693-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932682Ab1CXFrI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 01:47:08 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:37589 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753590Ab1CXFrG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 01:47:06 -0400
+Received: by wya21 with SMTP id 21so8385108wya.19
+        for <git@vger.kernel.org>; Wed, 23 Mar 2011 22:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=QhRXWSoVp5FRv63rapRo+CXKrYP5VCIV9OOWRu0ts0k=;
+        b=nXGmGR/X8xwiHIzNGzAgRMijxTbIwGlbRzHrEBu5Gjd1e9uvqdCIrjuQf8k3KJnvsS
+         9FWpMm1dPxQM7wc6dVIvCyRfHz1/WtD1J+kyveBexgG+RYxYylaB1iCBjItzpJRwxx1h
+         H1iEbfGwVyeIuriqmdqMtfH0+8KeF+QKLQ84Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=eNmYbqPylsRsKUMF6zL6UMunjTNhZ1y08BF1+lPkgsCzCvyUtRQMVcp73nNWMLH7KB
+         k/ERSYK7TRaxD8Pu7o4OLriLaqg6PiZDKlL/2VbXfy4a2Oe/02FKrQIsJugA3NeX7ahz
+         VdAVrRiyM17GQrzUmiL/12ipRCca/Viu8f5Uo=
+Received: by 10.216.157.68 with SMTP id n46mr315549wek.111.1300945625098; Wed,
+ 23 Mar 2011 22:47:05 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Wed, 23 Mar 2011 22:46:35 -0700 (PDT)
+In-Reply-To: <AANLkTinJTy5OkcU+L=nFVwGMNBepuYgAr-+Jk=OVmG6P@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169893>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
-
-> On Wed, 23 Mar 2011, Junio C Hamano wrote:
+On Thu, Mar 24, 2011 at 11:51 AM, Nazri Ramliy <ayiehere@gmail.com> wro=
+te:
+> Hi,
 >
->> * mz/rebase (2011-02-28) 34 commits
->>  - rebase: define options in OPTIONS_SPEC
->> ...
->> 
->> I think the tip one is a response to J6t's regression concerns; it looked
->> Ok to me.
+> I'd like to announce a little tool that I have been using for the pas=
+t
+> few years whenever I use git: git-number.
 >
-> Do I need to do anything to un-stall (the tip of) this topic?
+> git-number allows you to use numbers in place of filenames whenever
+> you need to provide them to any git command.
+>
+> When run without argument it will run git-status and prepend a number
+> for each file name that git-status shows, starting from 1:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git number
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# On branch master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Untracked files:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 (use "git add <file>..." to inclu=
+de in what will be committed)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#1 =C2=A0 =C2=A0 =C2=A0foo/bar/baz/frobnit=
+=2Efu
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0nothing added to commit but untracked file=
+s present (use "git add" to track)
+>
+> The output is exactly the same as git status (with color), but with
+> numbers associated with each file that is shown.
+>
+> Now, instead of writing:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git add foo/bar/baz/frobnit.fu
+>
+> You can just do
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git number add 1
+>
 
-Thanks for a ping, but not at this point.
+Nice. I have something similar in a private tool (same problem: too
+long paths to type). This can be made applicable to a few other
+commands too, like 'diff --stat'. I think the magic character [1], be
+it ':' or '/', can be used to make this (the syntax is for
+demostration only):
 
-I was hoping that I don't have to be the only person to re-review the last
-bit and has been waiting for an independent Ack from other regular
-reviewers.
+$ git add :@{1}
+
+equivalent to your 'git number add 1'.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/169844
+--=20
+Duy
