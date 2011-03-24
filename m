@@ -1,110 +1,120 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFH] git cherry vs. git rev-list --cherry, or: Why does "..."
- suck?
-Date: Thu, 24 Mar 2011 08:38:48 +0100
-Message-ID: <4D8AF508.7070709@drmicha.warpmail.net>
-References: <4D889119.3020009@drmicha.warpmail.net> <4D8A23CD.9030203@drmicha.warpmail.net> <7vfwqdem0p.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] pathspec: reserve some letters after a colon pathspec
+Date: Thu, 24 Mar 2011 14:49:20 +0700
+Message-ID: <AANLkTinjdi3+qcQxcBYj8SdQgbZYP=KiLwxM3Vq0c1Er@mail.gmail.com>
+References: <bc49592f5e524a0d12aa55eeca1c5ca659b6525f.1298974647.git.git@drmicha.warpmail.net>
+ <1300894353-19386-1-git-send-email-pclouds@gmail.com> <7vvcz9emrn.fsf@alter.siamese.dyndns.org>
+ <4D8AEF9B.9050001@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 08:42:37 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 24 08:49:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2fBk-0006pk-C9
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:42:36 +0100
+	id 1Q2fIr-0001VA-LM
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:49:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933550Ab1CXHmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 03:42:31 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42013 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933451Ab1CXHma (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 03:42:30 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B2FC9207BC;
-	Thu, 24 Mar 2011 03:42:29 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 24 Mar 2011 03:42:29 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ws0tX8ZDU+WQs7VOCZJfiMz5iSI=; b=S2wbpvzI44brdGPXrVX+rg79HpDy8FZeT+C+szkZtg8aD6pTmAgPQLPwbH7/Od/MlNGuK/lo1ZF7nCVcSpw2OlNaHD33OIZUsRG6SpjB2wkdA03L9YdorjGJdEkR/a453awRZ66WsU7hIq9BMMxTkuyn8Mp1KNUED1gLBEPO8UA=
-X-Sasl-enc: K0sgI7OUej7a/BMgPWiMPsppGC0ZDKIQp9o8C9XGv8LS 1300952549
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3A6FD40862D;
-	Thu, 24 Mar 2011 03:42:29 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7vfwqdem0p.fsf@alter.siamese.dyndns.org>
+	id S1756306Ab1CXHtw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 03:49:52 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49907 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754373Ab1CXHtv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 03:49:51 -0400
+Received: by wwa36 with SMTP id 36so11208959wwa.1
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 00:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=a1R2Uqzf9dRJSM4VEOoBKYqmUY9szNbfYijKenH4sp8=;
+        b=YI36uh6lmh0jyBl3yP9foasWrezY65rK4wN5SjwNCcXBpu9Lz5VDIYsDvV7PGW67xu
+         IWx45Ctlz//WWXXRo0/B78CDc115OEE5c+HK95jR0iHR1m37sYFq1K7ZV30Go2q4cGve
+         jpsz4P8vlOb93gg2cUckIUSG4fZX7HQISCaJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=XFJV4CMOFfb+8znKn6H/ZTm+SzrHkgIIJlGBmOxWmPpaW3Chl5k77DFik/wgaoiuta
+         KdSyVxsTN2OKzLedcPN1S5YB8Pddgf+eYpZUCXVw+YqRC4KVHAUi524zLSfQmJ7aausU
+         D7wiEQgwxem7fEMR3raHBI27LDoucDJ3NxbQ0=
+Received: by 10.216.66.131 with SMTP id h3mr7787510wed.111.1300952990134; Thu,
+ 24 Mar 2011 00:49:50 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Thu, 24 Mar 2011 00:49:20 -0700 (PDT)
+In-Reply-To: <4D8AEF9B.9050001@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169902>
 
-Junio C Hamano venit, vidit, dixit 23.03.2011 19:20:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Adding some recent insight:
+2011/3/24 Michael J Gruber <git@drmicha.warpmail.net>:
+>> Here is a weather-baloon. =C2=A0I will use colon below as the magic =
+introducer,
+>> as I don't care very deeply about the choice of it.
 >>
->> Michael J Gruber venit, vidit, dixit 22.03.2011 13:07:
->>> Performance
->>> ===========
->>>
->>> I don't get this:
->>>
->>> git cherry A B: 0.4s
->>> git rev-list --cherry A...B: 1.7s
->>> (more details below)
+>> =C2=A0- "^:([^\w\d]+)(.*)$", that is "a magic introducer followed by=
+ a sequence
+>> =C2=A0 =C2=A0of non-alnum followed by the remainder" means that the =
+part that is
+>> =C2=A0 =C2=A0given to the matching engine is $2, and each gibberish =
+character in $1
+>> =C2=A0 =C2=A0determines what magic is requested when the matching en=
+gine does its
+>> =C2=A0 =C2=A0work. =C2=A0Among the gibberish that can be in $1, we c=
+urrently would want
+>> =C2=A0 =C2=A0to support:
 >>
->> I can get the latter down to 0.95s and this
+>> =C2=A0 =C2=A0 . '/' denotes that $2 is relative to root of the worki=
+ng tree, i.e. do
+>> =C2=A0 =C2=A0 =C2=A0 not add 'prefix' to it at the left.
 >>
->>> merge-base A B: 0.95s
->>> merge-base --all A B: 0.95s
->>> rev-parse A...B: 0.95s
+>> =C2=A0 =C2=A0 . '!' denotes that the matching with $2 should not hon=
+or globbing.
 >>
->> to 0.16s each. The downside is that merge-base may give a few
->> unneccessary candidates (commits which are ancestors of other commits it
->> returns), but this does not change the results for rev-list, of course.
->>
->> I get this dramatic speedup by removing the check for duplicates from
->> get_merge_bases_many() in commit.c. After a first merge_bases_many()
->> run, returning N commits, that check calls merge_bases_many() again for
->> each pair (N choose 2) to check whether one is contained in the other.
->> Quite a bottleneck. Removing it works great. But can we live with a few
->> additional merge bases?
-> 
-> When we run merge-base as the top-level command (this includes
-> reduce_heads() that is used by "git merge"), we have to cull unnecessary
-> phantom bases that can be reached by other bases, so you are not allowed
-> to make such a change unconditionally.
-> 
-> Passing down a parameter from a caller that is prepared to handle phantom
-> merge bases correctly is probably the right approach.  Existing callers
-> can make "safer" calls for now; you can later examine them and turn them
-> into "faster" calls if they operate correctly given a result that contain
-> phantom bases.
 
-Yes, I was thinking of having thorough vs. fast mode, but I'll dig more
-into merge_bases_many().
+And maybe:
 
-My current impression is that those phantom merge bases appear only
-(mainly?) when there are severe date ordering problems in the dag.
-merge_bases_many() uses commit_list_insert_by_date(), and given the way
-it walks, later merge bases which are ancestors of another one get
-marked STALE automatically.
+    . ':' to reach the superproject if user's inside a subproject. So
+'::/foo' means foo at superproject while ':/foo' means foo in the
+current project, both at root.
 
-For callers which are interested in one base only, the check makes a
-difference only if there are date ordering problems.
+>> =C2=A0...
+>
+> I like this a lot, especially the fact that we would have descriptive
+> long names as well as short versions for a subset!
 
-In my A B example, merge_bases_many() comes up with the correct 25 ones
-during its first run, and then gets called 300 times again (25*24/2) to
-check each pair of them, without any reduction. (Clearly, it's a non
-issue in the case of unique merge base.)
+I'll leave it to you to come up with something we can test :)
 
-What I'm mainly interested in is the A...B case. And for a revision walk
-with one A...B range and revs->limited, one could even embed the whole
-mb-logic into the walk! But I don't see how to do this for multiple
-symmetric ranges.
+> Two remarks:
+>
+> :(symlink|submodule|directory|file): would fit into that scheme (for =
+use
+> in .gitattributes), though I'm not sure we want that for general
+> pathspecs. We probably want textconv applied to :file: only by defaul=
+t,
+> attributes to match with :file only?
 
-Michael
+It does not hurt to have generic support for everything. 'git ls-files
+-- :executable:' would be nice, though I'm not sure if I will ever use
+it.
+
+> We already have ":./cdwfile" as in "commit:./cwdfile", and this looks
+> like a preexisting instance, although it is not ("commit:" gets strip=
+ped
+> and "./cwdfile" is the pathspec). People will probably try something
+> like "commit:/rootfile", and we may or may not want to support this.
+> That particular one is easy, but "commit:full-tree:name" has a define=
+d
+> meaning now...
+
+I think we should leave this one out. It's to address a single path.
+If you bring full pathspec support to it, a pathspec may resolve to
+multiple paths, which is unwanted. If people want pathspecs, they can
+do "git cmd commit -- pathspecs" most of the time.
+--=20
+Duy
