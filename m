@@ -1,114 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/1] gitweb: javascript ability to adjust time based on timezone
-Date: Thu, 24 Mar 2011 22:23:22 +0100
-Message-ID: <201103242223.23563.jnareb@gmail.com>
-References: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost> <AANLkTincAcVQQtH+T9+K7tyBd0P5S=8YxXpsfrQ=68gE@mail.gmail.com> <4D8AF101.7030709@eaglescrag.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [msysGit] Trailing spaces in branchname (git-svn)
+Date: Thu, 24 Mar 2011 22:26:42 +0100
+Message-ID: <AANLkTinZnd0R8Rnv4kaiJAGP0qKEwgbU+nP=donmbEbp@mail.gmail.com>
+References: <0014af8a-3b24-4398-88aa-7a3e460f2283@s11g2000yqh.googlegroups.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Kevin Cernekee <cernekee@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: "J.H." <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Thu Mar 24 22:24:10 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Barthus <magnus.kallstrom@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:28:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2s0n-0001LI-JV
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 22:24:10 +0100
+	id 1Q2s4d-0003Of-W2
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 22:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754863Ab1CXVYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 17:24:04 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63272 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752397Ab1CXVYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 17:24:01 -0400
-Received: by bwz15 with SMTP id 15so450808bwz.19
-        for <git@vger.kernel.org>; Thu, 24 Mar 2011 14:24:00 -0700 (PDT)
+	id S1757213Ab1CXV1s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 17:27:48 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:65338 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756400Ab1CXV1n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 17:27:43 -0400
+Received: by fxm17 with SMTP id 17so457250fxm.19
+        for <git@vger.kernel.org>; Thu, 24 Mar 2011 14:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=fi8J6SD2RsUakY6zK20MIg4/jWO3rv2DYUgPZNk0Eh0=;
-        b=MlvArVCUlmVFr3wfFnboWno+MWqozgnjMxkk5w9Xo7bbqnb78WHiuaQ8XhB6Ogq2X5
-         pj2iH3rhzjqt/v0Fcgk/rM05W7VVlzp3EhERwAlifS3uqHmHEfm86rHIRNG/K9NpCnc9
-         UPwuXFyek/Uj4eiJd+QMBW7pICeRPPqOEzRMs=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ubGI2bRdQ+xlKROiwdfvWZCbjyxuzmPLb59J8wnig/8=;
+        b=TTkYqT7j1YwaaYFO9Giy47ILhUCuiR1Bxq2Ge19hmvvZ+NZ8dGy6dXH1UWXgLBwRDn
+         C6/W5VHu40pGk42kChOhfjOmdhjYQCgIM/HlSNomWimKewMJZ04QW6+EYxuSrppFNxBj
+         HoD1HnzYbMXoVZ55UXKhRiFD9J7zLMBdOLgmQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=T9wbyTEFSqq9UiZgkt05wg4vWYo++9rnx9bBknfkOaX+k8ID+8aHzyOY1oX/ptlN0V
-         4CQt3CXsjYJ/KXME8E6iwQFVFQ5NRWO7NLpSl7As8hjj/kBT3tia57bwLJnfYxUnKK/L
-         It0HA8Wo/wI0xoLpG5ocO2lANc6nRSYWeZPRc=
-Received: by 10.204.16.198 with SMTP id p6mr1229968bka.143.1301001805063;
-        Thu, 24 Mar 2011 14:23:25 -0700 (PDT)
-Received: from [192.168.1.13] (abwk172.neoplus.adsl.tpnet.pl [83.8.234.172])
-        by mx.google.com with ESMTPS id z18sm254486bkf.20.2011.03.24.14.23.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Mar 2011 14:23:23 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4D8AF101.7030709@eaglescrag.net>
-Content-Disposition: inline
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=Q0yap4G2qw5g7RqguxAqHG2Us9bXkWjc2h/9aKLwVFATUe8mS6aXQcOUwpVxF3bHOO
+         mdPhDQ0WoWdpfmgzWkEvaIcJ6Tj33DkBLUsVzGH4d8GVYhHXbVTrVF+6OcDji6yvAVG3
+         0tz+CcjbSqSTUmrSAnpmnpZgLUvzdMpUeZGnI=
+Received: by 10.223.56.220 with SMTP id z28mr1801325fag.11.1301002062311; Thu,
+ 24 Mar 2011 14:27:42 -0700 (PDT)
+Received: by 10.223.117.78 with HTTP; Thu, 24 Mar 2011 14:26:42 -0700 (PDT)
+In-Reply-To: <0014af8a-3b24-4398-88aa-7a3e460f2283@s11g2000yqh.googlegroups.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169946>
 
-On Thu, 24 Mar 2011, J.H. wrote:
-> On 03/23/2011 10:23 PM, Kevin Cernekee wrote:
-> > On Wed, Mar 23, 2011 at 5:08 PM, John 'Warthog9' Hawley
-> > <warthog9@eaglescrag.net> wrote:
+On Thu, Mar 24, 2011 at 9:16 PM, Barthus <magnus.kallstrom@gmail.com> w=
+rote:
+> I am trying to clone a subversion repository that has a branchname
+> with a trailing space. Since I can't find a solution I downloaded the
+> code to try to understand the problem. Since I am not familiar with
+> perl it is a bit hard for me. This is what I have found out so far:
+>
+> In git-svn.perl:
+> tmp_index_do is called and tries to create the folder with the
+> trailing space (under svn/refs/remotes) with the following line of
+> code:
+> mkpath([$dir]) unless -d $dir;
+> reading the solution above, I figured that I should be able to
+> "sanitize" the path -reusing som code already existing in the script:
+> =A0 =A0 =A0 =A0sub refname
+> I then tried to:
+> git svn fetch
+>
+> Now the folder gets created, but then some lockfile is supposed to be
+> created (with the trailing space in the path), and it fails again.
+>
+> I have not been able to locate the call that tries to create the
+> lockfile (yet), and I guess there will be more fileoperations made to
+> the folder. If I manage to figure out the code my theory now is to
+> "sanitize" the branchname in the structure where it is contained when
+> it comes from subversion (possibly adding a "sanitized" storage to no=
+t
+> destroy the original name if it is needed), and see if the clone/fetc=
+h
+> can continue.
+>
+> My hope is though, that someone who understands this maybe can fix it=
+,
+> or maybe point me in the right direction.
 
-> > > This patch takes the same basic goal, display the appropriate times
-> > > in a given timezone, and implements it in Javascript.  This requires
-> > > adding / using a new class, dtcommit, which is based on the
-> > > dtstart/dtend microformats.  Appropriate commit dates are wrapped in
-> > > a span with this class, and a title of the time in ISO8601 format.
-
-[...]
-> > 4) IE6 does not seem to like ISO 8601 format:
-> > 
-> > x = new Date("2011-03-09T03:29:09Z");
-> > 
-> > This sets all fields to NaN.  I suspect that getTime() values
-> > (milliseconds since 1970-01-01) are more portable.
-> 
-> That's actually an issue, my understanding (as well as the understanding
-> of all of the microformats that are out there) is that ISO 8601 is the
-> "correct" format that these things should be in.  If IE6 can't handle
-> that (and I'll admit I don't have trivial access to older IEs for
-> testing right now), then there is a *LOT* of Javascript out there that
-> is just broken.
-> 
-> Going a bit further, I would draw the line in the sand for gitweb
-> supporting IE as a browser somewhere around IE 7 or 8 at this point as well:
-> 
-> http://www.w3schools.com/browsers/browsers_explorer.asp
-> 
-> IE 5, 6 & 7 look to have negligible market share at best as it is, and
-> I'm not sure it's worth trying to go back and support IE6 or anything prior.
-
-Another solution would be check if browser supports required JavaScript
-features, and if not behave as if JavaScript was disabled (graceful
-degradation).
-
-[...]
-> > Some other things that popped up:
-> > 
-> > 5) Some timezone offsets are not a whole number of hours.  Bangalore
-> > time is GMT +0530, for instance.
-> 
-> The code is capable of handling this, it's mainly an issue of interface,
-> which I'll bring up in response to 6 & 7
-
-This is not issue of only interface: date.js has 'tzOffset / 100 * msPerHr'
-and this do not support fractional offsets.  +0530 is 5.5 hours, not 5.3.
-
--- 
-Jakub Narebski
-Poland
+This kind of question is usually better to ask on the main Git mailing
+list, as it's not really Windows specific.
