@@ -1,169 +1,110 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git cherry improvements suggestions
-Date: Thu, 24 Mar 2011 08:40:39 +0100
-Message-ID: <AANLkTi=7NKn4FrCqFaGH+XTHRw3oLCv=aKPWAJfNsgD_@mail.gmail.com>
-References: <AANLkTimk0bkOGVy2W+XddHRuf-1xw+d0RwzPhnk40vi8@mail.gmail.com>
-	<4D89CF8E.4070100@drmicha.warpmail.net>
-	<AANLkTinXh_Y9ft5Pd5SxOEXvKNm3HLmsiut8WrvFZrdQ@mail.gmail.com>
-	<4D89F6BC.2040902@drmicha.warpmail.net>
-	<AANLkTin7Du5RYt946hNjP-y53puNykebCjiKk5Ju_igr@mail.gmail.com>
-	<4D8A0741.9000506@drmicha.warpmail.net>
-	<AANLkTi=7=QDh0Pe9W4bRcGY5Krg7sBqRcZ2C1YonJSRN@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFH] git cherry vs. git rev-list --cherry, or: Why does "..."
+ suck?
+Date: Thu, 24 Mar 2011 08:38:48 +0100
+Message-ID: <4D8AF508.7070709@drmicha.warpmail.net>
+References: <4D889119.3020009@drmicha.warpmail.net> <4D8A23CD.9030203@drmicha.warpmail.net> <7vfwqdem0p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 24 08:40:54 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 08:42:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2fA6-00065f-AX
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:40:54 +0100
+	id 1Q2fBk-0006pk-C9
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Mar 2011 08:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933604Ab1CXHkm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2011 03:40:42 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:45427 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933550Ab1CXHkk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 03:40:40 -0400
-Received: by vws1 with SMTP id 1so6271024vws.19
-        for <git@vger.kernel.org>; Thu, 24 Mar 2011 00:40:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=r8rnr5GkJvln3HmKl/b15x3f5plwJW4oTf/xEpMhdKg=;
-        b=wNcPlCS33e375hik+f3jEgcfLnmMTmIrW8mtAlGSGFz5ffiWUOhajZSLlI4+Z8syy6
-         z6UgN2DuJEG8mKUHIKMWPZCPqTS6kmwcM1Zy94cNCtOOkFUwwRLplK2eCQbqpzuD30gz
-         AF0P04wTwiBGLvMCEiu79PfLzJW/9RnmBAC3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EcdilCID6Y9/qFbcuC6qn4QjqDNhE/VGGBOc5mTeFBtYwXZbElNcBldhN4Lm5P6gfD
-         mi9G5ouYi1tWC6FnUTBCcSC5eGsxYBToApcuzDFgwMaPydhrS1qUnw891TigD+vOEWXq
-         Vp6bmgMORPYaWzQDUCAbKkEgY36TguEFjEEtg=
-Received: by 10.52.95.135 with SMTP id dk7mr85652vdb.93.1300952439189; Thu, 24
- Mar 2011 00:40:39 -0700 (PDT)
-Received: by 10.220.210.16 with HTTP; Thu, 24 Mar 2011 00:40:39 -0700 (PDT)
-In-Reply-To: <AANLkTi=7=QDh0Pe9W4bRcGY5Krg7sBqRcZ2C1YonJSRN@mail.gmail.com>
+	id S933550Ab1CXHmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2011 03:42:31 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42013 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933451Ab1CXHma (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 03:42:30 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B2FC9207BC;
+	Thu, 24 Mar 2011 03:42:29 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 24 Mar 2011 03:42:29 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ws0tX8ZDU+WQs7VOCZJfiMz5iSI=; b=S2wbpvzI44brdGPXrVX+rg79HpDy8FZeT+C+szkZtg8aD6pTmAgPQLPwbH7/Od/MlNGuK/lo1ZF7nCVcSpw2OlNaHD33OIZUsRG6SpjB2wkdA03L9YdorjGJdEkR/a453awRZ66WsU7hIq9BMMxTkuyn8Mp1KNUED1gLBEPO8UA=
+X-Sasl-enc: K0sgI7OUej7a/BMgPWiMPsppGC0ZDKIQp9o8C9XGv8LS 1300952549
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3A6FD40862D;
+	Thu, 24 Mar 2011 03:42:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <7vfwqdem0p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169901>
 
-On Wed, Mar 23, 2011 at 8:28 PM, Piotr Krukowiecki
-<piotr.krukowiecki@gmail.com> wrote:
-> On Wed, Mar 23, 2011 at 3:44 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 15:43:
->>> On Wed, Mar 23, 2011 at 2:33 PM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>> Piotr Krukowiecki venit, vidit, dixit 23.03.2011 14:23:
->>>>> Just some stats:
->>>>>
->>>>> =A0 =A0git log --cherry-mark --left-right --oneline --date-order =
-branch...trunk
->>>>>
->>>>> lists 1004 commits, takes about 20s and memory peaks to about 670=
-MB
->>>>> twice during the run (I'm on linux with AMD Phenom II X4 945)
->>>>>
->>>>> With limit it prints X last commits (the limiting seems to take p=
-lace after all
->>>>> work, on the output list only).
->>>>>
->>>>> branch..trunk is 551 commits, the other way is 453 commits.
->>>>> 710 commits are found to be "=3D", 98 "<", 196 ">".
->>>>>
->>>>> Note, I'm not saying it's too slow, or that it's working incorrec=
-tly, I'm just
->>>>> giving real-life stats if anyone was interested.
->>>>> I suspect such checks won't be done frequently.
->>>>
->>>> You don't need to say it's slow - I've said so already :(
->>>>
->>>> http://permalink.gmane.org/gmane.comp.version-control.git/169725
->>>
->>> In the link above:
->>> =A0 git cherry A B: 0.4s
->>> =A0 git rev-list --cherry A...B: 1.7s
->>>
->>> So rev-list is 4.25x slower.
->>>
->>> In my case it's only 1.23x slower:
->>>
->>> =A0 =A0$ time git rev-list --cherry branch...trunk =A0> /tmp/rev-li=
-st
->>> =A0 =A0real =A0 =A0 =A0 0m18.627s
->>> =A0 =A0user =A0 =A0 =A0 0m17.710s
->>> =A0 =A0sys =A0 =A0 =A0 =A00m0.900s
->>>
->>> =A0 =A0$ time git cherry =A0branch trunk =A0> /tmp/cherry
->>> =A0 =A0real =A0 =A0 =A0 0m15.345s
->>> =A0 =A0user =A0 =A0 =A0 0m14.310s
->>> =A0 =A0sys =A0 =A0 =A0 =A00m1.020s
->>>
->>>
+Junio C Hamano venit, vidit, dixit 23.03.2011 19:20:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Adding some recent insight:
 >>
->> How's that with > /dev/null (or with --count for rev-list)? Also, ho=
-w
->> many merge bases do you have:
+>> Michael J Gruber venit, vidit, dixit 22.03.2011 13:07:
+>>> Performance
+>>> ===========
+>>>
+>>> I don't get this:
+>>>
+>>> git cherry A B: 0.4s
+>>> git rev-list --cherry A...B: 1.7s
+>>> (more details below)
 >>
->> git merge-base --all branch trunk | wc -l
->
-> I expect only one - there should be no merges between those two
-> branches.
->
-> I will do measurements tomorrow.
+>> I can get the latter down to 0.95s and this
+>>
+>>> merge-base A B: 0.95s
+>>> merge-base --all A B: 0.95s
+>>> rev-parse A...B: 0.95s
+>>
+>> to 0.16s each. The downside is that merge-base may give a few
+>> unneccessary candidates (commits which are ancestors of other commits it
+>> returns), but this does not change the results for rev-list, of course.
+>>
+>> I get this dramatic speedup by removing the check for duplicates from
+>> get_merge_bases_many() in commit.c. After a first merge_bases_many()
+>> run, returning N commits, that check calls merge_bases_many() again for
+>> each pair (N choose 2) to check whether one is contained in the other.
+>> Quite a bottleneck. Removing it works great. But can we live with a few
+>> additional merge bases?
+> 
+> When we run merge-base as the top-level command (this includes
+> reduce_heads() that is used by "git merge"), we have to cull unnecessary
+> phantom bases that can be reached by other bases, so you are not allowed
+> to make such a change unconditionally.
+> 
+> Passing down a parameter from a caller that is prepared to handle phantom
+> merge bases correctly is probably the right approach.  Existing callers
+> can make "safer" calls for now; you can later examine them and turn them
+> into "faster" calls if they operate correctly given a result that contain
+> phantom bases.
 
+Yes, I was thinking of having thorough vs. fast mode, but I'll dig more
+into merge_bases_many().
 
-Branches might change a bit since yesterday so the exact numbers
-might be a bit different.
+My current impression is that those phantom merge bases appear only
+(mainly?) when there are severe date ordering problems in the dag.
+merge_bases_many() uses commit_list_insert_by_date(), and given the way
+it walks, later merge bases which are ancestors of another one get
+marked STALE automatically.
 
+For callers which are interested in one base only, the check makes a
+difference only if there are date ordering problems.
 
-$ time git cherry  branch trunk  > /dev/null
+In my A B example, merge_bases_many() comes up with the correct 25 ones
+during its first run, and then gets called 300 times again (25*24/2) to
+check each pair of them, without any reduction. (Clearly, it's a non
+issue in the case of unique merge base.)
 
-real	0m15.246s
-user	0m14.260s
-sys	0m0.970s
+What I'm mainly interested in is the A...B case. And for a revision walk
+with one A...B range and revs->limited, one could even embed the whole
+mb-logic into the walk! But I don't see how to do this for multiple
+symmetric ranges.
 
-
-$ time git rev-list --cherry branch...trunk  > /dev/null
-
-real	0m18.801s
-user	0m17.980s
-sys	0m0.800s
-
-
-$ time git rev-list --cherry --count branch...trunk
-556
-
-real	0m18.825s
-user	0m18.010s
-sys	0m0.770s
-
-
-$ time git merge-base --all branch trunk  | wc -l
-2
-
-real	0m0.538s
-user	0m0.490s
-sys	0m0.040s
-
-
-I expected one merge base, but it appears our history is
-seriously fscked, either by past svn operations or by
-git-svn clone :)
-
-(I'm not saying there's an error somewhere, just that the
-history is ... complicated)
-
-
---=20
-Piotr Krukowiecki
+Michael
