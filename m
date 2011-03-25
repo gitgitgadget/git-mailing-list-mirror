@@ -1,87 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why git silently replaces untracked files?
-Date: Fri, 25 Mar 2011 12:58:11 -0400
-Message-ID: <20110325165811.GB25851@sigill.intra.peff.net>
-References: <1301064754576-6207950.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH (BUGFIX)] gitweb: Fix handling of fractional timezones in
+ parse_date
+Date: Fri, 25 Mar 2011 10:15:16 -0700
+Message-ID: <7v8vw36s0r.fsf@alter.siamese.dyndns.org>
+References: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost>
+ <1300925335-3212-2-git-send-email-warthog9@eaglescrag.net>
+ <201103241617.37400.jnareb@gmail.com> <201103251620.28811.jnareb@gmail.com>
+ <AANLkTik5bLaR_0uhqGrNWW6U7z82KfmpNTyvRwkKFfj+@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "igor.mikushkin" <igor.mikushkin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 17:58:23 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
+	git@vger.kernel.org
+To: Kevin Cernekee <cernekee@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 18:15:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3AL6-0003A4-Ix
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 17:58:20 +0100
+	id 1Q3Ac3-0004vb-Nc
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 18:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754369Ab1CYQ6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 12:58:15 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48730
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754261Ab1CYQ6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 12:58:14 -0400
-Received: (qmail 15268 invoked by uid 107); 25 Mar 2011 16:58:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 12:58:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 12:58:11 -0400
-Content-Disposition: inline
-In-Reply-To: <1301064754576-6207950.post@n2.nabble.com>
+	id S1754880Ab1CYRPf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 13:15:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64659 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753703Ab1CYRPb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 13:15:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E0337438A;
+	Fri, 25 Mar 2011 13:17:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=zWvdqGIK4fdF
+	O+CEgzL4kKr9zhg=; b=EqYScl4TV8JE575o3kR/CuhSFXRKUIGq4jtwgEj1ybx8
+	GIbUzdNmzDPNPscm6Q1emreB7jdjY+Oi0olPCz3t3R/AmSzu2TY3loB3dGutzyUj
+	JOT28ufXjj3MDTvRu91XSAgYcKZP3mFOS5bu3NwtKwLbJ9IuGAdd1xt2JLK5xq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WNfGQ6
+	R6hjklxeM+/Pa38H3o297O9DJKxmGeaJ8I4ldvMe/hUPaK4vRPvmVyaMxQNzRNE5
+	m75+o26KbdS6MquIA450uDsnXw+caf8jq+rNBzy8rPV66hseuSzL0gUOMkShwT10
+	GGvXXigMeUX+1vgR0X6w/EQIjOca2eMniwOIs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A01AB4387;
+	Fri, 25 Mar 2011 13:17:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2770E4385; Fri, 25 Mar 2011
+ 13:16:59 -0400 (EDT)
+In-Reply-To: <AANLkTik5bLaR_0uhqGrNWW6U7z82KfmpNTyvRwkKFfj+@mail.gmail.com>
+ (Kevin Cernekee's message of "Fri, 25 Mar 2011 09:26:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B515B3CC-5703-11E0-B932-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169999>
 
-On Fri, Mar 25, 2011 at 07:52:34AM -0700, igor.mikushkin wrote:
+Kevin Cernekee <cernekee@gmail.com> writes:
 
-> Why git silently replaces untracked files?
-> 
-> # mkdir test.git
-> # mkdir 1
-> # mkdir 2
-> # echo 1 > 1/test
-> # echo 2 > 2/test
-> # cd test.git
-> # git init --bare
-> # cd ..
-> # git clone test.git
-> # cp -r test/.git 1
-> # cp -r test/.git 2
-> # cd 1
-> # git add test
-> # git commit -am 1
-> # git push origin master
-> # cd ../2
-> # git pull
-> # cat test
-> 1
-> 
-> In my opinion it is wrong behavior.
-> I've just lost important file due to it.
-> 
-> Should not "git pull" fail here?
+> It's just a matter of personal preference, but I would find this
+> regexp slightly easier to read:
+>
+> +               ($tz =3D~ m/^([+\-])([0-9]{2})([0-9]{2})$/);
 
-Ick, definitely it's wrong behavior. The culprit seems to be a special
-code path for the initial pull which doesn't merge at all, but calls
-read-tree --reset. It should probably be:
+I'd say "^([-+])(\d\d)(\d\d)$" makes it the most clear.
 
-diff --git a/git-pull.sh b/git-pull.sh
-index a3159c3..fb9e2df 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -253,7 +253,7 @@ esac
- if test -z "$orig_head"
- then
- 	git update-ref -m "initial pull" HEAD $merge_head "$curr_head" &&
--	git read-tree --reset -u HEAD || exit 1
-+	git read-tree -m -u HEAD || exit 1
- 	exit
- fi
+>> + =C2=A0 =C2=A0 =C2=A0 $tz_sign =3D ($tz_sign eq '-' ? -1 : +1);
+>> + =C2=A0 =C2=A0 =C2=A0 my $local =3D $epoch + $tz_sign*($tz_hour + (=
+$tz_min/60.0))*3600;
+>
+> If you wanted to avoid floats, you could do something like:
+>
+> +       my $local =3D $epoch + $tz_sign * ($tz_hour * 3600 + $tz_min =
+* 60);
 
-Though I don't know if there are any cases where the --reset would be
-beneficial over "-m". I couldn't think of any.
+That is not just float-avoidance, but is much more logical.
 
--Peff
+	(($h * 60) + $m) * 60
+
+may be even more logical and more readable, though.
+
+Care to re-roll the patch?
