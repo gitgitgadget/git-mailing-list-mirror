@@ -1,70 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] HOME must be set before calling git-init when creating
- test repositories
-Date: Fri, 25 Mar 2011 14:30:48 -0700
-Message-ID: <7voc4y6g6v.fsf@alter.siamese.dyndns.org>
-References: <20110325200528.GA7302@blimp.localdomain>
- <7vsjub53j2.fsf@alter.siamese.dyndns.org>
- <AANLkTimQzPVOWCUx1hr+DEmRfdFB8=UeY_xCaxzVSwFy@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 22:31:05 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC 0/3] gitweb: Split gitweb.js, improve JavaScript
+Date: Fri, 25 Mar 2011 22:46:23 +0100
+Message-ID: <1301089586-8534-1-git-send-email-jnareb@gmail.com>
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	Kevin Cernekee <cernekee@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 25 22:46:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3Eb2-0003LQ-Ux
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 22:31:05 +0100
+	id 1Q3EqN-0003YM-OF
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 22:46:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755155Ab1CYVa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 17:30:59 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45278 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755132Ab1CYVa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 17:30:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0714C4279;
-	Fri, 25 Mar 2011 17:32:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hbg6jilP0jYArvhF3bczhNE0cP0=; b=sVGEa0
-	RDYapy7v5fA0ctV1thOGHw2buDtDXFYqFJBNF6r7GW4hAlMscxord402TYPABEbI
-	iMQW1l6hALCZAVW7S4THCx1mJT5WYPrS2OefUp+q7bgg4UTHSyteIUcj58RpBz5L
-	cEdomJMCCjFpJN0NJ3nDChHVEAGlKlyFzErak=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wP0qqbtHXIWslHuR7zdSHTreYC+oHueQ
-	nbty0Q8dtgBTu2t6u97zzGzB0fFzlYpacOzFf3o2Ed5JJ6DqSdn3EOsCsmTLm/0q
-	Ps2V2cu0DUmyI7eQZ1ErfCBvwtjVivblFiLOs+nJYRuRNwu9GvBE3rteLoLx3F6J
-	/6gyEKtEL/0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CBD1A4277;
-	Fri, 25 Mar 2011 17:32:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BDE3F4275; Fri, 25 Mar 2011
- 17:32:33 -0400 (EDT)
-In-Reply-To: <AANLkTimQzPVOWCUx1hr+DEmRfdFB8=UeY_xCaxzVSwFy@mail.gmail.com>
- (Alex Riesen's message of "Fri, 25 Mar 2011 22:01:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 67C6213C-5727-11E0-A6C5-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755444Ab1CYVqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 17:46:50 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:38717 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755112Ab1CYVqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 17:46:49 -0400
+Received: by wwa36 with SMTP id 36so1856664wwa.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 14:46:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=pDJtqu05FrbkxkSPZ6L8TI4awWfP7YOzUUns/HCyKdg=;
+        b=AGFg8up5/Pp/WKAq7iCJ7/mQJit0Be5SF9wxEgKVLYVaZ9S50DWM7sJkqWVygMDOEV
+         uf9DPaG2pkJT9m18832ygGz0KbDtrdO899KEC/Dat1IsbAbl4SlVPe0BLZjfHFskZymt
+         ZWMW6rVsiaPiFxPDO9Cs3NqekBkMJMIQXk72k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=S2yzUpFbpGWq1Lf/+xGnwHopMbWSqSg6BGcCzjBw2ZFZogDqHptObyoEj6TtTOSRTe
+         ItCwl6s1NaqNkaUyHMOxyxwvwSD4R2fVqMqz2uh1VA4C8c/+ekj6ya0yCATOhVEkRR9L
+         /MPbFerVG9Dy64OH7YevYF23d1HJy8SUzvK7A=
+Received: by 10.216.180.76 with SMTP id i54mr230306wem.33.1301089605950;
+        Fri, 25 Mar 2011 14:46:45 -0700 (PDT)
+Received: from localhost.localdomain (abwo211.neoplus.adsl.tpnet.pl [83.8.238.211])
+        by mx.google.com with ESMTPS id g7sm647802wby.14.2011.03.25.14.46.43
+        (version=SSLv3 cipher=OTHER);
+        Fri, 25 Mar 2011 14:46:44 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170021>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+This patch series is inspired by patch by John 'Warthog9' Hawley
 
-> On Fri, Mar 25, 2011 at 21:49, Junio C Hamano <gitster@pobox.com> wrote:
->
->> Doesn't this change the location of HOME used during the test as well?
->
-> As long as the test only includes test-lib.sh only once - it doesn't.
-> Why? Or rather, how?
+  [PATCH 1/1] gitweb: javascript ability to adjust time based on timezone
+  Message-Id: <1300925335-3212-2-git-send-email-warthog9@eaglescrag.net>
+  http://thread.gmane.org/gmane.comp.version-control.git/169384/focus=169882
 
-I thought you moved HOME=$(pwd) across "cd somewhere-else".  Doesn't it
-change what is returned from pwd?
+that added a few new JavaScript files for the new feature that this
+patch implemented.
+
+This is marked as RFC mainly because other patches in series,
+especially the last one fixing bug in gitweb's JavaScript code, should
+be send independently on gitweb.js splitting.
+
+Jakub Narebski (3):
+  gitweb: Split JavaScript for maintability; concatenate on build
+  gitweb: Update and improve comments in JavaScript files
+  gitweb: Fix parsing of negative fractional timezones in JavaScript
+
+ .gitignore                                         |    1 +
+ gitweb/Makefile                                    |   12 +-
+ .../static/{gitweb.js => js/blame_incremental.js}  |  216 ++------------------
+ gitweb/static/js/common-lib.js                     |  191 +++++++++++++++++
+ gitweb/static/js/detect-javascript.js              |   44 ++++
+ 5 files changed, 261 insertions(+), 203 deletions(-)
+ rename gitweb/static/{gitweb.js => js/blame_incremental.js} (75%)
+ create mode 100644 gitweb/static/js/common-lib.js
+ create mode 100644 gitweb/static/js/detect-javascript.js
+
+-- 
+1.7.3
