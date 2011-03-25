@@ -1,95 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] show: turn on rename progress
-Date: Fri, 25 Mar 2011 02:17:44 -0400
-Message-ID: <20110325061744.GA6261@sigill.intra.peff.net>
-References: <7vzkok6qie.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: `*' gitignores and nested ignores
+Date: Fri, 25 Mar 2011 09:18:23 +0100
+Message-ID: <4D8C4FCF.5060900@viscovery.net>
+References: <19851.6264.179471.935771@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 07:17:56 2011
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Fri Mar 25 09:18:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q30LK-0001ct-VZ
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 07:17:55 +0100
+	id 1Q32E9-0003yn-9D
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 09:18:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932200Ab1CYGRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 02:17:49 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39333
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752703Ab1CYGRs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 02:17:48 -0400
-Received: (qmail 8922 invoked by uid 107); 25 Mar 2011 06:18:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 02:18:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 02:17:44 -0400
-Content-Disposition: inline
-In-Reply-To: <7vzkok6qie.fsf@alter.siamese.dyndns.org>
- <7v4o6s86kr.fsf@alter.siamese.dyndns.org>
+	id S1754047Ab1CYISa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 04:18:30 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:28398 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752180Ab1CYIS2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 04:18:28 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Q32Dw-0000y3-39; Fri, 25 Mar 2011 09:18:24 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 9F92E1660F;
+	Fri, 25 Mar 2011 09:18:23 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <19851.6264.179471.935771@winooski.ccs.neu.edu>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169965>
 
-On Thu, Mar 24, 2011 at 04:03:16PM -0700, Junio C Hamano wrote:
+Am 3/24/2011 11:10, schrieb Eli Barzilay:
+> According to the man page, a .gitignore file that is deeper has highe=
+r
+> precedence, and a `!' line overrides lower precedence ignores.  I
+> tried that, and it works in cases like the last "vmlinux*" example.
+>=20
+> But it doesn't work if the lower precedence directory has a "*"
+> pattern.  If the last example from the man page is changed to:
+>=20
+>                $ cat .gitignore
+>                *
+>                $ ls arch/foo/kernel/vm*
+>                arch/foo/kernel/vmlinux.lds.S
+>                $ echo =C2=B4!/vmlinux*=C2=B4 >arch/foo/kernel/.gitign=
+ore
+>=20
+> then -- IIUC -- the second ignore should work the same, but it
+> doesn't.  This also happens if the first pattern is "/*".
+>=20
+> Is this a bug?
 
-> >   [1/4]: pager: save the original stderr when redirecting to pager
-> >   [2/4]: progress: use pager's original_stderr if available
-> >   [3/4]: show: turn on rename detection progress reporting
-> >   [4/4]: diff: turn on rename detection progress reporting
-> 
-> Thanks, but why does it affect t0101 and many others...?
+This has been discussed before, and IMNSHO, this is not a bug:
 
-Because I'm an idiot who, despite manually testing the option-parsing
-part of the code a million times, didn't actually run the full suite.
+http://thread.gmane.org/gmane.comp.version-control.git/157190
 
-> >  	while ((commit = get_revision(rev)) != NULL) {
-> > -		if (!log_tree_commit(rev, commit) &&
-> > +		int showed = log_tree_commit(rev, commit);
-> > +		if (showed &&
-> >  		    rev->max_count >= 0)
-
-Ugh. Of course, it should be:
-
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 4d52e99..b19e10d 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -275,7 +275,7 @@ static int cmd_log_walk(struct rev_info *rev)
- 	 */
- 	while ((commit = get_revision(rev)) != NULL) {
- 		int showed = log_tree_commit(rev, commit);
--		if (showed &&
-+		if (!showed &&
- 		    rev->max_count >= 0)
- 			/*
- 			 * We decremented max_count in get_revision,
-
-on top.
-
-> After looking at the implementation of log_tree_commit(), shouldn't this
-> part be more like this?
-> 
-> 	int shown = log_tree_commit(rev, commit);
->         if (!shown && rev->max_count >=0)
->         	rev->max_count++;
-> 	if (shown)
->         	rev->diffopt.show_rename_progress = 0;
-
-Yes. You shouldn't even need to look at log_tree_commit; you can see in
-the hunk of my patch that I accidentally inverted the unrelated
-max_count conditional while factoring out the call.
-
-I'll go find a brown paper bag now.
-
--Peff
-
-PS I assume you can squash in the above, or take your version (I don't
-care about the verb tense we use, but re-indenting the max_count
-conditional as you did is good style).
+-- Hannes
