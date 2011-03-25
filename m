@@ -1,87 +1,89 @@
-From: "Schalk, Ken" <ken.schalk@intel.com>
-Subject: RE: [PATCH 1/3] t3030: fix accidental success in symlink rename
-Date: Fri, 25 Mar 2011 11:25:32 -0700
-Message-ID: <EF9FEAB3A4B7D245B0801936B6EF4A251C397FCE@azsmsx503.amr.corp.intel.com>
-References: <20110325160013.GA25851@sigill.intra.peff.net>
- <20110325160326.GA26635@sigill.intra.peff.net>
- <7v1v1v6qs2.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Confusing error message due to Git trusting is_bare_repository()
+Date: Fri, 25 Mar 2011 14:25:36 -0400
+Message-ID: <20110325182536.GC25851@sigill.intra.peff.net>
+References: <AANLkTi=9CpMU9aZs2zuvRyv3rpECkRAvYA0Srnc61whg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:25:45 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:25:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3Bhg-0006Cv-LO
+	id 1Q3Bhh-0006Cv-80
 	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 19:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754593Ab1CYSZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 14:25:38 -0400
-Received: from mga14.intel.com ([143.182.124.37]:40904 "EHLO mga14.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754525Ab1CYSZh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 14:25:37 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga102.ch.intel.com with ESMTP; 25 Mar 2011 11:25:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.63,244,1299484800"; 
-   d="scan'208";a="408768497"
-Received: from azsmsx603.amr.corp.intel.com ([10.2.161.23])
-  by azsmga001.ch.intel.com with ESMTP; 25 Mar 2011 11:25:35 -0700
-Received: from azsmsx602.amr.corp.intel.com (10.2.121.201) by
- azsmsx603.amr.corp.intel.com (10.2.161.23) with Microsoft SMTP Server (TLS)
- id 8.2.255.0; Fri, 25 Mar 2011 11:25:35 -0700
-Received: from azsmsx503.amr.corp.intel.com ([10.2.121.76]) by
- azsmsx602.amr.corp.intel.com ([10.2.121.201]) with mapi; Fri, 25 Mar 2011
- 11:25:34 -0700
-Thread-Topic: [PATCH 1/3] t3030: fix accidental success in symlink rename
-Thread-Index: AcvrFAQ8iTujQsaoQLyf6lI5GnCVKwABYB7Q
-In-Reply-To: <7v1v1v6qs2.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1754838Ab1CYSZk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 14:25:40 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51139
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754525Ab1CYSZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 14:25:39 -0400
+Received: (qmail 16412 invoked by uid 107); 25 Mar 2011 18:26:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 14:26:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 14:25:36 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=9CpMU9aZs2zuvRyv3rpECkRAvYA0Srnc61whg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170013>
 
-> > The results for the test indicate that the merge should
-> > succeed, but also that "a" should no longer exist. Since
-> > both sides renamed "a" to the same destination, we will end
-> > up comparing those destinations for content.
+On Fri, Mar 25, 2011 at 11:56:20AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> > But what about what's left? One side (the rename only),
-> > replaced "a" with nothing. The other side replaced it with a
-> > symlink. The common base must also be nothing, because any
-> > "a" before this was meaningless (it was totally unrelated
-> > content that ended up getting renamed).
+> I had a co-worker git this well-known error message:
+>=20
+>     error: refusing to update checked out branch: refs/heads/master
+>     error: By default, updating the current branch in a non-bare repo=
+sitory
+>     error: is denied, because it will make the index and work tree in=
+consistent
+>     error: with what you pushed, and will require 'git reset --hard' =
+to match
+>     error: the work tree to HEAD.
+>=20
+> It *was* a bare repo, but the config file had bare=3Dfalse because
+> someone had simply copied a .git tree from a non-bare repo to make it=
+=2E
 
-> > The only sensible resolution is to keep the symlink.
+That seems like the problem there. I'm not blaming the user; what they
+expected to happen is reasonable, and even used to work. But I wonder i=
+f
+better education is possible.
 
-> I agree.
+> The issue is that we just use this:
+>=20
+>     int is_bare_repository(void)
+>     {
+>         /* if core.bare is not 'false', let's see if there is a work =
+tree */
+>         return is_bare_repository_cfg && !get_git_work_tree();
+>     }
 
-> We should treat structural changes and do a 3-way on that, and then
-> another 3-way on content changes, treating them as an independent
-> thing.
-> One side has "create 'e' out of 'a', removing 'a'" and "_create_ 'a',
-> that
-> is unrelated to the original 'a'", the other side has "create 'e' out
-> of
-> 'a', removing 'a'", so the end result should be that we do both,
-> i.e. "create 'e' out of 'a', removing 'a'" and "create 'a'".  At the
-> content level, the result in 'e' may have to be decided by 3-way.  The
-> result in 'a' should be a clean merge taken from the former "with b/c
-> link" branch, as this is not even a create (by the side that added a
-> backward compatibility symbolic link) vs a delete (by pure-rename side)
-> conflict.
+> For the purposes of the error message it would be helpful if we also
+> detected whether something didn't have a working tree, but was set to
+> bare=3Dfalse, and tell the user to updatet he bare=3Dfalse to bare=3D=
+true
+> for his almost-bare repository.
 
-I completely agree, keeping the symlink would be the right thing to do.  When I worked on the patch which added that test, my only concern was eliminating the rename/add conflict on "e" (which seemed pointless, since the content of "e" was identical in both branches).
+How do we know whether or not it has a working tree? Can't I do
+something like:
 
---Ken Schalk
+  cd /var/working-trees/foo
+  git init
+  mv .git /var/repositories/foo.git
+  export GIT_DIR=3D/var/repositories/foo.git
+  echo content >file && git add file && git commit -m foo
+
+I thought the reason that core.bare was introduced was to handle weird
+cases like this.
+
+-Peff
