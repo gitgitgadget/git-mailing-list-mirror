@@ -1,96 +1,118 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: GSOC proposal
-Date: Sat, 26 Mar 2011 00:07:00 +0100
-Message-ID: <4D8D2014.3050603@web.de>
-References: <20110324220104.GA18721@paksenarrion.iveqy.com> <4D8BD358.1030603@web.de> <7vtyes6pya.fsf@alter.siamese.dyndns.org> <20110325100600.GA30376@paksenarrion.iveqy.com>
+From: Motiejus =?utf-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>
+Subject: start of git2 (based on libgit2)
+Date: Fri, 25 Mar 2011 23:12:03 +0000
+Message-ID: <20110325231203.GA7961@jakstys.lt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sat Mar 26 00:07:29 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 26 00:12:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3G6H-00021L-Bo
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 00:07:25 +0100
+	id 1Q3GAt-0004At-Dc
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 00:12:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755515Ab1CYXHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 19:07:20 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:49016 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753072Ab1CYXHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 19:07:20 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 70C3C18A73F77;
-	Sat, 26 Mar 2011 00:07:08 +0100 (CET)
-Received: from [93.240.108.46] (helo=[192.168.178.43])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Q3G60-00034B-00; Sat, 26 Mar 2011 00:07:08 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110325100600.GA30376@paksenarrion.iveqy.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX194hw3rI4aUyfCfM9HtThAq6zaVEfW4wJ5o9aFA
-	vF6K10xHFmqJ0B3PqPumVCYd0nQNZ2ZddMzItsTKbNdU+Tyl+i
-	IRcIeCLts/qJH4b7/tug==
+	id S1754254Ab1CYXMG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 19:12:06 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49141 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751509Ab1CYXME convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 19:12:04 -0400
+Received: by wwa36 with SMTP id 36so1907220wwa.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 16:12:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :user-agent;
+        bh=+GVulWTcVUAXdkGWg8hvZKdaV5dKoQKL+7cWPd6ioo4=;
+        b=lwoimaHqRk2qYYuICAt27ysny4QIDNFZQ3RwlQm9RNbpW9cQb7XacaSxAkltXvkGU8
+         3NpwyTxyCKobS/lYLuXlO/LetiqBzI8gLjl2bJVs6qp1F9Gvl7RRi5YjQ62UY4NcLxMD
+         8UNMKK4z5F/1Ixkt/Wv4EtnH6bl5dZXda/V9Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=mCTyl8SQHy4cBHFaSmiZ4cmaxrFGXb8Tl2Qe7Sm2BulAtQ5VHU3YhoDFd7bRVhNrmn
+         WEb2RXAAzS+VuLe07BQewEe9MePR5aZ/eeIAGEbv/aU34048Ky3QNERBv7hNMW0Vrxan
+         Zx//3dhe8WM5C7uYH4z2qozPpNvbbZd7d9moo=
+Received: by 10.227.53.206 with SMTP id n14mr1266694wbg.14.1301094723012;
+        Fri, 25 Mar 2011 16:12:03 -0700 (PDT)
+Received: from localhost ([109.246.247.245])
+        by mx.google.com with ESMTPS id u9sm674902wbg.51.2011.03.25.16.12.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Mar 2011 16:12:02 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170032>
 
-Am 25.03.2011 11:06, schrieb Fredrik Gustafsson:
-> On Thu, Mar 24, 2011 at 04:47:41PM -0700, Junio C Hamano wrote:
->> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>
->>>> == Preventing false "pointers" ==
->>>> It's far too easy to push a gitrepo pointing to a submodule version that
->>>> is not existing on the server. Prevent this by checking for available
->>>> submodule versions before acceptingt the push.
->>>
->>> Yes, requiring to force such a push is an issue raised quite often (I
->>> think addressing this issue would be a good starting point for people
->>> who want to get involved in enhancing the submodule experience).
->>
->> You need to be careful, though.
->>
->> That check can only be sanely done at a hosting site that hosts _both_ the
->> superproject and the submodule repositories.  It might make more sense to
->> have this check on the side that pushes, which by definition should have
->> both superprojet and the submodule.  Fail, or prompt to confirm, a push
->> from the superproject when it is detected that the submodule commits bound
->> to the commits in the superproject have not been pushed out.
-> 
-> I can see three different ways of doing this:
-> 1. the reciever (server) checks for available submodules before
-> accepting a commit
-> 
-> 2. the sender checks for available submodules on the server before
-> sending a commit.
-> 
-> 3. each submodule contains a flag that tells if the last command was a
-> commit or a push. The core-repository wont allow a push if one (or more)
-> submodules has a commit as "last command".
-> 
-> Although alternative 1 is the only one that is certain of preventing the
-> problem with "false pointers", it has several other drawbacks. I believe
-> that alt. 3 is the proper way of handling this in git. Although we
-> doesn't guarantee a sane server-repo we does prevent the client from
-> doing stupid things by mistake.
+Hello,
 
-I concur with Junio and am in favor of the following solution, as I
-think we already have all the information needed present on the side
-that pushes:
+I wrote similar letter before, but did not receive feedback I was expec=
+ting.
 
-Before doing a push in the superproject collect all submodule commits
-that are recorded in the commits to be pushed out to the superproject's
-remote. Then check that they all are contained in at least one remote
-ref of the submodule they are recorded for. If not, error out and tell
-the user he should push the submodule first or has to use the "-f" flag
-to force the push if he really knows what he is doing. Commits of those
-submodules that aren't checked out are ignored.
+I think libgit2 is an amazing thing, and I started writing[1] cli clien=
+t for
+it. This is what it can do now:
+    $ git2 rev-list <anything>
 
-This approach would achieve the goal you stated in your last sentence,
-which me thinks is a sane thing to do.
+Which is roughly equivalent to:
+    $ git rev-list HEAD
+
+I do not know how it will figure out past merge history, but that's for
+the future.
+
+I want to get started with it, but before that I want and discuss some
+architectural questions.
+
+According to Jeff King[2], I should start with plumbing commands. I
+agree.  However, how deep?  I.e. do I have to make sure all git rev-lis=
+t
+possible arguments are implemented?
+
+Are we aiming for a distributed 100s of executables architecture
+(current git), or single huge binary? I would go for single executable
+for to higher portability. Is that ok?
+
+Build tool. Currently libgit2 uses waf. I am not against it (I've chose=
+n
+waf for one of my own C++ projects), However, it's too clumsy for me. I=
+s
+it me who lacks experience? Scons looks much easier for me. Moreover, w=
+e
+do not need automatic configuration, so it makes waf "overfeatured".
+
+Build configuration. Git-send-email is not really a must-have for an
+embedded device, so we should be able to specify these features in
+configure-time. How do you think it should be taken care of?
+
+1) <buildtool> configure  --disable-everything --enable-email
+2) make menuconfig and enjoy the blue screen of choice
+3) anything else?
+
+Waiting for your answers, will go on working.
+
+I am a student and would like to do this take this up in GSOC. I just
+received a letter from Vicent Marti with sort of confirmation that the
+project is interesting for the community. I'm happy about it.  Currentl=
+y
+I am a full-time python programmer, but have done some C++. I created
+SoundPatty[3], a real-time sound recognition (record) application for m=
+y
+job VoIP recognition needs.
+
+In case you have any questions, opinions, please ask. Thank you.
+
+[1] https://github.com/Motiejus/git2/
+[2] http://marc.info/?l=3D3Dgit&m=3D3D130081966214059&w=3D3D4
+[3] https://github.com/Motiejus/SoundPatty/=20
+[CV] http://m.jakstys.lt/
+
+Motiejus Jak=C5=A1tys
