@@ -1,183 +1,281 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] merge: handle renames with replacement content
-Date: Fri, 25 Mar 2011 12:06:47 -0400
-Message-ID: <20110325160647.GB26635@sigill.intra.peff.net>
+Subject: [PATCH 3/3] merge: turn on rewrite detection
+Date: Fri, 25 Mar 2011 12:08:10 -0400
+Message-ID: <20110325160810.GC26635@sigill.intra.peff.net>
 References: <20110325160013.GA25851@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git <git@vger.kernel.org>
 To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 17:06:57 2011
+X-From: git-owner@vger.kernel.org Fri Mar 25 17:08:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q39XM-0004ey-Dx
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 17:06:57 +0100
+	id 1Q39Yh-0005bU-VN
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 17:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754217Ab1CYQGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 12:06:51 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41061
+	id S1754412Ab1CYQIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 12:08:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41068
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753973Ab1CYQGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 12:06:50 -0400
-Received: (qmail 14876 invoked by uid 107); 25 Mar 2011 16:07:29 -0000
+	id S1750853Ab1CYQIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 12:08:12 -0400
+Received: (qmail 14910 invoked by uid 107); 25 Mar 2011 16:08:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 12:07:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 12:06:47 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 12:08:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 12:08:10 -0400
 Content-Disposition: inline
 In-Reply-To: <20110325160013.GA25851@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169995>
 
-We generally think of a rename as removing one path entirely
-and placing similar content at a new path. In other words,
-after a rename, the original path is now empty. But that is
-not necessarily the case with rewrite detection (which is
-not currently possible to do for merge-recursive).
+We currently don't do break-detection at all in
+merge-recursive. But there are some cases where it would
+provide a more useful merge result.
 
-The current merge code blindly removes paths that are used
-as rename sources; however, we should check to see if there
-is useful content at that path.  There are basically two
-interesting cases:
+For example, consider this case (which is the basis for the
+new tests in t6039):
 
-  1. One side renames a path, but also puts new content
-     (or a symlink) at the same path. We want to detect the
-     rename, and have changes from the other side applied to
-     the rename destination. The new content at the original
-     path should be left untouched.
+  1. You rename a header file foo.h to bar.h. You install a
+     new foo.h that includes bar.h (for compatibility).
 
-     The current code just calls remove_file, but that
-     ignores the concept that the renaming side may put
-     something else useful there. We should detect this case
-     and either remove (if no new content), or put the new
-     content in place at the original path.
+  2. Another branch makes changes to foo.h.
 
-  2. Both sides renamed and installed new content at the
-     original path. If they didn't rename to the same
-     destination, it is a conflict, and we already mark it
-     as such. But if it's the same destination, then it's
-     not a conflict; the renamed content will be merged at
-     the new destination.
+When you merge, you want the changes the other branch made
+to foo.h to migrate to the rename destination, bar.h, just
+as you would if you hadn't installed that compatibility
+header.
 
-     For the new content at the original path, we have to do
-     a 3-way merge. The base must be the null sha1, because
-     this "slot" for content didn't exist before (it was
-     taken up by the content which got renamed away). So if
-     only one side installed new content, that content
-     automatically wins. If both sides did, and it is the
-     same content, then that content is OK. But if the
-     content is different, then we have a conflict and
-     should do the usual conflict-markers thing.
+Similarly, you want the compatibility header left untouched.
+The other side's changes all ended up in bar.h, so there is
+no reason to conflict with the new content in foo.h.
 
-This patch implements the semantics described above, which
-lays the groundwork for turning on rewrite detection.
+This patch turns on break detection for merge-recursive. In
+addition to new tests in t6039, it makes a similar test in
+t3030 pass.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I split this one out for easier review. The semantics I am
-proposing are a superset of the current "remove" behavior (it's just
-that without break detection on, you can't trigger the other cases). But
-by putting this in before enabling break detection, you can test easily
-that the new code isn't breaking any existing behavior.
+I hope the tests are readable. I thought it was important to test the
+merges in both directions (because an early iteration screwed that up),
+which led to factoring out a lot of the setup and checking code.
 
- merge-recursive.c |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 63 insertions(+), 2 deletions(-)
+ merge-recursive.c          |    1 +
+ t/t3030-merge-recursive.sh |    2 +-
+ t/t6039-merge-break.sh     |  174 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 176 insertions(+), 1 deletions(-)
+ create mode 100755 t/t6039-merge-break.sh
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 8e82a8b..16263b0 100644
+index 16263b0..cd42c47 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -706,6 +706,64 @@ static void update_file(struct merge_options *o,
- 	update_file_flags(o, sha, mode, path, o->call_depth || clean, !o->call_depth);
- }
+@@ -426,6 +426,7 @@ static struct string_list *get_renames(struct merge_options *o,
+ 			    1000;
+ 	opts.rename_score = o->rename_score;
+ 	opts.show_rename_progress = o->show_rename_progress;
++	opts.break_opt = 0;
+ 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	if (diff_setup_done(&opts) < 0)
+ 		die("diff setup failed");
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index e686f04..43ff220 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -631,7 +631,7 @@ test_expect_success 'merge-recursive copy vs. rename' '
  
-+static int update_or_remove(struct merge_options *o,
-+			    const unsigned char *sha1, unsigned mode,
-+			    const char *path, int update_wd)
-+{
-+	if (is_null_sha1(sha1))
-+		return remove_file(o, 1, path, !update_wd);
+ if test_have_prereq SYMLINKS
+ then
+-	test_expect_failure 'merge-recursive rename vs. rename/symlink' '
++	test_expect_success 'merge-recursive rename vs. rename/symlink' '
+ 
+ 		git checkout -f rename &&
+ 		git merge rename-ln &&
+diff --git a/t/t6039-merge-break.sh b/t/t6039-merge-break.sh
+new file mode 100755
+index 0000000..d3dabf5
+--- /dev/null
++++ b/t/t6039-merge-break.sh
+@@ -0,0 +1,174 @@
++#!/bin/sh
 +
-+	update_file_flags(o, sha1, mode, path, 1, update_wd);
-+	return 0;
++test_description='merging with renames from broken pairs
++
++This is based on a real-world practice of moving a header file to a
++new location, but installing a "replacement" file that points to
++the old one. We need break detection in the merge to find the
++rename.
++'
++. ./test-lib.sh
++
++# A fake header file; it needs a fair bit of content
++# for break detection and inexact rename detection to work.
++mksample() {
++	echo '#ifndef SAMPLE_H'
++	echo '#define SAMPLE_H'
++	for i in 0 1 2 3 4; do
++		for j in 0 1 2 3 4 5 6 7 8 9; do
++			echo "extern fun$i$j();"
++		done
++	done
++	echo '#endif /* SAMPLE_H */'
 +}
 +
-+static void merge_rename_source(struct merge_options *o,
-+				       const char *path,
-+				       struct stage_data *d)
-+{
-+	if (is_null_sha1(d->stages[2].sha)) {
-+		/*
-+		 * If both were real renames (not from a broken pair), we can
-+		 * stop caring about the path. We don't touch the working
-+		 * directory, though. The path must be gone in HEAD, so there
-+		 * is no point (and anything we did delete would be an
-+		 * untracked file).
-+		 */
-+		if (is_null_sha1(d->stages[3].sha)) {
-+			remove_file(o, 1, path, 1);
-+			return;
-+		}
-+
-+		/*
-+		 * If "ours" was a real rename, but the other side came
-+		 * from a broken pair, then their version is the right
-+		 * resolution (because we have no content, ours having been
-+		 * renamed away, and they have new content).
-+		 */
-+		update_file_flags(o, d->stages[3].sha, d->stages[3].mode,
-+				  path, 1, 1);
-+		return;
-+	}
-+
-+	/*
-+	 * Now we have the opposite. "theirs" is a real rename, but ours
-+	 * is from a broken pair. We resolve in favor of us, but we don't
-+	 * need to touch the working directory.
-+	 */
-+	if (is_null_sha1(d->stages[3].sha)) {
-+		update_file_flags(o, d->stages[2].sha, d->stages[2].mode,
-+				  path, 1, 0);
-+		return;
-+	}
-+
-+	/*
-+	 * Otherwise, both came from broken pairs. We need to do an actual
-+	 * merge on the entries. We can just mark it as unprocessed and
-+	 * the regular code will handle it.
-+	 */
-+	d->processed = 0;
++mvsample() {
++	sed 's/SAMPLE_H/NEW_H/' "$1" >"$2" &&
++	rm "$1"
 +}
 +
- /* Low level file merging, update and removal */
- 
- struct merge_file_info {
-@@ -1025,7 +1083,7 @@ static int process_renames(struct merge_options *o,
- 							      ren1->dst_entry,
- 							      ren2->dst_entry);
- 			} else {
--				remove_file(o, 1, ren1_src, 1);
-+				merge_rename_source(o, ren1_src, ren1->src_entry);
- 				update_stages_and_entry(ren1_dst,
- 							ren1->dst_entry,
- 							ren1->pair->one,
-@@ -1049,7 +1107,10 @@ static int process_renames(struct merge_options *o,
- 			int renamed_stage = a_renames == renames1 ? 2 : 3;
- 			int other_stage =   a_renames == renames1 ? 3 : 2;
- 
--			remove_file(o, 1, ren1_src, o->call_depth || renamed_stage == 2);
-+			update_or_remove(o,
-+				ren1->src_entry->stages[renamed_stage].sha,
-+				ren1->src_entry->stages[renamed_stage].mode,
-+				ren1_src, renamed_stage == 3);
- 
- 			hashcpy(src_other.sha1, ren1->src_entry->stages[other_stage].sha);
- 			src_other.mode = ren1->src_entry->stages[other_stage].mode;
++# A replacement sample header file that references a new one.
++mkreplacement() {
++	echo '#ifndef SAMPLE_H'
++	echo '#define SAMPLE_H'
++	echo "#include \"$1\""
++	echo '#endif /* SAMPLE_H */'
++}
++
++# Tweak the header file in a minor way.
++tweak() {
++	sed 's,42.*,& /* secret of something-or-other */,' "$1" >"$1.tmp" &&
++	mv "$1.tmp" "$1"
++}
++
++reset() {
++	git reset --hard &&
++	git checkout master &&
++	git reset --hard base &&
++	git clean -f &&
++	{ git branch -D topic || true; }
++}
++
++test_expect_success 'setup baseline' '
++	mksample >sample.h &&
++	git add sample.h &&
++	git commit -m "add sample.h" &&
++	git tag base
++'
++
++setup_rename_plus_tweak() {
++	reset &&
++	mvsample sample.h new.h &&
++	mkreplacement new.h >sample.h &&
++	git add sample.h new.h &&
++	git commit -m 'rename sample.h to new.h, with replacement' &&
++	git checkout -b topic base &&
++	tweak sample.h &&
++	git commit -a -m 'tweak sample.h'
++}
++
++check_tweak_result() {
++	mksample >expect.orig &&
++	mvsample expect.orig expect &&
++	tweak expect &&
++	test_cmp expect new.h &&
++	mkreplacement new.h >expect &&
++	test_cmp expect sample.h
++}
++
++test_expect_success 'merge rename to tweak finds rename' '
++	setup_rename_plus_tweak &&
++	git merge master &&
++	check_tweak_result
++'
++
++test_expect_success 'merge tweak to rename finds rename' '
++	setup_rename_plus_tweak &&
++	git checkout master &&
++	git merge topic &&
++	check_tweak_result
++'
++
++setup_double_rename_one_replacement() {
++	setup_rename_plus_tweak &&
++	mvsample sample.h new.h &&
++	git add new.h &&
++	git commit -a -m 'rename sample.h to new.h (no replacement)'
++}
++
++test_expect_success 'merge rename to rename/tweak (one replacement)' '
++	setup_double_rename_one_replacement &&
++	git merge master &&
++	check_tweak_result
++'
++
++test_expect_success 'merge rename/tweak to rename (one replacement)' '
++	setup_double_rename_one_replacement &&
++	git checkout master &&
++	git merge topic &&
++	check_tweak_result
++'
++
++setup_double_rename_two_replacements_same() {
++	setup_rename_plus_tweak &&
++	mvsample sample.h new.h &&
++	mkreplacement new.h >sample.h &&
++	git add sample.h new.h &&
++	git commit -m 'rename sample.h to new.h with replacement (same)'
++}
++
++test_expect_success 'merge rename to rename/tweak (two replacements, same)' '
++	setup_double_rename_two_replacements_same &&
++	git merge master &&
++	check_tweak_result
++'
++
++test_expect_success 'merge rename/tweak to rename (two replacements, same)' '
++	setup_double_rename_two_replacements_same &&
++	git checkout master &&
++	git merge topic &&
++	check_tweak_result
++'
++
++setup_double_rename_two_replacements_diff() {
++	setup_rename_plus_tweak &&
++	mvsample sample.h new.h &&
++	mkreplacement diff.h >sample.h &&
++	git add sample.h new.h &&
++	git commit -m 'rename sample.h to new.h with replacement (diff)'
++}
++
++test_expect_success 'merge rename to rename/tweak (two replacements, diff)' '
++	setup_double_rename_two_replacements_diff &&
++	test_must_fail git merge master &&
++	cat >expect <<-\EOF &&
++	#ifndef SAMPLE_H
++	#define SAMPLE_H
++	<<<<<<< HEAD
++	#include "diff.h"
++	=======
++	#include "new.h"
++	>>>>>>> master
++	#endif /* SAMPLE_H */
++	EOF
++	test_cmp expect sample.h
++'
++
++test_expect_success 'merge rename to rename/tweak (two replacements, diff)' '
++	setup_double_rename_two_replacements_diff &&
++	git checkout master &&
++	test_must_fail git merge topic &&
++	cat >expect <<-\EOF &&
++	#ifndef SAMPLE_H
++	#define SAMPLE_H
++	<<<<<<< HEAD
++	#include "new.h"
++	=======
++	#include "diff.h"
++	>>>>>>> topic
++	#endif /* SAMPLE_H */
++	EOF
++	test_cmp expect sample.h
++'
++
++test_done
 -- 
 1.7.4.41.g423da.dirty
