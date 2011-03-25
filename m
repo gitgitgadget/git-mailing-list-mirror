@@ -1,78 +1,102 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/4] t7607: clean up stray untracked file
-Date: Fri, 25 Mar 2011 14:09:03 -0400
-Message-ID: <20110325180903.GB14898@sigill.intra.peff.net>
+Subject: [PATCH 3/4] merge: merge unborn index before setting ref
+Date: Fri, 25 Mar 2011 14:10:38 -0400
+Message-ID: <20110325181038.GC14898@sigill.intra.peff.net>
 References: <20110325180644.GA30838@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
 To: "igor.mikushkin" <igor.mikushkin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:09:15 2011
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:10:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3BRj-0005IS-3S
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 19:09:15 +0100
+	id 1Q3BTC-0006FS-9i
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 19:10:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595Ab1CYSJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 14:09:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50408
+	id S1754432Ab1CYSKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 14:10:41 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36835
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754172Ab1CYSJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 14:09:05 -0400
-Received: (qmail 16249 invoked by uid 107); 25 Mar 2011 18:09:45 -0000
+	id S1754257Ab1CYSKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 14:10:40 -0400
+Received: (qmail 16292 invoked by uid 107); 25 Mar 2011 18:11:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 14:09:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 14:09:03 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 14:11:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 14:10:38 -0400
 Content-Disposition: inline
 In-Reply-To: <20110325180644.GA30838@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170010>
 
-This file ends up conflicting with the test just after it
-(causing the "git merge" to fail).  Neither test is to blame
-for the bug, though. It looks like the merge in 1a9fe45
-(Merge branch 'tr/merge-unborn-clobber', 2011-02-09) is what
-caused the conflict.
+When we merge into an unborn branch, there are basically two
+steps:
 
-We didn't notice because the follow-on test is already
-marked as expect_failure (even though it has since been
-fixed, and now succeeds once the untracked file is moved out
-of the way).
+  1. Write the sha1 of the new commit into the ref pointed
+     to by HEAD.
+
+  2. Update the index with the new content, and check it out
+     to the working tree.
+
+We currently do them in this order. However, (2) is the step
+that is much more likely to fail, since it can be blocked by
+things like untracked working tree files. When it does, the
+merge fails and we are left with an empty index but an
+updated HEAD.
+
+This patch switches the order, so that a failure in updating
+the index leaves us unchanged. Of course, a failure in
+updating the ref now leaves us with an updated index and
+mis-matched HEAD. That is arguably not much better, but it
+is probably less likely to actually happen.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t7607-merge-overwrite.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+I noticed this while diagnosing the pull problem fixed in 4/4. As
+discused, this is just trading one set of error conditions for another.
+The "right" thing to do is probably to rollback, but of course that can
+fail, too, and it's more effort. I think in practice this is fine.
 
+ builtin/merge.c            |    2 +-
+ t/t7607-merge-overwrite.sh |    4 ++++
+ 2 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index aa3453c..c8d028c 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1063,9 +1063,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		remote_head = peel_to_type(argv[0], 0, NULL, OBJ_COMMIT);
+ 		if (!remote_head)
+ 			die("%s - not something we can merge", argv[0]);
++		read_empty(remote_head->sha1, 0);
+ 		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+ 				DIE_ON_ERR);
+-		read_empty(remote_head->sha1, 0);
+ 		return 0;
+ 	} else {
+ 		struct strbuf merge_names = STRBUF_INIT;
 diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
-index 691c5fd..c86e298 100755
+index c86e298..b54e840 100755
 --- a/t/t7607-merge-overwrite.sh
 +++ b/t/t7607-merge-overwrite.sh
-@@ -150,6 +150,7 @@ test_expect_success 'will not overwrite untracked file on unborn branch' '
- 	git rm -fr . &&
- 	git checkout --orphan new &&
- 	cp important c0.c &&
-+	test_when_finished "rm c0.c" &&
- 	test_must_fail git merge c0 2>out &&
- 	test_cmp out expect &&
- 	test_path_is_missing .git/MERGE_HEAD &&
-@@ -164,7 +165,7 @@ test_expect_success 'set up unborn branch and content' '
- 	echo bar > untracked-file
+@@ -157,6 +157,10 @@ test_expect_success 'will not overwrite untracked file on unborn branch' '
+ 	test_cmp important c0.c
  '
  
--test_expect_failure 'will not clobber WT/index when merging into unborn' '
-+test_expect_success 'will not clobber WT/index when merging into unborn' '
- 	git merge master &&
- 	grep foo tracked-file &&
- 	git show :tracked-file >expect &&
++test_expect_success 'failed merge leaves unborn branch in the womb' '
++	test_must_fail git rev-parse --verify HEAD
++'
++
+ test_expect_success 'set up unborn branch and content' '
+ 	git symbolic-ref HEAD refs/heads/unborn &&
+ 	rm -f .git/index &&
 -- 
 1.7.4.33.gb8855.dirty
