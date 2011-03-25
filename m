@@ -1,99 +1,152 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: `*' gitignores and nested ignores
-Date: Fri, 25 Mar 2011 05:37:10 -0400
-Message-ID: <19852.25158.340116.57859@winooski.ccs.neu.edu>
-References: <19851.6264.179471.935771@winooski.ccs.neu.edu>
-	<4D8C4FCF.5060900@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: merge recursive and code movement
+Date: Fri, 25 Mar 2011 05:37:58 -0400
+Message-ID: <20110325093758.GA9047@sigill.intra.peff.net>
+References: <AANLkTi=h6jUsjqXofd0QeWbNBjc9DeodJJ3FN7caW4XC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 25 10:37:27 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 10:38:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q33SQ-0005eV-2a
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 10:37:26 +0100
+	id 1Q33T5-0005zT-4f
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 10:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756633Ab1CYJhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 05:37:15 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:60665 "EHLO
-	winooski.ccs.neu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756567Ab1CYJhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 05:37:14 -0400
-Received: from winooski.ccs.neu.edu (localhost.localdomain [127.0.0.1])
-	by winooski.ccs.neu.edu (8.14.4/8.14.4) with ESMTP id p2P9bB9m003367;
-	Fri, 25 Mar 2011 05:37:11 -0400
-Received: (from eli@localhost)
-	by winooski.ccs.neu.edu (8.14.4/8.14.4/Submit) id p2P9bAHX003345;
-	Fri, 25 Mar 2011 05:37:10 -0400
-In-Reply-To: <4D8C4FCF.5060900@viscovery.net>
-X-Mailer: VM 8.1.93a under 23.2.1 (x86_64-redhat-linux-gnu)
+	id S1756640Ab1CYJiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 05:38:01 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37199
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751652Ab1CYJiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 05:38:00 -0400
+Received: (qmail 11481 invoked by uid 107); 25 Mar 2011 09:38:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 05:38:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 05:37:58 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=h6jUsjqXofd0QeWbNBjc9DeodJJ3FN7caW4XC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169974>
 
-An hour ago, Johannes Sixt wrote:
-> Am 3/24/2011 11:10, schrieb Eli Barzilay:
-> > According to the man page, a .gitignore file that is deeper has
-> > higher precedence, and a `!' line overrides lower precedence
-> > ignores.  I tried that, and it works in cases like the last
-> > "vmlinux*" example.
-> > 
-> > But it doesn't work if the lower precedence directory has a "*"
-> > pattern.  [...]
-> > 
-> > Is this a bug?
+On Thu, Mar 24, 2011 at 05:18:20PM -0400, Jay Soffian wrote:
+
+> There's a use case that merge recursive doesn't seem to handle, and I
+> wonder how difficult it would be to add.
+
+I don't think it's that hard. In your example:
+
+> Say you have a merge between OURS and THEIRS, with common ancestor BASE.
 > 
-> This has been discussed before, and IMNSHO, this is not a bug:
+> Between BASE and THEIRS, a file named header.h has the following changes:
 > 
-> http://thread.gmane.org/gmane.comp.version-control.git/157190
+>   # Rename header.h to header_new.h
+>   git mv header.h header_new.h
+> 
+>   # Minor edits to account for the rename such as fixing the
+>   # include guard:
+>   perl -pi -e 's/HEADER_H_/HEADER_NEW_H_/' header_new.h
+> 
+>   # Drop a compatibility header.h in place till we can fix all the
+>   # files which include header.h
+>   cat > header.h <<-__EOF__
+> 	#ifndef HEADER_H_
+> 	#define HEADER_H_
+> 	#include "header_hew.h"
+> 	#endif // HEADER_H_
+>   __EOF__
 
-To reply to what you wrote there:
+You have a move coupled with a rewritten version of a file. So without
+copy or break detection, we won't consider the original header.h as a
+possible rename source.
 
-> You should update your expectations to match what you got.
+>   git add header.h header_new.h
+>   git commit -m 'rename header.h to header_new.h'
+> 
+> Meanwhile, between BASE and OURS, a few minor changes are made to
+> header.h. This could be as little as a single line change in the
+> middle of the header.h.
+> 
+> Now you merge THEIRS to OURS. Git will just show header.h in conflict.
 
-That kind of an answer is a thick hint that something is not
-documented right.  As things stand, I don't see anything in the man
-page that describes the actual algorithm that is used.  I also found a
-similar weirdness now -- the man page says
+Right. merge-recursive won't detect the rename here.
 
-  within one level of precedence, the last matching pattern decides
-  the outcome
+In your case, I think merge-recursive doing break detection is the right
+solution. It realizes that header.h has been rewritten and considers it
+as a source candidate for the rename to header_new.
 
-but this is not true for nested files in this case:
+Copy detection might also work, but I don't think it makes sense in a
+merge setting. If I copy "foo.h" to "bar.h", and meanwhile you make a
+change to "foo.h", there is no reason to think the change should apply
+to bar.h instead of foo.h (you might perhaps think it could apply to
+_both_, but that is a different story).
 
-  *
-  !foo
+So break detection is the only thing that makes sense to me.  This
+one-liner does what you want:
 
-So some description of what's going on is needed.  Perhaps it's
-exactly what Seth's suggested patch describes.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 2a048c6..ed574e6 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -429,6 +429,7 @@ static struct string_list *get_renames(struct merge_options *o,
+ 			    1000;
+ 	opts.rename_score = o->rename_score;
+ 	opts.show_rename_progress = o->show_rename_progress;
++	opts.break_opt = 0;
+ 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	if (diff_setup_done(&opts) < 0)
+ 		die("diff setup failed");
 
+And I tested it on this:
 
-In any case, it seems possible to do something that works more as
-expected.  As suggested in that thread -- scanning only directories
-that have committed files would not make things slow, since the files
-need to be checked anyway.  This is not even hard to describe in a man
-page.  It seems like some arbitrariness that buys performance, but its
-less so than the current situation.
+-- >8 --
+#!/bin/sh
 
-There's also the option of scanning only .gitignore files that are
-checked in, but that will probably be too confusing when the files are
-created and/or modified.
+rm -rf repo
 
-Yet another alternative is to say that an ignored .gitignore file is
-ignored, and making this:
+git init repo && cd repo
 
-  /*
-  !.gitignore
+# Sample header.
+cp /path/to/your/git/revision.h .
+git add revision.h
+git commit -m 'add revision.h'
 
-an idiom for doing the slow thing in case you really want it.
+# Move and tweak header.
+git mv revision.h foo.h
+perl -pi -e 's/REVISION_H/FOO_H/' foo.h
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+# And put in replacement header.
+cat >revision.h <<'EOF'
+#ifndef REVISION_H
+#define REVISION_H
+#include "foo.h"
+#endif /* REVISION_H */
+EOF
+
+# And commit.
+git add revision.h foo.h
+git commit -m 'rename revision.h to foo.h'
+
+# Now make a minor change on a side branch.
+git checkout -b other HEAD^
+sed -i '/REV_TREE_SAME/i/* some comment */' revision.h
+git commit -a -m 'tweak revision.h'
+
+git merge master
+-- 8< --
+
+It _almost_ works. The merge completes automatically, and the tweak ends
+up in foo.h, as you expect. But the merge silently deletes the
+placeholder revision.h!
+
+I suspect it is a problem of merge-recursive either not handling the
+broken filepair properly, or perhaps reading too much into what a rename
+means. I haven't dug further.
+
+-Peff
