@@ -1,175 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] fixup! vcs-svn: improve reporting of input errors
-Date: Thu, 24 Mar 2011 20:12:50 -0500
-Message-ID: <20110325011250.GA20364@elie>
-References: <7vsjuegzj8.fsf@alter.siamese.dyndns.org>
- <1300970636-31743-1-git-send-email-david.barr@cordelta.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: Summer of Code project ideas
+Date: Fri, 25 Mar 2011 01:11:38 +0000
+Message-ID: <878vw4c8c5.fsf@fox.patthoyts.tk>
+References: <AANLkTinpVKBjcqxaCGH0vp82kpKsO2uCBPdMoMKco6Ex@mail.gmail.com>
+	<20110303185918.GA18503@sigill.intra.peff.net>
+	<AANLkTinXZDq5FJxMmxUuWpCGgMYb3HH774eLJCojmnOz@mail.gmail.com>
+	<20110303203323.GA21102@sigill.intra.peff.net>
+	<20110309174956.GA22683@sigill.intra.peff.net>
+	<AANLkTinpAOE06YX-m=ptQM_y-QMGpVmjewDxWopkXJkQ@mail.gmail.com>
+	<20110309215841.GC4400@sigill.intra.peff.net>
+	<m37hbx5ncw.fsf_-_@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 02:13:14 2011
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
+	"J.H." <warthog9@eaglescrag.net>, Paul Mackerras <paulus@samba.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 02:45:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q2vaT-0003sT-BA
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 02:13:13 +0100
+	id 1Q2w5z-0007Uv-29
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 02:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757364Ab1CYBM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2011 21:12:58 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:54103 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755410Ab1CYBM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2011 21:12:57 -0400
-Received: by ywj3 with SMTP id 3so261102ywj.19
-        for <git@vger.kernel.org>; Thu, 24 Mar 2011 18:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=7HeEvxJBDMrK6bZP4Cp91zy1jM83MRgZ5sXOQ+FCia8=;
-        b=KWkRkI6XZBr/wcFm42by3cFkJWAXZ4gpuDKblj+aJqX8krNwS/cJ+1VtnpC3ffSqLw
-         g1gMrMDpXmhAhH5joptXDq1k2u0YWz0+i7+pl1SLmFCO2dmi6R85TfUWhgjcy4mzmEtq
-         LJNtkrIzIrjxLEGLFQvn1SBKKLt11JZQpRBAs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=lYLa8VbWdjE5HPgYnkHGY2Vt28Qvq6E9CmDVnR//f3CAdS3CIkjvikiz/CFRsgX4ei
-         KA7tnYzs0+1VpnShze3F9jXyK2buXN5WJjSlM2hjdENJjAA0z0EcvxEaBGJZr7bEDRsR
-         Qg93T5nT8wZ3NhvYVE5biL48S53ATXkvI78Zk=
-Received: by 10.101.129.27 with SMTP id g27mr134427ann.51.1301015576820;
-        Thu, 24 Mar 2011 18:12:56 -0700 (PDT)
-Received: from elie (adsl-68-255-102-141.dsl.chcgil.ameritech.net [68.255.102.141])
-        by mx.google.com with ESMTPS id w39sm507690ana.13.2011.03.24.18.12.54
-        (version=SSLv3 cipher=OTHER);
-        Thu, 24 Mar 2011 18:12:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1300970636-31743-1-git-send-email-david.barr@cordelta.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757328Ab1CYBpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2011 21:45:41 -0400
+Received: from queueout04-winn.ispmail.ntl.com ([81.103.221.58]:59331 "EHLO
+	queueout04-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752144Ab1CYBpk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2011 21:45:40 -0400
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.2])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20110325011139.SFLJ18231.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Fri, 25 Mar 2011 01:11:39 +0000
+Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1Q2vYx-0002zW-DK; Fri, 25 Mar 2011 01:11:39 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 94446204E6; Fri, 25 Mar 2011 01:11:38 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <m37hbx5ncw.fsf_-_@localhost.localdomain> (Jakub Narebski's
+	message of "Thu, 17 Mar 2011 16:40:44 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=ebhbZBIB6E4A:10 a=kj9zAlcOel0A:10 a=pGLkceISAAAA:8 a=PKzvZo6CAAAA:8 a=VwQbUJbxAAAA:8 a=Rf460ibiAAAA:8 a=r_mIuvaqQ6uSLWB9obkA:9 a=WmLt-7k-A6Kvs0gqfzwA:7 a=E9xNt89tO8uBnql-70rbEbXo3SgA:4 a=CjuIK1q_8ugA:10 a=MSl-tDqOz04A:10 a=OdWmie4EkE0A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169958>
 
-Hi David,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-David Barr wrote:
+>Jeff King <peff@peff.net> writes:
+>
+>> https://git.wiki.kernel.org/index.php/SoC2011Ideas
+>> 
+>> If you have any ideas, please add them to the page!
+>
+>A few project ideas I am not sure if they are feasible for GSoC:
+>
+>* merging-in support for caching in gitweb, and benchmarking/profiling
+>  gitweb in high load situation
+>
+>  J.H., you would probably want gitweb [output] caching to be merged-in
+>  sooner that the end of Google Summer of Code 2011, isn't it?
+>
+>* embedding graphical diff and graphical merge tool in git-gui, e.g. as
+>  "git gui diff".  I think that we can use xxdiff; the license is 
+>  compatibile.
+>
+>  Pat and Shawn, is it something worth doing?  Does it look like a good
+>  project for GSoC2011, or is it too small of a project for this?  Would
+>  we be able to find mentor for this idea?
 
-> An excessive constraint was introduced in c9d1c8ba; when reading
-> svn props, it is permissible for both keys and values to contain
-> nul characters.
+There is also tkdiff for stealing from. I'm not sure about the worth -
+there are lots of free merge tools around. But if someone wants to do
+that then fine.
 
-Yes, that will work.
+>* splitting gitk, common library (Tcl/Tk bindings) for gitk and git-gui
+>
+>  Pat and Paul, do you think it is right scope, or is it too large project
+>  to put as an GSoC idea?
 
-buffer_read_string returns a '\0'-terminated string and on early EOF,
-the part after the end-of-file will be gibberish (and probably
-uninitialized).  But it lives in an 1000-char buffer and errors out
-when it doesn't fit, so at least with the fix it wouldn't crash.
+It shouldn't be too large. You are likely looking at doing Git.pm as a
+Tcl package (without looking in much detail). Testing that gitk and
+git-gui didn't get broken will probably be tedious. So adding some test
+suite to each could help. The Tcl test package is quite capable of being
+used to test Tk apps provided some tests get written.
 
-Sorry for the breakage.  I suppose a test like the following would
-catch future problems of this kind?
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t9010-svn-fe.sh |   79 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 79 insertions(+), 0 deletions(-)
-
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 5a6a4b9..a91b59c 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -370,6 +370,85 @@ test_expect_failure 'change file mode but keep old content' '
- 	test_cmp hello actual.target
- '
- 
-+test_expect_failure 'null bytes' '
-+	# Caveat: svnadmin 1.6.16 (r1073529) truncates at \0 in the
-+	# svn:specialQnotreally example.
-+	reinit_git &&
-+	cat >expect <<-\EOF &&
-+	OBJID
-+	:100644 100644 OBJID OBJID M	greeting
-+	OBJID
-+	:000000 100644 OBJID OBJID A	greeting
-+	EOF
-+	printf "%s\n" "something with a null byte (Q)" |
-+		q_to_nul >expect.message &&
-+	printf "%s\n" "helQo" |
-+		q_to_nul >expect.hello1 &&
-+	printf "%s\n" "link hello" >expect.hello2 &&
-+	{
-+		properties svn:log "something with a null byte (Q)" &&
-+		echo PROPS-END
-+	} |
-+	q_to_nul >props &&
-+	{
-+		q_to_nul <<-\EOF &&
-+		SVN-fs-dump-format-version: 3
-+
-+		Revision-number: 1
-+		Prop-content-length: 10
-+		Content-length: 10
-+
-+		PROPS-END
-+
-+		Node-path: greeting
-+		Node-kind: file
-+		Node-action: add
-+		Prop-content-length: 10
-+		Text-content-length: 6
-+		Content-length: 16
-+
-+		PROPS-END
-+		helQo
-+
-+		Revision-number: 2
-+		EOF
-+		echo Prop-content-length: $(wc -c <props) &&
-+		echo Content-length: $(wc -c <props) &&
-+		echo &&
-+		cat props &&
-+		q_to_nul <<-\EOF
-+
-+		Node-path: greeting
-+		Node-kind: file
-+		Node-action: change
-+		Prop-content-length: 43
-+		Text-content-length: 11
-+		Content-length: 54
-+
-+		K 21
-+		svn:specialQnotreally
-+		V 1
-+		*
-+		PROPS-END
-+		link hello
-+		EOF
-+	} >8bitclean.dump &&
-+	test-svn-fe 8bitclean.dump >stream &&
-+	git fast-import <stream &&
-+	{
-+		git rev-list HEAD |
-+		git diff-tree --root --stdin |
-+		sed "s/$_x40/OBJID/g"
-+	} >actual &&
-+	git diff-tree --always -s --format=%s HEAD >actual.message &&
-+	git cat-file blob HEAD^:greeting >actual.hello1 &&
-+	git cat-file blob HEAD:greeting >actual.hello2 &&
-+	test_cmp expect actual &&
-+	test_cmp expect.message actual.message &&
-+	test_cmp expect.hello1 actual.hello1 &&
-+	test_cmp expect.hello2 actual.hello2
-+'
-+
- test_expect_success 'change file mode and reiterate content' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
 -- 
-1.7.4.1
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
