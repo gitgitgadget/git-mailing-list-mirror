@@ -1,65 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: [PATCH] HOME must be set before calling git-init when creating
  test repositories
-Date: Fri, 25 Mar 2011 13:49:37 -0700
-Message-ID: <7vsjub53j2.fsf@alter.siamese.dyndns.org>
-References: <20110325200528.GA7302@blimp.localdomain>
+Date: Fri, 25 Mar 2011 22:01:55 +0100
+Message-ID: <AANLkTimQzPVOWCUx1hr+DEmRfdFB8=UeY_xCaxzVSwFy@mail.gmail.com>
+References: <20110325200528.GA7302@blimp.localdomain> <7vsjub53j2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 21:50:15 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 22:02:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3DxT-0007DR-9g
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 21:50:11 +0100
+	id 1Q3E9S-0005Qk-51
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 22:02:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754934Ab1CYUtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 16:49:50 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50127 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754836Ab1CYUts (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 16:49:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 416163D70;
-	Fri, 25 Mar 2011 16:51:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FidVIudyOpXvtAMlwpwxXe0AyUc=; b=E5ZUTt
-	XuRvmoSH41iWBiLge9zUhRwKMp9zQJGf6Ogb69Xf9NbsS4dEekeOHQNiSgbb/k/C
-	EySdGHExF/G0BvRlWQNLtCk9KD1JP3SA8sTrGUyKkglGbeR3c2JO9qGpmPQcaPR4
-	FmEuwk6mVUOko/5Pfb2gww+lbOKDJcOj6bFVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CidDBf7pyWr876Bs5gzDlWLbOiQLKlDh
-	55hVGE8lkgjxV1kQL62gAJE8PY1434mCqiHqh824Mo8NK/F+yJYdwgu5N3HZq/uy
-	RL9slYwYo7PBmes9btsrcphbqBaECvvFsBcj5IXaYQBe/Q1X31qeV/KxRy7lJB1W
-	NKjWEMArAzI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1DB423D6F;
-	Fri, 25 Mar 2011 16:51:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AB6F63D6D; Fri, 25 Mar 2011
- 16:51:22 -0400 (EDT)
-In-Reply-To: <20110325200528.GA7302@blimp.localdomain> (Alex Riesen's message
- of "Fri, 25 Mar 2011 21:05:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A6848F5E-5721-11E0-A16B-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755197Ab1CYVCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 17:02:19 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38712 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755192Ab1CYVCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 17:02:16 -0400
+Received: by bwz15 with SMTP id 15so1197989bwz.19
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 14:02:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=OB1nmqDtTUJI86XLsBrQhn+2tPd8dpsXTtRIi5Ntwvo=;
+        b=RJ07ldtb06Ljo0yv99m4ywFsaSbHL0Jl+X8AjoEBoY/BzcS3b6TRoPDQdxK6CjEjyw
+         x/AWOPixPznqCRcFs0lNsHoq7InjD6KPCI1UY3K+Ra8RRIRXQ4CLa2hyzDiYxkWFSeHX
+         SxkjxWJCpOrnEuJcvV2y/66YtHk4BCQ9lSqKY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=FmX9zyHX4aJQ3tX6gC5nSU5QbL4Yy8wUFjfGcVu9WtT30xKAz7SnXn4zmDCpMOpQK/
+         7T8N70N1hvo5djN1xVhITkjana3u24sjujt9aaOpvc5zkgQF9Z05nfKdPGZWQioBWI8l
+         wKgEgMIOt6eAktk8TM6feqCa66cZYr+AQYkag=
+Received: by 10.204.83.228 with SMTP id g36mr1222175bkl.30.1301086935108; Fri,
+ 25 Mar 2011 14:02:15 -0700 (PDT)
+Received: by 10.204.29.2 with HTTP; Fri, 25 Mar 2011 14:01:55 -0700 (PDT)
+In-Reply-To: <7vsjub53j2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170018>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Fri, Mar 25, 2011 at 21:49, Junio C Hamano <gitster@pobox.com> wrote:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+>> Otherwise the created test repositories will be affected by users ~/.gitconfig.
+>> For example, setting core.logAllrefupdates in users config will make all
+>> calls to "git config --unset core.logAllrefupdates" fail which will break
+>> the first test which uses the statement and expects it to succeed.
+>
+> Doesn't this change the location of HOME used during the test as well?
+>
 
-> Otherwise the created test repositories will be affected by users ~/.gitconfig.
-> For example, setting core.logAllrefupdates in users config will make all
-> calls to "git config --unset core.logAllrefupdates" fail which will break
-> the first test which uses the statement and expects it to succeed.
-
-Doesn't this change the location of HOME used during the test as well?
+As long as the test only includes test-lib.sh only once - it doesn't.
+Why? Or rather, how?
