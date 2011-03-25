@@ -1,87 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] t3030: fix accidental success in symlink rename
-Date: Fri, 25 Mar 2011 13:51:24 -0400
-Message-ID: <20110325175124.GA24513@sigill.intra.peff.net>
-References: <20110325160013.GA25851@sigill.intra.peff.net>
- <20110325160326.GA26635@sigill.intra.peff.net>
- <7v1v1v6qs2.fsf@alter.siamese.dyndns.org>
+From: "igor.mikushkin" <igor.mikushkin@gmail.com>
+Subject: Re: Why git silently replaces untracked files?
+Date: Fri, 25 Mar 2011 10:53:48 -0700 (PDT)
+Message-ID: <1301075628970-6208585.post@n2.nabble.com>
+References: <1301064754576-6207950.post@n2.nabble.com> <20110325165811.GB25851@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>,
-	Ken Schalk <ken.schalk@intel.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 18:51:33 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 25 18:53:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3BAa-0002VJ-2U
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 18:51:32 +0100
+	id 1Q3BCs-0003y9-1G
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 18:53:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754252Ab1CYRv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 13:51:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48935
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751360Ab1CYRv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 13:51:26 -0400
-Received: (qmail 15942 invoked by uid 107); 25 Mar 2011 17:52:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 13:52:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 13:51:24 -0400
-Content-Disposition: inline
-In-Reply-To: <7v1v1v6qs2.fsf@alter.siamese.dyndns.org>
+	id S1754555Ab1CYRxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 13:53:49 -0400
+Received: from sam.nabble.com ([216.139.236.26]:40019 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754525Ab1CYRxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 13:53:49 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.69)
+	(envelope-from <igor.mikushkin@gmail.com>)
+	id 1Q3BCm-0005Nd-VU
+	for git@vger.kernel.org; Fri, 25 Mar 2011 10:53:48 -0700
+In-Reply-To: <20110325165811.GB25851@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170004>
 
-On Fri, Mar 25, 2011 at 10:42:05AM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+Jeff King wrote:
 > 
-> > In this test, we have merge two branches. On one branch, we
-> > renamed "a" to "e". On the other, we renamed "a" to "e" and
-> > then added a symlink pointing at "a" pointing to "e".
+> On Fri, Mar 25, 2011 at 07:52:34AM -0700, igor.mikushkin wrote:
 > 
-> I read this five times but still couldn't figure out that you meant that
-> the other side 'added a symlink "a" to allow people keep referring to "e"
-> with the old name "a"' until I actually read the actual test you are
-> describing here.
-
-Hmph. I edited it to try to be more clear, and obviously left in a typo.
-I clearly need to proofread more.
-
-> Besides, /we have merge/s/have//, I think.
-
-It was actually s/have merge/merge.  So what I intended to write was:
-
-  In this test, we merge two branches. On one branch, we renamed "a" to
-  "e". On the other, we renamed "a" to "e" and then added a symlink "a"
-  pointing to "e".
-
-If that's not clear enough, then feel free to swap it out for something
-better.
-
-> > The only sensible resolution is to keep the symlink.
+> &gt; Why git silently replaces untracked files?
+> &gt; 
+> &gt; # mkdir test.git
+> &gt; # mkdir 1
+> &gt; # mkdir 2
+> &gt; # echo 1 &gt; 1/test
+> &gt; # echo 2 &gt; 2/test
+> &gt; # cd test.git
+> &gt; # git init --bare
+> &gt; # cd ..
+> &gt; # git clone test.git
+> &gt; # cp -r test/.git 1
+> &gt; # cp -r test/.git 2
+> &gt; # cd 1
+> &gt; # git add test
+> &gt; # git commit -am 1
+> &gt; # git push origin master
+> &gt; # cd ../2
+> &gt; # git pull
+> &gt; # cat test
+> &gt; 1
+> &gt; 
+> &gt; In my opinion it is wrong behavior.
+> &gt; I've just lost important file due to it.
+> &gt; 
+> &gt; Should not &quot;git pull&quot; fail here?
 > 
-> I agree.
+> Ick, definitely it's wrong behavior. The culprit seems to be a special
+> code path for the initial pull which doesn't merge at all, but calls
+> read-tree --reset. It should probably be:
 > 
-> We should treat structural changes and do a 3-way on that, and then
-> another 3-way on content changes, treating them as an independent thing.
-> One side has "create 'e' out of 'a', removing 'a'" and "_create_ 'a', that
-> is unrelated to the original 'a'", the other side has "create 'e' out of
-> 'a', removing 'a'", so the end result should be that we do both,
-> i.e. "create 'e' out of 'a', removing 'a'" and "create 'a'".  At the
-> content level, the result in 'e' may have to be decided by 3-way.  The
-> result in 'a' should be a clean merge taken from the former "with b/c
-> link" branch, as this is not even a create (by the side that added a
-> backward compatibility symbolic link) vs a delete (by pure-rename side)
-> conflict.
+> diff --git a/git-pull.sh b/git-pull.sh
+> index a3159c3..fb9e2df 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -253,7 +253,7 @@ esac
+>  if test -z &quot;$orig_head&quot;
+>  then
+>  	git update-ref -m &quot;initial pull&quot; HEAD $merge_head
+> &quot;$curr_head&quot; &amp;&amp;
+> -	git read-tree --reset -u HEAD || exit 1
+> +	git read-tree -m -u HEAD || exit 1
+>  	exit
+>  fi
+> 
+> Though I don't know if there are any cases where the --reset would be
+> beneficial over &quot;-m&quot;. I couldn't think of any.
+> 
 
-Good, I think we are on the same page. Hopefully you will find my 2/3
-correct at least in spirit, then, if not implementation. :)
+Thanks Jeff,
+My opinion is that you are right and merging is best here
+(Though just fail would be probably OK either).
+Love one line fixes.
 
--Peff
+Igor
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Why-git-silently-replaces-untracked-files-tp6207950p6208585.html
+Sent from the git mailing list archive at Nabble.com.
