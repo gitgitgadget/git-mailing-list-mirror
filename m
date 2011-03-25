@@ -6,138 +6,76 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-filter-branch : LANG / LC_ALL = C breaks UTF-8 author names
-Date: Tue, 31 Aug 2010 20:08:55 -0500
-Message-ID: <20100901010855.GD22968@burratino>
-References: <4C6E8109.5030202@leadformance.com>
- <20100820133244.GB15736@burratino>
- <4C6E86AA.2020903@leadformance.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: merge recursive and code movement
+Date: Fri, 25 Mar 2011 13:32:22 -0400
+Message-ID: <AANLkTimWm6eim2u-SDrot_VtMuUf=wvf_P5DuYpuV-m5@mail.gmail.com>
+References: <AANLkTi=h6jUsjqXofd0QeWbNBjc9DeodJJ3FN7caW4XC@mail.gmail.com>
+ <20110325093758.GA9047@sigill.intra.peff.net> <20110325101204.GB9047@sigill.intra.peff.net>
+ <20110325111225.GC9047@sigill.intra.peff.net> <20110325160013.GA25851@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 1 Sep 2010 01:11:06 +0000 (UTC)
-Cc: git@vger.kernel.org
-To: Richard MICHAEL <rmichael@leadformance.com>
+NNTP-Posting-Date: Fri, 25 Mar 2011 17:33:04 +0000 (UTC)
+Cc: git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=b7cBzfWoSy0ZANHJqDVRbaaqCc1SnpqHgdjl1s2bHIM=;
-        b=Ywd4R2ZAR7TtGCtcMXuASJ6LRjlc+6XdTZPl47E2iDUh1YoEpW1vxtKd4fosuLY5lR
-         WCIwspTPfTbtAzZQLMDpjsKgqBi8lC/lE/1+37FEil0tS7+fGzN9IgspOAM8WP4gpB/s
-         jtuZNxHwElZxnVbAsFUokJfMk7L2ryis8ucBU=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=hpdvgef2AvxWzvJyYjJy+3zS247LaK6KkzFsl7h6p1k=;
+        b=IlADM/qpj6eXswI4SyvGhSw6tbfmb3IJvvXGjFTjURH57uld33KilpCB1CzsQ5gXV0
+         J3+mGKZ3W9vmsQsUSCw2CNt8nl55z4M1uXmWrO9CCH/DrcrFAIZFptKF7+HPcfABKKFI
+         kRckouBh0YwLUTlwhgXNZJxBQwD4YnBVkBgk4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Uo3/0M3J1g6XxHwBkW4BBKLvgIy+qZvRRd0811ps39O8WEgdJ4tlP/dzPi9LlKG/Wg
-         o0wKJRalVZS45XQhKlpKO2l4YXehYD7omyzZyo3LH0J2xr6h3/l4Io4ziseLK4O8u3bZ
-         4ocZz0qUPsoiZf3Mh62JvcVFWf3+emcXNsVeU=
-Content-Disposition: inline
-In-Reply-To: <4C6E86AA.2020903@leadformance.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Hka9qDGKEEkCsK97eshcXrALUWUIJ+wtsvHCiq4i3l6XaLbEekO+YTXOvDEufY2c8i
+         8BO6ONE9NQNwkY9AhAfQGeZzT/zYmMB29ScWQTX241703V6xW75b5GwHUizBnjVVhJW2
+         /PpxVb8e8bBZ/AfeqOS9WI6TpcNA6VNcDXrpc=
+In-Reply-To: <20110325160013.GA25851@sigill.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170000>
 Received: from vger.kernel.org ([209.132.180.67]) by lo.gmane.org with esmtp
- (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id 1Oqbqy-0004Cb-Oz
- for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 03:11:05 +0200
+ (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id 1Q3Asd-0007F9-C9
+ for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 18:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751812Ab0IABKr convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 21:10:47 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:62307 "EHLO
- mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751430Ab0IABKq convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 21:10:46 -0400
-Received: by qwh6 with SMTP id 6so5805932qwh.19 for <git@vger.kernel.org>;
- Tue, 31 Aug 2010 18:10:46 -0700 (PDT)
-Received: by 10.229.232.198 with SMTP id jv6mr4841051qcb.36.1283303445907;
- Tue, 31 Aug 2010 18:10:45 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176]) by
- mx.google.com with ESMTPS id l8sm10441006qck.6.2010.08.31.18.10.44
- (version=SSLv3 cipher=RC4-MD5); Tue, 31 Aug 2010 18:10:44 -0700 (PDT)
+ S1751967Ab1CYRcy convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 13:32:54 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:43517 "EHLO
+ mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751088Ab1CYRcx convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 13:32:53 -0400
+Received: by iyb14 with SMTP id 14so734231iyb.19 for <git@vger.kernel.org>;
+ Fri, 25 Mar 2011 10:32:53 -0700 (PDT)
+Received: by 10.42.137.198 with SMTP id z6mr1575189ict.261.1301074373084;
+ Fri, 25 Mar 2011 10:32:53 -0700 (PDT)
+Received: by 10.231.181.91 with HTTP; Fri, 25 Mar 2011 10:32:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 
-Hi Richard,
+On Fri, Mar 25, 2011 at 12:00 PM, Jeff King <peff@peff.net> wrote:
+>
+> OK, I figured it out. I was thrown off by test failures in t3030, but=
+ I
+> think that test is actually wrong; it documents what happens, but not
+> really what we _want_ to have happen.
+>
+> So this is the patch series I ended up with:
+>
+> =C2=A0[1/3]: t3030: fix accidental success in symlink rename
+> =C2=A0[2/3]: merge: handle renames with replacement content
+> =C2=A0[3/3]: merge: turn on rewrite detection
 
-Richard MICHAEL wrote:
->>Richard MICHAEL wrote:
+I read through all three of these and, from my superficial
+understanding of the merge code, they look correct.
 
->>> I am filtering our repo with git-filter-branch, but as the sed
->>> script runs with LANG=3DC LC_ALL=3DC (7 bit US ASCII), it dies on
->>> commits authored by our team members with accented names.
-[...]
-> What about special casing the bad sed (or whitelisting good sed)?
-> Surely a hack, but would those of us with GNU or BSD would be happy.
-> Which was the troublesome sed?
+I'll test these out on some actual merges as soon as I can. (Probably
+next week.)
 
-Sorry for the slow response.  The problematic sed is GNU sed from
-MacPorts (I think).  Even with LC_ALL=3DC, .* no longer matches
-arbitrary sequences of bytes with such sed: you can check yours with
+Thank you for this series.
 
- $ echo '=C3=A9tale' | LC_ALL=3DC sed 's/.*//'
-
-Unfortunately I have not been able to reproduce it on Linux.  Debian
-sed 4.2.1-7 and GNU sed v4.2.1-21-gc6d32f0 both produce the expected
-result:
-
- $ echo '=C3=A9tale' | LC_ALL=3DC sed 's/.*//'
- $
-
-> Unfortunately, it
-> doesn't "die" well either; the 'export' shell var fails but it keeps
-> processing commits.
-
-Hmm, that sounds like a bug indeed.  Here is what the start to a fix
-might look like, but I stopped early because it there's quite a lot of
-sed usage in git that expects to be able to process arbitrary data
-with short, newline-terminated lines (regardless of encoding).
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 962a93b..34a5fa3 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -68,8 +68,8 @@ eval "$functions"
- # "author" or "committer
-=20
- set_ident () {
--	lid=3D"$(echo "$1" | tr "[A-Z]" "[a-z]")"
--	uid=3D"$(echo "$1" | tr "[a-z]" "[A-Z]")"
-+	lid=3D"$(echo "$1" | tr "[A-Z]" "[a-z]")" &&
-+	uid=3D"$(echo "$1" | tr "[a-z]" "[A-Z]")" &&
- 	pick_id_script=3D'
- 		/^'$lid' /{
- 			s/'\''/'\''\\'\'\''/g
-@@ -90,9 +90,9 @@ set_ident () {
-=20
- 			q
- 		}
--	'
-+	' &&
-=20
--	LANG=3DC LC_ALL=3DC sed -ne "$pick_id_script"
-+	LANG=3DC LC_ALL=3DC sed -ne "$pick_id_script" &&
- 	# Ensure non-empty id name.
- 	echo "case \"\$GIT_${uid}_NAME\" in \"\") GIT_${uid}_NAME=3D\"\${GIT_=
-${uid}_EMAIL%%@*}\" && export GIT_${uid}_NAME;; esac"
- }
-@@ -322,9 +322,11 @@ while read commit parents; do
- 	git cat-file commit "$commit" >../commit ||
- 		die "Cannot read commit $commit"
-=20
--	eval "$(set_ident AUTHOR <../commit)" ||
-+	set_author=3D$(set_ident AUTHOR <../commit) &&
-+	eval "$set_author" ||
- 		die "setting author failed for commit $commit"
--	eval "$(set_ident COMMITTER <../commit)" ||
-+	set_committer=3D$(set_ident COMMITTER <../commit) &&
-+	eval "$set_committer" ||
- 		die "setting committer failed for commit $commit"
- 	eval "$filter_env" < /dev/null ||
- 		die "env filter failed: $filter_env"
