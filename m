@@ -1,78 +1,79 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] HOME must be set before calling git-init when creating
- test repositories
-Date: Fri, 25 Mar 2011 22:51:58 +0100
-Message-ID: <AANLkTikO4=TtFtpsQ_JtmGKqQ1NzgTuo7e8cdaQca+T7@mail.gmail.com>
-References: <20110325200528.GA7302@blimp.localdomain> <7vsjub53j2.fsf@alter.siamese.dyndns.org>
- <AANLkTimQzPVOWCUx1hr+DEmRfdFB8=UeY_xCaxzVSwFy@mail.gmail.com> <7voc4y6g6v.fsf@alter.siamese.dyndns.org>
+From: "J.H." <warthog9@eaglescrag.net>
+Subject: Re: [PATCH/RFC 0/3] gitweb: Split gitweb.js, improve JavaScript
+Date: Fri, 25 Mar 2011 15:03:22 -0700
+Message-ID: <4D8D112A.5020703@eaglescrag.net>
+References: <1301089586-8534-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 22:52:27 2011
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Kevin Cernekee <cernekee@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 23:03:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3Evh-0006MK-KN
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 22:52:25 +0100
+	id 1Q3F6X-0003n9-L1
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 23:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755310Ab1CYVwU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 17:52:20 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64781 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755114Ab1CYVwT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 17:52:19 -0400
-Received: by bwz15 with SMTP id 15so1222279bwz.19
-        for <git@vger.kernel.org>; Fri, 25 Mar 2011 14:52:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=pEINQfEE6TKi8Dq33rIFkqfLznLBW+DcbeJ0De40umg=;
-        b=IiJrLftaOSEqBRHXm7XbsOfuiqGEE2dMBOmYfFAO5HY7o7nBInOzGo9IllCT9Ta2Y2
-         dMdu9LUNPplZGemEwWunaK2NjRGG4tHfS1eSNux3OxvErMuJou9rrM4UJNpnzxn8qmZe
-         6llfXI/anYnzRAr3o3upMI6HqZLoyeIuTNNKU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BUl+kW7g1V0T+zhXXB9lzFvl/wOYEK4VWGZl7OkZZvinAeuS4iZQuJ43/K+T06q57W
-         FTz0ZUCve9j/nCbl5r2blTGDMpxsXd2L4jm2JOLLIIMGlqK03FgpxMuA3/knfxOHvNPl
-         axw5cIvGJ4fKRpGg/I0xmyUsBPwCtq/Bb0jAk=
-Received: by 10.204.20.134 with SMTP id f6mr1223583bkb.165.1301089938192; Fri,
- 25 Mar 2011 14:52:18 -0700 (PDT)
-Received: by 10.204.29.2 with HTTP; Fri, 25 Mar 2011 14:51:58 -0700 (PDT)
-In-Reply-To: <7voc4y6g6v.fsf@alter.siamese.dyndns.org>
+	id S1755426Ab1CYWD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 18:03:29 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:42738 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755418Ab1CYWD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 18:03:27 -0400
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p2PM3NCp014877
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Fri, 25 Mar 2011 15:03:23 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <1301089586-8534-1-git-send-email-jnareb@gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Fri, 25 Mar 2011 15:03:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170026>
 
-On Fri, Mar 25, 2011 at 22:30, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Alex Riesen <raa.lkml@gmail.com> writes:
->
->> On Fri, Mar 25, 2011 at 21:49, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->>
->>> Doesn't this change the location of HOME used during the test as we=
-ll?
->>
->> As long as the test only includes test-lib.sh only once - it doesn't=
-=2E
->> Why? Or rather, how?
->
-> I thought you moved HOME=3D$(pwd) across "cd somewhere-else". =C2=A0D=
-oesn't it
-> change what is returned from pwd?
->
+The only thing I would comment on is that we may want to document (for
+the build process) a way to force a certain ordering of various files.
+Case in point we probably want to force the things like various global
+defs (what I'm proposing in the timezone stuff) at the top and let the
+function defs go below that.
 
-Oh, it does. That's why the second patch (prefixed "[PATCH, fixed]").
-It makes HOME to be "$(pwd)/somewhere-else", or precisely:
+Other than that this all looks good.
 
-  HOME=3D"$(pwd)"/"$test"
-  export HOME
+- John 'Warthog9' Hawley
+
+On 03/25/2011 02:46 PM, Jakub Narebski wrote:
+> This patch series is inspired by patch by John 'Warthog9' Hawley
+> 
+>   [PATCH 1/1] gitweb: javascript ability to adjust time based on timezone
+>   Message-Id: <1300925335-3212-2-git-send-email-warthog9@eaglescrag.net>
+>   http://thread.gmane.org/gmane.comp.version-control.git/169384/focus=169882
+> 
+> that added a few new JavaScript files for the new feature that this
+> patch implemented.
+> 
+> This is marked as RFC mainly because other patches in series,
+> especially the last one fixing bug in gitweb's JavaScript code, should
+> be send independently on gitweb.js splitting.
+> 
+> Jakub Narebski (3):
+>   gitweb: Split JavaScript for maintability; concatenate on build
+>   gitweb: Update and improve comments in JavaScript files
+>   gitweb: Fix parsing of negative fractional timezones in JavaScript
+> 
+>  .gitignore                                         |    1 +
+>  gitweb/Makefile                                    |   12 +-
+>  .../static/{gitweb.js => js/blame_incremental.js}  |  216 ++------------------
+>  gitweb/static/js/common-lib.js                     |  191 +++++++++++++++++
+>  gitweb/static/js/detect-javascript.js              |   44 ++++
+>  5 files changed, 261 insertions(+), 203 deletions(-)
+>  rename gitweb/static/{gitweb.js => js/blame_incremental.js} (75%)
+>  create mode 100644 gitweb/static/js/common-lib.js
+>  create mode 100644 gitweb/static/js/detect-javascript.js
+> 
