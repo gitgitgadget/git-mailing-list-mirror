@@ -1,88 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (BUGFIX)] gitweb: Fix handling of fractional timezones in
- parse_date
-Date: Fri, 25 Mar 2011 10:15:16 -0700
-Message-ID: <7v8vw36s0r.fsf@alter.siamese.dyndns.org>
-References: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost>
- <1300925335-3212-2-git-send-email-warthog9@eaglescrag.net>
- <201103241617.37400.jnareb@gmail.com> <201103251620.28811.jnareb@gmail.com>
- <AANLkTik5bLaR_0uhqGrNWW6U7z82KfmpNTyvRwkKFfj+@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t3030: fix accidental success in symlink rename
+Date: Fri, 25 Mar 2011 10:42:05 -0700
+Message-ID: <7v1v1v6qs2.fsf@alter.siamese.dyndns.org>
+References: <20110325160013.GA25851@sigill.intra.peff.net>
+ <20110325160326.GA26635@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
-	git@vger.kernel.org
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 18:15:55 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>,
+	Ken Schalk <ken.schalk@intel.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 25 18:42:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3Ac3-0004vb-Nc
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 18:15:52 +0100
+	id 1Q3B1l-0005Mb-Os
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 18:42:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754880Ab1CYRPf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 13:15:35 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64659 "EHLO
+	id S1752141Ab1CYRmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 13:42:20 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34314 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753703Ab1CYRPb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 13:15:31 -0400
+	with ESMTP id S1752670Ab1CYRmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 13:42:19 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E0337438A;
-	Fri, 25 Mar 2011 13:17:10 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B6ED4691;
+	Fri, 25 Mar 2011 13:44:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=zWvdqGIK4fdF
-	O+CEgzL4kKr9zhg=; b=EqYScl4TV8JE575o3kR/CuhSFXRKUIGq4jtwgEj1ybx8
-	GIbUzdNmzDPNPscm6Q1emreB7jdjY+Oi0olPCz3t3R/AmSzu2TY3loB3dGutzyUj
-	JOT28ufXjj3MDTvRu91XSAgYcKZP3mFOS5bu3NwtKwLbJ9IuGAdd1xt2JLK5xq0=
+	:content-type; s=sasl; bh=U2DWydbwmtpm3kVWuWWA6fLoI7c=; b=ABYK47
+	ckWRXLnfE8HxZ1kBGeP0kO/vjDhIYNyjJ8nMonsB2xe8qjp1/2zio/Tg6jpYCPQ/
+	RxvFueXXulikljxGKCQI5AYDrMwJlvKvXfkKgOgFNi3Icbkz2wDYBbkfM+MD8KXH
+	jm6hXSBQNnlZdfREPcz4gSRM4EaxVmgOp9gz8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WNfGQ6
-	R6hjklxeM+/Pa38H3o297O9DJKxmGeaJ8I4ldvMe/hUPaK4vRPvmVyaMxQNzRNE5
-	m75+o26KbdS6MquIA450uDsnXw+caf8jq+rNBzy8rPV66hseuSzL0gUOMkShwT10
-	GGvXXigMeUX+1vgR0X6w/EQIjOca2eMniwOIs=
+	:content-type; q=dns; s=sasl; b=jmDCa/PMQK6OtoEFLszaUWu7ufgfIPER
+	jvWFiRKPUhbzX0hWcCO4kMhh02Hc5+lTnMp9sIGUEhCrrY61xTUuE6X2w1Mcqz0w
+	m/7wmvS6syYiAF7nAg4MMBm0seG/srBYZ/Gr6WPzHbUNpZgaHBaoFitx3+xNKrh+
+	L783siyVths=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A01AB4387;
-	Fri, 25 Mar 2011 13:17:05 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0996E468B;
+	Fri, 25 Mar 2011 13:43:55 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2770E4385; Fri, 25 Mar 2011
- 13:16:59 -0400 (EDT)
-In-Reply-To: <AANLkTik5bLaR_0uhqGrNWW6U7z82KfmpNTyvRwkKFfj+@mail.gmail.com>
- (Kevin Cernekee's message of "Fri, 25 Mar 2011 09:26:22 -0700")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8F64A4680; Fri, 25 Mar 2011
+ 13:43:49 -0400 (EDT)
+In-Reply-To: <20110325160326.GA26635@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 25 Mar 2011 12:03:26 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B515B3CC-5703-11E0-B932-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 745A8BC4-5707-11E0-8D69-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170001>
 
-Kevin Cernekee <cernekee@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> It's just a matter of personal preference, but I would find this
-> regexp slightly easier to read:
+> In this test, we have merge two branches. On one branch, we
+> renamed "a" to "e". On the other, we renamed "a" to "e" and
+> then added a symlink pointing at "a" pointing to "e".
+
+I read this five times but still couldn't figure out that you meant that
+the other side 'added a symlink "a" to allow people keep referring to "e"
+with the old name "a"' until I actually read the actual test you are
+describing here.
+
+Besides, /we have merge/s/have//, I think.
+
+> The results for the test indicate that the merge should
+> succeed, but also that "a" should no longer exist. Since
+> both sides renamed "a" to the same destination, we will end
+> up comparing those destinations for content.
 >
-> +               ($tz =3D~ m/^([+\-])([0-9]{2})([0-9]{2})$/);
-
-I'd say "^([-+])(\d\d)(\d\d)$" makes it the most clear.
-
->> + =C2=A0 =C2=A0 =C2=A0 $tz_sign =3D ($tz_sign eq '-' ? -1 : +1);
->> + =C2=A0 =C2=A0 =C2=A0 my $local =3D $epoch + $tz_sign*($tz_hour + (=
-$tz_min/60.0))*3600;
+> But what about what's left? One side (the rename only),
+> replaced "a" with nothing. The other side replaced it with a
+> symlink. The common base must also be nothing, because any
+> "a" before this was meaningless (it was totally unrelated
+> content that ended up getting renamed).
 >
-> If you wanted to avoid floats, you could do something like:
->
-> +       my $local =3D $epoch + $tz_sign * ($tz_hour * 3600 + $tz_min =
-* 60);
+> The only sensible resolution is to keep the symlink.
 
-That is not just float-avoidance, but is much more logical.
+I agree.
 
-	(($h * 60) + $m) * 60
-
-may be even more logical and more readable, though.
-
-Care to re-roll the patch?
+We should treat structural changes and do a 3-way on that, and then
+another 3-way on content changes, treating them as an independent thing.
+One side has "create 'e' out of 'a', removing 'a'" and "_create_ 'a', that
+is unrelated to the original 'a'", the other side has "create 'e' out of
+'a', removing 'a'", so the end result should be that we do both,
+i.e. "create 'e' out of 'a', removing 'a'" and "create 'a'".  At the
+content level, the result in 'e' may have to be decided by 3-way.  The
+result in 'a' should be a clean merge taken from the former "with b/c
+link" branch, as this is not even a create (by the side that added a
+backward compatibility symbolic link) vs a delete (by pure-rename side)
+conflict.
