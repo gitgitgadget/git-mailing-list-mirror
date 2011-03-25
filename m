@@ -1,152 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (BUGFIX) v2] gitweb: Fix handling of fractional timezones in parse_date
-Date: Fri, 25 Mar 2011 17:50:54 +0100
-Message-ID: <201103251750.56375.jnareb@gmail.com>
-References: <dab08d0ff27b0f571a17ed4f1ab0f39b@localhost> <201103251620.28811.jnareb@gmail.com> <AANLkTik5bLaR_0uhqGrNWW6U7z82KfmpNTyvRwkKFfj+@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Why git silently replaces untracked files?
+Date: Fri, 25 Mar 2011 12:58:11 -0400
+Message-ID: <20110325165811.GB25851@sigill.intra.peff.net>
+References: <1301064754576-6207950.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
-	git@vger.kernel.org, Junio Hamano <gitster@pobox.com>
-To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 17:51:21 2011
+Cc: git@vger.kernel.org
+To: "igor.mikushkin" <igor.mikushkin@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 17:58:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3AEF-0006lG-7U
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 17:51:15 +0100
+	id 1Q3AL6-0003A4-Ix
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 17:58:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754163Ab1CYQvI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 12:51:08 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64709 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753782Ab1CYQvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 12:51:07 -0400
-Received: by bwz15 with SMTP id 15so1043438bwz.19
-        for <git@vger.kernel.org>; Fri, 25 Mar 2011 09:51:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=cdridbrqVNtcDxEYAhQMb5izvcqCZZYQvbTXpl5IVaA=;
-        b=yG3ineqWkODBE5uTxg2PMPWpVDHDDP/Qn9r2EKKCdlAAzVir1IYivUOymz51/N5PGY
-         zL7PJ32jqHATLwbuNwzbMmMR5RlJ9yBbCUZI/ylqNHXFRJ1K1j4HYtB2QCoJrWPSXek+
-         RTSapTIClf3uMzvlZ9pLd9jJq9dfOPXvo7ZtA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=BHVsoF1aGccWYxxWdZnhG3xspCNKKC5CIdWMCEYXI+4RnibcavxxV0zgrH9U3he0XA
-         wJzJYDJDGFHyXtU5OgId/VzfbihWTqme66Scnrs0Wc7cEcvAmLOrtE6WCcmY0vK363Hk
-         zQkaR01sCvi4ACg0V+ajgNGMLOgo1S/1rWQnY=
-Received: by 10.204.140.18 with SMTP id g18mr932933bku.59.1301071865736;
-        Fri, 25 Mar 2011 09:51:05 -0700 (PDT)
-Received: from [192.168.1.13] (abwo211.neoplus.adsl.tpnet.pl [83.8.238.211])
-        by mx.google.com with ESMTPS id c11sm879725bkc.14.2011.03.25.09.51.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 Mar 2011 09:51:04 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTik5bLaR_0uhqGrNWW6U7z82KfmpNTyvRwkKFfj+@mail.gmail.com>
+	id S1754369Ab1CYQ6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 12:58:15 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48730
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754261Ab1CYQ6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 12:58:14 -0400
+Received: (qmail 15268 invoked by uid 107); 25 Mar 2011 16:58:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 12:58:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 12:58:11 -0400
 Content-Disposition: inline
+In-Reply-To: <1301064754576-6207950.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169998>
 
-On Fri, 25 Mar 2011, Kevin Cernekee wrote:
-> 2011/3/25 Jakub Narebski <jnareb@gmail.com>:
-> > @@ -2921,8 +2921,10 @@ sub parse_date {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0$date{'iso-8601'} =C2=A0=3D sprintf "%04=
-d-%02d-%02dT%02d:%02d:%02dZ",
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 1900+$year, 1+$mon, $mday, $hour ,$min, $s=
-ec;
-> >
-> > - =C2=A0 =C2=A0 =C2=A0 $tz =3D~ m/^([+\-][0-9][0-9])([0-9][0-9])$/;
-> > - =C2=A0 =C2=A0 =C2=A0 my $local =3D $epoch + ((int $1 + ($2/60)) *=
- 3600);
-> > + =C2=A0 =C2=A0 =C2=A0 my ($tz_sign, $tz_hour, $tz_min) =3D
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ($tz =3D~ m/^([+=
-\-])([0-9][0-9])([0-9][0-9])$/);
->=20
-> It's just a matter of personal preference, but I would find this
-> regexp slightly easier to read:
->=20
-> +               ($tz =3D~ m/^([+\-])([0-9]{2})([0-9]{2})$/);
+On Fri, Mar 25, 2011 at 07:52:34AM -0700, igor.mikushkin wrote:
 
-I went for minimal changes, same as with the change below.
+> Why git silently replaces untracked files?
+> 
+> # mkdir test.git
+> # mkdir 1
+> # mkdir 2
+> # echo 1 > 1/test
+> # echo 2 > 2/test
+> # cd test.git
+> # git init --bare
+> # cd ..
+> # git clone test.git
+> # cp -r test/.git 1
+> # cp -r test/.git 2
+> # cd 1
+> # git add test
+> # git commit -am 1
+> # git push origin master
+> # cd ../2
+> # git pull
+> # cat test
+> 1
+> 
+> In my opinion it is wrong behavior.
+> I've just lost important file due to it.
+> 
+> Should not "git pull" fail here?
 
-> > + =C2=A0 =C2=A0 =C2=A0 $tz_sign =3D ($tz_sign eq '-' ? -1 : +1);
-> > + =C2=A0 =C2=A0 =C2=A0 my $local =3D $epoch + $tz_sign*($tz_hour + =
-($tz_min/60.0))*3600;
->=20
-> If you wanted to avoid floats, you could do something like:
->=20
-> +       my $local =3D $epoch + $tz_sign * ($tz_hour * 3600 + $tz_min =
-* 60);
+Ick, definitely it's wrong behavior. The culprit seems to be a special
+code path for the initial pull which doesn't merge at all, but calls
+read-tree --reset. It should probably be:
 
-Note that because valid $tz_min can be only 00, 30 or 45, see=20
-e.g. http://en.wikipedia.org/wiki/List_of_time_zones_by_UTC_offset=20
-therefore version using floats would not introduce any rounding
-errors: 0, 0.5 and 0.75 can be represented exactly as 2-base float.
+diff --git a/git-pull.sh b/git-pull.sh
+index a3159c3..fb9e2df 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -253,7 +253,7 @@ esac
+ if test -z "$orig_head"
+ then
+ 	git update-ref -m "initial pull" HEAD $merge_head "$curr_head" &&
+-	git read-tree --reset -u HEAD || exit 1
++	git read-tree -m -u HEAD || exit 1
+ 	exit
+ fi
 
-Anyway below is patch with above changes:
+Though I don't know if there are any cases where the --reset would be
+beneficial over "-m". I couldn't think of any.
 
--- >8 --
-Subject: [PATCH] gitweb: Fix handling of fractional timezones in parse_=
-date
-
-=46ractional timezones, like -0330 (NST used in Canada) or +0430
-(Afghanistan, Iran DST), were not handled properly in parse_date; this
-means values such as 'minute_local' and 'iso-tz' were not generated
-correctly.
-
-This was caused by two mistakes:
-
-* sign of timezone was applied only to hour part of offset, and not
-  as it should be also to minutes part (this affected only negative
-  fractional timezones).
-
-* 'int $h + $m/60' is 'int($h + $m/60)' and not 'int($h) + $m/60',
-  so fractional part was discarded altogether ($h is hours, $m is
-  minutes, which is always less than 60).
-
-
-Note that positive fractional timezones +0430, +0530 and +1030 can be
-found as authortime in git.git repository itself.
-
-=46or example http://repo.or.cz/w/git.git/commit/88d50e7 had authortime
-of "Fri, 8 Jan 2010 18:48:07 +0000 (23:48 +0530)", which is not marked
-with 'atnight', when "git show 88d50e7" gives correct author date of
-"Sat Jan 9 00:18:07 2010 +0530".
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0178633..7b9f90b 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2921,8 +2921,10 @@ sub parse_date {
- 	$date{'iso-8601'}  =3D sprintf "%04d-%02d-%02dT%02d:%02d:%02dZ",
- 	                     1900+$year, 1+$mon, $mday, $hour ,$min, $sec;
-=20
--	$tz =3D~ m/^([+\-][0-9][0-9])([0-9][0-9])$/;
--	my $local =3D $epoch + ((int $1 + ($2/60)) * 3600);
-+	my ($tz_sign, $tz_hour, $tz_min) =3D
-+		($tz =3D~ m/^([+\-])([0-9]{2})([0-9]{2})$/);
-+	$tz_sign =3D ($tz_sign eq '-' ? -1 : +1);
-+	my $local =3D $epoch + $tz_sign*($tz_hour*3600 + $tz_min*60);
- 	($sec, $min, $hour, $mday, $mon, $year, $wday, $yday) =3D gmtime($loc=
-al);
- 	$date{'hour_local'} =3D $hour;
- 	$date{'minute_local'} =3D $min;
---=20
-1.7.3
+-Peff
