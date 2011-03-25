@@ -1,91 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] pull: do not clobber untracked files on initial pull
-Date: Fri, 25 Mar 2011 14:13:31 -0400
-Message-ID: <20110325181331.GD14898@sigill.intra.peff.net>
-References: <20110325180644.GA30838@sigill.intra.peff.net>
+From: "Schalk, Ken" <ken.schalk@intel.com>
+Subject: RE: [PATCH 1/3] t3030: fix accidental success in symlink rename
+Date: Fri, 25 Mar 2011 11:25:32 -0700
+Message-ID: <EF9FEAB3A4B7D245B0801936B6EF4A251C397FCE@azsmsx503.amr.corp.intel.com>
+References: <20110325160013.GA25851@sigill.intra.peff.net>
+ <20110325160326.GA26635@sigill.intra.peff.net>
+ <7v1v1v6qs2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "igor.mikushkin" <igor.mikushkin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:13:39 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:25:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3BVy-00083f-Oa
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 19:13:39 +0100
+	id 1Q3Bhg-0006Cv-LO
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 19:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172Ab1CYSNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 14:13:34 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36842
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752343Ab1CYSNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 14:13:33 -0400
-Received: (qmail 16328 invoked by uid 107); 25 Mar 2011 18:14:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 14:14:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 14:13:31 -0400
-Content-Disposition: inline
-In-Reply-To: <20110325180644.GA30838@sigill.intra.peff.net>
+	id S1754593Ab1CYSZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2011 14:25:38 -0400
+Received: from mga14.intel.com ([143.182.124.37]:40904 "EHLO mga14.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754525Ab1CYSZh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 14:25:37 -0400
+Received: from azsmga001.ch.intel.com ([10.2.17.19])
+  by azsmga102.ch.intel.com with ESMTP; 25 Mar 2011 11:25:35 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.63,244,1299484800"; 
+   d="scan'208";a="408768497"
+Received: from azsmsx603.amr.corp.intel.com ([10.2.161.23])
+  by azsmga001.ch.intel.com with ESMTP; 25 Mar 2011 11:25:35 -0700
+Received: from azsmsx602.amr.corp.intel.com (10.2.121.201) by
+ azsmsx603.amr.corp.intel.com (10.2.161.23) with Microsoft SMTP Server (TLS)
+ id 8.2.255.0; Fri, 25 Mar 2011 11:25:35 -0700
+Received: from azsmsx503.amr.corp.intel.com ([10.2.121.76]) by
+ azsmsx602.amr.corp.intel.com ([10.2.121.201]) with mapi; Fri, 25 Mar 2011
+ 11:25:34 -0700
+Thread-Topic: [PATCH 1/3] t3030: fix accidental success in symlink rename
+Thread-Index: AcvrFAQ8iTujQsaoQLyf6lI5GnCVKwABYB7Q
+In-Reply-To: <7v1v1v6qs2.fsf@alter.siamese.dyndns.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170012>
 
-For a pull into an unborn branch, we do not use "git merge"
-at all. Instead, we call read-tree directly. However, we
-used the --reset parameter instead of "-m", which turns off
-the safety features.
+> > The results for the test indicate that the merge should
+> > succeed, but also that "a" should no longer exist. Since
+> > both sides renamed "a" to the same destination, we will end
+> > up comparing those destinations for content.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This blames all the way back to d09e79c (git-pull: allow pulling into an
-empty repository, 2006-11-16) by Linus. I couldn't think of a good
-reason to use "--reset" instead of "-m".
+> > But what about what's left? One side (the rename only),
+> > replaced "a" with nothing. The other side replaced it with a
+> > symlink. The common base must also be nothing, because any
+> > "a" before this was meaningless (it was totally unrelated
+> > content that ended up getting renamed).
 
- git-pull.sh     |    2 +-
- t/t5520-pull.sh |   11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletions(-)
+> > The only sensible resolution is to keep the symlink.
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 63b063a..e31226b 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -274,7 +274,7 @@ esac
- if test -z "$orig_head"
- then
- 	git update-ref -m "initial pull" HEAD $merge_head "$curr_head" &&
--	git read-tree --reset -u HEAD || exit 1
-+	git read-tree -m -u HEAD || exit 1
- 	exit
- fi
- 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 0470a81..0e5eb67 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -46,6 +46,17 @@ test_expect_success 'pulling into void using master:master' '
- 	test_cmp file cloned-uho/file
- '
- 
-+test_expect_success 'pulling into void does not overwrite untracked files' '
-+	git init cloned-untracked &&
-+	(
-+		cd cloned-untracked &&
-+		echo untracked >file &&
-+		test_must_fail git pull .. master &&
-+		echo untracked >expect &&
-+		test_cmp expect file
-+	)
-+'
-+
- test_expect_success 'test . as a remote' '
- 
- 	git branch copy master &&
--- 
-1.7.4.33.gb8855.dirty
+> I agree.
+
+> We should treat structural changes and do a 3-way on that, and then
+> another 3-way on content changes, treating them as an independent
+> thing.
+> One side has "create 'e' out of 'a', removing 'a'" and "_create_ 'a',
+> that
+> is unrelated to the original 'a'", the other side has "create 'e' out
+> of
+> 'a', removing 'a'", so the end result should be that we do both,
+> i.e. "create 'e' out of 'a', removing 'a'" and "create 'a'".  At the
+> content level, the result in 'e' may have to be decided by 3-way.  The
+> result in 'a' should be a clean merge taken from the former "with b/c
+> link" branch, as this is not even a create (by the side that added a
+> backward compatibility symbolic link) vs a delete (by pure-rename side)
+> conflict.
+
+I completely agree, keeping the symlink would be the right thing to do.  When I worked on the patch which added that test, my only concern was eliminating the rename/add conflict on "e" (which seemed pointless, since the content of "e" was identical in both branches).
+
+--Ken Schalk
