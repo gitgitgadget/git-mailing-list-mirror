@@ -1,152 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: merge recursive and code movement
-Date: Fri, 25 Mar 2011 05:37:58 -0400
-Message-ID: <20110325093758.GA9047@sigill.intra.peff.net>
-References: <AANLkTi=h6jUsjqXofd0QeWbNBjc9DeodJJ3FN7caW4XC@mail.gmail.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: GSOC proposal
+Date: Fri, 25 Mar 2011 11:06:00 +0100
+Message-ID: <20110325100600.GA30376@paksenarrion.iveqy.com>
+References: <20110324220104.GA18721@paksenarrion.iveqy.com>
+ <4D8BD358.1030603@web.de>
+ <7vtyes6pya.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 10:38:09 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 10:54:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q33T5-0005zT-4f
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 10:38:07 +0100
+	id 1Q33it-0005bT-RZ
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 10:54:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756640Ab1CYJiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 05:38:01 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37199
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751652Ab1CYJiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 05:38:00 -0400
-Received: (qmail 11481 invoked by uid 107); 25 Mar 2011 09:38:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Mar 2011 05:38:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2011 05:37:58 -0400
+	id S1754148Ab1CYJyW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 05:54:22 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55803 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753564Ab1CYJyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2011 05:54:21 -0400
+Received: by bwz15 with SMTP id 15so771018bwz.19
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 02:54:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=/irYjkf5h0bUmOOyEyaMnefJVwu0ZKAXsfRlVWc45zQ=;
+        b=CcBcX8MCSdNvUiDRv1XUKbHolqwDilpvB8Ii2mK89awoXF+d/vejn5DV0Zp3J2KjYe
+         oCQR1QkQBr8//XtfLySSTgHjNTJjdmRqWQrmju70lDMR9LKtUo4pvrQ4sMwE1v61EDdD
+         MRPkBfkH9oL0ivFqRHW2bEhCANy/CLvUUaDsw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=ADf1mFYtdz3jj0nMNfq7dT8LPotWUKm+xIRYNESIXmnXnh8xF7u7dL5uz+M4BDQhsY
+         5rDB0j0cXKprFxZXqDW3RSh/C4X+iR9txBDn5h1d19XXYkyPTyIeEIZDNq+Fm6UylzkX
+         FcjDutw8+3Tk8ZbpCVKG4nFrYH2trhbV+/YJw=
+Received: by 10.204.133.91 with SMTP id e27mr544620bkt.23.1301046859770;
+        Fri, 25 Mar 2011 02:54:19 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (h-185-240.A189.priv.bahnhof.se [85.24.185.240])
+        by mx.google.com with ESMTPS id l1sm596962bkl.1.2011.03.25.02.54.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Mar 2011 02:54:17 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1Q33u4-00080g-7D; Fri, 25 Mar 2011 11:06:00 +0100
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=h6jUsjqXofd0QeWbNBjc9DeodJJ3FN7caW4XC@mail.gmail.com>
+In-Reply-To: <7vtyes6pya.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169975>
 
-On Thu, Mar 24, 2011 at 05:18:20PM -0400, Jay Soffian wrote:
+On Thu, Mar 24, 2011 at 04:47:41PM -0700, Junio C Hamano wrote:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>=20
+> >> =3D=3D Preventing false "pointers" =3D=3D
+> >> It's far too easy to push a gitrepo pointing to a submodule versio=
+n that
+> >> is not existing on the server. Prevent this by checking for availa=
+ble
+> >> submodule versions before acceptingt the push.
+> >
+> > Yes, requiring to force such a push is an issue raised quite often =
+(I
+> > think addressing this issue would be a good starting point for peop=
+le
+> > who want to get involved in enhancing the submodule experience).
+>=20
+> You need to be careful, though.
+>=20
+> That check can only be sanely done at a hosting site that hosts _both=
+_ the
+> superproject and the submodule repositories.  It might make more sens=
+e to
+> have this check on the side that pushes, which by definition should h=
+ave
+> both superprojet and the submodule.  Fail, or prompt to confirm, a pu=
+sh
+> from the superproject when it is detected that the submodule commits =
+bound
+> to the commits in the superproject have not been pushed out.
 
-> There's a use case that merge recursive doesn't seem to handle, and I
-> wonder how difficult it would be to add.
+I can see three different ways of doing this:
+1. the reciever (server) checks for available submodules before
+accepting a commit
 
-I don't think it's that hard. In your example:
+2. the sender checks for available submodules on the server before
+sending a commit.
 
-> Say you have a merge between OURS and THEIRS, with common ancestor BASE.
-> 
-> Between BASE and THEIRS, a file named header.h has the following changes:
-> 
->   # Rename header.h to header_new.h
->   git mv header.h header_new.h
-> 
->   # Minor edits to account for the rename such as fixing the
->   # include guard:
->   perl -pi -e 's/HEADER_H_/HEADER_NEW_H_/' header_new.h
-> 
->   # Drop a compatibility header.h in place till we can fix all the
->   # files which include header.h
->   cat > header.h <<-__EOF__
-> 	#ifndef HEADER_H_
-> 	#define HEADER_H_
-> 	#include "header_hew.h"
-> 	#endif // HEADER_H_
->   __EOF__
+3. each submodule contains a flag that tells if the last command was a
+commit or a push. The core-repository wont allow a push if one (or more=
+)
+submodules has a commit as "last command".
 
-You have a move coupled with a rewritten version of a file. So without
-copy or break detection, we won't consider the original header.h as a
-possible rename source.
+Although alternative 1 is the only one that is certain of preventing th=
+e
+problem with "false pointers", it has several other drawbacks. I believ=
+e
+that alt. 3 is the proper way of handling this in git. Although we
+doesn't guarantee a sane server-repo we does prevent the client from
+doing stupid things by mistake.
 
->   git add header.h header_new.h
->   git commit -m 'rename header.h to header_new.h'
-> 
-> Meanwhile, between BASE and OURS, a few minor changes are made to
-> header.h. This could be as little as a single line change in the
-> middle of the header.h.
-> 
-> Now you merge THEIRS to OURS. Git will just show header.h in conflict.
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
-Right. merge-recursive won't detect the rename here.
-
-In your case, I think merge-recursive doing break detection is the right
-solution. It realizes that header.h has been rewritten and considers it
-as a source candidate for the rename to header_new.
-
-Copy detection might also work, but I don't think it makes sense in a
-merge setting. If I copy "foo.h" to "bar.h", and meanwhile you make a
-change to "foo.h", there is no reason to think the change should apply
-to bar.h instead of foo.h (you might perhaps think it could apply to
-_both_, but that is a different story).
-
-So break detection is the only thing that makes sense to me.  This
-one-liner does what you want:
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 2a048c6..ed574e6 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -429,6 +429,7 @@ static struct string_list *get_renames(struct merge_options *o,
- 			    1000;
- 	opts.rename_score = o->rename_score;
- 	opts.show_rename_progress = o->show_rename_progress;
-+	opts.break_opt = 0;
- 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	if (diff_setup_done(&opts) < 0)
- 		die("diff setup failed");
-
-And I tested it on this:
-
--- >8 --
-#!/bin/sh
-
-rm -rf repo
-
-git init repo && cd repo
-
-# Sample header.
-cp /path/to/your/git/revision.h .
-git add revision.h
-git commit -m 'add revision.h'
-
-# Move and tweak header.
-git mv revision.h foo.h
-perl -pi -e 's/REVISION_H/FOO_H/' foo.h
-
-# And put in replacement header.
-cat >revision.h <<'EOF'
-#ifndef REVISION_H
-#define REVISION_H
-#include "foo.h"
-#endif /* REVISION_H */
-EOF
-
-# And commit.
-git add revision.h foo.h
-git commit -m 'rename revision.h to foo.h'
-
-# Now make a minor change on a side branch.
-git checkout -b other HEAD^
-sed -i '/REV_TREE_SAME/i/* some comment */' revision.h
-git commit -a -m 'tweak revision.h'
-
-git merge master
--- 8< --
-
-It _almost_ works. The merge completes automatically, and the tweak ends
-up in foo.h, as you expect. But the merge silently deletes the
-placeholder revision.h!
-
-I suspect it is a problem of merge-recursive either not handling the
-broken filepair properly, or perhaps reading too much into what a rename
-means. I haven't dug further.
-
--Peff
+tel: 0733-608274
+e-post: iveqy@iveqy.com
