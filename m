@@ -1,52 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 4/4] diff: turn on rename detection progress reporting
-Date: Fri, 25 Mar 2011 09:35:38 +0100
-Message-ID: <4D8C53DA.1010300@viscovery.net>
-References: <20110324174556.GA30661@sigill.intra.peff.net> <20110324175124.GD30685@sigill.intra.peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] warn use of "git diff A..B"
+Date: Fri, 25 Mar 2011 10:06:11 +0100
+Message-ID: <AANLkTim4aQQgm290Z+OfHd7+oz8jQ_UfWQdxPdG_6k-H@mail.gmail.com>
+References: <7voc51cydw.fsf@alter.siamese.dyndns.org>
+	<7vei5xcxzm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 25 09:35:56 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 10:06:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q32Us-0002hG-7q
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 09:35:54 +0100
+	id 1Q32yI-0008DQ-TE
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Mar 2011 10:06:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933818Ab1CYIfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 04:35:46 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:46347 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933717Ab1CYIfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 04:35:43 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Q32Ud-0001iO-2P; Fri, 25 Mar 2011 09:35:40 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CCE671660F;
-	Fri, 25 Mar 2011 09:35:38 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110324175124.GD30685@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1754116Ab1CYJGN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 05:06:13 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33465 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752599Ab1CYJGM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 05:06:12 -0400
+Received: by bwz15 with SMTP id 15so747791bwz.19
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 02:06:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ocI0yPhTbfkprey0M3Tvt6RtdtXwTiqL6zGXPNBiM8Q=;
+        b=ZpgaX8rrf8MdwIcMuj0RNnFXxHxM3XzUyl8amBzQVfc27kI+VVpcqjiOZG/Jmq4HMR
+         5cDlJwIWi39QQZnsvppYmEjDIboI9VS2e1zZaECIju/X3H/hmwLLbHxdiaXkChXXsnCV
+         VZ0rGFkGRdGLHc+ZUzbGJYVs7vysQ42Kdwzfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VxW2PM0HSaN7RsZl6iYTRWvq5RDqtuSIAk2f/7mYpoNbXV2SFYSsOOPL6ONLao42FG
+         aVQmrTXMQSM3y5ffTiVlS1nWBpSYlldrxRphVtO6qCnWjJD6zZ6EV7G/KT+mgsxIA7A0
+         exsQHWw+GG4XcG0zzvj4uQZlhCoxRCD0XjjpM=
+Received: by 10.204.154.88 with SMTP id n24mr507490bkw.38.1301043971150; Fri,
+ 25 Mar 2011 02:06:11 -0700 (PDT)
+Received: by 10.204.57.78 with HTTP; Fri, 25 Mar 2011 02:06:11 -0700 (PDT)
+In-Reply-To: <7vei5xcxzm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169968>
 
-Am 3/24/2011 18:51, schrieb Jeff King:
-> Since all of the progress happens before we generate any
-> output, this looks OK, even when output goes to a pager.
-> We do the usual --progress/--no-progress options and check
-> isatty(2) to enable the feature.
+On Wed, Mar 23, 2011 at 22:45, Junio C Hamano <gitster@pobox.com> wrote=
+:
 
-Why does it look good? Because the pager is not spawned, yet? Then this is
-not so good because on Windows we don't have a facility to wait until
-there is output, and for this reason we spawn the pager immediately.
+I agree with Jakub. I often write something like this:
 
--- Hannes
+    $ git log origin/master..origin/pu
+    $ ^log^diff
+    git diff origin/master..origin/pu
+
+It would be annoying to have that start to warn.
+
+> + =C2=A0 =C2=A0 =C2=A0 warning("Do not write 'git diff A..B' but writ=
+e 'git diff A B'");
+> + =C2=A0 =C2=A0 =C2=A0 warning("diff is about two endpoints!");
+
+And in any case this warning is way too terse to give the user an idea
+of what this is about.
