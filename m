@@ -1,119 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: GSOC idea: build in scripts and cleanups
-Date: Fri, 25 Mar 2011 21:14:35 -0500
-Message-ID: <20110326021435.GA2352@elie>
-References: <201103260141.20798.robert.david.public@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Bug Tracker
+Date: Sat, 26 Mar 2011 12:42:36 +0700
+Message-ID: <AANLkTimWQ0vBr1u2iny9FJxrEK39C0ab_6phYFda8s6Q@mail.gmail.com>
+References: <4D8D2E29.6090008@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Robert David <robert.david.public@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 26 03:14:50 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: "Stanley F." <wurfk3ks@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 26 06:43:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3J1d-0008HD-P9
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 03:14:50 +0100
+	id 1Q3MHY-0006YW-Ve
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 06:43:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934302Ab1CZCOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 22:14:44 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48387 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934174Ab1CZCOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 22:14:43 -0400
-Received: by iyb14 with SMTP id 14so1117125iyb.19
-        for <git@vger.kernel.org>; Fri, 25 Mar 2011 19:14:43 -0700 (PDT)
+	id S1753738Ab1CZFnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Mar 2011 01:43:10 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:50458 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753781Ab1CZFnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Mar 2011 01:43:09 -0400
+Received: by wwa36 with SMTP id 36so2049101wwa.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 22:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=4KnnairTJ14p4s/ViA9QVvs4lQYC5Zb0BHBSdV4fQHo=;
-        b=yFArBeTo4ccKSHBJyZLVmSfzJcYzpvdw9q/fq6s9j1Ua1gS3Id+VJ7gKJ8SspEQ2Mp
-         vSUXdK31pY0OrrHb2icXVEWlmiMINi5+gD5Z8Kc77sivBaXmOgYyMJBRK06V7Vbt16/M
-         SKVc12RFCZQ3j+V2L3EatNVNT4B/01pOCJCpk=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=wUUTx9cunbwrTtnn2AJb9sGZfrPbBWCztULaoUCqCxQ=;
+        b=WcyU1mtmoJM7KdPKdddZGzj/7VZntzTfiygFyQYx3uYxOlQDd3nKZK5582JaMbP3DK
+         24FeJQh+8pCRYvoZ/AcZXcMxrqUBGENpkL2yWEnssMJTiQ3c8Z6zRFKbRK6CpygN4uZY
+         SHecKkQ5wRi0jD0ly6zElGdlk1vzkcUwHKu1s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=MwYNInRIl2aSO8TXnlhez2J4ImWGbnqOOhh9QGLc1epfLRAtmgZvSVY93d+kHkzEup
-         rW+Xjs3V8CD8aIFXUIiEw5mh1enUMbM9hAr9ws0Job2ME2SDlRm8Go4Hdj4guIQlD1VG
-         ihrLtDA2I3xU2sU/nJTHtTn57tvXhtjSFwWwA=
-Received: by 10.43.45.8 with SMTP id ui8mr2504423icb.197.1301105681887;
-        Fri, 25 Mar 2011 19:14:41 -0700 (PDT)
-Received: from elie (adsl-68-255-102-141.dsl.chcgil.ameritech.net [68.255.102.141])
-        by mx.google.com with ESMTPS id g4sm980648ick.23.2011.03.25.19.14.40
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Mar 2011 19:14:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201103260141.20798.robert.david.public@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=i9EuE81NXcsgvWm+F0yvLyY1iKagVV3Zru/F3+pLUPCoXQbQZcB1G4cz8OuA7cFKeo
+         fE/U9ifzfJalGDmI6XtpmPwG6pw+abHb635I6M5CD9H8A2s0cdALwCAOq5qJhLwKdma3
+         on+/xxphgjIhq9XRWfQBNN3gBVLZQXD7H0LkE=
+Received: by 10.217.2.73 with SMTP id o51mr527936wes.66.1301118186134; Fri, 25
+ Mar 2011 22:43:06 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Fri, 25 Mar 2011 22:42:36 -0700 (PDT)
+In-Reply-To: <4D8D2E29.6090008@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170039>
 
-(+cc: various relevant people for ideas)
-Hi,
-
-Robert David wrote:
-
-> I'm long time user of git and very interested in development participation. 
-
-Welcome!
-
-> Having passing your GSOC ideas, keep my eyes on scripts building in and also 
-> git add -p cleanups. Because I like this kind of work. 
+On Sat, Mar 26, 2011 at 7:07 AM, Stanley F. <wurfk3ks@googlemail.com> wrote:
+> Good evening,
 >
-> Because there are more thinks to do in the cleanup and rewrite task, I would 
-> like to ask if there is some priority in these tasks? To let me focus on the 
-> most important parts. 
+> I'm interested in working for git during this year's GSoC program.
+> So I want to get familiar with the git code by implementing some
+> patches. But I can't find a bug tracker or something where are some
+> TODOs to prepare for GSOC.
+> Where can I find some small tasks, I can start with to get a reference
+> for my proposal?
 
-Looking at the git-add--interactive.perl source, I see:
+Git list is the bug tracker (well, not exactly a bug tracker). I wish
+we have a todo list too. In the mean time you can look for "low
+hanging fruit" in the list archive. I found this one:
 
-	process_args();
-	refresh();
-	if ($patch_mode) {
-		patch_update_cmd();
-	}
-[...]
-
-and patch_update_cmd looks like
-
-	my @all_mods = list_modified($patch_mode_flavour{FILTER});
-	my @mods = grep { !($_->{BINARY}) } @all_mods;
-[...]
-	if ($patch_mode) {
-		@them = @mods;
-	}
-[...]
-	for (@them) {
-		return 0 if patch_update_file($_->{VALUE});
-	}
-
-patch_update_file loops over hunks in the diff for that file and acts
-on them one at a time.  So a natural step might be to eliminate this
-outer "for (@them)" loop, so the person at the keyboard could decide
-to go back to a previous file or list all files and choose one.
-
-Others may have more to say.  If there are things you wished "git
-checkout --patch" was able to do, that can also help.
-
-> I was also thinking if there isn't PERL a better choice in rewriting shell 
-> scripts, due to planed porting (android, etc). Better than C. But I don't know 
-> android and other platform so much, so thats why I'm asking.
-
-So far (on Windows and various Unixen) it seems that C is much easier
-to work with as far as porting goes.[2]
-
-Jonathan
-
-[1] Android is an odd example because the platform uses Java heavily
-(so JGit might be a better fit for it).  Perhaps the wish for android
-support should have been put on the Eclipse ideas page[2] and a link
-added to git's; I dunno.
-[2] http://wiki.eclipse.org/Google_Summer_of_Code_2011_Ideas#Ideas_submission
+http://marc.info/?l=git&m=129986810306332
+-- 
+Duy
