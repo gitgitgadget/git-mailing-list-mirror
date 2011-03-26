@@ -1,105 +1,109 @@
-From: Robert David <robert.david.public@gmail.com>
-Subject: GSOC idea: build in scripts and cleanups
-Date: Sat, 26 Mar 2011 01:41:20 +0100
-Organization: DDM Praha
-Message-ID: <201103260141.20798.robert.david.public@gmail.com>
+From: Motiejus =?utf-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>
+Subject: Re: start of git2 (based on libgit2)
+Date: Sat, 26 Mar 2011 02:13:01 +0000
+Message-ID: <20110326021300.GC2934@jakstys.lt>
+References: <20110325231203.GA7961@jakstys.lt>
+ <4D8D2B31.4040908@lyx.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2258623.J6QnOYnbWr";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 26 01:41:41 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, libgit2@librelist.com
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Sat Mar 26 03:13:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3HZS-0008IA-34
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 01:41:38 +0100
+	id 1Q3J02-0007fn-1n
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 03:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932167Ab1CZAl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2011 20:41:28 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37188 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932122Ab1CZAl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2011 20:41:26 -0400
-Received: by fxm17 with SMTP id 17so1535834fxm.19
-        for <git@vger.kernel.org>; Fri, 25 Mar 2011 17:41:24 -0700 (PDT)
+	id S933560Ab1CZCND convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2011 22:13:03 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:54702 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932229Ab1CZCNB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2011 22:13:01 -0400
+Received: by wya21 with SMTP id 21so1559220wya.19
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 19:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:organization:to:subject:date:user-agent
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        bh=m+asOxhTVtXOCkEg4RPyKWEXLr0BD7+GrRkuS0bFYS4=;
-        b=w7jizI/vZPUTBvNQaH2/fSSjgy58IGlk0K3TAaO7/lVNkku2QNW3waJ2YoCYMRgP7e
-         bsXYA0xJWdmXqZZK3V24Gv/+3FBwd7jSIebGKPCmvqH6hoBu7ABYCm4BEjP8aNLO+Vvk
-         pAU6k7v78ProlZ8MmTz1j91rEU+dUNyh4jSQQ=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=bgrXVaowVGP4LPIDrpmcM+jjrPzGBoZiWWISVfHoK68=;
+        b=rdIHbCELt/2QCNFr5UFvOdA8oOVo6wR9oDoQG8jIThhk/fI+e138HKBSv+lP19jrO9
+         Kcci3gXxCIaJRVv69PT2QCtYu84I8lcMOyF6VAHupR+xAUKC47DA3/qj4uUipkaRezRN
+         t4JTAwiSn6HIakizpGpC3uLgQ6VtOs9sl5B/s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:mime-version
-         :content-type:content-transfer-encoding:message-id;
-        b=w1kjEWuHlDL0BUdw4AmgzLAJ6DLm22nQBO1XEUaKROv6ggOyhPSNYRA/nXXVn1tcrl
-         j2upvnq7l+GtOoPiu3xwktJLVsGtjZR3Yhtm00QgZowxQg8kzcPzCLS8i3B+A9AycqJF
-         Z2i4yyRg1kjBfpiwB/UXFm0gxQPFpXlF0wPT4=
-Received: by 10.223.7.26 with SMTP id b26mr1567751fab.119.1301100084713;
-        Fri, 25 Mar 2011 17:41:24 -0700 (PDT)
-Received: from robert-eee.localnet (gate.chabry.cz [80.92.246.13])
-        by mx.google.com with ESMTPS id c24sm628708fak.7.2011.03.25.17.41.22
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Mar 2011 17:41:23 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-686; KDE/4.4.5; i686; ; )
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=T0dMOBnyo23MFaPDrwzr0Nmn80JL56tLCZdiGpFf9itkbEHqyYSF/tq2r8cRe5zNux
+         xzqAFvqpYirFh/n7vRrNZ0wJzCZ35XnOPlXI5X4hVz1Gs4XRvrKllr6Uo3kiJLJQZB90
+         G4mdGiC9zLfF3IAwc8Zp9nPXXbW2FQm3QXKFM=
+Received: by 10.227.55.4 with SMTP id s4mr1417050wbg.228.1301105580100;
+        Fri, 25 Mar 2011 19:13:00 -0700 (PDT)
+Received: from localhost ([109.246.247.245])
+        by mx.google.com with ESMTPS id u9sm734631wbg.17.2011.03.25.19.12.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Mar 2011 19:12:59 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D8D2B31.4040908@lyx.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170037>
 
---nextPart2258623.J6QnOYnbWr
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+On Sat, Mar 26, 2011 at 12:54:25AM +0100, Vincent van Ravesteijn wrote:
+> On 26-3-2011 0:12, Motiejus Jak=C5=A1tys wrote:
+> >According to Jeff King[2], I should start with plumbing commands. I
+> >agree.  However, how deep?  I.e. do I have to make sure all git rev-=
+list
+> >possible arguments are implemented?
+>=20
+> I guess a lot can be copied from Git itself. Actually
+> builtin/rev-list.c consists mostly of command line arguments parsing
+> methods, and outputting functions. The key is to parse what you want
+> to know and ask libgit2 to provide the info. If libgit2 has
+> implemented the basic functionality that is needed, the rest would
+> be relatively simple.
+> AFAICS, current git is a single binary on Windows already.
 
-Hi,=20
+So I have the answer. Thank you. Further working path is getting
+clearer. Finish with rev-list, make it work with t/. Then pick up
+dependencies of one of the must-have commands (commit/merge/diff?),
+implement them and implement the command.
 
-I'm IT student from Czech Republic.
-I'm long time user of git and very interested in development participation.=
-=20
-Having passing your GSOC ideas, keep my eyes on scripts building in and als=
-o=20
-git add -p cleanups. Because I like this kind of work.=20
+>=20
+> >Build tool. Currently libgit2 uses waf. I am not against it (I've ch=
+osen
+> >waf for one of my own C++ projects), However, it's too clumsy for me=
+=2E Is
+> >it me who lacks experience? Scons looks much easier for me. Moreover=
+, we
+> >do not need automatic configuration, so it makes waf "overfeatured".
+>=20
+> Why not CMake which is also used for libgit2 ?
 
-Because there are more thinks to do in the cleanup and rewrite task, I woul=
-d=20
-like to ask if there is some priority in these tasks? To let me focus on th=
-e=20
-most important parts.=20
+Did not notice that. I noticed wscript and stopped looking... I never
+tried CMake before. But I have nothing against it.
 
-I'm experienced in C and shell ( i did a lot of bug fixing in company I wor=
-ked=20
-part-time ) and beginner in PERL ( I wrote some scripts but nothing big ). =
-I=20
-like PERL much, so it is not a problem for me to learn that better.
+>=20
+> I already wrote a CMakeLists file for your git2 app.
 
-I was also thinking if there isn't PERL a better choice in rewriting shell=
-=20
-scripts, due to planed porting (android, etc). Better than C. But I don't k=
-now=20
-android and other platform so much, so thats why I'm asking.
+Very nice. Pull request? Patch?
 
-Greets,
-Robert David.
+>=20
+> As you know, this project can be possibly fulfilled by a GSoC
+> student (either you or someone else). Maybe people are awaiting this
+> before diving into the project.
 
---nextPart2258623.J6QnOYnbWr
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+Competition is a good thing. The most important thing is picking the
+best choice.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iF4EABEIAAYFAk2NNjAACgkQLSNWchw0XGxBjAD/ZUBzfF3t4o1Hul+TRcoxsuJI
-+5f8yKnd1/0/sCVn17sBAOyExVD+JKjuMItuJqMV43kdbSf5DH6cHnFf5yCEw8PC
-=iqq0
------END PGP SIGNATURE-----
-
---nextPart2258623.J6QnOYnbWr--
+Thank you Vincent,
+Motiejus
