@@ -1,121 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC 0/3] gitweb: Split gitweb.js, improve JavaScript
-Date: Sat, 26 Mar 2011 12:08:42 +0100
-Message-ID: <201103261208.44548.jnareb@gmail.com>
-References: <1301089586-8534-1-git-send-email-jnareb@gmail.com> <4D8D112A.5020703@eaglescrag.net>
+From: Kacper Kornet <kornet@camk.edu.pl>
+Subject: GIT_WORK_TREE and GIT_DIR with git clone
+Date: Sat, 26 Mar 2011 13:58:18 +0100
+Message-ID: <20110326125818.GA2621@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Kevin Cernekee <cernekee@gmail.com>
-To: "J.H." <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Sat Mar 26 12:09:01 2011
+Content-Type: text/plain; charset=iso-8859-2
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 26 14:18:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3RMZ-0000xT-Uj
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 12:09:00 +0100
+	id 1Q3TNk-0007dw-4S
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 14:18:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753162Ab1CZLIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Mar 2011 07:08:53 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38643 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172Ab1CZLIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Mar 2011 07:08:52 -0400
-Received: by bwz15 with SMTP id 15so1433194bwz.19
-        for <git@vger.kernel.org>; Sat, 26 Mar 2011 04:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=dwsmoITsYUry6dkgAEtWpx8yFwUnAw+I4fsRc8Q1X/s=;
-        b=n0Q6oTPOgprdSRtfwn83Ci7/QmjsegPhY3jnw/cuqnBlTo2MiOfb6uTZBE+i3p7FeL
-         KgH0DrepfO36hb8Soio/RJjPdmxh8qDebbfOXVzGakEFGic5H84sBV7Ogdg7znyTnzoa
-         hLTiiNW8IGx/00vuZCJEkjPXdmuqSwqrYASPA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=v7izeLJ/foxceZQNrG3UvbNzLarLijWNcQioSX7llRZoKhs9pcNEpzDGxKgMFAZPCe
-         ZPVF32Ql1XQY4ZfJE75gThXn7W4qbcTIQqwP8HRClCCPk2kYnR2r9aq9G2VPHmjptE9Q
-         KZJSv0pDvW06zqBivtS9y4hgkQ+12DFeGTZ4k=
-Received: by 10.204.82.166 with SMTP id b38mr1652188bkl.207.1301137730872;
-        Sat, 26 Mar 2011 04:08:50 -0700 (PDT)
-Received: from [192.168.1.13] (abwo211.neoplus.adsl.tpnet.pl [83.8.238.211])
-        by mx.google.com with ESMTPS id z18sm1335895bkf.8.2011.03.26.04.08.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 26 Mar 2011 04:08:49 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4D8D112A.5020703@eaglescrag.net>
+	id S1751746Ab1CZNSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Mar 2011 09:18:14 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:58846 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751368Ab1CZNSN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Mar 2011 09:18:13 -0400
+X-Greylist: delayed 1185 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Mar 2011 09:18:13 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 832325F0047
+	for <git@vger.kernel.org>; Sat, 26 Mar 2011 13:58:23 +0100 (CET)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id DONY+dzN+je0 for <git@vger.kernel.org>;
+	Sat, 26 Mar 2011 13:58:18 +0100 (CET)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 85BCA5F0046
+	for <git@vger.kernel.org>; Sat, 26 Mar 2011 13:58:18 +0100 (CET)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 72BED80F32; Sat, 26 Mar 2011 13:58:18 +0100 (CET)
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170051>
 
-On Fri, 25 Mar 2011, J.H. wrote:
+Is there a reason why git clone does not respect GIT_DIR
+variable. I have found it confusing that:
 
-> The only thing I would comment on is that we may want to document (for
-> the build process) a way to force a certain ordering of various files.
-> Case in point we probably want to force the things like various global
-> defs (what I'm proposing in the timezone stuff) at the top and let the
-> function defs go below that.
- 
-Actually I don't think that matters, at least not if JavaScript files
-contain only variables and functions, and do not include any code that
-is actually run when file is loaded.  A very simple test (below) 
-confirms that.
+GIT_WORK_TREE=repo GIT_DIR=repo/.git git clone <path>/repo.git
 
-In JavaScript variable declarations ('var' keyword) and function 
-definitions ('function' keyword) get "hoisted" at beginning.  
+is not equivalent to
 
-> Other than that this all looks good.
+git clone <path>/repo.git
 
-Thanks.
- 
--- 8< --
-<html>
-<head>
-<title>JavaScript test</title>
-<script>
-// -------------------------------------------
-// B
-
-var varB = 'varB';
-
-function fooB() {
-  fooA();
-  alert('varB='+varB + '; varA='+varA);
-  return 'fooB';
-}
-
-
-// -------------------------------------------
-// A
-
-var varA = 'varA';
-
-function fooA() {
-  alert('varA='+varA);
-  return 'fooA';
-}
-
-
-// ===========================================
-// main
-fooB();
-</script>
-</head>
-<body>
-test
-</body>
-</html>
--- >8 --
 -- 
-Jakub Narebski
-Poland
+  Kacper
