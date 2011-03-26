@@ -1,96 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PULL svn-fe] vcs-svn: simplifications, error handling
- improvements
-Date: Sat, 26 Mar 2011 01:46:53 -0500
-Message-ID: <20110326064653.GC20529@elie>
-References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
- <1300751400-7427-1-git-send-email-david.barr@cordelta.com>
- <20110323003240.GA4949@elie>
- <7vsjuegzj8.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] dir.c: do not trip over difference in "/"
+Date: Sat, 26 Mar 2011 14:59:52 +0700
+Message-ID: <AANLkTi=s1+BhwWrG_8S6kaF+_m9FHKdBEUMT5hgUGSvu@mail.gmail.com>
+References: <1301060989-7246-1-git-send-email-pclouds@gmail.com> <b28c22b42c43f5dced45bee8ba4c76965b736d9a.1301068238.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 26 07:47:06 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Matthijs Kooijman <matthijs@stdin.nl>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat Mar 26 09:00:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3NH8-0000qn-9Q
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 07:47:06 +0100
+	id 1Q3OQH-0001R1-Mp
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 09:00:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753136Ab1CZGrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Mar 2011 02:47:00 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58360 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751410Ab1CZGq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Mar 2011 02:46:59 -0400
-Received: by iwn34 with SMTP id 34so1792474iwn.19
-        for <git@vger.kernel.org>; Fri, 25 Mar 2011 23:46:58 -0700 (PDT)
+	id S1753568Ab1CZIAZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Mar 2011 04:00:25 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:44053 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753327Ab1CZIAY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Mar 2011 04:00:24 -0400
+Received: by wwk4 with SMTP id 4so245281wwk.1
+        for <git@vger.kernel.org>; Sat, 26 Mar 2011 01:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=YOQOFtuZUmyV1yo0YRlk7VBOTJx7VkP1AB3lA3F5tbg=;
-        b=VrNRmvyrI8aG25KyUCiuyWHHxGKT+P3b/Glhv+roy1N6aTUhtMWHkIkINydcUlktGN
-         FH3OkR9t0dzFvy+m6rjpxpfqozJYecvLjb09KvgkxEVoLwjkGpdaSRnQDp6+gEMeNyJx
-         xSDoWHm71Vs7Wn0/vYsBtLQlVxQvgC/aMlK78=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=0YVNcMDGmNVQ4+Qcgse9fNZsKbXveSN041rA4UZ0Du8=;
+        b=DP9vVEJbPUSREaTPJCZwTSSzgN8h2Af7rkHHveGGlgzZ3dsEuP3A1T1ptorUo3BBDS
+         Ma+vTepApkiY54KDhAAR6o0mflS6nT0WBha+uIq+Cjpk9BB3dV3NqHQZQJbduXnJQpXA
+         ccuF5Md9LMnstssc5tkKrT22CxDt2IukcFu+U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=KpL4UHUYHOJECEDd3AH+BoxQv8nn2+jLqc6cM8zNca/I2mxyPmgdhrWwfYJ2ZJXYOL
-         pOBkUpQDfLVWrNBMPwUU4gNAA+e6saw0Lbjn3hcwqFimnS8JWdFVbg3HYA8oFi/rZ9IR
-         TzVCkmQ1xKAlqOO3sDQDwLJgFs4WGpsxKmlw8=
-Received: by 10.43.43.137 with SMTP id uc9mr2925542icb.209.1301122017545;
-        Fri, 25 Mar 2011 23:46:57 -0700 (PDT)
-Received: from elie (adsl-68-255-102-141.dsl.chcgil.sbcglobal.net [68.255.102.141])
-        by mx.google.com with ESMTPS id 8sm1183372iba.55.2011.03.25.23.46.55
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 Mar 2011 23:46:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vsjuegzj8.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=sLC4hQ0V0krrYk+882mgxRW8l7397m37hsobE20PtyqJuYrk5s3aSLmGygh428haLI
+         zQNKpFl6FQ1Ib7k3mH13j+Z4BgxyudcHvYTMyXBgX+X1VX6wpac9t0kRAIrI8W/DhKGQ
+         VpUbsOTA2VdloDkkHyBUQ4WZspr5OZMVprqkg=
+Received: by 10.216.120.129 with SMTP id p1mr1715681weh.81.1301126423126; Sat,
+ 26 Mar 2011 01:00:23 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Sat, 26 Mar 2011 00:59:52 -0700 (PDT)
+In-Reply-To: <b28c22b42c43f5dced45bee8ba4c76965b736d9a.1301068238.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170043>
 
-Hi,
+2011/3/25 Michael J Gruber <git@drmicha.warpmail.net>:
+> get_relative_cwd() tries to determine a common prefix for dir and cwd=
+=2E
+> The fix in
+> 490544b (get_cwd_relative(): do not misinterpret suffix as subdirecto=
+ry, 2010-05-22)
+> made the logic less naive (so that foo-bar is not misdetected as bein=
+g
+> within foo) but broke some other cases, in particular foo not being
+> detected as being within foo/ any more.
 
-Junio C Hamano wrote:
+I'd rather kill this function off. It's only used in is_inside_dir(),
+we can be replaced with is_subdir_or_same() in my previous patch (more
+or less the same function with get_relative_cwd, but less cryptic).
 
-> Done.
+> diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+> index bd8b607..f0dbdd8 100755
+> --- a/t/t1501-worktree.sh
+> +++ b/t/t1501-worktree.sh
+> @@ -63,6 +63,19 @@ cd sub/dir || exit 1
+> =C2=A0test_rev_parse 'subdirectory' false false true sub/dir/
+> =C2=A0cd ../../.. || exit 1
+>
+> +say "core.worktree =3D absolute path/"
+> +GIT_DIR=3D$(pwd)/repo.git
+> +GIT_CONFIG=3D$GIT_DIR/config
+> +git config core.worktree "$(pwd)/work/"
+> +test_rev_parse 'outside' =C2=A0 =C2=A0 =C2=A0false false false
+> +cd work2
+> +test_rev_parse 'outside2' =C2=A0 =C2=A0 false false false
+> +cd ../work || exit 1
+> +test_rev_parse 'inside' =C2=A0 =C2=A0 =C2=A0 false false true ''
+> +cd sub/dir || exit 1
+> +test_rev_parse 'subdirectory' false false true sub/dir/
+> +cd ../../.. || exit 1
+> +
+> =C2=A0say "GIT_WORK_TREE=3Drelative path (override core.worktree)"
+> =C2=A0GIT_DIR=3D$(pwd)/repo.git
+> =C2=A0GIT_CONFIG=3D$GIT_DIR/config
 
-Turns out that introduced a regression (in handling of properties with
-embedded NULs; thanks to David for catching and debugging it).  Could
-you pull
-
-  git://repo.or.cz/git/jrn.git svn-fe
-
-for a fix and some other improvements in the area?
-
-Sorry for the trouble,
-Jonathan Nieder (4):
-      vcs-svn: make reading of properties binary-safe
-      vcs-svn: remove buffer_read_string
-      vcs-svn: avoid unnecessary copying of log message and author
-      vcs-svn: handle log message with embedded NUL
-
- t/t0081-line-buffer.sh  |   35 ++++++----------
- t/t9010-svn-fe.sh       |  104 +++++++++++++++++++++++++++++++++++++++++++++++
- test-line-buffer.c      |    6 ---
- vcs-svn/fast_export.c   |   12 +++--
- vcs-svn/fast_export.h   |    7 ++-
- vcs-svn/line_buffer.c   |    8 ----
- vcs-svn/line_buffer.h   |    4 +-
- vcs-svn/line_buffer.txt |   12 +----
- vcs-svn/repo_tree.c     |    5 +-
- vcs-svn/repo_tree.h     |    4 +-
- vcs-svn/svndump.c       |   42 +++++++++----------
- 11 files changed, 156 insertions(+), 83 deletions(-)
+I tried something similar (basically core.worktree =3D $(pwd)/work/) bu=
+t
+could not reproduce. Note that worktree will be normalized by
+real_path() (or get_absolute_path() earlier) and the trailing '/' may
+have been removed.
+--=20
+Duy
