@@ -1,84 +1,132 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] HOME must be set before calling git-init when creating
- test repositories
-Date: Sat, 26 Mar 2011 10:11:18 -0400
-Message-ID: <20110326141118.GA3475@sigill.intra.peff.net>
-References: <20110325200528.GA7302@blimp.localdomain>
- <7vsjub53j2.fsf@alter.siamese.dyndns.org>
- <AANLkTimQzPVOWCUx1hr+DEmRfdFB8=UeY_xCaxzVSwFy@mail.gmail.com>
- <7voc4y6g6v.fsf@alter.siamese.dyndns.org>
- <AANLkTikO4=TtFtpsQ_JtmGKqQ1NzgTuo7e8cdaQca+T7@mail.gmail.com>
- <7vvcz64ygm.fsf@alter.siamese.dyndns.org>
- <AANLkTi=+SZGxLyP8vFPpmK8DZvke6-Tu-crwq5+89qWx@mail.gmail.com>
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: ANNOUNCE gitslave-2.0.1
+Date: Sat, 26 Mar 2011 11:18:25 -0400
+Message-ID: <201103261518.p2QFIPLJ020427@no.baka.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 26 15:11:28 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 26 16:18:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3UD9-0005d9-0V
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 15:11:27 +0100
+	id 1Q3VGL-0002UN-HT
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 16:18:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511Ab1CZOLV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Mar 2011 10:11:21 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35660
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751306Ab1CZOLU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Mar 2011 10:11:20 -0400
-Received: (qmail 24230 invoked by uid 107); 26 Mar 2011 14:12:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 26 Mar 2011 10:12:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Mar 2011 10:11:18 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=+SZGxLyP8vFPpmK8DZvke6-Tu-crwq5+89qWx@mail.gmail.com>
+	id S1752212Ab1CZPS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Mar 2011 11:18:29 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from tsutomu.baka.org ([66.114.72.182]:33878 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751752Ab1CZPS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Mar 2011 11:18:28 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id p2QFIR91002373
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Sat, 26 Mar 2011 11:18:27 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id p2QFIPLJ020427
+	for <git@vger.kernel.org>; Sat, 26 Mar 2011 11:18:26 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170055>
 
-On Sat, Mar 26, 2011 at 11:08:06AM +0100, Alex Riesen wrote:
 
-> >> Oh, it does. That's why the second patch (prefixed "[PATCH, fixed]=
-").
-> >> It makes HOME to be "$(pwd)/somewhere-else", or precisely:
-> >>
-> >> =C2=A0 HOME=3D"$(pwd)"/"$test"
-> >> =C2=A0 export HOME
-> >
-> > What happens to people who has non-empty "$root", iow, their $test =
-begins
-> > with '/'?
->=20
-> It's still under $test then.
+Gitslave http://gitslave.sf.net creates a group of related
+repositories=E2=80=94a superproject repository and a number of slave
+repositories=E2=80=94all of which are concurrently developed on and on =
+which
+all git operations should normally operate; so when you branch, each
+repository in the project is branched in turn. Similarly when you
+commit, push, pull, merge, tag, checkout, status, log, etc; each git
+command will run on the superproject and all slave repositories in
+turn. This sort of activity may be very familiar to CVS and (to a
+lesser extent) Subversion users. Gitslave's design is for simplicity
+for normal git operations.
 
-No, it's totally broken. $(pwd)/$test is nonsensical. The code right
-above your change guarantees that $test is an absolute path, either
-because the user gave us an absolute $root or because it has been
-prepended with $TEST_DIRECTORY (which itself comes from $(pwd)).
+Gitslave is an alternative to git-submodules: easier to use and better
+for some (but not all) workflows.
 
-So the change you want is HOME=3D$test. But note that the code looks li=
-ke
-this then:
+When you have a problem which calls for easy multirepository
+management without lots of synchronization, where you typically might
+want to run the same git command over every repository in your
+project, gitslave is the solution for you.
 
-  HOME=3D$test
-  export HOME
-  test_create_repo "$test"
-  cd -P "$test"
+Release note highlights since last announcement, see release notes at
+http://gitslave.sf.net for more details.
+----------------------------------------------------------------------
+* Now supports git+ssh:// and host:repo style GRLs
 
-meaning that test_create_repo sees a non-existent HOME. I don't
-think that matters, but if it did, you could do:
+Traditionally gitslave has only supported /path/to/repo and URL
+(ssh://host/path/to/repo) style Git Resource Locators.  Gitslave has
+now been taught about the alternate reference styles.
 
-  HOME=3D$TEST_DIRECTORY
-  export HOME
-  test_create_repo "$test"
-  cd -P "$test"
-  HOME=3D$test
 
--Peff
+* gits now has pager support
+
+gits will use less, $PAGER, and $GIT_PAGER hopefully similar to how
+native git uses pagers for output.
+
+
+* gits will not clean directories with .git in them
+
+Replicating recent git functionality, `gits clean -dfx` will not
+destroy repositories.  This helps the situation where different
+branches have different slave modules attached.
+
+
+* Recursive subprojects
+
+With the use of `gits attach --recursive=3D.gitslave URL DIRECTORY`
+gitslave now fully support recursive subprojects (or slaves which are
+themselves gitslave masters of yet more slaves).
+
+
+* gitslave tutorial created
+
+A tutorial was created which walks the reader through a from-scratch
+repository creation using the most popular and needed git commands in
+the multi-repository gitslave environment.  The tutorial and overall
+gitslave website is now stored as part of gitslave.
+
+
+* gits pulls more efficient and safer.
+
+Gits pulls perform a pull on all available local branches.  This now sh=
+ould
+perform only one fetch (in most cases).  Also --rebase is safer by
+using --preserve-merges (in most cases).
+
+
+* gits now implements paginated output by default, just like git
+
+Pagination is only enabled if standard output is a tty (and there is a
+controlling tty for the pager to take input from).  If you do not want
+paginated output, the -n or --no-pager option disables it.  All the git
+pager configuration settings (GIT_PAGER and PAGER environment variables=
+,
+and core.pager configuration setting) are honored.
+
+
+* gits populate can now request population of specific ifpresent module=
+s
+
+* gits clone now supported for easy project cloning
+
+* gits detach now supported for easier project maintenance
+----------------------------------------------------------------------
+
+					-Seth Robertson
