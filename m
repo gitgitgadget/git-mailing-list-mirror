@@ -1,69 +1,85 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: start of git2 (based on libgit2)
-Date: Sat, 26 Mar 2011 19:33:19 +1300
-Message-ID: <4D8D88AF.9010306@vilain.net>
-References: <20110325231203.GA7961@jakstys.lt>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PULL svn-fe] vcs-svn: simplifications, error handling
+ improvements
+Date: Sat, 26 Mar 2011 01:42:39 -0500
+Message-ID: <20110326064220.GB20529@elie>
+References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
+ <1300751400-7427-1-git-send-email-david.barr@cordelta.com>
+ <20110323003240.GA4949@elie>
+ <7vsjuegzj8.fsf@alter.siamese.dyndns.org>
+ <7vbp12gyqk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?TW90aWVqdXMgSmFrxaF0eXM=?= <desired.mta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 26 07:33:30 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 26 07:42:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3N3x-0004zj-9L
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 07:33:29 +0100
+	id 1Q3ND3-0007yl-Cx
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Mar 2011 07:42:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265Ab1CZGdX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Mar 2011 02:33:23 -0400
-Received: from vilain.net ([60.234.254.246]:58161 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751146Ab1CZGdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Mar 2011 02:33:22 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 134C42E0AB; Sat, 26 Mar 2011 19:33:21 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from [192.168.1.83] (arcturus.local [192.168.1.83])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 032482E0A6;
-	Sat, 26 Mar 2011 19:33:20 +1300 (NZDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <20110325231203.GA7961@jakstys.lt>
-X-Enigmail-Version: 1.1.2
+	id S1752576Ab1CZGmr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Mar 2011 02:42:47 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:63223 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752583Ab1CZGmq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Mar 2011 02:42:46 -0400
+Received: by iyb14 with SMTP id 14so1246117iyb.19
+        for <git@vger.kernel.org>; Fri, 25 Mar 2011 23:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=PTV4Zm5dhHsV9aXQpJ5VktWZjETzSzBl9Q5KvvUDjVg=;
+        b=BUIzjMadK723gRZW8/6JnyUd+jmv1jGl6TXGaN600LjZx4rhxl0i+S5fAzkuHKFnI7
+         8YevgZznFrD0gdy2K5Bspc5qrBRM6g7h0Jn8AojqIoiNzyJm0sM0cY/ACnTjOlZy74RD
+         UTz/K1TmgzmlyjMHXEh/LvShlSBdNcu8uFSoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=PooJO0I/JgwUpJ3Hup9Q/Bb/RgXGBOy8KSm312taOPZEviw2Odzam8jL4Phob/WF3O
+         v/1pBouRgEKwuWxT95qXZuwmcF1/r2imdskHEj3VyBe3n5Dj93WOArRu6q5eByG4J6/v
+         SdlMvpTz7jEsc5LfA3n2kUWc9zcOBzq+xg+fs=
+Received: by 10.42.82.75 with SMTP id c11mr88463icl.92.1301121766115;
+        Fri, 25 Mar 2011 23:42:46 -0700 (PDT)
+Received: from elie (adsl-68-255-102-141.dsl.chcgil.ameritech.net [68.255.102.141])
+        by mx.google.com with ESMTPS id d10sm1186040ibb.0.2011.03.25.23.42.44
+        (version=SSLv3 cipher=OTHER);
+        Fri, 25 Mar 2011 23:42:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vbp12gyqk.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170041>
 
-On 26/03/11 12:12, Motiejus Jak=C5=A1tys wrote:
-> Build tool. Currently libgit2 uses waf. I am not against it (I've cho=
-sen
-> waf for one of my own C++ projects), However, it's too clumsy for me.=
- Is
-> it me who lacks experience? Scons looks much easier for me. Moreover,=
- we
-> do not need automatic configuration, so it makes waf "overfeatured".
+Junio C Hamano wrote:
 
-Another one you might like to look at is "ccanlint" - it wraps a whole
-bunch of things that make for exceptional quality code, such as code
-coverage by the test suite, documentation coverage, compilable examples=
-,
-even cranks it up using valgrind to check that it's right.
+> A bit more datapoint.  The first one works just fine, while the second one
+> gets stuck:
+>
+>     $ cd t && make T=t0081-line-buffer.sh test
+>     $ cd t && make T=t0081-line-buffer.sh prove
+>
+> I notice that [sh] spawned from prove is orphaned.
+>
+> 21643 pts/9    Ss     0:00      \_ bash
+> 17149 pts/9    S+     0:00      |   \_ make T=t0081-line-buffer.sh prove
+> 17155 pts/9    S+     0:00      |       \_ /bin/sh -c echo "*** prove ***"; GIT_CONFIG=.git/
+> 17156 pts/9    S+     0:00      |           \_ /usr/bin/perl /usr/bin/prove --exec /bin/sh t
+> 17157 pts/9    Z+     0:00      |               \_ [sh] <defunct>
 
-As far as your question about how much to implement or bring across fro=
-m
-git - try to do it feature by feature, with reference to the test suite
-and make sure each feature has a test.  It's a very bad idea IMHO to
-port across untested features.  I'd much rather have a core set of
-commands which are well tested and stable, than a handful of
-fully-implemented but buggy commands.
+Hmm, looks like the "kill $!" is not working like it is supposed to.
+What is your /bin/sh?  How far does
 
-Sam
+	make T=0081-line-buffer.sh prove SHELL_PATH_SH='/bin/sh -x'
+
+get before the lull?
