@@ -1,134 +1,153 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v2] tests: fix overeager scrubbing of environment variables
-Date: Mon, 28 Mar 2011 00:26:29 +0200
-Message-ID: <4D8FB995.20001@web.de>
-References: <4D8FAAAC.3050905@web.de> <20110327213756.GD25927@elie>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC] tests: use the --long-tests facility to toggle some slow
+ tests
+Date: Sun, 27 Mar 2011 18:00:25 -0500
+Message-ID: <20110327230025.GD27445@elie>
+References: <4D8FAAAC.3050905@web.de>
+ <20110327213756.GD25927@elie>
+ <4D8FB995.20001@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 00:26:41 2011
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 28 01:01:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3yPw-00083v-NT
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 00:26:41 +0200
+	id 1Q3yxx-0002Re-OC
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 01:01:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751695Ab1C0W0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2011 18:26:36 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:45984 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751262Ab1C0W0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Mar 2011 18:26:35 -0400
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 6975419B2659A;
-	Mon, 28 Mar 2011 00:26:29 +0200 (CEST)
-Received: from [93.246.35.114] (helo=[192.168.178.43])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Q3yPl-0007d2-00; Mon, 28 Mar 2011 00:26:29 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110327213756.GD25927@elie>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19mux4RJf9TzQOMb9Hs2ixPBSHOOAKtTTpJdWkp
-	BXVyGDKra1qbMN2TwpfF8NL6QduO4zXofda6nmdwBNasMtVwOt
-	7Q8Sorp5powFLODx+P9g==
+	id S1751932Ab1C0XBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Mar 2011 19:01:25 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39143 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752084Ab1C0XAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Mar 2011 19:00:34 -0400
+Received: by iyb14 with SMTP id 14so2501891iyb.19
+        for <git@vger.kernel.org>; Sun, 27 Mar 2011 16:00:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=pQy+SBrzQ/nIk2Raw1XtcRkfrH2YjD9weFGFEb1E4Ks=;
+        b=uHvsdTjSIurYasY2bkjNACMixzwOmg4bq9Zyx+Aj+RBv1vRxUJg2GM7Z7L4k7dkqb1
+         A7gBIorvhhVbW6y3vP33Rr/er6H9+xhYIpc1ZgEOu9E/6saylBax51w/XtOjL7XGbzJo
+         R7q14FsUHyA7Ym/VbM9dvuUi4ZWqUvGkwLWHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=vVYwhGigDCCewsgBVnUFyoq7FDZmhrLV4g2uwqO8xLvDjkEvo9qyqkd10deb9VX+w/
+         ykSNVx6+SWTHploLDeihAmwID0uGFcOFhFFhoL/ewOV2LtOAfOVdWSpezFF3fnM0mApj
+         hg5OccyZF3Am6JUh9O82K4nAhv2G6vMeMawwo=
+Received: by 10.42.156.70 with SMTP id y6mr5119747icw.524.1301266833592;
+        Sun, 27 Mar 2011 16:00:33 -0700 (PDT)
+Received: from elie (adsl-68-255-101-206.dsl.chcgil.sbcglobal.net [68.255.101.206])
+        by mx.google.com with ESMTPS id jv9sm2380414icb.13.2011.03.27.16.00.31
+        (version=SSLv3 cipher=OTHER);
+        Sun, 27 Mar 2011 16:00:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D8FB995.20001@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170093>
 
-In commit 95a1d12e9b9f ("tests: scrub environment of GIT_* variables") all
-environment variables starting with "GIT_" were unset for the tests using
-a perl script rather than unsetting them one by one. Only three exceptions
-were made to make them work as before: "GIT_TRACE*", "GIT_DEBUG*" and
-"GIT_USE_LOOKUP".
+The GIT_TEST_LONG facility (v1.6.0-rc0~246, 2008-06-17) was added to
+support tests for a gitweb caching engine that was never merged.
+So --long-tests has been a no-op for years.
 
-Unfortunately some environment variables used by the test framework itself
-were not added to the exceptions and thus stopped working when given
-before the make command instead of after it. Those are:
+Since then, some other expensive tests have sprouted up that fit its
+description pretty well, namely:
 
-- GIT_NOTES_TIMING_TESTS
-- GIT_PATCHID_TIMING_TESTS
-- GIT_PROVE_OPTS
-- GIT_REMOTE_SVN_TEST_BIG_FILES
-- GIT_SKIP_TESTS
-- GIT_TEST*
-- GIT_VALGRIND_OPTIONS
+ - GIT_NOTES_TIMING_TESTS
+ - GIT_PATCHID_TIMING_TESTS
+ - GIT_REMOTE_SVN_TEST_BIG_FILES
 
-I noticed that when skipping a test the way I was used to suddenly failed:
+All of these are not part of the default test run because they are
+expensive.  Let's replace their existing, undocumented triggers with
+GIT_TEST_LONG, so now you can do
 
-GIT_SKIP_TESTS='t1234' GIT_TEST_OPTS='--root=/dev/shm' make -j10 test
+ sh t3302-notes-index-expensive.sh -l -v
 
-This should work according to t/README, but didn't anymore, so let's fix
-that by adding them to the exception list.
+to get a sanity check for notes lookup performance scalability.
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
+Jens Lehmann wrote:
 
-Am 27.03.2011 23:37, schrieb Jonathan Nieder:
-> Jens Lehmann wrote:
-> 
->> - GIT_SKIP_TESTS
->> - GIT_TEST*
->> - GIT_PROVE_OPTS
->>
->> Let's fix that by adding them to the exception list.
->>
->> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> 
-> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+> Right you are, this version includes those too (but - except once for
+> GIT_VALGRIND_OPTIONS - none of them are mentioned in t/README, that's why
+> I managed to miss them ... maybe they should be documented there?).
 
-Thanks for your review! (I took the liberty to add your Ack to this updated
-version, please speak up if you are unhappy with anything in this v2!)
+Good idea.  See below for a possible sneaky way to document three of
+them.
 
-> It misses a few, though:
-> 
->  - GIT_REMOTE_SVN_TEST_BIG_FILES
->  - GIT_NOTES_TIMING_TESTS
->  - GIT_PATCHID_TIMING_TESTS
->  - GIT_VALGRIND_OPTIONS
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -46,7 +46,7 @@ unset VISUAL
+>  unset EMAIL
+>  unset $(perl -e '
+>  	my @env = keys %ENV;
+> -	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP)/, @env);
+> +	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP|NOTES_TIMING_TESTS|PATCHID_TIMING_TESTS|PROVE_OPTS|REMOTE_SVN_TEST_BIG_FILES|SKIP_TESTS|TEST|VALGRIND_OPTIONS)/, @env);
 
-Right you are, this version includes those too (but - except once for
-GIT_VALGRIND_OPTIONS - none of them are mentioned in t/README, that's why
-I managed to miss them ... maybe they should be documented there?).
+My poor terminal. :)  I sent a possible more invasive change that
+breaks this into multiple lines but it looks like our mails crossed.
+Anyway, I have no serious complaint; it might be that this one is the
+best way to go.  
 
-> If we were starting over I suppose those would all be GIT_TEST* but
-> there's something to be said for muscle memory.
+ t/t0081-line-buffer.sh           |    2 +-
+ t/t3302-notes-index-expensive.sh |    2 +-
+ t/t3419-rebase-patch-id.sh       |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Yeah, I thought the same about GIT_SKIP_TESTS when writing the first version
-of this patch ... ;-)
-
->> I noticed today that skipping a test the way I was used to suddenly failed:
->>
->> GIT_SKIP_TESTS='t1234' GIT_TEST_OPTS='--root=/dev/shm' make -j10 test
->>
->> This should work according to t/README, but didn't anymore.
-> 
-> I would have just written that in the change description.
-
-Yup, did that!
-
- t/test-lib.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 7cc9a52..f1f6d94 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -46,7 +46,7 @@ unset VISUAL
- unset EMAIL
- unset $(perl -e '
- 	my @env = keys %ENV;
--	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP)/, @env);
-+	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP|NOTES_TIMING_TESTS|PATCHID_TIMING_TESTS|PROVE_OPTS|REMOTE_SVN_TEST_BIG_FILES|SKIP_TESTS|TEST|VALGRIND_OPTIONS)/, @env);
- 	print join("\n", @vars);
- ')
- GIT_AUTHOR_EMAIL=author@example.com
+diff --git a/t/t0081-line-buffer.sh b/t/t0081-line-buffer.sh
+index 1dbe1c9..099abe0 100755
+--- a/t/t0081-line-buffer.sh
++++ b/t/t0081-line-buffer.sh
+@@ -12,7 +12,7 @@ correctly.
+ "
+ . ./test-lib.sh
+ 
+-test -n "$GIT_REMOTE_SVN_TEST_BIG_FILES" && test_set_prereq EXPENSIVE
++test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
+ 
+ generate_tens_of_lines () {
+ 	tens=$1 &&
+diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
+index e35d781..62820d0 100755
+--- a/t/t3302-notes-index-expensive.sh
++++ b/t/t3302-notes-index-expensive.sh
+@@ -8,7 +8,7 @@ test_description='Test commit notes index (expensive!)'
+ . ./test-lib.sh
+ 
+ test_set_prereq NOT_EXPENSIVE
+-test -n "$GIT_NOTES_TIMING_TESTS" && test_set_prereq EXPENSIVE
++test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
+ test -x /usr/bin/time && test_set_prereq USR_BIN_TIME
+ 
+ create_repo () {
+diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+index bd8efaf..0419e81 100755
+--- a/t/t3419-rebase-patch-id.sh
++++ b/t/t3419-rebase-patch-id.sh
+@@ -5,7 +5,7 @@ test_description='git rebase - test patch id computation'
+ . ./test-lib.sh
+ 
+ test_set_prereq NOT_EXPENSIVE
+-test -n "$GIT_PATCHID_TIMING_TESTS" && test_set_prereq EXPENSIVE
++test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
+ test -x /usr/bin/time && test_set_prereq USR_BIN_TIME
+ 
+ count()
 -- 
-1.7.4.2.407.gac78c
+1.7.4.2
