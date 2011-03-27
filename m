@@ -1,73 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Reproducible crash in git merge
-Date: Sun, 27 Mar 2011 11:01:09 -0700
-Message-ID: <7vr59s1lzu.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimxHn_fwMKh9cbp9i5LkShUi=HK44nv2KJ7ENaQ@mail.gmail.com>
- <m3pqpcv5ph.fsf@localhost.localdomain>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] warn use of "git diff A..B"
+Date: Sun, 27 Mar 2011 22:03:11 +0200
+Message-ID: <AANLkTikQB_2bapZXOyANrO1fsKGs4r6HP1TOuisZXfnr@mail.gmail.com>
+References: <7voc51cydw.fsf@alter.siamese.dyndns.org> <7vei5xcxzm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Gilman <davidgilman1@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 27 20:01:43 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 27 22:03:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3uHT-0006Wg-W9
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 20:01:40 +0200
+	id 1Q3wBh-00041z-Kz
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 22:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078Ab1C0SBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2011 14:01:22 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52379 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341Ab1C0SBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Mar 2011 14:01:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 57F254FF9;
-	Sun, 27 Mar 2011 14:03:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D3nk6R2IrL4QEBIrY724pVJD3iY=; b=XmH0Bq
-	D4d9LrmaImSY+i0BDyHMaDnfhJVtm7P9gFKXnzZ+mWsQr/inV9qbeMKqDu8OrWbM
-	pnfgAtgnui4LNQe5Mby2Wu5CdJvgz/0WiYVawenLFZWVf8YtoxRAuFri9Dsoxsfg
-	af7Ags/cr1J+bSdkGa3b1Nzkvzbb0geYViJZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MV1ACvr3c7KJQSyLQLIDKVpi802Jcsih
-	JE0j0u2bSlLLifI2ldOzSuHkLrpGTZn/95PwNosl0WGCnycruL93Rw/EKNVS+7D2
-	yBG3lbsSWKT0Uht1sClfn8r4T9AabgAaKpLBk/+rWf2/nYOR7rbi1Tc4g9nKIDT6
-	yUsWOGjYWNs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 217A04FF5;
-	Sun, 27 Mar 2011 14:03:00 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 094AF4FF3; Sun, 27 Mar 2011
- 14:02:55 -0400 (EDT)
-In-Reply-To: <m3pqpcv5ph.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Sun, 27 Mar 2011 10:23:13 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 73B39792-589C-11E0-A654-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754384Ab1C0UDd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Mar 2011 16:03:33 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56452 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754373Ab1C0UDc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Mar 2011 16:03:32 -0400
+Received: by bwz15 with SMTP id 15so1989148bwz.19
+        for <git@vger.kernel.org>; Sun, 27 Mar 2011 13:03:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=n5KG+l1omgbFSNKcBECgobbzLNVEJT7J9fF6G/yrg64=;
+        b=sAzA98XxLe5gb1GKM6M7VJGxN7Id3QwuX8rdkglMUTRqbHziSjcV4hNFKvVI9blU8d
+         k1urUS+gqq/w3p4dnhEbQFMRb6+DfRMkd7O5570xkG+wqk6UoVYHwcYb7vy5U5ANpQDw
+         5JFTIiSa0DuATv0PWtnpgsmUnRlSZAKYzAwk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=qV6g4P2sUqpj4XkYs3g8d34wx0USnOUICX+SYrNO7dl8Ihcr+N0XghrE009FFQ2ITk
+         qBSVvx/Mun2JdRsj5+6b3qRDyd4Q7CzHuU3Je4uiskR0mB3UaPMcXfP3UWzrmBmE2Hx3
+         5t+mygRR/TIIAMquAfg2qIXQSiZEQbLwN0RRM=
+Received: by 10.204.84.166 with SMTP id j38mr2896597bkl.84.1301256211127; Sun,
+ 27 Mar 2011 13:03:31 -0700 (PDT)
+Received: by 10.204.29.2 with HTTP; Sun, 27 Mar 2011 13:03:11 -0700 (PDT)
+In-Reply-To: <7vei5xcxzm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170087>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> David Gilman <davidgilman1@gmail.com> writes:
+On Wed, Mar 23, 2011 at 22:45, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> "git diff" (and "diff-tree") accepts a range notation "A..B" from the
+> command line to specify the two endpoints to be compared; the right w=
+ay to
+> spell this would be "git diff A B". =C2=A0This is merely a historical=
+ accident
+> that comes from the fact that "git log" family of commands and "git d=
+iff"
+> happens to share some code in their command line parsers.
 >
->> Unfortunately I can't share the repo itself because of its contents.
->
-> Does anyone remember the script that can be used to anonymize contents
-> of repository that cannot be made public for debugging purposes?
+> It was fine for people who are used to seeing "git diff A..B" and sil=
+ently
+> translating it to "git diff A B" in their head, but it made things ha=
+rd
+> for new people. =C2=A0It is easy to mistakenly think that "git diff A=
+=2E.B" has
+> some similarity with "git log A..B" (there isn't).
 
-That might help in certain narrow other cases, but I suspect that it is a
-way off tangent in this case, after looking at the stack trace.
-
-The process is dying inside pthe latform implementation of memcpy of
-inflate from zlib; unless the bug is reproduceable independent of the
-contents, any modification done by contents anonymizer is very likely to
-make this particular issue go away, don't you think?
+I like the dot-dot notation a lot.
