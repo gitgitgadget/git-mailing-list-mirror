@@ -1,72 +1,84 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] warn use of "git diff A..B"
-Date: Sun, 27 Mar 2011 22:03:11 +0200
-Message-ID: <AANLkTikQB_2bapZXOyANrO1fsKGs4r6HP1TOuisZXfnr@mail.gmail.com>
-References: <7voc51cydw.fsf@alter.siamese.dyndns.org> <7vei5xcxzm.fsf@alter.siamese.dyndns.org>
+From: David Gilman <davidgilman1@gmail.com>
+Subject: Re: Reproducible crash in git merge
+Date: Sun, 27 Mar 2011 15:24:58 -0500
+Message-ID: <AANLkTinW6pndDmpi=mewxXT=vLSePoJ2meMozCSht6Ze@mail.gmail.com>
+References: <AANLkTimxHn_fwMKh9cbp9i5LkShUi=HK44nv2KJ7ENaQ@mail.gmail.com> <m3pqpcv5ph.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 27 22:03:50 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 27 22:25:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3wBh-00041z-Kz
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 22:03:50 +0200
+	id 1Q3wWh-00049d-3u
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 22:25:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754384Ab1C0UDd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Mar 2011 16:03:33 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56452 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754373Ab1C0UDc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Mar 2011 16:03:32 -0400
-Received: by bwz15 with SMTP id 15so1989148bwz.19
-        for <git@vger.kernel.org>; Sun, 27 Mar 2011 13:03:31 -0700 (PDT)
+	id S1754334Ab1C0UZT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Mar 2011 16:25:19 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56681 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754239Ab1C0UZT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Mar 2011 16:25:19 -0400
+Received: by iwn34 with SMTP id 34so2956737iwn.19
+        for <git@vger.kernel.org>; Sun, 27 Mar 2011 13:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=n5KG+l1omgbFSNKcBECgobbzLNVEJT7J9fF6G/yrg64=;
-        b=sAzA98XxLe5gb1GKM6M7VJGxN7Id3QwuX8rdkglMUTRqbHziSjcV4hNFKvVI9blU8d
-         k1urUS+gqq/w3p4dnhEbQFMRb6+DfRMkd7O5570xkG+wqk6UoVYHwcYb7vy5U5ANpQDw
-         5JFTIiSa0DuATv0PWtnpgsmUnRlSZAKYzAwk0=
+         :message-id:subject:to:content-type:content-transfer-encoding;
+        bh=4XGOa3tQi8bAWUd6K7FuMeWNVaWcNdYrtV+oWreupGY=;
+        b=tg8uAvtvoAY/4YutQxrfpQa3T3urMye779NvkMxPfHYtyVHonb+Zi6rZPZj6ic3k4i
+         O/xPN52INvvsIlk1CiqAbx7vveOEYknHBIcAnJfyO8jW0rUGkrgyR87nFUW6jSQUKgZQ
+         MqXs3BXYN6B5NkyYebJ6nbFHOuChsK3W3jjeg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=qV6g4P2sUqpj4XkYs3g8d34wx0USnOUICX+SYrNO7dl8Ihcr+N0XghrE009FFQ2ITk
-         qBSVvx/Mun2JdRsj5+6b3qRDyd4Q7CzHuU3Je4uiskR0mB3UaPMcXfP3UWzrmBmE2Hx3
-         5t+mygRR/TIIAMquAfg2qIXQSiZEQbLwN0RRM=
-Received: by 10.204.84.166 with SMTP id j38mr2896597bkl.84.1301256211127; Sun,
- 27 Mar 2011 13:03:31 -0700 (PDT)
-Received: by 10.204.29.2 with HTTP; Sun, 27 Mar 2011 13:03:11 -0700 (PDT)
-In-Reply-To: <7vei5xcxzm.fsf@alter.siamese.dyndns.org>
+         :content-type:content-transfer-encoding;
+        b=G6IKuP2s+zZpjZvgL6V2MUbwf/hNFnYR5FZMrGaKuJWfsyHUJk9b/5f2yf3unH1OKr
+         kWWGasZpgLwvdTQnAxeJv7gVQ/5o3eEUpbLTm9vw7G2Lv7bpF41DqI3Bopz29+EdKkPY
+         pL4M1by8pZNP3SaJUsJQ7842H0fpCe0uJT+pI=
+Received: by 10.231.165.212 with SMTP id j20mr56671iby.139.1301257518152; Sun,
+ 27 Mar 2011 13:25:18 -0700 (PDT)
+Received: by 10.231.180.220 with HTTP; Sun, 27 Mar 2011 13:24:58 -0700 (PDT)
+In-Reply-To: <m3pqpcv5ph.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170088>
 
-On Wed, Mar 23, 2011 at 22:45, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> "git diff" (and "diff-tree") accepts a range notation "A..B" from the
-> command line to specify the two endpoints to be compared; the right w=
-ay to
-> spell this would be "git diff A B". =C2=A0This is merely a historical=
- accident
-> that comes from the fact that "git log" family of commands and "git d=
-iff"
-> happens to share some code in their command line parsers.
+OK, well I apologize for the bug report.  I was able to reproduce it 2
+or 3 times but I can no longer do so.  git fsck is showing no errors.
+
+On Sun, Mar 27, 2011 at 12:23 PM, Jakub Narebski <jnareb@gmail.com> wro=
+te:
+> David Gilman <davidgilman1@gmail.com> writes:
 >
-> It was fine for people who are used to seeing "git diff A..B" and sil=
-ently
-> translating it to "git diff A B" in their head, but it made things ha=
-rd
-> for new people. =C2=A0It is easy to mistakenly think that "git diff A=
-=2E.B" has
-> some similarity with "git log A..B" (there isn't).
+>> I can get git merge to crash during a git pull. =A0I'm using git
+>> 1.7.3.2. =A0The repo (afaict) is fine and had worked previously.
+>
+> "git fsck --all" doesn't show any _errors_, doesn't it?
+>
+>> Unfortunately I can't share the repo itself because of its contents.
+>
+> Does anyone remember the script that can be used to anonymize content=
+s
+> of repository that cannot be made public for debugging purposes?
+>
+> Unfortunately I didn't save this email (on git mailing list), nor do
+> I remember enough from email to find it on one of git mailing list
+> archives...
+>
+> It would be good if it made it into 'contrib/' area, isn't it?
+> --
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+>
 
-I like the dot-dot notation a lot.
+
+
+--=20
+David Gilman
