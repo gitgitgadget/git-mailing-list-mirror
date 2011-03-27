@@ -1,105 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: start of git2 (based on libgit2)
-Date: Sun, 27 Mar 2011 01:34:34 -0700
-Message-ID: <7v62r52c85.fsf@alter.siamese.dyndns.org>
-References: <20110325231203.GA7961@jakstys.lt> <4D8D2B31.4040908@lyx.org>
- <20110326132915.GA2859@sigill.intra.peff.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: remote-helpers and refs without a value
+Date: Sun, 27 Mar 2011 10:24:28 +0200
+Message-ID: <20110327082428.GA4428@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Vincent van Ravesteijn <vfr@lyx.org>,
-	Motiejus =?utf-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 27 10:35:09 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 27 11:06:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3lRE-0002qd-Bj
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 10:35:08 +0200
+	id 1Q3lvR-0005iP-LK
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 11:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752728Ab1C0Iev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2011 04:34:51 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61688 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752492Ab1C0Iet (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Mar 2011 04:34:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7672E3889;
-	Sun, 27 Mar 2011 04:36:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+uxxDTgo+TmQYIaUCH7hLbQofbU=; b=x68uVL
-	i4Fv0ZaASE4YLVENWV5AoOo5fw7uqcecWrV5eNY8R2wLdZAA6fEO2bUYKfxUp/Qa
-	xDdeFZr8LRCF041p6erWhIqUSQV8PdcjXkhllXUsXey96osey0DgEAr2Mungm5dD
-	zXdnaiqIdY55orJsrsZRGeCPm1TRPk2tsMp4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uT+9Dq6/YoXWcewD0M9VsAGprbqfnm3o
-	IMdGoYLobgZ0oqqwrVtyOJA1BYmJYLa2Sc7/m2LYe7F36vxFNVf6A4wx8L9su7MM
-	MnME6UyqlSKb0D1KTOYQhUBY9jiGeBiqtZ347DHW+BTp9rH6t4UThmiBCx2PIrBD
-	bwq2sPcBccg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3308F3887;
-	Sun, 27 Mar 2011 04:36:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9861F3886; Sun, 27 Mar 2011
- 04:36:20 -0400 (EDT)
-In-Reply-To: <20110326132915.GA2859@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 26 Mar 2011 09:29:15 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4DC02AA4-584D-11E0-BCC5-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1752836Ab1C0JGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Mar 2011 05:06:06 -0400
+Received: from vuizook.err.no ([85.19.221.46]:57012 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752807Ab1C0JGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Mar 2011 05:06:05 -0400
+X-Greylist: delayed 2491 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Mar 2011 05:06:05 EDT
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=glandium.org)
+	by vuizook.err.no with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <mh@glandium.org>)
+	id 1Q3lGv-0003v5-Mi
+	for git@vger.kernel.org; Sun, 27 Mar 2011 10:24:30 +0200
+Received: from mh by glandium.org with local (Exim 4.74)
+	(envelope-from <mh@glandium.org>)
+	id 1Q3lGu-0001Bk-MY
+	for git@vger.kernel.org; Sun, 27 Mar 2011 10:24:28 +0200
+Content-Disposition: inline
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Status: (score 1.4): No, score=1.4 required=5.0 tests=RDNS_DYNAMIC,TO_NO_BRKTS_DYNIP autolearn=disabled version=3.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170077>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Sat, Mar 26, 2011 at 12:54:25AM +0100, Vincent van Ravesteijn wrote:
->> 
->> I guess a lot can be copied from Git itself. Actually
->> builtin/rev-list.c consists mostly of command line arguments parsing
->> methods, and outputting functions. The key is to parse what you want
->> to know and ask libgit2 to provide the info. If libgit2 has
->> implemented the basic functionality that is needed, the rest would be
->> relatively simple.
->
-> I wouldn't worry about having _every_ argument. Some arguments are much
-> less frequently used than others. For example, start with basic stuff,
-> like including and excluding commits (e.g., "branch1 ^branch2"),
-> --max-count, --{min,max}-age, --grep, and others. Do common things like
-> path limiting. And then once all that is done and tested, start worrying
-> about things like --cherry-pick (or maybe not, and focus on the basics
-> of other simple commands).
+If I understand correctly how remote helpers work, the values that the
+helper returns to the list command is then used to update the remote
+branches, or FETCH_HEAD, dependint how the fetch happened.
 
-I agree that for a summer student project, aiming at basic stuff makes
-more sense than trying to chew a large bite that cannot be managed within
-the timeframe and not achieving anything.
+But when the helper returns a '?' value to the list command, I don't see
+how things are supposed to be updated. It looks like the helper is
+the only one, then, to be able to update the refs. But it also doesn't
+have any way to know which refs it needs to update...
 
-"A..B" requires you to walk the ancestry chain. Limiting history with
-pathspec while simplifying merges needs to use the tree-diff machinery;
-and filtering commits by looking at the message with "--grep" needs to
-call into the grep machinery.  Depending on how much libgit2 has already
-covered the basic blocks, even the above list might be too much, I am
-afraid.
+Is it a misunderstanding from my part, or is it something that should be
+improved in the remote-helpers support?
 
-A good news is that among the larger and more important basic building
-blocks in C git, there is only one part that was designed from day one to
-disregard the reusability and instead aimed for speed and simplicity, and
-that is the history and object walking. The way the in-core object pool is
-managed and especially the way per-object flags are designed to be used
-clearly show that the revision walker machinery can take it granted that
-the calling programs are run-once-and-clean-via-exit.
-
-But other major parts are designed to be reusable and I would imagine that
-it shouldn't be hard to link with them (or better yet, find counterparts
-in libgit2). "diff" machinery below the diffcore layer (i.e. the entry
-points "diff-lib.c" calls into, e.g. starting at diff_addremove(), then
-running the diffcore machinery with diffcore_std() and finally getting the
-result from diff_flush() callchain) and "grep" machinery below the
-"grep.c" (but not "builtin/grep.c") are designed not to depend on the
-process level global variables.
+Mike
