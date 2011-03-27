@@ -1,84 +1,87 @@
-From: David Gilman <davidgilman1@gmail.com>
-Subject: Re: Reproducible crash in git merge
-Date: Sun, 27 Mar 2011 15:24:58 -0500
-Message-ID: <AANLkTinW6pndDmpi=mewxXT=vLSePoJ2meMozCSht6Ze@mail.gmail.com>
-References: <AANLkTimxHn_fwMKh9cbp9i5LkShUi=HK44nv2KJ7ENaQ@mail.gmail.com> <m3pqpcv5ph.fsf@localhost.localdomain>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] tests: fix overeager scrubbing of environment variables
+Date: Sun, 27 Mar 2011 23:22:52 +0200
+Message-ID: <4D8FAAAC.3050905@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 27 22:25:31 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 27 23:23:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3wWh-00049d-3u
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 22:25:31 +0200
+	id 1Q3xQP-0000nQ-GE
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Mar 2011 23:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754334Ab1C0UZT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Mar 2011 16:25:19 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:56681 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754239Ab1C0UZT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Mar 2011 16:25:19 -0400
-Received: by iwn34 with SMTP id 34so2956737iwn.19
-        for <git@vger.kernel.org>; Sun, 27 Mar 2011 13:25:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=4XGOa3tQi8bAWUd6K7FuMeWNVaWcNdYrtV+oWreupGY=;
-        b=tg8uAvtvoAY/4YutQxrfpQa3T3urMye779NvkMxPfHYtyVHonb+Zi6rZPZj6ic3k4i
-         O/xPN52INvvsIlk1CiqAbx7vveOEYknHBIcAnJfyO8jW0rUGkrgyR87nFUW6jSQUKgZQ
-         MqXs3BXYN6B5NkyYebJ6nbFHOuChsK3W3jjeg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=G6IKuP2s+zZpjZvgL6V2MUbwf/hNFnYR5FZMrGaKuJWfsyHUJk9b/5f2yf3unH1OKr
-         kWWGasZpgLwvdTQnAxeJv7gVQ/5o3eEUpbLTm9vw7G2Lv7bpF41DqI3Bopz29+EdKkPY
-         pL4M1by8pZNP3SaJUsJQ7842H0fpCe0uJT+pI=
-Received: by 10.231.165.212 with SMTP id j20mr56671iby.139.1301257518152; Sun,
- 27 Mar 2011 13:25:18 -0700 (PDT)
-Received: by 10.231.180.220 with HTTP; Sun, 27 Mar 2011 13:24:58 -0700 (PDT)
-In-Reply-To: <m3pqpcv5ph.fsf@localhost.localdomain>
+	id S1751189Ab1C0VW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Mar 2011 17:22:59 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:44924 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750968Ab1C0VW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Mar 2011 17:22:59 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate01.web.de (Postfix) with ESMTP id DD9B118B5821F;
+	Sun, 27 Mar 2011 23:22:57 +0200 (CEST)
+Received: from [93.246.35.114] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Q3xQH-0003oh-00; Sun, 27 Mar 2011 23:22:57 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19Y7I5tzsqd5Yu5sweRp4vrLPeXps4d2D9M1uoD
+	fCaOFgEnePIjqE/Rpl8yIu1jiUgSKsmBwOmjYPuwEiDrX99k+u
+	dnWSGE6g1f9tJ8DDTaKg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170089>
 
-OK, well I apologize for the bug report.  I was able to reproduce it 2
-or 3 times but I can no longer do so.  git fsck is showing no errors.
+In commit 95a1d12e9b9f ("tests: scrub environment of GIT_* variables") all
+environment variables starting with "GIT_" were unset for the tests using
+a perl script rather than unsetting them one by one. Only three exceptions
+were made to make them work as before: "GIT_TRACE*", "GIT_DEBUG*" and
+"GIT_USE_LOOKUP".
 
-On Sun, Mar 27, 2011 at 12:23 PM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
-> David Gilman <davidgilman1@gmail.com> writes:
->
->> I can get git merge to crash during a git pull. =A0I'm using git
->> 1.7.3.2. =A0The repo (afaict) is fine and had worked previously.
->
-> "git fsck --all" doesn't show any _errors_, doesn't it?
->
->> Unfortunately I can't share the repo itself because of its contents.
->
-> Does anyone remember the script that can be used to anonymize content=
-s
-> of repository that cannot be made public for debugging purposes?
->
-> Unfortunately I didn't save this email (on git mailing list), nor do
-> I remember enough from email to find it on one of git mailing list
-> archives...
->
-> It would be good if it made it into 'contrib/' area, isn't it?
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
->
+Unfortunately some environment variables used by the test framework itself
+were not added to the exceptions and thus stopped working when given
+before the make command instead of after it. Those are:
 
+- GIT_SKIP_TESTS
 
+- GIT_TEST*
 
---=20
-David Gilman
+- GIT_PROVE_OPTS
+
+Let's fix that by adding them to the exception list.
+
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+
+I noticed today that skipping a test the way I was used to suddenly failed:
+
+GIT_SKIP_TESTS='t1234' GIT_TEST_OPTS='--root=/dev/shm' make -j10 test
+
+This should work according to t/README, but didn't anymore.
+
+ t/test-lib.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 7cc9a52..4a8c443 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -46,7 +46,7 @@ unset VISUAL
+ unset EMAIL
+ unset $(perl -e '
+ 	my @env = keys %ENV;
+-	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP)/, @env);
++	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP|SKIP_TESTS|TEST|PROVE_OPTS)/, @env);
+ 	print join("\n", @vars);
+ ')
+ GIT_AUTHOR_EMAIL=author@example.com
+-- 
+1.7.4.2.407.gac78c
