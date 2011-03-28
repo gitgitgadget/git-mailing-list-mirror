@@ -1,80 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: vcs-svn: integrate support for text deltas
-Date: Mon, 28 Mar 2011 02:00:15 -0500
-Message-ID: <20110328070015.GE11987@elie>
-References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
- <1300519254-20201-1-git-send-email-david.barr@cordelta.com>
+From: Karol Samborski <edv.karol@gmail.com>
+Subject: GSoC 2011
+Date: Mon, 28 Mar 2011 09:13:16 +0200
+Message-ID: <AANLkTikQ6=CrWuMemwv38HnBKPnt8CjQWqYj7oA8zVZ4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 09:00:27 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 28 09:13:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q46R8-0001Bi-Ej
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:00:26 +0200
+	id 1Q46de-0005EN-M7
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338Ab1C1HAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 03:00:21 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44782 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942Ab1C1HAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 03:00:20 -0400
-Received: by iwn34 with SMTP id 34so3337039iwn.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 00:00:19 -0700 (PDT)
+	id S1751432Ab1C1HNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 03:13:18 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:64223 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751314Ab1C1HNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 03:13:17 -0400
+Received: by bwz15 with SMTP id 15so2198317bwz.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 00:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=G3cuKFILe8Ul/0oA9sG/gSINSLLY29AH1SIB31C50bk=;
-        b=YwdeubZ5VoA1cdr71B3nUxFTxwE3YnHCnhHkJ0JAub13c9jsvxAi3pPrvUfMYR/VZi
-         wxDTDImc/zhEYdJ3He9/eX/P/TKMeWe3e+PppKIg7Seq9z+gO1ocPuLZvauFllVuFnLj
-         SGn1nD/dKleTmJsdrd1SzdgpKvlOC7nHckDBc=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=rx/Ej4Q81nunYKxWkR9JvxK/n6K0FmBYmhr8eMZKljU=;
+        b=qvCGteQyW+YqPyoTrI7hH01OEhJ1Lyc3SNvSe4bMhHUYVSRWmfZyK3A1YAtd/X7Zfb
+         xoy/yS5XwSJM7D5vGLLowo0m3sSKaRvErN38j3DMpsf2FI4QduAbT3xSe3mNtSHneIvW
+         OBehHUEEbpYoo73h6Bqpn9kcUJbpaEj5Xrqko=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=wLuc7G/oopj1j/MVa+o2ToyUewBtafAybZokv5jNCvI3LuJsHiF8hYsUjCdQdy/eZv
-         K/vXuk9xNPArGfPrSHNtQMd91ueChyI32ImljneYGjyVpxIuVCBHrmYGtfboOhFAEI0s
-         Z/FWXlyfgmEQEd7iSuOzBHz1GK6Sh5xQED/0k=
-Received: by 10.43.57.200 with SMTP id wh8mr6475407icb.29.1301295619831;
-        Mon, 28 Mar 2011 00:00:19 -0700 (PDT)
-Received: from elie (adsl-68-255-101-206.dsl.chcgil.ameritech.net [68.255.101.206])
-        by mx.google.com with ESMTPS id d10sm2752468ibb.0.2011.03.28.00.00.17
-        (version=SSLv3 cipher=OTHER);
-        Mon, 28 Mar 2011 00:00:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1300519254-20201-1-git-send-email-david.barr@cordelta.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=gU2HaEFLu8F4srzAHwfeLYBlYhstf90GtteAw2CD+KFH0KGRufOSAF3xUfP0lvts0i
+         XVCyLsBIDI2mqUwMa3enYG67QCgPR5oyB/gtnXeBCDvBVnf46AVeSpSA/NWUKasnvd6t
+         rygCw7ZK4rLdYJDwDBmAxfytt/35BW+VgdNGI=
+Received: by 10.204.19.20 with SMTP id y20mr3198452bka.170.1301296396098; Mon,
+ 28 Mar 2011 00:13:16 -0700 (PDT)
+Received: by 10.204.240.17 with HTTP; Mon, 28 Mar 2011 00:13:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170102>
 
-Hi,
+Hello all,
 
-David Barr wrote:
+My name is Karol Samborski and I'm a student from Poland. I'm studding
+in external way which means I'm only in school at weekends. Daily I
+work as a C/C++ programmer and I use git in work. I want to
+participate in Google Summer of Code program because I like git and I
+have no open source programming experience. I read at SoC2011Ideas
+wiki page that I should try sending a few simple patches to the
+mailing list. What patches do you mean? Do you have maybe a small task
+to do? That would be easier...
 
-> As previously, I have tested against
-> the ASF subversion repository to increase confidence in the series.
-> Hopefully, this brings us a little closer to having full support for
-> version 3 of the subversion dump format in master.
+Anyway I use vim, git and linux in a daily use and I love using them ;)
+But due to I'm external student I have much less time than the other students.
 
-Thanks much for digging this up.  (To think, it's been half a year
-since the svndiff0 parser was written!)  I've queued everything except
-patch 16, and grabbing patch 16 on top of db/delta-applier +
-db/vcs-svn-incremental should be just a formality.
-
-The patches have had over three months to cook already.  Whether or
-not a nice UI wrapper is ready[*], I'll be testing and then merging them
-to svn-fe in the next couple of weeks.  Sorry to take so long at this.
-
-[*] which will probably mean finally figuring out Tomas's work
+Best regards,
+Karol Samborski
