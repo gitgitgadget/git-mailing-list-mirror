@@ -1,53 +1,70 @@
-From: Jeff King <peff@peff.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: git @ be919d50 broken on OSX build
-Date: Mon, 28 Mar 2011 12:33:55 -0400
-Message-ID: <20110328163355.GB18774@sigill.intra.peff.net>
+Date: Mon, 28 Mar 2011 09:34:40 -0700
+Message-ID: <86hbani4pr.fsf@red.stonehenge.com>
 References: <86lizzi4zv.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 18:34:08 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 28 18:35:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4FOJ-0006yr-Vz
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 18:34:08 +0200
+	id 1Q4FPR-0007aj-QH
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 18:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932249Ab1C1Qd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 12:33:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47179
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932245Ab1C1Qd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 12:33:57 -0400
-Received: (qmail 13029 invoked by uid 107); 28 Mar 2011 16:34:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Mar 2011 12:34:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Mar 2011 12:33:55 -0400
-Content-Disposition: inline
-In-Reply-To: <86lizzi4zv.fsf@red.stonehenge.com>
+	id S932136Ab1C1Qen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 12:34:43 -0400
+Received: from lax-gw09.mailroute.net ([199.89.0.109]:39374 "EHLO
+	mail.mroute.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932080Ab1C1Qel (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 12:34:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by lax-gw09.mroute.net (Postfix) with ESMTP id 64E68138560
+	for <git@vger.kernel.org>; Mon, 28 Mar 2011 16:34:41 +0000 (GMT)
+X-Virus-Scanned: by MailRoute
+Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
+	by lax-gw09.mroute.net (Postfix) with ESMTP id AB39613855B
+	for <git@vger.kernel.org>; Mon, 28 Mar 2011 16:34:40 +0000 (GMT)
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 9F66A18EF; Mon, 28 Mar 2011 09:34:40 -0700 (PDT)
+x-mayan-date: Long count = 12.19.18.4.6; tzolkin = 7 Cimi; haab = 19 Cumku
+In-Reply-To: <86lizzi4zv.fsf@red.stonehenge.com> (Randal L. Schwartz's message
+	of "Mon, 28 Mar 2011 09:28:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170154>
 
-On Mon, Mar 28, 2011 at 09:28:36AM -0700, Randal L. Schwartz wrote:
+>>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 
-> ...
->     GEN git-add--interactive
-> Writing perl.mak for Git
-> make[2]: *** [perl.mak] Error 1
-> make[1]: *** [instlibdir] Error 2
-> make: *** [git-add--interactive] Error 2
+Randal> ...
+Randal>     GEN git-add--interactive
+Randal> Writing perl.mak for Git
+Randal> make[2]: *** [perl.mak] Error 1
+Randal> make[1]: *** [instlibdir] Error 2
+Randal> make: *** [git-add--interactive] Error 2
 
-Hmm. That looks like our parallel-build recursive-make heisenbug. If you
-redo the "make", does it work?
+And in bisecting, I got broken at fbc9629e2f0cd31 with:
 
-If not, do you mind bisecting? be919d50 updates the release notes, so it
-is probably not the cause. :)
+Locohost.local:~/MIRROR/git-GIT % make prefix=/opt/git all install
+quick-install-man
+GITGUI_VERSION = 0.14.0
+    * new locations or Tcl/Tk interpreter
+    GEN git-gui
+rm: git-gui: is a directory
+make: *** [git-gui] Error 1
 
--Peff
+and after a few "git bisect skip", I'm still stuck.
+
+Am I bisecting wrong?
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.posterous.com/ for Smalltalk discussion
