@@ -1,69 +1,83 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: remote-helpers and refs without a value
-Date: Mon, 28 Mar 2011 09:50:09 +0200
-Message-ID: <20110328075009.GA5115@glandium.org>
-References: <20110327082428.GA4428@glandium.org>
- <AANLkTi=cNin=XYqbAJMggWj7OcZ8=9PGCVGGg=JRO-bj@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: GSoC 2011
+Date: Mon, 28 Mar 2011 10:17:37 +0200
+Message-ID: <AANLkTin9REqDJhWbQ2JbESufcg6hSf6cw3NpiamXvkU_@mail.gmail.com>
+References: <AANLkTikQ6=CrWuMemwv38HnBKPnt8CjQWqYj7oA8zVZ4@mail.gmail.com>
+	<AANLkTikC5cagS8qYPDmWO+jhC4pHMkJq6zQN3QemMhwG@mail.gmail.com>
+	<AANLkTikM7C_h5cwgd5KoddBUH3xsdwtBiGwM_2ecKR2k@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 09:50:24 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Karol Samborski <edv.karol@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 10:17:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q47DU-0000CX-4e
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:50:24 +0200
+	id 1Q47dv-0001M1-U4
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 10:17:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974Ab1C1HuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 03:50:17 -0400
-Received: from vuizook.err.no ([85.19.221.46]:48418 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347Ab1C1HuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 03:50:16 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=glandium.org)
-	by vuizook.err.no with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <mh@glandium.org>)
-	id 1Q47DG-0002OF-8x; Mon, 28 Mar 2011 09:50:11 +0200
-Received: from mh by glandium.org with local (Exim 4.74)
-	(envelope-from <mh@glandium.org>)
-	id 1Q47DF-0001LV-BP; Mon, 28 Mar 2011 09:50:09 +0200
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=cNin=XYqbAJMggWj7OcZ8=9PGCVGGg=JRO-bj@mail.gmail.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Status: (score 0.4): No, score=0.4 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.3.1
+	id S1752340Ab1C1IRj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 04:17:39 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:60255 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751267Ab1C1IRi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 04:17:38 -0400
+Received: by wya21 with SMTP id 21so2612751wya.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 01:17:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=EbDXR2ecb0jLrvvbZ/3BaGvMfEReEhsL+8mK/JRZ2qA=;
+        b=Nph5inghKI0Uqtv+eWHURXpSX91SovQu9/jVL/VLqPsjF/sEI12vVzLSnTHl7o5vgl
+         xFK1sHpgdV2Ev6nDnZ88kpE0WGVbWEMHWS/965005JqVCsHP9X+H8GhIakPGbagGcJZZ
+         0FGF7Y4Bwv9bg2gAmAMXvKeaxrSHVlj4OAiE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=CNdxTr2OXG748+72SJQ9IYNz8fHQ1qDKPNjylvNjQ2zfxNrwA8iol7cwcN1QP45sA/
+         pe/u4EQbMXPUZZsGigHc6tynvkx+hjpYpefscVpeO3m2Q26QXL7Mbr375Sm/DUn9hCFj
+         cheJy6BsAtlyGgpL4w9fG1NsXf46I4hkVgtms=
+Received: by 10.216.246.12 with SMTP id p12mr3265425wer.91.1301300257195; Mon,
+ 28 Mar 2011 01:17:37 -0700 (PDT)
+Received: by 10.216.89.12 with HTTP; Mon, 28 Mar 2011 01:17:37 -0700 (PDT)
+In-Reply-To: <AANLkTikM7C_h5cwgd5KoddBUH3xsdwtBiGwM_2ecKR2k@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170110>
 
-On Mon, Mar 28, 2011 at 03:22:57PM +0800, Tay Ray Chuan wrote:
-> Hi,
-> 
-> On Sun, Mar 27, 2011 at 4:24 PM, Mike Hommey <mh@glandium.org> wrote:
-> > But when the helper returns a '?' value to the list command, I don't see
-> > how things are supposed to be updated. It looks like the helper is
-> > the only one, then, to be able to update the refs. But it also doesn't
-> > have any way to know which refs it needs to update...
-> 
-> I don't think that's right. The transport machinery (transport.c,
-> transport-helper.c) in git is the one who calls the shots - the
-> transport machinery first 1) asks for the list of refs, 2) does the
-> appropriate "matching" (of what refs to fetch/push), then 3) sends
-> this down to the remote helper.
-> 
-> If the remote helper sends back a '?', the transport machinery should
-> be implemented to fail and die. A quick scan of transport.c does not
-> show this, but I assume the failure would happen at the ref matching
-> level, leading to failure of the whole fetch/push.
+On Mon, Mar 28, 2011 at 9:55 AM, Karol Samborski <edv.karol@gmail.com> wrote:
+> 2011/3/28 Christian Couder <christian.couder@gmail.com>:
+>>
+>> It depends a lot what part of git you would like to work on.
+>> Do you find one of the proposed subject interesting?
+>> If yes, tell us and the relevant people will probably tell you what
+>> you could start with.
+>
+> I thought about "Build in more external commands".
 
-Failing wouldn't make sense. That'd mean '?' may not be used by
-remote-helpers, and that they'd need to grab everything from the remote
-before git even decides what to grab.
+Ok, but which of the suggested commands would you like to rewrite?
 
-Mike
+When you know the one you want to work on, you can find the relevant
+people and then put them in CC.
+And you can look at its source code and find some parts that can
+already be implemented in other existing commands in C.
+
+>> I hope you will have more time during the summer otherwise it might
+>> not be enough for the GSOC.
+>>
+>
+> OK, maybe it might not be enough but I just want to do something for
+> the others ;)
+> It's ok if you will not approve my work later because of to slowly
+> work but I will finish my task.
+
+Great! We love people who finish the tasks ;-)
+
+Thanks,
+Christian.
