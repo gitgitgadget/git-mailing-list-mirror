@@ -1,78 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/10] Docs: git tag
-Date: Mon, 28 Mar 2011 11:04:25 -0700
-Message-ID: <7v8vvzyvdi.fsf@alter.siamese.dyndns.org>
-References: <1301327622-8595-1-git-send-email-mfwitten@gmail.com>
+From: Joe Ratterman <jratt0@gmail.com>
+Subject: Re: [PATCH] Add two grep config options
+Date: Mon, 28 Mar 2011 13:08:11 -0500
+Message-ID: <AANLkTinNM_tf=rJYXLO8cgaxwpAz2pi8G4nJiwZ9RLR6@mail.gmail.com>
+References: <1301088071-918-1-git-send-email-jratt0@gmail.com>
+	<7vlj024wal.fsf@alter.siamese.dyndns.org>
+	<4D9037AA.9090601@drmicha.warpmail.net>
+	<20110328115421.GA9232@sigill.intra.peff.net>
+	<7vvcz3yxs8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 20:04:40 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 20:08:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Gnv-0001se-6Q
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 20:04:39 +0200
+	id 1Q4Grs-0003mq-Qw
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 20:08:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754596Ab1C1SEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 14:04:37 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65167 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754470Ab1C1SEg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 14:04:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4577F4CB2;
-	Mon, 28 Mar 2011 14:06:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f67zvWPmyICU0OCkVu3o1FL1UMw=; b=u5v+5w
-	AVO02Wfp5Pztiho4kFFQgsy+ekotTkFTm15KuorxgQUcVa4nmEj+h9PZh9T5yjsn
-	IJWYR7oLUHtKRzGUqKeidCmN+rVdDB3HB6uZnSd31KWhxjiYElGfKve7WKxIJtmO
-	YbbZiPD8ovgZgdUNHnTprtGETPNYj5/xCIKwI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rbfykXsewA6yQF7uULJqhAPF1WKxb/YC
-	Bv81VdkhdGbeqcpiAiy7uMvOMPC+nL3wUsThPtfUvuBU4cCt1qb//FTKtE6W91+X
-	x0vX5cjWmtQggtzX8K6Vdbz9QmymAxkBvoJm8yWNtflK1+qeA5ffguvwUpSafRj4
-	H17Lp3mOjqQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2224D4CAE;
-	Mon, 28 Mar 2011 14:06:17 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 39A9F4CAC; Mon, 28 Mar 2011
- 14:06:13 -0400 (EDT)
-In-Reply-To: <1301327622-8595-1-git-send-email-mfwitten@gmail.com> (Michael
- Witten's message of "Mon, 28 Mar 2011 15:32:06 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 138C0B4A-5966-11E0-B987-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755323Ab1C1SIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 14:08:15 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:53387 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751744Ab1C1SIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 14:08:12 -0400
+Received: by gwaa18 with SMTP id a18so1269385gwa.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 11:08:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=xYH3kFWaXT3lJ1LwkOHI34meRtP9IuM4S/VDDQMO8Yc=;
+        b=xen2bwJCpepks7HDasQzImuZhCgD2XjLSDpUTpclSlszuE8OsruiL4yT8BuDCSmKv1
+         +LuM0LSxWoVNvFQBtq/JrR8fIEFzU8LFQ+KBsJnpF3+fvd2c50bTQ+NtqkDNLxn2Epnb
+         c50GHSJkt+FOhW5TlWTSNBOZUdWPHBJtkPPJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=cle7UfpHcl33oFaTtXkAtzjUUdBShZzwuHOyg9TY2oxoR73dpBMa4TBjzD7mF/hMcG
+         y5HfeTkD/4n1ReVybR4UMc9zI3jwjgUranAdaVdh7ItVWghz3Z9QCR9JKez4kCiQg9bR
+         6J02zLyewqoqf8mGQ+nM4eCw01xjA+FYsOWbs=
+Received: by 10.236.105.164 with SMTP id k24mr235605yhg.370.1301335691079;
+ Mon, 28 Mar 2011 11:08:11 -0700 (PDT)
+Received: by 10.236.95.16 with HTTP; Mon, 28 Mar 2011 11:08:11 -0700 (PDT)
+In-Reply-To: <7vvcz3yxs8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170170>
 
-Michael Witten <mfwitten@gmail.com> writes:
-
-> Small patches fixing up the `git tag' docs.
+On Mon, Mar 28, 2011 at 12:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> But would any user go all that trouble, just not to say "-nE" from the
+> command line (or use an alias that was designed not to crash with
+> scripts)?
 >
-> Michael Witten (10):
->   Docs: git tag: Add `the'
->   Docs: git tag: peoples back -> people's backs
->   Docs: git tag: Revise a paragraph.
->   Docs: git tag: other's -> the other person's
->   Docs: git tag: Streamline a sentence.
->   Docs: git tag: Add missing 'the'
->   Docs: git tag: Use 'who' again
->   Docs: git tag: Remove superfluous 'with'
->   Docs: git tag: Use semicolon
->   Docs: git tag: Rewrite discussion of GIT_COMMITTER_DATE
 
-Thanks; all looked sensible changes, except for 7/10 which I somehow find
-the original is more readable than the new text, partly because the
-sentences are shorter but more importantly because the two sentences make
-two separate assertions (the first is about what "one-shot" pull means,
-the second is about why automatic tag following is not desired in that
-situation).
+I use the $GREP_OPTIONS environment variable to add -n and -P (pcre)
+to my grep commands by default.  Coming from a strong Perl background,
+I don't know the *exact* difference between basic and extended, so I
+do not usually realize I need -E until it gets a little too
+complicated.  I generally forget line numbers until I want to start
+editing the file, making me run the grep command a second time.  For
+me, it is much easier to have them in the environment/config-file,
+since I never want to avoid them.
+
+Joe
