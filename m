@@ -1,401 +1,277 @@
 From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCH/RFC 9/9] add long forms for author and committer identity
-Date: Tue, 29 Mar 2011 00:17:31 +0100
-Message-ID: <1301354251-23380-10-git-send-email-wmpalmer@gmail.com>
+Subject: [PATCH/RFC 8/9] add long forms %(authordate) and %(committerdate)
+Date: Tue, 29 Mar 2011 00:17:30 +0100
+Message-ID: <1301354251-23380-9-git-send-email-wmpalmer@gmail.com>
 References: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Will Palmer <wmpalmer@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 01:18:32 2011
+X-From: git-owner@vger.kernel.org Tue Mar 29 01:18:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Lhf-00010L-Em
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 01:18:31 +0200
+	id 1Q4Lhg-00010L-1d
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 01:18:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932151Ab1C1XSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 19:18:15 -0400
+	id S932181Ab1C1XSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 19:18:22 -0400
 Received: from mail-ww0-f44.google.com ([74.125.82.44]:35885 "EHLO
 	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755418Ab1C1XSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 19:18:07 -0400
+	with ESMTP id S1755538Ab1C1XSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 19:18:05 -0400
 Received: by mail-ww0-f44.google.com with SMTP id 36so4410093wwa.1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 16:18:06 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 16:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=ddnQ7MpsPLO7wzL9fFwjEUNFXx/IxPqM4whzU8zcqhU=;
-        b=S5lE1griiyzUmJmElNJJzFD71E91x3F0vIqv6y8d6N52YktoAPObdMKD2Y7khDi7Ew
-         TvFjRHFgtQ7vX4xbWKjEh1j1EYKL8taRq4AItCsQrzeSNkh903hTyikTTKEDjgp2Qcn+
-         uXHfPieRQrtQv4KgRgug8QYEtQNL6W6BTzflM=
+        bh=5DWr41Iw4IB3gyOYL/M25treWE4z8tg9KjvNKZeeUWw=;
+        b=mdx3FLzZBqvFHx2tN507wvTj0O6HOa3O0U1r0J7oGQZalmXejgRB38h+rBUnUMwfOW
+         CER7EiaYeRtAXSfChnJMQS0dP0CGgjnXklPjzrEKGIp+boFGfctVCo9LFOsyWZd2jIRy
+         lGWKZW3JzS0YSXEFaQbSSzRNgG+Sd/yYfOiZM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=qtkIt5rN0D5E9H/n5geR31PJwIMj8X+gCo4QpfKfwL019emFDuJUr7b7RqNVKq1gvg
-         L94timJRyicyuWQoU3z4t/TjCATWw9qwLBlrPAkRYWA9HJqfv3EllI1F4P2ehBamkwmJ
-         b0diotxI802sGNyyge8qjHf/qdjopLY1Bp0eE=
-Received: by 10.216.120.193 with SMTP id p43mr4095018weh.92.1301354286545;
-        Mon, 28 Mar 2011 16:18:06 -0700 (PDT)
+        b=RKVgPQ8FFnS6wAQb8l6Lsh8Lc1kh9nXURuEobfwneQ1/CPPAf140br0l5LA0+Nhl2T
+         q3ox07WXmminjClzxblCMrwXTAV3MvzQhwFYe0O/2FsSVG628MtfHkY1X1DJ0P2NClYS
+         ERQRUbuyJth09a917OJVa4fRktlzqUElRzFs8=
+Received: by 10.216.9.159 with SMTP id 31mr3505553wet.0.1301354284901;
+        Mon, 28 Mar 2011 16:18:04 -0700 (PDT)
 Received: from localhost.localdomain (5acc3aad.bb.sky.com [90.204.58.173])
-        by mx.google.com with ESMTPS id b54sm1678272wer.45.2011.03.28.16.18.04
+        by mx.google.com with ESMTPS id b54sm1678272wer.45.2011.03.28.16.18.03
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Mar 2011 16:18:05 -0700 (PDT)
+        Mon, 28 Mar 2011 16:18:04 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.2
 In-Reply-To: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170207>
 
-this adds the long forms %(authorname), %(committername),
-%(authoremail), and %(committeremail) to complement the existing
-placeholders %an, %ae, %cn, and %ce; and, :mailmap forms of each, eg:
-    %(authoremail:mailmap)
+this adds the long forms %(authordate) and %(committerdate) to
+complement the existing placeholders %ad, %aD, %ar, %at, %ai, %cd, %cC,
+%cr, %ct, and %ci. The specific format is specified as with --date, eg:
+	%(committerdate:rfc2822)
 
-The main purpose of this change is to match the format of the
-placeholders supported in git for-each-ref, though the optional :mailmap
-parameter seemed like a sensible extension.
-
-At this point we have enough "long form" placeholders to justify giving
-them their own section in the documentation, so we do.
+This change exists mostly to give a place for new date formatting
+options to go, though it also has the benefit of matching the format of
+the date placeholders in git for-each-ref.
 
 Signed-off-by: Will Palmer <wmpalmer@gmail.com>
 ---
- Documentation/pretty-formats.txt |   57 ++++++++++++++++++++++++++++----
- commit.h                         |    6 +--
- pretty.c                         |   68 ++++++++++++++++++++++++++++----------
- test-pretty.c                    |   14 +++++--
- 4 files changed, 112 insertions(+), 33 deletions(-)
+ Documentation/pretty-formats.txt |    4 ++
+ cache.h                          |    2 +
+ date.c                           |   58 +++++++++++++++++++++++++------------
+ pretty.c                         |   51 +++++++++++++++++++++++++++++----
+ test-pretty.c                    |   10 ++++++
+ 5 files changed, 100 insertions(+), 25 deletions(-)
 
 diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index dfb81a7..e9d6634 100644
+index d987102..dfb81a7 100644
 --- a/Documentation/pretty-formats.txt
 +++ b/Documentation/pretty-formats.txt
-@@ -97,7 +97,13 @@ The title was >>t4119: test autocomputing -p<n> for traditional diff input.<<
- 
- --------
- +
--The placeholders are:
-+The placeholders are divided into two categories, "short forms",
-+for quickly typing the more-common placeholders, and "long forms",
-+which may be more readable, and may support various additional
-+options.
-++
-+--
-+Short forms:
- 
- - '%H': commit hash
- - '%h': abbreviated commit hash
-@@ -114,8 +120,6 @@ The placeholders are:
+@@ -114,6 +114,8 @@ The placeholders are:
  - '%ar': author date, relative
  - '%at': author date, UNIX timestamp
  - '%ai': author date, ISO 8601 format
--- '%(authordate[:<format>])': author date. Without a <format>, the --date= option is respected.
--  Otherwise, a format of the type which can be specified via the --date= option is taken.
++- '%(authordate[:<format>])': author date. Without a <format>, the --date= option is respected.
++  Otherwise, a format of the type which can be specified via the --date= option is taken.
  - '%cn': committer name
  - '%cN': committer name (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
  - '%ce': committer email
-@@ -125,8 +129,6 @@ The placeholders are:
+@@ -123,6 +125,8 @@ The placeholders are:
  - '%cr': committer date, relative
  - '%ct': committer date, UNIX timestamp
  - '%ci': committer date, ISO 8601 format
--- '%(committerdate[:<format>])': committer date. Without a <format>, the --date= option is respected.
--  Otherwise, a format of the type which can be specified via the --date= option is taken.
++- '%(committerdate[:<format>])': committer date. Without a <format>, the --date= option is respected.
++  Otherwise, a format of the type which can be specified via the --date= option is taken.
  - '%d': ref names, like the --decorate option of linkgit:git-log[1]
  - '%e': encoding
  - '%s': subject
-@@ -142,20 +144,61 @@ The placeholders are:
- - '%Cblue': switch color to blue
- - '%Creset': reset color
- - '%C(...)': color specification, as described in color.branch.* config option
--- '%(color:...)': alternative form of %C(...)
- - '%m': left, right or boundary mark
- - '%n': newline
- - '%%': a raw '%'
- - '%x00': print a byte from a hex code
- - '%w([<w>[,<i1>[,<i2>]]])': switch line wrapping, like the -w option of
-   linkgit:git-shortlog[1].
--- '%(wrap:[<w>[,<i1>[,<i2>]]])': alternative form of %w(...)
-+
-+Long forms:
-+
-+- '%(authorname[:mailmap])':
-++
-+author name, optionally respecting .mailmap (see linkgit:git-shortlog[1]
-+or linkgit:git-blame[1]).
-+
-+- '%(authoremail[:mailmap])':
-++
-+author email, optionally respecting .mailmap (see linkgit:git-shortlog[1]
-+or linkgit:git-blame[1]).
-+
-+- '%(authordate[:<format>])':
-++
-+author date. Without a <format>, the --date= option is respected.
-+Otherwise, a format of the type which can be specified via the --date=
-+option is taken.
-+
-+- '%(committername[:mailmap])':
-++
-+committer name, optionally respecting .mailmap (see
-+linkgit:git-shortlog[1] or linkgit:git-blame[1]).
-+
-+- '%(committeremail[:mailmap])':
-++
-+committer email, optionally respecting .mailmap (see
-+linkgit:git-shortlog[1] or linkgit:git-blame[1]).
-+
-+- '%(committerdate[:<format>])':
-++
-+committer date. Without a <format>, the --date= option is respected.
-+Otherwise, a format of the type which can be specified via the --date=
-+option is taken.
-+
-+- '%(color:[<spec>])':
-++
-+color specification, as described in color.branch.* config option.
-+
-+- '%(wrap:[<w>[,<i1>[,<i2>]]])':
-++
-+switch line wrapping, like the -w option of linkgit:git-shortlog[1].
+diff --git a/cache.h b/cache.h
+index fa564fa..b769cf8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -829,6 +829,8 @@ void datestamp(char *buf, int bufsize);
+ #define approxidate(s) approxidate_careful((s), NULL)
+ unsigned long approxidate_careful(const char *, int *);
+ unsigned long approxidate_relative(const char *date, const struct timeval *now);
++#define DATE_FORMAT_MAX 9 /* strlen("relative") + 1 */
++size_t parse_date_format_len(const char *format, enum date_mode *dmode);
+ enum date_mode parse_date_format(const char *format);
  
- NOTE: Some placeholders may depend on other options given to the
- revision traversal engine. For example, the `%g*` reflog options will
- insert an empty string unless we are traversing reflog entries (e.g., by
- `git log -g`). The `%d` placeholder will use the "short" decoration
- format if `--decorate` was not already provided on the command line.
-+--
- 
- If you add a `{plus}` (plus sign) after '%' of a placeholder, a line-feed
- is inserted immediately before the expansion if and only if the
-diff --git a/commit.h b/commit.h
-index fff1225..a175444 100644
---- a/commit.h
-+++ b/commit.h
-@@ -95,14 +95,10 @@ enum format_part_type {
- 	FORMAT_PART_TREE_HASH_ABBREV,
- 
- 	FORMAT_PART_AUTHOR_NAME,
--	FORMAT_PART_AUTHOR_NAME_MAILMAP,
- 	FORMAT_PART_AUTHOR_EMAIL,
--	FORMAT_PART_AUTHOR_EMAIL_MAILMAP,
- 	FORMAT_PART_AUTHOR_DATE,
- 	FORMAT_PART_COMMITTER_NAME,
--	FORMAT_PART_COMMITTER_NAME_MAILMAP,
- 	FORMAT_PART_COMMITTER_EMAIL,
--	FORMAT_PART_COMMITTER_EMAIL_MAILMAP,
- 	FORMAT_PART_COMMITTER_DATE,
- 
- 	FORMAT_PART_DECORATE,
-@@ -130,6 +126,7 @@ enum format_part_magic {
- 
- enum format_arg_type {
- 	FORMAT_ARG_UINT,
-+	FORMAT_ARG_BOOLEAN,
- 	FORMAT_ARG_DATE_MODE
- };
- 
-@@ -137,6 +134,7 @@ struct format_arg {
- 	enum format_arg_type type;
- 	union {
- 		unsigned long uint;
-+		int boolean : 1;
- 		enum date_mode dmode;
- 	};
- };
-diff --git a/pretty.c b/pretty.c
-index 006bbe3..ef6c3c1 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -90,6 +90,16 @@ static void part_add_arg_date_mode(struct format_part *part,
- 	return;
+ #define IDENT_WARN_ON_NO_NAME  1
+diff --git a/date.c b/date.c
+index ce48220..1834ab6 100644
+--- a/date.c
++++ b/date.c
+@@ -659,28 +659,48 @@ int parse_date(const char *date, char *result, int maxlen)
+ 	return date_string(timestamp, offset, result, maxlen);
  }
  
-+static void part_add_arg_boolean(struct format_part *part, int value)
++size_t parse_date_format_len(const char *format, enum date_mode *dmode)
 +{
-+	part->args = xrealloc(part->args,
-+			      sizeof(struct format_arg) * (part->argc+1));
-+	part->args[part->argc].type = FORMAT_ARG_BOOLEAN;
-+	part->args[part->argc].boolean = value ? 1 : 0;
-+	part->argc++;
-+	return;
++	if (!strcmp(format, "relative")) {
++		*dmode = DATE_RELATIVE;
++		return 8;
++	} else if (!strcmp(format, "iso8601")) {
++		*dmode = DATE_ISO8601;
++		return 7;
++	} else if (!strcmp(format, "iso")) {
++		*dmode = DATE_ISO8601;
++		return 3;
++	} else if (!strcmp(format, "rfc2822")) {
++		*dmode = DATE_RFC2822;
++		return 7;
++	} else if (!strcmp(format, "rfc")) {
++		*dmode = DATE_RFC2822;
++		return 3;
++	} else if (!strcmp(format, "short")) {
++		*dmode = DATE_SHORT;
++		return 5;
++	} else if (!strcmp(format, "local")) {
++		*dmode = DATE_LOCAL;
++		return 5;
++	} else if (!strcmp(format, "default")) {
++		*dmode = DATE_NORMAL;
++		return 7;
++	} else if (!strcmp(format, "raw")) {
++		*dmode = DATE_RAW;
++		return 3;
++	} else if (!strcmp(format, "unix")) {
++		*dmode = DATE_UNIX;
++		return 4;
++	} else
++		return 0;
 +}
 +
- /*
- * Parse a single argument of an extended format, up to the next delimiter
- * ie: up to ',' or ')'
-@@ -165,6 +175,31 @@ static struct format_part *parse_extended(const char *unparsed)
- 				goto fail;
- 			goto success;
- 		}
-+		if (!prefixcmp(c, "name") || !prefixcmp(c, "email")) {
-+			if (*c == 'n') { /* name */
-+				part->type = (*e == 'a') ? FORMAT_PART_AUTHOR_NAME :
-+							   FORMAT_PART_COMMITTER_NAME;
-+				c += 4;
-+			} else { /* email */
-+				part->type = (*e == 'a') ? FORMAT_PART_AUTHOR_EMAIL :
-+							   FORMAT_PART_COMMITTER_EMAIL;
-+				c += 5;
-+			}
+ enum date_mode parse_date_format(const char *format)
+ {
+-	if (!strcmp(format, "relative"))
+-		return DATE_RELATIVE;
+-	else if (!strcmp(format, "iso8601") ||
+-		 !strcmp(format, "iso"))
+-		return DATE_ISO8601;
+-	else if (!strcmp(format, "rfc2822") ||
+-		 !strcmp(format, "rfc"))
+-		return DATE_RFC2822;
+-	else if (!strcmp(format, "short"))
+-		return DATE_SHORT;
+-	else if (!strcmp(format, "local"))
+-		return DATE_LOCAL;
+-	else if (!strcmp(format, "default"))
+-		return DATE_NORMAL;
+-	else if (!strcmp(format, "raw"))
+-		return DATE_RAW;
+-	else if (!strcmp(format, "unix"))
+-		return DATE_UNIX;
+-	else
++	enum date_mode dmode;
++	if (!parse_date_format_len(format, &dmode))
+ 		die("unknown date format %s", format);
++	return dmode;
+ }
+ 
+ void datestamp(char *buf, int bufsize)
+diff --git a/pretty.c b/pretty.c
+index 616b857..006bbe3 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -102,19 +102,38 @@ const char *parse_arg(struct format_part *part, enum format_arg_type type,
+ 	struct format_arg arg = {0};
+ 	const char *c = unparsed;
+ 	char *t;
++	size_t len;
++	char date_format[DATE_FORMAT_MAX];
+ 
+-	if (type != FORMAT_ARG_UINT)
+-		return NULL;
+ 	arg.type = type;
+ 
+ 	c += strspn(c, WHITESPACE);
+-	if (isdigit(*c)) {
+-		arg.uint = strtoul(c, &t, 10);
+-		c = t + strspn(t, WHITESPACE);
 +
-+			strspn(c, WHITESPACE);
++	switch (type){
++	case FORMAT_ARG_UINT:
++		if (isdigit(*c)) {
++			arg.uint = strtoul(c, &t, 10);
++			c = t;
++		}
++		break;
++	case FORMAT_ARG_DATE_MODE:
++		len = strcspn(c, WHITESPACE ",)");
++		if (len >= DATE_FORMAT_MAX)
++			return NULL;
++		strncpy(date_format, c, len);
++		len = parse_date_format_len(date_format, &arg.dmode);
++		if (!len)
++			return NULL;
++		c += len;
++		break;
++	default:
++		return NULL;
+ 	}
++
++	c += strspn(c, WHITESPACE);
+ 	if (*c == ',' || *c == ')'){
+ 		ALLOC_GROW(part->args, part->argc+1, part->args_alloc);
+-		memcpy(&(part->args[part->argc]), &arg,
++		memcpy(&part->args[part->argc], &arg,
+ 		       sizeof(struct format_arg));
+ 		part->argc++;
+ 		return c;
+@@ -130,6 +149,26 @@ static struct format_part *parse_extended(const char *unparsed)
+ 
+ 	c += strspn(c, WHITESPACE);
+ 
++	if (!prefixcmp(c, "author") || !prefixcmp(c, "committer")) {
++		e = c;
++		c += (*e == 'a') ? 6 : 9;
++		if (!prefixcmp(c, "date")) {
++			part->type = (*e == 'a') ? FORMAT_PART_AUTHOR_DATE :
++						   FORMAT_PART_COMMITTER_DATE;
++			c += 4 + strspn(c + 4, WHITESPACE);
 +			if (*c == ')')
 +				goto success;
 +			if (*c != ':')
 +				goto fail;
-+			c += 1 + strspn(c + 1, WHITESPACE);
-+			if (!prefixcmp(c, "mailmap")) {
-+				part_add_arg_boolean(part, 1);
-+				c += 7 + strspn(c + 7, WHITESPACE);
-+				if (*c == ')')
-+					goto success;
-+			}
-+			goto fail;
++			c = parse_arg(part, FORMAT_ARG_DATE_MODE, c+1);
++			if (!c)
++				goto fail;
++			goto success;
 +		}
- 
- 		c = e;
- 	}
-@@ -285,13 +320,15 @@ static struct format_part *parse_special(const char *unparsed)
- 			part->type = FORMAT_PART_AUTHOR_NAME;
- 			return part;
- 		case 'N':
--			part->type = FORMAT_PART_AUTHOR_NAME_MAILMAP;
-+			part->type = FORMAT_PART_AUTHOR_NAME;
-+			part_add_arg_boolean(part, 1);
- 			return part;
- 		case 'e':
- 			part->type = FORMAT_PART_AUTHOR_EMAIL;
- 			return part;
- 		case 'E':
--			part->type = FORMAT_PART_AUTHOR_EMAIL_MAILMAP;
-+			part->type = FORMAT_PART_AUTHOR_EMAIL;
-+			part_add_arg_boolean(part, 1);
- 			return part;
- 		case 'd':
- 			part->type = FORMAT_PART_AUTHOR_DATE;
-@@ -321,13 +358,15 @@ static struct format_part *parse_special(const char *unparsed)
- 			part->type = FORMAT_PART_COMMITTER_NAME;
- 			return part;
- 		case 'N':
--			part->type = FORMAT_PART_COMMITTER_NAME_MAILMAP;
-+			part->type = FORMAT_PART_COMMITTER_NAME;
-+			part_add_arg_boolean(part, 1);
- 			return part;
- 		case 'e':
- 			part->type = FORMAT_PART_COMMITTER_EMAIL;
- 			return part;
- 		case 'E':
--			part->type = FORMAT_PART_COMMITTER_EMAIL_MAILMAP;
-+			part->type = FORMAT_PART_COMMITTER_EMAIL;
-+			part_add_arg_boolean(part, 1);
- 			return part;
- 		case 'd':
- 			part->type = FORMAT_PART_COMMITTER_DATE;
-@@ -976,10 +1015,11 @@ static void format_person_part(struct strbuf *sb, struct format_part *part,
- 		return;
- 	end = mail_end-msg;
- 
--	if (part->type == FORMAT_PART_AUTHOR_NAME_MAILMAP ||
--	    part->type == FORMAT_PART_AUTHOR_EMAIL_MAILMAP ||
--	    part->type == FORMAT_PART_COMMITTER_NAME_MAILMAP ||
--	    part->type == FORMAT_PART_COMMITTER_EMAIL_MAILMAP) {
-+	if ((part->type == FORMAT_PART_AUTHOR_NAME ||
-+	     part->type == FORMAT_PART_AUTHOR_EMAIL ||
-+	     part->type == FORMAT_PART_COMMITTER_NAME ||
-+	     part->type == FORMAT_PART_COMMITTER_EMAIL) &&
-+	    part->argc && part->args[0].boolean) { /* mailmap */
- 		/* copy up to, and including, the end delimiter */
- 		strlcpy(person_name, name_start, name_len+1);
- 		strlcpy(person_mail, mail_start, mail_len+1);
-@@ -990,16 +1030,12 @@ static void format_person_part(struct strbuf *sb, struct format_part *part,
- 		mail_len = strlen(person_mail);
- 	}
- 	if (part->type == FORMAT_PART_AUTHOR_NAME ||
--	    part->type == FORMAT_PART_AUTHOR_NAME_MAILMAP ||
--	    part->type == FORMAT_PART_COMMITTER_NAME ||
--	    part->type == FORMAT_PART_COMMITTER_NAME_MAILMAP) {
-+	    part->type == FORMAT_PART_COMMITTER_NAME) {
- 		strbuf_add(sb, name_start, name_len);
- 		return;
- 	}
- 	if (part->type == FORMAT_PART_AUTHOR_EMAIL ||
--	    part->type == FORMAT_PART_AUTHOR_EMAIL_MAILMAP ||
--	    part->type == FORMAT_PART_COMMITTER_EMAIL ||
--	    part->type == FORMAT_PART_COMMITTER_EMAIL_MAILMAP) {
-+	    part->type == FORMAT_PART_COMMITTER_EMAIL) {
- 		strbuf_add(sb, mail_start, mail_len);
- 		return;
- 	}
-@@ -1338,17 +1374,13 @@ void format_commit_message_part(struct format_part *part,
- 
- 	switch (part->type) {
- 	case FORMAT_PART_AUTHOR_NAME:
--	case FORMAT_PART_AUTHOR_NAME_MAILMAP:
- 	case FORMAT_PART_AUTHOR_EMAIL:
--	case FORMAT_PART_AUTHOR_EMAIL_MAILMAP:
- 	case FORMAT_PART_AUTHOR_DATE:
- 		format_person_part(sb, part, commit->buffer + c->author.off,
- 				   c->author.len, c->pretty_ctx->date_mode);
- 		return;
- 	case FORMAT_PART_COMMITTER_NAME:
--	case FORMAT_PART_COMMITTER_NAME_MAILMAP:
- 	case FORMAT_PART_COMMITTER_EMAIL:
--	case FORMAT_PART_COMMITTER_EMAIL_MAILMAP:
- 	case FORMAT_PART_COMMITTER_DATE:
- 		format_person_part(sb, part, commit->buffer + c->committer.off,
- 				   c->committer.len, c->pretty_ctx->date_mode);
++
++		c = e;
++	}
++
+ 	if (!prefixcmp(c, "color")) {
+ 		part->type = FORMAT_PART_LITERAL;
+ 		c += 5 + strspn(c + 5, WHITESPACE);
 diff --git a/test-pretty.c b/test-pretty.c
-index 6a92c65..f9d44fa 100644
+index eb88e3a..6a92c65 100644
 --- a/test-pretty.c
 +++ b/test-pretty.c
-@@ -19,11 +19,15 @@ static const char *all = "a"
+@@ -19,6 +19,16 @@ static const char *all = "a"
  "%m%w()%w(1)%w(1,2)%w(1,2,3)"
  "%(wrap)%(wrap:1)%(wrap:1,2)%(wrap:1,2,3)"
  "%(color)%(color:red)%(color:red bold)%(color:red green bold)"
-+"%(authorname)%(authorname:mailmap)"
-+"%(authoremail)%(authoremail:mailmap)"
- "%(authordate)%(authordate:default)%(authordate:relative)"
- "%(authordate:short)%(authordate:local)"
- "%(authordate:iso8601)%(authordate:iso)"
- "%(authordate:rfc2822)%(authordate:rfc)"
- "%(authordate:unix)%(authordate:raw)"
-+"%(committername)%(committername:mailmap)"
-+"%(committeremail)%(committeremail:mailmap)"
- "%(committerdate)%(committerdate:default)%(committerdate:relative)"
- "%(committerdate:short)%(committerdate:local)"
- "%(committerdate:iso8601)%(committerdate:iso)"
-@@ -46,14 +50,10 @@ static struct strbuf *parts_debug(struct format_parts *parts,
- 		{FORMAT_PART_TREE_HASH, "TREE_HASH"},
- 		{FORMAT_PART_TREE_HASH_ABBREV, "TREE_HASH_ABBREV"},
- 		{FORMAT_PART_AUTHOR_NAME, "AUTHOR_NAME"},
--		{FORMAT_PART_AUTHOR_NAME_MAILMAP, "AUTHOR_NAME_MAILMAP"},
- 		{FORMAT_PART_AUTHOR_EMAIL, "AUTHOR_EMAIL"},
--		{FORMAT_PART_AUTHOR_EMAIL_MAILMAP, "AUTHOR_EMAIL_MAILMAP"},
- 		{FORMAT_PART_AUTHOR_DATE, "AUTHOR_DATE"},
- 		{FORMAT_PART_COMMITTER_NAME, "COMMITTER_NAME"},
--		{FORMAT_PART_COMMITTER_NAME_MAILMAP, "COMMITTER_NAME_MAILMAP"},
- 		{FORMAT_PART_COMMITTER_EMAIL, "COMMITTER_EMAIL"},
--		{FORMAT_PART_COMMITTER_EMAIL_MAILMAP, "COMMITTER_EMAIL_MAILMAP"},
- 		{FORMAT_PART_COMMITTER_DATE, "COMMITTER_DATE"},
++"%(authordate)%(authordate:default)%(authordate:relative)"
++"%(authordate:short)%(authordate:local)"
++"%(authordate:iso8601)%(authordate:iso)"
++"%(authordate:rfc2822)%(authordate:rfc)"
++"%(authordate:unix)%(authordate:raw)"
++"%(committerdate)%(committerdate:default)%(committerdate:relative)"
++"%(committerdate:short)%(committerdate:local)"
++"%(committerdate:iso8601)%(committerdate:iso)"
++"%(committerdate:rfc2822)%(committerdate:rfc)"
++"%(committerdate:unix)%(committerdate:raw)"
+ "%x0a%n%%%@";
  
- 		{FORMAT_PART_DECORATE, "DECORATE"},
-@@ -155,6 +155,12 @@ static struct strbuf *parts_debug(struct format_parts *parts,
- 					strbuf_addstr(buf, "UINT:");
- 					strbuf_addf(buf, "%lu", part->args[j].uint);
- 					break;
-+				case FORMAT_ARG_BOOLEAN:
-+					strbuf_addstr(buf, "BOOLEAN:");
-+					strbuf_addstr(buf,
-+						      part->args[j].boolean ?
-+						       "TRUE" : "FALSE");
-+					break;
- 				case FORMAT_ARG_DATE_MODE:
- 					strbuf_addstr(buf, "DATE_MODE:");
- 					switch(part->args[j].dmode){
+ static struct strbuf *parts_debug(struct format_parts *parts,
 -- 
 1.7.4.2
