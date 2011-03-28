@@ -1,130 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git svn mkdirs" is very slow
-Date: Mon, 28 Mar 2011 10:44:15 -0700
-Message-ID: <7vhbanywb4.fsf@alter.siamese.dyndns.org>
-References: <4D90A3AA.3050601@alum.mit.edu>
+From: Andrew Garber <andrew@andrewgarber.com>
+Subject: Re: Why can't I use git-bisect to find the first *good* commit?
+Date: Mon, 28 Mar 2011 13:45:29 -0400
+Message-ID: <AANLkTimT+WN2F-BmQzQrAs3uizHig9cCXDUdc7nQ-vC5@mail.gmail.com>
+References: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com>
+ <AANLkTin1QCda9BV+gND1kcXRTZBF7hj3Chce5OkLX2a9@mail.gmail.com>
+ <4D909DD1.2050904@viscovery.net> <AANLkTinC9Lr9uCTUZSVxVR56+FQm2NGRpPu90fm9OHF5@mail.gmail.com>
+ <vpq62r3i1z4.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 28 19:44:34 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Mar 28 19:45:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4GUR-0008RO-JE
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 19:44:32 +0200
+	id 1Q4GVq-0000ck-0F
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 19:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753715Ab1C1Ro0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 13:44:26 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41083 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751347Ab1C1RoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 13:44:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1AF5649E4;
-	Mon, 28 Mar 2011 13:46:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KaBjzyfO2to+gEGWPKBHzpckCc0=; b=VeBSQl
-	Cz8AZqa2ITq29jPRrXVtDgfH/dRLbVY+gnMKgGAnV+E/PFPYANH4XirOLGLnFWsI
-	D2YGSH//Z72HZri7eb+Qb0w1igcAiCVBXvP+bo7Itwn76K6eYT+b8yB4zU3xXpQx
-	K0JCUfV/HWtlEPeeeKzi3A0qxfBXzgQmrRpfQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vJTNw4hqu3YD6hOnlrt6ZGiyVd56hhxi
-	oQS6WBZkJtZ1iU35LHCv7Am9JYJbrCGOaqdq9H0U50qU8FLPQZMUAsS20ogpsMMh
-	E8ps93U/I7D9wKCGMBK5WeYqPtM/gTUc/Qjj5Znn2cPkKzaVWlSrqUJ4PeNEQ63y
-	RNMFGsw0vcg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EDA0149E3;
-	Mon, 28 Mar 2011 13:46:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E8EC349E2; Mon, 28 Mar 2011
- 13:46:03 -0400 (EDT)
-In-Reply-To: <4D90A3AA.3050601@alum.mit.edu> (Michael Haggerty's message of
- "Mon, 28 Mar 2011 17:05:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 423B51CE-5963-11E0-AB79-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755266Ab1C1Rpv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2011 13:45:51 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:65209 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755240Ab1C1Rpu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2011 13:45:50 -0400
+Received: by eyx24 with SMTP id 24so1235621eyx.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 10:45:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Cu+ifH9JgFGWlYmMH75UEbeWLO5GY0qo706Xr/i0l5o=;
+        b=a+Vj2VsI2sDOoxXhJuckL1cuN6j/kxUop68UHgcppPl50KgkrZR9Gw7s9ltvNMnyZD
+         VF7bnm58yK5oORTbOpyqkmgBAat1o/+ttnjJX0it0bw1gsLrkVhsWvcDdk658NCbdw72
+         aofgVLXSicIfi2Zick2fCSnLkV4IEkC24isXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=XdNxMzYep5n9zEnIeUtSBkCqTcxNUQLPaqW5cHLej06E5ZQfWvLDAZ+5PJX3uutttS
+         HZrzXIwgWhMbjYR20d5mDp8Oo81isup8qy7J4AMAh7X/Qk8p4qYBiR75/34MF1s2O5T6
+         Rjeqko6mzsFm8EuoP/GLFW14gGVyhpkffZTuM=
+Received: by 10.213.104.103 with SMTP id n39mr1914185ebo.144.1301334349122;
+ Mon, 28 Mar 2011 10:45:49 -0700 (PDT)
+Received: by 10.213.105.76 with HTTP; Mon, 28 Mar 2011 10:45:29 -0700 (PDT)
+In-Reply-To: <vpq62r3i1z4.fsf@bauges.imag.fr>
+X-Google-Sender-Auth: 21Xx3ymzlgg348QnCcGO0kzMqZA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170166>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+If branch bar is broken, do a bisect on branch bar. The fact that
+branch foo works in inconsequential.
 
-> So I
-> wanted to implement the following feature:
+On Mon, Mar 28, 2011 at 1:33 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Andrew Garber <andrew@andrewgarber.com> writes:
 >
-> 1. An svn.autoMkdirs / svn-remote.<name>.autoMkdirs configuration
-> variable.  The value should default to true for backwards compatibility.
+>> On Mon, Mar 28, 2011 at 10:40 AM, Johannes Sixt <j.sixt@viscovery.ne=
+t> wrote:
+>>
+>>> =C2=A0 =C2=A0 =C2=A0o--o--o--B
+>>> =C2=A0 =C2=A0 /
+>>> =C2=A0--o--o--o--o--G
+>>>
+>>> When I have this history and I mark B as bad and G as good, will I =
+now
+>>> find the first bad or the first good commit?
+>>
+>> That kind of situation shouldn't occur: IMO, bisect should only deal
+>> with a single branch (the current branch).
 >
-> 2. Only call mkemptydirs() if this variable is set to true.
+> Why?
 >
-> 3. Make an exception for "git svn mkdirs", which should do its thing
-> regardless of how this configuration option is set.
+> It's not uncommon in real life to face the "it works in branch foo bu=
+t
+> not in branch bar, where did it break?" problem. And one expects a gr=
+eat
+> tool such as Git to be able to answer it.
 >
-> I think it should only be about a 10-line change, plus documentation and
-> tests.  Unfortunately, my perl-foo is very limited, and it will take me
-> a while to figure out how option parsing and handling works in git-svn.
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
 >
-> Would this feature be welcome?
->
-> Is there anybody willing to make the Perl changes?  I would be willing
-> to work on the documentation and test suite changes.
-
-Sounds like a sensible thing to do, but I wonder if we also want a command
-line option --automkdirs (or --auto-create-empty-directories) in %fc_opts
-to make it overridable from the command line.  Perhaps it is not worth it.
-
-A completely untested patch is here.
-
- git-svn.perl |   18 ++++++++++++++++--
- 1 files changed, 16 insertions(+), 2 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index a5857c1..fe4c716 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -781,6 +781,16 @@ sub cmd_find_rev {
- 	print "$result\n" if $result;
- }
- 
-+sub auto_create_empty_directories {
-+	my ($gs) = @_;
-+	my $var = eval { command_oneline('config', '--get', '--bool',
-+					 "svn-remote.$gs->{repo_id}.automkdirs") };
-+	# By default, create empty directories by consulting the unhandled log,
-+	# but allow setting it to 'false' to skip it.  I wonder if the variable
-+	# should be "skip create empty directories", though...
-+	return !($var && $var eq 'false');
-+}
-+
- sub cmd_rebase {
- 	command_noisy(qw/update-index --refresh/);
- 	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
-@@ -804,7 +814,9 @@ sub cmd_rebase {
- 		$_fetch_all ? $gs->fetch_all : $gs->fetch;
- 	}
- 	command_noisy(rebase_cmd(), $gs->refname);
--	$gs->mkemptydirs;
-+	if (auto_create_empty_directories($gs)) {
-+		$gs->mkemptydirs;
-+	}
- }
- 
- sub cmd_show_ignore {
-@@ -1242,7 +1254,9 @@ sub post_fetch_checkout {
- 	command_noisy(qw/read-tree -m -u -v HEAD HEAD/);
- 	print STDERR "Checked out HEAD:\n  ",
- 	             $gs->full_url, " r", $gs->last_rev, "\n";
--	$gs->mkemptydirs($gs->last_rev);
-+	if (auto_create_empty_directories($gs)) {
-+		$gs->mkemptydirs($gs->last_rev);
-+	}
- }
- 
- sub complete_svn_url {
