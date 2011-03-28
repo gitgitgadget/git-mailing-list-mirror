@@ -1,130 +1,72 @@
-From: Robert David <robert.david.public@gmail.com>
-Subject: Re: GSOC idea: build in scripts and cleanups
-Date: Mon, 28 Mar 2011 10:55:22 +0200
-Organization: DDM Praha
-Message-ID: <201103281055.23578.robert.david.public@gmail.com>
-References: <201103260141.20798.robert.david.public@gmail.com> <20110326021435.GA2352@elie> <20110326133939.GB2859@sigill.intra.peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Why can't I use git-bisect to find the first *good* commit?
+Date: Mon, 28 Mar 2011 11:32:21 +0200
+Message-ID: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart10413659.b6ifYWBI83";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 28 10:55:42 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 28 11:32:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q48Eg-0007ML-7e
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 10:55:42 +0200
+	id 1Q48oK-0004nm-DI
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 11:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753661Ab1C1Iza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 04:55:30 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:52466 "EHLO
+	id S1751869Ab1C1JcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 05:32:25 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:35485 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753642Ab1C1Iz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 04:55:28 -0400
-Received: by fxm17 with SMTP id 17so2451836fxm.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 01:55:27 -0700 (PDT)
+	with ESMTP id S1750921Ab1C1JcW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 05:32:22 -0400
+Received: by fxm17 with SMTP id 17so2474186fxm.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 02:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:organization:to:subject:date:user-agent:cc
-         :references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=NNGWLpCasVy+kOJZSBwYW2hnTR4vOua7vHrxc7zvDhY=;
-        b=dhseRf8vUsfnEk/R3GpHzhz8w1qVUekmxXwN+4FS1nO8JbzlKldUajZHyq/7PSWeQa
-         3aj8YwDcbE29Mr4lZnKKZLEh0WPPwUfvzZl6bv2cl9l+RrqDvKiycuob6stLcnT45qx9
-         xTrkwkJxIjryNWrcinasRt1NpMu9G55wIl4mc=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=BcN1ZNSq89jhY7puKf/En0AhLos9YxCGh6zrimCz8gQ=;
+        b=DLOJhl/wcZQ/+T7QiYRx1HiYFH9qree5kxLZOLPJYKKRaBFUYmSD9gllXafRDB0GUm
+         qLDKPyE7W7U71wNBfIXGVU3Zo0P+0HYjVm4TZ3nW4vG6RHvjV+2txO17wAmgPlDFwkLG
+         8Brdz38ix6XXWhrIFxabN5h8RxBfFJudUTpGY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        b=IvyPyTOgINzqeIkrAeUrbo5N2fe0bszGlfskoqKb2bY+Xh4sMzocxzEb3spf1rLQRe
-         P3lhIC5K0ddnxNML+ESf5FlK8fyX07PS/53dC1dAuZkaB9AxJmOEa2l7a5c7PtfDvgVc
-         aBH3hI7xGMM2Mn3Iisp2n7yl+oAjUyxzcopDc=
-Received: by 10.223.86.2 with SMTP id q2mr4135470fal.120.1301302527602;
-        Mon, 28 Mar 2011 01:55:27 -0700 (PDT)
-Received: from robert-eee.localnet (gate.chabry.cz [80.92.246.13])
-        by mx.google.com with ESMTPS id n1sm1359562fam.40.2011.03.28.01.55.25
-        (version=SSLv3 cipher=OTHER);
-        Mon, 28 Mar 2011 01:55:25 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-686; KDE/4.4.5; i686; ; )
-In-Reply-To: <20110326133939.GB2859@sigill.intra.peff.net>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=ph791YDeDNiEMmXtzo57k/W5k/5tDVlG0XAB+YV6/dQETC2SxQzSCjwhN1Tl7SatVK
+         cLst8rytzDY0HSPaTfRqya8FOQrW8Zal2FDAUdw2FpnpauJm6tVfIsLJc4yxFfn3pXaz
+         uY6T8N7dcnuOko8uEJUQW77dJFMLsxAiCHF8E=
+Received: by 10.223.112.83 with SMTP id v19mr4108192fap.122.1301304741332;
+ Mon, 28 Mar 2011 02:32:21 -0700 (PDT)
+Received: by 10.223.93.196 with HTTP; Mon, 28 Mar 2011 02:32:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170113>
 
---nextPart10413659.b6ifYWBI83
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Something was broken a 100 revisions ago, has now been fixed, but I
+want to find when it was fixed.
 
-Dne sobota 26 b=C5=99ezna 2011 14:39:39 Jeff King napsal(a):
-> On Fri, Mar 25, 2011 at 09:14:35PM -0500, Jonathan Nieder wrote:
-> > > I was also thinking if there isn't PERL a better choice in rewriting
-> > > shell scripts, due to planed porting (android, etc). Better than C.
-> > > But I don't know android and other platform so much, so thats why I'm
-> > > asking.
-> >=20
-> > So far (on Windows and various Unixen) it seems that C is much easier
-> > to work with as far as porting goes.[2]
->=20
-> If I were considering cleaning up and porting add--interactive to C, I
-> think I would probably start with just porting the "-p" patch loop
-> first. I think it's the part that most people use, and most callers
-> don't support a generic "-i" but just the "-p" interface (e.g., you can
-> do "git add -i" or "git add -p", but only "git checkout -p"). And that
-> cuts down the size of the task somewhat.
+I'd expect this to work:
 
-I have read all the code in git-add--interactive. If I understand that=20
-correct, you mean to separate -i and -p int two different commands.
-And make the -p option more like the -i (but just only for patching).
+    $ git bisect start
+    $ git bisect good
+    $ git bisect bad HEAD~100
+    Some good revs are not ancestor of the bad rev.
+    git bisect cannot work properly in this case.
+    Maybe you mistake good and bad revs?
 
-And consequently port them to C.=20
+But instead I have to do:
 
->=20
-> As far as cleanup versus features, I think Thomas would have to comment
-> on that. He is the one who did the most work on patch-mode, and
-> therefore the one who most thinks it needs cleaned up. :)
->=20
+    $ git bisect start
+    $ git bisect bad
+    $ git bisect good HEAD~100
 
-Is Thomas going to be a mentor in this task?
+And then proceed to mark good revisions as bad, and bad revisions as
+good.
 
-Robert David.
+That works, but it's very confusing.
 
-
-> > [1] Android is an odd example because the platform uses Java heavily
-> > (so JGit might be a better fit for it).  Perhaps the wish for android
-> > support should have been put on the Eclipse ideas page[2] and a link
-> > added to git's; I dunno.
->=20
-> Yeah, I'm not sure what an Android port would quite look like. In theory
-> I could probably build stock git for my rooted N1 using a
-> cross-compiler. But I can't imagine what I would use it for. A native
-> app seems like it would be more useful, and that pretty much requires
-> Java.
->=20
-> -Peff
-
---nextPart10413659.b6ifYWBI83
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iF4EABEIAAYFAk2QTPsACgkQLSNWchw0XGxhBAEAjNpLygHlNudO773qCIaiNeXC
-d0D9rimQSPCSEgIDIzQA/1Ru2+mMH6b6cPK85jL77JBJwtp9KrkdzdFKAyopIwc+
-=7xv0
------END PGP SIGNATURE-----
-
---nextPart10413659.b6ifYWBI83--
+Why can't bisect just do the right thing here and accept that your
+more recent revesion is the good one, and the old one is the bad one?
