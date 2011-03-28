@@ -1,153 +1,143 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC] tests: use the --long-tests facility to toggle some slow
- tests
-Date: Sun, 27 Mar 2011 18:00:25 -0500
-Message-ID: <20110327230025.GD27445@elie>
-References: <4D8FAAAC.3050905@web.de>
- <20110327213756.GD25927@elie>
- <4D8FB995.20001@web.de>
+Subject: Re: GSoC questions
+Date: Sun, 27 Mar 2011 19:11:53 -0500
+Message-ID: <20110328001152.GA11294@elie>
+References: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 28 01:01:52 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, libgit2@librelist.org,
+	Jeff King <peff@peff.net>
+To: Alexandru Sutii <sutii.alex@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 02:12:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q3yxx-0002Re-OC
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 01:01:50 +0200
+	id 1Q4040-0007cL-Nz
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 02:12:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932Ab1C0XBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2011 19:01:25 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:39143 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752084Ab1C0XAe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Mar 2011 19:00:34 -0400
-Received: by iyb14 with SMTP id 14so2501891iyb.19
-        for <git@vger.kernel.org>; Sun, 27 Mar 2011 16:00:33 -0700 (PDT)
+	id S1751956Ab1C1AMA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Mar 2011 20:12:00 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:41265 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751262Ab1C1AL7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Mar 2011 20:11:59 -0400
+Received: by yia27 with SMTP id 27so996112yia.19
+        for <git@vger.kernel.org>; Sun, 27 Mar 2011 17:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=pQy+SBrzQ/nIk2Raw1XtcRkfrH2YjD9weFGFEb1E4Ks=;
-        b=uHvsdTjSIurYasY2bkjNACMixzwOmg4bq9Zyx+Aj+RBv1vRxUJg2GM7Z7L4k7dkqb1
-         A7gBIorvhhVbW6y3vP33Rr/er6H9+xhYIpc1ZgEOu9E/6saylBax51w/XtOjL7XGbzJo
-         R7q14FsUHyA7Ym/VbM9dvuUi4ZWqUvGkwLWHA=
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=6+O+QfYRwIIx+5mD0zo+w3Qk6ISaZIipGO00pfpE+EQ=;
+        b=XybE9eK4RVeubtTICNcHosgSHiox1SpTb9pVNw9xJFnKMgjryoqmxQ6ZQgmI+8azBU
+         NpfVPLOLbVObSKMiWXMntgZwqecd6Ph8ZpkhijJP0HI46zPg0e1njr3IGdMAjEWAlEWD
+         m7gEO9XnbDbF6nsGl8U7jxGWwgE3vviYd5De8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vVYwhGigDCCewsgBVnUFyoq7FDZmhrLV4g2uwqO8xLvDjkEvo9qyqkd10deb9VX+w/
-         ykSNVx6+SWTHploLDeihAmwID0uGFcOFhFFhoL/ewOV2LtOAfOVdWSpezFF3fnM0mApj
-         hg5OccyZF3Am6JUh9O82K4nAhv2G6vMeMawwo=
-Received: by 10.42.156.70 with SMTP id y6mr5119747icw.524.1301266833592;
-        Sun, 27 Mar 2011 16:00:33 -0700 (PDT)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=hvsp0+R73KqkHVt4GDqt2rrn/ufy7Pzb5kO61RGtF+k8g2WK0aH7VfvqdxuDBBRwX1
+         +3q1WncEsLSMmB4gR+FAYEVKXddVP+Tzm1ZBDWgnx0bNIWzFzoQ2clEUK70tebc1Zg4b
+         gNhB/Um+Wap8mLqs3oQ6+E1258ptnfJ8pJAfc=
+Received: by 10.147.158.16 with SMTP id k16mr3231148yao.22.1301271118797;
+        Sun, 27 Mar 2011 17:11:58 -0700 (PDT)
 Received: from elie (adsl-68-255-101-206.dsl.chcgil.sbcglobal.net [68.255.101.206])
-        by mx.google.com with ESMTPS id jv9sm2380414icb.13.2011.03.27.16.00.31
+        by mx.google.com with ESMTPS id x69sm1649211yhn.41.2011.03.27.17.11.56
         (version=SSLv3 cipher=OTHER);
-        Sun, 27 Mar 2011 16:00:32 -0700 (PDT)
+        Sun, 27 Mar 2011 17:11:57 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4D8FB995.20001@web.de>
+In-Reply-To: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170094>
 
-The GIT_TEST_LONG facility (v1.6.0-rc0~246, 2008-06-17) was added to
-support tests for a gitweb caching engine that was never merged.
-So --long-tests has been a no-op for years.
+Hi,
 
-Since then, some other expensive tests have sprouted up that fit its
-description pretty well, namely:
+Alexandru Sutii wrote:
 
- - GIT_NOTES_TIMING_TESTS
- - GIT_PATCHID_TIMING_TESTS
- - GIT_REMOTE_SVN_TEST_BIG_FILES
+> I am interested in two projects from your list:
+> - Build a minimal Git client based on libgit2
+> - Port Git to Android
+> My questions are:
+> - How important are these projects for the community?
+> - Should I provide a patch in order to prove that I am suited for one=
+ of these
+> projects?
+> =C2=A0 If so, what specifically should I implement?
 
-All of these are not part of the default test run because they are
-expensive.  Let's replace their existing, undocumented triggers with
-GIT_TEST_LONG, so now you can do
+Thanks for writing.  The "minimal Git client" task seems like a
+popular one.  Luckily that is not a fatal problem --- git has many
+subcommands, so even if every proposal is about that, it could be
+possible to subdivide the work and produce something interesting.
 
- sh t3302-notes-index-expensive.sh -l -v
+Some reading matter:
 
-to get a sanity check for notes lookup performance scalability.
+ http://thread.gmane.org/gmane.comp.version-control.git/99608/focus=3D9=
+9682
+ http://thread.gmane.org/gmane.comp.version-control.git/169498/focus=3D=
+169517
+ http://thread.gmane.org/gmane.comp.version-control.git/169498/focus=3D=
+169762
+ http://thread.gmane.org/gmane.comp.version-control.git/170032/focus=3D=
+170076
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Jens Lehmann wrote:
+Is there some particular part of git functionality you would like to
+focus on (history creation, history mining, object store maintenance,
+configuration, transport)?  The list of low-level commands (plumbing)
+in the git manual might be a good place to get an idea of the scope.
 
-> Right you are, this version includes those too (but - except once for
-> GIT_VALGRIND_OPTIONS - none of them are mentioned in t/README, that's why
-> I managed to miss them ... maybe they should be documented there?).
+The ideas page mentions areas in which libgit2 functionality is
+incomplete --- depending on your interest, you might want to focus on
+one of these (so the project would be to add functionality to libgit2
+as well as using it) or to steer clear of them (to focus on
+functionality libgit2 already has).
 
-Good idea.  See below for a possible sneaky way to document three of
-them.
+So, to make a long story short: there is something sneaky about us
+presenting this idea, since there is so much room for choice.  As your
+project becomes more precise it should be possible for people on the
+list to give more detailed advice.
 
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -46,7 +46,7 @@ unset VISUAL
->  unset EMAIL
->  unset $(perl -e '
->  	my @env = keys %ENV;
-> -	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP)/, @env);
-> +	my @vars = grep(/^GIT_/ && !/^GIT_(TRACE|DEBUG|USE_LOOKUP|NOTES_TIMING_TESTS|PATCHID_TIMING_TESTS|PROVE_OPTS|REMOTE_SVN_TEST_BIG_FILES|SKIP_TESTS|TEST|VALGRIND_OPTIONS)/, @env);
+Cc-ing the libgit2 list and Jeff King for more hints.
 
-My poor terminal. :)  I sent a possible more invasive change that
-breaks this into multiple lines but it looks like our mails crossed.
-Anyway, I have no serious complaint; it might be that this one is the
-best way to go.  
+As for porting git to Android: that idea is less concrete to me.  A
+native Android app would presumably be in Java, so most likely your
+best bet is to talk to someone involved in the JGit project[1].
 
- t/t0081-line-buffer.sh           |    2 +-
- t/t3302-notes-index-expensive.sh |    2 +-
- t/t3419-rebase-patch-id.sh       |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Another note.  Please feel free to venture beyond projects listed on
+the ideas page.  For example the 2010 ideas page contains some gems:
 
-diff --git a/t/t0081-line-buffer.sh b/t/t0081-line-buffer.sh
-index 1dbe1c9..099abe0 100755
---- a/t/t0081-line-buffer.sh
-+++ b/t/t0081-line-buffer.sh
-@@ -12,7 +12,7 @@ correctly.
- "
- . ./test-lib.sh
- 
--test -n "$GIT_REMOTE_SVN_TEST_BIG_FILES" && test_set_prereq EXPENSIVE
-+test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
- 
- generate_tens_of_lines () {
- 	tens=$1 &&
-diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
-index e35d781..62820d0 100755
---- a/t/t3302-notes-index-expensive.sh
-+++ b/t/t3302-notes-index-expensive.sh
-@@ -8,7 +8,7 @@ test_description='Test commit notes index (expensive!)'
- . ./test-lib.sh
- 
- test_set_prereq NOT_EXPENSIVE
--test -n "$GIT_NOTES_TIMING_TESTS" && test_set_prereq EXPENSIVE
-+test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
- test -x /usr/bin/time && test_set_prereq USR_BIN_TIME
- 
- create_repo () {
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index bd8efaf..0419e81 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -5,7 +5,7 @@ test_description='git rebase - test patch id computation'
- . ./test-lib.sh
- 
- test_set_prereq NOT_EXPENSIVE
--test -n "$GIT_PATCHID_TIMING_TESTS" && test_set_prereq EXPENSIVE
-+test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
- test -x /usr/bin/time && test_set_prereq USR_BIN_TIME
- 
- count()
--- 
-1.7.4.2
+ https://git.wiki.kernel.org/index.php/SoC2010Ideas#Several_small_proje=
+cts_improving_msysGit
+
+as does the 2008 page if you can get Nicolas Pitre on board :)
+
+ https://git.wiki.kernel.org/index.php/SoC2008Ideas#Implement_pack_v4.2=
+=46v5_for_higher_compression
+
+Really, if you name any git-related topic you're interested in,
+chances are we can come up together with something valuable and
+interesting to work on in that area.
+
+Lastly, as far as patches go: yes, it would be excellent (and it would
+show initiative) to offer an experience of what it is like to work
+with you (if you end up finding time for this).
+
+Git may misbehave; or while getting up to speed on some aspect of its
+behavior you may find some documentation confusing; or you may wonder,
+"why is this code doing such a slow/unreliable/otherwise insane
+thing?"  When the moment comes, look straight to
+Documentation/SubmittingPatches and it will tell what to do. :)
+
+Good luck with whatever project you decide,
+Jonathan
+
+[1] http://wiki.eclipse.org/Google_Summer_of_Code_2011_Ideas#Ideas_subm=
+ission
+http://eclipse.org/jgit/developers/
