@@ -1,74 +1,82 @@
-From: Andrew Garber <andrew@andrewgarber.com>
-Subject: Re: Why can't I use git-bisect to find the first *good* commit?
-Date: Mon, 28 Mar 2011 13:18:18 -0400
-Message-ID: <AANLkTinC9Lr9uCTUZSVxVR56+FQm2NGRpPu90fm9OHF5@mail.gmail.com>
-References: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com>
- <AANLkTin1QCda9BV+gND1kcXRTZBF7hj3Chce5OkLX2a9@mail.gmail.com> <4D909DD1.2050904@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add two grep config options
+Date: Mon, 28 Mar 2011 13:21:22 -0400
+Message-ID: <20110328172122.GA20817@sigill.intra.peff.net>
+References: <1301088071-918-1-git-send-email-jratt0@gmail.com>
+ <7vlj024wal.fsf@alter.siamese.dyndns.org>
+ <4D9037AA.9090601@drmicha.warpmail.net>
+ <20110328115421.GA9232@sigill.intra.peff.net>
+ <7vvcz3yxs8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Mar 28 19:18:46 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Joe Ratterman <jratt0@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 19:21:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4G5V-0004RR-EY
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 19:18:45 +0200
+	id 1Q4G89-0005oq-M3
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 19:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754307Ab1C1RSk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2011 13:18:40 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:38603 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752119Ab1C1RSj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2011 13:18:39 -0400
-Received: by eyx24 with SMTP id 24so1228194eyx.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 10:18:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BmHrk2zFALfZBtJosFdJNvbW4lebuRYWRwazUKaFr0g=;
-        b=c0gn4fEgFK8JJnXv5czeEtzNUu1czQMJZj8FsKiBYDJf2BSCr5NmXqRxDY9JbwFD6Z
-         8NYJyRkIzq0kFIAcCjIUR/feTj/US7ypLsblQkXLgQ/bXGFtwT+5Jsib6ZcPzFIe1ddF
-         iRvUbxWX42X+/KHitFM7D1v9clfj5z5mNfSpw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=SeAqBuI0/BWOXTd6Q0Y45jl6TOKeV6F41HjW4OZOWD1yhZzlfj/32C7JaW0XG9VjpT
-         EvkoD/vUdwkEvnIBdH27yUYbuDX20rQ8Lhhb0He6qXeV47qROG21DEqTGFafb7ag7CTA
-         1nJFf57zFOER3bcQQfhi3v7I0jyHvA/tcMjF0=
-Received: by 10.213.25.212 with SMTP id a20mr1860098ebc.106.1301332718215;
- Mon, 28 Mar 2011 10:18:38 -0700 (PDT)
-Received: by 10.213.105.76 with HTTP; Mon, 28 Mar 2011 10:18:18 -0700 (PDT)
-In-Reply-To: <4D909DD1.2050904@viscovery.net>
-X-Google-Sender-Auth: EfvdsYhcGGNgG-EmWGWKI49IoFM
+	id S1754786Ab1C1RVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 13:21:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56233
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752832Ab1C1RVY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 13:21:24 -0400
+Received: (qmail 13818 invoked by uid 107); 28 Mar 2011 17:22:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Mar 2011 13:22:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Mar 2011 13:21:22 -0400
+Content-Disposition: inline
+In-Reply-To: <7vvcz3yxs8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170163>
 
-On Mon, Mar 28, 2011 at 10:40 AM, Johannes Sixt <j.sixt@viscovery.net> =
-wrote:
-> Define "end" and "other end"! It's not that trivial.
->
-> =C2=A0 =C2=A0 =C2=A0o--o--o--B
-> =C2=A0 =C2=A0 /
-> =C2=A0--o--o--o--o--G
->
-> When I have this history and I mark B as bad and G as good, will I no=
-w
-> find the first bad or the first good commit?
->
-> -- Hannes
->
+On Mon, Mar 28, 2011 at 10:12:23AM -0700, Junio C Hamano wrote:
 
-That kind of situation shouldn't occur: IMO, bisect should only deal
-with a single branch (the current branch).
+> Jeff King <peff@peff.net> writes:
+> 
+> > One shortcoming of such a scheme, though, is that it is an
+> > all-or-nothing proposal...
+> 
+> I fully agree with this assessment, and I think that was the primary
+> reason that we rejected --plumbing / GIT_PLUMB (i.e. as too naive to be
+> useful).
+> 
+> > So what we really want is to let the script "allow" certain options from
+> > the user's preferences. This could be done easily with individual config
+> > options, like:
+> >
+> >   git --allow=grep.extended grep ...
+> 
+> I think this is probably the right thing to do _if_ we wanted to add such
+> a configuration variable and give a way to let script writers protect
+> themselves.
+
+Note that "git --allow=grep.extended" is not useful without
+GIT_PLUMBING=1. Otherwise, users at the command line would have to
+individually allow each config option, which makes them pointless.
+
+Probably you already figured that out, but I wasn't sure from what you
+wrote.
+
+> But would any user go all that trouble, just not to say "-nE" from the
+> command line (or use an alias that was designed not to crash with
+> scripts)?
+
+I dunno. I generally prefer to use extended regexps when I can, but I
+don't remember ever having been annoyed that they are not the default
+with git grep. Perhaps because 99% of my greps are for literal symbol
+names (whereas in my editor, I am often doing substitutions, and I am
+continually annoyed at having to use backslash to make my parentheses
+magical).
+
+-Peff
