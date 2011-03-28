@@ -1,81 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC questions
-Date: Mon, 28 Mar 2011 10:35:06 -0400
-Message-ID: <20110328143506.GC14763@sigill.intra.peff.net>
-References: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
- <20110328001152.GA11294@elie>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Why can't I use git-bisect to find the first *good* commit?
+Date: Mon, 28 Mar 2011 16:40:17 +0200
+Message-ID: <4D909DD1.2050904@viscovery.net>
+References: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com> <AANLkTin1QCda9BV+gND1kcXRTZBF7hj3Chce5OkLX2a9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alexandru Sutii <sutii.alex@gmail.com>, git@vger.kernel.org,
-	libgit2@librelist.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 16:35:18 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andrew Garber <andrew@andrewgarber.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 16:40:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4DXJ-0005JT-NF
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 16:35:18 +0200
+	id 1Q4DcL-0007v5-Be
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 16:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023Ab1C1OfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 10:35:10 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60892
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753776Ab1C1OfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 10:35:09 -0400
-Received: (qmail 10620 invoked by uid 107); 28 Mar 2011 14:35:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Mar 2011 10:35:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Mar 2011 10:35:06 -0400
-Content-Disposition: inline
-In-Reply-To: <20110328001152.GA11294@elie>
+	id S1754572Ab1C1OkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 10:40:25 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:29275 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754613Ab1C1OkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 10:40:21 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Q4DcA-00033E-2d; Mon, 28 Mar 2011 16:40:18 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C50711660F;
+	Mon, 28 Mar 2011 16:40:17 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <AANLkTin1QCda9BV+gND1kcXRTZBF7hj3Chce5OkLX2a9@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170133>
 
-On Sun, Mar 27, 2011 at 07:11:53PM -0500, Jonathan Nieder wrote:
-
-> The ideas page mentions areas in which libgit2 functionality is
-> incomplete --- depending on your interest, you might want to focus on
-> one of these (so the project would be to add functionality to libgit2
-> as well as using it) or to steer clear of them (to focus on
-> functionality libgit2 already has).
+Am 3/28/2011 16:29, schrieb Andrew Garber:
+>> I'd expect this to work:
+>>
+>>    $ git bisect start
+>>    $ git bisect good
+>>    $ git bisect bad HEAD~100
 > 
-> So, to make a long story short: there is something sneaky about us
-> presenting this idea, since there is so much room for choice.  As your
-> project becomes more precise it should be possible for people on the
-> list to give more detailed advice.
+> So would I. I think the behavior of git bisect should be changed.
+> Right now, it's trying to find the first bad commit. Instead, it
+> should be trying to find the first commit where the code's good/bad
+> state *changed*. IOW, it should be able to handle both of the
+> following cases:
+> 
+> good <--- oldest
+> good
+> good
+> bad <--- the commit we want bisect to find
+> bad
+> bad <--- newest
+> 
+> bad <--- oldest
+> bad
+> bad
+> good <--- the commit we want bisect to find
+> good
+> good <--- newest
+> 
+> It shouldn't matter which end we start on, so long as one end gets
+> marks good, and the other end gets marked bad.
 
-Yes. I didn't write those ideas on the idea page, but I do like their
-sneakiness. On the ideas I put up, I also tried to be a little bit
-vague.
+Define "end" and "other end"! It's not that trivial.
 
-Because I'd really rather see a student not do a proposal based on one
-of our ideas as a checklist of things to code. I'd much rather give them
-a _problem_, then come up with and implement their own solution,
-figuring out the requirements and the best way to go about it
-themselves (with hints from the community, of course; none of us works
-in a vacuum, and certainly somebody new to the project isn't going to
-always know the best way to go about things).
+      o--o--o--B
+     /
+  --o--o--o--o--G
 
-But GSoC (IMHO) is not just about getting code written. It's also about
-showing students what it's like to take part in open source projects,
-and to see a problem in need of solving and scratch that itch. And from
-the project's perspective, hopefully that gets the student addicted to
-scratching itches and they keep doing it.
+When I have this history and I mark B as bad and G as good, will I now
+find the first bad or the first good commit?
 
-> Another note.  Please feel free to venture beyond projects listed on
-> the ideas page.  For example the 2010 ideas page contains some gems:
-
-I very much agree with this. Though I would caution students to talk to
-the community a bit before doing a proposal for something out of the
-blue. Because often people have tried and failed at something similar
-before, and knowing the context helps. So post to the list and say "I am
-thinking of doing X. Has anybody done something like it before? What
-would be the best way to go about?"
-
--Peff
+-- Hannes
