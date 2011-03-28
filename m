@@ -1,79 +1,77 @@
-From: Alexandru Sutii <sutii.alex@gmail.com>
-Subject: Re: GSoC questions
-Date: Mon, 28 Mar 2011 23:26:47 +0300
-Message-ID: <AANLkTikGb1=Rtz-T9p=u+X32KpL2AXq0AELdSJ2NMHrW@mail.gmail.com>
-References: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
-	<20110328001152.GA11294@elie>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/4] vcs-svn: make reading of properties binary-safe
+Date: Mon, 28 Mar 2011 22:30:45 +0200
+Message-ID: <4D90EFF5.9050603@web.de>
+References: <7vsjuegzj8.fsf@alter.siamese.dyndns.org> <1300970636-31743-1-git-send-email-david.barr@cordelta.com> <20110325033431.GA3007@elie> <20110325040730.GB3007@elie> <4D90AA6A.1090904@web.de> <20110328194157.GC13433@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, libgit2@librelist.org,
-	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: tb <tboegi@web.de>, David Barr <david.barr@cordelta.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 22:26:57 2011
+X-From: git-owner@vger.kernel.org Mon Mar 28 22:31:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4J1Z-0003bA-Dy
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 22:26:53 +0200
+	id 1Q4J5r-0005Pf-In
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 22:31:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246Ab1C1U0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 16:26:48 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:57380 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753650Ab1C1U0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 16:26:48 -0400
-Received: by mail-iw0-f174.google.com with SMTP id 34so4054817iwn.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 13:26:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=UmnyuzXoP0DdouB3aX2ynWXsIFSwVMvaj6hFUtchdZk=;
-        b=cnVhoHFb41n8c2VDL4S2GdT5YvBsiHgYInXMIzBRTlkzbHYqKcImRTQYtlv+iPuxlT
-         e1CXyoy1DqquMmzsH6GT5GJgUbJzWMDU7NRVCNdYtOiRhiBy5dXUnj6rZT0kPD3uaFhf
-         gKOp0Rl//wHIY0LhRSPleLSrx8GVg79HD34t0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=coJhq2v0OIwGiXok35cR3mX7I50ftluHXY4Cnc3q75ixHuReJQx3en+t0323o5OmV8
-         SnfnFoYjngyA93QMDRG2xDwMpKEtvsutarOa1R4pPmoXljNrUz0h8ftJbdo3BWVz462f
-         uYdGazJyaBA6ce0QqfCw+tfV8z2bgWUuAyH0s=
-Received: by 10.42.138.4 with SMTP id a4mr7526724icu.258.1301344007802; Mon,
- 28 Mar 2011 13:26:47 -0700 (PDT)
-Received: by 10.43.133.2 with HTTP; Mon, 28 Mar 2011 13:26:47 -0700 (PDT)
-In-Reply-To: <20110328001152.GA11294@elie>
+	id S1753911Ab1C1UbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 16:31:15 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:56815 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752333Ab1C1UbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 16:31:14 -0400
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 2996B19B35007;
+	Mon, 28 Mar 2011 22:31:07 +0200 (CEST)
+Received: from [194.22.188.61] (helo=[192.168.209.16])
+	by smtp02.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #2)
+	id 1Q4J5e-0000qW-00; Mon, 28 Mar 2011 22:31:06 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110221 SUSE/3.1.8 Thunderbird/3.1.8
+In-Reply-To: <20110328194157.GC13433@elie>
+X-Sender: tboegi@web.de
+X-Provags-ID: V01U2FsdGVkX18YrzaZdqlFO+B8SGpCe+FtHLOiljLQQOr7fSsZ
+	PkYUubBui0rlrfRtN+/myD8HDUWLyzgFFxZGzhUEYjK1iLPzpl
+	8j8RbxPKc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170186>
 
-> Is there some particular part of git functionality you would like to
-> focus on (history creation, history mining, object store maintenance,
-> configuration, transport)?  The list of low-level commands (plumbing)
-> in the git manual might be a good place to get an idea of the scope.
+On 03/28/2011 09:41 PM, Jonathan Nieder wrote:
+> tb wrote:
 >
-> The ideas page mentions areas in which libgit2 functionality is
-> incomplete --- depending on your interest, you might want to focus on
-> one of these (so the project would be to add functionality to libgit2
-> as well as using it) or to steer clear of them (to focus on
-> functionality libgit2 already has).
+>> failure on t9010 with commit 195b7ca6f229455da61f9f6b
+> [...]
+>> Darwin birne.lan 10.7.0 Darwin Kernel Version 10.7.0: Sat Jan 29
+>> 15:17:16 PST 2011; root:xnu-1504.9.37~1/RELEASE_I386 i386
+>
+> Could you try 41e6b91f (vcs-svn: add missing cast to printf argument,
+> 2011-03-27) from
+>
+> 	git://repo.or.cz/git/jrn.git svn-fe
+>
+> ?  I suspect this is fallout from a missing cast in the commit you
+> pointed to.  Thanks for noticing.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+No good news from my side:
+Same (?) problem with 41e6b...
 
-Hello again! Thanks for your and Jeff's reply.
+not ok - 13 NUL in log message, file content, and property name
 
-I have decided on "minimal Git client based on libgit2" project. I have looked
-over the git manual page and I would like to work on manipulation commands
-functionality. I am also open for adding functionality to libgit2 as
-well as using it.
+/Torsten
 
-I have read the references from your mail and I am currently trying to
-understand project's architecture, as I am totally new to git's source code.
-Hope I will manage to identify the source code parts that interest me in
-a short time and maybe realize to implement something.
-
-In the meantime I would greatly appreciate some guidelines where to look.
-
---Alex.
+Note:
+(commit 41e6b  works OK on  my 32 bit 386 linux machine.
+  There is no svn on that machine, and commit 195b7ca6f22 had 10 
+failures in TC 9010. (If that is any useful information))
