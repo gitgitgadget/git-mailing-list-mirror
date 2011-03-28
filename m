@@ -1,80 +1,83 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] Improve test for pthreads flag
-Date: Mon, 28 Mar 2011 09:39:59 +0200
-Message-ID: <1301297999-30130-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 28 09:40:24 2011
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: GSoC 2011
+Date: Mon, 28 Mar 2011 09:42:39 +0200
+Message-ID: <AANLkTikC5cagS8qYPDmWO+jhC4pHMkJq6zQN3QemMhwG@mail.gmail.com>
+References: <AANLkTikQ6=CrWuMemwv38HnBKPnt8CjQWqYj7oA8zVZ4@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Karol Samborski <edv.karol@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 09:42:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q473o-0005Rz-8L
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:40:24 +0200
+	id 1Q4765-0006DP-Lr
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:42:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119Ab1C1HkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 03:40:18 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:43264 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751314Ab1C1HkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 03:40:17 -0400
-Received: by ewy4 with SMTP id 4so1085856ewy.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 00:40:16 -0700 (PDT)
+	id S1752978Ab1C1Hml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 03:42:41 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:36829 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752907Ab1C1Hmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 03:42:40 -0400
+Received: by wya21 with SMTP id 21so2592665wya.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 00:42:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=vVW9EYk5/vOudGArm+oXmXv2+SME8+4NFUbt0nRVdr0=;
-        b=ZJC8wtVmEBSl53EmVjoeybWQikC/LntJOp8wu+8TvKjlqDZAdO07nuwKwqqj7k2fS+
-         IXFVjaawgK/2kKx3goYo5AQR9g7QIv+vBBtbRB4pYlmSQOZhsHy6Ue+pSbjtDbvDjJqX
-         LQZEw8JKcyl3gAuiaYUjeqjiEPgaeZPOiHtBE=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=g9+9tC6wuA3bTBjYZfHrntKKBoDMP9GI3gnjtd44lEE=;
+        b=APdinPYtDOTJnHG3EGJ4Gn1PRqLEdPsQSzzIPxOR1O0/06BJt5LC8XE/f0qQofhAo7
+         4vmIw/bHaeHhehxQwzAaJKW4+ou7UlJ1fezsK4Pi2wJ3E8QGSM9P8UYWFgLW1EBhTm/5
+         j0CfpFSSQOwl6MF5mMuDtYYY2TmlSK6qhXLWY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=SPIyHzJK7/qsN23gULzUCF/wE07FCDG0VVHdzEMiBl5HshHVvXxDGosVQYcpDpD4jU
-         cMhT1TBPNLckBlmDgfToC1rOgkr6TNpb+FwHdvM7CckVYskB5yP3mc0x/E93CQtG5+XU
-         UNl237zDvtpoYaeec5rc8diKFEJgnO8QONtcE=
-Received: by 10.213.98.135 with SMTP id q7mr1026584ebn.72.1301298016136;
-        Mon, 28 Mar 2011 00:40:16 -0700 (PDT)
-Received: from localhost ([151.97.19.54])
-        by mx.google.com with ESMTPS id v60sm2529118eeh.16.2011.03.28.00.40.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Mar 2011 00:40:14 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.2.644.gb47dd1.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=L8yuKRLcnr6yMbpDi+Y38i55+iGfGHLHIUM3PoZwBI2ogCndRijFqE5erDkxThzaS7
+         jmCG6hJDEXbfTBC5hmeYm7b80+NZtDeRKNVko7+1+aW1qUN5JKT0kGAADuAKFc4HaWOZ
+         tSCPnNhOV3qmDW4uBg22kaA3uJ8kl87Qu1KQI=
+Received: by 10.216.142.165 with SMTP id i37mr3321106wej.106.1301298159351;
+ Mon, 28 Mar 2011 00:42:39 -0700 (PDT)
+Received: by 10.216.89.12 with HTTP; Mon, 28 Mar 2011 00:42:39 -0700 (PDT)
+In-Reply-To: <AANLkTikQ6=CrWuMemwv38HnBKPnt8CjQWqYj7oA8zVZ4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170106>
 
-When compiling with CC=clang using Clang 1.1 as shipped by Debian
-unstable (package version 2.7-3), the -mt flag is sufficient to compile
-during the `configure` test. However, building git would then fail at
-link time complaining about missing symbols such as `pthread_key_create'
-and `pthread_create'.
+Hi,
 
-Work around this issue by adding pthread key creation to the pthreads
-configure test source.
+On Mon, Mar 28, 2011 at 9:13 AM, Karol Samborski <edv.karol@gmail.com> wrote:
+> Hello all,
+>
+> My name is Karol Samborski and I'm a student from Poland. I'm studding
+> in external way which means I'm only in school at weekends. Daily I
+> work as a C/C++ programmer and I use git in work. I want to
+> participate in Google Summer of Code program because I like git and I
+> have no open source programming experience. I read at SoC2011Ideas
+> wiki page that I should try sending a few simple patches to the
+> mailing list. What patches do you mean? Do you have maybe a small task
+> to do? That would be easier...
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- configure.ac |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+It depends a lot what part of git you would like to work on.
+Do you find one of the proposed subject interesting?
+If yes, tell us and the relevant people will probably tell you what
+you could start with.
 
-diff --git a/configure.ac b/configure.ac
-index dd07907..fafd815 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -895,7 +895,9 @@ AC_LANG_PROGRAM([[
- #include <pthread.h>
- ]], [[
- 	pthread_mutex_t test_mutex;
-+	pthread_key_t test_key;
- 	int retcode = 0;
-+	retcode |= pthread_key_create(&test_key, (void *)0);
- 	retcode |= pthread_mutex_init(&test_mutex,(void *)0);
- 	retcode |= pthread_mutex_lock(&test_mutex);
- 	retcode |= pthread_mutex_unlock(&test_mutex);
--- 
-1.7.4.2.644.gb47dd1.dirty
+And by the way the same question has been asked recently and the
+answer was to search a mailing list archive for "low hanging fruit" as
+we don't use any bug tracker.
+You could perhaps search the source code for "TODO" or "NEEDS WORK" too.
+
+> Anyway I use vim, git and linux in a daily use and I love using them ;)
+> But due to I'm external student I have much less time than the other students.
+
+I hope you will have more time during the summer otherwise it might
+not be enough for the GSOC.
+
+Thanks,
+Christian.
