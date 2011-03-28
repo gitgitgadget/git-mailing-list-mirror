@@ -1,116 +1,144 @@
-From: Dan McGee <dpmcgee@gmail.com>
-Subject: [PATCH] Fix two unused variable warnings in gcc 4.6
-Date: Sun, 27 Mar 2011 20:32:19 -0500
-Message-ID: <1301275939-17018-1-git-send-email-dpmcgee@gmail.com>
-Cc: Dan McGee <dpmcgee@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 28 03:32:33 2011
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 06/16] vcs-svn: skeleton of an svn delta parser
+Date: Sun, 27 Mar 2011 22:30:13 -0500
+Message-ID: <20110328033013.GD11987@elie>
+References: <1300518231-20008-1-git-send-email-david.barr@cordelta.com>
+ <1300519254-20201-1-git-send-email-david.barr@cordelta.com>
+ <1300519254-20201-7-git-send-email-david.barr@cordelta.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 05:30:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q41Jo-0004rr-42
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 03:32:32 +0200
+	id 1Q43A0-0003a5-B9
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 05:30:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753252Ab1C1Bc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2011 21:32:27 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:45736 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753215Ab1C1Bc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Mar 2011 21:32:26 -0400
-Received: by gyd10 with SMTP id 10so741656gyd.19
-        for <git@vger.kernel.org>; Sun, 27 Mar 2011 18:32:25 -0700 (PDT)
+	id S1754049Ab1C1Da0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Mar 2011 23:30:26 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:62562 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753949Ab1C1DaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Mar 2011 23:30:24 -0400
+Received: by ywj3 with SMTP id 3so1030922ywj.19
+        for <git@vger.kernel.org>; Sun, 27 Mar 2011 20:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=CFqWbFvVAFjg+3i3sbPGzGIdFqppWsxavG5J+cp6Cwk=;
-        b=xJFPqrA89spT6ZGk6EtW6sjL6gOKm7ZTUhf+g9Ea7d1/tuX/3ZYUDCh3waqc8PRKbv
-         eWFVJF/KwMnhaclOHUYpMngDyRz+bJWRWcUTBozhRROu83/gjhiwKLKOXOjJh0U3DpAw
-         2RcjSiysCUl7vhgqRsGQpaEwaKAEnM0+oz21g=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=JZ1IEVGKO8pX8X/YOqIJStUL9owMz2w0NFaNxGIeD14=;
+        b=adv1UUb6ZBWmqftTYJJTcmB/BAH12Kt2pjXR4GzJm31lteGoFJ/hGEcUU9HRhif1/V
+         i+aiyyXytgROCAPSX7WJL5a8vlqVbtnJZwQDG+RD4ZOmO/nfj93wU/Ik4DsklngbMF6P
+         bnEUki4MANqcp1n+A8IZKjryM1bBH814hO5dQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=e19xrXgBytAAsHJesmrHkufme0MaYzRGTrOVkuXK8V2aVXJvO8XBjmeVA5goKWgNqd
-         rkIIgQ0x57LQ3Hs1axjT5xs/q6onX5HwORfhcLw+DZwk1Egx4oRMywWGWBZmAhhasv/E
-         ws7nEJJBvbMMnlmvcr6nr9/UKPf0p7vPJ2a0g=
-Received: by 10.236.79.197 with SMTP id i45mr4253252yhe.382.1301275945413;
-        Sun, 27 Mar 2011 18:32:25 -0700 (PDT)
-Received: from localhost (c-71-239-242-45.hsd1.il.comcast.net [71.239.242.45])
-        by mx.google.com with ESMTPS id h63sm1683931yhm.86.2011.03.27.18.32.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 27 Mar 2011 18:32:24 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.1
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fd3qbkEJ2R2mhYIPRKqz26lqNzvkZ8ShtZvjUQLpBMUzbLUf4Zez3Tyuku2FDZkYy0
+         yvJJTSvaz94ReDL0VEUgMtFe9HxMVCid4ow2vsrjKH1fVLX2VCWpip7T2IEpxlwPERqb
+         S/OxDO3e4hhizg9erXcGd3ICTnIzoGgGGj534=
+Received: by 10.91.95.11 with SMTP id x11mr3363002agl.192.1301283023256;
+        Sun, 27 Mar 2011 20:30:23 -0700 (PDT)
+Received: from elie ([68.255.101.206])
+        by mx.google.com with ESMTPS id u37sm1153402yba.7.2011.03.27.20.30.18
+        (version=SSLv3 cipher=OTHER);
+        Sun, 27 Mar 2011 20:30:21 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1300519254-20201-7-git-send-email-david.barr@cordelta.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170098>
 
-Seen with -Wunused-but-set-variable.
+(culling cc list)
+Hi,
 
-Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+David Barr wrote:
+
+> --- a/vcs-svn/line_buffer.c
+> +++ b/vcs-svn/line_buffer.c
+> @@ -98,10 +98,10 @@ char *buffer_read_string(struct line_buffer *buf, uint32_t len)
+>  	return ferror(buf->infile) ? NULL : buf->blob_buffer.buf;
+>  }
+>  
+> -void buffer_read_binary(struct line_buffer *buf,
+> -				struct strbuf *sb, uint32_t size)
+> +off_t buffer_read_binary(struct line_buffer *buf,
+> +				struct strbuf *sb, off_t size)
+>  {
+> -	strbuf_fread(sb, size, buf->infile);
+> +	return strbuf_fread(sb, size, buf->infile);
+>  }
+
+Apparently this change is from in an evil merge.  Yikes.
+
+Anyway, I think the original patch was something like the following.
+Would you mind if the parameter and return value go back to being of
+type size_t (to avoid a possibly problematic conversion when passing
+values to and from strbuf_fread)?
+
+-- 8< --
+Date: Sun, 2 Jan 2011 21:37:36 -0600
+Subject: vcs-svn: make buffer_read_binary API more convenient
+
+buffer_read_binary is a thin wrapper around fread, but its signature
+is wrong:
+
+ - fread can fill an arbitrary in-memory buffer.  buffer_read_binary
+   is limited to buffers whose size is representable by a 32-bit
+   integer.
+ - The result from fread is the number of bytes actually read.
+   buffer_read_binary only reports the number of bytes read by
+   incrementing sb->len by that amount and returns void.
+
+Fix both: let buffer_read_binary accept a size_t instead of uint32_t
+for the number of bytes to try to read and as a convenience return the
+number of bytes read.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- http-fetch.c      |    3 +--
- merge-recursive.c |    4 ----
- 2 files changed, 1 insertions(+), 6 deletions(-)
+ vcs-svn/line_buffer.c |    6 +++---
+ vcs-svn/line_buffer.h |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 923904f..3af4c71 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -8,7 +8,6 @@ static const char http_fetch_usage[] = "git http-fetch "
+diff --git a/vcs-svn/line_buffer.c b/vcs-svn/line_buffer.c
+index c390387..01fcb84 100644
+--- a/vcs-svn/line_buffer.c
++++ b/vcs-svn/line_buffer.c
+@@ -91,10 +91,10 @@ char *buffer_read_line(struct line_buffer *buf)
+ 	return buf->line_buffer;
+ }
  
- int main(int argc, const char **argv)
+-void buffer_read_binary(struct line_buffer *buf,
+-				struct strbuf *sb, uint32_t size)
++size_t buffer_read_binary(struct line_buffer *buf,
++				struct strbuf *sb, size_t size)
  {
--	const char *prefix;
- 	struct walker *walker;
- 	int commits_on_stdin = 0;
- 	int commits;
-@@ -60,7 +59,7 @@ int main(int argc, const char **argv)
- 	if (argv[arg])
- 		str_end_url_with_slash(argv[arg], &url);
+-	strbuf_fread(sb, size, buf->infile);
++	return strbuf_fread(sb, size, buf->infile);
+ }
  
--	prefix = setup_git_directory();
-+	setup_git_directory();
- 
- 	git_config(git_default_config, NULL);
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 8e82a8b..af13150 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -356,7 +356,6 @@ static void make_room_for_directories_of_df_conflicts(struct merge_options *o,
- 	 */
- 	const char *last_file = NULL;
- 	int last_len = 0;
--	struct stage_data *last_e;
- 	int i;
- 
- 	for (i = 0; i < entries->nr; i++) {
-@@ -386,7 +385,6 @@ static void make_room_for_directories_of_df_conflicts(struct merge_options *o,
- 		if (S_ISREG(e->stages[2].mode) || S_ISLNK(e->stages[2].mode)) {
- 			last_file = path;
- 			last_len = len;
--			last_e = e;
- 		} else {
- 			last_file = NULL;
- 		}
-@@ -961,7 +959,6 @@ static int process_renames(struct merge_options *o,
- 	}
- 
- 	for (i = 0, j = 0; i < a_renames->nr || j < b_renames->nr;) {
--		char *src;
- 		struct string_list *renames1, *renames2Dst;
- 		struct rename *ren1 = NULL, *ren2 = NULL;
- 		const char *branch1, *branch2;
-@@ -996,7 +993,6 @@ static int process_renames(struct merge_options *o,
- 			ren2 = ren1;
- 			ren1 = tmp;
- 		}
--		src = ren1->pair->one->path;
- 
- 		ren1->dst_entry->processed = 1;
- 		ren1->src_entry->processed = 1;
+ off_t buffer_copy_bytes(struct line_buffer *buf, off_t nbytes)
+diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
+index d0b22dd..8901f21 100644
+--- a/vcs-svn/line_buffer.h
++++ b/vcs-svn/line_buffer.h
+@@ -23,7 +23,7 @@ long buffer_tmpfile_prepare_to_read(struct line_buffer *buf);
+ int buffer_ferror(struct line_buffer *buf);
+ char *buffer_read_line(struct line_buffer *buf);
+ int buffer_read_char(struct line_buffer *buf);
+-void buffer_read_binary(struct line_buffer *buf, struct strbuf *sb, uint32_t len);
++size_t buffer_read_binary(struct line_buffer *buf, struct strbuf *sb, size_t len);
+ /* Returns number of bytes read (not necessarily written). */
+ off_t buffer_copy_bytes(struct line_buffer *buf, off_t len);
+ off_t buffer_skip_bytes(struct line_buffer *buf, off_t len);
 -- 
-1.7.4.1
+1.7.4.2.660.g270d4b.dirty
