@@ -1,94 +1,75 @@
-From: Joe Ratterman <jratt0@gmail.com>
-Subject: Re: [PATCH] Add two grep config options
-Date: Mon, 28 Mar 2011 09:48:19 -0500
-Message-ID: <AANLkTin_qRH54C0wKML67gftS05X98sKE+AxHJ4xo77C@mail.gmail.com>
-References: <1301088071-918-1-git-send-email-jratt0@gmail.com>
-	<7vlj024wal.fsf@alter.siamese.dyndns.org>
-	<4D9037AA.9090601@drmicha.warpmail.net>
-	<AANLkTin_qeFSqyXHddmEpu=5e4yO8cxyOkbhcXUg3efn@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: "git svn mkdirs" is very slow
+Date: Mon, 28 Mar 2011 17:05:14 +0200
+Message-ID: <4D90A3AA.3050601@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 16:48:28 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 28 17:05:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Dk3-0003ic-Io
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 16:48:27 +0200
+	id 1Q4E0U-0004ZD-HE
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 17:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754227Ab1C1OsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 10:48:21 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49893 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753939Ab1C1OsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 10:48:20 -0400
-Received: by gwaa18 with SMTP id a18so1186192gwa.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 07:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=VNpiyk3Vt2kI6KZfmXcuAj8NQZ94T82ZGjLm99ze6QE=;
-        b=I8QNaQbwdkTqcu1uCMAbWaEJrY3kdYvPqjOOm3NIBIUEd4RTInWuyMOikcvAeo0Edq
-         AmtVsalfwDXeCvhF+HyoC1UvUn9MRotDvrPrl10DAL+AI2DzP747UD1TNaKEXKUbu2e0
-         24PlMU9ljiLPKNN8HZfz/HBP5VxMd/jN7z15Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=JsBXoeU3pRS7PnURQPsSrEUpEmonPQoxOB+P/EHg3fvTeGqhtffrTQzuC15DZjRIey
-         d4tT6T6iIBt6dVJRETTktWqB+XLubczqa9tJKkVLBXtjO8rt7E6pmNAyRb8swst/95Dn
-         18l1bHIscCM5oNf2KF9GgVzuRIDycfceNsIhg=
-Received: by 10.42.132.5 with SMTP id b5mr7147825ict.484.1301323699328; Mon,
- 28 Mar 2011 07:48:19 -0700 (PDT)
-Received: by 10.42.218.1 with HTTP; Mon, 28 Mar 2011 07:48:19 -0700 (PDT)
-In-Reply-To: <AANLkTin_qeFSqyXHddmEpu=5e4yO8cxyOkbhcXUg3efn@mail.gmail.com>
+	id S1754163Ab1C1PFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 11:05:18 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:41447 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754119Ab1C1PFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 11:05:16 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p2SF5EZs020665
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Mon, 28 Mar 2011 17:05:14 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Lightning/1.0b2 Thunderbird/3.1.8
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170135>
 
-On Mon, Mar 28, 2011 at 7:13 AM, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
->
-> On Mon, Mar 28, 2011 at 09:24, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
-> > We could safeguard scripts from this by
-> >
-> > - checking istty and
->
-> That should consider running under the pager too.
->
-> I had proposed this scheme last year to TopGit as a way to
-> differentiate between ui and plumbing. But as Jeff pointed out, this
-> is probably not enough.
->
-> Bert
->
-> > - checking env for GIT_PLUMBING
-> >
+Hello,
 
+I've noticed that in our repository, "git svn mkdirs" or any other
+command that calls mkemptydirs() is very slow (approximately 8.5 s even
+with a warm disk cache).  Presumably this is related to the fact that
+the unhandled.log.gz for our Subversion trunk is almost 10 Mb.
 
-Thanks for looking over this and taking the time to comment.  I had
-not considered the importance of the first line, nor had I noticed the
-lack of hyphens in the other options--I copied the name of
-grep.extended-regexp from the --extended-regexp grep option.  I can
-change those things if the general idea is accepted.  I like the idea
-of a single option config key have takes a list of command-line flags,
-but I'm not 100% sure I know enough about git code internals to
-implement it.  I'll look.
+Of course it would be nice if this were faster.
 
-With regard to disabling the line numbering, GNU grep supports both -n
-and --line-number.  Adding the latter option to git grep allows for
-the long form --no-line-number.  Another option would be to use -N for
-the negative, like -h and -H.  GNU grep doesn't support either of
-those.
+But we have laid out our repository to make the presence/absence of
+empty directories irrelevant, so we would be just as happy if git-svn
+would *not* create empty directories, like in the good old days.  So I
+wanted to implement the following feature:
 
+1. An svn.autoMkdirs / svn-remote.<name>.autoMkdirs configuration
+variable.  The value should default to true for backwards compatibility.
+
+2. Only call mkemptydirs() if this variable is set to true.
+
+3. Make an exception for "git svn mkdirs", which should do its thing
+regardless of how this configuration option is set.
+
+I think it should only be about a 10-line change, plus documentation and
+tests.  Unfortunately, my perl-foo is very limited, and it will take me
+a while to figure out how option parsing and handling works in git-svn.
+
+Would this feature be welcome?
+
+Is there anybody willing to make the Perl changes?  I would be willing
+to work on the documentation and test suite changes.
 
 Thanks,
-Joe Ratterman
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
