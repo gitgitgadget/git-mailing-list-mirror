@@ -1,62 +1,69 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: GSoC 2011
-Date: Mon, 28 Mar 2011 14:48:57 +0700
-Message-ID: <AANLkTi=3B7m4G1ceif8TRAoOv8eA8ueRjrFwfK+OyOUr@mail.gmail.com>
-References: <AANLkTikQ6=CrWuMemwv38HnBKPnt8CjQWqYj7oA8zVZ4@mail.gmail.com> <AANLkTikC5cagS8qYPDmWO+jhC4pHMkJq6zQN3QemMhwG@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: remote-helpers and refs without a value
+Date: Mon, 28 Mar 2011 09:50:09 +0200
+Message-ID: <20110328075009.GA5115@glandium.org>
+References: <20110327082428.GA4428@glandium.org>
+ <AANLkTi=cNin=XYqbAJMggWj7OcZ8=9PGCVGGg=JRO-bj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Karol Samborski <edv.karol@gmail.com>, git@vger.kernel.org
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 09:49:40 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 09:50:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q47Cm-0008NL-Ca
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:49:40 +0200
+	id 1Q47DU-0000CX-4e
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752907Ab1C1Htf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 03:49:35 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:38275 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751347Ab1C1Hte (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 03:49:34 -0400
-Received: by wwk4 with SMTP id 4so1450120wwk.1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 00:49:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=//A7/HDpdWxtOm+LbyBA/2yhfk9ORKvIYijW54eI1oQ=;
-        b=F9UpNqgh6VVFCXf3j2e/O1oL0kYPuVe6jZ1og/QH07UecyEuDhdrQVRJRSQ4Mi+G24
-         hrIGvmMUPU0U7BrbNS2o3ty7+hdYS/dmwT1JoO1mk6kQUFXmXi6ewd53OsbzhnQhkJRf
-         D0Bv/QWUA5i5RQn4zABVQsGxxCk6mJUIAsb/I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=PsN8TkXV4VEN+WwIJaz/VD99qvvSa1DjXoZDUspVFnJS3dXyl5Xl/xEL+8k7zjetfv
-         YP3hAWErCTcG2XPVk8j+ZT7luAWdrhGDx88Ebmd43KfVxNFhLHYodUj75nYo1rkS51HM
-         mQkPC8GTFeSvnN8HDH8qSQktTu8O+31FAG5I8=
-Received: by 10.216.66.131 with SMTP id h3mr3690174wed.111.1301298573590; Mon,
- 28 Mar 2011 00:49:33 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Mon, 28 Mar 2011 00:48:57 -0700 (PDT)
-In-Reply-To: <AANLkTikC5cagS8qYPDmWO+jhC4pHMkJq6zQN3QemMhwG@mail.gmail.com>
+	id S1752974Ab1C1HuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 03:50:17 -0400
+Received: from vuizook.err.no ([85.19.221.46]:48418 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751347Ab1C1HuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 03:50:16 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=glandium.org)
+	by vuizook.err.no with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <mh@glandium.org>)
+	id 1Q47DG-0002OF-8x; Mon, 28 Mar 2011 09:50:11 +0200
+Received: from mh by glandium.org with local (Exim 4.74)
+	(envelope-from <mh@glandium.org>)
+	id 1Q47DF-0001LV-BP; Mon, 28 Mar 2011 09:50:09 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=cNin=XYqbAJMggWj7OcZ8=9PGCVGGg=JRO-bj@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Status: (score 0.4): No, score=0.4 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170109>
 
-On Mon, Mar 28, 2011 at 2:42 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> And by the way the same question has been asked recently and the
-> answer was to search a mailing list archive for "low hanging fruit" as
-> we don't use any bug tracker.
-> You could perhaps search the source code for "TODO" or "NEEDS WORK" too.
+On Mon, Mar 28, 2011 at 03:22:57PM +0800, Tay Ray Chuan wrote:
+> Hi,
+> 
+> On Sun, Mar 27, 2011 at 4:24 PM, Mike Hommey <mh@glandium.org> wrote:
+> > But when the helper returns a '?' value to the list command, I don't see
+> > how things are supposed to be updated. It looks like the helper is
+> > the only one, then, to be able to update the refs. But it also doesn't
+> > have any way to know which refs it needs to update...
+> 
+> I don't think that's right. The transport machinery (transport.c,
+> transport-helper.c) in git is the one who calls the shots - the
+> transport machinery first 1) asks for the list of refs, 2) does the
+> appropriate "matching" (of what refs to fetch/push), then 3) sends
+> this down to the remote helper.
+> 
+> If the remote helper sends back a '?', the transport machinery should
+> be implemented to fail and die. A quick scan of transport.c does not
+> show this, but I assume the failure would happen at the ref matching
+> level, leading to failure of the whole fetch/push.
 
-Also search for test_expect_failure in t/ directory. I don't know how
-hard those breakages are though.
--- 
-Duy
+Failing wouldn't make sense. That'd mean '?' may not be used by
+remote-helpers, and that they'd need to grab everything from the remote
+before git even decides what to grab.
+
+Mike
