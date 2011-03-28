@@ -1,99 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Why can't I use git-bisect to find the first *good* commit?
-Date: Mon, 28 Mar 2011 22:37:27 +0200
-Message-ID: <vpqvcz3x9q0.fsf@bauges.imag.fr>
-References: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com>
-	<AANLkTin1QCda9BV+gND1kcXRTZBF7hj3Chce5OkLX2a9@mail.gmail.com>
-	<4D909DD1.2050904@viscovery.net>
-	<AANLkTinC9Lr9uCTUZSVxVR56+FQm2NGRpPu90fm9OHF5@mail.gmail.com>
-	<vpq62r3i1z4.fsf@bauges.imag.fr>
-	<AANLkTimT+WN2F-BmQzQrAs3uizHig9cCXDUdc7nQ-vC5@mail.gmail.com>
-	<vpqr59r6sg5.fsf@bauges.imag.fr>
-	<AANLkTinuH4Ut+jtdqRfFrNeXA6JmBK2i0ddCcz4vV6JC@mail.gmail.com>
-	<vpqvcz35cjk.fsf@bauges.imag.fr>
-	<AANLkTikADLZvN0N==_H47O1vcrap1_Mcf7vW69d5sh0d@mail.gmail.com>
-	<AANLkTimR5XfOV-0RZjdyu72E9JdBfr1B+wc=q55V4qH5@mail.gmail.com>
-	<vpqbp0v2fve.fsf@bauges.imag.fr>
-	<AANLkTim+iQ89b49nC8NRtoUobV4tMVL+bCoW-vg3+rLD@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/4] vcs-svn: make reading of properties binary-safe
+Date: Mon, 28 Mar 2011 15:44:03 -0500
+Message-ID: <20110328204403.GC16202@elie>
+References: <7vsjuegzj8.fsf@alter.siamese.dyndns.org>
+ <1300970636-31743-1-git-send-email-david.barr@cordelta.com>
+ <20110325033431.GA3007@elie>
+ <20110325040730.GB3007@elie>
+ <4D90AA6A.1090904@web.de>
+ <20110328194157.GC13433@elie>
+ <4D90EFF5.9050603@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: demerphq <demerphq@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andrew Garber <andrew@andrewgarber.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 22:40:33 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Barr <david.barr@cordelta.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 28 22:44:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4JEl-0001Lm-Tm
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 22:40:32 +0200
+	id 1Q4JIO-00037v-1L
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 22:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755044Ab1C1Uk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 16:40:26 -0400
-Received: from imag.imag.fr ([129.88.30.1]:41806 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753911Ab1C1UkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 16:40:25 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p2SKbSQB010687
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 28 Mar 2011 22:37:28 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Q4JBo-0004L4-3I; Mon, 28 Mar 2011 22:37:28 +0200
-In-Reply-To: <AANLkTim+iQ89b49nC8NRtoUobV4tMVL+bCoW-vg3+rLD@mail.gmail.com>
-	(Andrew Garber's message of "Mon, 28 Mar 2011 16:12:49 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 28 Mar 2011 22:37:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1751871Ab1C1UoL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2011 16:44:11 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:62931 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751750Ab1C1UoK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2011 16:44:10 -0400
+Received: by vws1 with SMTP id 1so2649047vws.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 13:44:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=T4bVP8s3NnbAdSg+fFWcJUkygbo5jcWnGmojGoF22/w=;
+        b=VKfpLyXYKD+5Jfew6xWdMuIqU72kSOF+qe+yHPM0ZLKJGkoEDDOXLEwblJkByerJED
+         p33A3Acnhs92HGH7KlaYhBOoXY+Qj/vFIfYwAnXubaBKJy+CIkdAFRVQ76qXXSyqQbdI
+         tSnq3j1pABQ8UQKaNz1+i9XaZznBzz31nQql8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=magQZVzkS7yw2IAZy67brO9XIVZV7gUM2ZWAsOR5lIttbX3KKC1fCjWslN9JF/g3WS
+         lWq1olmR01tL7cNyTUI1mEmPG0xJwH5cCgzkb4wijp3B6wfB/pU+xYwudl6IM8k3JTCl
+         NvKFScjGZN6qeblwfniwl0tJ4dvDZMLTPMaRY=
+Received: by 10.52.18.47 with SMTP id t15mr6323792vdd.48.1301345049606;
+        Mon, 28 Mar 2011 13:44:09 -0700 (PDT)
+Received: from elie (adsl-68-255-101-206.dsl.chcgil.sbcglobal.net [68.255.101.206])
+        by mx.google.com with ESMTPS id u9sm1270820vbx.9.2011.03.28.13.44.07
+        (version=SSLv3 cipher=OTHER);
+        Mon, 28 Mar 2011 13:44:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D90EFF5.9050603@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170188>
 
-Andrew Garber <andrew@andrewgarber.com> writes:
+Torsten B=C3=B6gershausen wrote:
 
-> But what about demerphq's example? (see below)
+> No good news from my side:
+> Same (?) problem with 41e6b...
 >
->>      Bx--B--B--B*
->>     /
->>  --Gz--By--B--Gx--G*
->>
->> How does knowing that G* is good help you to find that Bx broke the
->> code in the B* branch again?
+> not ok - 13 NUL in log message, file content, and property name
 
-If all you want is to know which commit introduced the bug, it doesn't.
-But usually, what you're really looking for is an explanation and a fix
-for the bug. Let's see what git bisect tells us then:
+Alas.  Could you send the output for that test from
+"sh t9010-svn-fe.sh -v -i", or from
 
-$ git bisect start
-$ git bisect good <good-branch>
-$ git bisect bad <bad-branch>
-Bisecting: a merge base must be tested
-[f1fac16fb39dbe421b5cc4bcb945433495c794e1] ...
-$ git bisect bad
-The merge base f1fac16fb39dbe421b5cc4bcb945433495c794e1 is bad.
-This means the bug has been fixed between f1fac16fb39dbe421b5cc4bcb945433495c794e1
- and [089840ef9f8b97ddc9e28fa152c65115fb0b649a].
+	GIT_TRACE=3D1 sh -x t9010-svn-fe.sh -v -i
 
-This doesn't tell you where the bug was introduced, but gives you
-something which is usually even more valuable: where to find the fix.
-Then, you have the choice between merging the good branch into the bad
-one (like merging a maintainance branch into a dev branch), or to bisect
-again to find the actual fix in good-branch.
-
-If you really wanted to find the first bad commit, you've spent one
-iteration sub-optimally and can start a new bisect with the merge base
-as the base commit.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+if it looks more enlightening?
