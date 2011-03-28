@@ -1,78 +1,62 @@
-From: Maarten Billemont <lhunath@gmail.com>
-Subject: git-am cannot apply git format-patch -M
-Date: Mon, 28 Mar 2011 09:44:34 +0200
-Message-ID: <09D72CB4-1B48-4799-B0D5-DB54942D840F@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 28 09:44:46 2011
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: GSoC 2011
+Date: Mon, 28 Mar 2011 14:48:57 +0700
+Message-ID: <AANLkTi=3B7m4G1ceif8TRAoOv8eA8ueRjrFwfK+OyOUr@mail.gmail.com>
+References: <AANLkTikQ6=CrWuMemwv38HnBKPnt8CjQWqYj7oA8zVZ4@mail.gmail.com> <AANLkTikC5cagS8qYPDmWO+jhC4pHMkJq6zQN3QemMhwG@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Karol Samborski <edv.karol@gmail.com>, git@vger.kernel.org
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 09:49:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4781-0006fj-Gp
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:44:45 +0200
+	id 1Q47Cm-0008NL-Ca
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 09:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753075Ab1C1Hol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 03:44:41 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:63741 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751347Ab1C1Hok convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2011 03:44:40 -0400
-Received: by wwa36 with SMTP id 36so3470976wwa.1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 00:44:39 -0700 (PDT)
+	id S1752907Ab1C1Htf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 03:49:35 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:38275 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347Ab1C1Hte (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 03:49:34 -0400
+Received: by wwk4 with SMTP id 4so1450120wwk.1
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 00:49:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:content-type:content-transfer-encoding
-         :subject:date:message-id:to:mime-version:x-mailer;
-        bh=kIoZBW+VCtWlNKFxomgDrr+dzZ16NrDb5u/6ULxR9pw=;
-        b=iyzN+hhRT4fdPBWE3PrsQrrSE+LlxhcuaqAk/WwnDKovYclC/f9FZqY+t8d9tzO/5x
-         Q6m/p0G3ByPcbkEiDofWFpEzriUlwemmrGLuSX2+Pqy/rBDQmmDmiMseKDpgXbxLr2sQ
-         8FDrZZ+ZeAMHPxzwMJLyAhtMVK3UbIj1k7dIM=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=//A7/HDpdWxtOm+LbyBA/2yhfk9ORKvIYijW54eI1oQ=;
+        b=F9UpNqgh6VVFCXf3j2e/O1oL0kYPuVe6jZ1og/QH07UecyEuDhdrQVRJRSQ4Mi+G24
+         hrIGvmMUPU0U7BrbNS2o3ty7+hdYS/dmwT1JoO1mk6kQUFXmXi6ewd53OsbzhnQhkJRf
+         D0Bv/QWUA5i5RQn4zABVQsGxxCk6mJUIAsb/I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        b=BayV+hvTq3uf7s/YAJjvs/cLja8NJ5W5lKq+hsZZgw8ysPhVV86i0crFU+tsNXgC5j
-         SQ8J/hdDHzH1zvUOTku+B0/SotlBL1gqpe+S8QvX+7QcygIxZh8K2tddNVI0wimsKlzE
-         EH2osCCUTHQrrli2TG5s2Z1wAoxLl0VfnF4/c=
-Received: by 10.227.54.6 with SMTP id o6mr3463671wbg.61.1301298279290;
-        Mon, 28 Mar 2011 00:44:39 -0700 (PDT)
-Received: from mbillemo.lin-k.net ([80.169.61.18])
-        by mx.google.com with ESMTPS id g7sm1848653wby.31.2011.03.28.00.44.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Mar 2011 00:44:38 -0700 (PDT)
-X-Mailer: Apple Mail (2.1084)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=PsN8TkXV4VEN+WwIJaz/VD99qvvSa1DjXoZDUspVFnJS3dXyl5Xl/xEL+8k7zjetfv
+         YP3hAWErCTcG2XPVk8j+ZT7luAWdrhGDx88Ebmd43KfVxNFhLHYodUj75nYo1rkS51HM
+         mQkPC8GTFeSvnN8HDH8qSQktTu8O+31FAG5I8=
+Received: by 10.216.66.131 with SMTP id h3mr3690174wed.111.1301298573590; Mon,
+ 28 Mar 2011 00:49:33 -0700 (PDT)
+Received: by 10.216.163.202 with HTTP; Mon, 28 Mar 2011 00:48:57 -0700 (PDT)
+In-Reply-To: <AANLkTikC5cagS8qYPDmWO+jhC4pHMkJq6zQN3QemMhwG@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170108>
 
-I've created a series of patches for my local commits using:
+On Mon, Mar 28, 2011 at 2:42 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> And by the way the same question has been asked recently and the
+> answer was to search a mailing list archive for "low hanging fruit" as
+> we don't use any bug tracker.
+> You could perhaps search the source code for "TODO" or "NEEDS WORK" too.
 
-git format-patch -M -C ...
-
-The resulting patch files contain hunks like:
-
-diff --git a/file1 b/file2
-similarity index 93% 
-rename from file1
-rename to file2
-index 7cf3a09..88c9c13 100644
---- a/file1
-+++ b/file2
-[...]
-
-git-am fails at applying these hunks, failing with:
-
-Applying: [commit description]
-fatal: git apply: bad git-diff - inconsistent old filename on line 109
-Patch failed at [HEAD commit]
-When you have resolved this problem run "git am --resolved".
-If you would prefer to skip this patch, instead run "git am --skip".
-To restore the original branch and stop patching run "git am --abort".
-
-Additionally, I'd like to report that the line number reported by git-am in this error message does not reflect the actual line number of the problem in the patch file.  The reported line number is offset by -[amount of lines before the [---] line in the patch file], which makes understanding the error message hard, confusing and potentially misleading.
+Also search for test_expect_failure in t/ directory. I don't know how
+hard those breakages are though.
+-- 
+Duy
