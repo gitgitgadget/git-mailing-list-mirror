@@ -1,81 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why can't I use git-bisect to find the first *good* commit?
-Date: Mon, 28 Mar 2011 16:25:21 -0400
-Message-ID: <20110328202521.GB27755@sigill.intra.peff.net>
-References: <AANLkTinC9Lr9uCTUZSVxVR56+FQm2NGRpPu90fm9OHF5@mail.gmail.com>
- <vpq62r3i1z4.fsf@bauges.imag.fr>
- <AANLkTimT+WN2F-BmQzQrAs3uizHig9cCXDUdc7nQ-vC5@mail.gmail.com>
- <vpqr59r6sg5.fsf@bauges.imag.fr>
- <AANLkTinuH4Ut+jtdqRfFrNeXA6JmBK2i0ddCcz4vV6JC@mail.gmail.com>
- <vpqvcz35cjk.fsf@bauges.imag.fr>
- <AANLkTikADLZvN0N==_H47O1vcrap1_Mcf7vW69d5sh0d@mail.gmail.com>
- <AANLkTimR5XfOV-0RZjdyu72E9JdBfr1B+wc=q55V4qH5@mail.gmail.com>
- <vpqbp0v2fve.fsf@bauges.imag.fr>
- <AANLkTim+iQ89b49nC8NRtoUobV4tMVL+bCoW-vg3+rLD@mail.gmail.com>
+From: Alexandru Sutii <sutii.alex@gmail.com>
+Subject: Re: GSoC questions
+Date: Mon, 28 Mar 2011 23:26:47 +0300
+Message-ID: <AANLkTikGb1=Rtz-T9p=u+X32KpL2AXq0AELdSJ2NMHrW@mail.gmail.com>
+References: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
+	<20110328001152.GA11294@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	demerphq <demerphq@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andrew Garber <andrew@andrewgarber.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 22:25:30 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, libgit2@librelist.org,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 22:26:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4J0E-000310-58
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 22:25:30 +0200
+	id 1Q4J1Z-0003bA-Dy
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 22:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754337Ab1C1UZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 16:25:24 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42991
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753632Ab1C1UZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 16:25:24 -0400
-Received: (qmail 17494 invoked by uid 107); 28 Mar 2011 20:26:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Mar 2011 16:26:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Mar 2011 16:25:21 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTim+iQ89b49nC8NRtoUobV4tMVL+bCoW-vg3+rLD@mail.gmail.com>
+	id S1754246Ab1C1U0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 16:26:48 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57380 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753650Ab1C1U0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 16:26:48 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 34so4054817iwn.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 13:26:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=UmnyuzXoP0DdouB3aX2ynWXsIFSwVMvaj6hFUtchdZk=;
+        b=cnVhoHFb41n8c2VDL4S2GdT5YvBsiHgYInXMIzBRTlkzbHYqKcImRTQYtlv+iPuxlT
+         e1CXyoy1DqquMmzsH6GT5GJgUbJzWMDU7NRVCNdYtOiRhiBy5dXUnj6rZT0kPD3uaFhf
+         gKOp0Rl//wHIY0LhRSPleLSrx8GVg79HD34t0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=coJhq2v0OIwGiXok35cR3mX7I50ftluHXY4Cnc3q75ixHuReJQx3en+t0323o5OmV8
+         SnfnFoYjngyA93QMDRG2xDwMpKEtvsutarOa1R4pPmoXljNrUz0h8ftJbdo3BWVz462f
+         uYdGazJyaBA6ce0QqfCw+tfV8z2bgWUuAyH0s=
+Received: by 10.42.138.4 with SMTP id a4mr7526724icu.258.1301344007802; Mon,
+ 28 Mar 2011 13:26:47 -0700 (PDT)
+Received: by 10.43.133.2 with HTTP; Mon, 28 Mar 2011 13:26:47 -0700 (PDT)
+In-Reply-To: <20110328001152.GA11294@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170185>
 
-On Mon, Mar 28, 2011 at 04:12:49PM -0400, Andrew Garber wrote:
+> Is there some particular part of git functionality you would like to
+> focus on (history creation, history mining, object store maintenance,
+> configuration, transport)?  The list of low-level commands (plumbing)
+> in the git manual might be a good place to get an idea of the scope.
+>
+> The ideas page mentions areas in which libgit2 functionality is
+> incomplete --- depending on your interest, you might want to focus on
+> one of these (so the project would be to add functionality to libgit2
+> as well as using it) or to steer clear of them (to focus on
+> functionality libgit2 already has).
 
-> But what about demerphq's example? (see below)
-> 
-> >      Bx--B--B--B*
-> >     /
-> >  --Gz--By--B--Gx--G*
-> >
-> > How does knowing that G* is good help you to find that Bx broke the
-> > code in the B* branch again?
-> >
-> > Presumably 'By' broke the G* branch which was then fixed by Gx and
-> > none of this information helps you at all identify that Bx broke the
-> > B* branch.
-> >
-> > Whereas a plain binary search on the B* branch would eventually find
-> > that Bx was responsible.
+Hello again! Thanks for your and Jeff's reply.
 
-If you feed bisect a history where the bug flips off and on between good
-and bad commits, you aren't necessarily going to get the answer you
-want. But that has nothing to do with the history shape; it is a problem
-in a linear history like this, too:
+I have decided on "minimal Git client based on libgit2" project. I have looked
+over the git manual page and I would like to work on manipulation commands
+functionality. I am also open for adding functionality to libgit2 as
+well as using it.
 
-  --G--Bx--B--G--G--By--B
+I have read the references from your mail and I am currently trying to
+understand project's architecture, as I am totally new to git's source code.
+Hope I will manage to identify the source code parts that interest me in
+a short time and maybe realize to implement something.
 
-That being said, it is more likely to happen with cherry-picking, which
-is more likely to happen with multiple branches. In git.git, we tend to
-favor creating (or backporting) bugfix commits close to the bug itself,
-and then merging the same commit up.
+In the meantime I would greatly appreciate some guidelines where to look.
 
--Peff
+--Alex.
