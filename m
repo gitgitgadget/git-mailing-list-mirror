@@ -1,84 +1,92 @@
-From: Joe Ratterman <jratt0@gmail.com>
-Subject: [PATCH] grep: Add the option '--line-number'
-Date: Mon, 28 Mar 2011 13:11:55 -0500
-Message-ID: <1301335915-5782-1-git-send-email-jratt0@gmail.com>
-Cc: Joe Ratterman <jratt0@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 28 20:12:43 2011
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Why can't I use git-bisect to find the first *good* commit?
+Date: Mon, 28 Mar 2011 20:23:59 +0200
+Message-ID: <vpqvcz35cjk.fsf@bauges.imag.fr>
+References: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com>
+	<AANLkTin1QCda9BV+gND1kcXRTZBF7hj3Chce5OkLX2a9@mail.gmail.com>
+	<4D909DD1.2050904@viscovery.net>
+	<AANLkTinC9Lr9uCTUZSVxVR56+FQm2NGRpPu90fm9OHF5@mail.gmail.com>
+	<vpq62r3i1z4.fsf@bauges.imag.fr>
+	<AANLkTimT+WN2F-BmQzQrAs3uizHig9cCXDUdc7nQ-vC5@mail.gmail.com>
+	<vpqr59r6sg5.fsf@bauges.imag.fr>
+	<AANLkTinuH4Ut+jtdqRfFrNeXA6JmBK2i0ddCcz4vV6JC@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r?= =?iso-8859-1?Q?=F0?= 
+	<avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>
+To: Andrew Garber <andrew@andrewgarber.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 20:24:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Gvi-0005oI-H2
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 20:12:42 +0200
+	id 1Q4H6q-0002uL-Bd
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 20:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754782Ab1C1SMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 14:12:37 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:62797 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754717Ab1C1SMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 14:12:36 -0400
-Received: by iyb14 with SMTP id 14so3379867iyb.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 11:12:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=XjzctqLHSwafScLtzKAfb0jDF6O49wm9PBTbC/0FZeo=;
-        b=dONBl+E6pwKDiU65J6axLUK83KyHOKeixXuF88+lrmd/zppMnI6aSgeYt2bPxqAAYu
-         uvRu7RI0wrq4xwGQlDPNJTlkEzdCAmliBW45F5KNNMPK4XF9Bu9VNXSY9x2iC3cwyarf
-         hM2HSE2Hkz1P1dglfyBX243kVWpQfJPReH1Pg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=wiDFf/my1r/RGA8C+ucu0vLPLmK6A3WynTsXzC29Sa8yqKLSnsDynuVGlo8Sw1ZhU1
-         B2pzkOfjI6pOcAMzveMiLu1uVNkMmrr/2SmyGwWZqQBJUmZQ10AM5k6lB4Iydr4WZrGM
-         Hez4vkjodh0hC+ElXwWJmhVyaVBNsAz5ZaacY=
-Received: by 10.42.97.7 with SMTP id l7mr6932535icn.471.1301335934262;
-        Mon, 28 Mar 2011 11:12:14 -0700 (PDT)
-Received: from localhost.localdomain ([129.42.161.50])
-        by mx.google.com with ESMTPS id c1sm3085565ibe.32.2011.03.28.11.12.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Mar 2011 11:12:13 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.1.3.gbe203
+	id S1753992Ab1C1SYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 14:24:05 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41627 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751237Ab1C1SYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 14:24:04 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p2SINvSm020881
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 28 Mar 2011 20:23:57 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Q4H6d-0002Qu-QW; Mon, 28 Mar 2011 20:23:59 +0200
+In-Reply-To: <AANLkTinuH4Ut+jtdqRfFrNeXA6JmBK2i0ddCcz4vV6JC@mail.gmail.com>
+	(Andrew Garber's message of "Mon, 28 Mar 2011 14:12:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Mar 2011 20:23:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p2SINvSm020881
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1301941438.88841@brAtboW8VPZ/VfFJqSjvRA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170173>
 
-This is a synonym for the existing '-n' option, matching GNU grep.
+Andrew Garber <andrew@andrewgarber.com> writes:
 
-Signed-off-by: Joe Ratterman <jratt0@gmail.com>
----
- Documentation/git-grep.txt |    1 +
- builtin/grep.c             |    2 +-
- 2 files changed, 2 insertions(+), 1 deletions(-)
+> On Mon, Mar 28, 2011 at 1:55 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>
+>> Then which commit do you specify as "good"?
+>
+> Any ancestral commit *on the same branch* which is know to be working.
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 71668e0..c446590 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -102,6 +102,7 @@ OPTIONS
- 	as a regex).
- 
- -n::
-+--line-number::
- 	Prefix the line number to matching lines.
- 
- -l::
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 1d35f76..c51e9f1 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -874,7 +874,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN('F', "fixed-strings", &opt.fixed,
- 			"interpret patterns as fixed strings"),
- 		OPT_GROUP(""),
--		OPT_BOOLEAN('n', NULL, &opt.linenum, "show line numbers"),
-+		OPT_BOOLEAN('n', "line-number", &opt.linenum, "show line numbers"),
- 		OPT_NEGBIT('h', NULL, &opt.pathname, "don't show filenames", 1),
- 		OPT_BIT('H', NULL, &opt.pathname, "show filenames", 1),
- 		OPT_NEGBIT(0, "full-name", &opt.relative,
+What is the point is finding manually a commit *on the same branch* when
+the tool can do that for you? You don't know how old the breakage is, so
+finding the first good commit will take some time. Knowing that the
+other branch is good gives you a hint that the common ancestor between
+branches should be good, so a good start would be to find the common
+ancestor.
+
+But again, why would you insist in doing that manually?
+
+> Isn't the whole point of git bisect is to do binary search through
+> time?
+
+No. Bisect does a search through a DAG. And that is the whole point of
+bisect: doing a binary search through time is something you could do
+manually. That would be less convenient, but still workable. git bisect
+is far more clever, and does something you could hardly do manually, or
+at least not without getting headaches.
+
+> Perhaps you could give a concrete example of where you could use it
+> for multiple branches simultaneously?
+
+Well, see my previous email.
+
 -- 
-1.7.4.1.4.g0ea33
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
