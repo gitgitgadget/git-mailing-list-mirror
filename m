@@ -1,91 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSOC idea: build in scripts and cleanups
-Date: Mon, 28 Mar 2011 10:21:21 -0400
-Message-ID: <20110328142121.GB14763@sigill.intra.peff.net>
-References: <201103260141.20798.robert.david.public@gmail.com>
- <20110326021435.GA2352@elie>
- <20110326133939.GB2859@sigill.intra.peff.net>
- <201103281055.23578.robert.david.public@gmail.com>
+From: Andrew Garber <andrew@andrewgarber.com>
+Subject: Re: Why can't I use git-bisect to find the first *good* commit?
+Date: Mon, 28 Mar 2011 10:29:38 -0400
+Message-ID: <AANLkTin1QCda9BV+gND1kcXRTZBF7hj3Chce5OkLX2a9@mail.gmail.com>
+References: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Robert David <robert.david.public@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 16:21:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 16:30:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4DJz-0006xj-6v
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 16:21:31 +0200
+	id 1Q4DSJ-0002c7-Fv
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Mar 2011 16:30:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521Ab1C1OVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 10:21:25 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43122
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754084Ab1C1OVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 10:21:24 -0400
-Received: (qmail 10374 invoked by uid 107); 28 Mar 2011 14:22:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Mar 2011 10:22:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Mar 2011 10:21:21 -0400
-Content-Disposition: inline
-In-Reply-To: <201103281055.23578.robert.david.public@gmail.com>
+	id S1753229Ab1C1OaA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2011 10:30:00 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:36285 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753982Ab1C1O37 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2011 10:29:59 -0400
+Received: by eyx24 with SMTP id 24so1168930eyx.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 07:29:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aIqnlQ29/imzx0ngIdJ2g46tkR4tsSrSziI1lpO/pVQ=;
+        b=XyyreHGwNxIuUMgl3vFloI2elxxCZ+vouYFMW2yVQKkulc5l67/IJkle+luLFSaZhE
+         amnqFd8toSxYAvOk1Y5p1N+VOoRfaSPVMzXg/zEE/aBnZUHhGTQliXy1aPhp5Bxs8hXr
+         BbyrRbYEMomKQs5w/BsZ9ssiVQz3RlkRknqYI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=i1gKdiYNh7SiRYvMMbSCHziRoIGpfczVW9G3+m8MU5no94wK2IDEGJg8SMNKpcjPR0
+         wBFmm79p19Yx7XBYbH6fJ4+7AV1kxFGt6StwzcDx479yfBOiTHWJ1yI6gASB8Dg11qWp
+         zptm0IlWknmFyS6HCkGyIRCYRZjCPoaRXDAow=
+Received: by 10.213.15.141 with SMTP id k13mr1230232eba.144.1301322598100;
+ Mon, 28 Mar 2011 07:29:58 -0700 (PDT)
+Received: by 10.213.105.76 with HTTP; Mon, 28 Mar 2011 07:29:38 -0700 (PDT)
+In-Reply-To: <AANLkTinQ0rCw2ydisHra779r6_iSOxqRwOStpJrNbx7h@mail.gmail.com>
+X-Google-Sender-Auth: Aw-oW8NVP0u1XfcZXox0Yp4A9m8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170131>
 
-On Mon, Mar 28, 2011 at 10:55:22AM +0200, Robert David wrote:
+> I'd expect this to work:
+>
+> =C2=A0 =C2=A0$ git bisect start
+> =C2=A0 =C2=A0$ git bisect good
+> =C2=A0 =C2=A0$ git bisect bad HEAD~100
 
-> > If I were considering cleaning up and porting add--interactive to C, I
-> > think I would probably start with just porting the "-p" patch loop
-> > first. I think it's the part that most people use, and most callers
-> > don't support a generic "-i" but just the "-p" interface (e.g., you can
-> > do "git add -i" or "git add -p", but only "git checkout -p"). And that
-> > cuts down the size of the task somewhat.
-> 
-> I have read all the code in git-add--interactive. If I understand that 
-> correct, you mean to separate -i and -p int two different commands.
-> And make the -p option more like the -i (but just only for patching).
-> 
-> And consequently port them to C. 
+So would I. I think the behavior of git bisect should be changed.
+Right now, it's trying to find the first bad commit. Instead, it
+should be trying to find the first commit where the code's good/bad
+state *changed*. IOW, it should be able to handle both of the
+following cases:
 
-Sort of. The approach I would take would be:
+good <--- oldest
+good
+good
+bad <--- the commit we want bisect to find
+bad
+bad <--- newest
 
-  1. write patch loop code in C (i.e., the code that is going to replace
-     the --patch code path from git-add--interactive.perl), and make it
-     call-able from within other C programs
+bad <--- oldest
+bad
+bad
+good <--- the commit we want bisect to find
+good
+good <--- newest
 
-  2. write a new command, "git-add--interactive-patch", that behaves
-     like "git-add--interactive --patch", but is based on your new C
-     code.
+It shouldn't matter which end we start on, so long as one end gets
+marks good, and the other end gets marked bad.
 
-  3. Port C callers of "git-add--interactive --patch" to the new
-     interface from (1). This should be "add -p", "checkout -p", and
-     "reset -p".
-
-  4. Port non-C callers of "git-add--interactive --patch" to the new
-     command from (2). This should be git-add--interactive.perl and
-     git-stash.sh.
-
-  5. Remove the perl patch code in git-add--interactive.perl; you can
-     replace it with a call to git-add--interactive-patch.
-
-But that doesn't mean that's the way it has to be done. Just what I
-would do. :)
-
-> > As far as cleanup versus features, I think Thomas would have to comment
-> > on that. He is the one who did the most work on patch-mode, and
-> > therefore the one who most thinks it needs cleaned up. :)
-> 
-> Is Thomas going to be a mentor in this task?
-
-I hope so. I can also co-mentor if it helps.
-
--Peff
+Andrew
