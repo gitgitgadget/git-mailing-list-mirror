@@ -1,214 +1,100 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: [RFC 1/2] Portability: Convert strictly between function pointers
-Date: Tue, 29 Mar 2011 15:02:30 +0000
-Message-ID: <3c6b883f-8860-4da2-b328-d912019a4145-mfwitten@gmail.com>
-References: <522d5a8a-a674-40bd-91bf-b5b8f88e0f78-mfwitten@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:06:43 2011
+From: Rodrigo Rosenfeld Rosas <rr.rosas@gmail.com>
+Subject: Re: Translation inclusion criteria
+Date: Tue, 29 Mar 2011 16:24:38 -0300
+Message-ID: <4D9231F6.80205@gmail.com>
+References: <4D889CC9.4060603@gmail.com> <1301417951.13114.7.camel@drew-northup.unet.maine.edu> <7vhbalrbwi.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:25:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4eFV-0000aV-Ma
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 21:06:42 +0200
+	id 1Q4eXB-0001AP-2F
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 21:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753931Ab1C2TGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 15:06:36 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:33137 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752962Ab1C2TGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 15:06:35 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 21so420839wya.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 12:06:35 -0700 (PDT)
+	id S1754174Ab1C2TYo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 15:24:44 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:34341 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754161Ab1C2TYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 15:24:43 -0400
+Received: by vxi39 with SMTP id 39so439054vxi.19
+        for <git@vger.kernel.org>; Tue, 29 Mar 2011 12:24:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:date:from:to:message-id:references;
-        bh=mQPojmi6+Mqf2lz1nmTv7DON+lxOk8fhadm+OT8hwiw=;
-        b=i5uMmhuHH1mhEf0i6+Km2F+vAgniGG+EqVs5mVbLHzY1BjQx5jlKs/V2NCYOBwV13o
-         HJ1ChCQRsD26E/cI5N9m9vP6Qt6jpMWr1wuAGTqoaznQ1YAMU/72zKbQDP5VtbmB4pIU
-         czKPxvqECoD51iCGwfQ3CjrhM91nA6QXgEveg=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=e3uBY16zxvfEOaaYEF1xwCQwBs767JmgPZ6ke+pm03A=;
+        b=SAW6o0hMG47638lJLGULF4H/ztgMicPJxkOz17KK/bijPE/c1fpo3B9Bt2T4aeNR8e
+         8/MWowGR1JNwvGXDv9L8Vt2Pp4Nen5slbmzYG6Jj7VNc0b7mKqVGjO2iu6xIFhOx7adF
+         PXneTg9P3jCFe/RGkuhn9W2JLzyqYtuSc24Do=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:date:from:to:message-id:references;
-        b=Z0gpX+5Ls3wtM3Hb58yzwN1WtDhZva8HQtgxoDmbU51xUSs7zaIwZtmCIY4NfgX5uQ
-         YLWuGvh/Z7Hlug3hu+Yv4q6dABaHOUhgk9xcamnpwguSQdN6j1DQj8gCfvClOVwuC9vp
-         7508t6njAB46uKIby7pU4Hdvy4FfcJHTAXOSU=
-Received: by 10.216.144.166 with SMTP id n38mr96961wej.75.1301425533936;
-        Tue, 29 Mar 2011 12:05:33 -0700 (PDT)
-Received: from gmail.com ([109.123.119.163])
-        by mx.google.com with ESMTPS id z50sm2116491weq.47.2011.03.29.12.05.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 29 Mar 2011 12:05:33 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=it8Rr9rm3OYjRw9GZZ75+Fsuu+bd8w3ZnhmPta2LPtubWM/wtqnZJYoj9tfOiqOIgQ
+         pQLXh3fIRrjCT7BjuQyYWET3RwuZAard/pPHiywdjXXV9wVmpB3FrZY03a5hvDVLkNx7
+         Rv40nzkzKdouBWGnSihXEcZRGsq44uqrVpu4E=
+Received: by 10.52.67.146 with SMTP id n18mr245370vdt.232.1301426682777;
+        Tue, 29 Mar 2011 12:24:42 -0700 (PDT)
+Received: from [192.168.2.236] ([187.59.230.209])
+        by mx.google.com with ESMTPS id j15sm1077149vcs.20.2011.03.29.12.24.40
+        (version=SSLv3 cipher=OTHER);
+        Tue, 29 Mar 2011 12:24:41 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100918 Icedove/3.1.4
+In-Reply-To: <7vhbalrbwi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170312>
 
-Currently, building git with:
+  Em 29-03-2011 15:59, Junio C Hamano escreveu:
+> Drew Northup<drew.northup@maine.edu>  writes:
+>
+>> On Tue, 2011-03-22 at 09:57 -0300, Rodrigo Rosenfeld Rosas wrote:
+>>> Hi, I've followed the instructions in git-gui/po/README in 2008 but
+>>> pt.po was never included in master. Now I've just updated it.
+>>>
+>>> Is there anything else I should do for it being merged to master? W=
+hat
+>>> is the criteria for including new translations?
+>> ...
+>> Rodrigo,
+>> Internationalization of Git is very much an ongoing process. I suspe=
+ct
+>> that has something to do with the uptake of your contribution. =C3=86=
+var may
+>> have more information.
+> All the git-gui changes come through Pat Thoyts these days; =C3=86var=
+ has
+> nothing to with git-gui i18n/l10n (except perhaps as a translator to =
+his
+> own language, but I don't see his name in the shortlog).
+>
+> Perhaps the submission was sent with wrong Cc:; I don't pay attention=
+ to
+> git-gui and gitk l10n patches myself.
 
-  CFLAGS="-std=c99 -pedantic -Wall -Werror -g -02"
+Sorry, I think I'm missing something. From the mentioned README, it=20
+seems we're supposed to push our changes to the mob branch of=20
+mob@repo.or.cz:/srv/git/git-gui/git-gui-i18n.git/, which has write=20
+access enabled for everyone.
 
-causes gcc 4.5.2 to fail with:
+That's what I've done. I couldn't find any mention in the README about=20
+having to send some mail after that.
 
-  ISO C forbids initialization between function pointer and 'void *'
+I'll wait for instructions from Pat Thoyts to understand better what=20
+should be my next step...
 
-The C99 standard isn't very explicit about this fact, but the
-following paragraphs seem relevant:
+Thanks,
 
-  6.3.2.3.1:
-  A pointer to void may be converted to or from a pointer to
-  any incomplete or object type. A pointer to any incomplete
-  or object type may be converted to a pointer to void and
-  back again; the result shall compare equal to the original
-  pointer.
-
-  6.3.2.3.8:
-  A pointer to a function of one type may be converted to a
-  pointer to a function of another type and back again; the
-  result shall compare equal to the original pointer. If a
-  converted pointer is used to call a function whose type is
-  not compatible with the pointed-to type, the behavior is
-  undefined.
-
-  6.5.4.3:
-  Conversions that involve pointers, other than where
-  permitted by the constraints of 6.5.16.1, shall be
-  specified by means of an explicit cast.
-
-Also, this website:
-
-  http://www.safercode.com/blog/2008/11/25/generic-function-pointers-in-c-and-void.html
-
-provides some inspiring comments:
-
-  Why can't we use void* for a Generic Function Pointer?
-  ------------------------------------------------------
-
-  This is because a void* is a pointer to a generic
-  "data" type. A void * is used to denote pointers to
-  objects and in some systems, pointers to functions can
-  be larger than pointers to objects. So, if you convert
-  amongst them, you'll lose information and hence, the
-  situation would be undefined and implementation dependent.
-  ...
-
-However, that seems like a hypothetical justification for the
-implicitly undefined behavior of using a variable of type
-pointer to void to carry around a value of type
-pointer to function.
-
-In any case, the solution is clear: Rather than converting
-to and from a pointer to void, one can instead convert to
-and from a pointer to any other function type, say:
-
-  void (*)(void)
-
-Is this silly? Probably, but at least it's standards conforming.
-
-Unfortunately (or fortunately?), this requires more
-explicit casting, as per 6.5.4.3.
-
-Signed-off-by: Michael Witten <mfwitten@gmail.com>
----
- builtin/fetch-pack.c   |    2 +-
- builtin/receive-pack.c |    2 +-
- cache.h                |    5 +++--
- sha1_file.c            |    2 +-
- transport.c            |    4 ++--
- transport.h            |    4 ++--
- 6 files changed, 10 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 1724b76..ded1784 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -225,7 +225,7 @@ static void insert_one_alternate_ref(const struct ref *ref, void *unused)
- 
- static void insert_alternate_refs(void)
- {
--	foreach_alt_odb(refs_from_alternate_cb, insert_one_alternate_ref);
-+	foreach_alt_odb(refs_from_alternate_cb, (alt_odb_fn_cb)insert_one_alternate_ref);
- }
- 
- #define INITIAL_FLUSH 16
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 27050e7..4ce9241 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -738,7 +738,7 @@ static void add_one_alternate_ref(const struct ref *ref, void *unused)
- 
- static void add_alternate_refs(void)
- {
--	foreach_alt_odb(refs_from_alternate_cb, add_one_alternate_ref);
-+	foreach_alt_odb(refs_from_alternate_cb, (alt_odb_fn_cb)add_one_alternate_ref);
- }
- 
- int cmd_receive_pack(int argc, const char **argv, const char *prefix)
-diff --git a/cache.h b/cache.h
-index 9f06d21..ab3407a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -892,8 +892,9 @@ extern struct alternate_object_database {
- } *alt_odb_list;
- extern void prepare_alt_odb(void);
- extern void add_to_alternates_file(const char *reference);
-+typedef void (*alt_odb_fn_cb)(void);
--typedef int alt_odb_fn(struct alternate_object_database *, void *);
-+typedef int (*alt_odb_fn)(struct alternate_object_database *, alt_odb_fn_cb);
--extern void foreach_alt_odb(alt_odb_fn, void*);
-+extern void foreach_alt_odb(alt_odb_fn, alt_odb_fn_cb);
- 
- struct pack_window {
- 	struct pack_window *next;
-diff --git a/sha1_file.c b/sha1_file.c
-index df0edba..8555dbe 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -388,7 +388,7 @@ void add_to_alternates_file(const char *reference)
- 		link_alt_odb_entries(alt, alt + strlen(alt), '\n', NULL, 0);
- }
- 
--void foreach_alt_odb(alt_odb_fn fn, void *cb)
-+void foreach_alt_odb(alt_odb_fn fn, alt_odb_fn_cb cb)
- {
- 	struct alternate_object_database *ent;
- 
-diff --git a/transport.c b/transport.c
-index a02f79a..f572fa8 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1190,14 +1190,14 @@ literal_copy:
- 	return xstrdup(url);
- }
- 
--int refs_from_alternate_cb(struct alternate_object_database *e, void *cb)
-+int refs_from_alternate_cb(struct alternate_object_database *e, alt_odb_fn_cb cb)
- {
- 	char *other;
- 	size_t len;
- 	struct remote *remote;
- 	struct transport *transport;
- 	const struct ref *extra;
--	alternate_ref_fn *ref_fn = cb;
-+	alternate_ref_fn ref_fn = (alternate_ref_fn)cb;
- 
- 	e->name[-1] = '\0';
- 	other = xstrdup(real_path(e->base));
-diff --git a/transport.h b/transport.h
-index efb1968..47ea41a 100644
---- a/transport.h
-+++ b/transport.h
-@@ -166,7 +166,7 @@ int transport_refs_pushed(struct ref *ref);
- void transport_print_push_status(const char *dest, struct ref *refs,
- 		  int verbose, int porcelain, int *nonfastforward);
- 
--typedef void alternate_ref_fn(const struct ref *, void *);
-+typedef void (*alternate_ref_fn)(const struct ref *, void *);
--extern int refs_from_alternate_cb(struct alternate_object_database *e, void *cb);
-+extern int refs_from_alternate_cb(struct alternate_object_database *e, alt_odb_fn_cb cb);
- 
- #endif
--- 
-1.7.4.2.417.g32d76d
+Rodrigo.
