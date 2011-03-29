@@ -1,65 +1,133 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: how to squash two commits into only one
-Date: Tue, 29 Mar 2011 11:38:45 +0200
-Message-ID: <AANLkTi=7TNjLVrcJVppiULBnDdKCM_vqwhn1JqoW+DQo@mail.gmail.com>
-References: <AANLkTi=B37GABBc-YWfJN29Mh0kx4Tn8KenD5dJFo9j1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Lynn Lin <lynn.xin.lin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 11:39:17 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] revision.c: introduce --notes-ref= to use one notes ref only
+Date: Tue, 29 Mar 2011 12:05:09 +0200
+Message-ID: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 29 12:08:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4VOL-0001rs-FZ
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 11:39:13 +0200
+	id 1Q4Vr2-00065K-Pk
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 12:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740Ab1C2JjI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 05:39:08 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40823 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751518Ab1C2JjG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 05:39:06 -0400
-Received: by bwz15 with SMTP id 15so36030bwz.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 02:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=5HyQNV0CuCfdxqmubRlIubd4WNrZKYuhfI254oadLPw=;
-        b=P7UighNw47sGsDvx6Oro4Qu8SROcG7RGt8/neXj/hwdpGND/Rnw9ezDADcz6lYA88c
-         9NL1GRgI3sDSZH7mt0+VyBKXYln93FQymamY0AYKFHQT8dNwTAkP9ySFStoJj3teGQkQ
-         FxzU5Uj+ewazaQ53DCyKy3Xnk++w9qmzjJvI0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TDgXxgZgFb8lfIhqqNRcY06vXt0Rs6qc35tyfU2H2MOB1ekYr/SijRdWWKMLb7sSUp
-         xwSjtjJ0h+/XZXYf5B9Kq5K7QWGYBI78TT6t+tbYmI6pO3498LzLWXTWPxh02V8V9wDk
-         Px/lZp5haZf4A9dhCQ61VrEzVEJCTPds0frZ8=
-Received: by 10.204.84.166 with SMTP id j38mr4625867bkl.84.1301391545113; Tue,
- 29 Mar 2011 02:39:05 -0700 (PDT)
-Received: by 10.204.29.2 with HTTP; Tue, 29 Mar 2011 02:38:45 -0700 (PDT)
-In-Reply-To: <AANLkTi=B37GABBc-YWfJN29Mh0kx4Tn8KenD5dJFo9j1@mail.gmail.com>
+	id S1752521Ab1C2KIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 06:08:47 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:51072 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752249Ab1C2KIq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 06:08:46 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 46AF620298;
+	Tue, 29 Mar 2011 06:08:46 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 29 Mar 2011 06:08:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=gYqPEIe3R4WWsG4SIVd1EMcNu1w=; b=roqoDJb9o6kuNNXryXhfcEKJPwR3pEFa7mXhK/3oeeLHvaDmGmIXypZpgZlWCIPI2lvUHg7tlZJXYu4Vv4dz82Udv2USLzxZbweGRMOvIsOdTWl4tpILrDIFZQU/GfUGgAjbuQ5S4S2myGczyRLc/S34/wGeEtd5uRvVUDfEVBE=
+X-Sasl-enc: axHaJiHhvpnPxvgOhBB8PLsnRhlVLh1y8sdAY8Z75qSg 1301393325
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8E40F448927;
+	Tue, 29 Mar 2011 06:08:45 -0400 (EDT)
+X-Mailer: git-send-email 1.7.4.1.607.g888da
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170251>
 
-On Tue, Mar 29, 2011 at 07:42, Lynn Lin <lynn.xin.lin@gmail.com> wrote:
-> All,
-> =C2=A0 I have only have two commits in repo,then I want to squash the=
-se
-> two commit into one through git rebase -i .However it fails
->
-> $ git rebase -i HEAD^1
-> it only show up one commit so can't squash (can't squash without a
-> previous commit)
+As notes become increasingly popular, it's often interesting to show
+notes from a particular notes ref only. Introduce '--notes-ref=<ref>'
+as a convenience shortcut for '--no-standard-notes --show-notes=<ref>'.
 
-$ git rebase -i HEAD~2
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+The idea is to use the same name as in "git notes --ref=<ref>" but make
+it clear for the rev-list option to be about notes, thus "--notes-ref=<ref>".
 
-8-]
+ Documentation/git-log.txt        |    3 ++-
+ Documentation/pretty-options.txt |    4 ++++
+ revision.c                       |   15 +++++++++++----
+ t/t3301-notes.sh                 |    5 +++++
+ 4 files changed, 22 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 2c84028..56ffccd 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -179,7 +179,8 @@ multiple times.  A warning will be issued for refs that do not exist,
+ but a glob that does not match any refs is silently ignored.
+ +
+ This setting can be disabled by the `--no-standard-notes` option,
+-overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable,
++overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable
++or the `--notes-ref` option,
+ and supplemented by the `--show-notes` option.
+ 
+ GIT
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 50923e2..ef5eed4 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -46,3 +46,7 @@ is taken to be in `refs/notes/` if it is not qualified.
+ 	'core.notesRef' and 'notes.displayRef' variables (or
+ 	corresponding environment overrides).  Enabled by default.
+ 	See linkgit:git-config[1].
++
++--notes-ref[=<ref>]::
++	This is the same as `--no-standard-notes --show-notes=<ref>`,
++	i.e. it shows only the notes from the notes tree at `<ref>`.
+diff --git a/revision.c b/revision.c
+index 0f38364..d620926 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1368,19 +1368,26 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--show-notes")) {
+ 		revs->show_notes = 1;
+ 		revs->show_notes_given = 1;
+-	} else if (!prefixcmp(arg, "--show-notes=")) {
++	} else if (!prefixcmp(arg, "--show-notes=") || !prefixcmp(arg, "--notes-ref=")) {
+ 		struct strbuf buf = STRBUF_INIT;
++		int offset = strlen("--show-notes=");
+ 		revs->show_notes = 1;
+ 		revs->show_notes_given = 1;
++		if (!prefixcmp(arg, "--notes-ref=")) {
++			offset = strlen("--notes-ref=");
++			if (revs->notes_opt.extra_notes_refs)
++				string_list_clear(revs->notes_opt.extra_notes_refs, 0);
++			revs->notes_opt.suppress_default_notes = 1;
++		}
+ 		if (!revs->notes_opt.extra_notes_refs)
+ 			revs->notes_opt.extra_notes_refs = xcalloc(1, sizeof(struct string_list));
+-		if (!prefixcmp(arg+13, "refs/"))
++		if (!prefixcmp(arg+offset, "refs/"))
+ 			/* happy */;
+-		else if (!prefixcmp(arg+13, "notes/"))
++		else if (!prefixcmp(arg+offset, "notes/"))
+ 			strbuf_addstr(&buf, "refs/");
+ 		else
+ 			strbuf_addstr(&buf, "refs/notes/");
+-		strbuf_addstr(&buf, arg+13);
++		strbuf_addstr(&buf, arg+offset);
+ 		string_list_append(revs->notes_opt.extra_notes_refs,
+ 				   strbuf_detach(&buf, NULL));
+ 	} else if (!strcmp(arg, "--no-notes")) {
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 1921ca3..3fcfdc7 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -625,6 +625,11 @@ test_expect_success '--show-notes=ref accumulates' '
+ 	test_cmp expect-both-reversed output
+ '
+ 
++test_expect_success '--notes-ref=' '
++	git log --notes-ref=other -1 > output &&
++	test_cmp expect-other output
++'
++
+ test_expect_success 'Allow notes on non-commits (trees, blobs, tags)' '
+ 	git config core.notesRef refs/notes/other &&
+ 	echo "Note on a tree" > expect &&
+-- 
+1.7.4.1.607.g888da
