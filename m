@@ -1,118 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Portability: returning void
-Date: Tue, 29 Mar 2011 18:36:18 -0400
-Message-ID: <20110329223618.GC23510@sigill.intra.peff.net>
-References: <71372d7d-dd08-4945-a8bc-c7b981c09fb2-mfwitten@gmail.com>
- <20110329200230.GA377@elie>
- <20110329221652.GB23510@sigill.intra.peff.net>
+From: =?UTF-8?B?w4FuZ2VsIEdvbnrDoWxleg==?= <ingenit@zoho.com>
+Subject: Re: [PATCH] Remove "bashism" from contrib/thunderbird-patch-inline/appp.sh
+Date: Wed, 30 Mar 2011 00:48:14 +0200
+Message-ID: <4D9261AE.5070103@zoho.com>
+References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com> <4D9103D3.5010403@zoho.com> <7vei5qtnc5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 00:36:34 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 00:44:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4hWU-000320-6d
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 00:36:26 +0200
+	id 1Q4hdn-00060G-LH
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 00:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368Ab1C2WgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 18:36:21 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36412
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751683Ab1C2WgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 18:36:20 -0400
-Received: (qmail 1863 invoked by uid 107); 29 Mar 2011 22:37:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Mar 2011 18:37:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2011 18:36:18 -0400
-Content-Disposition: inline
-In-Reply-To: <20110329221652.GB23510@sigill.intra.peff.net>
+	id S1752170Ab1C2Wny convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 18:43:54 -0400
+Received: from sender1.zohomail.com ([72.5.230.95]:32036 "EHLO
+	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751683Ab1C2Wnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 18:43:53 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type; 
+  b=UThaVRr4LBciqgkmvI+52/z94lDZlGuS7rn18dY1bSsbz5aTTF8yUw9gNWmMPOL8UU0siLPjhDhe
+    1dG/pyNlR8xTKq8Mah5NcFTybJc7lBqcXJQO2LsTuMFSkNW3wGKt  
+Received: from [192.168.1.26] (7.Red-83-54-101.dynamicIP.rima-tde.net [83.54.101.7]) by mx.zohomail.com
+	with SMTPS id 1301438632953718.461405822257; Tue, 29 Mar 2011 15:43:52 -0700 (PDT)
+User-Agent: Thunderbird
+In-Reply-To: <7vei5qtnc5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170336>
 
-On Tue, Mar 29, 2011 at 06:16:52PM -0400, Jeff King wrote:
+Junio C Hamano wrote:
+> =C3=81ngel Gonz=C3=A1lez <ingenit@zoho.com> writes:
+>=20
+>> This is wrong.
+>=20
+> Not really.
+>=20
+>> You are replacing bash with sh:
+>>> -#!/bin/bash
+>>> +#!/bin/sh
+>>
+>> but the script still uses bash-specific syntax (aka. bashishms):
+>=20
+> Do you mean some of the parts you quoted are bashism?
 
-> On Tue, Mar 29, 2011 at 03:02:48PM -0500, Jonathan Nieder wrote:
-> 
-> > Next step is to figure out the longstanding mysterious bash + prove
-> > hang in t0081.
+I was pointing to the $( ) as a bashishm
+
+>>>  PATCH=3D$(zenity --file-selection)
+>=20
+> Even though ancient shells I grew up with did not have $(), it is a w=
+ay
+> backticks should have been written by Bourne from day one.  Historica=
+lly,
+> handling nesting and interraction between double-quotes and backticks
+> correctly was a nightmare to get right, and different implementations=
+ of
+> shells got them always wrong.  If you use $(), the headaches go away.
+
+> These days, we don't know of any POSIX shell that is widely used and =
+does
+> not understand $().  As such, the above construct is perfectly safe a=
+nd
+> even preferred over ``.  Welcome to the 21st century ;-)
 >
-> [...]
-> 
->   2. Tests should kill their backgrounded sleeps themselves. I think I
->      saw some "kill $!" lines in there, but maybe we are missing one.
+> The only major platform that didn't have a reasonable shell was Solar=
+is,
+> but we already have written its /bin/sh off as broken and unusable, a=
+nd
+> suggest people to use xpg4 or xpg6 shell (see the Makefile).
 
-Indeed, those kill lines aren't doing what you expect. Try instrumenting
-like this:
+I have to agree with you. $() is a much saner syntax. Still, the goal
+was portability.
+Reading your message, and considering the Solaris note, it might have
+been fine as it was. I have also checked the "Shell Command Language"
+section of IEEE Std 1003.1 and it does require $() use.
 
-diff --git a/t/t0081-line-buffer.sh b/t/t0081-line-buffer.sh
-index 1dbe1c9..3b2f8ce 100755
---- a/t/t0081-line-buffer.sh
-+++ b/t/t0081-line-buffer.sh
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- 
- test_description="Test the svn importer's input handling routines.
- 
-@@ -56,6 +56,7 @@ long_read_test () {
- 	binary $readsize
- 	copy $copysize
- 	EOF
-+	echo >>/tmp/foo killing $!
- 	kill $! &&
- 	test_line_count = $lines output &&
- 	tail -n 1 <output >actual &&
-@@ -90,6 +91,7 @@ test_expect_success PIPE '0-length read, no input available' '
- 	binary 0
- 	copy 0
- 	EOF
-+	echo >>/tmp/foo killing $!
- 	kill $! &&
- 	test_cmp expect actual
- '
-@@ -119,6 +121,7 @@ test_expect_success PIPE '1-byte read, no input available' '
- 	binary 1
- 	copy 1
- 	EOF
-+	echo >>/tmp/foo killing $!
- 	kill $! &&
- 	test_cmp expect actual
- '
-
-And then run the test under prove, and check "ps" for remaining sleep
-processes. You will see that the killed process IDs do not match up with
-the sleep processes. Except for one sleep process, which actually got
-killed. That is the second one in the list above. It works because it's:
-
-  {
-    sleep 100 >input &
-  } &&
-  ...
-  kill $!
-
-whereas the other ones are like:
-
-  {
-    do_something &&
-    sleep 100
-  } >input &
-
-So my guess is that we have to start a subshell for the latter ones, and
-_that_ is what gets killed. And that may explain the bash vs dash
-behavior; dash, upon receiving the kill signal, presumably kills its
-child, but bash does not (I didn't confirm that; it's just a theory).
-
-I'm not sure what the best solution is. Perhaps putting the subshell
-into its own process group and killing the whole PGRP?
-
--Peff
+Albeit being a single line I would still change it, it is now a much
+weaker position. Thanks for your insight.
