@@ -1,110 +1,155 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Portability: returning void
-Date: Tue, 29 Mar 2011 18:16:52 -0400
-Message-ID: <20110329221652.GB23510@sigill.intra.peff.net>
-References: <71372d7d-dd08-4945-a8bc-c7b981c09fb2-mfwitten@gmail.com>
- <20110329200230.GA377@elie>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 7/6] log/pretty-options: Document --[no-]notes and deprecate
+ old notes options
+Date: Wed, 30 Mar 2011 00:18:55 +0200
+Message-ID: <201103300018.55371.johan@herland.net>
+References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
+ <20110329205307.GA30959@sigill.intra.peff.net>
+ <201103292344.26249.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 00:17:06 2011
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 00:19:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4hDk-0003uO-0O
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 00:17:04 +0200
+	id 1Q4hFi-0004oP-Dd
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 00:19:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166Ab1C2WQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 18:16:56 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47803
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751360Ab1C2WQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 18:16:56 -0400
-Received: (qmail 678 invoked by uid 107); 29 Mar 2011 22:17:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Mar 2011 18:17:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2011 18:16:52 -0400
-Content-Disposition: inline
-In-Reply-To: <20110329200230.GA377@elie>
+	id S1751360Ab1C2WTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 18:19:00 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:45838 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750821Ab1C2WS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 18:18:59 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIU00A2NBBLA640@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 30 Mar 2011 00:18:57 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 6B5F41EA55D2_D925AD1B	for <git@vger.kernel.org>; Tue,
+ 29 Mar 2011 22:18:57 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 2ED1D1EA3AF2_D925AD1F	for <git@vger.kernel.org>; Tue,
+ 29 Mar 2011 22:18:57 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIU005YNBBK9O20@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 30 Mar 2011 00:18:57 +0200 (MEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
+In-reply-to: <201103292344.26249.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170333>
 
-On Tue, Mar 29, 2011 at 03:02:48PM -0500, Jonathan Nieder wrote:
+Document the behavior or the new --notes, --notes=<ref> and --no-notes
+options, and list --show-notes[=<ref>] and --[no-]standard-notes options
+as deprecated.
 
-> Next step is to figure out the longstanding mysterious bash + prove
-> hang in t0081.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-This patch solves it for me:
+On Tuesday 29 March 2011, Johan Herland wrote:
+> On Tuesday 29 March 2011, Jeff King wrote:
+> > Here's the series I ended up with. Getting the refactoring just right
+> > turned out to be non-trivial, but between several attempts and some
+> > tests, I think the end result is correct. Hopefully the breakdown of
+> > the changes into small patches helps make it easy to review.
+> > 
+> >   [1/6]: notes: make expand_notes_ref globally accessible
+> >   [2/6]: revision.c: refactor notes ref expansion
+> >   [3/6]: notes: refactor display notes extra refs field
+> >   [4/6]: notes: refactor display notes default handling
+> >   [5/6]: revision.c: support --notes command-line option
+> >   [6/6]: revision.c: make --no-notes reset --notes list
+> 
+> Indeed, the whole series looks good to me.
+> 
+> Acked-by: Johan Herland <johan@herland.net>
 
-diff --git a/t/t0081-line-buffer.sh b/t/t0081-line-buffer.sh
-index 1dbe1c9..7ea1317 100755
---- a/t/t0081-line-buffer.sh
-+++ b/t/t0081-line-buffer.sh
-@@ -50,7 +50,7 @@ long_read_test () {
- 		{
- 			generate_tens_of_lines $tens_of_lines "$line" &&
- 			sleep 100
--		} >input &
-+		} >input 5>/dev/null &
- 	} &&
- 	test-line-buffer input <<-EOF >output &&
- 	binary $readsize
-@@ -84,7 +84,7 @@ test_expect_success PIPE '0-length read, no input available' '
- 	rm -f input &&
- 	mkfifo input &&
- 	{
--		sleep 100 >input &
-+		sleep 100 >input 5>/dev/null &
- 	} &&
- 	test-line-buffer input <<-\EOF >actual &&
- 	binary 0
-@@ -113,7 +113,7 @@ test_expect_success PIPE '1-byte read, no input available' '
- 			printf "%s" a &&
- 			printf "%s" b &&
- 			sleep 100
--		} >input &
-+		} >input 5>/dev/null &
- 	} &&
- 	test-line-buffer input <<-\EOF >actual &&
- 	binary 1
+And here's some documentation to go on top.
 
-The problem is that the sleeps hang around for 100 seconds, and they are
-connected to the test script's stdout. It works to run "./t0081-*"
-because bash sees the SIGCHLD and knows the script is done. But the
-prove program actually ignore the SIGCHLD and waits until stdout and
-stderr on the child are closed.
 
-I'm not sure why it hangs with bash and not dash. Perhaps it has to do
-with one of them using an internal "sleep" and the other not.
-Double-weird is that if you "strace" the prove process, it will still
-hang. But if you "strace -f", it _won't_ hang. Which makes no sense,
-because the only extra thing happening is strace-ing the now-zombie bash
-process and the sleeps which are, well, sleeping.
+Have fun! :)
 
-So there is definitely some deep mystery, but I think the fix can be
-simpler: we should not leave processes hanging around that might have
-descriptors open. Though the above works, I don't like scripts having to
-know about the descriptor 5 magic above. The right solution to me is
-either:
+...Johan
 
-  1. Close descriptor 5 before running test code. But I'm not sure that
-     will work, since we actually execute the test code in the _current_
-     shell, not a subshell. Meaning we would be closing it for good.
+ Documentation/git-log.txt        |    4 ++--
+ Documentation/pretty-options.txt |   32 ++++++++++++++++++++++----------
+ 2 files changed, 24 insertions(+), 12 deletions(-)
 
-     It also doesn't address descriptor 4, which might also go to
-     stdout (if "-v" was used). I think the saving grace is that "prove"
-     is the only thing that cares, and it doesn't use "-v".
-
-  2. Tests should kill their backgrounded sleeps themselves. I think I
-     saw some "kill $!" lines in there, but maybe we are missing one.
-
--Peff
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index ff41784..0c1c10e 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -177,9 +177,9 @@ May be an unabbreviated ref name or a glob and may be specified
+ multiple times.  A warning will be issued for refs that do not exist,
+ but a glob that does not match any refs is silently ignored.
+ +
+-This setting can be disabled by the `--no-standard-notes` option,
++This setting can be disabled by the `--no-notes` option,
+ overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable,
+-and supplemented by the `--show-notes` option.
++and supplemented by the `--notes=<ref>` option.
+ 
+ Author
+ ------
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 50923e2..a9b399b 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -30,19 +30,31 @@ people using 80-column terminals.
+ 	preferred by the user.  For non plumbing commands this
+ 	defaults to UTF-8.
+ 
+---no-notes::
+---show-notes[=<ref>]::
++--notes[=<ref>]::
+ 	Show the notes (see linkgit:git-notes[1]) that annotate the
+ 	commit, when showing the commit log message.  This is the default
+ 	for `git log`, `git show` and `git whatchanged` commands when
+-	there is no `--pretty`, `--format` nor `--oneline` option is
+-	given on the command line.
++	there is no `--pretty`, `--format` nor `--oneline` option given
++	on the command line.
+++
++By default, the notes shown are from the notes refs listed in the
++'core.notesRef' and 'notes.displayRef' variables (or corresponding
++environment overrides). See linkgit:git-config[1] for more details.
+ +
+-With an optional argument, add this ref to the list of notes.  The ref
+-is taken to be in `refs/notes/` if it is not qualified.
++With an optional '<ref>' argument, add this notes ref to the list of
++notes refs to be shown. The ref is taken to be in `refs/notes/` if it
++is not qualified.
+ 
++--no-notes::
++	Do not show notes. This negates the above `--notes` option, by
++	resetting the list of notes refs from which notes are shown.
++	This can be combined with the above `--notes` option to control
++	exactly which notes refs are shown. E.g. "--notes=foo" will show
++	notes, both from the default notes ref, and from "refs/notes/foo",
++	while "--no-notes --notes=foo" will only show notes from
++	"refs/notes/foo".
++
++--show-notes[=<ref>]::
+ --[no-]standard-notes::
+-	Enable or disable populating the notes ref list from the
+-	'core.notesRef' and 'notes.displayRef' variables (or
+-	corresponding environment overrides).  Enabled by default.
+-	See linkgit:git-config[1].
++	These options are deprecated. Use the above --notes/--no-notes
++	options instead.
+-- 
+1.7.4
