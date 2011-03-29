@@ -1,82 +1,99 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] git-notes.txt: clarify -C vs. copy and -F
-Date: Tue, 29 Mar 2011 10:45:03 +0200
-Message-ID: <09668994f10284cfa5243789a627dce8c2325bc6.1301388217.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 10:48:54 2011
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: how to squash two commits into only one
+Date: Tue, 29 Mar 2011 10:50:57 +0200
+Message-ID: <AANLkTikLuGh6VRReWvu4yT1v2VE_FXPBCx+9kXMX1Mni@mail.gmail.com>
+References: <AANLkTi=B37GABBc-YWfJN29Mh0kx4Tn8KenD5dJFo9j1@mail.gmail.com>
+	<AANLkTi=5e4WUuZHcEJD50yJTw2eyYN_dN1S_7z62qy88@mail.gmail.com>
+	<AANLkTin-0cBa293CQSf4kwMUG=w2j5zkSz1oBDhNqaNe@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Lynn Lin <lynn.xin.lin@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 10:51:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4UbZ-0005m3-VV
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 10:48:50 +0200
+	id 1Q4Udk-0006l0-HZ
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 10:51:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448Ab1C2Iso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 04:48:44 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:37668 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751164Ab1C2Isn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 04:48:43 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3918820CCA;
-	Tue, 29 Mar 2011 04:48:43 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 29 Mar 2011 04:48:43 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=o+P4p/A+nLe+JSfRCmuWhEBjDig=; b=tu3w728YmjSDrAZFTUSooX9lgOEeWEfE+exfvPMsjIvFD3lTnGO/Pc+nm522U9mwvrQSP2vgf8t4Y4bNlcR2wwnP7ZxnsWLwKzxR51fKcW3W73+Qxk/4PL/dPQRGEYCQXkdbziV5FQZzypfR/99xIAHrJBrQdSNVmduoHGf7coc=
-X-Sasl-enc: Qw48X4pRJm7lLLIC3kx0hES6qMqGHWnCC76MbA49NAQF 1301388522
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B069A404DB8;
-	Tue, 29 Mar 2011 04:48:42 -0400 (EDT)
-X-Mailer: git-send-email 1.7.4.1.607.g888da
+	id S1751784Ab1C2Iu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 04:50:59 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:58582 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751324Ab1C2Iu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 04:50:58 -0400
+Received: by qyk7 with SMTP id 7so1795664qyk.19
+        for <git@vger.kernel.org>; Tue, 29 Mar 2011 01:50:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=H/kyxdj9h8BPNlb4nfaeS406cLPN7CZc4/XgOX/DmoY=;
+        b=i0sYSLK8mvIw+fN30SGHREBM8MtUyQ59qlLr6A/5ZoJIsxGDEZx6wixkJukAQ42UWs
+         taEPoZ9IZiRE6h6mHCe/HCr/WEpA//vEZiQHm7vOMvRo8yu+PHwthMLpce3cRfJgNWOx
+         3UQdKKivU8jwT3rYZxERZv4h9NShj20o/eAtQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=WQEysT6zMbBkVb6pT1nYOQZzX6chxv0U+GZtFwkxS0Ow+Zl0xyCXM3TFU9CpDaF8yg
+         CArDFlSTcezgG6ElC0JqJQmNEfV66R0gNHx+0Ye4J2lT0t9TIFB06iYZEi4CKugvm0fQ
+         30LOki9u3R4igsd6syiYqrDsWyszcHvKH7qFs=
+Received: by 10.229.22.138 with SMTP id n10mr4230262qcb.175.1301388657555;
+ Tue, 29 Mar 2011 01:50:57 -0700 (PDT)
+Received: by 10.229.25.15 with HTTP; Tue, 29 Mar 2011 01:50:57 -0700 (PDT)
+In-Reply-To: <AANLkTin-0cBa293CQSf4kwMUG=w2j5zkSz1oBDhNqaNe@mail.gmail.com>
+X-Google-Sender-Auth: ezL6euOANIUVk10I5n-5over2ag
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170247>
 
-The current description of '-C' together with the analogy to 'git commit
--C' can lead to the wrong conclusion that '-C' copies notes between
-objects. Make this clearer by rewording and pointing to 'copy'.
+On Tue, Mar 29, 2011 at 10:24, Lynn Lin <lynn.xin.lin@gmail.com> wrote:
 
-The example for attaching binary notes with 'git hash-object' followed
-by 'git notes add -C' immediately raises the question: "Why not use 'git
-notes add -F'?". Answer it (the latter is not binary-safe).
+> Thanks .However my case is like:
+> git log
+> 1
+> 2
+>
+> I want to squash 1 to 2,what's the commit I should specify with rebase -i
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-In fact, the long name '--reuse-message' is really misleading, but I've been
-around long enough to refrain from trying to change it ;)
+That would be 3, i.e. rebase -i 3
 
- Documentation/git-notes.txt |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+That won't work if there are only two commits in total.. rebase needs
+a commit before the one you want to squash to. But in that case you
+would do 'git reset HEAD^1' (and end up with only commit 2, and 'M'
+for the modifications originally done in commit 1), 'git add' <the
+files changed>, 'git commit --amend', which is exctly what Henrik
+described earlier.
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 296f314..c63b593 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -138,8 +138,9 @@ OPTIONS
- 
- -C <object>::
- --reuse-message=<object>::
--	Take the note message from the given blob object (for
--	example, another note).
-+	Take the given blob object (for	example, another note) as the
-+	note message. (Use `git notes copy <object>` instead to
-+	copy notes between objects.) 
- 
- -c <object>::
- --reedit-message=<object>::
-@@ -272,6 +273,8 @@ $ blob=$(git hash-object -w a.out)
- $ git notes --ref=built add -C "$blob" HEAD
- ------------
- 
-+(You cannot simply use `git notes --ref=built add -F a.out HEAD`
-+because that is not binary-safe.)
- Of course, it doesn't make much sense to display non-text-format notes
- with 'git log', so if you use such notes, you'll probably need to write
- some special-purpose tools to do something useful with them.
--- 
-1.7.4.1.607.g888da
+There is a particular problem if you have this sequence:
+git log
+ 1
+ 2
+ 3
+ 4
+ 5  (initial commit)
+
+and you want to squash 4 into 5.. there's no hash 6 to rebase -i to.
+There are several ways to do it, but what I do is something like this:
+git checkout 4
+git checkout -b tmp
+git reset HEAD^1
+<add files>
+git commit --amend
+git merge master
+git branch -M tmp master (<---- rename the tmp branch to 'master')
+
+the new master now has 4 and 5 squashed.
+
+I'm sure others on this list have different ways to do this, but it's
+the one method that looked obvious to me so that's what I did when I
+needed it (anyway it's more or less how I fixed historic commits in
+the past before I learned about 'rebase -i' .. well, rebase -i didn't
+even exist with the versions of Git I used back then anyway).
+
+-Tor
