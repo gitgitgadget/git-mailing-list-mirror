@@ -1,64 +1,80 @@
-From: =?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>
-Subject: Re: [PATCH] Remove "bashism" from contrib/thunderbird-patch-inline/appp.sh
-Date: Tue, 29 Mar 2011 02:16:00 +0200
-Message-ID: <4D9124C0.8070003@zoho.com>
-References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 0/9] add long forms for format placeholders
+Date: Mon, 28 Mar 2011 17:28:15 -0700
+Message-ID: <7vei5qvkgw.fsf@alter.siamese.dyndns.org>
+References: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?Lukas_Sandst?= =?ISO-8859-1?Q?r=F6m?= 
-	<luksan@gmail.com>
-To: Maxin john <maxin@maxinbjohn.info>
-X-From: git-owner@vger.kernel.org Tue Mar 29 02:11:43 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 02:28:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4MX7-000356-Jm
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 02:11:41 +0200
+	id 1Q4MnR-0008Af-B3
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 02:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755607Ab1C2ALg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 20:11:36 -0400
-Received: from sender1.zohomail.com ([72.5.230.95]:58831 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752170Ab1C2ALf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 20:11:35 -0400
-X-Greylist: delayed 8431 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Mar 2011 20:11:35 EDT
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type; 
-  b=lx/AyTykp/GPTSw+08WAxyuSroHeD7ZcAyI4Qr+HGqgRP4frxopI4YrJRSIBtA5Ms7hL42YoTV3W
-    Y971Z+NtpI3CNFs8yShpN8UcXsz97t4XAhc6ygbgX54ueL1CgDwb  
-Received: from [192.168.1.26] (61.Red-88-13-200.dynamicIP.rima-tde.net [88.13.200.61]) by mx.zohomail.com
-	with SMTPS id 130135749363591.4740672285136; Mon, 28 Mar 2011 17:11:33 -0700 (PDT)
-User-Agent: Thunderbird
-In-Reply-To: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
+	id S1754351Ab1C2A22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 20:28:28 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54485 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100Ab1C2A21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 20:28:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 47663408C;
+	Mon, 28 Mar 2011 20:30:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5bNSUFoFv/wzX1vgoGW/c1j9SWc=; b=qJfxsJ
+	HnZAchSC9m8oVbdLzO+Ieyxmv6FRtwyLJVvCMrnANdS8tYQPu9jxCK9aXiKFJfAY
+	3pJEoTN/f2OPmmgYhSBsXIG1GNdNk8E6Ekhktlst8cZIjYewep2iF2bfDwIlRt6z
+	1Wu7c/CVn2k8PE6CkSd1TYpyd2vao+hR3PwiQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LKuE25fZBXhK00WNgRyHFoyts4pr4UQF
+	+HyzGy+swvfEF11uzzGWYo9J4XEl/cIaUUKxJY5EK9BvleV8YrDYnvsEU4u2tvL/
+	pMKDaW4PoG3pdyvwov5zobLYyobUmoLqYCE+CXfGcoa3V/tb05Y/45QTYisO8OJV
+	B2SzYDpFAjk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 13CD9408A;
+	Mon, 28 Mar 2011 20:30:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F0F034089; Mon, 28 Mar 2011
+ 20:30:02 -0400 (EDT)
+In-Reply-To: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com> (Will
+ Palmer's message of "Tue, 29 Mar 2011 00:17:22 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B275B3CA-599B-11E0-B34A-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170209>
 
-Maxin john wrote:
-> > Remove "bashism" and minor corrections for
-> > contrib/thunderbird-patch-inline/appp.sh
-> >
-> > Signed-off-by: Maxin B. John <maxin@maxinbjohn.info>
-This is wrong.
+Will Palmer <wmpalmer@gmail.com> writes:
 
-You are replacing bash with sh:
-> > -#!/bin/bash
-> > +#!/bin/sh
+> I've been kicking around this series for a while now as part of a larger
+> effort of refactoring the pretty formats. A recent discussion on the
+> list has lead me to believe that this smaller subset may be of use
+> sooner, rather than later.
+>
+> This series attempts to add "long forms" for common format placeholders
+> in the "git log" family of commands, making the way for yet more
+> placeholders to be added without needing to worry too much about the
+> increasingly limited set of available one-letter mnemonics. It also
+> moves towards the possibility of eventual unification with the format
+> options in for-each-ref.
 
-but the script still uses bash-specific syntax (aka. bashishms):
-> > +
-> >  PATCH=$(zenity --file-selection)
-> >
-> >  if [ "$?" != "0" ] ; then
+I don't claim that I read 1300+ long [PATCH 5/9] carefully, but I like the
+direction in which this topic is going very much.
 
-So with your change the script won't be able to run on systems which
-don't have bash as /bin/sh
+Except that [PATCH 2/9] looked quite out of place---more like "I wanted to
+sneak this feature in" than "this was needed to keep the resulting code
+backward compatible" or anything like that.
 
-The standard equivalent of $( ) are `backticks`.
+Off the top of my head, I don't think of a reason to say that [PATCH 3/9]
+is going in a wrong direction---is there a reason to make you worried in
+the particular change?
