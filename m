@@ -1,92 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] enable "no-done" extension only when serving over smart-http
-Date: Tue, 29 Mar 2011 10:32:18 -0700
-Message-ID: <7vfwq5suhp.fsf@alter.siamese.dyndns.org>
-References: <7vlizxsv82.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 29 19:32:36 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/5] Towards a Git to SVN bridge
+Date: Tue, 29 Mar 2011 23:43:07 +0530
+Message-ID: <1301422392-21177-1-git-send-email-artagnon@gmail.com>
+Cc: Peter Baumann <waste.manager@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 29 20:14:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4cmP-0004wB-U2
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 19:32:34 +0200
+	id 1Q4dRE-0000OF-I4
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 20:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754003Ab1C2Rc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 13:32:28 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34840 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753964Ab1C2Rc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 13:32:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A102E49E6;
-	Tue, 29 Mar 2011 13:34:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=MpxNEba/N4j40soLDdqcdJKkG0o=; b=sTrpGO
-	/E1ht3VuA4mJeA0s9kL3mlS5iPVLHjZvrGU/CO8xnw2FlQ1yY6+EzNnqCarwpmEH
-	/eJLA7Zd+zDEaV07y5KFUsNJnjd5E1jTbknysurwIWV774QbOrSxZZkYNijpJ6lv
-	8haLHii1FQVMhxxo/qsVkqJB5eFYF0iKCaqEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HNlwOBS0lNRMuQJL/GMN8PYgHd6glFN+
-	vf8LgfiVWNAa49LOMOrBt1vvLEmmdJeMUO/3vE5YOPNTCIMZ5tbsIDEsQTGbwHrw
-	uAZJ9M+HxzupxLaLi4CeaTSKhVdceDF4Ok2Cwd8KpePGZTZAxgXCgyPStiE+4af0
-	sLJb2LYrt78=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7D8C749E5;
-	Tue, 29 Mar 2011 13:34:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6C6D049E4; Tue, 29 Mar 2011
- 13:34:07 -0400 (EDT)
-In-Reply-To: <7vlizxsv82.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 29 Mar 2011 10:16:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C1991038-5A2A-11E0-A87E-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1752438Ab1C2SOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 14:14:38 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:35826 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018Ab1C2SOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 14:14:38 -0400
+Received: by gyd10 with SMTP id 10so187404gyd.19
+        for <git@vger.kernel.org>; Tue, 29 Mar 2011 11:14:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Rz3yPlag8eYd0m10FYB+e9l8tUQAjjalkB6L3RqC5bY=;
+        b=DqMY0ChnhgT0dqZk+wTn9DbQSKS6zI8m3JJxu651ScBsfnMbVS7HuZnQglT8nUARlS
+         On9J9J48arBDlj/ix54k5WAjnjXfYQC9wXxxSnsBy0m8mZLwXjhqDOzEf4oYbKsXvv6m
+         wVuUPereKFeX4H+rds5DeYxZirLPnqtXbT6CQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=h67jAumvrOxa9i+cyAhysC0xpQtBK/luzz1oeD7nLACSzWC3iThv8hOQNpsVlBwv4/
+         5rc0QkgxI/NaR5GiOc2J71r+plHjojB+Ij6Gww5gLVmIGBVzBnAghRwKFfhB91h/nk3s
+         UoSacWn0qSAlFyq94GtHoZ+85+MKgt79H6800=
+Received: by 10.151.29.18 with SMTP id g18mr480234ybj.284.1301422477042;
+        Tue, 29 Mar 2011 11:14:37 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id o2sm1971669ybn.21.2011.03.29.11.14.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 29 Mar 2011 11:14:35 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170290>
 
-Do not advertise no-done capability when upload-pack is not serving over
-smart-http, as there is no way for this server to know when it should stop
-reading in-flight data from the client, even though it is necessary to
-drain all the in-flight data in order to unblock the client.
+Hi,
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * Sorry for the resend...
+Thanks to Jonathan, Junio, Peter, and Erik among others for reviewing
+previous iterations of this series. This iteration should take care of
+most error handling and design issues addressed in the previous
+iterations- it also comes along with a battery of tests.
 
- upload-pack.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+Small introduction: svn-fi's design is modelled after git-fast-import.
+It aims to be more comprehensive and production-ready than the
+existing alternative, git2svn.  It converts a fast-import stream
+to a Subversion dumpfile which can be loaded using `svnadmin load` (or
+alternatively using `svnrdump load`, which will feature in Subversion
+1.7).  The shortcomings can be summarized as follows:
+1. dir_cache is a very naive implementation using string_list.  This
+will not scale well either in memory or time, and should be replaced
+with a prefix tree in future.
+2. It currently only supports one branch. For supporting multiple
+branches, two things need to be implemented: a branch-specific
+dir_cache, and a mapper that maps branch names to directories (if the
+standard "trunk", "branches", "tags" layout is not to be hardcoded).
+3. Tags are currently unsupported, although it should be trivial to
+implement once a mapping is in place.
+4. Merges are unsupported.  This requires more thought.
+5. The `from` command in the fast-import stream is ignored.  This
+should probably be implemented like branching.
+6. The data can't make round trips back-and-fourth yet.  Although this
+topic has been discussed at length, there is no implementation of this
+yet.
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 5924f6f..a247fb9 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -640,15 +640,16 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- {
- 	static const char *capabilities = "multi_ack thin-pack side-band"
- 		" side-band-64k ofs-delta shallow no-progress"
--		" include-tag multi_ack_detailed no-done";
-+		" include-tag multi_ack_detailed";
- 	struct object *o = parse_object(sha1);
- 
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
- 	if (capabilities)
--		packet_write(1, "%s %s%c%s\n", sha1_to_hex(sha1), refname,
--			0, capabilities);
-+		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
-+			     0, capabilities,
-+			     stateless_rpc ? " no-done" : "");
- 	else
- 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
- 	capabilities = NULL;
+Thanks for reading.
+
+-- Ram
+
+Ramkumar Ramachandra (5):
+  date: Expose the time_to_tm function
+  fast-export: Introduce --inline-blobs
+  strbuf: Introduce strbuf_fwrite corresponding to strbuf_fread
+  vcs-svn: Introduce svnload, a dumpfile producer
+  t9012-svn-fi: Add tests for svn-fi
+
+ .gitignore                        |    1 +
+ Documentation/git-fast-export.txt |    5 +
+ Makefile                          |    6 +-
+ builtin/fast-export.c             |   23 ++-
+ cache.h                           |    1 +
+ contrib/svn-fe/.gitignore         |    1 +
+ contrib/svn-fe/Makefile           |   23 ++-
+ contrib/svn-fe/svn-fi.c           |   16 +
+ contrib/svn-fe/svn-fi.txt         |   28 ++
+ date.c                            |    2 +-
+ strbuf.c                          |   11 +
+ strbuf.h                          |    1 +
+ t/t9012-svn-fi.sh                 |  705 +++++++++++++++++++++++++++++++++++++
+ test-svn-fi.c                     |   17 +
+ vcs-svn/dir_cache.c               |   52 +++
+ vcs-svn/dir_cache.h               |   11 +
+ vcs-svn/dump_export.c             |  164 +++++++++
+ vcs-svn/dump_export.h             |   26 ++
+ vcs-svn/svnload.c                 |  485 +++++++++++++++++++++++++
+ vcs-svn/svnload.h                 |   19 +
+ 20 files changed, 1591 insertions(+), 6 deletions(-)
+ create mode 100644 contrib/svn-fe/svn-fi.c
+ create mode 100644 contrib/svn-fe/svn-fi.txt
+ create mode 100755 t/t9012-svn-fi.sh
+ create mode 100644 test-svn-fi.c
+ create mode 100644 vcs-svn/dir_cache.c
+ create mode 100644 vcs-svn/dir_cache.h
+ create mode 100644 vcs-svn/dump_export.c
+ create mode 100644 vcs-svn/dump_export.h
+ create mode 100644 vcs-svn/svnload.c
+ create mode 100644 vcs-svn/svnload.h
+
+-- 
+1.7.4.rc1.7.g2cf08.dirty
