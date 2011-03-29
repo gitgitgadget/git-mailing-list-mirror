@@ -1,121 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: suggestion: git status = restored
-Date: Tue, 29 Mar 2011 17:28:44 -0400
-Message-ID: <20110329212844.GA23510@sigill.intra.peff.net>
-References: <imil67$oec$1@dough.gmane.org>
- <20110329145818.GC10771@sigill.intra.peff.net>
- <4D92179D.6050102@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] revision.c: introduce --notes-ref= to use one notes ref
+ only
+Date: Tue, 29 Mar 2011 23:44:26 +0200
+Message-ID: <201103292344.26249.johan@herland.net>
+References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
+ <7vwrjhrd53.fsf@alter.siamese.dyndns.org>
+ <20110329205307.GA30959@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 23:28:53 2011
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 29 23:44:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4gT6-0000dd-Ib
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 23:28:52 +0200
+	id 1Q4giO-0007VH-3x
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 23:44:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846Ab1C2V2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 17:28:47 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37981
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752615Ab1C2V2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 17:28:46 -0400
-Received: (qmail 540 invoked by uid 107); 29 Mar 2011 21:29:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Mar 2011 17:29:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2011 17:28:44 -0400
-Content-Disposition: inline
-In-Reply-To: <4D92179D.6050102@gmail.com>
+	id S1752446Ab1C2Vob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 17:44:31 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:33388 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751662Ab1C2Voa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 17:44:30 -0400
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIU006E39Q4Q410@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 29 Mar 2011 23:44:28 +0200 (MEST)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id DFF7F1EEFDBD_D9252BBB	for <git@vger.kernel.org>; Tue,
+ 29 Mar 2011 21:44:27 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id CFB041EEFD77_D9252BBF	for <git@vger.kernel.org>; Tue,
+ 29 Mar 2011 21:44:27 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIU008DR9Q2KV20@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 29 Mar 2011 23:44:27 +0200 (MEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
+In-reply-to: <20110329205307.GA30959@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170329>
 
-On Tue, Mar 29, 2011 at 12:32:13PM -0500, Neal Kreitzinger wrote:
-
-> I see your point about the current worktree/index/HEAD.  I'm not a
-> git developer, but my idea is based on the concept that the sha-1 of
-> the content already exists in the object store regardless of its
-> path(s). I'm talking about identical blob sha-1's, not "similar"
-> content.  It seems like the loose object directory would be easy
-> enough the check for duplicate blob sha-1's, but the the pack would
-> probably be more difficult (i'm not sure how you could do that).  If
-> this capability doesn't fit well into fast default behavior, maybe
-> there could be an option to --find-restores-harder.
-
-Ah, I see. Yes, that is extremely cheap to calculate for loose or packed
-objects (see has_sha1_file in sha1_file.c). But by the time you run
-status, it is too late. When you "git add" the file, it will write the
-sha1 into the object db. So by definition, if you are tracking a file
-for commit, it will exist in the object db. You could check the
-timestamp on the object file to see if it has been around "for a while",
-but that is very hack-ish and may or may not return useful results.
-
-> That being said, I see how it may not be feasible for git-status to
-> do that extra work.  Git-status runs against "what you just did" so
-> hopefully I should know in my mind that I just checked something out
-> to restore it.  However, for analyzing history it would be nice for
-> git-log or git-diff to be able to do that extra work of finding
-> restores when asked.
+On Tuesday 29 March 2011, Jeff King wrote:
+> Here's the series I ended up with. Getting the refactoring just right
+> turned out to be non-trivial, but between several attempts and some
+> tests, I think the end result is correct. Hopefully the breakdown of the
+> changes into small patches helps make it easy to review.
 > 
-> In our workflow it would be useful because we have a utility
-> directory of mostly obsolete programs that needs to be deleted to
-> eliminate noise, but we're sure some of them will get restored once
-> we realize they're still needed.  An interrogation command with
-> --name-status --find-restores-harder would give an accurate picture
-> of what was really added (new content) and what was simply restored
-> (old content revived).
+>   [1/6]: notes: make expand_notes_ref globally accessible
+>   [2/6]: revision.c: refactor notes ref expansion
+>   [3/6]: notes: refactor display notes extra refs field
+>   [4/6]: notes: refactor display notes default handling
+>   [5/6]: revision.c: support --notes command-line option
+>   [6/6]: revision.c: make --no-notes reset --notes list
 
-I think you just want:
+Indeed, the whole series looks good to me.
 
-  git log -1 -- "$file"
+Acked-by: Johan Herland <johan@herland.net>
 
-to see if any commits had that path previously. Or if you really care
-about finding the same content somewhere in history at any path, you can
-look for the blobs with something like:
 
-  git rev-list HEAD |
-  git diff-tree -r -m --stdin |
-  perl -e '
-    # Make an index of blob sha1s pointing back to the file
-    # they name.
-    foreach my $file (@ARGV) {
-      my $sha1 = `git hash-object $file`;
-      chomp $sha1;
-      $files{$sha1}->{file} = $file;
-    }
+Thanks! :)
 
-    # Now look at the traversal history, noting the first time
-    # we hit each blob, and remember its commit.
-    while (<STDIN>) {
-      if (/^[0-9a-f]{40}$/) {
-        $commit = $&;
-      }
-      else {
-        while (/[0-9a-f]{40}/g) {
-          next unless exists $files{$&};
-          next if exists $files{$&}->{commit};
-          $files{$&}->{commit} = $commit;
-        }
-      }
-    }
+...Johan
 
-    # And then report the result, which is the most recent commit
-    # that blob was found in, either being deleted, added, or modified.
-    foreach my $v (sort { $a->{file} cmp $b->{file} } values(%files)) {
-      if ($v->{commit}) {
-        print "$v->{file} $v->{commit}\n";
-      }
-      else {
-        print "$v->{file} was never mentioned\n";
-      }
-    }
-  ' `git diff-index HEAD --name-only --diff-filter=A`
-
--Peff
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
