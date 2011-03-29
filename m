@@ -1,82 +1,65 @@
-From: =?ISO-8859-1?Q?Daniel_Nystr=F6m?= <daniel.nystrom@timeterminal.se>
-Subject: Re: [Q] Mark files for later commit?
-Date: Tue, 29 Mar 2011 14:15:12 +0200
-Message-ID: <AANLkTiktzbFUtRURaGxxm+dgG+KSOd6cbVQ49x8qK6EZ@mail.gmail.com>
-References: <AANLkTi=rPAQas3gvHJ+EFYTXP_YXuULQMk8o8pgkj=9T@mail.gmail.com>
- <7voc4uto9o.fsf@alter.siamese.dyndns.org> <7v8vvytldk.fsf@alter.siamese.dyndns.org>
- <AANLkTik33jiKipcv8d8tY_FXa2nE0BtBdi9vro0gkdQc@mail.gmail.com> <4D91CA31.20908@drmicha.warpmail.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] revision.c: introduce --notes-ref= to use one notes ref only
+Date: Tue, 29 Mar 2011 14:39:17 +0200
+Message-ID: <201103291439.17197.johan@herland.net>
+References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 29 14:15:39 2011
+X-From: git-owner@vger.kernel.org Tue Mar 29 14:39:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Xpe-0001jG-PJ
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 14:15:35 +0200
+	id 1Q4YCp-0005Cs-AO
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 14:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166Ab1C2MP3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 08:15:29 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37904 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752680Ab1C2MP3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 08:15:29 -0400
-Received: by iyb14 with SMTP id 14so109010iyb.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 05:15:28 -0700 (PDT)
-Received: by 10.43.56.205 with SMTP id wd13mr2218665icb.135.1301400927048;
- Tue, 29 Mar 2011 05:15:27 -0700 (PDT)
-Received: by 10.231.33.65 with HTTP; Tue, 29 Mar 2011 05:15:12 -0700 (PDT)
-X-Originating-IP: [85.24.181.147]
-In-Reply-To: <4D91CA31.20908@drmicha.warpmail.net>
-X-Google-Sender-Auth: dobpqlE1FQtjeT_WXh7eoedhhcg
+	id S1752231Ab1C2MjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 08:39:25 -0400
+Received: from smtp.opera.com ([213.236.208.81]:51240 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751353Ab1C2MjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 08:39:25 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p2TCdHLq000507
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 29 Mar 2011 12:39:17 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170262>
 
-Den 29 mars 2011 14:01 skrev Michael J Gruber <git@drmicha.warpmail.net=
->:
-> Daniel Nystr=F6m venit, vidit, dixit 29.03.2011 11:18:
->> Den 29 mars 2011 09:51 skrev Junio C Hamano <gitster@pobox.com>:
->>>> Daniel Nystr=F6m <daniel.nystrom@timeterminal.se> writes:
->>>>> How would you like a git feature like described above, marking fi=
-les
->>>>> for later inclusion?
->>>>
->>>> That does not sound like a feature but merely a source of confusio=
-n.
->>>
->>> If that is the case, then probably you shouldn't be even updating t=
-he
->>> "changelog" file constantly to begin with. =A0Instead, how about cr=
-eating a
->>> separate "changelog+" file that is not tracked, and keep its conten=
-ts
->>> maintained continuously so stuff won't be forgotten? =A0When the ti=
-me to
->>> release comes, you can "mv changelog changelog", and commit it.
->>
->> If we ignore this particular case, how would a "git hold <file>..." =
-feature do?
+On Tuesday 29 March 2011, Michael J Gruber wrote:
+> As notes become increasingly popular, it's often interesting to show
+> notes from a particular notes ref only. Introduce '--notes-ref=<ref>'
+> as a convenience shortcut for '--no-standard-notes
+> --show-notes=<ref>'.
 >
-> As Junio pointed out, your "hold file" (ChangeLog+) is really not
-> versioned (tracked) at all, so it has no place in the worktree.
-> Otherwise you'll have constant nagging during the release cycle one w=
-ay
-> or the other, if you want git to remind you of the files on hold. If =
-you
-> don't need the reminder, git does not need to know about the file.
-> Simply store it somewhere else (such as in .git/description if you do=
-n't
-> use that, or under .git/info/).
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> The idea is to use the same name as in "git notes --ref=<ref>" but
+> make it clear for the rev-list option to be about notes, thus
+> "--notes-ref=<ref>".
 
-Good points, indeed. But untracked files will be tracked on "git add
-=2E" which files on hold won't.
+The idea and implementation look good to me. Not sure I like the 
+option "bloat" (somehow feels it should be possible to express the same 
+behavior using fewer options), but if there's not a better way to 
+reorganize the options, then you can consider it Acked-by me.
 
-But I agree, the "hold" feature requires a better motivation and more
-actual use cases. I thought it may catch some interests on the list.
+
+Thanks! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
