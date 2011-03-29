@@ -1,92 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [BUG] "git fetch --tags" seems to be broken with recent change on
- 'master'
-Date: Mon, 28 Mar 2011 19:22:04 -0700
-Message-ID: <7vzkoeu0mr.fsf@alter.siamese.dyndns.org>
+From: Joe Ratterman <jratt0@gmail.com>
+Subject: Re: [PATCH] grep: allow -E and -n to be turned on by default via configuration
+Date: Mon, 28 Mar 2011 22:12:27 -0500
+Message-ID: <AANLkTikpjoyPWYomKsi0YA=KrcPU2Qxn0dBgjbUi2B_x@mail.gmail.com>
+References: <1301088071-918-1-git-send-email-jratt0@gmail.com>
+	<7vlj024wal.fsf@alter.siamese.dyndns.org>
+	<7vbp0ux5c9.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: spearce@spearce.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 04:22:22 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 05:12:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4OZZ-0002LY-Qw
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 04:22:22 +0200
+	id 1Q4PM9-0001tM-TF
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 05:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755276Ab1C2CWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 22:22:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43552 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753103Ab1C2CWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 22:22:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 311444F8B;
-	Mon, 28 Mar 2011 22:23:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=O
-	vPbQVjaMO/019PwUKZO7O5Hd3E=; b=Lobp88ZA/AcJ/jBPB+C+LDZ/NCtXyonaG
-	dVbybLKUd4zSqluiEV2zm3My2k0UvWD0GGDzgAnX6o9K03+p2Sy9Q9vtl52Ruc8L
-	osatfdCwU5Lbdr2AwrkBFY2UivvuXffbC9y5EDzvqfjRZaRP+l/2FG0RGoD3wsK+
-	31GwkV3YBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=J3LlQRBJHN/xZeIzpxao/XJJJ0RS31gkwEEKO9ALtFZGBVzOLOreIa6h
-	hYEdwJBCI9qEFB4HrWWF+brIRL1NiLsa4/iSrEoHXiwgzZ2LmXgqxqg7i1Bo5QS5
-	7+eU6OUqFSUQq+p7JP7dtMuUwShtk60Ii+gdnnEVRQ2BepVHHx8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0FA6C4F87;
-	Mon, 28 Mar 2011 22:23:55 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1AB804F84; Mon, 28 Mar 2011
- 22:23:51 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9841A76A-59AB-11E0-AED9-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755538Ab1C2DM3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2011 23:12:29 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57526 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755505Ab1C2DM2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2011 23:12:28 -0400
+Received: by iwn34 with SMTP id 34so4362232iwn.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 20:12:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ruMnQi1BEgJA1dv6IePqw96KOzfAC+DXg3MVwvnradQ=;
+        b=PRb90dBaI0w7aZ98w9lDXnbdlY4D6cqxBP5Fl/cRCbETolvwJfNAHQFWirlxuoYaoD
+         wmNrf9VImFIS5Zh6IED4ns3j3wrhK2F27LaBRYn7gR/Iap0qd1J/VUGws8NLC6HW/50i
+         j7ZM2wODP9yb/xhVevWEuGcOa04nK+QnjtZ4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QQxaWZWkdepFtLgbnf/hGQpI9XiO3yPcewbT4FQRPlClhG3EdAJoRFnKa4Sn9xbbSW
+         boRgk719+2LBoKLKfPQ9t7EixJjbK7ABa//gQZBnCaF1irvsDo10o4ebPzhW0n4yJC6p
+         2VzqdOr9/UppErM+49zELuTk1/4TbOFwCPWC4=
+Received: by 10.42.147.134 with SMTP id n6mr7539985icv.216.1301368347822; Mon,
+ 28 Mar 2011 20:12:27 -0700 (PDT)
+Received: by 10.42.218.1 with HTTP; Mon, 28 Mar 2011 20:12:27 -0700 (PDT)
+In-Reply-To: <7vbp0ux5c9.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170220>
 
-I haven't started digging this through, but just a heads-up.
+On Mon, Mar 28, 2011 at 5:12 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> =C2=A0 I did not add tests, but we do need one perhaps at the end of =
+t7810 to
+> =C2=A0 move things forward.
 
-One of the recent changes we made on 'master' (either Shawn's protocol
-tweak or my progressive common commit discovery) seems to have broken "git
-fetch --tags" and possibly other forms of fetch, failing with SIGPIPE.
-From the stack trace I am guessing that the server side might be closing
-the connection prematurely while the client still wants to say something
-to it.
 
-#0  0x000000362d80e470 in __write_nocancel () from /lib64/libpthread.so.0
-#1  0x00000000005064de in xwrite (fd=9, buf=0x896480, len=804) at wrapper.c:137
-#2  0x00000000004c6570 in safe_write (fd=9, buf=0x896480, n=804) at pkt-line.c:68
-#3  0x000000000042ada5 in send_request (fd=9, buf=0x7fffffffdd40)
-    at builtin/fetch-pack.c:219
-#4  0x000000000042b458 in find_common (fd=0x7c6740, 
-    result_sha1=0x7fffffffde20 "\200\203}", refs=0x0) at builtin/fetch-pack.c:368
-#5  0x000000000042c48c in do_fetch_pack (fd=0x7c6740, orig_ref=0x7d8460, nr_match=1, 
-    match=0x7d8380, pack_lockfile=0x7c6700) at builtin/fetch-pack.c:765
-#6  0x000000000042cd23 in fetch_pack (my_args=0x7fffffffdfc0, fd=0x7c6740, conn=0x7d83a0, 
-    ref=0x7d8460, dest=0x7f86d0 "/pub/scm/git/git.git", nr_heads=1, heads=0x7d8380, 
-    pack_lockfile=0x7c6700) at builtin/fetch-pack.c:985
-#7  0x00000000004f83d0 in fetch_refs_via_pack (transport=0x7c66a0, nr_heads=1, 
-    to_fetch=0x7f8600) at transport.c:542
-#8  0x00000000004f9c5c in transport_fetch_refs (transport=0x7c66a0, refs=0x7e5610)
-    at transport.c:1112
-#9  0x000000000042e3aa in fetch_refs (transport=0x7c66a0, ref_map=0x7e5610)
-    at builtin/fetch.c:513
-#10 0x000000000042eb97 in do_fetch (transport=0x7c66a0, refs=0x7c6b80, ref_count=0)
-    at builtin/fetch.c:712
-#11 0x000000000042f431 in fetch_one (remote=0x7c6420, argc=0, argv=0x7fffffffe4e8)
-    at builtin/fetch.c:895
-#12 0x000000000042f6c6 in cmd_fetch (argc=1, argv=0x7fffffffe4e0, prefix=0x0)
-    at builtin/fetch.c:947
-#13 0x000000000040484c in run_builtin (p=0x771de8, argc=3, argv=0x7fffffffe4e0)
-    at git.c:290
-#14 0x00000000004049e8 in handle_internal_command (argc=3, argv=0x7fffffffe4e0)
-    at git.c:448
-#15 0x0000000000404ae2 in run_argv (argcp=0x7fffffffe3cc, argv=0x7fffffffe3c0) at git.c:492
-#16 0x0000000000404c6a in main (argc=3, argv=0x7fffffffe4e0) at git.c:565
+What sort of tests would be appropriate?  I cannot find anything that
+tests -E/--extended-regexp.  I copied the first test that used "git
+grep -n" and changed it to these:
+1)  git -c grep.linenumber=3Dfalse grep -n  #  Expected to have line nu=
+mbers
+2)  git -c grep.linenumber=3Dtrue grep  #  Expected to have line number=
+s
+3)  git -c grep.linenumber=3Dtrue grep --no-line-number  #  Expected to
+have no line numbers
+
+
+Joe
