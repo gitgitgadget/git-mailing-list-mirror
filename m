@@ -1,169 +1,134 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/5] fast-export: Introduce --inline-blobs
-Date: Tue, 29 Mar 2011 15:44:12 -0500
-Message-ID: <20110329204412.GA13812@elie>
-References: <1301422392-21177-1-git-send-email-artagnon@gmail.com>
- <1301422392-21177-3-git-send-email-artagnon@gmail.com>
+From: Antonio Ospite <ospite@studenti.unina.it>
+Subject: Re: Minor cosmetic defect in git-pack-objects output
+Date: Tue, 29 Mar 2011 22:48:34 +0200
+Message-ID: <20110329224834.62393f3c.ospite@studenti.unina.it>
+References: <20110329121040.de22bd56.ospite@studenti.unina.it>
+	<4D923D59.3070301@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Peter Baumann <waste.manager@gmx.de>,
-	David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 22:44:37 2011
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Mar 29 22:49:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4fmE-0005wl-6W
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 22:44:34 +0200
+	id 1Q4fqU-0007tl-JI
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 22:48:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754111Ab1C2Uo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 16:44:28 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:62741 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238Ab1C2Uo2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 16:44:28 -0400
-Received: by vxi39 with SMTP id 39so512619vxi.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 13:44:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=xXMmJe3e2suhbDYwlA0Wf54D7VNg41lzesO2JiOI6Lk=;
-        b=uQNUlEPd6iWL1FHm5hJVvyEPPzvTgLTNK/EiWEPUtt+mMrDeYnqT9xCG1dZIhXHr92
-         elA7bSuJVEnCWhBjXnSb+Yigev64oZwKNs8ZGQZWdm7XxiiRHLGaNZBHJDOOex57awsp
-         UoDPQEAL0AZQpovOiyMuE56oWALJ6eTeQuHS8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UCdEfZ/iIAwyDEseR+1+BYpl37D7F4WJ6mpS2B2afEUBM+Kur/YoY3vFZQhxGE+nkQ
-         Go2FsOKuxzLUOBumEILy9wQdB0HlWxaMvNh6W2qtsLGGl62o4z9S919QRitESwqKyAcP
-         C6uU4RlnxV+SOqwhUjlQj581/FUC5r84U+m7o=
-Received: by 10.52.97.165 with SMTP id eb5mr326576vdb.298.1301431467148;
-        Tue, 29 Mar 2011 13:44:27 -0700 (PDT)
-Received: from elie (adsl-76-206-232-54.dsl.chcgil.sbcglobal.net [76.206.232.54])
-        by mx.google.com with ESMTPS id n32sm2962276vba.10.2011.03.29.13.44.24
-        (version=SSLv3 cipher=OTHER);
-        Tue, 29 Mar 2011 13:44:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1301422392-21177-3-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754592Ab1C2Usp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 16:48:45 -0400
+Received: from smtp204.alice.it ([82.57.200.100]:46202 "EHLO smtp204.alice.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754486Ab1C2Uso (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 16:48:44 -0400
+Received: from jcn (87.6.149.121) by smtp204.alice.it (8.5.124.08) (authenticated as fospite@alice.it)
+        id 4D7E0F640152C6F2; Tue, 29 Mar 2011 22:48:41 +0200
+In-Reply-To: <4D923D59.3070301@lsrfire.ath.cx>
+X-Mailer: Sylpheed 3.1.0 (GTK+ 2.24.3; x86_64-unknown-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170319>
 
-Hi,
+--Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ramkumar Ramachandra wrote:
+On Tue, 29 Mar 2011 22:13:13 +0200
+Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
 
-> Introduce a new command-line option --inline-blobs that always inlines
-> blobs instead of referring to them via marks or their original SHA-1
-> hash.
+> Am 29.03.2011 12:10, schrieb Antonio Ospite:
+> > Hi,
+> >=20
+> > in some cases, on git-pack-objects failure, there is a small defect in
+> > the output, see:
+> >=20
+> > # git gc --aggressive
+> > Counting objects: 1954118, done.
+> > Delta compression using up to 2 threads.
+> > warning: suboptimal pack - out of memory02)
+> > Compressing objects: 100% (1936802/1936802), done.
+> > Writing objects: 100% (1954118/1954118), done.
+> > Total 1954118 (delta 1618716), reused 0 (delta 0)
+> >=20
+> > The defect is here:
+> > warning: suboptimal pack - out of memory02)
+> >                                          ^^^
+> > the trailing chars are from the replaced line which was ending in
+> > 1936802)
+> >=20
+> > AFAICS this is basically what is happening:
+> > #include "git-compat-util.h"
+> > fprintf(stderr, "Compressing objects:  15% (296661/1936802)\r");
+> >                   warning("suboptimal pack - out of memory");
+> >=20
+> > I can think to a dumb workaround for this particular path but maybe
+> > there are other places when this can happen as well.
+>=20
+> The following patch should avoid it by clearing the the rest of the
+> line after warnings, error messages, usage notes etc. if stderr is a
+> terminal.
+>
 
-Could you expand on this?  What does it mean to inline a blob (is it the
-same thing as the reference manual describes as using the inline data
-format with the filemodify command)?  Why do we want to always do
-that?  How would a person or script choose whether to use this option?
-Are there any downsides?
+Cool, this is working indeed on the terminal, I don't know if
+introducing a CLEARLINE macro would look prettier.
 
-I ask because I would be happy to use something like this. ;-)  Thanks
-for working on it.
+Thanks Ren=E9.
 
-> --- a/Documentation/git-fast-export.txt
-> +++ b/Documentation/git-fast-export.txt
-> @@ -90,6 +90,11 @@ marks the same across runs.
->  	resulting stream can only be used by a repository which
->  	already contains the necessary objects.
->  
-> +--inline-blobs::
-> +	Inline all blobs, instead of referring to them via marks or
-> +	their original SHA-1 hash.  This is useful to parsers, as they
-> +	don't need to persist blobs.
+Regards,
+   Antonio
 
-This explanation leaves something out, I think.  If it is useful to
-parsers, that means it simplifies the syntax, so a natural conclusion
-would be that parsers do not need to learn about the non-inline
-syntax.  But I think the last time[1] this came up, we decided that
-one should not encourage that, because it moves away from a world in
-which "git fast-export", "hg fast-export", and svn-fe use one standard
-format and can be used interchangeably.
+> Ren=E9
+>=20
+> ---
+>  usage.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/usage.c b/usage.c
+> index b5e67e3..36f1968 100644
+> --- a/usage.c
+> +++ b/usage.c
+> @@ -9,7 +9,7 @@ void vreportf(const char *prefix, const char *err, va_lis=
+t params)
+>  {
+>  	char msg[4096];
+>  	vsnprintf(msg, sizeof(msg), err, params);
+> -	fprintf(stderr, "%s%s\n", prefix, msg);
+> +	fprintf(stderr, "%s%s%s\n", prefix, msg, isatty(2) ? "\033[K" : "");
+>  }
+> =20
+>  static NORETURN void usage_builtin(const char *err, va_list params)
+>=20
+>=20
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/165237/focus=165289
 
-Perhaps it would be better to say something to the effect that "This
-can decrease the memory footprint and complexity of the work some
-fast-import backends have to do"?  In other words, it's just an
-optimization.
+--=20
+Antonio Ospite
+http://ao2.it
 
-To that end, if the same blob keeps on coming up again and again, I'd
-be tempted to allow making a mark for it in the future, even when
---inline-blobs is specified.  In other words, I'd prefer (unless
-real-world considerations prevent it) for --inline-blobs to be a hint
-or a permission instead of something binding.
+PGP public key ID: 0x4553B001
 
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-[...]
-> @@ -118,7 +119,7 @@ static void handle_object(const unsigned char *sha1)
->  	char *buf;
->  	struct object *object;
->  
-> -	if (no_data)
-> +	if (no_data || inline_blobs)
->  		return;
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
 
-Maybe inline_blobs should imply no_data internally?
+--Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu
+Content-Type: application/pgp-signature
 
->  
->  	if (is_null_sha1(sha1))
-> @@ -218,7 +219,23 @@ static void show_filemodify(struct diff_queue_struct *q,
->  			if (no_data || S_ISGITLINK(spec->mode))
->  				printf("M %06o %s %s\n", spec->mode,
->  				       sha1_to_hex(spec->sha1), spec->path);
-> -			else {
-> +			else if (inline_blobs) {
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-If so, this could be something like
+iEYEARECAAYFAk2SRaMACgkQ5xr2akVTsAEiFgCgr3wxCjO1fVxdp5cWRRO1P2Gw
+4XYAoIys136hymK0RDfG/U5kvy7zdeqB
+=L0QY
+-----END PGP SIGNATURE-----
 
-	int inline_me = inline_blobs && !S_ISGITLINK(spec->mode);
-	...
-
-	if (no_data || S_ISGITLINK(spec->mode)) {
-		const char *dataref =
-			inline_me ? "inline" : sha1_to_hex(spec->sha1);
-		printf("M %06o %s %s\n", spec->mode, dataref, spec->path);
-	} else {
-		struct object *object = lookup_object(spec->sha1);
-		printf("M %06o :%d %s\n", spec->mode,
-		       get_object_mark(object), spec->path);
-	}
-
-	if (inline_blob && export_data(spec->data, spec->size))
-		die_errno("Could not write blob '%s'",
-				sha1_to_hex(spec->sha1));
-
-> --- a/contrib/svn-fe/.gitignore
-> +++ b/contrib/svn-fe/.gitignore
-[...]
-> --- a/contrib/svn-fe/Makefile
-> +++ b/contrib/svn-fe/Makefile
-[...]
-> --- /dev/null
-> +++ b/contrib/svn-fe/svn-fi.c
-[...]
-> --- /dev/null
-> +++ b/contrib/svn-fe/svn-fi.txt
-
-Snuck in from another patch?
-
-Hope that helps,
-Jonathan
+--Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu--
