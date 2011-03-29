@@ -1,147 +1,80 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: [PATCH/RFC 0/9] add long forms for format placeholders
-Date: Tue, 29 Mar 2011 08:27:00 +0100
-Message-ID: <1301383620.2335.50.camel@dreddbeard>
-References: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com>
-	 <7vei5qvkgw.fsf@alter.siamese.dyndns.org>
-	 <4D918032.3010608@drmicha.warpmail.net>
-Reply-To: wmpalmer@gmail.com
+From: Johan Herland <johan@herland.net>
+Subject: Re: [Q] Mark files for later commit?
+Date: Tue, 29 Mar 2011 09:38:41 +0200
+Message-ID: <201103290938.41528.johan@herland.net>
+References: <AANLkTi=rPAQas3gvHJ+EFYTXP_YXuULQMk8o8pgkj=9T@mail.gmail.com>
+ <7voc4uto9o.fsf@alter.siamese.dyndns.org>
+ <4D91858F.7030404@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Daniel =?utf-8?q?Nystr=C3=B6m?= <daniel.nystrom@timeterminal.se>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 29 09:27:15 2011
+X-From: git-owner@vger.kernel.org Tue Mar 29 09:38:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4TKc-0006RM-D7
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 09:27:14 +0200
+	id 1Q4TVq-0002Hf-HO
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 09:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876Ab1C2H1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 03:27:08 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:56467 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751376Ab1C2H1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 03:27:07 -0400
-Received: by wwa36 with SMTP id 36so4738984wwa.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 00:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:from:reply-to:to:cc:in-reply-to
-         :references:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=+8+AbGiIEtZfYShFyizici8oOqAr7T8E/hPyNrHcuE4=;
-        b=frj6MfssbGqvDChj0Q9vCM3KWGZXik8Th/0uEKvNmGqhtZGOlz9nsxUn5/0WiEsJIO
-         ZSFVYITcudR3u8fQjWMMjP82DALhpTHqPZpea780UVo9hZwc9NH4BZNswGAgPfvdFlHW
-         VNMXOe9YilJiKZGrLdEHlob7pd+VOeB3B7i5w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=SvQqcmyDx1WdKeWZZ8a81rzVEnfrGIlH3dBsuZuefQ5n5TSwGjnXQ6Df+tw6zBjaUB
-         9zA5X6mopQMinhMO3EqZliVYPvzAddHSdcz+fT/UxEyLXh9mlMLx1Ie3vQG6sUHux48A
-         u0oQkk9yf/0xbhOttHWI1gHzGLR0/1S3kd1sQ=
-Received: by 10.227.208.73 with SMTP id gb9mr5007385wbb.194.1301383625765;
-        Tue, 29 Mar 2011 00:27:05 -0700 (PDT)
-Received: from [192.168.0.129] (5acc3aad.bb.sky.com [90.204.58.173])
-        by mx.google.com with ESMTPS id e13sm2376295wbi.23.2011.03.29.00.27.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 29 Mar 2011 00:27:03 -0700 (PDT)
-In-Reply-To: <4D918032.3010608@drmicha.warpmail.net>
-X-Mailer: Evolution 2.28.3 
+	id S1751908Ab1C2Hip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 03:38:45 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:49568 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751376Ab1C2Hio (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 03:38:44 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIT00FJR6KID900@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 29 Mar 2011 09:38:42 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id E791F1EA5549_D918C81B	for <git@vger.kernel.org>; Tue,
+ 29 Mar 2011 07:38:41 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id D39451EA3C78_D918C81F	for <git@vger.kernel.org>; Tue,
+ 29 Mar 2011 07:38:41 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIT006T56KHBZ00@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 29 Mar 2011 09:38:41 +0200 (MEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
+In-reply-to: <4D91858F.7030404@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170242>
 
-On Tue, 2011-03-29 at 08:46 +0200, Michael J Gruber wrote:
-> Junio C Hamano venit, vidit, dixit 29.03.2011 02:28:
-> > Will Palmer <wmpalmer@gmail.com> writes:
-> > 
-> >> I've been kicking around this series for a while now as part of a larger
-> >> effort of refactoring the pretty formats. A recent discussion on the
-> >> list has lead me to believe that this smaller subset may be of use
-> >> sooner, rather than later.
-> >>
-> >> This series attempts to add "long forms" for common format placeholders
-> >> in the "git log" family of commands, making the way for yet more
-> >> placeholders to be added without needing to worry too much about the
-> >> increasingly limited set of available one-letter mnemonics. It also
-> >> moves towards the possibility of eventual unification with the format
-> >> options in for-each-ref.
-> > 
-> > I don't claim that I read 1300+ long [PATCH 5/9] carefully, but I like the
-> > direction in which this topic is going very much.
-> > 
-> > Except that [PATCH 2/9] looked quite out of place---more like "I wanted to
-> > sneak this feature in" than "this was needed to keep the resulting code
-> > backward compatible" or anything like that.
-> > 
-> > Off the top of my head, I don't think of a reason to say that [PATCH 3/9]
-> > is going in a wrong direction---is there a reason to make you worried in
-> > the particular change?
-> 
-> I'm wondering how much of this could and should be shared with
-> for-each-ref. ......................................
+On Tuesday 29 March 2011, Michael J Gruber wrote:
+> Note that you can share
+> notes when you set up refspecs etc in a push/pull based workflow. (I'm
+> not sure how well we support merging/pulling notes refs yet.)
 
-I agree with this.
-Not only that, but I think the "list" modes of branch and tag should
-also call for-each-ref internally, and I hope that some of the
-conditional formats that this series is moving slowly towards will help
-with that.
+Since v1.7.4, you can use "git notes merge" for merging notes ref. It's not 
+yet integrated with "pull", though, so typically you want to fetch it to a 
+different ref name, and then manually "git notes merge" that into the 
+original notes ref.
 
-> ............. Notable differences that I'm aware of:
-> 
-> - for-each-ref is about (named) refs which can point to any type of
-> object; rev-list/log is about commit objects
-> 
-> - for-each-ref deals with "few" objects typically, rev-list/log with many
-> 
-> So, other than %(refname), %(upstream) and %(tagger...), all
-> for-each-ref placeholders make sense for rev-list/log.
+E.g. if you want to sync "refs/notes/foo" with remote "bob", you can "git 
+fetch bob refs/notes/foo:refs/notes/bobs_foo", and then
+merge them with "git notes --ref=foo merge bobs_foo".
 
-I think the "right thing to do" here is to allow the parser to accept
-any of the for-each-ref specifications, but for the formatter to return
-an empty string for anything that doesn't make sense in context. This is
-what for-each-ref currently does. for-each-ref also gives an empty
-string for some invalid specifications, such as %(tree:short), but I
-assume this is a bug.
+> This does not work well in a patch/e-mail-based workflow.
 
-I'm not sure what the implications are in terms of what additional
-structures we'll need to pass in to the formatter, as I haven't looked
-much at the for-each-ref code. It may also be that there are some
-commit-related things which for-each-ref doesn't currently bother to
-grab, since its placeholder list is comparatively smaller than the
-rev-list one.
-
-> 
-> Sharing the parser would serve several purposes:
-> 
-> - reduced code
-> - increased test coverage (for-each-ref tests would test the parser)
-> - speed up for for-each-ref (due to your nice separation)
-> - short placeholders for for-each-ref
-> - automatic consistency between the two
-> 
-
-This is already a part of my longer-term plans, though those were mostly
-as a "I bet it would be fairly simple to do this once the rest is done".
-What I'm actually working towards is strictly related to the --pretty=
-formats, so I expect it will be a while before I get to anything like
-for-each-ref unification. It may also be worth noting that the last part
-of this work I submitted, "pretty aliases", was sent nearly a year ago.
-I am not going to be working on any of this full-time.
-The point here is: I would not be offended if someone were to snatch
-for-each-ref unification up from me, since I really don't know when I
-would get to it myself.
+...although there have been mailing list discussions on getting notes added 
+to "git format-patch" output (after the "---"), and then picked up again by 
+"git am".
 
 
-> Michael
+...Johan
 
 -- 
--- Will
+Johan Herland, <johan@herland.net>
+www.herland.net
