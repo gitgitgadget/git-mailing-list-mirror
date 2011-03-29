@@ -1,66 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] "git fetch --tags" seems to be broken with recent change
- on 'master'
-Date: Mon, 28 Mar 2011 23:33:22 -0700
-Message-ID: <7vsju6tozx.fsf@alter.siamese.dyndns.org>
-References: <7vzkoeu0mr.fsf@alter.siamese.dyndns.org>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [PATCH/RFC 0/9] add long forms for format placeholders
+Date: Tue, 29 Mar 2011 07:44:32 +0100
+Message-ID: <1301381072.2335.26.camel@dreddbeard>
+References: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com>
+	 <7vei5qvkgw.fsf@alter.siamese.dyndns.org>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 08:33:42 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 08:44:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4SUm-0004PR-In
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 08:33:40 +0200
+	id 1Q4SfT-000863-Br
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 08:44:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023Ab1C2Gdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 02:33:38 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44166 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753740Ab1C2Gdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 02:33:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AE673235B;
-	Tue, 29 Mar 2011 02:35:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=goQh4LX5x/2rvNTraSrpscn7DtQ=; b=nb5qdg
-	GOjSocawppVET5ttmqrvI9HdF0Cy2BzJV40ltH097OU9K8yw1alzEx2Yw3yGD8ke
-	ycACUoB5Iqyd1EZQOEc6OALONT4P9+MvBEp6EwO7EdwQnABQ9SkShzDLf+cxAVnT
-	/n9o1F1879i6jtrtwy4GnHlWoPOizNtaLGbio=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O7mwXb+cKYZ1JOKIIT2zQ8Ew+/QgaAYE
-	MYl/iCUhQgPaJCWzOiEBBV3NT4qv+F6XEmWhNIzBQ1EE+EWXjH4l8Usn7DyE1r2G
-	aBMSXnVb33bAskyB/Y6JYz+pPeWul2pz4VMPliqJKhvqfJNieE+phtOle1wJcSVc
-	PVatr82AI+c=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8B324235A;
-	Tue, 29 Mar 2011 02:35:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A34892359; Tue, 29 Mar 2011
- 02:35:11 -0400 (EDT)
-In-Reply-To: <7vzkoeu0mr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 28 Mar 2011 19:22:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B457B1EC-59CE-11E0-BD1B-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751871Ab1C2Goh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 02:44:37 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:55168 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751727Ab1C2Gog (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 02:44:36 -0400
+Received: by wya21 with SMTP id 21so3473778wya.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 23:44:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:from:reply-to:to:cc:in-reply-to
+         :references:content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=7hNOkMEasNzDj9MwJQtuqb6HncPDMSUoUOV6QU4eIVY=;
+        b=O5gHXwDK1nkATWVp8d+kB93fOTHUrlL/5pBh7T9vupoxQw6sJnIC29iyYDxjDJOd5N
+         TPiHaPTkWkL21bxf+3oDtRXx86sScal5zx+ZDyGpbVis+kQHG/HdmwrX7HafeqHCzwCA
+         YeQBY2DdTgF4hzPsM80rw+ptKXs1UWQocZ8qo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=MtdOtYNWucBEc3DsF/vJbcqCFBgzO+e72J+12xVYuDJQM8LdY65C16zz2kgdEvaFTM
+         YdMnx00qOpLPz9NgYeoHUD1h+98pelruO9PJExcbJ0FUgWN/69t/d4OoPnBBbwGtlUu+
+         zm/GUhT+wR1RfUxkmkBmxRQkBla5EJSt3m7u4=
+Received: by 10.227.153.152 with SMTP id k24mr4793842wbw.3.1301381075638;
+        Mon, 28 Mar 2011 23:44:35 -0700 (PDT)
+Received: from [192.168.0.129] (5acc3aad.bb.sky.com [90.204.58.173])
+        by mx.google.com with ESMTPS id y29sm2361651wbd.4.2011.03.28.23.44.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 28 Mar 2011 23:44:34 -0700 (PDT)
+In-Reply-To: <7vei5qvkgw.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170229>
 
-I still haven't pinpointed where things go wrong (I have GIT_TRACE_PACKET
-output, thanks to Peff, though), but I seem to be reliably able to
-reproduce the issue with 'master' and also reliably able to make the issue
-disappear with 'master' plus two reverts ("no-done" protocol extension).
+On Mon, 2011-03-28 at 17:28 -0700, Junio C Hamano wrote:
+> Will Palmer <wmpalmer@gmail.com> writes:
+> 
+> > I've been kicking around this series for a while now as part of a larger
+> > effort of refactoring the pretty formats. A recent discussion on the
+> > list has lead me to believe that this smaller subset may be of use
+> > sooner, rather than later.
+> >
+> > This series attempts to add "long forms" for common format placeholders
+> > in the "git log" family of commands, making the way for yet more
+> > placeholders to be added without needing to worry too much about the
+> > increasingly limited set of available one-letter mnemonics. It also
+> > moves towards the possibility of eventual unification with the format
+> > options in for-each-ref.
+> 
+> I don't claim that I read 1300+ long [PATCH 5/9] carefully, but I like the
+> direction in which this topic is going very much.
+> 
+> Except that [PATCH 2/9] looked quite out of place---more like "I wanted to
+> sneak this feature in" than "this was needed to keep the resulting code
+> backward compatible" or anything like that.
 
-For tonight, I'll revert 3e63b21 (upload-pack: Implement no-done
-capability, 2011-03-14) and 761ecf0 (fetch-pack: Implement no-done
-capability, 2011-03-14), as I don't want to harm other people with this
-issue.
+just for context, we're talking about:
+ [PATCH/RFC 2/9] add support for --date=unix to complement %at
+
+I was warned that I should tweak that message!
+
+This one is actually in there to make the later [PATCH 5/9] more
+consistent in how it handled dates, as: {AUTHOR,COMMITTER}_DATE: <TYPE>,
+rather than having a special case just for _UNIX.
+
+When I added DATE_UNIX to the enum, gcc started complaining about
+unhandled enum values in switch()es. To get around those (and noticing
+that %at was the only format that wasn't available as a --date= switch)
+--date=unix was added. It seemed like a good idea to move that change to
+earlier in the series, rather than "sneaking it in" as part of [PATCH
+5/9]
+
+Of course, [PATCH 1/9] is only in there to make the documentation tweaks
+in [PATCH 2/9] more readable.
+
+> 
+> Off the top of my head, I don't think of a reason to say that [PATCH 3/9]
+> is going in a wrong direction---is there a reason to make you worried in
+> the particular change?
+
+ [PATCH/RFC 3/9] interpret %C(invalid) as we would %%C(invalid)
+
+This one I was iffy on. On the one hand, it's inconsistent to treat
+%C(invalid) any differently from %Z(doesn't even exist), but on the
+other hand we lose feedback of telling the user why it's actually not
+working as intended.
+
+The real purpose of it was to prevent strange messages later on in the
+larger series, which adds support for %(alias:<aliasname>). Seeing the
+message "bad color value 'bkue' for variable '--pretty format'" when
+what you actually typed was:
+    commit %h%+(alias:mergeline)%+(alias:message)
+could be confusing.
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+-- Will
