@@ -1,96 +1,84 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [Q] Mark files for later commit?
-Date: Tue, 29 Mar 2011 14:01:53 +0200
-Message-ID: <4D91CA31.20908@drmicha.warpmail.net>
-References: <AANLkTi=rPAQas3gvHJ+EFYTXP_YXuULQMk8o8pgkj=9T@mail.gmail.com> <7voc4uto9o.fsf@alter.siamese.dyndns.org> <7v8vvytldk.fsf@alter.siamese.dyndns.org> <AANLkTik33jiKipcv8d8tY_FXa2nE0BtBdi9vro0gkdQc@mail.gmail.com>
+From: Karol Samborski <edv.karol@gmail.com>
+Subject: Re: GSoC 2011
+Date: Tue, 29 Mar 2011 14:10:12 +0200
+Message-ID: <AANLkTi=f36g6JTmN_NKkqfJjhPPTTVm-Ufi8xV=XZjAq@mail.gmail.com>
+References: <AANLkTikQ6=CrWuMemwv38HnBKPnt8CjQWqYj7oA8zVZ4@mail.gmail.com>
+	<AANLkTikC5cagS8qYPDmWO+jhC4pHMkJq6zQN3QemMhwG@mail.gmail.com>
+	<AANLkTikM7C_h5cwgd5KoddBUH3xsdwtBiGwM_2ecKR2k@mail.gmail.com>
+	<AANLkTin9REqDJhWbQ2JbESufcg6hSf6cw3NpiamXvkU_@mail.gmail.com>
+	<AANLkTi=5m8t0bknk1VnTmrhwOLeZua9650tDHkM6J+BS@mail.gmail.com>
+	<AANLkTimCBFDiZrcPEucqHR8Aze9W6=Yx3zKitQMTtx5a@mail.gmail.com>
+	<AANLkTin=JnXO7k-NNcHVksDcM7yer=9oh3Eu9McLS15_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Daniel_Nystr=F6m?= <daniel.nystrom@timeterminal.se>
-X-From: git-owner@vger.kernel.org Tue Mar 29 14:05:37 2011
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 29 14:10:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Xg0-0005UL-GU
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 14:05:36 +0200
+	id 1Q4Xkc-0007oJ-Ra
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 14:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755Ab1C2MFb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 08:05:31 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42764 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751837Ab1C2MFa (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 08:05:30 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 81A5920C4B;
-	Tue, 29 Mar 2011 08:05:30 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 29 Mar 2011 08:05:30 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=vsQPpM8zsvw2K4E4c+KHEzBgoCs=; b=SEbDU1n4jSLeRk6Ykv6hnElO5yCaDSOD2AKCQfi3pPhi2Vnf/zVfUr/mXmXDHc5gc7+J48uOymr+Fn354t2FPFp8tB4GbYtALL3C8+7BJsVvf27SAAvX1t2FuqdOcoHrHuSYA5C7bSxij6n7J9mD60mkO2i7BIwvXsFv2EnfL2k=
-X-Sasl-enc: 7hnukF34Oen3VMTMjMT6zbUXgrH7WWmdZi2eXhJ5EUQ3 1301400330
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id DEE5F404B0B;
-	Tue, 29 Mar 2011 08:05:29 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <AANLkTik33jiKipcv8d8tY_FXa2nE0BtBdi9vro0gkdQc@mail.gmail.com>
+	id S1752964Ab1C2MKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 08:10:15 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:61546 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752750Ab1C2MKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 08:10:14 -0400
+Received: by bwz15 with SMTP id 15so118573bwz.19
+        for <git@vger.kernel.org>; Tue, 29 Mar 2011 05:10:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=xoEEfQJeZfxy3wFLnYpnNk5QrfpEeoDkBgu9kGfknJg=;
+        b=jpYr9WNP4If+2OAFgNARj0A2Ta72TGvCKBACkMEYUCHy0Jutlf/miUBCIBtJKmXRbP
+         O99PYEzjjdQcpwoEczbNlKfXmLiYpGyen0H7suTQcpRz+YlBBb9qrHcjBARlDSftmcLB
+         31XIjBTrjpyPZ8uPyPE67PeYCfGjEXGrqiM7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=kXv5R5t+3nDwqHzRsbHVfKS/xO/mRGoiuFnZIaInUVLiUE16OQbmQOqHKXu8x/ktER
+         R3Zb1ri3EDexld+ZmdOmtxHiRl+fyL9ekyhOHPTWgb6pc17PGNn/l1rI3W5KROHbZkLp
+         UPcO4W6/kg+rzXARcrFDbQRCXcUpUhxgDZmfM=
+Received: by 10.204.25.194 with SMTP id a2mr4885884bkc.197.1301400612707; Tue,
+ 29 Mar 2011 05:10:12 -0700 (PDT)
+Received: by 10.204.240.17 with HTTP; Tue, 29 Mar 2011 05:10:12 -0700 (PDT)
+In-Reply-To: <AANLkTin=JnXO7k-NNcHVksDcM7yer=9oh3Eu9McLS15_@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170260>
 
-Daniel Nystr=F6m venit, vidit, dixit 29.03.2011 11:18:
-> Den 29 mars 2011 09:51 skrev Junio C Hamano <gitster@pobox.com>:
->>> Daniel Nystr=F6m <daniel.nystrom@timeterminal.se> writes:
->>>> How would you like a git feature like described above, marking fil=
-es
->>>> for later inclusion?
->>>
->>> That does not sound like a feature but merely a source of confusion=
-=2E
->>
->> If that is the case, then probably you shouldn't be even updating th=
-e
->> "changelog" file constantly to begin with.  Instead, how about creat=
-ing a
->> separate "changelog+" file that is not tracked, and keep its content=
-s
->> maintained continuously so stuff won't be forgotten?  When the time =
-to
->> release comes, you can "mv changelog changelog", and commit it.
->=20
-> If we ignore this particular case, how would a "git hold <file>..." f=
-eature do?
+2011/3/29 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
+> On Tue, Mar 29, 2011 at 2:08 PM, Karol Samborski <edv.karol@gmail.com> wrote:
+>> I heard that it is needed to put 40 hours per week in summer time to
+>> participate GSoC program.
+>> It is impossible in my case so I'll become a contributor outside the
+>> GSoC program.
+>
+> You're welcome!
+>
+>> My question is: should I work on rewriting git commands to C (this
+>> task is on GSoC 2011 ideas page) or leave this task for students from
+>> GSoC program?
+>
+> I bet converting small scripts now won't hurt anybody (it's not large
+> enough for GSoC work anyway, git-repack.sh for instance). It will help
+> you get familiar with the code base and can keep you busy until GSoC
+> really starts. By then we'll know what commands are taken by students.
 > --
-> $ git status
-> # On branch master
-> # Changed but not updated:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working di=
-rectory)
-> #
-> #	modified:   package/qt/qt.mk
-> #
-> # Changed but on hold:
-> #   (use "git add --holds <file>..." to update what will be committed=
-)
-> #
-> #	modified:   CHANGES
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
-> --
-> Would there be other use-cases?
+> Duy
+>
 
-As Junio pointed out, your "hold file" (ChangeLog+) is really not
-versioned (tracked) at all, so it has no place in the worktree.
-Otherwise you'll have constant nagging during the release cycle one way
-or the other, if you want git to remind you of the files on hold. If yo=
-u
-don't need the reminder, git does not need to know about the file.
-Simply store it somewhere else (such as in .git/description if you don'=
-t
-use that, or under .git/info/).
+Thank you for your answer. Of course I will get familiar with the code
+base first by sending simple patches to the mailing list for review ;)
+Your proposal sounds very good so I will start with rewriting
+git-repack.sh or another small script.
 
-Michael
+Regards,
+Karol
