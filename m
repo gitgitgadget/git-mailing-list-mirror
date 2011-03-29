@@ -1,65 +1,55 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Translation inclusion criteria
-Date: Tue, 29 Mar 2011 12:59:11 -0400
-Message-ID: <1301417951.13114.7.camel@drew-northup.unet.maine.edu>
-References: <4D889CC9.4060603@gmail.com>
+From: Edwin Amsler <edwinamsler@thinkboxsoftware.com>
+Subject: Git not using logged in user for propfind
+Date: Tue, 29 Mar 2011 12:01:41 -0500
+Message-ID: <4D921075.1050208@thinkboxsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-To: Rodrigo Rosenfeld Rosas <rr.rosas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 19:00:47 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 29 19:01:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4cHd-0006SJ-Vh
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 19:00:46 +0200
+	id 1Q4cIf-0006wu-GO
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 19:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026Ab1C2RAi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 13:00:38 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:46063 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991Ab1C2RAg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 13:00:36 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2TGxFv2005837
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 29 Mar 2011 12:59:20 -0400
-In-Reply-To: <4D889CC9.4060603@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=3
-	Fuz1=3 Fuz2=3
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p2TGxFv2005837
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1302022762.24037@yaMq/lx7tapHqLVMhPx8lA
+	id S1753933Ab1C2RBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 13:01:43 -0400
+Received: from smtp152.dfw.emailsrvr.com ([67.192.241.152]:43210 "EHLO
+	smtp152.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753920Ab1C2RBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 13:01:43 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp25.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id CE4092D0180
+	for <git@vger.kernel.org>; Tue, 29 Mar 2011 13:01:42 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp25.relay.dfw1a.emailsrvr.com (Authenticated sender: edwinamsler-AT-thinkboxsoftware.com) with ESMTPSA id 7F88E2D039F
+	for <git@vger.kernel.org>; Tue, 29 Mar 2011 13:01:42 -0400 (EDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170280>
 
+So, I set up a dandy non-ssl webshare on my server. SSL can come later 
+once everything is configured right.
 
-On Tue, 2011-03-22 at 09:57 -0300, Rodrigo Rosenfeld Rosas wrote:
-> Hi, I've followed the instructions in git-gui/po/README in 2008 but=20
-> pt.po was never included in master. Now I've just updated it.
->=20
-> Is there anything else I should do for it being merged to master? Wha=
-t=20
-> is the criteria for including new translations?
+Git clones fine, but when it does a push and uses propfind, it decides 
+to not use my username and so it gets a 401 not authorized error.
 
-Rodrigo,
-Internationalization of Git is very much an ongoing process. I suspect
-that has something to do with the uptake of your contribution. =C3=86va=
-r may
-have more information.
+Here's output from my log. DAV works fine on everything I've tested on, 
+it seems to be a git oopsie. Any ideas?
 
---=20
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+24.77.236.213 - -     [27/Mar/2011:18:21:47 -0500] "GET 
+/dav/git/coral/info/refs?service=git-receive-pack HTTP/1.1" 401 409
+24.77.236.213 - -     [27/Mar/2011:18:21:52 -0500] "GET 
+/dav/git/coral/info/refs?service=git-receive-pack HTTP/1.1" 401 409
+24.77.236.213 - edwin [27/Mar/2011:18:21:52 -0500] "GET 
+/dav/git/coral/info/refs?service=git-receive-pack HTTP/1.1" 200 0
+24.77.236.213 - edwin [27/Mar/2011:18:21:52 -0500] "GET 
+/dav/git/coral/HEAD HTTP/1.1" 200 23
+24.77.236.213 - -     [27/Mar/2011:18:21:52 -0500] "PROPFIND 
+/dav/git/coral/ HTTP/1.1" 401 397
