@@ -1,66 +1,77 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] reset: update help text
-Date: Tue, 29 Mar 2011 20:29:43 +0700
-Message-ID: <AANLkTin5CguMu360+hV_QJYHnyEQYeVp05HSBp05UGvr@mail.gmail.com>
-References: <1301404805-12095-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: 195b7ca6 breaks t9010 at current master
+Date: Tue, 29 Mar 2011 15:37:10 +0200
+Message-ID: <AANLkTi=pDM2AXwLWtQQmp77dAzhooFSMXHtKAoN_S8_a@mail.gmail.com>
+References: <AANLkTik0CNXY9bKGOa9Xmai_OPQgExfLsFs1yN2pCVr8@mail.gmail.com>
+	<20110329042446.GB25693@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 15:30:29 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 15:37:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Z03-0005Lc-1x
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 15:30:23 +0200
+	id 1Q4Z6l-0000HC-Sm
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 15:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166Ab1C2NaP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 09:30:15 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45612 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751809Ab1C2NaO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 09:30:14 -0400
-Received: by wya21 with SMTP id 21so141390wya.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 06:30:13 -0700 (PDT)
+	id S1752222Ab1C2NhN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 09:37:13 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:46002 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751630Ab1C2NhM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 09:37:12 -0400
+Received: by vxi39 with SMTP id 39so122968vxi.19
+        for <git@vger.kernel.org>; Tue, 29 Mar 2011 06:37:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=/tHEpKTgeh+6QNa+HBRI7+fi15qOsUg7kswF264Xjok=;
-        b=E5Mtcds979YcraeOYKIz2m4FmB5qw5QmYumFaR52OckTHnI/JRqPggbBNzJzl67wIQ
-         Ts7SxII1jSLG8ve5DEZvUZouPCGks8grNxeH1rhKelI1Dhh641pmP5YcI2lncNzdiK9y
-         7beMSR7QrxaFJUzRlnstF/3KmzOLtR2Tz6jHY=
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ebf/2LiSqZ6uHpJsRQehGNnxyXo5zq2fwEuZnhaeE5U=;
+        b=rqlDmvdm6qkkpeYmGlUvthWkLcSYMbtIZw2AxGV0pq6ddVPDsqYjVxtxZIK8+fcVOY
+         3H09b2/ugCruwLbgnvku+G1Q2yAC5lKmY3MOXfnAJ5WeSbKr48AisFeGl6xUngEhVp0m
+         RTY9MZUBxIwsbUgNQxsua+rSj545Neo1as5PU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=CatFbpJAXebmsljC8BMJHLyf+rKESby2aVSpxmnGfb4se9JrW9DdsFLeenizktEg6W
-         d/nFSdpqD/1Wh5IcGstMa7vD9BwDhTmweYA+0EnJfIAlIJSxD9sGdhx5WESZMqH+63Ot
-         2T58XnnGKf+GW2MktprGZCJvwcs8L/bciRWiQ=
-Received: by 10.217.2.73 with SMTP id o51mr4269638wes.66.1301405413211; Tue,
- 29 Mar 2011 06:30:13 -0700 (PDT)
-Received: by 10.216.163.202 with HTTP; Tue, 29 Mar 2011 06:29:43 -0700 (PDT)
-In-Reply-To: <1301404805-12095-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=Ghe2BGGE97FqfLojCEa4+gTZKqUSfUKZFTdAaG+6NKQGu30miByc3KD4r8ssZCkjbs
+         gnb8blWhBD80BfcIpDludLukmuJV3YKEzP+gQAiyup3EXomYu75StDof3qZxhdHt7mx1
+         j1wAzgqgacg+CtKToVUcurbyXPM4qk6Dj545k=
+Received: by 10.52.73.196 with SMTP id n4mr7293325vdv.227.1301405830845; Tue,
+ 29 Mar 2011 06:37:10 -0700 (PDT)
+Received: by 10.52.166.163 with HTTP; Tue, 29 Mar 2011 06:37:10 -0700 (PDT)
+In-Reply-To: <20110329042446.GB25693@elie>
+X-Google-Sender-Auth: RBBgQPv-pJKMWURHczNexdmwOto
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170268>
 
-2011/3/29 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> Also make it clear how --hard and --merge are different.
+On 29 March 2011 06:24, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> =C3=98yvind A. Holm wrote:
+> > When running "make test" at current master (v1.7.4.2-406-gbe919d5),
+> > t9010-svn-fe.sh fails. Bisecting shows that 195b7ca6 ("vcs-svn:
+> > handle log message with embedded NUL") breaks the test.
+>
+> Could you try with the following patch applied? =C2=A0It comes from
+> squashing the last two patches from the svn-fe branch:
+>
+> * tests: make sure input to sed is newline terminated
+> * vcs-svn: add missing cast to printf argument
 
-By the way I don't like the option names --hard, --mixed and --soft.
-They do not remind me what they actually do. Every time I need to do
-non-default operation, I have to open man page.
+Thanks a lot. Yes, that works. It seems as it's "vcs-svn: add missing
+cast to printf argument" that does the trick, at least t9010 doesn't
+fail after that's applied. ... And it has reached the official master
+now (as 8cc299d), seems it got pushed after I went to bed. I'm running =
+a
+test on current master (07514c8) now, and things look fine so far.
 
-I've been thinking of --ref, --index and --worktree as a more friendly
-version, which can be combined and converted to --soft, --mixed and
---hard internally. Invalid combinations will be rejected. That
-thinking went well until I found out there were --merge and --keep,
-and was stuck.
---=20
-Duy
+Regards,
+=C3=98yvind
