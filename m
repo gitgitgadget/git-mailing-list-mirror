@@ -1,277 +1,64 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCH/RFC 8/9] add long forms %(authordate) and %(committerdate)
-Date: Tue, 29 Mar 2011 00:17:30 +0100
-Message-ID: <1301354251-23380-9-git-send-email-wmpalmer@gmail.com>
-References: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Will Palmer <wmpalmer@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 01:18:35 2011
+From: =?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>
+Subject: Re: [PATCH] Remove "bashism" from contrib/thunderbird-patch-inline/appp.sh
+Date: Tue, 29 Mar 2011 02:16:00 +0200
+Message-ID: <4D9124C0.8070003@zoho.com>
+References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?Lukas_Sandst?= =?ISO-8859-1?Q?r=F6m?= 
+	<luksan@gmail.com>
+To: Maxin john <maxin@maxinbjohn.info>
+X-From: git-owner@vger.kernel.org Tue Mar 29 02:11:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Lhg-00010L-1d
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 01:18:32 +0200
+	id 1Q4MX7-000356-Jm
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 02:11:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932181Ab1C1XSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2011 19:18:22 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:35885 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755538Ab1C1XSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2011 19:18:05 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 36so4410093wwa.1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 16:18:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=5DWr41Iw4IB3gyOYL/M25treWE4z8tg9KjvNKZeeUWw=;
-        b=mdx3FLzZBqvFHx2tN507wvTj0O6HOa3O0U1r0J7oGQZalmXejgRB38h+rBUnUMwfOW
-         CER7EiaYeRtAXSfChnJMQS0dP0CGgjnXklPjzrEKGIp+boFGfctVCo9LFOsyWZd2jIRy
-         lGWKZW3JzS0YSXEFaQbSSzRNgG+Sd/yYfOiZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=RKVgPQ8FFnS6wAQb8l6Lsh8Lc1kh9nXURuEobfwneQ1/CPPAf140br0l5LA0+Nhl2T
-         q3ox07WXmminjClzxblCMrwXTAV3MvzQhwFYe0O/2FsSVG628MtfHkY1X1DJ0P2NClYS
-         ERQRUbuyJth09a917OJVa4fRktlzqUElRzFs8=
-Received: by 10.216.9.159 with SMTP id 31mr3505553wet.0.1301354284901;
-        Mon, 28 Mar 2011 16:18:04 -0700 (PDT)
-Received: from localhost.localdomain (5acc3aad.bb.sky.com [90.204.58.173])
-        by mx.google.com with ESMTPS id b54sm1678272wer.45.2011.03.28.16.18.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Mar 2011 16:18:04 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.2
-In-Reply-To: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com>
+	id S1755607Ab1C2ALg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2011 20:11:36 -0400
+Received: from sender1.zohomail.com ([72.5.230.95]:58831 "EHLO
+	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170Ab1C2ALf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2011 20:11:35 -0400
+X-Greylist: delayed 8431 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Mar 2011 20:11:35 EDT
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type; 
+  b=lx/AyTykp/GPTSw+08WAxyuSroHeD7ZcAyI4Qr+HGqgRP4frxopI4YrJRSIBtA5Ms7hL42YoTV3W
+    Y971Z+NtpI3CNFs8yShpN8UcXsz97t4XAhc6ygbgX54ueL1CgDwb  
+Received: from [192.168.1.26] (61.Red-88-13-200.dynamicIP.rima-tde.net [88.13.200.61]) by mx.zohomail.com
+	with SMTPS id 130135749363591.4740672285136; Mon, 28 Mar 2011 17:11:33 -0700 (PDT)
+User-Agent: Thunderbird
+In-Reply-To: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170208>
 
-this adds the long forms %(authordate) and %(committerdate) to
-complement the existing placeholders %ad, %aD, %ar, %at, %ai, %cd, %cC,
-%cr, %ct, and %ci. The specific format is specified as with --date, eg:
-	%(committerdate:rfc2822)
+Maxin john wrote:
+> > Remove "bashism" and minor corrections for
+> > contrib/thunderbird-patch-inline/appp.sh
+> >
+> > Signed-off-by: Maxin B. John <maxin@maxinbjohn.info>
+This is wrong.
 
-This change exists mostly to give a place for new date formatting
-options to go, though it also has the benefit of matching the format of
-the date placeholders in git for-each-ref.
+You are replacing bash with sh:
+> > -#!/bin/bash
+> > +#!/bin/sh
 
-Signed-off-by: Will Palmer <wmpalmer@gmail.com>
----
- Documentation/pretty-formats.txt |    4 ++
- cache.h                          |    2 +
- date.c                           |   58 +++++++++++++++++++++++++------------
- pretty.c                         |   51 +++++++++++++++++++++++++++++----
- test-pretty.c                    |   10 ++++++
- 5 files changed, 100 insertions(+), 25 deletions(-)
+but the script still uses bash-specific syntax (aka. bashishms):
+> > +
+> >  PATCH=$(zenity --file-selection)
+> >
+> >  if [ "$?" != "0" ] ; then
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index d987102..dfb81a7 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -114,6 +114,8 @@ The placeholders are:
- - '%ar': author date, relative
- - '%at': author date, UNIX timestamp
- - '%ai': author date, ISO 8601 format
-+- '%(authordate[:<format>])': author date. Without a <format>, the --date= option is respected.
-+  Otherwise, a format of the type which can be specified via the --date= option is taken.
- - '%cn': committer name
- - '%cN': committer name (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
- - '%ce': committer email
-@@ -123,6 +125,8 @@ The placeholders are:
- - '%cr': committer date, relative
- - '%ct': committer date, UNIX timestamp
- - '%ci': committer date, ISO 8601 format
-+- '%(committerdate[:<format>])': committer date. Without a <format>, the --date= option is respected.
-+  Otherwise, a format of the type which can be specified via the --date= option is taken.
- - '%d': ref names, like the --decorate option of linkgit:git-log[1]
- - '%e': encoding
- - '%s': subject
-diff --git a/cache.h b/cache.h
-index fa564fa..b769cf8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -829,6 +829,8 @@ void datestamp(char *buf, int bufsize);
- #define approxidate(s) approxidate_careful((s), NULL)
- unsigned long approxidate_careful(const char *, int *);
- unsigned long approxidate_relative(const char *date, const struct timeval *now);
-+#define DATE_FORMAT_MAX 9 /* strlen("relative") + 1 */
-+size_t parse_date_format_len(const char *format, enum date_mode *dmode);
- enum date_mode parse_date_format(const char *format);
- 
- #define IDENT_WARN_ON_NO_NAME  1
-diff --git a/date.c b/date.c
-index ce48220..1834ab6 100644
---- a/date.c
-+++ b/date.c
-@@ -659,28 +659,48 @@ int parse_date(const char *date, char *result, int maxlen)
- 	return date_string(timestamp, offset, result, maxlen);
- }
- 
-+size_t parse_date_format_len(const char *format, enum date_mode *dmode)
-+{
-+	if (!strcmp(format, "relative")) {
-+		*dmode = DATE_RELATIVE;
-+		return 8;
-+	} else if (!strcmp(format, "iso8601")) {
-+		*dmode = DATE_ISO8601;
-+		return 7;
-+	} else if (!strcmp(format, "iso")) {
-+		*dmode = DATE_ISO8601;
-+		return 3;
-+	} else if (!strcmp(format, "rfc2822")) {
-+		*dmode = DATE_RFC2822;
-+		return 7;
-+	} else if (!strcmp(format, "rfc")) {
-+		*dmode = DATE_RFC2822;
-+		return 3;
-+	} else if (!strcmp(format, "short")) {
-+		*dmode = DATE_SHORT;
-+		return 5;
-+	} else if (!strcmp(format, "local")) {
-+		*dmode = DATE_LOCAL;
-+		return 5;
-+	} else if (!strcmp(format, "default")) {
-+		*dmode = DATE_NORMAL;
-+		return 7;
-+	} else if (!strcmp(format, "raw")) {
-+		*dmode = DATE_RAW;
-+		return 3;
-+	} else if (!strcmp(format, "unix")) {
-+		*dmode = DATE_UNIX;
-+		return 4;
-+	} else
-+		return 0;
-+}
-+
- enum date_mode parse_date_format(const char *format)
- {
--	if (!strcmp(format, "relative"))
--		return DATE_RELATIVE;
--	else if (!strcmp(format, "iso8601") ||
--		 !strcmp(format, "iso"))
--		return DATE_ISO8601;
--	else if (!strcmp(format, "rfc2822") ||
--		 !strcmp(format, "rfc"))
--		return DATE_RFC2822;
--	else if (!strcmp(format, "short"))
--		return DATE_SHORT;
--	else if (!strcmp(format, "local"))
--		return DATE_LOCAL;
--	else if (!strcmp(format, "default"))
--		return DATE_NORMAL;
--	else if (!strcmp(format, "raw"))
--		return DATE_RAW;
--	else if (!strcmp(format, "unix"))
--		return DATE_UNIX;
--	else
-+	enum date_mode dmode;
-+	if (!parse_date_format_len(format, &dmode))
- 		die("unknown date format %s", format);
-+	return dmode;
- }
- 
- void datestamp(char *buf, int bufsize)
-diff --git a/pretty.c b/pretty.c
-index 616b857..006bbe3 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -102,19 +102,38 @@ const char *parse_arg(struct format_part *part, enum format_arg_type type,
- 	struct format_arg arg = {0};
- 	const char *c = unparsed;
- 	char *t;
-+	size_t len;
-+	char date_format[DATE_FORMAT_MAX];
- 
--	if (type != FORMAT_ARG_UINT)
--		return NULL;
- 	arg.type = type;
- 
- 	c += strspn(c, WHITESPACE);
--	if (isdigit(*c)) {
--		arg.uint = strtoul(c, &t, 10);
--		c = t + strspn(t, WHITESPACE);
-+
-+	switch (type){
-+	case FORMAT_ARG_UINT:
-+		if (isdigit(*c)) {
-+			arg.uint = strtoul(c, &t, 10);
-+			c = t;
-+		}
-+		break;
-+	case FORMAT_ARG_DATE_MODE:
-+		len = strcspn(c, WHITESPACE ",)");
-+		if (len >= DATE_FORMAT_MAX)
-+			return NULL;
-+		strncpy(date_format, c, len);
-+		len = parse_date_format_len(date_format, &arg.dmode);
-+		if (!len)
-+			return NULL;
-+		c += len;
-+		break;
-+	default:
-+		return NULL;
- 	}
-+
-+	c += strspn(c, WHITESPACE);
- 	if (*c == ',' || *c == ')'){
- 		ALLOC_GROW(part->args, part->argc+1, part->args_alloc);
--		memcpy(&(part->args[part->argc]), &arg,
-+		memcpy(&part->args[part->argc], &arg,
- 		       sizeof(struct format_arg));
- 		part->argc++;
- 		return c;
-@@ -130,6 +149,26 @@ static struct format_part *parse_extended(const char *unparsed)
- 
- 	c += strspn(c, WHITESPACE);
- 
-+	if (!prefixcmp(c, "author") || !prefixcmp(c, "committer")) {
-+		e = c;
-+		c += (*e == 'a') ? 6 : 9;
-+		if (!prefixcmp(c, "date")) {
-+			part->type = (*e == 'a') ? FORMAT_PART_AUTHOR_DATE :
-+						   FORMAT_PART_COMMITTER_DATE;
-+			c += 4 + strspn(c + 4, WHITESPACE);
-+			if (*c == ')')
-+				goto success;
-+			if (*c != ':')
-+				goto fail;
-+			c = parse_arg(part, FORMAT_ARG_DATE_MODE, c+1);
-+			if (!c)
-+				goto fail;
-+			goto success;
-+		}
-+
-+		c = e;
-+	}
-+
- 	if (!prefixcmp(c, "color")) {
- 		part->type = FORMAT_PART_LITERAL;
- 		c += 5 + strspn(c + 5, WHITESPACE);
-diff --git a/test-pretty.c b/test-pretty.c
-index eb88e3a..6a92c65 100644
---- a/test-pretty.c
-+++ b/test-pretty.c
-@@ -19,6 +19,16 @@ static const char *all = "a"
- "%m%w()%w(1)%w(1,2)%w(1,2,3)"
- "%(wrap)%(wrap:1)%(wrap:1,2)%(wrap:1,2,3)"
- "%(color)%(color:red)%(color:red bold)%(color:red green bold)"
-+"%(authordate)%(authordate:default)%(authordate:relative)"
-+"%(authordate:short)%(authordate:local)"
-+"%(authordate:iso8601)%(authordate:iso)"
-+"%(authordate:rfc2822)%(authordate:rfc)"
-+"%(authordate:unix)%(authordate:raw)"
-+"%(committerdate)%(committerdate:default)%(committerdate:relative)"
-+"%(committerdate:short)%(committerdate:local)"
-+"%(committerdate:iso8601)%(committerdate:iso)"
-+"%(committerdate:rfc2822)%(committerdate:rfc)"
-+"%(committerdate:unix)%(committerdate:raw)"
- "%x0a%n%%%@";
- 
- static struct strbuf *parts_debug(struct format_parts *parts,
--- 
-1.7.4.2
+So with your change the script won't be able to run on systems which
+don't have bash as /bin/sh
+
+The standard equivalent of $( ) are `backticks`.
