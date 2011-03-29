@@ -1,155 +1,198 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 7/6] log/pretty-options: Document --[no-]notes and deprecate
- old notes options
-Date: Wed, 30 Mar 2011 00:18:55 +0200
-Message-ID: <201103300018.55371.johan@herland.net>
-References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
- <20110329205307.GA30959@sigill.intra.peff.net>
- <201103292344.26249.johan@herland.net>
+From: Sebastian Thiel <byronimo@googlemail.com>
+Subject: Git Pack: Improving cache performance (maybe a good GSoC practice)
+Date: Wed, 30 Mar 2011 00:21:23 +0200
+Organization: Byronimo
+Message-ID: <4D925B63.9040405@googlemail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 00:19:08 2011
+Cc: Tay Ray Chuan <rctay89@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 30 00:21:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4hFi-0004oP-Dd
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 00:19:06 +0200
+	id 1Q4hI6-0005uC-93
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 00:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360Ab1C2WTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 18:19:00 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:45838 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750821Ab1C2WS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 18:18:59 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LIU00A2NBBLA640@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Wed, 30 Mar 2011 00:18:57 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 6B5F41EA55D2_D925AD1B	for <git@vger.kernel.org>; Tue,
- 29 Mar 2011 22:18:57 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 2ED1D1EA3AF2_D925AD1F	for <git@vger.kernel.org>; Tue,
- 29 Mar 2011 22:18:57 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LIU005YNBBK9O20@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 30 Mar 2011 00:18:57 +0200 (MEST)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
-In-reply-to: <201103292344.26249.johan@herland.net>
+	id S1751698Ab1C2WVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 18:21:30 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43939 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750821Ab1C2WV2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 18:21:28 -0400
+Received: by fxm17 with SMTP id 17so609764fxm.19
+        for <git@vger.kernel.org>; Tue, 29 Mar 2011 15:21:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:organization:user-agent
+         :mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        bh=UtBfQQEiZ2uvtTA5pPaELIL+CwdJWhIbbQqk+sBs12M=;
+        b=Of3AcIASxVRI07+fXWJsofM0O311Xw6ZpJeguxzmUKetDPEB65ZW+07I6bcr218AZU
+         j7zCj6ccYDn9w5NjzoMAazaXe2p53tTb6KnDlt0xEdPLvBJMgTJkxuh48VqlEURDndBO
+         o54b0nQdi/MmfgBiZMfFBrBmsq+1S7LqbrVR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:organization:user-agent:mime-version:to:cc
+         :subject:content-type:content-transfer-encoding;
+        b=HJqtGSQBX5GRdtETNUsRRdIkRmaT8l9ZdmP2Tp9a1StzVBn3RTtLylSPdJO2CZYXcD
+         7ohItetJE3y5qPgaQFcGbOYd5fsyu+ski9vbQn6sKXmvtuO+fC1UkBUFS3ZfXjHv0my4
+         C1B/N/mKf1grL3xWaASnggyUpqQd1x0U6F2tY=
+Received: by 10.223.78.138 with SMTP id l10mr399542fak.106.1301437287504;
+        Tue, 29 Mar 2011 15:21:27 -0700 (PDT)
+Received: from [10.0.1.33] (91-65-187-112-dynip.superkabel.de [91.65.187.112])
+        by mx.google.com with ESMTPS id j11sm2148434faa.44.2011.03.29.15.21.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 29 Mar 2011 15:21:24 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15pre) Gecko/20110207 Shredder/3.1.9pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170334>
 
-Document the behavior or the new --notes, --notes=<ref> and --no-notes
-options, and list --show-notes[=<ref>] and --[no-]standard-notes options
-as deprecated.
+Hi,
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
+What follows is a summary of how I approached the git cache in order to 
+write my own improved version. The conclusions can be found further 
+down, in case you want to skip all the extra words for now.
 
-On Tuesday 29 March 2011, Johan Herland wrote:
-> On Tuesday 29 March 2011, Jeff King wrote:
-> > Here's the series I ended up with. Getting the refactoring just right
-> > turned out to be non-trivial, but between several attempts and some
-> > tests, I think the end result is correct. Hopefully the breakdown of
-> > the changes into small patches helps make it easy to review.
-> > 
-> >   [1/6]: notes: make expand_notes_ref globally accessible
-> >   [2/6]: revision.c: refactor notes ref expansion
-> >   [3/6]: notes: refactor display notes extra refs field
-> >   [4/6]: notes: refactor display notes default handling
-> >   [5/6]: revision.c: support --notes command-line option
-> >   [6/6]: revision.c: make --no-notes reset --notes list
-> 
-> Indeed, the whole series looks good to me.
-> 
-> Acked-by: Johan Herland <johan@herland.net>
+I am currently working on a c++ implementation of the git core, which 
+for now includes reading and writing of loose objects, as well as 
+reading and verifying pack files. Actually, this is not the first time I 
+do this, as I made my first experience in that matter with a pure python 
+implementation of the git core 
+(https://github.com/gitpython-developers/gitdb). This time though, I 
+wanted to see whether I can achieve better performance, and how I can 
+make git more suitable to handle big files.
 
-And here's some documentation to go on top.
+When profiling my initial uncached version of my pack reading 
+implementation, I noticed that most of the time was actually spent in 
+zlibs inflate method. Apparently, a cache was a good idea - git already 
+has one. Ignoring its implementation, I wrote my own naive one right 
+away which stored only base objects and inflated deltas. Interestingly, 
+this could already double the performance of my test case, which would 
+just stream all data of all objects contained in the pack, sha by sha, 
+resembling a random access pattern.
 
+To compare my cache with git, I implemented pack verification, which 
+basically generates sha1 of all uncompressed objects in the pack, and 
+runs a crc32 on the compressed streams. As the objects are streamed 
+ordered by offset, the access pattern can be described as sequential.
 
-Have fun! :)
+It came at no surprise, that git would verify my test-pack (aggressively 
+packed git source repository with 137k objects, one 27mb pack) much 
+faster, i.e. 25%. After some profiling and optimizations, I could bring 
+it down to being just 15% faster. Considering that my cache, which only 
+got faster in the course of the optimizations, could speed up random 
+access by a factor of about 2.5, it was hard to understand that I 
+couldn't reach git's performance.
 
-...Johan
+The major difference turned out to be the way the cache works. Git has a 
+small delta cache with only 256 [hardcoded] cache entries and a default 
+memory limit of 16mb. There it stores fully decompressed objects. It 
+maps objects to entries by hashing their pack offsets into the available 
+range of entries. When the pack is accessed sequentially, the cache will 
+be filled with related uncompressed objects, which can in turn reduce 
+the time required to apply the next delta by a huge amount, as only a 
+single delta has to be applied instead of a possibly long delta chain. 
+As git appears to pack deltas of related objects close to each other 
+(regarding their offset in the pack), the cache will be hit quite often 
+automatically. As the number of entries is small, and as entries are 
+connected using a doubly linked list, reclaiming of memory is rather 
+efficient, as it hits the first used objects first, which are unlikely 
+to be needed ever again. Collection doesn't necessarily run too often as 
+well, as most entries will be overwritten with new data during hash 
+collisions.
+This cache implementation is clearly suitable for sequential access.
 
- Documentation/git-log.txt        |    4 ++--
- Documentation/pretty-options.txt |   32 ++++++++++++++++++++++----------
- 2 files changed, 24 insertions(+), 12 deletions(-)
+My cache was optimized for random access, hence it stores only base 
+objects and uncompressed delta streams, using many more entries to 
+achieve good cache hit ratios. The reason for the performance gain of 
+the random access cache was that it stores full objects. This fills the 
+cache memory up much faster, so having a lot of cache entries makes no 
+sense.
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index ff41784..0c1c10e 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -177,9 +177,9 @@ May be an unabbreviated ref name or a glob and may be specified
- multiple times.  A warning will be issued for refs that do not exist,
- but a glob that does not match any refs is silently ignored.
- +
--This setting can be disabled by the `--no-standard-notes` option,
-+This setting can be disabled by the `--no-notes` option,
- overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable,
--and supplemented by the `--show-notes` option.
-+and supplemented by the `--notes=<ref>` option.
- 
- Author
- ------
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 50923e2..a9b399b 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -30,19 +30,31 @@ people using 80-column terminals.
- 	preferred by the user.  For non plumbing commands this
- 	defaults to UTF-8.
- 
----no-notes::
----show-notes[=<ref>]::
-+--notes[=<ref>]::
- 	Show the notes (see linkgit:git-notes[1]) that annotate the
- 	commit, when showing the commit log message.  This is the default
- 	for `git log`, `git show` and `git whatchanged` commands when
--	there is no `--pretty`, `--format` nor `--oneline` option is
--	given on the command line.
-+	there is no `--pretty`, `--format` nor `--oneline` option given
-+	on the command line.
-++
-+By default, the notes shown are from the notes refs listed in the
-+'core.notesRef' and 'notes.displayRef' variables (or corresponding
-+environment overrides). See linkgit:git-config[1] for more details.
- +
--With an optional argument, add this ref to the list of notes.  The ref
--is taken to be in `refs/notes/` if it is not qualified.
-+With an optional '<ref>' argument, add this notes ref to the list of
-+notes refs to be shown. The ref is taken to be in `refs/notes/` if it
-+is not qualified.
- 
-+--no-notes::
-+	Do not show notes. This negates the above `--notes` option, by
-+	resetting the list of notes refs from which notes are shown.
-+	This can be combined with the above `--notes` option to control
-+	exactly which notes refs are shown. E.g. "--notes=foo" will show
-+	notes, both from the default notes ref, and from "refs/notes/foo",
-+	while "--no-notes --notes=foo" will only show notes from
-+	"refs/notes/foo".
-+
-+--show-notes[=<ref>]::
- --[no-]standard-notes::
--	Enable or disable populating the notes ref list from the
--	'core.notesRef' and 'notes.displayRef' variables (or
--	corresponding environment overrides).  Enabled by default.
--	See linkgit:git-config[1].
-+	These options are deprecated. Use the above --notes/--no-notes
-+	options instead.
--- 
-1.7.4
+Both cache types are optimized for different kinds of access modes, and 
+both are required to efficiently deal with everything git usually has to do.
+Hence I changed my cache to support both modes, and rerun the pack 
+verification test.
+
+The result was better than expected, as the my implementation now takes 
+the lead by a tiny amount (25.3s vs. 26.0s) with a 16mb cache size. On 
+my way to make it even faster, I experimented with different cache 
+sizes, amounts of entries and of course different packs, which ranged 
+from 20mb to 600mb, which helped me fine tune the relations of these 
+variables.
+In the end, with a cache of 27mb, my implementation took 20.6s, whereas 
+the git implementation could only improve slightly to finish after 25.3s.
+I believe the cause of this is the fixed amount of entries. My cache 
+adjusts this amount depending on the packs size, the amount of objects, 
+as well as the size of the cache. In the this case, my cache would have 
+nearly 1000 entries, which helped to spread the amount of available 
+memory. Due to the limited amount of entries, git will not even benefit 
+from further increasing the size, whereas I could get as low as 13.5s by 
+increasing the cache size to 48mb for instance.
+
+Just for the fun of it, I increased the amount of entries in the git 
+cache to the same amount my cache was using, and suddenly git was 
+performing equally well, finishing after just 20.8s with a 27mb cache size.
+
+As my random access cache performed worse in sequential access mode, I 
+ran a test to see whether the opposite is true as well: Does the 
+sequential cache harm performance in random access mode ? The answer is: 
+Yes it does ! To show some numbers:  34mb of objects per second could be 
+streamed without cache, which was reduced to 28mb/s with a random access 
+cache. The cache in that case just causes overhead (especially when 
+reclaiming memory), and is hit just rarely.
+
+To test my assumptions not only with my code, but also with git itself, 
+I used a test written for git-python, which streams blobs from the 27mb 
+git pack. With the default cache, I get 14mb/s. When I removed the 
+cache, it was upped to 15mb, which was less than expected, but we must 
+not forget the git-python overhead here. Finally, with the sequential 
+access cache enabled, its entries increased to 1000, and the cache size 
+upped to 27mb, suddenly I would get 34.2mb/s ! A new record, for 
+git-python at least ;).
+
+As a final disclaimer, please let me emphasize that the tests I run are 
+neither statistically profound, nor are the pack verification tests 
+necessarily comparable in all details. Additionally, the git-python 
+object throughput tests cannot be directly compared to the c++ test 
+which has much less overhead. The tests were made to show performance 
+relations and uncover ways to improve performance, and not to claim that 
+one implementation is 'better' than the other.
+
+-- Conclusions --
+* delta cache needs to deal with random and sequential access.
+* current implementation deals with sequential access only, which is 
+only suitable for pack verification, and in fact hurts performance in 
+other cases if the amount of entries (at least) is not dynamically 
+adjusted depending on parameters of the actual pack.
+* random access caches work well with plenty of entries, when storing 
+only uncompressed deltas and base objects, as reapplying a delta is very 
+fast.
+* Sequential access caches have to dynamically adjust their amount of 
+entries according to the amount of available cache memory and the 
+average packed object size, to make best use of the available memory.
+* it should be possible to adjust the caching mode at runtime, or to 
+fully disable the cache.
+* it might be useful/necessary to have one cache per pack sharing global 
+memory limits, instead of having one global cache, as caches need to be 
+adjusted depending on the actual pack.
+
+In case anyone is interested in having a look at the way the I determine 
+the cache parameters (which really are the key to optimizing 
+performance), this is the line you would have to focus on: 
+https://github.com/Byron/gitplusplus/blob/deltastream/src/git/db/pack_file.cpp#L103. 
+The cache is used by the pack stream, whose core is in the 
+unpack_object_recursive method (equivalent to unpack_delta_entry in the 
+git source): 
+https://github.com/Byron/gitplusplus/blob/deltastream/src/git/db/pack_stream.cpp#L247 
+.
+
+Kind Regards,
+Sebastian
