@@ -1,134 +1,77 @@
-From: Antonio Ospite <ospite@studenti.unina.it>
-Subject: Re: Minor cosmetic defect in git-pack-objects output
-Date: Tue, 29 Mar 2011 22:48:34 +0200
-Message-ID: <20110329224834.62393f3c.ospite@studenti.unina.it>
-References: <20110329121040.de22bd56.ospite@studenti.unina.it>
-	<4D923D59.3070301@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] revision.c: introduce --notes-ref= to use one notes ref
+ only
+Date: Tue, 29 Mar 2011 16:53:08 -0400
+Message-ID: <20110329205307.GA30959@sigill.intra.peff.net>
+References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
+ <201103291439.17197.johan@herland.net>
+ <20110329143357.GA10771@sigill.intra.peff.net>
+ <7vwrjhrd53.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Mar 29 22:49:02 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Johan Herland <johan@herland.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 22:53:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4fqU-0007tl-JI
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 22:48:58 +0200
+	id 1Q4fuf-0001Ze-11
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 22:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592Ab1C2Usp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 16:48:45 -0400
-Received: from smtp204.alice.it ([82.57.200.100]:46202 "EHLO smtp204.alice.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754486Ab1C2Uso (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 16:48:44 -0400
-Received: from jcn (87.6.149.121) by smtp204.alice.it (8.5.124.08) (authenticated as fospite@alice.it)
-        id 4D7E0F640152C6F2; Tue, 29 Mar 2011 22:48:41 +0200
-In-Reply-To: <4D923D59.3070301@lsrfire.ath.cx>
-X-Mailer: Sylpheed 3.1.0 (GTK+ 2.24.3; x86_64-unknown-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+	id S1754185Ab1C2UxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 16:53:11 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57763
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754003Ab1C2UxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 16:53:10 -0400
+Received: (qmail 32642 invoked by uid 107); 29 Mar 2011 20:53:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Mar 2011 16:53:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2011 16:53:08 -0400
+Content-Disposition: inline
+In-Reply-To: <7vwrjhrd53.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170320>
 
---Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, Mar 29, 2011 at 11:32:24AM -0700, Junio C Hamano wrote:
 
-On Tue, 29 Mar 2011 22:13:13 +0200
-Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Speaking of which, it is kind of weird that --show-notes is negated by
+> > --no-notes. So maybe it makes sense to introduce "--notes[=<ref>]" to do
+> > what I wrote above, and deprecate --show-notes.
+> 
+> I think that is sensible.
+> 
+> I personally think that "notes" are way too premature to be used seriously
+> by normal people yet, and if we want to fix UI and semantics warts (it is
+> understandable if we had plenty of them, simply because we didn't know
+> enough about possible use cases during the period we prototyped the notes
+> feature), the time to do so is now.
 
-> Am 29.03.2011 12:10, schrieb Antonio Ospite:
-> > Hi,
-> >=20
-> > in some cases, on git-pack-objects failure, there is a small defect in
-> > the output, see:
-> >=20
-> > # git gc --aggressive
-> > Counting objects: 1954118, done.
-> > Delta compression using up to 2 threads.
-> > warning: suboptimal pack - out of memory02)
-> > Compressing objects: 100% (1936802/1936802), done.
-> > Writing objects: 100% (1954118/1954118), done.
-> > Total 1954118 (delta 1618716), reused 0 (delta 0)
-> >=20
-> > The defect is here:
-> > warning: suboptimal pack - out of memory02)
-> >                                          ^^^
-> > the trailing chars are from the replaced line which was ending in
-> > 1936802)
-> >=20
-> > AFAICS this is basically what is happening:
-> > #include "git-compat-util.h"
-> > fprintf(stderr, "Compressing objects:  15% (296661/1936802)\r");
-> >                   warning("suboptimal pack - out of memory");
-> >=20
-> > I can think to a dumb workaround for this particular path but maybe
-> > there are other places when this can happen as well.
->=20
-> The following patch should avoid it by clearing the the rest of the
-> line after warnings, error messages, usage notes etc. if stderr is a
-> terminal.
->
+It is tempting to kill off --show-notes and --standard-notes, as it
+would clean up this code a bit. But even though they are probably not
+being seriously used by normal people, they have been in several
+released versions.
 
-Cool, this is working indeed on the terminal, I don't know if
-introducing a CLEARLINE macro would look prettier.
+Here's the series I ended up with. Getting the refactoring just right
+turned out to be non-trivial, but between several attempts and some
+tests, I think the end result is correct. Hopefully the breakdown of the
+changes into small patches helps make it easy to review.
 
-Thanks Ren=E9.
+  [1/6]: notes: make expand_notes_ref globally accessible
+  [2/6]: revision.c: refactor notes ref expansion
+  [3/6]: notes: refactor display notes extra refs field
+  [4/6]: notes: refactor display notes default handling
+  [5/6]: revision.c: support --notes command-line option
+  [6/6]: revision.c: make --no-notes reset --notes list
 
-Regards,
-   Antonio
-
-> Ren=E9
->=20
-> ---
->  usage.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->=20
-> diff --git a/usage.c b/usage.c
-> index b5e67e3..36f1968 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -9,7 +9,7 @@ void vreportf(const char *prefix, const char *err, va_lis=
-t params)
->  {
->  	char msg[4096];
->  	vsnprintf(msg, sizeof(msg), err, params);
-> -	fprintf(stderr, "%s%s\n", prefix, msg);
-> +	fprintf(stderr, "%s%s%s\n", prefix, msg, isatty(2) ? "\033[K" : "");
->  }
-> =20
->  static NORETURN void usage_builtin(const char *err, va_list params)
->=20
->=20
-
-
---=20
-Antonio Ospite
-http://ao2.it
-
-PGP public key ID: 0x4553B001
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
-
---Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAk2SRaMACgkQ5xr2akVTsAEiFgCgr3wxCjO1fVxdp5cWRRO1P2Gw
-4XYAoIys136hymK0RDfG/U5kvy7zdeqB
-=L0QY
------END PGP SIGNATURE-----
-
---Signature=_Tue__29_Mar_2011_22_48_35_+0200_aRUamgh98cf4Gmwu--
+-Peff
