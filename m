@@ -1,90 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/RFC 0/9] add long forms for format placeholders
-Date: Tue, 29 Mar 2011 08:46:10 +0200
-Message-ID: <4D918032.3010608@drmicha.warpmail.net>
-References: <1301354251-23380-1-git-send-email-wmpalmer@gmail.com> <7vei5qvkgw.fsf@alter.siamese.dyndns.org>
+From: Maxin john <maxin@maxinbjohn.info>
+Subject: Re: [PATCH] Remove "bashism" from contrib/thunderbird-patch-inline/appp.sh
+Date: Tue, 29 Mar 2011 09:54:37 +0300
+Message-ID: <AANLkTikaZA=7EFMVf1hwEoQJd6hChha0cCL7ZRMEZXyS@mail.gmail.com>
+References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
+	<4D9103D3.5010403@zoho.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Will Palmer <wmpalmer@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 08:49:57 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 08:54:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4SkU-0001RE-HI
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 08:49:54 +0200
+	id 1Q4SpI-0003O2-Tf
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 08:54:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287Ab1C2Gtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 02:49:49 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:36073 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752135Ab1C2Gtt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 02:49:49 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7B4F020446;
-	Tue, 29 Mar 2011 02:49:48 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 29 Mar 2011 02:49:48 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=QjYl25ydUnWiyGeEhdLw6XEHQA0=; b=sVvKDQL6IR5BT27YAExxmdotDCfCTA9pK70UOUB40xToKOWO1odnE2ts87E8rKWsbm7twpKIBK7inGnkHDvzsk2HzNO+L4uqRjEka6tYTX51aI1W9Kd/IM2OUejM0lniH8d86gxNmnDnAftSXjvg2khFEI9CFiu0wbNz8nWXz3g=
-X-Sasl-enc: wCePrQbrfjYhpEFkU2teU4XHXhXrXig56JViEd0F0KRj 1301381388
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id AE72D442C45;
-	Tue, 29 Mar 2011 02:49:47 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7vei5qvkgw.fsf@alter.siamese.dyndns.org>
+	id S1752206Ab1C2Gyj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 02:54:39 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:54764 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750878Ab1C2Gyi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 02:54:38 -0400
+Received: by yia27 with SMTP id 27so1478513yia.19
+        for <git@vger.kernel.org>; Mon, 28 Mar 2011 23:54:38 -0700 (PDT)
+Received: by 10.151.113.14 with SMTP id q14mr4808761ybm.112.1301381677991;
+ Mon, 28 Mar 2011 23:54:37 -0700 (PDT)
+Received: by 10.150.139.2 with HTTP; Mon, 28 Mar 2011 23:54:37 -0700 (PDT)
+X-Originating-IP: [91.154.177.92]
+In-Reply-To: <4D9103D3.5010403@zoho.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170233>
 
-Junio C Hamano venit, vidit, dixit 29.03.2011 02:28:
-> Will Palmer <wmpalmer@gmail.com> writes:
-> 
->> I've been kicking around this series for a while now as part of a larger
->> effort of refactoring the pretty formats. A recent discussion on the
->> list has lead me to believe that this smaller subset may be of use
->> sooner, rather than later.
+Hi,
+
+Thank you very much for the suggestions. However, I have tested this
+script in Ubuntu which uses dash as /bin/sh
+
+Eg: the following script runs successfully in Ubuntu 10.10
+
+#!/bin/dash
+
+PATCH=3D$(zenity --file-selection)
+
+if [ "$?" !=3D "0" ] ; then
+ echo "zenity failed"
+else
+ echo "success"
+fi
+
+I haven't confirmed this in other shell implementations. Please let me
+know your comments on this.
+
+Best Regards,
+Maxin B. John
+
+2011/3/29 =C1ngel Gonz=E1lez <ingenit@zoho.com>:
+> Maxin john wrote:
+>> Remove "bashism" and minor corrections for
+>> contrib/thunderbird-patch-inline/appp.sh
 >>
->> This series attempts to add "long forms" for common format placeholders
->> in the "git log" family of commands, making the way for yet more
->> placeholders to be added without needing to worry too much about the
->> increasingly limited set of available one-letter mnemonics. It also
->> moves towards the possibility of eventual unification with the format
->> options in for-each-ref.
-> 
-> I don't claim that I read 1300+ long [PATCH 5/9] carefully, but I like the
-> direction in which this topic is going very much.
-> 
-> Except that [PATCH 2/9] looked quite out of place---more like "I wanted to
-> sneak this feature in" than "this was needed to keep the resulting code
-> backward compatible" or anything like that.
-> 
-> Off the top of my head, I don't think of a reason to say that [PATCH 3/9]
-> is going in a wrong direction---is there a reason to make you worried in
-> the particular change?
-
-I'm wondering how much of this could and should be shared with
-for-each-ref. Notable differences that I'm aware of:
-
-- for-each-ref is about (named) refs which can point to any type of
-object; rev-list/log is about commit objects
-
-- for-each-ref deals with "few" objects typically, rev-list/log with many
-
-So, other than %(refname), %(upstream) and %(tagger...), all
-for-each-ref placeholders make sense for rev-list/log.
-
-Sharing the parser would serve several purposes:
-
-- reduced code
-- increased test coverage (for-each-ref tests would test the parser)
-- speed up for for-each-ref (due to your nice separation)
-- short placeholders for for-each-ref
-- automatic consistency between the two
-
-Michael
+>> Signed-off-by: Maxin B. John <maxin@maxinbjohn.info>
+>
+> This is wrong.
+>
+> You are replacing bash with sh:
+>> -#!/bin/bash
+>> +#!/bin/sh
+>
+> but the script still uses bash-specific syntax (aka. bashishms):
+>> +
+>> =A0PATCH=3D$(zenity --file-selection)
+>>
+>> =A0if [ "$?" !=3D "0" ] ; then
+>
+> So with your change the script won't be able to run on systems which
+> don't have bash as /bin/sh
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
