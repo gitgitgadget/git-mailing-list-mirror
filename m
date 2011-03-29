@@ -1,89 +1,61 @@
-From: Maxin john <maxin@maxinbjohn.info>
-Subject: Re: [PATCH] Remove "bashism" from contrib/thunderbird-patch-inline/appp.sh
-Date: Tue, 29 Mar 2011 09:54:37 +0300
-Message-ID: <AANLkTikaZA=7EFMVf1hwEoQJd6hChha0cCL7ZRMEZXyS@mail.gmail.com>
-References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
-	<4D9103D3.5010403@zoho.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: 195b7ca6 breaks t9010 at current master
+Date: Tue, 29 Mar 2011 03:06:20 -0400
+Message-ID: <08D5E94F-23F7-4F18-9E3F-A92722F70C70@silverinsanity.com>
+References: <AANLkTik0CNXY9bKGOa9Xmai_OPQgExfLsFs1yN2pCVr8@mail.gmail.com> <20110329042446.GB25693@elie>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 08:54:53 2011
+Cc: =?iso-8859-1?Q?=D8yvind_A=2E_Holm?= <sunny@sunbase.org>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 09:06:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4SpI-0003O2-Tf
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 08:54:53 +0200
+	id 1Q4T0X-00079i-VE
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 09:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206Ab1C2Gyj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 02:54:39 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:54764 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878Ab1C2Gyi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 02:54:38 -0400
-Received: by yia27 with SMTP id 27so1478513yia.19
-        for <git@vger.kernel.org>; Mon, 28 Mar 2011 23:54:38 -0700 (PDT)
-Received: by 10.151.113.14 with SMTP id q14mr4808761ybm.112.1301381677991;
- Mon, 28 Mar 2011 23:54:37 -0700 (PDT)
-Received: by 10.150.139.2 with HTTP; Mon, 28 Mar 2011 23:54:37 -0700 (PDT)
-X-Originating-IP: [91.154.177.92]
-In-Reply-To: <4D9103D3.5010403@zoho.com>
+	id S1752821Ab1C2HGY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 03:06:24 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:44856 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751573Ab1C2HGY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 03:06:24 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 00F161FFC192; Tue, 29 Mar 2011 07:06:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 1B4731FFC190;
+	Tue, 29 Mar 2011 07:06:09 +0000 (UTC)
+In-Reply-To: <20110329042446.GB25693@elie>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170234>
 
-Hi,
 
-Thank you very much for the suggestions. However, I have tested this
-script in Ubuntu which uses dash as /bin/sh
+On Mar 29, 2011, at 12:24 AM, Jonathan Nieder wrote:
 
-Eg: the following script runs successfully in Ubuntu 10.10
+> =D8yvind A. Holm wrote:
+>=20
+>> When running "make test" at current master (v1.7.4.2-406-gbe919d5),
+>> t9010-svn-fe.sh fails. Bisecting shows that 195b7ca6 ("vcs-svn: hand=
+le
+>> log message with embedded NUL") breaks the test.
+>=20
+> Could you try with the following patch applied?  It comes from
+> squashing the last two patches from the svn-fe branch:
 
-#!/bin/dash
+Breakage also seen on OS X 10.6.7, the provided patch does fix.
 
-PATCH=3D$(zenity --file-selection)
-
-if [ "$?" !=3D "0" ] ; then
- echo "zenity failed"
-else
- echo "success"
-fi
-
-I haven't confirmed this in other shell implementations. Please let me
-know your comments on this.
-
-Best Regards,
-Maxin B. John
-
-2011/3/29 =C1ngel Gonz=E1lez <ingenit@zoho.com>:
-> Maxin john wrote:
->> Remove "bashism" and minor corrections for
->> contrib/thunderbird-patch-inline/appp.sh
->>
->> Signed-off-by: Maxin B. John <maxin@maxinbjohn.info>
->
-> This is wrong.
->
-> You are replacing bash with sh:
->> -#!/bin/bash
->> +#!/bin/sh
->
-> but the script still uses bash-specific syntax (aka. bashishms):
->> +
->> =A0PATCH=3D$(zenity --file-selection)
->>
->> =A0if [ "$?" !=3D "0" ] ; then
->
-> So with your change the script won't be able to run on systems which
-> don't have bash as /bin/sh
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+~~ Brian
