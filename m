@@ -1,77 +1,109 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: Re: 195b7ca6 breaks t9010 at current master
-Date: Tue, 29 Mar 2011 15:37:10 +0200
-Message-ID: <AANLkTi=pDM2AXwLWtQQmp77dAzhooFSMXHtKAoN_S8_a@mail.gmail.com>
-References: <AANLkTik0CNXY9bKGOa9Xmai_OPQgExfLsFs1yN2pCVr8@mail.gmail.com>
-	<20110329042446.GB25693@elie>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH 00/10] Docs: git tag
+Date: Tue, 29 Mar 2011 08:59:48 -0500
+Message-ID: <AANLkTi=U8amjCM7=bn2=ewJs2UpNG+D+sCKm4pPf4hP-@mail.gmail.com>
+References: <1301327622-8595-1-git-send-email-mfwitten@gmail.com>
+ <7v8vvzyvdi.fsf@alter.siamese.dyndns.org> <4D917B5E.1000600@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 15:37:20 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Mar 29 16:00:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4Z6l-0000HC-Sm
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 15:37:20 +0200
+	id 1Q4ZT9-00045C-Io
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 16:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222Ab1C2NhN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 09:37:13 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:46002 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630Ab1C2NhM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 09:37:12 -0400
-Received: by vxi39 with SMTP id 39so122968vxi.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 06:37:10 -0700 (PDT)
+	id S1752706Ab1C2OAV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 10:00:21 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65495 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751866Ab1C2OAT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 10:00:19 -0400
+Received: by iyb14 with SMTP id 14so202328iyb.19
+        for <git@vger.kernel.org>; Tue, 29 Mar 2011 07:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ebf/2LiSqZ6uHpJsRQehGNnxyXo5zq2fwEuZnhaeE5U=;
-        b=rqlDmvdm6qkkpeYmGlUvthWkLcSYMbtIZw2AxGV0pq6ddVPDsqYjVxtxZIK8+fcVOY
-         3H09b2/ugCruwLbgnvku+G1Q2yAC5lKmY3MOXfnAJ5WeSbKr48AisFeGl6xUngEhVp0m
-         RTY9MZUBxIwsbUgNQxsua+rSj545Neo1as5PU=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=I+4TXRDU2YH7JKItiyPdLnpDIEpF9TMK17+lB82aYNY=;
+        b=Cp5G/J23tV6k6m+uqbEPRKOPRB+nlwNGqQWRmkWTi9PwfTc5iANy0WHWeS4zD3/O5I
+         pDqFYDWaHMRuZiPpS1vU8QLSc5+U6jGfAMAtMPp9lW4KD0EONjipcMMKe/IbquBrVO6E
+         5VarHRYOIHcYMYvFh0ojfrhV9e2bRyqyNuZ1U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=Ghe2BGGE97FqfLojCEa4+gTZKqUSfUKZFTdAaG+6NKQGu30miByc3KD4r8ssZCkjbs
-         gnb8blWhBD80BfcIpDludLukmuJV3YKEzP+gQAiyup3EXomYu75StDof3qZxhdHt7mx1
-         j1wAzgqgacg+CtKToVUcurbyXPM4qk6Dj545k=
-Received: by 10.52.73.196 with SMTP id n4mr7293325vdv.227.1301405830845; Tue,
- 29 Mar 2011 06:37:10 -0700 (PDT)
-Received: by 10.52.166.163 with HTTP; Tue, 29 Mar 2011 06:37:10 -0700 (PDT)
-In-Reply-To: <20110329042446.GB25693@elie>
-X-Google-Sender-Auth: RBBgQPv-pJKMWURHczNexdmwOto
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=XBXG94OusxwH8z2YrTKIpBf4CUDvnpQhGtENbkKB7S78e1NUQnCAegUwfCxFISyBdn
+         Hmz7cKFbrxQhDPe84l7ed/n6WaScs1M5kVBycMiZtzn41QP/Qu17FAIbpEjV2YdKSEIW
+         4iMeTWhX6j6+xAXwSETiMt23LHnIxESqmV5RM=
+Received: by 10.43.49.69 with SMTP id uz5mr9225632icb.133.1301407219029; Tue,
+ 29 Mar 2011 07:00:19 -0700 (PDT)
+Received: by 10.42.138.199 with HTTP; Tue, 29 Mar 2011 06:59:48 -0700 (PDT)
+In-Reply-To: <4D917B5E.1000600@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170269>
 
-On 29 March 2011 06:24, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> =C3=98yvind A. Holm wrote:
-> > When running "make test" at current master (v1.7.4.2-406-gbe919d5),
-> > t9010-svn-fe.sh fails. Bisecting shows that 195b7ca6 ("vcs-svn:
-> > handle log message with embedded NUL") breaks the test.
+On Tue, Mar 29, 2011 at 01:25, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Junio C Hamano venit, vidit, dixit 28.03.2011 20:04:
+>> Michael Witten <mfwitten@gmail.com> writes:
+>>
+>>> Small patches fixing up the `git tag' docs.
+>>>
+>>> Michael Witten (10):
+>>> =C2=A0 Docs: git tag: Add `the'
+>>> =C2=A0 Docs: git tag: peoples back -> people's backs
+>>> =C2=A0 Docs: git tag: Revise a paragraph.
+>>> =C2=A0 Docs: git tag: other's -> the other person's
+>>> =C2=A0 Docs: git tag: Streamline a sentence.
+>>> =C2=A0 Docs: git tag: Add missing 'the'
+>>> =C2=A0 Docs: git tag: Use 'who' again
+>>> =C2=A0 Docs: git tag: Remove superfluous 'with'
+>>> =C2=A0 Docs: git tag: Use semicolon
+>>> =C2=A0 Docs: git tag: Rewrite discussion of GIT_COMMITTER_DATE
+>>
+>> Thanks; all looked sensible changes, except for 7/10 which I somehow=
+ find
+>> the original is more readable than the new text, partly because the
+>> sentences are shorter but more importantly because the two sentences=
+ make
+>> two separate assertions (the first is about what "one-shot" pull mea=
+ns,
+>> the second is about why automatic tag following is not desired in th=
+at
+>> situation).
 >
-> Could you try with the following patch applied? =C2=A0It comes from
-> squashing the last two patches from the svn-fe branch:
->
-> * tests: make sure input to sed is newline terminated
-> * vcs-svn: add missing cast to printf argument
+> Looked mostly sensible to me (and I share Junio's view on 7), too,
+> although I probably would have changed "other's" simply to "others'".
 
-Thanks a lot. Yes, that works. It seems as it's "vcs-svn: add missing
-cast to printf argument" that does the trick, at least t9010 doesn't
-fail after that's applied. ... And it has reached the official master
-now (as 8cc299d), seems it got pushed after I went to bed. I'm running =
-a
-test on current master (07514c8) now, and things look fine so far.
+I probably chose the singular variant for 2 reasons: I generally
+prefer singular renditions, and the sentence is referring to an
+example of a pull-request from one individual.
 
-Regards,
-=C3=98yvind
+On Tue, Mar 29, 2011 at 01:25, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Those 10 patches could have been 1 actually, they are really divided
+> into atoms (which is not bad per se) even though they all fall under
+> "cosmetic language corrections and improvements" without any content
+> change nor restructuring.
+
+It's always hard to tell what delineations will be appreciated.
+However, it's almost always the case that the smaller a patch is, the
+more quickly it can be reviewed and approved (also, the smaller the
+diff, the more meaningful the commit message), so I err on the side of
+too small; after all, it's generally much easier to squash than to
+split.
+
+Of course, I would have no problem if Junio ultimately saw fit to
+squash some or all of them (with a note that such squashing has
+occurred).
+
+Thanks for your input.
