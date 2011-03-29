@@ -1,116 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] revision.c: introduce --notes-ref= to use one notes ref
- only
-Date: Tue, 29 Mar 2011 17:16:52 +0200
-Message-ID: <4D91F7E4.1040707@drmicha.warpmail.net>
-References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net> <201103291439.17197.johan@herland.net> <20110329143357.GA10771@sigill.intra.peff.net>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: Merging split files
+Date: Tue, 29 Mar 2011 12:33:17 -0400 (EDT)
+Message-ID: <3752347.282743.1301416397164.JavaMail.root@mail.hq.genarts.com>
+References: <20110329151623.GD10771@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 29 17:20:34 2011
+X-From: git-owner@vger.kernel.org Tue Mar 29 18:33:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4aif-0005HP-Rp
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 17:20:34 +0200
+	id 1Q4brY-0000nZ-KQ
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 18:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753860Ab1C2PU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 11:20:28 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38978 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753783Ab1C2PU1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 11:20:27 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 2C67220C9F;
-	Tue, 29 Mar 2011 11:20:27 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 29 Mar 2011 11:20:27 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=5cwb18w9SvXNTZ27KSwdougiM8M=; b=Xinhnp/XCPQKj46nUMU31XE8y8eZYl/O+85n9tJAhXX+YGrmsTQh8HoddJQT7rouBFj4X8r7TXMmLPrQ4IBQ3Fqkv27tmeeIaCMMdmjbnTE+E97xjdWG/wJeKarMKLuv0xQt5QminaO8hQkwfxCPJOxEP862u1NSaYDpYUgqIs4=
-X-Sasl-enc: Dgd+uw3uiLO68dthP56EwgUj8BksiM+DjhOD6/IZMPUD 1301412026
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 718D740513B;
-	Tue, 29 Mar 2011 11:20:26 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <20110329143357.GA10771@sigill.intra.peff.net>
+	id S1753026Ab1C2Qdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 12:33:43 -0400
+Received: from hq.genarts.com ([173.9.65.1]:10210 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750750Ab1C2Qdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 12:33:42 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id C4F9AEA2431;
+	Tue, 29 Mar 2011 12:33:40 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cvYIlaBzsmT8; Tue, 29 Mar 2011 12:33:18 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 1644FEA242E;
+	Tue, 29 Mar 2011 12:33:18 -0400 (EDT)
+In-Reply-To: <20110329151623.GD10771@sigill.intra.peff.net>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170277>
 
-Jeff King venit, vidit, dixit 29.03.2011 16:33:
-> On Tue, Mar 29, 2011 at 02:39:17PM +0200, Johan Herland wrote:
-> 
->> On Tuesday 29 March 2011, Michael J Gruber wrote:
->>> As notes become increasingly popular, it's often interesting to show
->>> notes from a particular notes ref only. Introduce '--notes-ref=<ref>'
->>> as a convenience shortcut for '--no-standard-notes
->>> --show-notes=<ref>'.
->>>
->>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->>> ---
->>> The idea is to use the same name as in "git notes --ref=<ref>" but
->>> make it clear for the rev-list option to be about notes, thus
->>> "--notes-ref=<ref>".
->>
->> The idea and implementation look good to me. Not sure I like the 
->> option "bloat" (somehow feels it should be possible to express the same 
->> behavior using fewer options), but if there's not a better way to 
->> reorganize the options, then you can consider it Acked-by me.
-> 
-> I feel this would be more consistent with most other options that take
-> an optional argument:
-> 
->   1. "--show-notes" uses default refs
-> 
->   2. "--show-notes=<ref>" shows _just_ <ref>, no defaults
-> 
->   3. "--show-notes=<ref1> --show-notes=<ref2>" shows <ref1> and <ref2>
-> 
->   4. (Probably) "--show-notes --show-notes=<ref>" should show default
->      refs and <ref>. This is the one I'm least sure of, as it leaves no
->      way to override what came earlier on the command line (which is
->      useful if, for example, we end up with Michael's proposed ui.log).
+Jeff-
 
-My "git log" shows notes from ref/notes/commits by default without alias
-or config, and that is what I want to override per command (to show
-Thomas' notes, e.g.).
+Thanks for taking the time to think about this.  More inline...
 
->      Perhaps "--no-notes" would reset, so:
+----- Original Message -----
+> From: "Jeff King" <peff@peff.net>
+> To: "Stephen Bash" <bash@genarts.com>
+> Cc: git@vger.kernel.org
+> Sent: Tuesday, March 29, 2011 11:16:23 AM
+> Subject: Re: Merging split files
+>
+> On Fri, Mar 18, 2011 at 09:22:36AM -0400, Stephen Bash wrote:
 > 
->        --show-notes --no-notes --show-notes=<ref>
+> > In our previous release foo.cxx contained both the base class and a
+> > few subclasses. Since then the number of subclasses has grown, and
+> > we've split foo.cxx (base and sub-classes) into foo-base.cxx (base
+> > class) and foo-defs.cxx (sub-classes). Since the release, we've had
+> > a
+> > few bug fixes in foo.cxx on the maintenance branch, and need to
+> > merge
+> > those back to development. When I did the merge Git identified
+> > foo.cxx as moved to foo-defs.cxx, which worked for most changes, but
+> > a
+> > few needed to be in foo-base.cxx. In this case it was a pretty
+> > trivial manual resolution, but is there a method for handling merges
+> > of split files?
 > 
->      would be equivalent to:
+> I don't think there is currently a good way to do this automatically.
 > 
->        --show-notes=<ref>
+> The problem is that the closest merge-recursive gets to understanding
+> content movement is that it considers whole file renames. ...
 > 
-> Of course a total behavior change of what --show-notes currently does.
+> So I think the most flexible thing is to forget file renames at all.
 
-I somehow stopped proposing behavior changes. Guess why? (I know I have
-my occasional relapse, but still...)
+I agree that would be the best solution long term. ("Git doesn't track files, Git tracks content".  Think I heard that somewhere before...)
 
-> 
-> Speaking of which, it is kind of weird that --show-notes is negated by
-> --no-notes. So maybe it makes sense to introduce "--notes[=<ref>]" to do
-> what I wrote above, and deprecate --show-notes.
+That being said, the back seat drivers in the office here (i.e. me and everyone else that knows almost nothing about the internals of merge recursive!) thought maybe a middle ground is teach merge recursive to do copy detection along with rename detection.  Then the algorithm would have a (relatively small?) list of candidate files to check for hunks.  You still have to deal with the similarity score in some corner cases, but hopefully since all we want is candidate files the process is relatively insensitive to the similarity threshold.
 
-Also, "git notes" has "--ref". Maybe this (which may be what you
-proposed above):
+Am I way off the deep end now?  I'm not lying when I say I know *nothing* about the merge implementations.
 
---notes: show standard notes
---notes=<ref>: show notes from <ref> only
---notes --notes=<ref>: show standard notes + those from <ref>
-(i.e., if any notes argument was given they accumulate; a single
-argument does not add to, but replaces the default)
---no-notes: you guess it
+> I definitely think it's an interesting area to work in, but I would
+> have to give it a lot of thought.
 
-One could deprecate --[no-]stand-notes as well, then.
+It's a "corner case" that I seem to have run into a lot in my work experience, so if the Git community can actually make a good solution work it will be a major win in my book.
 
-Changing status "PATCH" back to "PATCH/RFC"...
+Thanks again!
 
-Michael
+Stephen
