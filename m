@@ -1,112 +1,121 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] reset: update help text
-Date: Tue, 29 Mar 2011 16:04:57 -0500
-Message-ID: <20110329210457.GA14031@elie>
-References: <1301404805-12095-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: suggestion: git status = restored
+Date: Tue, 29 Mar 2011 17:28:44 -0400
+Message-ID: <20110329212844.GA23510@sigill.intra.peff.net>
+References: <imil67$oec$1@dough.gmane.org>
+ <20110329145818.GC10771@sigill.intra.peff.net>
+ <4D92179D.6050102@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Thomas Rast <trast@student.ethz.ch>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 23:05:15 2011
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 23:28:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4g6E-000726-TA
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 23:05:15 +0200
+	id 1Q4gT6-0000dd-Ib
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 23:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632Ab1C2VFI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 17:05:08 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:43065 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754625Ab1C2VFF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 17:05:05 -0400
-Received: by gwaa18 with SMTP id a18so255894gwa.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 14:05:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=tRMqImwDWC+tU9jyKBuaBX7xUXs/gWp7jVEDZ/Z6ztg=;
-        b=Ek4Hr+fFtrdwWywCyRtkj+u8O0OVCeWEvJLRfuVKp5PnZxyYlGMesq+tZ+Obz3gYpe
-         G6J8lA6nu4skR9GUEijD/q9rPRaA4fu2jt2T0TjPbmkulu8AN52Qao5UdXZOJt6nCTK2
-         tMKptqOK3hDxaIOO+hau2luSl31xT+k0MGCus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=E58rmNnfDubM/bUxHSsgEyCrdnqWN1RSokwmEam2vvyH6fietl9LjxxcExFedYdoNA
-         /pdNdGbtiqxyf/5PDug65yESGu3XOTgkmYJLEcDLGUnBYfgB3MvgfBKxAWHoqs6fmbur
-         Gc5xzgppZ3sAH92J9imU1J4cQiAQQO2IDRTD0=
-Received: by 10.150.214.8 with SMTP id m8mr645611ybg.121.1301432704463;
-        Tue, 29 Mar 2011 14:05:04 -0700 (PDT)
-Received: from elie (adsl-76-206-232-54.dsl.chcgil.sbcglobal.net [76.206.232.54])
-        by mx.google.com with ESMTPS id v15sm2369528ybk.6.2011.03.29.14.05.02
-        (version=SSLv3 cipher=OTHER);
-        Tue, 29 Mar 2011 14:05:03 -0700 (PDT)
+	id S1752846Ab1C2V2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 17:28:47 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37981
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752615Ab1C2V2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 17:28:46 -0400
+Received: (qmail 540 invoked by uid 107); 29 Mar 2011 21:29:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Mar 2011 17:29:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2011 17:28:44 -0400
 Content-Disposition: inline
-In-Reply-To: <1301404805-12095-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <4D92179D.6050102@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170328>
 
-(+cc: Christian, Michael, and Thomas)
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Tue, Mar 29, 2011 at 12:32:13PM -0500, Neal Kreitzinger wrote:
 
-> State --mixed is the default so users don't have to open up man page.
->
-> Also make it clear how --hard and --merge are different.
+> I see your point about the current worktree/index/HEAD.  I'm not a
+> git developer, but my idea is based on the concept that the sha-1 of
+> the content already exists in the object store regardless of its
+> path(s). I'm talking about identical blob sha-1's, not "similar"
+> content.  It seems like the loose object directory would be easy
+> enough the check for duplicate blob sha-1's, but the the pack would
+> probably be more difficult (i'm not sure how you could do that).  If
+> this capability doesn't fit well into fast default behavior, maybe
+> there could be an option to --find-restores-harder.
 
-Thanks; I think the goal of this patch is a good one.
+Ah, I see. Yes, that is extremely cheap to calculate for loose or packed
+objects (see has_sha1_file in sha1_file.c). But by the time you run
+status, it is too late. When you "git add" the file, it will write the
+sha1 into the object db. So by definition, if you are tracking a file
+for commit, it will exist in the object db. You could check the
+timestamp on the object file to see if it has been around "for a while",
+but that is very hack-ish and may or may not return useful results.
 
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -243,17 +243,17 @@ int cmd_reset(int argc, const char **argv, cons=
-t char *prefix)
->  	struct commit *commit;
->  	char *reflog_action, msg[1024];
->  	const struct option options[] =3D {
-> -		OPT__QUIET(&quiet, "be quiet, only report errors"),
->  		OPT_SET_INT(0, "mixed", &reset_type,
-> -						"reset HEAD and index", MIXED),
-> +				"reset HEAD and index (default)", MIXED),
+> That being said, I see how it may not be feasible for git-status to
+> do that extra work.  Git-status runs against "what you just did" so
+> hopefully I should know in my mind that I just checked something out
+> to restore it.  However, for analyzing history it would be nice for
+> git-log or git-diff to be able to do that extra work of finding
+> restores when asked.
+> 
+> In our workflow it would be useful because we have a utility
+> directory of mostly obsolete programs that needs to be deleted to
+> eliminate noise, but we're sure some of them will get restored once
+> we realize they're still needed.  An interrogation command with
+> --name-status --find-restores-harder would give an accurate picture
+> of what was really added (new content) and what was simply restored
+> (old content revived).
 
-Nice.
+I think you just want:
 
->  		OPT_SET_INT(0, "soft", &reset_type, "reset only HEAD", SOFT),
->  		OPT_SET_INT(0, "hard", &reset_type,
->  				"reset HEAD, index and working tree", HARD),
->  		OPT_SET_INT(0, "merge", &reset_type,
-> -				"reset HEAD, index and working tree", MERGE),
-> +				"like --hard but keep local changes in working tree", MERGE),
->  		OPT_SET_INT(0, "keep", &reset_type,
->  				"reset HEAD but keep local changes", KEEP),
+  git log -1 -- "$file"
 
-The description does not make it obvious to me how these two (--merge
-and --keep) differ.  I think the intent of the options are:
+to see if any commits had that path previously. Or if you really care
+about finding the same content somewhere in history at any path, you can
+look for the blobs with something like:
 
- --keep:
-	start working on a different commit, carrying over local changes
-	(like "git checkout")
- --merge:
-	return to <commit>, cancelling a merge-like operation that
-	creates some unmerged and some clean index entries
+  git rev-list HEAD |
+  git diff-tree -r -m --stdin |
+  perl -e '
+    # Make an index of blob sha1s pointing back to the file
+    # they name.
+    foreach my $file (@ARGV) {
+      my $sha1 = `git hash-object $file`;
+      chomp $sha1;
+      $files{$sha1}->{file} = $file;
+    }
 
-Maybe something along these lines could be ok starting point?
+    # Now look at the traversal history, noting the first time
+    # we hit each blob, and remember its commit.
+    while (<STDIN>) {
+      if (/^[0-9a-f]{40}$/) {
+        $commit = $&;
+      }
+      else {
+        while (/[0-9a-f]{40}/g) {
+          next unless exists $files{$&};
+          next if exists $files{$&}->{commit};
+          $files{$&}->{commit} = $commit;
+        }
+      }
+    }
 
-	OPT_SET_INT(0, "keep", &reset_type,
-		"move to <commit>, carrying over local changes in working tree",
-		KEEP),
-	OPT_SET_INT(0, "merge", &reset_type,
-		"return to <commit>, cancelling failed merge or cherry-pick",
-		MERGE),
+    # And then report the result, which is the most recent commit
+    # that blob was found in, either being deleted, added, or modified.
+    foreach my $v (sort { $a->{file} cmp $b->{file} } values(%files)) {
+      if ($v->{commit}) {
+        print "$v->{file} $v->{commit}\n";
+      }
+      else {
+        print "$v->{file} was never mentioned\n";
+      }
+    }
+  ' `git diff-index HEAD --name-only --diff-filter=A`
+
+-Peff
