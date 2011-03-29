@@ -1,65 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] revision.c: introduce --notes-ref= to use one notes ref
- only
-Date: Tue, 29 Mar 2011 15:01:38 -0400
-Message-ID: <20110329190138.GA23599@sigill.intra.peff.net>
-References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
- <20110329143547.GB10771@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-notes.txt: clarify -C vs. copy and -F
+Date: Tue, 29 Mar 2011 12:04:25 -0700
+Message-ID: <7vd3l9rbnq.fsf@alter.siamese.dyndns.org>
+References: <09668994f10284cfa5243789a627dce8c2325bc6.1301388217.git.git@drmicha.warpmail.net> <7vbp0tss6t.fsf@alter.siamese.dyndns.org> <7v7hbhss0g.fsf@alter.siamese.dyndns.org> <4D9226B4.20806@warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Johan Herland <johan@herland.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:01:55 2011
+To: Michael J Gruber <drmicha@warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:04:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4eAo-0006fI-Ho
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 21:01:50 +0200
+	id 1Q4eDa-00085L-PR
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Mar 2011 21:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138Ab1C2TBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2011 15:01:45 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34859
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750942Ab1C2TBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2011 15:01:44 -0400
-Received: (qmail 31700 invoked by uid 107); 29 Mar 2011 19:02:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Mar 2011 15:02:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2011 15:01:38 -0400
-Content-Disposition: inline
-In-Reply-To: <20110329143547.GB10771@sigill.intra.peff.net>
+	id S1752537Ab1C2TEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 15:04:37 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48053 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942Ab1C2TEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 15:04:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6AA96468F;
+	Tue, 29 Mar 2011 15:06:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IxZk2X1+tIvZ0lMj+nI2Fx7Iybc=; b=wr3ZSM
+	MYuh5y/P3+Gm3qqXJU85PfDtiN1BAYk5a9eRlAuZlFiFliLGUnHnvwrDnX46D1bk
+	OLBdPf650fsz7WxE2EQYYuQfWO3VD1SGMV/PgLPjmSXNnJFpbyHCppXVIdTF7By2
+	aLOi/9UGHk9LIMKqvqa4cYLbKl8SOf8YAtytM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x36nINC519RgwtyF9VqvxEpcBFbmzfr+
+	jb1TvOq4QrGUFlNARmk/czVOMRwp0CTL0MzrgBPk+lD91ahHkzLIUmRSexxDtIpe
+	yxGecmnk8bq8nnBQjq/WfinsccdUNSIQ8K/OvI/bpJWqZLRlZ5A7Mys1frhuKYxQ
+	F/9m9Nosqgw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3915B468E;
+	Tue, 29 Mar 2011 15:06:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CE896468D; Tue, 29 Mar 2011
+ 15:06:14 -0400 (EDT)
+In-Reply-To: <4D9226B4.20806@warpmail.net> (Michael J. Gruber's message of
+ "Tue, 29 Mar 2011 20:36:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A1922376-5A37-11E0-A2CA-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170309>
 
-On Tue, Mar 29, 2011 at 10:35:47AM -0400, Jeff King wrote:
+Michael J Gruber <drmicha@warpmail.net> writes:
 
-> On Tue, Mar 29, 2011 at 12:05:09PM +0200, Michael J Gruber wrote:
-> 
-> > -		if (!prefixcmp(arg+13, "refs/"))
-> > +		if (!prefixcmp(arg+offset, "refs/"))
-> >  			/* happy */;
-> > -		else if (!prefixcmp(arg+13, "notes/"))
-> > +		else if (!prefixcmp(arg+offset, "notes/"))
-> >  			strbuf_addstr(&buf, "refs/");
-> >  		else
-> >  			strbuf_addstr(&buf, "refs/notes/");
-> > -		strbuf_addstr(&buf, arg+13);
-> > +		strbuf_addstr(&buf, arg+offset);
-> >  		string_list_append(revs->notes_opt.extra_notes_refs,
-> >  				   strbuf_detach(&buf, NULL));
-> 
-> This issue is not introduced by your patch, but maybe it is a good
-> opportunity to refactor this to use expand_notes_ref from notes.c?
+>>> Yeah, it utterly is broken.  Why not fix it before people start making
+>>> serious use of notes?
+>
+> You seriously ask why? Because I've banged my head way to often by
+> suggesting behavior changes!
 
-Oops, I just realized this is in builtin/notes.c in master. I had
-already written a patch for another topic that made it globally
-accessible. :)
+Change of a behaviour that nobody had chance to have seriously used for
+only 6 weeks or so?  I'd call that a fair game.
 
--Peff
+> If I were to reimplement it I would:
+>
+> - make "notes add -C/-c" really analogous to "commit -c/-C", i.e. do
+> "notes copy"
+
+That is sensible.
+
+> - make -F binary safe
+
+Likewise.
+
+> and while at it rename "add" to "edit"
+
+That one I think is older wart that may be harder to change.
