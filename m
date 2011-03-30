@@ -1,62 +1,81 @@
-From: Maxin john <maxin@maxinbjohn.info>
-Subject: Re: [PATCH] Remove "bashism" from contrib/thunderbird-patch-inline/appp.sh
-Date: Wed, 30 Mar 2011 21:51:25 +0300
-Message-ID: <AANLkTinrfswqETPVjDEuKon8ntcgUpkizxit84b4imno@mail.gmail.com>
-References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
-	<4D9103D3.5010403@zoho.com>
-	<7vei5qtnc5.fsf@alter.siamese.dyndns.org>
-	<4D9261AE.5070103@zoho.com>
-	<AANLkTim+0gxGKZT=vfmX7v0QZrApjRwAzW3PiLePL-iQ@mail.gmail.com>
-	<7vmxkco5jg.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Portability: returning void
+Date: Wed, 30 Mar 2011 13:54:40 -0500
+Message-ID: <20110330185440.GC13440@elie>
+References: <20110329200230.GA377@elie>
+ <20110329221652.GB23510@sigill.intra.peff.net>
+ <20110329234955.GB14578@elie>
+ <20110330001653.GA1161@sigill.intra.peff.net>
+ <20110330002921.GC14578@elie>
+ <20110330033017.GA18157@sigill.intra.peff.net>
+ <20110330035733.GA2793@elie>
+ <20110330041339.GA26281@sigill.intra.peff.net>
+ <20110330084148.GE2793@elie>
+ <20110330124019.GA28062@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>,
-	Victor Engmark <victor.engmark@terreactive.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 20:51:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	David Barr <david.barr@cordelta.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 20:54:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q50UV-0001em-AT
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 20:51:39 +0200
+	id 1Q50Xc-0003Ri-Sy
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 20:54:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932320Ab1C3Sv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 14:51:27 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:61611 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932105Ab1C3Sv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 14:51:26 -0400
-Received: by yxs7 with SMTP id 7so651335yxs.19
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 11:51:25 -0700 (PDT)
-Received: by 10.150.239.7 with SMTP id m7mr1951261ybh.55.1301511085141; Wed,
- 30 Mar 2011 11:51:25 -0700 (PDT)
-Received: by 10.150.139.2 with HTTP; Wed, 30 Mar 2011 11:51:25 -0700 (PDT)
-X-Originating-IP: [91.154.177.92]
-In-Reply-To: <7vmxkco5jg.fsf@alter.siamese.dyndns.org>
+	id S932389Ab1C3Sys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 14:54:48 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:54826 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754812Ab1C3Syr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 14:54:47 -0400
+Received: by qyg14 with SMTP id 14so1151210qyg.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 11:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=rdbpn6amoD9EFmOKhcERyTFDy0JQUmAtuJxv3nRcG44=;
+        b=al/uYzK7sLXIVehqUcQTnRIQQC9VtVVpVy9w0KbE+exTTxQ7Q29YTh6MetgvqJ5C2x
+         s0fLFbYzmmMZwweXkRpnir9GDaFac0GnjL7Ys3BdLxASjzrpjCcXYBC2MXEPdC/ZXZ+g
+         DzQP1G9IpsOGsf1wOTUwPQrfpFSAje4Ifu6wg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=SnQrMP0FvEb55OrNqhsYgY2TzLwY2d4vTwg3eUUfiR/tOGhLoQP21Xdh4A5DdIULr+
+         L0DOOWrU9wTDG7O90gGLr7ABOOAlcWzMp1yEBa68fXKYqmotEFQbg0oeYcAOZV5C4gdX
+         bEe7Ban8XVKtrmw8zlzj1ZIO6UGSdTRkalsP0=
+Received: by 10.224.138.19 with SMTP id y19mr1516051qat.6.1301511286397;
+        Wed, 30 Mar 2011 11:54:46 -0700 (PDT)
+Received: from elie (adsl-68-255-107-98.dsl.chcgil.ameritech.net [68.255.107.98])
+        by mx.google.com with ESMTPS id m7sm245876qcg.17.2011.03.30.11.54.43
+        (version=SSLv3 cipher=OTHER);
+        Wed, 30 Mar 2011 11:54:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110330124019.GA28062@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170404>
 
-Hi,
+Jeff King wrote:
 
->
-> I'd just replace /bin/bash with /bin/sh without any other fuss, perhaps
-> except for the typofix in the comment, and be done with the topic.
->
+> That's OK with me. Should it drop test-line-buffer, too?
 
-I agree with this. The changes were mostly cosmetic and has nothing to
-do with the functionality of the script.
+For now, test-line-buffer is still being used to check the API wrt
+early EOF.
 
->
-> Thanks, I'll apply the early hunks from you.
->
+In the long term, yes, I would like to replace those tests with tests
+of svn-fe itself.  The test suite should not be an obstacle to
+changing the line-buffer API as long as svn-fe is adjusted correctly
+at the same time.
 
-Thank you very much.
-
-Best Regards,
-Maxin B. John
+Thanks for looking it over.
