@@ -1,109 +1,151 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Portability: returning void
-Date: Tue, 29 Mar 2011 19:42:36 -0500
-Message-ID: <20110330004236.GD14578@elie>
-References: <71372d7d-dd08-4945-a8bc-c7b981c09fb2-mfwitten@gmail.com>
- <20110329200230.GA377@elie>
- <20110329221652.GB23510@sigill.intra.peff.net>
- <20110329234955.GB14578@elie>
- <20110330001653.GA1161@sigill.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 7/6] log/pretty-options: Document --[no-]notes and deprecate
+ old notes options
+Date: Wed, 30 Mar 2011 02:57:19 +0200
+Message-ID: <201103300257.19921.johan@herland.net>
+References: <e83f8b622fba5add563fc331ae3922b79a0af008.1301392999.git.git@drmicha.warpmail.net>
+ <201103300018.55371.johan@herland.net>
+ <20110330002206.GB1161@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Barr <david.barr@cordelta.com>
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 02:42:53 2011
+X-From: git-owner@vger.kernel.org Wed Mar 30 02:57:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4jUq-0002lO-Rd
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 02:42:53 +0200
+	id 1Q4jj3-00073D-34
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 02:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754757Ab1C3Aml convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2011 20:42:41 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58816 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752067Ab1C3Aml convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2011 20:42:41 -0400
-Received: by gyd10 with SMTP id 10so316352gyd.19
-        for <git@vger.kernel.org>; Tue, 29 Mar 2011 17:42:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=MWChsnV4rUShYm/5eLpj6DJ0hkNm8tqsqtmWQaTkoFw=;
-        b=mz9/D6LMG+kPQWm3MuwtlDwmuQ8bwxTijA/FK9pXRI4Rf4HedbJD0vX1BhQ+K4RVqo
-         D/ThZ6QNnXISWJUH73kHei7C8wcGbJj4mV2f2AFK8Cs/GgdcJFfsbREVyHZJPfQeRCGL
-         vYhklb6ukItvR5U3w9kCMH1s5DxXpMUwrY22g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=G5mwzXc8Luqq748psfiyQOjCzx02zSfcMffGDZ3dLBfuyMgXVcuLGih5TmeF3y4Py+
-         cFTP4p2BPXwISq9S20tyBies+L0ZjtrwIS1VKrP/odbt7FGMrQX3YgU+57fUGq2VOCw1
-         Tc4Crt3fM15TEmMYf86iWm0yQyJa1RaUsiCmU=
-Received: by 10.151.21.7 with SMTP id y7mr196544ybi.145.1301445760128;
-        Tue, 29 Mar 2011 17:42:40 -0700 (PDT)
-Received: from elie (adsl-68-255-111-103.dsl.chcgil.ameritech.net [68.255.111.103])
-        by mx.google.com with ESMTPS id 74sm1899321yhl.59.2011.03.29.17.42.38
-        (version=SSLv3 cipher=OTHER);
-        Tue, 29 Mar 2011 17:42:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110330001653.GA1161@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755309Ab1C3A51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2011 20:57:27 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:50181 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755201Ab1C3A50 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2011 20:57:26 -0400
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIU008F3INO4160@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 30 Mar 2011 02:57:24 +0200 (MEST)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id DC8ED1EEEC9B_D927FF3B	for <git@vger.kernel.org>; Wed,
+ 30 Mar 2011 00:57:23 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id DBA811EEEC6D_D927FF0F	for <git@vger.kernel.org>; Wed,
+ 30 Mar 2011 00:57:20 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LIU008O1INK0000@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 30 Mar 2011 02:57:20 +0200 (MEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
+In-reply-to: <20110330002206.GB1161@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170345>
 
-Jeff King wrote:
+Document the behavior or the new --notes, --notes=<ref> and --no-notes
+options, and list --show-notes[=<ref>] and --[no-]standard-notes options
+as deprecated.
 
-> No, you misunderstand. It is prove itself that ignores the SIGCHLD. I=
-t
-> is stuck in the loop in TAP::Parser::Iterator::Process::_next. It has
-> gotten SIGCHLD, but it keeps blocking waiting to get EOF on the child=
-'s
-> stdout.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-Thanks for clarifying.
+On Wednesday 30 March 2011, Jeff King wrote:
+> On Wed, Mar 30, 2011 at 12:18:55AM +0200, Johan Herland wrote:
+> > And here's some documentation to go on top.
+> [...]
+> This example is wrong. "--notes=foo" will show _only_ foo. A few
+> examples:
+> 
+>   --notes=foo ;# only foo
+>   --notes --notes=foo ;# foo and default
+>   --notes=foo --notes=bar --notes --no-notes --notes=foo ;# only foo
+> 
+> Make sense?
 
-> Doesn't that point to an unreaped process? After 100 seconds the slee=
-p
-> process closes, prove gets EOF, and it completes. Lowering the "100" =
-to
-> "1" caused a 1-second hang for me.
+Yeah, I really screwed that up. Hope this version is better. :)
 
-I guess it's just a matter of terminology.  To me, it points to an
-undelivered signal, since the problem is not a zombie waiting to be
-wait-ed on but a process still alive and sleeping.
+...Johan
 
-> But instead of realizing its child has died, it
-> insists on waiting until the pipe is closed. Nothing has to be adopte=
-d
-> by init. There are simply still processes with the pipe open.
 
-I meant that the sleep process is not a descendant of prove any
-more.
+ Documentation/git-log.txt        |    4 ++--
+ Documentation/pretty-options.txt |   35 +++++++++++++++++++++++++----------
+ 2 files changed, 27 insertions(+), 12 deletions(-)
 
-| $ ps ax | egrep 'sleep|prove'
-| 20203 pts/3    T      0:00 vim utils/prove
-| 22654 pts/1    S+     0:00 /usr/bin/perl /usr/bin/prove --exec=3Dbash
-| t0081-line-buffer.sh
-| 22688 pts/1    S+     0:00 sleep 100
-| 22694 pts/1    S+     0:00 sleep 100
-| 22727 pts/3    S+     0:00 egrep sleep|prove
-| $ pstree -p 22654
-| prove(22654)=E2=94=80=E2=94=80=E2=94=80bash(22655)
-
-> Did you try my 5>/dev/null patch? With it, I get no hang at all.
-
-Now I've tested it and it indeed works as advertised.
-
-Sorry for the lack of clarity.
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index ff41784..ab3757b 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -177,9 +177,9 @@ May be an unabbreviated ref name or a glob and may be specified
+ multiple times.  A warning will be issued for refs that do not exist,
+ but a glob that does not match any refs is silently ignored.
+ +
+-This setting can be disabled by the `--no-standard-notes` option,
++This setting can be disabled by the `--no-notes` option,
+ overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable,
+-and supplemented by the `--show-notes` option.
++and overridden by the `--notes=<ref>` option.
+ 
+ Author
+ ------
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 50923e2..d5c9772 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -30,19 +30,34 @@ people using 80-column terminals.
+ 	preferred by the user.  For non plumbing commands this
+ 	defaults to UTF-8.
+ 
+---no-notes::
+---show-notes[=<ref>]::
++--notes[=<ref>]::
+ 	Show the notes (see linkgit:git-notes[1]) that annotate the
+ 	commit, when showing the commit log message.  This is the default
+ 	for `git log`, `git show` and `git whatchanged` commands when
+-	there is no `--pretty`, `--format` nor `--oneline` option is
+-	given on the command line.
++	there is no `--pretty`, `--format` nor `--oneline` option given
++	on the command line.
+++
++By default, the notes shown are from the notes refs listed in the
++'core.notesRef' and 'notes.displayRef' variables (or corresponding
++environment overrides). See linkgit:git-config[1] for more details.
+++
++With an optional '<ref>' argument, show this notes ref instead of the
++default notes ref(s). The ref is taken to be in `refs/notes/` if it
++is not qualified.
+ +
+-With an optional argument, add this ref to the list of notes.  The ref
+-is taken to be in `refs/notes/` if it is not qualified.
++Multiple --notes options can be combined to control which notes are
++being displayed. Examples: "--notes=foo" will show only notes from
++"refs/notes/foo"; "--notes=foo --notes" will show both notes from
++"refs/notes/foo" and from the default notes ref(s).
+ 
++--no-notes::
++	Do not show notes. This negates the above `--notes` option, by
++	resetting the list of notes refs from which notes are shown.
++	Options are parsed in the order given on the command line, so e.g.
++	"--notes --notes=foo --no-notes --notes=bar" will only show notes
++	from "refs/notes/bar".
++
++--show-notes[=<ref>]::
+ --[no-]standard-notes::
+-	Enable or disable populating the notes ref list from the
+-	'core.notesRef' and 'notes.displayRef' variables (or
+-	corresponding environment overrides).  Enabled by default.
+-	See linkgit:git-config[1].
++	These options are deprecated. Use the above --notes/--no-notes
++	options instead.
+-- 
+1.7.4
