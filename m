@@ -1,121 +1,99 @@
-From: Robert David <robert.david.public@gmail.com>
-Subject: Re: GSOC idea: build in scripts and cleanups
-Date: Wed, 30 Mar 2011 23:17:17 +0200
-Organization: DDM Praha
-Message-ID: <201103302317.17855.robert.david.public@gmail.com>
-References: <201103260141.20798.robert.david.public@gmail.com> <20110328142121.GB14763@sigill.intra.peff.net> <201103301739.12691.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule: Add --force option for git submodule update
+Date: Wed, 30 Mar 2011 14:08:45 -0700
+Message-ID: <7vd3l8mi3m.fsf@alter.siamese.dyndns.org>
+References: <4D92E225.3040602@morey-chaisemartin.com>
+ <4D93773C.2010807@web.de> <4D937B7E.10808@morey-chaisemartin.com>
+ <4D937F09.10000@web.de> <4D93905E.5030806@morey-chaisemartin.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1859848.1GTREOiQSX";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Mar 30 23:17:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 23:30:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q52li-0002YZ-Iv
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 23:17:34 +0200
+	id 1Q52xp-0000b1-TQ
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 23:30:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965191Ab1C3VRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 17:17:25 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60740 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964852Ab1C3VRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 17:17:22 -0400
-Received: by fxm17 with SMTP id 17so1382192fxm.19
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 14:17:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:organization:to:subject:date:user-agent:cc
-         :references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=a0ABGwbZl+SGjHixuy6RFXsxD/NTS1JNTBE4clMceYI=;
-        b=fqfX/ub7Ubzx3H4kF5JM5eqiOvsGCIJjuJGooqwQEqw5QEpEpEzasOmDVFTOEgHm/H
-         a95iJVW3XZzQsVQ44zWpNJLvxNns15ujt0qyUIUtTzy0GPowUK0ufNhl8DILoY3Q7mHR
-         BDQ79tstAUQXkfaAbQqt4/ZWKb2s0imZ810RQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        b=f+SzR65Zj7RVqVDhn5b2ly00VDW3CddFomp+1l+l+b5NEi19egV9RGRCKTGAd+gOS9
-         q6ddEiIf8EjADSyWkHA7bmi8HrkK+RF9uP5/DREhe6zshWjsO+SJSiG86EMZ+5R9wwNY
-         Xd25K03wiUo6f0+olNY+kw3sqHslbJuB0EyxE=
-Received: by 10.223.117.134 with SMTP id r6mr1891935faq.147.1301519841536;
-        Wed, 30 Mar 2011 14:17:21 -0700 (PDT)
-Received: from robert-eee.localnet (gate.chabry.cz [80.92.246.13])
-        by mx.google.com with ESMTPS id p16sm175065fax.21.2011.03.30.14.17.19
-        (version=SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 14:17:19 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-686; KDE/4.4.5; i686; ; )
-In-Reply-To: <201103301739.12691.trast@student.ethz.ch>
+	id S965062Ab1C3V3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 17:29:51 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57174 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965018Ab1C3VI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 17:08:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 141B445BF;
+	Wed, 30 Mar 2011 17:10:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sUM3qhoyVScxpDeddDiBIRMvvdA=; b=w7hPWz
+	taRveHlLYrhtegMd6a1PAeKppDgZsjiCGBuSLxVxJRaNu0WH/ORxIazfCcqlC/oH
+	ATuxG0aUKY+LFctRhx3x3P5yZZwgBFtZodmwOyD1gn5nH9oXL1ywTAV11zy1B3N+
+	505qvMMSrcgjL1rltgTcUcBNmTOzfdlzEk3Ig=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uzFjhRodQmStW3x1wTiS8ayrosF9w20Z
+	ZgPllxPG0TFN6ffQn12nOvEhCaVbJwNXYHwI69J23q3i5VCHbyvZ6pQUQa1AZnwY
+	OeUYDSSEOTx5ICoPUXjSna0I6hDvQuJb0ZRcUe2qR3sJDjvfMqejTD1hthgt5p30
+	75ttjkQjpzs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D6BA045BD;
+	Wed, 30 Mar 2011 17:10:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A79EB45BC; Wed, 30 Mar 2011
+ 17:10:34 -0400 (EDT)
+In-Reply-To: <4D93905E.5030806@morey-chaisemartin.com> (Nicolas
+ Morey-Chaisemartin's message of "Wed, 30 Mar 2011 22:19:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 29AF3B2E-5B12-11E0-9937-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170426>
 
---nextPart1859848.1GTREOiQSX
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com> writes:
 
-Dne st=C5=99eda 30 b=C5=99ezna 2011 17:39:12 Thomas Rast napsal(a):
-> Jeff King wrote:
-> > On Mon, Mar 28, 2011 at 10:55:22AM +0200, Robert David wrote:
-> > > > As far as cleanup versus features, I think Thomas would have to
-> > > > comment on that. He is the one who did the most work on patch-mode,
-> > > > and therefore the one who most thinks it needs cleaned up. :)
-> > >=20
-> > > Is Thomas going to be a mentor in this task?
-> >=20
-> > I hope so. I can also co-mentor if it helps.
->=20
-> I'm certainly ready; I didn't propose any projects that I would not
-> also mentor.  (However, I won't mentor more than one...)
+> On 03/30/2011 09:05 PM, Jens Lehmann wrote:
+>>> I know it is very intrusive. The main reason for that is I wanted the -f option to always behave the same (meaning throw away changes),
+>>> whether the submodule is already on the right commit or not.
+>> 
+>> Hmm, I don't know if that is a good thing to do. People are used to
+>> "git submodule update" to only touch those submodule where the HEAD
+>> differs from the commit recorded in the superproject (And I often
+>> find myself using "-f" if the command didn't succeed without it).
+>> But when using "-f" touches other submodules than not using it the
+>> user might experience a rather unpleasant surprise, I'm not sure we
+>> want to go that way.
+>
+> Well I was'nt sure about it either.
+> The idea for me was to be able to put the repo and submodules in the cloned state (except for ignored files)
+> In the current version the right thing to do is a bit of a mess:
+> $ git submodule foreach --recursive 'git checkout -f HEAD'
+> $ git submodule foreach --recursive 'git clean -f' # An untracked file on HEAD may be overwrittent by the new HEAD so checkout may fail if you don't do that
+> $ git submodule update --recursive
 
-Thank you for your attention.
+Shouldn't you be questioning _why_ your users have such changes that
+require them to run "checkout -f" everywhere in the submodule forests and
+still want to run "submodule update" in the first place?  If it happens
+very often and your users are constantly discarding what they have half
+accomplished, there is something wrong with the way your project works.
 
->=20
-> Note that while it's certainly a bonus, porting it to C probably makes
-> the project more difficult and time-consuming.  We'll have to see in
-> the proposal timelines however.
+If we read your motivation section in your original,
 
-It is not a big problem to me. I plan to begin full time work on this in ha=
-lf=20
-June.
-Before that I plan some cleanups and fixes to simplify the upcoming porting.
+  > This implies that to reset a whole git submodule tree, a user has to run
+  > first 'git submodule foreach --recursive git checkout -f' to then be
+  > able to run git submodule update.
 
->=20
-> As for cleanup, my gut feeling right now is that the Perl code can
-> probably cope with incremental cleanups as required for each feature.
-> On the other hand, the C port should start from a clean redesign so as
-> to not rewrite it twice.
+this is about "resetting", i.e. throwing away the work.  I think that is a
+sensible thing to do, but it is a very different purpose than "updating
+submodules so that I can work on top of what other people did", which
+would happen a lot more often than that.
 
-I agree that porting to C should be done from scratch. Thats why I would cl=
-ean=20
-and extend the script first to make a "preview". Than when it will comply=20
-with requirements, I will port that from scratch to C.
-
-Robert
-
---nextPart1859848.1GTREOiQSX
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iF4EABEIAAYFAk2Tnd0ACgkQLSNWchw0XGyM/QEAk7N/BnujWSrN5nZtzVkGupYx
-ztdc1lq1jZyw8+B5INgA/1gqi3Kha0M7C6COVRKJLTdDuHaP7wU2zQ3vYi24JA/d
-=2c7Y
------END PGP SIGNATURE-----
-
---nextPart1859848.1GTREOiQSX--
+Wouldn't it be both safer and easier to understand for the users if this
+"obliterate all my uncommitted work" were a separate subcommand, e.g. "git
+submodule reset --recursive" or something?
