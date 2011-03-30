@@ -1,99 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] Clean: Remove unnecessary `\' (line continuation)
-Date: Wed, 30 Mar 2011 12:21:21 -0700
-Message-ID: <7v8vvwo1n2.fsf@alter.siamese.dyndns.org>
-References: <1fbceaa8-398c-44ec-8833-a03e4cca6805-mfwitten@gmail.com>
- <ca8eabbf-ed1b-4b46-a7f7-4b068a2de5b7-mfwitten@gmail.com>
- <5bddd028-bf38-46b9-a189-bdb09038dfdd-mfwitten@gmail.com>
- <d92be3a1-6f30-4b04-ac38-39058e5a6959-mfwitten@gmail.com>
- <a59d19d0-f279-43fe-8ac6-06c4bd13c941-mfwitten@gmail.com>
+From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: how to squash two commits into only one
+Date: Wed, 30 Mar 2011 21:22:21 +0200
+Message-ID: <4D9382ED.4090806@dirk.my1.cc>
+References: <AANLkTi=B37GABBc-YWfJN29Mh0kx4Tn8KenD5dJFo9j1@mail.gmail.com> <AANLkTi=7TNjLVrcJVppiULBnDdKCM_vqwhn1JqoW+DQo@mail.gmail.com> <AANLkTimsN40twLwOWXsQqbv0SVN7T9rEHSUpcVum8aFR@mail.gmail.com> <AANLkTikX5YvMrooVi-7e-YDrCP_7QHqL6wR=1bY1cZ2L@mail.gmail.com> <5A9D499C-26AC-401E-B21A-1F8E03FBAC4B@gmail.com> <AANLkTinjbXzdfkxVRPPSXJj6Z0mMrikzdi2V8N5YAGR-@mail.gmail.com> <7v1v1psrvr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 21:21:38 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Joshua Juran <jjuran@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Lynn Lin <lynn.xin.lin@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 21:22:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q50xV-0000G9-MZ
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 21:21:38 +0200
+	id 1Q50yQ-0000sV-Ue
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 21:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755792Ab1C3TVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 15:21:32 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42923 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754847Ab1C3TVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 15:21:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 527024727;
-	Wed, 30 Mar 2011 15:23:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nvxbXvPIGjtAlAkGMF3zN1F/Uz4=; b=xVZzhf
-	nzXpzLnlv+uAShg5lVkuGmBtJyOzcqhA9S5ptd1aM5QGrcW+yqIF0JbzyIBMNoa+
-	Xmybp0kHNaxyFzbdKKkzUqlazm+4vB3kT3w68wpHjrXcG01fUOAiew9r/VpODn5K
-	4CF9q8eWdwzlnjb7Ar2HTj856xmxuBkeYywjI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HU6W0ALfajituHFD4n/aiaga4kmTDnmy
-	8YEbfUd3ynNkw6gJQ7xgY27kFaRvi44CRSJQvRo+EZuxsq+v7CcoHkR6z6D64CrO
-	BbllFCpPO7EEuc+DT7PwFvwo/UiInAoe/NAYmlDl8UHnWkitbK6qKVgEw3EDscHM
-	LZwKPPT+TZU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2F0034726;
-	Wed, 30 Mar 2011 15:23:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E62224720; Wed, 30 Mar 2011
- 15:23:10 -0400 (EDT)
-In-Reply-To: <a59d19d0-f279-43fe-8ac6-06c4bd13c941-mfwitten@gmail.com>
- (Michael Witten's message of "Wed, 2 Mar 2011 15:25:23 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2859E3AA-5B03-11E0-8EAF-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932720Ab1C3TW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 15:22:29 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.40]:45700 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932169Ab1C3TW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 15:22:28 -0400
+Received: from [84.176.47.197] (helo=[192.168.2.100])
+	by smtprelay02.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1Q50yF-0002Iq-58; Wed, 30 Mar 2011 21:22:23 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
+In-Reply-To: <7v1v1psrvr.fsf@alter.siamese.dyndns.org>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170410>
 
-Michael Witten <mfwitten@gmail.com> writes:
-
-> Signed-off-by: Michael Witten <mfwitten@gmail.com>
-> ---
->  t/t8001-annotate.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
+Am 29.03.2011 20:28 schrieb Junio C Hamano:
+> Nguyen Thai Ngoc Duy<pclouds@gmail.com>  writes:
 >
-> diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
-> index 45cb60e..68ac828 100755
-> --- a/t/t8001-annotate.sh
-> +++ b/t/t8001-annotate.sh
-> @@ -8,7 +8,7 @@ PROG='git annotate'
->  
->  test_expect_success \
->      'Annotating an old revision works' \
-> -    '[ $(git annotate file master | awk "{print \$3}" | grep -c "^A$") -eq 2 ] && \
-> +    '[ $(git annotate file master | awk "{print \$3}" | grep -c "^A$") -eq 2 ] &&
->       [ $(git annotate file master | awk "{print \$3}" | grep -c "^B$") -eq 2 ]'
+>>> Actually, that should be: `git reset --soft HEAD^; git commit --amend`.
+>>
+>> "git rebase --root" does not seem a bad idea though.
+>
+> The lack of this did't annoy me enough (one woudln't have to deal with
+> root commits too often) so I wouldn't bother implementing it myself, but
+> "git rebase --root" especially with "-i" would be a nice addition.
+>
+> i.e. well written and explained patches welcome.
 
-While this is not wrong per-se, I don't want to take too much half-way
-churning.
+Lynn, this won't help you right now, but perhaps in the future:
+When I create a new repo, the first thing I do is creating an
+empty commit, like so:
 
-If we were to properly do this, we should first rewrite it to use the more
-modern style:
+git init my_repo
+cd my_repo
+git commit --allow-empty -m "Initial commit (empty)"
 
-	test_expect_success 'Annotating an old revision works' '
-		... test script comes here ...
-        '
+This creates an empty root commit which is helpful not only
+in your case.
 
-and just run annotate once without having any downstream pipe, i.e.
+Another way to solve your problem would be to prepend that empty
+root commit to your repo afterwards. It's a bit weird, but it
+works -- at least if you don't have branches (except for
+"master").
 
-	git annotate file master >result &&
-	awk "{ print \$3; }" <result >authors &&
-	test 2 = $(grep A <authors | wc -l) &&
-	test 2 = $(grep B <authors | wc -l)
+git checkout --orphan new_master  (1)
+git rm -rf .                      (2)
+git commit --allow-empty -m "Initial commit (empty)" (3)
+git rebase new_master master      (4)
+git branch -d new_master          (5)
 
-so that we can catch breakage in "git annotate" itself more reliably
-(e.g. even if the command showed two lines for each author, it is a
-failure if the command itself did not exit with status 0).
+(1) creates a new branch 'new_master' which is totally independent
+     of any other branch in the repo, thus the option's name. But it
+     silently does a "git add .", i.e. it stages all files that were
+     checked out before issuing the command. See 'checkout' docs
+     for details.
+(2) removes all the files staged in (1), so that you have a new
+     starting point which is really clean.
+(3) creates the empty root commit on 'new_master'
+(4) replays all changes of 'master' to 'new_master'. 'new_master'
+     then has three commits: the root commit and the two commits from
+     'master'
+(5) removes the 'new_master' which is no longer needed.
+
+And NOW you can do your 'rebase -i <root_commit>' to squash your
+actual commits.
+
+If you have more than one branch you would have to repeat step (4) with
+the other branches.
+
+HTH,
+Dirk
