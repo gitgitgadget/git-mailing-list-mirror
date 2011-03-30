@@ -1,69 +1,77 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: GSOC idea: build in scripts and cleanups
-Date: Wed, 30 Mar 2011 17:39:12 +0200
-Message-ID: <201103301739.12691.trast@student.ethz.ch>
-References: <201103260141.20798.robert.david.public@gmail.com> <201103281055.23578.robert.david.public@gmail.com> <20110328142121.GB14763@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Robert David <robert.david.public@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 17:39:22 2011
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [RFC 2/2] Future Proofing: Pass around pointers to either functions or data
+Date: Wed, 30 Mar 2011 15:02:28 +0000
+Message-ID: <429c193b-6bc6-4f13-bd69-af113a4bd145-mfwitten@gmail.com>
+References: <3c6b883f-8860-4da2-b328-d912019a4145-mfwitten@gmail.com>
+            <522d5a8a-a674-40bd-91bf-b5b8f88e0f78-mfwitten@gmail.com>
+            <AANLkTi=nxA0BrLruQ9zc_SajH2ghpZX14Ra7QOo9fMBx@mail.gmail.com>
+Cc: git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 17:40:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4xUO-0002vG-Ul
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 17:39:21 +0200
+	id 1Q4xV4-0003HH-3o
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 17:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755117Ab1C3PjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 11:39:15 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:39942 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754807Ab1C3PjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 11:39:14 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Wed, 30 Mar
- 2011 17:39:05 +0200
-Received: from thomas.inf.ethz.ch (129.132.209.131) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.289.1; Wed, 30 Mar
- 2011 17:39:12 +0200
-User-Agent: KMail/1.13.6 (Linux/2.6.38-18-desktop; KDE/4.6.0; x86_64; ; )
-In-Reply-To: <20110328142121.GB14763@sigill.intra.peff.net>
-X-Originating-IP: [129.132.209.131]
+	id S932582Ab1C3Pj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 11:39:57 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:48129 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932236Ab1C3Pj4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 11:39:56 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 36so1652095wwa.1
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 08:39:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:date:from:to:cc:message-id:in-reply-to
+         :references;
+        bh=G0WJfSma1v3c3tkcB24nMJ/I17BjCPH+3lfksnmYuhE=;
+        b=KqYwEj4PXQE/G7ziywy3H3Pt4dcEUHt7eZe9h5EsFncyRWFzpy2XmmOMOQkUnJigDR
+         qlLKXkkJaLUfWE4DjbUDibBAdW+entHoHjD03caytFERFgB3Nznsq1qGluPe21JyO7Dg
+         CFqQTNp9gQxAGR1ocnhL+Xr3jZXq7+JDFbb5M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        b=q5W2R3EPN+6HeTic7nB1IsLYB+OkoxxYYDilCKYFPDBRJMRA0RyTWMXncaESOUCH+0
+         UidyxUM3Gue1z1HT6wsOl4RGsCkvBQA7McCDjTy+HKfzLFG/w6Sf9y6CKomgF1EJi7HY
+         oV/RcyUmBTAtXc+FGmVg8cySOQF3gW0ciQB1E=
+Received: by 10.216.66.131 with SMTP id h3mr1332740wed.111.1301497407819;
+        Wed, 30 Mar 2011 08:03:27 -0700 (PDT)
+Received: from gmail.com (s214856783.online.de [87.106.138.84])
+        by mx.google.com with ESMTPS id f52sm82935wes.11.2011.03.30.08.03.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 30 Mar 2011 08:03:26 -0700 (PDT)
+In-Reply-To: <AANLkTi=nxA0BrLruQ9zc_SajH2ghpZX14Ra7QOo9fMBx@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170390>
 
-Jeff King wrote:
-> On Mon, Mar 28, 2011 at 10:55:22AM +0200, Robert David wrote:
-> 
-> > > As far as cleanup versus features, I think Thomas would have to comment
-> > > on that. He is the one who did the most work on patch-mode, and
-> > > therefore the one who most thinks it needs cleaned up. :)
-> > 
-> > Is Thomas going to be a mentor in this task?
-> 
-> I hope so. I can also co-mentor if it helps.
+On Wed, 30 Mar 2011 12:09:46 +0200, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> On Tue, Mar 29, 2011 at 5:28 PM, Michael Witten <mfwitten@gmail.com> wrote:
+>> +#define ALT_ODB_FN_INFO_FUNC(variable, function) \
+>> +       union alt_odb_fn_info variable = { \
+>> +               .func = (alt_odb_fn_cb)function \
+>> +       }
+>> +#define ALT_ODB_FN_INFO_DATA(variable, data_) \
+>> +       union alt_odb_fn_info variable = { \
+>> +               .data = data_ \
+>> +       }
+>
+> We try to stay away from C99 features like this, as it doesn't work on
+> all compilers we target.
 
-I'm certainly ready; I didn't propose any projects that I would not
-also mentor.  (However, I won't mentor more than one...)
+How about changing it to this:
 
-Note that while it's certainly a bonus, porting it to C probably makes
-the project more difficult and time-consuming.  We'll have to see in
-the proposal timelines however.
-
-As for cleanup, my gut feeling right now is that the Perl code can
-probably cope with incremental cleanups as required for each feature.
-On the other hand, the C port should start from a clean redesign so as
-to not rewrite it twice.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+#define ALT_ODB_FN_INFO_FUNC(variable, function) \
+	union alt_odb_fn_info variable; do { \
+		variable.func = (alt_odb_fn_cb)function; \
+	} while (0)
+#define ALT_ODB_FN_INFO_DATA(variable, data_) \
+	union alt_odb_fn_info variable; do { \
+		variable.data = data_ \
+	} while (0)
