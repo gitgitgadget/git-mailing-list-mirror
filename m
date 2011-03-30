@@ -1,74 +1,105 @@
 From: Jeff King <peff@peff.net>
-Subject: [tig PATCH] blame broken in recent master
-Date: Wed, 30 Mar 2011 10:24:30 -0400
-Message-ID: <20110330142430.GA32523@sigill.intra.peff.net>
+Subject: Re: checkout new branch tracks wrong remote (bug?)
+Date: Wed, 30 Mar 2011 10:59:08 -0400
+Message-ID: <20110330145908.GA812@sigill.intra.peff.net>
+References: <loom.20110330T040437-823@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Wed Mar 30 16:25:38 2011
+To: chris <jugg@hotmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 16:59:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4wL2-0002Qc-C2
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 16:25:36 +0200
+	id 1Q4wrd-0005NV-L0
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 16:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932593Ab1C3OYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 10:24:38 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55045
+	id S932470Ab1C3O7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 10:59:11 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60590
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754812Ab1C3OYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 10:24:37 -0400
-Received: (qmail 10534 invoked by uid 107); 30 Mar 2011 14:25:14 -0000
+	id S1755127Ab1C3O7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 10:59:11 -0400
+Received: (qmail 10882 invoked by uid 107); 30 Mar 2011 14:59:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Mar 2011 10:25:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2011 10:24:30 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Mar 2011 10:59:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2011 10:59:08 -0400
 Content-Disposition: inline
+In-Reply-To: <loom.20110330T040437-823@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170388>
 
-As of 730ae86 (Rename prepare_io to prepare_update and make it more
-specialized, 2011-03-16), "tig blame" finds no actual blamed commits.
+On Wed, Mar 30, 2011 at 02:27:31AM +0000, chris wrote:
 
-The problem seems to be that prepare_update switched from calling
-format_argv to argv_copy, and we end up calling "git blame %(blameargs)"
-without "%(blameargs)" expanded. Blame looks like the only caller which
-actually uses a placeholder, so it is the only one broken.
+> I have two remotes configured.
+> 
+> One is "origin" which has a local tracking branch "master" for "origin/master".
+> 
+> The other is "mirror" which has option mirror = true
+> 
+> While on the local branch master, I issue the command:
+> 
+> $ git checkout -b wip
+> 
+> The branch "wip" is created and oddly configured to track the "mirror" remote.
 
-The patch below fixes it for me, but it seems like a hack. I'm not
-really sure why the switch in prepare_update was made; clearly it is
-part of some refactoring, but I'm not sure what your larger plans were.
+Right. You are creating a branch from "refs/heads/master" (the currently
+checked out branch). So the setup_tracking code will look for any remote
+which writes a tracking branch into refs/heads/master according to the
+configuration.
 
----
-diff --git a/tig.c b/tig.c
-index c1e5270..9ef61d3 100644
---- a/tig.c
-+++ b/tig.c
-@@ -4240,15 +4240,20 @@ blame_read_file(struct view *view, const char *line, bool *read_file)
- 			"git", "blame", "%(blameargs)", "--incremental",
- 				*opt_ref ? opt_ref : "--incremental", "--", opt_file, NULL
- 		};
-+		const char **formatted_argv = NULL;
-+
-+		format_argv(&formatted_argv, blame_argv, FALSE, !view->prev);
- 
- 		if (view->lines == 0 && !view->prev)
- 			die("No blame exist for %s", view->vid);
- 
--		if (view->lines == 0 || !start_update(view, blame_argv, opt_cdup)) {
-+		if (view->lines == 0 || !start_update(view, formatted_argv, opt_cdup)) {
- 			report("Failed to load blame data");
-+			argv_free(formatted_argv);
- 			return TRUE;
- 		}
- 
-+		argv_free(formatted_argv);
- 		*read_file = FALSE;
- 		return FALSE;
- 
+Your mirror config looks like this:
+
+> [remote "mirror"]
+>         url = ssh://chris@myserver.com/srv/git/mirrors/chris/myproject.git
+>         fetch = +refs/*:refs/*
+>         mirror = true
+
+meaning that a fetch of the mirror remote will write the mirror's
+refs/heads/master into our local refs/heads/master. IOW, your master
+branch is actually configured as a remote tracking branch of the mirror
+(which is probably not what you want; see below).
+
+> I do not expect this "wip" branch to be tracking the "mirror" remote, but rather
+> "origin", according to the documentation.
+
+In the absence of the mirror remote, it would not track anything. You
+are branching from a _local_ branch, so there is no remote to track. I
+think what you really want is:
+
+  git checkout -b wip origin/master
+
+All of that being said, I'm not sure your config makes sense:
+
+> [remote "origin"]
+>         fetch = +refs/heads/*:refs/remotes/origin/*
+>         url = ssh://myserver.com/srv/git/myproject.git
+> [remote "mirror"]
+>         url = ssh://chris@myserver.com/srv/git/mirrors/chris/myproject.git
+>         fetch = +refs/*:refs/*
+>         mirror = true
+
+Your mirror is configured to overwrite everything in refs/ if you fetch
+from it. Meaning it will throw away anything you fetched from "origin",
+as well as any local work. So this config is probably not what you want.
+
+I'm guessing what you really wanted is a remote only for pushing to, and
+created it with:
+
+  git remote add --mirror mirror ssh://...
+
+The --mirror option has problems with that case. See this thread:
+
+  http://article.gmane.org/gmane.comp.version-control.git/161653
+
+which has some suggestions, but nothing has been implemented yet.
+Probably it makes sense to allow --mirror=fetch and --mirror=push, but
+there is an open question of what just "--mirror" should do.
+
+-Peff
