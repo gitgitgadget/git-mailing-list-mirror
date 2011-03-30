@@ -1,84 +1,99 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: Add --force option for git submodule update
-Date: Wed, 30 Mar 2011 21:05:45 +0200
-Message-ID: <4D937F09.10000@web.de>
-References: <4D92E225.3040602@morey-chaisemartin.com> <4D93773C.2010807@web.de> <4D937B7E.10808@morey-chaisemartin.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] Clean: Remove unnecessary `\' (line continuation)
+Date: Wed, 30 Mar 2011 12:21:21 -0700
+Message-ID: <7v8vvwo1n2.fsf@alter.siamese.dyndns.org>
+References: <1fbceaa8-398c-44ec-8833-a03e4cca6805-mfwitten@gmail.com>
+ <ca8eabbf-ed1b-4b46-a7f7-4b068a2de5b7-mfwitten@gmail.com>
+ <5bddd028-bf38-46b9-a189-bdb09038dfdd-mfwitten@gmail.com>
+ <d92be3a1-6f30-4b04-ac38-39058e5a6959-mfwitten@gmail.com>
+ <a59d19d0-f279-43fe-8ac6-06c4bd13c941-mfwitten@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 21:06:52 2011
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 21:21:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q50jC-0001Ho-RF
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 21:06:52 +0200
+	id 1Q50xV-0000G9-MZ
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 21:21:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932292Ab1C3TGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 15:06:46 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:40355 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932191Ab1C3TGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 15:06:45 -0400
-Received: from smtp03.web.de  ( [172.20.0.65])
-	by fmmailgate02.web.de (Postfix) with ESMTP id DB99D19B6ADA2;
-	Wed, 30 Mar 2011 21:05:45 +0200 (CEST)
-Received: from [93.240.98.1] (helo=[192.168.178.43])
-	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Q50i9-0007T9-00; Wed, 30 Mar 2011 21:05:45 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <4D937B7E.10808@morey-chaisemartin.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18gPCyUovBZpaf624dD+pHpKdLc3qGvalKXY686
-	h8QJ14g+nqlWi1ED6rlii4S17q1eZoCr6kzwwHXoE7dbxrLLtg
-	LZF1s14n45JTcCFeixCQ==
+	id S1755792Ab1C3TVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 15:21:32 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42923 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754847Ab1C3TVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 15:21:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 527024727;
+	Wed, 30 Mar 2011 15:23:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nvxbXvPIGjtAlAkGMF3zN1F/Uz4=; b=xVZzhf
+	nzXpzLnlv+uAShg5lVkuGmBtJyOzcqhA9S5ptd1aM5QGrcW+yqIF0JbzyIBMNoa+
+	Xmybp0kHNaxyFzbdKKkzUqlazm+4vB3kT3w68wpHjrXcG01fUOAiew9r/VpODn5K
+	4CF9q8eWdwzlnjb7Ar2HTj856xmxuBkeYywjI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HU6W0ALfajituHFD4n/aiaga4kmTDnmy
+	8YEbfUd3ynNkw6gJQ7xgY27kFaRvi44CRSJQvRo+EZuxsq+v7CcoHkR6z6D64CrO
+	BbllFCpPO7EEuc+DT7PwFvwo/UiInAoe/NAYmlDl8UHnWkitbK6qKVgEw3EDscHM
+	LZwKPPT+TZU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2F0034726;
+	Wed, 30 Mar 2011 15:23:14 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E62224720; Wed, 30 Mar 2011
+ 15:23:10 -0400 (EDT)
+In-Reply-To: <a59d19d0-f279-43fe-8ac6-06c4bd13c941-mfwitten@gmail.com>
+ (Michael Witten's message of "Wed, 2 Mar 2011 15:25:23 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2859E3AA-5B03-11E0-8EAF-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170409>
 
-Am 30.03.2011 20:50, schrieb Nicolas Morey-Chaisemartin:
-> On 03/30/2011 08:32 PM, Jens Lehmann wrote:
->> Am 30.03.2011 09:56, schrieb Nicolas Morey-Chaisemartin:
-> 
->> All looking good up to here. But I wonder if the rest of git-submodule.sh
->> could be changed a bit less invasive ... maybe as simple as this?
->>
->> @@ -458,7 +461,6 @@ cmd_update()
->>
->>  		if test "$subsha1" != "$sha1"
->>  		then
->> -			force=
->>  			if test -z "$subsha1"
->>  			then
->>  				force="-f"
->>
->> Now force will not be cleared and thus contain "-f" if the user provided
->> it on the command line. All tests (including your new ones) are running
->> fine with this simplification ... am I missing something?
-> 
-> Actually, I don't think this work.
-> By doing that, if you run git submodule update without -f, it will set -f when you reached the first submodule not yet checked out ( -z $subsha1 ),
-> and the following submodules will be checkout using --force which may throw away changes the user wanted to keep.
+Michael Witten <mfwitten@gmail.com> writes:
 
-You are right, I just came to that conclusion myself ... but with a loop
-local variable initialized from force on every iteration it should work.
+> Signed-off-by: Michael Witten <mfwitten@gmail.com>
+> ---
+>  t/t8001-annotate.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
+> index 45cb60e..68ac828 100755
+> --- a/t/t8001-annotate.sh
+> +++ b/t/t8001-annotate.sh
+> @@ -8,7 +8,7 @@ PROG='git annotate'
+>  
+>  test_expect_success \
+>      'Annotating an old revision works' \
+> -    '[ $(git annotate file master | awk "{print \$3}" | grep -c "^A$") -eq 2 ] && \
+> +    '[ $(git annotate file master | awk "{print \$3}" | grep -c "^A$") -eq 2 ] &&
+>       [ $(git annotate file master | awk "{print \$3}" | grep -c "^B$") -eq 2 ]'
 
-> I know it is very intrusive. The main reason for that is I wanted the -f option to always behave the same (meaning throw away changes),
-> whether the submodule is already on the right commit or not.
+While this is not wrong per-se, I don't want to take too much half-way
+churning.
 
-Hmm, I don't know if that is a good thing to do. People are used to
-"git submodule update" to only touch those submodule where the HEAD
-differs from the commit recorded in the superproject (And I often
-find myself using "-f" if the command didn't succeed without it).
-But when using "-f" touches other submodules than not using it the
-user might experience a rather unpleasant surprise, I'm not sure we
-want to go that way.
+If we were to properly do this, we should first rewrite it to use the more
+modern style:
 
-> If we accept to drop this and only drop the changes when subsha1 != sha1, the patch can be much sorter by simply keeping the force flags I used and without modifying all the case/while thing.
+	test_expect_success 'Annotating an old revision works' '
+		... test script comes here ...
+        '
 
-Yes.
+and just run annotate once without having any downstream pipe, i.e.
+
+	git annotate file master >result &&
+	awk "{ print \$3; }" <result >authors &&
+	test 2 = $(grep A <authors | wc -l) &&
+	test 2 = $(grep B <authors | wc -l)
+
+so that we can catch breakage in "git annotate" itself more reliably
+(e.g. even if the command showed two lines for each author, it is a
+failure if the command itself did not exit with status 0).
