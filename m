@@ -1,76 +1,119 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] parse-remote: replace unnecessary sed invocation
-Date: Wed, 30 Mar 2011 01:48:40 -0700
-Message-ID: <1301474920-6718-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 10:48:54 2011
+From: Maxin john <maxin@maxinbjohn.info>
+Subject: Re: [PATCH] Remove "bashism" from contrib/thunderbird-patch-inline/appp.sh
+Date: Wed, 30 Mar 2011 09:52:23 +0100
+Message-ID: <AANLkTim+0gxGKZT=vfmX7v0QZrApjRwAzW3PiLePL-iQ@mail.gmail.com>
+References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
+	<4D9103D3.5010403@zoho.com>
+	<7vei5qtnc5.fsf@alter.siamese.dyndns.org>
+	<4D9261AE.5070103@zoho.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>,
+	Victor Engmark <victor.engmark@terreactive.ch>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 30 10:52:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4r5B-0005Wu-CJ
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 10:48:53 +0200
+	id 1Q4r8g-0007Ib-TU
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 10:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755604Ab1C3Iss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 04:48:48 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:36713 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754722Ab1C3Isr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 04:48:47 -0400
-Received: by gxk21 with SMTP id 21so428496gxk.19
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 01:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=h8bwYoBN9BtIa3ucY5xV1Jtcdu4wY2FdPMJ6g9F2YM0=;
-        b=QAbjnEdEVZGKD/H20942Q81E93s18TIf4YjOOGb9d9jX4IK/U9sLdXRVAx40tHMMDj
-         hUfjrHWAbPv0mbWETl8v+XKc7uiZUm3VX4flQrgI74RfMcGulqyAdpANH4TXguDdXKz/
-         6wm7krWw6JBPYdoVCI7vVGJ277WHbRhQuTo4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Y3GLMfHL06ELVeevyqZC9H7LNkeo+JZrdQ/ZSC7Yw/aAAqagcmjW2utZ6nykgeyvzM
-         2rtWebvG8G7w7yFmlQpzWvzSer/Olmigr2kLl3hKwnbYLWWLnCFKUAE5LqH+b+2rL0Js
-         gyP4Kr7XiJ3BSuU6LbZYt7HR0ijuh8C24dGxA=
-Received: by 10.151.134.17 with SMTP id l17mr1259720ybn.376.1301474926423;
-        Wed, 30 Mar 2011 01:48:46 -0700 (PDT)
-Received: from earth ([75.85.182.25])
-        by mx.google.com with ESMTPS id u37sm2294644yba.7.2011.03.30.01.48.43
-        (version=SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 01:48:46 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Wed, 30 Mar 2011 01:48:40 -0700
-X-Mailer: git-send-email 1.7.4.2.422.g537d99
+	id S1754480Ab1C3IwZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Mar 2011 04:52:25 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:39640 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752799Ab1C3IwZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Mar 2011 04:52:25 -0400
+Received: by ywj3 with SMTP id 3so426546ywj.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 01:52:24 -0700 (PDT)
+Received: by 10.151.87.12 with SMTP id p12mr1320806ybl.169.1301475144013; Wed,
+ 30 Mar 2011 01:52:24 -0700 (PDT)
+Received: by 10.150.139.2 with HTTP; Wed, 30 Mar 2011 01:52:23 -0700 (PDT)
+X-Originating-IP: [192.100.120.41]
+In-Reply-To: <4D9261AE.5070103@zoho.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170368>
 
-Just use parameter expansion instead.
+Hi,
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> Junio C Hamano wrote:
+=2E.
+>> Even though ancient shells I grew up with did not have $(), it is a =
+way
+>> backticks should have been written by Bourne from day one. =A0Histor=
+ically,
+>> handling nesting and interraction between double-quotes and backtick=
+s
+>> correctly was a nightmare to get right, and different implementation=
+s of
+>> shells got them always wrong. =A0If you use $(), the headaches go aw=
+ay.
+>> These days, we don't know of any POSIX shell that is widely used and=
+ does
+>> not understand $(). =A0As such, the above construct is perfectly saf=
+e and
+>> even preferred over ``. =A0Welcome to the 21st century ;-)
+>>
+>> The only major platform that didn't have a reasonable shell was Sola=
+ris,
+>> but we already have written its /bin/sh off as broken and unusable, =
+and
+>> suggest people to use xpg4 or xpg6 shell (see the Makefile).
+
+Thank you very much for sharing this information. It was really really
+informative.
+Thanks to =C1ngel Gonz=E1lez and Victor Engmark for sharing their views=
+=2E
+
+Considering all the suggestions, I think, it is "not possible to
+satisfy everyone" :)
+So, I have modified the patch by incorporating most of the nice suggest=
+ions.
+
+Please let me know your comments.
+
+Signed-off-by: Maxin B. John <maxin@maxinbjohn.info>
 ---
+diff --git a/contrib/thunderbird-patch-inline/appp.sh
+b/contrib/thunderbird-patch-inline/appp.sh
+index cc518f3..20dac9f 100755
+--- a/contrib/thunderbird-patch-inline/appp.sh
++++ b/contrib/thunderbird-patch-inline/appp.sh
+@@ -1,8 +1,8 @@
+-#!/bin/bash
++#!/bin/sh
+ # Copyright 2008 Lukas Sandstr=F6m <luksan@gmail.com>
+ #
+ # AppendPatch - A script to be used together with ExternalEditor
+-# for Mozilla Thunderbird to properly include pathes inline i e-mails.
++# for Mozilla Thunderbird to properly include patches inline in e-mail=
+s.
 
-Cleaning out the attic.
+ # ExternalEditor can be downloaded at http://globs.org/articles.php?ln=
+g=3Den&pg=3D2
 
- git-parse-remote.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+@@ -16,13 +16,12 @@ else
+        cd > /dev/null
+ fi
 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index e7013f7..9168879 100644
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -5,7 +5,8 @@
- GIT_DIR=$(git rev-parse -q --git-dir) || :;
- 
- get_default_remote () {
--	curr_branch=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
-+	curr_branch=$(git symbolic-ref -q HEAD)
-+	curr_branch="${cur_branch#refs/heads/}"
- 	origin=$(git config --get "branch.$curr_branch.remote")
- 	echo ${origin:-origin}
- }
--- 
-1.7.4.2.422.g537d99
+-PATCH=3D$(zenity --file-selection)
+-
+-if [ "$?" !=3D "0" ] ; then
+-       #zenity --error --text "No patchfile given."
+-       exit 1
++#check whether zenity is present
++if ! type zenity >/dev/null 2>&1 ; then
++       exit 1
+ fi
+
++PATCH=3D$(zenity --file-selection) || exit 1
+ cd - > /dev/null
+
+ SUBJECT=3D`sed -n -e '/^Subject: /p' "${PATCH}"`
