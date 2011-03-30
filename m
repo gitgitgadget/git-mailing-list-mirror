@@ -1,115 +1,116 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] Make "git notes add" more user-friendly when there
- are existing notes
-Date: Wed, 30 Mar 2011 08:54:17 +0200
-Message-ID: <4D92D399.4090404@drmicha.warpmail.net>
-References: <09668994f10284cfa5243789a627dce8c2325bc6.1301388217.git.git@drmicha.warpmail.net> <4D9226B4.20806@warpmail.net> <7vd3l9rbnq.fsf@alter.siamese.dyndns.org> <201103300202.55973.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 08:58:01 2011
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH 2v2/2] git-gui: support for diff3 conflict style
+Date: Wed, 30 Mar 2011 09:18:27 +0200
+Message-ID: <c761e522cce009a70d9131f0a5a1a2fc6aa6d9ac.1301469420.git.bert.wesarg@googlemail.com>
+References: <56c38bdfd71d8af5633bea00cb130256d6981af5.1301467146.git.bert.wesarg@googlemail.com>
+Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 09:18:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4pLr-0000Cz-Oz
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 08:58:00 +0200
+	id 1Q4pfs-00089r-2X
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 09:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958Ab1C3G5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 02:57:54 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57653 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751638Ab1C3G5x (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Mar 2011 02:57:53 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 5206B20611;
-	Wed, 30 Mar 2011 02:57:53 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Wed, 30 Mar 2011 02:57:53 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=XFtqrXjvfPA3a7efUw8lebFJEXI=; b=pUDz3EJUvDZ4IXxWiQRUFXeYTh1it0Bqp60N5H52sXqxEuYMMYcu1UgBNgscKcIaPRpfTKsN8TNbvOe+8iDBhG6qMXSnnTtc4NNmVdoZ+jE96rfD6HK/w1Q9IwENrUGfegWYrSOQ01miPB2ZaTwld6hfI7gAu+BAWPwGgDpvtgU=
-X-Sasl-enc: TJeUZztcS+bpB+KQYeRje1cWTIbcLxZoPz8bFzBfycOm 1301468272
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9528E4428DF;
-	Wed, 30 Mar 2011 02:57:52 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <201103300202.55973.johan@herland.net>
+	id S1753566Ab1C3HSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 03:18:34 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:65191 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752049Ab1C3HSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 03:18:33 -0400
+Received: by fxm17 with SMTP id 17so815108fxm.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 00:18:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to;
+        bh=zkWTUAD5tAiMuhGBEPkLkAVPuFu4zixqo90S3/iaOc4=;
+        b=ah16KmLcUDv/Rm3ccmEK6Mk6zc4xUVA/6CIiXh2ByXce0vxwaXozRfIboZqO6W4nSb
+         R04JbEyLDN7+Njm3gxCgMgnyw83ItK2vdF6jxXwTq8DfRlr4hAcukEalDbqdg2GlXLDt
+         abuwlGhvqBYbOeBp1G3fLdj1U2vamnfTgJC1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to;
+        b=qqCSOo0+ewiUhwLEHmz4X5CoLquYLqKS0DVzvETs/gOYtiLwypTrW7sycttnHwhMeV
+         +fvxDkoVpUMUWaFVoNnvo7ImOen6gVGy3gXfbdKb6GQj53bfQGR7qpBzwyLdOgertc4c
+         ERr3uVkL6Io1CcgHGiq3vVYk5iTUkQScIZyPA=
+Received: by 10.223.14.137 with SMTP id g9mr863917faa.2.1301469512692;
+        Wed, 30 Mar 2011 00:18:32 -0700 (PDT)
+Received: from localhost ([141.76.90.212])
+        by mx.google.com with ESMTPS id n15sm2241491fam.36.2011.03.30.00.18.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 30 Mar 2011 00:18:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.2.743.g539ab
+In-Reply-To: <56c38bdfd71d8af5633bea00cb130256d6981af5.1301467146.git.bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170361>
 
-Johan Herland venit, vidit, dixit 30.03.2011 02:02:
-> Currently, "notes add" (without -f/--force) will abort when the given object
-> already has existing notes. This makes sense for the modes of "git notes add"
-> that would necessarily overwrite the old message (when using the -m/-F/-C/-c
-> options). However, when no options are given (meaning the notes are created
-> from scratch in the editor) it is not very user-friendly to abort on existing
-> notes, and forcing the user to run "git notes edit".
-> 
-> Instead, it is better to simply "redirect" to "git notes edit" automatically,
-> i.e. open the existing notes in the editor and let the user edit them.
-> This patch does just that.
-> 
-> This changes the behavior of "git notes add" without options when notes
-> already exist for the given object, but I doubt that many users really depend
-> on the previous failure from "git notes add" in this case.
-> 
-> Signed-off-by: Johan Herland <johan@herland.net>
-> ---
-> 
-> On Tuesday 29 March 2011, Junio C Hamano wrote:
->> Michael J Gruber <drmicha@warpmail.net> writes:
->>> and while at it rename "add" to "edit"
->> That one I think is older wart that may be harder to change.
-> 
-> Here's one attempt at giving Michael a nicer "git notes add" without
-> breaking too many existing users. It's not very pretty, but I hope it
-> gets the job done without inconveniencing current users too much.
+This adds highlight support for the diff3 conflict style.
 
-That is certainly an improvement, though I'm still wondering how large a
-change we're aiming at, given Junio's remarks. Things I would like to
-throw in:
+The common pre-image will be reversed to --, because it has been removed
+and either replaced with our or their side.
 
-* options vs. arguments:
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+---
 
-"tag", "branch" etc. use options for subcommands, e.g. "tag -d", "branch
--d" etc. "remote", "stash" use arguments, e.g. "remote add", "stash
-list". I don't see us unifying that, but we should decide about a
-direction to go for "new" commands and stick to that. I feel that
-options are the way to go. What I really feel strongly about is that we
-should decide once and then stick to that for future commands (and may
-be gradually revamping).
+Sorry, I had an syntax error in the last version.
 
-* singular vs. plural:
+ git-gui.sh   |    3 +++
+ lib/diff.tcl |   12 ++++++++++++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
 
-All our porcelain commands are singular even when they deal with
-multiple items (tag, branch, remote, submodule, ...). "notes" is the
-only exception, why not have it be "note"? (That would also open up a
-migration strategy, though the usual suspects may not even bother ;))
-
-* "notes message":
-
-The term seems to be used to distinguish between the content of a note
-and the note object (blob content vs. blob object). A regular git user
-may think it is the commit message in the notes log, i.e.:
-
-git log $(git notes get-ref)
-
-I'm wondering whether we should actually expose those note commit
-messages. If notes are shared then editing a note may require an
-explanation just like other commits do, especially when they get used
-for other things than "notes" in the proper sense.
-
-If we do that, then -m,-c,-C etc. would need to be analogous to "git
-commit -m,-c,-C", i.e. about note commit messages, not about the actual
-note. If we completely discard the possibility that users will look at
-the notes log and write note commit messages, we can use the "regular
-commit message <-> notes content" analogy for the options that we
-partially have now (and adjust -c,-C).
-
-Cheers,
-Michael
+diff --git a/git-gui.sh b/git-gui.sh
+index d5c1535..6adcda6 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3388,6 +3388,9 @@ $ui_diff tag conf d_s- \
+ $ui_diff tag conf d< \
+ 	-foreground orange \
+ 	-font font_diffbold
++$ui_diff tag conf d| \
++	-foreground orange \
++	-font font_diffbold
+ $ui_diff tag conf d= \
+ 	-foreground orange \
+ 	-font font_diffbold
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index 39e4d90..caa4be7 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -339,6 +339,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	}
+ 
+ 	set ::current_diff_inheader 1
++	set ::in_conflict_pre_image 0
+ 	fconfigure $fd \
+ 		-blocking 0 \
+ 		-encoding [get_path_encoding $path] \
+@@ -439,10 +440,21 @@ proc read_diff {fd conflict_size cont_info} {
+ 			{++} {
+ 				set regexp [string map [list %conflict_size $conflict_size]\
+ 								{^\+\+([<>=]){%conflict_size}(?: |$)}]
++				set regexp_pre_image [string map [list %conflict_size $conflict_size]\
++								{^\+\+\|{%conflict_size}(?: |$)}]
+ 				if {[regexp $regexp $line _g op]} {
+ 					set is_conflict_diff 1
+ 					set line [string replace $line 0 1 {  }]
+ 					set tags d$op
++					set ::in_conflict_pre_image 0
++				} elseif {[regexp $regexp_pre_image $line]} {
++					set is_conflict_diff 1
++					set line [string replace $line 0 1 {  }]
++					set tags d|
++					set ::in_conflict_pre_image 1
++				} elseif ($::in_conflict_pre_image) {
++					set line [string replace $line 0 1 {--}]
++					set tags d_--
+ 				} else {
+ 					set tags d_++
+ 				}
+-- 
+1.7.4.2.743.g539ab
