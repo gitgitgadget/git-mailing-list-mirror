@@ -1,75 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove "bashism" from
- contrib/thunderbird-patch-inline/appp.sh
-Date: Wed, 30 Mar 2011 10:57:07 -0700
-Message-ID: <7vmxkco5jg.fsf@alter.siamese.dyndns.org>
-References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
- <4D9103D3.5010403@zoho.com> <7vei5qtnc5.fsf@alter.siamese.dyndns.org>
- <4D9261AE.5070103@zoho.com>
- <AANLkTim+0gxGKZT=vfmX7v0QZrApjRwAzW3PiLePL-iQ@mail.gmail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: [PATCH] parse-remote: replace unnecessary sed invocation
+Date: Wed, 30 Mar 2011 20:31:08 +0200
+Message-ID: <AANLkTikBD4T3hdyT2h=2dzw-QO1BnBp3eT=WGj5s5dC3@mail.gmail.com>
+References: <1301474920-6718-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?Q?=C3=81ngel_Gonz?= =?utf-8?Q?=C3=A1lez?= 
-	<ingenit@zoho.com>, Victor Engmark <victor.engmark@terreactive.ch>
-To: Maxin john <maxin@maxinbjohn.info>
-X-From: git-owner@vger.kernel.org Wed Mar 30 19:57:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 30 20:31:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4ze7-0005tr-Dg
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 19:57:31 +0200
+	id 1Q50Aq-0007Gv-Tl
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 20:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756102Ab1C3R50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 13:57:26 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46395 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754760Ab1C3R5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 13:57:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 637DB4BF3;
-	Wed, 30 Mar 2011 13:59:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=82FQmqjUNCOLdpL/2VhgtLWk28k=; b=H5Glot
-	3grcnkrPjFL+H7kkF6rzJR/RT30vhG5NpVAgzJsv4sbLj8rDCuhaLt6XYtTDzThQ
-	qT9Ioeusv5En6VW0JaPUNf6FudZcSf+uxuDWg2RZBDPLrIE8vkTyCHSOT/to4HjC
-	0gOPQZrCBUwaTSwUGADpqi9NWcPThVB5DRhfg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AwYTzNm2ZIbxVBOjkaOF/AtgGZfafVT6
-	zbPgLzBwDqgwdEBrDcw6Ti4ILxpc2QhujwdC3kLTWeJneN3FzvMTT1oExcq4hXRn
-	WqAGLxvTIL4wG8Fm+Pc2kcm2lbWU1zeg0/RMzrxgDe4aO8JbFJL63u94Uv/E/+0t
-	9GA82acrDbE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1C67A4BF2;
-	Wed, 30 Mar 2011 13:59:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7B0C54BF1; Wed, 30 Mar 2011
- 13:58:57 -0400 (EDT)
-In-Reply-To: <AANLkTim+0gxGKZT=vfmX7v0QZrApjRwAzW3PiLePL-iQ@mail.gmail.com>
- (Maxin john's message of "Wed, 30 Mar 2011 09:52:23 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 66439D34-5AF7-11E0-8278-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932119Ab1C3SbK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Mar 2011 14:31:10 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55837 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754815Ab1C3SbI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Mar 2011 14:31:08 -0400
+Received: by gyd10 with SMTP id 10so637401gyd.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 11:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xtx4k+6xlgC8B/IP2i4oprPC/gh+FdyMEj0IeaI/M7I=;
+        b=RjsAcRkxLeQoxl9ustWesIXLzbF0rAAKoXp0k1y1rbG/cYYFNseSRrVjyj5qdlm80F
+         iQc1Jut+StXXKBn/QFPciXcTZ/LkpJoZsms/gMBymTfvMcFa+2Mypq/7TG7j2zb3OQ6g
+         ZullAJx73wSuhGquqphH9bnAjSQsKLNiG8qf0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=UQu+urVnclSBOvT23ILn//1VDkAPn+V3WjyMg2RhvvHtwSTjNJoC+JqRqBvkWVxNz4
+         tZpwclPdPmF4r0xeXhiCsAC3fqrqfB4vfq10Eif0XqEjIgJ2pvkyBxFhCFHGpOWaswJa
+         eytgUoB8NKplGlStR5mBBjeY62enRwKV0zh1A=
+Received: by 10.236.200.137 with SMTP id z9mr2332486yhn.100.1301509868155;
+ Wed, 30 Mar 2011 11:31:08 -0700 (PDT)
+Received: by 10.147.33.7 with HTTP; Wed, 30 Mar 2011 11:31:08 -0700 (PDT)
+In-Reply-To: <1301474920-6718-1-git-send-email-bebarino@gmail.com>
+X-Google-Sender-Auth: Z1WoPKxSq-wxo_fiGkycyAUQ_E8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170399>
 
-Maxin john <maxin@maxinbjohn.info> writes:
+> + =C2=A0 =C2=A0 =C2=A0 curr_branch=3D$(git symbolic-ref -q HEAD)
+> + =C2=A0 =C2=A0 =C2=A0 curr_branch=3D"${cur_branch#refs/heads/}"
+                                           ^^^
 
-> So, I have modified the patch by incorporating most of the nice suggestions.
 
-I'd just replace /bin/bash with /bin/sh without any other fuss, perhaps
-except for the typofix in the comment, and be done with the topic.
 
-The script in the current version may look ugly to my eyes and others, but
-there is nothing _wrong_ in it per-se.  Rewriting them in different styles
-is not necessarily improvement, and this is only a contrib/ material after
-all.
-
-Thanks, I'll apply the early hunks from you.
+--=20
+ms
