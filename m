@@ -1,54 +1,115 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Portability: returning void
-Date: Wed, 30 Mar 2011 08:54:32 +0200
-Message-ID: <4D92D3A8.3090301@viscovery.net>
-References: <71372d7d-dd08-4945-a8bc-c7b981c09fb2-mfwitten@gmail.com> <20110329200230.GA377@elie> <20110329221652.GB23510@sigill.intra.peff.net> <20110329234955.GB14578@elie> <20110330001653.GA1161@sigill.intra.peff.net> <20110330002921.GC14578@elie> <20110330033017.GA18157@sigill.intra.peff.net> <20110330035733.GA2793@elie> <20110330041339.GA26281@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] Make "git notes add" more user-friendly when there
+ are existing notes
+Date: Wed, 30 Mar 2011 08:54:17 +0200
+Message-ID: <4D92D399.4090404@drmicha.warpmail.net>
+References: <09668994f10284cfa5243789a627dce8c2325bc6.1301388217.git.git@drmicha.warpmail.net> <4D9226B4.20806@warpmail.net> <7vd3l9rbnq.fsf@alter.siamese.dyndns.org> <201103300202.55973.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Barr <david.barr@cordelta.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 08:54:57 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 08:58:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4pIu-0007bn-4G
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 08:54:56 +0200
+	id 1Q4pLr-0000Cz-Oz
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 08:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533Ab1C3Gyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 02:54:40 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:19274 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751134Ab1C3Gyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 02:54:39 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Q4pIW-0005pO-Gn; Wed, 30 Mar 2011 08:54:32 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 3EA591660F;
-	Wed, 30 Mar 2011 08:54:32 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <20110330041339.GA26281@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1751958Ab1C3G5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 02:57:54 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57653 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751638Ab1C3G5x (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Mar 2011 02:57:53 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5206B20611;
+	Wed, 30 Mar 2011 02:57:53 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 30 Mar 2011 02:57:53 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=XFtqrXjvfPA3a7efUw8lebFJEXI=; b=pUDz3EJUvDZ4IXxWiQRUFXeYTh1it0Bqp60N5H52sXqxEuYMMYcu1UgBNgscKcIaPRpfTKsN8TNbvOe+8iDBhG6qMXSnnTtc4NNmVdoZ+jE96rfD6HK/w1Q9IwENrUGfegWYrSOQ01miPB2ZaTwld6hfI7gAu+BAWPwGgDpvtgU=
+X-Sasl-enc: TJeUZztcS+bpB+KQYeRje1cWTIbcLxZoPz8bFzBfycOm 1301468272
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9528E4428DF;
+	Wed, 30 Mar 2011 02:57:52 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <201103300202.55973.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170360>
 
-Am 3/30/2011 6:13, schrieb Jeff King:
-> On Tue, Mar 29, 2011 at 10:57:33PM -0500, Jonathan Nieder wrote:
->> I was in the process of writing a commit message for the same "exec"
->> trick, but I'm glad you got to it first. ;-)
+Johan Herland venit, vidit, dixit 30.03.2011 02:02:
+> Currently, "notes add" (without -f/--force) will abort when the given object
+> already has existing notes. This makes sense for the modes of "git notes add"
+> that would necessarily overwrite the old message (when using the -m/-F/-C/-c
+> options). However, when no options are given (meaning the notes are created
+> from scratch in the editor) it is not very user-friendly to abort on existing
+> notes, and forcing the user to run "git notes edit".
 > 
-> I don't know why I didn't think of it sooner. :)
+> Instead, it is better to simply "redirect" to "git notes edit" automatically,
+> i.e. open the existing notes in the editor and let the user edit them.
+> This patch does just that.
+> 
+> This changes the behavior of "git notes add" without options when notes
+> already exist for the given object, but I doubt that many users really depend
+> on the previous failure from "git notes add" in this case.
+> 
+> Signed-off-by: Johan Herland <johan@herland.net>
+> ---
+> 
+> On Tuesday 29 March 2011, Junio C Hamano wrote:
+>> Michael J Gruber <drmicha@warpmail.net> writes:
+>>> and while at it rename "add" to "edit"
+>> That one I think is older wart that may be harder to change.
+> 
+> Here's one attempt at giving Michael a nicer "git notes add" without
+> breaking too many existing users. It's not very pretty, but I hope it
+> gets the job done without inconveniencing current users too much.
 
-Note that tests that depend on ( exec ... ) & kill $! must be marked with
-the EXECKEEPSPID prerequisite.
+That is certainly an improvement, though I'm still wondering how large a
+change we're aiming at, given Junio's remarks. Things I would like to
+throw in:
 
--- Hannes
+* options vs. arguments:
+
+"tag", "branch" etc. use options for subcommands, e.g. "tag -d", "branch
+-d" etc. "remote", "stash" use arguments, e.g. "remote add", "stash
+list". I don't see us unifying that, but we should decide about a
+direction to go for "new" commands and stick to that. I feel that
+options are the way to go. What I really feel strongly about is that we
+should decide once and then stick to that for future commands (and may
+be gradually revamping).
+
+* singular vs. plural:
+
+All our porcelain commands are singular even when they deal with
+multiple items (tag, branch, remote, submodule, ...). "notes" is the
+only exception, why not have it be "note"? (That would also open up a
+migration strategy, though the usual suspects may not even bother ;))
+
+* "notes message":
+
+The term seems to be used to distinguish between the content of a note
+and the note object (blob content vs. blob object). A regular git user
+may think it is the commit message in the notes log, i.e.:
+
+git log $(git notes get-ref)
+
+I'm wondering whether we should actually expose those note commit
+messages. If notes are shared then editing a note may require an
+explanation just like other commits do, especially when they get used
+for other things than "notes" in the proper sense.
+
+If we do that, then -m,-c,-C etc. would need to be analogous to "git
+commit -m,-c,-C", i.e. about note commit messages, not about the actual
+note. If we completely discard the possibility that users will look at
+the notes log and write note commit messages, we can use the "regular
+commit message <-> notes content" analogy for the options that we
+partially have now (and adjust -c,-C).
+
+Cheers,
+Michael
