@@ -1,77 +1,67 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [RFC 2/2] Future Proofing: Pass around pointers to either functions or data
-Date: Wed, 30 Mar 2011 15:02:28 +0000
-Message-ID: <429c193b-6bc6-4f13-bd69-af113a4bd145-mfwitten@gmail.com>
-References: <3c6b883f-8860-4da2-b328-d912019a4145-mfwitten@gmail.com>
-            <522d5a8a-a674-40bd-91bf-b5b8f88e0f78-mfwitten@gmail.com>
-            <AANLkTi=nxA0BrLruQ9zc_SajH2ghpZX14Ra7QOo9fMBx@mail.gmail.com>
+Subject: [PATCH 0/4] Miscellaneous Improvements
+Date: Wed, 30 Mar 2011 16:13:18 +0000
+Message-ID: <1fbceaa8-398c-44ec-8833-a03e4cca6805-mfwitten@gmail.com>
+References: <ca8eabbf-ed1b-4b46-a7f7-4b068a2de5b7-mfwitten@gmail.com>
+            <5bddd028-bf38-46b9-a189-bdb09038dfdd-mfwitten@gmail.com>
+            <a59d19d0-f279-43fe-8ac6-06c4bd13c941-mfwitten@gmail.com>
+            <d92be3a1-6f30-4b04-ac38-39058e5a6959-mfwitten@gmail.com>
 Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 17:40:03 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 19:02:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4xV4-0003HH-3o
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 17:40:02 +0200
+	id 1Q4yms-0001L3-16
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 19:02:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932582Ab1C3Pj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 11:39:57 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:48129 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932236Ab1C3Pj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 11:39:56 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 36so1652095wwa.1
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 08:39:56 -0700 (PDT)
+	id S932971Ab1C3RCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 13:02:14 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:40054 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932933Ab1C3RCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 13:02:10 -0400
+Received: by mail-px0-f179.google.com with SMTP id 2so298886pxi.10
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 10:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:date:from:to:cc:message-id:in-reply-to
-         :references;
-        bh=G0WJfSma1v3c3tkcB24nMJ/I17BjCPH+3lfksnmYuhE=;
-        b=KqYwEj4PXQE/G7ziywy3H3Pt4dcEUHt7eZe9h5EsFncyRWFzpy2XmmOMOQkUnJigDR
-         qlLKXkkJaLUfWE4DjbUDibBAdW+entHoHjD03caytFERFgB3Nznsq1qGluPe21JyO7Dg
-         CFqQTNp9gQxAGR1ocnhL+Xr3jZXq7+JDFbb5M=
+        h=domainkey-signature:subject:date:from:to:cc:message-id:references;
+        bh=I/g9j97vppPjkWwvM/Tb4X2QpI/LT3yKLxCALNsZPJI=;
+        b=lmGMb53UnnJ0Ko0t6YGSkgU30vaOk5M2VUcsgqrKJfjLi8gcneZW6Nec5hxNGxsVRq
+         vZcUyJajufy3/sH9tEWR51tm4YLqEF3Rm+I1Eundp0YBpv8coT6BNt2m++OkslWh7nIo
+         KQuagBournsURFHTAK3lfs99qCIfZ9I32Rlws=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:date:from:to:cc:message-id:in-reply-to:references;
-        b=q5W2R3EPN+6HeTic7nB1IsLYB+OkoxxYYDilCKYFPDBRJMRA0RyTWMXncaESOUCH+0
-         UidyxUM3Gue1z1HT6wsOl4RGsCkvBQA7McCDjTy+HKfzLFG/w6Sf9y6CKomgF1EJi7HY
-         oV/RcyUmBTAtXc+FGmVg8cySOQF3gW0ciQB1E=
-Received: by 10.216.66.131 with SMTP id h3mr1332740wed.111.1301497407819;
-        Wed, 30 Mar 2011 08:03:27 -0700 (PDT)
-Received: from gmail.com (s214856783.online.de [87.106.138.84])
-        by mx.google.com with ESMTPS id f52sm82935wes.11.2011.03.30.08.03.25
+        h=subject:date:from:to:cc:message-id:references;
+        b=qMM1oeAhZQnBbXasN0vVQTtLiSrwX7RjmUXHlMLiiNxL9LbCSHiHIogi8UYCnkcw2a
+         XSvf9E6D3LD6uqa2PnVNoYYhT0TK88i2X3insIBXAFhYGY9lHTgJ5cM8bPLRnf630SQc
+         xYIfqFjZ9GuIJD3wyPo9T7Ce+CZR/1GWFaNk4=
+Received: by 10.142.148.16 with SMTP id v16mr1086718wfd.447.1301504529966;
+        Wed, 30 Mar 2011 10:02:09 -0700 (PDT)
+Received: from gmail.com (u199-48-147-004.appliedops.net [199.48.147.4])
+        by mx.google.com with ESMTPS id m10sm306990wfl.23.2011.03.30.10.02.08
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 08:03:26 -0700 (PDT)
-In-Reply-To: <AANLkTi=nxA0BrLruQ9zc_SajH2ghpZX14Ra7QOo9fMBx@mail.gmail.com>
+        Wed, 30 Mar 2011 10:02:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170391>
 
-On Wed, 30 Mar 2011 12:09:46 +0200, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> On Tue, Mar 29, 2011 at 5:28 PM, Michael Witten <mfwitten@gmail.com> wrote:
->> +#define ALT_ODB_FN_INFO_FUNC(variable, function) \
->> +       union alt_odb_fn_info variable = { \
->> +               .func = (alt_odb_fn_cb)function \
->> +       }
->> +#define ALT_ODB_FN_INFO_DATA(variable, data_) \
->> +       union alt_odb_fn_info variable = { \
->> +               .data = data_ \
->> +       }
->
-> We try to stay away from C99 features like this, as it doesn't work on
-> all compilers we target.
+Michael Witten (4):
+  Typos: t/README
+  Clean: Remove superfluous strbuf 'docs'
+  Clean: Remove unnecessary `\' (line continuation)
+  Clean: Remove useless parameters from both get_commit_info() functions
 
-How about changing it to this:
+ builtin/blame.c     |   14 ++++----------
+ reflog-walk.c       |   18 ++++--------------
+ strbuf.h            |   37 +------------------------------------
+ t/README            |   11 +++++------
+ t/t8001-annotate.sh |    2 +-
+ 5 files changed, 15 insertions(+), 67 deletions(-)
 
-#define ALT_ODB_FN_INFO_FUNC(variable, function) \
-	union alt_odb_fn_info variable; do { \
-		variable.func = (alt_odb_fn_cb)function; \
-	} while (0)
-#define ALT_ODB_FN_INFO_DATA(variable, data_) \
-	union alt_odb_fn_info variable; do { \
-		variable.data = data_ \
-	} while (0)
+-- 
+1.7.4.18.g68fe8
