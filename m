@@ -1,93 +1,74 @@
-From: Tilman Vogel <tilman.vogel@web.de>
-Subject: RFC: script to manually associate files after failed rename detection
- in conflicting merge
-Date: Wed, 30 Mar 2011 15:38:37 +0200
-Message-ID: <4D93325D.70403@web.de>
+From: Jeff King <peff@peff.net>
+Subject: [tig PATCH] blame broken in recent master
+Date: Wed, 30 Mar 2011 10:24:30 -0400
+Message-ID: <20110330142430.GA32523@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 15:38:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Wed Mar 30 16:25:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4vbj-0007Ky-11
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 15:38:47 +0200
+	id 1Q4wL2-0002Qc-C2
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 16:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754785Ab1C3Nim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 09:38:42 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35357 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750798Ab1C3Nil (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 09:38:41 -0400
-Received: by fxm17 with SMTP id 17so1047113fxm.19
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 06:38:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:sender:message-id:date:from:user-agent
-         :mime-version:to:subject:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=+aTD4SthEZNjklpKm4wh7mGXI9BQ5DnrlHaxJmoNDzA=;
-        b=Oyuc4Zzokw2QyeTpA/kPuIN2ESkFNPBFSylWWYlCrIAyLRDvvzXOv0C0tVYx5hlpuy
-         ZXnELC/P/HU+Dj+VopNeiH7dO7taD7444TbDmCeTYmq5D6eBouXwONiFZw9jesnNWXtB
-         lX/qoz8SYuKN/7J8E6Bgcjgw16Eza7U1iRZbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        b=J4rSf3sbuva411JN9zoMOtcD+2OeRyvQe2dgNQO+XfLqKXAXbTctn9MydnIDrvKUZQ
-         lGqLaG/urR1TrjNPPc6l8Go+rxv5mZtxtRvKpKpY2FsX3EGBLQOTqQJLibpXD5hJespn
-         bRvX0WBPnqoWfmHI+e3C7sJTZlgPsToJt/MmY=
-Received: by 10.223.2.2 with SMTP id 2mr1277722fah.47.1301492320187;
-        Wed, 30 Mar 2011 06:38:40 -0700 (PDT)
-Received: from atrium.lan (e178193092.adsl.alicedsl.de [85.178.193.92])
-        by mx.google.com with ESMTPS id n15sm45334fam.36.2011.03.30.06.38.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 06:38:39 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.11) Gecko/20101013 SUSE/3.1.5 Thunderbird/3.1.5
-X-Enigmail-Version: 1.1.2
+	id S932593Ab1C3OYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 10:24:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55045
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754812Ab1C3OYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 10:24:37 -0400
+Received: (qmail 10534 invoked by uid 107); 30 Mar 2011 14:25:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Mar 2011 10:25:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2011 10:24:30 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170387>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As of 730ae86 (Rename prepare_io to prepare_update and make it more
+specialized, 2011-03-16), "tig blame" finds no actual blamed commits.
 
-Hi!
+The problem seems to be that prepare_update switched from calling
+format_argv to argv_copy, and we end up calling "git blame %(blameargs)"
+without "%(blameargs)" expanded. Blame looks like the only caller which
+actually uses a placeholder, so it is the only one broken.
 
-I am aware of the fact that recently, git gained the ability to control
-the rename-threshold in merges. Still, it might sometimes be useful to
-have manual control about what gets associated as a rename.
+The patch below fixes it for me, but it seems like a hack. I'm not
+really sure why the switch in prepare_update was made; clearly it is
+part of some refactoring, but I'm not sure what your larger plans were.
 
-This is a first try to write a script that makes this task easy. I
-tested it here on CONFLICT (delete/modify) results and it seems to work
-quite well.
-
-I would be interested in feedback, in particular whether something
-similar is present already, even though I couldn't find anything other
-than the instructions in the FAQ.
-
-I put the script on gist.github.com at
-
-<https://gist.github.com/894374>
-
-Another, a little related question: Is anybody already working on making
-"git checkout -m" allow "-X" options? I'd really he happy about "-X
-ignore-space-change" and its relatives.
-
-Thanks for any feedback,
-
-Tilman
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.15 (GNU/Linux)
-Comment: Using GnuPG with SUSE - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk2TMl0ACgkQ9ZPu6Yae8lkbiQCgkZ6KkzYqPER6sjKgd+JmZU4P
-9joAnjWflRjgqJ24RX+8AjcRU2uKBmGK
-=7GfJ
------END PGP SIGNATURE-----
+---
+diff --git a/tig.c b/tig.c
+index c1e5270..9ef61d3 100644
+--- a/tig.c
++++ b/tig.c
+@@ -4240,15 +4240,20 @@ blame_read_file(struct view *view, const char *line, bool *read_file)
+ 			"git", "blame", "%(blameargs)", "--incremental",
+ 				*opt_ref ? opt_ref : "--incremental", "--", opt_file, NULL
+ 		};
++		const char **formatted_argv = NULL;
++
++		format_argv(&formatted_argv, blame_argv, FALSE, !view->prev);
+ 
+ 		if (view->lines == 0 && !view->prev)
+ 			die("No blame exist for %s", view->vid);
+ 
+-		if (view->lines == 0 || !start_update(view, blame_argv, opt_cdup)) {
++		if (view->lines == 0 || !start_update(view, formatted_argv, opt_cdup)) {
+ 			report("Failed to load blame data");
++			argv_free(formatted_argv);
+ 			return TRUE;
+ 		}
+ 
++		argv_free(formatted_argv);
+ 		*read_file = FALSE;
+ 		return FALSE;
+ 
