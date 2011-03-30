@@ -1,68 +1,71 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] Documentation/config.txt: make truth value of numbers more explicit
-Date: Wed, 30 Mar 2011 12:22:32 +0200
-Message-ID: <1301480552-23940-1-git-send-email-cmn@elego.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Git Pack: Improving cache performance (maybe a good GSoC practice)
+Date: Wed, 30 Mar 2011 14:07:22 +0200
+Message-ID: <AANLkTikD9OrboQ_0Qi+6vsJz3Bxe5g5GazTCP4LUFynN@mail.gmail.com>
+References: <4D925B63.9040405@googlemail.com> <AANLkTin6z3hM7nyMqOUPdHrY9TmRVAzpchM+4O=S7KKj@mail.gmail.com>
+ <4D92EDA0.8030309@googlemail.com> <AANLkTim+Ge2c-i_jUi8YN8g+cQmXuyKYrdHC+jYukjQy@mail.gmail.com>
+ <4D92FD9D.8040707@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 12:22:40 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Vicent Marti <vicent@github.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Sebastian Thiel <byronimo@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 14:07:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4sXv-000652-IR
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 12:22:39 +0200
+	id 1Q4uBi-00056z-IP
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 14:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184Ab1C3KWe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Mar 2011 06:22:34 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:42837 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755762Ab1C3KWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 06:22:34 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 9D5844611D;
-	Wed, 30 Mar 2011 12:22:23 +0200 (CEST)
-Received: (nullmailer pid 23990 invoked by uid 1000);
-	Wed, 30 Mar 2011 10:22:32 -0000
-X-Mailer: git-send-email 1.7.4.1
+	id S1755868Ab1C3MHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 08:07:45 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51739 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754285Ab1C3MHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 08:07:44 -0400
+Received: by fxm17 with SMTP id 17so979265fxm.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 05:07:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=JzhdG4EX4XAxFdXy/NomgaFiy8x8ajVTD4zYWeI1T3U=;
+        b=slTTuWqbBo8XAtlFnTJ7n2vFZCVcGbuSESO26q8IVSovdcib/NmL33jvpmCkNzmndo
+         igOOlrFnGFXEZryv2iHxetyNXPKg0vKNwhtHkTLsrd+YXfzjesy6/jr37QaT4BaUrsgo
+         IL2gyeGNSs7uzkiVjDY4th+Duz35nYApCQ77s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=JKTgN1QY9Jm5m3Mq0OG+t0HLnz8Ap368yDKBD/FVWjqyefUZ4dtlMLZB6qxLftk3uV
+         y76x8G/87dkHP1RcPS73Ts9aMhyRNwi6/6maY5M9ZcT3etydUVN5KlbBxIOn5sYr9C5e
+         hF051N+xiWa8x0vAQBJ6NhynY/AIUGB82+MxI=
+Received: by 10.223.35.147 with SMTP id p19mr1208530fad.13.1301486863053; Wed,
+ 30 Mar 2011 05:07:43 -0700 (PDT)
+Received: by 10.223.126.145 with HTTP; Wed, 30 Mar 2011 05:07:22 -0700 (PDT)
+In-Reply-To: <4D92FD9D.8040707@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170377>
 
-Change the order to 1/0 to have the same true/false order as the rest
-of the possibilities for a boolean variable in order not not confuse
-users.
+On Wed, Mar 30, 2011 at 11:53 AM, Sebastian Thiel
+<byronimo@googlemail.com> wrote:
+> Thank you very much for the heads-up - I was using old mirrors it appears:
+>
+> git://repo.or.cz/libgit2.git
+> git://repo.or.cz/libgit2/raj.git
+>
+> Its quite terrible that I was left thinking that the project stalled for
+> so long, and it was hard for me to understand why people would continue
+> to bring it up :).
+> Now it all makes sense !
+>
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
-
-Though if I read the source correctly, anything other than a 0 will
-give a true result, but it's better if we tell people to use 1.
-
- Documentation/config.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 701fba9..1a571f4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -62,7 +62,7 @@ Internal whitespace within a variable value is retain=
-ed verbatim.
-=20
- The values following the equals sign in variable assign are all either
- a string, an integer, or a boolean.  Boolean values may be given as ye=
-s/no,
--0/1, true/false or on/off.  Case is not significant in boolean values,=
- when
-+1/0, true/false or on/off.  Case is not significant in boolean values,=
- when
- converting value to the canonical form using '--bool' type specifier;
- 'git config' will ensure that the output is "true" or "false".
-=20
---=20
-1.7.4.1
+I was also confused by this at first. Shawn, would you mind updating
+the readme-field in the repo.or.cz-mirror to reflect that the project
+has moved to GitHub?
