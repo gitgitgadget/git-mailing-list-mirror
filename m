@@ -1,231 +1,234 @@
-From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-Subject: [PATCH] submodule: Add --force option for git submodule update
-Date: Wed, 30 Mar 2011 09:56:21 +0200
-Message-ID: <4D92E225.3040602@morey-chaisemartin.com>
-Reply-To: devel-git@morey-chaisemartin.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC svn-fe] tests: introduce helper to fill a pipe in the
+ background
+Date: Wed, 30 Mar 2011 03:16:43 -0500
+Message-ID: <20110330081643.GD2793@elie>
+References: <71372d7d-dd08-4945-a8bc-c7b981c09fb2-mfwitten@gmail.com>
+ <20110329200230.GA377@elie>
+ <20110329221652.GB23510@sigill.intra.peff.net>
+ <20110329234955.GB14578@elie>
+ <20110330001653.GA1161@sigill.intra.peff.net>
+ <20110330002921.GC14578@elie>
+ <20110330033017.GA18157@sigill.intra.peff.net>
+ <20110330035733.GA2793@elie>
+ <20110330041339.GA26281@sigill.intra.peff.net>
+ <4D92D3A8.3090301@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 09:56:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, David Barr <david.barr@cordelta.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 10:16:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4qGS-0007xw-Hn
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 09:56:28 +0200
+	id 1Q4qaH-00005X-Ai
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 10:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218Ab1C3H4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 03:56:25 -0400
-Received: from 30.mail-out.ovh.net ([213.186.62.213]:44852 "HELO
-	30.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752641Ab1C3H4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 03:56:24 -0400
-Received: (qmail 5431 invoked by uid 503); 30 Mar 2011 07:45:56 -0000
-Received: from b9.ovh.net (HELO mail417.ha.ovh.net) (213.186.33.59)
-  by 30.mail-out.ovh.net with SMTP; 30 Mar 2011 07:45:56 -0000
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 30 Mar 2011 09:56:21 +0200
-Received: from mailhost.kalray.eu (HELO sat.lin.mbt.kalray.eu) (devel-git@morey-chaisemartin.com@217.108.237.233)
-  by ns0.ovh.net with SMTP; 30 Mar 2011 09:56:21 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Lightning/1.0b2 Thunderbird/3.1.9
-X-Ovh-Tracer-Id: 16295430827636285406
-X-Ovh-Remote: 217.108.237.233 (mailhost.kalray.eu)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|U 0.5/N
+	id S1754647Ab1C3IQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 04:16:51 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:43381 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752925Ab1C3IQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 04:16:49 -0400
+Received: by iwn34 with SMTP id 34so999252iwn.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 01:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=04+pVDC1DmnkjS8FAX996/JPBxyTUKkEZAhkagk3i5o=;
+        b=gLAVsj7uZ9ayis8PAxPKVcICOwbmu7hT0W71M7hj2VFtw/nwPb8GLsFZq+aW8TE2/w
+         DmHnD/wSFBZ2UIdxSBc0jU28aD5nIQOBX0wUVd7thcMenAI7CTD5MOB14LhWzCN868Cs
+         brqF2YypPXKa8t0jVSaxu7PkyDuY2/JFPz5uQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iKWrb/khF5okT53gOBv9+wAliZ5xKFcyUky3cxh6MiHR4cfZL+UwOg2zBLtR2p9Ols
+         pYD55E/8VL71x4q9hI03FmW39ctTmsdLVA0sbi9dsmc6FUf1F1/yiJ56Gz6tRkH0UOxK
+         yuWHGap/21gdtT6bJU3IRmlF5GPLjeyzkWqMo=
+Received: by 10.43.60.71 with SMTP id wr7mr858129icb.148.1301473008566;
+        Wed, 30 Mar 2011 01:16:48 -0700 (PDT)
+Received: from elie (adsl-68-255-107-98.dsl.chcgil.sbcglobal.net [68.255.107.98])
+        by mx.google.com with ESMTPS id s1sm4211218iba.41.2011.03.30.01.16.46
+        (version=SSLv3 cipher=OTHER);
+        Wed, 30 Mar 2011 01:16:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D92D3A8.3090301@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170363>
 
-By default git submodule update runs a simple checkout on submodules
-that are not up-to-date.
-If the submodules contains modified or untracked files, the command may
-exit sanely with an error:
+The fill_input function generates a fifo and runs a command to write
+to it and wait.  The intended use is to check that specialized
+programs can find the end of their input without reading too much or
+relying on EOF or SIGPIPE.  For example:
 
-$ git submodule update
-error: Your local changes to the following files would be overwritten by
-checkout:
-	file
-Please, commit your changes or stash them before you can switch branches.
-Aborting
-Unable to checkout '1b69c6e55606b48d3284a3a9efe4b58bfb7e8c9e' in
-submodule path 'test1'
+	fill_input "echo hi" &&
+	head -1 input
 
-This implies that to reset a whole git submodule tree, a user has to run
-first 'git submodule foreach --recursive git checkout -f' to then be
-able to run git submodule update.
+will succeed, while
 
-This patch adds a --force option for the update command (only used for
-submodules without --rebase or --merge options). It passes the --force
-option to git checkout which will throw away the local changes.
-Also when --force is specified, git checkout -f is always called on
-submodules whether their HEAD matches the reference or not.
+	fill_input "echo hi" &&
+	head -2 input
 
-Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+will hang.
+
+It works by running the indicated commands followed by
+"exec sleep 100" in a background process; the process ID is later
+passed to "kill" to avoid leaving behind random processes.
+
+Several tests already did something like that but this adds some
+improvements:
+
+  1. Wrap the "kill" in a test_when_finished, since we want
+     to clean up the process whether the test succeeds or not.
+
+  2. Mark the kill as OK to fail.  These tests are not about
+     whether the input generating function dies due to SIGPIPE
+     or the system is slow enough for the timer to expire early
+     but about what happens on the downstream end.
+
+  3. Mark the relevant tests with the EXECKEEPSPID prerequisite.
+
+Based-on-patch-by: Jeff King <peff@peff.net>
+Improved-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/git-submodule.txt |    5 ++-
- git-submodule.sh                |   68 ++++++++++++++++++++------------------
- t/t7406-submodule-update.sh     |   23 +++++++++++++
- 3 files changed, 62 insertions(+), 34 deletions(-)
+Johannes Sixt wrote:
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 3a5aa01..6482a84 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -185,8 +185,9 @@ OPTIONS
+> Note that tests that depend on ( exec ... ) & kill $! must be marked with
+> the EXECKEEPSPID prerequisite.
+
+Hmm, that's a shame, since the point of writing t0081 was to make sure
+some assumptions the line-buffer lib makes are valid on Windows.  So I
+suspect a better thing to do would be to remove t0081 --- the
+line-buffer lib is simple, everyday use exercises it pretty well
+already, and I can't imagine this script catching a bug.
+
+ t/t0081-line-buffer.sh |   61 ++++++++++++++++++++++--------------------------
+ 1 files changed, 28 insertions(+), 33 deletions(-)
+
+diff --git a/t/t0081-line-buffer.sh b/t/t0081-line-buffer.sh
+index 5067d1e..fb09ff1 100755
+--- a/t/t0081-line-buffer.sh
++++ b/t/t0081-line-buffer.sh
+@@ -14,6 +14,25 @@ correctly.
  
- -f::
- --force::
--	This option is only valid for the add command.
--	Allow adding an otherwise ignored submodule path.
-+	This option is only valid for add and update commands.
-+	When running add, allow adding an otherwise ignored submodule path.
-+	When running update, throw away local changes in submodules.
+ test -n "$GIT_REMOTE_SVN_TEST_BIG_FILES" && test_set_prereq EXPENSIVE
  
- --cached::
- 	This option is only valid for status and summary commands.  These
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 3a13397..a195879 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -8,7 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
- USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <repository> [<path>]
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
--   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--] [<path>...]"
-@@ -385,6 +385,9 @@ cmd_update()
- 		-N|--no-fetch)
- 			nofetch=1
- 			;;
-+		-f | --force)
-+			force=$1
-+			;;
- 		-r|--rebase)
- 			update="rebase"
- 			;;
-@@ -430,6 +433,7 @@ cmd_update()
- 		name=$(module_name "$path") || exit
- 		url=$(git config submodule."$name".url)
- 		update_module=$(git config submodule."$name".update)
-+		force_checkout=
- 		if test -z "$url"
- 		then
- 			# Only mention uninitialized submodules when its
-@@ -456,13 +460,38 @@ cmd_update()
- 			update_module=$update
- 		fi
- 
--		if test "$subsha1" != "$sha1"
-+		if test -z "$subsha1" -a -z "$force"
-+		then
-+		    force_checkout="-f"
-+		fi
++fill_input () {
++	if
++		! test_declared_prereq PIPE ||
++		! test_declared_prereq EXECKEEPSPID
++	then
++		echo >&4 "fill_input requires PIPE,EXECKEEPSPID prerequisites"
++		return 127
++	fi &&
++	rm -f input &&
++	mkfifo input &&
++	{
++		(
++			eval "$*" &&
++			exec sleep 100
++		) >input &
++	} &&
++	test_when_finished "kill $!"
++}
 +
-+		# Is this something we just cloned?
-+		case ";$cloned_modules;" in
-+		    *";$name;"*)
-+			 # then there is no local change to integrate
-+			 update_module= ;;
-+		esac
-+
-+		case "$update_module" in
-+		    rebase)
-+			 command="git rebase"
-+			 action="rebase"
-+			 msg="rebased onto"
-+			 ;;
-+		    merge)
-+			 command="git merge"
-+			 action="merge"
-+			 msg="merged in"
-+			 ;;
-+		    *)
-+			 command="git checkout $force $force_checkout -q"
-+			 action="checkout"
-+			 msg="checked out"
-+			 ;;
-+		esac
-+
-+		if test "$subsha1" != "$sha1" || test -n "$force" -a "$action" = "checkout"
- 		then
--			force=
--			if test -z "$subsha1"
--			then
--				force="-f"
--			fi
+ generate_tens_of_lines () {
+ 	tens=$1 &&
+ 	line=$2 &&
+@@ -35,28 +54,15 @@ long_read_test () {
+ 	line=abcdefghi &&
+ 	echo "$line" >expect &&
  
- 			if test -z "$nofetch"
- 			then
-@@ -471,31 +500,6 @@ cmd_update()
- 				die "Unable to fetch in submodule path '$path'"
- 			fi
- 
--			# Is this something we just cloned?
--			case ";$cloned_modules;" in
--			*";$name;"*)
--				# then there is no local change to integrate
--				update_module= ;;
--			esac
--
--			case "$update_module" in
--			rebase)
--				command="git rebase"
--				action="rebase"
--				msg="rebased onto"
--				;;
--			merge)
--				command="git merge"
--				action="merge"
--				msg="merged in"
--				;;
--			*)
--				command="git checkout $force -q"
--				action="checkout"
--				msg="checked out"
--				;;
--			esac
--
- 			(clear_local_git_env; cd "$path" && $command "$sha1") ||
- 			die "Unable to $action '$sha1' in submodule path '$path'"
- 			say "Submodule path '$path': $msg '$sha1'"
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index fa9d23a..5d24d9f 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -74,6 +74,29 @@ test_expect_success 'submodule update detaching the HEAD ' '
- 	)
+-	if ! test_declared_prereq PIPE
+-	then
+-		echo >&4 "long_read_test: need to declare PIPE prerequisite"
+-		return 127
+-	fi &&
+ 	tens_of_lines=$(($1 / 100 + 1)) &&
+ 	lines=$(($tens_of_lines * 10)) &&
+ 	readsize=$((($lines - 1) * 10 + 3)) &&
+ 	copysize=7 &&
+-	rm -f input &&
+-	mkfifo input &&
+-	{
+-		(
+-			generate_tens_of_lines $tens_of_lines "$line" &&
+-			exec sleep 100
+-		) >input &
+-	} &&
++	fill_input "generate_tens_of_lines $tens_of_lines $line" &&
+ 	test-line-buffer input <<-EOF >output &&
+ 	binary $readsize
+ 	copy $copysize
+ 	EOF
+-	kill $! &&
+ 	test_line_count = $lines output &&
+ 	tail -n 1 <output >actual &&
+ 	test_cmp expect actual
+@@ -79,18 +85,13 @@ test_expect_success 'hello world' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'submodule update should fail due to local changes' '
-+	(cd super/submodule &&
-+	 git reset --hard HEAD~1 &&
-+	 echo "local change" > file
-+	) &&
-+	(cd super &&
-+	 (cd submodule &&
-+	  compare_head
-+	 ) &&
-+	 test_must_fail git submodule update submodule
-+	)
-+'
-+test_expect_success 'submodule update should throw away changes with --force ' '
-+	(cd super &&
-+	 (cd submodule &&
-+	  compare_head
-+	 ) &&
-+	 git submodule update --force submodule &&
-+	 cd submodule &&
-+	 ! compare_head
-+	)
-+'
-+
- test_expect_success 'submodule update --rebase staying on master' '
- 	(cd super/submodule &&
- 	  git checkout master
+-test_expect_success PIPE '0-length read, no input available' '
++test_expect_success PIPE,EXECKEEPSPID '0-length read, no input available' '
+ 	printf ">" >expect &&
+-	rm -f input &&
+-	mkfifo input &&
+-	{
+-		sleep 100 >input &
+-	} &&
++	fill_input : &&
+ 	test-line-buffer input <<-\EOF >actual &&
+ 	binary 0
+ 	copy 0
+ 	EOF
+-	kill $! &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -104,26 +105,20 @@ test_expect_success '0-length read, send along greeting' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success PIPE '1-byte read, no input available' '
++test_expect_success PIPE,EXECKEEPSPID '1-byte read, no input available' '
+ 	printf ">%s" ab >expect &&
+-	rm -f input &&
+-	mkfifo input &&
+-	{
+-		(
+-			printf "%s" a &&
+-			printf "%s" b &&
+-			exec sleep 100
+-		) >input &
+-	} &&
++	fill_input "
++		printf a &&
++		printf b
++	" &&
+ 	test-line-buffer input <<-\EOF >actual &&
+ 	binary 1
+ 	copy 1
+ 	EOF
+-	kill $! &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success PIPE 'long read (around 8192 bytes)' '
++test_expect_success PIPE,EXECKEEPSPID 'long read (around 8192 bytes)' '
+ 	long_read_test 8192
+ '
+ 
+-- 
+1.7.4.2
