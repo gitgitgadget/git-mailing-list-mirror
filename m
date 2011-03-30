@@ -1,75 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: error: cannot run hooks/pre-receive: No such file or directory
-Date: Wed, 30 Mar 2011 16:04:42 -0400
-Message-ID: <20110330200442.GA30663@sigill.intra.peff.net>
-References: <AANLkTinehsLJWYona7ONqquWpCZozr3hW-JNMhYz4Rvn@mail.gmail.com>
+Subject: Re: Problem with git bundle.
+Date: Wed, 30 Mar 2011 16:18:19 -0400
+Message-ID: <20110330201819.GB30663@sigill.intra.peff.net>
+References: <1301488591248-6222619.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Mathieu Malaterre <mathieu.malaterre@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 22:05:01 2011
+To: mav007ar <mav007ar@yahoo.com.ar>
+X-From: git-owner@vger.kernel.org Wed Mar 30 22:18:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q51dV-000609-5b
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 22:05:01 +0200
+	id 1Q51qh-0004Ne-Dq
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 22:18:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932890Ab1C3UEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 16:04:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46555
+	id S932894Ab1C3USY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 16:18:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52222
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932880Ab1C3UEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 16:04:45 -0400
-Received: (qmail 21343 invoked by uid 107); 30 Mar 2011 20:05:26 -0000
+	id S932884Ab1C3USX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 16:18:23 -0400
+Received: (qmail 21429 invoked by uid 107); 30 Mar 2011 20:19:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Mar 2011 16:05:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2011 16:04:42 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Mar 2011 16:19:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2011 16:18:19 -0400
 Content-Disposition: inline
-In-Reply-To: <AANLkTinehsLJWYona7ONqquWpCZozr3hW-JNMhYz4Rvn@mail.gmail.com>
+In-Reply-To: <1301488591248-6222619.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170421>
 
-On Wed, Mar 30, 2011 at 03:27:14PM +0200, Mathieu Malaterre wrote:
+On Wed, Mar 30, 2011 at 05:36:31AM -0700, mav007ar wrote:
 
-> $ git push
-> Counting objects: 5, done.
-> Delta compression using up to 4 threads.
-> Compressing objects: 100% (3/3), done.
-> Writing objects: 100% (3/3), 304 bytes, done.
-> Total 3 (delta 2), reused 0 (delta 0)
-> error: cannot run hooks/pre-receive: No such file or directory
-> To ssh://malat@gdcm.git.sourceforge.net/gitroot/gdcm/gdcm.old
->  ! [remote rejected] master -> master (pre-receive hook declined)
-> error: failed to push some refs to
-> 'ssh://malat@gdcm.git.sourceforge.net/gitroot/gdcm/gdcm.old'
-
-We won't try to execute a hook that doesn't exist, so the "no such file
-or directory" almost certainly means the #! interpreter is missing.
-
-> I tried with something as simple as :
+> Hi everyone. I am using git-svn and I want transfer a repository using git
+> bundle create ...
+> Does anyone has the right steps to perform this task?
+> Currently I'm doing the following.
 > 
-> % cat pre-receive
-> #!/usr/bin/ruby
-> % which ruby
-> /usr/bin/ruby
+> 1- git bundle create  --all
+> 2- git clone 
+> 3- cd into repository's directory just created.
+> 4- Add [svn-remote "svn"]
+>         url = https://svn.swacorp.com/svn/commerce/trunk/commerce-project
+>         fetch = :refs/remotes/git-svn
+> into the .git/config file.
+> 5- git svn fetch svn.
+> 
+> The problem is when I do the last step, I get ALL revisions with out
+> considering the revision included into the bundle.
 
-This might be a stupid question, but which machine is that output from?
-The pre-receive hook runs on the server, so you must have ruby there. I
-ask mainly because I didn't realize sourceforge would give people
-arbitrary shell access on the git boxes.
+Clone will only clone what's in refs/heads of the bundle. In your case,
+you also want the refs/remotes/git-svn branch (which is probably the
+same as the "master" you bring across in the bundle).
 
-My next guess would be that the git process runs in some kind of chroot
-that doesn't have ruby in it.
+So you could do this in the cloned repo:
 
-> Do I need to do something special with ruby ?
+  git update-ref refs/remotes/git-svn master
 
->From git's perspective, no, but it may depend on how the server is
-configured.
+And then your svn fetch should be much faster.
+
+But note that git-svn also keeps some magic cache in .git/svn. If you
+bring that information across, too, the initial fetch would probably be
+faster. So I really wonder if what you want instead of bundle is to
+simply tar up the .git directory of the original repo and copy the whole
+thing to your destination.
 
 -Peff
