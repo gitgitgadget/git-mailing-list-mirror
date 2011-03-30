@@ -1,77 +1,98 @@
-From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-Subject: Re: [PATCH] submodule: Add --force option for git submodule update
-Date: Wed, 30 Mar 2011 22:19:42 +0200
-Message-ID: <4D93905E.5030806@morey-chaisemartin.com>
-References: <4D92E225.3040602@morey-chaisemartin.com> <4D93773C.2010807@web.de> <4D937B7E.10808@morey-chaisemartin.com> <4D937F09.10000@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] remote: separate the concept of push and fetch
+ mirrors
+Date: Wed, 30 Mar 2011 13:45:59 -0700
+Message-ID: <7vhbakmj5k.fsf@alter.siamese.dyndns.org>
+References: <20110330195139.GA814@sigill.intra.peff.net>
+ <20110330195318.GB30624@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Mar 30 22:19:54 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: chris <jugg@hotmail.com>, Jan Hudec <bulb@ucw.cz>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 22:46:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q51rt-0005AC-Ni
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 22:19:54 +0200
+	id 1Q52HT-0002z6-Qb
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 22:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932861Ab1C3UTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 16:19:48 -0400
-Received: from 30.mail-out.ovh.net ([213.186.62.213]:59562 "HELO
-	30.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S932792Ab1C3UTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 16:19:47 -0400
-Received: (qmail 5255 invoked by uid 503); 30 Mar 2011 20:09:16 -0000
-Received: from b9.ovh.net (HELO mail417.ha.ovh.net) (213.186.33.59)
-  by 30.mail-out.ovh.net with SMTP; 30 Mar 2011 20:09:16 -0000
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 30 Mar 2011 22:19:44 +0200
-Received: from mut38-4-82-233-116-185.fbx.proxad.net (HELO uranus.nicolas.morey-chaisemartin.com) (nicolas@morey-chaisemartin.com@82.233.116.185)
-  by ns0.ovh.net with SMTP; 30 Mar 2011 22:19:43 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Lightning/1.0b2 Thunderbird/3.1.9
-In-Reply-To: <4D937F09.10000@web.de>
-X-Ovh-Tracer-Id: 10403033665830182839
-X-Ovh-Remote: 82.233.116.185 (mut38-4-82-233-116-185.fbx.proxad.net)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|U 0.5/N
+	id S932331Ab1C3UqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 16:46:14 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34797 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755389Ab1C3UqN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 16:46:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1F7674293;
+	Wed, 30 Mar 2011 16:47:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6Cug2J4S+r1n0k1q/Cd0DsSxMXE=; b=HkfHJy
+	SEvBXKLXjGJmKrVt3+qKyicuwfXZVFpnjtZsaB3zRfKUKKA2tptyN25hfkO2/ZBU
+	Cif5WpZ49e+Je9zGhV0rY2CnT9xxsoJ91aRcySYdhcifQ7gSW2UdAQJ5X0Jn43W1
+	n+Esq9vk1okgbA4MiMmQq7pb2zrxLrrQEg/yc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=we8wfzSwdOBPRzlvZ2i6RYRSvNh5rvFb
+	nPTVMzxAnoA8nsiOLnyCIv+QIg00cVcTIrD3wYhbr6ENeWlHZNykjY5ogJTDkvmo
+	sZseJ8d3o4bEMKY8YE2qRThDrlZoXwXF96ESZc94SuKw594u+LvBOOZf5FnHgdlD
+	t6Vg5KqyoKY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CFC684292;
+	Wed, 30 Mar 2011 16:47:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 481BA428E; Wed, 30 Mar 2011
+ 16:47:48 -0400 (EDT)
+In-Reply-To: <20110330195318.GB30624@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 30 Mar 2011 15:53:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FC0F7A56-5B0E-11E0-8EBB-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170423>
 
-On 03/30/2011 09:05 PM, Jens Lehmann wrote:
->> I know it is very intrusive. The main reason for that is I wanted the -f option to always behave the same (meaning throw away changes),
->> whether the submodule is already on the right commit or not.
-> 
-> Hmm, I don't know if that is a good thing to do. People are used to
-> "git submodule update" to only touch those submodule where the HEAD
-> differs from the commit recorded in the superproject (And I often
-> find myself using "-f" if the command didn't succeed without it).
-> But when using "-f" touches other submodules than not using it the
-> user might experience a rather unpleasant surprise, I'm not sure we
-> want to go that way.
-> 
+Jeff King <peff@peff.net> writes:
 
-Well I was'nt sure about it either.
-The idea for me was to be able to put the repo and submodules in the cloned state (except for ignored files)
-In the current version the right thing to do is a bit of a mess:
-$ git submodule foreach --recursive 'git checkout -f HEAD'
-$ git submodule foreach --recursive 'git clean -f' # An untracked file on HEAD may be overwrittent by the new HEAD so checkout may fail if you don't do that
-$ git submodule update --recursive
+> git-remote currently has one option, "--mirror", which sets
+> up mirror configuration which can be used for either
+> fetching or pushing. It looks like this:
+>
+>   [remote "mirror"]
+>     url = wherever
+>     fetch = +refs/*:refs/*
+>     mirror = true
+>
+> However, a remote like this can be dangerous and confusing.
 
-Hopefully with --force we can simplify to:
-$ git submodule foreach --recursive 'git checkout -f HEAD'
-$ git submodule update --recursive --force
+When --mirror was introduced at 3894439 (Teach "git remote" a mirror mode,
+2007-09-02), it was only about fetching into a bare repository from
+another repository and there wasn't any confusion.
 
-However the first step is not that trivial for most people (I sadly have too many first hand examples with my git users).
-If the --force option only works on submodule where HEAD differs from the reference, the first step will still be necessary !
-I find this a bit redundant.
+I knew about this potential confusion when we applied 84bb2df (Add a
+remote.*.mirror configuration option, 2008-04-17), but chose to be lazy
+and ignored the issue, thinking that users are intelligent enough not to
+mix these obviously incompatible modes of operation.  If a repository is a
+mirror to fetch from somebody else, you wouldn't develop in it in the
+first place, and you would definitely not push it back to where you are
+mirroring from.  If a repository is mirrored into somewhere else to
+publish your work in there, you wouldn't be fetching back from there to
+obliterate your work.
 
-Maybe another way would be to add another option.
-Keep the --force as you proposed. And add a --all option of some sort that let the user decides if he wants to hit all the submodules or not.
-This way we keep the regular behaviour with -f but provide a way to bypass the first step above.
+Being explicit like your series does is much safer than relying on "common
+sense".
 
-Nicolas Morey-Chaisemartin
+I briefly wondered if this affects one use case where you want to
+configure a bare repository at your firewall boundary as a relay that
+mirrors an external public repository of somebody else by fetching and
+then publishes that to a repository internal to your network by pushing,
+but in that case you would have two remotes (the external --mirror=fetch
+one, and the internal --mirror=push one) that are separate, so it is not
+an issue.
+
+Thanks for cleaning up the two-year old mess.
