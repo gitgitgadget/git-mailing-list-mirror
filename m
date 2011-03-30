@@ -1,110 +1,101 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git fast-import : How to change parent during import?
-Date: Wed, 30 Mar 2011 18:25:54 +0100
-Message-ID: <20110330182554.5375787b@fenix.utopia.dhis.org>
-References: <AANLkTikiEfUSdNqqTjuYy_JLJnEyCizmusSucYsEHC2r@mail.gmail.com>
-	<20110308024427.GA21471@elie>
-	<AANLkTini6NgeYxRdFtSDKe8GEEszDvXwRtLnuymiRNt4@mail.gmail.com>
-	<20110308222328.GE26471@elie>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: contrib/thunderbird-patch-inline: do not require /bin/bash to
+	run
+Date: Wed, 30 Mar 2011 13:43:59 -0400
+Message-ID: <1301507039.22607.33.camel@drew-northup.unet.maine.edu>
+References: <AANLkTinUh0BX3O+2Y1CiUTx7xvzW6ydrAGiGQUx4pbeP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 19:27:09 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>,
+	Lukas =?ISO-8859-1?Q?Sandstr=F6m?= <luksan@gmail.com>
+To: Maxin john <maxin@maxinbjohn.info>
+X-From: git-owner@vger.kernel.org Wed Mar 30 19:45:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4zAj-0006It-8X
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 19:27:09 +0200
+	id 1Q4zSH-0007rq-12
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 19:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755101Ab1C3R0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 13:26:52 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:36917 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754815Ab1C3R0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 13:26:51 -0400
-Received: by wwa36 with SMTP id 36so1776167wwa.1
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 10:26:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:in-reply-to
-         :references:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=rDJ/kPwUKSLC8kTcdvaaND3Ame9OzkqyOIbIeDRpPT0=;
-        b=CKZxTqs+N9EM9fizm+Wio/W9XmEHmSIEbrRSnRvZpO3tUhKAY9/7Rcf5/Woa+5vU2D
-         1VVqbRJfyDIWvbGCtCmQjIMiTmgEBe5cmpJVm9Wc+lUtCknTc+NOoE5/YiOx+DhFBcrY
-         gxlcGucF68lHSoeN99PI9xMgQQXjvwf2TRMEE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=SNLLfbyGYu0XTPRKxNYijUqyt9b7Nc+NCdlN8RF7TOf3BtlvBTBvaAw57LPKy654Ly
-         GnnmLLlz+7v1GVTAlnlcwZTNufgW8jvgIdpngmu0d5NZTwtubLmOUuMvhR12tzLaku+0
-         vueeZ7sb+qAEt9FLavm6A2l7w0QK9mEDx42Cg=
-Received: by 10.227.196.10 with SMTP id ee10mr1577389wbb.209.1301506009936;
-        Wed, 30 Mar 2011 10:26:49 -0700 (PDT)
-Received: from fenix.utopia.dhis.org ([95.69.85.122])
-        by mx.google.com with ESMTPS id p5sm173252wbg.11.2011.03.30.10.26.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 10:26:49 -0700 (PDT)
-In-Reply-To: <20110308222328.GE26471@elie>
-X-Mailer: Claws Mail 3.7.8 (GTK+ 2.24.3; x86_64-pc-linux-gnu)
+	id S932130Ab1C3RpI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Mar 2011 13:45:08 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:50289 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754910Ab1C3RpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 13:45:06 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2UHi4mO011631
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 30 Mar 2011 13:44:09 -0400
+In-Reply-To: <AANLkTinUh0BX3O+2Y1CiUTx7xvzW6ydrAGiGQUx4pbeP@mail.gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=5
+	Fuz1=5 Fuz2=5
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p2UHi4mO011631
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1302111863.14841@G3/2E7GUKO8LvY/nHo6dlw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170397>
 
-Hi Jonathan,
 
-On Tue, 8 Mar 2011 16:23:28 -0600
-Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Tue, 2011-03-29 at 10:08 +0300, Maxin john wrote:
+> contrib/thunderbird-patch-inline: do not require /bin/bash to run
+>=20
+> Modified the patch by incorporating the suggestions from =C3=81ngel
+> Gonz=C3=A1lez <ingenit@zoho.com> and Junio C Hamano <gitster@pobox.co=
+m>
+>=20
+> Signed-off-by: Maxin B. John <maxin@maxinbjohn.info>
+> ---
+> diff --git a/contrib/thunderbird-patch-inline/appp.sh
+> b/contrib/thunderbird-patch-inline/appp.sh
+> index cc518f3..1d109a5 100755
+> --- a/contrib/thunderbird-patch-inline/appp.sh
+> +++ b/contrib/thunderbird-patch-inline/appp.sh
+> @@ -1,8 +1,8 @@
+> -#!/bin/bash
+> +#!/bin/sh
+>  # Copyright 2008 Lukas Sandstr=C3=B6m <luksan@gmail.com>
+>  #
+>  # AppendPatch - A script to be used together with ExternalEditor
+> -# for Mozilla Thunderbird to properly include pathes inline i e-mail=
+s.
+> +# for Mozilla Thunderbird to properly include patches inline in e-ma=
+ils.
+>=20
+>  # ExternalEditor can be downloaded at http://globs.org/articles.php?=
+lng=3Den&pg=3D2
+>=20
+> @@ -16,7 +16,12 @@ else
+>         cd > /dev/null
+>  fi
+>=20
+> -PATCH=3D$(zenity --file-selection)
+> +#check whether zenity is present
+> +if ! type zenity >/dev/null 2>&1 ; then
+> +       exit 1
+> +fi
+> +
+> +PATCH=3D`zenity --file-selection`
 
-> The "tag fixup" idea is that in VCSes like CVS, tags do not
-> necessarily match the content on any branch.  So the history looks
-> somewhat like so (time flowing left to right):
-> 
->                      TAG
->                     /
->  o --- o --- o --- o --- o --- o ...
-> 
-> instead of the perhaps more sensible
-> 
->  o --- o --- o --- TAG --- o --- o ...
-> 
-> The side branch leading up to a tag does not correspond to any branch
-> name; after it is in the correct state one can use the "tag" command
-> to get it remembered in permanent history.  The same technique might
-> be useful whenever you are creating history that is not meant to stay
-> permanently on any branch.
+I could be missing something, but I thought we were trying to
+standardize to the $(....) syntax..., no? I didn't think that was a
+bash-ism.
 
-I don't think the TAG_FIXUP trick is what I need in this case. Assume the
-following:
+>  if [ "$?" !=3D "0" ] ; then
+>         #zenity --error --text "No patchfile given."
 
-A --- B --- C --- D ...    (branch1)
-      \
-       E --- F --- G ...   (branch2)
-
-Now assume that we are at commit D when we detect a commit to branch2. At this
-point there is no way of knowing the origin commit in branch1. What is currently
-being done is to use commit D as the parent of branch2, which is incorrect. But
-if we assume that all branches are created through a "cp" like command, then we
-know that B=E. So my idea is to go over A, B, C, etc and commit E "from:" each
-one and see which results in a zero differences diff-tree.
-
-Unfortunately, the current implementation I am using doesn't feel simple enough.
-Because I'm using commands external to fast-import, I need to be constantly
-making use of "checkpoint". And this seems to not be good enough, because I need
-to sleep during 0.1s (didn't try other values) after each "checkpoint" before
-being able to use diff-tree and similar commands. I am also forced to use the
-"--force" command due to all the orphan commits I leave behind.
-
-I would really prefer to have a simpler solution. Do you, or anyone else, see
-another option?
-
-Thanks in advance,
--- 
-Vitor Antunes
+--=20
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
