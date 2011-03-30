@@ -1,101 +1,75 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: contrib/thunderbird-patch-inline: do not require /bin/bash to
-	run
-Date: Wed, 30 Mar 2011 13:43:59 -0400
-Message-ID: <1301507039.22607.33.camel@drew-northup.unet.maine.edu>
-References: <AANLkTinUh0BX3O+2Y1CiUTx7xvzW6ydrAGiGQUx4pbeP@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove "bashism" from
+ contrib/thunderbird-patch-inline/appp.sh
+Date: Wed, 30 Mar 2011 10:57:07 -0700
+Message-ID: <7vmxkco5jg.fsf@alter.siamese.dyndns.org>
+References: <AANLkTin-USDnTxeKT_KOZW5kgC0vFXYbMNP9ct6fzbUC@mail.gmail.com>
+ <4D9103D3.5010403@zoho.com> <7vei5qtnc5.fsf@alter.siamese.dyndns.org>
+ <4D9261AE.5070103@zoho.com>
+ <AANLkTim+0gxGKZT=vfmX7v0QZrApjRwAzW3PiLePL-iQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=C1ngel_Gonz=E1lez?= <ingenit@zoho.com>,
-	Lukas =?ISO-8859-1?Q?Sandstr=F6m?= <luksan@gmail.com>
+	=?utf-8?Q?=C3=81ngel_Gonz?= =?utf-8?Q?=C3=A1lez?= 
+	<ingenit@zoho.com>, Victor Engmark <victor.engmark@terreactive.ch>
 To: Maxin john <maxin@maxinbjohn.info>
-X-From: git-owner@vger.kernel.org Wed Mar 30 19:45:18 2011
+X-From: git-owner@vger.kernel.org Wed Mar 30 19:57:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4zSH-0007rq-12
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 19:45:17 +0200
+	id 1Q4ze7-0005tr-Dg
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 19:57:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932130Ab1C3RpI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Mar 2011 13:45:08 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:50289 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754910Ab1C3RpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 13:45:06 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p2UHi4mO011631
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 30 Mar 2011 13:44:09 -0400
-In-Reply-To: <AANLkTinUh0BX3O+2Y1CiUTx7xvzW6ydrAGiGQUx4pbeP@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=5
-	Fuz1=5 Fuz2=5
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p2UHi4mO011631
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1302111863.14841@G3/2E7GUKO8LvY/nHo6dlw
+	id S1756102Ab1C3R50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 13:57:26 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46395 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754760Ab1C3R5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 13:57:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 637DB4BF3;
+	Wed, 30 Mar 2011 13:59:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=82FQmqjUNCOLdpL/2VhgtLWk28k=; b=H5Glot
+	3grcnkrPjFL+H7kkF6rzJR/RT30vhG5NpVAgzJsv4sbLj8rDCuhaLt6XYtTDzThQ
+	qT9Ioeusv5En6VW0JaPUNf6FudZcSf+uxuDWg2RZBDPLrIE8vkTyCHSOT/to4HjC
+	0gOPQZrCBUwaTSwUGADpqi9NWcPThVB5DRhfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AwYTzNm2ZIbxVBOjkaOF/AtgGZfafVT6
+	zbPgLzBwDqgwdEBrDcw6Ti4ILxpc2QhujwdC3kLTWeJneN3FzvMTT1oExcq4hXRn
+	WqAGLxvTIL4wG8Fm+Pc2kcm2lbWU1zeg0/RMzrxgDe4aO8JbFJL63u94Uv/E/+0t
+	9GA82acrDbE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1C67A4BF2;
+	Wed, 30 Mar 2011 13:59:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7B0C54BF1; Wed, 30 Mar 2011
+ 13:58:57 -0400 (EDT)
+In-Reply-To: <AANLkTim+0gxGKZT=vfmX7v0QZrApjRwAzW3PiLePL-iQ@mail.gmail.com>
+ (Maxin john's message of "Wed, 30 Mar 2011 09:52:23 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 66439D34-5AF7-11E0-8278-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170398>
 
+Maxin john <maxin@maxinbjohn.info> writes:
 
-On Tue, 2011-03-29 at 10:08 +0300, Maxin john wrote:
-> contrib/thunderbird-patch-inline: do not require /bin/bash to run
->=20
-> Modified the patch by incorporating the suggestions from =C3=81ngel
-> Gonz=C3=A1lez <ingenit@zoho.com> and Junio C Hamano <gitster@pobox.co=
-m>
->=20
-> Signed-off-by: Maxin B. John <maxin@maxinbjohn.info>
-> ---
-> diff --git a/contrib/thunderbird-patch-inline/appp.sh
-> b/contrib/thunderbird-patch-inline/appp.sh
-> index cc518f3..1d109a5 100755
-> --- a/contrib/thunderbird-patch-inline/appp.sh
-> +++ b/contrib/thunderbird-patch-inline/appp.sh
-> @@ -1,8 +1,8 @@
-> -#!/bin/bash
-> +#!/bin/sh
->  # Copyright 2008 Lukas Sandstr=C3=B6m <luksan@gmail.com>
->  #
->  # AppendPatch - A script to be used together with ExternalEditor
-> -# for Mozilla Thunderbird to properly include pathes inline i e-mail=
-s.
-> +# for Mozilla Thunderbird to properly include patches inline in e-ma=
-ils.
->=20
->  # ExternalEditor can be downloaded at http://globs.org/articles.php?=
-lng=3Den&pg=3D2
->=20
-> @@ -16,7 +16,12 @@ else
->         cd > /dev/null
->  fi
->=20
-> -PATCH=3D$(zenity --file-selection)
-> +#check whether zenity is present
-> +if ! type zenity >/dev/null 2>&1 ; then
-> +       exit 1
-> +fi
-> +
-> +PATCH=3D`zenity --file-selection`
+> So, I have modified the patch by incorporating most of the nice suggestions.
 
-I could be missing something, but I thought we were trying to
-standardize to the $(....) syntax..., no? I didn't think that was a
-bash-ism.
+I'd just replace /bin/bash with /bin/sh without any other fuss, perhaps
+except for the typofix in the comment, and be done with the topic.
 
->  if [ "$?" !=3D "0" ] ; then
->         #zenity --error --text "No patchfile given."
+The script in the current version may look ugly to my eyes and others, but
+there is nothing _wrong_ in it per-se.  Rewriting them in different styles
+is not necessarily improvement, and this is only a contrib/ material after
+all.
 
---=20
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Thanks, I'll apply the early hunks from you.
