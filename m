@@ -1,110 +1,76 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: Translation inclusion criteria
-Date: Wed, 30 Mar 2011 14:08:58 +0100
-Message-ID: <87tyekpxg5.fsf@fox.patthoyts.tk>
-References: <4D889CC9.4060603@gmail.com>
-	<1301417951.13114.7.camel@drew-northup.unet.maine.edu>
-	<7vhbalrbwi.fsf@alter.siamese.dyndns.org> <4D9231F6.80205@gmail.com>
+From: Mathieu Malaterre <mathieu.malaterre@gmail.com>
+Subject: error: cannot run hooks/pre-receive: No such file or directory
+Date: Wed, 30 Mar 2011 15:27:14 +0200
+Message-ID: <AANLkTinehsLJWYona7ONqquWpCZozr3hW-JNMhYz4Rvn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
-To: Rodrigo Rosenfeld Rosas <rr.rosas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 15:09:13 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 30 15:27:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q4v93-0003TZ-VC
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 15:09:10 +0200
+	id 1Q4vQz-0001ND-2U
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 15:27:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754803Ab1C3NJD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Mar 2011 09:09:03 -0400
-Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:47590 "EHLO
-	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754217Ab1C3NJB convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 09:09:01 -0400
-Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.3])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20110330130859.KXOT18231.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
-          Wed, 30 Mar 2011 14:08:59 +0100
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1Q4v8t-0006qY-Jq; Wed, 30 Mar 2011 14:08:59 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 149B0234BE; Wed, 30 Mar 2011 14:08:59 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <4D9231F6.80205@gmail.com> (Rodrigo Rosenfeld Rosas's message of
-	"Tue, 29 Mar 2011 16:24:38 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=QCTNZaaPMWkA:10 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8 a=Rf460ibiAAAA:8 a=XSml1LXEuemWVDRiQxUA:9 a=vYwQ58lgX8J6NeRvFa8A:7 a=6nj2ttJJq3PlrN7FOuzDkU2CLIYA:4 a=wPNLvfGTeEIA:10 a=MSl-tDqOz04A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S932425Ab1C3N1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 09:27:35 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37034 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754785Ab1C3N1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 09:27:35 -0400
+Received: by iwn34 with SMTP id 34so1266188iwn.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 06:27:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=oLJSlqrxXf0iGmcZPVha4241rPWnoufFAK+PnqHHFyc=;
+        b=B9Yv5nQ3FGjIGB5rZ4/06imr4VzLxTDPUiUL8LiWwS93RmZnkrlWuKQo7ROkSwI/v2
+         3xYbc1Nv6VvupX7Itw+uCMA51nCndFEInhpRjFiBBeshzRtl3uz85BU/hZdzVq0kudxW
+         2iRl6P1rqVE5jYNkwcU+T0Zk8ENYUBv/bx5hc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=eJKPm9x0433NQL/bQ4v/PQWSdqXgTouIBHfGFArVdGsik6Wml1D4QbfPEyop0dPut8
+         kZjBhpMj8Ve2Jxl4YoRMMLwLI/ucflt1rlSwQFDUDe7dqHj2HMagjRJF5sICrX0RKFQr
+         uvM122ufEVQtTlntULqLEO1fDI2fVJBAPwYPo=
+Received: by 10.42.75.6 with SMTP id y6mr1364213icj.10.1301491654154; Wed, 30
+ Mar 2011 06:27:34 -0700 (PDT)
+Received: by 10.42.165.134 with HTTP; Wed, 30 Mar 2011 06:27:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170384>
 
-Rodrigo Rosenfeld Rosas <rr.rosas@gmail.com> writes:
+Hi all,
 
-> Em 29-03-2011 15:59, Junio C Hamano escreveu:
->> Drew Northup<drew.northup@maine.edu>  writes:
->>
->>> On Tue, 2011-03-22 at 09:57 -0300, Rodrigo Rosenfeld Rosas wrote:
->>>> Hi, I've followed the instructions in git-gui/po/README in 2008 bu=
-t
->>>> pt.po was never included in master. Now I've just updated it.
->>>>
->>>> Is there anything else I should do for it being merged to master? =
-What
->>>> is the criteria for including new translations?
->>> ...
->>> Rodrigo,
->>> Internationalization of Git is very much an ongoing process. I susp=
-ect
->>> that has something to do with the uptake of your contribution. =C6v=
-ar may
->>> have more information.
->> All the git-gui changes come through Pat Thoyts these days; =C6var h=
-as
->> nothing to with git-gui i18n/l10n (except perhaps as a translator to=
- his
->> own language, but I don't see his name in the shortlog).
->>
->> Perhaps the submission was sent with wrong Cc:; I don't pay attentio=
-n to
->> git-gui and gitk l10n patches myself.
->
->Sorry, I think I'm missing something. From the mentioned README, it
->seems we're supposed to push our changes to the mob branch of
->mob@repo.or.cz:/srv/git/git-gui/git-gui-i18n.git/, which has write
->access enabled for everyone.
->
->That's what I've done. I couldn't find any mention in the README about
->having to send some mail after that.
->
->I'll wait for instructions from Pat Thoyts to understand better what
->should be my next step...
->
->Thanks,
->
->Rodrigo.
+  I am trying to use a ruby script to reject commit with non-linear
+history (*). However it keeps failing with the following message:
 
-It's best to just send a patch to me and this list based against one
-of the current branches (master/maint/pu). The i18n fork was done for
-the original work adding i18n to git-gui and hasn't been kept up to dat=
-e
-since 2008.
+$ git push
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 304 bytes, done.
+Total 3 (delta 2), reused 0 (delta 0)
+error: cannot run hooks/pre-receive: No such file or directory
+To ssh://malat@gdcm.git.sourceforge.net/gitroot/gdcm/gdcm.old
+ ! [remote rejected] master -> master (pre-receive hook declined)
+error: failed to push some refs to
+'ssh://malat@gdcm.git.sourceforge.net/gitroot/gdcm/gdcm.old'
 
---=20
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+I tried with something as simple as :
+
+% cat pre-receive
+#!/usr/bin/ruby
+% which ruby
+/usr/bin/ruby
+
+Do I need to do something special with ruby ?
+
+Thanks,
+-- 
+Mathieu
