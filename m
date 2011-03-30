@@ -1,53 +1,71 @@
-From: Sri <nkf364@motorola.com>
-Subject: compare log of two different repos
-Date: Wed, 30 Mar 2011 12:49:16 -0700 (PDT)
-Message-ID: <1301514556812-6224714.post@n2.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] better "remote add --mirror" semantics
+Date: Wed, 30 Mar 2011 15:51:39 -0400
+Message-ID: <20110330195139.GA814@sigill.intra.peff.net>
+References: <loom.20110330T040437-823@post.gmane.org>
+ <20110330145908.GA812@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 21:49:24 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: chris <jugg@hotmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 21:51:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q51OM-0006Uq-D3
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 21:49:22 +0200
+	id 1Q51Qg-0007hP-NI
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Mar 2011 21:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755734Ab1C3TtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 15:49:17 -0400
-Received: from sam.nabble.com ([216.139.236.26]:60705 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754838Ab1C3TtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 15:49:17 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.69)
-	(envelope-from <nkf364@motorola.com>)
-	id 1Q51OG-0000pF-QP
-	for git@vger.kernel.org; Wed, 30 Mar 2011 12:49:16 -0700
+	id S932153Ab1C3Tvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 15:51:42 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44324
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754979Ab1C3Tvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 15:51:41 -0400
+Received: (qmail 20971 invoked by uid 107); 30 Mar 2011 19:52:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Mar 2011 15:52:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2011 15:51:39 -0400
+Content-Disposition: inline
+In-Reply-To: <20110330145908.GA812@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170416>
 
-Hi
-This is my scenario:
--  Server has 2 different repos say x & y
-- I created a branch out of x ( say xx) and a branch out of y (say yy)
-- Now I made changes to xx/folder1/file1- change 1and commit it ;then I made
-changes to to yy/folder1/file1 -change 1 and yy/folder1/file 1 -change 2 and
-commit it ( Folder 1,file 1, change 1 are same in both xx and yy)
-- Now I want the log of unique commits between both branches ( which will be
-change 2 commit in yy)
+On Wed, Mar 30, 2011 at 10:59:08AM -0400, Jeff King wrote:
 
-How do I get this using GIT? Right now am doing it manually which is very
-tedious...
+> All of that being said, I'm not sure your config makes sense:
+> 
+> > [remote "origin"]
+> >         fetch = +refs/heads/*:refs/remotes/origin/*
+> >         url = ssh://myserver.com/srv/git/myproject.git
+> > [remote "mirror"]
+> >         url = ssh://chris@myserver.com/srv/git/mirrors/chris/myproject.git
+> >         fetch = +refs/*:refs/*
+> >         mirror = true
+> 
+> Your mirror is configured to overwrite everything in refs/ if you fetch
+> from it. Meaning it will throw away anything you fetched from "origin",
+> as well as any local work. So this config is probably not what you want.
+> 
+> I'm guessing what you really wanted is a remote only for pushing to, and
+> created it with:
+> 
+>   git remote add --mirror mirror ssh://...
+> 
+> The --mirror option has problems with that case. See this thread:
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/161653
 
-Thanks
-SS
+Here is a patch series which I think improves the situation. +cc Jan
+Hudec from the mentioned thread.
 
---
-View this message in context: http://git.661346.n2.nabble.com/compare-log-of-two-different-repos-tp6224714p6224714.html
-Sent from the git mailing list archive at Nabble.com.
+  [1/3]: remote: disallow some nonsensical option combinations
+  [2/3]: remote: separate the concept of push and fetch mirrors
+  [3/3]: remote: deprecate --mirror
+
+-Peff
