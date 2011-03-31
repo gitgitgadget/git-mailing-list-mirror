@@ -1,127 +1,57 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [msysGit] Git fails to push to secured webdav
-Date: Thu, 31 Mar 2011 11:57:58 +0200
-Message-ID: <AANLkTikEnFCUQvEHA6c5PAs_z-_REj9SqNfRjZ_9edzN@mail.gmail.com>
-References: <7867a559-ea24-49c3-978b-a2b65100525f@o20g2000yqk.googlegroups.com>
- <AANLkTinrwn7k=69wrgTr8YW6GzwOeBP-mKSs2b+ZZHv2@mail.gmail.com> <4D944EE0.3090806@gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCH 3/3] builtin/show.c: do not prune by pathspec
+Date: Thu, 31 Mar 2011 12:18:01 +0200
+Message-ID: <4D9454D9.6060406@viscovery.net>
+References: <4D94322A.8030409@drmicha.warpmail.net> <3bee7fb376e2fb498c9634ab2ff5506f8c74a7bc.1301562936.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Edwin Amsler <edwinguy@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 11:58:52 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 31 12:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5EeS-0003H6-4o
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 11:58:52 +0200
+	id 1Q5ExD-000390-6j
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 12:18:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933695Ab1CaJ6q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 05:58:46 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64583 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933544Ab1CaJ6p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2011 05:58:45 -0400
-Received: by fxm17 with SMTP id 17so1700214fxm.19
-        for <git@vger.kernel.org>; Thu, 31 Mar 2011 02:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gBXG0/MC6YWoEc83BZYeKKAsgHSq8o/XUAR0rZVLSSA=;
-        b=pNJ22w6GxKVESaPqNeL8cR+Qy1FFcz4xtPUU3xlwpIxqNj1CNHB6AQ1ac0XmA60maT
-         gUPlbU8Ocb33yho7o+st+dv5dlzdJ5JzUXcjoY97GFEIHTrfJuut7+fhFCgCxBj2eImK
-         liNmyqwYN1Lthk7SvtPdcklPt49/1rvzNss4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=SXhjFrqgpF1o+W7ij6rPamF0RGjgp0yVBN8OuA+cn95K/xIKf/fmS4q6lvAU6811hg
-         1SjZDEbKH1p6HkVtkJ3fnLfzjcSk3dIawwVRX7Tx9NJ1W8cR+M9EWTKt9+BUF7pSEfpO
-         Tc7tIO6qMu3tiFbKlDiMoVSgBw+NztJft05GM=
-Received: by 10.223.125.66 with SMTP id x2mr1658879far.51.1301565498166; Thu,
- 31 Mar 2011 02:58:18 -0700 (PDT)
-Received: by 10.223.126.145 with HTTP; Thu, 31 Mar 2011 02:57:58 -0700 (PDT)
-In-Reply-To: <4D944EE0.3090806@gmail.com>
+	id S933879Ab1CaKSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 06:18:09 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:63452 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933501Ab1CaKSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 06:18:07 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Q5Ex0-0003nG-0o; Thu, 31 Mar 2011 12:18:02 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id BBB911660F;
+	Thu, 31 Mar 2011 12:18:01 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <3bee7fb376e2fb498c9634ab2ff5506f8c74a7bc.1301562936.git.git@drmicha.warpmail.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170465>
 
-Please don't cull the CC-list (hit "reply all" in your mailing list).
-I'm not personally interested in the subject, so I'm not a likely
-person to get help from.
+Am 3/31/2011 11:17, schrieb Michael J Gruber:
+> By design, "git show commit -- path" is not "git show commit:path", and
+> there is no reason to change that. But "git show commit -- path" simply
+> returns nothing at all "most of the time" because it prunes by pathspec
+> even though it does not walk commits. This is pretty useless.
+> 
+> So, turn off pruning (but keep diff limiting of course) so that "git
+> show commit -- path" shows the commit message and the diff that the
+> commit introduces to path (filtered by path); only the diff will be
+> empty "most of the time".
 
-On Thu, Mar 31, 2011 at 11:52 AM, Edwin Amsler <edwinguy@gmail.com> wro=
-te:
-> On 2011-03-31 4:19 AM, Erik Faye-Lund wrote:
->>
->> On Thu, Mar 31, 2011 at 11:06 AM, RandomInsano<edwinguy@gmail.com> =A0=
-wrote:
->>>
->>> Aloha!
->>>
->>> I built a simple WebDAV share on my server. WebDAV is working
->>> marvelously! Git isn't :(
->>>
->>> Basically, when I auth with the server, git doesn't use those
->>> credentials when it does a WebDAV PROPFIND command, so it recieves =
-a
->>> 401 not authorized response.
->>>
->>> This is the back and forth between git and my webserver:
->>>
->>> [Initial push, failing due to security settings[
->>> 10.0.0.100 - - [31/Mar/2011:03:48:27 -0500] "GET /dav/git/coral.git=
-/
->>> info/refs?service=3Dgit-receive-pack HTTP/1.1" 401 409
->>> 10.0.0.100 - - [31/Mar/2011:03:48:31 -0500] "GET /dav/git/coral.git=
-/
->>> info/refs?service=3Dgit-receive-pack HTTP/1.1" 401 409
->>> [Git has now asked for my password]
->>> 10.0.0.100 - edwin [31/Mar/2011:03:48:31 -0500] "GET /dav/git/
->>> coral.git/info/refs?service=3Dgit-receive-pack HTTP/1.1" 200 0
->>> 10.0.0.100 - edwin [31/Mar/2011:03:48:31 -0500] "GET /dav/git/
->>> coral.git/HEAD HTTP/1.1" 200 23
->>> [Woo! Auth'd!]
->>> 10.0.0.100 - - [31/Mar/2011:03:48:32 -0500] "PROPFIND /dav/git/
->>> coral.git/ HTTP/1.1" 401 397
->>> [WTF?! FAIL!]
->>>
->>> Any ideas what's causing this? Which libraries are to blame, etc?
->>>
->> Didn't you already report this to the main Git list yetsterday?
->>
->> http://article.gmane.org/gmane.comp.version-control.git/170280
->>
->> Besides, it seems to me that this question has been asked and answer=
-ed
->> before:
->>
->> http://article.gmane.org/gmane.comp.version-control.git/105397
->
-> Indeed I did report to the main list! Sometimes it's best to ask at m=
-ultiple
-> sources, despite the annoyance for those who are members of both grou=
-ps.
-> Sorry for the double post for you.
->
-> The problem you referenced (git/webdav is refusing to authenticate pr=
-operly)
-> has the issue that git never tried to authenticate. Mine did. Then ju=
-st
-> forgot to use the authentication.
->
+How does this interfere with git show --walk commit -- path? Will it now
+show all commits instead of just those that changed path?
 
-Did you setup your .netrc file like
-Documentation/howto/setup-git-server-over-http.txt tells you to?
-
-http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob;f=3DDocumentation/howto=
-/setup-git-server-over-http.txt;h=3D622ee5c8dd7c384794a21baa6093d85a47f=
-89a54;hb=3DHEAD
+-- Hannes
