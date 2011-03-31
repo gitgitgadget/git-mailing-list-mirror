@@ -1,160 +1,97 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: ignorecase interoperability bugs
-Date: Thu, 31 Mar 2011 15:18:36 -0400
-Message-ID: <20110331191836.GA16342@gnu.kitenet.net>
+From: Jeff King <peff@github.com>
+Subject: Re: GSoC questions
+Date: Thu, 31 Mar 2011 15:27:58 -0400
+Message-ID: <20110331192758.GD16981@sigill.intra.peff.net>
+References: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
+ <20110328001152.GA11294@elie>
+ <AANLkTikGb1=Rtz-T9p=u+X32KpL2AXq0AELdSJ2NMHrW@mail.gmail.com>
+ <AANLkTink4wVb6O+yVm=HUh_s1GhKhyL4baqYGe=XFu04@mail.gmail.com>
+ <AANLkTinZ2zbhCRAqAYkiAa1=K8aUhcAuEe6Q_gO-v2h_@mail.gmail.com>
+ <AANLkTi=TOYOj2HWzy62G24Kg=NZC5X1=psA3GDhaH3Hc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ew6BAiZeqk4r7MaW"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 31 21:27:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Alexandru Sutii <sutii.alex@gmail.com>,
+	Vicent Marti <vicent@github.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	libgit2@librelist.org
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Thu Mar 31 21:28:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5NWW-0006Yh-Ai
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 21:27:16 +0200
+	id 1Q5NXN-00074u-32
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 21:28:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759265Ab1CaT1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 15:27:12 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:59640 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759220Ab1CaT1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 15:27:11 -0400
-X-Greylist: delayed 506 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Mar 2011 15:27:10 EDT
-Received: from gnu.kitenet.net (dialup-4.154.7.95.Dial1.Atlanta1.Level3.net [4.154.7.95])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id F089C1180B2
-	for <git@vger.kernel.org>; Thu, 31 Mar 2011 15:18:41 -0400 (EDT)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id B43DD5759A; Thu, 31 Mar 2011 15:18:36 -0400 (EDT)
+	id S1759098Ab1CaT2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 15:28:03 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51954
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753735Ab1CaT2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 15:28:00 -0400
+Received: (qmail 1983 invoked by uid 107); 31 Mar 2011 19:28:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Mar 2011 15:28:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2011 15:27:58 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <AANLkTi=TOYOj2HWzy62G24Kg=NZC5X1=psA3GDhaH3Hc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170523>
 
+On Thu, Mar 31, 2011 at 01:58:23PM +0200, Vincent van Ravesteijn wrote:
 
---ew6BAiZeqk4r7MaW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Thu, Mar 31, 2011 at 11:36 AM, Alexandru Sutii <sutii.alex@gmail.com> wrote:
+> > I have also used the original "usage.c" and "git-compat-util.h" for
+> > error handling.
+> > Is there a problem if the git2 client will reuse non-gitcore code, such
+> > as string parsing code, parameter parsing code, etc?
+> 
+> I guess the git2 client will consist solely of non-gitcore code, as
+> all the gitcore code will be part of libgit2 eventually.
+> 
+> I expect the transition to be not so difficult for many commands, but
+> the challenge I see is to do it not by 'reusing' git code, but by
+> 'sharing' the code. Otherwise we end up with a second Git and someone
+> should spend a lifetime to keep the reused code in synchronisation
+> with the git repo.
+> 
+> This might, however, require some (major) refactorization to the Git
+> code. I don't know whether that will be supported by everyone.
 
-Suppose I have two clones of a repo. "mac" has ignorecase=3Dtrue and is on =
-HFS+,
-and "lin" has ignorecase=3Dfalse and is on ext4. With git 1.7.4, I have fou=
-nd
-some very unusual behavior.
+I had sort of assumed that git-core code would be taken as inspiration,
+but that it would be an entirely new implementation, based around the
+error handling and build infrastructure provided by libgit2.
 
-on mac (omitting all git output to save space):
+And obviously libgit2 isn't going to provide everything you need. For
+example, in the mktag implementation that Alex posted, there's still a
+big verify_and_create_tag() function. I would prefer to see that code
+broken into library-sized chunks and added to libgit2 itself, with the
+eventual goal that mktag.c could consist of a very short main() function
+that just parses options calls into the library (and yeah, I realize
+that things are not always so simple, but it is a goal to work towards).
 
-$ mkdir X
-$ echo mac > X/foo
-$ git add X/foo
-$ git commit -m "added X/foo"
+So when starting with a command, rather than trying to port code from
+git.git, look at what it does and say "how would I do this in libgit2?
+What else needs to be implemented in the library before I can do it?".
+And then write the bulk of your code for libgit2, filling in those gaps
+in functionality, and as a final step make the actual executable
+command.
 
-on lin (omitting all git output to save space):
+In this case, one of the things that is lacking is the die() error
+handling. In general, that is not something libgit2 wants, because its
+goal is to pass errors back up the call chain. Another thing that is
+missing is option-parsing (though mktag doesn't need it). Again, not
+something that libgit2 wants to use.
 
-$ git pull mac master
-# now X/foo exists here
-$ mkdir x
-$ echo lin > x/foo
-$ git add x/foo
-$ git commit -m "added x/foo"
+But maybe those are things that libgit2 should be providing to callers.
+Or maybe they should be spun off into their own separate utility
+library. But in either case, they should probably be pulled out of core
+git, cleaned up to make them fit for library use, and then made part of
+libgit2.
 
-on mac:
-
-$ git pull lin master
-[...]
- * branch            master     -> FETCH_HEAD
-Updating a3dbf10..2d4223d
-Fast-forward
- x/foo |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 x/foo
-$ git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working director=
-y)
-#
-#	modified:   X/foo
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-$ git add X/foo
-$ git commit X
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working director=
-y)
-#
-#	modified:   X/foo
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-
-So, it's possible to get files that git thinks are changed, but
-cannot be committed.
-
-$ echo testing > X/foo
-$ git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working director=
-y)
-#
-#	modified:   X/foo
-#	modified:   x/foo
-
-And it's possible to have multiple cases of the same file show up
-even though ignorecase=3Dtrue.
-
-
-The problems don't end there. Suppose I have a program that expects to
-find a file in proggy/config. But, on mac, I already have a Proggy/Data
-file that I created & committed for some reason. No problem; I write
-my config to proggy/config; the program can read its file, I commit
-proggy/config, and all seems well. Now I clone to lin, and see:
-
-$ ls
-Proggy/Data
-Proggy/config
-$ proggy
-proggy: cannot open proggy/config: file does not exist
-
-
-Git 1.7.2.5 seems to handle both these cases better; the ignorecase rework
-in 1.7.4 introduced most of these problems AFAICS.
-
---=20
-see shy jo
-
---ew6BAiZeqk4r7MaW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIVAwUBTZTTickQ2SIlEuPHAQgImg/9Ggr/F59qMEoO9LIjOp+c7z+g7GxTfqhl
-XJju9GnIlbHBqGw2xjM47X0v407p1RV3JS9IeBtFwHIW63S5NgPH2DgfjXAQoW9Y
-HHddp+qfmY9xDzEnQoEGrUuAIwlVnom3moLvEY0k9lb8Y3wN6erGHoukKVtpgQBF
-I4xPc6yRbiOKuq4/DhWpCpYqdlimm7tSQsYuDXOdM+8hutGEWAtsDachS20iRcGW
-tWbPwfSRB53layQB/I0nYMLwat5qqQHr+ZblQ8iDoerNFelQMvGrQNdHU5qcbknH
-jk8S6B/RpIHjFa6c3asK/6DIPsAobeZHmS/Xx6QrtjtOQu9KD34tECWv3cfQ3P3s
-4aBkLbMVUxqVYoGhCJr/Rionz/NcI+lQmh80xB22mtlexNSdfT0u8dJPSRLQvyqN
-dmOsa5jt/+OD6ReUtz+JxDzt0eLhNhn1GvkekiTgkcC8Frzs4nrikq+u5P4Sncg0
-E6UNoFvDJBkSqhIfMNaXSuqmLPK8JwVuGIHv366nmizbz2cLNrSZ5lVltbVJMX00
-EBLXfWwht6a0Xn7s4vsPvOwtUbX6bnmNaQmPaxIGsqamQonnj/B37Qv1FF3rJrgJ
-PFlnATEnrPzkTKiQv5UhoQ8hPv6FykLhgWhd1vvbm2AzYObzffVSdhpH/OamnXeK
-HSn0iAoHdeA=
-=j+kC
------END PGP SIGNATURE-----
-
---ew6BAiZeqk4r7MaW--
+-Peff
