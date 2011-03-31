@@ -1,349 +1,166 @@
 From: Dan McGee <dpmcgee@gmail.com>
-Subject: [PATCH 2/2] http-push: refactor curl_easy_setup madness
-Date: Wed, 30 Mar 2011 20:38:51 -0500
-Message-ID: <1301535531-1244-2-git-send-email-dpmcgee@gmail.com>
-References: <1301535531-1244-1-git-send-email-dpmcgee@gmail.com>
+Subject: [PATCH 1/2] http: make curl callbacks match contracts from curl header
+Date: Wed, 30 Mar 2011 20:38:50 -0500
+Message-ID: <1301535531-1244-1-git-send-email-dpmcgee@gmail.com>
 Cc: Dan McGee <dpmcgee@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 31 03:39:05 2011
+X-From: git-owner@vger.kernel.org Thu Mar 31 03:39:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q56qm-0003dg-8L
+	id 1Q56ql-0003dg-MG
 	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 03:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933818Ab1CaBi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 21:38:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33023 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932822Ab1CaBi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 21:38:57 -0400
-Received: by mail-iw0-f174.google.com with SMTP id 34so1864765iwn.19
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 18:38:57 -0700 (PDT)
+	id S933816Ab1CaBiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 21:38:55 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52625 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932822Ab1CaBiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 21:38:54 -0400
+Received: by iyb14 with SMTP id 14so1845829iyb.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 18:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=Jejpa1xRbiBI71nGNLTq76sDS6J0/IqOe+R/YPBoUZk=;
-        b=tc0+kJ6E3KPI+U4dA+Y5OQwvF6cNnPpIitjB8Vv2DlQTH6TAWGuA21Sd9/AKiUch3y
-         8RQOjyrkivwiNmVeb4A4ivrWAP+Zwc2qn7f8YrbWVUYPJtyG5SSsALuZHshAu6pkJkwF
-         vOiPdpma2gL4/nVMXk7YgPEkMpvSFArRN0rOs=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=vA3lPV41wyg2HEpsmyTVSFQkmWdKZC3qvhhEBtf4IB0=;
+        b=NBVUmAN6l/oNNEM0WUQf8PagtPRgukC08j5UV/+Va6qK0c+siMJMmx6vs45YUopSHW
+         YuybTo8A/Ll5yDP8uCeN/MvQBD5X/4x19UXYbYNgpiFnPim66WQzwLPe8tFtvK2WmHOO
+         7rWnwqeG6zHtHy4TS8pZSRGHJEEgEgzaAuRaI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=va1fzlDezHJfTCcMWdHkr5FP+9xkM5MLgOPwmQ9QXwv0bKBR/iP5kP/lqy9afpBuIC
-         zVDHQ8TlHuizfHIeApd1NFvFg85xgm+D6t3cI8svUeSffuYPBa387JtZNhpVlBdGxVpW
-         CajScICT6/3y9VY/BtseUXmmVpCL//+7RyIGc=
-Received: by 10.231.60.73 with SMTP id o9mr2116457ibh.33.1301535536870;
-        Wed, 30 Mar 2011 18:38:56 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=hkcpAC5XvrzUfZwf4AhIkM/gY2sUq5LLxJ7Y+gqIyOn+SgG26amS6sDZgB5aUEa1T3
+         dv7jYcxuuPx1EaAgXhomQ/78bAlON5W/BNzLiUnEIGMKOm8Bf8BAAFN48YYYd0w9G97G
+         k01CyV91HsslO7Zl1lzcC8oe65TKMnF9nfBPs=
+Received: by 10.43.61.79 with SMTP id wv15mr2127235icb.229.1301535534254;
+        Wed, 30 Mar 2011 18:38:54 -0700 (PDT)
 Received: from localhost (c-71-239-242-45.hsd1.il.comcast.net [71.239.242.45])
-        by mx.google.com with ESMTPS id i26sm382187iby.41.2011.03.30.18.38.55
+        by mx.google.com with ESMTPS id i26sm384523iby.7.2011.03.30.18.38.52
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 18:38:55 -0700 (PDT)
+        Wed, 30 Mar 2011 18:38:53 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.2
-In-Reply-To: <1301535531-1244-1-git-send-email-dpmcgee@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170447>
 
-We were doing (nearly) the same thing all over the place, in slightly
-different orders, different variable names, etc. Refactor most calls
-into two helper functions, one for GET and one for everything else, that
-do the heavy lifting leaving most callsites a lot cleaner in the
-process.
+Yes, these don't match perfectly with the void* first parameter of the
+fread/fwrite in the standard library, but they do match the curl
+expected method signature. This is needed when a refactor passes a
+curl_write_callback around, which would otherwise give incorrect
+parameter warnings.
 
 Signed-off-by: Dan McGee <dpmcgee@gmail.com>
 ---
- http-push.c |  152 ++++++++++++++++++++---------------------------------------
- 1 files changed, 52 insertions(+), 100 deletions(-)
+ http-walker.c |    2 +-
+ http.c        |   12 ++++++------
+ http.h        |    6 +++---
+ remote-curl.c |    2 +-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index d18346c..28bfe76 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -169,7 +169,7 @@ enum dav_header_flag {
- 	DAV_HEADER_TIMEOUT = (1u << 2)
+diff --git a/http-walker.c b/http-walker.c
+index 9bc8114..c83df1b 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -185,7 +185,7 @@ static void process_alternates_response(void *callback_data)
+ 	struct active_request_slot *slot = alt_req->slot;
+ 	struct alt_base *tail = cdata->alt;
+ 	const char *base = alt_req->base;
+-	static const char null_byte = '\0';
++	char null_byte = '\0';
+ 	char *data;
+ 	int i = 0;
+ 
+diff --git a/http.c b/http.c
+index 9e76772..f44816b 100644
+--- a/http.c
++++ b/http.c
+@@ -60,7 +60,7 @@ static struct curl_slist *no_pragma_header;
+ 
+ static struct active_request_slot *active_queue_head;
+ 
+-size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
++size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ {
+ 	size_t size = eltsize * nmemb;
+ 	struct buffer *buffer = buffer_;
+@@ -92,7 +92,7 @@ curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
+ }
+ #endif
+ 
+-size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
++size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ {
+ 	size_t size = eltsize * nmemb;
+ 	struct strbuf *buffer = buffer_;
+@@ -102,7 +102,7 @@ size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *buffer
+ 	return size;
+ }
+ 
+-size_t fwrite_null(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf)
++size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
+ {
+ 	data_received++;
+ 	return eltsize * nmemb;
+@@ -1166,7 +1166,7 @@ abort:
+ }
+ 
+ /* Helpers for fetching objects (loose) */
+-static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
++static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
+ 			       void *data)
+ {
+ 	unsigned char expn[4096];
+@@ -1183,7 +1183,7 @@ static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
+ 	} while (posn < size);
+ 
+ 	freq->stream.avail_in = size;
+-	freq->stream.next_in = ptr;
++	freq->stream.next_in = (void *)ptr;
+ 	do {
+ 		freq->stream.next_out = expn;
+ 		freq->stream.avail_out = sizeof(expn);
+@@ -1202,7 +1202,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	char *filename;
+ 	char prevfile[PATH_MAX];
+ 	int prevlocal;
+-	unsigned char prev_buf[PREV_BUF_SIZE];
++	char prev_buf[PREV_BUF_SIZE];
+ 	ssize_t prev_read = 0;
+ 	long prev_posn = 0;
+ 	char range[RANGE_HEADER_SIZE];
+diff --git a/http.h b/http.h
+index e9ed3c2..19b7134 100644
+--- a/http.h
++++ b/http.h
+@@ -66,9 +66,9 @@ struct buffer {
  };
  
--static char *xml_entities(char *s)
-+static char *xml_entities(const char *s)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	while (*s) {
-@@ -197,6 +197,34 @@ static char *xml_entities(char *s)
- 	return strbuf_detach(&buf, NULL);
+ /* Curl request read/write callbacks */
+-extern size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
+-extern size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
+-extern size_t fwrite_null(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
++extern size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
++extern size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
++extern size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
+ #ifndef NO_CURL_IOCTL
+ extern curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
+ #endif
+diff --git a/remote-curl.c b/remote-curl.c
+index 775d614..17d8a9b 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -347,7 +347,7 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
  }
+ #endif
  
-+static void curl_setup_http_get(CURL *curl, const char *url,
-+		const char *custom_req)
-+{
-+	curl_easy_setopt(curl, CURLOPT_HTTPGET, 1);
-+	curl_easy_setopt(curl, CURLOPT_URL, url);
-+	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
-+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_null);
-+}
-+
-+static void curl_setup_http(CURL *curl, const char *url,
-+		const char *custom_req, struct buffer *buffer,
-+		curl_write_callback write_fn)
-+{
-+	curl_easy_setopt(curl, CURLOPT_PUT, 1);
-+	curl_easy_setopt(curl, CURLOPT_URL, url);
-+	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
-+	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
-+	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(curl, CURLOPT_IOCTLDATA, &buffer);
-+#endif
-+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_fn);
-+	curl_easy_setopt(curl, CURLOPT_NOBODY, 0);
-+	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
-+	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
-+}
-+
- static struct curl_slist *get_dav_token_headers(struct remote_lock *lock, enum dav_header_flag options)
+-static size_t rpc_in(const void *ptr, size_t eltsize,
++static size_t rpc_in(char *ptr, size_t eltsize,
+ 		size_t nmemb, void *buffer_)
  {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -272,11 +300,8 @@ static void start_mkcol(struct transfer_request *request)
- 	slot = get_active_slot();
- 	slot->callback_func = process_response;
- 	slot->callback_data = request;
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1); /* undo PUT setup */
--	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
-+	curl_setup_http_get(slot->curl, request->url, DAV_MKCOL);
- 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, request->errorstr);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_MKCOL);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
- 
- 	if (start_active_slot(slot)) {
- 		request->slot = slot;
-@@ -395,19 +420,8 @@ static void start_put(struct transfer_request *request)
- 	slot = get_active_slot();
- 	slot->callback_func = process_response;
- 	slot->callback_data = request;
--	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &request->buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, request->buffer.buf.len);
--	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
--#ifndef NO_CURL_IOCTL
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &request->buffer);
--#endif
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
--	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_PUT, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
-+	curl_setup_http(slot->curl, request->url, DAV_PUT,
-+			&request->buffer, fwrite_null);
- 
- 	if (start_active_slot(slot)) {
- 		request->slot = slot;
-@@ -427,13 +441,10 @@ static void start_move(struct transfer_request *request)
- 	slot = get_active_slot();
- 	slot->callback_func = process_response;
- 	slot->callback_data = request;
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1); /* undo PUT setup */
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_MOVE);
-+	curl_setup_http_get(slot->curl, request->url, DAV_MOVE);
- 	dav_headers = curl_slist_append(dav_headers, request->dest);
- 	dav_headers = curl_slist_append(dav_headers, "Overwrite: T");
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
- 
- 	if (start_active_slot(slot)) {
- 		request->slot = slot;
-@@ -458,10 +469,7 @@ static int refresh_lock(struct remote_lock *lock)
- 
- 	slot = get_active_slot();
- 	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, lock->url);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_LOCK);
-+	curl_setup_http_get(slot->curl, lock->url, DAV_LOCK);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
- 
- 	if (start_active_slot(slot)) {
-@@ -797,7 +805,7 @@ static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
- 	}
- }
- 
--static void one_remote_ref(char *refname);
-+static void one_remote_ref(const char *refname);
- 
- static void
- xml_start_tag(void *userData, const char *name, const char **atts)
-@@ -876,10 +884,7 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
- 		ep[1] = '\0';
- 		slot = get_active_slot();
- 		slot->results = &results;
--		curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
--		curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--		curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_MKCOL);
--		curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
-+		curl_setup_http_get(slot->curl, url, DAV_MKCOL);
- 		if (start_active_slot(slot)) {
- 			run_active_slot(slot);
- 			if (results.curl_result != CURLE_OK &&
-@@ -909,19 +914,9 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
- 
- 	slot = get_active_slot();
- 	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
--	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
--#ifndef NO_CURL_IOCTL
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
--#endif
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_LOCK);
-+	curl_setup_http(slot->curl, url, DAV_LOCK, &out_buffer, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-+	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 
- 	lock = xcalloc(1, sizeof(*lock));
- 	lock->timeout = -1;
-@@ -987,9 +982,7 @@ static int unlock_remote(struct remote_lock *lock)
- 
- 	slot = get_active_slot();
- 	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, lock->url);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_UNLOCK);
-+	curl_setup_http_get(slot->curl, lock->url, DAV_UNLOCK);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
- 
- 	if (start_active_slot(slot)) {
-@@ -1167,19 +1160,10 @@ static void remote_ls(const char *path, int flags,
- 
- 	slot = get_active_slot();
- 	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
--	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
--#ifndef NO_CURL_IOCTL
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
--#endif
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PROPFIND);
-+	curl_setup_http(slot->curl, url, DAV_PROPFIND,
-+			&out_buffer, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-+	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
-@@ -1250,19 +1234,10 @@ static int locking_available(void)
- 
- 	slot = get_active_slot();
- 	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
--	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
--#ifndef NO_CURL_IOCTL
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
--#endif
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, repo->url);
--	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PROPFIND);
-+	curl_setup_http(slot->curl, repo->url, DAV_PROPFIND,
-+			&out_buffer, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-+	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
-@@ -1436,19 +1411,9 @@ static int update_remote(unsigned char *sha1, struct remote_lock *lock)
- 
- 	slot = get_active_slot();
- 	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
--	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
--#ifndef NO_CURL_IOCTL
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
--#endif
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
-+	curl_setup_http(slot->curl, lock->url, DAV_PUT,
-+			&out_buffer, fwrite_null);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
--	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_PUT, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, lock->url);
- 
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
-@@ -1471,7 +1436,7 @@ static int update_remote(unsigned char *sha1, struct remote_lock *lock)
- 
- static struct ref *remote_refs;
- 
--static void one_remote_ref(char *refname)
-+static void one_remote_ref(const char *refname)
- {
- 	struct ref *ref;
- 	struct object *obj;
-@@ -1572,19 +1537,9 @@ static void update_remote_info_refs(struct remote_lock *lock)
- 
- 		slot = get_active_slot();
- 		slot->results = &results;
--		curl_easy_setopt(slot->curl, CURLOPT_INFILE, &buffer);
--		curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, buffer.buf.len);
--		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
--#ifndef NO_CURL_IOCTL
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &buffer);
--#endif
--		curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--		curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
-+		curl_setup_http(slot->curl, lock->url, DAV_PUT,
-+				&buffer, fwrite_null);
- 		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
--		curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
--		curl_easy_setopt(slot->curl, CURLOPT_PUT, 1);
--		curl_easy_setopt(slot->curl, CURLOPT_URL, lock->url);
- 
- 		if (start_active_slot(slot)) {
- 			run_active_slot(slot);
-@@ -1660,7 +1615,7 @@ static int verify_merge_base(unsigned char *head_sha1, unsigned char *branch_sha
- 	return (merge_bases && !merge_bases->next && merge_bases->item == branch);
- }
- 
--static int delete_remote_branch(char *pattern, int force)
-+static int delete_remote_branch(const char *pattern, int force)
- {
- 	struct ref *refs = remote_refs;
- 	struct ref *remote_ref = NULL;
-@@ -1742,10 +1697,7 @@ static int delete_remote_branch(char *pattern, int force)
- 	sprintf(url, "%s%s", repo->url, remote_ref->name);
- 	slot = get_active_slot();
- 	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_DELETE);
-+	curl_setup_http_get(slot->curl, url, DAV_DELETE);
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
- 		free(url);
+ 	size_t size = eltsize * nmemb;
 -- 
 1.7.4.2
