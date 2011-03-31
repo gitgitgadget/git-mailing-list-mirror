@@ -1,91 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] parse-remote: replace unnecessary sed invocation
-Date: Wed, 30 Mar 2011 19:31:48 -0700
-Message-ID: <7vlizwkokr.fsf@alter.siamese.dyndns.org>
-References: <1301474920-6718-1-git-send-email-bebarino@gmail.com>
- <AANLkTikBD4T3hdyT2h=2dzw-QO1BnBp3eT=WGj5s5dC3@mail.gmail.com>
- <AANLkTin3R8ApTZ97Cw67dN7_s_ycX8sQThypMq2N6eJi@mail.gmail.com>
+From: chris <jugg@hotmail.com>
+Subject: Re: [PATCH 2/3] remote: separate the concept of push and fetch mirrors
+Date: Thu, 31 Mar 2011 02:44:49 +0000 (UTC)
+Message-ID: <loom.20110331T040801-714@post.gmane.org>
+References: <20110330195139.GA814@sigill.intra.peff.net> <20110330195318.GB30624@sigill.intra.peff.net> <7vhbakmj5k.fsf@alter.siamese.dyndns.org> <20110330205734.GA2940@sigill.intra.peff.net> <7v62r0meok.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Schubert <mschub@elegosoft.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 04:32:11 2011
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 31 04:45:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q57gB-0002Ct-6I
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 04:32:11 +0200
+	id 1Q57sn-0005uJ-QB
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 04:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756739Ab1CaCcF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 22:32:05 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36976 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756729Ab1CaCcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 22:32:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D5DF49E6;
-	Wed, 30 Mar 2011 22:33:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T0wC0O+9RDLATUA6aTmk0GCK8gs=; b=biFnIo
-	8dUxHOwQnBut3oeA3osLbuZe33ZxZv6zzsTUrhwFU6fi5z43IvBfR7LjpErsk4Vr
-	FktP1AYiwkHydNCKhua9sasjg5RNwyjXK6sjS24AZnsH4B0CctVEgfO7kM3UIzWk
-	y140WR62a5ADw0+zG9hRWp0SY2WQEQ0CS/Uy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lOo1a+iCXZk80LjBK/HwwTy1vqtp5g9v
-	T9dm7Cx4biIj8bV9FLtXAeYk7w0OCLXfAwjx5d7a9SBU5Z2xJE5gyZrD+v0bWcqp
-	yAXuFO3i0WznKdG07RvibRZrMmZD2QQAwzhMGhjn+MPxe4flbr0TEt6G9Fc6UhK2
-	UrrwFdPrJmc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F04CB49DD;
-	Wed, 30 Mar 2011 22:33:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 94EFE49D4; Wed, 30 Mar 2011
- 22:33:39 -0400 (EDT)
-In-Reply-To: <AANLkTin3R8ApTZ97Cw67dN7_s_ycX8sQThypMq2N6eJi@mail.gmail.com>
- (Stephen Boyd's message of "Wed, 30 Mar 2011 18:02:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4CB3B7BC-5B3F-11E0-B4CE-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1756771Ab1CaCpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 22:45:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:50422 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755585Ab1CaCpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 22:45:05 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Q57sc-0005rF-O2
+	for git@vger.kernel.org; Thu, 31 Mar 2011 04:45:03 +0200
+Received: from 114-38-66-34.dynamic.hinet.net ([114.38.66.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 31 Mar 2011 04:45:02 +0200
+Received: from jugg by 114-38-66-34.dynamic.hinet.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 31 Mar 2011 04:45:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 114.38.66.34 (Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Ubuntu/10.04 Chromium/10.0.648.204 Chrome/10.0.648.204 Safari/534.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170452>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+Junio C Hamano <gitster <at> pobox.com> writes:
+> 
+> What would we call a person who first asks "I want a push mirror to save
+> away my work" and then says "now let's fetch from there", without
+> realizing that such a fetch will obliterate his work?  I agree that it
+> probably is asking a bit more than "common sense"; it perhaps requires an
+> ability to think for 5 minutes what oneself is doing .
 
-> On Wed, Mar 30, 2011 at 11:31 AM, Michael Schubert <mschub@elegosoft.com> wrote:
->>> +       curr_branch=$(git symbolic-ref -q HEAD)
->>> +       curr_branch="${cur_branch#refs/heads/}"
->>                                           ^^^
->
-> Ah! How did this pass the test suite... Anyway, looks like Junio
-> applied this patch to maint already :-( Sorry.
+If I have to stop and think for 5 minutes before I execute any git command, I 
+think there may be an issue with the tool. :)  That said - the above thoughts 
+were never the source of my surprise.
 
-Heh, I was wondering what those three carets under ads in "#refs/heads/"
-was pointing at, and didn't see you had only one R in the variable name.
+The only surprising aspect of this whole thing was the behavior of 
+branch.autosetupmerge when a 'mirror' remote existed.  Essentially the existence 
+of the mirror remote turned all local branches into remote-tracking branches - 
+that is surprising.
 
-Thanks for a correction, and Michael, please be a bit more specific (and
-point the correct part with your carret) when you send your messages.
+I have no issue with --mirror having its current behavior (although the proposed 
+changes certainly are more explicit and therefore clearer), however, I propose 
+that branch.autosetupmerge should ignore remotes with mirror = true.
 
-> Junio, please apply this (probably word wrapped since this is gmail
-> interface) and drop your trust level of me by a few points.
->
-> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-> index 9168879..ea093d2 100644
-> --- a/git-parse-remote.sh
-> +++ b/git-parse-remote.sh
-> @@ -6,7 +6,7 @@ GIT_DIR=$(git rev-parse -q --git-dir) || :;
->
->  get_default_remote () {
->         curr_branch=$(git symbolic-ref -q HEAD)
-> -       curr_branch="${cur_branch#refs/heads/}"
-> +       curr_branch="${curr_branch#refs/heads/}"
->         origin=$(git config --get "branch.$curr_branch.remote")
->         echo ${origin:-origin}
->  }
+I'd also propose that when setting up a --mirror, if the repository is not bare, 
+that the fetch refs be set to "refs/*:refs/*" rather than "+refs/*:refs/*".
+
+With those two changes, I get the functionality I want without surprises.
+
+I use the mirror for synchronizing "local" work between my workstations 
+(home/office).  So, I use the fact that I can fetch and pull from the mirror.
+
+chris
