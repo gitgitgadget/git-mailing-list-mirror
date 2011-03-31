@@ -1,56 +1,68 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH 1/2] cmd_clone: free dir and path buffers
-Date: Thu, 31 Mar 2011 17:06:29 +0200
-Message-ID: <1301583996.11592.3.camel@bee.lab.cmartin.tk>
-References: <1301581122-19947-1-git-send-email-cmn@elego.de>
-	 <AANLkTi=XYv1WFbvHwqvrJDkssKC-zU91Vj4EPbZG6OK2@mail.gmail.com>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH 1/2] cmd_clone: free dir and path buffers
+Date: Thu, 31 Mar 2011 17:10:41 +0200
+Message-ID: <1301584242-3193-1-git-send-email-cmn@elego.de>
+References: <1301583996.11592.3.camel@bee.lab.cmartin.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Thu Mar 31 17:06:53 2011
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 31 17:10:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5JSU-0005Sn-HO
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 17:06:50 +0200
+	id 1Q5JWO-0007uq-T7
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 17:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758077Ab1CaPGn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 11:06:43 -0400
-Received: from mx0.elegosoft.com ([88.198.54.133]:43368 "EHLO
-	mx0.elegosoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757716Ab1CaPGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 11:06:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 2F9A81B4CC0;
-	Thu, 31 Mar 2011 17:06:42 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uwWL6mL8IcrF; Thu, 31 Mar 2011 17:06:37 +0200 (CEST)
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id D453F1B4CAE;
-	Thu, 31 Mar 2011 17:06:36 +0200 (CEST)
-In-Reply-To: <AANLkTi=XYv1WFbvHwqvrJDkssKC-zU91Vj4EPbZG6OK2@mail.gmail.com>
-X-Mailer: Evolution 2.91.92 
+	id S1758208Ab1CaPKo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 11:10:44 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:41314 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757777Ab1CaPKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 11:10:43 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id E6BAB4611D;
+	Thu, 31 Mar 2011 17:10:32 +0200 (CEST)
+Received: (nullmailer pid 3232 invoked by uid 1000);
+	Thu, 31 Mar 2011 15:10:42 -0000
+X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <1301583996.11592.3.camel@bee.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170498>
 
-On jue, 2011-03-31 at 10:45 -0400, John Szakmeister wrote:
-> On Thu, Mar 31, 2011 at 10:18 AM, Carlos Mart=C3=ADn Nieto <cmn@elego=
-=2Ede> wrote:
-> > The variables dir and path are always allocated on the stack so it'=
-s
-> > always safe to free them.
->=20
-> I think you mean "on the heap". :-)
+The variables dir and path are always allocated on the heap so it's
+always safe to free them.
 
- Indeed I do=20
+This memory would be freed by _exit, but it's good form to free memory
+you've allocated.
 
-   cmn
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
+
+Hopefully this time there are no silly mistakes.
+
+ builtin/clone.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 2ee1fa9..fe0408c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -665,6 +665,8 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 			err =3D run_command_v_opt(argv_submodule, RUN_GIT_CMD);
+ 	}
+=20
++	free(dir);
++	free(path);
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
+--=20
+1.7.4.1
