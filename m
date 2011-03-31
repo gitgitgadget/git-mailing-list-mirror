@@ -1,7 +1,7 @@
 From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 1/2] fast-import: use struct hash_table for atom strings
-Date: Thu, 31 Mar 2011 22:59:57 +1100
-Message-ID: <1301572798-9973-2-git-send-email-david.barr@cordelta.com>
+Subject: [PATCH 2/2] fast-import: use struct hash_table for objects
+Date: Thu, 31 Mar 2011 22:59:58 +1100
+Message-ID: <1301572798-9973-3-git-send-email-david.barr@cordelta.com>
 References: <1301572798-9973-1-git-send-email-david.barr@cordelta.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Barr <david.barr@cordelta.com>
@@ -12,24 +12,24 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5GYE-0002jn-A6
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 14:00:34 +0200
+	id 1Q5GYE-0002jn-Th
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 14:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757374Ab1CaMA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 08:00:29 -0400
-Received: from mailhost.cordelta.com ([119.15.97.146]:52135 "EHLO
+	id S1757365Ab1CaMA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 08:00:28 -0400
+Received: from mailhost.cordelta.com ([119.15.97.146]:60863 "EHLO
 	mailhost.cordelta" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757324Ab1CaMA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751438Ab1CaMA1 (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 31 Mar 2011 08:00:27 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id 631A9C057;
+	by mailhost.cordelta (Postfix) with ESMTP id 2E50CC05B;
 	Thu, 31 Mar 2011 22:57:20 +1100 (EST)
 X-Virus-Scanned: amavisd-new at mailhost.cordelta
 Received: from mailhost.cordelta ([127.0.0.1])
 	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id t32gz31cg-am; Thu, 31 Mar 2011 22:57:17 +1100 (EST)
+	with ESMTP id oTBAg3qFgo47; Thu, 31 Mar 2011 22:57:17 +1100 (EST)
 Received: from dba.cordelta (unknown [192.168.123.140])
-	by mailhost.cordelta (Postfix) with ESMTP id 5005AC058;
+	by mailhost.cordelta (Postfix) with ESMTP id 60803C059;
 	Thu, 31 Mar 2011 22:57:17 +1100 (EST)
 X-Mailer: git-send-email 1.7.3.2.846.gf4b062
 In-Reply-To: <1301572798-9973-1-git-send-email-david.barr@cordelta.com>
@@ -37,64 +37,65 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170477>
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
- fast-import.c |   17 ++++++++++-------
- 1 files changed, 10 insertions(+), 7 deletions(-)
+ fast-import.c |   19 ++++++++++++-------
+ 1 files changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/fast-import.c b/fast-import.c
-index 65d65bf..0592b21 100644
+index 0592b21..8fd8ea9 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -300,9 +300,8 @@ static size_t total_allocd;
- static struct mem_pool *mem_pool;
+@@ -313,7 +313,7 @@ static off_t pack_size;
+ /* Table of objects we've written. */
+ static unsigned int object_entry_alloc = 5000;
+ static struct object_entry_pool *blocks;
+-static struct object_entry *object_table[1 << 16];
++static struct hash_table object_table;
+ static struct mark_set *marks;
+ static const char *export_marks_file;
+ static const char *import_marks_file;
+@@ -555,9 +555,9 @@ static struct object_entry *new_object(unsigned char *sha1)
  
- /* Atom management */
--static unsigned int atom_table_sz = 4451;
- static unsigned int atom_cnt;
--static struct atom_str **atom_table;
-+static struct hash_table atom_table;
- 
- /* The .pack file being generated */
- static unsigned int pack_id;
-@@ -680,10 +679,11 @@ static struct object_entry *find_mark(uintmax_t idnum)
- 
- static struct atom_str *to_atom(const char *s, unsigned short len)
+ static struct object_entry *find_object(unsigned char *sha1)
  {
--	unsigned int hc = hc_str(s, len) % atom_table_sz;
-+	unsigned int hc = hc_str(s, len);
- 	struct atom_str *c;
+-	unsigned int h = sha1[0] << 8 | sha1[1];
++	unsigned int h = sha1[0] << 24 | sha1[1] << 16 | sha1[2] << 8 | sha1[3];
+ 	struct object_entry *e;
+-	for (e = object_table[h]; e; e = e->next)
++	for (e = lookup_hash(h, &object_table); e; e = e->next)
+ 		if (!hashcmp(sha1, e->idx.sha1))
+ 			return e;
+ 	return NULL;
+@@ -565,8 +565,9 @@ static struct object_entry *find_object(unsigned char *sha1)
+ 
+ static struct object_entry *insert_object(unsigned char *sha1)
+ {
+-	unsigned int h = sha1[0] << 8 | sha1[1];
+-	struct object_entry *e = object_table[h];
++	unsigned int h = sha1[0] << 24 | sha1[1] << 16 | sha1[2] << 8 | sha1[3];
++	struct object_entry *e = lookup_hash(h, &object_table);
 +	void **pos;
  
--	for (c = atom_table[hc]; c; c = c->next_atom)
-+	for (c = lookup_hash(hc, &atom_table); c; c = c->next_atom)
- 		if (c->str_len == len && !strncmp(s, c->str_dat, len))
- 			return c;
+ 	while (e) {
+ 		if (!hashcmp(sha1, e->idx.sha1))
+@@ -575,9 +576,13 @@ static struct object_entry *insert_object(unsigned char *sha1)
+ 	}
  
-@@ -691,8 +691,12 @@ static struct atom_str *to_atom(const char *s, unsigned short len)
- 	c->str_len = len;
- 	strncpy(c->str_dat, s, len);
- 	c->str_dat[len] = 0;
--	c->next_atom = atom_table[hc];
--	atom_table[hc] = c;
-+	c->next_atom = NULL;
-+	pos = insert_hash(hc, c, &atom_table);
+ 	e = new_object(sha1);
+-	e->next = object_table[h];
++	e->next = NULL;
+ 	e->idx.offset = 0;
+-	object_table[h] = e;
++	pos = insert_hash(h, e, &object_table);
 +	if (pos) {
-+		c->next_atom = *pos;
-+		*pos = c;
++		e->next = *pos;
++		*pos = e;
 +	}
- 	atom_cnt++;
- 	return c;
+ 	return e;
  }
-@@ -3263,7 +3267,6 @@ int main(int argc, const char **argv)
  
- 	alloc_objects(object_entry_alloc);
- 	strbuf_init(&command_buf, 0);
--	atom_table = xcalloc(atom_table_sz, sizeof(struct atom_str*));
- 	branch_table = xcalloc(branch_table_sz, sizeof(struct branch*));
- 	avail_tree_table = xcalloc(avail_tree_table_sz, sizeof(struct avail_tree_content*));
- 	marks = pool_calloc(1, sizeof(struct mark_set));
 -- 
 1.7.3.2.846.gf4b062
