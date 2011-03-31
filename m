@@ -1,91 +1,133 @@
-From: Alexandru Sutii <sutii.alex@gmail.com>
-Subject: Re: GSoC questions
-Date: Thu, 31 Mar 2011 21:34:15 +0300
-Message-ID: <AANLkTikMsQHL9RMm=uOse+OObavMNc=PJE7aOqA-WMkY@mail.gmail.com>
-References: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
-	<20110328001152.GA11294@elie>
-	<AANLkTikGb1=Rtz-T9p=u+X32KpL2AXq0AELdSJ2NMHrW@mail.gmail.com>
-	<AANLkTink4wVb6O+yVm=HUh_s1GhKhyL4baqYGe=XFu04@mail.gmail.com>
-	<AANLkTinZ2zbhCRAqAYkiAa1=K8aUhcAuEe6Q_gO-v2h_@mail.gmail.com>
-	<AANLkTi=TOYOj2HWzy62G24Kg=NZC5X1=psA3GDhaH3Hc@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/4] fix hang in git push when pack-objects fails
+Date: Thu, 31 Mar 2011 14:42:44 -0400
+Message-ID: <20110331184243.GA12027@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Vicent Marti <vicent@github.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	libgit2@librelist.org, Jeff King <peff@peff.net>
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Thu Mar 31 20:34:26 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 31 20:42:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5MhN-0004DJ-Bs
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 20:34:25 +0200
+	id 1Q5MpY-0000gr-Js
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 20:42:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752344Ab1CaSeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 14:34:19 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51089 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758834Ab1CaSeQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 14:34:16 -0400
-Received: by iwn34 with SMTP id 34so2664139iwn.19
-        for <git@vger.kernel.org>; Thu, 31 Mar 2011 11:34:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=38SijftLjF6X9s0nO23aDmrOIBaJIJGMmeIez3WsRbI=;
-        b=x3punw2DO27mJNtFb/oAlq8hfoYhID2rLap3cooByBotugOyYYd3hGiaQUiMfvQq4Z
-         s2gi8kboBEW+DbNKOaBAps3M41P+Zgn3qTWifv41ZRwLoKPHFY6k0B0dj95WXSWPAvkh
-         DTsbTikV6NOol95k47M5xL/kQqpqycaDgfqVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=W3WFFQevBOtQoQzDevxiV0aQ3iP5HbixNI5uLl/S4SOrif/RnPbN98m94kvK2Ipwwm
-         XijjZ/Ia2yp32sPciPgHZj69rTmj+Nww2cadUynWwgg55idngv1duUOKLpx+Qstrj+7S
-         9HXZIYO7b3IPkJqyzR/fVz+iOVf28rAOD/bio=
-Received: by 10.42.138.4 with SMTP id a4mr3716570icu.258.1301596455813; Thu,
- 31 Mar 2011 11:34:15 -0700 (PDT)
-Received: by 10.43.133.2 with HTTP; Thu, 31 Mar 2011 11:34:15 -0700 (PDT)
-In-Reply-To: <AANLkTi=TOYOj2HWzy62G24Kg=NZC5X1=psA3GDhaH3Hc@mail.gmail.com>
+	id S1758982Ab1CaSmr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 14:42:47 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60510
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758977Ab1CaSmq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 14:42:46 -0400
+Received: (qmail 1199 invoked by uid 107); 31 Mar 2011 18:43:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Mar 2011 14:43:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2011 14:42:44 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170509>
 
-> I guess the git2 client will consist solely of non-gitcore code, as
-> all the gitcore code will be part of libgit2 eventually.
->
-> I expect the transition to be not so difficult for many commands, but
-> the challenge I see is to do it not by 'reusing' git code, but by
-> 'sharing' the code. Otherwise we end up with a second Git and someone
-> should spend a lifetime to keep the reused code in synchronisation
-> with the git repo.
->
-> This might, however, require some (major) refactorization to the Git
-> code. I don't know whether that will be supported by everyone.
->
-> On the other hand, we will get the bonus that using libgit2 in the
-> upstream git code is then becoming more trivial.
->
-> Maybe I'm aiming at too much here. It could well be that it is worth
-> writing the minimal git client to just be able to test libgit2 using
-> the git tests. Does anyone want to comment ?
+When we push over the git protocol, we spawn a pack-object process.  If
+pack-objects dies prematurely (for example, because there is some repo
+corruption), we are careful to clean up the sideband demuxer (if it is
+being used) with finish_async. However, for an async implementation
+which forks (i.e., when we have no pthreads), that means we will
+waitpid() for the async process.
 
-Hello!
+Meanwhile, the async sideband demuxer will continue trying to stream
+data from the remote repo until it gets EOF.  Depending on what data
+pack-objects actually sent, the remote repo may not actually send
+anything (e.g., if we sent nothing and it is simply waiting for the
+pack).  This leads to deadlock cycle in which send-pack waits on the
+demuxer, the demuxer waits on the remote receive-pack, and the remote
+receive-pack waits on send-pack to send the pack data.
 
-There have been a lot on discussions on the mailing list regarding
-on what this client should look like and I understand that we are
-expected to come with a specific approach. Also I understand there is
-no interest for this project to become large.
+You can test this by compiling with NO_PTHREADS=1 and running the
+following script:
 
-Considering this circumstances I think we should implement the client
-with the basic commands by reusing git's high level code. I am for building
-it independently of the git's mainstream.
+-- >8 --
+#!/bin/sh
 
-Anyway I am open to any proposals. Comments are still welcome.
+rm -rf parent child
 
---Alex
+git init --bare parent &&
+git init child &&
+cd child &&
+git remote add origin ../parent &&
+echo content >file &&
+git add file &&
+git commit -m one &&
+git push origin HEAD &&
+echo content >>file &&
+git add file &&
+git commit -m two
+
+sha1=`git rev-parse HEAD:file`
+file=`echo $sha1 | sed 's,..,&/,'`
+rm -fv .git/objects/$file
+
+git push
+-- 8< --
+
+The problem bisects to 38a81b4 (receive-pack: Wrap status reports inside
+side-band-64k, 2010-02-05). In fact, at that point in time we didn't use
+pthreads at all for async calls on non-win32 platforms, so even people
+with pthreads are affected. For example, you can trigger it with
+v1.7.0.2 even with pthreads, since we didn't use them for async code
+back then.  That state continued until f6b6098 (Enable threaded async
+procedures whenever pthreads is available, 2010-03-09), at which point
+the problem went away for pthreads users.
+
+So what I did was build a maint series straight on top of 38a81b4,
+the source of the bug:
+
+  [1/4]: teach wait_or_whine a "quiet" mode
+  [2/4]: finish_async: be quiet when waiting for async process
+  [3/4]: run-command: allow aborting async code prematurely
+  [4/4]: send-pack: abort sideband demuxer on pack-objects error
+
+The first two are refactoring so that aborting async code does not
+produce a stray "child process died with signal 15" message. If they're
+too invasive, they can go away and we can live with the extra message.
+
+The third one introduces abort_async, which just kill()s the
+forked process for the non-win32 case. For the win32 case, we need to
+either:
+
+  1. do nothing. I'm not 100% sure why, but the bug does not manifest
+     itself with pthreads. I don't know how it behaves on win32.
+
+  2. do the equivalent of pthread_cancel. This makes more sense to me.
+     Even if this particular case doesn't have an issue in the threaded
+     case, having a primitive like abort_async actually kill the thread
+     is sensible.
+
+So that fixes old versions. To fix newer ones, it needs to be merged
+with f6b6098, which has a few conflicts. And then you can apply on top
+of that merge:
+
+  [5/4]: run-command: implement abort_async for pthreads
+
+which will again break win32, as the compat wrapper doesn't implement
+pthread_cancel.
+
+If it's easier to pull than to recreate the merge, you can find the
+first series based on 38a81b4 here:
+
+  git://github.com/peff/git.git jk/maint-push-async-hang
+
+and then the merge, with conflict resolution, and 5/4 on top here:
+
+  git://github.com/peff/git.git jk/maint-push-async-hang-threads
+
+If it's easier, I can also build the fix on top of v1.7.2, which was the
+first release with async pthreads, and then we can either call that "old
+enough", or I can backport it via cherry-pick to the source.
+
+-Peff
