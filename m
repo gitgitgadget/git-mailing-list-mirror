@@ -1,87 +1,126 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: compare log of two different repos
-Date: Thu, 31 Mar 2011 12:34:32 -0700 (PDT)
-Message-ID: <m3r59n3x0d.fsf@localhost.localdomain>
-References: <1301514556812-6224714.post@n2.nabble.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: Usability improvement request: git show revision -- file
+Date: Thu, 31 Mar 2011 21:59:24 +0200
+Message-ID: <AANLkTimkdRtY_2S1U=Kog08EOAx_U2cgAFdEC60AZ4eO@mail.gmail.com>
+References: <AANLkTi=JPVXD7Je7Rz9yhKHnJo+K2rs5WnwTY22c3h6L@mail.gmail.com>
+	<4D94322A.8030409@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sri <nkf364@motorola.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 21:34:47 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 31 21:59:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5Ndh-0002Ey-Hu
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 21:34:41 +0200
+	id 1Q5O1j-0006wV-Gc
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 21:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759073Ab1CaTeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 15:34:36 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33802 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758969Ab1CaTef (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 15:34:35 -0400
-Received: by wwa36 with SMTP id 36so3221166wwa.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2011 12:34:34 -0700 (PDT)
+	id S1759308Ab1CaT70 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 15:59:26 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:38325 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759298Ab1CaT7Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2011 15:59:25 -0400
+Received: by vws1 with SMTP id 1so2176706vws.19
+        for <git@vger.kernel.org>; Thu, 31 Mar 2011 12:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=nBnym4KXjyQmKn0OZavdlujoE0WNQyth5jlcHuN0tXY=;
-        b=rkN+xHGvVf7lQRHU1P+JnApGwCxFcsV9I6+XVI31atoyRgTQ9RtddlU/7fjVFzaA6H
-         2iRPeMpUX6yqnLQOFw/zHM5y5c/jrg29ToxRXns+LbI0Hbw9SXcfk2qo064y3kBgmOdM
-         F4Y7oPScH2ItOX5zKXk1YOR2UhEOSm1hfxqnI=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Kuw4C8LS0uLAquPBMlsPZIiZpvZV80ZbWgfzPE+JbIU=;
+        b=itCiTVIHJ/QKfNe5URGkg2BoiLDVMDWOXxDpcGpWcT00+MyEE9Wn1HHqpHK7Maglub
+         r1f0cIdf/tq9CrfCE+EJCtYE/dayqbw4IJkjz+Sausf89Qkmq6y5Aq1y4xH2kZfGiJ+6
+         Q9hDMB+CMu/DFE8Eo2Ras8pxbl1tlHbpzKYgM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=hIqmemb3BtnL176fLEzXDyRzbsoCVpnyka16B4tZ4Zp48tCPXIRy3sUPL+je20WEa4
-         fqM4uoEij1zkSxaw8K0neegdHuPQ6XeTlpZk52yHICp1y2BlZwvnVK8BI11do9TvcLXP
-         HDqxN8miQ8C2AnomfvKut5wwEOaF+mr6wzoYA=
-Received: by 10.216.67.1 with SMTP id i1mr2927261wed.62.1301600073898;
-        Thu, 31 Mar 2011 12:34:33 -0700 (PDT)
-Received: from localhost.localdomain (abwa39.neoplus.adsl.tpnet.pl [83.8.224.39])
-        by mx.google.com with ESMTPS id g32sm675503wej.27.2011.03.31.12.34.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 31 Mar 2011 12:34:32 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p2VJYBmF032690;
-	Thu, 31 Mar 2011 21:34:22 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p2VJXtZC032684;
-	Thu, 31 Mar 2011 21:33:55 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1301514556812-6224714.post@n2.nabble.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=r1nxe8qkV923csjdzhYOZvqieIxSEotK6NV+XpQFGXnnVYgscHqb/oS1W3EVqjdF4z
+         00LxlsfOMYHtVyFgjxfmaH7CJb/nbmfUvE6CSwcNc6XtU8nyOdtfCI2Rkd+xvHkcb1Ko
+         9M0cwVmUh5Y2LHzPAQ/UMRSxJ+Cm6g85NDBCk=
+Received: by 10.52.93.177 with SMTP id cv17mr4239890vdb.133.1301601564729;
+ Thu, 31 Mar 2011 12:59:24 -0700 (PDT)
+Received: by 10.220.210.16 with HTTP; Thu, 31 Mar 2011 12:59:24 -0700 (PDT)
+In-Reply-To: <4D94322A.8030409@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170526>
 
-Sri <nkf364@motorola.com> writes:
+On Thu, Mar 31, 2011 at 9:50 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Piotr Krukowiecki venit, vidit, dixit 31.03.2011 08:45:
+>> Hi,
+>>
+>> if there's existing way to do this please tell me.
+>>
+>> There's this file "src/subdir/file". I'm in the "src" directory and =
+want to
+>> see the "file" at specific revision.
+>>
+>> Knowing about git show I'd expect something like this to work:
+>>
+>> =A0 =A0$ git show master -- subdir/file
+>>
+>> But it shows nothing (no output, no warning).
+>
+> ...because you are asking git to show the commit master, filtered by
+> subdir/file, and if that file is not changed there, the commit is not
 
-> Hi
-> This is my scenario:
-> - Server has 2 different repos say x & y
-> - I created a branch out of x ( say xx) and a branch out of y (say yy)
-> - Now I made changes to xx/folder1/file1- change 1and commit it ;then I made
-> changes to to yy/folder1/file1 -change 1 and yy/folder1/file 1 -change 2 and
-> commit it ( Folder 1,file 1, change 1 are same in both xx and yy)
-> - Now I want the log of unique commits between both branches ( which will be
-> change 2 commit in yy)
-> 
-> How do I get this using GIT? Right now am doing it manually which is very
-> tedious...
+It wasn't - I was doing git-blame and wanted to see file as it was befo=
+re
+the blamed commit.
 
-Besides adding one repository as remote in other repository, using
-"git remote add", you might also use the trick described here:
 
-  https://git.wiki.kernel.org/index.php/GitTips#How_to_compare_two_local_repositories
+> selected. If it is changed there, it shows you only the diff affectin=
+g
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I see - that makes sense too.
+
+
+> that file. (We might want to change this to filter the diff only.)
+
+Not sure what you mean by that?
+
+
+>> Following also does not
+>> work as expected:
+>>
+>> =A0 =A0$ git show master:subdir/file
+>> =A0 =A0fatal: Path 'src/subdir/file' exists, but not 'subdir/file'.
+>> =A0 =A0Did you mean 'master:src/subdir/file'?
+>
+> But git is really understanding about your situation, isn't it? ;)
+
+Yeah, but this looks like a workround for a common problem -
+people specify relative path a lot, so a warning was added.
+
+
+>> Of course following works:
+>>
+>> =A0 =A0$ git show master:src/subdir/file
+>>
+>> but it's not very convenient to have to specify full path, and it's =
+not what
+>> you would expect given that most other commands accept "-- relativep=
+ath"
+>> syntax.
+>
+> It's not the command in this case, but the "commit:pathspec" syntax, =
+and
+> for every command which understands it, it is relative to root (i.e.
+> expects a full path). But we do have a syntax for relative:
+>
+> git show master:./subdir/file
+
+Thanks, I'll try to remember. I don't have a better idea for solving
+this problem.
+
+
+--=20
+Piotr Krukowiecki
