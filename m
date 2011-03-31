@@ -1,65 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] sha1_name: Suggest commit:./file for path in subdir
-Date: Thu, 31 Mar 2011 12:26:13 -0700
-Message-ID: <7vsju3jdm2.fsf@alter.siamese.dyndns.org>
-References: <4D94322A.8030409@drmicha.warpmail.net>
- <4ff35194dc52fa969049f555f8d9358cb7ba0c1a.1301562935.git.git@drmicha.warpmail.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: ignorecase interoperability bugs
+Date: Thu, 31 Mar 2011 15:18:36 -0400
+Message-ID: <20110331191836.GA16342@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 31 21:26:29 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ew6BAiZeqk4r7MaW"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 31 21:27:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5NVk-0006AT-Or
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 21:26:29 +0200
+	id 1Q5NWW-0006Yh-Ai
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 21:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759253Ab1CaT0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 15:26:25 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40760 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759251Ab1CaT0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 15:26:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 882623BA9;
-	Thu, 31 Mar 2011 15:28:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x9++ssbV8uisg43dNmkaKO5rv8Y=; b=bXpF9k
-	rZ0v60vUUTWgVZZh2L8lU1kigBPBvfeGddHJIvZh21HEwZgr3cnhhPGLnauFoX8R
-	LSy/uTzkkrzegqX9/olgFunBcpQM6oQWqbx5VJOn3FjL8hdGJzUplkM4DLcsQ8NZ
-	eQ9xygeTndsVMPXyCHrtPfUTyrWI4CMQgiljY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jL8mWbDkYOzmCA2N7JqxNhjbpKieYrV2
-	GPdHLynfoEfddyJiMIHT5pz8GqBN9gaL6S4PHeKv3n9+8F0aFQmuAI6r16JbejPV
-	lcT8d0ZEiIAUz88pO2brs+LH+0CNi+ExsEfMjM8sMpvlJnoSbaUMgFtecpaaI58w
-	59KaWxj9oXk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 537AC3BA5;
-	Thu, 31 Mar 2011 15:28:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 38ED33BA4; Thu, 31 Mar 2011
- 15:28:03 -0400 (EDT)
-In-Reply-To: <4ff35194dc52fa969049f555f8d9358cb7ba0c1a.1301562935.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 31 Mar 2011 11:17:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 021719B8-5BCD-11E0-BCFA-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1759265Ab1CaT1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 15:27:12 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:59640 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759220Ab1CaT1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 15:27:11 -0400
+X-Greylist: delayed 506 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Mar 2011 15:27:10 EDT
+Received: from gnu.kitenet.net (dialup-4.154.7.95.Dial1.Atlanta1.Level3.net [4.154.7.95])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id F089C1180B2
+	for <git@vger.kernel.org>; Thu, 31 Mar 2011 15:18:41 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id B43DD5759A; Thu, 31 Mar 2011 15:18:36 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170522>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Currently, the "Did you mean..." message suggests "commit:fullpath"
-> only. Extend this to show the more convenient "commit:./file" form also.
+--ew6BAiZeqk4r7MaW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If we were to do this, I suspect that with non-empty prefix we should only
-show "./$file" form for brevity without aka.  This is a end-user facing
-message and not meant to help scripts, no?
+Suppose I have two clones of a repo. "mac" has ignorecase=3Dtrue and is on =
+HFS+,
+and "lin" has ignorecase=3Dfalse and is on ext4. With git 1.7.4, I have fou=
+nd
+some very unusual behavior.
+
+on mac (omitting all git output to save space):
+
+$ mkdir X
+$ echo mac > X/foo
+$ git add X/foo
+$ git commit -m "added X/foo"
+
+on lin (omitting all git output to save space):
+
+$ git pull mac master
+# now X/foo exists here
+$ mkdir x
+$ echo lin > x/foo
+$ git add x/foo
+$ git commit -m "added x/foo"
+
+on mac:
+
+$ git pull lin master
+[...]
+ * branch            master     -> FETCH_HEAD
+Updating a3dbf10..2d4223d
+Fast-forward
+ x/foo |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 x/foo
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working director=
+y)
+#
+#	modified:   X/foo
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git add X/foo
+$ git commit X
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working director=
+y)
+#
+#	modified:   X/foo
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+So, it's possible to get files that git thinks are changed, but
+cannot be committed.
+
+$ echo testing > X/foo
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working director=
+y)
+#
+#	modified:   X/foo
+#	modified:   x/foo
+
+And it's possible to have multiple cases of the same file show up
+even though ignorecase=3Dtrue.
+
+
+The problems don't end there. Suppose I have a program that expects to
+find a file in proggy/config. But, on mac, I already have a Proggy/Data
+file that I created & committed for some reason. No problem; I write
+my config to proggy/config; the program can read its file, I commit
+proggy/config, and all seems well. Now I clone to lin, and see:
+
+$ ls
+Proggy/Data
+Proggy/config
+$ proggy
+proggy: cannot open proggy/config: file does not exist
+
+
+Git 1.7.2.5 seems to handle both these cases better; the ignorecase rework
+in 1.7.4 introduced most of these problems AFAICS.
+
+--=20
+see shy jo
+
+--ew6BAiZeqk4r7MaW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTZTTickQ2SIlEuPHAQgImg/9Ggr/F59qMEoO9LIjOp+c7z+g7GxTfqhl
+XJju9GnIlbHBqGw2xjM47X0v407p1RV3JS9IeBtFwHIW63S5NgPH2DgfjXAQoW9Y
+HHddp+qfmY9xDzEnQoEGrUuAIwlVnom3moLvEY0k9lb8Y3wN6erGHoukKVtpgQBF
+I4xPc6yRbiOKuq4/DhWpCpYqdlimm7tSQsYuDXOdM+8hutGEWAtsDachS20iRcGW
+tWbPwfSRB53layQB/I0nYMLwat5qqQHr+ZblQ8iDoerNFelQMvGrQNdHU5qcbknH
+jk8S6B/RpIHjFa6c3asK/6DIPsAobeZHmS/Xx6QrtjtOQu9KD34tECWv3cfQ3P3s
+4aBkLbMVUxqVYoGhCJr/Rionz/NcI+lQmh80xB22mtlexNSdfT0u8dJPSRLQvyqN
+dmOsa5jt/+OD6ReUtz+JxDzt0eLhNhn1GvkekiTgkcC8Frzs4nrikq+u5P4Sncg0
+E6UNoFvDJBkSqhIfMNaXSuqmLPK8JwVuGIHv366nmizbz2cLNrSZ5lVltbVJMX00
+EBLXfWwht6a0Xn7s4vsPvOwtUbX6bnmNaQmPaxIGsqamQonnj/B37Qv1FF3rJrgJ
+PFlnATEnrPzkTKiQv5UhoQ8hPv6FykLhgWhd1vvbm2AzYObzffVSdhpH/OamnXeK
+HSn0iAoHdeA=
+=j+kC
+-----END PGP SIGNATURE-----
+
+--ew6BAiZeqk4r7MaW--
