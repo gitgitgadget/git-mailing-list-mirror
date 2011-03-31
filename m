@@ -1,69 +1,109 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH 3/3] builtin/show.c: do not prune by pathspec
-Date: Thu, 31 Mar 2011 12:58:06 +0200
-Message-ID: <4D945E3E.9010006@drmicha.warpmail.net>
-References: <4D94322A.8030409@drmicha.warpmail.net> <3bee7fb376e2fb498c9634ab2ff5506f8c74a7bc.1301562936.git.git@drmicha.warpmail.net> <4D9454D9.6060406@viscovery.net>
+From: Motiejus =?utf-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>
+Subject: Re: GSoC questions
+Date: Thu, 31 Mar 2011 14:06:05 +0300
+Message-ID: <20110331110605.GA14892@jakstys.lt>
+References: <AANLkTinTM8hQpcahGgDyB4UJvGbdN0xyp65wL5PDQGKa@mail.gmail.com>
+ <20110328001152.GA11294@elie>
+ <AANLkTikGb1=Rtz-T9p=u+X32KpL2AXq0AELdSJ2NMHrW@mail.gmail.com>
+ <AANLkTink4wVb6O+yVm=HUh_s1GhKhyL4baqYGe=XFu04@mail.gmail.com>
+ <AANLkTinZ2zbhCRAqAYkiAa1=K8aUhcAuEe6Q_gO-v2h_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 31 13:01:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Vicent Marti <vicent@github.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	libgit2@librelist.org, Jeff King <peff@peff.net>
+To: Alexandru Sutii <sutii.alex@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 13:06:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5FdJ-0006eb-4L
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 13:01:45 +0200
+	id 1Q5Fhd-0000ct-37
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 13:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757302Ab1CaLBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 07:01:38 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:34020 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757291Ab1CaLBh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2011 07:01:37 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E0377202C1;
-	Thu, 31 Mar 2011 07:01:36 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 31 Mar 2011 07:01:36 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=zAWvj2foQKjr9YBSjg/KyHr4Xik=; b=G5/FGlOx+hFi9xSf++kRl6vPncBn1Drad6Hg1QYyyuGXAjIk4btaN7Irwkfs7lWvyVi9ekuf1Kf2qs8EulGzKI2jETjymKeEQEuXJZBWXh5DPcHl15zg2WggacXg+492HwctBHImLzj+op/XugiuC2ClpFELYUCvGEa7DTtEHWk=
-X-Sasl-enc: 6v8PMa4O3I59t0rUmt94oLxDUZnIzkwIIIrfzkGynSDy 1301569296
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 228E940498F;
-	Thu, 31 Mar 2011 07:01:36 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <4D9454D9.6060406@viscovery.net>
+	id S1757240Ab1CaLGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 07:06:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:34326 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729Ab1CaLGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 07:06:06 -0400
+Received: by wwa36 with SMTP id 36so2652902wwa.1
+        for <git@vger.kernel.org>; Thu, 31 Mar 2011 04:06:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=FJYCpzjJsGsR9MPpXemP1r7Io7VQDbgP6xfYy4yeZDY=;
+        b=gq5OXl17U8nX1yQK1veGGI3Wd47az3CeY7RhxEoNFMM8SulrT+tiBbiGoMXvLeeCJZ
+         9SvEExmJZFsO+qQw13ouDRfHhf4IjMcD8XBFHkK1gzlE7AlVdkJtBBuwe0g8hK6QKdC4
+         rNrZ5KKfSHPef9UYE2af65hivvJcAdWycIYjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=B6nwo0OZSQNEE+80OoTiWCDBfznfWrJQPl/DGbs0u5unzYporAGrHaQZdTuvZ5LFKT
+         PfLtFoXK6Ng55AporzLFQPdrny8fwGjQDX8UyLnAH2BWomygmgOFYrGLsdT4XqHs9efe
+         hIhC00ciQk6xFPH91eMUX3/CMfKWpgvcqJz8k=
+Received: by 10.227.207.21 with SMTP id fw21mr2616419wbb.138.1301569563870;
+        Thu, 31 Mar 2011 04:06:03 -0700 (PDT)
+Received: from localhost ([78.56.137.167])
+        by mx.google.com with ESMTPS id y29sm583949wbd.4.2011.03.31.04.06.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 31 Mar 2011 04:06:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinZ2zbhCRAqAYkiAa1=K8aUhcAuEe6Q_gO-v2h_@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170468>
 
-Johannes Sixt venit, vidit, dixit 31.03.2011 12:18:
-> Am 3/31/2011 11:17, schrieb Michael J Gruber:
->> By design, "git show commit -- path" is not "git show commit:path", and
->> there is no reason to change that. But "git show commit -- path" simply
->> returns nothing at all "most of the time" because it prunes by pathspec
->> even though it does not walk commits. This is pretty useless.
->>
->> So, turn off pruning (but keep diff limiting of course) so that "git
->> show commit -- path" shows the commit message and the diff that the
->> commit introduces to path (filtered by path); only the diff will be
->> empty "most of the time".
+On Thu, Mar 31, 2011 at 12:36:15PM +0300, Alexandru Sutii wrote:
+> I began implementing the minimal git client[1]. I have implemented the
+> "git-mktag" command. For this I have modified the "mktag.c" file from
+> the "builtin" directory in order to make it run with libgit2. Basically the
+> input file verification code is the same with the original one. I have just
+> extracted the sha1, the object type, the tag name, the tagger, the
+> comment and created a tag with git_tag_create.
+
+Hi there,
+
+I started git2 client a couple of days ago and implemented a rough
+version of rev-list.c (which shows rev-list of HEAD. It is here:
+https://github.com/Motiejus/git2/
+
+Vincent van Ravesteijn forked and made some modifications:
+https://github.com/vfr-nl/git2/
+Thanks to him for CMakeLists.txt.
+
 > 
-> How does this interfere with git show --walk commit -- path? Will it now
-> show all commits instead of just those that changed path?
+> I have also used the original "usage.c" and "git-compat-util.h" for
+> error handling.  Is there a problem if the git2 client will reuse
+> non-gitcore code, such as string parsing code, parameter parsing code,
+> etc?
 
-Hmpft,
+I think this is what it has to be like. Provided it adds no
+requirements and license issues.
 
-git show --walk origin/master
-fatal: unrecognized argument: --walk
+> 
+> Can someone look on my code and give me some feedback?
 
-No, that is without my patch ;)
+You have done a good job in creating handlers and hooking up the
+repository. Thank you.
 
-In other words: "ENOPARSEOPTS in revision.c", there is no "--walk".
+> 
+> Just before ending the implementation of the mktag command I have
+> started thinking that maybe there was no need to reimplement this
+> command, as it can be considered that libgit2 already has this
+> feature.  Even if it is so I am not sorry I did this, because by
+> reimplementig it I had the chance to get used with git code and with
+> libgit2 API.
 
-Michael
+Don't know about the actual tag implementation, but in any case, the
+wrapper (glue) code around the tag very helpful.
+
+Best,
+Motiejus
