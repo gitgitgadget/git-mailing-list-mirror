@@ -1,7 +1,7 @@
 From: Dan McGee <dpmcgee@gmail.com>
-Subject: [PATCH 5/5] tree-walk: match_entry microoptimization
-Date: Wed, 30 Mar 2011 20:38:01 -0500
-Message-ID: <1301535481-1085-5-git-send-email-dpmcgee@gmail.com>
+Subject: [PATCH 3/5] tree-walk: micro-optimization in tree_entry_interesting
+Date: Wed, 30 Mar 2011 20:37:59 -0500
+Message-ID: <1301535481-1085-3-git-send-email-dpmcgee@gmail.com>
 References: <1301535481-1085-1-git-send-email-dpmcgee@gmail.com>
 Cc: Dan McGee <dpmcgee@gmail.com>
 To: git@vger.kernel.org
@@ -11,115 +11,78 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q56qR-0003Um-2I
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 03:38:43 +0200
+	id 1Q56qQ-0003Um-EC
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 03:38:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964940Ab1CaBiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 21:38:18 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37679 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933835Ab1CaBiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 21:38:14 -0400
-Received: by mail-iy0-f174.google.com with SMTP id 14so1845353iyb.19
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 18:38:14 -0700 (PDT)
+	id S964878Ab1CaBiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 21:38:17 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33023 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933830Ab1CaBiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 21:38:10 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 34so1864765iwn.19
+        for <git@vger.kernel.org>; Wed, 30 Mar 2011 18:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=ybeHqhOn9Ko1zx3Dwu1FHtjgbazgtaaSUOCc3aTiTjw=;
-        b=uIJWMjV3KYT9cAtmKPdiMfPVFMKoieeBgdybRS2Z8xjQfJUdTLeo+ZtL9plIo8vBSk
-         eq+5M0KdKJNNrAIdKOhgoxfiLAvnVnRuW5rpa2dy/eCDGdjPjajvTWf3dVSqopEa58wq
-         ekCot/q7KJ1K3l4w9V4uC8CoJjt8+9G6oEPGs=
+        bh=I0VrZsjUCGyeCq/+xv/MrcjTjVspVtlLPoUs5VHztGk=;
+        b=KNVzv3vRlW1ZjFOfOy7B/fTGDrp3pltV7Xoazr59mZdOBdhKJKCIVN8hUZL2KWHb+9
+         oFmPZfKw3gIQpt4Ya1NZU7Vz2buXWxQegYhrJfQlxmVH7JRKfEpZqW1Ru/THIcH2s1LB
+         kTgQ4UTgL3RiqaNn6p7HeiBOA4UGCXClwdiA4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=uV/ZrcjYdezicIn6S8i3Hwgqzf59O6/gDN+1May57Gw6ieSz2yW3DaBBXO4RHOYdMl
-         QNq/lr6nzapeGxK0CA62zMICmMl4R6ZFGNF1t+2BCziTCojE/nH/odrolsg5X9Bgyq0k
-         sgXE80/y1tPhB0VH5ZsPA8ruy403e86D/ITr4=
-Received: by 10.42.222.5 with SMTP id ie5mr2007664icb.331.1301535494451;
-        Wed, 30 Mar 2011 18:38:14 -0700 (PDT)
+        b=csmCovNVeZMTiFPFCMvRU4iTtsyNpAP/faYvpdMJzh0ZoGwWsdoQHrXEbcTKlNBkA1
+         BnEnG8ZX9B6Pt9zfdwUgI/TPLZGXzV0dqzi9MN1mL+gednE8qLTzVnu9C/UozvllSz4B
+         vY2rZSBVwlw3yiObgmqSe9MT9DZjuF/b7hSNQ=
+Received: by 10.42.77.8 with SMTP id g8mr1891048ick.478.1301535490119;
+        Wed, 30 Mar 2011 18:38:10 -0700 (PDT)
 Received: from localhost (c-71-239-242-45.hsd1.il.comcast.net [71.239.242.45])
-        by mx.google.com with ESMTPS id d10sm381225ibb.51.2011.03.30.18.38.13
+        by mx.google.com with ESMTPS id vr5sm281563icb.12.2011.03.30.18.38.08
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 18:38:13 -0700 (PDT)
+        Wed, 30 Mar 2011 18:38:09 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.2
 In-Reply-To: <1301535481-1085-1-git-send-email-dpmcgee@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170445>
 
-Before calling strncmp(), see if we can get away with checking only the
-first character of the passed path components instead.
+In the case of a wide breadth top-level tree (~2400 entries, all trees
+in this case), we can see a noticeable cost in the profiler calling
+strncmp() here. Most of the time we are at the base level of the
+repository, so base is "" and baselen == 0, which means we will always
+test true. Break out this one tiny case so we can short circuit the
+strncmp() call.
+
+This resulted in an ~11% improvement (43 to 38 secs) for a reasonable
+log operation on the Arch Linux Packages SVN clone repository, which
+contained 117220 commits and the aforementioned 2400 top-level objects:
+    git log -- autogen/trunk pacman/trunk/ wget/trunk/
+
+Negligible slowdown was noted with other repositories (e.g. linux-2.6).
 
 Signed-off-by: Dan McGee <dpmcgee@gmail.com>
 ---
- tree-walk.c |   26 ++++++++++++++++++--------
- 1 files changed, 18 insertions(+), 8 deletions(-)
+ tree-walk.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tree-walk.c b/tree-walk.c
-index 41383b0..083b951 100644
+index 9be8007..f386151 100644
 --- a/tree-walk.c
 +++ b/tree-walk.c
-@@ -488,9 +488,10 @@ static int match_entry(const struct name_entry *entry, int pathlen,
- 		       const char *match, int matchlen,
- 		       int *never_interesting)
- {
--	int m = -1; /* signals that we haven't called strncmp() */
-+	int m = -1; /* signals that we haven't compared strings */
+@@ -591,8 +591,8 @@ int tree_entry_interesting(const struct name_entry *entry,
+ 					      ps->max_depth);
+ 		}
  
- 	if (*never_interesting) {
-+		const int maxlen = (matchlen < pathlen) ? matchlen : pathlen;
- 		/*
- 		 * We have not seen any match that sorts later
- 		 * than the current path.
-@@ -500,10 +501,13 @@ static int match_entry(const struct name_entry *entry, int pathlen,
- 		 * Does match sort strictly earlier than path
- 		 * with their common parts?
- 		 */
--		m = strncmp(match, entry->path,
--			    (matchlen < pathlen) ? matchlen : pathlen);
--		if (m < 0)
--			return 0;
-+		if (maxlen && match[0] > entry->path[0]) {
-+			/* no good for the shortcut here, match must be <= */
-+		} else {
-+			m = strncmp(match, entry->path, maxlen);
-+			if(m < 0)
-+				return 0;
-+		}
- 
- 		/*
- 		 * If we come here even once, that means there is at
-@@ -531,12 +535,17 @@ static int match_entry(const struct name_entry *entry, int pathlen,
- 			return 0;
- 	}
- 
--	if (m == -1)
-+	if (m == -1) {
- 		/*
--		 * we cheated and did not do strncmp(), so we do
-+		 * we cheated and did compare strings, so we do
- 		 * that here.
- 		 */
--		m = strncmp(match, entry->path, pathlen);
-+		if (pathlen && match[0] == entry->path[0])
-+			/* invariant: matchlen == pathlen */
-+			m = strncmp(match, entry->path, pathlen);
-+		else
-+			m = 1;
-+	}
- 
- 	/*
- 	 * If common part matched earlier then it is a hit,
-@@ -552,6 +561,7 @@ static int match_entry(const struct name_entry *entry, int pathlen,
- static int match_dir_prefix(const char *base,
- 			    const char *match, int matchlen)
- {
-+	/* invariant: baselen >= matchlen */
- 	if (strncmp(base, match, matchlen))
- 		return 0;
- 
+-		/* Does the base match? */
+-		if (!strncmp(base_str, match, baselen)) {
++		/* Either there must be no base, or the base must match. */
++		if (baselen == 0 || !strncmp(base_str, match, baselen)) {
+ 			if (match_entry(entry, pathlen,
+ 					match + baselen, matchlen - baselen,
+ 					&never_interesting))
 -- 
 1.7.4.2
