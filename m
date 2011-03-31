@@ -1,77 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/5] strbuf: Introduce strbuf_fwrite corresponding to
- strbuf_fread
-Date: Wed, 30 Mar 2011 21:15:14 -0500
-Message-ID: <20110331021451.GA31090@elie>
-References: <1301422392-21177-1-git-send-email-artagnon@gmail.com>
- <1301422392-21177-4-git-send-email-artagnon@gmail.com>
+From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+Subject: Re: [PATCH] submodule: Add --force option for git submodule update
+Date: Thu, 31 Mar 2011 04:20:33 +0200
+Message-ID: <4D93E4F1.70103@morey-chaisemartin.com>
+References: <4D92E225.3040602@morey-chaisemartin.com> <4D93773C.2010807@web.de> <4D937B7E.10808@morey-chaisemartin.com> <4D937F09.10000@web.de> <4D93905E.5030806@morey-chaisemartin.com> <7vd3l8mi3m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Peter Baumann <waste.manager@gmx.de>,
-	David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 04:15:31 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 04:20:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q57Q0-0005yG-20
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 04:15:28 +0200
+	id 1Q57V5-0007SC-Ag
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 04:20:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755562Ab1CaCPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2011 22:15:22 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:40474 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755418Ab1CaCPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2011 22:15:22 -0400
-Received: by yxs7 with SMTP id 7so799511yxs.19
-        for <git@vger.kernel.org>; Wed, 30 Mar 2011 19:15:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=0f0xKrnTH6xRjPP4Rkdfo1ZAHusetvFevSuvN/ayg1c=;
-        b=f9Q4U0+skjqNHXpBsrhg5H6zoIVy6P7kKeCiDrbpv6YYOFhUU9PFD4Mx4mU0EwFVhC
-         20ilZuc344tsJtaQUiY5VZE13ibEeBcrTo8YksGCtupxWLRc+TQRxvHrZfdtpghf/bpq
-         sYL/ENkcpbmz5Lbhjf4E2hDHGiKqC7NWeq4LI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cYlAULJQIZKF7sUIzOKgGycA4XIN7xmtNg6yDf+ZLIqH4PeNkhYDBYowMcATbemoqw
-         FxRF9YnFw9qVppFUHAk65hBjfNXDGLBVNQNPuGBZUOx4bwocTm2fBoaYvQA9ItAASZiN
-         Heiv7Li7I/IhPcAs+6cKPXfauYjwBLiUdo7Sg=
-Received: by 10.236.168.41 with SMTP id j29mr2751896yhl.321.1301537721515;
-        Wed, 30 Mar 2011 19:15:21 -0700 (PDT)
-Received: from elie (adsl-68-255-107-98.dsl.chcgil.ameritech.net [68.255.107.98])
-        by mx.google.com with ESMTPS id x76sm367773yhn.94.2011.03.30.19.15.19
-        (version=SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2011 19:15:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1301422392-21177-4-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755528Ab1CaCUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2011 22:20:36 -0400
+Received: from 30.mail-out.ovh.net ([213.186.62.213]:41225 "HELO
+	30.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752059Ab1CaCUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2011 22:20:36 -0400
+Received: (qmail 30424 invoked by uid 503); 31 Mar 2011 02:10:02 -0000
+Received: from b9.ovh.net (HELO mail417.ha.ovh.net) (213.186.33.59)
+  by 30.mail-out.ovh.net with SMTP; 31 Mar 2011 02:10:01 -0000
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 31 Mar 2011 04:20:34 +0200
+Received: from mut38-4-82-233-116-185.fbx.proxad.net (HELO uranus.nicolas.morey-chaisemartin.com) (nicolas@morey-chaisemartin.com@82.233.116.185)
+  by ns0.ovh.net with SMTP; 31 Mar 2011 04:20:34 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Lightning/1.0b2 Thunderbird/3.1.9
+In-Reply-To: <7vd3l8mi3m.fsf@alter.siamese.dyndns.org>
+X-Ovh-Tracer-Id: 16497248385756159960
+X-Ovh-Remote: 82.233.116.185 (mut38-4-82-233-116-185.fbx.proxad.net)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-Spam-Check: DONE|U 0.5/N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170449>
 
-Ramkumar Ramachandra wrote:
+On 03/30/2011 11:08 PM, Junio C Hamano wrote:
+> Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com> writes:
+>> Well I was'nt sure about it either.
+>> The idea for me was to be able to put the repo and submodules in the cloned state (except for ignored files)
+>> In the current version the right thing to do is a bit of a mess:
+>> $ git submodule foreach --recursive 'git checkout -f HEAD'
+>> $ git submodule foreach --recursive 'git clean -f' # An untracked file on HEAD may be overwrittent by the new HEAD so checkout may fail if you don't do that
+>> $ git submodule update --recursive
+> 
+> Shouldn't you be questioning _why_ your users have such changes that
+> require them to run "checkout -f" everywhere in the submodule forests and
+> still want to run "submodule update" in the first place?  If it happens
+> very often and your users are constantly discarding what they have half
+> accomplished, there is something wrong with the way your project works.
+> 
 
-> [Subject: strbuf: Introduce strbuf_fwrite corresponding to strbuf_fread]
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+I did. Thee reason is we commit file generated by compilation.
+Whether it's docs, references (for automated integration) or simply result files that take 2 days to build,
+we have a strong need to commit generated files.
+And in this case, we need to discard a lot of things very often.
 
-And why?  FWIW strbuf_fread takes care of (1) setting the size of sb
-to accomodate the input, (2) starting reading at the end of the
-current strbuf, and (3) freeing the buffer if nothing could be read,
-so symmetry doesn't seem like a strong justification.
+> If we read your motivation section in your original,
+> 
+>   > This implies that to reset a whole git submodule tree, a user has to run
+>   > first 'git submodule foreach --recursive git checkout -f' to then be
+>   > able to run git submodule update.
+> 
+> this is about "resetting", i.e. throwing away the work.  I think that is a
+> sensible thing to do, but it is a very different purpose than "updating
+> submodules so that I can work on top of what other people did", which
+> would happen a lot more often than that.
+> 
+> Wouldn't it be both safer and easier to understand for the users if this
+> "obliterate all my uncommitted work" were a separate subcommand, e.g. "git
+> submodule reset --recursive" or something?
+> 
 
-Which is not to say this is a bad change.  Just that it's hard to see
-how it lives up to its goals without knowing what those goals are.
+I agree. A git submodule reset command makes a lot of sense.
+But I also still think having a --force option to update does too, in the way Jens proposed it (only on submodule that actually needed a checkout), don't you?
