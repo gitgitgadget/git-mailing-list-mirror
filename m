@@ -1,62 +1,95 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Fix potential local deadlock during fetch-pack
-Date: Thu, 31 Mar 2011 09:24:36 -0700
-Message-ID: <AANLkTiki2__qAqgDnB6yu8kzxNW-bMj2qJcx50yawCWM@mail.gmail.com>
-References: <7vtyelsvp0.fsf@alter.siamese.dyndns.org> <AANLkTikCRRftjExdhMgFGFMy-Dc1UCMdW1nTYV2bK1-T@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] submodule: Add --force option for git submodule update
+Date: Thu, 31 Mar 2011 19:41:32 +0200
+Message-ID: <4D94BCCC.7090808@web.de>
+References: <4D92E225.3040602@morey-chaisemartin.com> <4D93773C.2010807@web.de> <4D937B7E.10808@morey-chaisemartin.com> <4D937F09.10000@web.de> <4D93905E.5030806@morey-chaisemartin.com> <7vd3l8mi3m.fsf@alter.siamese.dyndns.org> <4D93E4F1.70103@morey-chaisemartin.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>, Johannes Sixt <j6t@kdbg.org>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 31 18:25:08 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 19:42:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5KgC-00029u-SO
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 18:25:05 +0200
+	id 1Q5Lsr-0000sC-CT
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 19:42:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758649Ab1CaQY6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 12:24:58 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36405 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753330Ab1CaQY6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2011 12:24:58 -0400
-Received: by vws1 with SMTP id 1so1994276vws.19
-        for <git@vger.kernel.org>; Thu, 31 Mar 2011 09:24:57 -0700 (PDT)
-Received: by 10.52.169.37 with SMTP id ab5mr3753840vdc.283.1301588697196; Thu,
- 31 Mar 2011 09:24:57 -0700 (PDT)
-Received: by 10.52.166.133 with HTTP; Thu, 31 Mar 2011 09:24:36 -0700 (PDT)
-In-Reply-To: <AANLkTikCRRftjExdhMgFGFMy-Dc1UCMdW1nTYV2bK1-T@mail.gmail.com>
+	id S1758668Ab1CaRmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 13:42:06 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:45824 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753627Ab1CaRmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 13:42:05 -0400
+Received: from smtp06.web.de  ( [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 8605C19B951D9;
+	Thu, 31 Mar 2011 19:41:35 +0200 (CEST)
+Received: from [93.240.124.73] (helo=[192.168.178.43])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Q5LsF-00076i-00; Thu, 31 Mar 2011 19:41:35 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <4D93E4F1.70103@morey-chaisemartin.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/1veSkOKd7r6QP4XQyHYIMrlrwZTi/SwavXIfl
+	w9NJIviwjUlqAeTArAOJqyCjyvV6RDKXKqdio8EX8Ina/BePFO
+	IYQistxv55JFiu84uFSw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170505>
 
-On Wed, Mar 30, 2011 at 02:42, Erik Faye-Lund <kusmabite@gmail.com> wro=
-te:
-> On Tue, Mar 29, 2011 at 7:06 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> The fetch-pack/upload-pack protocol relies on the underlying transpo=
-rt
->> (local pipe or TCP socket) to have enough slack to allow one window =
-worth
->> of data in flight without blocking the writer. =A0Traditionally we a=
-lways
->> relied on being able to have a batch of 32 "have"s in flight (roughl=
-y 1.5k
->> bytes) to stream.
+Am 31.03.2011 04:20, schrieb Nicolas Morey-Chaisemartin:
+> On 03/30/2011 11:08 PM, Junio C Hamano wrote:
+>> Shouldn't you be questioning _why_ your users have such changes that
+>> require them to run "checkout -f" everywhere in the submodule forests and
+>> still want to run "submodule update" in the first place?  If it happens
+>> very often and your users are constantly discarding what they have half
+>> accomplished, there is something wrong with the way your project works.
 >
-> Hmm, this explanation makes me wonder: Could this be related to the
-> deadlock we're experiencing with git-push over the git-protocol on
-> Windows when side-band-64k is enabled?
+> I did. Thee reason is we commit file generated by compilation.
+> Whether it's docs, references (for automated integration) or simply result files that take 2 days to build,
+> we have a strong need to commit generated files.
 
-I think its unrelated. It might also be a deadlock, but the push
-protocol is quite a bit different. As far as I remember, there is no
-risk of deadlock in the push protocol.
+We are in a similar situation at my dayjob, but we handled the issue in
+a different way. We were reluctant to check in generated files into our
+repository, so we decided to distribute them via zip files. We have a
+beefy build machine which builds and tests master over night and if
+everything went ok it zips the whole work tree including .git directory,
+build artifacts and submodules into one file. Then each developer just
+has to unpack this file, fetch from the git server and he is all set.
 
---=20
-Shawn.
+>> If we read your motivation section in your original,
+>>
+>>   > This implies that to reset a whole git submodule tree, a user has to run
+>>   > first 'git submodule foreach --recursive git checkout -f' to then be
+>>   > able to run git submodule update.
+>>
+>> this is about "resetting", i.e. throwing away the work.  I think that is a
+>> sensible thing to do, but it is a very different purpose than "updating
+>> submodules so that I can work on top of what other people did", which
+>> would happen a lot more often than that.
+>>
+>> Wouldn't it be both safer and easier to understand for the users if this
+>> "obliterate all my uncommitted work" were a separate subcommand, e.g. "git
+>> submodule reset --recursive" or something?
+> 
+> I agree. A git submodule reset command makes a lot of sense.
+
+Me too agrees that being able to reset a whole work tree including all
+submodules recursively makes a lot of sense. But I would not be so happy
+seeing this functionality being added to the git-submodule.sh script, as
+I believe it belongs into "git reset", so you'll just have to do a "git
+reset --hard --recurse-submodules" and you are done.
+
+In the branch "git-checkout-recurse-submodules" in my github repo (which
+is at https://github.com/jlehmann/git-submod-enhancements) you can see a
+preliminary implementation of that (it works and I use it every day at my
+job. It has recursion enabled by default at the moment yet still might
+overwrite local changes even if it shouldn't, so use with care ;-).
+
+> But I also still think having a --force option to update does too, in the way Jens proposed it (only on submodule that actually needed a checkout), don't you?
+
+Yes, I still think it makes sense to add the "-f" flag to submodule update.
