@@ -1,120 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] reset: update help text
-Date: Thu, 31 Mar 2011 13:42:46 -0500
-Message-ID: <20110331184246.GA19264@elie>
-References: <1301404805-12095-1-git-send-email-pclouds@gmail.com>
- <20110329210457.GA14031@elie>
- <AANLkTiknvWE9Fe3u88Jbis4Cgxd5ubqaR6MzYOJZ-AtM@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/4] teach wait_or_whine a "quiet" mode
+Date: Thu, 31 Mar 2011 14:43:42 -0400
+Message-ID: <20110331184342.GA16906@sigill.intra.peff.net>
+References: <20110331184243.GA12027@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 20:43:15 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 31 20:43:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5Mpt-0000uu-Lb
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 20:43:14 +0200
+	id 1Q5MqU-0001Fi-NK
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 20:43:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759007Ab1CaSnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 14:43:08 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:56920 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758919Ab1CaSnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 14:43:06 -0400
-Received: by gwaa18 with SMTP id a18so1092831gwa.19
-        for <git@vger.kernel.org>; Thu, 31 Mar 2011 11:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=B9s4XSdCwrIQ7fOvd3mxQtdL/TLd7om570uy4qS9Cgw=;
-        b=hKTLnmK+RTYkDG0+Aj20QaEvktiMKWRzRfUSq39MwUY8iRpHdwTFbesrOokADuE41w
-         7orOXGOclUQwrFFkCxmjg6jcboV9twpSknInxmW9w5AB6BOAjStYaKApm/khw18NCoDI
-         EThAa+sOHdyWdoPsv8+UnYnftZh6/z9BdK+sQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZIktMo4URlHugcw9m0U3+KdoO+vi8Ftf93We05Gbe+D3R8uRU827FD9DMrt05no5FJ
-         F8giWjR/XAe8EMqN9NQfNOd5I9WfaCrZ64fx30PDgb4zRH0KeBrr0kHIKyQXhGAFyQqs
-         ENnqWJY3TxHkKAn+XIiUr6zA3mj3eDf5MYa+0=
-Received: by 10.150.74.20 with SMTP id w20mr2870449yba.228.1301596984524;
-        Thu, 31 Mar 2011 11:43:04 -0700 (PDT)
-Received: from elie (adsl-68-255-107-98.dsl.chcgil.ameritech.net [68.255.107.98])
-        by mx.google.com with ESMTPS id m12sm2904327ybn.12.2011.03.31.11.43.01
-        (version=SSLv3 cipher=OTHER);
-        Thu, 31 Mar 2011 11:43:02 -0700 (PDT)
+	id S1759023Ab1CaSnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 14:43:46 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60514
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759001Ab1CaSnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 14:43:45 -0400
+Received: (qmail 1299 invoked by uid 107); 31 Mar 2011 18:44:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Mar 2011 14:44:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2011 14:43:42 -0400
 Content-Disposition: inline
-In-Reply-To: <AANLkTiknvWE9Fe3u88Jbis4Cgxd5ubqaR6MzYOJZ-AtM@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20110331184243.GA12027@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170511>
 
-Nguyen Thai Ngoc Duy wrote:
+The wait_or_whine function will complain to stderr in a few
+cases:
 
-> To be honest, I have no idea what the above describes. I read 9bc454d
-> (reset: add option "--keep" to "git reset" - 2010-01-19) and figured
-> that --keep is like --merge except that "git diff" before and after
-> the reset is exactly the same, is it? I have never used --keep before.
+  1. We fail to actually waitpid() correctly.
 
-I use "git reset --keep" to
+  2. The child died of a signal.
 
- - discard a bad commit: git reset --keep HEAD^
- - start working against a different commit:
+  3. The child returned exit code 127, indicating a missing
+     command to exec after forking.
 
-	git checkout -b topic &&
-	... hack hack hack without committing ... &&
-	: "oops, I thought I was on master but I was somewhere else" &&
-	git reset --keep master
+We already have a silent_exec_failure flag to silence (3).
+Let's convert that into a "quiet" flag to also silence (2).
+This shouldn't result in signal failure being silent for
+existing users of silent_exec_failure, since they already
+will need to be checking the return code and complaining for
+the case of a non-zero exit code.
 
-The spirit of the thing[1] is:
+For (1), it probably makes sense to always complain about a
+failure to correctly wait, so let's not quiet that.
 
- * if the diff "HEAD -> <commit>" touch paths in which we have local
-   changes, error out;
- * otherwise, checkout the relevant paths from <commit> but leave the
-   paths in which we have local changes alone.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ run-command.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-which indeed means "git diff --cached" and "git diff" before and after
-would be exactly the same.  But there are some edge cases, in which
-the diff "HEAD -> <commit>" makes the same change we did and the
-reset --keep is still allowed.
-
-This is totally different from --merge.  The only legitimate use of
---merge is to cancel a merge you just performed, imho --- the effect
-otherwise is too scary ("git add <path>; git reset --merge elsewhere"
---- bye, bye, changes made at <path>).
-
-Hope that helps,
-Jonathan
-
-[1] Detailed semantics: for each path listed by "git diff --name-only
-HEAD <commit>":
-
- * if the worktree, index, and HEAD match, make the index and worktree
-   match <commit>.
-
- * otherwise, if it is "not easy" to keep local changes, error out.
-   We are not going to do a three-way merge.  That is,
-
-   - if the index matches neither HEAD nor <commit>, error out;
-   - if the index matches HEAD but not the worktree, error out.
-
- * otherwise, it is "easy", so keep local changes.
-
-   - if the index already matches <commit>, leave the index and
-     worktree alone.
-   - if the index and worktree match HEAD, make them match the
-     <commit> instead.
-
-These are the same rules used by fast-forward merges and plain
-"git checkout".
+diff --git a/run-command.c b/run-command.c
+index 0d95340..0d5626a 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -240,7 +240,7 @@ fail_pipe:
+ 	return 0;
+ }
+ 
+-static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
++static int wait_or_whine(pid_t pid, const char *argv0, int quiet)
+ {
+ 	int status, code = -1;
+ 	pid_t waiting;
+@@ -256,7 +256,8 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ 		error("waitpid is confused (%s)", argv0);
+ 	} else if (WIFSIGNALED(status)) {
+ 		code = WTERMSIG(status);
+-		error("%s died of signal %d", argv0, code);
++		if (!quiet)
++			error("%s died of signal %d", argv0, code);
+ 		/*
+ 		 * This return value is chosen so that code & 0xff
+ 		 * mimics the exit code that a POSIX shell would report for
+@@ -271,7 +272,7 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ 		if (code == 127) {
+ 			code = -1;
+ 			failed_errno = ENOENT;
+-			if (!silent_exec_failure)
++			if (!quiet)
+ 				error("cannot run %s: %s", argv0,
+ 					strerror(ENOENT));
+ 		}
+-- 
+1.7.4.13.g8566c
