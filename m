@@ -1,96 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/4] teach wait_or_whine a "quiet" mode
-Date: Thu, 31 Mar 2011 14:43:42 -0400
-Message-ID: <20110331184342.GA16906@sigill.intra.peff.net>
+Subject: [PATCH 2/4] finish_async: be quiet when waiting for async process
+Date: Thu, 31 Mar 2011 14:44:00 -0400
+Message-ID: <20110331184400.GB16906@sigill.intra.peff.net>
 References: <20110331184243.GA12027@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 31 20:43:52 2011
+X-From: git-owner@vger.kernel.org Thu Mar 31 20:44:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5MqU-0001Fi-NK
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 20:43:51 +0200
+	id 1Q5Mqp-0001Qa-0F
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 20:44:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759023Ab1CaSnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 14:43:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60514
+	id S1759034Ab1CaSoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 14:44:05 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60517
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759001Ab1CaSnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 14:43:45 -0400
-Received: (qmail 1299 invoked by uid 107); 31 Mar 2011 18:44:28 -0000
+	id S1759030Ab1CaSoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 14:44:04 -0400
+Received: (qmail 1330 invoked by uid 107); 31 Mar 2011 18:44:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Mar 2011 14:44:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2011 14:43:42 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Mar 2011 14:44:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2011 14:44:00 -0400
 Content-Disposition: inline
 In-Reply-To: <20110331184243.GA12027@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170512>
 
-The wait_or_whine function will complain to stderr in a few
-cases:
+When we ask to finish_async, we should be quiet about things
+like signal death in the async process, for two reasons:
 
-  1. We fail to actually waitpid() correctly.
+  1. This better matches what happens on the Windows side,
+     where threads are used (and what will eventually happen
+     when pthreads are used on unix).
 
-  2. The child died of a signal.
-
-  3. The child returned exit code 127, indicating a missing
-     command to exec after forking.
-
-We already have a silent_exec_failure flag to silence (3).
-Let's convert that into a "quiet" flag to also silence (2).
-This shouldn't result in signal failure being silent for
-existing users of silent_exec_failure, since they already
-will need to be checking the return code and complaining for
-the case of a non-zero exit code.
-
-For (1), it probably makes sense to always complain about a
-failure to correctly wait, so let's not quiet that.
+  2. We pass along the error code to the caller, who needs
+     to check and produce an error message anyway for the
+     case of a non-zero exit code.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- run-command.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+ run-command.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/run-command.c b/run-command.c
-index 0d95340..0d5626a 100644
+index 0d5626a..258c880 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -240,7 +240,7 @@ fail_pipe:
- 	return 0;
- }
- 
--static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
-+static int wait_or_whine(pid_t pid, const char *argv0, int quiet)
+@@ -427,7 +427,7 @@ error:
+ int finish_async(struct async *async)
  {
- 	int status, code = -1;
- 	pid_t waiting;
-@@ -256,7 +256,8 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- 		error("waitpid is confused (%s)", argv0);
- 	} else if (WIFSIGNALED(status)) {
- 		code = WTERMSIG(status);
--		error("%s died of signal %d", argv0, code);
-+		if (!quiet)
-+			error("%s died of signal %d", argv0, code);
- 		/*
- 		 * This return value is chosen so that code & 0xff
- 		 * mimics the exit code that a POSIX shell would report for
-@@ -271,7 +272,7 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- 		if (code == 127) {
- 			code = -1;
- 			failed_errno = ENOENT;
--			if (!silent_exec_failure)
-+			if (!quiet)
- 				error("cannot run %s: %s", argv0,
- 					strerror(ENOENT));
- 		}
+ #ifndef WIN32
+-	int ret = wait_or_whine(async->pid, "child process", 0);
++	int ret = wait_or_whine(async->pid, "child process", 1);
+ #else
+ 	DWORD ret = 0;
+ 	if (WaitForSingleObject(async->tid, INFINITE) != WAIT_OBJECT_0)
 -- 
 1.7.4.13.g8566c
