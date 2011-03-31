@@ -1,132 +1,63 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] system_path: use a static buffer
-Date: Thu, 31 Mar 2011 16:36:27 +0200
-Message-ID: <1301582187-20340-1-git-send-email-cmn@elego.de>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: [PATCH 1/2] cmd_clone: free dir and path buffers
+Date: Thu, 31 Mar 2011 10:45:07 -0400
+Message-ID: <AANLkTi=XYv1WFbvHwqvrJDkssKC-zU91Vj4EPbZG6OK2@mail.gmail.com>
+References: <1301581122-19947-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 31 16:36:38 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Mar 31 16:45:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5IzD-0004G4-Bi
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 16:36:35 +0200
+	id 1Q5J7c-0000rZ-KI
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 16:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757779Ab1CaOg3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 10:36:29 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:36412 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753136Ab1CaOg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 10:36:29 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 4B9184611D;
-	Thu, 31 Mar 2011 16:36:18 +0200 (CEST)
-Received: (nullmailer pid 20392 invoked by uid 1000);
-	Thu, 31 Mar 2011 14:36:27 -0000
-X-Mailer: git-send-email 1.7.4.1
+	id S1757725Ab1CaOpJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 10:45:09 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:53324 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753139Ab1CaOpI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2011 10:45:08 -0400
+Received: by ewy4 with SMTP id 4so754391ewy.19
+        for <git@vger.kernel.org>; Thu, 31 Mar 2011 07:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1Hjv6A+acQ8F1lIifjNd0fRUN3KAlQCEZBbStuICLx4=;
+        b=lkovGPyWbRwdM2G+yGDFk90Ca77OtWRX7xu8mIv5GpQ0fFv6iHKSW7/kdnO0Ft8J+u
+         5oEuhHv2f0xxxuKAsJNJlUsUmEJaelKZGm1/z/gK9Tyw0frZmtMSFpcW2jzHylxqriMv
+         mVOfQncFnB/WWWz4tBWhU0Us/bMrDO3tMBYTI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=Ekuzfjpbib2R+y02zz761xE27Ab9Nbu0parIQbiU77nQ33YV2+m6fhtH2odJbnXS90
+         nzSoVnHwWSPtUvL0k467vj2WrtiFDybIkhSpzGi4Ns6rOyNcp1sdGsVya3M1QJqaRdgn
+         j3GZNxAHUn0JVdvCidmKY8wpQgqbDUXuIytlo=
+Received: by 10.216.143.135 with SMTP id l7mr1112547wej.86.1301582707209; Thu,
+ 31 Mar 2011 07:45:07 -0700 (PDT)
+Received: by 10.216.182.209 with HTTP; Thu, 31 Mar 2011 07:45:07 -0700 (PDT)
+In-Reply-To: <1301581122-19947-1-git-send-email-cmn@elego.de>
+X-Google-Sender-Auth: R4Wo-UOo6nMypm9pVnQRAkIc7-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170495>
 
-Make system_path behave like the other path functions by using a
-static buffer, plugging a memory leak.
+On Thu, Mar 31, 2011 at 10:18 AM, Carlos Mart=C3=ADn Nieto <cmn@elego.d=
+e> wrote:
+> The variables dir and path are always allocated on the stack so it's
+> always safe to free them.
 
-Also make sure the prefix pointer is always initialized to either
-PREFIX or NULL.
+I think you mean "on the heap". :-)
 
-git_etc_gitattributes and git_etc_gitconfig are the only users who are
-affected by this change. Make them use a static buffer, which fits
-their use better as well.
-
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
-
- Slightly changed version of the patch in pu with the error strings
-changed. Junio, do you want this patch at all. I think in your "what's
-cooking" messages, you said you don't like this type of band-aid? As
-it's not that big a deal, I'll drop it if you don't want it.
-
- attr.c     |    6 +++---
- config.c   |    6 +++---
- exec_cmd.c |   15 ++++++++++-----
- 3 files changed, 16 insertions(+), 11 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 6aff695..64d803f 100644
---- a/attr.c
-+++ b/attr.c
-@@ -467,9 +467,9 @@ static void drop_attr_stack(void)
-=20
- const char *git_etc_gitattributes(void)
- {
--	static const char *system_wide;
--	if (!system_wide)
--		system_wide =3D system_path(ETC_GITATTRIBUTES);
-+	static char system_wide[PATH_MAX];
-+	if (!system_wide[0])
-+		strlcpy(system_wide, system_path(ETC_GITATTRIBUTES), PATH_MAX);
- 	return system_wide;
- }
-=20
-diff --git a/config.c b/config.c
-index 822ef83..cd1c295 100644
---- a/config.c
-+++ b/config.c
-@@ -808,9 +808,9 @@ int git_config_from_file(config_fn_t fn, const char=
- *filename, void *data)
-=20
- const char *git_etc_gitconfig(void)
- {
--	static const char *system_wide;
--	if (!system_wide)
--		system_wide =3D system_path(ETC_GITCONFIG);
-+	static char system_wide[PATH_MAX];
-+	if (!system_wide[0])
-+		strlcpy(system_wide, system_path(ETC_GITCONFIG), PATH_MAX);
- 	return system_wide;
- }
-=20
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 38545e8..8d0fa49 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -9,11 +9,12 @@ static const char *argv0_path;
- const char *system_path(const char *path)
- {
- #ifdef RUNTIME_PREFIX
--	static const char *prefix;
-+	static const char *prefix =3D NULL;
- #else
- 	static const char *prefix =3D PREFIX;
- #endif
--	struct strbuf d =3D STRBUF_INIT;
-+	static char buf[PATH_MAX];
-+	int ret;
-=20
- 	if (is_absolute_path(path))
- 		return path;
-@@ -33,9 +34,13 @@ const char *system_path(const char *path)
- 	}
- #endif
-=20
--	strbuf_addf(&d, "%s/%s", prefix, path);
--	path =3D strbuf_detach(&d, NULL);
--	return path;
-+	ret =3D snprintf(buf, sizeof(buf), "%s/%s", prefix, path);
-+	if (ret >=3D sizeof(buf))
-+		die("system path too long");
-+	else if (ret < 0)
-+		die_errno("snprintf reported an error");
-+
-+	return buf;
- }
-=20
- const char *git_extract_argv0_path(const char *argv0)
---=20
-1.7.4.1
+-John
