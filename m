@@ -1,73 +1,88 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/4] teach wait_or_whine a "quiet" mode
-Date: Thu, 31 Mar 2011 22:56:39 +0200
-Message-ID: <201103312256.39317.j6t@kdbg.org>
-References: <20110331184243.GA12027@sigill.intra.peff.net> <20110331184342.GA16906@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: 195b7ca6 breaks t9010 at current master
+Date: Thu, 31 Mar 2011 16:14:43 -0500
+Message-ID: <20110331211443.GC19932@elie>
+References: <AANLkTik0CNXY9bKGOa9Xmai_OPQgExfLsFs1yN2pCVr8@mail.gmail.com>
+ <20110329042446.GB25693@elie>
+ <YHiIPkNCiU3RcX-PxtGuaAPfpIMSLtDzcuGX-pUHbb_4SC5aAQu_WQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 31 22:56:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>,
+	git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Mar 31 23:15:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5OvA-0004i6-4u
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 22:56:48 +0200
+	id 1Q5PCj-0005IC-Kf
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 23:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753194Ab1CaU4m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 16:56:42 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:42603 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751950Ab1CaU4l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 16:56:41 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id A0387CDF86;
-	Thu, 31 Mar 2011 22:56:32 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6825D19F5F5;
-	Thu, 31 Mar 2011 22:56:39 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <20110331184342.GA16906@sigill.intra.peff.net>
+	id S1758309Ab1CaVOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 17:14:54 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:62450 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756914Ab1CaVOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 17:14:52 -0400
+Received: by qwk3 with SMTP id 3so1780263qwk.19
+        for <git@vger.kernel.org>; Thu, 31 Mar 2011 14:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Thz64NlG8D1EuiizAnTANtjZRd8zeIMoOIQwTj57lJg=;
+        b=pUE0J4EKYrm+uUfrBEw+LIxG6+vRGiv957eRD2uZ8omxo3nGCNC1rVhGqEdC6FgFC6
+         krF/hPI9bMaihecR1QAEUr9L9fNM52vrfieE3dlCbP+2Qbrv+tL82I7e2eTKLCyxN6vc
+         QHjMA2dANNHL0sqjxq5O2iS+I/0bKUKqzU1WM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=B0Q4GZ+bzz08KNSQBPZUx20zNybixPN4xpFjxXsQskq9vUzjpPSW1X9z65Mw/YBUmZ
+         DpYVvVVSAIicUhOlvEv01Jci3aXfb+j7PY2KcOBA5DPTGps9UY9nKTSKFUjNCbamb4//
+         4GjtSG0/ntW6ds8CJ/s0RkFwB0QYLKosx832g=
+Received: by 10.224.216.133 with SMTP id hi5mr2503590qab.383.1301606090886;
+        Thu, 31 Mar 2011 14:14:50 -0700 (PDT)
+Received: from elie (adsl-68-255-107-98.dsl.chcgil.ameritech.net [68.255.107.98])
+        by mx.google.com with ESMTPS id c27sm1051691qck.46.2011.03.31.14.14.47
+        (version=SSLv3 cipher=OTHER);
+        Thu, 31 Mar 2011 14:14:49 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <YHiIPkNCiU3RcX-PxtGuaAPfpIMSLtDzcuGX-pUHbb_4SC5aAQu_WQ@cipher.nrlssc.navy.mil>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170530>
 
-On Donnerstag, 31. M=C3=A4rz 2011, Jeff King wrote:
-> The wait_or_whine function will complain to stderr in a few
-> cases:
+Hi,
+
+Brandon Casey wrote:
+
+> I was just about to send a patch for this, when I noticed it has
+> already been worked around in master by the above.
 >
->   1. We fail to actually waitpid() correctly.
+> I'll still share my one-liner for informational purposes which uses perl
+> and in my opinion is a little simpler:
 >
->   2. The child died of a signal.
->
->   3. The child returned exit code 127, indicating a missing
->      command to exec after forking.
->
-> We already have a silent_exec_failure flag to silence (3).
-> Let's convert that into a "quiet" flag to also silence (2).
+> --- a/t/t9010-svn-fe.sh
+> +++ b/t/t9010-svn-fe.sh
+> @@ -465,7 +465,7 @@ test_expect_success 'NUL in log message, file content, and property name' '
+>                 git diff-tree --root --stdin |
+>                 sed "s/$_x40/OBJID/g"
+>         } >actual &&
+> -       git cat-file commit HEAD | nul_to_q | sed -ne "/^\$/,\$ p" >actual.message &&
+> +       git cat-file commit HEAD | nul_to_q | perl -ne "print if (/^$/..eof())" >actual.message &&
+>         git cat-file blob HEAD^:greeting | nul_to_q >actual.hello1 &&
+>         git cat-file blob HEAD:greeting | nul_to_q >actual.hello2 &&
+>         test_cmp expect actual &&
 
-I'm rather negative on controlling these two error reports with the sam=
-e flag=20
-because...
+Thanks.  I'll definitely use that idiom the next time this sed gotcha
+comes up.
 
-> This shouldn't result in signal failure being silent for
-> existing users of silent_exec_failure, since they already
-> will need to be checking the return code and complaining for
-> the case of a non-zero exit code.
-
-This reasoning is not correct. Error reporting in the routines in=20
-run-command.c is structured such that callers have to check the return =
-code,=20
-but they do not report errors themselves. Therefore, even if callers re=
-quest=20
-silent_exec_failure, they will not do their own error reporting if ther=
-e is=20
-some other failure.
-
--- Hannes
+Also if you're interested, I'd be happy to take a patch on top to
+make it so as a cleanup (probably splitting the line at the same time,
+since it's getting pretty long).
