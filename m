@@ -1,63 +1,65 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH 1/2] cmd_clone: free dir and path buffers
-Date: Thu, 31 Mar 2011 10:45:07 -0400
-Message-ID: <AANLkTi=XYv1WFbvHwqvrJDkssKC-zU91Vj4EPbZG6OK2@mail.gmail.com>
-References: <1301581122-19947-1-git-send-email-cmn@elego.de>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] git-svn: don't confuse editors with an apostrophe
+Date: Thu, 31 Mar 2011 17:02:33 +0200
+Message-ID: <1301583753-2688-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Mar 31 16:45:17 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 31 17:02:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5J7c-0000rZ-KI
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 16:45:17 +0200
+	id 1Q5JOV-00036b-AI
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Mar 2011 17:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757725Ab1CaOpJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 10:45:09 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:53324 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753139Ab1CaOpI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2011 10:45:08 -0400
-Received: by ewy4 with SMTP id 4so754391ewy.19
-        for <git@vger.kernel.org>; Thu, 31 Mar 2011 07:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1Hjv6A+acQ8F1lIifjNd0fRUN3KAlQCEZBbStuICLx4=;
-        b=lkovGPyWbRwdM2G+yGDFk90Ca77OtWRX7xu8mIv5GpQ0fFv6iHKSW7/kdnO0Ft8J+u
-         5oEuhHv2f0xxxuKAsJNJlUsUmEJaelKZGm1/z/gK9Tyw0frZmtMSFpcW2jzHylxqriMv
-         mVOfQncFnB/WWWz4tBWhU0Us/bMrDO3tMBYTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=Ekuzfjpbib2R+y02zz761xE27Ab9Nbu0parIQbiU77nQ33YV2+m6fhtH2odJbnXS90
-         nzSoVnHwWSPtUvL0k467vj2WrtiFDybIkhSpzGi4Ns6rOyNcp1sdGsVya3M1QJqaRdgn
-         j3GZNxAHUn0JVdvCidmKY8wpQgqbDUXuIytlo=
-Received: by 10.216.143.135 with SMTP id l7mr1112547wej.86.1301582707209; Thu,
- 31 Mar 2011 07:45:07 -0700 (PDT)
-Received: by 10.216.182.209 with HTTP; Thu, 31 Mar 2011 07:45:07 -0700 (PDT)
-In-Reply-To: <1301581122-19947-1-git-send-email-cmn@elego.de>
-X-Google-Sender-Auth: R4Wo-UOo6nMypm9pVnQRAkIc7-8
+	id S1758202Ab1CaPCh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2011 11:02:37 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:49463 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758077Ab1CaPCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 11:02:35 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id E3DCA4611D;
+	Thu, 31 Mar 2011 17:02:24 +0200 (CEST)
+Received: (nullmailer pid 2744 invoked by uid 1000);
+	Thu, 31 Mar 2011 15:02:33 -0000
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170496>
 
-On Thu, Mar 31, 2011 at 10:18 AM, Carlos Mart=C3=ADn Nieto <cmn@elego.d=
-e> wrote:
-> The variables dir and path are always allocated on the stack so it's
-> always safe to free them.
+The quotation mark serving as an apostrophe confuses editors and they
+think a large part of the rest of the file is a string. Change
+"you're" to "you are" to avoid this.
 
-I think you mean "on the heap". :-)
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
--John
+diff --git a/git-svn.perl b/git-svn.perl
+index a5857c1..fe28f6a 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -345,7 +345,7 @@ Usage: git svn <command> [options] [arguments]\n
+ 	}
+ 	print $fd <<"";
+ \nGIT_SVN_ID may be set in the environment or via the --id/-i switch t=
+o an
+-arbitrary identifier if you're tracking multiple SVN branches/reposito=
+ries in
++arbitrary identifier if you are tracking multiple SVN branches/reposit=
+ories in
+ one git repository and want to keep them separate.  See git-svn(1) for=
+ more
+ information.
+=20
+--=20
+1.7.4.1
