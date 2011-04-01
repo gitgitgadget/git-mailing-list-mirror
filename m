@@ -1,107 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Small "git clean" annoyance
-Date: Fri, 1 Apr 2011 07:48:12 -0700
-Message-ID: <AANLkTinD=Zx0tdY53n8mXvpufCUr96v0u1DbzasRXMfY@mail.gmail.com>
-References: <AANLkTinQscpkRDftLmCrQR+Aq5RacGyurd3kb15y=1FK@mail.gmail.com> <AANLkTikksQj3HfOJmi-uZTfc7sTNNuDA4bFVaj2cY3Ad@mail.gmail.com>
+From: =?ISO-8859-1?Q?Sebasti=E1n_Ventura?= <lomegor@gmail.com>
+Subject: GSOC 2011: git on Android
+Date: Fri, 1 Apr 2011 12:21:02 -0300
+Message-ID: <AANLkTikHieyRYPntivWa51fUBxXCJNzuHGy_AvU++=PN@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 17:21:22 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 01 17:21:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5gA2-0007DU-7l
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 17:21:18 +0200
+	id 1Q5gAE-0007OM-AH
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 17:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757802Ab1DAPVM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 11:21:12 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52530 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752690Ab1DAPVL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 11:21:11 -0400
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.14.2/Debian-2build1) with ESMTP id p31FKNgh015417
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 1 Apr 2011 08:20:23 -0700
-Received: by iwn34 with SMTP id 34so3607865iwn.19
-        for <git@vger.kernel.org>; Fri, 01 Apr 2011 08:20:21 -0700 (PDT)
-Received: by 10.42.155.136 with SMTP id u8mr2423886icw.403.1301669667501; Fri,
- 01 Apr 2011 07:54:27 -0700 (PDT)
-Received: by 10.231.11.4 with HTTP; Fri, 1 Apr 2011 07:48:12 -0700 (PDT)
-In-Reply-To: <AANLkTikksQj3HfOJmi-uZTfc7sTNNuDA4bFVaj2cY3Ad@mail.gmail.com>
-X-Spam-Status: No, hits=-102.976 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755038Ab1DAPVY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 11:21:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50527 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639Ab1DAPVX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 11:21:23 -0400
+Received: by fxm17 with SMTP id 17so2676694fxm.19
+        for <git@vger.kernel.org>; Fri, 01 Apr 2011 08:21:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=GnsfAsCzmQDt23n8+ZCqKTF5avW+DKK+3NILCOqaXU8=;
+        b=uBgaZEsXL5YgF7rsAMcENcwHdw+7QtpYwcJaXQxXpi+XHIoPZ4Rt89NrAVs362SHnj
+         TcuWXk1v4CqNfs5RvPYid6M4bfe1l1HL+HK/KHBEz/DHvt0kYMA2zFwQ5v7alLlIbUpI
+         5WQRmnx3QFxQhD3FZUY2DKmdaJPw1YERrq1vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=HiA13mY3XM5cpWhY8645Om+ZaALfnojZuLUg90mywJDVZ8OmjdqvEHYAkPc4nE92dO
+         IH6Ia6dyy+rW9BgmCQaoAS7Ja+Owuxx3eSMwrqcGK6ddlmfdJDUhUzayFJEi2ms+//60
+         oV+MTGJJwEnpCGRcbsoCQYTGJG4Xd+nBuxXSs=
+Received: by 10.223.101.72 with SMTP id b8mr35696fao.15.1301671282202; Fri, 01
+ Apr 2011 08:21:22 -0700 (PDT)
+Received: by 10.223.1.204 with HTTP; Fri, 1 Apr 2011 08:21:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170593>
 
-On Fri, Apr 1, 2011 at 12:34 AM, Alex Riesen <raa.lkml@gmail.com> wrote=
-:
->
-> Something like this?
->
-> diff --git a/dir.c b/dir.c
-> index 325fb56..7251426 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1191,8 +1191,11 @@ int remove_dir_recursively(struct strbuf *path=
-, int flag)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return 0;
->
-> =A0 =A0 =A0 =A0dir =3D opendir(path->buf);
-> - =A0 =A0 =A0 if (!dir)
-> + =A0 =A0 =A0 if (!dir) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (rmdir(path->buf) =3D=3D 0)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return -1;
-> + =A0 =A0 =A0 }
+Hello,
 
-Heh. My minimalist sensibilities go "yuck", and say that you should jus=
-t do
+My name is Sebasti=E1n Ventura and I would like to participate in
+porting git to Android for GSOC 2011. I'm a 22 year old Computer
+Sciences student from Uruguay, and I'd really like to start
+contributing to open source but don't know where to start, and I think
+helping in this project is something I am able (and willing) to do.
+Therefore I would like to ask the community how can I start helping
+now to better understand the code.  But firstly, do you think this is
+a problem belonging to JGit (for making a native app) or that is
+better suited for this mailing list?
+Besides that, and even if I don't enter GSOC, I want to help in an
+Open Source project, so how can I help now? Is there any small problem
+that you think I can resolve?
 
-    if (!dir)
-        return rmdir(path->buf);
-
-instead.
-
-But not a big deal. Looks fine, and fixes the trivial annoyance.
-
-I'd still like the better error message. With "rm -rf" I get good
-error messages even for the complex case:
-
-  [torvalds@i5 git]$ mkdir tmp
-  [torvalds@i5 git]$ mkdir tmp/tmp
-  [torvalds@i5 git]$ chmod -w tmp
-  [torvalds@i5 git]$ rm -rf tmp
-  rm: cannot remove `tmp/tmp': Permission denied
-
-but "git clean" says:
-
-  [torvalds@i5 git]$ git clean -dqfx
-  warning: failed to remove tmp/
-
-Hmm.
-
-Adding the obvious "strerror(errno)" to builtin/clean.c just changes it=
- to
-
-  warning: failed to remove tmp/ (Permission denied)
-
-which I guess is better, but not entirely obvious (it's "tmp/tmp" that
-failed to remove due to permissions, but clean.c only sees/cares about
-the uppermost level)
-
-But it's probably not worth worrying about any more. The simple
-one-liner rmdir() looks worth it.
-
-                         Linus
+Thank you for reading,
+Sebasti=E1n Ventura
