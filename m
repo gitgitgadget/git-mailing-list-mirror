@@ -1,75 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Mar 2011, #06; Thu, 31)
-Date: Fri, 1 Apr 2011 13:06:10 -0400
-Message-ID: <20110401170610.GA23014@sigill.intra.peff.net>
-References: <7v62qzhqp4.fsf@alter.siamese.dyndns.org>
- <20110401152623.GA4553@sigill.intra.peff.net>
- <7vbp0phpmx.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 5/4] run-command: implement abort_async for pthreads
+Date: Fri, 1 Apr 2011 19:27:03 +0200
+Message-ID: <201104011927.03366.j6t@kdbg.org>
+References: <20110331184243.GA12027@sigill.intra.peff.net> <AANLkTikF_xLTdY0BgaXmUXvBJTG3HD3by9zN59KwPii5@mail.gmail.com> <AANLkTin3+PzYcQEaaxgr9_5mgDGO5oiYDyBD_2tJqCTk@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 19:06:19 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Apr 01 19:27:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5hnd-0005oR-74
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 19:06:17 +0200
+	id 1Q5i7v-0000Fj-5o
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 19:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758410Ab1DARGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 13:06:12 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52853
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757715Ab1DARGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 13:06:11 -0400
-Received: (qmail 12382 invoked by uid 107); 1 Apr 2011 17:06:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Apr 2011 13:06:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Apr 2011 13:06:10 -0400
+	id S1758523Ab1DAR1J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 13:27:09 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:15151 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758437Ab1DAR1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 13:27:08 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id D032EA7EBD;
+	Fri,  1 Apr 2011 19:25:11 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id AC7F219F5DA;
+	Fri,  1 Apr 2011 19:27:03 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <AANLkTin3+PzYcQEaaxgr9_5mgDGO5oiYDyBD_2tJqCTk@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vbp0phpmx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170597>
 
-On Fri, Apr 01, 2011 at 10:01:42AM -0700, Junio C Hamano wrote:
+On Freitag, 1. April 2011, Erik Faye-Lund wrote:
+> On Fri, Apr 1, 2011 at 11:41 AM, Erik Faye-Lund <kusmabite@gmail.com>=
+ wrote:
+> > On Thu, Mar 31, 2011 at 8:45 PM, Jeff King <peff@peff.net> wrote:
+> >> =A0 =A0 =A0 =A0kill(async->pid, 15);
+> >> =A0#else
+> >> - =A0 =A0 =A0 /* no clue */
+> >> + =A0 =A0 =A0 pthread_cancel(async->tid);
+> >
+> > My worry about terminating a thread that's currently holding a mute=
+x
+> > (implicitly through the CRT?) still applies though...
+>
+> OK, I've read up on thread-cancellation, and this code seems correct.
+> pthread_cancel doesn't kill the thread right away, it just signals a
+> cancellation-event, which is checked for at certain
+> cancellation-points. A lot of the CRT functions are defined as
+> cancellation points, so it'll be a matter for us Win32-guys to
+> implement pthread_testcancel() and inject that into the
+> function-wrappers of the CRT functions that are marked as
+> cancellation-points.
 
-> >> * jc/add-u-migration (2011-03-22) 3 commits
-> >>  - add: make "add -u/-A" update full tree without pathspec (step 3)
-> >>  - add: make "add -u/-A" update full tree without pathspec (step 2)
-> >>   (merged to 'next' on 2011-03-31 at 962e058)
-> >>  + add: make "add -u/-A" update full tree without pathspec
-> [...]
-> > I have been meaning to look closer at this. Were you wanting to get the
-> > first stage of the transition into 1.7.5?
-> 
-> I was tempted to but I think it would be far more pleasant if the first
-> step were to add the warning against "add -u" without pathspec that is ran
-> from a subdirectory to advise "if you meant 'from here', say '.', if you
-> meant 'everywhere', say ':/'---for now we pretend you said '.' to match
-> the traditional behaviour."
+That's not going to happen. We cannot implement pthread_cancel() on Win=
+dows=20
+because it would have to be able to interrupt blocking system calls.=20
+(TerminateThread() is a no-no, given all the caveats about leaking syst=
+em=20
+resources that are mentioned in the manual.)
 
-Yes, I think that is definitely the right first step.
+[OK, "cannot" is a hard word. It is possible in some way, I'm sure. But=
+ that=20
+would mean that we implement the equivalent of Cygwin or so...]
 
-> It is adding even more confusion to add the "in this repository, 'add -u'
-> is tree-wide" configuration variable without giving people who need to
-> override that in unfamiliar repositories (read: scripts).
-> 
-> Right now, we don't have a good advice to force the tree-wide behaviour
-> other than "cd $(git rev-parse --show-cdup)/. && git add -u", which is
-> quite a mouthful.
-> 
-> We know how the magic "this pathspec is from the root" should work, and I
-> think we even saw "should look like this" patches, but haven't applied to
-> any branch so far yet.
+But if I understand correctly what Jeff wrote so far, then the pthreade=
+d case=20
+happens to work - by chance or by design, we don't know (yet). Perhaps =
+we can=20
+get away with
 
-That reasoning makes sense. Let's let the :/ patches develop and cook
-for post-1.7.5, then, and worry about it in the next cycle when we can
-build on top of them.
+-	/* no clue */
++	/* pthread_cancel(async->tid); not necessary */
 
--Peff
+-- Hannes
