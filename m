@@ -1,65 +1,64 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Small "git clean" annoyance
-Date: Fri, 01 Apr 2011 09:41:48 +0200
-Message-ID: <vpq62qymn9f.fsf@bauges.imag.fr>
-References: <AANLkTinQscpkRDftLmCrQR+Aq5RacGyurd3kb15y=1FK@mail.gmail.com>
-	<AANLkTikksQj3HfOJmi-uZTfc7sTNNuDA4bFVaj2cY3Ad@mail.gmail.com>
+From: Robert Pollak <robert.pollak@jku.at>
+Subject: Re: [PATCH] Docs gitk: Explicitly mention -d, --date-order option
+Date: Fri, 01 Apr 2011 10:05:31 +0200
+Message-ID: <4D95874B.9040209@jku.at>
+References: <1f748ec60804180616i311571eftbabcd3133ff83302@mail.gmail.com> <7v1w52ib5d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 09:44:09 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Clifford Caoile <piyo@users.sourceforge.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 10:06:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5Z1d-0006Tb-1f
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 09:44:09 +0200
+	id 1Q5ZMm-0006ty-MU
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 10:06:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755154Ab1DAHnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 03:43:53 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33500 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755055Ab1DAHnw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 03:43:52 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p317fmfP032188
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 1 Apr 2011 09:41:48 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Q5YzN-0007aQ-3Q; Fri, 01 Apr 2011 09:41:49 +0200
-In-Reply-To: <AANLkTikksQj3HfOJmi-uZTfc7sTNNuDA4bFVaj2cY3Ad@mail.gmail.com>
-	(Alex Riesen's message of "Fri, 1 Apr 2011 09:34:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 01 Apr 2011 09:41:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p317fmfP032188
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1302248512.72968@9eSxErNCiV/qqWzKPT0WNw
+	id S1751980Ab1DAIFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 04:05:39 -0400
+Received: from email.edvz.uni-linz.ac.at ([140.78.3.58]:56046 "EHLO
+	email.uni-linz.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751299Ab1DAIFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 04:05:36 -0400
+Received: from [192.168.168.60] (unknown [140.78.223.2])
+	by email.uni-linz.ac.at (Postfix) with ESMTP id 3BC9CB8C6;
+	Fri,  1 Apr 2011 10:05:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <7v1w52ib5d.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 1.1.1
+OpenPGP: id=ADDE9E08;
+	url=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170558>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Hello Junio,
 
-> -	if (!dir)
-> +	if (!dir) {
-> +		if (rmdir(path->buf) == 0)
-> +			return 0;
->  		return -1;
-> +	}
+you wrote on 2008-04-18:
+> "Clifford Caoile" <piyo@users.sourceforge.net> writes:
+[...]
+>> Regarding the documentation patch "[PATCH] Docs gitk: Explicitly
+>> mention -d, --date-order option" [1] (2008-04-12), it has not been
+>> accepted. Is there problem with this patch?
+>>
+>> References:
+>> [1] http://marc.info/?l=git&m=120799377618677&w=2
+> 
+> There isn't anything _wrong_ with the patch per se, but the current
+> documentation refers you to rev-list page and limits itself to the most
+> often used options.
+> 
+> I was waiting to see that many people jumping up and down saying that the
+> omission of --date-order from the "most often used" set was a grave bug
+> before applying it.  It hasn't happened.
 
-Sounds good.
+This thread has helped me finding "-d" (which is gitk-specific). So
+here's my vote for the patch, FWIW.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Robert
