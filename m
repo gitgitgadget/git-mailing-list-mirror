@@ -1,155 +1,63 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Proposed design of fast-export helper
-Date: Fri, 1 Apr 2011 11:44:38 +0530
-Message-ID: <20110401061434.GA4469@kytes>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH 3/3] builtin/show.c: do not prune by pathspec
+Date: Fri, 01 Apr 2011 08:46:36 +0200
+Message-ID: <4D9574CC.7090005@drmicha.warpmail.net>
+References: <2590090d32e748932d988dff3897058b909e8358.1301562935.git.git@drmicha.warpmail.net> <4D94322A.8030409@drmicha.warpmail.net> <3bee7fb376e2fb498c9634ab2ff5506f8c74a7bc.1301562936.git.git@drmicha.warpmail.net> <AANLkTik4wy3B1S=7_2opLdAVy5LBq55VsfZnkj0=QskC@mail.gmail.com> <4D948105.3050009@drmicha.warpmail.net> <7vwrjfjdqr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 08:16:08 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 08:50:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5XeR-0005pv-Jz
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 08:16:07 +0200
+	id 1Q5YBU-0001Ed-V0
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 08:50:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754058Ab1DAGQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 02:16:00 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62958 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753951Ab1DAGPz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 02:15:55 -0400
-Received: by iwn34 with SMTP id 34so3155671iwn.19
-        for <git@vger.kernel.org>; Thu, 31 Mar 2011 23:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=PwhABO/B0CwriKMox0cTAJhickrUilVS/nwSf+vbBps=;
-        b=ZRZIPhGDIyMjM0u9v+0ihVOD/WkMhk0HEbEOsDUljf1lhUdlSPiXqZ04g8qPzo2Ep6
-         dlQwf/GfDG6IIa6Fxsq4RqtfR367QKWHfTiZJfKouq+/3fG4gJ9GSsv1T/xroPG0pIHt
-         UEQ21aEG+5kHPC8F4WDbXQRiGA0BcpE+m1i34=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=GNfp8hcEbZQief7TUCMVU4XUOTYkAmZUQPxf42gL0X8LFy7vRck4+0rnlKHv6mIF6d
-         uIiYn7xzGAraWwDPWWTu6FPe0SJ+J4lG9Zu+4b6/boRDDkeQJ16BU3mn44OUDcrBawsQ
-         Wxb+3g3U3irXpwW+MVlawLU6FuaOv8uMV/pWU=
-Received: by 10.43.64.9 with SMTP id xg9mr4815020icb.102.1301638554455;
-        Thu, 31 Mar 2011 23:15:54 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id g16sm1236594ibb.54.2011.03.31.23.15.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 31 Mar 2011 23:15:53 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754597Ab1DAGuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 02:50:08 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38045 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754512Ab1DAGuH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 02:50:07 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id F275A20863;
+	Fri,  1 Apr 2011 02:50:06 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 01 Apr 2011 02:50:07 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=y07OCRUrTr/i6rctQ43SHmSr8C4=; b=lbUSYDNGXq8+qFRfzNDvC8vdoXTl9E4eB7T/z+bPwTeeO4vSGCLH6f4mI+Dv+F7IOvng1YebqHmtZZ68CBmwDx0IqloAXHoQkTwdv29sHg5/rAwbDIuVYg8D0zLL9+x+QnAvyNm/N/5PdF6wh7D71XYMtl4rAjVZUqOSfEIneUA=
+X-Sasl-enc: Rrww5bZYyn5auhJwlaS/+RMDU6eYOVnqXdg3GMn12RrX 1301640606
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3C8584004F2;
+	Fri,  1 Apr 2011 02:50:06 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <7vwrjfjdqr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170552>
 
-Hi Jonathan,
+Junio C Hamano venit, vidit, dixit 31.03.2011 21:23:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>>> Tests please?
+>>
+>> Heck, we don't have any to begin with, and this is marked RFC. Given our
+>> usual reluctance to change even undocumented behavior I'm not going to
+>> bother with tests for an RFC.
+> 
+> Quite the contrary, a well written test is a concise and readable way to
+> illustrate what behaviour the proposed change is making, and helps judging
+> if it is going in a good direction.  So if it is an RFC, a test would help
+> very much, especially if there isn't any in the area currently.
 
-(+CC: Git List, Junio)
+While that may be true in some cases (e.g., providing sample output) I
+don't think the commit message to 3/3 leaves anything open that a test
+could clarify.
 
-This is the proposed design for a new "fast-export helper library".
-Normally, this would be an RFC patch; however, I'm not happy with the
-design, and I'd like some input before starting off.
-
-The Problem
------------
-svn-fi, a program to convert a git-fast-import stream to
-a Subversion dumpfile, has hit a dead-end [1].  This is because it
-doesn't know how to handle any `<dataref>` except 'inline' (this
-appears inside `filemodify`, `notemodify`, `ls` and `cat-blob`
-commands).
-
-The other two kinds of `<dataref>` that exporters can produce are:
-1. A mark reference (`:<idnum>`) set by a prior `blob` command
-2. A full 40-byte SHA-1 of an existing Git blob object.
-
-The most naive solution will involve modifying svn-fi to persist blobs
-in-memory as soon as it sees one after a `blob` command (this is the
-approach that git2svn uses).  However, this solution is both expensive
-in memory and highly unscalable.  Also, svn-fi's job is lightweight
-parsing and conversion from one format to another- I don't want to
-clutter it up with this additional complexity.
-
-The other alternative that svn-fi currently uses: --inline-blobs [2].
-This is a modification to the git-fast-export so that it only ever
-produces inlined blobs.  However, this has severe drawbacks, the main
-one being that every exporter must implement it for it to become
-accepted.  You also pointed out another problem: One blob may be
-referenced multiple times in the same stream, especially when dealing
-with cherry-picks and rebases (when branch support is added to
-svn-fi); writing it out explicitly that many times will pollute the
-stream unnecessarily large with a lot of redundant data.  In the best
-case, this can simply be a way to hint the git-fast-export to minimize
-the work that the helper has to do.
-
-Junio suggested using a fast-import-filter that can convert a
-fast-import stream from the current format to one that contains only
-inlined blobs [3].  The final proposal for the implementation differs,
-because I don't like the idea of having to parse the data twice and do
-the same error handling in two different places (svn-fi and the
-fast-import-filter).
-
-The library's API
------------------
-I've thought of building a sort of library which applications can link
-to. The API is as follows:
-int write_blob(unit32_t, char *, size_t, FILE *);
-int fetch_blob_mark(unit32_t, struct strbuf *);
-int fetch_blob_sha1(char *sha1, struct strbuf *); /* sha1[20] */
-
-The svn-fi parser should call write_blob when it encounters some data
-that it wants to persist. The arguments are:
-
-1. A mark using which the blob can be recalled using fetch_blob_mark
-(optional: use 0 to omit).
-2. A terminator character in the case of delimited format. Should be
-NULL when the format is non-delimited.
-3. In the case of the delimited format, the size of the delimeter
-itself.  Otherwise, the size of the blob itself.
-4. The FILE * to parse the blob from, which is already seeked to the
-right position and ready to parse.
-
-The library then parses this data and dumps it into a storage backend
-(described later) after computing its SHA1.
-
-fetch_blob_mark and fetch_blob_sha1 can then be used to fetch blobs
-using their mark or SHA1.  Fetching blobs using their mark should be
-O(1), while locating the exact SHA1 will require a bisect of sorts:
-slightly better than O(log (n)).
-
-How the library works
----------------------
-It maintains an sorted list of (SHA1, off_t, off_t) triplets in a
-buffer along with a 256-entry fanout table (call this blob_index) --
-this is mmap'ed, and only munmap'ed at the end of the program.  When
-write_blob is invoked, the blob is read from the FILE, and its SHA1 is
-computed.  Then it is written to another big buffer (call this
-blob_buffer) after an inexpensive zlib deflate along with its deflated
-size, and its (SHA1, offset1, offset2) is written to the blob_index --
-the first number refers to the blob_buffer number (there are many
-blob_buffers), and the second offset refers to the offset within that
-blob_buffer.  No dobut, this is an expensive table to maintain, but we
-don't have a choice in the matter -- there's nothing in the spec
-preventing a dataref from referring to blobs using their marks and
-SHA1s interchangably.
-
-For marks, there is another marks_buffer which stores (uint32_t,
-off_t, off_t) triplets.
-
-So, what do you think?
-
--- Ram
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/170290
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/170290/focus=170292
-[3]: http://thread.gmane.org/gmane.comp.version-control.git/165237/focus=165289
+Michael
