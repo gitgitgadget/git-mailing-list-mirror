@@ -1,66 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] index-pack: Create .keep files with same permissions
- and .pack/.idx
-Date: Fri, 1 Apr 2011 17:41:15 -0400
-Message-ID: <20110401214115.GA18679@sigill.intra.peff.net>
-References: <201103311246.25645.johan@herland.net>
- <20110331190429.GC16981@sigill.intra.peff.net>
- <201104010329.05299.johan@herland.net>
- <7v1v1lfy7q.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?SmVhbi1GcmFuw6dvaXMgQnVyZGV0?= <jfburdet@revelate.com>
+Subject: Re: Problem using git-filter-branch to move tree when repository
+ name contains space
+Date: Fri, 01 Apr 2011 23:49:04 +0200
+Message-ID: <4D964850.3050800@revelate.com>
+References: <4D95E182.6030903@revelate.com> <20110401144107.GA3103@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 23:41:26 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 01 23:50:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5m5q-0003j9-RJ
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 23:41:23 +0200
+	id 1Q5mEC-0004Dm-Eo
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 23:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757391Ab1DAVlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 17:41:17 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44345
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756799Ab1DAVlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 17:41:17 -0400
-Received: (qmail 17338 invoked by uid 107); 1 Apr 2011 21:42:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Apr 2011 17:42:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Apr 2011 17:41:15 -0400
-Content-Disposition: inline
-In-Reply-To: <7v1v1lfy7q.fsf@alter.siamese.dyndns.org>
+	id S1757955Ab1DAVtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 17:49:55 -0400
+Received: from mail-server-02.titaninternet.co.uk ([85.232.47.149]:37918 "EHLO
+	mail-server-02.titaninternet.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756932Ab1DAVty (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 17:49:54 -0400
+Received: from xdsl-188-155-127-11.adslplus.ch ([188.155.127.11] helo=[127.0.0.1])
+	by mail-server-02.titaninternet.co.uk with esmtpa (Exim 4.69)
+	(envelope-from <jfburdet@revelate.com>)
+	id 1Q5mDp-0006l6-M6; Fri, 01 Apr 2011 22:49:37 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
+In-Reply-To: <20110401144107.GA3103@sigill.intra.peff.net>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170627>
 
-On Fri, Apr 01, 2011 at 02:39:21PM -0700, Junio C Hamano wrote:
+What you suggested solved my problem. What a fast answer ! 6minutes !
+Thanks,
 
-> Johan Herland <johan@herland.net> writes:
+JF.
+
+On 01.04.2011 16:41, Jeff King wrote:
+> The problem is that GIT_INDEX_FILE is an absolute path that contains the
+> repo name. So it needs to be quoted in the mv command. This should work:
 > 
-> > While pushing to a remote repo, Git transiently adds a .keep file for the
-> > pack being pushed, to protect it from a concurrent "git gc". However, the
-> > permissions on this .keep file are such that if a different user attempts
-> > a local cross-filesystem clone ("git clone --no-hardlinks") on the server
-> > while the .keep file is present (either because of a concurrent push, or
-> > because of a prior failed push that left a stale .keep file), the clone
-> > will fail because the second user cannot access the .keep file created by
-> > the first user.
+>   git filter-branch --index-filter \
+>     'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+>       GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+>         git update-index --index-info &&
+>      mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
 > 
-> While I am not sure if letting a clone proceed while there is a concurrent
-> push is even a good idea to begin with, I agree that a stale .keep file is
-> a problem.
+> -Peff
 > 
-> I am kind of surprised that we are not using atexit(3) to clean them just
-> like we do for lockfiles; wouldn't that be a better solution?
-
-We definitely should do that, but it would also be nice if a power
-failure, kill -9, or segfault in receive-pack didn't leave a repo
-unusable.
-
--Peff
+> 
