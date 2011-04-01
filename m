@@ -1,68 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] write_idx_file should use an unsigned nr_objects
- parameter
-Date: Fri, 01 Apr 2011 11:28:27 -0700
-Message-ID: <7vtyehg71w.fsf@alter.siamese.dyndns.org>
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: Re: [PATCH 1/4] write_idx_file should use an unsigned nr_objects parameter
+Date: Fri, 1 Apr 2011 13:36:09 -0500
+Message-ID: <AANLkTi=ZxV5WbDhhZG1SnS9W+MMhwpf-jdoKwdAD=zWN@mail.gmail.com>
 References: <1301534674-31981-1-git-send-email-dpmcgee@gmail.com>
+	<7vtyehg71w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 20:28:46 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 20:36:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5j5Q-0006pO-G4
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 20:28:44 +0200
+	id 1Q5jCj-0002MD-At
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 20:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755620Ab1DAS2j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 14:28:39 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59834 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438Ab1DAS2i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 14:28:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C4C964A1C;
-	Fri,  1 Apr 2011 14:30:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yy4D7LIAR544498dGEwrodT03iE=; b=oBSW3y
-	xVw3C/G8Zk5ZFxyGa5tDryr3CJFKawklHAjKRc8Vu4s/JCufWG5YTSAJXNJdHHy7
-	veYJwE1OyuY7vX7CXqq8bEyyfOypVdOph017Se9BAchDULoiFJqNxRrzYDjUd/NI
-	opQsJGjNEIxO4SazrWaIXsy0A1kjT+FW7WZbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=btXtfcX7zc1YE4n0Img2xrmoNf0Qoyd5
-	S6su71Ps3UYRl9DlFcJDDrjYNsXhCrhaO1m0YM9MIkEHHkjvMd+5M6sfkAx78pNc
-	sxdYnh5/gVa0jR8Zerqp34mXh67ul3v/T4jV0crlJ5UV29oO8AhcUzGzCbAahkYg
-	4iuE7RpEC6c=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8DC7B4A1A;
-	Fri,  1 Apr 2011 14:30:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 973724A15; Fri,  1 Apr 2011
- 14:30:20 -0400 (EDT)
-In-Reply-To: <1301534674-31981-1-git-send-email-dpmcgee@gmail.com> (Dan
- McGee's message of "Wed, 30 Mar 2011 20:24:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B5870B8-5C8E-11E0-A859-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1756291Ab1DASgM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 14:36:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:36366 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754265Ab1DASgL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 14:36:11 -0400
+Received: by wya21 with SMTP id 21so3199639wya.19
+        for <git@vger.kernel.org>; Fri, 01 Apr 2011 11:36:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MG82axFo8FZ2XdZdzTP1NRaF611HTkdKpwIeJw3pcKs=;
+        b=mmVxK9nelBnmVXX2ysrRbMxKRD5ycr6pK3StOw3kSNVUkcezOfbtwvy39vwiSbmIDY
+         vY3e7uYq9jOgdGJknHNzRoCTUM7bwBDr0SuzyZI2i8m/zH4NQYT8E4jdB6f5AAX9ktpE
+         rbWfpVUidDPZ4Bp4tZFFsii61MTG8exJpI7fU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=blxjZ1LncbxYEkP6zoimWzh/iDa+HDAsUwL7g4uej11oniZbaP+RjdGBspqsuGNgp5
+         oRmWsxhKDY85siPCihn0rP2qV97qaYKLSICxNESCcd4HshhDAwIuhoH5vC8WI3dptNmw
+         dbAFqcI/AFse8bTp2CqYGSItLlPqRcCp2+qPU=
+Received: by 10.227.173.4 with SMTP id n4mr4474314wbz.132.1301682969725; Fri,
+ 01 Apr 2011 11:36:09 -0700 (PDT)
+Received: by 10.227.147.16 with HTTP; Fri, 1 Apr 2011 11:36:09 -0700 (PDT)
+In-Reply-To: <7vtyehg71w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170602>
 
-Dan McGee <dpmcgee@gmail.com> writes:
+On Fri, Apr 1, 2011 at 1:28 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Dan McGee <dpmcgee@gmail.com> writes:
+>
+>> This follows the precedent set in the pack-objects code and being
+>> adjusted for in index-pack and unpack-objects.
+>
+> Eh, why? =C2=A0The use of a fixed-width type in the existing code is =
+mostly to
+> make sure that the on-disk result will fit within the on-disk field. =
+=C2=A0The
+> variables like iteration counter "i" we use in write_idx_file() need =
+to be
+> at least as wide but there is no reason to forbid the compiler from u=
+sing
+> the natural interger type as long as it is more suiable on the platfo=
+rm,
+> no?
 
-> This follows the precedent set in the pack-objects code and being
-> adjusted for in index-pack and unpack-objects.
+Hmm. when making this patch, I thought it was required due to the
+other ones in this sequence or I was seeing compile errors. Reverting
+it seems to prove otherwise, as things compile just fine...
 
-Eh, why?  The use of a fixed-width type in the existing code is mostly to
-make sure that the on-disk result will fit within the on-disk field.  The
-variables like iteration counter "i" we use in write_idx_file() need to be
-at least as wide but there is no reason to forbid the compiler from using
-the natural interger type as long as it is more suiable on the platform,
-no?
+Either way, it should at least be an unsigned parameter of at least
+int length, no? The current parameter is signed, so 'unsigned' might
+make sense here.
+
+-Dan
