@@ -1,138 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (BUGFIX)] gitweb: Fix parsing of negative fractional timezones
-	in JavaScript
-Date: Fri, 01 Apr 2011 21:06:28 +0200
-Message-ID: <20110401190239.9686.12000.stgit@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] sha1_name: Suggest commit:./file for path in subdir
+Date: Fri, 01 Apr 2011 12:11:37 -0700
+Message-ID: <7vfwq1g51y.fsf@alter.siamese.dyndns.org>
+References: <4D94322A.8030409@drmicha.warpmail.net>
+ <4ff35194dc52fa969049f555f8d9358cb7ba0c1a.1301562935.git.git@drmicha.warpmail.net> <7vsju3jdm2.fsf@alter.siamese.dyndns.org> <4D957648.8070008@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
-	Kevin Cernekee <cernekee@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 01 21:07:22 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Apr 01 21:11:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5jgj-0001uu-An
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 21:07:17 +0200
+	id 1Q5jlF-0004IP-UI
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 21:11:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754553Ab1DATHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 15:07:08 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:43770 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754330Ab1DATHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 15:07:07 -0400
-Received: by wwk4 with SMTP id 4so890128wwk.1
-        for <git@vger.kernel.org>; Fri, 01 Apr 2011 12:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:subject:to:cc:date:message-id:user-agent
-         :mime-version:content-type:content-transfer-encoding;
-        bh=fzbFmklJVn5Re1Nq2/N5M8YYv0cvyl7i/W8ig1pOmeA=;
-        b=gA57iozAfKQP01BTSgGtqobrF5R/RdsfW/i9P7BgEnUV6r4GxAjK7sUR845ZDjSJ1u
-         aeGQTzQG1PG9eIoUHfg3AkAgat2v/93OO4G90TECxydgUWvmC+AGdGm4J3eLQVj7+imD
-         vAcDrRlQnWMlQwPu0QlfU2dwn8ToCGBFdx7x0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=aLO4Kl2/879TVCs3bhWs9cPVBL1t7/JFUIRCO8c7hqAAWL4OaYvb1lx6up4X9niuoD
-         cZh9ecH7VkrMKwOezErLm+BprGq6WkoLtyba2vL9rZyIbSNUNZGOLKLHlwQCHLkQ9+9R
-         mk6L/HVJInp2a09AWEiKBJtnjWDOt58Tb7+KE=
-Received: by 10.227.169.76 with SMTP id x12mr4455836wby.155.1301684825472;
-        Fri, 01 Apr 2011 12:07:05 -0700 (PDT)
-Received: from localhost.localdomain (abvl248.neoplus.adsl.tpnet.pl [83.8.209.248])
-        by mx.google.com with ESMTPS id bs4sm1441783wbb.18.2011.04.01.12.07.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 01 Apr 2011 12:07:03 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p31J6SMD009735;
-	Fri, 1 Apr 2011 21:06:43 +0200
-User-Agent: StGIT/0.14.3
+	id S1751057Ab1DATLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 15:11:53 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33582 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750767Ab1DATLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 15:11:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C1F574FDA;
+	Fri,  1 Apr 2011 15:13:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gQ1IkXwYBhrendsbRBoRHpQNDo0=; b=D23a4C
+	5V7yFmzqksdC9pkKT2mQ+2N0ppBPtyPYil4R1Xax1Iy+wycMRRuvAT81+aPgVKXI
+	WErJNxljYsMpUWAJkd5kQMo9rQ6g6QB/r59P6DOqH4tXCpUyTlB2gguMUFMtj5hm
+	tOR+WllvrY83tXOi05AetRwAQscJCP0p0eB38=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H73uOVD30CMcPr/3DgDQYGQKlvVNKPEt
+	Xu6udQ2R9w1qn+CNBcc6iyEXLI0hqHywOZl+sgLuPkb22PcV6awLtgqqmV8lqkul
+	aCvdIFGH5C2Qx8FQP6VFnMEhv+ZinQ1liZLPij/Ibinv5mkjnqYTPdHTqRoZ80TA
+	P9UNiQHqFrw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 889F84FD8;
+	Fri,  1 Apr 2011 15:13:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 565E44FD7; Fri,  1 Apr 2011
+ 15:13:30 -0400 (EDT)
+In-Reply-To: <4D957648.8070008@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Fri, 01 Apr 2011 08:52:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 23EF3F12-5C94-11E0-ADDC-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170607>
 
-Extract converting numerical timezone in the form of '(+|-)HHMM' to
-timezoneOffset function, and fix parsing of negative fractional
-timezones.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-This is used to format timestamps in 'blame_incremental' view; this
-complements commit 2b1e172 (gitweb: Fix handling of fractional
-timezones in parse_date, 2011-03-25).
+> Junio C Hamano venit, vidit, dixit 31.03.2011 21:26:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> 
+>>> Currently, the "Did you mean..." message suggests "commit:fullpath"
+>>> only. Extend this to show the more convenient "commit:./file" form also.
+>> 
+>> If we were to do this, I suspect that with non-empty prefix we should only
+>> show "./$file" form for brevity without aka.  This is a end-user facing
+>> message and not meant to help scripts, no?
+>
+> ENOPARSE
 
-Now
+Sorry.  What I meant was to show only "$commit:./$file" (with $commit and
+$file substituted appropriately so that the user can cut&paste from the
+output) when we issue this advice in a subdirectory.
 
-  gitweb.cgi/git.git/blame_incremental/3fe5489:/contrib/gitview/gitview#l853
+This is meant to be a direct and immediate advice to the user who typed it
+from the command line to tell what he might meant.  It is beneficial to
+teach the user that there are two different ways to spell it, and that in
+different contexts one of these two ways may be easier to use over the
+other way, but this is not a place to do so.
 
-and
-
-  gitweb.cgi/git.git/blame/3fe5489:/contrib/gitview/gitview#l853
-
-show the same correct time in author's local timezone in title
-(on mouseover) [Aneesh Kumar K.V, 2006-02-24 00:59:42 +0530].
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This was send earlier as part 3/3 of 
-
-  "[PATCH/RFC 0/3] gitweb: Split gitweb.js, improve JavaScript"
-  Message-Id: <1301089586-8534-1-git-send-email-jnareb@gmail.com>
-  http://thread.gmane.org/gmane.comp.version-control.git/170021/focus=170024
-
-It is now send separately as standalone patch, and is not held hostage
-to accepting series that splits gitweb JavaScript file.
-
- gitweb/static/gitweb.js |   24 +++++++++++++++++++-----
- 1 files changed, 19 insertions(+), 5 deletions(-)
-
-diff --git a/gitweb/static/gitweb.js b/gitweb/static/gitweb.js
-index 9c66928..40ec084 100644
---- a/gitweb/static/gitweb.js
-+++ b/gitweb/static/gitweb.js
-@@ -399,7 +399,24 @@ function fixColorsAndGroups() {
-  * used to extract hours and minutes from timezone info, e.g '-0900'
-  * @constant
-  */
--var tzRe = /^([+-][0-9][0-9])([0-9][0-9])$/;
-+var tzRe = /^([+-])([0-9][0-9])([0-9][0-9])$/;
-+
-+/**
-+ * convert numeric timezone +/-ZZZZ to offset from UTC in seconds
-+ *
-+ * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-+ * @returns {Number} offset from UTC in seconds for timezone
-+ *
-+ * @globals tzRe
-+ */
-+function timezoneOffset(timezoneInfo) {
-+	var match = tzRe.exec(timezoneInfo);
-+	var tz_sign = (match[1] === '-' ? -1 : +1);
-+	var tz_hour = parseInt(match[2],10);
-+	var tz_min  = parseInt(match[3],10);
-+
-+	return tz_sign*(((tz_hour*60) + tz_min)*60);
-+}
- 
- /**
-  * return date in local time formatted in iso-8601 like format
-@@ -408,14 +425,11 @@ var tzRe = /^([+-][0-9][0-9])([0-9][0-9])$/;
-  * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
-  * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-  * @returns {String} date in local time in iso-8601 like format
-- *
-- * @globals tzRe
-  */
- function formatDateISOLocal(epoch, timezoneInfo) {
--	var match = tzRe.exec(timezoneInfo);
- 	// date corrected by timezone
- 	var localDate = new Date(1000 * (epoch +
--		(parseInt(match[1],10)*3600 + parseInt(match[2],10)*60)));
-+		timezoneOffset(timezoneInfo)));
- 	var localDateStr = // e.g. '2005-08-07'
- 		localDate.getUTCFullYear()                 + '-' +
- 		padLeft(localDate.getUTCMonth()+1, 2, '0') + '-' +
+We know the context and what the user wanted to do (iow, the command is
+run in a subdirectory, and we already guessed that the user probably
+wanted to name the path in that subdirectory), so we already know between
+two forms, ./$path_around_here form, not the $prefix/$path_around_here
+form, is more appropriate, no?
