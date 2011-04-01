@@ -1,70 +1,62 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/3] sha1_name: Suggest commit:./file for path in subdir
-Date: Fri, 01 Apr 2011 08:52:56 +0200
-Message-ID: <4D957648.8070008@drmicha.warpmail.net>
-References: <4D94322A.8030409@drmicha.warpmail.net> <4ff35194dc52fa969049f555f8d9358cb7ba0c1a.1301562935.git.git@drmicha.warpmail.net> <7vsju3jdm2.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/3] revisions.txt: structure with a labelled list
+Date: Fri, 01 Apr 2011 09:01:46 +0200
+Message-ID: <4D95785A.7010701@drmicha.warpmail.net>
+References: <cover.1301569271.git.git@drmicha.warpmail.net>	<9e7095318e6dc40657db0cfef3400a66f6de20a4.1301569271.git.git@drmicha.warpmail.net> <m3mxkb3qwt.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 08:56:34 2011
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 09:05:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5YHY-0003id-RP
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 08:56:33 +0200
+	id 1Q5YQ9-00071J-F3
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 09:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754809Ab1DAG42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 02:56:28 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38595 "EHLO
+	id S1754843Ab1DAHFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 03:05:18 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:49176 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754512Ab1DAG41 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 02:56:27 -0400
+	by vger.kernel.org with ESMTP id S1754658Ab1DAHFR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 03:05:17 -0400
 Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 1CE1C202D7;
-	Fri,  1 Apr 2011 02:56:27 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 01 Apr 2011 02:56:27 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=kYCbf3jiwL6JsTAeZJ/9xzj7rL0=; b=u6UIdGtrJA0pEgkNvQQpLTXEev2blfekHYCR8zHdWHwdNmbpMlmUuGz/Ua29djGQnPcBIkMsoCp4goCxDt62TjbrqMLjw16lSb3UwVMGF/3EOtJW1oWEfXyQQGZOSffp2gbIo9JTwlKrOdEoHGlIyHFIw8FO1R0NqdSMND4ifsI=
-X-Sasl-enc: cZcM37LW6PENLpIJ8/rjwZR8CBzOxBQw6+CZeCckWoid 1301640986
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BF7D92083E;
+	Fri,  1 Apr 2011 03:05:16 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 01 Apr 2011 03:05:16 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=QsLwQl0msWwcm8Ywli7C+1TZr1o=; b=J09PPqpLYBz4HmBElFQhEcHy5A0utpFn1ILGvnsQap6PFA/r7865qoBScAQ0YszCbMJlE4QdUxU1nUQS+GkqNLCnr+x3+G/ENfL+rop9KpOu9I/tDjJEBelps714bFo5gSALsorl2exGP3iGasyE9NJ2S9HjVpGhGKXyKkobiX8=
+X-Sasl-enc: rnfrQRAoi6s5QsADYLwcMA9bfjIPfUuqZveXw/v+J6hm 1301641516
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 66DB4449DEF;
-	Fri,  1 Apr 2011 02:56:26 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 48CD6407E28;
+	Fri,  1 Apr 2011 03:05:16 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7vsju3jdm2.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <m3mxkb3qwt.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170555>
 
-Junio C Hamano venit, vidit, dixit 31.03.2011 21:26:
+Jakub Narebski venit, vidit, dixit 31.03.2011 23:46:
 > Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
->> Currently, the "Did you mean..." message suggests "commit:fullpath"
->> only. Extend this to show the more convenient "commit:./file" form also.
+>> -* The special construct '@\{-<n>\}' means the <n>th branch checked out
+>> +'@\{<n>\}', e.g. '@\{-1\}'::
+>> +  The special construct '@\{-<n>\}' means the <n>th branch checked out
+>>    before the current one.
 > 
-> If we were to do this, I suspect that with non-empty prefix we should only
-> show "./$file" form for brevity without aka.  This is a end-user facing
-> message and not meant to help scripts, no?
+> I think you meant
+> 
+>   +'@\{-<n>\}', e.g. '@\{-1\}'::
+> 
+> here.
 
-ENOPARSE
+Thanks, good spotting!
 
-Do you mean:
-
-- replace the old "commit:fullpath" with "commit:./file" or
-
-- show the new form only without "aka" (but with the old form) or
-
-- show literal "commit:./$file"?
-
-I guess you meant the first one. But I left in both forms on purpose:
-Saying only "commit:./file" does not explain what it means, the "./"
-part is easy to miss, and the user may not even be aware to be in a
-subdir. Listing both does not take much space and explains everything.
+I'll recheck the processed form and send out a v2 today.
 
 Michael
