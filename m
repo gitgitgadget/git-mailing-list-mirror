@@ -1,61 +1,58 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
 Subject: Re: [PATCH 5/4] run-command: implement abort_async for pthreads
-Date: Fri, 1 Apr 2011 16:18:01 -0400
-Message-ID: <20110401201801.GA16602@sigill.intra.peff.net>
-References: <20110331184243.GA12027@sigill.intra.peff.net>
- <201104011927.03366.j6t@kdbg.org>
- <AANLkTi=8+V3w-1uQgekjntM1qREGZYWSTE_ra1NbDxG8@mail.gmail.com>
- <201104012142.22065.j6t@kdbg.org>
- <AANLkTimKPD6rw1B9gG3ZN0KEOY41nk=6jE0MVcdotpkp@mail.gmail.com>
- <20110401200537.GA15778@sigill.intra.peff.net>
- <AANLkTi=ro88pwpA+Gfu5p2dB3ntn8PUcwvjHRh3iRy_H@mail.gmail.com>
- <20110401201714.GA16501@sigill.intra.peff.net>
+Date: Fri, 1 Apr 2011 22:18:07 +0200
+Message-ID: <201104012218.07872.j6t@kdbg.org>
+References: <20110331184243.GA12027@sigill.intra.peff.net> <201104012142.22065.j6t@kdbg.org> <AANLkTimKPD6rw1B9gG3ZN0KEOY41nk=6jE0MVcdotpkp@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 22:18:12 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Apr 01 22:18:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5knL-0005Vt-97
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 22:18:11 +0200
+	id 1Q5knX-0005fX-KW
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 22:18:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755329Ab1DAUSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 16:18:05 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54625
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755121Ab1DAUSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 16:18:03 -0400
-Received: (qmail 15558 invoked by uid 107); 1 Apr 2011 20:18:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Apr 2011 16:18:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Apr 2011 16:18:01 -0400
+	id S1755368Ab1DAUSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 16:18:16 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:1916 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755121Ab1DAUSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 16:18:16 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 2D09613004A;
+	Fri,  1 Apr 2011 22:18:08 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id EFFD419F5DA;
+	Fri,  1 Apr 2011 22:18:07 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <AANLkTimKPD6rw1B9gG3ZN0KEOY41nk=6jE0MVcdotpkp@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20110401201714.GA16501@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170617>
 
-On Fri, Apr 01, 2011 at 04:17:14PM -0400, Jeff King wrote:
+On Freitag, 1. April 2011, Erik Faye-Lund wrote:
+> On Fri, Apr 1, 2011 at 9:42 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> > But this does not help the case at hand in any way. How would you
+> > interrupt a thread that is blocked in ReadFile()? The point of
+> > pthread_cancel() is that it interrupts blocked system calls
+>
+> There is no mention of such a guarantee in POSIX (section 2.9.5 Thread
+> Cancellation), so relying on that is undefined behavior.
 
-> > static inline int pthread_cancel(pthread_t thread)
-> > {
-> > 	SetEvent(thread.cancel_event);
-> > 	CancelSynchronousIo(thread.handle);
-> > }
-> 
-> There are a ton of cancellation points, not just I/O (e.g., sleep).
-> However, interrupting a read would probably be sufficient for git's
-> purposes.
+In the paragraph before the bulleted list at the end of "Cancellation Points":
 
-Actually, I take that back. It would be sufficient for abort_async with
-its current callers, but adding a pthread_cancel that is only partially
-there may end up causing headaches down the road.
+"...If a thread has cancelability enabled and a cancellation request is made 
+with the thread as a target while the thread is suspended at a cancellation 
+point, the thread shall be awakened and the cancellation request shall be 
+acted upon..."
 
--Peff
+-- Hannes
