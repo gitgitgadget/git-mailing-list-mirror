@@ -1,78 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2] Documentation: Document diff.<tool>.* and filter.<driver>.* in config
-Date: Fri, 1 Apr 2011 15:50:16 +0200
-Message-ID: <201104011550.17750.jnareb@gmail.com>
-References: <m3ipuy49fg.fsf@localhost.localdomain> <1301654600-8901-1-git-send-email-artagnon@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] run-command: allow aborting async code prematurely
+Date: Fri, 1 Apr 2011 09:59:11 -0400
+Message-ID: <20110401135910.GA1650@sigill.intra.peff.net>
+References: <20110331184243.GA12027@sigill.intra.peff.net>
+ <20110331184421.GC16906@sigill.intra.peff.net>
+ <AANLkTinAQiuYjs+pxBVKM2-aQNSDd_-CC_fMahasTB=V@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Git list <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 15:50:37 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 15:59:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5ekF-00030Q-Hb
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 15:50:35 +0200
+	id 1Q5esi-0008K9-Qd
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 15:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756138Ab1DANua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 09:50:30 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:37925 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755938Ab1DANu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 09:50:29 -0400
-Received: by wya21 with SMTP id 21so2958157wya.19
-        for <git@vger.kernel.org>; Fri, 01 Apr 2011 06:50:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=CJhEDc8M3JMmOKOv+ICJit2keBmO5n7drD0jDf5NHb8=;
-        b=wbM47PzlMTzJbyKWJsA4znv+DvLtaidN6TxsZnvzeLWEsGGHliJjA/ZJGpKJZmzbtF
-         vtQAzshWwNdsJmvdpMEewSewFWa9AOPZE0qCxjIxH+8BM1vgC96S3Rn9qP2LXchS4ru6
-         nUDvMYzDPgjKJYQF6Lj01zTsA9NweSsDulw0c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=TXPcYliNeJ+kHTJS8dOUuEhEfFHuSrvRwmiEQUBAaF4cJ2p0R0YFkMJ8cVeyLJRKkz
-         mYPdg+ILT8xTv2cm8A3A3ajuNtdv+2iRzNJ/E1YlYcx9txYtnQIrCqkX7UypEF9GxO53
-         vgTmcmwCgiI7JZUH17vIs5ru9Gftsdo03g9N4=
-Received: by 10.216.123.66 with SMTP id u44mr3726390weh.109.1301665828269;
-        Fri, 01 Apr 2011 06:50:28 -0700 (PDT)
-Received: from [192.168.1.13] (abvl248.neoplus.adsl.tpnet.pl [83.8.209.248])
-        by mx.google.com with ESMTPS id r57sm1013319wes.1.2011.04.01.06.50.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 01 Apr 2011 06:50:25 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1301654600-8901-1-git-send-email-artagnon@gmail.com>
+	id S1756714Ab1DAN7O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 09:59:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58688
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754340Ab1DAN7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 09:59:13 -0400
+Received: (qmail 9026 invoked by uid 107); 1 Apr 2011 13:59:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Apr 2011 09:59:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Apr 2011 09:59:11 -0400
 Content-Disposition: inline
+In-Reply-To: <AANLkTinAQiuYjs+pxBVKM2-aQNSDd_-CC_fMahasTB=V@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170584>
 
-Ramkumar Ramachandra wrote:
+On Fri, Apr 01, 2011 at 11:36:53AM +0200, Erik Faye-Lund wrote:
 
-> +diff.<tool>.funcname::
-> +	Specifies a regular expression that matches a line to use as
-> +	the hunk header for files with `diff=<tool>` gitattribute. A
-> +	built-in pattern may also be used.  See
-> +	linkgit:gitattributes[5] for details.
-> +
-> +diff.<tool>.xfuncname::
-> +	Same as 'diff.<tool>.funcname', except that an extended
-> +	regular expression can be specified in this case.
+> > diff --git a/run-command.c b/run-command.c
+> > index 258c880..f179d2a 100644
+> > --- a/run-command.c
+> > +++ b/run-command.c
+> > @@ -439,6 +439,16 @@ int finish_async(struct async *async)
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;
+> > =C2=A0}
+> >
+> > +void abort_async(struct async *async)
+> > +{
+> > +#ifndef WIN32
+> > + =C2=A0 =C2=A0 =C2=A0 kill(async->pid, 15);
+>=20
+> This doesn't compile unless NO_PTHREADS is set, no?
 
-Don't we deprecate funcname in favor of xfuncname, perhaps to the point 
-of not documenting the former?
+Read the cover letter again. This goes on top of an old version,
+pre-pthreads. Patch 5/4 modernizes it.
 
--- 
-Jakub Narebski
-Poland
+> This should probably be
+>=20
+> void abort_async(struct async *async)
+> {
+> #ifdef NO_PTHREADS
+> 	kill(async->pid, 15);
+> #else
+> 	pthread_cancel(async->tid)
+> #endif
+> 	finish_async(async);
+> }
+
+Yes, eventually it becomes that, in 5/4.
+
+> ... and then us Windows-guys must implement something like pthread_ca=
+ncel().
+>=20
+> Or maybe not. Can pthread reliably cancel a thread while making sure
+> that thread isn't holding a mutex (like some thread-safe malloc
+> implementations do)? If not, I'm not entirely sure we can even reach
+> this goal.
+
+Yes, as you figured out in a later email, there are cancellation points=
+=2E
+However, I'm not sure it matters for this. Run-command's async code is =
+a
+very abstract primitive that can even be implemented in a separate
+process. So async code must not use mutexes or assume it shares memory
+with the parent. Real threaded code should use pthreads directly (and
+must be optional, or we alienate non-threaded platforms).
+
+-Peff
