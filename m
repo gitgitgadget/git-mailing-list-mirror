@@ -1,136 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/4] run-command: implement abort_async for pthreads
-Date: Fri, 1 Apr 2011 17:16:49 -0400
-Message-ID: <20110401211649.GA16787@sigill.intra.peff.net>
-References: <20110331184243.GA12027@sigill.intra.peff.net>
- <201104012142.22065.j6t@kdbg.org>
- <AANLkTimKPD6rw1B9gG3ZN0KEOY41nk=6jE0MVcdotpkp@mail.gmail.com>
- <201104012218.07872.j6t@kdbg.org>
- <AANLkTi=ec9azPovJoDVO6kyXEik4uFQu3dZNxAJyvDY=@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] index-pack: Create .keep files with same permissions
+ and .pack/.idx
+Date: Fri, 01 Apr 2011 14:39:21 -0700
+Message-ID: <7v1v1lfy7q.fsf@alter.siamese.dyndns.org>
+References: <201103311246.25645.johan@herland.net>
+ <20110331190429.GC16981@sigill.intra.peff.net>
+ <201104010329.05299.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 23:17:01 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Apr 01 23:39:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5liG-0008Ky-T0
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 23:17:01 +0200
+	id 1Q5m4A-0001sA-UP
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 23:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755080Ab1DAVQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 17:16:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56733
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754298Ab1DAVQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 17:16:53 -0400
-Received: (qmail 16272 invoked by uid 107); 1 Apr 2011 21:17:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Apr 2011 17:17:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Apr 2011 17:16:49 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=ec9azPovJoDVO6kyXEik4uFQu3dZNxAJyvDY=@mail.gmail.com>
+	id S1757335Ab1DAVje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 17:39:34 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34766 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756799Ab1DAVjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 17:39:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6D90C4292;
+	Fri,  1 Apr 2011 17:41:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=R7C070UW63NlaHubR5KLCzz9Y5Y=; b=oEdyOp
+	c5GeUn2wTP2yq5KTRIr7WNReFp6YyLMTQOsYRyfUaaZNMtUNJZQX83BWJcKmAspB
+	ic8LWl5tLScIivsJ60i4cC0FgVkPoVVZG/tHMglp1oej3AaNeEHoxtm5zThc3CG/
+	DQiuH2h1g3og03boIbrtMGLAsagQKX+gzKE8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iNoVBtdPAdVyFpxcXniolUUx7zzWOjE4
+	mo9EHC/0+QDOe9j4LXtf/BlzWRXeG8J+MIdJOtgymyoxPhM2d7XdX461kg+FelbU
+	XOlsk1fJN01j+u9jf+2Kq6Cs9PmCzQUWuLbNM6fio3xbXi5rBsMu4AW6DCU8SUX5
+	COLDYb90y1Y=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3BB4E428F;
+	Fri,  1 Apr 2011 17:41:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3644C428D; Fri,  1 Apr 2011
+ 17:41:13 -0400 (EDT)
+In-Reply-To: <201104010329.05299.johan@herland.net> (Johan Herland's message
+ of "Fri, 01 Apr 2011 03:29:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C6DB3578-5CA8-11E0-BFD3-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170625>
 
-On Fri, Apr 01, 2011 at 10:31:42PM +0200, Erik Faye-Lund wrote:
+Johan Herland <johan@herland.net> writes:
 
-> On Fri, Apr 1, 2011 at 10:18 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> > On Freitag, 1. April 2011, Erik Faye-Lund wrote:
-> >> On Fri, Apr 1, 2011 at 9:42 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> >> > But this does not help the case at hand in any way. How would you
-> >> > interrupt a thread that is blocked in ReadFile()? The point of
-> >> > pthread_cancel() is that it interrupts blocked system calls
-> >>
-> >> There is no mention of such a guarantee in POSIX (section 2.9.5 Thread
-> >> Cancellation), so relying on that is undefined behavior.
-> >
-> > In the paragraph before the bulleted list at the end of "Cancellation Points":
-> >
-> > "...If a thread has cancelability enabled and a cancellation request is made
-> > with the thread as a target while the thread is suspended at a cancellation
-> > point, the thread shall be awakened and the cancellation request shall be
-> > acted upon..."
-> >
-> 
-> A blocking thread and a suspended are two different matters. A
-> suspended thread is a thread that has been explicitly suspended by
-> wait, waitpid, sleep, pause etc. These functions explicitly say that
-> they suspend the thread ("shall suspend the calling thread until"),
-> while read etc does not ("shall block the calling thread until").
-> 
-> Similarly, making a blocking read/write fail (or terminate mid-way) is
-> not the same thing as awakening the thread.
-> 
-> I see how some people can read something like this into this section,
-> but I think it's pretty clear - this is not what it's talking about.
-> In fact, the more I read the relevant texts, the more convinced I get
-> that implementations that does terminate read/write strictly speaking
-> is in violation of the standard.
+> While pushing to a remote repo, Git transiently adds a .keep file for the
+> pack being pushed, to protect it from a concurrent "git gc". However, the
+> permissions on this .keep file are such that if a different user attempts
+> a local cross-filesystem clone ("git clone --no-hardlinks") on the server
+> while the .keep file is present (either because of a concurrent push, or
+> because of a prior failed push that left a stale .keep file), the clone
+> will fail because the second user cannot access the .keep file created by
+> the first user.
 
-What about the text right before the bit that Johannes quoted:
+While I am not sure if letting a clone proceed while there is a concurrent
+push is even a good idea to begin with, I agree that a stale .keep file is
+a problem.
 
-  The side effects of acting upon a cancellation request while suspended
-  during a call of a function are the same as the side effects that may
-  be seen in a single-threaded program when a call to a function is
-  interrupted by a signal and the given function returns [EINTR]. Any
-  such side effects occur before any cancellation cleanup handlers are
-  called.
-
-I agree it would be nicer if it explicitly said "when you are in a
-function which is a cancellation point, pending cancellation requests
-which are delivered are acuted upon immediately".
-
-But it is implied to me by the surrounding text, and it's the only
-sensible behavior IMHO. Plus it seems to be what at least glibc pthreads
-does on Linux, so I'm going to assume that people smarter than me
-thought about it and came up with the same interpretation.
-
-My test program was:
-
--- >8 --
-#include <pthread.h>
-#include <unistd.h>
-#include <stdio.h>
-
-void *child(void *data)
-{
-  char buf[32];
-  int r;
-
-  fprintf(stderr, "child reading from stdin...\n");
-  r = read(0, buf, sizeof(buf));
-  fprintf(stderr, "child read returned %d\n", r);
-  return NULL;
-}
-
-int main(void)
-{
-  pthread_t t;
-  void *r;
-
-  pthread_create(&t, NULL, child, NULL);
-  sleep(3);
-  pthread_cancel(t);
-
-  pthread_join(t, &r);
-  if (r == PTHREAD_CANCELED)
-    fprintf(stderr, "thread was canceled\n");
-  else
-    fprintf(stderr, "thread returned %p\n", r);
-
-  return 0;
-}
--- >8 --
-
-If you input something before 3 seconds is up, the thread prints its
-message and returns NULL. But if you let it go, the cancel interrupts
-the read().
-
--Peff
+I am kind of surprised that we are not using atexit(3) to clean them just
+like we do for lockfiles; wouldn't that be a better solution?
