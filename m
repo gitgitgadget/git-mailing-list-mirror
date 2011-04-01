@@ -1,116 +1,72 @@
-From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Burdet?= <jfburdet@revelate.com>
-Subject: Problem using git-filter-branch to move tree when repository name
- contains space
-Date: Fri, 01 Apr 2011 16:30:26 +0200
-Message-ID: <4D95E182.6030903@revelate.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Problem using git-filter-branch to move tree when repository
+ name contains space
+Date: Fri, 1 Apr 2011 10:41:07 -0400
+Message-ID: <20110401144107.GA3103@sigill.intra.peff.net>
+References: <4D95E182.6030903@revelate.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 01 16:31:43 2011
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Jean-Fran=C3=A7ois?= Burdet <jfburdet@revelate.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 16:41:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5fO1-0002Tp-4e
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 16:31:41 +0200
+	id 1Q5fXI-0008GR-FL
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 16:41:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546Ab1DAObf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 10:31:35 -0400
-Received: from [85.232.47.149] ([85.232.47.149]:53324 "EHLO
-	mail-server-02.titaninternet.co.uk" rhost-flags-FAIL-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1751813Ab1DAObf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 10:31:35 -0400
-Received: from cust.static.46-14-222-70.swisscomdata.ch ([46.14.222.70] helo=[127.0.0.1])
-	by mail-server-02.titaninternet.co.uk with esmtpa (Exim 4.69)
-	(envelope-from <jfburdet@revelate.com>)
-	id 1Q5fNZ-0002C3-Ty
-	for git@vger.kernel.org; Fri, 01 Apr 2011 15:31:14 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
-X-Enigmail-Version: 1.1.1
+	id S1756535Ab1DAOlK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 10:41:10 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51403
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755961Ab1DAOlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 10:41:09 -0400
+Received: (qmail 10791 invoked by uid 107); 1 Apr 2011 14:41:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Apr 2011 10:41:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Apr 2011 10:41:07 -0400
+Content-Disposition: inline
+In-Reply-To: <4D95E182.6030903@revelate.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170590>
 
-Hi,
+On Fri, Apr 01, 2011 at 04:30:26PM +0200, Jean-Fran=C3=A7ois Burdet wro=
+te:
 
-I want to move my repository (wich is contained in a directory whose
-name's containing a space)  root tree to a subdirectory.
+> I want to move my repository (wich is contained in a directory whose
+> name's containing a space)  root tree to a subdirectory.
+>=20
+> I followed what's documented in
+> http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.htm=
+l ,
+> using the last example :
+>=20
+> [...]
+>
+> jfburdet@nagios:~/git test$ git filter-branch --index-filter \
+> >         'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+> >                 GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
+> >                         git update-index --index-info &&
+> >          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+> Rewrite 3658e305df3ace21d39bf57dd4e0e5627818dfcc (1/1)mv: target
+> `test/.git-rewrite/t/../index' is not a directory
 
-I followed what's documented in
-http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html =
-,
-using the last example :
-
-git filter-branch --index-filter \
-        'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
-                GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
-                        git update-index --index-info &&
-         mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
-
-
-But, look at the following two scenario:
-
-Scenario 1 : Repository have no space in it, everything works fine :
-jfburdet@nagios:~$ mkdir gittest
-jfburdet@nagios:~$ cd gittest/
-jfburdet@nagios:~/gittest$ git init
-Initialized empty Git repository in /home/jfburdet/gittest/.git/
-jfburdet@nagios:~/gittest$ touch a_file
-jfburdet@nagios:~/gittest$ git add .
-jfburdet@nagios:~/gittest$ git commit -m "A commit"
-[master (root-commit) e6261d5] A commit
- Committer: jfburdet <jfburdet@(none)>
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 a_file
- jfburdet@nagios:~/gittest$ git filter-branch --index-filter \
->         'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
->                 GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
->                         git update-index --index-info &&
->          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
-Rewrite e6261d591357f39e1b4f95c0dfeb7a133e211161 (1/1)
-Ref 'refs/heads/master' was rewritten
-
-Scenario 2 : Repository have space in its directory name, making the
-command fails
-jfburdet@nagios:~$ mkdir "git test"
-jfburdet@nagios:~$ cd "git test"
-jfburdet@nagios:~/git test$
-jfburdet@nagios:~/git test$ git init
-Initialized empty Git repository in /home/jfburdet/git test/.git/
-jfburdet@nagios:~/git test$ touch a_file
-jfburdet@nagios:~/git test$ git add .
-jfburdet@nagios:~/git test$ git commit -m "A commit"
-[master (root-commit) 3658e30] A commit
- Committer: jfburdet <jfburdet@(none)>
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 a_file
-jfburdet@nagios:~/git test$ git filter-branch --index-filter \
->         'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
->                 GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
->                         git update-index --index-info &&
->          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
-Rewrite 3658e305df3ace21d39bf57dd4e0e5627818dfcc (1/1)mv: target
-`test/.git-rewrite/t/../index' is not a directory
-index filter failed: git ls-files -s | sed "s-  \"*-&newsubdir/-" |
-                GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
-                        git update-index --index-info &&
-         mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
-jfburdet@nagios:~/git test$
-
-
-I tried to tweak the sed expression with no success. Can someone help m=
+The problem is that GIT_INDEX_FILE is an absolute path that contains th=
 e
-with that ?
+repo name. So it needs to be quoted in the mv command. This should work=
+:
 
-Please note that I can't simply rename the directory before firing up
-"git filter-branch" because I'm in a process of merging repositories an=
-d
-their name are mandatory.
+  git filter-branch --index-filter \
+    'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+      GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
+        git update-index --index-info &&
+     mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
 
-Cheers,
-
-Jean-Fran=E7ois,
+-Peff
