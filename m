@@ -1,70 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 2/2] repack: Remove stale .keep files before repacking
-Date: Thu, 31 Mar 2011 21:41:50 -0400
-Message-ID: <20110401014150.GC21036@sigill.intra.peff.net>
-References: <201103311246.25645.johan@herland.net>
- <20110331190429.GC16981@sigill.intra.peff.net>
- <201104010334.28048.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Apr 01 03:42:14 2011
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: [PATCH 1/2] blame: add --abbrev command line option
+Date: Fri,  1 Apr 2011 10:54:55 +0900
+Message-ID: <1301622896-5836-1-git-send-email-namhyung@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 03:55:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5TNM-00046B-59
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 03:42:12 +0200
+	id 1Q5Ta2-00089g-8H
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 03:55:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753136Ab1DABly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2011 21:41:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39504
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751701Ab1DABlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2011 21:41:53 -0400
-Received: (qmail 4973 invoked by uid 107); 1 Apr 2011 01:42:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Mar 2011 21:42:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2011 21:41:50 -0400
-Content-Disposition: inline
-In-Reply-To: <201104010334.28048.johan@herland.net>
+	id S1753930Ab1DABzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2011 21:55:04 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:63019 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752918Ab1DABzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2011 21:55:03 -0400
+Received: by iyb14 with SMTP id 14so2980946iyb.19
+        for <git@vger.kernel.org>; Thu, 31 Mar 2011 18:55:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=ZSLiNFlBXAFA/2FFX2kxzqQfyD2FodsAzIYvrKb7tX8=;
+        b=iFrsuXk2VXmXZ0QikH4qcprj98Hn+vsK5M8fF67TZY2zC7vUSBLv4mmT5Ec7tPWej/
+         fdKlvc7lzI/W3S//v1eWA+VSMDeMN9llh+GoXHSsTx57VeVIUo6joJ0H5A0NkDjkt00S
+         FtMfkn5lCeZjDaNy4XVlER9pVFYNpuaNuzdeM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=b6deV4Z3T1VXmveGbGqnduRGUY1WkiW2eMYQIZh5KjpfqStdxMFGE/9YZORymaDU4U
+         +N2UY7dkeBE02u3871Ph6ahpNgLWcf+NeH/p+ag96TnpKeTbW7/aaS3jgswxOjJqM/v/
+         BHMXUCRWWOVRgg0BQ5ZaOFa82n8K0sdADBgB4=
+Received: by 10.42.176.201 with SMTP id bf9mr825293icb.224.1301622902826;
+        Thu, 31 Mar 2011 18:55:02 -0700 (PDT)
+Received: from localhost.localdomain ([118.176.72.144])
+        by mx.google.com with ESMTPS id i26sm1101359iby.58.2011.03.31.18.54.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 31 Mar 2011 18:55:01 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170549>
 
-On Fri, Apr 01, 2011 at 03:34:27AM +0200, Johan Herland wrote:
+Signed-off-by: Namhyung Kim <namhyung@gmail.com>
+---
+ builtin/blame.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-> On Thursday 31 March 2011, Jeff King wrote:
-> > On Thu, Mar 31, 2011 at 12:46:25PM +0200, Johan Herland wrote:
-> > > 3. Do I need to scan for and remove stale .keep files in a cron job
-> > > 
-> > >    in order to keep repos healthy and clonable?
-> > 
-> > If we fix (1), then hopefully it is not as much of an issue. But
-> > probably "git gc" should clean up stale ones after a while.
-> 
-> This patch tries to automatically remove stale .keep files. However,
-> it's still work-in-progress, as I don't know how to portably (a) ask
-> for the current hostname (so that I can compare it to the one in the
-> .keep file), or (b) test for whether a given PID is running on the
-> system (to determine whether the receive-pack process that wrote the
-> .keep file is still alive).
-> 
-> Feedback appreciated.
-
-Since your 1/2 turns them from an actual problem into just harmless
-cruft, there's no real rush to get rid of them. Could we just do
-something like "there is no matching pack file, and the mtime is 2 weeks
-old"?
-
-If there is a matching pack file, I don't think we want to get rid of
-them. People can have .keep files if they want to indicate the pack
-should be kept. I do admit it would be weird to write the "receive-pack"
-message into them, though.
-
--Peff
+diff --git a/builtin/blame.c b/builtin/blame.c
+index f6b03f7..253b480 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -41,6 +41,7 @@ static int reverse;
+ static int blank_boundary;
+ static int incremental;
+ static int xdl_opts;
++static int abbrev = 8;
+ 
+ static enum date_mode blame_date_mode = DATE_ISO8601;
+ static size_t blame_date_width;
+@@ -1670,7 +1671,7 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
+ 	cp = nth_line(sb, ent->lno);
+ 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
+ 		char ch;
+-		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? 40 : 8;
++		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? 40 : abbrev;
+ 
+ 		if (suspect->commit->object.flags & UNINTERESTING) {
+ 			if (blank_boundary)
+@@ -2310,6 +2311,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 'C', NULL, &opt, "score", "Find line copies within and across files", PARSE_OPT_OPTARG, blame_copy_callback },
+ 		{ OPTION_CALLBACK, 'M', NULL, &opt, "score", "Find line movements within and across files", PARSE_OPT_OPTARG, blame_move_callback },
+ 		OPT_CALLBACK('L', NULL, &bottomtop, "n,m", "Process only line range n,m, counting from 1", blame_bottomtop_callback),
++		OPT__ABBREV(&abbrev),
+ 		OPT_END()
+ 	};
+ 
+-- 
+1.7.4
