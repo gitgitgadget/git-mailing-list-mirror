@@ -1,70 +1,116 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Try to remove the given path even if it can't be opened
-Date: Fri, 1 Apr 2011 16:01:50 +0200
-Message-ID: <AANLkTikjfkieO9VdpEka7Hb0Fk3st1+dCMF9ti0Kg5Fw@mail.gmail.com>
-References: <AANLkTikfmXiZQquWi4STTCUy0qoY9J_waJ44nrPAvB1d@mail.gmail.com> <4D95D528.6050409@drmicha.warpmail.net>
+From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Burdet?= <jfburdet@revelate.com>
+Subject: Problem using git-filter-branch to move tree when repository name
+ contains space
+Date: Fri, 01 Apr 2011 16:30:26 +0200
+Message-ID: <4D95E182.6030903@revelate.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Apr 01 16:02:20 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 01 16:31:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5evb-0001ej-4w
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 16:02:19 +0200
+	id 1Q5fO1-0002Tp-4e
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 16:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab1DAOCO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 10:02:14 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:49933 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754394Ab1DAOCN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 10:02:13 -0400
-Received: by bwz15 with SMTP id 15so2544802bwz.19
-        for <git@vger.kernel.org>; Fri, 01 Apr 2011 07:02:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=m292rYRy75uSyKRXwHv+QmuRiResGVoZtTP0Zfn1Ja0=;
-        b=Dwdf3H8kIIQXwmo0awgzTjjDeBItsn0WQ880M8QB4Z6tDhkWQT+7guYRV8aU6xP5h7
-         L3FG8bArb6lw2b9ok6LfdCQJArHRCtifOtGF/D3pGUZc3d5ZHkOswRdboN5R8ck06e5m
-         EUP+Cl3m2oUcTDb55l04CTDE6Kseh3LwXtaD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ovrWnY8yOFBmQGdkJ4lXJMcWYDGsvHMUkN2yMLq0gwxpEoroGpifqhCaQC+D3gWHMU
-         IESUdvQ9wMIxB2SFRGChxA/MvWGCv6lQtJ4TtXmZspc/aEDHAgr3PuGuc4zfbL+4Qemg
-         AhJ/dWlM2rQPWZN4kb+1e4IyaFqgINeiSd5wc=
-Received: by 10.204.187.129 with SMTP id cw1mr3612463bkb.138.1301666532663;
- Fri, 01 Apr 2011 07:02:12 -0700 (PDT)
-Received: by 10.204.29.2 with HTTP; Fri, 1 Apr 2011 07:01:50 -0700 (PDT)
-In-Reply-To: <4D95D528.6050409@drmicha.warpmail.net>
+	id S1754546Ab1DAObf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 10:31:35 -0400
+Received: from [85.232.47.149] ([85.232.47.149]:53324 "EHLO
+	mail-server-02.titaninternet.co.uk" rhost-flags-FAIL-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1751813Ab1DAObf (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 10:31:35 -0400
+Received: from cust.static.46-14-222-70.swisscomdata.ch ([46.14.222.70] helo=[127.0.0.1])
+	by mail-server-02.titaninternet.co.uk with esmtpa (Exim 4.69)
+	(envelope-from <jfburdet@revelate.com>)
+	id 1Q5fNZ-0002C3-Ty
+	for git@vger.kernel.org; Fri, 01 Apr 2011 15:31:14 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170589>
 
-On Fri, Apr 1, 2011 at 15:37, Michael J Gruber <git@drmicha.warpmail.ne=
-t> wrote:
-> How about simply
->
-> if (!dir)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return rmdir(path->buf);
->
-> like we do later on in that function?
->
+Hi,
 
-I'm used to try to keep the returned value of a function I modify,
-and I'm also used to not trust the return values of the functions
-I don't control. That's to my defense.
+I want to move my repository (wich is contained in a directory whose
+name's containing a space)  root tree to a subdirectory.
 
-But you're unquestionably right.
+I followed what's documented in
+http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html =
+,
+using the last example :
+
+git filter-branch --index-filter \
+        'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+                GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
+                        git update-index --index-info &&
+         mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+
+
+But, look at the following two scenario:
+
+Scenario 1 : Repository have no space in it, everything works fine :
+jfburdet@nagios:~$ mkdir gittest
+jfburdet@nagios:~$ cd gittest/
+jfburdet@nagios:~/gittest$ git init
+Initialized empty Git repository in /home/jfburdet/gittest/.git/
+jfburdet@nagios:~/gittest$ touch a_file
+jfburdet@nagios:~/gittest$ git add .
+jfburdet@nagios:~/gittest$ git commit -m "A commit"
+[master (root-commit) e6261d5] A commit
+ Committer: jfburdet <jfburdet@(none)>
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 a_file
+ jfburdet@nagios:~/gittest$ git filter-branch --index-filter \
+>         'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+>                 GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
+>                         git update-index --index-info &&
+>          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+Rewrite e6261d591357f39e1b4f95c0dfeb7a133e211161 (1/1)
+Ref 'refs/heads/master' was rewritten
+
+Scenario 2 : Repository have space in its directory name, making the
+command fails
+jfburdet@nagios:~$ mkdir "git test"
+jfburdet@nagios:~$ cd "git test"
+jfburdet@nagios:~/git test$
+jfburdet@nagios:~/git test$ git init
+Initialized empty Git repository in /home/jfburdet/git test/.git/
+jfburdet@nagios:~/git test$ touch a_file
+jfburdet@nagios:~/git test$ git add .
+jfburdet@nagios:~/git test$ git commit -m "A commit"
+[master (root-commit) 3658e30] A commit
+ Committer: jfburdet <jfburdet@(none)>
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 a_file
+jfburdet@nagios:~/git test$ git filter-branch --index-filter \
+>         'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+>                 GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
+>                         git update-index --index-info &&
+>          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+Rewrite 3658e305df3ace21d39bf57dd4e0e5627818dfcc (1/1)mv: target
+`test/.git-rewrite/t/../index' is not a directory
+index filter failed: git ls-files -s | sed "s-  \"*-&newsubdir/-" |
+                GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
+                        git update-index --index-info &&
+         mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
+jfburdet@nagios:~/git test$
+
+
+I tried to tweak the sed expression with no success. Can someone help m=
+e
+with that ?
+
+Please note that I can't simply rename the directory before firing up
+"git filter-branch" because I'm in a process of merging repositories an=
+d
+their name are mandatory.
+
+Cheers,
+
+Jean-Fran=E7ois,
