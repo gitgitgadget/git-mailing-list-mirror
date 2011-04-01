@@ -1,78 +1,65 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Small "git clean" annoyance
-Date: Fri, 1 Apr 2011 09:34:44 +0200
-Message-ID: <AANLkTikksQj3HfOJmi-uZTfc7sTNNuDA4bFVaj2cY3Ad@mail.gmail.com>
+Date: Fri, 01 Apr 2011 09:41:48 +0200
+Message-ID: <vpq62qymn9f.fsf@bauges.imag.fr>
 References: <AANLkTinQscpkRDftLmCrQR+Aq5RacGyurd3kb15y=1FK@mail.gmail.com>
+	<AANLkTikksQj3HfOJmi-uZTfc7sTNNuDA4bFVaj2cY3Ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Apr 01 09:35:15 2011
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 09:44:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5Yt1-0002uw-AL
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 09:35:15 +0200
+	id 1Q5Z1d-0006Tb-1f
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 09:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110Ab1DAHfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 03:35:07 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41900 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755065Ab1DAHfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 03:35:05 -0400
-Received: by bwz15 with SMTP id 15so2318992bwz.19
-        for <git@vger.kernel.org>; Fri, 01 Apr 2011 00:35:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=iHiCdruYrguomVTNufORJARvp2OvQ/s8jqZmAkCNh1s=;
-        b=EJfqr5Rf8dBNxWOY3GVbN/3F8thD2wdDnBlJkeuDGLSnqVeJ9tEHGJgZais/COaBLw
-         AG2uFpYFGT778aR0kPXlkMEnX7uh5jae6ougHZQGtnii/iqiBffYdidtAndqFUNy9NBP
-         TqVnQ1Bg+Ixb3g7OS4Wg7dG/fLcVuQNeWO/r0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=x6weulhiKw8L8HO/w0JDFpPKnC2iUTq8sp5/XoJU8gTdkpIBPnbU+lBrgvH5z3WVd/
-         dqRyO/QfCBilC1PTMWXT8zOz5twBrsjx9MwMsqSykFFXMiukQoB+B1/ZqhJbu22WEuMX
-         phm3qedMB0DTeKo1NJCIwIDOqqX4Y4Ld1xXZ8=
-Received: by 10.204.83.228 with SMTP id g36mr1983821bkl.30.1301643304178; Fri,
- 01 Apr 2011 00:35:04 -0700 (PDT)
-Received: by 10.204.29.2 with HTTP; Fri, 1 Apr 2011 00:34:44 -0700 (PDT)
-In-Reply-To: <AANLkTinQscpkRDftLmCrQR+Aq5RacGyurd3kb15y=1FK@mail.gmail.com>
+	id S1755154Ab1DAHnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 03:43:53 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33500 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755055Ab1DAHnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 03:43:52 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p317fmfP032188
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 1 Apr 2011 09:41:48 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Q5YzN-0007aQ-3Q; Fri, 01 Apr 2011 09:41:49 +0200
+In-Reply-To: <AANLkTikksQj3HfOJmi-uZTfc7sTNNuDA4bFVaj2cY3Ad@mail.gmail.com>
+	(Alex Riesen's message of "Fri, 1 Apr 2011 09:34:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 01 Apr 2011 09:41:48 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p317fmfP032188
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1302248512.72968@9eSxErNCiV/qqWzKPT0WNw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170557>
 
-On Fri, Apr 1, 2011 at 00:01, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> Now, I realize that if the directory isn't empty, and is unreadable,
-> we really should give up (although a better error message about _why_
-> we failed may be in order) rather than try to chmod it or anything
-> like that. But the simple "try to rmdir it" might be a good addition
-> for the trivial case.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Something like this?
+> -	if (!dir)
+> +	if (!dir) {
+> +		if (rmdir(path->buf) == 0)
+> +			return 0;
+>  		return -1;
+> +	}
 
-diff --git a/dir.c b/dir.c
-index 325fb56..7251426 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1191,8 +1191,11 @@ int remove_dir_recursively(struct strbuf *path, int flag)
- 		return 0;
+Sounds good.
 
- 	dir = opendir(path->buf);
--	if (!dir)
-+	if (!dir) {
-+		if (rmdir(path->buf) == 0)
-+			return 0;
- 		return -1;
-+	}
- 	if (path->buf[original_len - 1] != '/')
- 		strbuf_addch(path, '/');
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
