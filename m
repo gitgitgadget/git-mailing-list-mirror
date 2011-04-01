@@ -1,69 +1,111 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 0/4] reflog, show and command line overrides
-Date: Fri,  1 Apr 2011 11:20:30 +0200
-Message-ID: <cover.1301649372.git.git@drmicha.warpmail.net>
+Subject: [PATCH 1/4] builtin/log.c: separate default and setup of cmd_log_init()
+Date: Fri,  1 Apr 2011 11:20:31 +0200
+Message-ID: <3872d568e82874257c0bce931ef3051b96914671.1301649372.git.git@drmicha.warpmail.net>
 References: <7vwrjfjdqr.fsf@alter.siamese.dyndns.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 01 11:24:16 2011
+X-From: git-owner@vger.kernel.org Fri Apr 01 11:24:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5aaV-00017j-Sx
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 11:24:16 +0200
+	id 1Q5aam-0001Hg-IK
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Apr 2011 11:24:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755092Ab1DAJYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 05:24:09 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:34791 "EHLO
+	id S1755221Ab1DAJYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2011 05:24:12 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:48431 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752933Ab1DAJYH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 05:24:07 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D5650208C0;
-	Fri,  1 Apr 2011 05:24:06 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 01 Apr 2011 05:24:06 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=cqAjXkbgAb3kMYOubjZfyW5Ew7U=; b=nvuJXg0JqT+jFhTLtU8y99PxH7rGGceLowt+Wz+tMPyp38hSNqsdSYAbQ+LyLuX3qPgS96RGbi16vzHm5yu5xTioFvdy3pNFUVriHinwnZwlRKP2XQAQGrWza0+j+FN9Rae4lmcUuWbOIcy86TOd19VqeTeHVLp7kbDmvsJ2wJc=
-X-Sasl-enc: FZSlEeDD6lhIo7d/jusPCePNFo6HgjggWvqcnRd3sZ/0 1301649846
+	by vger.kernel.org with ESMTP id S1754772Ab1DAJYK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Apr 2011 05:24:10 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6215C208B3;
+	Fri,  1 Apr 2011 05:24:10 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 01 Apr 2011 05:24:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=Mi6RyljfTSqaklD0YTwe3Pf2UE0=; b=IaOd+WV0U48p80mn0ssZfg3gkVtYCBL8aIwjVm+/mEm0a0hZoji9aL2KWV2rvBxnBNtGyV7fyxWd0fAzJTWaMtpVDLrWQxi+xfwMEtQ0OB162TYy/1PzFHLsNklP0xbr67ljokwqXdpwfa+JIAuKZFzzYvuH2EqcaRMvggpH0Vc=
+X-Sasl-enc: iZGWS+ZZGCT3MNCVZ39j+3u5a4mQPnIj89FmkGbZc6zf 1301649849
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 58EA5405202;
-	Fri,  1 Apr 2011 05:24:06 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E98B9444F76;
+	Fri,  1 Apr 2011 05:24:09 -0400 (EDT)
 X-Mailer: git-send-email 1.7.4.2.668.gba03a4
 In-Reply-To: <7vwrjfjdqr.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <cover.1301649372.git.git@drmicha.warpmail.net>
+References: <cover.1301649372.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170567>
 
-While thinking about how to redo 3/3 (show: do not prune by pathspec) I
-noticed a somehow related reflog problem, which overrides some command line
-options.
+cmd_log_init() sets up some default rev options and then calls
+setup_revisions(), so that a caller cannot set up own defaults: Either
+they get overriden by cmd_log_init() (if set before) or they override
+the command line (if set after). We even complain about this in a
+comment to cmd_log_reflog().
 
-So, here is some refactoring, a test exposing the reflog problem, and a fix for
-reflog (the new 1/4 through 3/4). Those 3 should be general good cleanup.
+Therefore, separate the two steps so that one can still call
+cmd_log_init() or, alternatively, cmd_log_init_defaults() followed by
+cmd_log_init_finish() (and set defaults in between).
 
-It turned out that the refactoring does not help with the show problem, but I
-changed the old 3/3 so that we change the pruning by commits only when the user
-has not requested to walk with show (the new 4/4). No time for new test now, sorry.
+No functional change so far.
 
-The old 1/3 and 2/3 ("Did you mean...") are not impacted (and not resent). They
-make for independent good UI cleanup also (and were related thematically only,
-not technically).
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ builtin/log.c |   21 +++++++++++++++------
+ 1 files changed, 15 insertions(+), 6 deletions(-)
 
-Michael J Gruber (4):
-  builtin/log.c: separate default and setup of cmd_log_init()
-  t/t1411: test reflog with formats
-  reflog: fix overriding of command line options
-  builtin/show: do not prune by pathspec
-
- builtin/log.c          |   32 +++++++++++++++++++-------------
- t/t1411-reflog-show.sh |   18 ++++++++++++++++++
- 2 files changed, 37 insertions(+), 13 deletions(-)
-
+diff --git a/builtin/log.c b/builtin/log.c
+index 9db43ed..f585209 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -49,13 +49,8 @@ static int parse_decoration_style(const char *var, const char *value)
+ 	return -1;
+ }
+ 
+-static void cmd_log_init(int argc, const char **argv, const char *prefix,
+-			 struct rev_info *rev, struct setup_revision_opt *opt)
++static void cmd_log_init_defaults(struct rev_info *rev)
+ {
+-	int i;
+-	int decoration_given = 0;
+-	struct userformat_want w;
+-
+ 	rev->abbrev = DEFAULT_ABBREV;
+ 	rev->commit_format = CMIT_FMT_DEFAULT;
+ 	if (fmt_pretty)
+@@ -68,7 +63,14 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 
+ 	if (default_date_mode)
+ 		rev->date_mode = parse_date_format(default_date_mode);
++}
+ 
++static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
++			 struct rev_info *rev, struct setup_revision_opt *opt)
++{
++	int i;
++	int decoration_given = 0;
++	struct userformat_want w;
+ 	/*
+ 	 * Check for -h before setup_revisions(), or "git log -h" will
+ 	 * fail when run without a git directory.
+@@ -128,6 +130,13 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 	setup_pager();
+ }
+ 
++static void cmd_log_init(int argc, const char **argv, const char *prefix,
++			 struct rev_info *rev, struct setup_revision_opt *opt)
++{
++	cmd_log_init_defaults(rev);
++	cmd_log_init_finish(argc, argv, prefix, rev, opt);
++}
++
+ /*
+  * This gives a rough estimate for how many commits we
+  * will print out in the list.
 -- 
 1.7.4.2.668.gba03a4
