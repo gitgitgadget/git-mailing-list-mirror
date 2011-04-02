@@ -1,94 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] index-pack: Create .keep files with same permissions
- and .pack/.idx
-Date: Fri, 01 Apr 2011 21:21:31 -0700
-Message-ID: <7v39m1e110.fsf@alter.siamese.dyndns.org>
-References: <201103311246.25645.johan@herland.net>
- <AANLkTimMJxni=Vuja+iHyMp8ydm7ZBvWnkSe68g6+pyH@mail.gmail.com>
- <7vk4fdehps.fsf@alter.siamese.dyndns.org>
- <201104020127.41774.johan@herland.net>
+From: Alif Wahid <alif.wahid@gmail.com>
+Subject: Git exhausts memory.
+Date: Sat, 2 Apr 2011 16:01:59 +1100
+Message-ID: <BANLkTin=yUtzbZjs_92FHDfs62VFFuLHwg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
-	Jeff King <peff@peff.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat Apr 02 06:22:11 2011
+Content-Type: multipart/mixed; boundary=20cf3071c7f6280d45049fe86dbc
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 02 07:02:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5sLh-0005Lm-Iy
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 06:22:09 +0200
+	id 1Q5syO-00080u-Df
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 07:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750756Ab1DBEVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2011 00:21:51 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50216 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750751Ab1DBEVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2011 00:21:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B44FA4775;
-	Sat,  2 Apr 2011 00:23:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DaqKc5tgisnMOhQPTjZpzrtSF0g=; b=Rcs+Cd
-	wmjecIS5mmXRA109H5ifnEkNLKQYV7wUL5kpjKyQfba/ryI5mJB4CySFBzcp9CNE
-	jP0aidrlpj6lalkfapuWfvdUQ+Vp68lc1vogaaLokCAeXTqwoLg4SofA1OCjgyzo
-	pXqRIUEd4+HUenGy1TlgUI3fjjL/a56LoUCGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AAVjacpCJkl63UVK7SyAb4+baNj5f4Dl
-	2miKBwFOVbzlOd8IIyCAVHB0XJQKwj4+qaovvsA8QXCYoN8rP0RMyGTpdUnn2KQN
-	CwViyCCJLMkB4dB8WbgAG/rUHPR0TLrwTWndU5YEojWT2OPezWNrRpxE8FzewgmT
-	wtW545SfVMc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 73C5F4774;
-	Sat,  2 Apr 2011 00:23:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0E06D4773; Sat,  2 Apr 2011
- 00:23:22 -0400 (EDT)
-In-Reply-To: <201104020127.41774.johan@herland.net> (Johan Herland's message
- of "Sat, 02 Apr 2011 01:27:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F598BFB0-5CE0-11E0-88E5-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751278Ab1DBFCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2011 01:02:01 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:60266 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750879Ab1DBFCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2011 01:02:00 -0400
+Received: by vws1 with SMTP id 1so3176610vws.19
+        for <git@vger.kernel.org>; Fri, 01 Apr 2011 22:01:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=hSCiz5ZiymXN9XQFWXxOG2LlIRdlXOrGIypQ9b6jZcs=;
+        b=TPBspxopRYt2RCpuTcrXWbY4kScsJCplUTfWzaszi5Rq/X/e8IjY0QUEmOyydiDs8X
+         82qC6u0p+qKHUEqyhEoPb5lS9dg1JBJDKzuv6Gj4rsBqeJsNFvrY5fe+YPtzHrzeSEk3
+         FwMVF3rqUTl2nWItAOXXHn388odmEPQ10MKX0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=E38wqDS6FOMiHvRGe39KR84grjQMOitetbJR0nHQVvQdyEVXgBPwx8iZ6ifw0rmMp4
+         72L/t9CDg8m55s7OTOtqI18OSFyGzyr1Yf4fO/eIlOXlpAYgNzIWEV4Cmm7Vnfq0YJ6T
+         BdEKXuBwPSCKwqkiir31IhtrZsMKYH0r+Wlk0=
+Received: by 10.52.74.226 with SMTP id x2mr6580508vdv.264.1301720519412; Fri,
+ 01 Apr 2011 22:01:59 -0700 (PDT)
+Received: by 10.52.155.70 with HTTP; Fri, 1 Apr 2011 22:01:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170643>
 
-Johan Herland <johan@herland.net> writes:
+--20cf3071c7f6280d45049fe86dbc
+Content-Type: text/plain; charset=UTF-8
 
-> Hmpf. I didn't know that clone --local --no-hardlinks was unsafe. If it's 
-> not safe, should it still be the default behavior for a cross-filesystem 
-> clone?
+Hi there,
 
-Unsafe is not quite the right word to use here in the sense that it
-wouldn't lead to any repository _corruption_ per-se, but if you ended up
-copying such a transient .keep file, the pack will stay forever in your
-clone target unless you notice and remove it yourself.
+I'm using Git v1.7.1 on Ubuntu v10.10 and unfortunately Git seems to
+regularly exhaust the memory on my machine and fails to compress loose
+objects and/or collect garbage.
 
-Having said that, I expect that the majority of use of a filesystem level
-local clone these days is to clone your own repository, likely on your own
-machine, and you have absolute control on both ends (e.g. you wouldn't be
-running a repack on the source while running a clone---you would more
-likely to see the repack finish and then clone).  So in that sense I would
-still think that file level clone being the default on a local machine is
-a reasonable default.
+My Intel based dual-core machine has 2 GB of RAM and 4 GB of swap
+space. I need to track a working tree with a handful of really large
+tarballs that rarely change and loads of really small text files that
+change frequently. What I'm seeing is that over time whenever "git gc"
+runs automatically it fails with the message "fatal: Out of memory,
+malloc failed". So I've been trying to manually run "git repack -ad
+--window-memory=1g --max-pack-size=1g" in the hope that Git will not
+exceed the physical memory. But I still get the same error message :(
 
-> While pushing to a remote repo, Git transiently adds a .keep file for the
-> pack being pushed, to protect it from a concurrent "git gc". Sometimes, when 
-> the push fails or is aborted, the .keep file is left stale in the repo. This 
-> causes problems for other users of the same repo, since the permissions on 
-> the .keep file (0600) make it inaccessible even though the rest of the repo 
-> is accessible (0444 modulo shared_repository setting).
+As I can't make my repository public, I've attached a simple Python
+script that generates a ~1.3 GB file containing random integers (takes
+roughly 10 min. on my machine). Then I run the following four commands
+and get the out-of-memory failure from "git repack". This is
+effectively emulating the scenario I have with my repository.
 
-I was also wondering why you initialized with 0444 in your patch and then
-even adjusted for shared repository settings.
+$ git init
+$ git add ./test_data.dat
+$ git commit ./test_data.dat -m "Test data."
+$ git repack -ad --window-memory=1g --max-pack-size=1g
+Counting objects: 3, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (2/2), done.
+fatal: Out of memory, malloc failed
 
-This is a tangent, but wouldn't it be wrong for index-pack to always leave
-the idx and pack files in 0444 with an explicit chmod() in the first
-place?  I suspect that we simply forgot to fix it when we introduced
-adjust_shared_perm().
+I can't find anything on the wiki about out-of-memory failures. Any
+info/help would be much appreciated.
+
+Regards
+
+Alif
+
+--20cf3071c7f6280d45049fe86dbc
+Content-Type: text/x-python; charset=US-ASCII; name="test_data.py"
+Content-Disposition: attachment; filename="test_data.py"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gm02sh220
+
+IyEgL3Vzci9iaW4vZW52IHB5dGhvbgoKaW1wb3J0IHN5cywgb3MsIHJhbmRvbQoKaWYgX19uYW1l
+X18gPT0gJ19fbWFpbl9fJzoKCiAgICBmYnVmZiA9IDIqKjI4ICAgIyBmaWxlIGJ1ZmZlciBzaXpl
+IGluIGJ5dGVzCiAgICBmaW50cyA9IDEwKio4ICAgIyBudW1iZXIgb2YgaW50ZWdlcnMgdG8gd3Jp
+dGUKICAgIGZzaXplID0gMTIgICAgICAjIG51bWJlciBvZiBkaWdpdHMgdG8gd3JpdGUgcGVyIGlu
+dGVnZXIKICAgIAogICAgZm5hbWUgPSBvcy5wYXRoLnNwbGl0ZXh0KG9zLnBhdGguYmFzZW5hbWUo
+c3lzLmFyZ3ZbMF0pKVswXQogICAgdHJ5OgogICAgICAgIG9zLm1rZGlyKGZuYW1lKQogICAgZXhj
+ZXB0IE9TRXJyb3I6CiAgICAgICAgcGFzcyAgICAjIGRpcmVjdG9yeSBhbHJlYWR5IGV4aXN0cwog
+ICAgICAgIAogICAgZnBhdGggPSBvcy5wYXRoLmpvaW4oZm5hbWUsIGZuYW1lKycuZGF0JykKICAg
+IGZoYW5kID0gb3BlbihmcGF0aCwgJ3cnLCBmYnVmZikKICAgIAogICAgc3lzLnN0ZG91dC53cml0
+ZSgnV3JpdGluZyAlZCBNQiB0byBmaWxlIFwnJXNcJ1xuJyAlIChmaW50cyooZnNpemUrMSkvMTAq
+KjYsIGZwYXRoKSkKICAgIHN5cy5zdGRvdXQud3JpdGUoJ1RoaXMgd2lsbCB0YWtlIHNvbWUgdGlt
+ZSwgcGxlYXNlIHdhaXQuXG4nKQogICAgc3lzLnN0ZG91dC53cml0ZSgnUHJvZ3Jlc3M6JykKICAg
+IHN5cy5zdGRvdXQuZmx1c2goKQoKICAgIHJhbmRvbS5zZWVkKC0xKQogICAgZmZvcm0gPSAnJScr
+c3RyKGZzaXplKSsnZFxuJwogICAgZm9yIHggaW4geHJhbmdlKGZpbnRzKTogCiAgICAgICAgZmhh
+bmQud3JpdGUoZmZvcm0gJSAocmFuZG9tLnJhbmRpbnQoMCxmaW50cykpKQogICAgICAgIGlmIHgg
+JSAoZmludHMvMTApID09IDAgYW5kIHggPiAwOgogICAgICAgICAgICBzeXMuc3Rkb3V0LndyaXRl
+KCclM2QvMTAnICUgKHgvKGZpbnRzLzEwKSkpIAogICAgICAgICAgICBzeXMuc3Rkb3V0LmZsdXNo
+KCkKCiAgICBzeXMuc3Rkb3V0LndyaXRlKCcgMTAvMTBcbicpCiAgICBzeXMuc3Rkb3V0LmZsdXNo
+KCkKICAgIGZoYW5kLmNsb3NlKCkKCg==
+--20cf3071c7f6280d45049fe86dbc--
