@@ -1,70 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Try to remove the given path even if it can't be opened
-Date: Sat, 02 Apr 2011 13:33:40 -0700
-Message-ID: <7vd3l4gzq3.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikfmXiZQquWi4STTCUy0qoY9J_waJ44nrPAvB1d@mail.gmail.com>
- <7vy63tg7yz.fsf@alter.siamese.dyndns.org> <20110402200920.GA18171@blimp.dmz>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] git-pack-objects.txt: fix grammatical errors
+Date: Sat, 02 Apr 2011 17:16:07 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1104021713480.28032@xanadu.home>
+References: <1301475606-11339-1-git-send-email-bebarino@gmail.com>
+ <alpine.LFD.2.00.1104021155230.28032@xanadu.home>
+ <7vy63sh6p7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 02 22:34:08 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 02 23:16:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q67WJ-0004tm-Ft
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 22:34:07 +0200
+	id 1Q68B5-0003WT-Le
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 23:16:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756310Ab1DBUeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2011 16:34:00 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58152 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756212Ab1DBUeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2011 16:34:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B7296585E;
-	Sat,  2 Apr 2011 16:35:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N4dft+Zuckj9dN7IcaxeLSX/pZw=; b=bLhKNw
-	RgcPg1dZ/uj8+Ar1lwlDCJrsKMHdUlWabymOeJAXcKHr4iFtRZi6y/MnRv/v1aEd
-	Lz7n34DXTJ+4ONnW56pXwazkb4XqJwWd+NM4pGXikV7ZBsQcOoOEz/UzrSXMZSnA
-	1SW0bgEXubc6Zy/kB1sBqEryALKooyrETvciY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bseg4jW46A8kOKYTo6JUxlyPOZ8tBrDl
-	PJYPm1YzqshV0cQ5nKStK3+GCdBRWoTHz+ikczNykjhjNZM0iT7TmIx0ECx48Mkl
-	fLvlBYXqEJLdedv8kUZ2/4vjRtjcHNjvVY3M7MO5dxsK6kZdnfeCJug9yvDIw0fL
-	6w9PaacKRAk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 629285857;
-	Sat,  2 Apr 2011 16:35:40 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 52CEB5850; Sat,  2 Apr 2011
- 16:35:32 -0400 (EDT)
-In-Reply-To: <20110402200920.GA18171@blimp.dmz> (Alex Riesen's message of
- "Sat, 2 Apr 2011 22:09:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C6216CEA-5D68-11E0-BED1-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1757146Ab1DBVQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2011 17:16:08 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:31828 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757026Ab1DBVQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2011 17:16:08 -0400
+Received: from xanadu.home ([66.130.28.92]) by vl-mo-mrz23.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LJ100JSWN1XKO40@vl-mo-mrz23.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 02 Apr 2011 17:15:33 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vy63sh6p7.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170663>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Sat, 2 Apr 2011, Junio C Hamano wrote:
 
->> Please don't do an attachment that has an inline patch and then attach the
->> patch itself again in base64.  It is extremely annoying.
->
-> Sorry. Hard to notice on GMail.
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> >> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+> >> index a51071e..442018b 100644
+> >> --- a/Documentation/git-pack-objects.txt
+> >> +++ b/Documentation/git-pack-objects.txt
+> >> @@ -190,9 +190,9 @@ self-contained. Use `git index-pack --fix-thin`
+> >>  (see linkgit:git-index-pack[1]) to restore the self-contained property.
+> >>  
+> >>  --delta-base-offset::
+> >> +	A packed archive can express the base object of a delta as
+> >> +	either a 20-byte object name or as an offset in the
+> >> +	stream, but older versions of git don't understand the
+> >>  	latter.  By default, 'git pack-objects' only uses the
+> >>  	former format for better compatibility.  This option
+> >>  	allows the command to use the latter format for
+> >
+> > This is misleading and not even true anymore if not using pack-objects.  
+> > Most people are using either 'git repack' or even 'git gc', and the 
+> > default is to use this parameter since commit 22c79eab.
+> 
+> This page is on the pack-objects plumbing, and in that context there is
+> nothing misleading nor false about it.
 
-Thanks.  I've already queued 0235017 (clean: unreadable directory may
-still be rmdir-able if it is empty, 2011-04-01) with a trivial test.
+True.  But...
+
+> We may however want to do something like the attached to help people who
+> might wonder how to pass this option through the Porcelain they use.
+
+That's the kind of precision I was meaning.
+
+> the longer term, it probably makes sense to make the option default at a
+> version bump, perhaps at the 1.8.0 boundary.
+
+Agreed.
+
+
+Nicolas
