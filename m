@@ -1,59 +1,81 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git enterprise setup on a large project
-Date: Sun, 3 Apr 2011 00:45:58 +0200
-Message-ID: <BANLkTi=HPxV9PojG01eY2B43F6VSzyEB7g@mail.gmail.com>
-References: <BANLkTinEweaD=6tNZ+52NziCFL1MvNL=qA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Completion for branches or tags broken with zsh
+Date: Sat, 2 Apr 2011 17:50:45 -0500
+Message-ID: <20110402225045.GA22781@elie>
+References: <1jxqbmc.vc0luayavmrkM%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Frederic JECKER <frederic.jecker@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 00:46:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mark Lodato <lodatom@gmail.com>
+To: Stefan Haller <lists@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Sun Apr 03 00:51:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q69a4-00082d-MC
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 00:46:09 +0200
+	id 1Q69em-0001F6-KU
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 00:51:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757229Ab1DBWqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2011 18:46:01 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:51333 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753017Ab1DBWqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2011 18:46:00 -0400
-Received: by bwz15 with SMTP id 15so3248788bwz.19
-        for <git@vger.kernel.org>; Sat, 02 Apr 2011 15:45:59 -0700 (PDT)
+	id S1757280Ab1DBWuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2011 18:50:55 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52902 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753186Ab1DBWuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2011 18:50:55 -0400
+Received: by iwn34 with SMTP id 34so4589413iwn.19
+        for <git@vger.kernel.org>; Sat, 02 Apr 2011 15:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=HQNxhCotvF2gKpCl/nmQkKDeJImvFhYWfHyd/mme+u8=;
-        b=agw6XygNIIEfwqxkYBrYF2OxStx5B7stH9Hs9zjQ2ipq4K1pvWboriIt0ILgK/r41H
-         jzesQYtTlgX3grr9IQPH1XsyNSu5vxdxp0XNdg+PT8WDh7kFsuV396/zxKGIUnj86UMY
-         LkR3o4Kz9Fbw+VYNxcH+xKP8aE4amwSNJp164=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Whe4hnIWZoylLX1OTRG0CRVXw0OIdShUu7ECeVIyKxQ=;
+        b=PUto36Avy1MlqIP54PJFElkiMGgDNYBPGc4VTG6LXp+1Bp0kdlLeYXShCqWI9SAWIl
+         1ZdjuZrcCn0sTaQTi9T4ZcvQFWSHg+//lK+tvTlKJzz5ybNQI3HnrbF5vkgnrlUzkBVP
+         GdfXwlF0tWX8+7eQqtE+IuYMK6WRr9e6xXDxg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=jX2LeuKI9+jHOQ0+b//c8/ks0TC3OzRYurnIUiXGyYZe9y3NCn4PxIIkE/VXbsqfG9
-         r2STRfXcfjdX0o+Pt+m1zuuWvhsPaWcwhRgudvvADV0iAGYS/qFccEZMdhn9HgfaLHZE
-         2s62iIrfX5lci0dSJg7Gm/jC3kAjuWnCsP9VU=
-Received: by 10.204.114.144 with SMTP id e16mr2881721bkq.119.1301784359342;
- Sat, 02 Apr 2011 15:45:59 -0700 (PDT)
-Received: by 10.204.55.71 with HTTP; Sat, 2 Apr 2011 15:45:58 -0700 (PDT)
-In-Reply-To: <BANLkTinEweaD=6tNZ+52NziCFL1MvNL=qA@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=QCXMKhB7or8a8nsxZmP0f+qtKmJqvYMyZV0ifgcCFemNqRj4A5irFE7n/7L0axBqdd
+         cdxj5TYQjUhJmXmdV/B7Ki6fBwd7HgvPOgy+HQQXg+jeV7iEfLNUTxHkxL8A4lQLGO0Y
+         dED68cHEAr+JXfWRHrpRjf61UlFJWxbBVtRYQ=
+Received: by 10.43.57.131 with SMTP id wg3mr2055437icb.299.1301784654358;
+        Sat, 02 Apr 2011 15:50:54 -0700 (PDT)
+Received: from elie (adsl-68-255-107-98.dsl.chcgil.ameritech.net [68.255.107.98])
+        by mx.google.com with ESMTPS id wu1sm2297465icb.10.2011.04.02.15.50.51
+        (version=SSLv3 cipher=OTHER);
+        Sat, 02 Apr 2011 15:50:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1jxqbmc.vc0luayavmrkM%lists@haller-berlin.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170665>
 
-On Saturday, April 2, 2011, Frederic JECKER <frederic.jecker@gmail.com> wrote:
-> Sorry for posting here.. just found that there was also a git-users
-> mailing list.
-> Please ignore my post
+Hi Stefan,
 
-This is the right place.
+Stefan Haller wrote:
 
-Git-users is something just something extra.
+> In the current master (and 1.7.4), tab completion for refs doesn't work
+> in zsh.  When typing "git log orig<TAB>", nothing appears.
+
+Sorry for the long silence.  Indeed, it seems that I broke this in
+da48616f1d (bash: get --pretty=m<tab> completion to work with bash v4,
+2010-12-02).  No fix yet.
+
+Here's the puzzle: _git calls _get_comp_words_by_ref to fill the local
+array "${words[@]}".  It doesn't succeed.  Within _get_comp_words_by_ref,
+${words[@]} gets filled correctly, but within _git, it keeps the value it
+previously had.
+
+Alas, that's as far as I can get without learning something about zsh. :)
+I can't reproduce it when defining functions like this directly, so
+there might be something subtle going on.
+
+Hints?
+
+Thanks for noticing.
+Jonathan
