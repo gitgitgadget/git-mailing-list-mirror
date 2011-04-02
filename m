@@ -1,110 +1,125 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 1/2] index-pack: Create .keep files with same permissions
- and .pack/.idx
-Date: Sat, 02 Apr 2011 01:37:28 +0200
-Message-ID: <201104020137.28951.johan@herland.net>
-References: <201103311246.25645.johan@herland.net>
- <7v1v1lfy7q.fsf@alter.siamese.dyndns.org>
- <AANLkTimMJxni=Vuja+iHyMp8ydm7ZBvWnkSe68g6+pyH@mail.gmail.com>
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: Re: [PATCH 2/2] blame: honor core.abbrev
+Date: Sat, 02 Apr 2011 10:37:08 +0900
+Message-ID: <1301708228.1507.34.camel@leonhard>
+References: <1301622896-5836-1-git-send-email-namhyung@gmail.com>
+	 <1301622896-5836-2-git-send-email-namhyung@gmail.com>
+	 <7vbp0pegmb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Apr 02 01:37:49 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 02 03:37:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5nuV-0006Ip-Cy
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 01:37:47 +0200
+	id 1Q5pmG-0005Xq-Oj
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 03:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716Ab1DAXhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 19:37:31 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:54409 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751012Ab1DAXhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 19:37:31 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LIZ000ETYYIWO80@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 02 Apr 2011 01:37:30 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id E3D171EA597B_D9661B9B	for <git@vger.kernel.org>; Fri,
- 01 Apr 2011 23:37:29 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id D00651EA3FB9_D9661B9F	for <git@vger.kernel.org>; Fri,
- 01 Apr 2011 23:37:29 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LIZ00HH3YYHKT00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 02 Apr 2011 01:37:29 +0200 (MEST)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.1; x86_64; ; )
-In-reply-to: <AANLkTimMJxni=Vuja+iHyMp8ydm7ZBvWnkSe68g6+pyH@mail.gmail.com>
+	id S1751779Ab1DBBhQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2011 21:37:16 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45921 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751438Ab1DBBhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2011 21:37:14 -0400
+Received: by iwn34 with SMTP id 34so4052673iwn.19
+        for <git@vger.kernel.org>; Fri, 01 Apr 2011 18:37:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
+         :content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=18wM8tokeBoGTijWl1XMUTEpybxJpY8H14KIJP+EwHk=;
+        b=ktM7VdwWvU7YhnAypr0ng/rqyVPE5Vzuwp8mAmLftKPgiwQwWxphcpM+4Vw1p8hhru
+         vBIIJFyGbvMcFssQBQshzL5fjUd/YNGyXX6WiPsKm/05IU5XBvrqj+mcsjO0YsM7QpFf
+         MP4/qWLu23OC4nXY678ZlXCVnZ8KS5vl2ZNJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=UMXa+Z8M+yfP3oJCwdsIk0iAAqcJ8loOLYZEoUE/UQvxR/WaJtKFRLLXneXNNdwRoa
+         COFrkx8Wqh9dRR3hNc/+BNvKYUHD43Dk2spQIDQUfjeFgSBfN0lMsZ/jj+57YOcFPkx3
+         utYrKv3urZFvGNfizMBHsFtFl97r86A5RKhZc=
+Received: by 10.43.69.197 with SMTP id yd5mr3358408icb.362.1301708234259;
+        Fri, 01 Apr 2011 18:37:14 -0700 (PDT)
+Received: from [118.176.76.239] ([118.176.76.239])
+        by mx.google.com with ESMTPS id i20sm1818862iby.48.2011.04.01.18.37.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 01 Apr 2011 18:37:13 -0700 (PDT)
+In-Reply-To: <7vbp0pegmb.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170637>
 
-On Friday 01 April 2011, Shawn Pearce wrote:
-> The only problem is a cpio based clone, which may link the objects
-> directory before the refs, and miss linking the new pack but wind up
-> linking the new ref, making the clone corrupt. But that is a bug in
-> the cpio clone implementation. Using file:// to use the classical pipe
-> is safe here, because the refs are scanned before the objects are.
-> IMHO, if you think clone during push is unsafe because of this, we
-> should fix the cpio clone path to do a `git ls-remote` on the source,
-> cache the refs in memory, copy the objects, then write out a
-> packed-refs file containing the refs we snapshotted *before* linking
-> the objects directory into the new clone.
+Hello, Junio-san.
 
-Looking at clone_local() in builtin/clone.c (which I guess is the
-culprit here), wouldn't we fix this simply by swapping the two parts
-of the function, so that the refs part is done before the objects
-part? Like this:
+2011-04-01 (=EA=B8=88), 15:44 -0700, Junio C Hamano:
+> Namhyung Kim <namhyung@gmail.com> writes:
+>=20
+> > If user sets config.abbrev option, use it as if --abbrev was given.
+> > We can't set abbrev to default_abbrev unconditionally IMHO, because
+> > historically default abbrev length of the blame command is 8 and
+> > DEFAULT_ABBREV is 7.
+>=20
+> Isn't the one-letter difference because we sometimes need to show the
+> boundary commit with a caret at the beginning?
+>=20
 
-
-static const struct ref *clone_local(const char *src_repo,
-				     const char *dest_repo)
-{
-	const struct ref *ret;
-	struct strbuf src = STRBUF_INIT;
-	struct strbuf dest = STRBUF_INIT;
-	struct remote *remote;
-	struct transport *transport;
-
-	remote = remote_get(src_repo);
-	transport = transport_get(remote, src_repo);
-	ret = transport_get_remote_refs(transport);
-	transport_disconnect(transport);
-
-	if (option_shared)
-		add_to_alternates_file(src_repo);
-	else {
-		strbuf_addf(&src, "%s/objects", src_repo);
-		strbuf_addf(&dest, "%s/objects", dest_repo);
-		copy_or_link_directory(&src, &dest);
-		strbuf_release(&src);
-		strbuf_release(&dest);
-	}
-
-	if (0 <= option_verbosity)
-		printf("done.\n");
-	return ret;
-}
+Yeah, I guessed so.
 
 
-Have fun! :)
+> I think the way this patch initializes orig_abbrev using DEFAULT_ABBR=
+EV is
+> wrong (at that point, I don't think you have called git_config() to g=
+et
+> the user config for DEFAULT_ABBREV).
+>=20
 
-...Johan
+My intention was that I want to check whether the user sets the option
+or not and apply the value only if it is set (ig. different from "7").
+Please see below.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+
+> See the patch to describe.c in dce9648 (Make the default abbrev lengt=
+h
+> configurable, 2010-10-28) for the right way to do this.
+>=20
+>  - initialize the variable to -1;
+>  - call git_config() to get correct value in DEFAULT_ABBREV;
+>  - call parse_options() to potentially update the variable; then
+>  - if variable is still -1, assign DEFAULT_ABBREV to it.
+>=20
+> After all that, add 1 to it to account for the possible boundary care=
+t.
+>=20
+
+I saw the patch already, and, yes, it would be a simple and probably th=
+e
+right way to do. But it could give a bit of confusion to the users IMHO=
+=2E
+Say, A user specify --abbbrev=3D10 then he/she might expect 10 hexdigit=
+s
+in the output but actually [s]he will get 11.
+
+So I decided to use the number as is, not adding 1. And this would be a
+constant behavior from the patch 1/2 and all other git command which us=
+e
+--abbrev option, I guess. But I kept to use 8 in case the user doesn't
+give the config or command-line option, just for backward compatibility=
+=2E
+
+I'm not sure this is really a concern. Maybe we can give them 11 as you
+said and document the behavior in the manual page.
+
+Thanks.
+
+
+--=20
+Regards,
+Namhyung Kim
