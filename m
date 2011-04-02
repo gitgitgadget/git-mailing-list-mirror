@@ -1,89 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] fast-import: use struct hash_table for atom strings
-Date: Fri, 1 Apr 2011 22:33:21 -0500
-Message-ID: <20110402033321.GA7023@elie>
-References: <1301572798-9973-1-git-send-email-david.barr@cordelta.com>
- <1301572798-9973-2-git-send-email-david.barr@cordelta.com>
- <20110402024209.GA6039@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] index-pack: Create .keep files with same permissions
+ and .pack/.idx
+Date: Fri, 01 Apr 2011 21:21:31 -0700
+Message-ID: <7v39m1e110.fsf@alter.siamese.dyndns.org>
+References: <201103311246.25645.johan@herland.net>
+ <AANLkTimMJxni=Vuja+iHyMp8ydm7ZBvWnkSe68g6+pyH@mail.gmail.com>
+ <7vk4fdehps.fsf@alter.siamese.dyndns.org>
+ <201104020127.41774.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Sat Apr 02 05:33:40 2011
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
+	Jeff King <peff@peff.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Apr 02 06:22:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q5rai-0007cf-KZ
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 05:33:37 +0200
+	id 1Q5sLh-0005Lm-Iy
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Apr 2011 06:22:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068Ab1DBDd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2011 23:33:29 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63882 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751393Ab1DBDd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2011 23:33:28 -0400
-Received: by iyb14 with SMTP id 14so4119751iyb.19
-        for <git@vger.kernel.org>; Fri, 01 Apr 2011 20:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=bUmCd7ukCwe5HzQ3HQlJfX6wYysUEIEPBvDkQ4JBuyM=;
-        b=bX0AaAeTm2rPJHi+nrDM4tdMyauAuPYjfeiZ0iw/rUW4uwp62KdXphXsJpQ2BD0MP4
-         S51enZCvSYwUJW8GB5GiNvFpykN/9PVZMAJ3K5AErr/aJwTlWSF/UAau91XwLZYmYnAL
-         tE6AtQKE7f8FFR53mkNLxNHJi7bCbnb55m93I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=v6g6d52eqWtKKvdhtCFhpkEMRwegwDdD2OXDY48141b5U9zy6bESdNaMbykuxDV6Mw
-         xseoJSSCmmTEaahpAIQDsXiEYNsp2Nd7mvnupgS+VVZ3HyJCAEeHH8Zs33mqCJ/Jlj5Z
-         giZrN6ah1599+pyW8Wofb7ut9MX5MHXXJSjks=
-Received: by 10.231.193.68 with SMTP id dt4mr4582689ibb.123.1301715208131;
-        Fri, 01 Apr 2011 20:33:28 -0700 (PDT)
-Received: from elie (adsl-68-255-107-98.dsl.chcgil.ameritech.net [68.255.107.98])
-        by mx.google.com with ESMTPS id i26sm1881911iby.7.2011.04.01.20.33.24
-        (version=SSLv3 cipher=OTHER);
-        Fri, 01 Apr 2011 20:33:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110402024209.GA6039@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750756Ab1DBEVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2011 00:21:51 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50216 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750751Ab1DBEVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2011 00:21:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B44FA4775;
+	Sat,  2 Apr 2011 00:23:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DaqKc5tgisnMOhQPTjZpzrtSF0g=; b=Rcs+Cd
+	wmjecIS5mmXRA109H5ifnEkNLKQYV7wUL5kpjKyQfba/ryI5mJB4CySFBzcp9CNE
+	jP0aidrlpj6lalkfapuWfvdUQ+Vp68lc1vogaaLokCAeXTqwoLg4SofA1OCjgyzo
+	pXqRIUEd4+HUenGy1TlgUI3fjjL/a56LoUCGY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AAVjacpCJkl63UVK7SyAb4+baNj5f4Dl
+	2miKBwFOVbzlOd8IIyCAVHB0XJQKwj4+qaovvsA8QXCYoN8rP0RMyGTpdUnn2KQN
+	CwViyCCJLMkB4dB8WbgAG/rUHPR0TLrwTWndU5YEojWT2OPezWNrRpxE8FzewgmT
+	wtW545SfVMc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 73C5F4774;
+	Sat,  2 Apr 2011 00:23:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0E06D4773; Sat,  2 Apr 2011
+ 00:23:22 -0400 (EDT)
+In-Reply-To: <201104020127.41774.johan@herland.net> (Johan Herland's message
+ of "Sat, 02 Apr 2011 01:27:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F598BFB0-5CE0-11E0-88E5-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170642>
 
-Jonathan Nieder wrote:
+Johan Herland <johan@herland.net> writes:
 
->> @@ -691,8 +691,12 @@ static struct atom_str *to_atom(const char *s, unsigned short len)
->>  	c->str_len = len;
->>  	strncpy(c->str_dat, s, len);
->>  	c->str_dat[len] = 0;
->> -	c->next_atom = atom_table[hc];
->> -	atom_table[hc] = c;
->> +	c->next_atom = NULL;
->> +	pos = insert_hash(hc, c, &atom_table);
->> +	if (pos) {
->> +		c->next_atom = *pos;
->> +		*pos = c;
->> +	}
->
-> If I understand correctly, this puts new atoms at the start of the
-> chain, just like v1.7.4-rc0~40^2 (fast-import: insert new object
-> entries at start of hash bucket, 2010-11-23) did for objects.  Did you
-> measure and find this faster, or is it just for simplicity or
-> consistency?  (I'd personally be fine with it either way, but it seems
-> prudent to ask.)
+> Hmpf. I didn't know that clone --local --no-hardlinks was unsafe. If it's 
+> not safe, should it still be the default behavior for a cross-filesystem 
+> clone?
 
-Agh.  Too-quick reading on my part (or rather, I lazily made an
-assumption and didn't pay much attention to the old code at all).  I
-have no reason to believe inserting at the end of the bucket would be
-better, and it would certainly be more complex.
+Unsafe is not quite the right word to use here in the sense that it
+wouldn't lead to any repository _corruption_ per-se, but if you ended up
+copying such a transient .keep file, the pack will stay forever in your
+clone target unless you notice and remove it yourself.
 
-Sorry, folks.  Don't mind me.
+Having said that, I expect that the majority of use of a filesystem level
+local clone these days is to clone your own repository, likely on your own
+machine, and you have absolute control on both ends (e.g. you wouldn't be
+running a repack on the source while running a clone---you would more
+likely to see the repack finish and then clone).  So in that sense I would
+still think that file level clone being the default on a local machine is
+a reasonable default.
+
+> While pushing to a remote repo, Git transiently adds a .keep file for the
+> pack being pushed, to protect it from a concurrent "git gc". Sometimes, when 
+> the push fails or is aborted, the .keep file is left stale in the repo. This 
+> causes problems for other users of the same repo, since the permissions on 
+> the .keep file (0600) make it inaccessible even though the rest of the repo 
+> is accessible (0444 modulo shared_repository setting).
+
+I was also wondering why you initialized with 0444 in your patch and then
+even adjusted for shared repository settings.
+
+This is a tangent, but wouldn't it be wrong for index-pack to always leave
+the idx and pack files in 0444 with an explicit chmod() in the first
+place?  I suspect that we simply forgot to fix it when we introduced
+adjust_shared_perm().
