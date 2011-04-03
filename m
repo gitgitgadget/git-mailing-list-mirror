@@ -1,158 +1,86 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC 1/2] git-sh-i18n--envsubst: our own envsubst(1) for eval_gettext()
-Date: Sun, 3 Apr 2011 17:25:13 +0200
-Message-ID: <BANLkTikf0s=tyGSnmgf1zmRAe3WnzB4JUA@mail.gmail.com>
-References: <1299019777-19033-1-git-send-email-avarab@gmail.com>
-	<1299019777-19033-2-git-send-email-avarab@gmail.com>
-	<7vpqq99i11.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: GSOC 11: Minimal git based client based on libgit2
+Date: Sun, 3 Apr 2011 21:05:18 +0530
+Message-ID: <20110403153515.GB1480@kytes>
+References: <AANLkTima7ezW+jFJKTKFmOvbibTkayaopF-NifKRQbp5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 17:25:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: libgit2@librelist.org, git@vger.kernel.org, peff@peff.net,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Sarath Lakshman <sarathlakshman@slynux.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 17:36:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6PB6-0007qA-DM
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 17:25:24 +0200
+	id 1Q6PM3-0003Ko-Vb
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 17:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543Ab1DCPZQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 11:25:16 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61004 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599Ab1DCPZP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Apr 2011 11:25:15 -0400
-Received: by fxm17 with SMTP id 17so3451836fxm.19
-        for <git@vger.kernel.org>; Sun, 03 Apr 2011 08:25:14 -0700 (PDT)
+	id S1752457Ab1DCPgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 11:36:33 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61374 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751048Ab1DCPgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 11:36:32 -0400
+Received: by iwn34 with SMTP id 34so5017969iwn.19
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 08:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=c8Cs7RzNtCE+/17dhk8KJReknQTyOEAl9PVz5GjTCJ0=;
-        b=hZ0yS5h2lz175dY3NOPS6ofnMw1gkxuH9uymNOYRX12o7Jc8MghzM4w74uoV2PRpYd
-         RSOMTuMWT5cJGWzBkm9mibxxnCKhky0VJ1YoH79wPXUeTqTPHIHmPmGTchNOx4hXQ6do
-         zeO7P41QB6HS9SeIcEFlfkoK+TOpCosNZvIxE=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=j0KbQTHgajud43Gr8svjKxEfJGe4YcdKUdkhKVbArrA=;
+        b=ZnV0onMrmeP8i/xijZr+jD6qOkZT8WbO8PCqUmoxN00zsUl72MbkVBF0QT3UARg+Cu
+         fWR+dYzqUyDgUcbbOPeuL2nqYxfrTSbpT/+6FMyqEjk5BluxSNc+E7jAl/IvXYIMH56L
+         npf4y04YdNWFEYpwm5LRF8IHDeWHc0x6kZvXM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tZcELIqqR1PSw1+BP4CaE4MGFLAerrUe6eckeAwFwUwNUhQHO1cjFP6mWpw57JbT4g
-         9q95kUZ1QvIDspaI/mK1yyTUCQ/6XlkEUd/BZaB0GcN2aaQ6K2qUUbt4wn88BbReNoKD
-         qRwTy9ZJkO2vf03CxgvgSxeMHJ9gK6T4dy7+o=
-Received: by 10.223.6.11 with SMTP id 11mr3202410fax.103.1301844314042; Sun,
- 03 Apr 2011 08:25:14 -0700 (PDT)
-Received: by 10.223.93.196 with HTTP; Sun, 3 Apr 2011 08:25:13 -0700 (PDT)
-In-Reply-To: <7vpqq99i11.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=SnQN7HIKNaM3t0+mJ2ZBADVy5MNbk/Q3YFMAru033fhZh7fF89vEMrlTl/A9wm1cKY
+         XtRRVQh9T5TkI7R3SKwX708dPzkriOAOevEezViylGssPg4vtt96/MXAbrGwENvbgj23
+         tvs9r1BJ0eBFU78ez0dY+hJLKM9UU0HBzFIxs=
+Received: by 10.231.39.135 with SMTP id g7mr6036306ibe.173.1301844991779;
+        Sun, 03 Apr 2011 08:36:31 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id hc41sm3051995ibb.64.2011.04.03.08.36.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 03 Apr 2011 08:36:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTima7ezW+jFJKTKFmOvbibTkayaopF-NifKRQbp5@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170699>
 
-On Thu, Mar 3, 2011 at 01:14, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
-s:
->
->> In a previous incarnation of the gettext series I implemented the
->> eval_gettext() fallback like this:
->>
->> =C2=A0 =C2=A0 eval_gettext() {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 gettext_out=3D$(gettext "$1")
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 gettext_eval=3D"printf '%s' \"$gettext_o=
-ut\""
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 printf "%s" "`eval \"$gettext_eval\"`"
->> =C2=A0 =C2=A0 }
->>
->> This was clever, but would incorrectly handle cases where the variab=
-le
->> being interpolated contained spaces. E.g.:
->>
->> =C2=A0 =C2=A0 cmd=3D"git foo"; eval_gettext "command: \$cmd"
->>
->> Would emit "command: gitfoo", instead of the correct "command: git
->> foo".
->
-> Hmm, are you sure you got your quoting right?
->
-> =C2=A0 =C2=A0$ cat >1.sh <<\EOF
-> =C2=A0 =C2=A0#!/bin/sh
-> =C2=A0 =C2=A0gettext () {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case "$1" in
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0'command: $cmd') echo 'dcomm=
-an: $cmd' ;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*) echo "GETTEXT POISON" ;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0esac
-> =C2=A0 =C2=A0}
->
-> =C2=A0 =C2=A0eval_gettext() {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gettext_out=3D$(gettext "$1"=
-) &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gettext_eval=3D"printf '%s' =
-\"$gettext_out\"" &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gettext_cmd=3D$(eval "$gette=
-xt_eval") &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0printf "%s" "$gettext_cmd"
-> =C2=A0 =C2=A0}
->
-> =C2=A0 =C2=A0cmd=3D"git foo"
-> =C2=A0 =C2=A0eval_gettext "command: \$cmd"
-> =C2=A0 =C2=A0EOF
-> =C2=A0 =C2=A0$ sh -x 1.sh
-> =C2=A0 =C2=A0+ cmd=3D'git foo'
-> =C2=A0 =C2=A0+ eval_gettext 'command: $cmd'
-> =C2=A0 =C2=A0++ gettext 'command: $cmd'
-> =C2=A0 =C2=A0++ case "$1" in
-> =C2=A0 =C2=A0++ echo 'dcomman: $cmd'
-> =C2=A0 =C2=A0+ gettext_out=3D'dcomman: $cmd'
-> =C2=A0 =C2=A0+ gettext_eval=3D'printf '\''%s'\'' "dcomman: $cmd"'
-> =C2=A0 =C2=A0++ eval 'printf '\''%s'\'' "dcomman: $cmd"'
-> =C2=A0 =C2=A0+++ printf %s 'dcomman: git foo'
-> =C2=A0 =C2=A0+ gettext_cmd=3D'dcomman: git foo'
-> =C2=A0 =C2=A0+ printf %s 'dcomman: git foo'
-> =C2=A0 =C2=A0dcomman: git foo
->
-> Am I grossly missing something from what you are trying to do here?
+Hi Sarath,
 
-(CC-ing the list again, so there's a record of this in the mail
-archive).
+Sarath Lakshman writes:
+> I am an undergraduate student from India who wants to contribute to
+> libgit2 during GSOC. I have worked with Fedora and Pardus during GSOC
+> 2008, 2009 and 2010.
 
-Your eval_gettext() is better, but it still fails in cases where the
-string contains "'s. E.g.:
+Thanks for writing.  Sorry about the late response.
 
-    test_expect_success C_LOCALE_OUTPUT 'eval_gettext: our
-eval_gettext() fallback can interpolate variables with spaces in them'
-'
-        cmdline=3D"git am" &&
-        export cmdline;
-        printf "When you have resolved this problem run \"git am
---resolved\"." >expect &&
-        eval_gettext "When you have resolved this problem run
-\"\$cmdline --resolved\"." >actual
-        test_cmp expect actual
-    '
+> I am interested to work on libgit2 based minimal git client. I have
+> built the libgit2 from source and tried to write basic git tasks. I
+> have written a lot of python code in the past and now I look for
+> writing good C code. Definitely, writing a git client based on libgit2
+> seems interesting.
 
-If this were just:
+A lot of students are interested in this project.  Please browse
+through the mailing list archives to see what the others have said --
+Jonathan's response will probably be helpful [1].  Additionally,
+please consider submitting more than one proposal to maximize your
+changes.
 
-    test_expect_success C_LOCALE_OUTPUT 'eval_gettext: our
-eval_gettext() fallback can interpolate variables with spaces in them'
-'
-        cmdline=3D"git am" &&
-        export cmdline;
-        printf "When you have resolved this problem run git am
---resolved." >expect &&
-        eval_gettext "When you have resolved this problem run
-\$cmdline --resolved." >actual
-        test_cmp expect actual
-    '
+Next steps: Post a concrete proposal to the list for feedback/
+discussion.  You can make your application stronger by showing us some
+code.
 
-Your version would work.
+[1]: http://article.gmane.org/gmane.comp.version-control.git/170094
 
-Maybe there's some portable version of doing this that works with
-variables with spaces mixed with quotes. But unless someone can point
-it out I'll submit a series with git-sh-i18n--envsubst and tests
-demonstrating why it's needed soon.q
+-- Ram
