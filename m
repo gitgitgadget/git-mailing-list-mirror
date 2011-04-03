@@ -1,73 +1,86 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
-Date: Wed, 06 Apr 2011 15:12:53 +0200
-Message-ID: <4D9C66D5.8070103@drmicha.warpmail.net>
-References: <4D9B310A.9020203@mit.edu> <1302034509-8842-1-git-send-email-asedeno@mit.edu> <4D9B7A9E.6040902@mit.edu> <4D9C6262.2080408@drmicha.warpmail.net> <4D9C64ED.4030900@mit.edu>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Git enterprise setup on a large project
+Date: Sun, 3 Apr 2011 20:31:15 +0200
+Message-ID: <20110403183115.GA28901@nibiru.local>
+References: <BANLkTikv4h3GBGB+hTHjJyAqwEmqZETyEg@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	James Y Knight <jknight@itasoftware.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg==?= <asedeno@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Apr 06 15:16:35 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 06 16:00:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Sb4-00079S-Nn
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 15:16:35 +0200
+	id 1Q7THM-0005GO-MQ
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 16:00:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756053Ab1DFNQ3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 09:16:29 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:42553 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754743Ab1DFNQ2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 09:16:28 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7D047204F9;
-	Wed,  6 Apr 2011 09:16:28 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 06 Apr 2011 09:16:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Q51e2BABfwoOm2e04de2kr26Sg4=; b=RBdFgkLP0TyzY3sJOkVJhGxbRaMN7le3SPs1gZMZRci9HwNlmV2TW2yhQOGxlLm2njoHmhieXCuS/SFd21PMoHpn7nV9H/xB802Bn15m5HwTxpYDvOWZvnBmOts7Ns7fVL9uj77E5woaqa15QHhOSOsR5sRtA+C0Eg/hHAd9t4w=
-X-Sasl-enc: qYWeXK2S5iuCe6Vd0ARwRq0Gdbh2piMSIJLtuL1EEm+u 1302095788
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8E434408D5E;
-	Wed,  6 Apr 2011 09:16:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <4D9C64ED.4030900@mit.edu>
+	id S1756138Ab1DFOAJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 10:00:09 -0400
+Received: from caprica.metux.de ([82.165.128.25]:58836 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756164Ab1DFOAH convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 10:00:07 -0400
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p36Ds7ue018842
+	for <git@vger.kernel.org>; Wed, 6 Apr 2011 15:58:16 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p36Ca3GH006454
+	for git@vger.kernel.org; Wed, 6 Apr 2011 14:36:03 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p33IVFlL006470
+	for git@vger.kernel.org; Sun, 3 Apr 2011 20:31:15 +0200
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <BANLkTikv4h3GBGB+hTHjJyAqwEmqZETyEg@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170976>
 
-"Alejandro R. Sede=C3=B1o" venit, vidit, dixit 06.04.2011 15:04:
-> On 4/6/2011 8:53 AM, Michael J Gruber wrote:
->>>> So I'm continuing to look into that. Perhaps it makes sense to use=
- pushurl
->>>> for both src and dst when branching?
->> For branching, yes. This is just the following in disguise:
->>
->> http://permalink.gmane.org/gmane.comp.version-control.git/135577
->>
->> "svn cp" between 2 URLs simply requires they're within the same repo=
-=2E
->=20
-> Yeah, I understand that. The purpose of that email was to make sure t=
-hat
-> the patch was not committed as is, and it was hastily written because=
- I
-> was practically out the door at the time.
+* Frederic JECKER <frederic.jecker@gmail.com> wrote:
 
-Long arms or small room? ;)
+> What could I do then ?
+> - Use submodules ?
+> - Create a blessed per-project repository and instead of a public
+> repository for each=A0developer=A0create a per-project public and sha=
+red
+> repository ?
+> ...I'm a bit lost
 
->=20
-> Thanks for the pointer though.
->=20
-> I'll be sending an updated patch in a few hours.
+Just think about who has to see whose commits ?
 
-Thanks!
+I guess, each project's codebase is accessed by a relatively
+small number of people. So it IMHO would be natural to give
+each project a separate (blessed) repository. The project
+leader will merge (or cherry-pick) the blessed changes here,
+and other merge-down or better rebase from there.
 
-Michael
+If there's some big mainline (the base for many other projects),
+it should live in its own repository. BTW: you dont have to use
+full clones - you could also fetch individual refs if you like.
+
+Individual WIP branches probably dont necessarily need to be pushed
+into the central project repos - devs could sync each other
+selectively.
+
+
+cu
+--=20
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
