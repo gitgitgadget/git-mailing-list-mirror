@@ -1,78 +1,84 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH maint resend] compat: add missing #include
- <sys/resource.h>
-Date: Sun, 3 Apr 2011 14:13:25 -0500
-Message-ID: <20110403191324.GE3830@elie>
-References: <1300271879-2050-1-git-send-email-stsp@stsp.name>
- <20110318202351.GA22696@elie>
- <20110331225909.GA21429@elie>
+Subject: Re: [PATCH] git.el: Don't use font-lock-compile-keywords
+Date: Sun, 3 Apr 2011 14:25:15 -0500
+Message-ID: <20110403192515.GF3830@elie>
+References: <m3oc501rja.fsf@e4300lm.epcc.ed.ac.uk>
+ <20110403001902.GA25671@elie>
+ <87ei5j2prc.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Stefan Sperling <stsp@stsp.name>,
-	Arnaud Lacombe <lacombar@gmail.com>
+Cc: Alexandre Julliard <julliard@winehq.org>,
+	Lawrence Mitchell <wence@gmx.li>, git@vger.kernel.org,
+	David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
+	Kevin Ryde <user42@zip.com.au>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 21:13:36 2011
+X-From: git-owner@vger.kernel.org Sun Apr 03 21:25:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6Sjv-0007gP-QJ
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:13:36 +0200
+	id 1Q6SvN-0003bF-SG
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117Ab1DCTNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 15:13:31 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62662 "EHLO
+	id S1753210Ab1DCTZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 15:25:21 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:41261 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752235Ab1DCTNa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 15:13:30 -0400
-Received: by iwn34 with SMTP id 34so5129082iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Apr 2011 12:13:29 -0700 (PDT)
+	with ESMTP id S1752748Ab1DCTZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 15:25:20 -0400
+Received: by iwn34 with SMTP id 34so5134876iwn.19
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 12:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=P6EV8Aq5BDlK01ur0nvuwkxKF8FkwJ0Z6fOIgEVkBNg=;
-        b=DzEW7f7i9w0ylDYbsRCy+/0cbokhmS++N2idoo26eNC+iEmYl4Zdi8n/1Ffdn+IedJ
-         Vr+xPcZHcvq+5s7ytk/Dlel7o2k3yth2Njr0kH2ouQB1UZBP3nUYNupDn+yNhsxeUlgu
-         HON+HF6fSLcnppGsVE8SDXHmh/XsXCX2qxoSw=
+        bh=CBsnT/fNRhtga+lZ0nil2FBOT1O/1o3K8hNah+J3tvE=;
+        b=KswE3s8sL2tGixmxUkOneCpx464Qjd0gxNmrTTgDezha0SY91cVy0miOAdxoiwchpr
+         hrba9SMPRv8pU9qhBxao4ITpIk1S1n/L1iyugIvlS6A+7YoT1B62GGpPoD674agWTVJY
+         6AHVEj1N10s4UWxjbvTpLaym+O99sJwqQJXH0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=ujhFqR4QKy6jUD5QmJ4y5ax2WUJGz1w2/5nUr4HJWXWWRIW44wW7/FZp4da0qAw50M
-         5a5tgZ5mdNzgTTF2AOcz1i1nY0rXsduRzY6HF7c20Pl2tDlRR9JDQ9cPb1LHFAGfbopP
-         dhNWBZ5RvhVGm31Ba0HgljrKJqXLq5HR4J7zY=
-Received: by 10.42.151.131 with SMTP id e3mr9536026icw.157.1301858009647;
-        Sun, 03 Apr 2011 12:13:29 -0700 (PDT)
+        b=uZNrRp1zq8T+d4FzJmyhXr0Rq0sYCWsBV3JXYdH8enYjMGH9C25dTRwyPkRBUVjQ5d
+         /9SvPJcWjZaE/rKX0U+ywo81IhcRj6gtdVz64LzovK7nQMAYsyQAAmk7B2ANjbojCGL6
+         nbc/yfSHu02gA3oaKMi8AWxJr4da0GFc9GR+4=
+Received: by 10.43.54.210 with SMTP id vv18mr2329688icb.103.1301858719576;
+        Sun, 03 Apr 2011 12:25:19 -0700 (PDT)
 Received: from elie (adsl-69-209-53-77.dsl.chcgil.sbcglobal.net [69.209.53.77])
-        by mx.google.com with ESMTPS id g16sm3167665ibb.20.2011.04.03.12.13.27
+        by mx.google.com with ESMTPS id wu1sm2938622icb.22.2011.04.03.12.25.17
         (version=SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2011 12:13:28 -0700 (PDT)
+        Sun, 03 Apr 2011 12:25:18 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110331225909.GA21429@elie>
+In-Reply-To: <87ei5j2prc.fsf@wine.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170776>
 
-Hi Junio,
+Alexandre Julliard wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Jonathan Nieder wrote:
+>>> So here it is
+>>> again.  The originally proposed patch from Debian is to use
+>>> font-lock-add-keywords rather than font-lock-compile-keywords.
+>>> However, it doesn't exist in XEmacs, if one is looking to
+>>> maintain compatibility, I believe this patch is the right thing
+>>> to do.
+>>>
+>>>  contrib/emacs/git.el |   13 ++++++++++---
+>>>  1 files changed, 10 insertions(+), 3 deletions(-)
+>>
+>> Leaving patch unsnipped for reviewers' sake.
+>
+> Looks good to me.
 
-> Date: Fri, 18 Mar 2011 15:23:52 -0500
-[...]
->  sha1_file.c:721: error: 'RLIMIT_NOFILE' undeclared (first use in this function)
-[...]
-> Reported-by: Stefan Sperling <stsp@stsp.name>
-> Tested-by: Stefan Sperling <stsp@stsp.name> [on OpenBSD]
-> Tested-by: Arnaud Lacombe <lacombar@gmail.com> [on FreeBSD 8]
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Just cc-ing Junio so he can see your ack.
 
-Ping?  Would you like a shorter commit message, or was this just lost
-in the noise?
+Junio, the patch up-thread fixes a bug reported by
+Kevin Ryde <user42@zip.com.au>.  I'm not knowledgeable enough to see
+what the impact is, but the emacs experts seem to like it.
