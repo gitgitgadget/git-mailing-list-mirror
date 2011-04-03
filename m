@@ -1,107 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git diff -D: omit the preimage of deletes
-Date: Sat, 02 Apr 2011 23:38:56 -0700
-Message-ID: <7vpqp3g7pb.fsf@alter.siamese.dyndns.org>
-References: <7v62qzhqp4.fsf@alter.siamese.dyndns.org>
- <b6975fdc80a338e47c1426e8bf8450b68130b84a.1301664623.git.git@drmicha.warpmail.net> <7vbp0pg4d7.fsf@alter.siamese.dyndns.org> <7vtyefg8fi.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun Apr 03 08:39:17 2011
+From: Timothy Chen <tnachen@gmail.com>
+Subject: [PATCH] Allow multiple merges to invalid HEAD
+Date: Sat,  2 Apr 2011 23:46:56 -0700
+Message-ID: <1301813216-19507-1-git-send-email-tnachen@gmail.com>
+Cc: Timothy Chen <tnachen@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 03 08:47:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6Gxx-00024D-AK
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 08:39:17 +0200
+	id 1Q6H5o-0004NY-W3
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 08:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781Ab1DCGjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 02:39:07 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62895 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636Ab1DCGjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 02:39:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9BC226F8;
-	Sun,  3 Apr 2011 02:40:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lMCsRvSP66UZNYQa3tnQpBhZEsc=; b=xBaiKD
-	+b6wgzQPLnh+NqAEXHl8yPw02BN1nJioeM2fXUlkpiMUJR+6uVgvH9aHW3qayp4g
-	y6y4hNyLPriq4jzHtqWE8IG/CI3Kp7+7z8pPk+JxzL7zGM3nIxaBcmbWAZ8sWnl/
-	FfAbTRCYCD/Ht/zlAKAWp+XHoge9bP/digUaA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qXHovn87MpfEPjJKc2+e4SGTcOvGgb7J
-	bdHCs+C0kgJsC6fC4hBym9uITxb9icqH8WDHhFHsJW1uvC8wfmdog4TnYpxG2wu8
-	kCKQzl4iEnR04tmOcdOjnpltYmTdLv1wWS3wiP7qkEhtE9cFg7wiMPvLqVhwejX9
-	L0L6XGK3GHU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C876426F7;
-	Sun,  3 Apr 2011 02:40:52 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CFEB326F6; Sun,  3 Apr 2011
- 02:40:49 -0400 (EDT)
-In-Reply-To: <7vtyefg8fi.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 02 Apr 2011 23:23:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 52059016-5DBD-11E0-BF81-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751802Ab1DCGrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 02:47:06 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:53476 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751561Ab1DCGrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 02:47:04 -0400
+Received: by iyb14 with SMTP id 14so4924003iyb.19
+        for <git@vger.kernel.org>; Sat, 02 Apr 2011 23:47:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=OlGPBgxlQekNR+WKJxfxn6lsoHjqYqT/CIyWYGAs6lw=;
+        b=YIZnZneunBdFEXhU3+tGWFal2ltUgH3OmoK36nCTPW9gFCIvQQB+HyBoVp3UxciraP
+         MxOVxQBw84B01SziAyv+LbUUB5OvuVth0iavd/voNDDBGxmlbxp8q2qSYprSdWS1HFaI
+         AFZ1mZGQITNt7to/AptciBrpWtR+ranU2njeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=EZlpBBj0hycBFdi7sdFoAAa1dinQSadrBU5rqeVDPWX1LcewfjfhOns+QNsT2HCTFU
+         PTVDPNmP8+GC24GEf+JL2n16OclRWwAxCUYWD7U25a371gK9nTOGr6hEtcYdUkxcmtya
+         UVN3Yp2JlCpBO/br8+ehBaW+7eE7E4MW8V63I=
+Received: by 10.42.173.197 with SMTP id s5mr4170457icz.368.1301813223450;
+        Sat, 02 Apr 2011 23:47:03 -0700 (PDT)
+Received: from localhost.localdomain (c-24-19-190-111.hsd1.wa.comcast.net [24.19.190.111])
+        by mx.google.com with ESMTPS id 13sm2774633ibo.25.2011.04.02.23.47.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 02 Apr 2011 23:47:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170680>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Currently git merge only allows one branch when current HEAD
+is not yet pointing to a valid commit.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I would have expected that the patch relative to jc/diff-irreversible-delete
->> topic would consist only of changes to diff.c:emit_rewrite_diff(), docs
->> and tests.
->
-> Here is an "in other words" follow-up.  Your tests looked reasonable (and
-> pass with this patch on top of what has been queued in 'pu').
+This patch will allow multiple branches to be passed in,
+and first updates current HEAD to the first branch's head then subsequently
+merge the rest of the branches.
+---
+ builtin/merge.c |   57 +++++++++++++++++++++++++++++-------------------------
+ 1 files changed, 31 insertions(+), 26 deletions(-)
 
-And this is the documentation part, based on your version but somewhat
-rewritten.  Your version said "cannot be applied with -R", but at the
-mechanical application level, the format is deliberately designed to make
-`patch` and `git apply` to fail, and I think that should be mentioned
-together with the reason why such an option exists (i.e. for human eyeball
-consumption).
-
-I'll squash these two to what is queued in 'pu'.  We may want to polish it
-again after 1.7.5 but I think it is in much better shape now.
-
-Thanks.
-
- Documentation/diff-options.txt |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index c93124b..30a00d3 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -259,6 +259,19 @@ endif::git-log[]
- 	projects, so use it with caution.  Giving more than one
- 	`-C` option has the same effect.
+diff --git a/builtin/merge.c b/builtin/merge.c
+index d54e7dd..290e0d4 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1090,9 +1090,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		 * to forbid "git merge" into a branch yet to be born.
+ 		 * We do the same for "git pull".
+ 		 */
+-		if (argc != 1)
+-			die(_("Can merge only exactly one commit into "
+-				"empty head"));
+ 		if (squash)
+ 			die(_("Squash commit into empty head not supported yet"));
+ 		if (!allow_fast_forward)
+@@ -1101,36 +1098,44 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		remote_head = peel_to_type(argv[0], 0, NULL, OBJ_COMMIT);
+ 		if (!remote_head)
+ 			die(_("%s - not something we can merge"), argv[0]);
+-		read_empty(remote_head->sha1, 0);
+ 		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+ 				DIE_ON_ERR);
+-		return 0;
+-	} else {
+-		struct strbuf merge_names = STRBUF_INIT;
  
-+-D::
-+--irreversible-delete::
-+	Omit the preimage for deletes, i.e. print only the header but not
-+	the diff between the preimage and `/dev/null`. The resulting patch
-+	is not meant to be applied with `patch` nor `git apply`; this is
-+	solely for people who want to just concentrate on reviewing the
-+	text after the change. In addition, the output obviously lack
-+	enough information to apply such a patch in reverse, even manually,
-+	hence the name of the option.
-++
-+When used together with `-B`, omit also the preimage in the deletion part
-+of a delete/create pair.
+-		/* We are invoked directly as the first-class UI. */
++		if (argc < 2)
++			return 0;
 +
- -l<num>::
- 	The `-M` and `-C` options require O(n^2) processing time where n
- 	is the number of potential rename/copy targets.  This
++		hashcpy(head, remote_head->sha1);
++		read_empty(remote_head->sha1, 0);
++		head_arg = argv[0];
++		argc--;
++		argv++;
++	}
++
++	struct strbuf merge_names = STRBUF_INIT;
++
++	/* We are invoked directly as the first-class UI. */
++	if(!head_invalid)
+ 		head_arg = "HEAD";
+ 
+-		/*
+-		 * All the rest are the commits being merged;
+-		 * prepare the standard merge summary message to
+-		 * be appended to the given message.  If remote
+-		 * is invalid we will die later in the common
+-		 * codepath so we discard the error in this
+-		 * loop.
+-		 */
+-		for (i = 0; i < argc; i++)
+-			merge_name(argv[i], &merge_names);
+-
+-		if (!have_message || shortlog_len) {
+-			fmt_merge_msg(&merge_names, &merge_msg, !have_message,
+-				      shortlog_len);
+-			if (merge_msg.len)
+-				strbuf_setlen(&merge_msg, merge_msg.len - 1);
+-		}
++	/*
++	 * All the rest are the commits being merged;
++	 * prepare the standard merge summary message to
++	 * be appended to the given message.  If remote
++	 * is invalid we will die later in the common
++	 * codepath so we discard the error in this
++	 * loop.
++	 */
++	for (i = 0; i < argc; i++)
++		merge_name(argv[i], &merge_names);
++
++	if (!have_message || shortlog_len) {
++		fmt_merge_msg(&merge_names, &merge_msg, !have_message,
++				  shortlog_len);
++		if (merge_msg.len)
++			strbuf_setlen(&merge_msg, merge_msg.len - 1);
+ 	}
+ 
+-	if (head_invalid || !argc)
++	if (!argc)
+ 		usage_with_options(builtin_merge_usage,
+ 			builtin_merge_options);
+ 
+-- 
+1.7.3.4
