@@ -1,91 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/51] i18n: Shell script translations
-Date: Sun, 03 Apr 2011 12:05:35 -0700
-Message-ID: <7vhbafcg00.fsf@alter.siamese.dyndns.org>
-References: <1301849175-1697-1-git-send-email-avarab@gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [GSoC 2011] Git Sequencer
+Date: Sun, 03 Apr 2011 21:07:01 +0200
+Message-ID: <1301857622.3448.134.camel@lambda>
+References: <20110403172054.GA10220@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 21:05:50 2011
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 21:07:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6ScP-0004nW-RA
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:05:50 +0200
+	id 1Q6Sdl-0005Me-Md
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:07:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753164Ab1DCTFo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 15:05:44 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53417 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753044Ab1DCTFo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Apr 2011 15:05:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6AE0B417D;
-	Sun,  3 Apr 2011 15:07:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=o7GW+L0qEJRuYV7Zyfssw8aqb
-	6s=; b=Djuu+RvtTZhkFs1z3jv4uDr7r03vnXk+6WVoVUYikw1XnpxBC9/yPifyr
-	uRb6A6gwFd7zV7zWq9pki4ZzzO64ezOhIneHi72kWw1ZbKgFbfHAA2sky1dzm6EF
-	dKBtZqmGCmd4XZNYa4GZZKN+3+tOtIpne8nQIyNyS08VLOI4w8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=YT0EXiM1TQE22nRz84q
-	ybMO65DhlNDR0hzcGuAEgUf5pkRh3hf3Ir5Do0nEkNSy/Xq4cKSK4UCgliZNOj4g
-	BGkEGWllCBLnyFOYaigcKpoue0kC6C7UTpmqvElSH1JAOSLnH1DltVhScS3SXz6a
-	VkiAcKWH5HKZO9XTfYFY33l8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0F8B54176;
-	Sun,  3 Apr 2011 15:07:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 342A54175; Sun,  3 Apr 2011
- 15:07:28 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A0728C0A-5E25-11E0-8CD2-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753129Ab1DCTHG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 15:07:06 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:56640 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753044Ab1DCTHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 15:07:05 -0400
+Received: (qmail invoked by alias); 03 Apr 2011 19:07:02 -0000
+Received: from erft-5d80a451.pool.mediaWays.net (EHLO [192.168.1.34]) [93.128.164.81]
+  by mail.gmx.net (mp072) with SMTP; 03 Apr 2011 21:07:02 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/wmwpLrdXwD809lzzdJk3AdHrt3pFW/uu94fLFx/
+	e26w414HcqS5DT
+In-Reply-To: <20110403172054.GA10220@kytes>
+X-Mailer: Evolution 2.30.3 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170772>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hi Ram,
 
-> Following the "i18n: Shell script translation infrastructure"
-> series. These are the actual shell script translations. Together thes=
-e
-> series add up to everything from:
->
->     git://github.com/avar/git.git ab/i18n-sh-only
-
-I am obviously not going to queue these patches right at this moment, b=
-ut
-people with topics in flight or in their head need to take a look at th=
-e
-parts of this series that may overlap with what they are touching, and
-plan to rebase their work when the time comes.
-
-What is more urgent at this moment in this cycle is to catch and adjust
-the fallouts from the merges of topics that started before ab/i18n topi=
-c.
-You caught one in t2019 that didn't mark a test that examines the outpu=
+first, some notes on my git-sequencer 2008 branches that can be found a=
 t
-for a translatable string with C_LOCALE_OUTPUT (as there was no such th=
-ing
-when the topic started).
+http://repo.or.cz/w/git/sbeyer.git ... (Not sure if I remember
+everything correctly)
 
-There may be other similar adjustments that are needed in tests, and al=
-so
-I suspect there are messages that are not marked with the _() markers t=
-hat
-came from other topics.  Because we shouldn't see too many new messages=
- in
-the code appearing from now on until 1.7.5 final, this is a perfect tim=
-e
-to catch and adjust these kinds of issues.
+I've settled to develop within the "seq-builtin-dev" branch and I
+sometimes merged Junio's "master" into that branch to catch up.
+The "seq-builtin-dev" branch is the important one.
 
-Thanks.
+Using git rebase -i (using git-sequencer) I sometimes remanaged the
+branch to "seq-builtin-rfc" that should represent a snapshot of a
+potential patch queue. My last rebase processes of the seq-builtin-rfc
+branch were pretty unmotivated and hence messy.
+
+I have not touched the repo very often after GSOC'08 and I stopped
+touching it (as I stopped following recent Git development) "20 months
+ago" apparently. Quite many things may have changed since then.
+
+The file A_SEQUENCER_TODO_FILE (added 2009-08-03) in the repo describes
+the missing and buggy pieces to fix so that _I_ (only me) would have
+been 100 per cent satisfied with that git-sequencer.
+http://repo.or.cz/w/git/sbeyer.git/blob/9e4b4d92f681a47e3d7ad2152d2391b=
+2ab125a0c:/A_SEQUENCER_TODO_FILE
+[Some notes are also "strategy notes" to get things accepted, like the
+changes on "rebase -i -p" which are "not loved by everyone". ;-)]
+
+On 2011-04-03, 22:50 +0530, Ramkumar Ramachandra wrote:=20
+> * Is this a good change? Are there any forseeable issues?
+
+I want to mention an issue that I have not foreseen before: merges.
+(You need merges, for example, when doing rebase -i -p ... -p as in
+--preserve-merges.)
+
+When I began, there was code in the "next" branch that added the TODO
+instructions "mark", "reset" and "merge" to do merges properly and I
+based my work on it. The original pieces by J=C3=B6rg Sommer can still =
+be
+found here:
+http://repo.or.cz/w/git/sbeyer.git/shortlog/6fabd85e8a777c26f3ae8ce11cb=
+7f4265502ea7f
+
+However, there have been strong opinions that the "mark"/"reset"/"merge=
+"
+instructions are ugly and unpleasant to users and not even necessary (a=
+t
+least for rebase--interactive... and for sequencer, maybe, maybe not).=20
+Hence, the code in "next" has been rejected later.
+
+During GSOC 2008 I regrettably underestimated the importance to
+communicate with the Git folks about these things. That's one of the
+main reasons the sequencer pieces did not get into master. And after
+GSOC'08 I had too little time for this... :-/
+
+Well, the merging thing is the only *real* issue I remember.
+
+Good luck and regards,
+  Stephan
