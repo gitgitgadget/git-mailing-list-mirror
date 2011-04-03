@@ -1,120 +1,139 @@
-From: Robert David <robert.david.public@gmail.com>
-Subject: Re: GSOC idea: build in scripts and cleanups
-Date: Sun, 3 Apr 2011 23:17:20 +0200
-Organization: DDM Praha
-Message-ID: <201104032317.21573.robert.david.public@gmail.com>
-References: <201103260141.20798.robert.david.public@gmail.com> <20110328142121.GB14763@sigill.intra.peff.net> <201103301739.12691.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Allow multiple merges to invalid HEAD
+Date: Sun, 3 Apr 2011 17:22:56 -0500
+Message-ID: <20110403222234.GB6537@elie>
+References: <1301813216-19507-1-git-send-email-tnachen@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1416335.eosQs74hxT";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 04 00:13:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Timothy Chen <tnachen@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 00:23:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6VXe-0008Ox-91
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 00:13:06 +0200
+	id 1Q6VhN-0003Go-Vf
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 00:23:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166Ab1DCWMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 18:12:54 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58485 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077Ab1DCWMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 18:12:52 -0400
-Received: by fxm17 with SMTP id 17so3554894fxm.19
-        for <git@vger.kernel.org>; Sun, 03 Apr 2011 15:12:50 -0700 (PDT)
+	id S1752066Ab1DCWXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 18:23:04 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40329 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751736Ab1DCWXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 18:23:03 -0400
+Received: by iwn34 with SMTP id 34so5222275iwn.19
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 15:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:organization:to:subject:date:user-agent:cc
-         :references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=oQx67TthYuaz+SEcxWieecIevwZI/mleMttpI3tkJpc=;
-        b=QOqm8lq3CPC15D1LYmrYbW6iz/l0l3evOVdko1gAINlwc7gdM7QS3SIHCs7j+zaZYW
-         wV70LKE8GQlqlC4iDBUVGaAQhzCfmsOofi2bunZXrzGEMpq/3WrXFdRkND5dTBZOOaxK
-         RzniRuYIfZ0h8zx21BSFaFqSAJtV5CZywoJVQ=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=ONj8vdggqMrvJwhUolUOtERNZ8X5ai97l7+g3XcYPEY=;
+        b=xHTyopjZZv7cpuml6ObVIiRTyJlYfPmIHyTscYLPIPSgMqvYhtKPz4JHctvuflJZqW
+         n93RumllhZhtgC+NSqbIfMhgH30OdE+ZbW+E3x3LoI5GIMlq6UYh3xG3TK3NGl6235q/
+         eeDwKvhcRsJkGjY67mBPbGm161YRwzxtCiFDQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        b=es21pF/e9cWEqJRjP8ZBvhKsgtDef/b+CWzAFaVGe9MjmFWXH8LR50CQuyWNbJhnOQ
-         paSNvqzXHBys1uIUKwdVl1fI1h7GJjw7ZiSDOs3thzSgJFHBp3Toj08Y8yVfGgXumVOZ
-         WsRXHTK3VLhCIZNzcEm4/3gKKfKGMZYJ9RCr4=
-Received: by 10.223.127.210 with SMTP id h18mr260524fas.67.1301868770702;
-        Sun, 03 Apr 2011 15:12:50 -0700 (PDT)
-Received: from robert-eee.localnet (gate.chabry.cz [80.92.246.13])
-        by mx.google.com with ESMTPS id c24sm1478464fak.31.2011.04.03.15.12.49
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=uCpbp8r4h58fgVl11DCiErDzYE/LiJ8ZpygD3w+IQs54B3LmSNO6ezfEBOQourugeJ
+         bw0Z7CYff/fsArdIwZWPr2E1iBSgTi4AMa6wpvlUKAFGFwrVioFwqCyH2AMyLNyD4UVD
+         A6jifwUjydJIYLMdtasY69Q4T6gqltaDMSdf8=
+Received: by 10.231.92.132 with SMTP id r4mr2846013ibm.57.1301869382162;
+        Sun, 03 Apr 2011 15:23:02 -0700 (PDT)
+Received: from elie (adsl-69-209-53-77.dsl.chcgil.sbcglobal.net [69.209.53.77])
+        by mx.google.com with ESMTPS id i20sm3272350iby.14.2011.04.03.15.23.00
         (version=SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2011 15:12:50 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-686; KDE/4.4.5; i686; ; )
-In-Reply-To: <201103301739.12691.trast@student.ethz.ch>
+        Sun, 03 Apr 2011 15:23:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1301813216-19507-1-git-send-email-tnachen@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170782>
-
---nextPart1416335.eosQs74hxT
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-
-Dne st=C5=99eda 30 b=C5=99ezna 2011 17:39:12 Thomas Rast napsal(a):
-> Jeff King wrote:
-> > On Mon, Mar 28, 2011 at 10:55:22AM +0200, Robert David wrote:
-> > > > As far as cleanup versus features, I think Thomas would have to
-> > > > comment on that. He is the one who did the most work on patch-mode,
-> > > > and therefore the one who most thinks it needs cleaned up. :)
-> > >=20
-> > > Is Thomas going to be a mentor in this task?
-> >=20
-> > I hope so. I can also co-mentor if it helps.
->=20
-> I'm certainly ready; I didn't propose any projects that I would not
-> also mentor.  (However, I won't mentor more than one...)
->=20
-> Note that while it's certainly a bonus, porting it to C probably makes
-> the project more difficult and time-consuming.  We'll have to see in
-> the proposal timelines however.
->=20
-> As for cleanup, my gut feeling right now is that the Perl code can
-> probably cope with incremental cleanups as required for each feature.
-> On the other hand, the C port should start from a clean redesign so as
-> to not rewrite it twice.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170783>
 
 Hi,
 
-I have submitted the proposal on gsoc official site. I would like to ask fo=
-r=20
-some comments on that. I don't know how you get access to student proposals=
- to=20
-git. But I see that as proposal from "robertdavid" number 1.
-I would like to focus myself only on this one proposal, so that is why I'm=
-=20
-asking for comments, to extend the proposal as needed.
+Timothy Chen wrote:
 
-Thanks,
-Robert David.
+>  builtin/merge.c |   57 +++++++++++++++++++++++++++++-------------------------
+>  1 files changed, 31 insertions(+), 26 deletions(-)
 
+Now for mechanics.
 
---nextPart1416335.eosQs74hxT
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+[...]
+> @@ -1101,36 +1098,44 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		remote_head = peel_to_type(argv[0], 0, NULL, OBJ_COMMIT);
+>  		if (!remote_head)
+>  			die(_("%s - not something we can merge"), argv[0]);
+> -		read_empty(remote_head->sha1, 0);
+>  		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+>  				DIE_ON_ERR);
+> -		return 0;
+> +
+> +		if (argc < 2)
+> +			return 0;
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+When argc == 1, this means read_empty never gets called.  Is that
+intended?
 
-iF4EABEIAAYFAk2Y4+EACgkQLSNWchw0XGxwkAD/SCyrOqvf67IjNwH8UJ/1fpn+
-CLeIMyCDQsnqrGjWVSEA/RpRDwQH96HfLT0+Bl60reTUj0mqTN8EJfO6lZNF6sFZ
-=D95P
------END PGP SIGNATURE-----
+It breaks 7607.13.  Running "make test" is a good way to find some
+breakages.
 
---nextPart1416335.eosQs74hxT--
+> +
+> +		hashcpy(head, remote_head->sha1);
+> +		read_empty(remote_head->sha1, 0);
+> +		head_arg = argv[0];
+> +		argc--;
+> +		argv++;
+
+As always when pretending something, I think a comment would be
+helpful.  Something to the effect of:
+
+	/*
+	 * We were called as "git merge <branch1> <branch2> <branch3>...".
+	 *
+	 * Now HEAD has advanced to <branch1>, and we can pretend
+	 * we were called as "git merge <branch2> <branch3>...".
+	 */
+
+Though I think I prefer the more explicit comment I suggested last
+time[1].
+
+> +	}
+> +
+> +	struct strbuf merge_names = STRBUF_INIT;
+> +
+> -	} else {
+> -		struct strbuf merge_names = STRBUF_INIT;
+> -
+> -		/* We are invoked directly as the first-class UI. */
+> +	/* We are invoked directly as the first-class UI. */
+
+Won't this break
+
+	git merge "message here" $(git rev-parse HEAD) foo bar
+
+?  Previously this code was in an "else" block so it wasn't reached in
+the is_old_style_invocation case.
+
+> -	if (head_invalid || !argc)
+> +	if (!argc)
+>  		usage_with_options(builtin_merge_usage,
+>  			builtin_merge_options);
+
+What happens with
+
+	git merge "message here" HEAD foo bar
+
+from an unborn branch?
+
+Hope that helps.
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/170456
