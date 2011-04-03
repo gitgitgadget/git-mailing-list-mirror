@@ -1,177 +1,130 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] sparse: Fix errors and silence warnings
-Date: Sun,  3 Apr 2011 00:06:54 -0700
-Message-ID: <1301814414-11368-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 03 09:07:40 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow multiple merges to invalid HEAD
+Date: Sun, 03 Apr 2011 01:08:56 -0700
+Message-ID: <7vei5jg3jb.fsf@alter.siamese.dyndns.org>
+References: <1301813216-19507-1-git-send-email-tnachen@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Timothy Chen <tnachen@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 10:09:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6HPN-00018n-D7
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 09:07:37 +0200
+	id 1Q6INL-0002Nw-21
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 10:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751870Ab1DCHHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 03:07:34 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47023 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751815Ab1DCHHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 03:07:23 -0400
-Received: by iwn34 with SMTP id 34so4796986iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Apr 2011 00:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=aGGwbCSzlOTcrb86QaGlhRAyeeFaNR3P3OnW1n+C1Mk=;
-        b=qyksm8U9XU21Nc9gNQNInihObvCUcfBCOstmE5oaSvyIZEhNvItjJd+Xz97MMKsFzf
-         JcUsZ4XY6JMUvbTZjkMbqaZGFt6qtnI00+qtlQa75D57biiI1M4uQU2k3L80BigOLdxV
-         XsiDEPA1TMxLvId5WHBmXaiEO9J95dMKOd3yU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=X/FR0mOXab0kloA5pruRnIJ8uOE60VAPwhCVQT/RBZq4nKAg346mbUzbn8nxpSmuFX
-         EUGbSedtvCJmRGn7s5Y8++gf/TriSGYWKC8j1cW9mTC6XKg7Jk4VwxuoXGfPWQGRwZph
-         JyJo7a5GbKC9MvL0dpE05Q7/N7HBMUV2OdmvI=
-Received: by 10.231.23.145 with SMTP id r17mr5947089ibb.26.1301814442429;
-        Sun, 03 Apr 2011 00:07:22 -0700 (PDT)
-Received: from earth ([75.85.182.25])
-        by mx.google.com with ESMTPS id he40sm2786095ibb.16.2011.04.03.00.07.15
-        (version=SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2011 00:07:21 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Sun, 03 Apr 2011 00:06:54 -0700
-X-Mailer: git-send-email 1.7.5.rc0.96.gc4b2c
+	id S1751788Ab1DCIJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 04:09:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37452 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557Ab1DCIJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 04:09:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D20D02D32;
+	Sun,  3 Apr 2011 04:10:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U/5vWjT0TZxNqjdBIwCKdAtIMcE=; b=T21HjO
+	2rkQSO/i7VKv8+XSuGg0OkMnDdg6zya+iB7iJMg4TrpHkasrZMH9MYjYP897vm5w
+	Ramo7jDOfxvz03u4YmBcpkVBCAUKvPIc8NuamQIf36yyhw3d2sWe/NYt+unnK05U
+	dHcWXF1F9y08EmAIhN8AFPw1k6cCFR4XznCSQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZHAiv3qoFSy8bZi6lCYSxvsTbTQRxXka
+	aHfwMYcZ7MwKgIefccLBp84eetNFYdou1nyg8HRLDoYHMtqNwyjdxsMb8Szw2urb
+	hxKC8vUfQhal/z2LJv66RBbdKMeRK9HhAO3vMyD/r47FATVm7N2ILl09S1bg37p9
+	NV9/c/7rbsI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 675212D31;
+	Sun,  3 Apr 2011 04:10:52 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 686F12D30; Sun,  3 Apr 2011
+ 04:10:49 -0400 (EDT)
+In-Reply-To: <1301813216-19507-1-git-send-email-tnachen@gmail.com> (Timothy
+ Chen's message of "Sat, 2 Apr 2011 23:46:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E46F87B6-5DC9-11E0-93F0-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170683>
 
- * load_file() returns a void pointer but is using 0 for the return
-   value
+Timothy Chen <tnachen@gmail.com> writes:
 
- * builtin/receive-pack.c forgot to include builtin.h
+> This patch will allow multiple branches to be passed in,
+> and first updates current HEAD to the first branch's head then subsequently
+> merge the rest of the branches.
 
- * packet_trace_prefix can be marked static
+I've questioned the motivation of the patch already, but let's comment on
+the mechanics as well while I am waiting for some builds to finish ;-)
 
- * ll_merge takes a pointer for its last argument, not an int
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index d54e7dd..290e0d4 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -1090,9 +1090,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		 * to forbid "git merge" into a branch yet to be born.
+>  		 * We do the same for "git pull".
+>  		 */
+>  		if (squash)
+>  			die(_("Squash commit into empty head not supported yet"));
+>  		if (!allow_fast_forward)
+> @@ -1101,36 +1098,44 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		remote_head = peel_to_type(argv[0], 0, NULL, OBJ_COMMIT);
+>  		if (!remote_head)
+>  			die(_("%s - not something we can merge"), argv[0]);
+>  		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+>  				DIE_ON_ERR);
 
- * crc32 expects a pointer as the second argument but Z_NULL is defined
-   to be 0 (see 38f4d13 sparse fix: Using plain integer as NULL pointer,
-   2006-11-18 for more info)
+You are going to perform a series of operations that is a lot more complex
+than what we traditionally have done at this point.  I do not think it is
+safe at all to update the ref this early before even knowing if the rest
+of the command succeeds.
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- builtin/grep.c         |    6 +++---
- builtin/index-pack.c   |    2 +-
- builtin/receive-pack.c |    2 +-
- csum-file.c            |    2 +-
- pack-check.c           |    2 +-
- pkt-line.c             |    2 +-
- rerere.c               |    2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
+> +		if (argc < 2)
+> +			return 0;
+> +
+> +		hashcpy(head, remote_head->sha1);
+> +		read_empty(remote_head->sha1, 0);
+> +		head_arg = argv[0];
+> +		argc--;
+> +		argv++;
+> +	}
+> +
+> +	struct strbuf merge_names = STRBUF_INIT;
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 891e5ea..10a1f65 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -414,10 +414,10 @@ static void *load_file(const char *filename, size_t *sz)
- 	err_ret:
- 		if (errno != ENOENT)
- 			error(_("'%s': %s"), filename, strerror(errno));
--		return 0;
-+		return NULL;
- 	}
- 	if (!S_ISREG(st.st_mode))
--		return 0;
-+		return NULL;
- 	*sz = xsize_t(st.st_size);
- 	i = open(filename, O_RDONLY);
- 	if (i < 0)
-@@ -427,7 +427,7 @@ static void *load_file(const char *filename, size_t *sz)
- 		error(_("'%s': short read %s"), filename, strerror(errno));
- 		close(i);
- 		free(data);
--		return 0;
-+		return NULL;
- 	}
- 	close(i);
- 	data[*sz] = 0;
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 5a67c81..31f001f 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -294,7 +294,7 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
- 	void *data;
- 
- 	obj->idx.offset = consumed_bytes;
--	input_crc32 = crc32(0, Z_NULL, 0);
-+	input_crc32 = crc32(0, NULL, 0);
- 
- 	p = fill(1);
- 	c = *p;
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 27050e7..e1ba4dc 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "pack.h"
- #include "refs.h"
- #include "pkt-line.h"
-diff --git a/csum-file.c b/csum-file.c
-index 4d50cc5..be49d5f 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -116,7 +116,7 @@ struct sha1file *sha1fd_throughput(int fd, const char *name, struct progress *tp
- 
- void crc32_begin(struct sha1file *f)
- {
--	f->crc32 = crc32(0, Z_NULL, 0);
-+	f->crc32 = crc32(0, NULL, 0);
- 	f->do_crc = 1;
- }
- 
-diff --git a/pack-check.c b/pack-check.c
-index c3bf21d..a1a5216 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -23,7 +23,7 @@ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
- 		   off_t offset, off_t len, unsigned int nr)
- {
- 	const uint32_t *index_crc;
--	uint32_t data_crc = crc32(0, Z_NULL, 0);
-+	uint32_t data_crc = crc32(0, NULL, 0);
- 
- 	do {
- 		unsigned int avail;
-diff --git a/pkt-line.c b/pkt-line.c
-index cd1bd26..5a04984 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -1,7 +1,7 @@
- #include "cache.h"
- #include "pkt-line.h"
- 
--const char *packet_trace_prefix = "git";
-+static const char *packet_trace_prefix = "git";
- static const char trace_key[] = "GIT_TRACE_PACKET";
- 
- void packet_trace_identity(const char *prog)
-diff --git a/rerere.c b/rerere.c
-index 3d00a71..22dfc84 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -438,7 +438,7 @@ static int merge(const char *name, const char *path)
- 		ret = 1;
- 		goto out;
- 	}
--	ret = ll_merge(&result, path, &base, NULL, &cur, "", &other, "", 0);
-+	ret = ll_merge(&result, path, &base, NULL, &cur, "", &other, "", NULL);
- 	if (!ret) {
- 		FILE *f;
- 
--- 
-1.7.5.rc0.96.gc4b2c
+Decl-after-statement.
+
+> +	/* We are invoked directly as the first-class UI. */
+> +	if(!head_invalid)
+
+SP after syntactic keyword and the open paren associated with it.
+
+>  		head_arg = "HEAD";
+>  
+> +	/*
+> +	 * All the rest are the commits being merged;
+> +	 * prepare the standard merge summary message to
+> +	 * be appended to the given message.  If remote
+> +	 * is invalid we will die later in the common
+> +	 * codepath so we discard the error in this
+> +	 * loop.
+> +	 */
+> +	for (i = 0; i < argc; i++)
+> +		merge_name(argv[i], &merge_names);
+> +
+> +	if (!have_message || shortlog_len) {
+> +		fmt_merge_msg(&merge_names, &merge_msg, !have_message,
+> +				  shortlog_len);
+> +		if (merge_msg.len)
+> +			strbuf_setlen(&merge_msg, merge_msg.len - 1);
+>  	}
+>  
+> +	if (!argc)
+>  		usage_with_options(builtin_merge_usage,
+>  			builtin_merge_options);
