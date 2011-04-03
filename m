@@ -1,201 +1,66 @@
-From: jari.aalto@cante.net
-Subject: [PATCH v3] contrib/emacs/git.el: Add user functions for push, pull, fetch
-Date: Sun,  3 Apr 2011 20:48:00 +0300
-Organization: Private
-Message-ID: <ae4f9adf62502f58a870a322cd30a62e23aba747.1301852577.git.jari.aalto@cante.net>
-References: <87mxk7454z.fsf@wine.dyndns.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: Jari Aalto <jari.aalto@cante.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 13/51] i18n: git-pull die messages
+Date: Sun, 3 Apr 2011 20:14:12 +0200
+Message-ID: <BANLkTinFT77rGXc08eXGMsucyQ7qkcKTsg@mail.gmail.com>
+References: <1301849175-1697-1-git-send-email-avarab@gmail.com>
+	<1301849175-1697-14-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 03 19:48:10 2011
+X-From: git-owner@vger.kernel.org Sun Apr 03 20:14:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6RPG-0001xK-2N
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 19:48:10 +0200
+	id 1Q6Roa-00031a-80
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 20:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867Ab1DCRsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 13:48:06 -0400
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:43968 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752779Ab1DCRsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 13:48:04 -0400
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id CC4BD18D207
-	for <git@vger.kernel.org>; Sun,  3 Apr 2011 20:48:02 +0300 (EEST)
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A02985B2F76; Sun, 03 Apr 2011 20:48:02 +0300
-Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id B821A2BD49
-	for <git@vger.kernel.org>; Sun,  3 Apr 2011 20:48:01 +0300 (EEST)
-Received: from vc.cante.net ([192.168.1.5] helo=picasso.cante.net)
-	by picasso.cante.net with esmtp (Exim 4.74)
-	(envelope-from <jari.aalto@cante.net>)
-	id 1Q6RP6-0007B9-SR; Sun, 03 Apr 2011 20:48:01 +0300
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <87mxk7454z.fsf@wine.dyndns.org>
-CC: julliard@winehq.org
-X-SA-Exim-Connect-IP: 192.168.1.5
-X-SA-Exim-Mail-From: jari.aalto@cante.net
-X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
-X-Antivirus: VAMS
+	id S1752870Ab1DCSOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 14:14:14 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:46973 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848Ab1DCSOO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Apr 2011 14:14:14 -0400
+Received: by fxm17 with SMTP id 17so3495451fxm.19
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 11:14:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ecTabjJhFF6R0Q4+pr3+ldLqubOu+3v28LZiJ0zvKMk=;
+        b=e2+wJDQ/ynWKoTxGV0X6ACGoZQabV4pgRT378sFR8WyFtIyQep9zXHrmZDQk+Jz2Xq
+         zRTw/jBPG/zVlqBf/1cLqDrwaGIIzX87K9kJ0QAJoaQly+j+eI/z0QFK4GQGdCCf1dEX
+         xx0fetSvpADgn+Ka2VbF8bb+oyE3EmaCWwjPU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=U0qGSHThJEa0guaA8rbSYj8mZUuK4BqOucXwvQn8M7bRSF++7+BNIg76VUj/8v8X0t
+         FRgaXXWoWi/xnjYiezzZXwKb/ZiakZaiEvVVcz7aoACvKxkgObb54bJvIf68DM1zWqOR
+         zSCz1hReBKNdSkFkRTkFs1ERYDvS8kkG0OuVM=
+Received: by 10.223.14.137 with SMTP id g9mr5260573faa.8.1301854452867; Sun,
+ 03 Apr 2011 11:14:12 -0700 (PDT)
+Received: by 10.223.93.196 with HTTP; Sun, 3 Apr 2011 11:14:12 -0700 (PDT)
+In-Reply-To: <1301849175-1697-14-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170766>
 
-From: Jari Aalto <jari.aalto@cante.net>
+On Sun, Apr 3, 2011 at 18:45, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- contrib/emacs/git.el |   70 ++++++++++++++++++++++++++++++++++++++++++++=
-+++++-
- 1 files changed, 69 insertions(+), 1 deletions(-)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # XXX: This is an =
+abomination
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0require_clean_=
+work_tree "pull with rebase" "Please commit or stash them."
 
-  [v2]
-  ** This fixes the pull message. The only change is last line:
-  ** (message "Pulled from remote: %s" remote)))
+I'd forgotten that I'd left that in there.
 
-  [v3] Fixes commented by <julliard@winehq.org>
-  ** Extra C-a keymap binding removed
-  ** Check success status before displaying message
-  ** no need to refresh the status files on push or fetch
-
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 214930a..26510d2 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -1,6 +1,7 @@
- ;;; git.el --- A user interface for git
-=20
- ;; Copyright (C) 2005, 2006, 2007, 2008, 2009 Alexandre Julliard <jullia=
-rd@winehq.org>
-+;; Copyright (C) 2010 Jari Aalto <jari.aalto@cante.net>
-=20
- ;; Version: 1.0
-=20
-@@ -33,11 +34,14 @@
- ;;
- ;; To start: `M-x git-status'
- ;;
-+;; RUDIMENTARY
-+;; - fetch/pull. Be sure to start gpg-agent, ssh-agent prior emacs
-+;;   to access ssh Git remotes.
-+;;
- ;; TODO
- ;;  - diff against other branch
- ;;  - renaming files from the status buffer
- ;;  - creating tags
--;;  - fetch/pull
- ;;  - revlist browser
- ;;  - git-show-branch browser
- ;;
-@@ -1520,6 +1524,7 @@ amended version of it."
-=20
- (unless git-status-mode-map
-   (let ((map (make-keymap))
-+        (remote-map (make-sparse-keymap))
-         (commit-map (make-sparse-keymap))
-         (diff-map (make-sparse-keymap))
-         (toggle-map (make-sparse-keymap)))
-@@ -1547,6 +1552,7 @@ amended version of it."
-     (define-key map "P"   'git-prev-unmerged-file)
-     (define-key map "q"   'git-status-quit)
-     (define-key map "r"   'git-remove-file)
-+    (define-key map "R"   remote-map)
-     (define-key map "t"    toggle-map)
-     (define-key map "T"   'git-toggle-all-marks)
-     (define-key map "u"   'git-unmark-file)
-@@ -1555,6 +1561,11 @@ amended version of it."
-     (define-key map "x"   'git-remove-handled)
-     (define-key map "\C-?" 'git-unmark-file-up)
-     (define-key map "\M-\C-?" 'git-unmark-all)
-+    ; remotes
-+    (define-key remote-map "R" 'git-pull)  ; retrieve "RR"
-+    (define-key remote-map "r" 'git-pull)  ; retrieve "Rr" (synonym)
-+    (define-key remote-map "p" 'git-push)
-+    (define-key remote-map "f" 'git-fetch)
-     ; the commit submap
-     (define-key commit-map "\C-a" 'git-amend-commit)
-     (define-key commit-map "\C-b" 'git-branch)
-@@ -1607,6 +1618,10 @@ amended version of it."
-       ["Interactive Diff File" git-diff-file-idiff t]
-       ["Log" git-log-file t]
-       "--------"
-+      ["Push" git-push t]
-+      ["Pull" git-pull t]
-+      ["Fetch" git-fetch t]
-+      "--------"
-       ["Mark" git-mark-file t]
-       ["Mark All" git-mark-all t]
-       ["Unmark" git-unmark-file t]
-@@ -1689,6 +1704,59 @@ Meant to be used in `after-save-hook'."
-             (git-call-process nil "add" "--refresh" "--" filename)
-             (git-update-status-files (list filename))))))))
-=20
-+(defun git-ask-remote (message)
-+  "Return remote."
-+  (let ((ret
-+	 (completing-read
-+	  "Push to remote: "
-+	  '(("origin" 1))		;FIXME read all remotes
-+	  (not 'predicate)
-+	  (not 'match)
-+	  "origin")))
-+    (if (not (string-match "[^ \t]" ret))
-+	"origin"
-+      ret)))
-+
-+(defun git-push (&optional remote)
-+  "Pull to REMOTE. Use \\[current-prefix-arg] to interactively set REMOT=
-E."
-+  (interactive
-+   (list (or (and current-prefix-arg
-+		  (git-ask-remote "Push to remote: "))
-+	     "origin")))
-+  ;; FIXME: could collect some status data for display
-+  (when (git-call-process-display-error "push" remote)
-+    (message "Pushed to remote: %s" remote)))
-+
-+(defun git-fetch (&optional remote)
-+  "Fetch from REMOTE. Use \\[current-prefix-arg] to interactively set RE=
-MOTE."
-+  (interactive
-+   (list (or (and current-prefix-arg
-+		  (git-ask-remote "Fetch from remote: "))
-+	     "origin")))
-+  ;; FIXME: could collect some status data for display
-+  (when (git-call-process-display-error "fetch" remote)
-+    (message "Fetched from remote: %s" remote)))
-+
-+(defun git-pull (&optional remote)
-+  "Pull from REMOTE. Use \\[current-prefix-arg] to interactively set REM=
-OTE."
-+  (interactive
-+   (list (or (and current-prefix-arg
-+		  (git-ask-remote "Pull from remote: "))
-+	     "origin")))
-+  (let ((not-clean
-+	 (ewoc-collect git-status (lambda (info &optional state)
-+				    (setq state (git-fileinfo->state info))
-+				    (or (eq state 'modified)
-+					(eq state 'added)
-+					(eq state 'deleted)
-+					(eq state 'unmerged))))))
-+    (if not-clean
-+	(error "Error: Can't pull while in unclean state (commit all first)."))
-+    (unless git-status (error "Not in git-status buffer."))
-+    ;; FIXME: could collect some status data for display
-+    (when (git-call-process-display-error "pull" remote)
-+      (message "Pulled from remote: %s" remote))))
-+
- (defun git-help ()
-   "Display help for Git mode."
-   (interactive)
---=20
-1.7.4.1
+Anyway, we can just skip translating these for now.
