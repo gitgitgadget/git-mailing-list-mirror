@@ -1,93 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Share color list between graph and show-branch
-Date: Sun, 03 Apr 2011 12:12:28 -0700
-Message-ID: <7v7hbbcfoj.fsf@alter.siamese.dyndns.org>
-References: <1301535506-1166-1-git-send-email-dpmcgee@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH maint resend] compat: add missing #include
+ <sys/resource.h>
+Date: Sun, 3 Apr 2011 14:13:25 -0500
+Message-ID: <20110403191324.GE3830@elie>
+References: <1300271879-2050-1-git-send-email-stsp@stsp.name>
+ <20110318202351.GA22696@elie>
+ <20110331225909.GA21429@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 21:12:55 2011
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Stefan Sperling <stsp@stsp.name>,
+	Arnaud Lacombe <lacombar@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 21:13:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6SjG-0007PG-8p
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:12:54 +0200
+	id 1Q6Sjv-0007gP-QJ
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:13:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135Ab1DCTMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 15:12:38 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60749 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752235Ab1DCTMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 15:12:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E720B4208;
-	Sun,  3 Apr 2011 15:14:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=5KmMcEyvB/D4omjdkwxgbvMFrwM=; b=qtFxnmRQl+TR/YeH3K0e
-	UICkPpL1s/Jr90IAqfbtbyALy/wAomJVQ2TvzBD3pKjjmJDEed0zEWUuzK9T5Byy
-	uCL2vjgK/WaebkUES71tuJOIEXT2eLh4JYGDA370JaEwIBXhrvCxDKAaS3MmHmi7
-	D9lV81jXPMBT/SRUBC/l4hg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=EZg2dZhs1TS6UPwGwpntY+Ca0pxRbmrQWffH1/pxP0NUsg
-	HdspcH7qqYsGAQF3eelrO5/XvieOnTxH8clU2kbdz0SEw5PifnlXOOxRAN8pqnVk
-	OUwWgzJpADWQk8ddraWFOSLdX00xKUmjUuJswxUEl87nZXxMvlfvYl+ZPXGcA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C53F24202;
-	Sun,  3 Apr 2011 15:14:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DAFC441FF; Sun,  3 Apr 2011
- 15:14:21 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 96747938-5E26-11E0-8CD2-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753117Ab1DCTNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 15:13:31 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:62662 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752235Ab1DCTNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 15:13:30 -0400
+Received: by iwn34 with SMTP id 34so5129082iwn.19
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 12:13:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=P6EV8Aq5BDlK01ur0nvuwkxKF8FkwJ0Z6fOIgEVkBNg=;
+        b=DzEW7f7i9w0ylDYbsRCy+/0cbokhmS++N2idoo26eNC+iEmYl4Zdi8n/1Ffdn+IedJ
+         Vr+xPcZHcvq+5s7ytk/Dlel7o2k3yth2Njr0kH2ouQB1UZBP3nUYNupDn+yNhsxeUlgu
+         HON+HF6fSLcnppGsVE8SDXHmh/XsXCX2qxoSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ujhFqR4QKy6jUD5QmJ4y5ax2WUJGz1w2/5nUr4HJWXWWRIW44wW7/FZp4da0qAw50M
+         5a5tgZ5mdNzgTTF2AOcz1i1nY0rXsduRzY6HF7c20Pl2tDlRR9JDQ9cPb1LHFAGfbopP
+         dhNWBZ5RvhVGm31Ba0HgljrKJqXLq5HR4J7zY=
+Received: by 10.42.151.131 with SMTP id e3mr9536026icw.157.1301858009647;
+        Sun, 03 Apr 2011 12:13:29 -0700 (PDT)
+Received: from elie (adsl-69-209-53-77.dsl.chcgil.sbcglobal.net [69.209.53.77])
+        by mx.google.com with ESMTPS id g16sm3167665ibb.20.2011.04.03.12.13.27
+        (version=SSLv3 cipher=OTHER);
+        Sun, 03 Apr 2011 12:13:28 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110331225909.GA21429@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170774>
 
-Dan McGee <dpmcgee@gmail.com> writes:
+Hi Junio,
 
-> diff --git a/color.h b/color.h
-> index c0528cf..a7da793 100644
-> --- a/color.h
-> +++ b/color.h
-> @@ -53,6 +53,10 @@ struct strbuf;
->   */
->  extern int git_use_color_default;
->  
-> +extern const char *column_colors_ansi[13];
-> +
-> +/* Ignore the RESET at the end when giving the size */
-> +#define COLUMN_COLORS_ANSI_MAX (ARRAY_SIZE(column_colors_ansi) - 1)
+Jonathan Nieder wrote:
 
-Sneaky.
+> Date: Fri, 18 Mar 2011 15:23:52 -0500
+[...]
+>  sha1_file.c:721: error: 'RLIMIT_NOFILE' undeclared (first use in this function)
+[...]
+> Reported-by: Stefan Sperling <stsp@stsp.name>
+> Tested-by: Stefan Sperling <stsp@stsp.name> [on OpenBSD]
+> Tested-by: Arnaud Lacombe <lacombar@gmail.com> [on FreeBSD 8]
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-I first went "Huh? -- this array-size macro cannot work", expecting that
-the array is not decleared with a fixed size in the header.
-
-It may make sense to unify these two palettes whose slot assignment does
-not have any meaning, but it feels that the above change totally goes
-against the spirit of using ARRAY_SIZE() macro, the point of which is to
-liberate programmers from having to count and adjust the size when adding
-the contents to the array.
-
-Wouldn't it make more sense to do something like
-
-    >>> in the header <<<
-    extern const char *custom_colors_ansi[];
-    extern const int CUSTOM_COLORS_ANSI_MAX;
-
-    >>> in the code <<<
-    const char *custom_colors_ansi[] = {
-            ... as before ...
-    };
-    /* Does not count the last element "RESET" */
-    const int CUSTOM_COLORS_ANSI_MAX = ARRAY_SIZE(custom_colors_ansi) - 1;
-
-to avoid mistakes?
+Ping?  Would you like a shorter commit message, or was this just lost
+in the noise?
