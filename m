@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 30/51] i18n: git-submodule "path not initialized" message
-Date: Sun,  3 Apr 2011 16:45:54 +0000
-Message-ID: <1301849175-1697-31-git-send-email-avarab@gmail.com>
+Subject: [PATCH 28/51] i18n: git-submodule "Entering [...]" message
+Date: Sun,  3 Apr 2011 16:45:52 +0000
+Message-ID: <1301849175-1697-29-git-send-email-avarab@gmail.com>
 References: <1301849175-1697-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,91 +11,100 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 03 18:48:33 2011
+X-From: git-owner@vger.kernel.org Sun Apr 03 18:48:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6QTT-0005RJ-6d
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 18:48:27 +0200
+	id 1Q6QTU-0005RJ-8i
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 18:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753278Ab1DCQsO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 12:48:14 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:59126 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752946Ab1DCQrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 12:47:00 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 4so1505877ewy.19
-        for <git@vger.kernel.org>; Sun, 03 Apr 2011 09:46:59 -0700 (PDT)
+	id S1753292Ab1DCQsT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 12:48:19 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:57591 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752704Ab1DCQq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 12:46:58 -0400
+Received: by mail-ey0-f174.google.com with SMTP id 24so1502912eyx.19
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 09:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=VbLSeJKEZh7C+LER90m9k2Gw/KRv3BUWMrkPoahWSn8=;
-        b=mOG5KV1KBxjReJkRLb2oBjzlEFes5cEn7X/fhOcFmlZL1iKcaF964kh6xVI9qsaejD
-         3zbbjIFORzqzyvF9Y5U9lwsn/JsqW6NCEejnezca7qHSuIPLoByphtNCugDx1ZP15lkz
-         2X6K3uy0hsmGm2LdZxRSgP+lZOqMNIvMLm3Gw=
+        bh=E0s0/7PZWpFgBf9/uc53y/RFlLDh/A5VJ99vLPWzZ+g=;
+        b=ddbJSq28DAHgT/TjoUL13K0c4uGblYhFC61ccuqQL1izVtK5LymH9Llx2ucEYcf2Hr
+         1B76eodT2o8vCuFl/qE3LkE/ZjB1ig/DdQ9LHlGwE7bnqDh/I35hAC/dPexnRa2kDbLq
+         /tEKJueVYFqN4PU1jT47TFIilJGC0PuippwnE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=FgzL8cH7dpjXuJzPCwLWG62COnoIVhSSTdtOMrZS1EwpUoJlSULLflbyCsNIX55oU5
-         /TToIk/h4ehq116g7b+hHnEbOAm6MroBVM6DDLCxISll2bWYK1xlqSn8tHihl7aiUT4W
-         45+hpsyDSQj21xLrt6jpBEaxH2j5a/bh8MNjE=
-Received: by 10.213.22.18 with SMTP id l18mr3085234ebb.115.1301849219341;
-        Sun, 03 Apr 2011 09:46:59 -0700 (PDT)
+        b=lmLkn4t2zIwGBRV83a/Cth6oYBZBU8uhnAoed2AvWvcz+N9d/PNDmFylJ64rLAXVVV
+         gZpb4eBCNNqgI02moscA52/d7y6jipnelNE3Fv0efCZkJOWohGiarLe9UnXpHtmj5tyF
+         w4Nxah9GBmW9h8b4JLQULypKXJWIQ5Zhki6Oo=
+Received: by 10.14.9.231 with SMTP id 79mr2922137eet.241.1301849217700;
+        Sun, 03 Apr 2011 09:46:57 -0700 (PDT)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id w59sm2750567eeh.24.2011.04.03.09.46.58
+        by mx.google.com with ESMTPS id w59sm2750567eeh.24.2011.04.03.09.46.56
         (version=SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2011 09:46:58 -0700 (PDT)
+        Sun, 03 Apr 2011 09:46:56 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.1
 In-Reply-To: <1301849175-1697-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170744>
 
-Gettextize the "Submodule path '$path' not initialized" message. This
-is explicitly tested for so we need to skip some tests with
-C_LOCALE_OUTPUT.
+Gettextize the "Entering [...]" message. This is explicitly tested for
+so we need to skip some tests with C_LOCALE_OUTPUT.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- git-submodule.sh           |    4 ++--
- t/t7400-submodule-basic.sh |    2 +-
+ git-submodule.sh             |    2 +-
+ t/t7407-submodule-foreach.sh |    4 ++--
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 43a10e2..bc24b2f 100755
+index b6c9a5b..fceacf8 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -436,8 +436,8 @@ cmd_update()
- 			# Only mention uninitialized submodules when its
- 			# path have been specified
- 			test "$#" !=3D "0" &&
--			say "Submodule path '$path' not initialized" &&
--			say "Maybe you want to use 'update --init'?"
-+			say "$(eval_gettext "Submodule path '\$path' not initialized
-+Maybe you want to use 'update --init'?")"
- 			continue
- 		fi
+@@ -289,7 +289,7 @@ cmd_foreach()
+ 	do
+ 		if test -e "$path"/.git
+ 		then
+-			say "Entering '$prefix$path'"
++			say "$(eval_gettext "Entering '\$prefix\$path'")"
+ 			name=3D$(module_name "$path")
+ 			(
+ 				prefix=3D"$prefix$path/"
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.s=
+h
+index e5be13c..4aa2d34 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -68,7 +68,7 @@ Entering 'sub3'
+ $pwd/clone-foo3-sub3-$sub3sha1
+ EOF
 =20
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 1911688..eded7e9 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -349,7 +349,7 @@ test_expect_success 'apply submodule diff' '
- 	test_cmp empty staged
- '
+-test_expect_success 'test basic "submodule foreach" usage' '
++test_expect_success C_LOCALE_OUTPUT 'test basic "submodule foreach" us=
+age' '
+ 	git clone super clone &&
+ 	(
+ 		cd clone &&
+@@ -153,7 +153,7 @@ Entering 'sub2'
+ Entering 'sub3'
+ EOF
 =20
--test_expect_success 'update --init' '
-+test_expect_success C_LOCALE_OUTPUT 'update --init' '
- 	mv init init2 &&
- 	git config -f .gitmodules submodule.example.url "$(pwd)/init2" &&
- 	git config --remove-section submodule.example &&
+-test_expect_success 'test messages from "foreach --recursive"' '
++test_expect_success C_LOCALE_OUTPUT 'test messages from "foreach --rec=
+ursive"' '
+ 	(
+ 		cd clone2 &&
+ 		git submodule foreach --recursive "true" > ../actual
 --=20
 1.7.4.1
