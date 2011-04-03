@@ -1,103 +1,93 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [GSoC 2011] Git Sequencer
-Date: Sun, 03 Apr 2011 21:07:01 +0200
-Message-ID: <1301857622.3448.134.camel@lambda>
-References: <20110403172054.GA10220@kytes>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Share color list between graph and show-branch
+Date: Sun, 03 Apr 2011 12:12:28 -0700
+Message-ID: <7v7hbbcfoj.fsf@alter.siamese.dyndns.org>
+References: <1301535506-1166-1-git-send-email-dpmcgee@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 21:07:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dan McGee <dpmcgee@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 21:12:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6Sdl-0005Me-Md
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:07:14 +0200
+	id 1Q6SjG-0007PG-8p
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:12:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753129Ab1DCTHG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 15:07:06 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:56640 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753044Ab1DCTHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 15:07:05 -0400
-Received: (qmail invoked by alias); 03 Apr 2011 19:07:02 -0000
-Received: from erft-5d80a451.pool.mediaWays.net (EHLO [192.168.1.34]) [93.128.164.81]
-  by mail.gmx.net (mp072) with SMTP; 03 Apr 2011 21:07:02 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/wmwpLrdXwD809lzzdJk3AdHrt3pFW/uu94fLFx/
-	e26w414HcqS5DT
-In-Reply-To: <20110403172054.GA10220@kytes>
-X-Mailer: Evolution 2.30.3 
-X-Y-GMX-Trusted: 0
+	id S1753135Ab1DCTMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 15:12:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60749 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752235Ab1DCTMh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 15:12:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E720B4208;
+	Sun,  3 Apr 2011 15:14:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=5KmMcEyvB/D4omjdkwxgbvMFrwM=; b=qtFxnmRQl+TR/YeH3K0e
+	UICkPpL1s/Jr90IAqfbtbyALy/wAomJVQ2TvzBD3pKjjmJDEed0zEWUuzK9T5Byy
+	uCL2vjgK/WaebkUES71tuJOIEXT2eLh4JYGDA370JaEwIBXhrvCxDKAaS3MmHmi7
+	D9lV81jXPMBT/SRUBC/l4hg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=EZg2dZhs1TS6UPwGwpntY+Ca0pxRbmrQWffH1/pxP0NUsg
+	HdspcH7qqYsGAQF3eelrO5/XvieOnTxH8clU2kbdz0SEw5PifnlXOOxRAN8pqnVk
+	OUwWgzJpADWQk8ddraWFOSLdX00xKUmjUuJswxUEl87nZXxMvlfvYl+ZPXGcA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C53F24202;
+	Sun,  3 Apr 2011 15:14:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DAFC441FF; Sun,  3 Apr 2011
+ 15:14:21 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 96747938-5E26-11E0-8CD2-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170773>
 
-Hi Ram,
+Dan McGee <dpmcgee@gmail.com> writes:
 
-first, some notes on my git-sequencer 2008 branches that can be found a=
-t
-http://repo.or.cz/w/git/sbeyer.git ... (Not sure if I remember
-everything correctly)
+> diff --git a/color.h b/color.h
+> index c0528cf..a7da793 100644
+> --- a/color.h
+> +++ b/color.h
+> @@ -53,6 +53,10 @@ struct strbuf;
+>   */
+>  extern int git_use_color_default;
+>  
+> +extern const char *column_colors_ansi[13];
+> +
+> +/* Ignore the RESET at the end when giving the size */
+> +#define COLUMN_COLORS_ANSI_MAX (ARRAY_SIZE(column_colors_ansi) - 1)
 
-I've settled to develop within the "seq-builtin-dev" branch and I
-sometimes merged Junio's "master" into that branch to catch up.
-The "seq-builtin-dev" branch is the important one.
+Sneaky.
 
-Using git rebase -i (using git-sequencer) I sometimes remanaged the
-branch to "seq-builtin-rfc" that should represent a snapshot of a
-potential patch queue. My last rebase processes of the seq-builtin-rfc
-branch were pretty unmotivated and hence messy.
+I first went "Huh? -- this array-size macro cannot work", expecting that
+the array is not decleared with a fixed size in the header.
 
-I have not touched the repo very often after GSOC'08 and I stopped
-touching it (as I stopped following recent Git development) "20 months
-ago" apparently. Quite many things may have changed since then.
+It may make sense to unify these two palettes whose slot assignment does
+not have any meaning, but it feels that the above change totally goes
+against the spirit of using ARRAY_SIZE() macro, the point of which is to
+liberate programmers from having to count and adjust the size when adding
+the contents to the array.
 
-The file A_SEQUENCER_TODO_FILE (added 2009-08-03) in the repo describes
-the missing and buggy pieces to fix so that _I_ (only me) would have
-been 100 per cent satisfied with that git-sequencer.
-http://repo.or.cz/w/git/sbeyer.git/blob/9e4b4d92f681a47e3d7ad2152d2391b=
-2ab125a0c:/A_SEQUENCER_TODO_FILE
-[Some notes are also "strategy notes" to get things accepted, like the
-changes on "rebase -i -p" which are "not loved by everyone". ;-)]
+Wouldn't it make more sense to do something like
 
-On 2011-04-03, 22:50 +0530, Ramkumar Ramachandra wrote:=20
-> * Is this a good change? Are there any forseeable issues?
+    >>> in the header <<<
+    extern const char *custom_colors_ansi[];
+    extern const int CUSTOM_COLORS_ANSI_MAX;
 
-I want to mention an issue that I have not foreseen before: merges.
-(You need merges, for example, when doing rebase -i -p ... -p as in
---preserve-merges.)
+    >>> in the code <<<
+    const char *custom_colors_ansi[] = {
+            ... as before ...
+    };
+    /* Does not count the last element "RESET" */
+    const int CUSTOM_COLORS_ANSI_MAX = ARRAY_SIZE(custom_colors_ansi) - 1;
 
-When I began, there was code in the "next" branch that added the TODO
-instructions "mark", "reset" and "merge" to do merges properly and I
-based my work on it. The original pieces by J=C3=B6rg Sommer can still =
-be
-found here:
-http://repo.or.cz/w/git/sbeyer.git/shortlog/6fabd85e8a777c26f3ae8ce11cb=
-7f4265502ea7f
-
-However, there have been strong opinions that the "mark"/"reset"/"merge=
-"
-instructions are ugly and unpleasant to users and not even necessary (a=
-t
-least for rebase--interactive... and for sequencer, maybe, maybe not).=20
-Hence, the code in "next" has been rejected later.
-
-During GSOC 2008 I regrettably underestimated the importance to
-communicate with the Git folks about these things. That's one of the
-main reasons the sequencer pieces did not get into master. And after
-GSOC'08 I had too little time for this... :-/
-
-Well, the merging thing is the only *real* issue I remember.
-
-Good luck and regards,
-  Stephan
+to avoid mistakes?
