@@ -1,176 +1,331 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.4.3
-Date: Sun, 03 Apr 2011 01:36:24 -0700
-Message-ID: <7v4o6fg29j.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [RFC PATCH] convert: add functions to check if we can bypass conversion
+Date: Sun,  3 Apr 2011 16:10:07 +0700
+Message-ID: <1301821807-16914-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 03 10:37:12 2011
+X-From: git-owner@vger.kernel.org Sun Apr 03 11:10:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6Io3-00027F-SF
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 10:37:12 +0200
+	id 1Q6JKE-0003Ro-7z
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 11:10:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737Ab1DCIgm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 04:36:42 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60945 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904Ab1DCIgj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Apr 2011 04:36:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 111672F17;
-	Sun,  3 Apr 2011 04:38:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=IFPbyABZp7uutYdPwnc4x6Cpa
-	J8=; b=N26FlUCW4m/4HC9b0bRPq7hS0zwhV2j+ySqPXy2AOc5eNS+f7ZAiQejbB
-	s11ylZg2n9ndxKyjTKqlc4HWoVZwSa6hX6i1F4JsmcSGzIDcS9rjGnGOflSO0gE5
-	LDiri/o1sgNfXShDfcDpu+h/yWcpA7nw9NiWwiyvaUjiMOWo2A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=V1yAuxkll+2EYhFJv33
-	0dHXf06++/ZWTPyTRqgY0aloQOyTD7JKiOH6DLDj77zaJOpwZzndmh/sSOX+sdav
-	e6XpJqxMgFxpK3jINqyyjzycWpYPNkN7xevG/qFpYJn3B180gm5ka6OQfyYLldyC
-	GJFobrD+S65Ebkhgoxpp6ef4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D26232F16;
-	Sun,  3 Apr 2011 04:38:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 791EB2F15; Sun,  3 Apr 2011
- 04:38:21 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BDF4F932-5DCD-11E0-8A5B-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751168Ab1DCJKU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2011 05:10:20 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:48616 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750784Ab1DCJKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 05:10:19 -0400
+Received: by iyb14 with SMTP id 14so4983897iyb.19
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 02:10:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=dzjQn/+gDGQzlJE8xAtNMtjoaUbBT8rqzV1V2PLTPl0=;
+        b=ZARpTwCSHggoYezP4USuJ1OMSAlirHXNP/pJk+rwdXeoU5uQ5QEOQjkjQBlkPTYobf
+         4q7tUI0jNuNyRK+QlZ+cOyriavz1YklkfAcJRfSSQsjTz3SfQ2T7xCNWYuUXuGji8Fro
+         GOzpYU/NTW8Eij24h18mCnmRmhW7oJwuv9d3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=vTbFn53s5zphG6+xiK2TOyIJYLYs6Ay0FCpZYOgCZCbIeieNDZyJUH6lvH3xoucz8V
+         mjboMzy82YcDuRmtZctlAuHrwGAN6yupWkVoFTOkiHeLzmkzVtCbB+hY07MQu96aI0O6
+         zrpJJs20N/ZJ/dVmNKt8Q4KFGq3arxcgcWRVg=
+Received: by 10.43.69.208 with SMTP id yd16mr2713368icb.158.1301821817941;
+        Sun, 03 Apr 2011 02:10:17 -0700 (PDT)
+Received: from tre ([115.73.209.201])
+        by mx.google.com with ESMTPS id gx2sm2849132ibb.43.2011.04.03.02.10.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 03 Apr 2011 02:10:17 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Sun, 03 Apr 2011 16:10:08 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170686>
 
-The latest maintenance release Git 1.7.4.3 is available at the
-usual places:
+Blob conversion from/to repository requires the entire blob in memory.
+The conversion is rarely used most of the time and that requirement
+could put pressure on memory for large blobs.
 
-  http://www.kernel.org/pub/software/scm/git/
+Add two functions to determine early whether we can bypass conversion
+without looking at the content.
 
-  git-1.7.4.3.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.4.3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.4.3.tar.{gz,bz2}		(preformatted docs)
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ I have patches to checkout loose objects directly to working tree but
+ they are ugly and do not support packs. We probably should flag deltif=
+ied
+ objects as "conversion required" too.
 
-The RPM binary packages for a few architectures are found in:
+ Anyway I think the intention of this patch is good. Whatever we are
+ going to do with large blobs wrt memory usage, we need to cut this
+ part out, or support streaming conversion interface. I doubt the
+ latter would come.
 
-  RPMS/$arch/git-*-1.7.4.3-1.fc13.$arch.rpm	(RPM)
+ cache.h   |    3 ++
+ convert.c |   79 +++++++++++++++++++++++++++++++++++++++++++++++------=
+-------
+ 2 files changed, 65 insertions(+), 17 deletions(-)
 
-Git v1.7.4.3 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-
-=46ixes since v1.7.4.2
---------------------
-
- * "git apply" used to confuse lines updated by previous hunks as lines
-   that existed before when applying a hunk, contributing misapplicatio=
-n
-   of patches with offsets.
-
- * "git branch --track" (and "git checkout --track --branch") used to
-   allow setting up a random non-branch that does not make sense to fol=
-low
-   as the "upstream".  The command correctly diagnoses it as an error.
-
- * "git checkout $other_branch" silently removed untracked symbolic lin=
-ks
-   in the working tree that are in the way in order to check out paths
-   under it from the named branch.
-
- * "git cvsimport" did not bail out immediately when the cvs server can=
-not
-   be reached, spewing unnecessary error messages that complain about t=
-he
-   server response that it never got.
-
- * "git diff --quiet" did not work very well with the "--diff-filter"
-   option.
-
- * "git grep -n" lacked a long-hand synonym --line-number.
-
- * "git stash apply" reported the result of its operation by running
-   "git status" from the top-level of the working tree; it should (and
-   now does) run it from the user's working directory.
-
-And other minor fixes and documentation updates.
-
-----------------------------------------------------------------
-
-Changes since v1.7.4.2 are as follows:
-
-Alex Riesen (1):
-      HOME must be set before calling git-init when creating test repos=
-itories
-
-Carlos Mart=C3=ADn Nieto (1):
-      Documentation/config.txt: make truth value of numbers more explic=
-it
-
-Clemens Buchacher (1):
-      do not overwrite untracked symlinks
-
-=46abian Keil (1):
-      git-cvsimport.perl: Bail out right away when reading from the ser=
-ver fails
-
-Jeff King (1):
-      docs: fix filter-branch subdir example for exotic repo names
-
-Joe Ratterman (1):
-      grep: Add the option '--line-number'
-
-Johan Herland (1):
-      branch/checkout --track: Ensure that upstream branch is indeed a =
-branch
-
-Johannes Sixt (3):
-      Demonstrate breakage: checkout overwrites untracked symlink with =
-directory
-      stash: fix incorrect quoting in cleanup of temporary files
-      stash: copy the index using --index-output instead of cp -p
-
-Junio C Hamano (9):
-      checkout: fix bug with ambiguous refs
-      apply: do not patch lines that were already patched
-      apply -v: show offset count when patch did not apply exactly
-      diff --quiet: disable optimization when --diff-filter=3DX is used
-      doc: technical details about the index file format
-      t8001: check the exit status of the command being tested
-      parse-remote: typofix
-      Doc: mention --delta-base-offset is the default for Porcelain com=
-mands
-      Git 1.7.4.3
-
-Maxin john (1):
-      contrib/thunderbird-patch-inline: do not require bash to run the =
-script
-
-Michael J Gruber (2):
-      git-bisect.txt: streamline run presentation
-      git-bisect.txt: example for bisecting with hot-fix
-
-Michael Witten (3):
-      git tag documentation grammar fixes and readability updates
-      Typos: t/README
-      strbuf.h: remove a tad stale docs-in-comment and reference api-do=
-c instead
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-      doc: technical details about the index file format
-
-Piotr Krukowiecki (2):
-      git stash: show status relative to current directory
-      Add test: git stash shows status relative to current dir
-
-Stephen Boyd (2):
-      parse-remote: replace unnecessary sed invocation
-      git-pack-objects.txt: fix grammatical errors
+diff --git a/cache.h b/cache.h
+index 08a9022..be3845d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1091,7 +1091,10 @@ extern void trace_repo_setup(const char *prefix)=
+;
+ /* returns 1 if *dst was used */
+ extern int convert_to_git(const char *path, const char *src, size_t le=
+n,
+                           struct strbuf *dst, enum safe_crlf checksafe=
+);
++extern int convert_to_git_needed(const char *path, size_t len,
++				 enum safe_crlf checksafe);
+ extern int convert_to_working_tree(const char *path, const char *src, =
+size_t len, struct strbuf *dst);
++extern int convert_to_working_tree_needed(const char *path, size_t len=
+);
+ extern int renormalize_buffer(const char *path, const char *src, size_=
+t len, struct strbuf *dst);
+=20
+ /* add */
+diff --git a/convert.c b/convert.c
+index d5aebed..39545ed 100644
+--- a/convert.c
++++ b/convert.c
+@@ -188,7 +188,8 @@ static int has_cr_in_index(const char *path)
+ }
+=20
+ static int crlf_to_git(const char *path, const char *src, size_t len,
+-		       struct strbuf *buf, enum action action, enum safe_crlf checks=
+afe)
++		       struct strbuf *buf, enum action action,
++		       enum safe_crlf checksafe, int dry_run)
+ {
+ 	struct text_stat stats;
+ 	char *dst;
+@@ -197,6 +198,9 @@ static int crlf_to_git(const char *path, const char=
+ *src, size_t len,
+ 	    (action =3D=3D CRLF_GUESS && auto_crlf =3D=3D AUTO_CRLF_FALSE) ||=
+ !len)
+ 		return 0;
+=20
++	if (dry_run)
++		return 1;
++
+ 	gather_stats(src, len, &stats);
+=20
+ 	if (action =3D=3D CRLF_AUTO || action =3D=3D CRLF_GUESS) {
+@@ -257,7 +261,7 @@ static int crlf_to_git(const char *path, const char=
+ *src, size_t len,
+ }
+=20
+ static int crlf_to_worktree(const char *path, const char *src, size_t =
+len,
+-			    struct strbuf *buf, enum action action)
++			    struct strbuf *buf, enum action action, int dry_run)
+ {
+ 	char *to_free =3D NULL;
+ 	struct text_stat stats;
+@@ -265,6 +269,9 @@ static int crlf_to_worktree(const char *path, const=
+ char *src, size_t len,
+ 	if (!len || determine_output_conversion(action) !=3D EOL_CRLF)
+ 		return 0;
+=20
++	if (dry_run)
++		return 1;
++
+ 	gather_stats(src, len, &stats);
+=20
+ 	/* No LF? Nothing to convert, regardless. */
+@@ -374,7 +381,7 @@ static int filter_buffer(int in, int out, void *dat=
+a)
+ }
+=20
+ static int apply_filter(const char *path, const char *src, size_t len,
+-                        struct strbuf *dst, const char *cmd)
++			struct strbuf *dst, const char *cmd, int dry_run)
+ {
+ 	/*
+ 	 * Create a pipeline to have the command filter the buffer's
+@@ -390,6 +397,9 @@ static int apply_filter(const char *path, const cha=
+r *src, size_t len,
+ 	if (!cmd)
+ 		return 0;
+=20
++	if (dry_run)
++		return 1;
++
+ 	memset(&async, 0, sizeof(async));
+ 	async.proc =3D filter_buffer;
+ 	async.data =3D &params;
+@@ -541,11 +551,17 @@ static int count_ident(const char *cp, unsigned l=
+ong size)
+ }
+=20
+ static int ident_to_git(const char *path, const char *src, size_t len,
+-                        struct strbuf *buf, int ident)
++			struct strbuf *buf, int ident, int dry_run)
+ {
+ 	char *dst, *dollar;
+=20
+-	if (!ident || !count_ident(src, len))
++	if (!ident)
++		return 0;
++
++	if (dry_run)
++		return 1;
++
++	if(!count_ident(src, len))
+ 		return 0;
+=20
+ 	/* only grow if not in place */
+@@ -582,7 +598,7 @@ static int ident_to_git(const char *path, const cha=
+r *src, size_t len,
+ }
+=20
+ static int ident_to_worktree(const char *path, const char *src, size_t=
+ len,
+-                             struct strbuf *buf, int ident)
++			     struct strbuf *buf, int ident, int dry_run)
+ {
+ 	unsigned char sha1[20];
+ 	char *to_free =3D NULL, *dollar, *spc;
+@@ -591,6 +607,9 @@ static int ident_to_worktree(const char *path, cons=
+t char *src, size_t len,
+ 	if (!ident)
+ 		return 0;
+=20
++	if (dry_run)
++		return 1;
++
+ 	cnt =3D count_ident(src, len);
+ 	if (!cnt)
+ 		return 0;
+@@ -726,8 +745,9 @@ static enum action determine_action(enum action tex=
+t_attr, enum eol eol_attr)
+ 	return text_attr;
+ }
+=20
+-int convert_to_git(const char *path, const char *src, size_t len,
+-                   struct strbuf *dst, enum safe_crlf checksafe)
++static int convert_to_git_1(const char *path, const char *src, size_t =
+len,
++			    struct strbuf *dst, enum safe_crlf checksafe,
++			    int dry_run)
+ {
+ 	struct git_attr_check check[5];
+ 	enum action action =3D CRLF_GUESS;
+@@ -748,23 +768,39 @@ int convert_to_git(const char *path, const char *=
+src, size_t len,
+ 			filter =3D drv->clean;
+ 	}
+=20
+-	ret |=3D apply_filter(path, src, len, dst, filter);
++	ret |=3D apply_filter(path, src, len, dst, filter, dry_run);
+ 	if (ret) {
++		if (dry_run)
++			return 1;
+ 		src =3D dst->buf;
+ 		len =3D dst->len;
+ 	}
+ 	action =3D determine_action(action, eol_attr);
+-	ret |=3D crlf_to_git(path, src, len, dst, action, checksafe);
++	ret |=3D crlf_to_git(path, src, len, dst, action, checksafe, dry_run)=
+;
+ 	if (ret) {
++		if (dry_run)
++			return 1;
+ 		src =3D dst->buf;
+ 		len =3D dst->len;
+ 	}
+-	return ret | ident_to_git(path, src, len, dst, ident);
++	return ret | ident_to_git(path, src, len, dst, ident, dry_run);
++}
++
++int convert_to_git(const char *path, const char *src, size_t len,
++		   struct strbuf *dst, enum safe_crlf checksafe)
++{
++	return convert_to_git_1(path, src, len, dst, checksafe, 0);
++}
++
++int convert_to_git_needed(const char *path, size_t len,
++			  enum safe_crlf checksafe)
++{
++	return convert_to_git_1(path, NULL, len, NULL, checksafe, 1);
+ }
+=20
+ static int convert_to_working_tree_internal(const char *path, const ch=
+ar *src,
+ 					    size_t len, struct strbuf *dst,
+-					    int normalizing)
++					    int normalizing, int dry_run)
+ {
+ 	struct git_attr_check check[5];
+ 	enum action action =3D CRLF_GUESS;
+@@ -785,8 +821,10 @@ static int convert_to_working_tree_internal(const =
+char *path, const char *src,
+ 			filter =3D drv->smudge;
+ 	}
+=20
+-	ret |=3D ident_to_worktree(path, src, len, dst, ident);
++	ret |=3D ident_to_worktree(path, src, len, dst, ident, dry_run);
+ 	if (ret) {
++		if (dry_run)
++			return 1;
+ 		src =3D dst->buf;
+ 		len =3D dst->len;
+ 	}
+@@ -796,23 +834,30 @@ static int convert_to_working_tree_internal(const=
+ char *path, const char *src,
+ 	 */
+ 	if (filter || !normalizing) {
+ 		action =3D determine_action(action, eol_attr);
+-		ret |=3D crlf_to_worktree(path, src, len, dst, action);
++		ret |=3D crlf_to_worktree(path, src, len, dst, action, dry_run);
+ 		if (ret) {
++			if (dry_run)
++				return 1;
+ 			src =3D dst->buf;
+ 			len =3D dst->len;
+ 		}
+ 	}
+-	return ret | apply_filter(path, src, len, dst, filter);
++	return ret | apply_filter(path, src, len, dst, filter, dry_run);
+ }
+=20
+ int convert_to_working_tree(const char *path, const char *src, size_t =
+len, struct strbuf *dst)
+ {
+-	return convert_to_working_tree_internal(path, src, len, dst, 0);
++	return convert_to_working_tree_internal(path, src, len, dst, 0, 0);
++}
++
++int convert_to_working_tree_needed(const char *path, size_t len)
++{
++	return convert_to_working_tree_internal(path, NULL, len, NULL, 0, 1);
+ }
+=20
+ int renormalize_buffer(const char *path, const char *src, size_t len, =
+struct strbuf *dst)
+ {
+-	int ret =3D convert_to_working_tree_internal(path, src, len, dst, 1);
++	int ret =3D convert_to_working_tree_internal(path, src, len, dst, 1, =
+0);
+ 	if (ret) {
+ 		src =3D dst->buf;
+ 		len =3D dst->len;
+--=20
+1.7.4.74.g639db
