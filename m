@@ -1,69 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH maint resend] compat: add missing #include
- <sys/resource.h>
-Date: Sun, 03 Apr 2011 12:27:32 -0700
-Message-ID: <7vlizrb0ez.fsf@alter.siamese.dyndns.org>
-References: <1300271879-2050-1-git-send-email-stsp@stsp.name>
- <20110318202351.GA22696@elie> <20110331225909.GA21429@elie>
- <20110403191324.GE3830@elie>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [GSoC 2011] Git Sequencer
+Date: Sun, 3 Apr 2011 15:49:32 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1104031407480.14365@iabervon.org>
+References: <20110403172054.GA10220@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Stefan Sperling <stsp@stsp.name>,
-	Arnaud Lacombe <lacombar@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 21:27:56 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>, Stephen Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 21:56:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6Sxo-0004Qd-A7
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:27:56 +0200
+	id 1Q6TPJ-0005gW-JW
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 21:56:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256Ab1DCT1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 15:27:51 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42766 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752748Ab1DCT1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 15:27:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 577C5438F;
-	Sun,  3 Apr 2011 15:29:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=81r6JZ6ifNQTfv6KPvrgnb3w9wU=; b=CCjYdL
-	lslFOdq2+46ELBnO7fKm+hsut4Zwy+NRcsZYNfr+wldh50o3V03m+oRc6A/A0/UM
-	NPYaZslaCx71trmmXGo1dk3GQa/M4qWF0PZc7MYwx11YRkaof7Ts6PrchnbM8Ilx
-	9eXCpm2eAf6CtbGbnubEpvNRGOLAUf7yRWZnA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=btM3eUziTAtHLMl/7w1iBmlK68B5HHyp
-	SvHy4bLS8WPYc1xc0sfgbKXixlwrJudoWCJpbkcCmAf+GUzSsEbtnzcY3ejRL67v
-	5FpcKo8X3NSJBLKniFYUE1r3VRMQMoItQwzoSjvppLOCXaeAB4OOwHQS9hO4qIuK
-	HYni5Sb11Gc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EA3FA438E;
-	Sun,  3 Apr 2011 15:29:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 060AA438A; Sun,  3 Apr 2011
- 15:29:25 -0400 (EDT)
-In-Reply-To: <20110403191324.GE3830@elie> (Jonathan Nieder's message of "Sun,
- 3 Apr 2011 14:13:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B4F455A2-5E28-11E0-8E3F-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753299Ab1DCT4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 15:56:15 -0400
+Received: from iabervon.org ([66.92.72.58]:47666 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753183Ab1DCT4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 15:56:14 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Apr 2011 15:56:14 EDT
+Received: (qmail 29837 invoked by uid 1000); 3 Apr 2011 19:49:32 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 3 Apr 2011 19:49:32 -0000
+In-Reply-To: <20110403172054.GA10220@kytes>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170779>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sun, 3 Apr 2011, Ramkumar Ramachandra wrote:
 
-> Ping?  Would you like a shorter commit message, or was this just lost
-> in the noise?
+> Hi,
+> 
+> I'd like to re-apply this year as a student because I really want to
+> see (among other things), a sequencer in git.git.  Also, since I
+> worked on areas related to fast-import and remote helpers last year, I
+> thought I should work on something completely orthogonal this year.
+> 
+> I now have a draft of my proposal ready, and I'd really appreciate
+> feedback.  Also, could someone mentor me?
+> 
+> ======================================================================
+> Project Proposal: Git Sequencer
+> Student: Ramkumar Ramachandra
+> Mentor: ?
+> 
+> == The Objective ==
+> 
+> To write git-sequencer, a new builtin command, and implement existing
+> commands on top of that.  This should give the commands more
+> functionality, improve their error handling, and make them faster.
+> The project can only be considered successful if all (or most) of the
+> code written gets merged into upstream.
+> 
+> The Git Sequencer was a 2008 GSoC project as well; unfortunately most
+> of the code did not get merged into git.git.  The learning from all
+> that work should serve as a huge headstart this year.
 
-No, it was sitting in my to-be-applied box.  Thanks.
+One of the things that is hard about sequencer is that it is ultimately a 
+complete replacement for several differently-implemented programs in 
+different languages, with different temporary file formats and differrent 
+supported operations. As such, you could probably spend an entire summer 
+just getting it reviewed, revised, and accepted, starting with a working 
+implementation.
+
+So I think your proposal is good in how [1/5] includes getting something 
+useful merged. My suspicion is that the outcome will be something like 
+that you implemented all 7 tasks and got 4 of them merged, assuming that 
+you really push getting things merged as soon as they're ready, without 
+spending too much time porting other things to use the core and getting 
+the ports reviewed before the core is accepted.
+
+I actually think that it would be a worthwhile feature for git's library 
+code to have a uniform mechanism for communicating that it is requesting 
+human intervention in the middle of a particular operation, where library 
+operations which conflict with being able to continue this operation are 
+either blocked or abort the operation, and the library is able to be told 
+in general that the human intervention is done and the library operation 
+should be finished now (or produce complaints about the user's work). That 
+is, a library-level, single-interrupted-step "sequencer". For that matter, 
+it should also apply to the common '"git merge" gets a conflict' case, and 
+it would be useful to get some representational uniformity between that 
+and cherry-pick getting a conflict.
+
+I think replacing existing multi-step processes is going to be a lot more 
+contentious and involve user-visible changes which involve matters of 
+taste and such. But I think you can make a valuable contribution in how a 
+single current step is handled before getting tangled in that, and be much 
+more likely to get a useful outcome than if you try to tackle the whole 
+problem.
+
+	-Daniel
+*This .sig left intentionally blank*
