@@ -1,71 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Background processes in post-receive hook
-Date: Sat, 02 Apr 2011 17:35:23 -0700
-Message-ID: <7v8vvsgoj8.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinrEt6DkwhknpDZ0iV9PR+7bBd3DAaPRJOgNFTG@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git: ideas and libgit2
+Date: Sat, 2 Apr 2011 20:01:05 -0500
+Message-ID: <20110403010040.GA25840@elie>
+References: <AANLkTimry9cvwQZ1bJYeUK6xafahtw-FgOWnDggfLdxJ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 02:35:51 2011
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 03:01:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6BIF-0007F5-G0
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 02:35:51 +0200
+	id 1Q6Bh3-00058j-KC
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Apr 2011 03:01:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757541Ab1DCAff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2011 20:35:35 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54610 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757523Ab1DCAfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2011 20:35:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A12D14D23;
-	Sat,  2 Apr 2011 20:37:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fMAsX+LwYEz6MAasvzeD3qmPhdM=; b=plqh3n
-	0J6YNyC1pbImxJtdF0f6yOxU5kt/jizjJT2oBUIoQ3dt3MrgNSvctQHaiA9jFHzH
-	uYMi6DSNYZLlBFX2N7Q5Dwl66LzCtaJn6nNFgtgmcTWRDzgV+99GF9ZIAt87u0Nm
-	RnTMMQqPmaBBD/xwHgKMDGZ7XzIw5L0sn4Nr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Foz7etT3VBqu+yRNe4xpjuVOFHy7m6/N
-	pSzskulJ7iR+hxs85xRGJop6s2TrJdGV9W6cQt2oWShEcWG+YKdm+eyym09oMj02
-	ypwb6UTi07Afm2KGZXyVygNBAc20GMZFYjs0goKpEM6hoFfKKFZsbOP8+f0RwOrU
-	ZAhJ1EOStrA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7F4274D21;
-	Sat,  2 Apr 2011 20:37:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 98F644D1E; Sat,  2 Apr 2011
- 20:37:17 -0400 (EDT)
-In-Reply-To: <AANLkTinrEt6DkwhknpDZ0iV9PR+7bBd3DAaPRJOgNFTG@mail.gmail.com>
- (James Pickens's message of "Sat, 2 Apr 2011 16:03:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 88E019A4-5D8A-11E0-A438-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1757570Ab1DCBBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2011 21:01:12 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:33355 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757465Ab1DCBBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2011 21:01:11 -0400
+Received: by iyb14 with SMTP id 14so4780863iyb.19
+        for <git@vger.kernel.org>; Sat, 02 Apr 2011 18:01:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=tCblE/M7Mto9Catj4qr+sQt+NdXg/7oaERunhnWSt1k=;
+        b=Gbhsq4sctGpsxSiEHFlIH3884pXWShWF9f6DwHFSQ540sBJA29H3Q9lDB7MaMzGCy1
+         Ajii70CRF30c40uMI8xj2bGxkZ8g3wBRYQkJGLm7disf4kzl5muu7x7KM4QI2gIcHJOo
+         6NGan3air4KFSNdCIP9fAgFM+n4eguOxRd5Rs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=F4OWjPaUyVRPrPAKV7XYhH4oTeTIDRbIzr/3Qh2E+eYPhdcv7PykRXkyyrrXgxitmk
+         pQBhwdPopyLkY0zbkEWQw5w1A40kMp6RfKmTxofYUIyMl/IZTmVkYfC4CSEnDPWoKU3j
+         d8iUzTxGexzOo7SYCrUcbjRLJtxKgdMI4I+IE=
+Received: by 10.231.80.193 with SMTP id u1mr5583629ibk.87.1301792470850;
+        Sat, 02 Apr 2011 18:01:10 -0700 (PDT)
+Received: from elie (adsl-68-255-107-98.dsl.chcgil.ameritech.net [68.255.107.98])
+        by mx.google.com with ESMTPS id y10sm2579063iba.46.2011.04.02.18.01.09
+        (version=SSLv3 cipher=OTHER);
+        Sat, 02 Apr 2011 18:01:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimry9cvwQZ1bJYeUK6xafahtw-FgOWnDggfLdxJ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170670>
 
-James Pickens <jepicken@gmail.com> writes:
+(cc-ing the git list; hoping that's okay.)
+Hi Thiago,
 
-> I have a post-receive hook (bash script) that launches several background
-> processes and exits immediately.  I do that so I don't have to wait for the
-> background processes to finish every time I push to the repository, but Git
-> seems to wait for them to finish anyways, even though the post-receive hook
-> itself already exited.  Is there any way to stop Git from waiting and let the
-> push finish immediately?
+Thiago Farina wrote:
 
-An easy way to do that is to run whatever lengthy process you do not want
-to wait for using
+> Would you help me to find some ideas to work on git? I'd also be
+> interested in working in some API related to libgit2.
 
-	echo "that command" | at now
+I'm probably not a good bet for that, since I'm not familiar with
+libgit2 at all.  You'd probably want to contact the libgit2 list at
+<libgit2@librelist.org>.
 
-in the hook ;-).
+Because of Google's summer program there's a list of potential
+projects at <https://git.wiki.kernel.org/index.php/SoC2011Ideas>.
+Some people were mentioning the possibility of keeping a list like
+this year-round, to give people something to hack on.
+
+I can help find a project in the field of merge, remote helpers,
+documentation processing, or startup procedure (repository discovery
+and option parsing).  Or you can steal a project from me, if you'd
+like.  Here's a few:
+
+ - glibc: <http://sourceware.org/bugzilla/show_bug.cgi?id=6530>.
+   This is desperately needed before translated output from the
+   git cli becomes possible.
+
+ - unifdef: split into coroutines following the stages of
+   preprocessing described by the C standard, so it can handle more
+   real-life preprocessor conditionals.  This should help with
+   understanding the #ifdef-ed mess that is glibc's printf (see
+   above).
+
+ - various git commands: support --patience, for patience diff.
+   Make a simple test script to demonstrate that it's turned on.
+   Especially nice would be "git add -p".
+   http://bugs.debian.org/522361
+
+ - daemon: add some tests (using daemon --inetd, presumably).
+   Let the client know when the repository is inaccessible:
+   http://thread.gmane.org/gmane.comp.version-control.git/145456/focus=145573
+
+ - daemon: add an option to stop tolerating inability to listen
+   on one of the supplied interfaces.  Make a sysvinit / systemd /
+   runit / whatever script describing best practices for running a
+   persistent git daemon for contrib.
+
+ - git test suite: find the remaining missing "&&"-s, fix them, and
+   make future tests without them automatically fail.
+   http://thread.gmane.org/gmane.comp.version-control.git/157903/focus=158265
+
+ - scripts: use "set -u" in git-sh-setup, and fix the errors that
+   result.  Some of the fixes won't be suitable for mainline: e.g.
+   use of GIT_ variables would have to change to
+
+	if test "${GIT_FOO:+set}"
+	then
+		... use GIT_ variable ...
+	fi
+
+   to suppress the error, but I doubt mainline git wants it.  Other
+   fixes (protecting against the environment by initializing local
+   variables to be empty) would be very much suitable for mainline.
+
+ - contrib: make a Makefile so the invoker can install all the crazy
+   contributed goodies at once if she wants to.
+
+ - look for interesting (possibly old) patch series on the list
+   (like the whole-directory-rename series!) and nudge them forward.
+
+Hope that helps,
+Jonathan
