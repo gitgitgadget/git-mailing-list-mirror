@@ -1,196 +1,86 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [GSoC 2011] Git Sequencer
-Date: Mon, 4 Apr 2011 14:59:59 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.1104041319570.14365@iabervon.org>
-References: <20110403172054.GA10220@kytes> <alpine.LNX.2.00.1104031407480.14365@iabervon.org> <20110404040610.GA30737@kytes> <20110404045437.GA2208@kytes>
+From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+Subject: [PATCH 1/2] git-svn: Fix the commit-url config to be the base url, just like the url config
+Date: Mon,  4 Apr 2011 15:09:07 -0400
+Message-ID: <1301944148-7950-2-git-send-email-asedeno@mit.edu>
+References: <1301944148-7950-1-git-send-email-asedeno@mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>, Stephen Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 21:00:12 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: James Y Knight <jknight@itasoftware.com>,
+	=?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Apr 04 21:09:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6p0T-0005NR-Vs
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 21:00:10 +0200
+	id 1Q6p9Q-00035Q-M3
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 21:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019Ab1DDTAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 15:00:01 -0400
-Received: from iabervon.org ([66.92.72.58]:60347 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753276Ab1DDTAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 15:00:00 -0400
-Received: (qmail 20229 invoked by uid 1000); 4 Apr 2011 18:59:59 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Apr 2011 18:59:59 -0000
-In-Reply-To: <20110404045437.GA2208@kytes>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755198Ab1DDTJT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 15:09:19 -0400
+Received: from mx1.itasoftware.com ([63.115.78.20]:35814 "EHLO
+	mx1.itasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755135Ab1DDTJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 15:09:18 -0400
+Received: from ita4mta2.internal.itasoftware.com (ita4mta2.internal.itasoftware.com [10.4.52.168])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.itasoftware.com (Postfix) with ESMTP id 20323256D42;
+	Mon,  4 Apr 2011 15:09:11 -0400 (EDT)
+Received: from asedeno.corp.itasoftware.com (lb1.dc4nat150.dc4.internal.itasoftware.com [10.4.199.150])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ita4mta2.internal.itasoftware.com (Postfix) with ESMTPS id E8B5F19D8039;
+	Mon,  4 Apr 2011 15:09:10 -0400 (EDT)
+Received: from asedeno by asedeno.corp.itasoftware.com with local (Exim 4.74)
+	(envelope-from <asedeno@asedeno.corp.itasoftware.com>)
+	id 1Q6p9C-0004C7-SR; Mon, 04 Apr 2011 15:09:10 -0400
+X-Mailer: git-send-email 1.7.4.2.1.gd6f1f
+In-Reply-To: <1301944148-7950-1-git-send-email-asedeno@mit.edu>
+X-ITASoftware-MailScanner: Found to be clean
+X-ITASoftware-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-1, required 3, ALL_TRUSTED -1.00)
+X-ITASoftware-MailScanner-From: asedeno@itasoftware.com
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170835>
 
-On Mon, 4 Apr 2011, Ramkumar Ramachandra wrote:
+=46rom: James Y Knight <jknight@itasoftware.com>
 
-> Hi Daniel,
-> 
-> Ramkumar Ramachandra writes:
-> > Daniel Barkalow writes:
-> > > I actually think that it would be a worthwhile feature for git's library 
-> > > code to have a uniform mechanism for communicating that it is requesting 
-> > > human intervention in the middle of a particular operation, where library 
-> > > operations which conflict with being able to continue this operation are 
-> > > either blocked or abort the operation, and the library is able to be told 
-> > > in general that the human intervention is done and the library operation 
-> > > should be finished now (or produce complaints about the user's work). That 
-> > > is, a library-level, single-interrupted-step "sequencer". For that matter, 
-> > > it should also apply to the common '"git merge" gets a conflict' case, and 
-> > > it would be useful to get some representational uniformity between that 
-> > > and cherry-pick getting a conflict.
-> 
-> [...]
-> 
-> > int sequencer_handle_conflict(); /* Returns ABORT (1) or RESOLVED (0) */
-> > 
-> > /**
-> >  * The sequencer_handle_conflict function essentially starts with a
-> >  * working tree with unmerged files and results in either a working
-> >  * tree without unmerged files (in which case it returns 0), or simply
-> >  * returns 1.  Advantage: Consistency. Each individual script will not
-> >  * have to maintain its own temporary files.
-> >  */
-> 
-> Uh, no.  I wrote this part in too quickly.  Clearly needs more
-> thought.
+This is necessary if you want to be able to commit to multiple branches=
+=2E
 
-Here's how I'm thinking about a single step:
+Signed-off-by: James Y Knight <jknight@itasoftware.com>
+Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+---
+ git-svn.perl |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-The non-conflict case is:
-
-  $ git cherry-pick ...
-  figure out what we're asked to do
-  make the change to the working directory and index
-  make the commit with info from the commit we're cherry-picking
-
-The conflict case should be:
-
-  $ git cherry-pick ...
-  figure out what we're asked to do
-  make the change to the working directory and index
-  discover problem, set up for human assistance, tweak info to say that we 
-    needed help
-  $ fix stuff
-  $ git continue
-  check that everything is how it should be
-  make the commit with info from the commit we're cherry-picking
-
-That is, the code that cherry-picks one commit can quit in the middle and 
-resume after the user finishes helping, and the main entry point to git 
-can resume that operation.
-
-So, my thought was that you'd have something like:
-
-cherry_pick_conflict = { 
-  "cherry-pick", APPLIES_TO_CURRENT_BRANCH | IN_MIDDLE_OF_COMMIT,
-  cherry_pick_verify_resolution,
-  cherry_pick_abort,
-  cherry_pick_post_resolution
-};
-
-int cherry_pick(struct commit *item)
-{
-  save info on the commit, flags, etc needed to understand what we're doing
-
-  try to apply diff...
-  if (!rejected)
-    return cherry_pick_post_resolution();
-  try to use merge recursive...
-  if (!conflict)
-    return cherry_pick_post_resolution();
-  return report_conflict(cherry_pick_conflict);
-}
-
-int cherry_pick_verify_resolution(void)
-{
-  if (still unmerged files) {
-    describe work still needed
-    return 1;
-  }
-  return 0;
-}
-
-int cherry_pick_abort(void)
-{
-  restore info on what we'd started and delete state
-
-  clean up the working directory, index, etc
-
-  return 0;
-}
-
-int cherry_pick_post_resolution(void)
-{
-  restore info on what we'd started and delete state
-
-  make the commit
-
-  return 0;
-}
-
-The important things are:
-
- - arbitrary code can determine that you're in the middle of resolving 
-   some conflict, that the resolution of that conflict is about doing
-   something to your current branch, and how to abort what you're doing,
-   and how to finish it
-
- - the same code gets run after the conflict has been resolved that would 
-   have been run immediately if the merge went smoothly
-
- - cherry-pick can save whatever it needs to in its state file; that's 
-   its business, and the semantics here don't have to interact with other 
-   commands, because report_conflict() has taken care of interaction with 
-   other commands
-
-The next step is to be able to have:
-
-int sequencer()
-{
-  save the list of steps, with no in-progress step
-  return sequencer_post_resolution();
-}
-
-int sequencer_post_resolution()
-{
-  finish any in-progress step
-  get the next step
-  if (no steps left)
-    return 0;
-  attempt step
-  if (!got_conflict)
-    return sequencer_post_resolution();
-  return report_conflict(sequencer_conflict);
-}
-
-Where the sequencer-level conflict nests around the cherry-pick-level 
-conflict, and the generic "continue" completes things from the inside out.
-
-I think, ultimately, that with this code structure in place, the 
-am/rebase/rebase--interactive/sequencer details of how the multi-step 
-process is recorded becomes less important. That way, your project can be 
-successful even if you can't find a syntax for the sequencer file that 
-meets the needs of all of these use cases. (Which is where I suspect 
-you'll get bogged down.) If you can get all of the cases where git exits 
-in order to get human intervention to share "everything that matters" and 
-the core to "know what's in progress as far as anything else cares", I 
-think that would be success, even if the various multi-step programs 
-continue using their own state files.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/git-svn.perl b/git-svn.perl
+index a5857c1..aa41896 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -523,12 +523,14 @@ sub cmd_dcommit {
+ 	}
+=20
+ 	if (defined $_commit_url) {
+-		$url =3D $_commit_url;
++		$url =3D $_commit_url . (length $gs->{path} ? '/' . $gs->{path} : ''=
+);
+ 	} else {
+ 		$url =3D eval { command_oneline('config', '--get',
+ 			      "svn-remote.$gs->{repo_id}.commiturl") };
+ 		if (!$url) {
+ 			$url =3D $gs->full_url
++		} else {
++			$url =3D $url . (length $gs->{path} ? '/' . $gs->{path} : '');
+ 		}
+ 	}
+=20
+--=20
+1.7.4.2.1.gd6f1f
