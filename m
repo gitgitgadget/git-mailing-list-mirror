@@ -1,71 +1,101 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 3/3] Documentation: Allow custom diff tools to be specified
- in 'diff.tool'
-Date: Mon, 04 Apr 2011 10:55:31 +0200
-Message-ID: <4D998783.8060209@drmicha.warpmail.net>
-References: <1301654600-8901-1-git-send-email-artagnon@gmail.com> <1301840722-24344-1-git-send-email-artagnon@gmail.com> <1301840722-24344-4-git-send-email-artagnon@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2011, #01; Sun, 3)
+Date: Mon, 04 Apr 2011 02:16:26 -0700 (PDT)
+Message-ID: <m3aag64bt5.fsf@localhost.localdomain>
+References: <7v62quc464.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 10:59:11 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 11:16:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6fcr-0001ii-S6
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 10:59:10 +0200
+	id 1Q6ftk-0002cX-MA
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 11:16:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754069Ab1DDI7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 04:59:04 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:47644 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753929Ab1DDI7C (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 04:59:02 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 4BBDE2071D;
-	Mon,  4 Apr 2011 04:59:02 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 04 Apr 2011 04:59:02 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=weslM5gg0YoShCXhmqiQlL/XFRk=; b=fludPJNUtAKET51cJvzlyhNESZ/e9DYnYMJiXEdIOcGAmmArw7ZLeTuq5bjCOfeE6UuKb+CRe0a66vjhik7Sbk8LikqzFlItesg1cCKD8B7tJHAqkMB7wFhb1rxRsYST3LI8PVVYZgOYWJWT9207SsreARq02HuV65fM08dnYv4=
-X-Sasl-enc: GQ6L81NJXjoLpYJo+XO8qWNiVMeCSAFJ67LKcL6Xl+SW 1301907542
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id AD4D6403C9F;
-	Mon,  4 Apr 2011 04:59:01 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <1301840722-24344-4-git-send-email-artagnon@gmail.com>
+	id S1753923Ab1DDJQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 05:16:31 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55170 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751795Ab1DDJQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 05:16:30 -0400
+Received: by bwz15 with SMTP id 15so3860246bwz.19
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 02:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=pJj2MvTr18uRB/mldGYDitwKHd3SMTqd6/w6aBjvL40=;
+        b=P82+T9nmc06WpGB2SGsSHjufnnAFjB7xOCQ8QFG6FwYVJHFTdhOoOv1uFTI8gZyBuq
+         oxZn0MXq2MrfMbl6ZaX1f+mle1nlBh5SjGZ1Bk+Bp43cHgJArf3DDTj33oEmwSym17be
+         f3eRbUNRsaB6+JI2TWe/qcknSfgezA9mLIxYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Mbg12tE1GYeTVw7Y3jV+w/TQ/xGlK+yhEsnYbIPcBBGt8wM4WVhLmVVIwi/S3tti46
+         5lP2h0/SWEHi944lpYlrc1xgbQatY06nU6p1Qj9gDpIAozezMyKHLAtte0rwx4IvGBH1
+         xYQu84PXKOYTuXZF8ilZFrls/2yskmZ1UZ2gg=
+Received: by 10.204.84.5 with SMTP id h5mr5671995bkl.201.1301908588320;
+        Mon, 04 Apr 2011 02:16:28 -0700 (PDT)
+Received: from localhost.localdomain (abvf154.neoplus.adsl.tpnet.pl [83.8.203.154])
+        by mx.google.com with ESMTPS id c11sm2930777bkc.14.2011.04.04.02.16.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 04 Apr 2011 02:16:26 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p349Fq6s011874;
+	Mon, 4 Apr 2011 11:16:03 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p349FYSJ011870;
+	Mon, 4 Apr 2011 11:15:34 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v62quc464.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170800>
 
-Ramkumar Ramachandra venit, vidit, dixit 03.04.2011 16:25:
-> Apart from the list of "valid values", 'diff.tool' can take any value,
-> provided there is a corresponding 'difftool.<tool>.cmd' option.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Here are the topics that have been cooking.  Commits prefixed with '-' are
+> only in 'pu' while commits prefixed with '+' are in 'next'.
 > 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Documentation/diff-config.txt |    4 +++-
->  1 files changed, 3 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-> index 8c1732f..7f985a3 100644
-> --- a/Documentation/diff-config.txt
-> +++ b/Documentation/diff-config.txt
-> @@ -59,7 +59,9 @@ diff.tool::
->  	Controls which diff tool is used.  `diff.tool` overrides
->  	`merge.tool` when used by linkgit:git-difftool[1] and has
->  	the same valid values as `merge.tool` minus "tortoisemerge"
-> -	and plus "kompare".
-> +	and plus "kompare".  Any other value is treated is custom
+> Hopefully we will have 1.7.5-rc1 coming Wednesday.
 
-"treated as a custom"
+ 
+> --------------------------------------------------
+> [Cooking]
 
-> +	diff tool and there must be a corresponding
-> +	'difftool.<tool>.cmd' option.
->  
->  diff.<driver>.command::
->  	Defines the command that implements the custom diff driver.
+> * jh/gitweb-localtime (2011-03-23) 1 commit
+>  - gitweb: javascript ability to adjust time based on timezone
+
+I am slowly working on this, but for various reasons most probably
+I wouldn't have time to finish it before 8th April at earliest.
+
+The split series would look something like this:
+ - gitweb: Split JavaScript for maintability, combining on build
+ - gitweb: Introduce and use format_timestamp
+ - gitweb.js: Cookies library
+ - gitweb.js: Parse W3CDTF date (ISO-8601 variant), format in RFC-2822
+ - gitweb: javascript ability to adjust time based on timezone
+
+
+BTW I guess that 
+
+  [PATCH (BUGFIX)] gitweb: Fix parsing of negative fractional timezones in JavaScript
+  Message-Id: <20110401190239.9686.12000.stgit@localhost.localdomain>
+  http://article.gmane.org/gmane.comp.version-control.git/170606
+
+didn't made it into this "What's cooking..." because it was send too
+late (2011-04-01 19:06:28 GMT), isn't it?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
