@@ -1,130 +1,140 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH (BUGFIX)] gitweb: Fix parsing of negative fractional timezones
- in JavaScript
-Date: Mon, 04 Apr 2011 11:30:29 -0700
-Message-ID: <4D9A0E45.6060101@eaglescrag.net>
-References: <20110401190239.9686.12000.stgit@localhost.localdomain>
+From: Robert David <robert.david.public@gmail.com>
+Subject: Re: GSOC idea: build in scripts and cleanups
+Date: Mon, 4 Apr 2011 20:51:31 +0200
+Organization: DDM Praha
+Message-ID: <201104042051.31874.robert.david.public@gmail.com>
+References: <201103260141.20798.robert.david.public@gmail.com> <201104040943.10030.robert.david.public@gmail.com> <7vwrj999dv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed;
+  boundary="nextPart14631375.3D69oozpSd";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha256
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Kevin Cernekee <cernekee@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 20:30:52 2011
+Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 20:52:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6oY7-0004pl-4F
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 20:30:51 +0200
+	id 1Q6osi-0000i1-R3
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 20:52:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755311Ab1DDSaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 14:30:35 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:55896 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755301Ab1DDSae (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 14:30:34 -0400
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p34IUT3F028980
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Mon, 4 Apr 2011 11:30:30 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
-In-Reply-To: <20110401190239.9686.12000.stgit@localhost.localdomain>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 04 Apr 2011 11:30:31 -0700 (PDT)
+	id S1755392Ab1DDSvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 14:51:39 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51135 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755390Ab1DDSvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 14:51:36 -0400
+Received: by fxm17 with SMTP id 17so4123725fxm.19
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 11:51:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:organization:to:subject:date:user-agent:cc
+         :references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=WEqGdax6POVTgQVDMXAFQbXA5fLVHMeAUhIG0tB4zho=;
+        b=BqF2JsjTWcMkyrlMQPY68p04LrBkQrs4pG459PYLmlHABnil+8T2wLGsAup7q0eue8
+         owpeFFJS/vRQaP04D4p5d7sXn/MwhETV16CI4rbtbGv0iuMtkF/mBDjaRuB9oNg1rk+t
+         h6GsUx/2T8d5aQoBxjSvfVsk9w6wjVVZxlGBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :message-id;
+        b=lUXUWDz9olqLvIXSNjJwVsdOsAe9LRFpXRP1uwuWEnlHPyivtYYJVJFITSl7O7OUlw
+         /OJcG/AgqJwl6CyTh5pSz/OesHZscy46efTyrNHCUT+zI2i4AhamHmGz3e/Ofxcro+d9
+         XrgTznpuT455wYvx90x/wuBsNnB98Wz5FAHJw=
+Received: by 10.223.110.81 with SMTP id m17mr775382fap.32.1301943095589;
+        Mon, 04 Apr 2011 11:51:35 -0700 (PDT)
+Received: from robert-eee.localnet (gate.chabry.cz [80.92.246.13])
+        by mx.google.com with ESMTPS id n2sm1838831fam.4.2011.04.04.11.51.33
+        (version=SSLv3 cipher=OTHER);
+        Mon, 04 Apr 2011 11:51:34 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-5-686; KDE/4.4.5; i686; ; )
+In-Reply-To: <7vwrj999dv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170833>
 
-Looks fine to me.
+--nextPart14631375.3D69oozpSd
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-- John 'Warthog9' Hawley
+Dne pond=C4=9Bl=C3=AD 04 dubna 2011 20:09:00 Junio C Hamano napsal(a):
+> Robert David <robert.david.public@gmail.com> writes:
+> > 1) Pre-coding time
+> > 2) 1-3 week
+> > 3) 4-5 week
+> > 4) 6-7 week
+> > 5) 8-11 week
+> > Extend the C code to the state it should be.
+> > Adopt other git commands to work with the new interface correctly.
+> > Test extensively.
+> > Update documentation where needed.
+> >=20
+> > 6) 12 week
+> > Write more documentation, to document what was done and how.
+> > Correct bugs and test.
+>=20
+> I am afraid to say that the above schedule is too ambitious and does not
+> leave any time for reviews and re-rolls.  Please keep in mind that
+> historically patch series by more experienced contributors of substantial
+> size (comparable or even smaller scale than the topic you are proposing)
+> all typically took three or four review-reroll cycles, if not less, and we
+> don't automatically get extra review bandwidth just because GSoC is going
+> on.
 
-On 04/01/2011 12:06 PM, Jakub Narebski wrote:
-> Extract converting numerical timezone in the form of '(+|-)HHMM' to
-> timezoneOffset function, and fix parsing of negative fractional
-> timezones.
-> 
-> This is used to format timestamps in 'blame_incremental' view; this
-> complements commit 2b1e172 (gitweb: Fix handling of fractional
-> timezones in parse_date, 2011-03-25).
-> 
-> Now
-> 
->   gitweb.cgi/git.git/blame_incremental/3fe5489:/contrib/gitview/gitview#l853
-> 
-> and
-> 
->   gitweb.cgi/git.git/blame/3fe5489:/contrib/gitview/gitview#l853
-> 
-> show the same correct time in author's local timezone in title
-> (on mouseover) [Aneesh Kumar K.V, 2006-02-24 00:59:42 +0530].
-> 
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-> This was send earlier as part 3/3 of 
-> 
->   "[PATCH/RFC 0/3] gitweb: Split gitweb.js, improve JavaScript"
->   Message-Id: <1301089586-8534-1-git-send-email-jnareb@gmail.com>
->   http://thread.gmane.org/gmane.comp.version-control.git/170021/focus=170024
-> 
-> It is now send separately as standalone patch, and is not held hostage
-> to accepting series that splits gitweb JavaScript file.
-> 
->  gitweb/static/gitweb.js |   24 +++++++++++++++++++-----
->  1 files changed, 19 insertions(+), 5 deletions(-)
-> 
-> diff --git a/gitweb/static/gitweb.js b/gitweb/static/gitweb.js
-> index 9c66928..40ec084 100644
-> --- a/gitweb/static/gitweb.js
-> +++ b/gitweb/static/gitweb.js
-> @@ -399,7 +399,24 @@ function fixColorsAndGroups() {
->   * used to extract hours and minutes from timezone info, e.g '-0900'
->   * @constant
->   */
-> -var tzRe = /^([+-][0-9][0-9])([0-9][0-9])$/;
-> +var tzRe = /^([+-])([0-9][0-9])([0-9][0-9])$/;
-> +
-> +/**
-> + * convert numeric timezone +/-ZZZZ to offset from UTC in seconds
-> + *
-> + * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-> + * @returns {Number} offset from UTC in seconds for timezone
-> + *
-> + * @globals tzRe
-> + */
-> +function timezoneOffset(timezoneInfo) {
-> +	var match = tzRe.exec(timezoneInfo);
-> +	var tz_sign = (match[1] === '-' ? -1 : +1);
-> +	var tz_hour = parseInt(match[2],10);
-> +	var tz_min  = parseInt(match[3],10);
-> +
-> +	return tz_sign*(((tz_hour*60) + tz_min)*60);
-> +}
->  
->  /**
->   * return date in local time formatted in iso-8601 like format
-> @@ -408,14 +425,11 @@ var tzRe = /^([+-][0-9][0-9])([0-9][0-9])$/;
->   * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
->   * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
->   * @returns {String} date in local time in iso-8601 like format
-> - *
-> - * @globals tzRe
->   */
->  function formatDateISOLocal(epoch, timezoneInfo) {
-> -	var match = tzRe.exec(timezoneInfo);
->  	// date corrected by timezone
->  	var localDate = new Date(1000 * (epoch +
-> -		(parseInt(match[1],10)*3600 + parseInt(match[2],10)*60)));
-> +		timezoneOffset(timezoneInfo)));
->  	var localDateStr = // e.g. '2005-08-07'
->  		localDate.getUTCFullYear()                 + '-' +
->  		padLeft(localDate.getUTCMonth()+1, 2, '0') + '-' +
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks, this is what I wanted to hear.=20
+I wrote the proposal from my point of view. I'm prepared to change the size=
+ of=20
+the task and schedule on mentors and developers comments.
+I'm also trying to understand your development cycle, to get that more=20
+precise. But I want also say that I'm prepared for a lot of work. I have th=
+e=20
+time in this period.
+
+If I understand correctly, you mean to divide this task in more terms? And =
+do=20
+less more precise. Test more, etc.
+
+Robert=20
+
+>=20
+> I am starting to suspect that it might make sense to say "as far as GSoC
+> participation is concerned, we would call a topic "merged upstream" when
+> it hits 'next', even if it is not ready for 'master' at the end of the
+> term".
+>=20
+> What do regular reviewers and potential mentors think?  Perhaps we have
+> more stringent quality requirements than other open source projects that
+> take "commit first, review and fix as necessary" cycle, and they may
+> declare success when "commit first" happens.  If that is the case, 'next',
+> whose definition is "without glaring design and implementation bugs and
+> fit enough for dogfooding, but needs extra polish", might be a better
+> success criteria to be fair for our students.
+>=20
+> I am not in the mentor pool and I would rather not to be to stay neutral,
+> so I'll leave it up to the mentors.
+
+--nextPart14631375.3D69oozpSd
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iF4EABEIAAYFAk2aEzMACgkQLSNWchw0XGyJnAD8CuDQMdWVGUPLdeSsZh+IjPYT
+McMbemW1fd4qusQZ3iYBAIo7rpIpZG6HBbCS9eL/oMlzQw3gWQ0rA7IDLTT8hJrH
+=CFq8
+-----END PGP SIGNATURE-----
+
+--nextPart14631375.3D69oozpSd--
