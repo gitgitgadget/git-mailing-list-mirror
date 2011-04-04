@@ -1,150 +1,259 @@
-From: Ciaran <ciaranj@gmail.com>
-Subject: p4Merge bundled command and the behaviour with files (same name)
- added on different branches.
-Date: Mon, 4 Apr 2011 09:55:41 +0100
-Message-ID: <BANLkTimpsg=26C0mq=feVT7mt0nwZBoBUA@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/3] Documentation: Add diff.<driver>.* to config
+Date: Mon, 04 Apr 2011 10:54:14 +0200
+Message-ID: <4D998736.2080901@drmicha.warpmail.net>
+References: <1301654600-8901-1-git-send-email-artagnon@gmail.com> <1301840722-24344-1-git-send-email-artagnon@gmail.com> <1301840722-24344-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=000e0cd148f4a21bfe04a013ec5a
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 04 10:56:02 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 10:57:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6fZn-0008Nm-ER
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 10:56:00 +0200
+	id 1Q6fbd-00016M-0h
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 10:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228Ab1DDIzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 04:55:43 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:61153 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459Ab1DDIzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 04:55:42 -0400
-Received: by pxi2 with SMTP id 2so1827254pxi.10
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 01:55:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=Y85Fg+uK8SSqV7V+oPS8/EBbZaRMQkaz3379R/anKU8=;
-        b=Om9b3VW48bsgLdHB1bfhSQTVOIuvixKFtMSOxt3xGpCxjND8kXJbEEyrpCHwwh4Arn
-         IJNCVTzYWQ7p8h88N5cmRICTATInDwakFXRTfGZmNqGz8A5JTO+7FxTebrkKiepgStDR
-         0lDUHtSwwGWqjiU62+1ebvpPCAR5Wfw6YOiSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=aDrVvrr2Caid17B+l1M/1lgrZq11ML4RcC0cgoSpuvmLY8pEshllg45F6pD1AwTkOZ
-         kHTgNONSjkg43BPQuWvrt8tjDadMNBIM2vAZBDCpQrwaMT6qlShKJNEOWTuSsTQ0U9mW
-         LrJP3LmvwodVlYEhMfp1t+Z2fmqBgLqb8/Iio=
-Received: by 10.142.127.17 with SMTP id z17mr1705361wfc.110.1301907341712;
- Mon, 04 Apr 2011 01:55:41 -0700 (PDT)
-Received: by 10.68.40.134 with HTTP; Mon, 4 Apr 2011 01:55:41 -0700 (PDT)
+	id S1754025Ab1DDI5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 04:57:47 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57521 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753362Ab1DDI5q (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 04:57:46 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 2F70B2063E;
+	Mon,  4 Apr 2011 04:57:46 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 04 Apr 2011 04:57:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=P8vCTeYOKDWTk/kaT5C4LUUzkaM=; b=SNlcox41iTaSvfhba207P1i8+hFQaNwIx+59mkTJLRgrMd8MTqIEVACTTAYbxNBihawB8BGsDKdj4h+oggcvZugLyrX1MQDafB+eTNM9vX7AEiegJDmIQQcdsNF6Iq9+r+Q0qtIwFKZtM1sUqpZ5P2nOBmgpUIsOCgSplenLwuc=
+X-Sasl-enc: Pv8QvZcbB5c13GQmavrLLTyL7p+dWjYSLu+IZCcGaJ/D 1301907465
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4C9DD4013DF;
+	Mon,  4 Apr 2011 04:57:45 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <1301840722-24344-3-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170798>
 
---000e0cd148f4a21bfe04a013ec5a
-Content-Type: text/plain; charset=ISO-8859-1
+Ramkumar Ramachandra venit, vidit, dixit 03.04.2011 16:25:
+> Although the gitattributes page contains comprehensive information
+> about these configuration options, they should be included in the
+> config documentation for completeness.  Also, move out the diff.*
+> configuration options into a dedicated diff-config.txt.
+> 
+> Helped-by: Jakub Narebski <jnareb@gmail.com>
+> Helped-by: Michael J Gruber <git@drmicha.warpmail.net>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Documentation/config.txt      |   63 +----------------------------
+>  Documentation/diff-config.txt |   91 +++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 92 insertions(+), 62 deletions(-)
+>  create mode 100644 Documentation/diff-config.txt
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 711072c..cfeef63 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -812,68 +812,7 @@ commit.template::
+>  	"{tilde}/" is expanded to the value of `$HOME` and "{tilde}user/" to the
+>  	specified user's home directory.
+>  
+> -diff.autorefreshindex::
+> -	When using 'git diff' to compare with work tree
+> -	files, do not consider stat-only change as changed.
+> -	Instead, silently run `git update-index --refresh` to
+> -	update the cached stat information for paths whose
+> -	contents in the work tree match the contents in the
+> -	index.  This option defaults to true.  Note that this
+> -	affects only 'git diff' Porcelain, and not lower level
+> -	'diff' commands such as 'git diff-files'.
+> -
+> -diff.external::
+> -	If this config variable is set, diff generation is not
+> -	performed using the internal diff machinery, but using the
+> -	given command.  Can be overridden with the `GIT_EXTERNAL_DIFF'
+> -	environment variable.  The command is called with parameters
+> -	as described under "git Diffs" in linkgit:git[1].  Note: if
+> -	you want to use an external diff program only on a subset of
+> -	your files, you	might want to use linkgit:gitattributes[5] instead.
+> -
+> -diff.mnemonicprefix::
+> -	If set, 'git diff' uses a prefix pair that is different from the
+> -	standard "a/" and "b/" depending on what is being compared.  When
+> -	this configuration is in effect, reverse diff output also swaps
+> -	the order of the prefixes:
+> -`git diff`;;
+> -	compares the (i)ndex and the (w)ork tree;
+> -`git diff HEAD`;;
+> -	 compares a (c)ommit and the (w)ork tree;
+> -`git diff --cached`;;
+> -	compares a (c)ommit and the (i)ndex;
+> -`git diff HEAD:file1 file2`;;
+> -	compares an (o)bject and a (w)ork tree entity;
+> -`git diff --no-index a b`;;
+> -	compares two non-git things (1) and (2).
+> -
+> -diff.noprefix::
+> -	If set, 'git diff' does not show any source or destination prefix.
+> -
+> -diff.renameLimit::
+> -	The number of files to consider when performing the copy/rename
+> -	detection; equivalent to the 'git diff' option '-l'.
+> -
+> -diff.renames::
+> -	Tells git to detect renames.  If set to any boolean value, it
+> -	will enable basic rename detection.  If set to "copies" or
+> -	"copy", it will detect copies, as well.
+> -
+> -diff.ignoreSubmodules::
+> -	Sets the default value of --ignore-submodules. Note that this
+> -	affects only 'git diff' Porcelain, and not lower level 'diff'
+> -	commands such as 'git diff-files'. 'git checkout' also honors
+> -	this setting when reporting uncommitted changes.
+> -
+> -diff.suppressBlankEmpty::
+> -	A boolean to inhibit the standard behavior of printing a space
+> -	before each empty output line. Defaults to false.
+> -
+> -diff.tool::
+> -	Controls which diff tool is used.  `diff.tool` overrides
+> -	`merge.tool` when used by linkgit:git-difftool[1] and has
+> -	the same valid values as `merge.tool` minus "tortoisemerge"
+> -	and plus "kompare".
+> +include::diff-config.txt[]
+>  
+>  difftool.<tool>.path::
+>  	Override the path for the given tool.  This is useful in case
+> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+> new file mode 100644
+> index 0000000..8c1732f
+> --- /dev/null
+> +++ b/Documentation/diff-config.txt
+> @@ -0,0 +1,91 @@
+> +diff.autorefreshindex::
+> +	When using 'git diff' to compare with work tree
+> +	files, do not consider stat-only change as changed.
+> +	Instead, silently run `git update-index --refresh` to
+> +	update the cached stat information for paths whose
+> +	contents in the work tree match the contents in the
+> +	index.  This option defaults to true.  Note that this
+> +	affects only 'git diff' Porcelain, and not lower level
+> +	'diff' commands such as 'git diff-files'.
+> +
+> +diff.external::
+> +	If this config variable is set, diff generation is not
+> +	performed using the internal diff machinery, but using the
+> +	given command.  Can be overridden with the `GIT_EXTERNAL_DIFF'
+> +	environment variable.  The command is called with parameters
+> +	as described under "git Diffs" in linkgit:git[1].  Note: if
+> +	you want to use an external diff program only on a subset of
+> +	your files, you	might want to use linkgit:gitattributes[5] instead.
+> +
+> +diff.ignoreSubmodules::
+> +	Sets the default value of --ignore-submodules. Note that this
+> +	affects only 'git diff' Porcelain, and not lower level 'diff'
+> +	commands such as 'git diff-files'. 'git checkout' also honors
+> +	this setting when reporting uncommitted changes.
+> +
+> +diff.mnemonicprefix::
+> +	If set, 'git diff' uses a prefix pair that is different from the
+> +	standard "a/" and "b/" depending on what is being compared.  When
+> +	this configuration is in effect, reverse diff output also swaps
+> +	the order of the prefixes:
+> +`git diff`;;
+> +	compares the (i)ndex and the (w)ork tree;
+> +`git diff HEAD`;;
+> +	 compares a (c)ommit and the (w)ork tree;
+> +`git diff --cached`;;
+> +	compares a (c)ommit and the (i)ndex;
+> +`git diff HEAD:file1 file2`;;
+> +	compares an (o)bject and a (w)ork tree entity;
+> +`git diff --no-index a b`;;
+> +	compares two non-git things (1) and (2).
+> +
+> +diff.noprefix::
+> +	If set, 'git diff' does not show any source or destination prefix.
+> +
+> +diff.renameLimit::
+> +	The number of files to consider when performing the copy/rename
+> +	detection; equivalent to the 'git diff' option '-l'.
+> +
+> +diff.renames::
+> +	Tells git to detect renames.  If set to any boolean value, it
+> +	will enable basic rename detection.  If set to "copies" or
+> +	"copy", it will detect copies, as well.
+> +
+> +diff.suppressBlankEmpty::
+> +	A boolean to inhibit the standard behavior of printing a space
+> +	before each empty output line. Defaults to false.
+> +
+> +diff.tool::
+> +	Controls which diff tool is used.  `diff.tool` overrides
+> +	`merge.tool` when used by linkgit:git-difftool[1] and has
+> +	the same valid values as `merge.tool` minus "tortoisemerge"
+> +	and plus "kompare".
 
-Hi All,
+That one would make more sense right before the diftool.* options.
 
-Hopefully a quick question.  Given the following scenario
+> +
+> +diff.<driver>.command::
+> +	Defines the command that implements the custom diff driver.
+> +	See linkgit:gitattributes[5] for details.
 
-mkdir git_repo
-cd git_repo
-git init
-echo foo > foo.txt
-git add foo.txt
-git commit -m "Initial commit"
-git checkout -b other
-echo bar > bar.txt
-git add bar.txt
-git commit -m "other commit"
-git checkout master
-echo barbarella > bar.txt
-git add bar.txt
-git commit -m "master commit"
-git merge other
+Why not:
 
-We would expect a 'both added' merge conflict (both the other branch,
-and the master branch added the file named bar.txt, but with different
-content.)  This is all good and right.  So in a system configured to
-use p4merge as the mergetool, one fires up with 'git mergetool'
+The custom diff driver command.
 
-What happens now is p4merge starts and tells us:
+> +
+> +diff.<driver>.xfuncname::
+> +	Defines the regular expression that the custom diff driver
+> +	should use to recognize the hunk header.  A built-in pattern
+> +	may also be used.  See linkgit:gitattributes[5] for details.
 
-Base: bar.txt.LOCAL.<num1>.txt
-Left: bar.txt.LOCAL.<num1>.txt Differences from base: 0
-Right: bar.txt.LOCAL.<num2>.txt Differences from base: 1
-Merge: bar.txt Conflicts:0
+The regular...
 
-Presenting the left + right options on top of each other in the result
-window (which may be correct) and leaving the save button disabled
-(grayed out)
+> +
+> +diff.<driver>.binary::
+> +	Set this option to true to make the custom diff driver treat
+> +	files as binary.  See linkgit:gitattributes[5] for details.
 
-If at this point one closes the window without editing the presented
-(apparently merged) file, then nothing will be saved to disk and we
-will see:
+This has nothing to do with the diff driver's operation. It is about how
+git treats the result (the output from the diff driver):
 
-bar.txt seems unchanged.
-Was the merge successful? [y/n]
+Set to true if git should treat the output of the custom diff driver as
+binary.
 
-In the console.  Which Git wise is correct, that is exactly right, the
-p4merge tool hasn't made any actual changes to the underlying file.
+> +
+> +diff.<driver>.textconv::
+> +	Defines the command that the custom diff driver should call to
+> +	generate the text-converted version of a binary file.  The
+> +	result of the conversion is used to generate a human-readable
+> +	diff.  See linkgit:gitattributes[5] for details.
 
-This behaviour seems confusing to me (the p4merge client behaviour,
-*not* Git's)   I believe it is because in the case where there is no
-logical base between two files the local one is arbritrarily chosen,
-and p4merge *thinks* that this is equal to the merge result and has
-nothing to persist.
+No, please! You don't need a custom diff driver for textconv.
 
-I have attached a patch that resolves the issue for me (e.g.
-introduces the behaviour I expect) by passing a reference to an empty
-file in the case where there is no meaningful base.  Unfortunately I
-don't understand enough to say whether this change is correct or not
-and would value feedback on it.
+The command which git should call to...
 
-Many thanks
- - Cj.
+> +
+> +diff.<driver>.wordregex::
+> +	Defines the regular expression that the custom diff driver
+> +	should use to split words in a line.  See
+> +	linkgit:gitattributes[5] for details.
+> +
+> +diff.<driver>.cachetextconv::
+> +	Set this option to true to make the custom diff driver cache
+> +	the text conversion outputs.  See linkgit:gitattributes[5] for
+> +	details.
 
---000e0cd148f4a21bfe04a013ec5a
-Content-Type: application/octet-stream; 
-	name="0001-Modified-the-p4merge-client-command-to-pass-a-refere.patch"
-Content-Disposition: attachment; 
-	filename="0001-Modified-the-p4merge-client-command-to-pass-a-refere.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gm3610kp0
+Again, both are independent of a custom diff driver. Maybe even <driver>
+is misleading here, I dunno. By "custom diff driver", I mean the thing
+you specify with "diff.<whatever>.command", and this is orthogonal
+(unrelated, can be combined with) textconc etc.
 
-RnJvbSA4ZWI1MDdhYzg2Zjk1MmJmNDcwMGQ5NGNhYTM2MWIxNjMyYWIwMWE2IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBjaWFyYW5qIDxjaWFyYW5qQGdtYWlsLmNvbT4KRGF0ZTogTW9u
-LCA0IEFwciAyMDExIDA5OjI0OjE4ICswMTAwClN1YmplY3Q6IFtQQVRDSF0gTW9kaWZpZWQgdGhl
-IHA0bWVyZ2UgY2xpZW50IGNvbW1hbmQgdG8gcGFzcyBhIHJlZmVyZW5jZSB0byBhbiBlbXB0eSBm
-aWxlIGluc3RlYWQgb2YgdGhlIGxvY2FsIGZpbGUgd2hlbiBubyBiYXNlIHJldmlzaW9uIGF2YWls
-YWJsZS4KCkluIHRoZSBzaXR1YXRpb24gd2hlcmUgYSBtZXJnZSB0cmllcyB0byBhZGQgYSBmaWxl
-IGZyb20gb25lIGJyYW5jaCBpbnRvIGEgYnJhbmNoIHRoYXQgYWxyZWFkeSBjb250YWlucyB0aGF0
-IGZpbGUgKGJ5IG5hbWUpLCBwNG1lcmdlCmN1cnJlbnRseSBzZWVtcyB0byBoYXZlIHN1Y2Nlc3Nm
-dWxseSBhdXRvbWF0aWNhbGx5IHJlc29sdmVkIHRoZSAnY29uZmxpY3QnIHdoZW4gaXQgaXMgb3Bl
-bmVkIChjb3JyZWN0bHkgaWYgdGhlIGZpbGVzIGRpZmZlcmVkIGJ5Cmp1c3Qgd2hpdGVzcGFjZSBm
-b3IgZXhhbXBsZSkgYnV0IGxlYXZlcyB0aGUgc2F2ZSBidXR0b24gZGlzYWJsZWQuIFRoaXMgbWVh
-bnMgdGhlIHVzZXIgb2YgdGhlIHA0bWVyZ2UgY2xpZW50IGNhbm5vdCBjb21taXQgdGhlIHJlc29s
-dmVkCmNoYW5nZXMgYmFjayB0byBkaXNrIGFuZCBtZXJlbHkgZXhpdHMsIGxlYXZpbmcgdGhlIG9y
-aWdpbmFsIChtZXJnZS1jb25mbGljdGVkKSBmaWxlIGluLXRhY3Qgb24gdGhlIGRpc2suCgpJZiB0
-aGUgdXNlciBpcyBub3QgcGF5aW5nIGF0dGVudGlvbiB0aGlzIGZpbGUgY2FuIGdldCBjb21taXR0
-ZWQgOigKCldpdGggdGhpcyBjaGFuZ2UsIHA0bWVyZ2UgYXBwZWFycyB0byBiZWhhdmUgZmFyIG1v
-cmUgYXMgZXhwZWN0ZWQsIGZvciBleGFtcGxlIGxlYXZpbmcgdGhlIHNhdmUgYnV0dG9uIGVuYWJs
-ZWQgYWxsb3dpbmcgb25lIHRvIHNhdmUgdGhlCnJlc29sdmVkIGZpbGUgdG8gZGlzay4KLS0tCiBn
-aXQtbWVyZ2V0b29sLS1saWIuc2ggfCAgICA0ICsrKy0KIDEgZmlsZXMgY2hhbmdlZCwgMyBpbnNl
-cnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdC1tZXJnZXRvb2wtLWxp
-Yi5zaCBiL2dpdC1tZXJnZXRvb2wtLWxpYi5zaAppbmRleCBmYjNmNTJiLi4zZTQ4NmRjIDEwMDY0
-NAotLS0gYS9naXQtbWVyZ2V0b29sLS1saWIuc2gKKysrIGIvZ2l0LW1lcmdldG9vbC0tbGliLnNo
-CkBAIC0yNjIsNyArMjYyLDkgQEAgcnVuX21lcmdlX3Rvb2wgKCkgewogCQkJaWYgJGJhc2VfcHJl
-c2VudDsgdGhlbgogCQkJCSIkbWVyZ2VfdG9vbF9wYXRoIiAiJEJBU0UiICIkTE9DQUwiICIkUkVN
-T1RFIiAiJE1FUkdFRCIKIAkJCWVsc2UKLQkJCQkiJG1lcmdlX3Rvb2xfcGF0aCIgIiRMT0NBTCIg
-IiRMT0NBTCIgIiRSRU1PVEUiICIkTUVSR0VEIgorCQkJCXRvdWNoICIuZW1wdHkiCisJCQkJIiRt
-ZXJnZV90b29sX3BhdGgiICIuZW1wdHkiICIkTE9DQUwiICIkUkVNT1RFIiAiJE1FUkdFRCIKKwkJ
-CQlybSAiLmVtcHR5IgogCQkJZmkKIAkJCWNoZWNrX3VuY2hhbmdlZAogCQllbHNlCi0tIAoxLjcu
-My40Cgo=
---000e0cd148f4a21bfe04a013ec5a--
+Michael
