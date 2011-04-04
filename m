@@ -1,86 +1,150 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/3] Documentation: Add filter.<driver>.* to config
-Date: Mon, 04 Apr 2011 10:46:03 +0200
-Message-ID: <4D99854B.70801@drmicha.warpmail.net>
-References: <1301654600-8901-1-git-send-email-artagnon@gmail.com> <1301840722-24344-1-git-send-email-artagnon@gmail.com> <1301840722-24344-2-git-send-email-artagnon@gmail.com>
+From: Ciaran <ciaranj@gmail.com>
+Subject: p4Merge bundled command and the behaviour with files (same name)
+ added on different branches.
+Date: Mon, 4 Apr 2011 09:55:41 +0100
+Message-ID: <BANLkTimpsg=26C0mq=feVT7mt0nwZBoBUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 10:49:55 2011
+Content-Type: multipart/mixed; boundary=000e0cd148f4a21bfe04a013ec5a
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 04 10:56:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6fTv-0004vo-0F
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 10:49:55 +0200
+	id 1Q6fZn-0008Nm-ER
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 10:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753848Ab1DDIti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 04:49:38 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58433 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751459Ab1DDIth (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 04:49:37 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C657F204E1;
-	Mon,  4 Apr 2011 04:49:36 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 04 Apr 2011 04:49:36 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=MjAu5V6N1rhBibO37ojkQSh6M6M=; b=LdvDbZfDeET61n2yADOPsyFoauzfvYqG1OGrSgKI7Q40ClAxfkEmUWuSgr8mlVXjyogK6VGu7k6a2LrGRBscxFYvyBR8kGMAPEhlqaUl2/LI+dHWnNhFq917YYVK+wuBAHzpldcV5aOZQUN92rBL4Etmd6iLt1FqqcZa8cl5CyA=
-X-Sasl-enc: zTXdX9VT4+i6ODH2a48JA+eE7PBxAGi659Q6nsPo7Oby 1301906976
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 466CF401369;
-	Mon,  4 Apr 2011 04:49:35 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <1301840722-24344-2-git-send-email-artagnon@gmail.com>
+	id S1752228Ab1DDIzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 04:55:43 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:61153 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459Ab1DDIzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 04:55:42 -0400
+Received: by pxi2 with SMTP id 2so1827254pxi.10
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 01:55:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=Y85Fg+uK8SSqV7V+oPS8/EBbZaRMQkaz3379R/anKU8=;
+        b=Om9b3VW48bsgLdHB1bfhSQTVOIuvixKFtMSOxt3xGpCxjND8kXJbEEyrpCHwwh4Arn
+         IJNCVTzYWQ7p8h88N5cmRICTATInDwakFXRTfGZmNqGz8A5JTO+7FxTebrkKiepgStDR
+         0lDUHtSwwGWqjiU62+1ebvpPCAR5Wfw6YOiSc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=aDrVvrr2Caid17B+l1M/1lgrZq11ML4RcC0cgoSpuvmLY8pEshllg45F6pD1AwTkOZ
+         kHTgNONSjkg43BPQuWvrt8tjDadMNBIM2vAZBDCpQrwaMT6qlShKJNEOWTuSsTQ0U9mW
+         LrJP3LmvwodVlYEhMfp1t+Z2fmqBgLqb8/Iio=
+Received: by 10.142.127.17 with SMTP id z17mr1705361wfc.110.1301907341712;
+ Mon, 04 Apr 2011 01:55:41 -0700 (PDT)
+Received: by 10.68.40.134 with HTTP; Mon, 4 Apr 2011 01:55:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170797>
 
-Ramkumar Ramachandra venit, vidit, dixit 03.04.2011 16:25:
-> Although the gitattributes page contains comprehensive information
-> about these configuration options, they should be included in the
-> config documentation for completeness.
-> 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Documentation/config.txt |   10 ++++++++++
->  1 files changed, 10 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 8ea55d4..711072c 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -973,6 +973,16 @@ format.signoff::
->      the rights to submit this work under the same open source license.
->      Please see the 'SubmittingPatches' document for further discussion.
->  
-> +filter.<driver>.clean::
-> +	Defines the command to be used to convert the contents of
-> +	worktree file upon checkin.  See linkgit:gitattributes[5] for
-> +	details.
-> +
+--000e0cd148f4a21bfe04a013ec5a
+Content-Type: text/plain; charset=ISO-8859-1
 
-Here we go again :) I rever Desmond Tutu, I dislike "to... to"... And
-articles. Also, every option "defines" something, no need to say that:
+Hi All,
 
-The command which is used to convert the content of a worktree file to a
-blob upon checkin.
+Hopefully a quick question.  Given the following scenario
 
+mkdir git_repo
+cd git_repo
+git init
+echo foo > foo.txt
+git add foo.txt
+git commit -m "Initial commit"
+git checkout -b other
+echo bar > bar.txt
+git add bar.txt
+git commit -m "other commit"
+git checkout master
+echo barbarella > bar.txt
+git add bar.txt
+git commit -m "master commit"
+git merge other
 
-> +filter.<driver>.smudge::
-> +	Defines the command to be used to convert the blob object to
-> +	worktree file upon checkout.  See linkgit:gitattributes[5] for
-> +	details.
-> +
+We would expect a 'both added' merge conflict (both the other branch,
+and the master branch added the file named bar.txt, but with different
+content.)  This is all good and right.  So in a system configured to
+use p4merge as the mergetool, one fires up with 'git mergetool'
 
-The command which is used to convert the content of a blob object to a
-worktree file upon checkout.
+What happens now is p4merge starts and tells us:
 
->  gc.aggressiveWindow::
->  	The window size parameter used in the delta compression
->  	algorithm used by 'git gc --aggressive'.  This defaults
+Base: bar.txt.LOCAL.<num1>.txt
+Left: bar.txt.LOCAL.<num1>.txt Differences from base: 0
+Right: bar.txt.LOCAL.<num2>.txt Differences from base: 1
+Merge: bar.txt Conflicts:0
+
+Presenting the left + right options on top of each other in the result
+window (which may be correct) and leaving the save button disabled
+(grayed out)
+
+If at this point one closes the window without editing the presented
+(apparently merged) file, then nothing will be saved to disk and we
+will see:
+
+bar.txt seems unchanged.
+Was the merge successful? [y/n]
+
+In the console.  Which Git wise is correct, that is exactly right, the
+p4merge tool hasn't made any actual changes to the underlying file.
+
+This behaviour seems confusing to me (the p4merge client behaviour,
+*not* Git's)   I believe it is because in the case where there is no
+logical base between two files the local one is arbritrarily chosen,
+and p4merge *thinks* that this is equal to the merge result and has
+nothing to persist.
+
+I have attached a patch that resolves the issue for me (e.g.
+introduces the behaviour I expect) by passing a reference to an empty
+file in the case where there is no meaningful base.  Unfortunately I
+don't understand enough to say whether this change is correct or not
+and would value feedback on it.
+
+Many thanks
+ - Cj.
+
+--000e0cd148f4a21bfe04a013ec5a
+Content-Type: application/octet-stream; 
+	name="0001-Modified-the-p4merge-client-command-to-pass-a-refere.patch"
+Content-Disposition: attachment; 
+	filename="0001-Modified-the-p4merge-client-command-to-pass-a-refere.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gm3610kp0
+
+RnJvbSA4ZWI1MDdhYzg2Zjk1MmJmNDcwMGQ5NGNhYTM2MWIxNjMyYWIwMWE2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBjaWFyYW5qIDxjaWFyYW5qQGdtYWlsLmNvbT4KRGF0ZTogTW9u
+LCA0IEFwciAyMDExIDA5OjI0OjE4ICswMTAwClN1YmplY3Q6IFtQQVRDSF0gTW9kaWZpZWQgdGhl
+IHA0bWVyZ2UgY2xpZW50IGNvbW1hbmQgdG8gcGFzcyBhIHJlZmVyZW5jZSB0byBhbiBlbXB0eSBm
+aWxlIGluc3RlYWQgb2YgdGhlIGxvY2FsIGZpbGUgd2hlbiBubyBiYXNlIHJldmlzaW9uIGF2YWls
+YWJsZS4KCkluIHRoZSBzaXR1YXRpb24gd2hlcmUgYSBtZXJnZSB0cmllcyB0byBhZGQgYSBmaWxl
+IGZyb20gb25lIGJyYW5jaCBpbnRvIGEgYnJhbmNoIHRoYXQgYWxyZWFkeSBjb250YWlucyB0aGF0
+IGZpbGUgKGJ5IG5hbWUpLCBwNG1lcmdlCmN1cnJlbnRseSBzZWVtcyB0byBoYXZlIHN1Y2Nlc3Nm
+dWxseSBhdXRvbWF0aWNhbGx5IHJlc29sdmVkIHRoZSAnY29uZmxpY3QnIHdoZW4gaXQgaXMgb3Bl
+bmVkIChjb3JyZWN0bHkgaWYgdGhlIGZpbGVzIGRpZmZlcmVkIGJ5Cmp1c3Qgd2hpdGVzcGFjZSBm
+b3IgZXhhbXBsZSkgYnV0IGxlYXZlcyB0aGUgc2F2ZSBidXR0b24gZGlzYWJsZWQuIFRoaXMgbWVh
+bnMgdGhlIHVzZXIgb2YgdGhlIHA0bWVyZ2UgY2xpZW50IGNhbm5vdCBjb21taXQgdGhlIHJlc29s
+dmVkCmNoYW5nZXMgYmFjayB0byBkaXNrIGFuZCBtZXJlbHkgZXhpdHMsIGxlYXZpbmcgdGhlIG9y
+aWdpbmFsIChtZXJnZS1jb25mbGljdGVkKSBmaWxlIGluLXRhY3Qgb24gdGhlIGRpc2suCgpJZiB0
+aGUgdXNlciBpcyBub3QgcGF5aW5nIGF0dGVudGlvbiB0aGlzIGZpbGUgY2FuIGdldCBjb21taXR0
+ZWQgOigKCldpdGggdGhpcyBjaGFuZ2UsIHA0bWVyZ2UgYXBwZWFycyB0byBiZWhhdmUgZmFyIG1v
+cmUgYXMgZXhwZWN0ZWQsIGZvciBleGFtcGxlIGxlYXZpbmcgdGhlIHNhdmUgYnV0dG9uIGVuYWJs
+ZWQgYWxsb3dpbmcgb25lIHRvIHNhdmUgdGhlCnJlc29sdmVkIGZpbGUgdG8gZGlzay4KLS0tCiBn
+aXQtbWVyZ2V0b29sLS1saWIuc2ggfCAgICA0ICsrKy0KIDEgZmlsZXMgY2hhbmdlZCwgMyBpbnNl
+cnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdC1tZXJnZXRvb2wtLWxp
+Yi5zaCBiL2dpdC1tZXJnZXRvb2wtLWxpYi5zaAppbmRleCBmYjNmNTJiLi4zZTQ4NmRjIDEwMDY0
+NAotLS0gYS9naXQtbWVyZ2V0b29sLS1saWIuc2gKKysrIGIvZ2l0LW1lcmdldG9vbC0tbGliLnNo
+CkBAIC0yNjIsNyArMjYyLDkgQEAgcnVuX21lcmdlX3Rvb2wgKCkgewogCQkJaWYgJGJhc2VfcHJl
+c2VudDsgdGhlbgogCQkJCSIkbWVyZ2VfdG9vbF9wYXRoIiAiJEJBU0UiICIkTE9DQUwiICIkUkVN
+T1RFIiAiJE1FUkdFRCIKIAkJCWVsc2UKLQkJCQkiJG1lcmdlX3Rvb2xfcGF0aCIgIiRMT0NBTCIg
+IiRMT0NBTCIgIiRSRU1PVEUiICIkTUVSR0VEIgorCQkJCXRvdWNoICIuZW1wdHkiCisJCQkJIiRt
+ZXJnZV90b29sX3BhdGgiICIuZW1wdHkiICIkTE9DQUwiICIkUkVNT1RFIiAiJE1FUkdFRCIKKwkJ
+CQlybSAiLmVtcHR5IgogCQkJZmkKIAkJCWNoZWNrX3VuY2hhbmdlZAogCQllbHNlCi0tIAoxLjcu
+My40Cgo=
+--000e0cd148f4a21bfe04a013ec5a--
