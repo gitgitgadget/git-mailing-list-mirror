@@ -1,94 +1,72 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [GSoC 2011] Git Sequencer
-Date: Mon, 4 Apr 2011 10:24:41 +0530
-Message-ID: <20110404045437.GA2208@kytes>
+Date: Sun, 03 Apr 2011 22:20:18 -0700
+Message-ID: <7vy63qa8z1.fsf@alter.siamese.dyndns.org>
 References: <20110403172054.GA10220@kytes>
- <alpine.LNX.2.00.1104031407480.14365@iabervon.org>
- <20110404040610.GA30737@kytes>
+ <201104040643.35583.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Stephen Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Stephen Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Apr 04 06:56:06 2011
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Apr 04 07:20:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6bpd-0001x3-R3
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 06:56:06 +0200
+	id 1Q6cDj-0000mI-0b
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 07:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751369Ab1DDEzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 00:55:49 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34282 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751021Ab1DDEzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 00:55:48 -0400
-Received: by iwn34 with SMTP id 34so5392341iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Apr 2011 21:55:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=bnEXe+dfh5Og41G7PlOqB7A7KifGAFKOXO2MooDzzRA=;
-        b=sWVF2rrwZJa2if0oHpPY1I7glgm05Hlq2RhQimCx4/+EbjbQRGYtQUsBO/LWDLESSY
-         byt8Rw6KwyWVrliX8OZk/PTiJsz52uE96Eo7g4L76/ZfDWswOuGA5tnntA9MDKvrPxpa
-         zTzFW3F4nPFXIrtwDYR1NS2FKfpCFjGSo+frM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=CgIvBTf2PaIwzwboMOmRCr9qSSvVZRsJCefY7nOF8COlavhz9DYkr+RspNU9dXKgl0
-         YvkxlVgco2zxXN1otJ2W0lo/L1VUSSAY9a3FCJ00rRiOgn73fHnyz1iobIT+OxzgQYku
-         zG+RR9BGaksYutbvXUDBsUX8DSpw/om0pQy1I=
-Received: by 10.231.39.130 with SMTP id g2mr6882427ibe.118.1301892947651;
-        Sun, 03 Apr 2011 21:55:47 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id e9sm178411ibb.66.2011.04.03.21.55.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2011 21:55:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110404040610.GA30737@kytes>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751859Ab1DDFUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 01:20:42 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35958 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751544Ab1DDFUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 01:20:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 71FFA5799;
+	Mon,  4 Apr 2011 01:22:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UZRClR+xcu2ifi/qEtY/6SydlYc=; b=ZcnuX8
+	TVYIq+6Qmng+IPCSaGa1ExKtfyjIJy1LlR47OMnjxww0zP7DR9UjCOhDxowXydFi
+	azR87luDSgKCCOjW8hXIzTuexeQeuyBJ4dNQgPkGr89mo2tQF71xiVmXmjbgJq64
+	Hheh4an0CMCxY7o4Mwiypn26qJBH66yn7HoXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aiVj+B7OYOXgFjVrVO9D57BdM/qpkwSK
+	gSLXYVjbqN98bL4n6nCaoMqMf2zY/DYMiAeevkSVap2f/dTBrDRawMVJRUeN3nF5
+	j8z0iV7lFv8IVATBxGzmfNl3kNijswQrhX3c5TXPYW3x2hGguqSQ4coMEY2pIQI+
+	NWlSpdDfp50=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BDBD95798;
+	Mon,  4 Apr 2011 01:22:21 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CE57B5795; Mon,  4 Apr 2011
+ 01:22:12 -0400 (EDT)
+In-Reply-To: <201104040643.35583.chriscool@tuxfamily.org> (Christian Couder's
+ message of "Mon, 4 Apr 2011 06:43:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 846EF72C-5E7B-11E0-A57D-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170788>
 
-Hi Daniel,
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Ramkumar Ramachandra writes:
-> Daniel Barkalow writes:
-> > I actually think that it would be a worthwhile feature for git's library 
-> > code to have a uniform mechanism for communicating that it is requesting 
-> > human intervention in the middle of a particular operation, where library 
-> > operations which conflict with being able to continue this operation are 
-> > either blocked or abort the operation, and the library is able to be told 
-> > in general that the human intervention is done and the library operation 
-> > should be finished now (or produce complaints about the user's work). That 
-> > is, a library-level, single-interrupted-step "sequencer". For that matter, 
-> > it should also apply to the common '"git merge" gets a conflict' case, and 
-> > it would be useful to get some representational uniformity between that 
-> > and cherry-pick getting a conflict.
+> Yeah, the first step should be 'cherry-pick' with '--continue', '--abort', and 
+> '--skip' merged.
 
-[...]
-
-> int sequencer_handle_conflict(); /* Returns ABORT (1) or RESOLVED (0) */
-> 
-> /**
->  * The sequencer_handle_conflict function essentially starts with a
->  * working tree with unmerged files and results in either a working
->  * tree without unmerged files (in which case it returns 0), or simply
->  * returns 1.  Advantage: Consistency. Each individual script will not
->  * have to maintain its own temporary files.
->  */
-
-Uh, no.  I wrote this part in too quickly.  Clearly needs more
-thought.
-
--- Ram
+I haven't looked at rebase-i machinery recently, but I wonder if it would
+just be a matter of making a multi-commit cherry-pick just prepare a bunch
+of "pick XXX" lines into .git/rebase-merge/rebase-todo file, make other
+trivial setups (like detaching HEAD, writing head-name and head files) and
+then execing "git rebase --continue"?
