@@ -1,123 +1,132 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's cooking in git.git (Apr 2011, #01; Sun, 3)
-Date: Mon, 04 Apr 2011 12:40:35 +0200
-Message-ID: <4D99A023.1090102@drmicha.warpmail.net>
-References: <7v62quc464.fsf@alter.siamese.dyndns.org>
+From: Lasse Makholm <lasse.makholm@gmail.com>
+Subject: Re: [RFC/PATCH] Make "git notes add" more user-friendly when there
+ are existing notes
+Date: Mon, 4 Apr 2011 13:35:38 +0200
+Message-ID: <BANLkTi=PHq=VVuh24S5-QZDXkdW4XVWWQA@mail.gmail.com>
+References: <09668994f10284cfa5243789a627dce8c2325bc6.1301388217.git.git@drmicha.warpmail.net>
+	<201103300202.55973.johan@herland.net>
+	<4D92D399.4090404@drmicha.warpmail.net>
+	<201103301159.55573.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 12:44:17 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Apr 04 13:35:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6hGb-0007mg-41
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 12:44:17 +0200
+	id 1Q6i4T-0004Bk-2U
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 13:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754547Ab1DDKoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 06:44:11 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:35301 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754487Ab1DDKoK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 06:44:10 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E51CC20309;
-	Mon,  4 Apr 2011 06:44:09 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 04 Apr 2011 06:44:09 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=IKfq5q0NibHz9jXY82fQzFqm1Vg=; b=hPw3JHD7S/fxneIWYx+ySJyD/S1fDy3IOn0dSaO13nmeB3l3ygsvp2EOIp6uwuOyKzZpuoExOFYVEWK9DDAWFiXToVgPiIzqD9D8eN9rgRGOcmNz3nVK3ZAVW5yJC70DOWEqsY+wS2ttBOgfF6rhbHu+RXoU1VnsYBRhvirSuY8=
-X-Sasl-enc: YiXO5IFsWkop3xDm44Cfm6pdruKmXcI96uLbPwc78tqK 1301913849
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 61966442AD5;
-	Mon,  4 Apr 2011 06:44:09 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7v62quc464.fsf@alter.siamese.dyndns.org>
+	id S1752806Ab1DDLfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 07:35:40 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:65128 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752294Ab1DDLfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 07:35:39 -0400
+Received: by pxi2 with SMTP id 2so1897999pxi.10
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 04:35:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=tZA0p2bBsD3hdxL3qzlE8SoipGgHXZDinvx5oZb1ius=;
+        b=EAEEKc+y6O7WeGSHM78NvemdeC14/uhWECjSiSHmvDBvqHzO2CC23/1/L76dt009ac
+         azpzHTEFIvoLNOC1o9GrIFm8YmFoa32dLwKq3Z7Xcsm9006jtTW1czWZzaIXYty3+MSB
+         Rs+IhlZKs0CSk8qLCDdfSW3xWMJcVtIpSh0Jg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=rLEssSQGS1Hlq0KxkhtAqWTnDz+Krn7ABGf00BBSIqbw2JJJqljucm1ApKXrjUVKdt
+         5kFj7Yhu9xChcXcb/Tyxt3V8/5eWkC1RdohsIbPdV6qYKSu/JXBOh6WnRnyUOQJjTkET
+         6fqLx2Ij4xNWPcDrOLu/hf37Ro52V/KPicWdc=
+Received: by 10.142.144.20 with SMTP id r20mr6358988wfd.76.1301916938737; Mon,
+ 04 Apr 2011 04:35:38 -0700 (PDT)
+Received: by 10.68.46.39 with HTTP; Mon, 4 Apr 2011 04:35:38 -0700 (PDT)
+In-Reply-To: <201103301159.55573.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170803>
 
-Junio C Hamano venit, vidit, dixit 04.04.2011 01:21:
-> Here are the topics that have been cooking.  Commits prefixed with '-' are
-> only in 'pu' while commits prefixed with '+' are in 'next'.
-> 
-> Hopefully we will have 1.7.5-rc1 coming Wednesday.
-> 
-> --------------------------------------------------
-> [New Topics]
-> * jc/rev-list-options-fix (2011-04-01) 1 commit
->   (merged to 'next' on 2011-04-03 at 91f19de)
->  + "log --cherry-pick" documentation regression fix
-> 
-> We should merge this before -rc1, but there might be other similar
-> breakages in the text flow due to the same f98fd43 (git-log.txt,
-> rev-list-options.txt: put option blocks in proper order, 2011-03-08).
+On 30 March 2011 11:59, Johan Herland <johan@herland.net> wrote:
+>> * options vs. arguments:
+>>
+>> "tag", "branch" etc. use options for subcommands, e.g. "tag -d", "branch
+>> -d" etc. "remote", "stash" use arguments, e.g. "remote add", "stash
+>> list". I don't see us unifying that, but we should decide about a
+>> direction to go for "new" commands and stick to that. I feel that
+>> options are the way to go. What I really feel strongly about is that we
+>> should decide once and then stick to that for future commands (and may
+>> be gradually revamping).
+>
+> This is a big discussion, and I don't really have a strong opinion either
+> way (or on whether unification of options vs. arguments is really necessary
+> at all). In general, I like separating the "verb" of the command (_what_ to
+> do) from the "adverbs" (_how_ to do it). For some git commands, the verb is
+> right there in the name (e.g. "checkout", "add", "rm", etc.), so the options
+> are usually all "adverbs". Other commands, however, refer to one of git's
+> "subsystems" (for some very vague definition of "subsystem") as a "noun"
+> (e.g. "stash", "remote", "notes"), and the verb needs to be specified
+> (either as a subcommand, or as an option). In those cases, I personally
+> prefer the subcommand approach ("git noun verb --adverb") better than the
+> option approach ("git noun --verb --adverb"), so as to separate the verb
+> from the adverbs.
+>
+> However, some commands (e.g. "branch", "tag") are _both_ "verbs" ("I want to
+> tag something") and "nouns" ("I want to add a tag"). By now, I'm thoroughly
+> used to "branch -d" and "tag -d", so e.g. "branch rm" and "tag rm" look a
+> bit foreign to me, although they probably follow the above principle more
+> closely...
 
-I rechecked and didn't find any other mis-references. Some commit
-limiting options mention commit formatters like "--pretty", but I deem
-that to be okay without an explicit "see below".
+Think of it less as the (only) verb and more of it as a domain. In the
+domain of a git remote, (add|rm|rename|...) is the action (verb) and
+that's why it is and should be a sub-command.
 
+git remote and git stash do it right in my opinion. The default action
+differs (list vs. create) but that's OK because so does the most
+common use case.
 
-> * mg/doc-revisions-txt (2011-04-01) 3 commits
->  - revisions.txt: language improvements
->  - revisions.txt: structure with a labelled list
->  - revisions.txt: consistent use of quotes
-> 
-> Most parts looked reasonable except for some nits.
+The canonical way to create a stash is to say "git stash create" but
+we allow you to simply say "git stash" because that's probably what
+you want. It seems then, that the canonical way to create a commit
+would be by saying "git commit create" (again, allowing the "git
+commit" shortcut).
 
-Should I resubmit or have you squashed that in already?
+We could even expand on the heresy and argue that git log should be an
+alias for "git commit list"... :-)
 
-> 
-> * mg/reflog-with-options (2011-04-01) 3 commits
->   (merged to 'next' on 2011-04-03 at e69a95c)
->  + reflog: fix overriding of command line options
->  + t/t1411: test reflog with formats
->  + builtin/log.c: separate default and setup of cmd_log_init()
->  (this branch is used by mg/show-without-prune.)
-> 
-> Reasonable, but can wait.
+My fingers type git branch -d foo by habit as well, but were it to
+change, I'd get over it and form new habits. We shouldn't let the
+force of mere habits prevent us from doing The Right Thing.
 
-Well, can be considered bugfix, but not a regression fix.
+You could argue that git branch -d is broken because -d is, in fact,
+not an option at all. If it was, you would be able to say git branch
+-d junk feature master to delete junk and branch out feature from
+master. But you can't because -d really is a sub-command in disguise.
 
-> 
-> * mg/show-without-prune (2011-04-01) 1 commit
->  - builtin/show: do not prune by pathspec
->  (this branch uses mg/reflog-with-options.)
-> 
-> I wanted to like this, but it still feels like too much magic.
+> Then you have weird cases that further complicate things: "rebase" is
+> usually a verb, but in "rebase --continue" or "rebase --abort" another verb
+> takes the focus, and I would probably prefer them as subcommands ("rebase
+> continue" and "rebase abort").
 
-...with a little less magic suggested now (act on single no-walk rev only).
+Absolutely, yes. I don't see this as a weird case at all. In my view,
+this is clearly broken just as git branch -d is. Again, in the domain
+of a rebase, abort and continue are clearly commands and should loose
+the dashes.
 
-> * mg/sha1-path-advise (2011-03-31) 2 commits
->  - sha1_name: Suggest commit:./file for path in subdir
->  - t1506: factor out test for "Did you mean..."
-> 
+> What can I say? Habits are hard to break, and this might be a case where
+> breaking them is more harmful than a somewhat messy command-line interface.
 
-Should I resubmit with "commit:./file" only, or is that too late anyways?
+As someone, standing on the edge of a 1000+ developer deployment of
+git, the option-vs-sub-command issue is one of the many things
+currently keeping me up at night. I would take a break in habits any
+day to avoid a lifetime of pain teaching people to remember and accept
+these inconsistencies...
 
-> --------------------------------------------------
-> [Cooking]
-> 
-> * jc/diff-irreversible-delete (2011-02-28) 1 commit
->   (merged to 'next' on 2011-04-03 at 5a23b23)
->  + git diff -D: omit the preimage of deletes
-> 
-> Unstuck, thanks to Michael J Gruber.
-
-and to Junio for taking up the sticks ;)
-
-> * mg/grep-full-tree (2011-03-01) 2 commits
->  . grep: make --full-tree work with pathspecs
->  . grep: --full-tree
-> 
-> It would be preferable to use ":/" or whatever magic pathspec that is
-> relative to the root of the working tree.
-
-I think we can drop it, it's clear we're going for ":/" or the like, and
-it's clear that won't be before 1.7.5.
-
-Michael
+/Lasse
