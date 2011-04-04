@@ -1,58 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 0/3] revisions.txt improvements
-Date: Mon, 04 Apr 2011 11:18:50 -0700
-Message-ID: <7voc4l98xh.fsf@alter.siamese.dyndns.org>
-References: <cover.1301649867.git.git@drmicha.warpmail.net>
- <cover.1301930700.git.git@drmicha.warpmail.net>
+From: "J.H." <warthog9@eaglescrag.net>
+Subject: Re: [PATCH (BUGFIX)] gitweb: Fix parsing of negative fractional timezones
+ in JavaScript
+Date: Mon, 04 Apr 2011 11:30:29 -0700
+Message-ID: <4D9A0E45.6060101@eaglescrag.net>
+References: <20110401190239.9686.12000.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Apr 04 20:19:09 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Kevin Cernekee <cernekee@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 20:30:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6oMn-00067u-7A
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 20:19:09 +0200
+	id 1Q6oY7-0004pl-4F
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 20:30:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167Ab1DDSTC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 14:19:02 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51343 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754891Ab1DDSTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 14:19:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5623F4A71;
-	Mon,  4 Apr 2011 14:20:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=wHp1Aj
-	0aVxOdRpCx6ZZjdLmBPcURA9uLZCZvg3vUOA9YrWWFTthFfk7FNyf1Sj8qVUshEW
-	VNotz5qFXIibAdYUA0UsQvqFLguOBf9fQldJ5u0I9qbzf05OrkqfLlcfQZ4pj9wQ
-	SffgUfuCE0xb8O7F3OpSjxSbfE/5buPQfJSfk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=csg0rcunM7oteFz593As9ADV3vUvuqFE
-	YPqtBAY3gOAi0lMhsCVjLPnpZAz4wNwsqq7NF5+8sT2PdGGTKF9gbAKfTs4IuCFy
-	HXOEAPKO9TCXRZvU6BtJc0HNg5BDGf7vVp6ZHPFBoj7QhJYu+fq9lYwQ4LAOBLcU
-	XYC2ShGx+mk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 313874A70;
-	Mon,  4 Apr 2011 14:20:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4FADD4A6A; Mon,  4 Apr 2011
- 14:20:46 -0400 (EDT)
-In-Reply-To: <cover.1301930700.git.git@drmicha.warpmail.net> (Michael J.
- Gruber's message of "Mon, 4 Apr 2011 17:27:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 44398CFE-5EE8-11E0-9988-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755311Ab1DDSaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 14:30:35 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:55896 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755301Ab1DDSae (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 14:30:34 -0400
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p34IUT3F028980
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Mon, 4 Apr 2011 11:30:30 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <20110401190239.9686.12000.stgit@localhost.localdomain>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 04 Apr 2011 11:30:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170832>
 
-Thanks.
+Looks fine to me.
+
+- John 'Warthog9' Hawley
+
+On 04/01/2011 12:06 PM, Jakub Narebski wrote:
+> Extract converting numerical timezone in the form of '(+|-)HHMM' to
+> timezoneOffset function, and fix parsing of negative fractional
+> timezones.
+> 
+> This is used to format timestamps in 'blame_incremental' view; this
+> complements commit 2b1e172 (gitweb: Fix handling of fractional
+> timezones in parse_date, 2011-03-25).
+> 
+> Now
+> 
+>   gitweb.cgi/git.git/blame_incremental/3fe5489:/contrib/gitview/gitview#l853
+> 
+> and
+> 
+>   gitweb.cgi/git.git/blame/3fe5489:/contrib/gitview/gitview#l853
+> 
+> show the same correct time in author's local timezone in title
+> (on mouseover) [Aneesh Kumar K.V, 2006-02-24 00:59:42 +0530].
+> 
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+> This was send earlier as part 3/3 of 
+> 
+>   "[PATCH/RFC 0/3] gitweb: Split gitweb.js, improve JavaScript"
+>   Message-Id: <1301089586-8534-1-git-send-email-jnareb@gmail.com>
+>   http://thread.gmane.org/gmane.comp.version-control.git/170021/focus=170024
+> 
+> It is now send separately as standalone patch, and is not held hostage
+> to accepting series that splits gitweb JavaScript file.
+> 
+>  gitweb/static/gitweb.js |   24 +++++++++++++++++++-----
+>  1 files changed, 19 insertions(+), 5 deletions(-)
+> 
+> diff --git a/gitweb/static/gitweb.js b/gitweb/static/gitweb.js
+> index 9c66928..40ec084 100644
+> --- a/gitweb/static/gitweb.js
+> +++ b/gitweb/static/gitweb.js
+> @@ -399,7 +399,24 @@ function fixColorsAndGroups() {
+>   * used to extract hours and minutes from timezone info, e.g '-0900'
+>   * @constant
+>   */
+> -var tzRe = /^([+-][0-9][0-9])([0-9][0-9])$/;
+> +var tzRe = /^([+-])([0-9][0-9])([0-9][0-9])$/;
+> +
+> +/**
+> + * convert numeric timezone +/-ZZZZ to offset from UTC in seconds
+> + *
+> + * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
+> + * @returns {Number} offset from UTC in seconds for timezone
+> + *
+> + * @globals tzRe
+> + */
+> +function timezoneOffset(timezoneInfo) {
+> +	var match = tzRe.exec(timezoneInfo);
+> +	var tz_sign = (match[1] === '-' ? -1 : +1);
+> +	var tz_hour = parseInt(match[2],10);
+> +	var tz_min  = parseInt(match[3],10);
+> +
+> +	return tz_sign*(((tz_hour*60) + tz_min)*60);
+> +}
+>  
+>  /**
+>   * return date in local time formatted in iso-8601 like format
+> @@ -408,14 +425,11 @@ var tzRe = /^([+-][0-9][0-9])([0-9][0-9])$/;
+>   * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
+>   * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
+>   * @returns {String} date in local time in iso-8601 like format
+> - *
+> - * @globals tzRe
+>   */
+>  function formatDateISOLocal(epoch, timezoneInfo) {
+> -	var match = tzRe.exec(timezoneInfo);
+>  	// date corrected by timezone
+>  	var localDate = new Date(1000 * (epoch +
+> -		(parseInt(match[1],10)*3600 + parseInt(match[2],10)*60)));
+> +		timezoneOffset(timezoneInfo)));
+>  	var localDateStr = // e.g. '2005-08-07'
+>  		localDate.getUTCFullYear()                 + '-' +
+>  		padLeft(localDate.getUTCMonth()+1, 2, '0') + '-' +
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
