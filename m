@@ -1,106 +1,71 @@
-From: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
-Subject: [PATCH] git-completion: Add support for git submodule options
-Date: Mon, 04 Apr 2011 13:15:33 +0200
-Message-ID: <4D99A855.1050605@morey-chaisemartin.com>
-Reply-To: devel-git@morey-chaisemartin.com
+From: Alif Wahid <alif.wahid@gmail.com>
+Subject: Re: Git exhausts memory.
+Date: Mon, 4 Apr 2011 22:52:52 +1000
+Message-ID: <BANLkTinCwZG3+0Ss8o9ODptg=L8LKKN7aQ@mail.gmail.com>
+References: <BANLkTin=yUtzbZjs_92FHDfs62VFFuLHwg@mail.gmail.com>
+	<alpine.LFD.2.00.1104021103130.28032@xanadu.home>
+	<BANLkTikRGQ45xvWvisMhXi4Hu2r_0GS=Gg@mail.gmail.com>
+	<alpine.LFD.2.00.1104031110150.28032@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 04 14:40:38 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Apr 04 14:52:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6j5C-0008P2-FR
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 14:40:38 +0200
+	id 1Q6jH9-0007XZ-5s
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 14:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054Ab1DDMka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 08:40:30 -0400
-Received: from 9.26.mail-out.ovh.net ([46.105.56.220]:49215 "HELO
-	26.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753970Ab1DDMkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 08:40:04 -0400
-Received: (qmail 4772 invoked by uid 503); 4 Apr 2011 11:10:39 -0000
-Received: from b9.ovh.net (HELO mail95.ha.ovh.net) (213.186.33.59)
-  by 26.mail-out.ovh.net with SMTP; 4 Apr 2011 11:10:38 -0000
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 4 Apr 2011 13:15:35 +0200
-Received: from mailhost.kalray.eu (HELO sat.lin.mbt.kalray.eu) (devel-git@morey-chaisemartin.com@217.108.237.233)
-  by ns0.ovh.net with SMTP; 4 Apr 2011 13:15:34 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Lightning/1.0b2 Thunderbird/3.1.9
-X-Ovh-Tracer-Id: 12129882647591182302
-X-Ovh-Remote: 217.108.237.233 (mailhost.kalray.eu)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|U 0.5/N
+	id S1752407Ab1DDMwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 08:52:53 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:49431 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751165Ab1DDMwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 08:52:53 -0400
+Received: by vws1 with SMTP id 1so4065604vws.19
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 05:52:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=JQqlom5po+bqdLw6+LwK/WDm98vXcPt6EClCK8GMsOU=;
+        b=pK6GocBokDLp/Ammn9NZbuE6PYws1o34FohdrDorPvrWTFKh4fuQhmH43i6Zs5NTbR
+         U/Kil0aNjPDktZWv3HXdbjdFfUXgAhg3e2xN5/V0tTA5BvYAlHCDmWpCln8TqScsHYgq
+         QuXnXG5tFqUf4IY15lZx8AyZmG742CTt7+lew=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Bi9oApctsLiH7lCNVPhkRHXo6Mf1n8BWJwiCnbAprs7mcafRPgd23J4s+DmeuuwB3Y
+         m5DsVfdsgDe1OMus8pAmE0IDWK2kDrv1uCtGJQdWD8PWJoXKkLwVoExybOBKsC30YfCz
+         eIOSUnCG+UxZwEdHvZVwKhTcVAcKGLgptQdbE=
+Received: by 10.52.18.6 with SMTP id s6mr4558185vdd.144.1301921572499; Mon, 04
+ Apr 2011 05:52:52 -0700 (PDT)
+Received: by 10.52.155.70 with HTTP; Mon, 4 Apr 2011 05:52:52 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1104031110150.28032@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170809>
 
-Completion for git submodule only handled subcommands.
-Add support for options of each subcommand
+Hi Nicolas,
 
-Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
----
- contrib/completion/git-completion.bash |   38 +++++++++++++++++++++++++++++++-
- 1 files changed, 37 insertions(+), 1 deletions(-)
+On 4 April 2011 01:18, Nicolas Pitre <nico@fluxnic.net> wrote:
+>
+> Something you can try is to simply tell Git not to attempt any delta
+> compression on those tar files using gitattributes (see the man page of
+> the same name).
+>
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 840ae38..a7040e1 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2546,7 +2546,8 @@ _git_submodule ()
- 	__git_has_doubledash && return
- 
- 	local subcommands="add status init update summary foreach sync"
--	if [ -z "$(__git_find_on_cmdline "$subcommands")" ]; then
-+	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	if [ -z "$subcommand" ]; then
- 		local cur
- 		_get_comp_words_by_ref -n =: cur
- 		case "$cur" in
-@@ -2558,6 +2559,41 @@ _git_submodule ()
- 			;;
- 		esac
- 		return
-+	else
-+	    local add_opts="--branch= --force --reference="
-+	    local status_opts="--cached --recursive"
-+	    local update_opts="--init --no-fetch --rebase --reference= --merge --recursive"
-+	    local summary_opts="--cached --files --summary-limit="
-+	    local foreach_opts="--recursive"
-+
-+	    local cur
-+	    _get_comp_words_by_ref -n =: cur
-+	    case "$subcommand,$cur" in
-+		 add,--*)
-+		     __gitcomp "$add_opts"
-+		     ;;
-+		 status,--*)
-+		     __gitcomp "$status_opts"
-+		     ;;
-+		 update,--*)
-+		     __gitcomp "$update_opts"
-+		     ;;
-+		 summary,--*)
-+		     __gitcomp "$summary_opts"
-+		     ;;
-+		 summary,*)
-+		     __gitcomp "$(__git_refs)"
-+		     ;;
-+		 foreach,--*)
-+		     __gitcomp "$foreach_opts"
-+		     ;;
-+		 sync,*)
-+		     COMPREPLY=()
-+		     ;;
-+		 *)
-+		     COMPREPLY=()
-+		     ;;
-+	    esac 
- 	fi
- }
- 
+Seems to have worked. Both git-gc and git-repack appear to be less
+memory hungry now and do actually run to completion without failure.
+
+Thanks for your help.
+
+Cheers
+
+Alif
