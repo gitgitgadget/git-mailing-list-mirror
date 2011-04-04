@@ -1,61 +1,73 @@
-From: Kevin Ryde <user42@zip.com.au>
-Subject: Re: [PATCH] git.el: Don't use font-lock-compile-keywords
-Date: Tue, 05 Apr 2011 09:15:41 +1000
-Message-ID: <871v1h38wy.fsf@blah.blah>
-References: <m3oc501rja.fsf@e4300lm.epcc.ed.ac.uk>
-	<20110403001902.GA25671@elie>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/2] git-svn: Fix the commit-url config to be the base
+	url, just like the url config
+Date: Mon, 4 Apr 2011 15:54:42 -0700
+Message-ID: <20110404225442.GA9307@dcvr.yhbt.net>
+References: <1301944148-7950-1-git-send-email-asedeno@mit.edu> <1301944148-7950-2-git-send-email-asedeno@mit.edu> <20110404215227.GA4224@dcvr.yhbt.net> <F8E6CFA4-79F6-41AC-8266-09B3B46C8520@itasoftware.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Lawrence Mitchell <wence@gmx.li>,
-	Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org,
-	David =?iso-8859-1?Q?K=E5ge?= =?iso-8859-1?Q?dal?= 
-	<davidk@lysator.liu.se>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 00:46:17 2011
+Cc: Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
+	git@vger.kernel.org
+To: James Y Knight <jknight@itasoftware.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 00:54:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6sXJ-0007Ac-EM
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 00:46:17 +0200
+	id 1Q6sfc-0003Qn-Ca
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 00:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755555Ab1DDWqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 18:46:00 -0400
-Received: from mailout2-2.pacific.net.au ([61.8.2.225]:46781 "EHLO
-	mailout2.pacific.net.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754028Ab1DDWp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 18:45:59 -0400
-X-Greylist: delayed 1826 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Apr 2011 18:45:59 EDT
-Received: from mailproxy1.pacific.net.au (mailproxy1.pacific.net.au [61.8.2.162])
-	by mailout2.pacific.net.au (Postfix) with ESMTP id 2EC8E2B6BDA;
-	Tue,  5 Apr 2011 08:15:29 +1000 (EST)
-Received: from blah.blah (unknown [203.26.175.149])
-	by mailproxy1.pacific.net.au (Postfix) with ESMTP id 8C1C68C23;
-	Tue,  5 Apr 2011 08:15:28 +1000 (EST)
-Received: from gg by blah.blah with local (Exim 4.72)
-	(envelope-from <gg@zip.com.au>)
-	id 1Q6szl-0001mk-Rm; Tue, 05 Apr 2011 09:15:41 +1000
-In-Reply-To: <20110403001902.GA25671@elie> (Jonathan Nieder's message of "Sat,
-	2 Apr 2011 19:19:02 -0500")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
+	id S1755802Ab1DDWyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 18:54:47 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:50124 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753148Ab1DDWyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 18:54:46 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EAD21F749;
+	Mon,  4 Apr 2011 22:54:46 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <F8E6CFA4-79F6-41AC-8266-09B3B46C8520@itasoftware.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170847>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
->
-> Lawrence Mitchell wrote:
->> font-lock-add-keywords rather than font-lock-compile-keywords.
->> However, it doesn't exist in XEmacs,
+James Y Knight <jknight@itasoftware.com> wrote:
+> On Apr 4, 2011, at 5:52 PM, Eric Wong wrote:
+> > $_commit_url is a user-specified parameter from the --commit-url switch.
+> > If they want to override it it's the user's perogative.  It's not the
+> > default and not commonly used.
+> 
+> In .git/config:
+> 
+> [svn-remote "svn"]
+>         url = http://hostname/svnrepo/
+>         commiturl = svn+ssh://hostname/svnrepo
+>         branches = branches/*:refs/remotes/origin/*
+>         fetch = trunk:refs/remotes/origin/master
+> 
+> The commiturl configuration is necessary so that the canonical URL is the http:// url (which can be used for read-only access), but if you want to commit, you have to use svn+ssh. This is a fairly common way of setting up access to an svn repository, so I'm surprised to be the first one to hit this issue.
+> 
+> Without the patch, you need:
+>         commiturl = svn+ssh://hostname/svnrepo/trunk
+> which of course then doesn't allow you to commit to other branches.
 
-Oh, I didn't realize that.  In my own code I think I've only ever
-set font-lock-defaults and left it at that ...
+Originally --commit-url was only intended to be a command-line option
+and for overriding specific cases and also for dealing with permission
+mismatches (limited commit access to a branch, unlimited read access
+to the repo).
 
+Your patch breaks existing use cases, I think.
+
+I think Junio's suggestion for a pushurl config which does what you
+think commitUrl does would be what you're after...
+
+Thanks
 
 
 -- 
-Newton's first law elucidated for the layman:
-A body in motion continues in motion, unless it doesn't.
+Eric Wong
