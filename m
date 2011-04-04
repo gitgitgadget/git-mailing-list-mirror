@@ -1,82 +1,81 @@
 From: Jonathan Michalon <johndescs@gmail.com>
 Subject: Re: Better big file support & GSoC
-Date: Mon, 4 Apr 2011 18:52:48 +0200
-Message-ID: <20110404185248.1061e452@RunningPinguin.chalmion.homelinux.net>
+Date: Mon, 4 Apr 2011 18:53:35 +0200
+Message-ID: <20110404185335.2daa5a6a@RunningPinguin.chalmion.homelinux.net>
 References: <20110402164051.1f263aa0@RunningPinguin.chalmion.homelinux.net>
- <alpine.DEB.2.00.1104022056530.29543@asgard.lang.hm>
+ <20110402153008.GA5921@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Apr 04 18:53:02 2011
+X-From: git-owner@vger.kernel.org Mon Apr 04 18:53:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6n1R-0003Dg-Rz
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 18:53:02 +0200
+	id 1Q6n2A-0003ge-6W
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 18:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754530Ab1DDQw4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 12:52:56 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:57401 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754027Ab1DDQwz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 12:52:55 -0400
-Received: by wwk4 with SMTP id 4so1846837wwk.1
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 09:52:54 -0700 (PDT)
+	id S1754725Ab1DDQxl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 12:53:41 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:49253 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754669Ab1DDQxk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 12:53:40 -0400
+Received: by wya21 with SMTP id 21so4839519wya.19
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 09:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:cc:subject:message-id:in-reply-to
          :references:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=vT+P+xWHHhuc7+S3ojXfO7s5kzIu/DZeH/c+BP+/JvA=;
-        b=yC4QtPeqqWfsNgSrOKCoL4hyEjOk7nRdvrIx6dZYT4fdWz6DIeJ9bqzo3y1JIycLwM
-         pmWh8EF0Ado//9JilGk4BHt5EZQCyQ2ZLKm72+l1mD7USRqAOBAq0g3CVkTEUY0Ss5AX
-         Ormn/pMmQ+eBJ7boR6VjNcWNjgz/WzLmUa5CY=
+        bh=wS7DD7Ykr2UtyFvVL3Zc6bHJqa8vUyP6HYjji3HpwNI=;
+        b=ObANTahxhOLjqlI85RzTYUPyuCd3+qd0JkvAYb5Tx0S2CeL4u8YjILr0XhEMoO7RUy
+         hoWFwonvur5kwFzp9NV571YnjxWy3PKyVY6H/xWvBa9XYldvV9lZsfJtT97/Xdlu2fSw
+         iIODw+icS81zrignwxa6tsezkmpO2vvYJFBs8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:cc:subject:message-id:in-reply-to:references:x-mailer
          :mime-version:content-type:content-transfer-encoding;
-        b=YexPd7+GEqqE1zIiXvIekXCEXeyhEUyp1PigBjXbqIhTM6KXQTNvYf+yeLntH9MTQY
-         m6zXEqshlYkKZ0ujxLppWOAYuELJfNZbpnnb227dYEerxpo/3o5bWw3/ZlzuRfKUngWb
-         v9ULybyU9pR0ji4JSiGLOq/17zYjqD+XvORkk=
-Received: by 10.216.82.16 with SMTP id n16mr3125880wee.13.1301935972979;
-        Mon, 04 Apr 2011 09:52:52 -0700 (PDT)
+        b=jMf7tNPW+LC1InoyH+/3WEiLpykO0HKdm0+Xr3ztT1o9RY/ZMbr2Z8iZBxH1c+gBpF
+         AYqbjLkqpqinviJQ9T9WNcqf5kNaY5QRga+vE1jBJC/swftP2WdNFGACpm+E90NxTSZF
+         m/4RHbmhXXv8F/X6bvEguX712iP92Yiq/zl+Q=
+Received: by 10.216.87.8 with SMTP id x8mr4779554wee.46.1301936018736;
+        Mon, 04 Apr 2011 09:53:38 -0700 (PDT)
 Received: from RunningPinguin.chalmion.homelinux.net (AStrasbourg-251-1-20-21.w82-126.abo.wanadoo.fr [82.126.210.21])
-        by mx.google.com with ESMTPS id c54sm2343210wer.30.2011.04.04.09.52.52
+        by mx.google.com with ESMTPS id h39sm2346166wes.5.2011.04.04.09.53.37
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 04 Apr 2011 09:52:52 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1104022056530.29543@asgard.lang.hm>
+        Mon, 04 Apr 2011 09:53:38 -0700 (PDT)
+In-Reply-To: <20110402153008.GA5921@centaur.lab.cmartin.tk>
 X-Mailer: Claws Mail 3.7.4 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170824>
 
-Le Sat, 2 Apr 2011 21:00:53 -0700 (PDT),
-david@lang.hm a =C3=A9crit :
-
-> On Sat, 2 Apr 2011, Jonathan Michalon wrote:
+Le Sat, 2 Apr 2011 17:30:15 +0200,
+Carlos Mart=EDn Nieto <cmn@elego.de> a =E9crit :
+> On Sat, Apr 02, 2011 at 04:40:51PM +0200, Jonathan Michalon wrote:
+> > What I personally would like as a feature is the ability to store t=
+he main
+> > repo with sources etc. into a conventional repo but put the data el=
+sewhere
+> > on a storage location. This would allow to develop programs which n=
+eed data
+> > to run (like textures in games etc.) without making the repo slow, =
+big or
+> > just messy.
 >=20
-> > Hi Git people,
-> >
-> > I'm an applicant to the GSoC within git.
-> > I would like to help building a better big file support mechanism.
-> >
-> > I have read the latest threads on this topic:
-> > http://thread.gmane.org/gmane.comp.version-control.git/165389/focus=
-=3D165389
-> > http://thread.gmane.org/gmane.comp.version-control.git/168403/focus=
-=3D168852
+>  This sounds a lot like like what git-annex [0] does. Maybe
+>  integrating its functionality with mainline git could be a good
+>  start.
 >=20
-> there was also an offshoot of a similar discussion that pointed out t=
-hat=20
-> this could be done pretty cleanly with the clean/smudge hooks.
+> [0] http://git-annex.branchable.com/
 >=20
-> David Lang
+>    cmn
 
 Edit:
 Hum I just failed to reply correcly... did only to the original poster,=
@@ -84,20 +83,19 @@ Hum I just failed to reply correcly... did only to the original poster,=
 whole list. My apologies.
 
 Message:
-At least to my mind big file support is more important than just doing =
-some
-tricky manipulation with existing hook types. It should highly benefit =
-from
-being integrated deeply within git, both because of optimisations or in=
- terms
-of integration.
-I read the discussion about clean/smudge hooks too but I skipped the id=
-ea
-because the final thought was "feels like a hack". See here:
-http://article.gmane.org/gmane.comp.version-control.git/168857
+Yes, for sure. I will try to reuse as much code as possible, and diggin=
+g into
+some which does almost the job will help. But in fact I doubt that it w=
+ill be
+very comparable both as separate software and integrated code.
+In addition Eric Montellese dug already into the code but was not compl=
+etely
+satisfied. See: http://article.gmane.org/gmane.comp.version-control.git=
+/165395
 
-In fact I don't know how this could be considered as "clean" or "hacky"=
-=E2=80=A6
+I would like to have the opinion of the community before going in the w=
+rong
+direction.
 
 --
 Jonathan Michalon
