@@ -1,90 +1,157 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: How to split a big commit
-Date: Mon, 4 Apr 2011 21:25:38 +0700
-Message-ID: <BANLkTinpiR2sHS35uqD+uLnTKVtimhT7eg@mail.gmail.com>
-References: <BANLkTikFXzut7fY5Tr0u-abu5Q0rMUOCmA@mail.gmail.com> <20110404130016.GA16975@kytes>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] tree_entry_interesting: inline strncmp()
+Date: Mon,  4 Apr 2011 21:46:26 +0700
+Message-ID: <1301928386-25038-1-git-send-email-pclouds@gmail.com>
+References: <1301535481-1085-3-git-send-email-dpmcgee@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 16:26:41 2011
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	dpmcgee@gmail.com
+X-From: git-owner@vger.kernel.org Mon Apr 04 16:49:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6kjo-0007bw-Q1
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 16:26:41 +0200
+	id 1Q6l5X-0005XC-3F
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 16:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754471Ab1DDO0c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 10:26:32 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:55564 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754429Ab1DDO0b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 10:26:31 -0400
-Received: by pxi2 with SMTP id 2so1990851pxi.10
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 07:26:31 -0700 (PDT)
+	id S1754641Ab1DDOtA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 10:49:00 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47303 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754628Ab1DDOs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 10:48:59 -0400
+Received: by gwaa18 with SMTP id a18so2185460gwa.19
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 07:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=ioafDeA+G+It24k9cJhQ+NY3J0V02rEE28swpfxZCHU=;
-        b=iOlnVjNjQRRR8+3w/WPOTq+kOUKNHYP0LQ19tnvu0jlgVkEkgIn2dznZHn2PLPPA5Q
-         JVfrWY57dDzDsDrgb6eufAS8nHrkb2yhYZ9QN5qO2+JU5qwUkhSDevF9A7OQmUsBtKuh
-         cNHMdyhw5XdDBLByZrl0BWs98LXtS/qu/PnWg=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=/fGTCbqnFaEbOFllWx2bjL3BSZhr+VO8QR1VGgNH1Y8=;
+        b=ByBOQCBlUVD5D84RdC6prqsRiBFsSvD3xb1B2F4Xbu1l71Kko/hJpXvzm0ZmoxoLeF
+         FDQTV/FQliStoz4IZh3k+CFSMs2evxv4BXYyXXaY7ACdfOTGWholZ4O9UFVIeumyJnlR
+         VMbh29VChsS9aNlte4jm3yivmQ3y9MjWZ+hhY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CU9VUz0FsxvWkhYvroCCgyrrctkEeoIHkFLByy9anyimjqpIxd7/B77u+bEg2+d0f0
-         MAQ1srdiKVOTnA4JMbAopYeV8mIm3ilkOiBAumsK3Gc20gVu8tJyi3vpQbeDeNlJSDMy
-         jyJK8FO1KH2a8ldLfJrseGsBwX2hNCjjbsUpE=
-Received: by 10.142.76.16 with SMTP id y16mr6470577wfa.157.1301927168124; Mon,
- 04 Apr 2011 07:26:08 -0700 (PDT)
-Received: by 10.68.54.201 with HTTP; Mon, 4 Apr 2011 07:25:38 -0700 (PDT)
-In-Reply-To: <20110404130016.GA16975@kytes>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=xgJJEtK7qAZR3pa21a7kTY7EJBz+JSugRCBb1txxgzlvgwEnn2sC2nGaN0xNNRiIhC
+         CIbZ5JXKtvioOdSmE7HeDOxQmgUQ5WrIU8FY2PKO4iuMY40Eg7Zzc5HRXuY4WBZf+eaI
+         apnE0Hx6S70NyHqrYr2oMe9K6e/bHXqfVIkgk=
+Received: by 10.42.135.193 with SMTP id q1mr8948975ict.41.1301928538678;
+        Mon, 04 Apr 2011 07:48:58 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.251.245])
+        by mx.google.com with ESMTPS id e9sm507875ibb.32.2011.04.04.07.48.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 04 Apr 2011 07:48:56 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 04 Apr 2011 21:46:27 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
+In-Reply-To: <1301535481-1085-3-git-send-email-dpmcgee@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170813>
 
-On Mon, Apr 4, 2011 at 8:00 PM, Ramkumar Ramachandra <artagnon@gmail.co=
-m> wrote:
-> To split a big commit, I simply reverse-diff-apply the changes that I
-> don't want in the big commit, and I stage all changes. =C2=A0Then, I =
-again
-> reverse-diff-apply all the staged changes, and keep that in the
-> unstaged portion.
+strncmp() is the function that takes most of the time inside
+tree_entry_interesting(). Inline it so we can shave some seconds out
+of function call time.
 
-Won't work for me. The reverse part would be way larger than the to-com=
-mit part.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Turns out simplicity is the best. My straight copy of strncmp from
+ glibc performed worse.
 
-> ...
-> I can afford to do this kind of jugglery very easily because I use
-> Magit with Emacs. =C2=A0After highlighting the relevant portions,
-> reverse-diff-apply is one keystroke :)
+ With this I get a slightly better performance than Dan's 3/5:
+ 81.07-82.27 secs versus 82.02-82.92 (no other patches are applied).
+ But I'm happy even if it gives the same or slightly worse
+ performance because this applies to more cases than flat top tree
+ case.
 
-Hmm.. interesting. Never got around to actually use magit. I may have
-a good reason now.
+ Dan, match_dir_prefix() can also use some reordering to avoid
+ strncmp(). But I suppose it won't give much gain on packages.git
 
-> But yes, you're probably right-
-> there should be an easier way to do this. =C2=A0Maybe a 'git split' t=
-hat
-> allows you to interactively select the portions of an existing commit
-> that you'd like to exclude from the commit and turn into a new commit=
-?
+ tree-walk.c |   28 ++++++++++++++++++++++++----
+ 1 files changed, 24 insertions(+), 4 deletions(-)
 
-Hmm..yeah something like grep for chunks, then automatically splitting
-those chunks out would be nice.
-
-I have another use for such a tool too. When .po files are
-automatically updated by intltool (gnome translation helper tool),
-comment lines are all changed because they contain source line and
-those line likely change. With this tool I can filter out comment-only
-changes.
-
-Thanks for the idea.
+diff --git a/tree-walk.c b/tree-walk.c
+index 322becc..80bfc3a 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -457,6 +457,26 @@ int get_tree_entry(const unsigned char *tree_sha1,=
+ const char *name, unsigned ch
+ 	return retval;
+ }
+=20
++/* Static version of strncmp to reduce function call cost */
++static inline int strncmp_1(const char *s1, const char *s2, size_t n)
++{
++	unsigned char c1 =3D '\0';
++	unsigned char c2 =3D '\0';
++
++	if (!n)
++		return 0;
++
++	while (n > 0) {
++		c1 =3D (unsigned char) *s1++;
++		c2 =3D (unsigned char) *s2++;
++		if (c1 =3D=3D '\0' || c1 !=3D c2)
++			return c1 - c2;
++		n--;
++	}
++
++	return c1 - c2;
++}
++
+ static int match_entry(const struct name_entry *entry, int pathlen,
+ 		       const char *match, int matchlen,
+ 		       int *never_interesting)
+@@ -473,7 +493,7 @@ static int match_entry(const struct name_entry *ent=
+ry, int pathlen,
+ 		 * Does match sort strictly earlier than path
+ 		 * with their common parts?
+ 		 */
+-		m =3D strncmp(match, entry->path,
++		m =3D strncmp_1(match, entry->path,
+ 			    (matchlen < pathlen) ? matchlen : pathlen);
+ 		if (m < 0)
+ 			return 0;
+@@ -509,7 +529,7 @@ static int match_entry(const struct name_entry *ent=
+ry, int pathlen,
+ 		 * we cheated and did not do strncmp(), so we do
+ 		 * that here.
+ 		 */
+-		m =3D strncmp(match, entry->path, pathlen);
++		m =3D strncmp_1(match, entry->path, pathlen);
+=20
+ 	/*
+ 	 * If common part matched earlier then it is a hit,
+@@ -525,7 +545,7 @@ static int match_entry(const struct name_entry *ent=
+ry, int pathlen,
+ static int match_dir_prefix(const char *base, int baselen,
+ 			    const char *match, int matchlen)
+ {
+-	if (strncmp(base, match, matchlen))
++	if (strncmp_1(base, match, matchlen))
+ 		return 0;
+=20
+ 	/*
+@@ -592,7 +612,7 @@ int tree_entry_interesting(const struct name_entry =
+*entry,
+ 		}
+=20
+ 		/* Does the base match? */
+-		if (!strncmp(base_str, match, baselen)) {
++		if (!strncmp_1(base_str, match, baselen)) {
+ 			if (match_entry(entry, pathlen,
+ 					match + baselen, matchlen - baselen,
+ 					&never_interesting))
 --=20
-Duy
+1.7.4.74.g639db
