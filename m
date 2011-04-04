@@ -1,96 +1,97 @@
-From: Ryan Bilesky <rbilesky@gmail.com>
-Subject: New To GIT have some (probably simple) newbie questions
-Date: Mon, 4 Apr 2011 15:13:32 -0700
-Message-ID: <BANLkTim=G0obXv9LjoT7nW9C=wpmJ=RAVQ@mail.gmail.com>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>
+Subject: GSOC application: Network layer for libgit2
+Date: Tue, 5 Apr 2011 00:20:59 +0200
+Message-ID: <20110404222051.GB4529@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 00:13:49 2011
+To: git@vger.kernel.org, libgit2@librelist.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 00:21:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6s1r-0006wK-28
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 00:13:47 +0200
+	id 1Q6s8y-0002Yl-3g
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 00:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755871Ab1DDWNh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 18:13:37 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:61243 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755866Ab1DDWNe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 18:13:34 -0400
-Received: by wya21 with SMTP id 21so5078056wya.19
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 15:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=ixBrmrz1L+Gf8QCPmauOcBl9HITb+BlLUDs4jRlrA/M=;
-        b=Ivt8cfLcS1Pqz3jS5EBhaRGC6sKOnVtGjC7uMZRXRfNdW/YFgFmEBLl1XBP7aHAna/
-         MOeLHscS/99eqRPeruIcW24+6d67yzzJws2kkOjCBszCP84Yw908gCBkSZL8+iYAc+Ht
-         7pwX2wLysrq1QQVP3j70CVpbQi5BouTKs/d1U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=F2JIs+afpMYJ+btoNQDdge9V5qPitb5TkdDnDNuwI1h83XIaUdn7pHWxP2DyEhZbOQ
-         avmKrw8VvA6vvLrgEsDWIwQG3kdMrDLR1SFpFQmyVXeOMsYo/egxvVZt8hXaN4fp1DBH
-         xZAsY6quBmHrC845wriIVLdpK2cmDiROI3Y5A=
-Received: by 10.216.67.1 with SMTP id i1mr3766916wed.62.1301955212883; Mon, 04
- Apr 2011 15:13:32 -0700 (PDT)
-Received: by 10.216.56.69 with HTTP; Mon, 4 Apr 2011 15:13:32 -0700 (PDT)
+	id S1755823Ab1DDWVD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 18:21:03 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:42632 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755021Ab1DDWVB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 18:21:01 -0400
+Received: from centaur.lab.cmartin.tk (brln-4d0c31e8.pool.mediaWays.net [77.12.49.232])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 66FA546124;
+	Tue,  5 Apr 2011 00:20:49 +0200 (CEST)
+Received: (nullmailer pid 5290 invoked by uid 1000);
+	Mon, 04 Apr 2011 22:20:59 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>,
+	git@vger.kernel.org, libgit2@librelist.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170843>
 
-Sorry if these questions seem simple but I am new to GIT, I've done
-some searching about how it works but I still have some questions that
-I hope someone on this list would be kind enough to answer.=A0 I am
-using msysgit on Windows 7.
+Hi all,
 
-=46or some of my projects I have to comit changes to SVN.=A0 So I did s=
-ome
-research and found out how to use git-svn so I start by right clicking
-on the directory I want to store my repository in, and I select Git
-Bash Here.=A0 I enter in the comand
+ I'd like to take part in this year's GSOC adding a/the network layer
+to libgit2. I already have some experience with git and libgit2. This
+message is mostly in order to get some feedback to the timeline and
+goals. I'll send a formal application in a day or two.
 
-git-svn clone -s --username=3Dmyusername https://mysvnrepo/svn git
+ Not studying in the US, I don't have free time that early, so I
+expect most of the actual hard coding will be done after the
+midterm. By then I do want to have most of the thinking done.
 
-and that works and it creates a local git repository that is cloned
-from the svn repo, then if I
+ From reading the documentation, I assume I'll have to write
+pack-objects using libgit2, or rather add that support to it in the
+library and then write {upload,receive}-pack first mostly as a client
+of the library in order to include it in a more library-friendly form
+once it works.
 
-git-svn dcommit
+ My goal for this project would be to add the object packing code to
+libgit2 and, if we want to have pushing and fetching inside the
+library, to add this functionality to the library as well. Otherwise,
+the client would be useful for later conversion of git.git to libgit2
+or as an example for others.
 
-that keeps then synced up, but there is my first issue, manually
-syncing, so I look at git hooks, so if I create a file called
-post-commit in the hooks directory of my local git repo with the
-following content
+ As for success, I'd rate a success to have the library code merged or
+ready to merge both for object packing and network protocol, if it
+does go into the library.
 
-#!/bin/sh
-git-svn dcommit
+ I expect the timeline to be:
 
-that should work to automatically sync my local git repo and the
-remote svn repo upon me committing to git right?
+ - Pre-coding time: get to know the packed object format better, read
+   the documentation and code for it in git.git.
 
-What I have no clue how to do though it to get this to work with
-another git repo, I mean I can use the gui to clone a git repo, but
-how do I sync them up.=A0 The reason being is I use a git hosting
-service where I want to mirror all my commit to, just as a backup
-mostly.
+- Up to midterm: due to the difference in lecture times between the US
+   and Germany, I won't be able to devote all my time to coding, but I
+   expect/hope to have code using the network protocol working by this
+   time, as well as a design for object packing (the code has to be
+   worthy of a library, so object caches would have to be invalidated
+   and other side-effects which come from not being allowed to assume
+   the code runs once and then dies).
 
-How can I sync up my local git repo with the remote hosted repo AND
-where necessary svn using svn-git?
+- Up to the end: get object packing working, thread safety issues,
+  reviews, and other misc. library code stuff, including getting
+  push/fetch into the library if necessary.
 
-My final question is a matter of work flow.=A0 I have a local it repos
-on my machine using msysgit, as well as hosted git repos with an
-online service.=A0 Since I am a single developer its easy to just sync
-my commits back to the remote repo for each project I have.=A0 But if I
-do get another developer or two to help me how does that work, do we
-all just sync to the one hosted repo or should we all sync with
-another too?=A0 And if so how do I sync with multiple git repos.
+ I've put the network side of things earlier because I expect it to be
+'lighter' but I'd be interested to know if people think the order
+should be reversed.
 
-Thanks in advance for your help.
+ As for previous involvement, I've sent a few small patches to git.git
+and larger ones to libgit2. I'm currently writing its config file
+support during an internship. In the melange application, I'll post
+some gmane links to threads and to my libgit2 fork on gibhub.
+
+ Thanks for your time if you've read this far,
+   cmn
+--=20
+Carlos Mart=C3=ADn Nieto | http://cmartin.tk
+
+"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
