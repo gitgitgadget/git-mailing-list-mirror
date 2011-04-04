@@ -1,139 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Allow multiple merges to invalid HEAD
-Date: Sun, 3 Apr 2011 17:22:56 -0500
-Message-ID: <20110403222234.GB6537@elie>
-References: <1301813216-19507-1-git-send-email-tnachen@gmail.com>
+From: Cyril Roelandt <tipecaml@gmail.com>
+Subject: GSoC 2011 : one more interested student.
+Date: Mon, 04 Apr 2011 02:38:16 +0200
+Message-ID: <4D9912F8.60002@gmail.com>
+Reply-To: tipecaml@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Timothy Chen <tnachen@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 00:23:10 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 04 02:38:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6VhN-0003Go-Vf
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 00:23:10 +0200
+	id 1Q6XoF-0002U4-P8
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Apr 2011 02:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066Ab1DCWXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2011 18:23:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40329 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751736Ab1DCWXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2011 18:23:03 -0400
-Received: by iwn34 with SMTP id 34so5222275iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Apr 2011 15:23:03 -0700 (PDT)
+	id S1753524Ab1DDAiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2011 20:38:21 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:64606 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751558Ab1DDAiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2011 20:38:20 -0400
+Received: by wwa36 with SMTP id 36so5888967wwa.1
+        for <git@vger.kernel.org>; Sun, 03 Apr 2011 17:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=ONj8vdggqMrvJwhUolUOtERNZ8X5ai97l7+g3XcYPEY=;
-        b=xHTyopjZZv7cpuml6ObVIiRTyJlYfPmIHyTscYLPIPSgMqvYhtKPz4JHctvuflJZqW
-         n93RumllhZhtgC+NSqbIfMhgH30OdE+ZbW+E3x3LoI5GIMlq6UYh3xG3TK3NGl6235q/
-         eeDwKvhcRsJkGjY67mBPbGm161YRwzxtCiFDQ=
+        h=domainkey-signature:message-id:date:from:reply-to:user-agent
+         :mime-version:to:subject:content-type:content-transfer-encoding;
+        bh=raPsyjW7agKkdtfNlu7GO6z0KwVceY0GZEClaknxC5c=;
+        b=RUULikltNijX9cLcS59g908BSjp1/9KyU32CQaDqHf+uXpud8gkMD9B/3UIyoouLMb
+         wmLBtQZfVdceLBm9O4H8gkbdfmeblwF4TZXBgufLguRLrYSwTCD/2pz7phHOXcgMdPAY
+         qTMtDFK6KHpMEB7UnwKDw/6MCBkAygVOdGM4Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=uCpbp8r4h58fgVl11DCiErDzYE/LiJ8ZpygD3w+IQs54B3LmSNO6ezfEBOQourugeJ
-         bw0Z7CYff/fsArdIwZWPr2E1iBSgTi4AMa6wpvlUKAFGFwrVioFwqCyH2AMyLNyD4UVD
-         A6jifwUjydJIYLMdtasY69Q4T6gqltaDMSdf8=
-Received: by 10.231.92.132 with SMTP id r4mr2846013ibm.57.1301869382162;
-        Sun, 03 Apr 2011 15:23:02 -0700 (PDT)
-Received: from elie (adsl-69-209-53-77.dsl.chcgil.sbcglobal.net [69.209.53.77])
-        by mx.google.com with ESMTPS id i20sm3272350iby.14.2011.04.03.15.23.00
+        h=message-id:date:from:reply-to:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=IVvyyfJBg+GSmmGoicVE2oEnSDl8Vxor8QLWaj8yrAExy8QYOMEu+6q2BOzznGtkMt
+         Z6rXQbIsTH/iLmkHEMDHwkHofD28hBUWoZZhvTe3xAYuRF7EA9MZWg1v0XeXkDNV0pvS
+         xN0oZUOg01/M2ndUPFwF0BcFXT3HGjNOl+ulM=
+Received: by 10.216.143.88 with SMTP id k66mr3603162wej.15.1301877499438;
+        Sun, 03 Apr 2011 17:38:19 -0700 (PDT)
+Received: from [192.168.0.10] (tal33-1-82-226-197-59.fbx.proxad.net [82.226.197.59])
+        by mx.google.com with ESMTPS id g7sm2612671wby.48.2011.04.03.17.38.17
         (version=SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2011 15:23:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1301813216-19507-1-git-send-email-tnachen@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Sun, 03 Apr 2011 17:38:18 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.24 (X11/20101027)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170784>
 
-Hi,
+Hi.
 
-Timothy Chen wrote:
+I am currently studying Computer Science and Engineering. I have been 
+using Open Source software for quite a while now, but I have  not 
+contributed a lot of code to Open Source projects - except for a few 
+patches to Gnome.
 
->  builtin/merge.c |   57 +++++++++++++++++++++++++++++-------------------------
->  1 files changed, 31 insertions(+), 26 deletions(-)
+Being a git user, I would be interested in working on this project. I 
+believe that taking part in the GSoC would be a good opportunity for me 
+to discover the guts of a version control system.
 
-Now for mechanics.
+* Complete some libgit2 features
+Implementing a few key features seems like a great way to understand the 
+way a VCS works. I would be interesting in working on the diff command 
+and on the network related commands (git-push, git-fetch).
 
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-[...]
-> @@ -1101,36 +1098,44 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		remote_head = peel_to_type(argv[0], 0, NULL, OBJ_COMMIT);
->  		if (!remote_head)
->  			die(_("%s - not something we can merge"), argv[0]);
-> -		read_empty(remote_head->sha1, 0);
->  		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
->  				DIE_ON_ERR);
-> -		return 0;
-> +
-> +		if (argc < 2)
-> +			return 0;
+* Build a minimal Git client based on libgit2
+It seems to be a quite popular task :) Hacking on this small git client 
+would be a nice experience and would help me understanding how libgit2 
+works.
 
-When argc == 1, this means read_empty never gets called.  Is that
-intended?
+* Build in more external commands
+I am wondering why these commands should be rewritten. You know what 
+they say : "if it is not broken, do not fix it" :-p Do these commands 
+currently have performance issues ?
 
-It breaks 7607.13.  Running "make test" is a good way to find some
-breakages.
 
-> +
-> +		hashcpy(head, remote_head->sha1);
-> +		read_empty(remote_head->sha1, 0);
-> +		head_arg = argv[0];
-> +		argc--;
-> +		argv++;
+I will be working in a research lab until the end of June, but I will 
+have more free time in July/August, that I could use to hack on git, 
+which means I may have less time than most US students, who can enjoy a 
+slightly longer summer break. Do you think it would be possible to work 
+one of these projects anyway ?
 
-As always when pretending something, I think a comment would be
-helpful.  Something to the effect of:
-
-	/*
-	 * We were called as "git merge <branch1> <branch2> <branch3>...".
-	 *
-	 * Now HEAD has advanced to <branch1>, and we can pretend
-	 * we were called as "git merge <branch2> <branch3>...".
-	 */
-
-Though I think I prefer the more explicit comment I suggested last
-time[1].
-
-> +	}
-> +
-> +	struct strbuf merge_names = STRBUF_INIT;
-> +
-> -	} else {
-> -		struct strbuf merge_names = STRBUF_INIT;
-> -
-> -		/* We are invoked directly as the first-class UI. */
-> +	/* We are invoked directly as the first-class UI. */
-
-Won't this break
-
-	git merge "message here" $(git rev-parse HEAD) foo bar
-
-?  Previously this code was in an "else" block so it wasn't reached in
-the is_old_style_invocation case.
-
-> -	if (head_invalid || !argc)
-> +	if (!argc)
->  		usage_with_options(builtin_merge_usage,
->  			builtin_merge_options);
-
-What happens with
-
-	git merge "message here" HEAD foo bar
-
-from an unborn branch?
-
-Hope that helps.
-Jonathan
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/170456
+Best regards,
+Cyril.
