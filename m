@@ -1,150 +1,123 @@
-From: Timothy Chen <tnachen@gmail.com>
-Subject: Re: [PATCH] Allow multiple merges to invalid HEAD
-Date: Mon, 4 Apr 2011 23:01:53 -0700
-Message-ID: <ABB52AD0-EAF4-43CA-951D-9ED8A5FB1929@gmail.com>
-References: <1301813216-19507-1-git-send-email-tnachen@gmail.com> <20110403222234.GB6537@elie>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 08:02:12 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 4/4] builtin/show: do not prune by pathspec
+Date: Tue, 05 Apr 2011 08:06:51 +0200
+Message-ID: <4D9AB17B.70409@drmicha.warpmail.net>
+References: <7vwrjfjdqr.fsf@alter.siamese.dyndns.org> <cover.1301649372.git.git@drmicha.warpmail.net> <6509d23c538dfabd4fac8870d29a69b1dd11a516.1301649372.git.git@drmicha.warpmail.net> <7v1v1h8z5k.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?B?Tmd1eeG7hQ==?= =?UTF-8?B?biBUaMOhaSBOZ+G7jWMgRHV5?= 
+	<pclouds@gmail.com>, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 08:10:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6zLA-0005fx-As
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 08:02:12 +0200
+	id 1Q6zTM-0001Q4-AQ
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 08:10:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288Ab1DEGCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 02:02:06 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:51228 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750906Ab1DEGCE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 02:02:04 -0400
-Received: by iyb14 with SMTP id 14so44977iyb.19
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 23:02:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:content-type:mime-version:subject:from
-         :in-reply-to:date:content-transfer-encoding:message-id:references:to
-         :x-mailer;
-        bh=imZsxozOWfj+wTUne/7dZXGu2+B03RNt/DwkiPiyFB8=;
-        b=eoI0xBlpZPz3JON9yeWc+VVywNFmwCiwWNRXkMSuakhgtl08O3zCuVraZq4z7slRWg
-         TmjFD0fG3sCqFnuyg6DRYyUEwLVs9iPMgaFz4AL7bP5oTJ/77g8EbOlv78R3cctitHXe
-         Iy17Z4vckE2WJshXjvhW5LdCQtv7aC+V3QgeE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=content-type:mime-version:subject:from:in-reply-to:date
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=bDmrxmNn89H8SM0hJbEv+nKgnuuOh22RkmJFpU22Mzi/XIDext3YYNwQvyafos6bVr
-         W45RgVbu3PFQrKBQx0uW9XBH4Oqgwnu23R2uvbrCKpSJRL3C2SmMLLxbMpzk99HbPwpY
-         U2omfwV2WEuxj12L6k2inAAzYed30zGTez0rU=
-Received: by 10.42.149.132 with SMTP id w4mr12264227icv.267.1301983322343;
-        Mon, 04 Apr 2011 23:02:02 -0700 (PDT)
-Received: from [192.168.1.100] (c-24-19-190-111.hsd1.wa.comcast.net [24.19.190.111])
-        by mx.google.com with ESMTPS id c1sm395398ibe.0.2011.04.04.23.01.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 04 Apr 2011 23:01:57 -0700 (PDT)
-In-Reply-To: <20110403222234.GB6537@elie>
-X-Mailer: Apple Mail (2.1084)
+	id S1751221Ab1DEGK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 02:10:26 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33533 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751150Ab1DEGKZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 02:10:25 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 2DFE020D59;
+	Tue,  5 Apr 2011 02:10:25 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 05 Apr 2011 02:10:25 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=j0Uy98fVy+jVYWEpaa4pzNZPNlE=; b=pl5Jate3CR2YZRH7B6ZMzMgcfPLmgjqxPEcp3J6SIDzPYtAkYnpCOXK8ULblt8sMc5HIVv6jFyRiOs34L8e265VGlRXIyitWZgv4kgGhMHpb6U1fUoLiuI88m+HdZZ8upFLGi1BRr52+8MHeMzpc4MBSIjcNx4BkzkOnGUf2Wfk=
+X-Sasl-enc: BIIsSxkOOOErlkrEv2BwTNKIZBRtBvEs2jc5DLy1xm/J 1301983824
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 009CA443101;
+	Tue,  5 Apr 2011 02:10:23 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <7v1v1h8z5k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170869>
 
-Thanks for all the review.
+Junio C Hamano venit, vidit, dixit 04.04.2011 23:49:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> diff --git a/builtin/log.c b/builtin/log.c
+>> index 916019c..474a76d 100644
+>> --- a/builtin/log.c
+>> +++ b/builtin/log.c
+>> @@ -420,6 +420,8 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+>>  	opt.def = "HEAD";
+>>  	opt.tweak = show_rev_tweak_rev;
+>>  	cmd_log_init(argc, argv, prefix, &rev, &opt);
+>> +	if (rev.no_walk)
+>> +		rev.prune = 0;
+> 
+> This is not your fault, but I am somewhat disgusted by the reason why
+> 
+>     $ git show master..next [ -- Documentation ]
+> 
+> works by "walking" the history.  It takes completely different codepath
+> from "git log" with the same set of arguments.
+> 
+>  * first log_init() grabs '^master' and 'next' into the rev.pending object
+>    array;
+> 
+>  * we pop '^master' first, make it the only object in the rev.pending
+>    object array, and let cmd_log_walk() call prepare_revision_walk() on it
+>    to limit the list.  Since we don't have any positive ref, we get
+>    nothing;
+> 
+>  * then we pop 'next', make it again _the only_ object in the rev.pending
+>    object array; prepare_revision_walk() on the same codepath now limits
+>    the list to exclude what is reachable from 'master', only because we
+>    have processed '^master'.
+> 
+> Yikes.  In other words, the reason the current code works is only by
+> accident.
 
-Yes I agree it does brings more complexity with a small gain in feature.
+That is super ugly, yes.
 
-So please disregard this patch (also please forgive my missing signed-off as it's my first patch), as I'm gonna move on to work on some fixes on submodules as I originally intended.
+> 
+> This is a tangent, but we _might_ want to (perhaps at git 2.0) update the
+> revision parsing machinery so that we can clear the object flags more
+> easily and have
+> 
+>     $ git log A..B C..D [ -- pathspec ]
+> 
+> compute the union of (commits reachable from B but not from A) and
+> (commits reachable from D but not from C).  I say we _might_ because we
+> would still want to compute what the current code computes in some cases,
+> and we may be able to express it as "^A ^C B D", but I am not sure if we
+> want to go that route and end up with a general set operation (with unions
+> and intersections, perhaps even using parentheses to express precedence).
+> 
+> More general set operation is certainly doable, and at that point it
+> probably does not matter that we cannot stream the output as we are doing
+> something complex (IOW, we would be revs->limited, giving up the latency),
+> but I don't know if it is useful in the first place to support such
+> general case.  Because the most complex set operations that I run every
+> day is
+> 
+>     $ git log ^master $topic1 $topic2 $topic3... -- $pathspec
+> 
+> and I don't recall cases in which I wished A..B C..D showed commits
+> within A..B that are reachable from C.
+> 
 
-Thanks!
+We seem to promise that one should think in terms of sets, and this
+breaks with "A..B" and "C...D" unless one always thinks of them in the
+resolved form "^A B" and "^E C D" (with E=$(git merge-base C D)).
 
-Tim
+I also think that "A...B C" treats C as the right of that symmetric
+range (because anything non-left we treat as right), and "A...B ^C"
+probably interacts badly with --cherry-pick (though I haven't tried).
 
-On Apr 3, 2011, at 3:22 PM, Jonathan Nieder wrote:
+Also, "A...B C...D" would be a candidate for union. Lot's to do for
+after 1.7.5...
 
-> Hi,
-> 
-> Timothy Chen wrote:
-> 
->> builtin/merge.c |   57 +++++++++++++++++++++++++++++-------------------------
->> 1 files changed, 31 insertions(+), 26 deletions(-)
-> 
-> Now for mechanics.
-> 
->> --- a/builtin/merge.c
->> +++ b/builtin/merge.c
-> [...]
->> @@ -1101,36 +1098,44 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->> 		remote_head = peel_to_type(argv[0], 0, NULL, OBJ_COMMIT);
->> 		if (!remote_head)
->> 			die(_("%s - not something we can merge"), argv[0]);
->> -		read_empty(remote_head->sha1, 0);
->> 		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
->> 				DIE_ON_ERR);
->> -		return 0;
->> +
->> +		if (argc < 2)
->> +			return 0;
-> 
-> When argc == 1, this means read_empty never gets called.  Is that
-> intended?
-> 
-> It breaks 7607.13.  Running "make test" is a good way to find some
-> breakages.
-> 
->> +
->> +		hashcpy(head, remote_head->sha1);
->> +		read_empty(remote_head->sha1, 0);
->> +		head_arg = argv[0];
->> +		argc--;
->> +		argv++;
-> 
-> As always when pretending something, I think a comment would be
-> helpful.  Something to the effect of:
-> 
-> 	/*
-> 	 * We were called as "git merge <branch1> <branch2> <branch3>...".
-> 	 *
-> 	 * Now HEAD has advanced to <branch1>, and we can pretend
-> 	 * we were called as "git merge <branch2> <branch3>...".
-> 	 */
-> 
-> Though I think I prefer the more explicit comment I suggested last
-> time[1].
-> 
->> +	}
->> +
->> +	struct strbuf merge_names = STRBUF_INIT;
->> +
->> -	} else {
->> -		struct strbuf merge_names = STRBUF_INIT;
->> -
->> -		/* We are invoked directly as the first-class UI. */
->> +	/* We are invoked directly as the first-class UI. */
-> 
-> Won't this break
-> 
-> 	git merge "message here" $(git rev-parse HEAD) foo bar
-> 
-> ?  Previously this code was in an "else" block so it wasn't reached in
-> the is_old_style_invocation case.
-> 
->> -	if (head_invalid || !argc)
->> +	if (!argc)
->> 		usage_with_options(builtin_merge_usage,
->> 			builtin_merge_options);
-> 
-> What happens with
-> 
-> 	git merge "message here" HEAD foo bar
-> 
-> from an unborn branch?
-> 
-> Hope that helps.
-> Jonathan
-> 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/170456
+Michael
