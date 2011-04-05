@@ -1,97 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git exhausts memory.
-Date: Tue, 05 Apr 2011 15:16:12 -0700
-Message-ID: <7vmxk4l4yb.fsf@alter.siamese.dyndns.org>
-References: <BANLkTin=yUtzbZjs_92FHDfs62VFFuLHwg@mail.gmail.com>
- <alpine.LFD.2.00.1104021103130.28032@xanadu.home>
- <BANLkTikRGQ45xvWvisMhXi4Hu2r_0GS=Gg@mail.gmail.com>
- <alpine.LFD.2.00.1104031110150.28032@xanadu.home>
- <BANLkTinCwZG3+0Ss8o9ODptg=L8LKKN7aQ@mail.gmail.com>
- <BANLkTinU7x16yp+y-HW9UhkVn9SftOJCcA@mail.gmail.com>
- <4D9B47D2.6050909@ira.uka.de>
- <BANLkTikanSa3D1Bd8kSySPWQhcj1y8N+qA@mail.gmail.com>
- <7vzko4mw44.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1104051655310.28032@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Holger Hellmuth <hellmuth@ira.uka.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alif Wahid <alif.wahid@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 00:16:39 2011
+From: Eric Blake <eblake@redhat.com>
+Subject: [PATCHv3 2/2] Documentation: enhance gitignore whitelist example
+Date: Tue,  5 Apr 2011 16:17:58 -0600
+Message-ID: <1302041878-24426-2-git-send-email-eblake@redhat.com>
+References: <1302041878-24426-1-git-send-email-eblake@redhat.com>
+Cc: eblake@redhat.com, j6t@kdbg.org, jrnieder@gmail.com,
+	gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 06 00:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7EYA-0002fQ-1H
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 00:16:38 +0200
+	id 1Q7EZl-0003eE-T1
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 00:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753358Ab1DEWQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 18:16:34 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55754 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752049Ab1DEWQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 18:16:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D83E9510F;
-	Tue,  5 Apr 2011 18:18:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BcXd2zS9bU285qXvccLw02q0VsE=; b=kh3Ywi
-	wwpbyelo84vSnzo3FlwvvOXaKR89MCWMlMAtWW7Jv6zso3MUC/TaTzM3aNnXOLjE
-	FIu8EdaLYZuqae7KamgnFkDuZA6ocGA7wWL6Xbtya1qgo7vS1MenKdPIOQEZBLjP
-	/aMYAh93HPGEVAR8XPLHmiMnRvAq7ocgH8pBI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lzB43caltqzH2b21l+Cw4GM6qhZ20Lde
-	gCcz/cLxfdSPcFmD2dGdHc+34HU3Fr9ObpEIcfScDylHmQmGG8XLvdWTsdW4/BUc
-	KQESpLiMt+vWOXU5GLmhVvAfWxZ0V1/op8Ft4yFj0/3BIh8J+VNE8X9C4oRrVc8Z
-	E+Nx8/7NjGw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 57652510E;
-	Tue,  5 Apr 2011 18:18:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EC7475103; Tue,  5 Apr 2011
- 18:18:06 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.1104051655310.28032@xanadu.home> (Nicolas
- Pitre's message of "Tue, 05 Apr 2011 16:56:20 -0400 (EDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9A0157DA-5FD2-11E0-A726-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1752867Ab1DEWSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 18:18:13 -0400
+Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:59233
+	"EHLO qmta04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752329Ab1DEWSM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 18:18:12 -0400
+Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
+	by qmta04.westchester.pa.mail.comcast.net with comcast
+	id TyGK1g00316LCl054yJDnj; Tue, 05 Apr 2011 22:18:13 +0000
+Received: from office.redhat.com ([24.10.251.25])
+	by omta06.westchester.pa.mail.comcast.net with comcast
+	id TyJ01g00n0ZdyUg3SyJCVa; Tue, 05 Apr 2011 22:18:13 +0000
+X-Mailer: git-send-email 1.7.4
+In-Reply-To: <1302041878-24426-1-git-send-email-eblake@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170927>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+I was trying to whitelist a single file pattern in a directory
+that I was otherwise content to ignore, but when I tried:
 
->> > This is only implemented inside of fast-import. pack-objects does not
->> > honor this variable.
->> 
->> Do you mean perhaps we should?
->
-> Yes.
->
-> Acked-by: Nicolas Pitre <nico@fluxnic.net>
+  /m4/
+  !/m4/virt-*.m4
 
-I actually was somewhat unhappy to use uintmax_t type in the public header
-for some reason I cannot quite explain (perhaps religious), and was hoping
-somebody with more sanity than myself would stop me or show me a better
-way.
+then 'git add' kept warning me that I had to use -f.  I finally
+figured out that ignoring a directory is much different than ignoring
+all files in a directory, when it comes to later negation patterns:
 
->> diff --git a/cache.h b/cache.h
->> index 2674f4c..316d85f 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -573,6 +573,7 @@ extern int core_compression_seen;
->>  extern size_t packed_git_window_size;
->>  extern size_t packed_git_limit;
->>  extern size_t delta_base_cache_limit;
->> +extern uintmax_t big_file_threshold;
->>  extern int read_replace_refs;
->>  extern int fsync_object_files;
->>  extern int core_preload_index;
+  /m4/*
+  !/m4/virt-*.m4
+
+Improving the documentation will help others learn from my mistake.
+
+CC: Jonathan Nieder <jrnieder@gmail.com>
+CC: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+
+v3: split out fnmatch tweaks, don't tweak specification of patterns
+or existing examples but instead add an entirely new example, make
+the example use a deeper hierarchy
+
+ Documentation/gitignore.txt |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 9b1e5e1..e1ad234 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -139,6 +139,44 @@ EXAMPLES
+     [...]
+ --------------------------------------------------------------
+
++It is possible to ignore most of a hierarchy, while still
++white-listing a single file, by ignoring multiple files then using a
++negation pattern for the file in question.  However, this requires
++ignoring files and not directories, since no patterns are ever matched
++inside of an ignored directory.  For nested files, it requires several
++iterations of refined patterns.
++
++--------------------------------------------------------------
++    $ git status
++    [...]
++    # Untracked files:
++    [...]
++    #       Documentation/build/file
++    #       build/file
++    #       build/foo/baz
++    #       build/foo/other
++    [...]
++    $ cat .gitignore
++    # Use anchoring, since `build' would ignore Documentation/build.
++    # Do not ignore the directory itself, ...
++    # /build/
++    # rather ignore files in the top-level build directory, ...
++    /build/*
++    # but permit child directories, ...
++    !/build/*/
++    # then ignore all nested files, ...
++    /build/*/*
++    # and finally white-list the special file
++    !/build/foo/baz
++    $ git status
++    [...]
++    # Untracked files:
++    [...]
++    #       Documentation/build/file
++    #       build/foo/baz
++    [...]
++--------------------------------------------------------------
++
+ Another example:
+
+ --------------------------------------------------------------
+-- 
+1.7.4
