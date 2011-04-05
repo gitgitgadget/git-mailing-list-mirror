@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 3/8] gitk: fix "blame parent commit" with separate work tree
-Date: Mon,  4 Apr 2011 22:14:14 -0400
-Message-ID: <1301969659-19703-4-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 5/8] gitk: put temporary directory inside .git
+Date: Mon,  4 Apr 2011 22:14:16 -0400
+Message-ID: <1301969659-19703-6-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1301969659-19703-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
@@ -12,76 +12,75 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6vpW-0002JM-AN
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 04:17:18 +0200
+	id 1Q6vpX-0002JM-S1
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 04:17:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085Ab1DECQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 22:16:57 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:42634 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752049Ab1DECQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 22:16:52 -0400
-Received: by qwk3 with SMTP id 3so3719792qwk.19
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 19:16:51 -0700 (PDT)
+	id S1752140Ab1DECRC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 22:17:02 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:51652 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752066Ab1DECQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 22:16:56 -0400
+Received: by qyk7 with SMTP id 7so1438075qyk.19
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 19:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=AeUBpBuc/rn0WHKy9k9mInvbFL0Hl2jdXLsLb96nP6Q=;
-        b=uuRFfBNrj6gJixD057HeilfdCH2XgXuBqqfl+MM7K7Oev2KrBAOqP2v8x6uMBLRCPh
-         Nn+VgODq3IInWvw67t+lfl+q4FuFAHeswNctfyE3SwuudxyQWeKGl1AfBZkfybFU3oc5
-         MzM7LeLcO6BMvOMFKRo/4ajYhRqN8ipy2Q2nI=
+        bh=HxMwLy4c8UwseCN03rnCc88DRnYlau34pWteRS6ifk8=;
+        b=wCXHSMopt7D2OhmpGj4qFz+3+twE5+OWRjMzJneYeS//Om1AsCiZ3cE/vCmpbcskJr
+         ll3+RXAnTavNdgdciwRvYXqlfVMcQ/p6bkdNZCH45VNJ1O9Ku+NNsrlKUZeaTNOJLVxx
+         SxdEC/awtfRa8pCBxXMWoQ+sjFsmcBmoT2f3o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=G/YROCMbC8AOd1rXpnTQjO7S8fw65M1jyoruSPhLy8KrXiVomzJ3nxUMof7ORDz69v
-         0rb4amO2sZhEiPuyOLa/KkepYng1lDE+FxnbCBiGV0it8HGV4XVe83MaNkjE3LCrkS+I
-         OXxuYoABFtg8SHYaQY6Z9visKuEy/Prh5Mxr4=
-Received: by 10.229.90.12 with SMTP id g12mr2221504qcm.104.1301969811667;
-        Mon, 04 Apr 2011 19:16:51 -0700 (PDT)
+        b=lSnK0LimV2q5K+VsIdK1d1cmkbJeOX7GI3gBE9qE+biWUAgbk3PU9w4FEMn2QRWxvJ
+         zB3CORz/3SSfV6wJeXr/oaoxVWc2upgIL8ZVu9Kjc12wnokCQQFOfwlvjjmdNOdceXfS
+         Fx1o3/lZJsyDzZ6luirYMUJIWufkBBwB7Y+uk=
+Received: by 10.224.27.10 with SMTP id g10mr6207452qac.204.1301969815552;
+        Mon, 04 Apr 2011 19:16:55 -0700 (PDT)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s16sm3902340qco.13.2011.04.04.19.16.50
+        by mx.google.com with ESMTPS id s16sm3902340qco.13.2011.04.04.19.16.53
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 04 Apr 2011 19:16:50 -0700 (PDT)
+        Mon, 04 Apr 2011 19:16:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.79.gcbe20
 In-Reply-To: <1301969659-19703-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170858>
 
-Running "blame parent commit" currently brings up an empty blame view
-when the the work tree is not the parent of the git directory. Fix it
-by feeding git-blame paths relative to $GIT_WORK_TREE instead of
-"$GIT_DIR/..".
+When running "External diff" from gitk, the "from" and "to" files will
+first be copied into a directory that is currently
+".git/../.gitk-tmp.$pid". When gitk is closed, the directory is
+deleted. When the work tree is not at ".git/.." (which is supported
+since the previous commit), that directory may not even be git-related
+and it does not seem unlikely that permissions may not allow the
+temporary directory to be created there. Move the directory inside
+.git instead.
+
+This patch introduces a regression in the case that the .git directory
+is readonly, but .git/.. is writeable.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- gitk-git/gitk |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ gitk-git/gitk |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
 diff --git a/gitk-git/gitk b/gitk-git/gitk
-index a0f0f37..b1696de 100755
+index 58b98df..b925f3e 100755
 --- a/gitk-git/gitk
 +++ b/gitk-git/gitk
-@@ -3558,7 +3558,7 @@ proc make_relative {f} {
- }
+@@ -3332,8 +3332,7 @@ proc gitknewtmpdir {} {
+     global diffnum gitktmpdir gitdir
  
- proc external_blame {parent_idx {line {}}} {
--    global flist_menu_file gitdir
-+    global flist_menu_file cdup
-     global nullid nullid2
-     global parentlist selectedline currentid
- 
-@@ -3577,7 +3577,7 @@ proc external_blame {parent_idx {line {}}} {
-     if {$line ne {} && $line > 1} {
- 	lappend cmdline "--line=$line"
-     }
--    set f [file join [file dirname $gitdir] $flist_menu_file]
-+    set f [file join $cdup $flist_menu_file]
-     # Unfortunately it seems git gui blame doesn't like
-     # being given an absolute path...
-     set f [make_relative $f]
+     if {![info exists gitktmpdir]} {
+-	set gitktmpdir [file join [file dirname $gitdir] \
+-			    [format ".gitk-tmp.%s" [pid]]]
++	set gitktmpdir [file join $gitdir [format ".gitk-tmp.%s" [pid]]]
+ 	if {[catch {file mkdir $gitktmpdir} err]} {
+ 	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
+ 	    unset gitktmpdir
 -- 
 1.7.4.79.gcbe20
