@@ -1,111 +1,86 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 7/8] gitk: simplify calculation of gitdir
-Date: Mon,  4 Apr 2011 22:14:18 -0400
-Message-ID: <1301969659-19703-8-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 2/8] gitk: fix "show origin of this line" with separate work tree
+Date: Mon,  4 Apr 2011 22:14:13 -0400
+Message-ID: <1301969659-19703-3-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1301969659-19703-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Apr 05 04:17:22 2011
+X-From: git-owner@vger.kernel.org Tue Apr 05 04:17:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6vpZ-0002JM-HA
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 04:17:21 +0200
+	id 1Q6vpa-0002JM-2A
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 04:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170Ab1DECRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2011 22:17:12 -0400
+	id S1752174Ab1DECRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 22:17:20 -0400
 Received: from mail-qw0-f46.google.com ([209.85.216.46]:36444 "EHLO
 	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752093Ab1DECQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2011 22:16:59 -0400
+	with ESMTP id S1751802Ab1DECQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 22:16:50 -0400
 Received: by mail-qw0-f46.google.com with SMTP id 3so3719730qwk.19
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 19:16:58 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 19:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=voGzkbaNNOS8Vk8pau7EaBK7FGwfbBQ+s3Gh2I8iPVE=;
-        b=dv7NbMm+wCYc7QRkSaENEXPqixPGPDplfl0lKpNnxQN8PY3kqtFQn5PEN5cmaE0IQw
-         W0vZnxF8PIWQbcDvjb2ldXXjoM9knuoXE2fxamN+vy6dyspj3riwYpGKaLphWLEwpYtE
-         hO741KQOXgpSt3vF0UDF5nf3PtJ1dSo0nRJuM=
+        bh=VKCnSDvkTZLEmvX7NKEUliWvZZGrsdL3QML2AH2C0+c=;
+        b=UQJQj8tshSleVLKQ8sYkxVCbl6IIFjvCAIe36pQ2Swp04CdQwrdyoLdcPjy2bFVUDg
+         WW9YoPwsN1pNc2LjzSh0vfK8CIGKSL7bQw6u1LJ/1BoijeYkoO/OM1n9UxAp/4YYmxwg
+         aXQAad838B4kv6JtLriLSU1m+2qFlBFMPcLSs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=vXtZ/4irhzFary7qgi9autWZBsko5pMwXAzadruB069x1eI5zu1hBiYoCbEfruvm4W
-         X6VD4BmIO7wiVxFURP+lVBngLkHPAeylExdJt9mzzrRCWDDA36sDvaXZLANRkQAIj4JA
-         kLkUigqKirvhmjiTbn5QGk5SHgZPxUfS0GQOw=
-Received: by 10.224.113.142 with SMTP id a14mr6135344qaq.269.1301969818954;
-        Mon, 04 Apr 2011 19:16:58 -0700 (PDT)
+        b=bL04n8a8Kl5a6dR0N4cmi5rwcqFE8wEtLd3KtjrOo2TjTHdA0yJUG5qcietudrDp/7
+         MAMkM8lHw0qOUpybDkFwoT576/s+BtzQuoabL9o/DImzSIulSyEw5D4XBiaJ/0nrOzom
+         bLvZwojnBrlu1UUt0oSFMw8VZ8SR28Wy1etW8=
+Received: by 10.224.214.72 with SMTP id gz8mr6594931qab.81.1301969810106;
+        Mon, 04 Apr 2011 19:16:50 -0700 (PDT)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s16sm3902340qco.13.2011.04.04.19.16.57
+        by mx.google.com with ESMTPS id s16sm3902340qco.13.2011.04.04.19.16.48
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 04 Apr 2011 19:16:58 -0700 (PDT)
+        Mon, 04 Apr 2011 19:16:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.79.gcbe20
 In-Reply-To: <1301969659-19703-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170860>
 
-Since 5024baa ([PATCH] Make gitk work when launched in a subdirectory,
-2007-01-09), gitk has used 'git rev-parse --git-dir' to find the .git
-directory. However, gitk still first checks for the $GIT_DIR
-environment variable and that the value returned from git-rev-parse
-does not point to a file. Since git-rev-parse does both of these
-checks already, the checks can safely be removed from gitk. This makes
-the gitdir procedure small enough to inline.
-
-This cleanup introduces a UI regression in that the error message will
-now be "Cannot find a git repository here." even in the case where
-GIT_DIR points to a file, for which the error message was previously
-"Cannot find the git directory \"%s\".". It should be noted, though,
-that even before this patch, 'gitk --git-dir=path/to/some/file' would
-give the former error message.
+Running "show origin of this line" currently fails when the the work
+tree is not the parent of the git directory. Fix it by feeding
+git-blame paths relative to $GIT_WORK_TREE instead of "$GIT_DIR/..".
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- gitk-git/gitk |   15 +--------------
- 1 files changed, 1 insertions(+), 14 deletions(-)
+ gitk-git/gitk |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 0c1c4df..232ea6e 100755
+index ce96294..a0f0f37 100755
 --- a/gitk-git/gitk
 +++ b/gitk-git/gitk
-@@ -9,15 +9,6 @@ exec wish "$0" -- "$@"
+@@ -3590,7 +3590,7 @@ proc external_blame {parent_idx {line {}}} {
+ proc show_line_source {} {
+     global cmitmode currentid parents curview blamestuff blameinst
+     global diff_menu_line diff_menu_filebase flist_menu_file
+-    global nullid nullid2 gitdir
++    global nullid nullid2 gitdir cdup
  
- package require Tk
- 
--proc gitdir {} {
--    global env
--    if {[info exists env(GIT_DIR)]} {
--	return $env(GIT_DIR)
--    } else {
--	return [exec git rev-parse --git-dir]
--    }
--}
--
- # A simple scheduler for compute-intensive stuff.
- # The aim is to make sure that event handlers for GUI actions can
- # run at least every 50-100 ms.  Unfortunately fileevent handlers are
-@@ -11507,14 +11498,10 @@ setui $uicolor
- setoptions
- 
- # check that we can find a .git directory somewhere...
--if {[catch {set gitdir [gitdir]}]} {
-+if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
-     show_error {} . [mc "Cannot find a git repository here."]
-     exit 1
- }
--if {![file isdirectory $gitdir]} {
--    show_error {} . [mc "Cannot find the git directory \"%s\"." $gitdir]
--    exit 1
--}
- 
- set selecthead {}
- set selectheadid {}
+     set from_index {}
+     if {$cmitmode eq "tree"} {
+@@ -3643,7 +3643,7 @@ proc show_line_source {} {
+     } else {
+ 	lappend blameargs $id
+     }
+-    lappend blameargs -- [file join [file dirname $gitdir] $flist_menu_file]
++    lappend blameargs -- [file join $cdup $flist_menu_file]
+     if {[catch {
+ 	set f [open $blameargs r]
+     } err]} {
 -- 
 1.7.4.79.gcbe20
