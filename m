@@ -1,136 +1,124 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [GSoC 2011] Git Sequencer
-Date: Wed, 6 Apr 2011 00:29:32 +0530
-Message-ID: <20110405185929.GA25644@kytes>
-References: <20110403172054.GA10220@kytes>
- <alpine.LNX.2.00.1104031407480.14365@iabervon.org>
- <20110404040610.GA30737@kytes>
- <20110404045437.GA2208@kytes>
- <alpine.LNX.2.00.1104041319570.14365@iabervon.org>
- <20110405175003.GA12159@kytes>
- <alpine.LNX.2.00.1104051354500.14365@iabervon.org>
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: rebase autosquash doesn't recognise a chain of fixups
+Date: Tue, 05 Apr 2011 11:02:06 -0700
+Message-ID: <B584DA91-1811-4976-A915-458672455DAD@sb.org>
+References: <20110405154100.GC16031@bee.lab.cmartin.tk>
+ <7v4o6cob4t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Stephen Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Apr 05 21:00:50 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pat Notz <patnotz@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	=?utf-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 21:06:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7BUg-0002uF-Dn
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 21:00:50 +0200
+	id 1Q7Ba7-0006tn-2J
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 21:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980Ab1DETAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 15:00:45 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60133 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753707Ab1DETAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 15:00:44 -0400
-Received: by iyb14 with SMTP id 14so666495iyb.19
-        for <git@vger.kernel.org>; Tue, 05 Apr 2011 12:00:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=z4SURTfWgiOZy8Oeom6ucbrnpBloTHZFctu6b2IHQ8E=;
-        b=keSDdkGdZ4VMEau6QitcX0DVevUDnZwNdFs9bC5L3NBkfp/Zu65c257hd9e5XKblZL
-         zfGsEuY2Z/W8yCJxFNhGOxYDBLOdIuGdF9Ti/b3DdmVTBpxLLX2o9wS2kMcE9Y4e1W78
-         BFmOLpm0Mg6heO62U4zaOpIClU7tPPoYYEdig=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=PgQ/FYOHWP9VwUIPpLLdZ265RE7kL0an0sOfkTOQMsWN/c4NK6rvopsm5Fmz+LVhoC
-         vwMNErZs4HhWs2wFnXo9RKjz7urHqDT8hD3/dPvUDFoHTHbZtLKwBV6gAzsrDV/AjeFr
-         9Whln22bVts4NYSGLlSrQjwB8e8bu/Uz7p5NU=
-Received: by 10.43.71.18 with SMTP id yi18mr86972icb.54.1302030043654;
-        Tue, 05 Apr 2011 12:00:43 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id wo15sm4324977icb.16.2011.04.05.12.00.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Apr 2011 12:00:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.1104051354500.14365@iabervon.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753354Ab1DETGW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 15:06:22 -0400
+Received: from honeycrisp.apple.com ([17.151.62.51]:65414 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753093Ab1DETGV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 15:06:21 -0400
+X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Apr 2011 15:06:21 EDT
+Received: from relay16.apple.com ([17.128.113.55])
+ by localhost.apple.com (Oracle Communications Messaging Exchange Server
+ 7u4-20.01 64bit (built Nov 21 2010))
+ with ESMTP id <0LJ6009CRY65TC71@localhost.apple.com> for git@vger.kernel.org;
+ Tue, 05 Apr 2011 11:06:20 -0700 (PDT)
+X-AuditID: 11807137-b7c3cae0000010f5-4e-4d9b5a1b68df
+Received: from et.apple.com (et.apple.com [17.151.62.12])
+	by relay16.apple.com (Apple SCV relay) with SMTP id 3D.3B.04341.B1A5B9D4; Tue,
+ 05 Apr 2011 11:06:20 -0700 (PDT)
+Received: from [17.244.5.20] by et.apple.com
+ (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008; 32bit))
+ with ESMTPSA id <0LJ600929YAJD410@et.apple.com> for git@vger.kernel.org; Tue,
+ 05 Apr 2011 11:06:19 -0700 (PDT)
+In-reply-to: <7v4o6cob4t.fsf@alter.siamese.dyndns.org>
+X-Mailer: iPad Mail (8G4)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170904>
 
-Hi Daniel,
+This seems unnecessary. `git commit --fixup HEAD` doesn't really make a=
+ny sense at all to run when you can say `git commit --amend` instead,
 
-Daniel Barkalow writes:
-> On Tue, 5 Apr 2011, Ramkumar Ramachandra wrote:
-> > Excellent.  The crux of the idea: The sequencer should serve as the
-> > entry/ exit point for Git when any operation requires user
-> > intervention to proceed.
-> 
-> I'm a bit surprised by the idea of calling that "the sequencer" (rather 
-> than having "the sequencer" be a command), but I actually think you're 
-> entirely right to do so. Be sure to be very explicit about that, though, 
-> because people will probably start with the wrong idea of what you're 
-> proposing otherwise.
+-Kevin
 
-Ah.  I'll make sure to word it unambiguously in the proposal, and link
-to this thread :)
+On Apr 5, 2011, at 10:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> > For this, it should have information about
-> > how we got to this point, and how to proceed after the user
-> > intervention is complete; this information is contained in:
-> > 
-> > > cherry_pick_conflict = { 
-> > >   "cherry-pick", APPLIES_TO_CURRENT_BRANCH | IN_MIDDLE_OF_COMMIT,
-> > >   cherry_pick_verify_resolution,
-> > >   cherry_pick_abort,
-> > >   cherry_pick_post_resolution
-> > > };
-> > 
-> > Wait -- isn't it missing a skip callback?
-> 
-> I think "skip" is actually: abort the lowest-level conflict and continue 
-> the next-level conflict. If you're doing a rebase, and the rebase is doing 
-> a "pick", and the pick got a conflict, --skip means that you abort the 
-> pick (to get back to the state where the earlier commits have been picked 
-> but this one hasn't been started, followed by having the rebase continue 
-> with what it was going to do after the pick completed.
-> 
-> So I don't think you need a "skip" callback, as long as you've untangled 
-> the levels cleanly and get the nesting support right.
-
-Okay.  I'm not yet entirely clear about this yet, but I think it
-should be sorted out during implementation.
-
-> > cherry_pick_conflict = { 
-> >   "cherry-pick", APPLIES_TO_CURRENT_BRANCH | IN_MIDDLE_OF_COMMIT,
-> >   cherry_pick_verify_resolution,
-> >   cherr_pick_skip,
-> >   cherry_pick_abort,
-> >   cherry_pick_post_resolution
-> > };
-> > 
-> > This information is passed to report_conflict(), which takes care of
-> > user intervention.  The user can do whatever she wants and then ask
-> > the sequencer to "continue", "skip" or "abort":
-> 
-> Right, although I think:
-> 
->   $ git cheery-pick some-sha1
->   Conflict needs to be fixed now!
-> 
->   $ git skip
-> 
-> should give an error message about the current conflict not being a step 
-> of a larger process. That is, you can always "continue" or "abort", but 
-> you can only "skip" if there's something to skip to, even if it's only the 
-> higher-order sequence reporting that it's completed successfully.
-
-Right, got it.
-
--- Ram
+> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+>=20
+>> Say I have the following commits:
+>>=20
+>>    5154127 fixup! fixup! one
+>>    0d130d8 fixup! one
+>>    0869d30 one
+>>=20
+>> because I keep executing `git commit -a --fixup HEAD`. When I want t=
+o
+>> squash them all into 0869d30, I do `git rebase -i --autosquash
+>> 0869d30^` and I get
+>>=20
+>>    pick 0869d30 one
+>>    fixup 0d130d8 fixup! one
+>>    pick 5154127 fixup! fixup! one
+>=20
+> The way Kevin's d3d7a42 (rebase: better rearranging of fixup!/squash!
+> lines with --autosquash, 2010-11-04) series works is to match "fixup!=
+"
+> only with "pick"; a later "fixup!" never matches an earlier "fixup!" =
+but a
+> "pick" can be matched against more than one "fixup!".
+>=20
+> I think one way to make this work is to fix what Pat did in d71b8ba
+> (commit: --fixup option for use with rebase --autosquash, 2010-11-02)=
+=2E
+>=20
+> Perhaps like this, but I'll leave additions of test scripts to t3415 =
+to
+> others.
+>=20
+> -- >8 --
+> Subject: commit --fixup: do not duplicate "fixup! " at the beginning
+>=20
+> The "rebase -i" command can match more than one "fixup!" against a si=
+ngle
+> "pick" in the right order thanks to the earlier d3d7a42 (rebase: bett=
+er
+> rearranging of fixup!/squash! lines with --autosquash, 2010-11-04), b=
+ut a
+> "fixup!" entry is never matched with another "fixup!" entry.
+>=20
+> When creating a commit marked to fix up an earlier commit with --fixu=
+p, we
+> can mark it to look for the original and fix that one up.
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> builtin/commit.c |    2 ++
+> 1 files changed, 2 insertions(+), 0 deletions(-)
+>=20
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 67757e9..b3c4d63 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -668,6 +668,8 @@ static int prepare_to_commit(const char *index_fi=
+le, const char *prefix,
+>        ctx.output_encoding =3D get_commit_output_encoding();
+>        format_commit_message(commit, "fixup! %s\n\n",
+>                      &sb, &ctx);
+> +        while (!prefixcmp(sb.buf, "fixup! fixup!"))
+> +            strbuf_splice(&sb, 0, 7, "", 0);
+>        hook_arg1 =3D "message";
+>    } else if (!stat(git_path("MERGE_MSG"), &statbuf)) {
+>        if (strbuf_read_file(&sb, git_path("MERGE_MSG"), 0) < 0)
