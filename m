@@ -1,133 +1,113 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: [PATCHv2] Documentation: enhance gitignore whitelist example
-Date: Tue,  5 Apr 2011 15:06:23 -0600
-Message-ID: <1302037583-19289-1-git-send-email-eblake@redhat.com>
-Cc: eblake@redhat.com, j6t@kdbg.org, jrnieder@gmail.com,
-	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 23:12:24 2011
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] Documentation: enhance gitignore whitelist example
+Date: Tue, 5 Apr 2011 23:15:54 +0200
+Message-ID: <201104052315.54375.j6t@kdbg.org>
+References: <1302032214-11438-1-git-send-email-eblake@redhat.com> <20110405194005.GA32427@elie>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Blake <eblake@redhat.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 23:16:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7DXz-0001gl-6j
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:12:24 +0200
+	id 1Q7Dbn-0004Bx-Na
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764Ab1DEVMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 17:12:18 -0400
-Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:52764 "EHLO
-	qmta06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754017Ab1DEVMS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 17:12:18 -0400
-X-Greylist: delayed 343 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Apr 2011 17:12:18 EDT
-Received: from omta10.emeryville.ca.mail.comcast.net ([76.96.30.28])
-	by qmta06.emeryville.ca.mail.comcast.net with comcast
-	id Tx0G1g0050cQ2SLA6x6btf; Tue, 05 Apr 2011 21:06:35 +0000
-Received: from office.redhat.com ([24.10.251.25])
-	by omta10.emeryville.ca.mail.comcast.net with comcast
-	id Tx6W1g01A0ZdyUg8Wx6acu; Tue, 05 Apr 2011 21:06:35 +0000
-X-Mailer: git-send-email 1.7.4
+	id S1754017Ab1DEVQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 17:16:00 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:38167 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753605Ab1DEVQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 17:16:00 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id E5A6C2C4010;
+	Tue,  5 Apr 2011 23:15:55 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 0902E19F5C0;
+	Tue,  5 Apr 2011 23:15:55 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20110405194005.GA32427@elie>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170916>
 
-I was trying to whitelist a single file pattern in a directory
-that I was otherwise content to ignore, but when I tried:
+On Dienstag, 5. April 2011, Jonathan Nieder wrote:
+> Eric Blake wrote:
+> > @@ -70,7 +70,9 @@ PATTERN FORMAT
+> >   - An optional prefix '!' which negates the pattern; any
+> >     matching file excluded by a previous pattern will become
+> >     included again.  If a negated pattern matches, this will
+> > -   override lower precedence patterns sources.
+> > +   override lower precedence patterns sources.  However, a
+> > +   file negation does not override a path that has already
+> > +   been excluded by a directory match.
 
-  /m4/
-  !/m4/virt-*.m4
+I don't think this is the right place to explain this caveat. Here we describe 
+the format and behavior of the patterns in a rather formal manner.
 
-then 'git add' kept warning me that I had to use -f.  I finally
-figured out that ignoring a directory is much different than ignoring
-all files in a directory, when it comes to later negation patterns:
+> > @@ -87,7 +89,8 @@ PATTERN FORMAT
+> >
+> >   - Otherwise, git treats the pattern as a shell glob suitable
+> >     for consumption by fnmatch(3) with the FNM_PATHNAME flag:
+> > -   wildcards in the pattern will not match a / in the pathname.
+> > +   wildcards in the pattern will not match a / in the pathname,
+> > +   and do not ignore files with a leading . in the pathname.
 
-  /m4/*
-  !/m4/virt-*.m4
+I don't think this is correct. * matches .gitignore. I tried it.
 
-Improving the documentation will help others learn from my mistake.
+> > @@ -116,8 +119,11 @@ EXAMPLES
+> >      [...]
+> >      # Untracked files:
+> >      [...]
+> > +    #       Documentation/build
+> >      #       Documentation/foo.html
+> >      #       Documentation/gitignore.html
+> > +    #       build/log
+> > +    #       build/.file
+> >      #       file.o
+> >      #       lib.a
+> >      #       src/internal.o
+> > @@ -125,6 +131,10 @@ EXAMPLES
+> >      $ cat .git/info/exclude
+> >      # ignore objects and archives, anywhere in the tree.
+> >      *.[oa]
+> > +    # ignore files in the immediate child directory build,
+> > +    /build/*
+> > +    # except for the log.
+> > +    !/build/log
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
-CC: Johannes Sixt <j6t@kdbg.org>
----
+Doesn't this example give the false impression that you could do
 
-v2: incorporate helpful comments from Junio
+	/foo/*
+	!/foo/bar/baz
 
- Documentation/gitignore.txt |   25 +++++++++++++++++++++----
- 1 files changed, 21 insertions(+), 4 deletions(-)
+and have foo/bar/baz not ignored? But it is still ignored.
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 2e7328b..0955931 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -70,7 +70,11 @@ PATTERN FORMAT
-  - An optional prefix '!' which negates the pattern; any
-    matching file excluded by a previous pattern will become
-    included again.  If a negated pattern matches, this will
--   override lower precedence patterns sources.
-+   override lower precedence patterns sources.  However, since
-+   directory patterns prevent searching for any files below
-+   that directory, if it is desirable to whitelist a single
-+   file in a directory, you should first exclude all files in
-+   the directory rather than the directory itself.
+I propose a paragraph like this in the NOTES section:
 
-  - If the pattern ends with a slash, it is removed for the
-    purpose of the following description, but it would only find
-@@ -87,7 +91,8 @@ PATTERN FORMAT
+--- 8< ---
+When a directory is ignored, it is not possible to un-ignore a single file 
+somewhere in the directory using another pattern. E.g., with the patterns
 
-  - Otherwise, git treats the pattern as a shell glob suitable
-    for consumption by fnmatch(3) with the FNM_PATHNAME flag:
--   wildcards in the pattern will not match a / in the pathname.
-+   wildcards in the pattern will not match a / in the pathname,
-+   and do not ignore files with a leading . in the pathname.
-    For example, "Documentation/{asterisk}.html" matches
-    "Documentation/git.html" but not "Documentation/ppc/ppc.html"
-    or "tools/perf/Documentation/perf.html".
-@@ -116,8 +121,11 @@ EXAMPLES
-     [...]
-     # Untracked files:
-     [...]
-+    #       Documentation/build
-     #       Documentation/foo.html
-     #       Documentation/gitignore.html
-+    #       build/log
-+    #       build/.file
-     #       file.o
-     #       lib.a
-     #       src/internal.o
-@@ -125,19 +133,28 @@ EXAMPLES
-     $ cat .git/info/exclude
-     # ignore objects and archives, anywhere in the tree.
-     *.[oa]
-+    # ignore files in the immediate child directory build,...
-+    /build/*
-+    # ... except for the log.
-+    !/build/log
-     $ cat Documentation/.gitignore
--    # ignore generated html files,
-+    # ignore generated html files,...
-     *.html
--    # except foo.html which is maintained by hand
-+    # ... except foo.html which is maintained by hand
-     !foo.html
-     $ git status
-     [...]
-     # Untracked files:
-     [...]
-+    #       Documentation/build
-     #       Documentation/foo.html
-+    #       build/log
-     [...]
- --------------------------------------------------------------
+--------------
+/build/
+!/build/tests/results
+--------------
 
-+Note that using `!/build/log' works with an earlier `/build/*' but
-+would have no effect if there were an earlier `/build/'.
-+
- Another example:
+the file "build/tests/results" is still ignored because when a directory is 
+ignored, its contents are never investigated. In a situation where a few 
+exceptions in an otherwise ignored hierarchy are needed, the recommended 
+procedure is to specify to ignore the root of the hierarchy and then to 'git 
+add -f' the exceptional files. Subsequent changes to the files will not be 
+ignored.
+--- 8< ---
 
- --------------------------------------------------------------
--- 
-1.7.4
+-- Hannes
