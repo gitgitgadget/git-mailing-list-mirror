@@ -1,142 +1,177 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GSOC idea: build in scripts and cleanups
-Date: Tue, 05 Apr 2011 11:18:58 -0700
-Message-ID: <7vtyecmui5.fsf@alter.siamese.dyndns.org>
-References: <201103260141.20798.robert.david.public@gmail.com>
- <20110328142121.GB14763@sigill.intra.peff.net>
- <201103301739.12691.trast@student.ethz.ch>
- <201104040943.10030.robert.david.public@gmail.com>
- <7vwrj999dv.fsf@alter.siamese.dyndns.org>
- <20110405170729.GC9965@sigill.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [GSoC 2011] Git Sequencer
+Date: Tue, 5 Apr 2011 14:24:46 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1104051354500.14365@iabervon.org>
+References: <20110403172054.GA10220@kytes> <alpine.LNX.2.00.1104031407480.14365@iabervon.org> <20110404040610.GA30737@kytes> <20110404045437.GA2208@kytes> <alpine.LNX.2.00.1104041319570.14365@iabervon.org> <20110405175003.GA12159@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert David <robert.david.public@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 05 20:19:36 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>, Stephen Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 20:24:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Aqb-0001lc-PD
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 20:19:26 +0200
+	id 1Q7Avu-0005TR-Oh
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 20:24:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753777Ab1DESTU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 14:19:20 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57565 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753014Ab1DESTU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 14:19:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7353941A3;
-	Tue,  5 Apr 2011 14:21:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U6UrwNepo8GngGnmtkOCux971/s=; b=Xf/Qi1
-	8qpMB/P5bG7zKGtt0k1ioI8mtr94qbxY3Habgb+ZMkHb0cE3jec8iwlkWmXHGgDb
-	7i6jE44R6TfmMMB8MNonwAcTgEdNncam3dXsWClf7Jtd7g7QYRs71do+j/lkwU+J
-	BfpGbmyKp4Tej5a/pAEeu6bCY482aiqybu+oQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hmcyLJHIts5acjGE/JrGBR8VOqL40v3W
-	RtrbZlXq/ZNBJ1qULGu9fs22zpHIbPMT+FJwQn59i85awg0sk9mCKJwMAGprw2Bj
-	UbQTDmudgXip0zEt2AFUhWlIPZ9xRA1N6e6rBkhxEEGnp0ZQsCBptDDnPStCFGrm
-	5idiaCAhQsU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F2E3A4199;
-	Tue,  5 Apr 2011 14:21:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D4D04197; Tue,  5 Apr 2011
- 14:20:53 -0400 (EDT)
-In-Reply-To: <20110405170729.GC9965@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 5 Apr 2011 13:07:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 76DCA78A-5FB1-11E0-ADAF-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753920Ab1DESYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 14:24:49 -0400
+Received: from iabervon.org ([66.92.72.58]:37908 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753657Ab1DESYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 14:24:48 -0400
+Received: (qmail 28394 invoked by uid 1000); 5 Apr 2011 18:24:46 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Apr 2011 18:24:46 -0000
+In-Reply-To: <20110405175003.GA12159@kytes>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170899>
 
-Jeff King <peff@peff.net> writes:
+On Tue, 5 Apr 2011, Ramkumar Ramachandra wrote:
 
-> On Mon, Apr 04, 2011 at 11:09:00AM -0700, Junio C Hamano wrote:
->
->> I am afraid to say that the above schedule is too ambitious and does not
->> leave any time for reviews and re-rolls.  Please keep in mind that
->> historically patch series by more experienced contributors of substantial
->> size (comparable or even smaller scale than the topic you are proposing)
->> all typically took three or four review-reroll cycles, if not less, and we
->> don't automatically get extra review bandwidth just because GSoC is going
->> on.
->
-> I agree. I think it's important to take review-reroll cycles into
-> account. Not just in terms of allocating time, but also considering the
-> latency, and keeping the student's pipeline full of work while waiting
-> on review.
+> Hi Daniel,
+> 
+> Daniel Barkalow writes:
+> > On Mon, 4 Apr 2011, Ramkumar Ramachandra wrote:
+> > > Ramkumar Ramachandra writes:
+> > > > Daniel Barkalow writes:
+> > > > > I actually think that it would be a worthwhile feature for git's library 
+> > > > > code to have a uniform mechanism for communicating that it is requesting 
+> > > > > human intervention in the middle of a particular operation, where library 
+> > > > > operations which conflict with being able to continue this operation are 
+> > > > > either blocked or abort the operation, and the library is able to be told 
+> > > > > in general that the human intervention is done and the library operation 
+> > > > > should be finished now (or produce complaints about the user's work). That 
+> > > > > is, a library-level, single-interrupted-step "sequencer". For that matter, 
+> > > > > it should also apply to the common '"git merge" gets a conflict' case, and 
+> > > > > it would be useful to get some representational uniformity between that 
+> > > > > and cherry-pick getting a conflict.
+> > > 
+> > > [...]
+> 
+> Thanks for the detailed response- I've rearragned your response and
+> added some comments.  I initially wanted to design it so that all
+> state is persisted by the sequencer, but I can clearly see what's
+> wrong with that approach now.
+> 
+> > I think, ultimately, that with this code structure in place, the 
+> > am/rebase/rebase--interactive/sequencer details of how the multi-step 
+> > process is recorded becomes less important. That way, your project can be 
+> > successful even if you can't find a syntax for the sequencer file that 
+> > meets the needs of all of these use cases. (Which is where I suspect 
+> > you'll get bogged down.) If you can get all of the cases where git exits 
+> > in order to get human intervention to share "everything that matters" and 
+> > the core to "know what's in progress as far as anything else cares", I 
+> > think that would be success, even if the various multi-step programs 
+> > continue using their own state files.
+> 
+> Excellent.  The crux of the idea: The sequencer should serve as the
+> entry/ exit point for Git when any operation requires user
+> intervention to proceed.
 
-During the course of GSoC program, one will learn that other community
-members do not have any obligation to keep one's pipeline full [*1*], and
-learn how to cope with it.  Measuring the availability of others so that
-one can make optimum use of others' time is a skill to be learned to be
-successful in interacting with the open source community.
+I'm a bit surprised by the idea of calling that "the sequencer" (rather 
+than having "the sequencer" be a command), but I actually think you're 
+entirely right to do so. Be sure to be very explicit about that, though, 
+because people will probably start with the wrong idea of what you're 
+proposing otherwise.
 
-It takes people skills, not just "hacking" [*2*].
+> For this, it should have information about
+> how we got to this point, and how to proceed after the user
+> intervention is complete; this information is contained in:
+> 
+> > cherry_pick_conflict = { 
+> >   "cherry-pick", APPLIES_TO_CURRENT_BRANCH | IN_MIDDLE_OF_COMMIT,
+> >   cherry_pick_verify_resolution,
+> >   cherry_pick_abort,
+> >   cherry_pick_post_resolution
+> > };
+> 
+> Wait -- isn't it missing a skip callback?
 
->   Week 3: build new functionality Y on top of X
->
-> Obviously "Y" is going to depend somewhat on the refactoring of "X". But
-> you can say in the RFC/PATCH for Y that X is still ongoing, and to
-> review with that in mind. And that keeps the student doing something
-> during week 3 while reviews for X flow in.
+I think "skip" is actually: abort the lowest-level conflict and continue 
+the next-level conflict. If you're doing a rebase, and the rebase is doing 
+a "pick", and the pick got a conflict, --skip means that you abort the 
+pick (to get back to the state where the earlier commits have been picked 
+but this one hasn't been started, followed by having the rebase continue 
+with what it was going to do after the pick completed.
 
-Yes.
+So I don't think you need a "skip" callback, as long as you've untangled 
+the levels cleanly and get the nesting support right.
 
-> In the past, students haven't been very engaged with the list community,
-> and I think that has hurt us. The code gets dumped as a whole at the
-> end, and review is a lot harder, and GSoC is over, so the student ends
-> up busy with going back to school.
+> cherry_pick_conflict = { 
+>   "cherry-pick", APPLIES_TO_CURRENT_BRANCH | IN_MIDDLE_OF_COMMIT,
+>   cherry_pick_verify_resolution,
+>   cherr_pick_skip,
+>   cherry_pick_abort,
+>   cherry_pick_post_resolution
+> };
+> 
+> This information is passed to report_conflict(), which takes care of
+> user intervention.  The user can do whatever she wants and then ask
+> the sequencer to "continue", "skip" or "abort":
 
-While GSoC's "success" criteria (from stipend payment point of view) may
-be to finish the defined task for the project, the program's larger
-objective is to give an opportunity to students to learn how to work with
-the open source community, so in that sense, I'd call that a total
-failure.
+Right, although I think:
 
-I agree that we should help fixing that.
+  $ git cheery-pick some-sha1
+  Conflict needs to be fixed now!
 
-[Footnote]
+  $ git skip
 
-*1* The mentor is special, has that obligation, and fulfils the obligation
-by exercising his open source community skills and guiding the student to
-break down the project into smaller subtasks to match the bandwidth of the
-community.
+should give an error message about the current conflict not being a step 
+of a larger process. That is, you can always "continue" or "abort", but 
+you can only "skip" if there's something to skip to, even if it's only the 
+higher-order sequence reporting that it's completed successfully.
 
-*2* That incidentally is what I learned from working with Linus during the
-early 2 months of git's life.  "People skill" is not just "being nice,
-polite and diplomatic", none of which describes Linus ;-).
+> > Where the sequencer-level conflict nests around the cherry-pick-level 
+> > conflict, and the generic "continue" completes things from the inside out.
+> 
+> Right.  And then the sequencer fires the appropriate callback and
+> returns control to the parent command.  More notes:
+> 
+> >  - cherry-pick can save whatever it needs to in its state file; that's 
+> >    its business, and the semantics here don't have to interact with other 
+> >    commands, because report_conflict() has taken care of interaction with 
+> >    other commands
+> 
+> At the end of a merge for example, the MERGE_MSG needs to be retrieved
+> to create a new merge commit.  The sequencer des not need to know
+> anything about this, since this is specific to 'merge'.
 
-I think the most important skills include
+Right. And remove_branch_state() wouldn't even need to know about 
+MERGE_MSG like it does now, because that would be handled by aborting any 
+in-progress merge.
 
- * being observant and know what others are doing, how busy they are, what
-   patches are in flight that may have potential interactions with your
-   work, and at what velocity these patches are progressing; and
+> >  - arbitrary code can determine that you're in the middle of resolving 
+> >    some conflict, that the resolution of that conflict is about doing
+> >    something to your current branch, and how to abort what you're doing,
+> >    and how to finish it
+> 
+> Any arbitrary code simply has to ask the sequencer about the state of
+> the intermediate files that report_conflict() uses.  They don't have
+> to worry about command-specific intermediate files.
 
- * clearly communicate what you are doing, in what order, for what reason,
-   and where the boundaries of your goals are, and demonstrate that you
-   are dedicated to the cause of the project.
+Right.
 
-The former would help you avoid duplicated work (if somebody is doing what
-you can take advantage of and it is going at a reasonable pace, you can
-spend your time on areas that do not depend on his work in the meantime
-and wait) and unnecessary conflicts. The latter would make it more likely
-that others would want to help you by correcting flaws in your design
-assumptions and filling the gap that you are planning to punt, and help
-these others to avoid duplicated work and unnecessary conflicts while
-helping you.
+> >  - the same code gets run after the conflict has been resolved that would 
+> >    have been run immediately if the merge went smoothly
+> 
+> Using these callbacks, there is no need for if-else ugliness inside
+> the specific command to decide what to do next.
+> 
+> I suppose we can call this  idea a "generic conflict handler".  I like
+> it very  much, and  I'll definitely  include this as  part of  my GSoC
+> work.  Thanks for taking the time to explain it in such detail :)
+
+You're welcome. Thanks for proposing to actually implement it. :)
+
+	-Daniel
+*This .sig left intentionally blank*
