@@ -1,134 +1,122 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] Documentation: enhance gitignore whitelist example
-Date: Tue, 05 Apr 2011 15:23:46 -0600
-Organization: Red Hat
-Message-ID: <4D9B8862.1050605@redhat.com>
-References: <1302032214-11438-1-git-send-email-eblake@redhat.com> <20110405194005.GA32427@elie> <201104052315.54375.j6t@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH 2/2] stash: drop dirty worktree check on apply
+Date: Tue, 5 Apr 2011 17:23:15 -0400
+Message-ID: <20110405212314.GA3613@sigill.intra.peff.net>
+References: <20110405212025.GA3579@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------enig5F2AE7F76DCEF26E24000980"
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Apr 05 23:26:48 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Brian Lopez <brian@github.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 23:26:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Dlt-0001TV-Gm
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:26:46 +0200
+	id 1Q7Dlq-0001TV-HX
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:26:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755013Ab1DEVXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 17:23:51 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:39141 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754610Ab1DEVXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 17:23:51 -0400
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p35LNlq8028192
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 5 Apr 2011 17:23:47 -0400
-Received: from [10.3.113.117] (ovpn-113-117.phx2.redhat.com [10.3.113.117])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id p35LNlSd024220;
-	Tue, 5 Apr 2011 17:23:47 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Lightning/1.0b3pre Mnenhy/0.8.3 Thunderbird/3.1.9
-In-Reply-To: <201104052315.54375.j6t@kdbg.org>
-X-Enigmail-Version: 1.1.2
-OpenPGP: url=http://people.redhat.com/eblake/eblake.gpg
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1754975Ab1DEVXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 17:23:18 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44450
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754430Ab1DEVXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 17:23:18 -0400
+Received: (qmail 28683 invoked by uid 107); 5 Apr 2011 21:24:03 -0000
+Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Apr 2011 17:24:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Apr 2011 17:23:15 -0400
+Content-Disposition: inline
+In-Reply-To: <20110405212025.GA3579@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170919>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig5F2AE7F76DCEF26E24000980
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Before we apply a stash, we make sure there are no changes
+in the worktree that are not in the index. This check dates
+back to the original git-stash.sh, and is presumably
+intended to prevent changes in the working tree from being
+accidentally lost during the merge.
 
-On 04/05/2011 03:15 PM, Johannes Sixt wrote:
->>> @@ -87,7 +89,8 @@ PATTERN FORMAT
->>>
->>>   - Otherwise, git treats the pattern as a shell glob suitable
->>>     for consumption by fnmatch(3) with the FNM_PATHNAME flag:
->>> -   wildcards in the pattern will not match a / in the pathname.
->>> +   wildcards in the pattern will not match a / in the pathname,
->>> +   and do not ignore files with a leading . in the pathname.
->=20
-> I don't think this is correct. * matches .gitignore. I tried it.
+However, this check has two problems:
 
-That was my point.  * _does_ match .gitignore, even though for normal
-shell globs, FNM_PERIOD is set and * does not match .gitignore.  That
-is, while in the shell 'dir/*' only matches non-dot files, in .gitignore
-it matches all files including dot-files.
+  1. It is overly restrictive. If my stash changes only file
+     "foo", but "bar" is dirty in the working tree, it will
+     prevent us from applying the stash.
 
-Any ideas for a better way to word that?
+  2. It is redundant. We don't touch the working tree at all
+     until we actually call merge-recursive. But it has its
+     own (much more accurate) checks to avoid losing working
+     tree data, and will abort the merge with a nicer
+     message telling us which paths were problems.
 
-> I propose a paragraph like this in the NOTES section:
->=20
-> --- 8< ---
-> When a directory is ignored, it is not possible to un-ignore a single f=
-ile=20
-> somewhere in the directory using another pattern. E.g., with the patter=
-ns
->=20
-> --------------
-> /build/
-> !/build/tests/results
-> --------------
->=20
-> the file "build/tests/results" is still ignored because when a director=
-y is=20
-> ignored, its contents are never investigated. In a situation where a fe=
-w=20
-> exceptions in an otherwise ignored hierarchy are needed, the recommende=
-d=20
-> procedure is to specify to ignore the root of the hierarchy and then to=
- 'git=20
-> add -f' the exceptional files. Subsequent changes to the files will not=
- be=20
-> ignored.
+So we can simply drop the check entirely.
 
-Yeah, but then you have to 'git add -f path/to/file' them every time you
-change them, or use the sledgehammer of 'git add .'.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+As with any time we loosen a safety valve, I am worried that I'm missing
+a case where it is still doing something useful. Thus the RFC tag on
+this patch.
 
-Does it make any better sense to document:
+I'm not sure if the check was perhaps even required when git-stash was
+written, and has simply since become useless as merge-recursive became
+more careful.
 
-  /build/*
-  !/build/*/
-  /build/*/*
-  !/build/foo/baz
+ git-stash.sh     |    4 +---
+ t/t3903-stash.sh |   16 ++++++++++++++--
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-which ignores all files in build, then un-ignores directories, then
-ignores all files in subdirectories of build except for the desired
-multi-level file under build?  At which point you no longer need 'git
-add -f', but can simply do 'git add build' to pick up /build/foo/baz in
-one go without warning?
-
---=20
-Eric Blake   eblake@redhat.com    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
-
-
---------------enig5F2AE7F76DCEF26E24000980
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Public key at http://people.redhat.com/eblake/eblake.gpg
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
-
-iQEcBAEBCAAGBQJNm4hiAAoJEKeha0olJ0NqipQH/iuryTsKmT2PIpdnZL4jQ6hL
-w2U8Khdj9yntsTv603ZBSk3EYb79ft7gNx17p3k+eWXxUmcfNVtRAOk5KW+4SIF8
-0OIG2tp7Li1Bz11yVPiBORwuLyZDLru4rZxIZ2Lk9KeUPK9B13FAXCCa60q7HNHk
-TszyiBI35wkcia4bmUsySoyO364xEFQZpwJfhYNJ3pt7Yh/5hUi0as+JX3Kn3nRN
-qrE1n/QiCNci3D87T6QOAq3ak0tBobdiTUNMEn0jH3VQUJgYpgwv/uayBSmiiFOO
-vBwFt3fQlgfvdUTnE6DmyqB2gb1VOVq0nAJVsRDd3Rxxov/9joo4NART8uHgh7U=
-=IXon
------END PGP SIGNATURE-----
-
---------------enig5F2AE7F76DCEF26E24000980--
+diff --git a/git-stash.sh b/git-stash.sh
+index a5b1dc3..07ac323 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -334,9 +334,7 @@ apply_stash () {
+ 
+ 	assert_stash_like "$@"
+ 
+-	git update-index -q --refresh &&
+-	git diff-files --quiet --ignore-submodules ||
+-		die 'Cannot apply to a dirty working tree, please stage your changes'
++	git update-index -q --refresh || die 'unable to refresh index'
+ 
+ 	# current index state
+ 	c_tree=$(git write-tree) ||
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 11077f0..966bc46 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -43,14 +43,26 @@ test_expect_success 'applying bogus stash does nothing' '
+ 	test_cmp expect file
+ '
+ 
+-test_expect_success 'apply needs clean working directory' '
++test_expect_success 'apply does not need clean working directory' '
+ 	echo 4 > other-file &&
+ 	git add other-file &&
+ 	echo 5 > other-file &&
+-	test_must_fail git stash apply
++	git stash apply &&
++	echo 3 >expect &&
++	test_cmp expect file
++'
++
++test_expect_success 'apply does not clobber working directory changes' '
++	git reset --hard &&
++	echo 4 >file &&
++	test_must_fail git stash apply &&
++	echo 4 >expect &&
++	test_cmp expect file
+ '
+ 
+ test_expect_success 'apply stashed changes' '
++	git reset --hard &&
++	echo 5 >other-file &&
+ 	git add other-file &&
+ 	test_tick &&
+ 	git commit -m other-file &&
+-- 
+1.7.4.3.13.g0b769.dirty
