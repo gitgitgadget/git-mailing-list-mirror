@@ -1,89 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rebase autosquash doesn't recognise a chain of fixups
-Date: Tue, 05 Apr 2011 14:03:12 -0700
-Message-ID: <7v8vvommwf.fsf@alter.siamese.dyndns.org>
-References: <20110405154100.GC16031@bee.lab.cmartin.tk>
- <7v4o6cob4t.fsf@alter.siamese.dyndns.org>
- <B584DA91-1811-4976-A915-458672455DAD@sb.org>
- <7vk4f8mu4i.fsf@alter.siamese.dyndns.org>
- <BANLkTimqvu7c559_AQ6yLxPACOxD0ciNxQ@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
+Date: Tue, 5 Apr 2011 14:09:40 -0700
+Message-ID: <20110405210940.GA19412@dcvr.yhbt.net>
+References: <4D9B310A.9020203@mit.edu> <1302034509-8842-1-git-send-email-asedeno@mit.edu> <4D9B7A9E.6040902@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pat Notz <patnotz@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue Apr 05 23:04:43 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, James Y Knight <jknight@itasoftware.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Apr 05 23:09:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7DQX-0005kG-Pm
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:04:42 +0200
+	id 1Q7DVa-0000Gq-Oz
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505Ab1DEVDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 17:03:40 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36782 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754017Ab1DEVDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 17:03:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2634146F2;
-	Tue,  5 Apr 2011 17:05:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7lXk+z7009RokzuegtF+m0BgX84=; b=TqKByg
-	Ejd6uoPGIZ+7YSNYoFfuw48OrorzpMMttWgEDcO+yVUNySgkuPSCEBmpv8wvvV1k
-	C1qGRufn0hGI9qn8PG8Gqx00M2Mzvexkvd5hVvp4lFpUdQsiDrZ1RLkbwQAFdfyT
-	do7k/kDz9crIC1aehLpf0AW1v09ymrPEcQ0N0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aHXFecdC5yfNOv2h5Bf2nkYDEdvz4tPu
-	Wg80NOsMTpkaQsCwOTpsNnEdgvlZNtr7Qx7UM/IDhd4hvevI87FZyY5luLmpygcb
-	qxfPgC/75TFoeeVQxVMYo2MyVgRYmFH1jlNwBM4SNaWaxIaAlMEw7oDEi6BnU9uf
-	iWSO64IrnUQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C874A46F0;
-	Tue,  5 Apr 2011 17:05:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E4BDD46EB; Tue,  5 Apr 2011
- 17:05:06 -0400 (EDT)
-In-Reply-To: <BANLkTimqvu7c559_AQ6yLxPACOxD0ciNxQ@mail.gmail.com> (Kevin
- Ballard's message of "Tue, 5 Apr 2011 11:59:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6798D55C-5FC8-11E0-B7C4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754593Ab1DEVJm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 17:09:42 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:48451 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753739Ab1DEVJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 17:09:41 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A1601F863;
+	Tue,  5 Apr 2011 21:09:41 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4D9B7A9E.6040902@mit.edu>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170914>
 
-Kevin Ballard <kevin@sb.org> writes:
+"\"Alejandro R. Sede=C3=B1o\"" <asedeno@mit.edu> wrote:
+> Trying to use an unsupported feature: Source and dest appear not to b=
+e in
+> the same repository (src: 'http://asedeno/svn/trunk'; dst:
+> 'file:///tmp/svn/repo/branches/nb1') at /tmp/git/libexec/git-core/git=
+-svn
+> line 770
 
-> On Tue, Apr 5, 2011 at 11:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> Kevin Ballard <kevin@sb.org> writes:
->>
->> > This seems unnecessary. `git commit --fixup HEAD` doesn't really make any
->> sense at all to run when you can say `git commit --amend` instead,
->>
->> What about this sequence?
->>
->>        git commit -m 'foo'
->>        git commit -m 'bar'
->>        git commit --fixup HEAD~1
->>        git commit -m 'baz'
->>        git commit --fixup HEAD~1
->>
->>
-> You raise a good point. I personally think someone who types that deserves
-> what he gets, but I have no objection to being intelligent about duplicate
-> fixup! prefixes.
+This may be a new warning/error in newer versions of Subversion itself.
+Maybe it's better to always use the same URL for all read/writes
 
-Of course an alternative solution is to fix this on the "rebase -i" side,
-by building on top of your d3d7a42 (rebase: better rearranging of
-fixup!/squash! lines with --autosquash, 2010-11-04).
-
-Or perhaps we would want to do both.
+--=20
+Eric Wong
