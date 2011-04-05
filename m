@@ -1,111 +1,184 @@
 From: Dan McGee <dpmcgee@gmail.com>
-Subject: Re: [PATCH] Share color list between graph and show-branch
-Date: Mon, 4 Apr 2011 19:32:05 -0500
-Message-ID: <BANLkTint1+c0h9DExydWeeafdgawEJPuMw@mail.gmail.com>
-References: <1301535506-1166-1-git-send-email-dpmcgee@gmail.com>
-	<7v7hbbcfoj.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 02:32:14 2011
+Subject: [PATCH] http: make curl callbacks match contracts from curl header
+Date: Mon,  4 Apr 2011 20:06:19 -0500
+Message-ID: <1301965579-5299-1-git-send-email-dpmcgee@gmail.com>
+References: <7v8vvp7fr0.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Dan McGee <dpmcgee@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 03:06:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q6uBp-0006yE-HB
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 02:32:13 +0200
+	id 1Q6uj4-00063W-BW
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 03:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190Ab1DEAcI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2011 20:32:08 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51912 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009Ab1DEAcG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2011 20:32:06 -0400
-Received: by wwa36 with SMTP id 36so7072783wwa.1
-        for <git@vger.kernel.org>; Mon, 04 Apr 2011 17:32:05 -0700 (PDT)
+	id S1751260Ab1DEBG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2011 21:06:29 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:45523 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751053Ab1DEBG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2011 21:06:27 -0400
+Received: by yxs7 with SMTP id 7so2398638yxs.19
+        for <git@vger.kernel.org>; Mon, 04 Apr 2011 18:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=L+F02XzY+jYj1tq1zzZxATQ0xyx0Wq+2A/aW5rpAxpI=;
-        b=OhyYcOM6SUeOgESotRSPP/rdAwKdTiT8veS3PMWxnQW4DTYZmxFkxYMgzixPwBX252
-         ruGtejY8cVKDMN6IjBvOq724Zn/E89dq3npVGCdmTB7T4ZhpnFWer/vOOQOjHpXbytQB
-         9Rsj9fLALYJCOE7nAKmGDWzWMXsbHIs2g2RZc=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=Gn9LKvZtAEK+58WOIhbsks5T1OOBeliftLDZKc97tXY=;
+        b=lCyO0wioQKrvn+fuXZR+aH7wEDTWt8ZHNMOjSO83GLMUXnZz9Diqgs6wSzaIWN0yST
+         PWb2XjpefaM6C7sMxC2gcbVG+7mxlY7SMYvcUgELKX4JGtxIcJl/1KMgqemQJ6yBfoRC
+         CsTWBGlul0HITwoie1SNW2vVLg/S9l+aC+glE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EUz7GESZdRenbFIlYGVbmU+vmonBVScz0yLIPYwQapKyTiQNNSj2S/UKgjV5G8XwZt
-         PnlX3umb7bj0GUhx0M1eWK8uizU/MSDz9klTUv5z29wuntZPB8Fipb80GUFWruqYq//y
-         n5lthOQZI+WEN6tZO5p9IABeCQ99GorrFBI2c=
-Received: by 10.227.195.6 with SMTP id ea6mr7779402wbb.74.1301963525163; Mon,
- 04 Apr 2011 17:32:05 -0700 (PDT)
-Received: by 10.227.147.16 with HTTP; Mon, 4 Apr 2011 17:32:05 -0700 (PDT)
-In-Reply-To: <7v7hbbcfoj.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=ZnQvcFBOX/dbBjAXdAjI1qYwWnBiZZA0NjbkCmpnIT3JBM+kp5f0RndOwjHCPttuMf
+         OACjaRY/f4EV84ZEQdvC8oqHibJRgERRZ4K7Cayqq3WcIKT7C7Qm1aZg6xDjYQBD9qwk
+         w1CuL8bn83mLeYMAWi8cQKqN8/Kz3waduu6y0=
+Received: by 10.236.154.5 with SMTP id g5mr3304333yhk.86.1301965587216;
+        Mon, 04 Apr 2011 18:06:27 -0700 (PDT)
+Received: from localhost (c-71-239-242-45.hsd1.il.comcast.net [71.239.242.45])
+        by mx.google.com with ESMTPS id p59sm2603288yhm.46.2011.04.04.18.06.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 04 Apr 2011 18:06:26 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.2
+In-Reply-To: <7v8vvp7fr0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170852>
 
-On Sun, Apr 3, 2011 at 2:12 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Dan McGee <dpmcgee@gmail.com> writes:
->
->> diff --git a/color.h b/color.h
->> index c0528cf..a7da793 100644
->> --- a/color.h
->> +++ b/color.h
->> @@ -53,6 +53,10 @@ struct strbuf;
->> =C2=A0 */
->> =C2=A0extern int git_use_color_default;
->>
->> +extern const char *column_colors_ansi[13];
->> +
->> +/* Ignore the RESET at the end when giving the size */
->> +#define COLUMN_COLORS_ANSI_MAX (ARRAY_SIZE(column_colors_ansi) - 1)
->
-> Sneaky.
->
-> I first went "Huh? -- this array-size macro cannot work", expecting t=
-hat
-> the array is not decleared with a fixed size in the header.
->
-> It may make sense to unify these two palettes whose slot assignment d=
-oes
-> not have any meaning, but it feels that the above change totally goes
-> against the spirit of using ARRAY_SIZE() macro, the point of which is=
- to
-> liberate programmers from having to count and adjust the size when ad=
-ding
-> the contents to the array.
->
-> Wouldn't it make more sense to do something like
->
-> =C2=A0 =C2=A0>>> in the header <<<
-> =C2=A0 =C2=A0extern const char *custom_colors_ansi[];
-> =C2=A0 =C2=A0extern const int CUSTOM_COLORS_ANSI_MAX;
->
-> =C2=A0 =C2=A0>>> in the code <<<
-> =C2=A0 =C2=A0const char *custom_colors_ansi[] =3D {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0... as before ...
-> =C2=A0 =C2=A0};
-> =C2=A0 =C2=A0/* Does not count the last element "RESET" */
-> =C2=A0 =C2=A0const int CUSTOM_COLORS_ANSI_MAX =3D ARRAY_SIZE(custom_c=
-olors_ansi) - 1;
->
-> to avoid mistakes?
+Yes, these don't match perfectly with the void* first parameter of the
+fread/fwrite in the standard library, but they do match the curl
+expected method signature. This is needed when a refactor passes a
+curl_write_callback around, which would otherwise give incorrect
+parameter warnings.
 
-Duh. This makes way more sense, I'll resend the patch with the
-necessary changes; I couldn't think of an elegant way to do it at the
-time.
+Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+---
 
-On another note, we also have this whole crazy "- 1" bit and the RESET
-element at the end, and yet I see nowhere that slot is actually used.
-It looks like this was introduced by commit 1e3d4119d21df28.
+Cast the const-ness away in process_alternates_response with the call to
+fwrite_buffer() as suggested by Junio, which shows the correct intent rather
+than making the variable non-const to begin with. The static modifier was still
+dropped.
 
--Dan
+ http-walker.c |    4 ++--
+ http.c        |   12 ++++++------
+ http.h        |    6 +++---
+ remote-curl.c |    2 +-
+ 4 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/http-walker.c b/http-walker.c
+index 9bc8114..51a906e 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -185,7 +185,7 @@ static void process_alternates_response(void *callback_data)
+ 	struct active_request_slot *slot = alt_req->slot;
+ 	struct alt_base *tail = cdata->alt;
+ 	const char *base = alt_req->base;
+-	static const char null_byte = '\0';
++	const char null_byte = '\0';
+ 	char *data;
+ 	int i = 0;
+ 
+@@ -218,7 +218,7 @@ static void process_alternates_response(void *callback_data)
+ 		}
+ 	}
+ 
+-	fwrite_buffer(&null_byte, 1, 1, alt_req->buffer);
++	fwrite_buffer((char *)&null_byte, 1, 1, alt_req->buffer);
+ 	alt_req->buffer->len--;
+ 	data = alt_req->buffer->buf;
+ 
+diff --git a/http.c b/http.c
+index 9e76772..f44816b 100644
+--- a/http.c
++++ b/http.c
+@@ -60,7 +60,7 @@ static struct curl_slist *no_pragma_header;
+ 
+ static struct active_request_slot *active_queue_head;
+ 
+-size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
++size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ {
+ 	size_t size = eltsize * nmemb;
+ 	struct buffer *buffer = buffer_;
+@@ -92,7 +92,7 @@ curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
+ }
+ #endif
+ 
+-size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
++size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ {
+ 	size_t size = eltsize * nmemb;
+ 	struct strbuf *buffer = buffer_;
+@@ -102,7 +102,7 @@ size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *buffer
+ 	return size;
+ }
+ 
+-size_t fwrite_null(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf)
++size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
+ {
+ 	data_received++;
+ 	return eltsize * nmemb;
+@@ -1166,7 +1166,7 @@ abort:
+ }
+ 
+ /* Helpers for fetching objects (loose) */
+-static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
++static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
+ 			       void *data)
+ {
+ 	unsigned char expn[4096];
+@@ -1183,7 +1183,7 @@ static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
+ 	} while (posn < size);
+ 
+ 	freq->stream.avail_in = size;
+-	freq->stream.next_in = ptr;
++	freq->stream.next_in = (void *)ptr;
+ 	do {
+ 		freq->stream.next_out = expn;
+ 		freq->stream.avail_out = sizeof(expn);
+@@ -1202,7 +1202,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	char *filename;
+ 	char prevfile[PATH_MAX];
+ 	int prevlocal;
+-	unsigned char prev_buf[PREV_BUF_SIZE];
++	char prev_buf[PREV_BUF_SIZE];
+ 	ssize_t prev_read = 0;
+ 	long prev_posn = 0;
+ 	char range[RANGE_HEADER_SIZE];
+diff --git a/http.h b/http.h
+index e9ed3c2..19b7134 100644
+--- a/http.h
++++ b/http.h
+@@ -66,9 +66,9 @@ struct buffer {
+ };
+ 
+ /* Curl request read/write callbacks */
+-extern size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
+-extern size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
+-extern size_t fwrite_null(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
++extern size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
++extern size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
++extern size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
+ #ifndef NO_CURL_IOCTL
+ extern curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
+ #endif
+diff --git a/remote-curl.c b/remote-curl.c
+index 775d614..17d8a9b 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -347,7 +347,7 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
+ }
+ #endif
+ 
+-static size_t rpc_in(const void *ptr, size_t eltsize,
++static size_t rpc_in(char *ptr, size_t eltsize,
+ 		size_t nmemb, void *buffer_)
+ {
+ 	size_t size = eltsize * nmemb;
+-- 
+1.7.4.2
