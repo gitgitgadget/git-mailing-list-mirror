@@ -1,124 +1,75 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: rebase autosquash doesn't recognise a chain of fixups
-Date: Tue, 05 Apr 2011 11:02:06 -0700
-Message-ID: <B584DA91-1811-4976-A915-458672455DAD@sb.org>
-References: <20110405154100.GC16031@bee.lab.cmartin.tk>
- <7v4o6cob4t.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [BUG] git-svn: --no-metadata related bug
+Date: Wed, 6 Apr 2011 00:37:24 +0530
+Message-ID: <20110405190722.GB25644@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Notz <patnotz@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?utf-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 21:06:28 2011
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 05 21:08:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Ba7-0006tn-2J
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 21:06:27 +0200
+	id 1Q7Bc4-0008CD-Ik
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 21:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354Ab1DETGW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 15:06:22 -0400
-Received: from honeycrisp.apple.com ([17.151.62.51]:65414 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753093Ab1DETGV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 15:06:21 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Apr 2011 15:06:21 EDT
-Received: from relay16.apple.com ([17.128.113.55])
- by localhost.apple.com (Oracle Communications Messaging Exchange Server
- 7u4-20.01 64bit (built Nov 21 2010))
- with ESMTP id <0LJ6009CRY65TC71@localhost.apple.com> for git@vger.kernel.org;
- Tue, 05 Apr 2011 11:06:20 -0700 (PDT)
-X-AuditID: 11807137-b7c3cae0000010f5-4e-4d9b5a1b68df
-Received: from et.apple.com (et.apple.com [17.151.62.12])
-	by relay16.apple.com (Apple SCV relay) with SMTP id 3D.3B.04341.B1A5B9D4; Tue,
- 05 Apr 2011 11:06:20 -0700 (PDT)
-Received: from [17.244.5.20] by et.apple.com
- (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008; 32bit))
- with ESMTPSA id <0LJ600929YAJD410@et.apple.com> for git@vger.kernel.org; Tue,
- 05 Apr 2011 11:06:19 -0700 (PDT)
-In-reply-to: <7v4o6cob4t.fsf@alter.siamese.dyndns.org>
-X-Mailer: iPad Mail (8G4)
-X-Brightmail-Tracker: AAAAAA==
+	id S1754508Ab1DETIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 15:08:23 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41364 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754453Ab1DETIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 15:08:22 -0400
+Received: by iyb14 with SMTP id 14so672578iyb.19
+        for <git@vger.kernel.org>; Tue, 05 Apr 2011 12:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=7eUH9BjXxe3/9WtYVgpPfUM7IzSxBIFAMGkxOdsAi1I=;
+        b=NptzRnL9bVIcJlMpJN1sKzVQDhRSM0Ni5px2L6zrteqD3k0EdidZAehW8MCxkWJuQP
+         9IUTGiyUjFo8dgjsCqOAjIjOtH5d7RcI+eJWlfnVkjQFGtSgVgFkiAHewpjD683QgSoq
+         IVDq+nobDq78QOJp/grkwDClBE4j1UrUxhCW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=XdUqb8f4qe0jfXvV3IB/5pMVSHIdKzB4dRI52HrqyLHXG/5n4cgzSlknURx1zVnfzX
+         sb+/c4R2VR3QOPTBVEDi8katbnjx/U4TB9aL7DXJGbW6uUdYvJIm8I92wWxgugIfQ9cd
+         leiRblwLG73g3Wq43Bjod7GyV6YtGTssChFuU=
+Received: by 10.42.97.70 with SMTP id m6mr88515icn.104.1302030502088;
+        Tue, 05 Apr 2011 12:08:22 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id i20sm4637674iby.31.2011.04.05.12.08.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 05 Apr 2011 12:08:21 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170905>
 
-This seems unnecessary. `git commit --fixup HEAD` doesn't really make a=
-ny sense at all to run when you can say `git commit --amend` instead,
+Hi,
 
--Kevin
+This bug was reported by sh4rm4 on #git-devel a few minutes ago [1].
 
-On Apr 5, 2011, at 10:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Steps to reproduce:
+$ git svn clone --no-metadata -T trunk http://dxirc.googlecode.com/svn/
 
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
->> Say I have the following commits:
->>=20
->>    5154127 fixup! fixup! one
->>    0d130d8 fixup! one
->>    0869d30 one
->>=20
->> because I keep executing `git commit -a --fixup HEAD`. When I want t=
-o
->> squash them all into 0869d30, I do `git rebase -i --autosquash
->> 0869d30^` and I get
->>=20
->>    pick 0869d30 one
->>    fixup 0d130d8 fixup! one
->>    pick 5154127 fixup! fixup! one
->=20
-> The way Kevin's d3d7a42 (rebase: better rearranging of fixup!/squash!
-> lines with --autosquash, 2010-11-04) series works is to match "fixup!=
-"
-> only with "pick"; a later "fixup!" never matches an earlier "fixup!" =
-but a
-> "pick" can be matched against more than one "fixup!".
->=20
-> I think one way to make this work is to fix what Pat did in d71b8ba
-> (commit: --fixup option for use with rebase --autosquash, 2010-11-02)=
-=2E
->=20
-> Perhaps like this, but I'll leave additions of test scripts to t3415 =
-to
-> others.
->=20
-> -- >8 --
-> Subject: commit --fixup: do not duplicate "fixup! " at the beginning
->=20
-> The "rebase -i" command can match more than one "fixup!" against a si=
-ngle
-> "pick" in the right order thanks to the earlier d3d7a42 (rebase: bett=
-er
-> rearranging of fixup!/squash! lines with --autosquash, 2010-11-04), b=
-ut a
-> "fixup!" entry is never matched with another "fixup!" entry.
->=20
-> When creating a commit marked to fix up an earlier commit with --fixu=
-p, we
-> can mark it to look for the original and fix that one up.
->=20
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> builtin/commit.c |    2 ++
-> 1 files changed, 2 insertions(+), 0 deletions(-)
->=20
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 67757e9..b3c4d63 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -668,6 +668,8 @@ static int prepare_to_commit(const char *index_fi=
-le, const char *prefix,
->        ctx.output_encoding =3D get_commit_output_encoding();
->        format_commit_message(commit, "fixup! %s\n\n",
->                      &sb, &ctx);
-> +        while (!prefixcmp(sb.buf, "fixup! fixup!"))
-> +            strbuf_splice(&sb, 0, 7, "", 0);
->        hook_arg1 =3D "message";
->    } else if (!stat(git_path("MERGE_MSG"), &statbuf)) {
->        if (strbuf_read_file(&sb, git_path("MERGE_MSG"), 0) < 0)
+Output:
+Found possible branch point: http://dxirc.googlecode.com/svn/trunk => http://dxirc.googlecode.com/svn/branches/0.20, 93
+Use of uninitialized value $u in substitution (s///) at /usr/lib/git/git-svn line 1733.
+Use of uninitialized value $u in concatenation (.) or string at /usr/lib/git/git-svn line 1733.
+refs/remotes/trunk: 'http://dxirc.googlecode.com/svn' not found in ''
+
+Comments:
+Works fine when '--no-metadata' is omitted.  It seems to be a simple
+variable-initialization bug.  I would have posted a patch, but I can't
+test it on my own system because git-svn doesn't work with the
+upstream Subversion-related libraries I have installed.
+
+[1]: http://colabti.org/irclogger/irclogger_log/git-devel?date=2011-04-05#l76
+
+-- Ram
