@@ -1,113 +1,115 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] Documentation: enhance gitignore whitelist example
-Date: Tue, 5 Apr 2011 23:15:54 +0200
-Message-ID: <201104052315.54375.j6t@kdbg.org>
-References: <1302032214-11438-1-git-send-email-eblake@redhat.com> <20110405194005.GA32427@elie>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] stash: fix accidental apply of non-existent stashes
+Date: Tue, 5 Apr 2011 17:20:25 -0400
+Message-ID: <20110405212025.GA3579@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Eric Blake <eblake@redhat.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 23:16:20 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 23:26:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Dbn-0004Bx-Na
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:16:20 +0200
+	id 1Q7Dlm-0001TV-Oj
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 23:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017Ab1DEVQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 17:16:00 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:38167 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753605Ab1DEVQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 17:16:00 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id E5A6C2C4010;
-	Tue,  5 Apr 2011 23:15:55 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 0902E19F5C0;
-	Tue,  5 Apr 2011 23:15:55 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <20110405194005.GA32427@elie>
+	id S1754973Ab1DEVUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 17:20:31 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44448
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754811Ab1DEVUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 17:20:31 -0400
+Received: (qmail 28608 invoked by uid 107); 5 Apr 2011 21:21:14 -0000
+Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Apr 2011 17:21:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Apr 2011 17:20:25 -0400
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170917>
 
-On Dienstag, 5. April 2011, Jonathan Nieder wrote:
-> Eric Blake wrote:
-> > @@ -70,7 +70,9 @@ PATTERN FORMAT
-> >   - An optional prefix '!' which negates the pattern; any
-> >     matching file excluded by a previous pattern will become
-> >     included again.  If a negated pattern matches, this will
-> > -   override lower precedence patterns sources.
-> > +   override lower precedence patterns sources.  However, a
-> > +   file negation does not override a path that has already
-> > +   been excluded by a directory match.
+Once upon a time, "git rev-parse ref@{9999999}" did not
+generate an error. Therefore when we got an invalid stash
+reference in "stash apply", we could end up not noticing
+until quite late.  Commit b0f0ecd (detached-stash: work
+around git rev-parse failure to detect bad log refs,
+2010-08-21) handled this by checking for the "Log for stash
+has only %d entries" warning on stderr when we validated the
+ref.
 
-I don't think this is the right place to explain this caveat. Here we describe 
-the format and behavior of the patterns in a rather formal manner.
+A few days later, e6eedc3 (rev-parse: exit with non-zero
+status if ref@{n} is not valid., 2010-08-24) fixed the
+original issue. That made the extra stderr test superfluous,
+but also introduced a new bug. Now the early call to:
 
-> > @@ -87,7 +89,8 @@ PATTERN FORMAT
-> >
-> >   - Otherwise, git treats the pattern as a shell glob suitable
-> >     for consumption by fnmatch(3) with the FNM_PATHNAME flag:
-> > -   wildcards in the pattern will not match a / in the pathname.
-> > +   wildcards in the pattern will not match a / in the pathname,
-> > +   and do not ignore files with a leading . in the pathname.
+  git rev-parse --symbolic "$@"
 
-I don't think this is correct. * matches .gitignore. I tried it.
+fails, but we don't notice the exit code. Worse, its empty
+output means we think the user didn't provide us a ref, and
+we try to apply stash@{0}.
 
-> > @@ -116,8 +119,11 @@ EXAMPLES
-> >      [...]
-> >      # Untracked files:
-> >      [...]
-> > +    #       Documentation/build
-> >      #       Documentation/foo.html
-> >      #       Documentation/gitignore.html
-> > +    #       build/log
-> > +    #       build/.file
-> >      #       file.o
-> >      #       lib.a
-> >      #       src/internal.o
-> > @@ -125,6 +131,10 @@ EXAMPLES
-> >      $ cat .git/info/exclude
-> >      # ignore objects and archives, anywhere in the tree.
-> >      *.[oa]
-> > +    # ignore files in the immediate child directory build,
-> > +    /build/*
-> > +    # except for the log.
-> > +    !/build/log
+This patch checks the rev-parse exit code and fails early in
+the revision parsing process. We can also get rid of the
+stderr test; as a bonus, this means that "stash apply" can
+now run under GIT_TRACE=1 properly.
 
-Doesn't this example give the false impression that you could do
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git-stash.sh     |   12 +-----------
+ t/t3903-stash.sh |    6 ++++++
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
-	/foo/*
-	!/foo/bar/baz
-
-and have foo/bar/baz not ignored? But it is still ignored.
-
-I propose a paragraph like this in the NOTES section:
-
---- 8< ---
-When a directory is ignored, it is not possible to un-ignore a single file 
-somewhere in the directory using another pattern. E.g., with the patterns
-
---------------
-/build/
-!/build/tests/results
---------------
-
-the file "build/tests/results" is still ignored because when a directory is 
-ignored, its contents are never investigated. In a situation where a few 
-exceptions in an otherwise ignored hierarchy are needed, the recommended 
-procedure is to specify to ignore the root of the hierarchy and then to 'git 
-add -f' the exceptional files. Subsequent changes to the files will not be 
-ignored.
---- 8< ---
-
--- Hannes
+diff --git a/git-stash.sh b/git-stash.sh
+index a305fb1..a5b1dc3 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -264,7 +264,7 @@ parse_flags_and_rev()
+ 	b_tree=
+ 	i_tree=
+ 
+-	REV=$(git rev-parse --no-flags --symbolic "$@" 2>/dev/null)
++	REV=$(git rev-parse --no-flags --symbolic "$@") || exit 1
+ 
+ 	FLAGS=
+ 	for opt
+@@ -310,16 +310,6 @@ parse_flags_and_rev()
+ 	IS_STASH_LIKE=t &&
+ 	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
+ 	IS_STASH_REF=t
+-
+-	if test "${REV}" != "${REV%{*\}}"
+-	then
+-		# maintainers: it would be better if git rev-parse indicated
+-		# this condition with a non-zero status code but as of 1.7.2.1 it
+-		# it did not. So, we use non-empty stderr output as a proxy for the
+-		# condition of interest.
+-		test -z "$(git rev-parse "$REV" 2>&1 >/dev/null)" || die "$REV does not exist in the stash log"
+-	fi
+-
+ }
+ 
+ is_stash_like()
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index f62aaf5..11077f0 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -37,6 +37,12 @@ test_expect_success 'parents of stash' '
+ 	test_cmp output expect
+ '
+ 
++test_expect_success 'applying bogus stash does nothing' '
++	test_must_fail git stash apply stash@{1} &&
++	echo 1 >expect &&
++	test_cmp expect file
++'
++
+ test_expect_success 'apply needs clean working directory' '
+ 	echo 4 > other-file &&
+ 	git add other-file &&
+-- 
+1.7.4.3.13.g0b769.dirty
