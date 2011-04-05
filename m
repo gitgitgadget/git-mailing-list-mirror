@@ -1,68 +1,71 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Git exhausts memory.
-Date: Tue, 5 Apr 2011 18:19:30 -0400
-Message-ID: <BANLkTim-6L1ZeaPT3tVWmyhj-rX1iURQ3g@mail.gmail.com>
-References: <BANLkTin=yUtzbZjs_92FHDfs62VFFuLHwg@mail.gmail.com>
- <alpine.LFD.2.00.1104021103130.28032@xanadu.home> <BANLkTikRGQ45xvWvisMhXi4Hu2r_0GS=Gg@mail.gmail.com>
- <alpine.LFD.2.00.1104031110150.28032@xanadu.home> <BANLkTinCwZG3+0Ss8o9ODptg=L8LKKN7aQ@mail.gmail.com>
- <BANLkTinU7x16yp+y-HW9UhkVn9SftOJCcA@mail.gmail.com> <4D9B47D2.6050909@ira.uka.de>
- <BANLkTikanSa3D1Bd8kSySPWQhcj1y8N+qA@mail.gmail.com> <7vzko4mw44.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1104051655310.28032@xanadu.home> <7vmxk4l4yb.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Holger Hellmuth <hellmuth@ira.uka.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alif Wahid <alif.wahid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 00:19:57 2011
+From: Eric Blake <eblake@redhat.com>
+Subject: [PATCHv3 1/2] Documentation: clarify fnmatch behavior in gitignore
+Date: Tue,  5 Apr 2011 16:17:57 -0600
+Message-ID: <1302041878-24426-1-git-send-email-eblake@redhat.com>
+Cc: eblake@redhat.com, j6t@kdbg.org, jrnieder@gmail.com,
+	gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 06 00:23:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7EbM-0004Ow-6k
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 00:19:56 +0200
+	id 1Q7Ef7-0006Xs-LM
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 00:23:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303Ab1DEWTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 18:19:51 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:52107 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753239Ab1DEWTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 18:19:50 -0400
-Received: by vws1 with SMTP id 1so675602vws.19
-        for <git@vger.kernel.org>; Tue, 05 Apr 2011 15:19:50 -0700 (PDT)
-Received: by 10.52.88.12 with SMTP id bc12mr304229vdb.243.1302041990206; Tue,
- 05 Apr 2011 15:19:50 -0700 (PDT)
-Received: by 10.52.166.133 with HTTP; Tue, 5 Apr 2011 15:19:30 -0700 (PDT)
-In-Reply-To: <7vmxk4l4yb.fsf@alter.siamese.dyndns.org>
+	id S1753264Ab1DEWXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 18:23:45 -0400
+Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:53004
+	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752770Ab1DEWXo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 18:23:44 -0400
+X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Apr 2011 18:23:44 EDT
+Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
+	by QMTA11.westchester.pa.mail.comcast.net with comcast
+	id TyGK1g00616LCl05ByJ5tQ; Tue, 05 Apr 2011 22:18:05 +0000
+Received: from office.redhat.com ([24.10.251.25])
+	by omta06.westchester.pa.mail.comcast.net with comcast
+	id TyJ01g00n0ZdyUg3SyJ4TY; Tue, 05 Apr 2011 22:18:05 +0000
+X-Mailer: git-send-email 1.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170930>
 
-On Tue, Apr 5, 2011 at 18:16, Junio C Hamano <gitster@pobox.com> wrote:
-> Nicolas Pitre <nico@fluxnic.net> writes:
->
->>> > This is only implemented inside of fast-import. pack-objects does not
->>> > honor this variable.
->>>
->>> Do you mean perhaps we should?
->>
->> Yes.
->>
->> Acked-by: Nicolas Pitre <nico@fluxnic.net>
->
-> I actually was somewhat unhappy to use uintmax_t type in the public header
-> for some reason I cannot quite explain (perhaps religious), and was hoping
-> somebody with more sanity than myself would stop me or show me a better
-> way.
+Make it clear that in a .gitignore file,
 
-unsigned long? Without even looking at the source, I bet that is the
-type used by pack-objects for the size member that you are comparing
-against.
+  *ignore
+
+matches (and therefore excludes) `.gitignore', even though the
+same glob does not match in the shell.
+
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+
+v3: separate fnmatch wording cleanup into its own patch
+
+ Documentation/gitignore.txt |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 2e7328b..9b1e5e1 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -86,9 +86,10 @@ PATTERN FORMAT
+    `.gitignore` file).
+
+  - Otherwise, git treats the pattern as a shell glob suitable
+-   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
+-   wildcards in the pattern will not match a / in the pathname.
+-   For example, "Documentation/{asterisk}.html" matches
++   for consumption by fnmatch(3) with the FNM_PATHNAME but not
++   FNM_PERIOD flags: wildcards in the pattern will match leading
++   . but not / in pathnames.  For example,
++   "Documentation/{asterisk}.html" matches "Documentation/.html" and
+    "Documentation/git.html" but not "Documentation/ppc/ppc.html"
+    or "tools/perf/Documentation/perf.html".
 
 -- 
-Shawn.
+1.7.4
