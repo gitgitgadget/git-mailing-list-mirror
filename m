@@ -1,129 +1,97 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 9/9] Documentation: update api-builtin and api-setup
-Date: Tue, 5 Apr 2011 18:32:31 +0700
-Message-ID: <BANLkTi=opkt7=BSCknKzN9396+urvVkhVQ@mail.gmail.com>
-References: <cover.1204130175.git.pclouds@gmail.com> <20080227164045.GA28142@laptop>
- <20110405080729.GA25921@elie>
+From: =?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg==?= <asedeno@MIT.EDU>
+Subject: Re: [PATCH 1/2] git-svn: Fix the commit-url config to be the base
+  url, just like the url config
+Date: Tue, 05 Apr 2011 11:11:06 -0400
+Message-ID: <4D9B310A.9020203@mit.edu>
+References: <1301944148-7950-1-git-send-email-asedeno@mit.edu> <1301944148-7950-2-git-send-email-asedeno@mit.edu> <20110404215227.GA4224@dcvr.yhbt.net> <F8E6CFA4-79F6-41AC-8266-09B3B46C8520@itasoftware.com> <20110404225442.GA9307@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 13:33:09 2011
+Content-Transfer-Encoding: 7bit
+Cc: James Y Knight <jknight@itasoftware.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Apr 05 17:16:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q74VR-0003BQ-1T
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 13:33:09 +0200
+	id 1Q77zP-0004Pp-Ti
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 17:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292Ab1DELdE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 07:33:04 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:52325 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752877Ab1DELdC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 07:33:02 -0400
-Received: by pxi2 with SMTP id 2so182110pxi.10
-        for <git@vger.kernel.org>; Tue, 05 Apr 2011 04:33:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=81dsoVhciUyHYUEdJmzBGgUIzO2/yjF6/CjDkHaN9cw=;
-        b=k5ZQ3PeJE9d4EKHc1Fq/nMK/5aD3MbSf/NY6zItyxtzXA1c2Arl6gzx4/IS6wposP3
-         DN9BFreYb0Tx9azJmKWb/0mKdxoYWIBx6KbSWQ+jQ0/ZC/AQYnQIP+rVx+6oda+8GHIb
-         yDxyJF5m11ZjVYURMkdI+Hy93U6ZhP+gh4hms=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=PAgSyu3gT5y+8WCBSUrTnU13+GE28Pr4SGxGK8Md1bHx37f0djnLIrFkpaggKXO457
-         pyPnlt0xfz13XK0t7bHQFiZ/YPxTLNz3m+Xim2285EjKbgbCNsxCdx5pSTeHv5ApEKA7
-         83wCupGoZ/w2WnDyarbn32QnjVf1Jq6mQ3A6I=
-Received: by 10.142.202.12 with SMTP id z12mr7334994wff.442.1302003182031;
- Tue, 05 Apr 2011 04:33:02 -0700 (PDT)
-Received: by 10.68.54.201 with HTTP; Tue, 5 Apr 2011 04:32:31 -0700 (PDT)
-In-Reply-To: <20110405080729.GA25921@elie>
+	id S1753923Ab1DEPQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 11:16:13 -0400
+Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:63778 "EHLO
+	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753255Ab1DEPQL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 11:16:11 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Apr 2011 11:16:11 EDT
+X-AuditID: 12074422-b7ccdae000003dab-b8-4d9b3110328b
+Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
+	by dmz-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 18.6C.15787.0113B9D4; Tue,  5 Apr 2011 11:11:12 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id p35FB86V024904
+	for <git@vger.kernel.org>; Tue, 5 Apr 2011 11:11:09 -0400
+Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.238.2.175])
+	(authenticated bits=0)
+        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p35FB6B4026420
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 5 Apr 2011 11:11:07 -0400 (EDT)
+Received: by darkmatter.mit.edu (Postfix, from userid 108)
+	id CA69014C010; Tue,  5 Apr 2011 11:11:06 -0400 (EDT)
+Received: from asedeno.corp.itasoftware.com (ita4fw1.itasoftware.com [63.107.91.99])
+	by darkmatter.mit.edu (Postfix) with ESMTPSA id A658B834727;
+	Tue,  5 Apr 2011 11:11:06 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110309 Icedove/3.1.9
+In-Reply-To: <20110404225442.GA9307@dcvr.yhbt.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixCmqrStgONvX4NZGZYuuK91MDowenzfJ
+	BTBGcdmkpOZklqUW6dslcGV8uPWateAcT0Xr2XbmBsaPnF2MnBwSAiYSj2esZoGwxSQu3FvP
+	1sXIxSEksI9Rov/xMmYI5ySjxLepG5kgnI9MEisenQNrERIoklj8+Ak7RGI3o8S2hbOZQRK8
+	AmoSs6+fBSri4GARUJW4tkwCJMwm4CKx5PE1NhBbVCBeYtnL2awQ5YISJ2c+AZspAlT+ccYL
+	sDHMAo4Sa9b+ZQSxhQWyJT5t2A510RdGiUtzDzCBJDgFjCS6dzWA7WIWUJdYP08IoldeYvvb
+	OcwTGIVnIVkxC6FqFpKqBYzMqxhlU3KrdHMTM3OKU5N1i5MT8/JSi3RN9XIzS/RSU0o3MYJC
+	m91FaQfjz4NKhxgFOBiVeHhXv5jpK8SaWFZcmXuIUZKDSUmU119/tq8QX1J+SmVGYnFGfFFp
+	TmrxIUYJDmYlEV7T17N8hXhTEiurUovyYVLSHCxK4rxzJNV9hQTSE0tSs1NTC1KLYLIaHBwC
+	Vw4emc0oxZKXn5eqJMHrYgC0QLAoNT21Ii0zpwShlImDE2QRD9AibpAa3uKCxNzizHSI/ClG
+	RSlx3mCQhABIIqM0D64XlpJeMYoDvSXMawdSxQNMZ3Ddr4AGMwENrlYG+aC4JBEhJdXAmH+b
+	f9HdiOPLtedmM2rutN1aJeL8uOWKrY2Y/uV7NzVOLkgKvnFg82LuihcVVjzf2Y0fHWe5Ub0w
+	pnazgZTB94D5yttNmnrTK25sv13LqG/iY5lrdVSvtfdVoeiF5wUs0ZLOcyV+v0h/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170882>
 
-2011/4/5 Jonathan Nieder <jrnieder@gmail.com>:
-> Hi,
->
-> On 2008-02-27, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
->> =C2=A0Documentation/technical/api-builtin.txt | =C2=A0 10 ++++
->> =C2=A0Documentation/technical/api-setup.txt =C2=A0 | =C2=A0 70 +++++=
-++++++++++++++++++++++----
->> =C2=A02 files changed, 72 insertions(+), 8 deletions(-)
->
-> I'm curious --- did anything ever come of this patch?
+On 04/04/2011 06:54 PM, Eric Wong wrote:
+> James Y Knight <jknight@itasoftware.com> wrote:
+>> > On Apr 4, 2011, at 5:52 PM, Eric Wong wrote:
+>>> > > $_commit_url is a user-specified parameter from the --commit-url switch.
+>>> > > If they want to override it it's the user's perogative.  It's not the
+>>> > > default and not commonly used.
+>> > 
+>> > In .git/config:
+>> > 
+>> > [svn-remote "svn"]
+>> >         url = http://hostname/svnrepo/
+>> >         commiturl = svn+ssh://hostname/svnrepo
+>> >         branches = branches/*:refs/remotes/origin/*
+>> >         fetch = trunk:refs/remotes/origin/master
+>> > 
+>> > The commiturl configuration is necessary so that the canonical URL is the http:// url (which can be used for read-only access), but if you want to commit, you have to use svn+ssh. This is a fairly common way of setting up access to an svn repository, so I'm surprised to be the first one to hit this issue.
+>> > 
+>> > Without the patch, you need:
+>> >         commiturl = svn+ssh://hostname/svnrepo/trunk
+>> > which of course then doesn't allow you to commit to other branches.
+> Originally --commit-url was only intended to be a command-line option
+> and for overriding specific cases and also for dealing with permission
+> mismatches (limited commit access to a branch, unlimited read access
+> to the repo).
+> 
+> Your patch breaks existing use cases, I think.
+> 
+> I think Junio's suggestion for a pushurl config which does what you
+> think commitUrl does would be what you're after...
 
-No idea. Perhaps nothing :) You should submit a new patch. Your
-description looks very good. Some comments..
+That sounds good to me. I'll submit an updated patch later today.
 
-> Simpler advice might be:
->
-> =C2=A0. If the command is builtin and always needs a repository,
-> =C2=A0 use the RUN_SETUP flag in the builtin table.
-> =C2=A0. If the command is builtin and can benefit from a repository,
-> =C2=A0 use RUN_SETUP_GENTLY.
-> =C2=A0. If you have to run a repository search later, call
-> =C2=A0 "setup_git_directory_gently" or the shortcut "setup_git_direct=
-ory"
-> =C2=A0 (which means "setup_git_directory_gently(NULL)").
-
-I would discourage people from calling setup_git_directory_* directly,
-at least for builtins. It complicates setup handling because there
-will be a short time since main() until that function where we are not
-sure if we can access repo. There's also alias handling which may set
-things up while the command may not want it
-
-I'd rather explicitly mark (RUN_SETUP_NO_THANKS?) commands that want
-to setup repo manually (few of them, init/clone and server commands).
-Then main() just goes ahead and calls setup_gently() at the very
-beginning. Setup hack around alias handling would be gone. If it ends
-up with a RUN_SETUP_NO_THANKS one, it undoes the setup. Hmm... I need
-to get back to this.
-
->> +
->> +Do not access git repository (even indirectly like `git_config()`) =
-before
->> +calling one of these functions. Otherwise you may encounter `die()`=
- if git
->> +fails to automatically find/setup a repository.
->
-> =C2=A0. If you try to access the git repository (even indirectly like
-> =C2=A0 `git_config()`) before calling setup_git_directory_gently then=
- git
-> =C2=A0 will look in the wrong place.
-> =C2=A0. When changing the value of the GIT_DIR environment variable, =
-call
-> =C2=A0 set_git_dir. =C2=A0setup_git_directory_gently does this alread=
-y.
-
-You can also check startup_info.have_repository before you access repo
-because setup*gently may find no repo.
-
-> Did we ever figure out what happens/should happen when the requested
-> worktree is not an ancestor of cwd?
-
-prefix is NULL, cwd is unchanged. Repo-wide commands should work fine.
-cwd-sensitive ones may cry.
-
->> +When working with pathspecs and prefix, you can use `get_pathspec()=
-`
->> +to auto prepend a given prefix to pathspecs. Other helpful function=
-s
->> +are `prefix_path()`, `prefix_filename()`
->
-> What do prefix_* do when there is no worktree?
-
-These functions are purely string manipulation. If there is no
-worktree, prefix would be NULL and be passed to the functions as such.
---=20
-Duy
+-Alejandro
