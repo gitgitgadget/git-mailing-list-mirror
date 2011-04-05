@@ -1,62 +1,59 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
-Subject: Re: rebase autosquash doesn't recognise a chain of fixups
-Date: Tue, 5 Apr 2011 18:03:36 +0200
-Message-ID: <20110405160336.GA20336@bee.lab.cmartin.tk>
-References: <20110405154100.GC16031@bee.lab.cmartin.tk>
- <4D9B39EB.9040208@lyx.org>
+From: Jeff Adamson <jwa@urbancode.com>
+Subject: Value size limits on git config files
+Date: Tue, 5 Apr 2011 12:29:31 -0400
+Message-ID: <BANLkTikknAiYr4y-it3+qZ3dnXE56dQBoQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Tue Apr 05 18:03:45 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 18:30:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q78jJ-0004c1-6O
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 18:03:45 +0200
+	id 1Q798u-0005ta-TD
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 18:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755146Ab1DEQDj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 12:03:39 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:39962 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753373Ab1DEQDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 12:03:38 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 5149946124;
-	Tue,  5 Apr 2011 18:03:26 +0200 (CEST)
-Received: (nullmailer pid 20420 invoked by uid 1000);
-	Tue, 05 Apr 2011 16:03:36 -0000
-Content-Disposition: inline
-In-Reply-To: <4D9B39EB.9040208@lyx.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753740Ab1DEQaG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 12:30:06 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:50165 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752339Ab1DEQaF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 12:30:05 -0400
+Received: by pzk9 with SMTP id 9so207534pzk.19
+        for <git@vger.kernel.org>; Tue, 05 Apr 2011 09:30:04 -0700 (PDT)
+Received: by 10.142.98.13 with SMTP id v13mr248332wfb.279.1302021004457; Tue,
+ 05 Apr 2011 09:30:04 -0700 (PDT)
+Received: by 10.68.56.71 with HTTP; Tue, 5 Apr 2011 09:29:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170886>
 
-On Tue, Apr 05, 2011 at 05:48:59PM +0200, Vincent van Ravesteijn wrote:
-> On 5-4-2011 17:41, Carlos Mart=EDn Nieto wrote:
-> >Hello,
-> >
-> >  Say I have the following commits:
-> >
-> >     5154127 fixup! fixup! one
-> >     0d130d8 fixup! one
-> >     0869d30 one
-> >
-> >because I keep executing `git commit -a --fixup HEAD`.
-> >
-> >Am I just too lazy and should look up the commit I want to fixup?
->=20
-> I would use 'git commit --amend -a' instead if I am already sure
-> that I want to squash my commit into the previous one.
+When trying to=A0incorporate=A0large aliases into my ~/.gitconfig file =
+via
+`git config --global "!$(cat myscript)"`, I determined that there
+appears to be a limit to the size of a value. =A0When exceeded, git
+prints out "fatal: bad config file line 82 in ~/.gitconfig". =A0I was
+able to strip enough comments and such from myscript that it then no
+longer invalidated the config once the value was less than 1024 chars.
+ (Minor aside, I am doing this as a small experiment to potentially
+aid in=A0synchronizing=A0all my git=A0behaviors=A0across machines by in=
+lining
+them into the config file. =A0Whether this is a good path to explore or
+not is a separate issue.)
 
- That does make more sense. I guess I was just too excited about
- discovering fixups :)
+My questions are:
+=A0 =A0Is this 1024 char limit on config file values documented somewhe=
+re?
+=A0 =A0Should it be considered a bug that git config can write out conf=
+ig
+files which it can not then read (e.g. it should be changed to either
+enforce the value-length limit during writing, or the parser updated
+to handle large values)?
 
-   cmn
+
+Thanks,
+Jeff
