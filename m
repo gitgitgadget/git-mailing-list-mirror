@@ -1,83 +1,127 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] stash: fix false positive in the invalid ref test.
-Date: Wed,  6 Apr 2011 09:21:13 +1000
-Message-ID: <1302045673-59982-1-git-send-email-jon.seymour@gmail.com>
-Cc: peff@peff.net, Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 06 01:22:04 2011
+Subject: Re: [PATCH 1/2] stash: fix accidental apply of non-existent stashes
+Date: Wed, 6 Apr 2011 09:23:12 +1000
+Message-ID: <BANLkTik4sJwvBsnS855YEV=1akpGqYaspA@mail.gmail.com>
+References: <20110405212025.GA3579@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 06 01:23:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7FZT-0004cf-6U
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 01:22:03 +0200
+	id 1Q7Fag-0005JI-4I
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 01:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532Ab1DEXV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 19:21:58 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52315 "EHLO
+	id S1752841Ab1DEXXO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 19:23:14 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61285 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751574Ab1DEXV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 19:21:57 -0400
-Received: by iyb14 with SMTP id 14so868482iyb.19
-        for <git@vger.kernel.org>; Tue, 05 Apr 2011 16:21:57 -0700 (PDT)
+	with ESMTP id S1751941Ab1DEXXM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 19:23:12 -0400
+Received: by iyb14 with SMTP id 14so869207iyb.19
+        for <git@vger.kernel.org>; Tue, 05 Apr 2011 16:23:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=xL651Dj6/NvmY88klK7zOG8KmDW0ShPABXuyhPCsQEg=;
-        b=cdPbeQk0pa0TVGQ+ZA+AjL70sotVe8G8wXsC0Eosci2j/aMPJza4Kmt0ENwxaLeEFL
-         +jf7lkTzwaTcZbvd74b/St4Ch6AoYGS+G0Qo9AlpiZDelBIowo9T5Ni7oUYf+nub27Lb
-         1Gl57VIZywLunf/dPgpzcLE6MPBX6xisg2syc=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3RMbdjI59526CrLh3K9P9UyMLOPrB4eWyz5R6ZVKOyE=;
+        b=MG7V42WWlcokd8Kh3c5s0BCDiPc8ug+CPxgJTioU2h2DKZnmWRPCMbg5kUGap5cZ+v
+         BThwsDDthPx9OGUvSkLUFmfpt/uMVExg9KcUUbwEI4ntqaEMHARrZ7ZquylJPjEr5IMO
+         MsE9FJOolf+XoHToA7MA1v9Jt2QabDZXWNQrs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=AllA8vxTMB/kxHf1IJ29jjwvcFxCf6FHTT513Cza2/zFGRlTvJmyW8aYxmAB33S7W6
-         a2098NamnPNqZmyLjiwG0oje0n2I7ZB1CkzLTF8Ktohw34XjenLv/kTK08oVw+mmacdw
-         PkTXyOY+X3IMTsR0lHCMsDyP8QlUjhv4iYpgo=
-Received: by 10.42.138.74 with SMTP id b10mr445451icu.367.1302045717341;
-        Tue, 05 Apr 2011 16:21:57 -0700 (PDT)
-Received: from localhost.localdomain (124-168-187-53.dyn.iinet.net.au [124.168.187.53])
-        by mx.google.com with ESMTPS id xi12sm4439935icb.6.2011.04.05.16.21.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Apr 2011 16:21:55 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.rc0.132.g4c19c
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UV9puChLz9uvxw5V5qOgdUvMOd35wMUAb2Wp361McaArQch9B7pXYSXvYBrZebEkn9
+         K/+GqPzH0aixLZ6k5Q0FTmjhpM9Hvhu9Plze2KAGhPeb0P6OxlqTBKbUKcmgpbyq5pqu
+         eKA26ypPYK2526AbcKfDeJVFr8C6i8JNc+ggU=
+Received: by 10.42.161.196 with SMTP id u4mr472145icx.11.1302045792311; Tue,
+ 05 Apr 2011 16:23:12 -0700 (PDT)
+Received: by 10.42.241.197 with HTTP; Tue, 5 Apr 2011 16:23:12 -0700 (PDT)
+In-Reply-To: <20110405212025.GA3579@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170939>
 
-Jeff King reported a problem with git stash apply incorrectly
-applying an invalid stash reference.
+On Wed, Apr 6, 2011 at 7:20 AM, Jeff King <peff@peff.net> wrote:
+> Signed-off-by: Jeff King <peff@peff.net>
+Acked-by: Jon Seymour <jon.seymour@gmail.com>
 
-There is an existing test that should have caught this, but
-the test itself was broken, resulting in a false positive.
+I've also submitted a patch that fixes the test that should have caught=
+ this.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- t/t3903-stash.sh |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+jon.
 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 11077f0..5263de7 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -543,11 +543,11 @@ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
- 	echo bar6 > file2 &&
- 	git add file2 &&
- 	git stash &&
--	test_must_fail git drop stash@{1} &&
--	test_must_fail git pop stash@{1} &&
--	test_must_fail git apply stash@{1} &&
--	test_must_fail git show stash@{1} &&
--	test_must_fail git branch tmp stash@{1} &&
-+	test_must_fail git stash drop stash@{1} &&
-+	test_must_fail git stash pop stash@{1} &&
-+	test_must_fail git stash apply stash@{1} &&
-+	test_must_fail git stash show stash@{1} &&
-+	test_must_fail git stash branch tmp stash@{1} &&
- 	git stash drop
- '
- 
--- 
-1.7.5.rc0.132.g4c19c
+> ---
+> =C2=A0git-stash.sh =C2=A0 =C2=A0 | =C2=A0 12 +-----------
+> =C2=A0t/t3903-stash.sh | =C2=A0 =C2=A06 ++++++
+> =C2=A02 files changed, 7 insertions(+), 11 deletions(-)
+>
+> diff --git a/git-stash.sh b/git-stash.sh
+> index a305fb1..a5b1dc3 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -264,7 +264,7 @@ parse_flags_and_rev()
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0b_tree=3D
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0i_tree=3D
+>
+> - =C2=A0 =C2=A0 =C2=A0 REV=3D$(git rev-parse --no-flags --symbolic "$=
+@" 2>/dev/null)
+> + =C2=A0 =C2=A0 =C2=A0 REV=3D$(git rev-parse --no-flags --symbolic "$=
+@") || exit 1
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0FLAGS=3D
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0for opt
+> @@ -310,16 +310,6 @@ parse_flags_and_rev()
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0IS_STASH_LIKE=3Dt &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test "$ref_stash" =3D "$(git rev-parse --s=
+ymbolic-full-name "${REV%@*}")" &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0IS_STASH_REF=3Dt
+> -
+> - =C2=A0 =C2=A0 =C2=A0 if test "${REV}" !=3D "${REV%{*\}}"
+> - =C2=A0 =C2=A0 =C2=A0 then
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # maintainers: it =
+would be better if git rev-parse indicated
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # this condition w=
+ith a non-zero status code but as of 1.7.2.1 it
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # it did not. So, =
+we use non-empty stderr output as a proxy for the
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # condition of int=
+erest.
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 test -z "$(git rev=
+-parse "$REV" 2>&1 >/dev/null)" || die "$REV does not exist in the stas=
+h log"
+> - =C2=A0 =C2=A0 =C2=A0 fi
+> -
+> =C2=A0}
+>
+> =C2=A0is_stash_like()
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index f62aaf5..11077f0 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -37,6 +37,12 @@ test_expect_success 'parents of stash' '
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_cmp output expect
+> =C2=A0'
+>
+> +test_expect_success 'applying bogus stash does nothing' '
+> + =C2=A0 =C2=A0 =C2=A0 test_must_fail git stash apply stash@{1} &&
+> + =C2=A0 =C2=A0 =C2=A0 echo 1 >expect &&
+> + =C2=A0 =C2=A0 =C2=A0 test_cmp expect file
+> +'
+> +
+> =C2=A0test_expect_success 'apply needs clean working directory' '
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo 4 > other-file &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git add other-file &&
+> --
+> 1.7.4.3.13.g0b769.dirty
+>
+>
