@@ -1,75 +1,154 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [BUG] git-svn: --no-metadata related bug
-Date: Wed, 6 Apr 2011 00:37:24 +0530
-Message-ID: <20110405190722.GB25644@kytes>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Documentation: enhance gitignore whitelist example
+Date: Tue, 5 Apr 2011 14:40:05 -0500
+Message-ID: <20110405194005.GA32427@elie>
+References: <1302032214-11438-1-git-send-email-eblake@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 05 21:08:29 2011
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Eric Blake <eblake@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 21:40:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Bc4-0008CD-Ik
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 21:08:28 +0200
+	id 1Q7C6t-00038d-Gb
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Apr 2011 21:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754508Ab1DETIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 15:08:23 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41364 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754453Ab1DETIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 15:08:22 -0400
-Received: by iyb14 with SMTP id 14so672578iyb.19
-        for <git@vger.kernel.org>; Tue, 05 Apr 2011 12:08:22 -0700 (PDT)
+	id S1753354Ab1DETkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 15:40:14 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:51666 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751278Ab1DETkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 15:40:12 -0400
+Received: by vxi39 with SMTP id 39so561994vxi.19
+        for <git@vger.kernel.org>; Tue, 05 Apr 2011 12:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=7eUH9BjXxe3/9WtYVgpPfUM7IzSxBIFAMGkxOdsAi1I=;
-        b=NptzRnL9bVIcJlMpJN1sKzVQDhRSM0Ni5px2L6zrteqD3k0EdidZAehW8MCxkWJuQP
-         9IUTGiyUjFo8dgjsCqOAjIjOtH5d7RcI+eJWlfnVkjQFGtSgVgFkiAHewpjD683QgSoq
-         IVDq+nobDq78QOJp/grkwDClBE4j1UrUxhCW4=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=CnE7Ltr341C86vGXGqiRyAkZO3007bEwiYz/e8XB1gA=;
+        b=kz0fmQXzqPk7V8h1FXMbnmkL2dpWuAmddLZ59eXmLoO3US6Yfoupsid9YiEBQerOen
+         K9P/nESpRdvdtyeszjqaYnMJlncAqsKQKG5q3iMcD11PHHrojDON/Dn3iSZwnc8DvXtB
+         DHDL2WqwFN2SeyT40rxZ+TSOrZJ0/sLOz8fno=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=XdUqb8f4qe0jfXvV3IB/5pMVSHIdKzB4dRI52HrqyLHXG/5n4cgzSlknURx1zVnfzX
-         sb+/c4R2VR3QOPTBVEDi8katbnjx/U4TB9aL7DXJGbW6uUdYvJIm8I92wWxgugIfQ9cd
-         leiRblwLG73g3Wq43Bjod7GyV6YtGTssChFuU=
-Received: by 10.42.97.70 with SMTP id m6mr88515icn.104.1302030502088;
-        Tue, 05 Apr 2011 12:08:22 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id i20sm4637674iby.31.2011.04.05.12.08.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Apr 2011 12:08:21 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=LxWNdm5gO0cqe7WS23nX7cCxp6Y59c29abHKTVrbqlCY5SLGd8BgA0Yfk6CTHMfCSQ
+         ItNUJvg91gyAy3OfGBg5NzAsaRsc+TPwHn4odqW0A5yMz421GqI3VMA2AZkdB1Zf9IYZ
+         4Uz96UT+1hsUFkdWpZshuy9gBInB7uZqINPFs=
+Received: by 10.220.95.139 with SMTP id d11mr15888vcn.261.1302032411670;
+        Tue, 05 Apr 2011 12:40:11 -0700 (PDT)
+Received: from elie (adsl-69-209-53-77.dsl.chcgil.ameritech.net [69.209.53.77])
+        by mx.google.com with ESMTPS id p29sm1508611vcr.7.2011.04.05.12.40.09
+        (version=SSLv3 cipher=OTHER);
+        Tue, 05 Apr 2011 12:40:10 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1302032214-11438-1-git-send-email-eblake@redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170906>
 
-Hi,
+Eric Blake wrote:
 
-This bug was reported by sh4rm4 on #git-devel a few minutes ago [1].
+> I was trying to whitelist a single file pattern in a directory
+> that I was otherwise content to ignore, but when I tried:
+> 
+> /m4/
+> !/m4/virt-*.m4
+> 
+> then 'git add' kept warning me that I had to use -f.  I finally
+> figured out that ignoring a directory is much different than ignoring
+> all files in a directory, when it comes to later negation patterns:
+> 
+> /m4/*
+> !/m4/virt-*.m4
+> 
+> Improving the documentation will help others learn from my mistake.
+> 
+> Signed-off-by: Eric Blake <eblake@redhat.com>
 
-Steps to reproduce:
-$ git svn clone --no-metadata -T trunk http://dxirc.googlecode.com/svn/
+Yes.
 
-Output:
-Found possible branch point: http://dxirc.googlecode.com/svn/trunk => http://dxirc.googlecode.com/svn/branches/0.20, 93
-Use of uninitialized value $u in substitution (s///) at /usr/lib/git/git-svn line 1733.
-Use of uninitialized value $u in concatenation (.) or string at /usr/lib/git/git-svn line 1733.
-refs/remotes/trunk: 'http://dxirc.googlecode.com/svn' not found in ''
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Comments:
-Works fine when '--no-metadata' is omitted.  It seems to be a simple
-variable-initialization bug.  I would have posted a patch, but I can't
-test it on my own system because git-svn doesn't work with the
-upstream Subversion-related libraries I have installed.
+Cc-ing Hannes, in case he has thoughts on how to explain this more
+intuitively.
 
-[1]: http://colabti.org/irclogger/irclogger_log/git-devel?date=2011-04-05#l76
-
--- Ram
+> ---
+>  Documentation/gitignore.txt |   19 +++++++++++++++++--
+>  1 files changed, 17 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index 2e7328b..2f49989 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -70,7 +70,9 @@ PATTERN FORMAT
+>   - An optional prefix '!' which negates the pattern; any
+>     matching file excluded by a previous pattern will become
+>     included again.  If a negated pattern matches, this will
+> -   override lower precedence patterns sources.
+> +   override lower precedence patterns sources.  However, a
+> +   file negation does not override a path that has already
+> +   been excluded by a directory match.
+> 
+>   - If the pattern ends with a slash, it is removed for the
+>     purpose of the following description, but it would only find
+> @@ -87,7 +89,8 @@ PATTERN FORMAT
+> 
+>   - Otherwise, git treats the pattern as a shell glob suitable
+>     for consumption by fnmatch(3) with the FNM_PATHNAME flag:
+> -   wildcards in the pattern will not match a / in the pathname.
+> +   wildcards in the pattern will not match a / in the pathname,
+> +   and do not ignore files with a leading . in the pathname.
+>     For example, "Documentation/{asterisk}.html" matches
+>     "Documentation/git.html" but not "Documentation/ppc/ppc.html"
+>     or "tools/perf/Documentation/perf.html".
+> @@ -116,8 +119,11 @@ EXAMPLES
+>      [...]
+>      # Untracked files:
+>      [...]
+> +    #       Documentation/build
+>      #       Documentation/foo.html
+>      #       Documentation/gitignore.html
+> +    #       build/log
+> +    #       build/.file
+>      #       file.o
+>      #       lib.a
+>      #       src/internal.o
+> @@ -125,6 +131,10 @@ EXAMPLES
+>      $ cat .git/info/exclude
+>      # ignore objects and archives, anywhere in the tree.
+>      *.[oa]
+> +    # ignore files in the immediate child directory build,
+> +    /build/*
+> +    # except for the log.
+> +    !/build/log
+>      $ cat Documentation/.gitignore
+>      # ignore generated html files,
+>      *.html
+> @@ -134,10 +144,15 @@ EXAMPLES
+>      [...]
+>      # Untracked files:
+>      [...]
+> +    #       Documentation/build
+>      #       Documentation/foo.html
+> +    #       build/log
+>      [...]
+>  --------------------------------------------------------------
+> 
+> +Note that using `!/build/log' works with an earlier `/build/*' but
+> +would have no effect if there were an earlier `/build/'.
+> +
+>  Another example:
+> 
+>  --------------------------------------------------------------
+> -- 
+> 1.7.4
+> 
