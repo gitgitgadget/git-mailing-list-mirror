@@ -1,88 +1,84 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH v2 2/3] blame: honor core.abbrev
-Date: Wed,  6 Apr 2011 11:20:51 +0900
-Message-ID: <1302056452-5387-2-git-send-email-namhyung@gmail.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH v2 1/3] blame: add --abbrev command line option
+Date: Tue, 5 Apr 2011 23:46:19 -0300
+Message-ID: <BANLkTim8bR1Z5sQCtVeqCJcCh_wuQxCvJQ@mail.gmail.com>
 References: <1302056452-5387-1-git-send-email-namhyung@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 04:21:27 2011
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Namhyung Kim <namhyung@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 04:46:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7IN2-0004UH-R2
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 04:21:25 +0200
+	id 1Q7IlF-0006TU-DO
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 04:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754627Ab1DFCVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 22:21:06 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:59876 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754310Ab1DFCVB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 22:21:01 -0400
-Received: by yia27 with SMTP id 27so415297yia.19
-        for <git@vger.kernel.org>; Tue, 05 Apr 2011 19:21:01 -0700 (PDT)
+	id S1754627Ab1DFCqU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2011 22:46:20 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44185 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754248Ab1DFCqU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2011 22:46:20 -0400
+Received: by iyb14 with SMTP id 14so996579iyb.19
+        for <git@vger.kernel.org>; Tue, 05 Apr 2011 19:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=cSQZx5zzroYLpvoyMErqLgm7znB/4gTo0MxZfaR/2Cs=;
-        b=GS8+cEdLDb5YOqta3VLauTjBqVNgF4qUjohMfVn0lM/mWbxD6LLH4X3vBoPRg4j6tN
-         61sxkK8517wkUpKTa81l+SAQ0XJL7WGrgas4B8rwb1dFYRaDhdfquoIVpVdX/F54ZGfo
-         6zHvVB/gU71PIXt/GWSrJaXqtmw2RMtYGXgD8=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6doNlV1MPE46J0Nx56Ce8aRw3PMA2YUKtYkTswUJJAQ=;
+        b=whNj8RsCSYV5tXXP0ESfiD9GQploR7Td8jys7GyxEKaylfTxciJ8JkjjUL0fZjxXNK
+         ntT0cEUbIgRYXr9OpRdCHefqH5mS8FtiSubRIcmPCkTyU/qiks9ZhyAapPQq2Fv5q6/t
+         qWmArGmsK0/GC8YnZkEu1mIsT+banb1rhyy5g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=h92OUuxfuniokZm90xc6kpfKdakqePnfv8dME++KMVL/vQmnngwPFiAotq2KufcoBF
-         mtUs8Jx3U81/wgA0errTsovZ/x9dmB1o5N+qB/yYfnxjdOyHFCZ0Hw+SDVfTERj0HbxM
-         aW/TfuBh/7Bqek/NYsWMF4N3RoR1Ii/yoERxI=
-Received: by 10.150.147.15 with SMTP id u15mr1396640ybd.327.1302056461265;
-        Tue, 05 Apr 2011 19:21:01 -0700 (PDT)
-Received: from localhost.localdomain ([118.176.76.173])
-        by mx.google.com with ESMTPS id p23sm443416ybk.24.2011.04.05.19.20.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Apr 2011 19:21:00 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VbyROqSa22kURAHxcJRVSbv36mSZIZA0fj3zFjt9SAY2OQD4tXHHuTFYjkcanbQwHH
+         S3pxfGPKA08TbNcbpBaYs90oY44aMuqotbT3t6jVOCx5QRwbrJWPU0xktTQGrdmJcgdQ
+         DEPc1QDr3SDIN5fuoYQj9mBQ9n21ydKiViqPM=
+Received: by 10.43.69.130 with SMTP id yc2mr687638icb.298.1302057979137; Tue,
+ 05 Apr 2011 19:46:19 -0700 (PDT)
+Received: by 10.42.164.3 with HTTP; Tue, 5 Apr 2011 19:46:19 -0700 (PDT)
 In-Reply-To: <1302056452-5387-1-git-send-email-namhyung@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170950>
 
-If user sets config.abbrev option, use it as if --abbrev was given.
-This is the default value and user can override different abbrev
-length by specifing --abbrev=N command line option.
+On Tue, Apr 5, 2011 at 11:20 PM, Namhyung Kim <namhyung@gmail.com> wrot=
+e:
+> Signed-off-by: Namhyung Kim <namhyung@gmail.com>
+> ---
+> =C2=A0builtin/blame.c | =C2=A0 =C2=A04 +++-
+> =C2=A01 files changed, 3 insertions(+), 1 deletions(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index f6b03f7..253b480 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -41,6 +41,7 @@ static int reverse;
+> =C2=A0static int blank_boundary;
+> =C2=A0static int incremental;
+> =C2=A0static int xdl_opts;
+> +static int abbrev =3D 8;
+>
+> =C2=A0static enum date_mode blame_date_mode =3D DATE_ISO8601;
+> =C2=A0static size_t blame_date_width;
+> @@ -1670,7 +1671,7 @@ static void emit_other(struct scoreboard *sb, s=
+truct blame_entry *ent, int opt)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0cp =3D nth_line(sb, ent->lno);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0for (cnt =3D 0; cnt < ent->num_lines; cnt+=
++) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0char ch;
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int length =3D (op=
+t & OUTPUT_LONG_OBJECT_NAME) ? 40 : 8;
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int length =3D (op=
+t & OUTPUT_LONG_OBJECT_NAME) ? 40 : abbrev;
 
-Signed-off-by: Namhyung Kim <namhyung@gmail.com>
----
- builtin/blame.c |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 253b480..4639788 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -41,7 +41,7 @@ static int reverse;
- static int blank_boundary;
- static int incremental;
- static int xdl_opts;
--static int abbrev = 8;
-+static int abbrev = -1;
- 
- static enum date_mode blame_date_mode = DATE_ISO8601;
- static size_t blame_date_width;
-@@ -2347,6 +2347,11 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- parse_done:
- 	argc = parse_options_end(&ctx);
- 
-+	if (abbrev == -1)
-+		abbrev = default_abbrev;
-+	/* one more abbrev length is needed for the boundary commit */
-+	abbrev++;
-+
- 	if (revs_file && read_ancestry(revs_file))
- 		die_errno("reading graft file '%s' failed", revs_file);
- 
--- 
-1.7.4
+Should this 40 be a constant?
