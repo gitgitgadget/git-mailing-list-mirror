@@ -1,133 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] add--interactive.perl: factor out repeated --recount option
-Date: Wed, 06 Apr 2011 14:31:53 -0700
-Message-ID: <7vy63ngj7a.fsf_-_@alter.siamese.dyndns.org>
-References: <7v4o6fg29j.fsf@alter.siamese.dyndns.org>
- <BANLkTimh+--iRNEpr2XOFf4jXoVhmHUnoA@mail.gmail.com>
- <7voc4ji23p.fsf@alter.siamese.dyndns.org>
- <7v4o6bi1lm.fsf_-_@alter.siamese.dyndns.org>
+From: Jeff King <peff@github.com>
+Subject: Re: [RFC] upload-pack deadlock
+Date: Wed, 6 Apr 2011 17:33:33 -0400
+Message-ID: <20110406213333.GA18481@sigill.intra.peff.net>
+References: <20110404053626.GA26529@sigill.intra.peff.net>
+ <7v8vvnjnyg.fsf@alter.siamese.dyndns.org>
+ <20110406175413.GA8205@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 06 23:32:21 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
+	Aman Gupta <aman@github.com>, Ryan Tomayko <ryan@github.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 23:33:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7aKn-0000xd-Jw
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 23:32:17 +0200
+	id 1Q7aM9-0001uj-KU
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 23:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274Ab1DFVcF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 17:32:05 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60441 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932225Ab1DFVcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 17:32:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7EC6B53EE;
-	Wed,  6 Apr 2011 17:33:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DvDwGlVqpac7Dw16JXP1Ob2/6EQ=; b=TzWIRc
-	dLqmWrOCtzOSmG2GuxqDOSNcpCK9Pak8FhgLUL/CrIdb952DDYxHiyAYyIBPPRL7
-	BjApcHnMAZ1zmfgfSJvDf4zZvmOMDcG9pK4rWvnx2xpHUsUX2ACjYR49mA2O+ZMl
-	znBkjZ9AdR1izaI1Y1Ur1BY26AlBcNLoNvi1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hx0k6aUy2Mzmp8vIK95zHua4S/LOmuT5
-	iRF/9Hl3v2CcMu2yZ/+j0/+wYpW0nKRI7CUzTCq6cAUl792zhumsadf2zyWga3M/
-	52JE+biZejy/6lS5f5AKwAGzeHbcb+yOCjXOVuz693CYFjlTCwqGhzyMIpDzXD37
-	pm/w40Qy62I=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C77B53ED;
-	Wed,  6 Apr 2011 17:33:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3938953EC; Wed,  6 Apr 2011
- 17:33:49 -0400 (EDT)
-In-Reply-To: <7v4o6bi1lm.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 06 Apr 2011 13:09:09 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 91C0F7C4-6095-11E0-AF62-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932332Ab1DFVdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 17:33:37 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43531
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932330Ab1DFVdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 17:33:36 -0400
+Received: (qmail 9469 invoked by uid 107); 6 Apr 2011 21:34:23 -0000
+Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Apr 2011 17:34:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Apr 2011 17:33:33 -0400
+Content-Disposition: inline
+In-Reply-To: <20110406175413.GA8205@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171018>
 
-Depending on the direction and the target of patch application, we would
-need to pass --cached and --reverse to underlying "git apply".  Also we
-only pass --check when we are not applying but just checking.
+On Wed, Apr 06, 2011 at 01:54:13PM -0400, Jeff King wrote:
 
-But we always pass --recount since 8cbd431 (git-add--interactive: replace
-hunk recounting with apply --recount, 2008-07-02).  Instead of repeating
-the same --recount over and over again, move it to a single place that
-actually runs the command, namely, "run_git_apply" subroutine.
+> So I am wondering if we could simply drop the fflush(NULL) entirely in
+> the start_command case. And in the start_async case, move it inside the
+> NO_PTHREADS case.
+> 
+> I guess the fflush does do one other thing; it makes sure that output on
+> a single descriptor is ordered sensibly. And we would be losing that.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+After reading 13af8cb (start_command: flush buffers in the WIN32 code
+path as well, 2011-02-04), I think dropping the fflush is a bad idea.
+Let's do the simple and safe fix, and if this type of problem actually
+comes up more than once, then I'll think about over-engineering an
+abstraction to fix it. :)
+
+Here it is with a nice commit message.
+
+-- >8 --
+Subject: [PATCH] upload-pack: start pack-objects before async rev-list
+
+In a pthread-enabled version of upload-pack, there's a race condition
+that can cause a deadlock on the fflush(NULL) we call from run-command.
+
+What happens is this:
+
+  1. Upload-pack is informed we are doing a shallow clone.
+
+  2. We call start_async() to spawn a thread that will generate rev-list
+     results to feed to pack-objects. It gets a file descriptor to a
+     pipe which will eventually hook to pack-objects.
+
+  3. The rev-list thread uses fdopen to create a new output stream
+     around the fd we gave it, called pack_pipe.
+
+  4. The thread writes results to pack_pipe. Outside of our control,
+     libc is doing locking on the stream. We keep writing until the OS
+     pipe buffer is full, and then we block in write(), still holding
+     the lock.
+
+  5. The main thread now uses start_command to spawn pack-objects.
+     Before forking, it calls fflush(NULL) to flush every stdio output
+     buffer. It blocks trying to get the lock on pack_pipe.
+
+And we have a deadlock. The thread will block until somebody starts
+reading from the pipe. But nobody will read from the pipe until we
+finish flushing to the pipe.
+
+To fix this, we swap the start order: we start the
+pack-objects reader first, and then the rev-list writer
+after. Thus the problematic fflush(NULL) happens before we
+even open the new file descriptor (and even if it didn't,
+flushing should no longer block, as the reader at the end of
+the pipe is now active).
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+And the result is one line shorter, so it _must_ be good.
 
- * Applies on top of 9d15860.  I tried to be careful but may have missed
-   some calls.  Extra set of eyeballs appreciated.
+ upload-pack.c |   23 +++++++++++------------
+ 1 files changed, 11 insertions(+), 12 deletions(-)
 
- git-add--interactive.perl |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index a329c5a..6a439db 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -705,7 +705,7 @@ sub add_untracked_cmd {
- sub run_git_apply {
- 	my $cmd = shift;
- 	my $fh;
--	open $fh, '| git ' . $cmd;
-+	open $fh, '| git ' . $cmd . " --recount";
- 	print $fh @_;
- 	return close $fh;
- }
-@@ -1050,7 +1050,7 @@ sub edit_hunk_manually {
+diff --git a/upload-pack.c b/upload-pack.c
+index bba053f..ce5cbbe 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -157,15 +157,8 @@ static void create_pack_file(void)
+ 	const char *argv[10];
+ 	int arg = 0;
  
- sub diff_applies {
- 	my $fh;
--	return run_git_apply($patch_mode_flavour{APPLY_CHECK} . ' --recount --check',
-+	return run_git_apply($patch_mode_flavour{APPLY_CHECK} . ' --check',
- 			     map { @{$_->{TEXT}} } @_);
- }
+-	if (shallow_nr) {
+-		memset(&rev_list, 0, sizeof(rev_list));
+-		rev_list.proc = do_rev_list;
+-		rev_list.out = -1;
+-		if (start_async(&rev_list))
+-			die("git upload-pack: unable to fork git-rev-list");
+-		argv[arg++] = "pack-objects";
+-	} else {
+-		argv[arg++] = "pack-objects";
++	argv[arg++] = "pack-objects";
++	if (!shallow_nr) {
+ 		argv[arg++] = "--revs";
+ 		if (create_full_pack)
+ 			argv[arg++] = "--all";
+@@ -183,7 +176,7 @@ static void create_pack_file(void)
+ 	argv[arg++] = NULL;
  
-@@ -1139,7 +1139,7 @@ sub help_patch_cmd {
+ 	memset(&pack_objects, 0, sizeof(pack_objects));
+-	pack_objects.in = shallow_nr ? rev_list.out : -1;
++	pack_objects.in = -1;
+ 	pack_objects.out = -1;
+ 	pack_objects.err = -1;
+ 	pack_objects.git_cmd = 1;
+@@ -192,8 +185,14 @@ static void create_pack_file(void)
+ 	if (start_command(&pack_objects))
+ 		die("git upload-pack: unable to fork git-pack-objects");
  
- sub apply_patch {
- 	my $cmd = shift;
--	my $ret = run_git_apply $cmd . ' --recount', @_;
-+	my $ret = run_git_apply $cmd, @_;
- 	if (!$ret) {
- 		print STDERR @_;
- 	}
-@@ -1148,17 +1148,17 @@ sub apply_patch {
- 
- sub apply_patch_for_checkout_commit {
- 	my $reverse = shift;
--	my $applies_index = run_git_apply 'apply '.$reverse.' --cached --recount --check', @_;
--	my $applies_worktree = run_git_apply 'apply '.$reverse.' --recount --check', @_;
-+	my $applies_index = run_git_apply 'apply '.$reverse.' --cached --check', @_;
-+	my $applies_worktree = run_git_apply 'apply '.$reverse.' --check', @_;
- 
- 	if ($applies_worktree && $applies_index) {
--		run_git_apply 'apply '.$reverse.' --cached --recount', @_;
--		run_git_apply 'apply '.$reverse.' --recount', @_;
-+		run_git_apply 'apply '.$reverse.' --cached', @_;
-+		run_git_apply 'apply '.$reverse, @_;
- 		return 1;
- 	} elsif (!$applies_index) {
- 		print colored $error_color, "The selected hunks do not apply to the index!\n";
- 		if (prompt_yesno "Apply them to the worktree anyway? ") {
--			return run_git_apply 'apply '.$reverse.' --recount', @_;
-+			return run_git_apply 'apply '.$reverse, @_;
- 		} else {
- 			print colored $error_color, "Nothing was applied.\n";
- 			return 0;
+-	/* pass on revisions we (don't) want */
+-	if (!shallow_nr) {
++	if (shallow_nr) {
++		memset(&rev_list, 0, sizeof(rev_list));
++		rev_list.proc = do_rev_list;
++		rev_list.out = pack_objects.in;
++		if (start_async(&rev_list))
++			die("git upload-pack: unable to fork git-rev-list");
++	}
++	else {
+ 		FILE *pipe_fd = xfdopen(pack_objects.in, "w");
+ 		if (!create_full_pack) {
+ 			int i;
 -- 
-1.7.5.rc1
+1.7.4.3.13.g0b769.dirty
