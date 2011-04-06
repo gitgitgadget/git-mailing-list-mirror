@@ -1,95 +1,87 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/4] Documentation: Allow custom diff tools to be specified in 'diff.tool'
-Date: Wed,  6 Apr 2011 15:27:33 +0530
-Message-ID: <1302083854-2448-4-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 1/4] Documentation: Add filter.<driver>.* to config
+Date: Wed,  6 Apr 2011 15:27:31 +0530
+Message-ID: <1302083854-2448-2-git-send-email-artagnon@gmail.com>
 References: <1301654600-8901-1-git-send-email-artagnon@gmail.com>
  <1302083854-2448-1-git-send-email-artagnon@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 06 11:59:15 2011
+X-From: git-owner@vger.kernel.org Wed Apr 06 11:59:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7PW7-00062s-3d
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 11:59:15 +0200
+	id 1Q7PW6-00062s-HM
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 11:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755509Ab1DFJ67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 05:58:59 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44390 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755472Ab1DFJ64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 05:58:56 -0400
-Received: by mail-iy0-f174.google.com with SMTP id 14so1266731iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 02:58:55 -0700 (PDT)
+	id S1755496Ab1DFJ65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 05:58:57 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56041 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755263Ab1DFJ6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 05:58:47 -0400
+Received: by iwn34 with SMTP id 34so1276921iwn.19
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 02:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=ijs3RDeA5mlyvMre2jtswk5zHgitlK9sIR2vYRC6Jek=;
-        b=QVCqJYZJRihsaoT+sZvzVJ74eoec8uDNe0+mC54R53SjLXoiqhuWobo4zhgYdkHvw5
-         jP6FkVOK3xYmKtZ7JPASSI/PcuUwDf/YndzZFkArUtN5DW1KaS/wNR0oBdazTTdAH9R/
-         0uOuN8md3G6UyDeq/4pvk5z2vuGiTcIjHuAVw=
+        bh=lvgnsRzH4XXdc4B3aXUIDrFD1GH2aUEcd3qiQx42aHk=;
+        b=CIWk2jgGlJul6QapRcKSLAnMqXifwFrwjscvsT9KjoBcMrhi06dkcMvbg01qA6N+AE
+         cZ8B1E2kj0lpZ60cboURqxyXSh0Ot0/bHVRvrEr08INjHOv7OPeDKFxXmeKIYWcrAjmm
+         RED1XYdjXmHrspYFM19RJeFL8PjFbFTwsYNBE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BQAY4Qci6+TuiVpeRvoGJ2ftYHnzaAQYNA33kW1JJ7FXIV1Ah67wfbY3TpoBj8Zy6J
-         ZUIBD65I/xaefRaKUB0Bb4+uerBAdbbFPVdwM78a6uF2F/uqxChGLBOGg1r8toUpkEne
-         dZxpwtHkel+oSAGAiPNjk97mSUVfgdt1Kck04=
-Received: by 10.43.62.72 with SMTP id wz8mr1188264icb.350.1302083935878;
-        Wed, 06 Apr 2011 02:58:55 -0700 (PDT)
+        b=QstQpYAYJ4rRvaRXbM2v6DoYimfHqi72D2FCnKVZxQN+CiUjrz5XdgOFsxZMJMrw3w
+         MOc14fN4Gf+frKRFS+kshlpUmSyw/AN1MX0OtITTBYCkYiTvDgeVbzjBrcSkBn8KPADz
+         NLIYjoHDYZKQAbYsgKfGt8fGrU+qaq2u1UBqg=
+Received: by 10.43.62.13 with SMTP id wy13mr1126682icb.360.1302083927286;
+        Wed, 06 Apr 2011 02:58:47 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id c1sm318477ibe.51.2011.04.06.02.58.51
+        by mx.google.com with ESMTPS id c1sm318477ibe.51.2011.04.06.02.58.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 02:58:54 -0700 (PDT)
+        Wed, 06 Apr 2011 02:58:45 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 In-Reply-To: <1302083854-2448-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170961>
 
-Apart from the list of "valid values", 'diff.tool' can take any value,
-provided there is a corresponding 'difftool.<tool>.cmd' option.  Also,
-describe this option just before the 'difftool.*' options.
+Although the gitattributes page contains comprehensive information
+about these configuration options, they should be included in the
+config documentation for completeness.
 
 Helped-by: Michael J Gruber <git@drmicha.warpmail.net>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Documentation/diff-config.txt |   13 +++++++------
- 1 files changed, 7 insertions(+), 6 deletions(-)
+ Documentation/config.txt |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 0796d5e..f1468df 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -55,12 +55,6 @@ diff.suppressBlankEmpty::
- 	A boolean to inhibit the standard behavior of printing a space
- 	before each empty output line. Defaults to false.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 8ea55d4..654a3b8 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -973,6 +973,15 @@ format.signoff::
+     the rights to submit this work under the same open source license.
+     Please see the 'SubmittingPatches' document for further discussion.
  
--diff.tool::
--	Controls which diff tool is used.  `diff.tool` overrides
--	`merge.tool` when used by linkgit:git-difftool[1] and has
--	the same valid values as `merge.tool` minus "tortoisemerge"
--	and plus "kompare".
--
- diff.<driver>.command::
- 	The custom diff driver command.  See linkgit:gitattributes[5]
- 	for details.
-@@ -88,3 +82,10 @@ diff.<driver>.wordregex::
- diff.<driver>.cachetextconv::
- 	Set this option to true to make the diff driver cache the text
- 	conversion outputs.  See linkgit:gitattributes[5] for details.
++filter.<driver>.clean::
++	The command which is used to convert the contents of worktree
++	file upon checkin.  See linkgit:gitattributes[5] for details.
 +
-+diff.tool::
-+	The diff tool to used by linkgit:git-difftool[1].  This option
-+	overrides `merge.tool`, and has the same valid values as
-+	`merge.tool` minus "tortoisemerge" and plus "kompare".  Any
-+	other value is treated as a custom diff tool, and there must
-+	be a corresponding 'difftool.<tool>.cmd' option.	
++filter.<driver>.smudge::
++	The command which is used to convert the blob object to
++	worktree file upon checkout.  See linkgit:gitattributes[5] for
++	details.
++
+ gc.aggressiveWindow::
+ 	The window size parameter used in the delta compression
+ 	algorithm used by 'git gc --aggressive'.  This defaults
 -- 
 1.7.4.rc1.7.g2cf08.dirty
