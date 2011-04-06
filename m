@@ -1,91 +1,77 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: Re: [PATCH v2 1/3] blame: add --abbrev command line option
-Date: Wed, 06 Apr 2011 20:06:37 +0900
-Message-ID: <1302087997.1509.0.camel@leonhard>
-References: <1302056452-5387-1-git-send-email-namhyung@gmail.com>
-	 <7vy63ojced.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: blobs (once more)
+Date: Wed, 06 Apr 2011 13:06:21 +0200
+Message-ID: <vpqmxk3prki.fsf@bauges.imag.fr>
+References: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
 X-From: git-owner@vger.kernel.org Wed Apr 06 13:06:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7QZa-00065x-6u
+	id 1Q7QZZ-00065x-Jj
 	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 13:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755212Ab1DFLGq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 07:06:46 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41941 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752321Ab1DFLGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 07:06:45 -0400
-Received: by iyb14 with SMTP id 14so1309775iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 04:06:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
-         :content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=QFD/lZ4S9wbqyNH/d0NDAWyrpiyxkm9X6eMvbPgnLDs=;
-        b=uMrkQORdY4+xP+8+gKzhoTO0vI+IFfpPAUXPm4OfBQwfbLgzaE+4uDczhJeeaG+tl8
-         6BQPREqJchrzyUfPImSzj9rPPHCg+DqMs/3feaTcZhnB7zYfdfSmoWqimOVR6wB7X5Pw
-         /QIl5ilu3lCAfP+z3t6PnnFr/9x4lYOgBzElU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=phzAaUgejX+cxQnZ0AFbsbmWbId3VyQz1B1MVy7n9vnpxWIOFWEKEmyvNBpjLGfHIS
-         hDPktWE/rrVc3DVXASNjfxVXRLYlxMVwZW+cSPz2HuP9YLGOsP0USKwAEDiC0gulaoPu
-         oFICCmOYTdt8gK0Qj4o5K9c1yfK7UsRtciPlw=
-Received: by 10.231.28.164 with SMTP id m36mr332934ibc.163.1302088005083;
-        Wed, 06 Apr 2011 04:06:45 -0700 (PDT)
-Received: from [118.176.76.173] ([118.176.76.173])
-        by mx.google.com with ESMTPS id g16sm357504ibb.37.2011.04.06.04.06.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 04:06:43 -0700 (PDT)
-In-Reply-To: <7vy63ojced.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.28.3 
+	id S1754965Ab1DFLGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 07:06:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33043 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754808Ab1DFLGh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 07:06:37 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p36B6LPT026032
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 6 Apr 2011 13:06:21 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Q7QZ4-0001GO-6W; Wed, 06 Apr 2011 13:06:22 +0200
+In-Reply-To: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com> (Pau Garcia
+	i. Quiles's message of "Wed, 6 Apr 2011 10:09:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 06 Apr 2011 13:06:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p36B6LPT026032
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1302692784.09773@F9y/181wJCoXYr4HXerxgw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170964>
 
-2011-04-05 (=ED=99=94), 20:18 -0700, Junio C Hamano:
-> Thanks.
->=20
-> As the meaning of the option changes between 1/3 and 2/3, let's squas=
-h
-> these three patches into a single commit.  Here is what I've tentativ=
-ely
-> queued.
->=20
+Pau Garcia i Quiles <pgquiles@elpauer.org> writes:
 
-Great! Thanks.
+> I have read about:
+> - submodules + using different repositories once one "blob repository"
+> grows too much. This will be probably rejected because it is quite
+> contrived.
+> - git-annex (does not get the files in when cloning, pulling, checking
+> out; you need to do it manually)
+> - git-media (same as git-annex)
+> - boar (no, we do not want to use a VCS for binaries in addition to git)
+> - and a few more
+>
+> So far the only good solution seems to be git-bigfiles but it's still
+> in development.
 
+This seems to be the hot topic of the moment in Git ;-). Loot at the
+mailing-list's archive, like
 
-> commit 84393bfd731c435120dc1dda63432a70124821cb
-> Author: Namhyung Kim <namhyung@gmail.com>
-> Date:   Wed Apr 6 11:20:50 2011 +0900
->=20
->     blame: add --abbrev command line option and make it honor core.ab=
-brev
->    =20
->     If user sets config.abbrev option, use it as if --abbrev was give=
-n.  This
->     is the default value and user can override different abbrev lengt=
-h by
->     specifying the --abbrev=3DN command line option.
->    =20
->     Signed-off-by: Namhyung Kim <namhyung@gmail.com>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+http://thread.gmane.org/gmane.comp.version-control.git/170649
+https://git.wiki.kernel.org/index.php/SoC2011Ideas#Better_big-file_support
 
+there may be a GSoC on the topic. I don't think there's a really good
+solution for you right now (but I didn't really look closely), but the
+situation is improving.
 
---=20
-Regards,
-Namhyung Kim
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
