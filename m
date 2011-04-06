@@ -1,95 +1,65 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/4] Documentation: Allow custom diff tools to be specified in 'diff.tool'
-Date: Thu,  7 Apr 2011 00:16:50 +0530
-Message-ID: <1302115611-1950-4-git-send-email-artagnon@gmail.com>
-References: <1302083854-2448-1-git-send-email-artagnon@gmail.com>
- <1302115611-1950-1-git-send-email-artagnon@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 06 20:48:42 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [RFC] upload-pack deadlock
+Date: Wed, 6 Apr 2011 21:15:31 +0200
+Message-ID: <BANLkTi=5WgfLoBU1ZXqyEkoBf_pQu2QKOA@mail.gmail.com>
+References: <20110404053626.GA26529@sigill.intra.peff.net> <7v8vvnjnyg.fsf@alter.siamese.dyndns.org>
+ <20110406175413.GA8205@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Aman Gupta <aman@github.com>, Ryan Tomayko <ryan@github.com>
+To: Jeff King <peff@github.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 21:16:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7XmQ-0007ED-LU
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 20:48:39 +0200
+	id 1Q7YCs-0000eZ-49
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 21:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756583Ab1DFSsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 14:48:20 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63758 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756572Ab1DFSsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 14:48:12 -0400
-Received: by mail-iy0-f174.google.com with SMTP id 14so1697854iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 11:48:12 -0700 (PDT)
+	id S1756634Ab1DFTPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 15:15:53 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54974 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751879Ab1DFTPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 15:15:52 -0400
+Received: by bwz15 with SMTP id 15so1421351bwz.19
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 12:15:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=4gZq2W1gwT9xd1EGF0NkrMYKqc/OijhN4To4yCDP+cI=;
-        b=xO5Yg+iBtoHuRBYkdD/aY5POiSRdDNyoKuEQLCEIS7T0PxqdPwUThldtAUiAJKyvRF
-         +JvjEc6uEHJfubZ1esXkqJHDU6JcBszIhXQ6KxlEvRKs1PZV2aNksIkQLAJ3ys63itr4
-         zUqpElz2gfiPkqa6XfltUr+wtcUCKKg+gWlrk=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=l6E/+/7KpZGSrPcP2Sws2pjzENmM67HigrJM6ceC4Dw=;
+        b=Y5Gg9sKSPt33J7zuIpcRkw0+jSX0/XL+sfTA9ghbwfNNBEjP4TaRHDaAG/57MLB3RP
+         1dwIV2eXOqbYjEJ27sz5InOHoLYt2unRedsZHRmkJI0QL1tfJy/OFSNMiq+MzwLY4rA2
+         9Os/y4sM82h7pQHl3U/gpCAst+DExyh/v+Plk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=N31TFLEtl2PwYFlC6tWYOjp5ROZ+ptayPPWJt2LAoX1lJkGlk9/PAADPQsrzOeenYT
-         bT8zp+xdKdykyAOPh8Et5E2fo6Mnd0hQFgucaU8u2otmi+JfK5FUv4cCtFPSEFH9AiII
-         0bQ4512c6NJVu9S3KmUUuZREoLtjKiggY4AP0=
-Received: by 10.42.149.132 with SMTP id w4mr2137166icv.267.1302115691981;
-        Wed, 06 Apr 2011 11:48:11 -0700 (PDT)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id vr5sm495851icb.0.2011.04.06.11.48.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 11:48:10 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
-In-Reply-To: <1302115611-1950-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=FZtRxhMRO612EV/eTIjjV1aoEUhSmASiBvqxfcB5SuVrOItu39WGzDPj/841Od65qb
+         RgexY6NDd6coTzmaQtXAmzjDO7bmzQt2vMpusqjfSLzIuAR1yP36ByPWY11yQbLJrEs/
+         R2Smwf8AwnYp1XDXX79sH1tHwAaFVpF3j87JM=
+Received: by 10.204.20.79 with SMTP id e15mr1236849bkb.147.1302117351131; Wed,
+ 06 Apr 2011 12:15:51 -0700 (PDT)
+Received: by 10.204.172.130 with HTTP; Wed, 6 Apr 2011 12:15:31 -0700 (PDT)
+In-Reply-To: <20110406175413.GA8205@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171006>
 
-Apart from the list of "valid values", 'diff.tool' can take any value,
-provided there is a corresponding 'difftool.<tool>.cmd' option.  Also,
-describe this option just before the 'difftool.*' options.
+On Wed, Apr 6, 2011 at 7:54 PM, Jeff King <peff@github.com> wrote:
+> I do still wonder about the win32 deadlock that Erik mentioned. Does my
+> patch help at all, or is there another bug hiding somewhere?
 
-Helped-by: Michael J Gruber <git@drmicha.warpmail.net>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/diff-config.txt |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
+Nope :(
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 0796d5e..d604484 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -55,12 +55,6 @@ diff.suppressBlankEmpty::
- 	A boolean to inhibit the standard behavior of printing a space
- 	before each empty output line. Defaults to false.
- 
--diff.tool::
--	Controls which diff tool is used.  `diff.tool` overrides
--	`merge.tool` when used by linkgit:git-difftool[1] and has
--	the same valid values as `merge.tool` minus "tortoisemerge"
--	and plus "kompare".
--
- diff.<driver>.command::
- 	The custom diff driver command.  See linkgit:gitattributes[5]
- 	for details.
-@@ -88,3 +82,11 @@ diff.<driver>.wordregex::
- diff.<driver>.cachetextconv::
- 	Set this option to true to make the diff driver cache the text
- 	conversion outputs.  See linkgit:gitattributes[5] for details.
-+
-+diff.tool::
-+	The diff tool to be used by linkgit:git-difftool[1].  This
-+	option overrides `merge.tool`, and has the same valid built-in
-+	values as `merge.tool` minus "tortoisemerge" and plus
-+	"kompare".  Any other value is treated as a custom diff tool,
-+	and there must be a corresponding `difftool.<tool>.cmd`
-+	option.
--- 
-1.7.4.rc1.7.g2cf08.dirty
+If you're interested, you can read some more information here on the
+msysGit mailing list:
+http://groups.google.com/group/msysgit/browse_thread/thread/865318a3e89d9e64/9d475b8ff3cef3c3
+
+It only happens when pushing over the git-protocol. But it happens consistently.
