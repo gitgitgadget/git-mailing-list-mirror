@@ -1,83 +1,54 @@
-From: =?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg==?= <asedeno@MIT.EDU>
-Subject: Re: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
-Date: Wed, 06 Apr 2011 09:04:45 -0400
-Message-ID: <4D9C64ED.4030900@mit.edu>
-References: <4D9B310A.9020203@mit.edu> <1302034509-8842-1-git-send-email-asedeno@mit.edu> <4D9B7A9E.6040902@mit.edu> <4D9C6262.2080408@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [BUG] git-svn: --no-metadata related bug
+Date: Wed, 06 Apr 2011 15:04:43 +0200
+Message-ID: <4D9C64EB.5060703@drmicha.warpmail.net>
+References: <20110405190722.GB25644@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	James Y Knight <jknight@itasoftware.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 15:05:06 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 15:08:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7SPy-0007qo-95
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 15:05:06 +0200
+	id 1Q7STA-0001je-2F
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 15:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755963Ab1DFNE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 09:04:59 -0400
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:65049 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755870Ab1DFNE7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 09:04:59 -0400
-X-AuditID: 12074424-b7cacae000003d70-aa-4d9c64d18e8f
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 73.A2.15728.1D46C9D4; Wed,  6 Apr 2011 09:04:18 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id p36D4vV7027580
-	for <git@vger.kernel.org>; Wed, 6 Apr 2011 09:04:57 -0400
-Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.238.2.175])
-	(authenticated bits=0)
-        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p36D4uQp013602
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 6 Apr 2011 09:04:57 -0400 (EDT)
-Received: by darkmatter.mit.edu (Postfix, from userid 108)
-	id E2F9A14C029; Wed,  6 Apr 2011 09:04:55 -0400 (EDT)
-Received: from [18.238.2.136] (JABUN.MIT.EDU [18.238.2.136])
-	by darkmatter.mit.edu (Postfix) with ESMTPSA id AFAB114C00F;
-	Wed,  6 Apr 2011 09:04:55 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <4D9C6262.2080408@drmicha.warpmail.net>
-X-Enigmail-Version: 1.1.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixCmqrHspZY6vwcOrzBZdV7qZHBg9Pm+S
-	C2CM4rJJSc3JLEst0rdL4Mo4ffgjY8Ei1or527eyNDDOZOli5OSQEDCR2LrhGhOELSZx4d56
-	ti5GLg4hgX2MEos/NzGDJIQETjJK3JjHApH4yCTx/eBXRohEkcTab7eZIRKLGSXu3VrECpLg
-	FVCTWP3nIXsXIwcHi4CqxO1WUZAwm4CLxJLH19hAbFGBTImOPe/ZIcoFJU7OfAJ2kYiAvsS1
-	c09YQWYyC8xilHg0eyLYFcICHhLTjq2GWjaHUWLW1mdgCU6gH/6s3MIM8YOkxOnjR5hAFjML
-	qEusnycEEmYWkJfY/nYO8wRGkVlI9s1CqJqFpGoBI/MqRtmU3Crd3MTMnOLUZN3i5MS8vNQi
-	XXO93MwSvdSU0k2MoJBnd1HZwdh8SOkQowAHoxIP7+nFs32FWBPLiitzDzFKcjApifJeSJjj
-	K8SXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE1/T1LF8h3pTEyqrUonyYlDQHi5I47zxJdV8hgfTE
-	ktTs1NSC1CKYrAwHh5IEb14y0FDBotT01Iq0zJwShDQTByfIcB6g4ROAKUKIt7ggMbc4Mx0i
-	f4pRUUqctxgkIQCSyCjNg+uFpaRXjOJArwjzhoNU8QDTGVz3K6DBTECDt06ZDTK4JBEhJdXA
-	OEdC11vVtP5+RdNz5lnRKvx+80IiZ9sxPHwxvf5mctYLF46PT6pMppa8PR904Zv9/CNLW0+J
-	vFwpOf/8uYOLp39f1iWwNeDHEXGvD64aLGLGX26emrCVzTxA8gRj077PS6fVXZs8 
+	id S1755871Ab1DFNIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 09:08:18 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:34418 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754743Ab1DFNIR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 09:08:17 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5D72B209AD;
+	Wed,  6 Apr 2011 09:08:17 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Wed, 06 Apr 2011 09:08:17 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=u6DlxcLay5W1o05ilHCUleOtH/Y=; b=T3zMm6Lzs2YrgXy19XpxWvmi2O0Q1f6okQrdkAU3IER0pk2+d2yK7Q1anbAQFnFgPMr4m+G6R928qUM8ZyzRk+Oa3514KkgxlqdDtUvyvdf0feq6ap/65jOq1YiFjx1rvo4+uq3xZhUWx8GOi48dEnpSRnrgXsNJglI8eA50398=
+X-Sasl-enc: ALApFefkB9qqTibWNsdlk3VrwTVLPwHBmm2ki1hDeXi5 1302095297
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D56964471D1;
+	Wed,  6 Apr 2011 09:08:16 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <20110405190722.GB25644@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170974>
 
-On 4/6/2011 8:53 AM, Michael J Gruber wrote:
->> > So I'm continuing to look into that. Perhaps it makes sense to use pushurl
->> > for both src and dst when branching?
-> For branching, yes. This is just the following in disguise:
-> 
-> http://permalink.gmane.org/gmane.comp.version-control.git/135577
-> 
-> "svn cp" between 2 URLs simply requires they're within the same repo.
+Ramkumar Ramachandra venit, vidit, dixit 05.04.2011 21:07:
+> git svn clone --no-metadata -T trunk http://dxirc.googlecode.com/svn/
 
-Yeah, I understand that. The purpose of that email was to make sure that
-the patch was not committed as is, and it was hastily written because I
-was practically out the door at the time.
+Works fine for me, using:
 
-Thanks for the pointer though.
+git svn --version
+git-svn version 1.7.5.rc0.365.g23929a (svn 1.6.16)
 
-I'll be sending an updated patch in a few hours.
+What are the affected versions?
 
--Alejandro
+Michael
