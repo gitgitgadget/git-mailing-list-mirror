@@ -1,165 +1,75 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] config: support values longer than 1024 bytes
-Date: Wed, 6 Apr 2011 18:16:50 +0200
-Message-ID: <BANLkTikuzfZrv+N0Qm7utfYF6fsYQn7Zcg@mail.gmail.com>
-References: <1302046203-4408-1-git-send-email-kusmabite@gmail.com>
- <20110406005223.GA10374@sigill.intra.peff.net> <BANLkTim0N0kM+OX5Tztz-Kh+eRRsNixX0A@mail.gmail.com>
- <20110406153509.GA1864@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git exhausts memory.
+Date: Wed, 06 Apr 2011 09:33:39 -0700
+Message-ID: <7vtyebjq58.fsf@alter.siamese.dyndns.org>
+References: <BANLkTin=yUtzbZjs_92FHDfs62VFFuLHwg@mail.gmail.com>
+ <alpine.LFD.2.00.1104021103130.28032@xanadu.home>
+ <BANLkTikRGQ45xvWvisMhXi4Hu2r_0GS=Gg@mail.gmail.com>
+ <alpine.LFD.2.00.1104031110150.28032@xanadu.home>
+ <BANLkTinCwZG3+0Ss8o9ODptg=L8LKKN7aQ@mail.gmail.com>
+ <BANLkTinU7x16yp+y-HW9UhkVn9SftOJCcA@mail.gmail.com>
+ <4D9B47D2.6050909@ira.uka.de>
+ <BANLkTikanSa3D1Bd8kSySPWQhcj1y8N+qA@mail.gmail.com>
+ <7vzko4mw44.fsf@alter.siamese.dyndns.org>
+ <BANLkTinOzkHMpr5Yg7dixMyTSHBXCsO7Qw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jwa@urbancode.com, drew.northup@maine.edu
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 18:17:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Holger Hellmuth <hellmuth@ira.uka.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alif Wahid <alif.wahid@gmail.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 18:34:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7VPx-0006v7-Ds
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 18:17:17 +0200
+	id 1Q7VgX-0001tx-5q
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 18:34:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754818Ab1DFQRM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 12:17:12 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60351 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751202Ab1DFQRL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 12:17:11 -0400
-Received: by fxm17 with SMTP id 17so1105348fxm.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 09:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NuzPSNJdh7v0TRuQe2J+jfNyiFlmMcsV8b20UAkyFMg=;
-        b=lMHhfMPOD19V9bgRIZj/Mgccu/rRiEZtAFYeQNhTVEIw77MLuCitR4GJ53II3WVIuI
-         bgTQK70YX969or2yjBUey9sio9AN9oo2k7GEae6ra0cSfCUouyoFwUGbILpFrCRrM27F
-         01LT5XtsFzoaSatNtTXFS4/p+Zl6QuDUgYIEA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=ShntlHsxhJCoTBrhv882js5WafXcGr/dJbRWxBGtj09HIecaVDswFNHvZtQOlB52T6
-         DTuU+0pUKH+sawn1IHo6t4E9qmwHiFlTNgnhMacaO/cgrKNbRUmXsxEUfKIaV48/Yw5A
-         tQFj7F7BytfbjKw5gwELOuCly4Pq+RBfKXHT4=
-Received: by 10.204.22.9 with SMTP id l9mr1065071bkb.66.1302106630186; Wed, 06
- Apr 2011 09:17:10 -0700 (PDT)
-Received: by 10.204.172.130 with HTTP; Wed, 6 Apr 2011 09:16:50 -0700 (PDT)
-In-Reply-To: <20110406153509.GA1864@sigill.intra.peff.net>
+	id S1754829Ab1DFQeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 12:34:05 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41787 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753949Ab1DFQeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 12:34:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9701D4899;
+	Wed,  6 Apr 2011 12:35:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v6/dDB/Ndtbt8nqsXyTusD9iZBE=; b=s31sfe
+	wIKtPVIiVtlcfCqQtT81nxui4dtWpPjgQBQN7IRhxnWuD8cGLj5wevvEnZ7yqz37
+	YcjaX+CbtfBXSZ3ABG6XydP1ud3k8JBeg0NA+1z9AR+sgc7b+pMV8XrT3YtCf2VZ
+	PurnjNXAmQWoFBq7E8WQSswDYpOvEIvEggsII=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Te4CPg/e72bAmmCAfdB/ajtOjbkFxs4v
+	rYLwdufkIvD6E0umzxcXvtsDvQcxFOhHAEl9xrrZQdwNxQMf6z9J0Ys5gIPz7iv3
+	HBUBmGnieEcNuM8kdy/CVGdQ6Xhu6MjMkX0n7IJ2jQ+4jNU1DwPRcJWdKhkNHFh4
+	JzswIIS1kN8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 27EC24897;
+	Wed,  6 Apr 2011 12:35:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 22BD14895; Wed,  6 Apr 2011
+ 12:35:36 -0400 (EDT)
+In-Reply-To: <BANLkTinOzkHMpr5Yg7dixMyTSHBXCsO7Qw@mail.gmail.com> (Jay
+ Soffian's message of "Wed, 6 Apr 2011 11:51:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ECBEF196-606B-11E0-A46F-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170989>
 
-On Wed, Apr 6, 2011 at 5:35 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Apr 06, 2011 at 11:10:42AM +0200, Erik Faye-Lund wrote:
->
->> > But for the other, one of the invariants of strbuf is that the str=
-ing is
->> > always NUL-terminated. So I would expect strbuf_init to properly
->> > NUL-terminate after growing based on the hint.
->>
->> I agree. An unterminated yet non-NULL return from strbuf_detach is
->> just dangerous behavior. Something like this should probably be
->> applied:
->>
->> ---8<---
->> diff --git a/strbuf.c b/strbuf.c
->> index 77444a9..538035a 100644
->> --- a/strbuf.c
->> +++ b/strbuf.c
->> @@ -24,14 +24,16 @@ int suffixcmp(const char *str, const char *suffi=
-x)
->> =A0 * buf is non NULL and ->buf is NUL terminated even for a freshly
->> =A0 * initialized strbuf.
->> =A0 */
->> -char strbuf_slopbuf[1];
->> +char strbuf_slopbuf[1] =3D { '\0' };
->
-> This hunk is redundant. slopbuf will already be initialized to 0.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Right, silly me. I somehow thought that implicit zero-initialization
-only applied to static variables, but K&R tells me I was wrong. Thanks
-for pointing it out :)
+> This will be white-spaced damaged by Gmail, but anyway:
 
->
->> =A0void strbuf_init(struct strbuf *sb, size_t hint)
->> =A0{
->> =A0 =A0 =A0 sb->alloc =3D sb->len =3D 0;
->> =A0 =A0 =A0 sb->buf =3D strbuf_slopbuf;
->> - =A0 =A0 if (hint)
->> + =A0 =A0 if (hint) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_grow(sb, hint);
->> + =A0 =A0 =A0 =A0 =A0 =A0 sb->buf[0] =3D '\0';
->> + =A0 =A0 }
->> =A0}
->
-> But this one is the right fix.
->
-
-OK, I'll turn this into a two-patch series, then.
-
->> that. But this brings a new issue: leaving potentially huge blocks o=
-f
->> memory (especially since this patch is about long lines) allocated
->> inside a function can be a bit nasty. But it's probably not a big de=
-al
->
-> Yeah. It's just one block, though, and in the normal case it is proba=
-bly
-> only about 80 characters. So it is more efficient than what's there n=
-ow. :)
->
-> Somebody could have some gigantic value, though, and yes, we'll grow =
-to
-> the biggest one and never free that memory. You could also have
-> parse_value take a strbuf parameter to output into, and then free it
-> after config reading is done.
->
->> In other words: I think you're right, it's a much better approach.
->> Less allocations, less penalty on the start-up time for every little
->> git-command.
->
-> I doubt the efficiency increase is measurable. We end up xstrdup'ing
-> quite a few of the values in the config callbacks anyway. I would do
-> whatever seems most natural for reading/writing the code.
->
-
-I think I'll just leave the single leak in. Since it would allocate
-the buffer lazily, it would really only "waste" more memory than the
-existing implementation when the old implementation would fail. So my
-conscience is clear ;)
-
->> > I do wonder, though, if we could be reusing the unquote_c_style()
->> > function in quote.c. They are obviously similar, but I haven't che=
-cked
->> > if there is more going on in the config code.
->>
->> Hmm, this is an interesting suggestion. It would be a part of a bigg=
-er
->> change though: unquote_c_style requires it's input to be in memory,
->> while parse_value uses a function called get_next_char to feed the
->> parser. So we'd either have to read the entire file into memory, or
->> find some way to read the file line-by-line while handling \n-escapi=
-ng
->> correctly.
->>
->> It also seems like there's differences in what kind of escaping and
->> normalization the two functions handle; unquote_c_style handles more
->> escaped character sequences, while parse_value normalize all
->> non-escaped space-characters ('\t' et. al) into SP. This might not b=
-e
->> such a big problem in reality.
->
-> This was just a random thought that I had, and I didn't investigate i=
-t
-> how hard it would be. =A0If it turns out to be too much trouble, just
-> forget it.
->
-
-Yeah. I think I'll skip it, since it isn't dead obvious.
-
-Thanks for the input, I'll cook up a new version soon.
+I've already done that last night.  Thanks.
