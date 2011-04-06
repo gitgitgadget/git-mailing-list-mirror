@@ -1,122 +1,100 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/4] Documentation: Add filter.<driver>.* to config
-Date: Wed, 6 Apr 2011 18:21:12 +0530
-Message-ID: <20110406124235.GA5881@kytes>
-References: <1301654600-8901-1-git-send-email-artagnon@gmail.com>
- <1302083854-2448-1-git-send-email-artagnon@gmail.com>
- <1302083854-2448-2-git-send-email-artagnon@gmail.com>
- <4D9C4E0F.8050302@drmicha.warpmail.net>
+From: =?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg==?= <asedeno@MIT.EDU>
+Subject: Re: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
+Date: Wed, 06 Apr 2011 08:56:41 -0400
+Message-ID: <4D9C6309.8080809@mit.edu>
+References: <4D9B310A.9020203@mit.edu> <1302034509-8842-1-git-send-email-asedeno@mit.edu> <4D9C6023.6040305@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	James Y Knight <jknight@itasoftware.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 14:52:24 2011
+X-From: git-owner@vger.kernel.org Wed Apr 06 14:57:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7SDe-0007UF-OY
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 14:52:23 +0200
+	id 1Q7SIK-0002TT-7t
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 14:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755964Ab1DFMwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 08:52:18 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56306 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755763Ab1DFMwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 08:52:17 -0400
-Received: by iyb14 with SMTP id 14so1390148iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 05:52:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=JafRmBeilEX/EqZfEFM47QADDefRGWD38cyeONiPgbk=;
-        b=hGiXf7j20Yz+JXQFHmTybTJsb6RlB+z4RJiBCWPdqWCOHHEhR9C292zeErUGpjr+tj
-         Dk5zG7io6lcV+HB99yyiQB/rhhZrLj8yvE1D7b38kZWHKT08CBMgbiNqVDWdtNVlXBqf
-         IzT5kjB7dXtK4SwLA+6Qgu0lTLtQ8rs9xclMw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IQcRBmQPWabKhT+tvyo29v6ap78HVEHIhS9FY0FbiVFvDWW0h33+e4UMUCFYTLBVdp
-         rwNvAqFgu+FBJubDOdRAB3n+zrn4Wmh3PFXcvDr4rjtPu9eaA+I1DZmTWYTllD8KNqzk
-         dMMZYF0oFxoTO9mSSHUyo+vuCI4ialNnE9KBw=
-Received: by 10.42.132.198 with SMTP id e6mr1455574ict.517.1302094336657;
-        Wed, 06 Apr 2011 05:52:16 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id ww2sm321300icb.3.2011.04.06.05.52.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 05:52:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4D9C4E0F.8050302@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755986Ab1DFM47 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 08:56:59 -0400
+Received: from DMZ-MAILSEC-SCANNER-4.MIT.EDU ([18.9.25.15]:63464 "EHLO
+	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755976Ab1DFM45 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 08:56:57 -0400
+X-AuditID: 1209190f-b7cf3ae0000046b8-aa-4d9c63135351
+Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
+	by dmz-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 7F.7A.18104.3136C9D4; Wed,  6 Apr 2011 08:56:51 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id p36Cut49007992
+	for <git@vger.kernel.org>; Wed, 6 Apr 2011 08:56:56 -0400
+Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.238.2.175])
+	(authenticated bits=0)
+        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p36Cur4V012264
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 6 Apr 2011 08:56:54 -0400 (EDT)
+Received: by darkmatter.mit.edu (Postfix, from userid 108)
+	id 3F16C14C021; Wed,  6 Apr 2011 08:56:53 -0400 (EDT)
+Received: from [18.238.2.136] (JABUN.MIT.EDU [18.238.2.136])
+	by darkmatter.mit.edu (Postfix) with ESMTPSA id 11F9114C00F;
+	Wed,  6 Apr 2011 08:56:53 -0400 (EDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <4D9C6023.6040305@drmicha.warpmail.net>
+X-Enigmail-Version: 1.1.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMKsWRmVeSWpSXmKPExsUixG6nriucPMfX4ECblUXXlW4mB0aPz5vk
+	AhijuGxSUnMyy1KL9O0SuDJ+rVjJUjCVu+Lg4n/sDYxvOboYOTkkBEwkjr2YyAJhi0lcuLee
+	rYuRi0NIYB+jREfTQkYI5ySjxOsVG5khnI9MEhsOT2cCaRESKJK4OGUdK0RiMaPEuv13wGbx
+	CqhJfLx1mRXEZhFQldh4rBusgU3ARWLJ42tsILaoQKZEx5737BD1ghInZz4B6xUR0Je4du4J
+	2FBmgVmMEo9mT2QGSQgLeEhMO7Ya6oxGRonpb2+ATeIE+mJn4w1GiC8kJU4fPwK0jQOoW11i
+	/TwhkDCzgLxE89bZzBMYRWYh2TcLoWoWkqoFjMyrGGVTcqt0cxMzc4pTk3WLkxPz8lKLdE30
+	cjNL9FJTSjcxgsKeU5J/B+O3g0qHGAU4GJV4eFcsnu0rxJpYVlyZe4hRkoNJSZT3QsIcXyG+
+	pPyUyozE4oz4otKc1OJDjBIczEoivKavZ/kK8aYkVlalFuXDpKQ5WJTEeWdJqvsKCaQnlqRm
+	p6YWpBbBZGU4OJQkeOuSgIYKFqWmp1akZeaUIKSZODhBhvMADa8CqeEtLkjMLc5Mh8ifYlSU
+	EucNAUkIgCQySvPgemFp6RWjONArwrxNIFU8wJQG1/0KaDAT0OCtU2aDDC5JREhJNTDW//mT
+	yasT7ldcY8TK8PuWevOsji8LPjy1qj3ZbKe2n0m6pPl86bIc5gkxx1Vm3lGRiP6r6KsqcN6R
+	l39bsmvF6etBX/Tar36Ku+54/su9igkPut6623yOXjwzWpj/s7yikUkHUx+T5p/o 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170971>
 
-Hi Michael,
+On 4/6/2011 8:44 AM, Michael J Gruber wrote:
+> Alejandro R. Sede=C3=B1o venit, vidit, dixit 05.04.2011 22:15:
+>> > Similar to the 'remote.<name>.pushurl' config key for git remotes,=
+ the
+>> > 'pushurl' key is treated the same as the 'url' key. This is distin=
+ct
+>> > from the 'commiturl' key, which is defined to be a full svn path.
+>> >=20
+>> > This is necessary if you want to be able to commit to multiple bra=
+nches.
+> Maybe one can understand this remark after reading the whole thread, =
+but
+> reading it as a commit message I'm wondering: Huh? How can I have bee=
+n
+> doing it then without pushurl?
+>=20
+> Also, "treated the same as the url" makes a reader wonder why we have
+> two names for the same.
+>=20
+> The point of pushurl is that you can use a passwordless transport for
+> fetches and another transport for pushes. The standing assumption is
+> that both urls point in fact at the same repo. Weird things can happe=
+n
+> if not. Is that assumption the same for your svn pushurl?
 
-Michael J Gruber writes:
-> Ramkumar Ramachandra venit, vidit, dixit 06.04.2011 11:57:
-> > Although the gitattributes page contains comprehensive information
-> > about these configuration options, they should be included in the
-> > config documentation for completeness.
-> > 
-> > Helped-by: Michael J Gruber <git@drmicha.warpmail.net>
-> > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> > ---
-> >  Documentation/config.txt |    9 +++++++++
-> >  1 files changed, 9 insertions(+), 0 deletions(-)
-> > 
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index 8ea55d4..654a3b8 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -973,6 +973,15 @@ format.signoff::
-> >      the rights to submit this work under the same open source license.
-> >      Please see the 'SubmittingPatches' document for further discussion.
-> >  
-> > +filter.<driver>.clean::
-> > +	The command which is used to convert the contents of worktree
-> > +	file upon checkin.  See linkgit:gitattributes[5] for details.
-> 
-> I don't want to be a PITA, but is there any particular reason you are
-> refusing to use the article "a" even after repeated suggestions to use
-> it? (Also, I suggested to say what we are converting into here.)
+Yes, that is the idea. I will rephrase the commit message and
+documentation to be clearer when I send the next version of this patch.
 
-Ouch, sorry.
+When I say, "treated the same as the url," what I mean to say is that
+any manipulations that would be done to 'url' are also done to
+'pushurl', such as appending '/trunk' or '/branches/<branch-name>/' if
+necessary, which does not happen with commiturl since it is a full snv =
+path.
 
-> > +
-> > +filter.<driver>.smudge::
-> > +	The command which is used to convert the blob object to
-> > +	worktree file upon checkout.  See linkgit:gitattributes[5] for
-> > +	details.
-> > +
-> 
-> You see, before my first response in this thread I thought: "Doing this
-> myself would be less work than replying and explaining things, but I'll
-> try to be nice."
-> 
-> Now, this is v4, I've even provided complete sentences ready for copy &
-> paste, and we're still iterating. It turned out to be *much more* work
-> than doing it myself. I'm sorry but I can't afford to spend even more
-> time on this.
-
-I'm very sorry to have caused so much pain.  Yes, I can imagine how
-terrible it must be to review several iterations of a simple
-documentation patch.  Thank you for being so patient with me so far- I
-understand if you don't want to do this anymore.
-
-I do spend time proofreading patches before sending them out, but I'm
-clearly not very good at it.  In future, I'll either try rewriting
-entire paragraphs or simply refrain from writing documentation
-patches.  Please try to understand that sending out many iterations of
-a documentation patch isn't something I particularly enjoy doing.
-I'll send out another iteration of this series anyway.
-
--- Ram
+-Alejandro
