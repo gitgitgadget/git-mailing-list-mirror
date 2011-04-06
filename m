@@ -1,104 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] upload-pack deadlock
-Date: Wed, 06 Apr 2011 10:20:55 -0700
-Message-ID: <7v8vvnjnyg.fsf@alter.siamese.dyndns.org>
-References: <20110404053626.GA26529@sigill.intra.peff.net>
+Subject: Re: Re* git commit fails under some circumstances
+Date: Wed, 06 Apr 2011 10:24:17 -0700
+Message-ID: <7v1v1fjnsu.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikHRM10p9e8XCzuiih7cYtQRG7Az2Qn5qtPzhZJ@mail.gmail.com>
+ <7vhbagh3aw.fsf@alter.siamese.dyndns.org>
+ <20110405173603.GD9965@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
-	Aman Gupta <aman@github.com>, Ryan Tomayko <ryan@github.com>
+Cc: Laszlo Papp <djszapi@archlinux.us>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 19:21:23 2011
+X-From: git-owner@vger.kernel.org Wed Apr 06 19:24:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7WPu-0003EI-SB
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 19:21:19 +0200
+	id 1Q7WT3-0005pi-3a
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 19:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644Ab1DFRVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 13:21:13 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64374 "EHLO
+	id S1755300Ab1DFRY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 13:24:28 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34717 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755136Ab1DFRVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 13:21:13 -0400
+	with ESMTP id S1754502Ab1DFRY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 13:24:27 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6FE0B4ED8;
-	Wed,  6 Apr 2011 13:23:05 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EFE904F6D;
+	Wed,  6 Apr 2011 13:26:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=CCiCXAggtHMDs89HfZwzbF9I1kk=; b=dk+KAa6f8r26tLY9zZp6
-	EB1S5G6oPigUdILsSeNm01T7+DAQGJuMvx4jQPZTgP0LxopYla4ct1bwNu0IYls9
-	iIqMmWKyqbCymYE7DFTAvhZyP7A3pwCHWnYOxUeJlEQd1dv35l7XKjY//v7Yd95v
-	20fcqo7Fhypjmn/E+T8/AAk=
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=YET+wTVxddtgYDfqH5rl15KT6hc=; b=pIxczL
+	nb5MANhSsURrL41a4MoOJuP+dNYFJXh9Gw2EEwF0TEfyBxIivPVW4yC4wN4Qs9TV
+	9Lm7Hf+GoCJW5bxfPcjhn/yNUPuMnUyjbHNm63Wg56oot7aNjHKf1FDhJcaPDsUj
+	oOzWubpyV9KirydTUpQqM/ijc4bNlmjOg7mF0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=p7gKy3nxPt1LpoToLbT01AkCIjbtKfvgPgZnuVW60EYXRZ
-	SjByTosPXSMrXwLVWr9txXsDCLDIEwzQeNrtP9Pd5g4A99eZBH+y9N5qcLpfAi5d
-	h3ahT5V5FrealrZPipuQ3ejqxsx6bO1dGTNnGzyvYu9ZQBWGh9HzozAYZGaXU=
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TQWfuAu66X24KwtadMkZZ2h/iOmcIsRr
+	+IKeRIZ9VqVBVnXUUkQaj5jwp0vGFUVbGPVAQ/gVZImxPoFCv8awe9aNH0nn3yfT
+	Pv0vn9lTdF8FMIEqYPXlNOE/LEY73p7KN6fLGMFODKXwBXpoKPT0plY6yNTTxCiW
+	LbiDhk6F5AY=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F049F4ED4;
-	Wed,  6 Apr 2011 13:22:58 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B71C24F6C;
+	Wed,  6 Apr 2011 13:26:17 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2D7F74ECD; Wed,  6 Apr 2011
- 13:22:51 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8C73E4F67; Wed,  6 Apr 2011
+ 13:26:13 -0400 (EDT)
+In-Reply-To: <20110405173603.GD9965@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 5 Apr 2011 13:36:04 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 84A445BE-6072-11E0-BE6A-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: FB1D70F8-6072-11E0-AD50-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170994>
 
 Jeff King <peff@peff.net> writes:
 
-> In a pthread-enabled version of upload-pack, there's a race condition
-> that can cause a deadlock on the fflush(NULL) we call from run-command.
->
-> What happens is this:
->
->   1. Upload-pack is informed we are doing a shallow clone.
->
->   2. We call start_async() to spawn a thread that will generate rev-list
->      results to feed to pack-objects. It gets a file descriptor to a
->      pipe which will eventually hook to pack-objects.
->
->   3. The rev-list thread uses fdopen to create a new output stream
->      around the fd we gave it, called pack_pipe.
->
->   4. The thread writes results to pack_pipe. Outside of our control,
->      libc is doing locking on the stream. We keep writing until the OS
->      pipe buffer is full, and then we block in write(), still holding
->      the lock.
->
->   5. The main thread now uses start_command to spawn pack-objects.
->      Before forking, it calls fflush(NULL) to flush every stdio output
->      buffer. It blocks trying to get the lock on pack_pipe.
->
-> And we have a deadlock. The thread will block until somebody starts
-> reading from the pipe. But nobody will read from the pipe until we
-> finish flushing to the pipe.
+> I am much more concerned with whether and how this information would be
+> represented in the "git status --porcelain" format.
 
-Thanks for a concise summary.
-
-> There are a few possible solutions:
->
->   1. Flip the order of initialization, so that we don't start writing
->      anything until the pack-objects reader is already in place. That
->      works in this case, and the patch is at the end of this mail. The
->      biggest problem is that it doesn't fix the general case.
-
-In what sense are you not fixing "the general case", though?
-
-If a program runs two threads, both of which access the FILE streams, it
-should be the responsibility of the program to get these threads
-coordinated to avoid such races and deadlocks, no?
-
-While I think you mean start_async() API should be helping the API users
-(calling programs) to fulfil that responsibility better, it really is up
-to the thread to do random things to wreak havoc, like the shallow
-codepath that tries to fill the stream while the main codepath expected
-nothing happening, and I do not think of a good abstraction to help us
-being more careful.
+I earlier suggested using 'I'; a safer alternative would be to change
+nothing and let the callers figure it out.  I slightly favor the former;
+while there is a definite risk of breaking scripts' expectations, they can
+be tentatively marked "this script does not work until you 'git add' paths
+you used 'add -N'" and I don't think it would be such a big deal.
