@@ -1,93 +1,90 @@
-From: =?iso-8859-1?Q?Peter_J=F6nsson_P?= <peter.p.jonsson@ericsson.com>
-Subject: RE: blobs (once more)
-Date: Wed, 6 Apr 2011 13:12:41 +0200
-Message-ID: <41F80411E3CC644A844E6BED6E472FD91196D0CD30@ESESSCMS0363.eemea.ericsson.se>
-References: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
- <vpqmxk3prki.fsf@bauges.imag.fr>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/4] Documentation: Add filter.<driver>.* to config
+Date: Wed, 06 Apr 2011 13:27:11 +0200
+Message-ID: <4D9C4E0F.8050302@drmicha.warpmail.net>
+References: <1301654600-8901-1-git-send-email-artagnon@gmail.com> <1302083854-2448-1-git-send-email-artagnon@gmail.com> <1302083854-2448-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andrey Devyatkin <andrey.devyatkin@ericsson.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>
-X-From: git-owner@vger.kernel.org Wed Apr 06 13:12:56 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 13:30:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7QfP-0001U4-Uc
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 13:12:56 +0200
+	id 1Q7Qwn-00046K-Hx
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 13:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755760Ab1DFLMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 07:12:50 -0400
-Received: from mailgw9.se.ericsson.net ([193.180.251.57]:55037 "EHLO
-	mailgw9.se.ericsson.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755802Ab1DFLMs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 07:12:48 -0400
-X-AuditID: c1b4fb39-b7c6dae0000023f2-fb-4d9c4aae7e05
-Received: from esessmw0247.eemea.ericsson.se (Unknown_Domain [153.88.253.125])
-	by mailgw9.se.ericsson.net (Symantec Mail Security) with SMTP id 5F.41.09202.EAA4C9D4; Wed,  6 Apr 2011 13:12:47 +0200 (CEST)
-Received: from ESESSCMS0363.eemea.ericsson.se ([169.254.1.133]) by
- esessmw0247.eemea.ericsson.se ([10.2.3.116]) with mapi; Wed, 6 Apr 2011
- 13:12:43 +0200
-Thread-Topic: blobs (once more)
-Thread-Index: Acv0SsubhuyRP8xPTcmV+Otq0HaV1wAADVKg
-In-Reply-To: <vpqmxk3prki.fsf@bauges.imag.fr>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Brightmail-Tracker: AAAAAA==
+	id S1755543Ab1DFLas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 07:30:48 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48178 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751673Ab1DFLar (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 07:30:47 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5428420A37;
+	Wed,  6 Apr 2011 07:30:47 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 06 Apr 2011 07:30:47 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=oDkhlVh7/ZnyRuva58crqT5tYPk=; b=Hjm5IQd1OPCNnwU167u+KasDABS4osbJaeqW6g+8TVRJIvJiZnIjEGQv2XLYj4/rdibAWx+dulXYX+xfG28Ca/D8Fn9VtN1Ax/Gws/LjRJ31Jalrg7HWGU4+zyci0oUiruwgG4+XD4gvQatk5fAL4o8tzQNURqG7t1N4dhcdpAY=
+X-Sasl-enc: ISHbH3UPFaChEQnN8b7hySvpXmDkTiI15OOqZPLu3JOq 1302089446
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 17CB044788C;
+	Wed,  6 Apr 2011 07:30:45 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <1302083854-2448-2-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170966>
 
-Hi!
+Ramkumar Ramachandra venit, vidit, dixit 06.04.2011 11:57:
+> Although the gitattributes page contains comprehensive information
+> about these configuration options, they should be included in the
+> config documentation for completeness.
+> 
+> Helped-by: Michael J Gruber <git@drmicha.warpmail.net>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Documentation/config.txt |    9 +++++++++
+>  1 files changed, 9 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 8ea55d4..654a3b8 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -973,6 +973,15 @@ format.signoff::
+>      the rights to submit this work under the same open source license.
+>      Please see the 'SubmittingPatches' document for further discussion.
+>  
+> +filter.<driver>.clean::
+> +	The command which is used to convert the contents of worktree
+> +	file upon checkin.  See linkgit:gitattributes[5] for details.
 
-How about using Google's repo-tool instead of submodules? Is that a better solution if one really needs to keep binaries together (in some way) with the source code?
+I don't want to be a PITA, but is there any particular reason you are
+refusing to use the article "a" even after repeated suggestions to use
+it? (Also, I suggested to say what we are converting into here.)
 
-We are starting to prototype Git and since we need to distribute cross-compilers with the code it would be nice to keep it in a separate repo. Currently we are _heavy_ ClearCase users (oh the horror) with many bad old habits that we are trying to break :)
+> +
+> +filter.<driver>.smudge::
+> +	The command which is used to convert the blob object to
+> +	worktree file upon checkout.  See linkgit:gitattributes[5] for
+> +	details.
+> +
 
-// Peter 
+You see, before my first response in this thread I thought: "Doing this
+myself would be less work than replying and explaining things, but I'll
+try to be nice."
 
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Matthieu Moy
-Sent: den 6 april 2011 13:06
-To: Pau Garcia i Quiles
-Cc: Git Mailing List; Johannes Schindelin
-Subject: Re: blobs (once more)
+Now, this is v4, I've even provided complete sentences ready for copy &
+paste, and we're still iterating. It turned out to be *much more* work
+than doing it myself. I'm sorry but I can't afford to spend even more
+time on this.
 
-Pau Garcia i Quiles <pgquiles@elpauer.org> writes:
-
-> I have read about:
-> - submodules + using different repositories once one "blob repository"
-> grows too much. This will be probably rejected because it is quite 
-> contrived.
-> - git-annex (does not get the files in when cloning, pulling, checking 
-> out; you need to do it manually)
-> - git-media (same as git-annex)
-> - boar (no, we do not want to use a VCS for binaries in addition to 
-> git)
-> - and a few more
->
-> So far the only good solution seems to be git-bigfiles but it's still 
-> in development.
-
-This seems to be the hot topic of the moment in Git ;-). Loot at the mailing-list's archive, like
-
-http://thread.gmane.org/gmane.comp.version-control.git/170649
-https://git.wiki.kernel.org/index.php/SoC2011Ideas#Better_big-file_support
-
-there may be a GSoC on the topic. I don't think there's a really good solution for you right now (but I didn't really look closely), but the situation is improving.
-
---
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
---
-To unsubscribe from this list: send the line "unsubscribe git" in the body of a message to majordomo@vger.kernel.org More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>  gc.aggressiveWindow::
+>  	The window size parameter used in the delta compression
+>  	algorithm used by 'git gc --aggressive'.  This defaults
