@@ -1,202 +1,131 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] config: support values longer than 1024 bytes
-Date: Wed, 6 Apr 2011 11:10:42 +0200
-Message-ID: <BANLkTim0N0kM+OX5Tztz-Kh+eRRsNixX0A@mail.gmail.com>
-References: <1302046203-4408-1-git-send-email-kusmabite@gmail.com> <20110406005223.GA10374@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: blobs (once more)
+Date: Wed, 6 Apr 2011 11:25:57 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1104061121000.2040@bonsai2>
+References: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jwa@urbancode.com, drew.northup@maine.edu
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 11:11:14 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Wed Apr 06 11:26:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Olc-0002zH-Kw
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 11:11:13 +0200
+	id 1Q7P05-0003PS-7K
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 11:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430Ab1DFJLG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 05:11:06 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:42330 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750975Ab1DFJLE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 05:11:04 -0400
-Received: by bwz15 with SMTP id 15so965667bwz.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 02:11:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tRyyLt0itXF1tjHi0Bsd28uINykoELgIaGHzJFJOxFQ=;
-        b=wuBgiegwSezeu3bwtE/IwCX0inriO+WafOQIOy6iMRBXkYfTkQRfvJ3r07bTOlqLPn
-         RyopSqWRxuAsimGdWyxPXaOJUko8C1gVY5lGSnibLpETL8rEeo4TTCOgciDcK+BvoZzR
-         sOf+CFX/rFYnVRjgSRaYAV3PLO0Xiq6/OIiiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=etN5zetdAM9mK/1vmLYsYyWKd/LAM/7V2xPxe5fn1VNjFmHYl/2NvDPge09GGvjtXM
-         qEl5O1Y841ps4uUmnnVCU9nIppJII91yHh07APuN6RwbMyS8A5qJUo5toclHkSZwSu5/
-         xnssWbr275Yv1RJbVrbTlUjpRe+FrdOE2ULHI=
-Received: by 10.204.84.137 with SMTP id j9mr573126bkl.120.1302081062664; Wed,
- 06 Apr 2011 02:11:02 -0700 (PDT)
-Received: by 10.204.172.130 with HTTP; Wed, 6 Apr 2011 02:10:42 -0700 (PDT)
-In-Reply-To: <20110406005223.GA10374@sigill.intra.peff.net>
+	id S1755285Ab1DFJ0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 05:26:03 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:35104 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755212Ab1DFJ0C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 05:26:02 -0400
+Received: (qmail invoked by alias); 06 Apr 2011 09:25:58 -0000
+Received: from pD9EB2A84.dip0.t-ipconnect.de (EHLO noname) [217.235.42.132]
+  by mail.gmx.net (mp070) with SMTP; 06 Apr 2011 11:25:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/3WFdwPSr3eGJNg7O3uqBcvH0UME3Esk1MNLK9zp
+	UXLF7NnglrW/44
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170957>
 
-On Wed, Apr 6, 2011 at 2:52 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Apr 06, 2011 at 01:30:03AM +0200, Erik Faye-Lund wrote:
->
->> The rather awkward return statement with strdup("") is because
->> strbuf_detach returns NULL when there's nothing allocated. Even
->> worse, it returns an uninitialized string if the string has been
->> initialized with a non-zero 'hint'.
->
-> That seems like two bugs in the strbuf code.
->
-> I would expect strbuf_detach to _always_ return an allocated buffer,
-> even if it is xstrdup(""). Though the code in strbuf_detach is explic=
-it
-> about returning NULL rather than slopbuf, so perhaps there is a case
-> where it is useful.
+Hi,
 
-Yeah, this is why I didn't just go for it. Looking through history, it
-seems that the reason why it explicitly returns NULL when there's
-nothing allocated is that it used to do so "by artifact" before
-b315c5c ("strbuf change: be sure ->buf is never ever NULL."), and it
-looks like the author didn't want to change the semantics. Fair
-enough, changing this takes a lot of code-reading to verify that there
-isn't any call-sites that depend on this behavior.
+On Wed, 6 Apr 2011, Pau Garcia i Quiles wrote:
 
->
-> But for the other, one of the invariants of strbuf is that the string=
- is
-> always NUL-terminated. So I would expect strbuf_init to properly
-> NUL-terminate after growing based on the hint.
+> Binary large objects. I know it has been discussed once and again but 
+> I'd like to know if there is something new.
+> 
+> Some corporation hired the company I work for one year ago to develop a 
+> large application. They imposed ClearCase as the VCS. I don't know if 
+> you have used it but it is a pain in the ass. We have lost weeks of 
+> development to site-replication problems, funny merges, etc. We are 
+> trying to migrate our project to git, which we have experience with.
+> 
+> One very important point in this project (which is Windows only) is 
+> putting binaries in the repository. So far, we have suceeded in not 
+> doing that in other projects but we will need to do that in this 
+> project.
+> 
+> In the Windows world, it is not unusual to use third-party libraries 
+> which are only available in binary form. Getting them as source is not 
+> an option because the companies developing them are not selling the 
+> source. Moving from those binary-only dependencies to something else is 
+> not an option either because what we are using has some unique features, 
+> be it technical features or support features. In our project, we have 
+> about a dozen such binaries, ranging from a few hundred kilobytes, to a 
+> couple hundred megabytes (proprietary database and virtualization 
+> engine).
+> 
+> The usual answer to the "I need to put binaries in the repository" 
+> question has been "no, you do not". Well, we do. We are in heavy 
+> development now, therefore today's version may depend on a certain 
+> version of a third-party shared library (DLL) which we only can get in 
+> binary form, and tomorrow's version may depend on the next version of 
+> that library, and you cannot mix today's source with yesterday's 
+> third-party DLL. I. e. to be able to use the code from 7 days ago at 
+> 11.07 AM you need "git checkout" to "return" our source AND the binaries 
+> we were using back then. This is something ClearCase manages 
+> satisfactorily.
 
-I agree. An unterminated yet non-NULL return from strbuf_detach is
-just dangerous behavior. Something like this should probably be
-applied:
+I understand. The problem in your case might not be too bad, after all. 
+The problem only arises when you have big files that are compressed. If 
+you check in multiple versions of an uncompressed .dll file, Git will 
+usually do a very good job at compressing them.
 
----8<---
-diff --git a/strbuf.c b/strbuf.c
-index 77444a9..538035a 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -24,14 +24,16 @@ int suffixcmp(const char *str, const char *suffix)
-  * buf is non NULL and ->buf is NUL terminated even for a freshly
-  * initialized strbuf.
-  */
--char strbuf_slopbuf[1];
-+char strbuf_slopbuf[1] =3D { '\0' };
+If they are compressed, what you probably need is something like a sparse 
+clone, which is sort of available in the form of shallow clones, but it is 
+too limited still.
 
- void strbuf_init(struct strbuf *sb, size_t hint)
- {
- 	sb->alloc =3D sb->len =3D 0;
- 	sb->buf =3D strbuf_slopbuf;
--	if (hint)
-+	if (hint) {
- 		strbuf_grow(sb, hint);
-+		sb->buf[0] =3D '\0';
-+	}
- }
+Having said that, in another company I work for, they hav 20G repositories 
+and they will grow larger. That is something they incurred due to 
+historical reasons, and they are willing to pay the price in terms of disk 
+space. Due to Git's distributed nature, they had no problems with cloning; 
+they just use a local reference upon initial clone.
 
- void strbuf_release(struct strbuf *sb)
----8<---
+> I have read about:
+> - submodules + using different repositories once one "blob repository"  
+>   grows too much. This will be probably rejected because it is quite 
+>   contrived.
 
->
->> =A0static char *parse_value(void)
->> =A0{
->> - =A0 =A0 static char value[1024];
->> - =A0 =A0 int quote =3D 0, comment =3D 0, len =3D 0, space =3D 0;
->> + =A0 =A0 struct strbuf value =3D STRBUF_INIT;
->> + =A0 =A0 int quote =3D 0, comment =3D 0, space =3D 0;
->
-> One thing you could about the strbuf_detach thing is to just use a
-> single static strbuf instead of the static array, and just reset its
-> length back to zero on each call. So:
->
-> =A0static struct strbuf value =3D STRBUF_INIT;
-> =A0...
-> =A0strbuf_reset(&value);
->
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 value[len] =3D 0;
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return value;
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return value.len ?
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_detach(&val=
-ue, NULL) :
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strdup("");
->
-> Then this just becomes:
->
-> =A0return value.buf;
->
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 default:
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_rel=
-ease(&value);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return N=
-ULL;
->
-> And you can drop the release.
->
->> @@ -226,7 +226,9 @@ static int get_value(config_fn_t fn, void *data,=
- char *name, unsigned int len)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!value)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return -1;
->> =A0 =A0 =A0 }
->> - =A0 =A0 return fn(name, value, data);
->> + =A0 =A0 ret =3D fn(name, value, data);
->> + =A0 =A0 free(value);
->> + =A0 =A0 return ret;
->
-> And drop this hunk, since callers no longer need to free.
->
+I would also recommend against this, because submodules are a very weak 
+part of Git.
 
-Yeah, and this was what I tried first.
+> - git-annex (does not get the files in when cloning, pulling, checking 
+>   out; you need to do it manually)
+> - git-media (same as git-annex)
 
-I dropped that approach because I misread the code of strbuf_setlen so
-I thought it ended up freeing the buffer (which would have lost the
-gain we get from making it static). This is wrong, it does not do
-that. But this brings a new issue: leaving potentially huge blocks of
-memory (especially since this patch is about long lines) allocated
-inside a function can be a bit nasty. But it's probably not a big deal
-here, the blocks are probably small enough to "leak" without worries,
-unless you have a downright evil config file (which I suspect could
-only happen due to disk-corruption, in which case you're going to have
-much much bigger problems). And that problem can also be fixed by
-giving the buffer file-local scope, and adding a cleanup-function that
-gets called when config-parsing is finished. But it's probably not
-even worth the hassle.
+Yes, this is an option, but a bit klunky.
 
-I guess it's my background from handheld/low-power device development
-that makes me worry too much about problems like these :P
+> - boar (no, we do not want to use a VCS for binaries in addition to git)
 
-In other words: I think you're right, it's a much better approach.
-Less allocations, less penalty on the start-up time for every little
-git-command.
+I did not know about that.
 
-> I do wonder, though, if we could be reusing the unquote_c_style()
-> function in quote.c. They are obviously similar, but I haven't checke=
-d
-> if there is more going on in the config code.
+> - and a few more
+> 
+> So far the only good solution seems to be git-bigfiles but it's still
+> in development.
 
-Hmm, this is an interesting suggestion. It would be a part of a bigger
-change though: unquote_c_style requires it's input to be in memory,
-while parse_value uses a function called get_next_char to feed the
-parser. So we'd either have to read the entire file into memory, or
-find some way to read the file line-by-line while handling \n-escaping
-correctly.
+It has stalled, apparently, but I wanted to have a look at it anyway. Will 
+let you know of my findings!
 
-It also seems like there's differences in what kind of escaping and
-normalization the two functions handle; unquote_c_style handles more
-escaped character sequences, while parse_value normalize all
-non-escaped space-characters ('\t' et. al) into SP. This might not be
-such a big problem in reality.
+> Is there any good solution for my use case, where version = sources 
+> version + binaries version?
+> 
+> Thank you.
+> 
+> If we suceed with git here, the whole corportation (150,000+
+> employees, Fortune 500) may start to move to git in a year. Many
+> people are fed up with CC there.
+
+Ciao,
+Johannes
