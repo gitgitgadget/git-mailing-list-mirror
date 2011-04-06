@@ -1,56 +1,162 @@
-From: Daniel Lobato <elobatocs@gmail.com>
-Subject: Re: GSOC submission
-Date: Wed, 6 Apr 2011 16:45:52 +0200
-Message-ID: <BANLkTikkQmBWFnfFeiShA_YwSaGDYeu-NA@mail.gmail.com>
-References: <BANLkTi=5rWzDvsfdys_YhA-4zBxc=HMpeA@mail.gmail.com>
+From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+Subject: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
+Date: Wed,  6 Apr 2011 11:05:36 -0400
+Message-ID: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
+References: <4D9B7A9E.6040902@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 06 16:46:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: James Y Knight <jknight@itasoftware.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Apr 06 17:05:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Tzb-0006f7-DU
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 16:45:59 +0200
+	id 1Q7UIo-0004nV-Cg
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 17:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756294Ab1DFOpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 10:45:54 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:56826 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756261Ab1DFOpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 10:45:53 -0400
-Received: by gxk21 with SMTP id 21so595353gxk.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 07:45:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=qfgF03KWMixGfRioOwd/4CyAOKUkww+DQUE2MIJrqCQ=;
-        b=GquWiCo0ugqvxohYyBPAvYEwE8Ev6waxPLN0ORrH1VdrCw5qdyVDGxW1etfcFuRg/s
-         MUHYkQYbHZisKFIWSc8b2cXuNzA7MbjxDmKcd5mLwO3tNGX7mD72fDskG2Aan+/iowpU
-         uPdiTZPO+Ac02tkNH4avJlBfqV2DoqQBDwXfM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=QGW+Qnpn9n1ziUP1RU5y5aej2fCKJm/usCOlJZ11Ct2XJ+MWMsqREQY5n1RIPeA0E8
-         kJP3YqP0h5SJvTTEKHBStQCDuJy1FLTEBQgyYSfp3lftyKwglMaU6dpGSfdMmuwbLgZt
-         KYKf6b9LUL+P2wPRtlGQEvh933m6QRD2It9nA=
-Received: by 10.150.214.17 with SMTP id m17mr1928174ybg.187.1302101152884;
- Wed, 06 Apr 2011 07:45:52 -0700 (PDT)
-Received: by 10.150.178.4 with HTTP; Wed, 6 Apr 2011 07:45:52 -0700 (PDT)
-In-Reply-To: <BANLkTi=5rWzDvsfdys_YhA-4zBxc=HMpeA@mail.gmail.com>
+	id S1756282Ab1DFPFo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 11:05:44 -0400
+Received: from mx1.itasoftware.com ([63.115.78.20]:42870 "EHLO
+	mx1.itasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756203Ab1DFPFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 11:05:43 -0400
+Received: from ita4mta2.internal.itasoftware.com (ita4mta2.internal.itasoftware.com [10.4.52.168])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.itasoftware.com (Postfix) with ESMTP id 71377256D46;
+	Wed,  6 Apr 2011 11:05:36 -0400 (EDT)
+Received: from asedeno.corp.itasoftware.com (lb1.dc4nat162.dc4.internal.itasoftware.com [10.4.199.162])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ita4mta2.internal.itasoftware.com (Postfix) with ESMTPS id 4796619D8031;
+	Wed,  6 Apr 2011 11:05:36 -0400 (EDT)
+Received: from asedeno by asedeno.corp.itasoftware.com with local (Exim 4.74)
+	(envelope-from <asedeno@asedeno.corp.itasoftware.com>)
+	id 1Q7UIa-0002ON-7X; Wed, 06 Apr 2011 11:05:36 -0400
+X-Mailer: git-send-email 1.7.4.2.1.gd6f1f
+In-Reply-To: <4D9B7A9E.6040902@mit.edu>
+X-ITASoftware-MailScanner: Found to be clean
+X-ITASoftware-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-1, required 3, ALL_TRUSTED -1.00)
+X-ITASoftware-MailScanner-From: asedeno@itasoftware.com
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170979>
 
-2011/4/6 Daniel Lobato <elobatocs@gmail.com>
->
-> Hi all,
-> I am a prospective GSoC contributor in git, and I have already written my letter but unfortunately it looks like it is impossible to submit it since yesterday, it gives a 500 http error if I try to do so.
-> Thank you for the opportunity,
-> Daniel Lobato
+Similar to the 'remote.<name>.pushurl' config key for git remotes,
+'pushurl' is designed to be used in cases where 'url' points to an SVN
+repository via a read-only transport, to provide an alternate
+read/write transport. It is assumed that both keys point to the same
+repository.
+
+The 'pushurl' key is distinct from the 'commiturl' key in that
+'commiturl' is a full svn path while 'pushurl' (like 'url') is a base
+path. 'commiturl' takes precendece over 'pushurl' in cases where
+either might be used.
+
+The 'pushurl' is used by git-svn's dcommit and branch commands.
+
+Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+Reviewed-off-by: James Y Knight <jknight@itasoftware.com>
+---
+ Documentation/git-svn.txt |   10 ++++++++++
+ git-svn.perl              |   18 +++++++++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index ea8fafd..4aa6404 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -648,6 +648,16 @@ svn-remote.<name>.rewriteUUID::
+ 	where the original UUID is not available via either useSvmProps
+ 	or useSvnsyncProps.
+=20
++svn-remote.<name>.pushurl::
++
++	Similar to git's 'remote.<name>.pushurl', this key is designed
++	to be used in cases where 'url' points to an SVN repository
++	via a read-only transport, to provide an alternate read/write
++	transport. It is assumed that both keys point to the same
++	repository. Unlike 'commiturl', 'pushurl' is a base path. If
++	either 'commiturl' or 'pushurl' could be used, 'commiturl'
++	takes precedence.
++
+ svn.brokenSymlinkWorkaround::
+ 	This disables potentially expensive checks to workaround
+ 	broken symlinks checked into SVN by broken clients.  Set this
+diff --git a/git-svn.perl b/git-svn.perl
+index fa8cd07..184442a 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -531,7 +531,7 @@ sub cmd_dcommit {
+ 		$url =3D eval { command_oneline('config', '--get',
+ 			      "svn-remote.$gs->{repo_id}.commiturl") };
+ 		if (!$url) {
+-			$url =3D $gs->full_url
++			$url =3D $gs->full_pushurl
+ 		}
+ 	}
+=20
+@@ -679,7 +679,7 @@ sub cmd_branch {
+ 	$head ||=3D 'HEAD';
+=20
+ 	my (undef, $rev, undef, $gs) =3D working_head_info($head);
+-	my $src =3D $gs->full_url;
++	my $src =3D $gs->full_pushurl;
+=20
+ 	my $remote =3D Git::SVN::read_all_remotes()->{$gs->{repo_id}};
+ 	my $allglobs =3D $remote->{ $_tag ? 'tags' : 'branches' };
+@@ -730,7 +730,7 @@ sub cmd_branch {
+ 		$url =3D eval { command_oneline('config', '--get',
+ 			"svn-remote.$gs->{repo_id}.commiturl") };
+ 		if (!$url) {
+-			$url =3D $remote->{url};
++			$url =3D $remote->{pushurl} || $remote->{url};
+ 		}
+ 	}
+ 	my $dst =3D join '/', $url, $lft, $branch_name, ($rgt || ());
+@@ -1834,6 +1834,8 @@ sub read_all_remotes {
+ 			$r->{$1}->{svm} =3D {};
+ 		} elsif (m!^(.+)\.url=3D\s*(.*)\s*$!) {
+ 			$r->{$1}->{url} =3D $2;
++		} elsif (m!^(.+)\.pushurl=3D\s*(.*)\s*$!) {
++			$r->{$1}->{pushurl} =3D $2;
+ 		} elsif (m!^(.+)\.(branches|tags)=3D$svn_refspec$!) {
+ 			my ($remote, $t, $local_ref, $remote_ref) =3D
+ 			                                     ($1, $2, $3, $4);
+@@ -2071,6 +2073,8 @@ sub new {
+ 	$self->{url} =3D command_oneline('config', '--get',
+ 	                               "svn-remote.$repo_id.url") or
+                   die "Failed to read \"svn-remote.$repo_id.url\" in c=
+onfig\n";
++	$self->{pushurl} =3D eval { command_oneline('config', '--get',
++	                          "svn-remote.$repo_id.pushurl") };
+ 	$self->rebuild;
+ 	$self;
+ }
+@@ -2548,6 +2552,14 @@ sub full_url {
+ 	$self->{url} . (length $self->{path} ? '/' . $self->{path} : '');
+ }
+=20
++sub full_pushurl {
++	my ($self) =3D @_;
++	if ($self->{pushurl}) {
++		return $self->{pushurl} . (length $self->{path} ? '/' . $self->{path=
+} : '');
++	} else {
++		return $self->full_url;
++	}
++}
+=20
+ sub set_commit_header_env {
+ 	my ($log_entry) =3D @_;
+--=20
+1.7.4.2.1.gd6f1f
