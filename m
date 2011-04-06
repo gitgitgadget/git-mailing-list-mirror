@@ -1,86 +1,90 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Git enterprise setup on a large project
-Date: Sun, 3 Apr 2011 20:31:15 +0200
-Message-ID: <20110403183115.GA28901@nibiru.local>
-References: <BANLkTikv4h3GBGB+hTHjJyAqwEmqZETyEg@mail.gmail.com>
-Reply-To: weigelt@metux.de
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: blobs (once more)
+Date: Wed, 6 Apr 2011 10:14:35 -0400
+Message-ID: <BANLkTi=03mrHzfcVhgF9woWhsWb3wenxMQ@mail.gmail.com>
+References: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com> <alpine.DEB.1.00.1104061121000.2040@bonsai2>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 06 16:00:17 2011
+Cc: Pau Garcia i Quiles <pgquiles@elpauer.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 06 16:15:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7THM-0005GO-MQ
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 16:00:17 +0200
+	id 1Q7TVd-0007bq-81
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 16:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756138Ab1DFOAJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 10:00:09 -0400
-Received: from caprica.metux.de ([82.165.128.25]:58836 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756164Ab1DFOAH convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 10:00:07 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p36Ds7ue018842
-	for <git@vger.kernel.org>; Wed, 6 Apr 2011 15:58:16 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p36Ca3GH006454
-	for git@vger.kernel.org; Wed, 6 Apr 2011 14:36:03 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id p33IVFlL006470
-	for git@vger.kernel.org; Sun, 3 Apr 2011 20:31:15 +0200
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <BANLkTikv4h3GBGB+hTHjJyAqwEmqZETyEg@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1756159Ab1DFOO4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 10:14:56 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:50395 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755986Ab1DFOOz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 10:14:55 -0400
+Received: by gyd10 with SMTP id 10so582146gyd.19
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 07:14:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=wUIGngUKLk6717IYzb4E0aqX8pnn12SyPuhXmbW2soo=;
+        b=MLTm9kbl4rh3uxnKlO2bfgtauOh4aNG0s2prZWOqIkrIls7W3332EY8y8NJ41CHgVo
+         B6CliU2vbT+aSl7ZXSG3AipxfKfIGFXoDo2Qt6DyB0oTB+NtdAV7R9YMtKdl9kDwtlds
+         3F9tMMPeX6LDb+2rBXE7e9pdhz8f3QFDuNm8U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=fHowLeGKyPpVFBZlC4gbF5qLV03QqNPuuIpESok5CSL57XBZGDtXOc/DLQOZUYpHnJ
+         ipP4GzGhQmlWQiZAQ0VosiXZBmorW7z4++vYq++V8H5fZUrrZ0o40P5Q8Kg22VIODP7k
+         VySjLjQEVtrfXIaXk+DJhSayNWLE03PjTQa/I=
+Received: by 10.91.199.16 with SMTP id b16mr1919055agq.3.1302099295106; Wed,
+ 06 Apr 2011 07:14:55 -0700 (PDT)
+Received: by 10.90.103.15 with HTTP; Wed, 6 Apr 2011 07:14:35 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1104061121000.2040@bonsai2>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170977>
 
-* Frederic JECKER <frederic.jecker@gmail.com> wrote:
+On Wed, Apr 6, 2011 at 5:25 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> I understand. The problem in your case might not be too bad, after al=
+l.
+> The problem only arises when you have big files that are compressed. =
+If
+> you check in multiple versions of an uncompressed .dll file, Git will
+> usually do a very good job at compressing them.
 
-> What could I do then ?
-> - Use submodules ?
-> - Create a blessed per-project repository and instead of a public
-> repository for each=A0developer=A0create a per-project public and sha=
-red
-> repository ?
-> ...I'm a bit lost
+Except when they are very large; in that case git tends to OOM. But
+just yesterday Junio posted a proposed patch to honour a max file size
+for compression (search the archive for 'Git exhausts memory' and
+'core.bigFileThreshold'.
 
-Just think about who has to see whose commits ?
+So Pau might be in luck with current git + Junio's patch + enough RAM
+on the workstations. Pau, I definitely suggest you try it out.
 
-I guess, each project's codebase is accessed by a relatively
-small number of people. So it IMHO would be natural to give
-each project a separate (blessed) repository. The project
-leader will merge (or cherry-pick) the blessed changes here,
-and other merge-down or better rebase from there.
+If it still consumes too much memory with the largest filest (ie: the
+VM images you mention), the fedpkg approach (discussed in this thread)
+is good too. It's a Python wrapper around git, which tracks a text
+file listing the hashes of the large files, and fetches them (or
+uploads them) via SCP. You only need to use it when dealing with the
+large files -- most of the time you're just using git.
 
-If there's some big mainline (the base for many other projects),
-it should live in its own repository. BTW: you dont have to use
-full clones - you could also fetch individual refs if you like.
+The fedpkg code is quite readable, and I've already "stolen" some of
+its code for my local needs. Recommended.
 
-Individual WIP branches probably dont necessarily need to be pushed
-into the central project repos - devs could sync each other
-selectively.
+cheers,
 
 
-cu
+m
 --=20
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
