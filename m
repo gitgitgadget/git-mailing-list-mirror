@@ -1,63 +1,133 @@
-From: Jeff King <peff@github.com>
-Subject: Re: [PATCH] stash: fix false positive in the invalid ref test.
-Date: Wed, 6 Apr 2011 14:27:26 -0400
-Message-ID: <20110406182726.GC8205@sigill.intra.peff.net>
-References: <1302045673-59982-1-git-send-email-jon.seymour@gmail.com>
+From: Arnaud Lacombe <lacombar@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.4.3
+Date: Wed, 6 Apr 2011 14:40:29 -0400
+Message-ID: <BANLkTimh+--iRNEpr2XOFf4jXoVhmHUnoA@mail.gmail.com>
+References: <7v4o6fg29j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 20:27:37 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 20:40:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7XS4-0000uw-AW
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 20:27:36 +0200
+	id 1Q7Xed-0001Fh-Pk
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 20:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756161Ab1DFS1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 14:27:30 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35535
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755368Ab1DFS1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 14:27:30 -0400
-Received: (qmail 7394 invoked by uid 107); 6 Apr 2011 18:28:16 -0000
-Received: from 205.158.58.41.ptr.us.xo.net (HELO sigill.intra.peff.net) (205.158.58.41)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Apr 2011 14:28:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Apr 2011 14:27:26 -0400
-Content-Disposition: inline
-In-Reply-To: <1302045673-59982-1-git-send-email-jon.seymour@gmail.com>
+	id S1756388Ab1DFSka convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 14:40:30 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39617 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756371Ab1DFSka convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 14:40:30 -0400
+Received: by iyb14 with SMTP id 14so1690970iyb.19
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 11:40:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3q1k5P3OcsKQNEuy+KgFkQVzKzk7N6G++qi8nhn/iHs=;
+        b=ceGiD0r36VgYLdR6k4ZDihDRkc8bMFxYXXO88w+XHiI3jz4MXpWEdPY5RdZRwKiW60
+         zBf5yzyO4yvJLoYw0DwgGwKm5FNh23pbXd1YiyJbhQoRmhsgYD27xKgjldh2vLh9+4h0
+         WlUTMvkaLA1grUR0r6WRTWNY6BQkX0bZvs7Sg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HkUKiYpwnGvL7d1ZgvvaMYhUChdvWh+RnCdSK85ehmC4agpXxZ+zhEfpLPdPrybSjo
+         OOgZhctxiKdtag1pSpAfi4Bh7HbjpR1mlky2BkfdNQyUhU33UriaO1mnEa+uTZpAcA/s
+         2paLpAh7TpSLszXxxlyJ6emf9FsCbejl58Lic=
+Received: by 10.43.64.16 with SMTP id xg16mr1986436icb.72.1302115229347; Wed,
+ 06 Apr 2011 11:40:29 -0700 (PDT)
+Received: by 10.42.180.71 with HTTP; Wed, 6 Apr 2011 11:40:29 -0700 (PDT)
+In-Reply-To: <7v4o6fg29j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171000>
 
-On Wed, Apr 06, 2011 at 09:21:13AM +1000, Jon Seymour wrote:
+Hi Julio,,
 
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 11077f0..5263de7 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -543,11 +543,11 @@ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
->  	echo bar6 > file2 &&
->  	git add file2 &&
->  	git stash &&
-> -	test_must_fail git drop stash@{1} &&
-> -	test_must_fail git pop stash@{1} &&
-> -	test_must_fail git apply stash@{1} &&
-> -	test_must_fail git show stash@{1} &&
-> -	test_must_fail git branch tmp stash@{1} &&
-> +	test_must_fail git stash drop stash@{1} &&
-> +	test_must_fail git stash pop stash@{1} &&
-> +	test_must_fail git stash apply stash@{1} &&
-> +	test_must_fail git stash show stash@{1} &&
-> +	test_must_fail git stash branch tmp stash@{1} &&
->  	git stash drop
+On Sun, Apr 3, 2011 at 4:36 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Junio C Hamano (9):
+> =A0 =A0 =A0apply: do not patch lines that were already patched
+>
+This commit introduces a regression when editing splithunks using "git
+add -p". Reverting the patch fix the regression.
 
-Probably we should just squash your fix in with my first patch, and drop
-my test.  Your fixed version is a superset of what mine tests.
+Considering the following checked-in code:
 
--Peff
+int
+main(int argc, char **argv)
+{
+        int a;
+
+        return 0;
+}
+
+modified the following way:
+
+int
+main(int argc, char **argv)
+{
+        int c;
+        int a;
+        int d;
+        int e;
+        int f;
+
+        return 0;
+}
+
+if you 'git add -p' on the file, you'll get:
+
+diff --git a/main.c b/main.c
+index f9f4197..7fb483f 100644
+--- a/main.c
++++ b/main.c
+@@ -9,7 +9,11 @@
+ int
+ main(int argc, char **argv)
+ {
++       int c;
+        int a;
++       int d;
++       int e;
++       int f;
+
+        return 0;
+ }
+
+Now, I only want the first part, so I reduce the context by typing
+'s', which lead to:
+
+Split into 2 hunks.
+@@ -9,4 +9,5 @@
+ int
+ main(int argc, char **argv)
+ {
++       int c;
+        int a;
+
+If I edit this hunk and make _no_modification_, "git apply" fails with:
+
+error: patch failed: main.c:12
+error: main.c: patch does not apply
+Your edited hunk does not apply. Edit again (saying "no" discards!) [y/=
+n]?
+
+This hunk does _apply_, as it could be staged and committed as-is if I
+did not edit it.
+
+This was just a way to reproduce the regression. If you change the
+code in a way that would still apply, git-apply would still fails to
+apply the hunk. Editing the whole original hunk (ie. not split) works
+fine.
+
+ - Arnaud
