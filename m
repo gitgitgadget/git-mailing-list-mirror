@@ -1,363 +1,329 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.5-rc1
-Date: Wed, 06 Apr 2011 13:04:17 -0700
-Message-ID: <7vd3kzi1tq.fsf@alter.siamese.dyndns.org>
+Subject: What's cooking in git.git (Apr 2011, #02; Wed, 6)
+Date: Wed, 06 Apr 2011 13:04:40 -0700
+Message-ID: <7v8vvni1t3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 06 22:04:35 2011
+X-From: git-owner@vger.kernel.org Wed Apr 06 22:05:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7Yxu-0008Bb-Lo
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 22:04:35 +0200
+	id 1Q7YyH-0008U3-CV
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 22:04:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756757Ab1DFUE1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 16:04:27 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50337 "EHLO
+	id S1756760Ab1DFUEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 16:04:51 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50833 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753455Ab1DFUE0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 16:04:26 -0400
+	with ESMTP id S1753455Ab1DFUEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 16:04:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 39B424898;
-	Wed,  6 Apr 2011 16:06:18 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F82E48B0;
+	Wed,  6 Apr 2011 16:06:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=MNQ2j8e0fyITnCqDQrxVEkEfv
-	ME=; b=oCx2k5M3IUXs0NPFgDFS7feFJWIWw4/9hjtyPply6RxBchU87RVbx7LZD
-	O61a1DhXjVFKIEwpomIwAaI2yEP0PtBQOKy29ugvzD9Uif1k/HHQaUZQfrmeessc
-	y+twy3H2pu7cuEmC4Li0R9F97/KVIaRxPMTxSrujKOcQNHC5Zk=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=R
+	I+jpnCZiCOQhaGnvMNlyqvnXUg=; b=q/KCEn2hpazLRB+VVYe9YSODAeOZhMhh2
+	0xLXrsWW+/kWYZy2hK6LQwBECBJDlT5klhX1xywUXL5Kq6G4cH3G/BfRaTtqH14s
+	5IDQ4guhu1zCST5nE9kE4hHZKXAEdreLfeyYWG8PI2G4Qbvyzisy2YMnfI++/X8K
+	N41onyI61g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=fL0AYEsk8YwHVJc9VtZ
-	7NpQq7LbfmntHl5OkHMMF9dGLREsnlmyRqmrmyg5i3/bkIU5Dvq6MLEgfQjX0IJV
-	9o+42ncEBespdV5YsVr9z+IFmn+8RfXVGqo5L6yTR7UY3Pd6tE+kwLLr26ojpco8
-	A7IrUhgegx8agoMXclf2rcYQ=
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=CIY
+	cJufGQUbDj0qeTDf/4d09TJftkFecT1jRMu74X/AeAt+KUifX4Ad0Z5XMDgeCnKf
+	EBgZPLGo6TTsSl5X970ZJjZKxy5oMGpkQU0JORvUaBpvhqwXVh3vT4wYTsHptCOB
+	qnnpVu2snu9o1D6ICERuXgfwlMtlo9uf73Baczxs=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 253344897;
-	Wed,  6 Apr 2011 16:06:16 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7980948AD;
+	Wed,  6 Apr 2011 16:06:42 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E65AB4895; Wed,  6 Apr 2011
- 16:06:13 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 04D8B48A3; Wed,  6 Apr 2011
+ 16:06:36 -0400 (EDT)
+X-master-at: 6be0559183ac0b40680df314748141d1bdf28e41
+X-next-at: 00b8c7c14947fdc050aa2896ceffcc245873ec3e
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5432FD50-6089-11E0-947D-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 63E6BD54-6089-11E0-8D54-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171013>
 
-A release candidate Git 1.7.5-rc1 is available at the usual places
-for testing:
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.
 
-  http://www.kernel.org/pub/software/scm/git/
+The tip of 'master' is at 1.7.5-rc1 now.
 
-  git-1.7.5.rc1.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.5.rc1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.5.rc1.tar.{gz,bz2}		(preformatted docs)
+--------------------------------------------------
+[New Topics]
 
-The RPM binary packages for a few architectures are found in:
+* dm/http-cleanup (2011-03-30) 2 commits
+ - http-push: refactor curl_easy_setup madness
+ - http: make curl callbacks match contracts from curl header
 
-  testing/git-*-1.7.5.rc1-1.fc13.$arch.rpm	(RPM)
+* jc/pack-objects-bigfile (2011-04-05) 1 commit
+ - Teach core.bigfilethreashold to pack-objects
 
-Please hunt for regressions and have fun.  Thanks.
+* jk/maint-stash-oob (2011-04-06) 2 commits
+ - stash: fix false positive in the invalid ref test.
+ - stash: fix accidental apply of non-existent stashes
 
-Git v1.7.5 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+* nk/blame-abbrev (2011-04-06) 1 commit
+ - blame: add --abbrev command line option and make it honor core.abbrev
 
-Updates since v1.7.4
---------------------
+* nm/submodule-update-force (2011-04-01) 1 commit
+ - submodule: Add --force option for git submodule update
 
- * Various MinGW portability fixes.
+* jk/maint-upload-pack-shallow (2011-04-04) 1 commit
+ - [REVISIT] upload-pack deadlock during a shallow clone
 
- * Various git-p4 enhancements (in contrib).
+* jk/stash-loosen-safety (2011-04-05) 1 commit
+ - stash: drop dirty worktree check on apply
 
- * Various vcs-svn enhancements.
+--------------------------------------------------
+[Graduated to "master"]
 
- * Various git-gui updates (0.14.0).
+* jc/rev-list-options-fix (2011-04-01) 1 commit
+  (merged to 'next' on 2011-04-03 at 91f19de)
+ + "log --cherry-pick" documentation regression fix
 
- * Update to more modern HP-UX port.
+* jk/maint-remote-mirror-safer (2011-03-30) 3 commits
+  (merged to 'next' on 2011-04-03 at ccc9c1a)
+ + remote: deprecate --mirror
+ + remote: separate the concept of push and fetch mirrors
+ + remote: disallow some nonsensical option combinations
 
- * The codebase is getting prepared for i18n/l10n; no translated
-   strings nor translation mechanism in the code yet, but the strings
-   are being marked for l10n.
+This avoids a nonsense configuration to be created to confuse unsuspecting
+users.
 
- * The bash completion script can now complete symmetric difference
-   for "git diff" command, e.g. "git diff ...bra<TAB>".
+* jl/submodule-fetch-on-demand (2011-03-06) 7 commits
+  (merged to 'next' on 2011-03-20 at a5e452d)
+ + fetch/pull: Describe --recurse-submodule restrictions in the BUGS section
+ + submodule update: Don't fetch when the submodule commit is already present
+ + fetch/pull: Don't recurse into a submodule when commits are already present
+ + Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule' option
+ + config: teach the fetch.recurseSubmodules option the 'on-demand' value
+ + fetch/pull: Add the 'on-demand' value to the --recurse-submodules option
+ + fetch/pull: recurse into submodules when necessary
 
- * The default minimum length of abbreviated and unique object names
-   can now be configured by setting the core.abbrev configuration
-   variable.
+* mg/doc-revisions-txt (2011-04-04) 3 commits
+  (merged to 'next' on 2011-04-04 at ebf3612)
+ + revisions.txt: language improvements
+ + revisions.txt: structure with a labelled list
+ + revisions.txt: consistent use of quotes
 
- * "git apply -v" reports offset lines when the patch does not apply at
-   the exact location recorded in the diff output.
+* nm/maint-conflicted-submodule-entries (2011-03-30) 1 commit
+  (merged to 'next' on 2011-04-03 at 40c5094)
+ + submodule: process conflicting submodules only once
 
- * "git config" used to be also known as "git repo-config", but the old
-   name is now officially deprecated.
+--------------------------------------------------
+[Stalled]
 
- * "git checkout --detach <commit>" is a more user friendly synonym for
-   "git checkout <commit>^0".
+* jh/gitweb-localtime (2011-03-23) 1 commit
+ - gitweb: javascript ability to adjust time based on timezone
 
- * "git checkout" performed on detached HEAD gives a warning and
-   advice when the commit being left behind will become unreachable fro=
-m
-   any branch or tag.
+* mg/show-without-prune (2011-04-01) 1 commit
+ - builtin/show: do not prune by pathspec
+ (this branch uses mg/reflog-with-options.)
 
- * "git cherry-pick" and "git revert" can be told to use a custom merge
-   strategy, similar to "git rebase".
+I wanted to like this, but it still feels like too much magic.
 
- * "git cherry-pick" remembers which commit failed to apply when it is
-   stopped by conflicts, making it unnecessary to use "commit -c $commi=
-t"
-   to conclude it.
+* gr/cvsimport-alternative-cvspass-location (2011-02-18) 1 commit
+ - Look for password in both CVS and CVSNT password files.
 
- * "git cvsimport" bails out immediately when the cvs server cannot be
-   reached, without spewing unnecessary error messages that complain ab=
-out
-   the server response it never got.
+It seems that we need separate parsers for these two formats in order not
+to regress the users of the original cvs.
 
- * "git fetch" vs "git upload-pack" transfer learned 'no-done'
-   protocol extension to save one round-trip after the content
-   negotiation is done. This saves one HTTP RPC, reducing the overall
-   latency for a trivial fetch.
+* jc/index-pack (2011-02-25) 5 commits
+ - index-pack --verify: read anomalous offsets from v2 idx file
+ - write_idx_file: need_large_offset() helper function
+ - index-pack: --verify
+ - write_idx_file: introduce a struct to hold idx customization options
+ - index-pack: group the delta-base array entries also by type
 
- * "git fetch" can be told to recursively fetch submodules on-demand.
+Still a WIP, and will not be ready for 1.7.5. Need to put histogram output
+into index-pack --verify to really kill verify-pack.
 
- * "git grep -f <filename>" learned to treat "-" as "read from the
-   standard input stream".
+* jk/tag-contains (2010-07-05) 4 commits
+ - Why is "git tag --contains" so slow?
+ - default core.clockskew variable to one day
+ - limit "contains" traversals based on commit timestamp
+ - tag: speed up --contains calculation
 
- * "git grep --no-index" did not honor pathspecs correctly, returning
-   paths outside the specified area.
+The idea of the bottom one is probably Ok, except that the use of object
+flags needs to be rethought, or at least the helper needs to be moved to
+builtin/tag.c to make it clear that it should not be used outside the
+current usage context.
 
- * "git init" learned the --separate-git-dir option to allow the git
-   directory for a new repository created elsewhere and linked via the
-   gitdir mechanism. This is primarily to help submodule support later
-   to switch between a branch of superproject that has the submodule
-   and another that does not.
+--------------------------------------------------
+[Cooking]
 
- * "git log" type commands now understand globbing pathspecs.  You
-   can say "git log -- '*.txt'" for example.
+* dm/color-palette (2011-04-05) 1 commit
+  (merged to 'next' on 2011-04-04 at 0244ef9)
+ + Share color list between graph and show-branch
 
- * "git log" family of commands learned --cherry and --cherry-mark
-   options that can be used to view two diverged branches while omittin=
-g
-   or highlighting equivalent changes that appear on both sides of a
-   symmetric difference (e.g. "log --cherry A...B").
+* mg/sha1-path-advise (2011-03-31) 2 commits
+  (merged to 'next' on 2011-04-04 at e429e0c)
+ + sha1_name: Suggest commit:./file for path in subdir
+ + t1506: factor out test for "Did you mean..."
 
- * A lazy "git merge" that didn't say what to merge used to be an error=
-=2E
-   When run on a branch that has an upstream defined, however, the comm=
-and
-   now merges from the configured upstream.
+* ar/clean-rmdir-empty (2011-04-01) 1 commit
+  (merged to 'next' on 2011-04-03 at c63fac8)
+ + clean: unreadable directory may still be rmdir-able if it is empty
 
- * "git mergetool" learned how to drive "beyond compare 3" as well.
+* jk/maint-push-async-hang (2011-03-31) 4 commits
+ - send-pack: abort sideband demuxer on pack-objects error
+ - run-command: allow aborting async code prematurely
+ - finish_async: be quiet when waiting for async process
+ - teach wait_or_whine a "quiet" mode
+ (this branch is used by jk/maint-push-async-hang-threads.)
 
- * "git rerere forget" without pathspec used to forget all the saved
-   conflicts that relate to the current merge; it now requires you to
-   give it pathspecs.
+* jk/maint-push-async-hang-threads (2011-03-31) 2 commits
+ - run-command: implement abort_async for pthreads
+ - Merge branch 'jk/maint-push-async-hang' into jk/maint-push-async-hang-threads
+ (this branch uses jk/maint-push-async-hang.)
 
- * "git rev-list --objects $revs -- $pathspec" now limits the objects l=
-isted
-   in its output properly with the pathspec, in preparation for narrow
-   clones.
+* mg/reflog-with-options (2011-04-01) 3 commits
+  (merged to 'next' on 2011-04-03 at e69a95c)
+ + reflog: fix overriding of command line options
+ + t/t1411: test reflog with formats
+ + builtin/log.c: separate default and setup of cmd_log_init()
+ (this branch is used by mg/show-without-prune.)
 
- * "git push" with no parameters gives better advice messages when
-   "tracking" is used as the push.default semantics or there is no remo=
-te
-   configured yet.
+Reasonable, but can wait.
 
- * A possible value to the "push.default" configuration variable,
-   'tracking', gained a synonym that more naturally describes what it
-   does, 'upstream'.
+* mh/git-svn-automkdirs (2011-04-01) 1 commit
+  (merged to 'next' on 2011-04-03 at 7fa4978)
+ + git-svn: add an option to skip the creation of empty directories
 
- * "git rerere" learned a new subcommand "remaining" that is similar to
-   "status" and lists the paths that had conflicts which are known to
-   rerere, but excludes the paths that have already been marked as
-   resolved in the index from its output.  "git mergetool" has been
-   updated to use this facility.
+Should be safe, but I'd like an Ack from git-svn folks.
 
-Also contains various documentation updates.
+* jc/diff-irreversible-delete (2011-02-28) 1 commit
+  (merged to 'next' on 2011-04-03 at 5a23b23)
+ + git diff -D: omit the preimage of deletes
 
+Unstuck, thanks to Michael J Gruber.
 
-=46ixes since v1.7.4
-------------------
+* jh/notes-add-ui (2011-03-30) 1 commit
+ - Make "git notes add" more user-friendly when there are existing notes
 
-All of the fixes in the v1.7.4.X maintenance series are included in thi=
-s
-release, unless otherwise noted.
+* jk/notes-ui-updates (2011-03-30) 7 commits
+ - log/pretty-options: Document --[no-]notes and deprecate old notes options
+ - revision.c: make --no-notes reset --notes list
+ - revision.c: support --notes command-line option
+ - notes: refactor display notes default handling
+ - notes: refactor display notes extra refs field
+ - revision.c: refactor notes ref expansion
+ - notes: make expand_notes_ref globally accessible
 
- * "git fetch" from a client that is mostly following the remote
-   needlessly told all of its refs to the server for both sides to
-   compute the set of objects that need to be transferred efficiently,
-   instead of stopping when the server heard enough. In a project with
-   many tags, this turns out to be extremely wasteful, especially over
-   the smart HTTP transport (sp/maint-{upload,fetch}-pack-stop-early~1)=
-=2E
+I like what this does, but it probably can wait.
 
- * "git fetch" run from a repository that uses the same repository as
-   its alternate object store as the repository it is fetching from
-   did not tell the server that it already has access to objects
-   reachable from the refs in their common alternate object store,
-   causing it to fetch unnecessary objects (jc/maint-fetch-alt).
+* nd/maint-setup (2011-03-26) 2 commits
+  (merged to 'next' on 2011-03-31 at 2c36f6a)
+ + Kill off get_relative_cwd()
+ + setup: return correct prefix if worktree is '/'
 
- * "git remote add --mirror" created a configuration that is suitable f=
-or
-   doing both a mirror fetch and a mirror push at the same time, which
-   made little sense.  We now warn and require the command line to spec=
-ify
-   either --mirror=3Dfetch or --mirror=3Dpush.
+This benefits only the minority who use /.git at the root level of the
+filesystem, but the changed code is used from many codepaths; will not
+merge before 1.7.5.
 
-----------------------------------------------------------------
+* mz/rebase (2011-02-28) 34 commits
+  (merged to 'next' on 2011-03-31 at 3b1343c)
+ + rebase: define options in OPTIONS_SPEC
+  (merged to 'next' on 2011-02-25 at 52caa7a)
+ + Makefile: do not install sourced rebase scripts
+  (merged to 'next' on 2011-02-22 at 3219155)
+ + rebase: use @{upstream} if no upstream specified
+ + rebase -i: remove unnecessary state rebase-root
+ + rebase -i: don't read unused variable preserve_merges
+ + git-rebase--am: remove unnecessary --3way option
+ + rebase -m: don't print exit code 2 when merge fails
+ + rebase -m: remember allow_rerere_autoupdate option
+ + rebase: remember strategy and strategy options
+ + rebase: remember verbose option
+ + rebase: extract code for writing basic state
+ + rebase: factor out sub command handling
+ + rebase: make -v a tiny bit more verbose
+ + rebase -i: align variable names
+ + rebase: show consistent conflict resolution hint
+ + rebase: extract am code to new source file
+ + rebase: extract merge code to new source file
+ + rebase: remove $branch as synonym for $orig_head
+ + rebase -i: support --stat
+ + rebase: factor out call to pre-rebase hook
+ + rebase: factor out clean work tree check
+ + rebase: factor out reference parsing
+ + rebase: reorder validation steps
+ + rebase -i: remove now unnecessary directory checks
+ + rebase: factor out command line option processing
+ + rebase: align variable content
+ + rebase: align variable names
+ + rebase: stricter check of standalone sub command
+ + rebase: act on command line outside parsing loop
+ + rebase: improve detection of rebase in progress
+ + rebase: remove unused rebase state 'prev_head'
+ + rebase: read state outside loop
+ + rebase: refactor reading of state
+ + rebase: clearer names for directory variables
 
-Changes since v1.7.5-rc0 are as follows:
+I wanted to wait for an independent Ack or two for the tip one, which was
+a response to regression concerns raised by J6t, but ended up merging it
+to 'next' after giving another look.  Will not merge before 1.7.5, as
+there is no user visible improvements up to this point.
 
-Dan McGee (2):
-      Remove old binaries from .gitignore
-      Fix two unused variable warnings in gcc 4.6
+* jk/maint-merge-rename-create (2011-03-25) 3 commits
+  (merged to 'next' on 2011-03-31 at b9bc9f1)
+ + merge: turn on rewrite detection
+ + merge: handle renames with replacement content
+ + t3030: fix accidental success in symlink rename
 
-Jakub Narebski (1):
-      gitweb: Fix parsing of negative fractional timezones in JavaScrip=
-t
+* mz/maint-rename-unmerged (2011-03-23) 1 commit
+  (merged to 'next' on 2011-03-31 at c7b3d9a)
+ + diffcore-rename: don't consider unmerged path as source
 
-Jared Hance (1):
-      merge: match the help text with the documentation
+Will cook until 1.7.5 final.
 
-Jeff King (7):
-      merge: merge unborn index before setting ref
-      pull: do not clobber untracked files on initial pull
-      remote: disallow some nonsensical option combinations
-      remote: separate the concept of push and fetch mirrors
-      remote: deprecate --mirror
-      docs: fix filter-branch subdir example for exotic repo names
-      pull: do not clobber untracked files on initial pull
+* nd/struct-pathspec (2011-04-05) 5 commits
+ - pathspec: rename per-item field has_wildcard to use_wildcard
+  (merged to 'next' on 2011-03-31 at 66cbb7d)
+ + Improve tree_entry_interesting() handling code
+ + Convert read_tree{,_recursive} to support struct pathspec
+ + Reimplement read_tree_recursive() using tree_entry_interesting()
+ + Merge branch 'en/object-list-with-pathspec' into 'nd/struct-pathspec'
 
-Jens Lehmann (7):
-      fetch/pull: recurse into submodules when necessary
-      fetch/pull: Add the 'on-demand' value to the --recurse-submodules=
- option
-      config: teach the fetch.recurseSubmodules option the 'on-demand' =
-value
-      Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodule'=
- option
-      fetch/pull: Don't recurse into a submodule when commits are alrea=
-dy present
-      submodule update: Don't fetch when the submodule commit is alread=
-y present
-      fetch/pull: Describe --recurse-submodule restrictions in the BUGS=
- section
+Will cook until 1.7.5 final.
 
-Joe Ratterman (1):
-      grep: allow -E and -n to be turned on by default via configuratio=
-n
+* jc/add-u-migration (2011-03-22) 3 commits
+ - add: make "add -u/-A" update full tree without pathspec (step 3)
+ - add: make "add -u/-A" update full tree without pathspec (step 2)
+  (merged to 'next' on 2011-03-31 at 962e058)
+ + add: make "add -u/-A" update full tree without pathspec
 
-Jonathan Nieder (1):
-      compat: add missing #include <sys/resource.h>
+Need to redo the advice after the "this is from root of the working tree"
+magic pathspec.
 
-Junio C Hamano (8):
-      merge: merge with the default upstream branch without argument
-      "log --cherry-pick" documentation regression fix
-      Doc: mention --delta-base-offset is the default for Porcelain com=
-mands
-      Git 1.7.4.3
-      Update release notes
-      Start preparing for 1.7.4.4
-      Git 1.7.4.4
-      Git 1.7.5-rc1
+* jc/rename-degrade-cc-to-c (2011-01-06) 4 commits
+  (merged to 'next' on 2011-03-31 at 8d685d7)
+ + diffcore-rename: fall back to -C when -C -C busts the rename limit
+ + diffcore-rename: record filepair for rename src
+ + diffcore-rename: refactor "too many candidates" logic
+ + builtin/diff.c: remove duplicated call to diff_result_code()
 
-Lawrence Mitchell (1):
-      git.el: Don't use font-lock-compile-keywords
+Will hold.
 
-Michael J Gruber (3):
-      revisions.txt: consistent use of quotes
-      revisions.txt: structure with a labelled list
-      revisions.txt: language improvements
+* cn/system-path-tweak (2011-03-17) 1 commit
+ - system_path: use a static buffer
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
-      git-init.txt: move description section up
-      init, clone: support --separate-git-dir for .git file
+Don't see much point in this itself. Probably will drop.
 
-Nicolas Morey-Chaisemartin (1):
-      submodule: process conflicting submodules only once
+* en/merge-recursive (2011-03-17) 4 commits
+  (merged to 'next' on 2011-03-18 at a32016b)
+ + merge-recursive: tweak magic band-aid
+  (merged to 'next' on 2011-03-09 at 3762932)
+ + merge-recursive: When we detect we can skip an update, actually skip it
+ + t6022: New test checking for unnecessary updates of files in D/F conflicts
+ + t6022: New test checking for unnecessary updates of renamed+modified files
 
-SZEDER G=C3=A1bor (1):
-      Documentation: trivial grammar fix in core.worktree description
-
-Stephen Boyd (2):
-      Makefile: Cover more files with make check
-      sparse: Fix errors and silence warnings
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (70):
-      i18n: git-init basic messages
-      i18n: git-init "Initialized [...] repository" message
-      i18n: git-clone basic messages
-      i18n: git-clone "Cloning into" message
-      i18n: git-clone "Cloning into" message
-      i18n: git-add basic messages
-      i18n: git-add "The following paths are ignored" message
-      i18n: git-add "did not match any files" message
-      i18n: git-add "remove '%s'" message
-      i18n: git-add "Unstaged changes" message
-      i18n: git-branch basic messages
-      i18n: git-branch "remote branch '%s' not found" message
-      i18n: git-branch "Deleted branch [...]" message
-      i18n: git-branch "git branch -v" messages
-      i18n: git-branch "(no branch)" message
-      i18n: git-checkout basic messages
-      i18n: git-checkout: our/their version message
-      i18n: git-checkout describe_detached_head messages
-      i18n: git-checkout "HEAD is now at" message
-      i18n: git-checkout "Switched to a .. branch" message
-      i18n: git-commit basic messages
-      i18n: git-commit "middle of a merge" message
-      i18n: git-commit formatting messages
-      i18n: git-commit print_summary messages
-      i18n: git-commit "enter the commit message" message
-      i18n: git-commit advice messages
-      i18n: git-diff basic messages
-      i18n: git-fetch basic messages
-      i18n: git-fetch formatting messages
-      i18n: git-fetch update_local_ref messages
-      i18n: git-fetch split up "(non-fast-forward)" message
-      i18n: git-grep basic messages
-      i18n: git-grep "--open-files-in-pager" message
-      i18n: git-log basic messages
-      i18n: git-log "--OPT does not make sense" messages
-      i18n: git-merge basic messages
-      i18n: git-merge "Updating %s..%s" message
-      i18n: git-merge "You have not concluded your merge" messages
-      i18n: git-merge "Wonderful" message
-      i18n: git-mv basic messages
-      i18n: git-mv "bad" messages
-      i18n: git-rm basic messages
-      i18n: git-reset basic messages
-      i18n: git-reset reset_type_names messages
-      i18n: git-reset "Unstaged changes after reset" message
-      i18n: git-tag basic messages
-      i18n: git-tag tag_template message
-      i18n: git-push basic messages
-      i18n: git-push "prevent you from losing" message
-      i18n: git-status basic messages
-      i18n: git-status "nothing to commit" messages
-      i18n: git-status shortstatus messages
-      i18n: git-status "Changes to be committed" message
-      i18n: git-status "Initial commit" message
-      i18n: git-status "renamed: " message
-      i18n: git-archive basic messages
-      i18n: git-bundle basic messages
-      i18n: git-clean basic messages
-      i18n: git-clean clean.requireForce messages
-      i18n: git-describe basic messages
-      i18n: git-gc basic messages
-      i18n: git-gc "Auto packing the repository" message
-      i18n: git-notes basic commands
-      i18n: git-notes GIT_NOTES_REWRITE_MODE error message
-      i18n: git-revert basic messages
-      i18n: git-revert "Your local changes" message
-      i18n: git-revert literal "me" messages
-      i18n: git-revert split up "could not revert/apply" message
-      i18n: git-shortlog basic messages
-      t2019-checkout-ambiguous-ref.sh: depend on C_LOCALE_OUTPUT
+I am not happy with these magic band aids.  Will hold.
