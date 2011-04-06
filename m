@@ -1,86 +1,116 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: blobs (once more)
-Date: Wed, 6 Apr 2011 18:42:35 +0200
-Message-ID: <20110406164235.GB17662@jpl.local>
-References: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
- <vpqmxk3prki.fsf@bauges.imag.fr>
- <41F80411E3CC644A844E6BED6E472FD91196D0CD30@ESESSCMS0363.eemea.ericsson.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pathspec: rename per-item field has_wildcard to
+ use_wildcard
+Date: Wed, 06 Apr 2011 10:13:02 -0700
+Message-ID: <7vfwpvjobl.fsf@alter.siamese.dyndns.org>
+References: <7vr59gl581.fsf@alter.siamese.dyndns.org>
+ <BANLkTikJ3=H_OgcNueMjnwwQ2W-2kamf=w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andrey Devyatkin <andrey.devyatkin@ericsson.com>
-To: Peter =?iso-8859-1?Q?J=F6nsson?= P <peter.p.jonsson@ericsson.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 19:09:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 19:13:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7WEO-0002UQ-Fd
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 19:09:24 +0200
+	id 1Q7WIC-0005Ut-Vf
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 19:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755453Ab1DFRJT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 13:09:19 -0400
-Received: from smtprelay-h21.telenor.se ([195.54.99.196]:60005 "EHLO
-	smtprelay-h21.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752949Ab1DFRJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 13:09:18 -0400
-X-Greylist: delayed 1600 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Apr 2011 13:09:18 EDT
-Received: from ipb1.telenor.se (ipb1.telenor.se [195.54.127.164])
-	by smtprelay-h21.telenor.se (Postfix) with ESMTP id 36127EB4E6
-	for <git@vger.kernel.org>; Wed,  6 Apr 2011 18:42:37 +0200 (CEST)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AmgWAPqWnE1T46eEPGdsb2JhbACJE48ajUoLAQEBATcyiHm5K4VsBA
-X-IronPort-AV: E=Sophos;i="4.63,311,1299452400"; 
-   d="scan'208";a="180206285"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb1.telenor.se with ESMTP; 06 Apr 2011 18:42:36 +0200
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id AC69E422D0; Wed,  6 Apr 2011 18:42:35 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <41F80411E3CC644A844E6BED6E472FD91196D0CD30@ESESSCMS0363.eemea.ericsson.se>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755481Ab1DFRNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 13:13:15 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54968 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754224Ab1DFRNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 13:13:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 44C754DCE;
+	Wed,  6 Apr 2011 13:15:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lKXqYFcCiQmZE4TOPE55kL2PTpk=; b=KDF8M/
+	EHif9Zq3pS+PGOJb/jWZ0bj8IFV+8GUTRJ6QZ0QJpzhE7WVbmK7d1SeN1+R+0akW
+	VfFk6kjzr6HXUxn98vwW6H2oc9aENOLortV9Ql7RS7jm1K/WmEoee8DK+o77D5Fy
+	uoAGLDXlz+gn7qCDcQRpiI48Yb7CEbdW6nGLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kQFFKz+zpoPQ9iua1wQwGwRvSwI2LrhU
+	PcnhI5ur99A8ukVMIrMYzW4IxZJTTZrwsNDGp++oeHOs+EJCtkeLCIBBy3W/ZmXC
+	nNWt36keQrM67N2QFhua7mpvV+p+ygTJ8Y6rQhg4DimyD7dq3dIeMu087MH2tRtr
+	3fTt5V0IZZ4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1207C4DCD;
+	Wed,  6 Apr 2011 13:15:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B2E274DCA; Wed,  6 Apr 2011
+ 13:14:58 -0400 (EDT)
+In-Reply-To: <BANLkTikJ3=H_OgcNueMjnwwQ2W-2kamf=w@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 6 Apr 2011 22:54:19 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 68F967A0-6071-11E0-B773-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170992>
 
-On Wednesday, April 06, 2011 at 13:12 CEST,
-     Peter J=F6nsson P <peter.p.jonsson@ericsson.com> wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> How about using Google's repo-tool instead of submodules? Is that
-> a better solution if one really needs to keep binaries together
-> (in some way) with the source code?
+> 2011/4/6 Junio C Hamano <gitster@pobox.com>:
+>
+> I have started working on the conversion, but it may take a while
+> because in many places pathspec is still assumed a prefix (and handled
+> separately, which is not good for negative pathspec). Fundamental
+> support for magic pathspec and "top dir" notation probably do not need
+> get_pathspec() converted to struct pathspec.
 
-I don't know if Repo vs. submodules is the most interesting choice;
-they're both relying on plain gits for the storage. We stored large
-binaries in gits for a while too, but for us the major hassle was
-that it was killing our servers. When too many of the few hundreds of
-developers were fetching multi-GB repos the 8-16 core 24 GB RAM server
-(don't know the exact specs at the time) was really down on its knees.
-Now, we were using JGit (via Gerrit) and I'm sure tuning could've helpe=
-d
--- as well as just replicating the data and spreading the load across
-multiple servers -- but don't forget this factor when choosing the tool=
-=2E
+I think you meant to say "If we only want to have 'top dir' magic,
+fundamental support and get_pathspec() conversion are unnecessary", and I
+agree 100%.
 
-> We are starting to prototype Git and since we need to distribute
-> cross-compilers with the code it would be nice to keep it in a
-> separate repo. Currently we are _heavy_ ClearCase users (oh the
-> horror) with many bad old habits that we are trying to break :)
+I am actually tempted to add Michael's hack to get_pathspec() only to
+support the "from the top" (and error out with any other magic---as the
+approach without a proper restructuring will not work with anything but
+that particular magic), to get the "add -u" topic going, and let you (or
+other people who are interested in the pathspec rationalization) later fix
+it up just a small part of existing issues.
 
-We've been there too.
+The extensible syntax I have in mind (we only parse in get_pathspec() in
+such a tentative version but anything other than the :/ will error out) is
+to use:
 
---=20
-Magnus B=E4ck                   Opinions are my own and do not necessar=
-ily
-SW Configuration Manager      represent the ones of my employer, etc.
-Sony Ericsson
+ (1) Colon, a run of selected non-alpha (i.e. magic signature), an
+     optional colon to terminate the magic signature, followed by the
+     path, e.g.
+
+     - ":/hello.c" is a path from the top.
+
+     - ":!/hello.c" is path from the top but no globbing.
+
+     - ":/!hello.c" is the same as above.
+
+     - ":/::hello.c" is ":hello.c" from the top, the second colon
+       terminates the magic signature and allows the funny file with a
+       leading colon to be named.
+
+     - "::hello.c" does not have any magic, is the same as "hello.c".
+
+ (2) Colon, open parenthesis, a comma separated list of words to name
+     magic, close parenthesis, followed by the path, e.g. these are the
+     long-hand counterparts to the examples in (1)
+
+     - ":(top)hello.c"
+     - ":(top,noglob)hello.c"
+     - ":(noglob,top)hello.c"
+     - ":(noglob,top):hello.c"
+     - ":()hello.c"
+
+At this point, I am not interested in building the repertoire of magic
+yet, but would want to nail a syntax that is
+
+ - concise in common cases (e.g. "from the top, not a funny name" is ':/'
+   followed by the name);
+ - is extensible in the future; and
+ - easy to parse and error out on magic we do not understand.
