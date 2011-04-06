@@ -1,7 +1,7 @@
 From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH v2 3/3] Documentation: add --abbrev option to the man page of git blame
-Date: Wed,  6 Apr 2011 11:20:52 +0900
-Message-ID: <1302056452-5387-3-git-send-email-namhyung@gmail.com>
+Subject: [PATCH v2 2/3] blame: honor core.abbrev
+Date: Wed,  6 Apr 2011 11:20:51 +0900
+Message-ID: <1302056452-5387-2-git-send-email-namhyung@gmail.com>
 References: <1302056452-5387-1-git-send-email-namhyung@gmail.com>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
@@ -11,75 +11,78 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7IN3-0004UH-Em
+	id 1Q7IN2-0004UH-R2
 	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 04:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754641Ab1DFCVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2011 22:21:20 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:45962 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754609Ab1DFCVE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2011 22:21:04 -0400
-Received: by gwaa18 with SMTP id a18so227730gwa.19
-        for <git@vger.kernel.org>; Tue, 05 Apr 2011 19:21:03 -0700 (PDT)
+	id S1754627Ab1DFCVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2011 22:21:06 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:59876 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754310Ab1DFCVB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2011 22:21:01 -0400
+Received: by yia27 with SMTP id 27so415297yia.19
+        for <git@vger.kernel.org>; Tue, 05 Apr 2011 19:21:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=amnOKN3vB1MsC1jgdmQHygZ54nXKN9H+Rs8fKBODh1A=;
-        b=i1sbE9k5PxI1bqPJTPsNjhrxBodUDIkxxYy4SGi/RlisgWz2Ed+Di6A03gI/JGDiJm
-         U+nYZrPRcQpBn5x1nFhkw0Wwzfm5fS+X3ZUu3nyOBnfZ/2AOf+Ko/YieiIKXcUAgkdF9
-         k86lIZdf4i4ar6cjIl3VC1Xlr0dNGleoVoJqU=
+        bh=cSQZx5zzroYLpvoyMErqLgm7znB/4gTo0MxZfaR/2Cs=;
+        b=GS8+cEdLDb5YOqta3VLauTjBqVNgF4qUjohMfVn0lM/mWbxD6LLH4X3vBoPRg4j6tN
+         61sxkK8517wkUpKTa81l+SAQ0XJL7WGrgas4B8rwb1dFYRaDhdfquoIVpVdX/F54ZGfo
+         6zHvVB/gU71PIXt/GWSrJaXqtmw2RMtYGXgD8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VbOshzOg/SPxjNTmDB83QvEq/NQ/HRciG7OlIMLS1UlLuIj0Kndu6zWQThIzbTFWyv
-         9XofhCIlDSYr9KTtihJko26poO6z8RSjKY3+18yzvIJ9MoJijEftyMy8b9KgHAZh4thw
-         YSzeT8bWbkTfvtJbuhrtvf6gYPiNGCSUuJ61k=
-Received: by 10.150.144.12 with SMTP id r12mr1245137ybd.216.1302056463773;
-        Tue, 05 Apr 2011 19:21:03 -0700 (PDT)
+        b=h92OUuxfuniokZm90xc6kpfKdakqePnfv8dME++KMVL/vQmnngwPFiAotq2KufcoBF
+         mtUs8Jx3U81/wgA0errTsovZ/x9dmB1o5N+qB/yYfnxjdOyHFCZ0Hw+SDVfTERj0HbxM
+         aW/TfuBh/7Bqek/NYsWMF4N3RoR1Ii/yoERxI=
+Received: by 10.150.147.15 with SMTP id u15mr1396640ybd.327.1302056461265;
+        Tue, 05 Apr 2011 19:21:01 -0700 (PDT)
 Received: from localhost.localdomain ([118.176.76.173])
-        by mx.google.com with ESMTPS id p23sm443416ybk.24.2011.04.05.19.21.01
+        by mx.google.com with ESMTPS id p23sm443416ybk.24.2011.04.05.19.20.59
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Apr 2011 19:21:03 -0700 (PDT)
+        Tue, 05 Apr 2011 19:21:00 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4
 In-Reply-To: <1302056452-5387-1-git-send-email-namhyung@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170949>
+
+If user sets config.abbrev option, use it as if --abbrev was given.
+This is the default value and user can override different abbrev
+length by specifing --abbrev=N command line option.
 
 Signed-off-by: Namhyung Kim <namhyung@gmail.com>
 ---
- Documentation/git-blame.txt |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+ builtin/blame.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index c4d1ff8..27ce6bd 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental] [-L n,m]
--	    [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
-+	    [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>] [--abbrev=<n>]
- 	    [<rev> | --contents <file> | --reverse <rev>] [--] <file>
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 253b480..4639788 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -41,7 +41,7 @@ static int reverse;
+ static int blank_boundary;
+ static int incremental;
+ static int xdl_opts;
+-static int abbrev = 8;
++static int abbrev = -1;
  
- DESCRIPTION
-@@ -73,6 +73,12 @@ include::blame-options.txt[]
- 	Ignore whitespace when comparing the parent's version and
- 	the child's to find where the lines came from.
+ static enum date_mode blame_date_mode = DATE_ISO8601;
+ static size_t blame_date_width;
+@@ -2347,6 +2347,11 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ parse_done:
+ 	argc = parse_options_end(&ctx);
  
-+--abbrev=<n>::
-+	Instead of using the default 7+1 hexadecimal digits as the
-+	abbreviated object name, use <n>+1 digits. Note that git
-+	will add 1 for the boundary commit to be distinguished (with
-+	a caret at the beginning).
++	if (abbrev == -1)
++		abbrev = default_abbrev;
++	/* one more abbrev length is needed for the boundary commit */
++	abbrev++;
 +
+ 	if (revs_file && read_ancestry(revs_file))
+ 		die_errno("reading graft file '%s' failed", revs_file);
  
- THE PORCELAIN FORMAT
- --------------------
 -- 
 1.7.4
