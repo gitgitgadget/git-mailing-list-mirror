@@ -1,92 +1,165 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Git exhausts memory.
-Date: Wed, 6 Apr 2011 11:51:26 -0400
-Message-ID: <BANLkTinOzkHMpr5Yg7dixMyTSHBXCsO7Qw@mail.gmail.com>
-References: <BANLkTin=yUtzbZjs_92FHDfs62VFFuLHwg@mail.gmail.com>
- <alpine.LFD.2.00.1104021103130.28032@xanadu.home> <BANLkTikRGQ45xvWvisMhXi4Hu2r_0GS=Gg@mail.gmail.com>
- <alpine.LFD.2.00.1104031110150.28032@xanadu.home> <BANLkTinCwZG3+0Ss8o9ODptg=L8LKKN7aQ@mail.gmail.com>
- <BANLkTinU7x16yp+y-HW9UhkVn9SftOJCcA@mail.gmail.com> <4D9B47D2.6050909@ira.uka.de>
- <BANLkTikanSa3D1Bd8kSySPWQhcj1y8N+qA@mail.gmail.com> <7vzko4mw44.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] config: support values longer than 1024 bytes
+Date: Wed, 6 Apr 2011 18:16:50 +0200
+Message-ID: <BANLkTikuzfZrv+N0Qm7utfYF6fsYQn7Zcg@mail.gmail.com>
+References: <1302046203-4408-1-git-send-email-kusmabite@gmail.com>
+ <20110406005223.GA10374@sigill.intra.peff.net> <BANLkTim0N0kM+OX5Tztz-Kh+eRRsNixX0A@mail.gmail.com>
+ <20110406153509.GA1864@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Holger Hellmuth <hellmuth@ira.uka.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alif Wahid <alif.wahid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 17:56:30 2011
+Cc: git@vger.kernel.org, jwa@urbancode.com, drew.northup@maine.edu
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 06 18:17:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7V5n-0000J5-V7
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 17:56:28 +0200
+	id 1Q7VPx-0006v7-Ds
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 18:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756421Ab1DFP4X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 11:56:23 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40353 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756325Ab1DFP4W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 11:56:22 -0400
-Received: by bwz15 with SMTP id 15so1262124bwz.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 08:56:21 -0700 (PDT)
+	id S1754818Ab1DFQRM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 12:17:12 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:60351 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751202Ab1DFQRL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2011 12:17:11 -0400
+Received: by fxm17 with SMTP id 17so1105348fxm.19
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 09:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=we32or79e0mwJkOGWxUpP/omjcijpR/L5AAVnkT/w/8=;
-        b=NKBK9wQc36XmimhGrYaalecfGY0432yF6ygHlA1p7QC6ufTXL2s7XTijir5PGZaYZu
-         mCWOsHo0I/V0T5sHg+LjMtGNAP4wtYE8YY6icGkXZpZtVq85SSbE/qv5xcGLo2Ti3pJO
-         BZhE5r6Rl9dI1ttJl6hRWs4xWIZsClHJR/1JA=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NuzPSNJdh7v0TRuQe2J+jfNyiFlmMcsV8b20UAkyFMg=;
+        b=lMHhfMPOD19V9bgRIZj/Mgccu/rRiEZtAFYeQNhTVEIw77MLuCitR4GJ53II3WVIuI
+         bgTQK70YX969or2yjBUey9sio9AN9oo2k7GEae6ra0cSfCUouyoFwUGbILpFrCRrM27F
+         01LT5XtsFzoaSatNtTXFS4/p+Zl6QuDUgYIEA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=aF7xcjXpFkGqJ7bwobAOA0iGnzBjSRedkzflw6H8nBs84SPdRAbLTeUV9yYcBAy3qG
-         D+isJB4984+hdKD4vGvm9J2FY4SqjneeD0pdwizfTpdPRqEgIFyD2t398t9DBt+wTXDZ
-         9NNeQSVpcBlH3qu4+Myj3o/GNxQ8geCh7Qc5w=
-Received: by 10.204.20.65 with SMTP id e1mr1677bkb.149.1302105116224; Wed, 06
- Apr 2011 08:51:56 -0700 (PDT)
-Received: by 10.204.126.17 with HTTP; Wed, 6 Apr 2011 08:51:26 -0700 (PDT)
-In-Reply-To: <7vzko4mw44.fsf@alter.siamese.dyndns.org>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=ShntlHsxhJCoTBrhv882js5WafXcGr/dJbRWxBGtj09HIecaVDswFNHvZtQOlB52T6
+         DTuU+0pUKH+sawn1IHo6t4E9qmwHiFlTNgnhMacaO/cgrKNbRUmXsxEUfKIaV48/Yw5A
+         tQFj7F7BytfbjKw5gwELOuCly4Pq+RBfKXHT4=
+Received: by 10.204.22.9 with SMTP id l9mr1065071bkb.66.1302106630186; Wed, 06
+ Apr 2011 09:17:10 -0700 (PDT)
+Received: by 10.204.172.130 with HTTP; Wed, 6 Apr 2011 09:16:50 -0700 (PDT)
+In-Reply-To: <20110406153509.GA1864@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170988>
 
-On Tue, Apr 5, 2011 at 1:44 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> =C2=A0builtin/pack-objects.c | =C2=A0 =C2=A08 ++++++--
-> =C2=A0cache.h =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-| =C2=A0 =C2=A01 +
-> =C2=A0config.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=
-=A0 =C2=A06 ++++++
-> =C2=A0environment.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A0=
-1 +
-> =C2=A0fast-import.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A0=
-5 -----
-> =C2=A05 files changed, 14 insertions(+), 7 deletions(-)
+On Wed, Apr 6, 2011 at 5:35 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Apr 06, 2011 at 11:10:42AM +0200, Erik Faye-Lund wrote:
+>
+>> > But for the other, one of the invariants of strbuf is that the str=
+ing is
+>> > always NUL-terminated. So I would expect strbuf_init to properly
+>> > NUL-terminate after growing based on the hint.
+>>
+>> I agree. An unterminated yet non-NULL return from strbuf_detach is
+>> just dangerous behavior. Something like this should probably be
+>> applied:
+>>
+>> ---8<---
+>> diff --git a/strbuf.c b/strbuf.c
+>> index 77444a9..538035a 100644
+>> --- a/strbuf.c
+>> +++ b/strbuf.c
+>> @@ -24,14 +24,16 @@ int suffixcmp(const char *str, const char *suffi=
+x)
+>> =A0 * buf is non NULL and ->buf is NUL terminated even for a freshly
+>> =A0 * initialized strbuf.
+>> =A0 */
+>> -char strbuf_slopbuf[1];
+>> +char strbuf_slopbuf[1] =3D { '\0' };
+>
+> This hunk is redundant. slopbuf will already be initialized to 0.
 
-This will be white-spaced damaged by Gmail, but anyway:
+Right, silly me. I somehow thought that implicit zero-initialization
+only applied to static variables, but K&R tells me I was wrong. Thanks
+for pointing it out :)
 
-diff --git i/Documentation/config.txt w/Documentation/config.txt
-index 750c86d..91aa9be 100644
---- i/Documentation/config.txt
-+++ w/Documentation/config.txt
-@@ -443,7 +443,6 @@ be delta compressed, but larger binary media files =
-won't be.
- +
- Common unit suffixes of 'k', 'm', or 'g' are supported.
- +
--Currently only linkgit:git-fast-import[1] honors this setting.
+>
+>> =A0void strbuf_init(struct strbuf *sb, size_t hint)
+>> =A0{
+>> =A0 =A0 =A0 sb->alloc =3D sb->len =3D 0;
+>> =A0 =A0 =A0 sb->buf =3D strbuf_slopbuf;
+>> - =A0 =A0 if (hint)
+>> + =A0 =A0 if (hint) {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_grow(sb, hint);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 sb->buf[0] =3D '\0';
+>> + =A0 =A0 }
+>> =A0}
+>
+> But this one is the right fix.
+>
 
- core.excludesfile::
- 	In addition to '.gitignore' (per-directory) and
+OK, I'll turn this into a two-patch series, then.
 
+>> that. But this brings a new issue: leaving potentially huge blocks o=
+f
+>> memory (especially since this patch is about long lines) allocated
+>> inside a function can be a bit nasty. But it's probably not a big de=
+al
+>
+> Yeah. It's just one block, though, and in the normal case it is proba=
+bly
+> only about 80 characters. So it is more efficient than what's there n=
+ow. :)
+>
+> Somebody could have some gigantic value, though, and yes, we'll grow =
+to
+> the biggest one and never free that memory. You could also have
+> parse_value take a strbuf parameter to output into, and then free it
+> after config reading is done.
+>
+>> In other words: I think you're right, it's a much better approach.
+>> Less allocations, less penalty on the start-up time for every little
+>> git-command.
+>
+> I doubt the efficiency increase is measurable. We end up xstrdup'ing
+> quite a few of the values in the config callbacks anyway. I would do
+> whatever seems most natural for reading/writing the code.
+>
 
-j.
+I think I'll just leave the single leak in. Since it would allocate
+the buffer lazily, it would really only "waste" more memory than the
+existing implementation when the old implementation would fail. So my
+conscience is clear ;)
+
+>> > I do wonder, though, if we could be reusing the unquote_c_style()
+>> > function in quote.c. They are obviously similar, but I haven't che=
+cked
+>> > if there is more going on in the config code.
+>>
+>> Hmm, this is an interesting suggestion. It would be a part of a bigg=
+er
+>> change though: unquote_c_style requires it's input to be in memory,
+>> while parse_value uses a function called get_next_char to feed the
+>> parser. So we'd either have to read the entire file into memory, or
+>> find some way to read the file line-by-line while handling \n-escapi=
+ng
+>> correctly.
+>>
+>> It also seems like there's differences in what kind of escaping and
+>> normalization the two functions handle; unquote_c_style handles more
+>> escaped character sequences, while parse_value normalize all
+>> non-escaped space-characters ('\t' et. al) into SP. This might not b=
+e
+>> such a big problem in reality.
+>
+> This was just a random thought that I had, and I didn't investigate i=
+t
+> how hard it would be. =A0If it turns out to be too much trouble, just
+> forget it.
+>
+
+Yeah. I think I'll skip it, since it isn't dead obvious.
+
+Thanks for the input, I'll cook up a new version soon.
