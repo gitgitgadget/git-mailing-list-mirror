@@ -1,77 +1,63 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [BUG] git-svn: --no-metadata related bug
-Date: Wed, 6 Apr 2011 23:42:39 +0530
-Message-ID: <20110406181234.GB667@kytes>
-References: <20110405190722.GB25644@kytes>
- <4D9C64EB.5060703@drmicha.warpmail.net>
+From: Jeff King <peff@github.com>
+Subject: Re: [PATCH] stash: fix false positive in the invalid ref test.
+Date: Wed, 6 Apr 2011 14:27:26 -0400
+Message-ID: <20110406182726.GC8205@sigill.intra.peff.net>
+References: <1302045673-59982-1-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 20:13:52 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 20:27:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7XEi-0007kc-55
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 20:13:48 +0200
+	id 1Q7XS4-0000uw-AW
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 20:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756094Ab1DFSNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 14:13:42 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49854 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752918Ab1DFSNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 14:13:42 -0400
-Received: by gxk21 with SMTP id 21so677665gxk.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 11:13:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=nS5+hp025WRDS5wckPRzTKlf7glfFWqomTXIMG+aJLU=;
-        b=fyBI/DuRz15T6A1a+o8qKkBd07MoOPT4zJgd6fwd8VpyGryxHeNJsLeKnxcDoVDFdF
-         knu/SA959JcdP3aAZ5aJRrdoBeP2AgFoH2NUCYe5P0yjEnR5xpFdZU8rCVM5frmQ8jY1
-         yVc5dacyUgFVNNcu0wM0EK6kNO8zf0h1Dthek=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=KeyAGiAGFQvfeZPTLmfyB+cdZL08r65weG1n/Om8meole9R0dvllNOm4FYsq981zum
-         qE9Xsi+FKG+6JWvndEHVUTnCaYb/YJtrPZyCCSz4OHpOP6YZhoftctW8cTWMjsz1uRbQ
-         whzHIkU03rCatf1IAfAnU6RhyqZ7kFzzCuy7w=
-Received: by 10.90.8.10 with SMTP id 10mr2243565agh.102.1302113621265;
-        Wed, 06 Apr 2011 11:13:41 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id d14sm917692ana.0.2011.04.06.11.13.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 11:13:40 -0700 (PDT)
+	id S1756161Ab1DFS1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 14:27:30 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35535
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755368Ab1DFS1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 14:27:30 -0400
+Received: (qmail 7394 invoked by uid 107); 6 Apr 2011 18:28:16 -0000
+Received: from 205.158.58.41.ptr.us.xo.net (HELO sigill.intra.peff.net) (205.158.58.41)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Apr 2011 14:28:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Apr 2011 14:27:26 -0400
 Content-Disposition: inline
-In-Reply-To: <4D9C64EB.5060703@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1302045673-59982-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/170999>
 
-Hi Michael,
+On Wed, Apr 06, 2011 at 09:21:13AM +1000, Jon Seymour wrote:
 
-Michael J Gruber writes:
-> Ramkumar Ramachandra venit, vidit, dixit 05.04.2011 21:07:
-> > git svn clone --no-metadata -T trunk http://dxirc.googlecode.com/svn/
-> 
-> Works fine for me, using:
-> 
-> git svn --version
-> git-svn version 1.7.5.rc0.365.g23929a (svn 1.6.16)
-> 
-> What are the affected versions?
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 11077f0..5263de7 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -543,11 +543,11 @@ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
+>  	echo bar6 > file2 &&
+>  	git add file2 &&
+>  	git stash &&
+> -	test_must_fail git drop stash@{1} &&
+> -	test_must_fail git pop stash@{1} &&
+> -	test_must_fail git apply stash@{1} &&
+> -	test_must_fail git show stash@{1} &&
+> -	test_must_fail git branch tmp stash@{1} &&
+> +	test_must_fail git stash drop stash@{1} &&
+> +	test_must_fail git stash pop stash@{1} &&
+> +	test_must_fail git stash apply stash@{1} &&
+> +	test_must_fail git stash show stash@{1} &&
+> +	test_must_fail git stash branch tmp stash@{1} &&
+>  	git stash drop
 
-I'm sorry, but I have no additional information about the bug.  I
-simply reported it on someone else's behalf, hoping that someone on
-the list would be able to reproduce it and supply a fix (see IRC
-conversation and explanation for not being able to test it myself).
+Probably we should just squash your fix in with my first patch, and drop
+my test.  Your fixed version is a superset of what mine tests.
 
--- Ram
+-Peff
