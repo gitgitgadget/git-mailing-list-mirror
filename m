@@ -1,130 +1,95 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 4/4] Documentation: Minor language improvements to merge-config
-Date: Thu,  7 Apr 2011 00:16:51 +0530
-Message-ID: <1302115611-1950-5-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 3/4] Documentation: Allow custom diff tools to be specified in 'diff.tool'
+Date: Thu,  7 Apr 2011 00:16:50 +0530
+Message-ID: <1302115611-1950-4-git-send-email-artagnon@gmail.com>
 References: <1302083854-2448-1-git-send-email-artagnon@gmail.com>
  <1302115611-1950-1-git-send-email-artagnon@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 06 20:48:41 2011
+X-From: git-owner@vger.kernel.org Wed Apr 06 20:48:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7XmQ-0007ED-4c
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 20:48:38 +0200
+	id 1Q7XmQ-0007ED-LU
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 20:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756550Ab1DFSsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 14:48:18 -0400
+	id S1756583Ab1DFSsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 14:48:20 -0400
 Received: from mail-iy0-f174.google.com ([209.85.210.174]:63758 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756507Ab1DFSsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 14:48:16 -0400
+	with ESMTP id S1756572Ab1DFSsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 14:48:12 -0400
 Received: by mail-iy0-f174.google.com with SMTP id 14so1697854iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 11:48:16 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 11:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=JfL3MhZAVIbFc4EVy4BvaCpYuqB2SNsYcOYcIggHCJs=;
-        b=fs5upvsgwk6/SuTvxvNEJZ4xsV4H83xB2P5lfvCgNSC+5iQZONVSqKISGYDu6PrtLD
-         ULOYRJRT4FZ+V6Qkm37kZp9HbQB6e8HYwVD1jTnAes8XQLBf2UQ7eNdRkg57wj7H9+0G
-         GGlp58ePLq5OuvzaYBG31wAre+zG5c+WWoslk=
+        bh=4gZq2W1gwT9xd1EGF0NkrMYKqc/OijhN4To4yCDP+cI=;
+        b=xO5Yg+iBtoHuRBYkdD/aY5POiSRdDNyoKuEQLCEIS7T0PxqdPwUThldtAUiAJKyvRF
+         +JvjEc6uEHJfubZ1esXkqJHDU6JcBszIhXQ6KxlEvRKs1PZV2aNksIkQLAJ3ys63itr4
+         zUqpElz2gfiPkqa6XfltUr+wtcUCKKg+gWlrk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Tl1q/LFSGwAnukGJUE7xHEZ8GK+qKBWW297jtNvJ8WzD9dPjeXlM1iPhTtALDxsZzX
-         CzAeu2XGQtF28yJvj7SIQWM0pJetTPLCVF7yJHgzi2Psbg06sIwzDLbKNtYF4B8vAzNK
-         o8wTIj1BJpddwHyfZwNxBr1wkWHz716NRqXF8=
-Received: by 10.42.179.3 with SMTP id bo3mr1402776icb.316.1302115695849;
-        Wed, 06 Apr 2011 11:48:15 -0700 (PDT)
+        b=N31TFLEtl2PwYFlC6tWYOjp5ROZ+ptayPPWJt2LAoX1lJkGlk9/PAADPQsrzOeenYT
+         bT8zp+xdKdykyAOPh8Et5E2fo6Mnd0hQFgucaU8u2otmi+JfK5FUv4cCtFPSEFH9AiII
+         0bQ4512c6NJVu9S3KmUUuZREoLtjKiggY4AP0=
+Received: by 10.42.149.132 with SMTP id w4mr2137166icv.267.1302115691981;
+        Wed, 06 Apr 2011 11:48:11 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id vr5sm495851icb.0.2011.04.06.11.48.12
+        by mx.google.com with ESMTPS id vr5sm495851icb.0.2011.04.06.11.48.07
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 11:48:14 -0700 (PDT)
+        Wed, 06 Apr 2011 11:48:10 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 In-Reply-To: <1302115611-1950-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171005>
 
-Improve readability by dropping superflous verbs like "specifies",
-"controls", and "defines".  Describe the `merge.tool` option just
-before the `mergetool.*` options.
+Apart from the list of "valid values", 'diff.tool' can take any value,
+provided there is a corresponding 'difftool.<tool>.cmd' option.  Also,
+describe this option just before the 'difftool.*' options.
 
+Helped-by: Michael J Gruber <git@drmicha.warpmail.net>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Documentation/merge-config.txt |   39 ++++++++++++++++++++-------------------
- 1 files changed, 20 insertions(+), 19 deletions(-)
+ Documentation/diff-config.txt |   14 ++++++++------
+ 1 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 8920258..6cd5127 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -1,5 +1,5 @@
- merge.conflictstyle::
--	Specify the style in which conflicted hunks are written out to
-+	The style in which conflicted hunks are written out to
- 	working tree files upon merge.  The default is "merge", which
- 	shows a `<<<<<<<` conflict marker, changes made by one side,
- 	a `=======` marker, changes made by the other side, and then
-@@ -38,19 +38,12 @@ merge.renormalize::
- 	attributes" in linkgit:gitattributes[5].
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 0796d5e..d604484 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -55,12 +55,6 @@ diff.suppressBlankEmpty::
+ 	A boolean to inhibit the standard behavior of printing a space
+ 	before each empty output line. Defaults to false.
  
- merge.stat::
--	Whether to print the diffstat between ORIG_HEAD and the merge result
--	at the end of the merge.  True by default.
+-diff.tool::
+-	Controls which diff tool is used.  `diff.tool` overrides
+-	`merge.tool` when used by linkgit:git-difftool[1] and has
+-	the same valid values as `merge.tool` minus "tortoisemerge"
+-	and plus "kompare".
 -
--merge.tool::
--	Controls which merge resolution program is used by
--	linkgit:git-mergetool[1].  Valid built-in values are: "araxis",
--	"bc3", "diffuse", "ecmerge", "emerge", "gvimdiff", "kdiff3", "meld",
--	"opendiff", "p4merge", "tkdiff", "tortoisemerge", "vimdiff"
--	and "xxdiff".  Any other value is treated is custom merge tool
--	and there must be a corresponding mergetool.<tool>.cmd option.
-+	Set this option to false to omit printing the diffstat between
-+	ORIG_HEAD and the merge result at the end of the merge.
-+	Defaults to true.
- 
- merge.verbosity::
--	Controls the amount of output shown by the recursive merge
-+	The amount of output shown by the recursive merge
- 	strategy.  Level 0 outputs nothing except a final error
- 	message if conflicts were detected. Level 1 outputs only
- 	conflicts, 2 outputs conflicts and file changes.  Level 5 and
-@@ -58,14 +51,22 @@ merge.verbosity::
- 	Can be overridden by the 'GIT_MERGE_VERBOSITY' environment variable.
- 
- merge.<driver>.name::
--	Defines a human-readable name for a custom low-level
--	merge driver.  See linkgit:gitattributes[5] for details.
-+	The name of the custom merge driver.  See
-+	linkgit:gitattributes[5] for details.
- 
- merge.<driver>.driver::
--	Defines the command that implements a custom low-level
--	merge driver.  See linkgit:gitattributes[5] for details.
-+	The command that implements the custom merge driver.  See
-+	linkgit:gitattributes[5] for details.
- 
- merge.<driver>.recursive::
--	Names a low-level merge driver to be used when
--	performing an internal merge between common ancestors.
--	See linkgit:gitattributes[5] for details.
-+	The merge driver to be used when performing an internal merge
-+	between common ancestors.  See linkgit:gitattributes[5] for
-+	details.
+ diff.<driver>.command::
+ 	The custom diff driver command.  See linkgit:gitattributes[5]
+ 	for details.
+@@ -88,3 +82,11 @@ diff.<driver>.wordregex::
+ diff.<driver>.cachetextconv::
+ 	Set this option to true to make the diff driver cache the text
+ 	conversion outputs.  See linkgit:gitattributes[5] for details.
 +
-+merge.tool::
-+	The merge tool to be used by linkgit:git-mergetool[1].  Valid
-+	built-in values are: "araxis", "bc3", "diffuse", "ecmerge",
-+	"emerge", "gvimdiff", "kdiff3", "meld", "opendiff", "p4merge",
-+	"tkdiff", "tortoisemerge", "vimdiff" and "xxdiff".  Any other
-+	value is treated as a custom merge tool, and there must be a
-+	corresponding `mergetool.<tool>.cmd` option.
++diff.tool::
++	The diff tool to be used by linkgit:git-difftool[1].  This
++	option overrides `merge.tool`, and has the same valid built-in
++	values as `merge.tool` minus "tortoisemerge" and plus
++	"kompare".  Any other value is treated as a custom diff tool,
++	and there must be a corresponding `difftool.<tool>.cmd`
++	option.
 -- 
 1.7.4.rc1.7.g2cf08.dirty
