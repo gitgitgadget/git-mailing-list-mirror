@@ -1,109 +1,133 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git: "git stash" changes owners and permissions
-Date: Wed, 6 Apr 2011 15:52:12 -0500
-Message-ID: <20110406205212.GC1922@elie>
-References: <878vvnfp60.fsf@kiva6.ethz.ch>
- <20110406184938.GE1220@elie>
- <20110406200640.GF12557@sym.noone.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] add--interactive.perl: factor out repeated --recount option
+Date: Wed, 06 Apr 2011 14:31:53 -0700
+Message-ID: <7vy63ngj7a.fsf_-_@alter.siamese.dyndns.org>
+References: <7v4o6fg29j.fsf@alter.siamese.dyndns.org>
+ <BANLkTimh+--iRNEpr2XOFf4jXoVhmHUnoA@mail.gmail.com>
+ <7voc4ji23p.fsf@alter.siamese.dyndns.org>
+ <7v4o6bi1lm.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Axel Beckert <abe@debian.org>
-X-From: git-owner@vger.kernel.org Wed Apr 06 22:52:30 2011
+Cc: Thomas Rast <trast@student.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 06 23:32:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7ZiH-0000LD-4C
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 22:52:29 +0200
+	id 1Q7aKn-0000xd-Jw
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Apr 2011 23:32:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713Ab1DFUwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 16:52:19 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:49570 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755463Ab1DFUwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 16:52:17 -0400
-Received: by vws1 with SMTP id 1so1445074vws.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 13:52:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=u8JUxHlOUy/le5P6wdw6qu9XarKBmKfa1qBsfPhPjVA=;
-        b=wGhkHBT+gfJvOl+CGiP+xA3XnzvycnbxpOOu6eVsiOPH/xMc6GXZ4rtJbO4DkHarVG
-         9NF0Ze2YmLzgIFws+BAAYKbGm+c4keugoGak2bVzRIyeHLdNZrU59VybU82TamHoqRGD
-         20AI1flFO9vQ1sA2vb4ETOTiTG5qz0H+x31I0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZrnuekCpmmwXijTeXft+cdUodEymaAcu6G8EBknbJnYdKnY4ZKfKtNTBeS7I0nKyKS
-         Wh5Phq+oVKCVT/QyQNUD6myHbwTF/MhvDf2d/3wi0+gJDVvcraj/pe4GcmSCwD29yzm7
-         5lxxXhHkH3W8OHCA09laY8LoYcLPE2ZM+b9uU=
-Received: by 10.52.177.196 with SMTP id cs4mr99286vdc.279.1302123137002;
-        Wed, 06 Apr 2011 13:52:17 -0700 (PDT)
-Received: from elie (adsl-69-209-53-77.dsl.chcgil.ameritech.net [69.209.53.77])
-        by mx.google.com with ESMTPS id b26sm560535vby.3.2011.04.06.13.52.15
-        (version=SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 13:52:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110406200640.GF12557@sym.noone.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932274Ab1DFVcF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 17:32:05 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60441 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932225Ab1DFVcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 17:32:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7EC6B53EE;
+	Wed,  6 Apr 2011 17:33:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DvDwGlVqpac7Dw16JXP1Ob2/6EQ=; b=TzWIRc
+	dLqmWrOCtzOSmG2GuxqDOSNcpCK9Pak8FhgLUL/CrIdb952DDYxHiyAYyIBPPRL7
+	BjApcHnMAZ1zmfgfSJvDf4zZvmOMDcG9pK4rWvnx2xpHUsUX2ACjYR49mA2O+ZMl
+	znBkjZ9AdR1izaI1Y1Ur1BY26AlBcNLoNvi1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hx0k6aUy2Mzmp8vIK95zHua4S/LOmuT5
+	iRF/9Hl3v2CcMu2yZ/+j0/+wYpW0nKRI7CUzTCq6cAUl792zhumsadf2zyWga3M/
+	52JE+biZejy/6lS5f5AKwAGzeHbcb+yOCjXOVuz693CYFjlTCwqGhzyMIpDzXD37
+	pm/w40Qy62I=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C77B53ED;
+	Wed,  6 Apr 2011 17:33:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3938953EC; Wed,  6 Apr 2011
+ 17:33:49 -0400 (EDT)
+In-Reply-To: <7v4o6bi1lm.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 06 Apr 2011 13:09:09 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 91C0F7C4-6095-11E0-AF62-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171017>
 
-(moving to the git list)
-Axel Beckert wrote[0]:
+Depending on the direction and the target of patch application, we would
+need to pass --cached and --reverse to underlying "git apply".  Also we
+only pass --check when we are not applying but just checking.
 
-> I should probably look again for plugins or hooks taking care of file
-> meta-data, but the last time I looked for such a thing, the stuff I
-> found wasn't very promising. Any tips and hints are appreciated.
+But we always pass --recount since 8cbd431 (git-add--interactive: replace
+hunk recounting with apply --recount, 2008-07-02).  Instead of repeating
+the same --recount over and over again, move it to a single place that
+actually runs the command, namely, "run_git_apply" subroutine.
 
-Everything I know about metadata tracking is at [1].  Which is to say,
-I don't know much.  I believe the state of the art involves saving
-scripts to store metadata along with the repository, as in Dan
-Jacobson's git-cache-meta script and etckeeper's pre-commit.d
-directory[2]. [3]
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-As mentioned before, I don't advise using git to deploy changed files.
-It will change them in the wrong order and creates windows when they're
-not present.  Perhaps a procedure like the following can work?
+ * Applies on top of 9d15860.  I tried to be careful but may have missed
+   some calls.  Extra set of eyeballs appreciated.
 
-	cd /root; (umask 077 && mkdir tmp); cd tmp
-	git clone /etc/interesting-subdir
-	cd interesting-subdir
-	... hack hack hack ...
-	git commit
-	... is it really ok?  check in whatever way I know ...
+ git-add--interactive.perl |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
-	# yes, it's okay.
-	git push /etc/interesting-subdir/.git HEAD:refs/remotes/jrn/proposed
-	cd /etc/interesting-subdir
-	git diff jrn/proposed;	# one final check
-
-	# deploy.
-	rsync -a --exclude='.git' /root/tmp/interesting-subdir/ .
-	git reset jrn/proposed
-	git diff;	# should show no changes.
-
-	# clean up.
-	rm -r /root/tmp/interesting-subdir
-	rmdir /root/tmp
-
-Please keep us posted --- it would be nice to put whatever workflow
-you end up with in a howto for distribution with git.
-
-Regards,
-Jonathan
-
-[0] http://bugs.debian.org/621090
-[1] https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools#Backups.2C_metadata.2C_and_large_files
-[2] http://git.kitenet.net/?p=etckeeper.git;a=tree;f=pre-commit.d;hb=master
-[3] It is as though we were in the days of shar as an archival format.
-In the long term I will be happier if something pleasant based on
-.gitattributes appears. ;-)
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index a329c5a..6a439db 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -705,7 +705,7 @@ sub add_untracked_cmd {
+ sub run_git_apply {
+ 	my $cmd = shift;
+ 	my $fh;
+-	open $fh, '| git ' . $cmd;
++	open $fh, '| git ' . $cmd . " --recount";
+ 	print $fh @_;
+ 	return close $fh;
+ }
+@@ -1050,7 +1050,7 @@ sub edit_hunk_manually {
+ 
+ sub diff_applies {
+ 	my $fh;
+-	return run_git_apply($patch_mode_flavour{APPLY_CHECK} . ' --recount --check',
++	return run_git_apply($patch_mode_flavour{APPLY_CHECK} . ' --check',
+ 			     map { @{$_->{TEXT}} } @_);
+ }
+ 
+@@ -1139,7 +1139,7 @@ sub help_patch_cmd {
+ 
+ sub apply_patch {
+ 	my $cmd = shift;
+-	my $ret = run_git_apply $cmd . ' --recount', @_;
++	my $ret = run_git_apply $cmd, @_;
+ 	if (!$ret) {
+ 		print STDERR @_;
+ 	}
+@@ -1148,17 +1148,17 @@ sub apply_patch {
+ 
+ sub apply_patch_for_checkout_commit {
+ 	my $reverse = shift;
+-	my $applies_index = run_git_apply 'apply '.$reverse.' --cached --recount --check', @_;
+-	my $applies_worktree = run_git_apply 'apply '.$reverse.' --recount --check', @_;
++	my $applies_index = run_git_apply 'apply '.$reverse.' --cached --check', @_;
++	my $applies_worktree = run_git_apply 'apply '.$reverse.' --check', @_;
+ 
+ 	if ($applies_worktree && $applies_index) {
+-		run_git_apply 'apply '.$reverse.' --cached --recount', @_;
+-		run_git_apply 'apply '.$reverse.' --recount', @_;
++		run_git_apply 'apply '.$reverse.' --cached', @_;
++		run_git_apply 'apply '.$reverse, @_;
+ 		return 1;
+ 	} elsif (!$applies_index) {
+ 		print colored $error_color, "The selected hunks do not apply to the index!\n";
+ 		if (prompt_yesno "Apply them to the worktree anyway? ") {
+-			return run_git_apply 'apply '.$reverse.' --recount', @_;
++			return run_git_apply 'apply '.$reverse, @_;
+ 		} else {
+ 			print colored $error_color, "Nothing was applied.\n";
+ 			return 0;
+-- 
+1.7.5.rc1
