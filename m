@@ -1,95 +1,92 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/4] Documentation: Add diff.<driver>.* to config
-Date: Thu, 7 Apr 2011 08:33:43 +0530
-Message-ID: <20110407030341.GA28334@kytes>
-References: <1302083854-2448-1-git-send-email-artagnon@gmail.com>
- <1302115611-1950-1-git-send-email-artagnon@gmail.com>
- <1302115611-1950-3-git-send-email-artagnon@gmail.com>
- <7vwrj7i2je.fsf@alter.siamese.dyndns.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: blobs (once more)
+Date: Thu, 07 Apr 2011 14:20:47 +0900
+Message-ID: <buo4o6abpsg.fsf@dhlpc061.dev.necel.com>
+References: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 05:04:50 2011
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Thu Apr 07 07:20:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7fWb-0000aE-Nx
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 05:04:50 +0200
+	id 1Q7heL-0000FV-KA
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 07:20:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437Ab1DGDEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 23:04:41 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38941 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752638Ab1DGDEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 23:04:40 -0400
-Received: by iwn34 with SMTP id 34so2045028iwn.19
-        for <git@vger.kernel.org>; Wed, 06 Apr 2011 20:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=9+bjgKX+jVzYh8JgSFgk/V0bVq8SgA4CbVvKYWsusLA=;
-        b=K2bNzT8TXf3dxO0/m72fH9e/PCrUPyVz/Gg5UmufXcopyP2jz7M/uZPTORHnSeG31I
-         FgM8Fj+3JmHGtL2d7gpVWVqJ5NHVrWq9iTV3dFLJc73I4xRjhekAX1V8Ss8sE2aXQTCk
-         N91bmg177/YVUl5J1qtxqnkGcY0/ovukEnqTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=TAJqjUGuKqfe/b+RBtGZbUCTrNHNzHkHumnXAsrLb6NWvpgFMqEpQgls7hsvZLMykm
-         TYCOWy2Ja1wK9iKemxfgZeMQrQ4qpkMzZD7W+IayjPl204Paerr3w2/PSJ2qbrYSb9Oc
-         vLP0dL6XM4pgFKbUIITxhnhO7TwgUpc0noDKg=
-Received: by 10.42.229.133 with SMTP id ji5mr501959icb.311.1302145479708;
-        Wed, 06 Apr 2011 20:04:39 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id jv9sm723208icb.1.2011.04.06.20.04.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Apr 2011 20:04:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vwrj7i2je.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751575Ab1DGFUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 01:20:50 -0400
+Received: from relmlor4.renesas.com ([210.160.252.174]:38140 "EHLO
+	relmlor4.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751401Ab1DGFUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2011 01:20:50 -0400
+Received: from relmlir3.idc.renesas.com ([10.200.68.153])
+ by relmlor4.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LJ900K7BO6OID50@relmlor4.idc.renesas.com> for
+ git@vger.kernel.org; Thu, 07 Apr 2011 14:20:48 +0900 (JST)
+Received: from relmlac4.idc.renesas.com ([10.200.69.24])
+ by relmlir3.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LJ900FUKO6OKUB0@relmlir3.idc.renesas.com> for
+ git@vger.kernel.org; Thu, 07 Apr 2011 14:20:48 +0900 (JST)
+Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
+	id 8CD6248070; Thu, 07 Apr 2011 14:20:48 +0900 (JST)
+Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
+	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 7B5D948087; Thu,
+ 07 Apr 2011 14:20:48 +0900 (JST)
+Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
+ relmlac4.idc.renesas.com with ESMTP id QAB29226; Thu,
+ 07 Apr 2011 14:20:48 +0900
+X-IronPort-AV: E=Sophos;i="4.63,314,1299423600";   d="scan'208";a="20430120"
+Received: from unknown (HELO relay21.aps.necel.com) ([10.29.19.50])
+ by relmlii2.idc.renesas.com with ESMTP; Thu, 07 Apr 2011 14:20:48 +0900
+Received: from relay21.aps.necel.com ([10.29.19.50] [10.29.19.50])
+ by relay21.aps.necel.com with ESMTP; Thu, 07 Apr 2011 14:20:48 +0900
+Received: from dhlpc061 ([10.114.97.243] [10.114.97.243])
+ by relay21.aps.necel.com with ESMTP; Thu, 07 Apr 2011 14:20:47 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)	id A7B8152E1E1; Thu,
+ 07 Apr 2011 14:20:47 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-reply-to: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171042>
 
-Hi Junio,
+Pau Garcia i Quiles <pgquiles@elpauer.org> writes:
+> The usual answer to the "I need to put binaries in the repository"
+> question has been "no, you do not". Well, we do. We are in heavy
+> development now, therefore today's version may depend on a certain
+> version of a third-party shared library (DLL) which we only can get in
+> binary form, and tomorrow's version may depend on the next version of
+> that library, and you cannot mix today's source with yesterday's
+> third-party DLL. I. e. to be able to use the code from 7 days ago at
+> 11.07 AM you need "git checkout" to "return" our source AND the
+> binaries we were using back then. This is something ClearCase manages
+> satisfactorily.
 
-Junio C Hamano writes:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> 
-> > +diff.<driver>.command::
-> > +	The custom diff driver command.  See linkgit:gitattributes[5]
-> > +	for details.
-> 
-> This is about "custom", but I thought it was pointed out that ...
-> 
-> > +diff.<driver>.xfuncname::
-> > +	The regular expression that the custom diff driver should use
-> > +	to recognize the hunk header.  A built-in pattern may also be
-> > +	used.  See linkgit:gitattributes[5] for details.
-> > +
-> > +diff.<driver>.binary::
-> > +	Set this option to true to make the custom diff driver treat
-> > +	files as binary.  See linkgit:gitattributes[5] for details.
-> 
-> ... these two don't have much to do with "custom".  You seem to have
-> dropped "custom" from the remaining three, and I think their description
-> without "custom" makes more sense.
-> 
-> It is not a problem for me to just amend these two and lose "custom" when
-> I apply this patch (if there is no other glitch in it, of course), but I
+If it were me, I'd just store the huge binaries in some sort of separate
+remote filesystem, and then store the remote-file-system _paths_ to them
+in git (in a simple text file).
 
-Right.  I was a little confused about these two, but yeah- I see now
-that dependence on `diff.<driver>.command` is equivalent to saying
-that an option applies to a "custom" diff driver.  Please amend to
-lose the "custom".
+Then either use the build system or some sort of git filter to make sure
+that the actual library was installed before building based on the path
+read from the file in git.
 
-Thanks.
+[This would be a pain as a _general_ solution (for git), because it
+involves coordination with a the remote file system, etc, but for an
+organization like yours setting up a system for a specific product, it
+should be fairly easy to set up and maintain -- and particularly so if
+the main use is to store 3rd party library releases, as they're
+typically not going to be something that anybody will want to checkin,
+but rather installed by a small set of people.]
 
--- Ram
+-Miles
+
+-- 
+Circus, n. A place where horses, ponies and elephants are permitted to see
+men, women and children acting the fool.
