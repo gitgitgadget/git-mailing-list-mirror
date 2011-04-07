@@ -1,134 +1,73 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 9/9] sparse: Fix argument number/type warnings caused by the
- main() macro
-Date: Thu, 07 Apr 2011 19:51:13 +0100
-Message-ID: <4D9E07A1.4000707@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff-tree output inconsistency?
+Date: Thu, 7 Apr 2011 15:08:32 -0400
+Message-ID: <20110407190832.GA18842@sigill.intra.peff.net>
+References: <20110407135938.GA322@regex.yaph.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, bebarino@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 20:55:50 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Thu Apr 07 21:08:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7uMt-0006YJ-Ji
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 20:55:47 +0200
+	id 1Q7uZN-0006jo-UE
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 21:08:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756638Ab1DGSzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2011 14:55:42 -0400
-Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:39247 "EHLO
-	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756564Ab1DGSzl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 14:55:41 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1Q7uKx-00076P-l5; Thu, 07 Apr 2011 18:53:48 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1756681Ab1DGTIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 15:08:36 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40872
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756677Ab1DGTIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2011 15:08:35 -0400
+Received: (qmail 22679 invoked by uid 107); 7 Apr 2011 19:09:22 -0000
+Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 07 Apr 2011 15:09:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Apr 2011 15:08:32 -0400
+Content-Disposition: inline
+In-Reply-To: <20110407135938.GA322@regex.yaph.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171078>
 
+On Thu, Apr 07, 2011 at 03:59:38PM +0200, Arjen Laarhoven wrote:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+> I was fiddling with the git-diff-tree command to retrieve a list of
+> files which have in a commit:
+> 
+> $ git diff-tree --name-only HEAD
+> 
+> According to the documentation, the output starts with the SHA-1 of the
+> tree-ish given, after which the list of changed files follows.  This is
+> the case when just one commit-id is given.
+> 
+> However, when given 2 tree-ish objects, the separate line with the SHA-1
+> is not shown.
+> 
+> I browsed through the code and the history for diff-tree.c, but couldn't
+> find an explanation for the inconsistency.  The documentation for the
+> --no-commit-id confuses me a bit more, as it states that the commit id
+> is shown 'when applicable'.  Unfortunately, it fails to explain when
+> exactly that is :-)
+> 
+> Have I found a documentation bug/shortcoming, is it a code bug or am I
+> misunderstanding something else?
 
- compat/mingw.h       |    4 ++--
- fast-import.c        |    3 ++-
- git.c                |    3 ++-
- test-chmtime.c       |    2 +-
- test-index-version.c |    2 +-
- test-parse-options.c |    3 ++-
- 6 files changed, 10 insertions(+), 7 deletions(-)
+I think it's a documentation bug. The sha1 is shown only when a single
+tree-ish is given (either on the command line, or via --stdin). This is
+a historical behavior, as one of the original uses of diff-tree was
+to implement log as:
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 62eccd3..ddcf365 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -316,8 +316,8 @@ void free_environ(char **env);
-  */
- 
- #define main(c,v) dummy_decl_mingw_main(); \
--static int mingw_main(); \
--int main(int argc, const char **argv) \
-+static int mingw_main(c,v); \
-+int main(int argc, char **argv) \
- { \
- 	extern CRITICAL_SECTION pinfo_cs; \
- 	_fmode = _O_BINARY; \
-diff --git a/fast-import.c b/fast-import.c
-index 65d65bf..7ba98c5 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -3247,8 +3247,9 @@ static void parse_argv(void)
- 		read_marks();
- }
- 
--int main(int argc, const char **argv)
-+int main(int argc, char **av)
- {
-+	const char **argv = (const char **) av;
- 	unsigned int i;
- 
- 	git_extract_argv0_path(argv[0]);
-diff --git a/git.c b/git.c
-index ef598c3..31fc678 100644
---- a/git.c
-+++ b/git.c
-@@ -507,8 +507,9 @@ static int run_argv(int *argcp, const char ***argv)
- }
- 
- 
--int main(int argc, const char **argv)
-+int main(int argc, char **av)
- {
-+	const char **argv = (const char **) av;
- 	const char *cmd;
- 
- 	startup_info = &git_startup_info;
-diff --git a/test-chmtime.c b/test-chmtime.c
-index 92713d1..8532743 100644
---- a/test-chmtime.c
-+++ b/test-chmtime.c
-@@ -56,7 +56,7 @@ static int timespec_arg(const char *arg, long int *set_time, int *set_eq)
- 	return 1;
- }
- 
--int main(int argc, const char *argv[])
-+int main(int argc, char *argv[])
- {
- 	static int verbose;
- 
-diff --git a/test-index-version.c b/test-index-version.c
-index bfaad9e..05d4699 100644
---- a/test-index-version.c
-+++ b/test-index-version.c
-@@ -1,6 +1,6 @@
- #include "cache.h"
- 
--int main(int argc, const char **argv)
-+int main(int argc, char **argv)
- {
- 	struct cache_header hdr;
- 	int version;
-diff --git a/test-parse-options.c b/test-parse-options.c
-index 4e3710b..925704c 100644
---- a/test-parse-options.c
-+++ b/test-parse-options.c
-@@ -27,8 +27,9 @@ static int number_callback(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
--int main(int argc, const char **argv)
-+int main(int argc, char **av)
- {
-+	const char **argv = (const char **) av;
- 	const char *prefix = "prefix/";
- 	const char *usage[] = {
- 		"test-parse-options <options>",
--- 
-1.7.4
+  git rev-list | git diff-tree --stdin
+
+You can even do "git diff-tree --stdin --pretty=medium" to get the full
+log-ish output.  These days, though, log does everything in one process.
+
+But I don't think we make that clear anywhere in the diff-tree manpage.
+
+-Peff
