@@ -1,113 +1,86 @@
-From: Dan McGee <dpmcgee@gmail.com>
-Subject: [PATCH 2/2] stash: ensure --no-keep-index and --patch can be used in any order
-Date: Thu,  7 Apr 2011 12:04:20 -0500
-Message-ID: <1302195860-31053-2-git-send-email-dpmcgee@gmail.com>
-References: <1302195860-31053-1-git-send-email-dpmcgee@gmail.com>
-Cc: Thomas Rast <trast@student.ethz.ch>, Dan McGee <dpmcgee@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 19:04:37 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] magic pathspec: add tentative
+ ":/path/from/top/level" pathspec support
+Date: Thu, 07 Apr 2011 11:28:10 -0700
+Message-ID: <7v8vvlgblx.fsf@alter.siamese.dyndns.org>
+References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
+ <1302138996-10006-2-git-send-email-gitster@pobox.com>
+ <7v62qqhm9h.fsf@alter.siamese.dyndns.org>
+ <BANLkTinkXVSFYqqZ+pHK0w8ij5YtPMfKEA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 20:28:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7sdG-0006lE-Kc
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 19:04:34 +0200
+	id 1Q7twT-000543-9h
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 20:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756261Ab1DGREb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2011 13:04:31 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:53849 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756179Ab1DGREa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2011 13:04:30 -0400
-Received: by mail-gw0-f46.google.com with SMTP id a18so923353gwa.19
-        for <git@vger.kernel.org>; Thu, 07 Apr 2011 10:04:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=kKTDFvjXji5oYzgpAbxVZhNOgdn4/m7HlBkhee30Ug0=;
-        b=MD2rudZX7ns+aFsYre7hUcIPe5RBilKGGb331KuoUziYn6KIigATH023k7HF8WeKag
-         rrH4Fi6yIACrQNH6yrtz1NGXWDdFqHYc165Srnyfcdb649igHIGq9EXyMCLBnwF6ZlO7
-         dvolbfESU7jhbOCAW167+9Hd2kANxgyxtE0BY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=GaV2+X4WluWV0yVbEp/mV6z7YatKqySp9TsNNKYpI3Tt2kdjC7KzU7RCEnnXTXybF2
-         979n6sVFAuUWwSa4bfzBQf5MCmoZB4YcEJDSWrqPqXVMkxce4/ccs4EvF/m7GfhAUkdt
-         1SjQT1bXu5aDYOnOMWkzO1bfmR3+PLTBHatss=
-Received: by 10.150.149.34 with SMTP id w34mr1073694ybd.309.1302195870573;
-        Thu, 07 Apr 2011 10:04:30 -0700 (PDT)
-Received: from localhost (c-71-239-242-45.hsd1.il.comcast.net [71.239.242.45])
-        by mx.google.com with ESMTPS id w1sm987220ybl.9.2011.04.07.10.04.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Apr 2011 10:04:29 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.4
-In-Reply-To: <1302195860-31053-1-git-send-email-dpmcgee@gmail.com>
+	id S1756227Ab1DGS2X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Apr 2011 14:28:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60737 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752301Ab1DGS2W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 14:28:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3F5DB5921;
+	Thu,  7 Apr 2011 14:30:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Ug+l+TMKMeE3
+	6GvBG4O9UxsCeX0=; b=svlllgIJrcWA9amJkd/1bZo2v6lYIBI6zspiIZ3wYOTY
+	tNiz2dMCPbfaU1nm24gMAFm+P9wr+hN65ROscxSl8NpzMoy9gw0GWTsBU/hJu51/
+	v49pS8v1AIhGsTk+3pNcRK9G9G0eX3Nyv8p4r7xfBUNbMfjbmPsToaUBkmUoTS4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aO2RXN
+	wgb7p5kQU06/EOrMXPjUkFY2f6ZFGRxQY7KAF1y4j3L2cos1XqT51416INzIgHj8
+	0jVhRa+X4zR3lSMGinQtk0eWpvN6alyol2iy/uP0PyZ+y1u8MPJvI/o+wWSMyb5j
+	TDrn4iSu6B2DryjVo/sD5ekvDLQsAjMxMPlAg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 06F0C591F;
+	Thu,  7 Apr 2011 14:30:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0B14B591D; Thu,  7 Apr 2011
+ 14:30:06 -0400 (EDT)
+In-Reply-To: <BANLkTinkXVSFYqqZ+pHK0w8ij5YtPMfKEA@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Thu, 7 Apr 2011 20:09:43 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 11BE3586-6145-11E0-903B-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171069>
 
-Don't assume one comes after the other on the command line. Use a
-three-state variable to track and check its value accordingly.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Signed-off-by: Dan McGee <dpmcgee@gmail.com>
----
- git-stash.sh           |    9 +++++----
- t/t3904-stash-patch.sh |    2 +-
- 2 files changed, 6 insertions(+), 5 deletions(-)
+> 2011/4/7 Junio C Hamano <gitster@pobox.com>:
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 if (('a' <=3D ch && ch <=3D 'z') ||
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 ('A' <=3D ch && ch <=3D 'Z')) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addf(&sb, "[%c%c]",
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 tolower(ch), toupper(ch));
+>
+> Nice try. You know you are going to pay a high performance price for
+> that, don't you ;) Maybe also worth mentioning in document that this
+> applies to ASCII charset only (as opposed to Unicode).
 
-diff --git a/git-stash.sh b/git-stash.sh
-index a305fb1..fd66884 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -136,11 +136,12 @@ save_stash () {
- 			keep_index=t
- 			;;
- 		--no-keep-index)
--			keep_index=
-+			keep_index=n
- 			;;
- 		-p|--patch)
- 			patch_mode=t
--			keep_index=t
-+			# only default to keep if we don't already have an override
-+			test -z "$keep_index" && keep_index=t
- 			;;
- 		-q|--quiet)
- 			GIT_QUIET=t
-@@ -185,7 +186,7 @@ save_stash () {
- 	then
- 		git reset --hard ${GIT_QUIET:+-q}
- 
--		if test -n "$keep_index" && test -n $i_tree
-+		if test "$keep_index" = "t" && test -n $i_tree
- 		then
- 			git read-tree --reset -u $i_tree
- 		fi
-@@ -193,7 +194,7 @@ save_stash () {
- 		git apply -R < "$TMP-patch" ||
- 		die "Cannot remove worktree changes"
- 
--		if test -z "$keep_index"
-+		if test "$keep_index" != "t"
- 		then
- 			git reset
- 		fi
-diff --git a/t/t3904-stash-patch.sh b/t/t3904-stash-patch.sh
-index 4d58789..781fd71 100755
---- a/t/t3904-stash-patch.sh
-+++ b/t/t3904-stash-patch.sh
-@@ -48,7 +48,7 @@ test_expect_success PERL 'git stash -p --no-keep-index' '
- 	verify_state bar dummy bar_index
- '
- 
--test_expect_failure PERL 'git stash --no-keep-index -p' '
-+test_expect_success PERL 'git stash --no-keep-index -p' '
- 	set_state dir/foo work index &&
- 	set_state bar bar_work bar_index &&
- 	(echo n; echo y) | git stash save --no-keep-index -p &&
--- 
-1.7.4.4
+You know this is a throw-away patch, just to illustrate that some thing=
+s
+are doable with a hack to add more code to get_pathspec(), while others
+would need a bigger restructuring, don't you?
+
+Besides, _if_ the user wants to do something costly, as long as the
+implementation does not harm common cases, it _still_ is better to make
+the code do the work, no?
