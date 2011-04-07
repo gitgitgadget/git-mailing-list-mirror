@@ -1,171 +1,87 @@
-From: Ciaran <ciaranj@gmail.com>
-Subject: Re: p4Merge bundled command and the behaviour with files (same name)
- added on different branches.
-Date: Thu, 7 Apr 2011 10:48:55 +0100
-Message-ID: <BANLkTik0HnV9+436dt=c0yKQb0KxpbgGGg@mail.gmail.com>
-References: <BANLkTimpsg=26C0mq=feVT7mt0nwZBoBUA@mail.gmail.com>
-	<20110407094347.GB7593@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/4] Documentation: Add filter.<driver>.* to config
+Date: Thu, 07 Apr 2011 13:57:31 +0200
+Message-ID: <4D9DA6AB.40100@drmicha.warpmail.net>
+References: <1301654600-8901-1-git-send-email-artagnon@gmail.com> <1302083854-2448-1-git-send-email-artagnon@gmail.com> <1302083854-2448-2-git-send-email-artagnon@gmail.com> <4D9C4E0F.8050302@drmicha.warpmail.net> <20110406124235.GA5881@kytes> <7vpqozjpcl.fsf@alter.siamese.dyndns.org> <20110406180950.GA667@kytes>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 11:49:02 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 11:57:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7lpm-0003Jf-2K
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 11:49:02 +0200
+	id 1Q7lyC-0008DD-Ff
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 11:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858Ab1DGJs5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Apr 2011 05:48:57 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:54257 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751657Ab1DGJs4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 05:48:56 -0400
-Received: by yxs7 with SMTP id 7so916769yxs.19
-        for <git@vger.kernel.org>; Thu, 07 Apr 2011 02:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4i3dhs8c9dK77/FghgdvHEvTE2Te6kiAMgN+r9JG+xM=;
-        b=HjgJonT7LXTS2vNH0ql8cPdmnMRv0UZWfT4vTTEGD1PQzLZ5/0x0M+/xwxyMPYnUKb
-         4KxybB/PlBlHONHaV8v06fAhby8ycd39j4FEbwbGwGBKdGz2DhuKj2hWirAB6WUNi5EK
-         V/wKShksfcyLNDTwXq9WW24YdghGq2ooFMDjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VzS2Fyo8ApYtj1rKI5Gtu+fCHE1VUW+nUQRwzh6on7bCal4K6jzHas6k+6RPfTUqIG
-         Aqp7Y7FUMcoxPhjy+FteV0O7Mz4UJf2ijB7nQqwF844Lk7sUvlXqOh2pH9GBOSnmedL9
-         NC4HATGB19URYeakCsqWdxWS+tRHnrxJygvDY=
-Received: by 10.236.187.102 with SMTP id x66mr817736yhm.114.1302169735438;
- Thu, 07 Apr 2011 02:48:55 -0700 (PDT)
-Received: by 10.236.103.173 with HTTP; Thu, 7 Apr 2011 02:48:55 -0700 (PDT)
-In-Reply-To: <20110407094347.GB7593@gmail.com>
+	id S1754049Ab1DGJ5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 05:57:38 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:49075 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752631Ab1DGJ5h (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 05:57:37 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 4BF50209AD;
+	Thu,  7 Apr 2011 05:57:37 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Thu, 07 Apr 2011 05:57:37 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=oHPXcohj3qmmWh+Df6WjjfR4Ptc=; b=Pk2tpUSuwc3sUHVw5lx3Y0Z6RaEF0k22527EcXpm/uhXHt4mu2AQEyUCqjROm90wjcj/zz6IvF3uJci22RGDbL4s6vnz2Gmq/di6AJZgfUYxkGvG3EPdLbSm7S3hilkz9cGa9BMNZ+9/Qk8UyRF0F4F52pVOWiJB5T/dzmBpGX0=
+X-Sasl-enc: wmXOt1SwilK1s9sgg2hDNwVmpyuz1FHvHMVAK2u8yqUT 1302170255
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 70159441943;
+	Thu,  7 Apr 2011 05:57:35 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <20110406180950.GA667@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171051>
 
-On Thu, Apr 7, 2011 at 10:43 AM, David Aguilar <davvid@gmail.com> wrote=
-:
-> On Mon, Apr 04, 2011 at 09:55:41AM +0100, Ciaran wrote:
->> [...]
->> We would expect a 'both added' merge conflict (both the other branch=
-,
->> and the master branch added the file named bar.txt, but with differe=
-nt
->> content.) =A0This is all good and right. =A0So in a system configure=
-d to
->> use p4merge as the mergetool, one fires up with 'git mergetool'
+Ramkumar Ramachandra venit, vidit, dixit 06.04.2011 20:09:
+> Hi Junio,
+> 
+> Junio C Hamano writes:
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>> I'm very sorry to have caused so much pain.  Yes, I can imagine how
+>>> terrible it must be to review several iterations of a simple
+>>> documentation patch.  Thank you for being so patient with me so far- I
+>>> understand if you don't want to do this anymore.
+>>>
+>>> I do spend time proofreading patches before sending them out, but I'm
+>>> clearly not very good at it.  In future, I'll either try rewriting
+>>> entire paragraphs or simply refrain from writing documentation patches.
 >>
->> What happens now is p4merge starts and tells us:
+>> I do not think that is the lesson you should learn from this exchange.  A
+>> major part of Michael's complaint (which I think was justified) was that
+>> he even made a suggestion that is ready to be cut-and-pasted, but your
+>> reroll does not use the suggested phrasing _without_ explaining why it
+>> doesn't.
 >>
->> Base: bar.txt.LOCAL.<num1>.txt
->> Left: bar.txt.LOCAL.<num1>.txt Differences from base: 0
->> Right: bar.txt.LOCAL.<num2>.txt Differences from base: 1
->> Merge: bar.txt Conflicts:0
->>
->> Presenting the left + right options on top of each other in the resu=
-lt
->> window (which may be correct) and leaving the save button disabled
->> (grayed out)
->>
->> If at this point one closes the window without editing the presented
->> (apparently merged) file, then nothing will be saved to disk and we
->> will see:
->>
->> bar.txt seems unchanged.
->> Was the merge successful? [y/n]
->>
->> In the console. =A0Which Git wise is correct, that is exactly right,=
- the
->> p4merge tool hasn't made any actual changes to the underlying file.
->>
->> This behaviour seems confusing to me (the p4merge client behaviour,
->> *not* Git's) =A0 I believe it is because in the case where there is =
-no
->> logical base between two files the local one is arbritrarily chosen,
->> and p4merge *thinks* that this is equal to the merge result and has
->> nothing to persist.
->>
->> I have attached a patch that resolves the issue for me (e.g.
->> introduces the behaviour I expect) by passing a reference to an empt=
-y
->> file in the case where there is no meaningful base. =A0Unfortunately=
- I
->> don't understand enough to say whether this change is correct or not
->> and would value feedback on it.
->>
->> Many thanks
->> =A0- Cj.
->
-> Thanks. =A0If this patch were for actual consideration you would
-> inline the patch instead of sending an attachment as described
-> in Documentation/SubmittingPatches. =A0Marking the subject line
-> with "[RFC PATCH]" lets us know that you're interested in
-> feedback. =A0I have a few questions below.
-Thank you for respnding, I wasn't sure on the etiquette (and quite
-frankly nervous as it was about posting to the list ;) ), so please
-accept my apologies.
+>> It is not limited to "documentation patches".  If you get a "how about
+>> doing it this way---isn't it cleaner?" suggestion to your code patch, you
+>> at least owe either "yeah, that looks better---thanks, I've used it in
+>> this reroll" or "no, because...; I've used the original" to the person who
+>> tried to help you, no?
+> 
+> I completely agree -- all of Michael's suggestions were excellent, and
+> I'd definitely owe him an explanation for not using something.  In
+> this particular case, it was an honest mistake though- I meant to
+> include Michael's version, but I'd rolled out the wrong commit after
+> rebasing.
 
->
->> index fb3f52b..3e486dc 100644
->> --- a/git-mergetool--lib.sh
->> +++ b/git-mergetool--lib.sh
->> @@ -262,7 +262,9 @@ run_merge_tool () {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if $base_present; then
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$merge_=
-tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 else
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$merge_to=
-ol_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 touch ".em=
-pty"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$merge_to=
-ol_path" ".empty" "$LOCAL" "$REMOTE" "$MERGED"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 rm ".empty=
-"
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 check_unchanged
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 else
->> --
->
-> What if the user has a file called '.empty' in their repository?
-Then it will get over-written ;)
+Ram, all is well (explained) now, and please don't give up on
+documentation patches. You see, it happened to me again and again that I
+submitted something, and someone took over the initiative or the idea
+and submitted something under his name. And that is completely OK (after
+all I had signed off on my patch, it's part of the O in OSS) but
+"deprives" the original submitter of the "reward" of having the commit
+count incremented. And that is what I wanted to spare you by not
+submitting my own version.
 
->
-> What if the user Ctrl-C's out of mergetool -- does a stale
-> .empty file get left behind?
-Yup, I imagine so.
-
->
-> Does it work if we pass /dev/null instead?
-> Is such a strategy portable to Windows?
-I don't think so, that was my first try (in Windows.)
-
->
-> If /dev/null doesn't work, would it be better if the
-> empty file were given a different name?
-> Maybe something like foo.EMPTY.<num>.txt?
-I'm amenable to anything.   My patch was really an example, hoping to
-prompt a conversation with someone who actually knows the working of
-git / mergetool-lib :)
-
-Presumably I can co-opt whatever logic drives the existing
-local/remote/merged temporary file names to create an 'empty' filename
-in the temporary folder, since this file will always be identical it
-shouldn't matter if it hangs around/gets updated con-currently etc. ?
-
-Thanks
-- Cj.
-
-> --
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0David
->
+Cheers,
+Michael
