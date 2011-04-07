@@ -1,92 +1,50 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: blobs (once more)
-Date: Thu, 07 Apr 2011 14:20:47 +0900
-Message-ID: <buo4o6abpsg.fsf@dhlpc061.dev.necel.com>
-References: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Pau Garcia i Quiles <pgquiles@elpauer.org>
-X-From: git-owner@vger.kernel.org Thu Apr 07 07:20:58 2011
+From: Andrew Garber <andrew@andrewgarber.com>
+Subject: [PATCH] git-p4: replace each tab with 8 spaces for consistency
+Date: Thu,  7 Apr 2011 02:01:20 -0400
+Message-ID: <1302156081-3286-1-git-send-email-andrew@andrewgarber.com>
+References: <y>
+Cc: Andrew Garber <andrew@andrewgarber.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Apr 07 08:03:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7heL-0000FV-KA
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 07:20:57 +0200
+	id 1Q7iJi-00073S-M2
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 08:03:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575Ab1DGFUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2011 01:20:50 -0400
-Received: from relmlor4.renesas.com ([210.160.252.174]:38140 "EHLO
-	relmlor4.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401Ab1DGFUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2011 01:20:50 -0400
-Received: from relmlir3.idc.renesas.com ([10.200.68.153])
- by relmlor4.idc.renesas.com ( SJSMS)
- with ESMTP id <0LJ900K7BO6OID50@relmlor4.idc.renesas.com> for
- git@vger.kernel.org; Thu, 07 Apr 2011 14:20:48 +0900 (JST)
-Received: from relmlac4.idc.renesas.com ([10.200.69.24])
- by relmlir3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LJ900FUKO6OKUB0@relmlir3.idc.renesas.com> for
- git@vger.kernel.org; Thu, 07 Apr 2011 14:20:48 +0900 (JST)
-Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
-	id 8CD6248070; Thu, 07 Apr 2011 14:20:48 +0900 (JST)
-Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 7B5D948087; Thu,
- 07 Apr 2011 14:20:48 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac4.idc.renesas.com with ESMTP id QAB29226; Thu,
- 07 Apr 2011 14:20:48 +0900
-X-IronPort-AV: E=Sophos;i="4.63,314,1299423600";   d="scan'208";a="20430120"
-Received: from unknown (HELO relay21.aps.necel.com) ([10.29.19.50])
- by relmlii2.idc.renesas.com with ESMTP; Thu, 07 Apr 2011 14:20:48 +0900
-Received: from relay21.aps.necel.com ([10.29.19.50] [10.29.19.50])
- by relay21.aps.necel.com with ESMTP; Thu, 07 Apr 2011 14:20:48 +0900
-Received: from dhlpc061 ([10.114.97.243] [10.114.97.243])
- by relay21.aps.necel.com with ESMTP; Thu, 07 Apr 2011 14:20:47 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id A7B8152E1E1; Thu,
- 07 Apr 2011 14:20:47 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <BANLkTim3kg1ycGkgWsqaZiqMY9LTKV6DBw@mail.gmail.com>
+	id S1751657Ab1DGGDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 02:03:24 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53126 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751069Ab1DGGDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2011 02:03:23 -0400
+Received: by iwn34 with SMTP id 34so2138060iwn.19
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 23:03:22 -0700 (PDT)
+Received: by 10.43.57.200 with SMTP id wh8mr897401icb.29.1302156202864;
+        Wed, 06 Apr 2011 23:03:22 -0700 (PDT)
+Received: from localhost.localdomain (75-119-246-204.dsl.teksavvy.com [75.119.246.204])
+        by mx.google.com with ESMTPS id gy41sm915291ibb.22.2011.04.06.23.03.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 06 Apr 2011 23:03:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
+In-Reply-To: <y>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171043>
 
-Pau Garcia i Quiles <pgquiles@elpauer.org> writes:
-> The usual answer to the "I need to put binaries in the repository"
-> question has been "no, you do not". Well, we do. We are in heavy
-> development now, therefore today's version may depend on a certain
-> version of a third-party shared library (DLL) which we only can get in
-> binary form, and tomorrow's version may depend on the next version of
-> that library, and you cannot mix today's source with yesterday's
-> third-party DLL. I. e. to be able to use the code from 7 days ago at
-> 11.07 AM you need "git checkout" to "return" our source AND the
-> binaries we were using back then. This is something ClearCase manages
-> satisfactorily.
+Note that the majority of git-p4 uses spaces, not tabs, for indentation.
+Consistent indentation is critical to the functionality of Python
+scripts: mixing tabs and spaces in Python can lead to hard-to-find bugs.
 
-If it were me, I'd just store the huge binaries in some sort of separate
-remote filesystem, and then store the remote-file-system _paths_ to them
-in git (in a simple text file).
+Andrew Garber (1):
+  git-p4: replace each tab with 8 spaces for consistency
 
-Then either use the build system or some sort of git filter to make sure
-that the actual library was installed before building based on the path
-read from the file in git.
-
-[This would be a pain as a _general_ solution (for git), because it
-involves coordination with a the remote file system, etc, but for an
-organization like yours setting up a system for a specific product, it
-should be fairly easy to set up and maintain -- and particularly so if
-the main use is to store 3rd party library releases, as they're
-typically not going to be something that anybody will want to checkin,
-but rather installed by a small set of people.]
-
--Miles
+ contrib/fast-import/git-p4 |   64 ++++++++++++++++++++++----------------------
+ 1 files changed, 32 insertions(+), 32 deletions(-)
 
 -- 
-Circus, n. A place where horses, ponies and elephants are permitted to see
-men, women and children acting the fool.
+1.7.3.4
