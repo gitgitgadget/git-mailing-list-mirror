@@ -1,116 +1,104 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [PATCH] pathspec: rename per-item field has_wildcard to use_wildcard
-Date: Thu, 7 Apr 2011 19:51:34 +0700
-Message-ID: <BANLkTi=sjhWdav6QLguUnr6HE3Roc0NM4Q@mail.gmail.com>
+Date: Thu, 7 Apr 2011 20:00:11 +0700
+Message-ID: <BANLkTinkdR4gg1=z-b4941Pppfsg+CgD-g@mail.gmail.com>
 References: <7vr59gl581.fsf@alter.siamese.dyndns.org> <BANLkTikJ3=H_OgcNueMjnwwQ2W-2kamf=w@mail.gmail.com>
- <7vfwpvjobl.fsf@alter.siamese.dyndns.org>
+ <7vfwpvjobl.fsf@alter.siamese.dyndns.org> <4D9D9B60.4030404@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 14:54:53 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Apr 07 15:00:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7ojc-0002OU-7w
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 14:54:52 +0200
+	id 1Q7opS-0006as-B4
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 15:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948Ab1DGMyr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Apr 2011 08:54:47 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62324 "EHLO
+	id S1756066Ab1DGNAn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Apr 2011 09:00:43 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:61975 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751848Ab1DGMyq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 08:54:46 -0400
-Received: by bwz15 with SMTP id 15so1970990bwz.19
-        for <git@vger.kernel.org>; Thu, 07 Apr 2011 05:54:45 -0700 (PDT)
+	with ESMTP id S1755551Ab1DGNAm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 09:00:42 -0400
+Received: by bwz15 with SMTP id 15so1975304bwz.19
+        for <git@vger.kernel.org>; Thu, 07 Apr 2011 06:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=if4YR60BXk2jjdpq8YVscebGvR2JC9xvhgS9u/np4A8=;
-        b=Y2b/g9yjX88FeF66oHk6oVsdTfKOyeMj8QJWDXbvxXSlNiXvEPxW8jxFxj8kWKnZf3
-         7mqv2TN0v26FIgdMxVFlQNT+sCPEP99IQ7NsEcPXP5B/Wa1sa61bTCg85p1kjLLNWcMm
-         IukwMCoKvUyRgh7yqGk03wXCrrh/nfhs+rRDI=
+        bh=6khZ3EkBzss3+/qJ/rTT7gdHYKOCI2GlaXeI3iFiPPk=;
+        b=e7iG2n9LY2qkXlPV1F3zs+3Udgcuh/g4MfLLGSdHaTXuGp+hiEL7GZTSub3GEHQT/U
+         LFRpFDUrhYnRmVlDSHTrFdRpFvp7xfQPqbPEOy/fvxW/B7RWs3qIJuFobV6C9BReX9sh
+         4UYGX/OcbFbJyTWZqac9wfuDDFxghmDQj9ydA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=Q652dbFoyIbYQgnT3dxMGgEVSOzYQzugjFGVws80/kKl67gqmlMt9S7E69eNXFc/BS
-         XsnN32JBvR3BbhNBxjEw8JzvivMBa6xqoiVxguA7N6qSax3jm+e1EG/dzh2aZswbdxoc
-         hS+UC4JEeLdneFhn9V205u1E5cF2bb2Yl770M=
-Received: by 10.204.81.224 with SMTP id y32mr714703bkk.152.1302180724124; Thu,
- 07 Apr 2011 05:52:04 -0700 (PDT)
-Received: by 10.204.37.195 with HTTP; Thu, 7 Apr 2011 05:51:34 -0700 (PDT)
-In-Reply-To: <7vfwpvjobl.fsf@alter.siamese.dyndns.org>
+        b=HhTE7/BZ61mECeaNi98WuiWYTmbmGShf6WaJKI3vsMsacfV3UIqJq1wxErEt3QuGGO
+         TpkhuBhEbQhydZOLx5jYhQPIa8cgkxTKv+4aaVTm1Pwx7UJHG/r3zvgAylT8LWLXZ08w
+         NWp88r0z39fibn2Upmkeif3yOdSxWmrqnQ9q0=
+Received: by 10.204.143.4 with SMTP id s4mr700447bku.98.1302181241101; Thu, 07
+ Apr 2011 06:00:41 -0700 (PDT)
+Received: by 10.204.37.195 with HTTP; Thu, 7 Apr 2011 06:00:11 -0700 (PDT)
+In-Reply-To: <4D9D9B60.4030404@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171056>
 
-On Thu, Apr 7, 2011 at 12:13 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> The extensible syntax I have in mind (we only parse in get_pathspec()=
- in
-> such a tentative version but anything other than the :/ will error ou=
-t) is
-> to use:
->
-> =C2=A0(1) Colon, a run of selected non-alpha (i.e. magic signature), =
-an
-> =C2=A0 =C2=A0 optional colon to terminate the magic signature, follow=
-ed by the
-> =C2=A0 =C2=A0 path, e.g.
->
-> =C2=A0 =C2=A0 - ":/hello.c" is a path from the top.
->
-> =C2=A0 =C2=A0 - ":!/hello.c" is path from the top but no globbing.
->
-> =C2=A0 =C2=A0 - ":/!hello.c" is the same as above.
->
-> =C2=A0 =C2=A0 - ":/::hello.c" is ":hello.c" from the top, the second =
-colon
-> =C2=A0 =C2=A0 =C2=A0 terminates the magic signature and allows the fu=
-nny file with a
-> =C2=A0 =C2=A0 =C2=A0 leading colon to be named.
->
-> =C2=A0 =C2=A0 - "::hello.c" does not have any magic, is the same as "=
-hello.c".
+On Thu, Apr 7, 2011 at 6:09 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Junio, we're in rc phase ;)
 
-What about ":hello.c", same as "hello.c"? I think we need to reserve
-some more characters for future extension. The selected set of magic
-in your patch misses my favourite negate magic :)
+He was excited. It's good, we may get this feature sooner :)
 
-By the way, I think we should use a better term than "magic". Pathspec =
-modifier?
-
-> =C2=A0(2) Colon, open parenthesis, a comma separated list of words to=
- name
-> =C2=A0 =C2=A0 magic, close parenthesis, followed by the path, e.g. th=
-ese are the
-> =C2=A0 =C2=A0 long-hand counterparts to the examples in (1)
+>> =C2=A0(2) Colon, open parenthesis, a comma separated list of words t=
+o name
+>> =C2=A0 =C2=A0 =C2=A0magic, close parenthesis, followed by the path, =
+e.g. these are the
+>> =C2=A0 =C2=A0 =C2=A0long-hand counterparts to the examples in (1)
+>>
+>> =C2=A0 =C2=A0 =C2=A0- ":(top)hello.c"
+>> =C2=A0 =C2=A0 =C2=A0- ":(top,noglob)hello.c"
+>> =C2=A0 =C2=A0 =C2=A0- ":(noglob,top)hello.c"
+>> =C2=A0 =C2=A0 =C2=A0- ":(noglob,top):hello.c"
+>> =C2=A0 =C2=A0 =C2=A0- ":()hello.c"
+>>
 >
-> =C2=A0 =C2=A0 - ":(top)hello.c"
-> =C2=A0 =C2=A0 - ":(top,noglob)hello.c"
-> =C2=A0 =C2=A0 - ":(noglob,top)hello.c"
-> =C2=A0 =C2=A0 - ":(noglob,top):hello.c"
-> =C2=A0 =C2=A0 - ":()hello.c"
->
+> Do we need the parentheses? I guess we need them to have the magic st=
+art
+> with a non-alpha, otherwise we could do with ":top,noglob:hello.c"
+> (which I like but breaks those with a file named ":top:hello.c").
 
-Can we mix short and long magic? It seems impossible in your patch. I
-don't know if that's the intention.
+That has something to do with "easy to parse and catch error", I
+think. At the moment ":hello/:world" is interpreted as "hello/:world".
+Without parentheses, we need to look further for colon and may
+accidentally misinterpret it.
 
-> At this point, I am not interested in building the repertoire of magi=
-c
-> yet, but would want to nail a syntax that is
+> What about these:
 >
-> =C2=A0- concise in common cases (e.g. "from the top, not a funny name=
-" is ':/'
-> =C2=A0 followed by the name);
-> =C2=A0- is extensible in the future; and
-> =C2=A0- easy to parse and error out on magic we do not understand.
+> :/(noglob)hello.c
+> :(top)!hello.c
+>
+> I.e. do we allow combinations?
+
+I think we should. I don't like typing long pathspecs, just because
+only remember mnemonic for "top" and happen to need "noglob" too.
+
+> It seems you accept to break people with files named ":(top)hello.c" =
+but
+> not those with files named ":top:hello.c". Which is OK if it's a
+> conscious decision, of course.
+
+At least once we agree on colon being the magic introducer and general
+rules, we can do these earlier in 1.7.x
+
+ - warn people that ":hello.c" may change semantics in future
+ - recommend to escape ("::hello.c" instead of ":hello.c")
 --=20
 Duy
