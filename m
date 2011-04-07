@@ -1,192 +1,170 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/4] add -u: get rid of "treewideupdate" configuration
-Date: Wed,  6 Apr 2011 18:16:34 -0700
-Message-ID: <1302138996-10006-3-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH 1/4] magic pathspec: add tentative
+ ":/path/from/top/level" pathspec support
+Date: Wed, 06 Apr 2011 18:40:26 -0700
+Message-ID: <7v62qqhm9h.fsf@alter.siamese.dyndns.org>
 References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
+ <1302138996-10006-2-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 03:17:04 2011
+X-From: git-owner@vger.kernel.org Thu Apr 07 03:40:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7dqJ-0006sC-NV
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 03:17:04 +0200
+	id 1Q7eDE-0003gJ-Fn
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 03:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757194Ab1DGBQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 21:16:47 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45029 "EHLO
+	id S1757273Ab1DGBkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 21:40:37 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62011 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756123Ab1DGBQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 21:16:46 -0400
+	with ESMTP id S1754665Ab1DGBkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 21:40:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C7A844C1D
-	for <git@vger.kernel.org>; Wed,  6 Apr 2011 21:18:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=BBgH
-	gE/YUZ8InxuZ2A/fmA+4EDM=; b=gK0EnmVcuIpJulYVtFXVuBlktcmkHuA4skXt
-	UpcA1sHcE1cagpdaeo9ejNFG4yQo4gsbuKXyz5wltH22ilYd8y87mJNKwsNBZc+V
-	ayiWfkSaC5jXQ+WWFCJvZ67BL69Rba6Ms/qIxyy+/T2BnbVJKAFjp0zI6ldHg8tw
-	M2ysWiU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=UyJqvg
-	1tCXtJF32NEb641oRZO7Q8WTgz5Wb9hdnezLLpofCm/bBfEScm74jh+SWwLH6UJu
-	u4ls6ceJWkPv5lXv0t2Rsq7L3z6zDLLeWxIGiqQSAlVOZiMTCHBX2ZQAobbGsaYq
-	8M3o6Zi6uyABSJYe7XAD8V4z5g/Fis1h9klJw=
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8E8004F82;
+	Wed,  6 Apr 2011 21:42:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SdFX3+7XdO6MAFiJ8d9UAU1KCCo=; b=HeuirL
+	SkBdmSfsLxlzUCUP0NTi61NS6BKxe5LsUJNyZSeiiwkSltwNpWtJujeCwfAJyKvo
+	WqKOu1A6uf1nDgi50klUlD+cKlVsGf03mycSpME0WWhjuyDAJqhYsf3bQvxF4P/n
+	TOks73MZKpYRSNgaCqseYLyCj4/fZlz7n68kA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aDCSr8ZMHsbkwuF8QKzJw8wQOWMnjEwQ
+	qQfklgm23mg517j/lkR4ecY4WhbPgVSSWY1v6iW5Nt4puNpz+lw2I21/Zce0taFR
+	SzPfGt4Rdh6bdeiwceYO3czucn6WAkmH6Z+IowEKWUHK9UrivgbcTyhPurmHKwBo
+	qS7eSg2uJzI=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C509D4C1C
-	for <git@vger.kernel.org>; Wed,  6 Apr 2011 21:18:38 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6110A4F81;
+	Wed,  6 Apr 2011 21:42:25 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CC4184C1B for
- <git@vger.kernel.org>; Wed,  6 Apr 2011 21:18:37 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.rc1
-In-Reply-To: <1302138996-10006-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: F7B446AC-60B4-11E0-8995-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3D8D74F7E; Wed,  6 Apr 2011
+ 21:42:21 -0400 (EDT)
+In-Reply-To: <1302138996-10006-2-git-send-email-gitster@pobox.com> (Junio C.
+ Hamano's message of "Wed, 6 Apr 2011 18:16:33 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4A041E3E-60B8-11E0-9D43-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171039>
 
-Thanks to the magic ":/" pathspec, it is much easier to invoke both
-tree-wide operation and limited-to-cwd operation on demand from the
-command line.  What remains is the downside of the configuration variable,
-namely, that it makes git behave differently depending on who you are and
-in which repository you are using it, hence making it harder to help
-and/or teach others.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Remove the configuration variable, and adjust the warning message.
+> This patch implements only "top" magic because it is the only kind of
+> magic that can be hacked into the system without such a refactoring.
+> Other types of magic that are envisioned (e.g. "icase") needs to be able
+> to express more than what a simple string can encode and needs to wait.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Actually "icase" could be implemented inside get_pathspec() by doing
+something like the attached patch.
+
+But "noglob" needs support from the "struct pathspec_item" infrastructure.
+It is insufficient to parse the magic signature at get_pathspec() level,
+as I do not see a way to encode these magic in the match string.
+
+I suspect that Duy's favourite "negate" cannot be done if we discard the
+magic information at the get_pathspec() level, either.
+
 ---
- builtin/add.c         |   26 ++++++--------------------
- t/t2200-add-update.sh |   29 +++++++++++++++++++----------
- 2 files changed, 25 insertions(+), 30 deletions(-)
+ Documentation/glossary-content.txt |    7 +++++--
+ setup.c                            |   31 +++++++++++++++++++++++++++----
+ 2 files changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 595f5cc..f58d1cf 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -310,7 +310,6 @@ static const char ignore_error[] =
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index e51d7e6..0ca029b 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -319,10 +319,13 @@ top `/`;;
+ 	The magic word `top` (mnemonic: `/`) makes the pattern match
+ 	from the root of the working tree, even when you are running
+ 	the command from inside a subdirectory.
++icase;;
++	The magic word `icase` (there is no mnemonic for it) makes the
++	pattern match case insensitively.  E.g. `:(icase)makefile` matches
++	both `Makefile` and `makefile`.
+ --
+ +
+-Currently only the slash `/` is recognized as the "magic signature",
+-but it is envisioned that we will support more types of magic in later
++It is envisioned that we will support more types of magic in later
+ versions of git.
  
- static int verbose = 0, show_only = 0, ignored_too = 0, refresh_only = 0;
- static int ignore_add_errors, addremove, intent_to_add, ignore_missing = 0;
--static int default_tree_wide_update = -1;
+ [[def_parent]]parent::
+diff --git a/setup.c b/setup.c
+index 820ed05..e66ffbe 100644
+--- a/setup.c
++++ b/setup.c
+@@ -136,12 +136,12 @@ void verify_non_filename(const char *prefix, const char *arg)
+  * Possible future magic semantics include stuff like:
+  *
+  *	{ PATHSPEC_NOGLOB, '!', "noglob" },
+- *	{ PATHSPEC_ICASE, '\0', "icase" },
+  *	{ PATHSPEC_RECURSIVE, '*', "recursive" },
+  *	{ PATHSPEC_REGEXP, '\0', "regexp" },
+  *
+  */
+ #define PATHSPEC_FROMTOP    (1<<0)
++#define PATHSPEC_ICASE      (1<<1)
  
- static struct option builtin_add_options[] = {
- 	OPT__DRY_RUN(&show_only, "dry run"),
-@@ -336,10 +335,6 @@ static int add_config(const char *var, const char *value, void *cb)
- 		ignore_add_errors = git_config_bool(var, value);
- 		return 0;
- 	}
--	if (!strcasecmp(var, "add.treewideupdate")) {
--		default_tree_wide_update = git_config_bool(var, value);
--		return 0;
--	}
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -368,15 +363,10 @@ static const char *warn_add_uA_180_migration_msg[] = {
- 	"In release 1.8.0, running 'git add -u' (or 'git add -A') from",
- 	"a subdirectory without giving any pathspec WILL take effect",
- 	"on the whole working tree, not just the part under the current",
--	"directory. You can set add.treewideupdate configuration variable",
--	"to 'false' to keep the current behaviour.",
--	"You can set the configuration variable to 'true' to make the",
--	"'git add -u/-A' command without pathspec take effect on the whole",
--	"working tree now. If you do so, you can use '.' at the end of",
--	"the command, e.g. 'git add -u .' when you want to limit the",
--	"operation to the current directory.",
--	"This warning will be issued until you set the configuration variable",
--	"to either 'true' or 'false'."
-+	"directory. Please make it a habit to add '.' when you want to",
-+	"limit the operation to the current directory and below.",
-+	"You can use ':/' at the end of the command to affect the operation",
-+	"on the whole working tree.",
+ struct pathspec_magic {
+ 	unsigned bit;
+@@ -149,6 +149,7 @@ struct pathspec_magic {
+ 	const char *name;
+ } pathspec_magic[] = {
+ 	{ PATHSPEC_FROMTOP, '/', "top" },
++	{ PATHSPEC_ICASE, '\0', "icase" },
  };
  
- static int warn_180_migration(void)
-@@ -419,12 +409,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		die("Option --ignore-missing can only be used together with --dry-run");
- 	if ((addremove || take_worktree_changes) && !argc) {
- 		whole_tree_add = 1;
--		if (prefix) {
--			if (default_tree_wide_update < 0)
--				default_tree_wide_update = warn_180_migration();
--			if (!default_tree_wide_update)
--				whole_tree_add = 0;
--		}
-+		if (prefix)
-+			whole_tree_add = warn_180_migration();
+ /*
+@@ -168,7 +169,8 @@ const char *prefix_pathspec(const char *prefix, int prefixlen, const char *elt)
+ {
+ 	unsigned magic = 0;
+ 	const char *copyfrom = elt;
+-	int i;
++	const char *retval;
++	int i, free_source = 0;
+ 
+ 	if (elt[0] != ':') {
+ 		; /* nothing to do */
+@@ -215,10 +217,31 @@ const char *prefix_pathspec(const char *prefix, int prefixlen, const char *elt)
+ 			copyfrom++;
  	}
  
- 	add_new_files = !take_worktree_changes && !refresh_only;
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 7ac8b70..f7711ba 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -80,10 +80,9 @@ test_expect_success 'change gets noticed' '
- 
- '
- 
--test_expect_success 'update from a subdirectory without pathspec (no config)' '
-+test_expect_success 'update from a subdirectory without pathspec' '
- 	# This test needs to be updated to expect the whole tree
- 	# update after 1.8.0 migration.
--	test_might_fail git config --remove add.treewideupdate &&
- 	test_might_fail git reset check dir1 &&
- 	echo changed >check &&
- 	(
-@@ -97,15 +96,13 @@ test_expect_success 'update from a subdirectory without pathspec (no config)' '
- 	grep warning expect.warning
- '
- 
--test_expect_success 'update from a subdirectory without pathspec (local)' '
--	test_when_finished "git config --remove add.treewideupdate; :" &&
--	git config add.treewideupdate false &&
-+test_expect_success 'update from a subdirectory with local pathspec' '
- 	test_might_fail git reset check dir1 &&
- 	echo changed >check &&
- 	(
- 		cd dir1 &&
- 		echo even more >sub2 &&
--		git add -u 2>../expect.warning
-+		git add -u . 2>../expect.warning
- 	) &&
- 	git diff-files --name-only dir1 check >actual &&
- 	echo check >expect &&
-@@ -113,15 +110,27 @@ test_expect_success 'update from a subdirectory without pathspec (local)' '
- 	! grep warning expect.warning
- '
- 
--test_expect_success 'update from a subdirectory without pathspec (global)' '
--	test_when_finished "git config --remove add.treewideupdate; :" &&
--	git config add.treewideupdate true &&
-+test_expect_success 'update from a subdirectory with magic pathspec (mnemonic)' '
- 	test_might_fail git reset check dir1 &&
- 	echo changed >check &&
- 	(
- 		cd dir1 &&
- 		echo even more >sub2 &&
--		git add -u 2>../expect.warning
-+		git add -u :/ 2>../expect.warning
-+	) &&
-+	git diff-files --name-only dir1 check >actual &&
-+	: >expect &&
-+	test_cmp expect actual &&
-+	! grep warning expect.warning
-+'
++	if (magic & PATHSPEC_ICASE) {
++		struct strbuf sb = STRBUF_INIT;
++		for (i = 0; copyfrom[i]; i++) {
++			int ch = copyfrom[i];
++			if (('a' <= ch && ch <= 'z') ||
++			    ('A' <= ch && ch <= 'Z')) {
++				strbuf_addf(&sb, "[%c%c]",
++					    tolower(ch), toupper(ch));
++			} else {
++				strbuf_addch(&sb, ch);
++			}
++		}
++		if (sb.len) {
++			free_source = 1;
++			copyfrom = strbuf_detach(&sb, NULL);
++		}
++	}
 +
-+test_expect_success 'update from a subdirectory with magic pathspec (longhand)' '
-+	test_might_fail git reset check dir1 &&
-+	echo changed >check &&
-+	(
-+		cd dir1 &&
-+		echo even more >sub2 &&
-+		git add -u ":(top)" 2>../expect.warning
- 	) &&
- 	git diff-files --name-only dir1 check >actual &&
- 	: >expect &&
--- 
-1.7.5.rc1
+ 	if (magic & PATHSPEC_FROMTOP)
+-		return xstrdup(copyfrom);
++		retval = xstrdup(copyfrom);
+ 	else
+-		return prefix_path(prefix, prefixlen, copyfrom);
++		retval = prefix_path(prefix, prefixlen, copyfrom);
++	if (free_source)
++		free((char *)copyfrom);
++	return retval;
+ }
+ 
+ const char **get_pathspec(const char *prefix, const char **pathspec)
