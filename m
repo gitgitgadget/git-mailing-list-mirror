@@ -1,63 +1,63 @@
-From: Jeff King <peff@github.com>
-Subject: Re: [PATCH] stash: fix false positive in the invalid ref test.
-Date: Wed, 6 Apr 2011 19:04:59 -0400
-Message-ID: <20110406230459.GC20904@sigill.intra.peff.net>
-References: <1302045673-59982-1-git-send-email-jon.seymour@gmail.com>
- <20110406182726.GC8205@sigill.intra.peff.net>
- <BANLkTimqG4XSTRGH-+EMi6vYL7N8JU1Mtw@mail.gmail.com>
+From: Enchanter <ensoul.magazine@gmail.com>
+Subject: Re: packfile is unavailable/cannot be accessed
+Date: Thu, 7 Apr 2011 00:01:28 +0000 (UTC)
+Message-ID: <loom.20110407T015644-337@post.gmane.org>
+References: <loom.20110406T020617-993@post.gmane.org> <20110406154208.GC1864@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 01:05:11 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 07 02:01:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7bmg-0003sN-TM
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 01:05:11 +0200
+	id 1Q7cfa-0001lh-7i
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 02:01:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756761Ab1DFXFE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2011 19:05:04 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33003
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756708Ab1DFXFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 19:05:03 -0400
-Received: (qmail 10626 invoked by uid 107); 6 Apr 2011 23:05:49 -0000
-Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Apr 2011 19:05:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Apr 2011 19:04:59 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTimqG4XSTRGH-+EMi6vYL7N8JU1Mtw@mail.gmail.com>
+	id S1755258Ab1DGABr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 20:01:47 -0400
+Received: from lo.gmane.org ([80.91.229.12]:45791 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751012Ab1DGABq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 20:01:46 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Q7cfP-0001gl-BL
+	for git@vger.kernel.org; Thu, 07 Apr 2011 02:01:44 +0200
+Received: from 210.215.158.240 ([210.215.158.240])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Apr 2011 02:01:43 +0200
+Received: from ensoul.magazine by 210.215.158.240 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Apr 2011 02:01:43 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 210.215.158.240 (Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Ubuntu/11.04 Chromium/10.0.648.204 Chrome/10.0.648.204 Safari/534.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171027>
 
-On Thu, Apr 07, 2011 at 08:47:07AM +1000, Jon Seymour wrote:
+Jeff King <peff <at> peff.net> writes:
 
-> On Thu, Apr 7, 2011 at 4:27 AM, Jeff King <peff@github.com> wrote:
-> > On Wed, Apr 06, 2011 at 09:21:13AM +1000, Jon Seymour wrote:
-> =C2=A0 =C2=A0 git stash drop
-> >
-> > Probably we should just squash your fix in with my first patch, and=
- drop
-> > my test. =C2=A0Your fixed version is a superset of what mine tests.
-> >
->=20
-> I was wondering if it might be better to break up the original test,
-> so that each sub-function has its own invalid ref test? If there is
-> agreement, I can do this on top of 9355fc which is the tip of the
-> branch containing these fixes that has been merged into pu.
+> 
+> Looking through the source code, the only way this message can be
+> generated is if lseek fails on the packfile. It looks like the messages
+> are coming from the remote end. Where is your remote located? Which
+> operating system is it running on? Is the repo on an exotic filesystem
+> that might not support seeking?
+> 
+> -Peff
+> 
 
-I don't think it's that big a deal. You could do a more thorough test
-for each, I guess (to make sure they not just failed but also show that
-they didn't have any effects), but that would not be checking an actual
-regression we have seen. IOW, I'm sure you have something more
-productive to do with your time. :)
+Jeff, thanks for you reply. 
 
--Peff
+1. the bare repository is on the windows server
+2. One developer use ubuntu with git 1.7.4.1 (Has the error message)
+3. Another developer use windows XP with git 1.7.4.msysgit.0 (there's no errors)
