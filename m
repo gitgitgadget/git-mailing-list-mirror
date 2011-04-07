@@ -1,72 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pathspec: rename per-item field has_wildcard to
- use_wildcard
-Date: Thu, 07 Apr 2011 12:47:45 -0700
-Message-ID: <7vr59detcu.fsf@alter.siamese.dyndns.org>
-References: <7vr59gl581.fsf@alter.siamese.dyndns.org>
- <BANLkTikJ3=H_OgcNueMjnwwQ2W-2kamf=w@mail.gmail.com>
- <7vfwpvjobl.fsf@alter.siamese.dyndns.org>
- <4D9D9B60.4030404@drmicha.warpmail.net>
- <7vvcypeti4.fsf@alter.siamese.dyndns.org>
+From: Thorsten Glaser <tg@mirbsd.de>
+Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
+Date: Thu, 7 Apr 2011 19:27:57 +0000 (UTC)
+Message-ID: <Pine.BSM.4.64L.1104071923580.4692@herc.mirbsd.org>
+References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Apr 07 21:48:23 2011
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 21:51:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7vBk-00011p-MJ
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 21:48:21 +0200
+	id 1Q7vER-0002t4-JU
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 21:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756874Ab1DGTr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2011 15:47:58 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42370 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756709Ab1DGTr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2011 15:47:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9AB9F41D0;
-	Thu,  7 Apr 2011 15:49:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G8bAjIp5Zxr/aSZEq5gEfLGJLoQ=; b=FkuVW7
-	KJTgZ5BQ5BLLlxG0h0I9IyG9fyCulSMTwgQUCQI8DTOgZLQc0VZIMIyWQOmvGTcH
-	MGieL3SrOD+1qqbotMFWQVJSBjYZ8FCrvFgHzoxurVcPhl8c83vhT4cK9uI7zqxJ
-	Koq6qEj6HORUkuEcju4AN2Ly/1xskptSkRRos=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eRM6Ixd4Yma1rctxBb7OkVkdIWmv4uJ3
-	yPe9B72K5FdrENKVcB+r5aQ1SzkBCCELJK5hbGnIHSykIoPRfjV9f61YJdqtiwkW
-	747ad0qfZ8dL/+tjSDct7EI2Bd+prq3BOr+3dksfz2QPmXy/VGJgk/Mcwp9nbeLq
-	GcIHUV4P78I=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6ABEC41CA;
-	Thu,  7 Apr 2011 15:49:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4DE5841C8; Thu,  7 Apr 2011
- 15:49:41 -0400 (EDT)
-In-Reply-To: <7vvcypeti4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 07 Apr 2011 12:44:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 301C174A-6150-11E0-B71B-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1756719Ab1DGTvB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Apr 2011 15:51:01 -0400
+Received: from static-87-79-237-121.netcologne.de ([87.79.237.121]:38030 "EHLO
+	herc.mirbsd.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756565Ab1DGTvA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 15:51:00 -0400
+X-Greylist: delayed 727 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Apr 2011 15:51:00 EDT
+Received: from herc.mirbsd.org (tg@localhost [IPv6:::1])
+	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0) with ESMTP id p37JRxtZ028551
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 7 Apr 2011 19:28:03 GMT
+Received: (from tg@localhost)
+	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0/Submit) id p37JRwPd009314;
+	Thu, 7 Apr 2011 19:27:58 GMT
+Received: by S/MIME Plugin for MirBSD 10 Kv#10uAE-20110220 i386; Thu Apr  7 19:27:57 UTC 2011
+X-X-Sender: tg@herc.mirbsd.org
+In-Reply-To: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
+X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171085>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Richard Hartmann dixit:
 
-> Because I doubt that the major restructuring we discussed earlier won't be
-> ready within the 1.7.6 timeframe,...
+>git natively. metastore exists, but its binary storage format is
 
-I think people involved in this thread have dealt with my bad writing long
-enough and understood what I meant, but just in case, I meant to say that
-I do not think restructuring would be ready to ship with 1.7.6,
-in other words, s/won't/will/ is needed above.
+According to the documentation, metastore supports saving/restoring
+POSIX Extended Attributes (however I got EOPNOTSUPP trying to setfacl
+and setxattr, so I couldn=E2=80=99t verify the claim). It does *not* ho=
+wever
+track the stuff visible using lsattr(1) on ext2fs.
 
-Sorry for a noise.
+Personally, I think this should definitively be tracked in git, not
+in extra files (like =E2=80=9C EA DATA. SF=E2=80=9D in OS/2) managed wi=
+th external
+tools (reminds me too much of things like umsdos and Rock Ridge as
+well). Support needs not be part of core git, especially restoring
+can be dangerous (consider SELinux), plus it=E2=80=99s very platform an=
+d
+filesystem dependent, but seeing that people seem to want to use
+git for keeping their /etc (I use RCS, myself, but volunteered my
+C skill to change metastore if it needs be) there is definitively
+a market for having it there, in a standardised manner.
+
+bye,
+//mirabilos
+--=20
+=46WIW, I'm quite impressed with mksh interactively. I thought it was m=
+uch
+*much* more bare bones. But it turns out it beats the living hell out o=
+f
+ksh93 in that respect. I'd even consider it for my daily use if I hadn'=
+t
+wasted half my life on my zsh setup. :-) -- Frank Terbeck in #!/bin/mks=
+h
