@@ -1,104 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: BUG? in --dirstat when rearranging lines in a file
-Date: Thu, 7 Apr 2011 07:56:02 -0700
-Message-ID: <BANLkTinEipewx2+Cx7Us0BSoSbjjU9uE6A@mail.gmail.com>
-References: <201104071549.37187.johan@herland.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] magic pathspec: add tentative
+ ":/path/from/top/level" pathspec support
+Date: Thu, 07 Apr 2011 09:18:08 -0700
+Message-ID: <7vd3kyf327.fsf@alter.siamese.dyndns.org>
+References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
+ <1302138996-10006-2-git-send-email-gitster@pobox.com>
+ <BANLkTint7sGCg7_seu1-SWJC=_sKF-FKYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Apr 07 16:57:03 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 18:18:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7qdq-00008Q-L2
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 16:57:02 +0200
+	id 1Q7rub-0007Mp-T0
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 18:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170Ab1DGO4u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Apr 2011 10:56:50 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:41103 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754071Ab1DGO4t convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 10:56:49 -0400
-Received: from mail-iy0-f174.google.com (mail-iy0-f174.google.com [209.85.210.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p37EuNin022394
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Thu, 7 Apr 2011 07:56:23 -0700
-Received: by iyb14 with SMTP id 14so2538413iyb.19
-        for <git@vger.kernel.org>; Thu, 07 Apr 2011 07:56:22 -0700 (PDT)
-Received: by 10.42.155.136 with SMTP id u8mr1469625icw.403.1302188182150; Thu,
- 07 Apr 2011 07:56:22 -0700 (PDT)
-Received: by 10.231.11.4 with HTTP; Thu, 7 Apr 2011 07:56:02 -0700 (PDT)
-In-Reply-To: <201104071549.37187.johan@herland.net>
-X-Spam-Status: No, hits=-102.985 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754793Ab1DGQSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 12:18:20 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41258 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751294Ab1DGQST (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2011 12:18:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2CA79492C;
+	Thu,  7 Apr 2011 12:20:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eaZdPEOEkff70ajclGM7uqRob6w=; b=j9HxJv
+	OAEZdAbooifAqCBh3cOky7tSlPyWzzFx7ILWWSgq8REXSW65eNI/yGtIh5BHn3jy
+	5XeN0BHQ/KXUAeiB1AkHQXIK736xMMYzQtkH2ux3MghGHxx7ZzLYmHoq46baNNZw
+	Rou9js5Y1lUzrhxKjOTamVZUG2Tst7bBarH5k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rgj5CkKSzwjuIpHV9H4ecqOiHXM3qsp7
+	jihOquSTnfXGbzyl797LdbuioAjCFQSf3z2FH8fir3W6WUbs1GYwM4Bbhy+YbCvG
+	i4LgEJLA+c7HW/ce6kVW24HDjZnL+9IWlbzuZ0llNpEWlSg5AxyLP8i5txy7po39
+	zobVhVBT0g8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0A85D492B;
+	Thu,  7 Apr 2011 12:20:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 25096492A; Thu,  7 Apr 2011
+ 12:20:04 -0400 (EDT)
+In-Reply-To: <BANLkTint7sGCg7_seu1-SWJC=_sKF-FKYw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Thu, 7 Apr 2011 20:23:21 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E76580C6-6132-11E0-87F4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171064>
 
-On Thu, Apr 7, 2011 at 6:49 AM, Johan Herland <johan@herland.net> wrote=
-:
->
-> Consider the following sequence of commands:
-> [...]
-> $ git diff --stat
-> =A0dir/file | =A0 =A02 +-
-> =A01 files changed, 1 insertions(+), 1 deletions(-)
-> $ git diff --dirstat
-> $ # WTF!?
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-So the "--dirstat" thing really is different - it has never done a
-full patch, it really only does a line hash count and then estimates
-the amount of deleted/new code from that.
+> Also the patch does not catch this (ie. not die() on unrecognized signature).
 
-> Is this a bug or a feature? :)
+Of course it doesn't.
 
-It's a "bueature" or a "featug". The dirstat code counts "damage" as
-you noticed, and it does that because it's easy and often relevant. It
-can be computed without actually generating the whole diff, the same
-way we do rename-detection without actually generating the diff, by
-just looking at "hash and count each line" information. In fact, it
-uses the same "diffcore_count_changes()" function for it.
+I didn't say "everything that is not alphanumeric is magic". I only said
+"all the magic are not alphanumeric".  Notice the difference.
 
-So the reason I wouldn't call it a bug is that it very much is on
-purpose. Generating a real diff is much more expensive, and instead
-using the line hashes gives us a quick and efficient O(n) way to
-gather up differences. But because it does the difference by basically
-just comparing hashes of the lines without taking _ordering_ into
-account, it gives you a "how many lines do these files have in common"
-rather than a real diff.
 
-So git internally has *three* different "difference" engines:
+This is so that you can say ":/.gitignore" and do not have to say
+":/:.gitignore".
 
- - the "delta" algorithm that we use for packing (and binary diffs)
- - the traditional line-based diff for normal diffs
- - the "rename/copy/dirstat damage detectior" that doesn't take line
-ordering into account, only some unordered "heap of data contents"
-comparison.
+I am also tempted to special case a ':' followed by a zero magic as if it
+specifies the top magic, e.g. ":Makefile" is the same as ":(top)Makefile",
+aka ":/Makefile".  It is not in the published code, but the short-cut
+would help ":.gitignore".
 
-You could think of the damage detection as a "rename detection within
-a file". It's actually quite nice for "git diff -M --dirstat", where
-it means that pure code movement - whether inside a file or by
-renaming a file - doesn't count as damage.
-
-(Of course, moving a piece of code _from_ one file to another still
-counts as damage, so it's not really ignoring pure code movement).
-
-NOTE! Speed isn't the only reason we do that "unordered heap of data
-contents" comparison. For rename detection, we really don't want
-moving a big function around in a file to be counted as "rewriting the
-file". So there are actually other reasons to like these semantics.
-That said, honestly, for dirstat, the big issue was that it made it
-really really simple. Look at how small the dirstat patch was (commit
-7df7c019c2a4), and realize that it's because it just re-used the
-existing damage counting code.
-
-                            Linus
+You don't require, nor allowed to have, a colon after ')' when writing a
+long hand, by the way.  There is no reason to require one for disambiguation.
