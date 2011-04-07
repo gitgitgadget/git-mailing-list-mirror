@@ -1,164 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug Report: git add
-Date: Wed, 6 Apr 2011 21:48:19 -0400
-Message-ID: <20110407014819.GA12730@sigill.intra.peff.net>
-References: <4D9BA35E.6040204@dcook.org>
- <20110407005750.GC28813@sigill.intra.peff.net>
- <7vbp0ihnou.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/4] Documentation: Add diff.<driver>.* to config
+Date: Thu, 7 Apr 2011 08:33:43 +0530
+Message-ID: <20110407030341.GA28334@kytes>
+References: <1302083854-2448-1-git-send-email-artagnon@gmail.com>
+ <1302115611-1950-1-git-send-email-artagnon@gmail.com>
+ <1302115611-1950-3-git-send-email-artagnon@gmail.com>
+ <7vwrj7i2je.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Darren Cook <darren@dcook.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 03:48:30 2011
+X-From: git-owner@vger.kernel.org Thu Apr 07 05:04:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7eKj-00009R-C9
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 03:48:29 +0200
+	id 1Q7fWb-0000aE-Nx
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 05:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757321Ab1DGBsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2011 21:48:23 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46855
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754665Ab1DGBsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2011 21:48:22 -0400
-Received: (qmail 13291 invoked by uid 107); 7 Apr 2011 01:49:08 -0000
-Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Apr 2011 21:49:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Apr 2011 21:48:19 -0400
+	id S1753437Ab1DGDEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2011 23:04:41 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38941 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752638Ab1DGDEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2011 23:04:40 -0400
+Received: by iwn34 with SMTP id 34so2045028iwn.19
+        for <git@vger.kernel.org>; Wed, 06 Apr 2011 20:04:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=9+bjgKX+jVzYh8JgSFgk/V0bVq8SgA4CbVvKYWsusLA=;
+        b=K2bNzT8TXf3dxO0/m72fH9e/PCrUPyVz/Gg5UmufXcopyP2jz7M/uZPTORHnSeG31I
+         FgM8Fj+3JmHGtL2d7gpVWVqJ5NHVrWq9iTV3dFLJc73I4xRjhekAX1V8Ss8sE2aXQTCk
+         N91bmg177/YVUl5J1qtxqnkGcY0/ovukEnqTo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=TAJqjUGuKqfe/b+RBtGZbUCTrNHNzHkHumnXAsrLb6NWvpgFMqEpQgls7hsvZLMykm
+         TYCOWy2Ja1wK9iKemxfgZeMQrQ4qpkMzZD7W+IayjPl204Paerr3w2/PSJ2qbrYSb9Oc
+         vLP0dL6XM4pgFKbUIITxhnhO7TwgUpc0noDKg=
+Received: by 10.42.229.133 with SMTP id ji5mr501959icb.311.1302145479708;
+        Wed, 06 Apr 2011 20:04:39 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id jv9sm723208icb.1.2011.04.06.20.04.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 06 Apr 2011 20:04:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vbp0ihnou.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vwrj7i2je.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171041>
 
-On Wed, Apr 06, 2011 at 06:09:37PM -0700, Junio C Hamano wrote:
+Hi Junio,
 
-> > If you do "git add settings" (without the slash) it will add the
-> > repository as a submodule.  Which is not the behavior you asked for, but
-> > is at least reasonable. So the real bug seems to me the fact that "git
-> > add settings/" and "git add settings" behave differently.
+Junio C Hamano writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 > 
-> Also if "git add settings/x" does not complain, that would be a bigger
-> issue, whose solution would probably be in the same area.
+> > +diff.<driver>.command::
+> > +	The custom diff driver command.  See linkgit:gitattributes[5]
+> > +	for details.
 > 
-> It may finally be the time to rename has_symlink_leading_path() function
-> and enhance its feature.  It happens to check leading symlinks, but its
-> real purpose is to check if the given path is outside the working tree,
-> and a path that is in a subdirectory with its own .git repository
-> certainly is outside the working tree.  The callers should be able to say
-> what check is being asked for by naming the _purpose_ of the test ("is
-> this path outside the working tree?"), not the mechanics ("does the path
-> have a symlink that points outside?").
+> This is about "custom", but I thought it was pointed out that ...
+> 
+> > +diff.<driver>.xfuncname::
+> > +	The regular expression that the custom diff driver should use
+> > +	to recognize the hunk header.  A built-in pattern may also be
+> > +	used.  See linkgit:gitattributes[5] for details.
+> > +
+> > +diff.<driver>.binary::
+> > +	Set this option to true to make the custom diff driver treat
+> > +	files as binary.  See linkgit:gitattributes[5] for details.
+> 
+> ... these two don't have much to do with "custom".  You seem to have
+> dropped "custom" from the remaining three, and I think their description
+> without "custom" makes more sense.
+> 
+> It is not a problem for me to just amend these two and lose "custom" when
+> I apply this patch (if there is no other glitch in it, of course), but I
 
-So here's a quick-and-dirty, "this is the first time I've ever looked at
-this code" patch that catches this behavior. It doesn't do any renaming,
-and it does an ugly job of exposing the flag constants.
+Right.  I was a little confused about these two, but yeah- I see now
+that dependence on `diff.<driver>.command` is equivalent to saying
+that an option applies to a "custom" diff driver.  Please amend to
+lose the "custom".
 
-Interestingly, builtin/add.c also has treat_gitlinks which specifically
-bails on trying to add something in a submodule. But it misses this
-case, because its test is to check the index for gitlink entries.
+Thanks.
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 024aae4..5754863 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -202,9 +202,15 @@ static const char **validate_pathspec(int argc, const char **argv, const char *p
- 	if (pathspec) {
- 		const char **p;
- 		for (p = pathspec; *p; p++) {
--			if (has_symlink_leading_path(*p, strlen(*p))) {
-+			int r = has_symlink_leading_path(*p, strlen(*p));
-+			if (r) {
- 				int len = prefix ? strlen(prefix) : 0;
--				die(_("'%s' is beyond a symbolic link"), *p + len);
-+				if (r & FL_SYMLINK)
-+					die(_("'%s' is beyond a symbolic link"), *p + len);
-+				else if (r & FL_GITREPO)
-+					die(_("'%s' is inside a submodule"), *p + len);
-+				die("BUG: '%s' ignored for unknown reason %d",
-+				    *p + len, r);
- 			}
- 		}
- 	}
-diff --git a/cache.h b/cache.h
-index 21bcc52..2784f67 100644
---- a/cache.h
-+++ b/cache.h
-@@ -880,6 +880,8 @@ struct cache_def {
- 	int prefix_len_stat_func;
- };
- 
-+#define FL_SYMLINK  (1 << 2)
-+#define FL_GITREPO  (1 << 6)
- extern int has_symlink_leading_path(const char *name, int len);
- extern int threaded_has_symlink_leading_path(struct cache_def *, const char *, int);
- extern int check_leading_path(const char *name, int len);
-diff --git a/symlinks.c b/symlinks.c
-index 034943b..22152fd 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -47,7 +47,6 @@ static inline void reset_lstat_cache(struct cache_def *cache)
- 
- #define FL_DIR      (1 << 0)
- #define FL_NOENT    (1 << 1)
--#define FL_SYMLINK  (1 << 2)
- #define FL_LSTATERR (1 << 3)
- #define FL_ERR      (1 << 4)
- #define FL_FULLPATH (1 << 5)
-@@ -92,7 +91,7 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 		match_len = last_slash =
- 			longest_path_match(name, len, cache->path, cache->len,
- 					   &previous_slash);
--		*ret_flags = cache->flags & track_flags & (FL_NOENT|FL_SYMLINK);
-+		*ret_flags = cache->flags & track_flags & (FL_NOENT|FL_SYMLINK|FL_GITREPO);
- 
- 		if (!(track_flags & FL_FULLPATH) && match_len == len)
- 			match_len = last_slash = previous_slash;
-@@ -139,8 +138,21 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 			if (errno == ENOENT)
- 				*ret_flags |= FL_NOENT;
- 		} else if (S_ISDIR(st.st_mode)) {
--			last_slash_dir = last_slash;
--			continue;
-+			struct stat junk;
-+			struct strbuf gitdir = STRBUF_INIT;
-+			strbuf_add(&gitdir, cache->path, match_len);
-+			strbuf_addstr(&gitdir, "/.git");
-+			if (lstat(gitdir.buf, &junk) < 0) {
-+				if (errno == ENOENT) {
-+					last_slash_dir = last_slash;
-+					strbuf_release(&gitdir);
-+					continue;
-+				}
-+				*ret_flags = FL_LSTATERR;
-+			}
-+			else
-+				*ret_flags = FL_GITREPO;
-+			strbuf_release(&gitdir);
- 		} else if (S_ISLNK(st.st_mode)) {
- 			*ret_flags = FL_SYMLINK;
- 		} else {
-@@ -154,7 +166,7 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 	 * path types, FL_NOENT, FL_SYMLINK and FL_DIR, can be cached
- 	 * for the moment!
- 	 */
--	save_flags = *ret_flags & track_flags & (FL_NOENT|FL_SYMLINK);
-+	save_flags = *ret_flags & track_flags & (FL_NOENT|FL_SYMLINK|FL_GITREPO);
- 	if (save_flags && last_slash > 0 && last_slash <= PATH_MAX) {
- 		cache->path[last_slash] = '\0';
- 		cache->len = last_slash;
-@@ -197,7 +209,7 @@ static int lstat_cache(struct cache_def *cache, const char *name, int len,
-  */
- int threaded_has_symlink_leading_path(struct cache_def *cache, const char *name, int len)
- {
--	return lstat_cache(cache, name, len, FL_SYMLINK|FL_DIR, USE_ONLY_LSTAT) & FL_SYMLINK;
-+	return lstat_cache(cache, name, len, FL_SYMLINK|FL_DIR|FL_GITREPO, USE_ONLY_LSTAT) & (FL_SYMLINK|FL_GITREPO);
- }
- 
- /*
+-- Ram
