@@ -1,83 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-p4: replace each tab with 8 spaces for consistency
-Date: Thu, 07 Apr 2011 11:45:24 -0700
-Message-ID: <7v1v1dgat7.fsf@alter.siamese.dyndns.org>
-References: <1302156081-3286-1-git-send-email-andrew@andrewgarber.com>
- <7vhbaafr7r.fsf@alter.siamese.dyndns.org> <4D9DE7E4.1030808@cisco.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH 0/9] Some more sparse patches
+Date: Thu, 07 Apr 2011 19:16:01 +0100
+Message-ID: <4D9DFF61.8090302@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 20:45:40 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>, bebarino@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 20:53:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7uD5-00085Q-KH
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 20:45:39 +0200
+	id 1Q7uKD-0004hb-1Y
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 20:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756543Ab1DGSpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2011 14:45:34 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43839 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756297Ab1DGSpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2011 14:45:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F116B5ADF;
-	Thu,  7 Apr 2011 14:47:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=b5COEjltxNqYqRqVIyRufNcyg0E=; b=SDsVK/
-	pu7pBUTR1K+FfzDnJRDeuBAAF4hxrYlJS0jg9LhrKHOq5x6AwZiztueesrao2Dch
-	OkT4nDPIJxjFnFdeKCAjfFU4uiWAgIDMbG4JapguPXnYBcmAY06tinqjZlsymKZ/
-	lg/az3A8IW/n/wWU3F4csyKqQ4bkdQfEKcKKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kAh+McB/yvy25kLNAWJ1RFmYjzJnBcXP
-	Ys6iAQMalbTdVIvkgcSrSkEANzoD0qn84yhgW6D72JfkSSFURBtOIz06IgGWRyZ4
-	uNqha8+FGTs2X4/1veI1A50eORbULMthIjB0R2hnaUDIqZIEqrVxDelrXKypjOEc
-	F8Mj1ZZn3Cg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CCB5B5ADE;
-	Thu,  7 Apr 2011 14:47:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F1AFF5ADD; Thu,  7 Apr 2011
- 14:47:19 -0400 (EDT)
-In-Reply-To: <4D9DE7E4.1030808@cisco.com> (Phil Hord's message of "Thu, 07
- Apr 2011 12:35:48 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 79583D20-6147-11E0-8B11-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1756543Ab1DGSw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 14:52:56 -0400
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:48557 "EHLO
+	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756227Ab1DGSwz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 14:52:55 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1Q7uK5-0001Om-pF; Thu, 07 Apr 2011 18:52:54 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171071>
 
-Phil Hord <hordp@cisco.com> writes:
+Hi Junio,
 
-> This is what I want:
->
->    git fix-whitespace             # fix new ws errors in workdir
->    git fix-whitespace --all       # fix all ws errors in workdir
->    git fix-whitespace foo         # fix new ws errors since foo
->    git fix-whitespace --cached    # fix new ws errors in the index
->    etc.
+My (git.git) sparse branch, which I've been feeding and updating for
+over two years now, has recently started to shrink quite rapidly.
+This (of course) is due to Stephen's recent commits (eg c2e86add
+and 52d269da and 1e4cd68c). These patches are (most) of what
+remains of my sparse branch (Some are just too ugly to send :-P ).
 
-If you understood the example I gave, you should be able to figure all of
-these out.  In the most general case, you would come up with a way to
-generate a diff that represents the change you want to fix (e.g. "new
-errors" would be comparing the HEAD and the working tree), reverse apply
-the diff and then forward apply the same diff with --whitespace=fix, but
-often you can omit "reverse apply the diff" step by finding an appropriate
-combination between HEAD/index/working tree.
+[Hmmm, I haven't read the list for a few days, so if Stephen has
+already addressed these issues, sorry for the noise! ]
 
-I long time wrote this alias
+I suspect it is a little too late in this cycle for patches like
+this, but I'm hoping you won't mind parking these in pu ready for
+consideration early in the next cycle.
 
-[alias]
-        wsadd = "!sh -c 'git diff -- \"$@\" | git apply --cached --whitespace=fix;\
-                git co -- ${1-.} \"$@\"' -"
+    [PATCH 1/9] Makefile: Use cgcc rather than sparse in the check target
+    [PATCH 2/9] sparse: Fix an "symbol 'cmd_index_pack' not declared" warning
+    [PATCH 3/9] sparse: Fix some "Using plain integer as NULL pointer" warnings
+    [PATCH 4/9] sparse: Fix an "symbol 'format_subject' not declared" warning
+    [PATCH 5/9] sparse: Fix an "symbol 'merge_file' not decared" warning
+    [PATCH 6/9] gettext.h: Avoid using a non-standard C construct
+    [PATCH 7/9] sparse: Fix errors due to missing target-specific variables
+    [PATCH 8/9] sparse: Fix some "symbol not declared" warnings
+    [PATCH 9/9] sparse: Fix argument number/type warnings caused by the main() macro
 
-that acts as if you are saying "git add $path" while fixing the whitespace
-errors I introduced in the working tree version.
+Note that I had originally not intended to send patch #9, but I mis-counted
+the commits when running "format-patch" and didn't notice for a while ...
+Also, patch #9 is the only one specific to MinGW; I have patched support for
+MinGW into my local sparse (about two years ago...), but have not got around to
+sending those patches back upstream ... So, you may want to drop that one.
+
+After these patches, sparse issues no errors on Cygwin; MinGW still has about
+25 warnings (but compat/nedmalloc/malloc.c.h seems to send sparse into an
+infinite loop); Linux has two groups of warnings as follows:
+
+    connect.c:226:39: warning: incorrect type in argument 2 (invalid types)
+    connect.c:226:39:    expected union __CONST_SOCKADDR_ARG [usertype] __addr
+    connect.c:226:39:    got struct sockaddr *ai_addr
+    daemon.c:787:36: warning: incorrect type in argument 2 (invalid types)
+    daemon.c:787:36:    expected union __CONST_SOCKADDR_ARG [usertype] __addr
+    daemon.c:787:36:    got struct sockaddr *ai_addr
+    daemon.c:918:67: warning: incorrect type in argument 2 (invalid types)
+    daemon.c:918:67:    expected union __SOCKADDR_ARG [usertype] __addr
+    daemon.c:918:67:    got struct sockaddr *<noident>
+    imap-send.c:1119:42: warning: incorrect type in argument 2 (invalid types)
+    imap-send.c:1119:42:    expected union __CONST_SOCKADDR_ARG [usertype] __addr
+    imap-send.c:1119:42:    got struct sockaddr *ai_addr
+
+These are due to sparse not (yet) supporting transparent unions (I have a patch
+somewhere...), and
+
+    notes.c:397:17: error: too long token expansion
+    notes-merge.c:63:9: error: too long token expansion
+    notes-merge.c:564:9: error: too long token expansion
+
+Which is caused by overflowing an internal static buffer (again I have a patch).
+
+ATB,
+Ramsay Jones
