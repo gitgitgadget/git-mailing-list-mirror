@@ -1,76 +1,88 @@
-From: Thorsten Glaser <tg@mirbsd.de>
-Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
-Date: Thu, 7 Apr 2011 19:27:57 +0000 (UTC)
-Message-ID: <Pine.BSM.4.64L.1104071923580.4692@herc.mirbsd.org>
-References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 6/9] gettext.h: Avoid using a non-standard C construct
+Date: Thu, 7 Apr 2011 17:10:15 -0500
+Message-ID: <20110407221015.GA20080@elie>
+References: <4D9E056C.1070906@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 21:51:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>, bebarino@gmail.com,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Fri Apr 08 00:10:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7vER-0002t4-JU
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 21:51:07 +0200
+	id 1Q7xPK-0006f6-IX
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 00:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756719Ab1DGTvB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Apr 2011 15:51:01 -0400
-Received: from static-87-79-237-121.netcologne.de ([87.79.237.121]:38030 "EHLO
-	herc.mirbsd.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756565Ab1DGTvA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 15:51:00 -0400
-X-Greylist: delayed 727 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Apr 2011 15:51:00 EDT
-Received: from herc.mirbsd.org (tg@localhost [IPv6:::1])
-	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0) with ESMTP id p37JRxtZ028551
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 7 Apr 2011 19:28:03 GMT
-Received: (from tg@localhost)
-	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0/Submit) id p37JRwPd009314;
-	Thu, 7 Apr 2011 19:27:58 GMT
-Received: by S/MIME Plugin for MirBSD 10 Kv#10uAE-20110220 i386; Thu Apr  7 19:27:57 UTC 2011
-X-X-Sender: tg@herc.mirbsd.org
-In-Reply-To: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
-X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
+	id S1755414Ab1DGWKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 18:10:25 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:52592 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754565Ab1DGWKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2011 18:10:24 -0400
+Received: by gxk21 with SMTP id 21so1214379gxk.19
+        for <git@vger.kernel.org>; Thu, 07 Apr 2011 15:10:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=xVvhRHPVIz+bwBIJhfcK1XDjS2TX+d8Oh7ZhvVLvbDo=;
+        b=nU7RRMZUeXNrfXrcyQxy+rVcbwu4wYUNxDD0qvpdTcSlvUCiwdLYKc1JbD8Jz5S7Hw
+         PV+/CxIBvUh0DGBjDSz/yXNEO0na6QKhAyqBJyTkzzV6wfXfvKl0Ysq1ZxT6sxkUXXzH
+         zL/KUTTF39wquZ+N1f67M7UBAl9WfWZuxzSyE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=EgRXdCp8EPQTo8sjZ8mQa0kvFWPJi/BKzr1/0X6nd8jbkdry7QI4Yxa8yh9nmN7WyF
+         FU5p+Ousao42RhchPnVCfyhB5NTKtUgUcwz51YHutuNzYVyoYI4s355vJL374/EBcPsa
+         8PYS7Gs0Wcxt9BY/2WAv2Ffv8Qv0x/38vLfno=
+Received: by 10.236.79.74 with SMTP id h50mr1913392yhe.82.1302214223335;
+        Thu, 07 Apr 2011 15:10:23 -0700 (PDT)
+Received: from elie (adsl-69-209-53-77.dsl.chcgil.sbcglobal.net [69.209.53.77])
+        by mx.google.com with ESMTPS id u33sm943808yhn.60.2011.04.07.15.10.21
+        (version=SSLv3 cipher=OTHER);
+        Thu, 07 Apr 2011 15:10:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4D9E056C.1070906@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171086>
 
-Richard Hartmann dixit:
+Hi,
 
->git natively. metastore exists, but its binary storage format is
+Ramsay Jones wrote:
 
-According to the documentation, metastore supports saving/restoring
-POSIX Extended Attributes (however I got EOPNOTSUPP trying to setfacl
-and setxattr, so I couldn=E2=80=99t verify the claim). It does *not* ho=
-wever
-track the stuff visible using lsattr(1) on ext2fs.
+> +++ b/gettext.h
+> @@ -35,6 +35,6 @@ const char *Q_(const char *msgid, const char *plu, unsigned long n)
+[...]
+> -#define N_(msgid) (msgid)
+> +#define N_(msgid) msgid
 
-Personally, I think this should definitively be tracked in git, not
-in extra files (like =E2=80=9C EA DATA. SF=E2=80=9D in OS/2) managed wi=
-th external
-tools (reminds me too much of things like umsdos and Rock Ridge as
-well). Support needs not be part of core git, especially restoring
-can be dangerous (consider SELinux), plus it=E2=80=99s very platform an=
-d
-filesystem dependent, but seeing that people seem to want to use
-git for keeping their /etc (I use RCS, myself, but volunteered my
-C skill to change metastore if it needs be) there is definitively
-a market for having it there, in a standardised manner.
+Good catch.  Thanks!
 
-bye,
-//mirabilos
---=20
-=46WIW, I'm quite impressed with mksh interactively. I thought it was m=
-uch
-*much* more bare bones. But it turns out it beats the living hell out o=
-f
-ksh93 in that respect. I'd even consider it for my daily use if I hadn'=
-t
-wasted half my life on my zsh setup. :-) -- Frank Terbeck in #!/bin/mks=
-h
+> In particular, standard C does not allow a parenthesized string
+> as an array initializer.
+
+The subject line seems unnecessarily vague.  Why not:
+
+	i18n: avoid parenthesized string as array initializer
+
+	The syntax
+
+		static const char ignore_error[] = ("something");
+
+	is invalid C.  GCC and MSVC can parse it, but for example
+	tcc cannot.  So remove the parenthesis from the definition
+	of the N_() macro.
+
+	Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+	Acked-by: Jonathan Nieder <jrnieder@gmail.com>
