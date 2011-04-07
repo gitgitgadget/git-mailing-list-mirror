@@ -1,131 +1,136 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] pathspec: rename per-item field has_wildcard to use_wildcard
-Date: Thu, 07 Apr 2011 13:09:20 +0200
-Message-ID: <4D9D9B60.4030404@drmicha.warpmail.net>
-References: <7vr59gl581.fsf@alter.siamese.dyndns.org> <BANLkTikJ3=H_OgcNueMjnwwQ2W-2kamf=w@mail.gmail.com> <7vfwpvjobl.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: p4Merge bundled command and the behaviour with files (same
+ name) added on different branches.
+Date: Thu, 7 Apr 2011 02:43:49 -0700
+Message-ID: <20110407094347.GB7593@gmail.com>
+References: <BANLkTimpsg=26C0mq=feVT7mt0nwZBoBUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 11:09:31 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Ciaran <ciaranj@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 11:44:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q7lDW-0004tK-KG
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 11:09:30 +0200
+	id 1Q7lkv-0000bg-UQ
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Apr 2011 11:44:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646Ab1DGJJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2011 05:09:25 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59066 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751171Ab1DGJJY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2011 05:09:24 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0D63020945;
-	Thu,  7 Apr 2011 05:09:23 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Thu, 07 Apr 2011 05:09:23 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=hUsY6UliMMYyoN3kFEOGcSXf8aM=; b=IkkOiY1rsiYCJhkxSedvO+6QMRs6dvR74UNkp7ZE9asN8dsq/LuhcF9tzPk/WOKjQX1yHzxgku/QJyVbV+NO0A4cU0hHbAzbZ61nwFj0NeF3kypaMNDvyrLyi2yl83leV/oHgwYSwzbLFJrr0Hmy10VI01SKJN8QBC3fkVRL1z4=
-X-Sasl-enc: LZmk+BFg5ak7rxcilNke7GrTm0rVRDuJshGP8PiYlnZN 1302167362
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1B7DD405511;
-	Thu,  7 Apr 2011 05:09:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7vfwpvjobl.fsf@alter.siamese.dyndns.org>
+	id S1752858Ab1DGJn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 05:43:56 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:55848 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751657Ab1DGJnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2011 05:43:55 -0400
+Received: by iyb14 with SMTP id 14so2281142iyb.19
+        for <git@vger.kernel.org>; Thu, 07 Apr 2011 02:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=+SZJcJ3eMCPW/EwgU5g9oEQE3YGsbuwpt1J/UoWlctk=;
+        b=jnhRfMdvru2qLJfdawIQm9w1MVWoqPSB+ojJ+0pDV7Rz/G6YVxNRJu4eV+0peYLV1n
+         Ip7J3J47mkXR5pdHIyh5NIhHjfUtgpJWlKIoYLK25y7Bs1J+SgjUapF7DO7XyS2WyUs4
+         n1synJtkOxGdvaa1nMtTYMeTr7vGN6Wahra4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=PrBmojba9Lqc7e3sUj5+X4MggpCzxu0qWCHoIcpShSgsPjsL0y1I+5tYDv+kxgoSZh
+         KMJwMk3KK0rJKFjrbJvezC3UDPPVMmnv40X1Vm2Khj9TogfDMU4Op0AgExZcU2xDtZmf
+         ugvn/WJaqAXn8VRvwY3oteF4Q7uK2v5vcM/RI=
+Received: by 10.42.5.81 with SMTP id 17mr1062031icv.130.1302169435064;
+        Thu, 07 Apr 2011 02:43:55 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id xg14sm931787icb.7.2011.04.07.02.43.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Apr 2011 02:43:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTimpsg=26C0mq=feVT7mt0nwZBoBUA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171049>
 
-Junio C Hamano venit, vidit, dixit 06.04.2011 19:13:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Mon, Apr 04, 2011 at 09:55:41AM +0100, Ciaran wrote:
+> [...]
+> We would expect a 'both added' merge conflict (both the other branch,
+> and the master branch added the file named bar.txt, but with different
+> content.)  This is all good and right.  So in a system configured to
+> use p4merge as the mergetool, one fires up with 'git mergetool'
 > 
->> 2011/4/6 Junio C Hamano <gitster@pobox.com>:
->>
->> I have started working on the conversion, but it may take a while
->> because in many places pathspec is still assumed a prefix (and handled
->> separately, which is not good for negative pathspec). Fundamental
->> support for magic pathspec and "top dir" notation probably do not need
->> get_pathspec() converted to struct pathspec.
+> What happens now is p4merge starts and tells us:
 > 
-> I think you meant to say "If we only want to have 'top dir' magic,
-> fundamental support and get_pathspec() conversion are unnecessary", and I
-> agree 100%.
+> Base: bar.txt.LOCAL.<num1>.txt
+> Left: bar.txt.LOCAL.<num1>.txt Differences from base: 0
+> Right: bar.txt.LOCAL.<num2>.txt Differences from base: 1
+> Merge: bar.txt Conflicts:0
 > 
-> I am actually tempted to add Michael's hack to get_pathspec() only to
-> support the "from the top" (and error out with any other magic---as the
-> approach without a proper restructuring will not work with anything but
-> that particular magic), to get the "add -u" topic going, and let you (or
-> other people who are interested in the pathspec rationalization) later fix
-> it up just a small part of existing issues.
+> Presenting the left + right options on top of each other in the result
+> window (which may be correct) and leaving the save button disabled
+> (grayed out)
 > 
+> If at this point one closes the window without editing the presented
+> (apparently merged) file, then nothing will be saved to disk and we
+> will see:
+> 
+> bar.txt seems unchanged.
+> Was the merge successful? [y/n]
+> 
+> In the console.  Which Git wise is correct, that is exactly right, the
+> p4merge tool hasn't made any actual changes to the underlying file.
+> 
+> This behaviour seems confusing to me (the p4merge client behaviour,
+> *not* Git's)   I believe it is because in the case where there is no
+> logical base between two files the local one is arbritrarily chosen,
+> and p4merge *thinks* that this is equal to the merge result and has
+> nothing to persist.
+> 
+> I have attached a patch that resolves the issue for me (e.g.
+> introduces the behaviour I expect) by passing a reference to an empty
+> file in the case where there is no meaningful base.  Unfortunately I
+> don't understand enough to say whether this change is correct or not
+> and would value feedback on it.
+> 
+> Many thanks
+>  - Cj.
 
-Junio, we're in rc phase ;)
+Thanks.  If this patch were for actual consideration you would
+inline the patch instead of sending an attachment as described
+in Documentation/SubmittingPatches.  Marking the subject line
+with "[RFC PATCH]" lets us know that you're interested in
+feedback.  I have a few questions below.
 
-> The extensible syntax I have in mind (we only parse in get_pathspec() in
-> such a tentative version but anything other than the :/ will error out) is
-> to use:
-> 
->  (1) Colon, a run of selected non-alpha (i.e. magic signature), an
->      optional colon to terminate the magic signature, followed by the
->      path, e.g.
-> 
->      - ":/hello.c" is a path from the top.
-> 
->      - ":!/hello.c" is path from the top but no globbing.
-> 
->      - ":/!hello.c" is the same as above.
-> 
->      - ":/::hello.c" is ":hello.c" from the top, the second colon
->        terminates the magic signature and allows the funny file with a
->        leading colon to be named.
-> 
->      - "::hello.c" does not have any magic, is the same as "hello.c".
-> 
->  (2) Colon, open parenthesis, a comma separated list of words to name
->      magic, close parenthesis, followed by the path, e.g. these are the
->      long-hand counterparts to the examples in (1)
-> 
->      - ":(top)hello.c"
->      - ":(top,noglob)hello.c"
->      - ":(noglob,top)hello.c"
->      - ":(noglob,top):hello.c"
->      - ":()hello.c"
-> 
+> index fb3f52b..3e486dc 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -262,7 +262,9 @@ run_merge_tool () {
+>  			if $base_present; then
+>  				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+>  			else
+> -				"$merge_tool_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
+> +				touch ".empty"
+> +				"$merge_tool_path" ".empty" "$LOCAL" "$REMOTE" "$MERGED"
+> +				rm ".empty"
+>  			fi
+>  			check_unchanged
+>  		else
+> -- 
 
-Do we need the parentheses? I guess we need them to have the magic start
-with a non-alpha, otherwise we could do with ":top,noglob:hello.c"
-(which I like but breaks those with a file named ":top:hello.c").
+What if the user has a file called '.empty' in their repository?
 
-What about these:
+What if the user Ctrl-C's out of mergetool -- does a stale
+.empty file get left behind?
 
-:/(noglob)hello.c
-:(top)!hello.c
+Does it work if we pass /dev/null instead?
+Is such a strategy portable to Windows?
 
-I.e. do we allow combinations?
-
-Do we need the the second colon at all then? I.e. we can declare ":"
-non-magic after seeing it once so that ":(top):hello.c" would be
-":hello.c" at top.
-
-> At this point, I am not interested in building the repertoire of magic
-> yet, but would want to nail a syntax that is
-> 
->  - concise in common cases (e.g. "from the top, not a funny name" is ':/'
->    followed by the name);
->  - is extensible in the future; and
->  - easy to parse and error out on magic we do not understand.
-> 
-
-- and does dot break users with files named xyz.
-
-Spelling out xyz would already nail down the syntax quite a bit. It
-seems you accept to break people with files named ":(top)hello.c" but
-not those with files named ":top:hello.c". Which is OK if it's a
-conscious decision, of course.
-
-Michael
+If /dev/null doesn't work, would it be better if the
+empty file were given a different name?
+Maybe something like foo.EMPTY.<num>.txt?
+-- 
+		David
