@@ -1,101 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: "prune" prone to clock skew (Re: t3306 failure with v1.7.5-rc1)
-Date: Fri, 08 Apr 2011 09:41:53 +0200
-Message-ID: <4D9EBC41.4080501@drmicha.warpmail.net>
-References: <4D9ECF7C.6010709@drmicha.warpmail.net> <4D9EB406.5080302@viscovery.net> <4D9EB57D.1060402@drmicha.warpmail.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: keeping -RT and mainline tree in single repository
+Date: Fri, 8 Apr 2011 13:22:20 +0530
+Message-ID: <20110408075217.GA25171@kytes>
+References: <BANLkTikGMG76QhLaGfs-m-SizcaqnZ0mhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 08 09:42:03 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Tharindu Rukshan Bamunuarachchi <btharindu@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 09:53:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q86KP-0001in-VP
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 09:42:02 +0200
+	id 1Q86VP-0007Uh-G0
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 09:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932124Ab1DHHl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 03:41:56 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:37355 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756426Ab1DHHlz (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 03:41:55 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 007FF20A11;
-	Fri,  8 Apr 2011 03:41:54 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Fri, 08 Apr 2011 03:41:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=6LuQZV0f5Dz0B9524s+5KACfXc8=; b=PR096T5wd+9ooZZNx2H5dsODzqRu08h6kT9/ekQThgPPvyE7s8O0GCRI6VLuSBZq4bnKcnwb9ZHQGEbvxCLd5q1d2IxKaFf3/ulDhar+QYYzbTZz1JQQf2H/Mx5yAOjwSJA9tsN09/BjcD2v2QbbW3PtXUd/v4diYQbiszFmCgI=
-X-Sasl-enc: PveQ4/jJ92tWeuh1HdwHYm00lHsilWmTiUoNzHwUrFQT 1302248514
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 58CA3409DC2;
-	Fri,  8 Apr 2011 03:41:54 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <4D9EB57D.1060402@drmicha.warpmail.net>
+	id S1756942Ab1DHHxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 03:53:14 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41242 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756859Ab1DHHxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 03:53:13 -0400
+Received: by iyb14 with SMTP id 14so3226880iyb.19
+        for <git@vger.kernel.org>; Fri, 08 Apr 2011 00:53:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=kCRuvLl+GX3+TeTD+8sMYYmwCpfvGdmux9RSmviai90=;
+        b=i7l6W1gYQvLxDcPMQeO0lzdoXkCxxb2NsWtStJE4ZCOiGU9LdfAKPye0N8SdJoTLCR
+         +XKVvRnKZ+3GUhBniPMk21zux09mXW1wqNOzBUKmbkKNz41UZaGlCij37vFIuovt9B6t
+         0ZFW4ZZyGrOQoHIR883j0C7qjtIjMChP6Y0Ds=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=emIGU6o98z+OG0FZ69j1n3IiWcoM25x6hsmgavKuD+cfkKqIjgCMYQXLrmfUHL9bKe
+         7wj7RVDBwdoiZFhg7AO8gyFNSiWxFTFPxagbAJQwCbW3/RxdHPttGtdpWCMjJqyAFam3
+         SAHZEaaMyXJ6JKQHdZlzuDhpyiIAtGhGoWRZA=
+Received: by 10.42.66.147 with SMTP id p19mr3166367ici.7.1302249193244;
+        Fri, 08 Apr 2011 00:53:13 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id xn10sm1419614icb.4.2011.04.08.00.53.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 08 Apr 2011 00:53:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTikGMG76QhLaGfs-m-SizcaqnZ0mhA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171115>
 
-Michael J Gruber venit, vidit, dixit 08.04.2011 09:13:
-> Johannes Sixt venit, vidit, dixit 08.04.2011 09:06:
->> Am 4/8/2011 11:03, schrieb Michael J Gruber:
->>> I get this stupid test failure in test 3 of t3306. The problem is that a
->>> dangling commit does not get pruned away when it should:
->>>
->>> 3rd
->>> test_must_fail: command succeeded: git cat-file -p
->>> 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29
->>> not ok - 4 verify that commits are gone
->>>
->>> It's a system where make complains about funny clock (I dunno why) but
+Hi Tharindu,
 
-(I know now.)
+Tharindu Rukshan Bamunuarachchi writes:
+> at the moment i am pulling latest source from
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> and keep my driver development up-to-date with mainline.
+> 
+> i need to port my driver to -rt also.
+> 
+> 1. do i have to pull and use another git repository from RT GIT. i.e.
+> git://git.kernel.org/pub/scm/linux/kernel/git/tip/linux-2.6-tip.git
+> 2. how can i use current GIT repository to keep sync with both -RT and
+> mainline ?
 
->>> can we make this more robust? The following helps with "sleep 5" but not
->>> with "sleep 4". test_tick does not help. What's going on?
+You just need two remotes -- simply run `git remote add rt
+git://git.kernel.org/pub/scm/linux/kernel/git/tip/linux-2.6-tip.git`
+to add this remote.  Then, `git fetch --all` to fetch from all
+remotes.
 
-Adding one more observation from that system:
+> 3. how can i pull latest commits without switching between branches. (
+> i hv two branches ... master & my-own-hacked). Every time i switch to
+> master and pull latest code.
 
-rm GIT-VERSION-FILE ;date; sh ./GIT-VERSION-GEN; date; ls -l --full-time
-GIT-VERSION-FILE
+A `pull` is a `fetch` plus an additional action depending on the
+switches and the situation (merge, merge with rebase, ff merge etc).
+You can run `fetch`, irrespective of the branch you're on.  However,
+you need to switch branches to perform a `merge` operation, because of
+the way it works.
 
-Fri Apr  8 09:27:40 CEST 2011
-GIT_VERSION = 1.7.5.rc1
-Fri Apr  8 09:27:41 CEST 2011
--rw-r----- 1 mjg mjg 24 2011-04-08 09:27:47.000000000 +0200 GIT-VERSION-FILE
+Hope that helps.
 
-Note that the second "date" happens after the creation of
-GIT-VERSION-FILE. I can even do this with a simple
-
-rm a;date; touch a; date; ls -l --full-time a
-Fri Apr  8 09:31:04 CEST 2011
-Fri Apr  8 09:31:04 CEST 2011
--rw-r----- 1 mjg mjg 0 2011-04-08 09:31:11.000000000 +0200 a
-
-Suffice it to say that this is on NFS, and of course the creation date
-comes from the NFS server, the "date" from the client... OK, I got that.
-Scary.
-
-EXPLANATION:
-
-I guess "prune" looks at some file time stamps (rather than parsing the
-commit time proper) so that it is prone to the same client/server clock
-skew problems when the repo is not on the local file system.
-
-PROBLEM (?):
-
-I really hope this does not go both ways - imagine a messed server
-turning it's clock a few weeks back by accident, and running "git prune"
-on the client, or a messed client turning the clock forward... Do we do
-proper checks before removing something?
-
-I mean, there's a difference between missing that something is stale and
-missing that it is not...
-
-Michael
+-- Ram
