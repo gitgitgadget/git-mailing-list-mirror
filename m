@@ -1,73 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: GSoC proposal for svn remote helper
-Date: Fri, 8 Apr 2011 02:11:53 -0500
-Message-ID: <20110408071153.GA23051@elie>
-References: <BANLkTinYyxxkZpmEF2PYXMb_BjCVcbTkYw@mail.gmail.com>
- <BANLkTinHE-E5_mK8aKYv2f7yExVvfOFVRw@mail.gmail.com>
- <20110408052126.GA22256@elie>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: t3306 failure with v1.7.5-rc1
+Date: Fri, 08 Apr 2011 09:13:01 +0200
+Message-ID: <4D9EB57D.1060402@drmicha.warpmail.net>
+References: <4D9ECF7C.6010709@drmicha.warpmail.net> <4D9EB406.5080302@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, artagnon@gmail.com, david.barr@cordelta.com,
-	srabbelier@gmail.com, Eric Wong <normalperson@yhbt.net>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 09:12:08 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Apr 08 09:13:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q85rT-00039C-8U
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 09:12:07 +0200
+	id 1Q85sU-0003jN-MB
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 09:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754868Ab1DHHMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 03:12:01 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:59033 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754740Ab1DHHMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 03:12:00 -0400
-Received: by iwn34 with SMTP id 34so3205211iwn.19
-        for <git@vger.kernel.org>; Fri, 08 Apr 2011 00:11:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=qq2swG57nRTC8y169N/k9NlH+Q10+oJw8yhVVOH18TI=;
-        b=hn+9l3qvskeT0HhoNNy+yNLJlZGG2ANnd9Uw/ktvUq9apgdcPtiJUHTGAgAYGAiO8t
-         u73KrcGgJt+iLiaeSulhBrMUBYzUYYpdTi1N+hVhidsQkF915Hdc4GtzxEfBRwgTRfHL
-         fvSSicS+1/757miL3JxQh0uZJpadUsYxHJjSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jChuBgE3FSuRV2orMCG7tXdRsotQxrBpdfj0yaGeriOKJ2tzFaOLfWFGX/5Juv2NTL
-         iwj4ZCU/CCWYKdrSPS6m65cVWPh3gNDgYvubUaqJicqjsSvmPgbEtkdlqopeOrWgBdQk
-         R7GVVQiWJhdIx7BjIQG1xIsD3zstXObTrkpHY=
-Received: by 10.42.159.201 with SMTP id m9mr2945921icx.244.1302246719596;
-        Fri, 08 Apr 2011 00:11:59 -0700 (PDT)
-Received: from elie ([69.209.53.77])
-        by mx.google.com with ESMTPS id d9sm1682890ibb.36.2011.04.08.00.11.57
-        (version=SSLv3 cipher=OTHER);
-        Fri, 08 Apr 2011 00:11:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110408052126.GA22256@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755027Ab1DHHNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 03:13:05 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:57870 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754773Ab1DHHNE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 03:13:04 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 1EFEA208B8;
+	Fri,  8 Apr 2011 03:13:03 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Fri, 08 Apr 2011 03:13:03 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=zw4moJ+3pylC+wYTTxZWFgeVpSk=; b=DXVW4OdARVgkl+68R0Q+ZAOrs2K+XXGaDsFJ+n3e6cL+qQYLjzfofHtpKJnQIWWGW/MJeIrnromDstwphbgNlYweDhcYmsoewZLR9L7qYI5eYFr26A5rQoHbWux9cUFBb9A1ZunfMXa/FJETKn3Hu25Bo0HxM6sjFe0SVs32nGQ=
+X-Sasl-enc: M/A2qXCOMV5ayZ9eZBkWW1WmqExpsM9kERnQ+k5Opdog 1302246782
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 889F8408711;
+	Fri,  8 Apr 2011 03:13:02 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <4D9EB406.5080302@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171112>
 
-Hi again,
+Johannes Sixt venit, vidit, dixit 08.04.2011 09:06:
+> Am 4/8/2011 11:03, schrieb Michael J Gruber:
+>> I get this stupid test failure in test 3 of t3306. The problem is that a
+>> dangling commit does not get pruned away when it should:
+>>
+>> 3rd
+>> test_must_fail: command succeeded: git cat-file -p
+>> 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29
+>> not ok - 4 verify that commits are gone
+>>
+>> It's a system where make complains about funny clock (I dunno why) but
+>> can we make this more robust? The following helps with "sleep 5" but not
+>> with "sleep 4". test_tick does not help. What's going on?
+> 
+> Looking at the time of day of your last emails (it's ~2 hours in the
+> future), I'd say something is fishy with your system's clock. Fix that first.
 
-A small clarification.
+Well, while you're right about that, an offset should not matter for the
+test, right?
 
-Jonathan Nieder wrote:
+About my clock: The result of booting a "different" system on that
+box... (In this case even a kubuntu using hw clock in tz...). thanks for
+pointing it out!
 
-> As mentioned before, this sounds very ambitious.  Once we have a
-> timeline showing how this breaks down into small steps it should
-> hopefully be clearer way.
+In any case, that test was on a different box with clean checkout and
+make clean. I don't think anyone jumped the clock right in between each
+of my 20 or so test runs.
 
-Agh, that sentence doesn't even parse.  I ought to have have said:
-"Breaking the task into concrete steps will make it easier to see what
-is realistic."
+Michael
