@@ -1,70 +1,92 @@
-From: Thorsten Glaser <tg@mirbsd.de>
-Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
-Date: Fri, 8 Apr 2011 19:05:31 +0000 (UTC)
-Message-ID: <Pine.BSM.4.64L.1104081903550.22999@herc.mirbsd.org>
-References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
- <Pine.BSM.4.64L.1104071923580.4692@herc.mirbsd.org>
- <BANLkTink-c8JuxnMBCAmXiVwFkBxJrTucw@mail.gmail.com> <4D9EDCEA.9010903@drmicha.warpmail.net>
- <20110408185924.GA25840@elie>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug Report: git add
+Date: Fri, 8 Apr 2011 15:15:54 -0400
+Message-ID: <20110408191554.GA6516@sigill.intra.peff.net>
+References: <4D9BA35E.6040204@dcook.org>
+ <20110407005750.GC28813@sigill.intra.peff.net>
+ <7vbp0ihnou.fsf@alter.siamese.dyndns.org>
+ <20110407014819.GA12730@sigill.intra.peff.net>
+ <7vlizmfrl1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 21:15:09 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Darren Cook <darren@dcook.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 21:16:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8H98-0006cq-Dg
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 21:15:06 +0200
+	id 1Q8HA3-0007J1-4v
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 21:16:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757696Ab1DHTPA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 15:15:00 -0400
-Received: from static-87-79-237-121.netcologne.de ([87.79.237.121]:46701 "EHLO
-	herc.mirbsd.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757680Ab1DHTO7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 15:14:59 -0400
-Received: from herc.mirbsd.org (tg@localhost [IPv6:::1])
-	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0) with ESMTP id p38J5Xo2015136
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 Apr 2011 19:05:36 GMT
-Received: (from tg@localhost)
-	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0/Submit) id p38J5W3Q014379;
-	Fri, 8 Apr 2011 19:05:32 GMT
-Received: by S/MIME Plugin for MirBSD 10 Kv#10uAE-20110220 i386; Fri Apr  8 19:05:31 UTC 2011
-X-X-Sender: tg@herc.mirbsd.org
-In-Reply-To: <20110408185924.GA25840@elie>
-X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
+	id S1756243Ab1DHTP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 15:15:58 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36981
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752348Ab1DHTP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 15:15:57 -0400
+Received: (qmail 3804 invoked by uid 107); 8 Apr 2011 19:16:45 -0000
+Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Apr 2011 15:16:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Apr 2011 15:15:54 -0400
+Content-Disposition: inline
+In-Reply-To: <7vlizmfrl1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171146>
 
-Jonathan Nieder dixit:
+On Thu, Apr 07, 2011 at 12:28:26AM -0700, Junio C Hamano wrote:
 
->I think the most native-looking way to store metadata associated to
->paths is .gitattributes.  It also has the nice feature of allowing a
->single attribute to apply to multiple files.
+> Jeff King <peff@peff.net> writes:
+> 
+> > @@ -139,8 +138,21 @@ static int lstat_cache_matchlen(struct cache_def *cache,
+> >  			if (errno == ENOENT)
+> >  				*ret_flags |= FL_NOENT;
+> >  		} else if (S_ISDIR(st.st_mode)) {
+> > -			last_slash_dir = last_slash;
+> > -			continue;
+> > +			struct stat junk;
+> > +			struct strbuf gitdir = STRBUF_INIT;
+> > +			strbuf_add(&gitdir, cache->path, match_len);
+> > +			strbuf_addstr(&gitdir, "/.git");
+> > +			if (lstat(gitdir.buf, &junk) < 0) {
+> > +				if (errno == ENOENT) {
+> > +					last_slash_dir = last_slash;
+> > +					strbuf_release(&gitdir);
+> > +					continue;
+> > +				}
+> > +				*ret_flags = FL_LSTATERR;
+> > +			}
+> > +			else
+> > +				*ret_flags = FL_GITREPO;
+> 
+> This only checks "does the directory have .git in it?".
 
-Eh, no. Think of extended attributes like, say, NTFS Resource Forks.
-They=E2=80=99re just different =E2=80=9Clines=E2=80=9D into the =E2=80=9C=
-plane=E2=80=9D a file can be, if
-you excuse the metapher. (All parallel, of course.) They are just
-another facet of each file.
+Yeah. I was trying to keep the test as inexpensive as possible, since
+this is a very frequently called codepath. But really, doing a more
+elaborate test shouldn't matter. The common case will be that the stat
+fails, and we do nothing else.
 
-bye,
-//mirabilos
---=20
-22:20=E2=8E=9C<asarch> The crazy that persists in his craziness becomes=
- a master
-22:21=E2=8E=9C<asarch> And the distance between the craziness and genia=
-lity is
-only measured by the success 18:35=E2=8E=9C<asarch> "Psychotics are con=
-sistently
-inconsistent. The essence of sanity is to be inconsistently inconsisten=
-t
+I do worry about adding an extra lstat for each directory having
+noticeable overhead. Maybe it doesn't matter because of the stat
+caching, but I didn't measure.
+
+> It probably is sufficient, but setup.c:is_git_directory() may do a more
+> appropriate check, I think.  That ".git" thing could be a regular file
+> (i.e. "gitdir: path"), so depending on the junk.st_mode, you may have to
+> call read_gitfile_gently() on it before checking with is_git_directory().
+
+I worry a little about the PATH_MAX check and die in is_git_directory. I
+would hate for a deep hierarchy to start failing because of this extra
+check. OTOH, it is only 5 extra characters to append ".git", so it is
+unlikely that a path was that close to PATH_MAX but not exceeding it.
+
+Similarly, read_gitfile_gently is anything but gentle. It die()s if we
+can't open the '.git' file or it is in an invalid format, which would be
+a regression here.
+
+-Peff
