@@ -1,99 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: switching branches when they use different submodule remotes
-Date: Fri, 08 Apr 2011 13:45:01 -0700
-Message-ID: <7vei5c322a.fsf@alter.siamese.dyndns.org>
-References: <p0624080dc9c4f8ff178c@[192.168.1.122]>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
+Date: Fri, 8 Apr 2011 16:54:37 -0400
+Message-ID: <20110408205437.GB16540@sigill.intra.peff.net>
+References: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
+ <1302274674-4231-1-git-send-email-asedeno@mit.edu>
+ <7vmxk033ic.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-X-From: git-owner@vger.kernel.org Fri Apr 08 22:45:22 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
+	git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 22:54:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8IYT-0005Sh-Rq
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 22:45:22 +0200
+	id 1Q8Iha-0002kY-Od
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 22:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757888Ab1DHUpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 16:45:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51972 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757841Ab1DHUpN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 16:45:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 816665387;
-	Fri,  8 Apr 2011 16:47:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SSSk60bvLAWgfrW9Qvpnp4kjJic=; b=Sl3ODP
-	0pf0Hr3fa5YB51ixDyjK4eKDRsVPCXElUdVWZ6cA4hm4+I7W73TWjWM0qvP0qduF
-	EjCjZzTbzYnmE8WSXhqgsKG0+XzZEb2gDA5H4hetAMoX7KSAWqCXLRzUL0C4u0jr
-	uRdKQ/PJiBXZfsGu96RYYYW/P8GEIWfuAHvNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XY96TVTFVhKJHLDH6KUqrcrtotdxEMXR
-	IGg+OLMbyTj6SlvEzxbnD2dmfRFRJjV8qz7/+1JttP/hASwvGiLapsuKAGOW7vvk
-	OaStgIKj37d768aMotGuKexHUJc+tBmkfu99GobI16y35FV4f48RFKjEzuPrC7rz
-	0AzfPEzbMh0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 494E15386;
-	Fri,  8 Apr 2011 16:47:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4FE7D5382; Fri,  8 Apr 2011
- 16:46:59 -0400 (EDT)
-In-Reply-To: <p0624080dc9c4f8ff178c@[192.168.1.122]> (Stephen Bannasch's
- message of "Fri\, 8 Apr 2011 13\:52\:16 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B0DABEA-6221-11E0-A1DA-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1757841Ab1DHUyl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 16:54:41 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59088
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753401Ab1DHUyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 16:54:40 -0400
+Received: (qmail 5044 invoked by uid 107); 8 Apr 2011 20:55:28 -0000
+Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Apr 2011 16:55:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Apr 2011 16:54:37 -0400
+Content-Disposition: inline
+In-Reply-To: <7vmxk033ic.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171163>
 
-Stephen Bannasch <stephen.bannasch@deanbrook.org> writes:
+On Fri, Apr 08, 2011 at 01:13:47PM -0700, Junio C Hamano wrote:
 
-> it made it clear that executing init does not alter existing
-> information in .git/config so I deleted the reference in ./git/config
-> manually and started over.
->
-> Is there a better way to handle this?
+> A Tangent.
+>=20
+> >> X-Mailer: git-send-email 1.7.4.2.1.gd6f1f
+> >> In-Reply-To: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
+>=20
+> This is not about this particular patch, but the From: address
+> git-send-email generates for you does not seem to quote the human rea=
+dable
+> part, even though the name has a "." in it.
+>=20
+> Your mails seem to reach the recipients fine, but I saw my reply to y=
+ou
+> bounce, because "To:" or "Cc:" in my reply end up having the "R." par=
+t not
+> quoted, like this:
+>=20
+>   (wrong)  To: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+>  (correct) To: "Alejandro R. Sede=C3=B1o" <asedeno@mit.edu>
 
-Perhaps "submodule sync"?
+Hmm. His case has an extra level of confusion, though, because the
+non-ascii characters all need rfc2047 encoding. So two emails I've seen
+from him have:
 
-There are at least two different scenarios where you may have multiple
-URLs for a given submodule path.
+  From: =3D?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg=3D=3D?=3D <asedeno@M=
+IT.EDU>
+  From: =3D?UTF-8?q?Alejandro=3D20R=3D2E=3D20Sede=3DC3=3DB1o?=3D <asede=
+no@mit.edu>
 
- - These two URLs may represent two projects with different histories, and
-   depending on the commit that is checked out, your superproject may want
-   to use a URL for the repository that appears in .gitmodules that is
-   checked out.  "submodule sync" would be one solution for this case.
+where the first is from Icedove (i.e., Thunderbird) and the second is
+from git-send-email.
 
- - These two URLs may represent a single project but the repository
-   migrated and the old URL may not even work anymore.  In such a case,
-   even when you checked out an old commit of the superproject, you do not
-   want to use the old and now decommissioned URL in the .gitmodules file.
+The first one contains double-quotes embedded in the encoded portion.
+The second one (send-email) does not.
 
-There can be combinations and variants of the above two.
+But I'm not clear on if that is necessary. I thought that rfc2047 could
+only encode a "word" in the "phrase" portion in an address header,
+meaning the parsing should be unambiguous.
 
-In very early days of "git submodule" Porcelain support, there were a lot
-of design discussion taking these two situations into account.  I don't
-recall the details, but the core idea was:
+That being said, I think we are not quoting in the non-rfc2047 case,
+anyway, and that is a bug. rfc5322 says this (section 4.1, Miscellaneou=
+s
+obsolete tokens):
 
- - record a tuple <the value chosen by the user, the value the user saw in
-   .gitmodules when the user chose the value> in .git/config;
+  Note: The "period" (or "full stop") character (".") in obs-phrase is
+  not a form that was allowed in earlier versions of this or any other
+  specification.  Period (nor any other character from specials) was no=
+t
+  allowed in phrase because it introduced a parsing difficulty
+  distinguishing between phrases and portions of an addr-spec (see
+  section 4.4).  It appears here because the period character is
+  currently used in many messages in the display-name portion of
+  addresses, especially for initials in names, and therefore must be
+  interpreted properly.
 
- - when .gitmodules has a value that the user has not seen, ask the user
-   what to do. The user may want to use the value recorded in .gitmodules,
-   or may want to use the value already in .git/config.  This would result
-   in a new tuple <the value chosen, the value in .gitmodules> recorded in
-   .git/config;
+which recognizes this situation. But being in the obsolete section, I
+think it is saying "you still need to interpret these, but don't
+generate them". IOW, we should still be generating quotes now.
 
- - when .gitmodules has a value that the user has seen, use the
-   corresponding value the user chose to use.
+I think format-patch is totally lacking in this type of quoting. If I
+do:
 
-which would have solved both use cases; unfortunately, nobody has been
-inclined to implement anything like that so far.
+  $ git init
+  $ git config user.name '<bogus> with "quotes"'
+  $ echo contents >foo && git add . && git commit -m foo
+  $ git format-patch --stdout --root
+  ...
+  From: bogus with "quotes <peff@peff.net>
+
+So some of my magic characters are just stripped, and some of them get
+included, making the output bogus (the stripping of <> actually happens
+within git, so the commit itself is missing them).
+
+Not that I think a name like that is sane, but probably we should be
+double-quoting properly anyway, and then the "." case would just fall
+out.
+
+-Peff
