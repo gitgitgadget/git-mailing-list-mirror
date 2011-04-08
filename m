@@ -1,79 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Thorsten Glaser <tg@mirbsd.de>
 Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
-Date: Fri, 8 Apr 2011 13:59:24 -0500
-Message-ID: <20110408185924.GA25840@elie>
+Date: Fri, 8 Apr 2011 19:05:31 +0000 (UTC)
+Message-ID: <Pine.BSM.4.64L.1104081903550.22999@herc.mirbsd.org>
 References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
  <Pine.BSM.4.64L.1104071923580.4692@herc.mirbsd.org>
- <BANLkTink-c8JuxnMBCAmXiVwFkBxJrTucw@mail.gmail.com>
- <4D9EDCEA.9010903@drmicha.warpmail.net>
+ <BANLkTink-c8JuxnMBCAmXiVwFkBxJrTucw@mail.gmail.com> <4D9EDCEA.9010903@drmicha.warpmail.net>
+ <20110408185924.GA25840@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
-	Thorsten Glaser <tg@mirbsd.de>, Git List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Apr 08 20:59:39 2011
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 21:15:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8Gu9-0004i5-Fk
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 20:59:37 +0200
+	id 1Q8H98-0006cq-Dg
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 21:15:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580Ab1DHS7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 14:59:32 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:58614 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757541Ab1DHS7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 14:59:31 -0400
-Received: by vws1 with SMTP id 1so2917926vws.19
-        for <git@vger.kernel.org>; Fri, 08 Apr 2011 11:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=H3VIhA+pKj65mUjkyfUON5TJXoqsGSp9YtTphDXJsqo=;
-        b=b9KS7qlgzSXBfuq5CyN0cIg8Beip8e3IW+1u1A5WdFEWZSuAd1aP7stO1GI9UKzP9z
-         WxvIIZ6e3cSyyJSF+OJqAYqo0vjSaIUFb1p1TMSSJj6S9lK87imKuRz/ihEr/WkNuj3+
-         86B1ZXDXF7b0pKsLxI9sD4F0fb1sSUZt5QPPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=HOdys4JD/bbIIUYi3qGde+EQJx7f3Zn6azaoeW+1XhB/a+zfXbC8w7c8S59LEnoB9Y
-         vKtVDwZSbliKz0NIwhZlIt+SaYVle+8lA2IAwIYW6avxLhc8GesOToj1gCbcb4wkGb20
-         yLNMnheXG5I5vmHhPt2mr6bB3Vfx3pbAhD4+Q=
-Received: by 10.52.71.97 with SMTP id t1mr3756440vdu.246.1302289171223;
-        Fri, 08 Apr 2011 11:59:31 -0700 (PDT)
-Received: from elie (adsl-69-209-53-77.dsl.chcgil.ameritech.net [69.209.53.77])
-        by mx.google.com with ESMTPS id c8sm727174vcc.33.2011.04.08.11.59.28
-        (version=SSLv3 cipher=OTHER);
-        Fri, 08 Apr 2011 11:59:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4D9EDCEA.9010903@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757696Ab1DHTPA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 15:15:00 -0400
+Received: from static-87-79-237-121.netcologne.de ([87.79.237.121]:46701 "EHLO
+	herc.mirbsd.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757680Ab1DHTO7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 15:14:59 -0400
+Received: from herc.mirbsd.org (tg@localhost [IPv6:::1])
+	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0) with ESMTP id p38J5Xo2015136
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 8 Apr 2011 19:05:36 GMT
+Received: (from tg@localhost)
+	by herc.mirbsd.org (8.14.5.Beta0/8.14.5.Beta0/Submit) id p38J5W3Q014379;
+	Fri, 8 Apr 2011 19:05:32 GMT
+Received: by S/MIME Plugin for MirBSD 10 Kv#10uAE-20110220 i386; Fri Apr  8 19:05:31 UTC 2011
+X-X-Sender: tg@herc.mirbsd.org
+In-Reply-To: <20110408185924.GA25840@elie>
+X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171145>
 
-Hi,
+Jonathan Nieder dixit:
 
-Michael J Gruber wrote:
+>I think the most native-looking way to store metadata associated to
+>paths is .gitattributes.  It also has the nice feature of allowing a
+>single attribute to apply to multiple files.
 
-> Note that etckeeper and metastore predate our notes feature. By now, a
-> notes tree is a perfect place to store meta information. You can attach
-> notes to blobs perfectly (see textconv-cache). That may be an option for
-> a reimplementation, depending on how you want the versioning of the
-> files to be related with the versioning of the meta data.
+Eh, no. Think of extended attributes like, say, NTFS Resource Forks.
+They=E2=80=99re just different =E2=80=9Clines=E2=80=9D into the =E2=80=9C=
+plane=E2=80=9D a file can be, if
+you excuse the metapher. (All parallel, of course.) They are just
+another facet of each file.
 
-Wouldn't that mean the same content couldn't have one owner in one
-commit and a different owner in another commit?
-
-I think the most native-looking way to store metadata associated to
-paths is .gitattributes.  It also has the nice feature of allowing a
-single attribute to apply to multiple files.  But the tools for
-looking them up (e.g., git check-attr) do not get much use yet so they
-probably could use a lot of improvement.
+bye,
+//mirabilos
+--=20
+22:20=E2=8E=9C<asarch> The crazy that persists in his craziness becomes=
+ a master
+22:21=E2=8E=9C<asarch> And the distance between the craziness and genia=
+lity is
+only measured by the success 18:35=E2=8E=9C<asarch> "Psychotics are con=
+sistently
+inconsistent. The essence of sanity is to be inconsistently inconsisten=
+t
