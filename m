@@ -1,135 +1,162 @@
-From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCH 3/3] Teach --dirstat to not completely ignore rearranged lines
-Date: Fri, 8 Apr 2011 16:55:37 +0200
-Message-ID: <201104081655.38075.johan@herland.net>
-References: <201104071549.37187.johan@herland.net> <BANLkTinEipewx2+Cx7Us0BSoSbjjU9uE6A@mail.gmail.com> <201104081646.35750.johan@herland.net>
+From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+Subject: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
+Date: Fri,  8 Apr 2011 10:57:54 -0400
+Message-ID: <1302274674-4231-1-git-send-email-asedeno@mit.edu>
+References: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	johan@herland.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 16:56:43 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: James Y Knight <jknight@itasoftware.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Apr 08 16:58:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8D73-0002rG-OB
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 16:56:42 +0200
+	id 1Q8D8T-0003nu-84
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 16:58:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757355Ab1DHO4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 10:56:36 -0400
-Received: from smtp.opera.com ([213.236.208.81]:47291 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752580Ab1DHO4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 10:56:35 -0400
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p38EtcfH009850
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 8 Apr 2011 14:55:38 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <201104081646.35750.johan@herland.net>
-Content-Disposition: inline
+	id S1757367Ab1DHO6D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 10:58:03 -0400
+Received: from mx1.itasoftware.com ([63.115.78.20]:56134 "EHLO
+	mx1.itasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757204Ab1DHO6B (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 10:58:01 -0400
+Received: from ita4mta2.internal.itasoftware.com (ita4mta2.internal.itasoftware.com [10.4.52.168])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.itasoftware.com (Postfix) with ESMTP id 24DA9256D4F;
+	Fri,  8 Apr 2011 10:57:55 -0400 (EDT)
+Received: from asedeno.corp.itasoftware.com (lb1.dc4nat162.dc4.internal.itasoftware.com [10.4.199.162])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ita4mta2.internal.itasoftware.com (Postfix) with ESMTPS id 0291419D8031;
+	Fri,  8 Apr 2011 10:57:55 -0400 (EDT)
+Received: from asedeno by asedeno.corp.itasoftware.com with local (Exim 4.74)
+	(envelope-from <asedeno@asedeno.corp.itasoftware.com>)
+	id 1Q8D8E-00016n-PE; Fri, 08 Apr 2011 10:57:54 -0400
+X-Mailer: git-send-email 1.7.4.2.1.gd6f1f
+In-Reply-To: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
+X-ITASoftware-MailScanner: Found to be clean
+X-ITASoftware-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-1, required 3, ALL_TRUSTED -1.00)
+X-ITASoftware-MailScanner-From: asedeno@itasoftware.com
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171128>
 
-Currently, the --dirstat analysis fails to detect some kinds of changes.
-For example, rearranging lines in a file causes the "damage" calculated
-by show_dirstat() to be 0. However, when we process the diff queue in
-show_dirstat(), we already now that there should be at least _some_
-damage assigned to each entry, because truly _unchanged_ entries are
-simply not present in the diff queue.
+Similar to the 'remote.<name>.pushurl' config key for git remotes,
+'pushurl' is designed to be used in cases where 'url' points to an SVN
+repository via a read-only transport, to provide an alternate
+read/write transport. It is assumed that both keys point to the same
+repository.
 
-This patch teaches show_dirstat() to assign a minimum amount of damage
-(== 1) to entries for which the analysis otherwise yields zero damage.
-Obviously this is not a complete fix, but it's at least better to
-underrepresent these changes, rather than simply pretending that they
-don't exist.
+The 'pushurl' key is distinct from the 'commiturl' key in that
+'commiturl' is a full svn path while 'pushurl' (like 'url') is a base
+path. 'commiturl' takes precendece over 'pushurl' in cases where
+either might be used.
 
-Signed-off-by: Johan Herland <johan@herland.net>
+The 'pushurl' is used by git-svn's dcommit and branch commands.
+
+Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+Reviewed-by: James Y Knight <jknight@itasoftware.com>
 ---
+ Documentation/git-svn.txt |   10 ++++++++++
+ git-svn.perl              |   18 +++++++++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-This is a somewhat quick and ugly solution to make --dirstat at least
-show _something_ for changes that consist solely of rearranging lines
-in a file. Sure, those changes would be thoroughly underrepresented by
---dirstat (probably falling below the default 3% threshold in many
-cases), but I figure it's better to underrepresent them rather than
-ignoring them completely.
-
-As with 2/3, this patch also relies on the assumption that the diff
-queue never contains entries that should be considered "unchanged" by
---dirstat.
-
- Documentation/diff-options.txt                |    4 ++--
- diff.c                                        |    8 ++++++++
- t/t4013-diff-various.sh                       |    2 --
- t/t4013/diff.diff_--dirstat_initial_rearrange |    1 +
- 4 files changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 25e48c4..61a8409 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -75,8 +75,8 @@ endif::git-format-patch[]
- +
- Note that `--dirstat` does not use the regular diff machinery to calculate
- the changes (rather it is based on the rename detection machinery). Therefore,
--`--dirstat` may skip some changes that `--stat` does not skip. For example,
--rearranging the lines in a file will not be detected by `--dirstat`.
-+`--dirstat` will count some changes differently than `--stat`. For example,
-+rearranged lines in a file will be underrepresented by `--dirstat`.
- 
- --dirstat-by-file[=<limit>]::
- 	Same as `--dirstat`, but counts changed files instead of lines.
-diff --git a/diff.c b/diff.c
-index 28d9293..0d82082 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1578,8 +1578,16 @@ static void show_dirstat(struct diff_options *options)
- 		 * Original minus copied is the removed material,
- 		 * added is the new material.  They are both damages
- 		 * made to the preimage.
-+		 * If the resulting damage is zero, we know that
-+		 * diffcore_count_changes() considers the two entries
-+		 * to be identical, but since they are in the diff
-+		 * queue at all, we now that there must have been
-+		 * _some_ kind of change, so we force all entries to
-+		 * have at least a minimum of damage.
- 		 */
- 		damage = (p->one->size - copied) + added;
-+		if (!damage)
-+			damage = 1;
- 
- found_damage:
- 		ALLOC_GROW(dir.files, dir.nr + 1, dir.alloc);
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index e8240f2..93a6f20 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -300,9 +300,7 @@ diff --no-index --name-status -- dir2 dir
- diff --no-index dir dir3
- diff master master^ side
- diff --dirstat master~1 master~2
--# --dirstat does NOT pick up changes that simply rearrange existing lines
- diff --dirstat initial rearrange
--# ...but --dirstat-by-file DOES pick up rearranged lines
- diff --dirstat-by-file initial rearrange
- EOF
- 
-diff --git a/t/t4013/diff.diff_--dirstat_initial_rearrange b/t/t4013/diff.diff_--dirstat_initial_rearrange
-index fb2e17d..5fb02c1 100644
---- a/t/t4013/diff.diff_--dirstat_initial_rearrange
-+++ b/t/t4013/diff.diff_--dirstat_initial_rearrange
-@@ -1,2 +1,3 @@
- $ git diff --dirstat initial rearrange
-+ 100.0% dir/
- $
--- 
-1.7.5.rc1
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index ea8fafd..4aa6404 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -648,6 +648,16 @@ svn-remote.<name>.rewriteUUID::
+ 	where the original UUID is not available via either useSvmProps
+ 	or useSvnsyncProps.
+=20
++svn-remote.<name>.pushurl::
++
++	Similar to git's 'remote.<name>.pushurl', this key is designed
++	to be used in cases where 'url' points to an SVN repository
++	via a read-only transport, to provide an alternate read/write
++	transport. It is assumed that both keys point to the same
++	repository. Unlike 'commiturl', 'pushurl' is a base path. If
++	either 'commiturl' or 'pushurl' could be used, 'commiturl'
++	takes precedence.
++
+ svn.brokenSymlinkWorkaround::
+ 	This disables potentially expensive checks to workaround
+ 	broken symlinks checked into SVN by broken clients.  Set this
+diff --git a/git-svn.perl b/git-svn.perl
+index fa8cd07..184442a 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -531,7 +531,7 @@ sub cmd_dcommit {
+ 		$url =3D eval { command_oneline('config', '--get',
+ 			      "svn-remote.$gs->{repo_id}.commiturl") };
+ 		if (!$url) {
+-			$url =3D $gs->full_url
++			$url =3D $gs->full_pushurl
+ 		}
+ 	}
+=20
+@@ -679,7 +679,7 @@ sub cmd_branch {
+ 	$head ||=3D 'HEAD';
+=20
+ 	my (undef, $rev, undef, $gs) =3D working_head_info($head);
+-	my $src =3D $gs->full_url;
++	my $src =3D $gs->full_pushurl;
+=20
+ 	my $remote =3D Git::SVN::read_all_remotes()->{$gs->{repo_id}};
+ 	my $allglobs =3D $remote->{ $_tag ? 'tags' : 'branches' };
+@@ -730,7 +730,7 @@ sub cmd_branch {
+ 		$url =3D eval { command_oneline('config', '--get',
+ 			"svn-remote.$gs->{repo_id}.commiturl") };
+ 		if (!$url) {
+-			$url =3D $remote->{url};
++			$url =3D $remote->{pushurl} || $remote->{url};
+ 		}
+ 	}
+ 	my $dst =3D join '/', $url, $lft, $branch_name, ($rgt || ());
+@@ -1834,6 +1834,8 @@ sub read_all_remotes {
+ 			$r->{$1}->{svm} =3D {};
+ 		} elsif (m!^(.+)\.url=3D\s*(.*)\s*$!) {
+ 			$r->{$1}->{url} =3D $2;
++		} elsif (m!^(.+)\.pushurl=3D\s*(.*)\s*$!) {
++			$r->{$1}->{pushurl} =3D $2;
+ 		} elsif (m!^(.+)\.(branches|tags)=3D$svn_refspec$!) {
+ 			my ($remote, $t, $local_ref, $remote_ref) =3D
+ 			                                     ($1, $2, $3, $4);
+@@ -2071,6 +2073,8 @@ sub new {
+ 	$self->{url} =3D command_oneline('config', '--get',
+ 	                               "svn-remote.$repo_id.url") or
+                   die "Failed to read \"svn-remote.$repo_id.url\" in c=
+onfig\n";
++	$self->{pushurl} =3D eval { command_oneline('config', '--get',
++	                          "svn-remote.$repo_id.pushurl") };
+ 	$self->rebuild;
+ 	$self;
+ }
+@@ -2548,6 +2552,14 @@ sub full_url {
+ 	$self->{url} . (length $self->{path} ? '/' . $self->{path} : '');
+ }
+=20
++sub full_pushurl {
++	my ($self) =3D @_;
++	if ($self->{pushurl}) {
++		return $self->{pushurl} . (length $self->{path} ? '/' . $self->{path=
+} : '');
++	} else {
++		return $self->full_url;
++	}
++}
+=20
+ sub set_commit_header_env {
+ 	my ($log_entry) =3D @_;
+--=20
+1.7.4.2.1.gd6f1f
