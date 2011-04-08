@@ -1,68 +1,69 @@
-From: Tharindu Rukshan Bamunuarachchi <btharindu@gmail.com>
-Subject: keeping -RT and mainline tree in single repository
-Date: Fri, 8 Apr 2011 12:33:25 +0530
-Message-ID: <BANLkTikGMG76QhLaGfs-m-SizcaqnZ0mhA@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: t3306 failure with v1.7.5-rc1
+Date: Fri, 08 Apr 2011 11:03:56 +0200
+Message-ID: <4D9ECF7C.6010709@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 08 09:04:03 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 08 09:04:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q85je-0007oD-9P
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 09:04:02 +0200
+	id 1Q85jm-0007sn-KP
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 09:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754566Ab1DHHD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 03:03:56 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35973 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753698Ab1DHHD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 03:03:56 -0400
-Received: by vws1 with SMTP id 1so2482703vws.19
-        for <git@vger.kernel.org>; Fri, 08 Apr 2011 00:03:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=HF91K053iFL2B4TqIt4aXq+5FYWH54BncjjQbrt3vco=;
-        b=OE3TwQIrz8wIxuaAlPTzBo17bEdxIDccPCGGHUyWSKsGYcUl3Dvv5gD0cre/33QNSy
-         AFy84VP2BvTsavwomewMjzMINeYRkfVjyai7pIO0s7nyYTfLbG1adiWLWN8wo4DapU2e
-         xwVNlu2UnDxpwHEBG53AepaZDRmmqMXOY1vx0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=dHOzRhmzT/JK/609o+XPVg7OlDz2PgCnAkTyPh2BZWzGIGc6QDlMXr5YzlIPHkhD8q
-         tOGlFltzezDnc9P9nqoY3FetgSjq5YMOwlFmTSDHya9WwhEGKVO1v2LlJEQQhQiNxDPJ
-         nOEc2OgLm0UBu9r9P+U6WTszNzMIcAdqP6Rds=
-Received: by 10.52.73.193 with SMTP id n1mr2731631vdv.226.1302246235266; Fri,
- 08 Apr 2011 00:03:55 -0700 (PDT)
-Received: by 10.52.166.106 with HTTP; Fri, 8 Apr 2011 00:03:25 -0700 (PDT)
+	id S1754584Ab1DHHED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 03:04:03 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:42552 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754567Ab1DHHEC (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 03:04:02 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 82A41209A7
+	for <git@vger.kernel.org>; Fri,  8 Apr 2011 03:04:01 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 08 Apr 2011 03:04:01 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:content-type:content-transfer-encoding; s=smtpout; bh=gAGrfg6xOUb75MQj78XxJWLEo2c=; b=I0QShGLlZzVrjAHs5E0xLZYbizDioGnh80TKFJdw37XA5Kl94raUzJ78b5F+UVB/ErCj5biRfiLH8M5oVxXGV7RI+uBz2K0+uXswwhrsW2PdcJQ99nBXmcT8Ky4NXVbwhqBwnVuMM7PPgPgiopBlCdytVoMenEWZ3zSytGEt9Ro=
+X-Sasl-enc: tiPyQG6iXIQ8Hk7LDILrJqrcpzHPaYqniJCRmaCz3GK5 1302246241
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D9A84406CC7
+	for <git@vger.kernel.org>; Fri,  8 Apr 2011 03:03:59 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171109>
 
-hi All,
+Heya,
 
-at the moment i am pulling latest source from
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-and keep my driver development up-to-date with mainline.
+I get this stupid test failure in test 3 of t3306. The problem is that a
+dangling commit does not get pruned away when it should:
 
-i need to port my driver to -rt also.
+3rd
+test_must_fail: command succeeded: git cat-file -p
+5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29
+not ok - 4 verify that commits are gone
 
-1. do i have to pull and use another git repository from RT GIT. i.e.
-git://git.kernel.org/pub/scm/linux/kernel/git/tip/linux-2.6-tip.git
-2. how can i use current GIT repository to keep sync with both -RT and
-mainline ?
-3. how can i pull latest commits without switching between branches. (
-i hv two branches ... master & my-own-hacked). Every time i switch to
-master and pull latest code.
+It's a system where make complains about funny clock (I dunno why) but
+can we make this more robust? The following helps with "sleep 5" but not
+with "sleep 4". test_tick does not help. What's going on?
 
-Really appreciate if you can point howto/resource ?
+---
 
-Thanks in advance
-__
-Tharindu "R" Bamunuarachchi.
+diff --git i/t/t3306-notes-prune.sh w/t/t3306-notes-prune.sh
+index c428217..da76463 100755
+--- i/t/t3306-notes-prune.sh
++++ w/t/t3306-notes-prune.sh
+@@ -62,7 +62,9 @@ test_expect_success 'remove some commits' '
+
+ 	git reset --hard HEAD~1 &&
+ 	git reflog expire --expire=now HEAD &&
++	sleep 5 &&
+ 	git gc --prune=now
+ '
+
+ test_expect_success 'verify that commits are gone' '
