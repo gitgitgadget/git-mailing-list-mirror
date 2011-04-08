@@ -1,71 +1,63 @@
-From: David Xu <xudavidb@gmail.com>
-Subject: Re: Delivery Status Notification (Failure)
-Date: Thu, 7 Apr 2011 22:41:05 -0400
-Message-ID: <BANLkTi=EoLWJKyN_bx6B9rVW=yxUJtmsmA@mail.gmail.com>
-References: <BANLkTin+Qn9FzvTJauOPVCJnk8v4ajVnSw@mail.gmail.com>
-	<000e0cd5cff499795e04a05dc387@google.com>
+From: David Xu <davidxu@seas.upenn.edu>
+Subject: GSOC --follow Proposal
+Date: Thu, 7 Apr 2011 22:43:34 -0400
+Message-ID: <BANLkTimG=QV=pjLn1bvZrc6q-Luh0TTpAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001517588caa4e72bd04a05f2827
+Content-Type: multipart/mixed; boundary=0016364ee2ec3209b404a05f3140
+Cc: Jonathan Nieder <jrnieder@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 08 04:41:15 2011
+X-From: git-owner@vger.kernel.org Fri Apr 08 04:43:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q81dK-0000vB-97
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 04:41:15 +0200
+	id 1Q81fn-0001j4-Go
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 04:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757375Ab1DHClI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2011 22:41:08 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:57776 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757327Ab1DHClH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2011 22:41:07 -0400
-Received: by qyk7 with SMTP id 7so3689413qyk.19
-        for <git@vger.kernel.org>; Thu, 07 Apr 2011 19:41:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=thPnO4FP6GneRWOkDkDWdhqDlIVPeRjju4g+HyrrBbs=;
-        b=CEYZ0WiovtE+9JKU0YSpJnAbxodoMcdXscdyFOYMiNy9TTHRJjesT7v+e26hVgku/d
-         mSi/Du+6vTRxNUDeSHzFi+rKwpyS8jk63IYyVNLF7LLwvoAxVoGU+mcYL13h8kAH9qRk
-         8+IiLvPd2PErdmz1qhDWud2omJ2qdNCaQshrk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=ZaLbhjs9G/q5fZZEr8GRpqHBzVmv4GR/qMCylQt0yJAdodp5xFTjC2xCSHMz8QXViG
-         OZoyHHFTXOER27ZyX+OHZX3bdaWwSO3jFcAbo7xFH5DHqvI2dA8jFs2+HxwzJortWHH1
-         uIDESXA9pW4ART/u6h2fXxJ+rpCCvgp3ablxg=
-Received: by 10.229.130.164 with SMTP id t36mr1275156qcs.39.1302230465409;
- Thu, 07 Apr 2011 19:41:05 -0700 (PDT)
-Received: by 10.229.217.66 with HTTP; Thu, 7 Apr 2011 19:41:05 -0700 (PDT)
-In-Reply-To: <000e0cd5cff499795e04a05dc387@google.com>
+	id S1757358Ab1DHCnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2011 22:43:42 -0400
+Received: from talbot.seas.upenn.edu ([158.130.67.217]:56581 "EHLO
+	talbot.seas.upenn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757327Ab1DHCnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2011 22:43:41 -0400
+Received: from mail-qw0-f46.google.com (mail-qw0-f46.google.com [209.85.216.46])
+	(authenticated bits=0)
+	by talbot.seas.upenn.edu (8.14.3/8.14.3) with ESMTP id p382hdHT015686
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 7 Apr 2011 22:43:40 -0400
+Received: by qwk3 with SMTP id 3so1855222qwk.19
+        for <git@vger.kernel.org>; Thu, 07 Apr 2011 19:43:34 -0700 (PDT)
+Received: by 10.229.86.76 with SMTP id r12mr1270117qcl.115.1302230614542; Thu,
+ 07 Apr 2011 19:43:34 -0700 (PDT)
+Received: by 10.229.217.66 with HTTP; Thu, 7 Apr 2011 19:43:34 -0700 (PDT)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.2.15,1.0.148,0.0.0000
+ definitions=2011-04-08_01:2011-04-08,2011-04-07,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 suspectscore=3
+ phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=6.0.2-1012030000 definitions=main-1104070173
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171101>
 
---001517588caa4e72bd04a05f2827
+--0016364ee2ec3209b404a05f3140
 Content-Type: text/plain; charset=ISO-8859-1
 
 Hi, this is my revised proposal for git. I was unable to find a public bug
 list, so I couldn't specify which bugs I would attempt to fix in the project
-schedule. I apologize for this coming in a bit late, I had classes and an
-interview today, so I just got back home.
+schedule.
 
 Thank you!
 -David
 
---001517588caa4e72bd04a05f2827
+--0016364ee2ec3209b404a05f3140
 Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document; 
 	name="git-v2.docx"
 Content-Disposition: attachment; filename="git-v2.docx"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gm8id9to0
+X-Attachment-Id: f_gm8ig4xe0
 
 UEsDBBQABgAIAAAAIQDwIex9jgEAABMGAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAAC
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -395,4 +387,4 @@ AAAAIQBvoACRSgIAAMIHAAASAAAAAAAAAAAAAAAAAFY8AAB3b3JkL2ZvbnRUYWJsZS54bWxQSwEC
 LQAUAAYACAAAACEAF6AWTgIBAACsAQAAFAAAAAAAAAAAAAAAAADQPgAAd29yZC93ZWJTZXR0aW5n
 cy54bWxQSwECLQAUAAYACAAAACEANneTfl4FAACrRgAAEgAAAAAAAAAAAAAAAAAEQAAAd29yZC9u
 dW1iZXJpbmcueG1sUEsFBgAAAAANAA0ASQMAAJJFAAAAAA==
---001517588caa4e72bd04a05f2827--
+--0016364ee2ec3209b404a05f3140--
