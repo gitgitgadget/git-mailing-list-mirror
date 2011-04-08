@@ -1,89 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: New to git
-Date: Fri, 8 Apr 2011 16:10:25 -0400
-Message-ID: <20110408201024.GA15964@sigill.intra.peff.net>
-References: <BANLkTimy-95OJGxU9XzcaR=0jTJWXOwsDg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
+Date: Fri, 08 Apr 2011 13:13:47 -0700
+Message-ID: <7vmxk033ic.fsf@alter.siamese.dyndns.org>
+References: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
+ <1302274674-4231-1-git-send-email-asedeno@mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Marco Maggesi <marco.maggesi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 22:10:39 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: =?utf-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Apr 08 22:14:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8I0o-0000ez-2y
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 22:10:34 +0200
+	id 1Q8I4U-0003H0-6l
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 22:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757833Ab1DHUK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 16:10:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60144
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757777Ab1DHUK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 16:10:27 -0400
-Received: (qmail 4563 invoked by uid 107); 8 Apr 2011 20:11:15 -0000
-Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Apr 2011 16:11:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Apr 2011 16:10:25 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTimy-95OJGxU9XzcaR=0jTJWXOwsDg@mail.gmail.com>
+	id S1757890Ab1DHUOF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 16:14:05 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56733 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757799Ab1DHUOB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 16:14:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B93DD50A5;
+	Fri,  8 Apr 2011 16:15:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=h7z8IPucru+K
+	l+Bpdqfaw23mt2g=; b=xNd8pvkK52owEuc+LSFi7i5Fwh9Jues1va8p6MfwW24+
+	BW9f4zpnoQTg3aljv3CnVexLw6xAK3i1K/4aByukrGuJ9H9J/JK0SGJ/GZzjQ6X4
+	GWTeS0FYJUBGOyr10LYcKyYn/WE+RYQ48Sz5Rw20Im0DUiYB6OE7xzi2g+3Fmao=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u3dE2y
+	6dMMOjYDivbULNK0lpmT2Uk19XReMf5eVmYCftm9MEGQYDvADrkDZEzNe/tyWYON
+	TkXvJXnX1X3MBIAGj1S1m702mYJJ9ho2O6/IZJIiffM00JnzYa7SHTIX69ZeY9CB
+	wQr/lm06UGjgIRo9O2eiGna1mTj/if35jy2u4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 76C7250A4;
+	Fri,  8 Apr 2011 16:15:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 17909509F; Fri,  8 Apr 2011
+ 16:15:44 -0400 (EDT)
+In-Reply-To: <1302274674-4231-1-git-send-email-asedeno@mit.edu> ("Alejandro
+ R. =?utf-8?Q?Sede=C3=B1o=22's?= message of "Fri, 8 Apr 2011 10:57:54 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FF5DEB2E-621C-11E0-9C97-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171156>
 
-On Fri, Apr 08, 2011 at 09:43:09PM +0200, Marco Maggesi wrote:
+A Tangent.
 
-> Now I would like to setup a repository on a server and use it as a
-> central point of distribution for a few other computers.
-> As far as I can understand, the default mechanism for push / pull
-> requires that git is installed on every machine, including the server.
+>> X-Mailer: git-send-email 1.7.4.2.1.gd6f1f
+>> In-Reply-To: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
 
-Yes, it's the default, but there are other mechanisms that don't require
-server support. For example, rsync, and dumb http and ftp support.
-They're not as efficient, but they do work.
+This is not about this particular patch, but the From: address
+git-send-email generates for you does not seem to quote the human reada=
+ble
+part, even though the name has a "." in it.
 
-For pushing, they are not as convenient. The dumb http push support goes
-over DAV, so you must have a DAV server set up. Similarly, the rsync
-support does not (as far as I know) do rsync-over-ssh, but expects to
-connect to the rsync daemon directly.
+Your mails seem to reach the recipients fine, but I saw my reply to you
+bounce, because "To:" or "Cc:" in my reply end up having the "R." part =
+not
+quoted, like this:
 
-But if you are just using the server as a distribution point for a
-single repository, it can be much simpler. For example, if you always
-just want to push and overwrite what is on the server (i.e., like a
-mirror), you can just use plain rsync outside of git. To avoid mirror
-lag, you do want to update the objects before the refs. So this:
+  (wrong)  To: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+ (correct) To: "Alejandro R. Sede=C3=B1o" <asedeno@mit.edu>
 
-  LOCAL=/path/to/repo.git
-  REMOTE=server:path/to/repo.git
-  rsync -a $LOCAL/objects/ $REMOTE/objects/
-  rsync -a $LOCAL $REMOTE
+I wonder if we should do something about it in git-send-email.  Every t=
+ime
+I grab Shawn's address using my "git who" alias, I manually quote his n=
+ame
+to avoid my message thrown into dustbin by vger.
 
-would work. And then expose repo.git on the server via http or ftp, and
-clients can clone directly from it.
+    [alias]
+    who =3D "!sh -c 'git log -1 --format=3D\"%an <%ae>\" --author=3D\"$=
+1\"' -"
 
-> My problem is that I can hardly install git on the server for several
-> reasons that I will not explain here (also I'm not the administrator
-> of the server).
-
-You didn't list your reasons, so I'll assume they're good. But note that
-you don't need to be the administrator to accept a git push. You can
-build it as a regular user, and have git connect over ssh and run the
-server side.
-
-> For the moment I came only to the following idea: mount the remote
-> repository via fuse-ssh and use the local installation of git to push
-> / pull changes.
-> Surely it is inefficient but I don't care too much (my repositories
-> are small enough I think).
-> Can you see other drawbacks of this solution?
-
-That is inefficient, but I think it would work OK. If you are doing
-that, though, you are probably better off just rsyncing the whole result
-as I showed above. It's less inefficient and easier to set up (if you
-have rsync on the server, of course).
-
--Peff
+I suspect Michael is not "Michael J. Gruber" for the same reason...
