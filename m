@@ -1,121 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-svn: Add a svn-remote.<name>.pushurl config key
-Date: Fri, 8 Apr 2011 16:54:37 -0400
-Message-ID: <20110408205437.GB16540@sigill.intra.peff.net>
-References: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
- <1302274674-4231-1-git-send-email-asedeno@mit.edu>
- <7vmxk033ic.fsf@alter.siamese.dyndns.org>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
+Date: Fri, 8 Apr 2011 23:23:29 +0200
+Message-ID: <BANLkTi=3LPRzohnZStAogddpL5ZLehb97Q@mail.gmail.com>
+References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
+ <Pine.BSM.4.64L.1104071923580.4692@herc.mirbsd.org> <BANLkTink-c8JuxnMBCAmXiVwFkBxJrTucw@mail.gmail.com>
+ <4D9EDCEA.9010903@drmicha.warpmail.net> <20110408185924.GA25840@elie>
+ <Pine.BSM.4.64L.1104081903550.22999@herc.mirbsd.org> <20110408194548.GA26094@elie>
+ <Pine.BSM.4.64L.1104081955490.22999@herc.mirbsd.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
-	git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 22:54:48 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git List <git@vger.kernel.org>
+To: Thorsten Glaser <tg@mirbsd.de>
+X-From: git-owner@vger.kernel.org Fri Apr 08 23:24:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8Iha-0002kY-Od
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 22:54:47 +0200
+	id 1Q8J9o-0003o7-JB
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 23:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757841Ab1DHUyl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 16:54:41 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59088
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753401Ab1DHUyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 16:54:40 -0400
-Received: (qmail 5044 invoked by uid 107); 8 Apr 2011 20:55:28 -0000
-Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Apr 2011 16:55:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Apr 2011 16:54:37 -0400
-Content-Disposition: inline
-In-Reply-To: <7vmxk033ic.fsf@alter.siamese.dyndns.org>
+	id S1753453Ab1DHVXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 17:23:51 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:54238 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751495Ab1DHVXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 17:23:50 -0400
+Received: by iwn34 with SMTP id 34so3825481iwn.19
+        for <git@vger.kernel.org>; Fri, 08 Apr 2011 14:23:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=46KUMgUpBAabgzxyBlzQgCA8kdCL3lQvXKfpkkgzZCc=;
+        b=S8ilzOVq+aPD2k3J1lN7dqNS91jgJjvbYig1ktEyVaQ2CmV5h42HCNbb9sAwmx8Bz8
+         qUgZcWrcZhXdHp0mbc6ed7/3XhiXtOK5NdmD0L378c18hL9YH1rDycf52dRgLEFZUDie
+         NSCMBArAPkEkddZe7/K2+kzkrRWHS+LRtc3ig=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=EBWIEdC3QpZgWsTYKR99ZvmPKFCU9n6LorSqEnULSbWtjcDLe+KFISbgwoGQBE/xpL
+         y2Eq+evAbBPjmKtg72gjVS9wEyhM/djEC466Xqgs3R+Y0vIEKbfEo0aChb3Ats6kc5qK
+         u2QjMzAy57rXCXq1P5Z9xTreMiWbjshMsLUSQ=
+Received: by 10.231.121.1 with SMTP id f1mr2693562ibr.35.1302297829061; Fri,
+ 08 Apr 2011 14:23:49 -0700 (PDT)
+Received: by 10.231.92.16 with HTTP; Fri, 8 Apr 2011 14:23:29 -0700 (PDT)
+In-Reply-To: <Pine.BSM.4.64L.1104081955490.22999@herc.mirbsd.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171164>
 
-On Fri, Apr 08, 2011 at 01:13:47PM -0700, Junio C Hamano wrote:
+Ignoring any potentially flame-ish comments in the shared interest of
+factual discussion and eventual consensus followed by progress; please
+do the same :)
 
-> A Tangent.
->=20
-> >> X-Mailer: git-send-email 1.7.4.2.1.gd6f1f
-> >> In-Reply-To: <1302102336-8800-1-git-send-email-asedeno@mit.edu>
->=20
-> This is not about this particular patch, but the From: address
-> git-send-email generates for you does not seem to quote the human rea=
-dable
-> part, even though the name has a "." in it.
->=20
-> Your mails seem to reach the recipients fine, but I saw my reply to y=
-ou
-> bounce, because "To:" or "Cc:" in my reply end up having the "R." par=
-t not
-> quoted, like this:
->=20
->   (wrong)  To: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
->  (correct) To: "Alejandro R. Sede=C3=B1o" <asedeno@mit.edu>
 
-Hmm. His case has an extra level of confusion, though, because the
-non-ascii characters all need rfc2047 encoding. So two emails I've seen
-from him have:
+On Fri, Apr 8, 2011 at 21:58, Thorsten Glaser <tg@mirbsd.de> wrote:
 
-  From: =3D?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg=3D=3D?=3D <asedeno@M=
-IT.EDU>
-  From: =3D?UTF-8?q?Alejandro=3D20R=3D2E=3D20Sede=3DC3=3DB1o?=3D <asede=
-no@mit.edu>
+> This might be an alternative. RichiH, what are the requirements?
 
-where the first is from Icedove (i.e., Thunderbird) and the second is
-from git-send-email.
+The main use case from my/our POV is to track mtime etc to maintain
+relative and absolute differences which can be extremely useful for
+data even if it's not needed for code files.
 
-The first one contains double-quotes embedded in the encoded portion.
-The second one (send-email) does not.
 
-But I'm not clear on if that is necessary. I thought that rfc2047 could
-only encode a "word" in the "phrase" portion in an address header,
-meaning the parsing should be unambiguous.
+> I fear that the dotfile way will meet them better, considering
+> that they are versioned together, not separately, and what you
+> told me quickly about the idea.
 
-That being said, I think we are not quoting in the non-rfc2047 case,
-anyway, and that is a bug. rfc5322 says this (section 4.1, Miscellaneou=
-s
-obsolete tokens):
+Points to consider:
 
-  Note: The "period" (or "full stop") character (".") in obs-phrase is
-  not a form that was allowed in earlier versions of this or any other
-  specification.  Period (nor any other character from specials) was no=
-t
-  allowed in phrase because it introduced a parsing difficulty
-  distinguishing between phrases and portions of an addr-spec (see
-  section 4.4).  It appears here because the period character is
-  currently used in many messages in the display-name portion of
-  addresses, especially for initials in names, and therefore must be
-  interpreted properly.
+* In most cases I can think of, it would be preferable to track
+changes in metadata along with the actual files.
 
-which recognizes this situation. But being in the obsolete section, I
-think it is saying "you still need to interpret these, but don't
-generate them". IOW, we should still be generating quotes now.
+* It should be possible for other repositories to ignore this metadata.
 
-I think format-patch is totally lacking in this type of quoting. If I
-do:
+* I am not sure if notes are suitable for this. Using notes.displayRef
+to hide those notes is an option, but it would force everyone to set
+this up locally. Else, it would be very spammy.
 
-  $ git init
-  $ git config user.name '<bogus> with "quotes"'
-  $ echo contents >foo && git add . && git commit -m foo
-  $ git format-patch --stdout --root
-  ...
-  From: bogus with "quotes <peff@peff.net>
+* .gitattributes is too important to fill with potentially thousands
+of lines, imo. Using it to define what metadata should be stored would
+make sense, though.
 
-So some of my magic characters are just stripped, and some of them get
-included, making the output bogus (the stripping of <> actually happens
-within git, so the commit itself is missing them).
+* would a .gitmetadata make sense for storage? Alternatively, a
+.git/objects/??/*.metadata per object could make sense.
 
-Not that I think a name like that is sane, but probably we should be
-double-quoting properly anyway, and then the "." case would just fall
-out.
 
--Peff
+Thoughts?
+Richard
