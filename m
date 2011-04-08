@@ -1,88 +1,87 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/4] magic pathspec: add tentative ":/path/from/top/level"
- pathspec support
-Date: Fri, 8 Apr 2011 19:00:08 +0700
-Message-ID: <BANLkTi=YK-4TOxoD1qR8TO4SymLK6sPnQA@mail.gmail.com>
-References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
- <1302138996-10006-2-git-send-email-gitster@pobox.com> <BANLkTint7sGCg7_seu1-SWJC=_sKF-FKYw@mail.gmail.com>
- <7vd3kyf327.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: BUG? in --dirstat when rearranging lines in a file
+Date: Fri, 8 Apr 2011 16:46:35 +0200
+Message-ID: <201104081646.35750.johan@herland.net>
+References: <201104071549.37187.johan@herland.net> <BANLkTinEipewx2+Cx7Us0BSoSbjjU9uE6A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	johan@herland.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 14:00:58 2011
+X-From: git-owner@vger.kernel.org Fri Apr 08 16:48:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8AMz-00030j-KM
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 14:00:57 +0200
+	id 1Q8Cyo-00058i-LV
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 16:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022Ab1DHMAk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 08:00:40 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60218 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812Ab1DHMAj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 08:00:39 -0400
-Received: by bwz15 with SMTP id 15so2769257bwz.19
-        for <git@vger.kernel.org>; Fri, 08 Apr 2011 05:00:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=ywGJFMHwmBZjczIzYAylF4su/EJlIhS5c3lRYcPJdnc=;
-        b=eZdBOwp+zgtJTL2DsSB4bD2vjQ9iYbkmHpK/PZzOk/YgO/ssQAY2JmoJcYOegxa9Sp
-         tJwJ9EHZYEqhaI10uRNZo67CSLqftLLkkYb1SGbKSNYbTuLE/n0FuphksQ1v1IZ0+xZX
-         UzweCTSwDRopgXcFbVCOnKwl1Dp/9AIIfx2O8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=KXTtujUWhgV4fo2J4QOo0QVGOFlYn1GGculSKS5fhmSQx56x/TRUJk5eJzznEKEz2W
-         agxwDMW9CvB3yB7EfZZyjYr/ZxdAdeTbhdhXC2pHYUZfrasd2Eq+XEsI2KJvrDTBaZba
-         fNOMzKaO1yAmA+8DdeQoRK/o9qtZ1/xjX6PK0=
-Received: by 10.204.143.4 with SMTP id s4mr1807838bku.98.1302264038100; Fri,
- 08 Apr 2011 05:00:38 -0700 (PDT)
-Received: by 10.204.37.195 with HTTP; Fri, 8 Apr 2011 05:00:08 -0700 (PDT)
-In-Reply-To: <7vd3kyf327.fsf@alter.siamese.dyndns.org>
+	id S1756685Ab1DHOsE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 10:48:04 -0400
+Received: from smtp.opera.com ([213.236.208.81]:44133 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752580Ab1DHOsD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 10:48:03 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p38EkZwW007695
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 8 Apr 2011 14:46:36 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <BANLkTinEipewx2+Cx7Us0BSoSbjjU9uE6A@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171124>
 
-On Thu, Apr 7, 2011 at 11:18 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Thursday 07 April 2011, Linus Torvalds wrote:
+> On Thu, Apr 7, 2011 at 6:49 AM, Johan Herland wrote:
+> > Consider the following sequence of commands:
+> > [...]
+> > $ git diff --stat
+> > =A0dir/file | =A0 =A02 +-
+> > =A01 files changed, 1 insertions(+), 1 deletions(-)
+> > $ git diff --dirstat
+> > $ # WTF!?
 >
->> Also the patch does not catch this (ie. not die() on unrecognized si=
-gnature).
+> So the "--dirstat" thing really is different - it has never done a
+> full patch, it really only does a line hash count and then estimates
+> the amount of deleted/new code from that.
 >
-> Of course it doesn't.
->
-> I didn't say "everything that is not alphanumeric is magic". I only s=
-aid
-> "all the magic are not alphanumeric". =C2=A0Notice the difference.
->
->
-> This is so that you can say ":/.gitignore" and do not have to say
-> ":/:.gitignore".
+> [...]
 
-But then, say people have a file named @foo at top dir. They can write
-":/@foo" to address the file. Some time later we decide to use '@' as
-magic, how can we re-train user's fingers?
+Ok, so here are 3 patches to somewhat improve the situation without=20
+making --dirstat too ugly or expensive.
 
-> I am also tempted to special case a ':' followed by a zero magic as i=
-f it
-> specifies the top magic, e.g. ":Makefile" is the same as ":(top)Makef=
-ile",
-> aka ":/Makefile". =C2=A0It is not in the published code, but the shor=
-t-cut
-> would help ":.gitignore".
+#1: Simply document the current behavior.
 
-If you're not too tempted to do it, then reserve the case (ie. die()).
-Although I quite like it, one less keystroke for me.
+#2: Improve --dirstat-by-file. It doesn't really care about the per-fil=
+e=20
+analysis done by --dirstat, but only whether or not a file has changed=20
+at all. Since the diff queue does not contain unchanged files (<- this=20
+is an assumption that I hope someone with more diffcore knowledge can=20
+verify), we can unconditionally assign damage =3D=3D 1 to each entry in=
+ the=20
+diff queue, and bypass the entire --dirstat per-file analysis.
+
+#3. This is a quick/ugly hack that depends on the same assumption as #2=
+:=20
+If an entry is in the diff queue, we now that it is not unchanged. So=20
+if the per-file analysis yields damage =3D=3D 0, we know that it must h=
+ave=20
+overlooked something (rearranged lines), so we set damage =3D 1 instead=
+=2E=20
+The logic is that underrepresenting a change in --dirstat is better=20
+than ignoring it...
+
+
+=2E..Johan
+
 --=20
-Duy
+Johan Herland, <johan@herland.net>
+www.herland.net
