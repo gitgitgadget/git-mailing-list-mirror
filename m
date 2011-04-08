@@ -1,92 +1,127 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug Report: git add
-Date: Fri, 8 Apr 2011 15:15:54 -0400
-Message-ID: <20110408191554.GA6516@sigill.intra.peff.net>
-References: <4D9BA35E.6040204@dcook.org>
- <20110407005750.GC28813@sigill.intra.peff.net>
- <7vbp0ihnou.fsf@alter.siamese.dyndns.org>
- <20110407014819.GA12730@sigill.intra.peff.net>
- <7vlizmfrl1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] add -u: get rid of "treewideupdate" configuration
+Date: Fri, 08 Apr 2011 12:27:05 -0700
+Message-ID: <7vaag04k8m.fsf@alter.siamese.dyndns.org>
+References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
+ <1302138996-10006-3-git-send-email-gitster@pobox.com>
+ <20110408175149.GA3917@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Darren Cook <darren@dcook.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 21:16:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 08 21:27:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8HA3-0007J1-4v
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 21:16:03 +0200
+	id 1Q8HL0-00062L-13
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 21:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756243Ab1DHTP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 15:15:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36981
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752348Ab1DHTP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 15:15:57 -0400
-Received: (qmail 3804 invoked by uid 107); 8 Apr 2011 19:16:45 -0000
-Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Apr 2011 15:16:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Apr 2011 15:15:54 -0400
-Content-Disposition: inline
-In-Reply-To: <7vlizmfrl1.fsf@alter.siamese.dyndns.org>
+	id S1757719Ab1DHT1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 15:27:16 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34808 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757680Ab1DHT1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 15:27:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2F21F4AAF;
+	Fri,  8 Apr 2011 15:29:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DcN+9+/YDfX8qASjdPc+DBqxX3k=; b=N0L+a+
+	zKfGqNj0jFGuOjYHVgxmtrBd8kZVLFNuSQp+VXjO7m1SOFXNeiHxZUmp5JPH897l
+	gs5rUZRdGZ/AQMbAsyiIpFnmocxSitY7uP2UqbogBAcbJuEpsyNnjh0s0qz56AN8
+	yLEvMwRSIVfpuRWE4PRiCT6rE8jVkFhneSydQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hkeJ4wcUelURruRh8GyyV01OsRUa5G3p
+	IRo9iwexSh5IT3adoYbWY0nH2r7TC30LaMuhV9UL/fxYQxcYzcaHOqDqN663670u
+	nqvFd+mJSj/UOw7O1OSJ2xrXCWPijsRwzPyoHlYeYzyE1B/T9L2G5y9KjTiCzzXF
+	UUg4rjZ3qkE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0B4874AAC;
+	Fri,  8 Apr 2011 15:29:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 329904AAA; Fri,  8 Apr 2011
+ 15:29:02 -0400 (EDT)
+In-Reply-To: <20110408175149.GA3917@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 8 Apr 2011 13:54:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7862AEEE-6216-11E0-B094-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171147>
 
-On Thu, Apr 07, 2011 at 12:28:26AM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > @@ -139,8 +138,21 @@ static int lstat_cache_matchlen(struct cache_def *cache,
-> >  			if (errno == ENOENT)
-> >  				*ret_flags |= FL_NOENT;
-> >  		} else if (S_ISDIR(st.st_mode)) {
-> > -			last_slash_dir = last_slash;
-> > -			continue;
-> > +			struct stat junk;
-> > +			struct strbuf gitdir = STRBUF_INIT;
-> > +			strbuf_add(&gitdir, cache->path, match_len);
-> > +			strbuf_addstr(&gitdir, "/.git");
-> > +			if (lstat(gitdir.buf, &junk) < 0) {
-> > +				if (errno == ENOENT) {
-> > +					last_slash_dir = last_slash;
-> > +					strbuf_release(&gitdir);
-> > +					continue;
-> > +				}
-> > +				*ret_flags = FL_LSTATERR;
-> > +			}
-> > +			else
-> > +				*ret_flags = FL_GITREPO;
-> 
-> This only checks "does the directory have .git in it?".
+>> What remains is the downside of the configuration variable,
+>> namely, that it makes git behave differently depending on who you are and
+>> in which repository you are using it, hence making it harder to help
+>> and/or teach others.
+>
+> I have never been a fan of this reasoning. Sure, it is slightly harder
+> to help people when the system is configurable. But dropping
+> configurability comes at the cost of people who are using the system
+> day-to-day. And isn't making it pleasant to use every day more important
+> than the minority of times you are telling somebody else how to use it?
 
-Yeah. I was trying to keep the test as inexpensive as possible, since
-this is a very frequently called codepath. But really, doing a more
-elaborate test shouldn't matter. The common case will be that the stat
-fails, and we do nothing else.
+I probably should stated it differently.  I dropped it during this round
+because they are _not_ needed to help the transition, but it is a possible
+additional feature.
 
-I do worry about adding an extra lstat for each directory having
-noticeable overhead. Maybe it doesn't matter because of the stat
-caching, but I didn't measure.
+Let me try to explain the train of throught a bit better.
 
-> It probably is sufficient, but setup.c:is_git_directory() may do a more
-> appropriate check, I think.  That ".git" thing could be a regular file
-> (i.e. "gitdir: path"), so depending on the junk.st_mode, you may have to
-> call read_gitfile_gently() on it before checking with is_git_directory().
+People seem to expect "add -u" without any pathspec to work on the whole
+working tree structure even when you are in a subdirectory, similar to
+"git commit -a".  We will be changing "add -u" in the longer term to do
+so.
 
-I worry a little about the PATH_MAX check and die in is_git_directory. I
-would hate for a deep hierarchy to start failing because of this extra
-check. OTOH, it is only 5 extra characters to append ".git", so it is
-unlikely that a path was that close to PATH_MAX but not exceeding it.
+After the transition happens, people can easily say "add -u ." to limit it
+to the current subdirectory, and people can say "add -u ." even today to
+be explicit (which would help them transitioning).
 
-Similarly, read_gitfile_gently is anything but gentle. It die()s if we
-can't open the '.git' file or it is in an invalid format, which would be
-a regression here.
+Before the transition, however, there is no pleasant way to cause "add -u"
+to add everything when you work in a subdirectory, short of saying:
 
--Peff
+	(cd $(git rev-parse --show-cdup)/. && git add -u)
+
+With ":/", we gain an easy way, "git add -u :/", to say "whole tree".
+That is the only thing this series does.
+
+Up to this part, I think we both agree are good thing.
+
+Now, imagine you were born in a world where we had the :/ magic from day
+one of git.  Different commands "git add -u", "git grep", "git ls-files"
+without pathspec operate differently, and for some reason (e.g. usability,
+similarity to other people's corresponding command, or historical reasons)
+some of them operate only within the current subdirectory while others
+operate on the whole tree.  The default behaviour might even be different
+between versions of git or user configuration.
+
+Because we assume that you already have both "." and ":/" to easily be
+explicit in that world, "teachers and helpers may have to scratch there
+head wasting their time" is no longer an issue.  If you are teaching
+others, you ought to know about "." and ":/", and whether we add the
+configuration mechanism or not, you ought to know that you should be
+explicit to protect yourself from the differences between 1.7.X and 1.8.0
+versions in the first place.
+
+So I agree that "costs teachers and helpers" is much less of an issue.
+
+You can certainly introduce configuration variables e.g. "addu.treewide",
+"grep.treewide", "lsfiles.treewide" (or even "core.treewide" to cover them
+all) to change the default behaviour for each user or each repository.
+
+The real question would become: if it is worth the maintenance cost of
+additional code to help users who want to avoid typing "." (or ":/") all
+the time in the environment they control.  I don't know the answer to this
+question yet.
+
+A good new is that we had to conflate the discussion with "but there is no
+pleasant way to tell 'default to local' commands to work on the whole
+tree" justification for configuration variables before ":/".  With ":/",
+that excuse will be gone and the discussion can be much more simplified.
