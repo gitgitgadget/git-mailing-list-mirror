@@ -1,96 +1,72 @@
-From: Vincent van Ravesteijn <V.F.vanRavesteijn@tudelft.nl>
-Subject: Serious inflate inconsistency on windows
-Date: Fri, 08 Apr 2011 10:39:50 +0200
-Message-ID: <4D9EC9D6.2090100@tudelft.nl>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] merge: allow "-" as a short-hand for "previous branch"
+Date: Fri, 08 Apr 2011 11:30:20 +0200
+Message-ID: <4D9ED5AC.3050106@drmicha.warpmail.net>
+References: <7vmxk164wd.fsf@alter.siamese.dyndns.org> <BANLkTikA3dFQpZWC=TC3+zp2FS=uBBxf0Q@mail.gmail.com> <7vbp0h63sw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 08 11:01:38 2011
+Cc: Thomas Adam <thomas@xteddy.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 11:30:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q87ZP-0000xH-0F
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 11:01:35 +0200
+	id 1Q881N-0007WQ-3X
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 11:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753259Ab1DHJB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 05:01:29 -0400
-Received: from mailservice.tudelft.nl ([130.161.131.5]:53641 "EHLO
-	mailservice.tudelft.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752450Ab1DHJB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 05:01:28 -0400
-X-Greylist: delayed 1300 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Apr 2011 05:01:28 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by amavis (Postfix) with ESMTP id 80A1A2B8010
-	for <git@vger.kernel.org>; Fri,  8 Apr 2011 10:39:47 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at tudelft.nl
-X-Spam-Flag: NO
-X-Spam-Score: -21.89
-X-Spam-Level: 
-X-Spam-Status: No, score=-21.89 tagged_above=-99 required=5
-	tests=[BAYES_00=-1.9, PROLO_LEO3=0.01, TUD_REL01=-20] autolearn=ham
-Received: from mailservice.tudelft.nl ([130.161.131.73])
-	by localhost (tudelft.nl [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id mINXjjmunsNi for <git@vger.kernel.org>;
-	Fri,  8 Apr 2011 10:39:46 +0200 (CEST)
-Received: from smtp-a.tudelft.nl (smtp-a.tudelft.nl [130.161.180.7])
-	by mx2.tudelft.nl (Postfix) with ESMTP id E21702B8011
-	for <git@vger.kernel.org>; Fri,  8 Apr 2011 10:39:46 +0200 (CEST)
-Received: from [192.168.40.219] (221-44.206-83.static-ip.oleane.fr [83.206.44.221])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp-a.tudelft.nl (Postfix) with ESMTP id 92538B3A62
-	for <git@vger.kernel.org>; Fri,  8 Apr 2011 10:39:46 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+	id S1754374Ab1DHJaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 05:30:23 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48532 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751608Ab1DHJaW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 05:30:22 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id EDBB620B73;
+	Fri,  8 Apr 2011 05:30:21 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Fri, 08 Apr 2011 05:30:21 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=UIYTqFwP8nBg3mm10rnbfUsYEHU=; b=cGQZN4gFScx/8//OOg7uDNjMI4KEK/yK2X/FrHO652HtILjzy3z46jC17+KlZyqACzdnuJHvuZXyLuJox7ZbLpzEQ7vhiyxM1qGA2ubwXhO0Q6/lZS7uiCqj6HSQFTHgAH9LVuGc2gdzOZU02tPdrTKG8L+pJD5FlBGDdVflC/I=
+X-Sasl-enc: CWcT9f3J7zXUecW1mz2286FgtNYNgc4Zx15rtU3uRUpV 1302255021
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 57943408588;
+	Fri,  8 Apr 2011 05:30:21 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <7vbp0h63sw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171118>
 
-Hi All,
+Junio C Hamano venit, vidit, dixit 08.04.2011 01:26:
+> Thomas Adam <thomas@xteddy.org> writes:
+> 
+>> I agree this is is useful, but is there a danger of this being a
+>> common typo, and people merging in previous branches a lot more often
+>> than they ever intended?  In the case of "git checkout -" that's not
+>> as fatal, but if I ever mistype "git merge -" -- I'm now left with an
+>> unraveling exercise to do.
+> 
+> Just like you can checkout the previous branch back if you found you
+> checked out a wrong branch by a typo, if you found that you merged a wrong
+> branch, you can just reset it away back to ORIG_HEAD, no?
+> 
+> Or am I missing something more obvious?
 
-I'm not sure how important this is, but I had the following this morning 
-while fetching the git repo:
+Only tests and doc :)
 
- >git fetch
-remote: Counting objects: 567, done.
-remote: Compressing objects: 100% (149/149), done.
-remote: Total 317 (delta 238), reused 216 (delta 167)
-Receiving objects: 100% (317/317), 134.38 KiB | 24 KiB/s, done.
-error: inflate: data stream error (incorrect header check)
-fatal: serious inflate inconsistency
-fatal: index-pack failed
+Seriously, I like that. If there are more places where this makes sense
+(I haven't looked) we might even factor it out. In principle it makes
+sense everywhere where a branch name makes sense, e.g.:
 
- >git --version
-git version 1.7.4.MSVC
-(self-compiled on windows 28-3-2011)
+git branch -D foo
+#...can't delete the current branch
+git checkout whatever
+git branch -D -
 
-This was reproducable. Now trying a precompiled git version:
+In this case, shell history is faster, of course.
 
- >"c:\Program Files\Git\bin\git.exe" fetch
-remote: Counting objects: 567, done.
-remote: Compressing objects: 100% (149/149), done.
-remote: Total 317 (delta 238), reused 216 (delta 167)
-Receiving objects: 100% (317/317), 134.38 KiB | 20 KiB/s, done.
-Resolving deltas: 100% (238/238), completed with 65 local objects.
- From git://git.kernel.org/pub/scm/git/git
-    5cd1518..ee3adc3  html       -> origin/html
-    d424a47..5fb41b8  maint      -> origin/maint
-    9b12242..635319e  man        -> origin/man
-    fa38cfc..6be0559  master     -> origin/master
-    0244ef9..4a6bb82  next       -> origin/next
-  + 5d84cab...1e58d31 pu         -> origin/pu  (forced update)
-    f0ee024..9b460ad  todo       -> origin/todo
-  * [new tag]         v1.7.4.4   -> v1.7.4.4
-  * [new tag]         v1.7.5-rc1 -> v1.7.5-rc1
-
- >"c:\Program Files\Git\bin\git.exe" --version
-git version 1.7.3.1.msysgit.0
-
-I don't know how to rewind my git clone to represent exactly the state 
-it was in this morning, so it's difficult to explore further.
-
-Vincent
+Michael
