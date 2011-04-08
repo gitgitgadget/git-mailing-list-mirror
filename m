@@ -1,85 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] --dirstat: Document shortcomings compared to --stat
- or regular diff
-Date: Fri, 08 Apr 2011 12:50:32 -0700
-Message-ID: <7v1v1c4j5j.fsf@alter.siamese.dyndns.org>
+Subject: Re: BUG? in --dirstat when rearranging lines in a file
+Date: Fri, 08 Apr 2011 12:56:50 -0700
+Message-ID: <7vtye834al.fsf@alter.siamese.dyndns.org>
 References: <201104071549.37187.johan@herland.net>
  <BANLkTinEipewx2+Cx7Us0BSoSbjjU9uE6A@mail.gmail.com>
- <201104081646.35750.johan@herland.net> <201104081648.11842.johan@herland.net>
+ <201104081646.35750.johan@herland.net>
+ <BANLkTinv3SSYWn==F=ans4uHuHJhTrfjDQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Apr 08 21:50:49 2011
+X-From: git-owner@vger.kernel.org Fri Apr 08 21:57:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8Hhh-0004Cx-AR
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 21:50:49 +0200
+	id 1Q8Hnp-00006l-Sp
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 21:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757868Ab1DHTuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 15:50:44 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60201 "EHLO
+	id S1757802Ab1DHT5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 15:57:04 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34110 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757802Ab1DHTun (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 15:50:43 -0400
+	with ESMTP id S1757782Ab1DHT5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 15:57:02 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C84EB4D46;
-	Fri,  8 Apr 2011 15:52:37 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 231DA4E0B;
+	Fri,  8 Apr 2011 15:58:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=da45cE6IfERY19VDEIBIV/yVn1A=; b=KQz5Be
-	qJfFRD0wT3EPZI7tLUlMGwzjyVE284OF1t+XBkErBXxxC7yJ3EjjmtL5K/lEzA9C
-	Battd0l3Vd5pA/aRSyS8/kWRuX6Zwc2VrjaITNGtahoqvkehilq8RbsuclKkybSu
-	B6IeoLacDX6l8kwVq3dtU6xWua+IGZF547UO8=
+	:content-type; s=sasl; bh=HmiQ+Tg5dV0V/41CoiWyE1Q/y/Y=; b=o9KOqz
+	E+GAv4XHFpK6bduH3L3evWF+V/QfWEkpGBW5OlXCQS/eFNfROIQeG4eP15TB/NiO
+	qI3hiiFRfm7ikPcntQvU36FXwSovJgzs7xm3AcIzoH5YNXVbWY80Z6vgGSyS0HlQ
+	VH2VvtCSxQw0/B3zTGWmhNY8D6j/2WVck5hAI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RzOvEv5BxQJ/zaUGBHwg2ydRMMPyOHoT
-	/+LCOWteeQGv9LPT21J28dn3CrVlF5p5Rb/Ch40ac6EdgKHCyvUeJ6fkYNjMZyat
-	4LyouWxu1NAtkuPcbf3g/3xSZejWyTPOl8zZN8Z2F3bYSpbBIS1EPIMw0boO9V5s
-	ObwRuscZWpU=
+	:content-type; q=dns; s=sasl; b=nZVySYLQpmjugQZvq9jR/8AlJaWyHge6
+	kBW51CHM2EIJ4TiOo9/b87G+fF9fC1w9kI2QBgViDErwoeM85smv570AKbsNlGHj
+	rredMOgegZodB+hVnVnFu+2B3avNaSnlM2f6JZi8ACN2WDbvHcm5c6Fiac2gkYF4
+	B6hyHpxznJU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 90A484D45;
-	Fri,  8 Apr 2011 15:52:34 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E26C34E09;
+	Fri,  8 Apr 2011 15:58:52 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3B6764D44; Fri,  8 Apr 2011
- 15:52:29 -0400 (EDT)
-In-Reply-To: <201104081648.11842.johan@herland.net> (Johan Herland's message
- of "Fri, 8 Apr 2011 16:48:11 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A93794E08; Fri,  8 Apr 2011
+ 15:58:48 -0400 (EDT)
+In-Reply-To: <BANLkTinv3SSYWn==F=ans4uHuHJhTrfjDQ@mail.gmail.com> (Linus
+ Torvalds's message of "Fri, 8 Apr 2011 08:04:52 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF4E2DA8-6219-11E0-8A85-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: A0DA3E1A-621A-11E0-8490-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171153>
 
-Johan Herland <johan@herland.net> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index c93124b..25e48c4 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -72,6 +72,11 @@ endif::git-format-patch[]
->  	a cut-off percent (3% by default) are not shown. The cut-off percent
->  	can be set with `--dirstat=<limit>`. Changes in a child directory are not
->  	counted for the parent directory, unless `--cumulative` is used.
-> ++
-> +Note that `--dirstat` does not use the regular diff machinery to calculate
-> +the changes (rather it is based on the rename detection machinery). Therefore,
-> +`--dirstat` may skip some changes that `--stat` does not skip. For example,
-> +rearranging the lines in a file will not be detected by `--dirstat`.
+> On Fri, Apr 8, 2011 at 7:46 AM, Johan Herland <johan@herland.net> wrote:
+>>
+>> #2: Improve --dirstat-by-file. It doesn't really care about the per-file
+>> analysis done by --dirstat, but only whether or not a file has changed
+>> at all. Since the diff queue does not contain unchanged files (<- this
+>> is an assumption that I hope someone with more diffcore knowledge can
+>> verify),
+>
+> Hmm.
+>
+> I think that with renames, the diff queue _can_ contain unchanged
+> files (ie pure renames).
+>
+> Also, I think -CC (aka --find-copies-harder), _every_ file ends up in
+> the diff queue because that's how it does the detection.
 
-Be positive: s/will not be detected/is not considered to be a change/,
-perhaps.  Also "it is based on the rename detection machinery" is
-describing an implementation detail without helping the end users.
+Both are correct, but the output phase happens after diffcore_std() cleans
+up the unused and unchanged filepairs thrown into the queue for the
+purpose of find-copies-harder, so you shouldn't have to worry about them.
 
-Try to rephrase what Linus explained when he said "it is very much on
-purpose".  Perhaps like this?
-
-    Note that the `--dirstat` option computes the changes while ignoring
-    pure code movements within a file.  In other words, rearranging lines
-    in a file is not counted as a change.
+When you rename a file without changing its contents, what do you want to
+see in --dirstat-by-file output?  I assume that you do not want to show
+anything, so it would be sufficient to compare the two object names.
