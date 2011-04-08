@@ -1,63 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
-Date: Fri, 08 Apr 2011 12:01:14 +0200
-Message-ID: <4D9EDCEA.9010903@drmicha.warpmail.net>
-References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com> <Pine.BSM.4.64L.1104071923580.4692@herc.mirbsd.org> <BANLkTink-c8JuxnMBCAmXiVwFkBxJrTucw@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/4] magic pathspec: add tentative ":/path/from/top/level"
+ pathspec support
+Date: Fri, 8 Apr 2011 18:39:58 +0700
+Message-ID: <BANLkTimqeFxO5dSX2J3w9rBqkNALZzTWyQ@mail.gmail.com>
+References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
+ <1302138996-10006-2-git-send-email-gitster@pobox.com> <7v62qqhm9h.fsf@alter.siamese.dyndns.org>
+ <BANLkTinkXVSFYqqZ+pHK0w8ij5YtPMfKEA@mail.gmail.com> <7v8vvlgblx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Thorsten Glaser <tg@mirbsd.de>, Git List <git@vger.kernel.org>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 12:01:25 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 13:40:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q88VG-0006Md-Be
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 12:01:22 +0200
+	id 1Q8A3J-00009c-9b
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Apr 2011 13:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755965Ab1DHKBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 06:01:17 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:54015 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751568Ab1DHKBQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 06:01:16 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 26E9020A60;
-	Fri,  8 Apr 2011 06:01:16 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 08 Apr 2011 06:01:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=5u2/PgXGOqw9SozWUA3GfT8E4GY=; b=s+OpYVPRJzH0Q94788JtGn5WO60uVFoSOpKymkEf2MsLwfMKPtDYBfNcNYk6Bzaakx9H3QoaIyzqomG1tzrhMP10g8TXSaWpJr/1d4j5UfLMUVpWXroc9v3TrpDxUL/Um/we7nIW0afZ9QkKz2Ihgv2hvErfl58VTu5acO4I2Mo=
-X-Sasl-enc: 7Rs6kd1xUeC+TdWaMookYuWf22Ix00OKcKVxWBBnBw5q 1302256875
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 833774049B9;
-	Fri,  8 Apr 2011 06:01:15 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <BANLkTink-c8JuxnMBCAmXiVwFkBxJrTucw@mail.gmail.com>
+	id S1755218Ab1DHLkb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 07:40:31 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:64563 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754554Ab1DHLka convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 07:40:30 -0400
+Received: by bwz15 with SMTP id 15so2755745bwz.19
+        for <git@vger.kernel.org>; Fri, 08 Apr 2011 04:40:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=WAm3BlHnnOcPmlBk/TNrUy8yvkiuqiWuZSdh3xJFL8c=;
+        b=IWNeQev7NvwEjrkgU2BEN7RjOn1/zc7YQSpBAooEVnTfQAxBk27Onza5kfkRZR+Ha/
+         jKx+FLkGLx+XxwXEoMIdTrJCbXTWUiuWBdmCZhXIqJtj8BWTBxiRJUt3ebmjAvxkMaIe
+         g8lX5rX8ZL4Ee9D049ykl2HDsNKoOfK6HZ7uA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=CLdwXcCG5XyEQTtki06YsDe/LdzDpDh6WDLOKpeGmfwrdJrOGeoqcD23Ah/cnS2gMT
+         gdN1GOgqwFws4p1LUd0DH6kGtlHvHxDL/5ZXYvzWbGHCq1WxyTit1XC7CduSlKSPS+S+
+         pW8plissSG3zlEXcyRKU1WkWnnv9l3zey2ntM=
+Received: by 10.204.189.76 with SMTP id dd12mr1771752bkb.206.1302262829224;
+ Fri, 08 Apr 2011 04:40:29 -0700 (PDT)
+Received: by 10.204.37.195 with HTTP; Fri, 8 Apr 2011 04:39:58 -0700 (PDT)
+In-Reply-To: <7v8vvlgblx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171122>
 
-Richard Hartmann venit, vidit, dixit 08.04.2011 02:29:
-> On Thu, Apr 7, 2011 at 21:27, Thorsten Glaser <tg@mirbsd.de> wrote:
-> 
->> but seeing that people seem to want to use
->> git for keeping their /etc (I use RCS, myself, but volunteered my
->> C skill to change metastore if it needs be) there is definitively
->> a market for having it there, in a standardised manner.
-> 
-> etckeeper does exist and it's very useful.
+On Fri, Apr 8, 2011 at 1:28 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>
+>> 2011/4/7 Junio C Hamano <gitster@pobox.com>:
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 if (('a' <=3D ch && ch <=3D 'z') ||
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 ('A' <=3D ch && ch <=3D 'Z')) {
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addf(&sb, "[%c%c]",
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 tolower(ch), toupper(ch));
+>>
+>> Nice try. You know you are going to pay a high performance price for
+>> that, don't you ;) Maybe also worth mentioning in document that this
+>> applies to ASCII charset only (as opposed to Unicode).
+>
+> You know this is a throw-away patch, just to illustrate that some thi=
+ngs
+> are doable with a hack to add more code to get_pathspec(), while othe=
+rs
+> would need a bigger restructuring, don't you?
+>
+> Besides, _if_ the user wants to do something costly, as long as the
+> implementation does not harm common cases, it _still_ is better to ma=
+ke
+> the code do the work, no?
 
-While I think there is some consensus not to have attribs (besides x) in
-core git, contrib/ may be a good place.
-
-Note that etckeeper and metastore predate our notes feature. By now, a
-notes tree is a perfect place to store meta information. You can attach
-notes to blobs perfectly (see textconv-cache). That may be an option for
-a reimplementation, depending on how you want the versioning of the
-files to be related with the versioning of the meta data.
-
-Michael
+I was thinking of the latter rather than the former. And I agree. Just
+wondering how slow it (fnmatch in general) can be compared to plain
+prefix. I guess we will know soon if this patch gets in and users
+start to use it.
+--=20
+Duy
