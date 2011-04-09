@@ -1,154 +1,100 @@
-From: Jonathon Mah <me@JonathonMah.com>
-Subject: [PATCH] mergetool: Teach about submodules
-Date: Fri,  8 Apr 2011 20:59:30 -0700
-Message-ID: <1302321570-85987-1-git-send-email-me@JonathonMah.com>
-Cc: Jonathon Mah <me@JonathonMah.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 05:59:59 2011
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/4] add -u: get rid of "treewideupdate" configuration
+Date: Sat, 9 Apr 2011 11:38:24 +0700
+Message-ID: <20110409043824.GA22543@do>
+References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
+ <1302138996-10006-3-git-send-email-gitster@pobox.com>
+ <20110408175149.GA3917@sigill.intra.peff.net>
+ <7vaag04k8m.fsf@alter.siamese.dyndns.org>
+ <20110408202404.GA16540@sigill.intra.peff.net>
+ <7vmxk01izn.fsf@alter.siamese.dyndns.org>
+ <20110408223206.GA7343@sigill.intra.peff.net>
+ <7vei5c1iat.fsf@alter.siamese.dyndns.org>
+ <7vaag01gdl.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 06:41:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8PL4-0001MS-NA
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 05:59:59 +0200
+	id 1Q8Pz0-0000SY-UC
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 06:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218Ab1DID7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2011 23:59:41 -0400
-Received: from ipmail06.adl2.internode.on.net ([150.101.137.129]:11923 "EHLO
-	ipmail06.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753774Ab1DID7l (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Apr 2011 23:59:41 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApSDAG/Wn01i6vJRIWdsb2JhbACJE50HCwEBAQEgFzLCPYVtBIVV
-Received: from c-98-234-242-81.hsd1.ca.comcast.net (HELO Adamantium.local.net) ([98.234.242.81])
-  by ipmail06.adl2.internode.on.net with ESMTP; 09 Apr 2011 13:29:36 +0930
-X-Mailer: git-send-email 1.7.5.rc1.1.g64431
+	id S1751497Ab1DIElJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2011 00:41:09 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:34709 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375Ab1DIElH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2011 00:41:07 -0400
+Received: by iyb14 with SMTP id 14so3991817iyb.19
+        for <git@vger.kernel.org>; Fri, 08 Apr 2011 21:41:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=TmMz3kF11hLWmTQcp+zS63z5yELQwp0G4mk014/lt0s=;
+        b=OmmtFVP+B1bZm8Ckh0PqbbDrKwYjNcNHu3Mh4TD52fe5MgoPjJnNKvVrbyK/DtavCy
+         tNBr/BVfkBygS9Kax1VH4cMhdUPJtrVUl2VP0LTF/3MYiXKuz5j/x55r66VrSk+LtlGu
+         fkhHd6URc88QOJttsjN2yb1bWJ/+zacifhypE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=L8IlnzwtveXPyom5EZt1O3yBbw5UEIE2yKdMyNYby0T/5YychoXODq/iI0LbPIkmAw
+         K0UVUjXXTPLA3mBOC9gTpTQWnfX6JHbywNRniDi2cYAX0gZSOcTEJnZdk+ctiDNNBmDD
+         hbtSWbDNmqRadsvLHg5Zsp+lYsnrLb7ED6hSw=
+Received: by 10.42.240.202 with SMTP id lb10mr1789194icb.297.1302324066561;
+        Fri, 08 Apr 2011 21:41:06 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.238.90])
+        by mx.google.com with ESMTPS id i26sm1246222iby.41.2011.04.08.21.41.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 08 Apr 2011 21:41:05 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 09 Apr 2011 11:38:24 +0700
+Content-Disposition: inline
+In-Reply-To: <7vaag01gdl.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171180>
 
-Mergetool mildly clobbered submodules, attempting to move and copy their
-directories. It now recognizes submodules and offers a resolution:
+On Fri, Apr 08, 2011 at 04:18:46PM -0700, Junio C Hamano wrote:
+> It appears that we might want to further tweak the code that tries to
+> disambiguate between revs and paths (we error out when argv[i] does not
+> name a rev and lstat(argv[i]) fails)
 
-Submodule merge conflict for 'Shared':
-  {local}: commit ad9f12e3e6205381bf2163a793d1e596a9e211d0
-  {remote}: commit f5893fb70ec5646efcd9aa643c5136753ac89253
-Use (l)ocal or (r)emote, or (a)bort?
+Something like below? The additional goodness is, instead of writing
 
-Selecting a commit will stage it, but not update the submodule (as it
-would had there been no conflict). Type changes are also supported,
-should the path be a submodule on one side, and a file on the other.
+git grep foo -- '*.a'
 
-Signed-off-by: Jonathon Mah <me@JonathonMah.com>
----
- git-mergetool.sh |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 64 insertions(+), 3 deletions(-)
+I can now write a shorter version
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index bacbda2..83351d6 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -21,6 +21,10 @@ is_symlink () {
-     test "$1" = 120000
- }
+git grep foo :./*.a
+
+Perhaps we can use the first pathspec with magic as a mark of
+pathspec arguments, equivalent to "--"
+
+--8<--
+diff --git a/setup.c b/setup.c
+index 03cd84f..a00a23f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -73,6 +73,8 @@ int check_filename(const char *prefix, const char *arg)
+ 	const char *name;
+ 	struct stat st;
  
-+is_submodule () {
-+    test "$1" = 160000
-+}
-+
- local_present () {
-     test -n "$local_mode"
- }
-@@ -52,6 +56,8 @@ describe_file () {
- 	echo "deleted"
-     elif is_symlink "$mode" ; then
- 	echo "a symbolic link -> '$(cat "$file")'"
-+    elif is_submodule "$mode" ; then
-+	echo "commit $file"
-     else
- 	if base_present; then
- 	    echo "modified"
-@@ -112,6 +118,51 @@ resolve_deleted_merge () {
- 	done
- }
- 
-+resolve_submodule_merge () {
-+    while true; do
-+	printf "Use (l)ocal or (r)emote, or (a)bort? "
-+	read ans
-+	case "$ans" in
-+	    [lL]*)
-+		local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
-+		if is_submodule "$local_mode"; then
-+		    stage_submodule "$MERGED" $(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $2;}')
-+		else
-+		    git checkout-index -f --stage=2 -- "$MERGED"
-+		    git add -- "$MERGED"
-+		fi
-+		return 0
-+		;;
-+	    [rR]*)
-+		remote_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}')
-+		if is_submodule "$remote_mode"; then
-+		    stage_submodule "$MERGED" $(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $2;}')
-+		else
-+		    git checkout-index -f --stage=2 -- "$MERGED"
-+		    git add -- "$MERGED"
-+		fi
-+		return 0
-+		;;
-+	    [aA]*)
-+		return 1
-+		;;
-+	    esac
-+	done
-+}
-+
-+stage_submodule () {
-+    path="$1"
-+    submodule_sha1="$2"
-+
-+    submodule_basename=$(basename "$path")
-+    tree_with_module=$(echo "160000 commit $submodule_sha1	\"$submodule_basename\"" | git mktree --missing 2>/dev/null)
-+    if test -z "$tree_with_module" ; then
-+	echo "$path: unable to stage commit $sha1"
-+	return 1
-+    fi
-+    git checkout $tree_with_module -- "$path"
-+}
-+
- checkout_staged_file () {
-     tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
- 
-@@ -139,13 +190,23 @@ merge_file () {
-     REMOTE="./$MERGED.REMOTE.$ext"
-     BASE="./$MERGED.BASE.$ext"
- 
--    mv -- "$MERGED" "$BACKUP"
--    cp -- "$BACKUP" "$MERGED"
--
-     base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
-     local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
-     remote_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}')
- 
-+    if is_submodule "$local_mode" || is_submodule "$remote_mode"; then
-+	echo "Submodule merge conflict for '$MERGED':"
-+	local_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $2;}')
-+	remote_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $2;}')
-+	describe_file "$local_mode" "local" "$local_sha1"
-+	describe_file "$remote_mode" "remote" "$remote_sha1"
-+	resolve_submodule_merge
-+	return
-+    fi
-+
-+    mv -- "$MERGED" "$BACKUP"
-+    cp -- "$BACKUP" "$MERGED"
-+
-     base_present   && checkout_staged_file 1 "$MERGED" "$BASE"
-     local_present  && checkout_staged_file 2 "$MERGED" "$LOCAL"
-     remote_present && checkout_staged_file 3 "$MERGED" "$REMOTE"
++	if (*arg == ':')	/* pathspec magic */
++		return 1;
+ 	name = prefix ? prefix_filename(prefix, strlen(prefix), arg) : arg;
+ 	if (!lstat(name, &st))
+ 		return 1; /* file exists */
+--8<--
 -- 
-1.7.5.rc1.1.g64431
+Duy
