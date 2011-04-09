@@ -1,100 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [PATCH 2/4] add -u: get rid of "treewideupdate" configuration
-Date: Fri, 08 Apr 2011 21:56:49 -0700
-Message-ID: <7v39ls10q6.fsf@alter.siamese.dyndns.org>
+Date: Sat, 9 Apr 2011 11:58:09 +0700
+Message-ID: <BANLkTimCbr+hnJNGWDBVbjZKEBDW1KR4=g@mail.gmail.com>
 References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
- <1302138996-10006-3-git-send-email-gitster@pobox.com>
- <20110408175149.GA3917@sigill.intra.peff.net>
- <7vaag04k8m.fsf@alter.siamese.dyndns.org>
- <20110408202404.GA16540@sigill.intra.peff.net>
- <7vmxk01izn.fsf@alter.siamese.dyndns.org>
- <20110408223206.GA7343@sigill.intra.peff.net>
- <7vei5c1iat.fsf@alter.siamese.dyndns.org>
- <7vaag01gdl.fsf@alter.siamese.dyndns.org> <20110409043824.GA22543@do>
+ <1302138996-10006-3-git-send-email-gitster@pobox.com> <20110408175149.GA3917@sigill.intra.peff.net>
+ <7vaag04k8m.fsf@alter.siamese.dyndns.org> <20110408202404.GA16540@sigill.intra.peff.net>
+ <7vmxk01izn.fsf@alter.siamese.dyndns.org> <20110408223206.GA7343@sigill.intra.peff.net>
+ <7vei5c1iat.fsf@alter.siamese.dyndns.org> <7vaag01gdl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Michael J Gruber <git@drmicha.warpmail.net>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 06:57:26 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 06:58:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8QEe-0006jM-QK
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 06:57:25 +0200
+	id 1Q8QFy-0007HL-1H
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 06:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566Ab1DIE5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2011 00:57:09 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49107 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460Ab1DIE5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2011 00:57:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0D3CD5C87;
-	Sat,  9 Apr 2011 00:59:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zimaU2CU5fZJzJYKysm+5EmKz3M=; b=spZ3ZA
-	OqDub+cgcCRojzVH95vhKASo3lc9RyOy5hYDZWDw7ta4ZLpiJ2h5zzraVe2A6CSa
-	+bhkfUCjjVeAjZBUC1tzcQ/7UNzNKrmjETvjH5C1OmF3gJN6xcfErzlfMPowJqlO
-	4jsg6hCHcDB6K98LgObyj6kjjSpQEyqQD9QZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wTbdyMrUxkYpKza2ZLO88EhVF+b3b1XA
-	zl0fIlOk08PfKPGDh8dFfIvwRvcezfxPwAWbJ7DW3PN2MBjArnNbDBbJmN2zvRC/
-	m0aibHJOvx12bAbi2dhrMCalHqgyVd2xq/Dn21IdOXiKBnmAruQB2/mRRX6mmahb
-	1IwKTTujGG4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BCBD35C86;
-	Sat,  9 Apr 2011 00:58:55 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8A1E85C85; Sat,  9 Apr 2011
- 00:58:47 -0400 (EDT)
-In-Reply-To: <20110409043824.GA22543@do> (Nguyen Thai Ngoc Duy's message of
- "Sat, 9 Apr 2011 11:38:24 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1268770E-6266-11E0-A211-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751551Ab1DIE6l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Apr 2011 00:58:41 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54487 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751196Ab1DIE6k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2011 00:58:40 -0400
+Received: by bwz15 with SMTP id 15so3300423bwz.19
+        for <git@vger.kernel.org>; Fri, 08 Apr 2011 21:58:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=RBdkwC/CNSF3QZ1ulrpjgLItUcNsLHIZVmmfqRY94vE=;
+        b=B4GVrqjVYq0qB3XonrvglED2uEAnDByLe2AeQQUx37H7/JSK/2boBtrRBiWZm53NB/
+         YhZDfdujtQzf3lOt2f7pkyf6B1jHJiKZ7aiZwrKQSE/oxqhshlN2x3KfcmndH6nIqnEB
+         fEdOy2COS7l9bp/4lavcnyciC8vUn8gFsA+r0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=qzfkTRHtwzjXa2y65UjkTLp1Tio/4bnJymIYxukDxvxzWCyVc4D7ZvXylkm9+KXZxV
+         mjtDHG5Fp2vzij8s4Of3vnUQuVzN2eA+c22BiHaVznixTNq4MpggQiFEwaIo1sPY6Msk
+         GCHPQQduVvoyx9MT70AtDNiQphfOBk5pXIGR8=
+Received: by 10.204.22.205 with SMTP id o13mr747602bkb.71.1302325119101; Fri,
+ 08 Apr 2011 21:58:39 -0700 (PDT)
+Received: by 10.204.37.195 with HTTP; Fri, 8 Apr 2011 21:58:09 -0700 (PDT)
+In-Reply-To: <7vaag01gdl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171182>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Sat, Apr 9, 2011 at 6:18 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Also make ':' without anything else to mean "there is no pathspec". =C2=
+=A0This
+> would allow differences between "git log" and "git log ." run from th=
+e top
+> level of the working tree (the latter simplifies no-op commits away f=
+rom
+> the history) to be expressed from a subdirectory by saying "git log :=
+".
 
-> On Fri, Apr 08, 2011 at 04:18:46PM -0700, Junio C Hamano wrote:
->> It appears that we might want to further tweak the code that tries to
->> disambiguate between revs and paths (we error out when argv[i] does not
->> name a rev and lstat(argv[i]) fails)
->
-> Something like below?
-
-That's too loose for my taste.  At that point in the codepath, don't we
-sometimes expect the argv[i] might name a blob in the index?
-
-By "we might want to further...", I meant "when we properly redesign the
-get_pathspec vs init_pathspec combination".
-
-
-There are places in the current code that call verify_filename() to make
-sure that argv[i] is a pathspec after making sure argv[i] cannot be an
-object name.  Currently it just does lstat() on it to see if it names a
-path.
-
-Instead, when we refactor get/init-pathspec API, we could expose an
-interface to turn one element from argv[] into a "struct pathspec_item".
-Then we can try to feed argv[i] to that string-to-pathspec_item function,
-and consider that argv[i] _is_ a proper pathspec only if it parses
-correctly *and* if it matches either an item in the current working tree.
-
-That would be a moral equivalent of the current verify_filename() check
-but is far more precise one; e.g. the current code rejects
-
-	git grep -e foo '*.c' ;# bad
-
-because '*.c' is not an object name, but lstat("*.c") fails, and you need
-to disambiguate with '--'.  If you rewrite the verify_filename() in the
-way I outlined above, you wouldn't have to.
+The intention is good, but reality may need more work. I assume that
+"git add -u :" is equivalent to "git add -u" (or "git add -u ." to be
+precise). Unfortunately, cmd_add() checks argc for no arguments to
+turn "add -u <nothing>" to "add -u .", not the result from
+get_pathspec(). It can be fixed. Just heads up as there can be similar
+traps elsewhere.
+--=20
+Duy
