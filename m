@@ -1,88 +1,93 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
-Date: Sat, 9 Apr 2011 11:09:22 +0200
-Message-ID: <BANLkTim5DPjGjJ=SfnNfXpzCd6=PKnSs6g@mail.gmail.com>
-References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
- <Pine.BSM.4.64L.1104071923580.4692@herc.mirbsd.org> <BANLkTink-c8JuxnMBCAmXiVwFkBxJrTucw@mail.gmail.com>
- <4D9EDCEA.9010903@drmicha.warpmail.net> <20110408185924.GA25840@elie>
- <Pine.BSM.4.64L.1104081903550.22999@herc.mirbsd.org> <20110408194548.GA26094@elie>
- <Pine.BSM.4.64L.1104081955490.22999@herc.mirbsd.org> <BANLkTi=3LPRzohnZStAogddpL5ZLehb97Q@mail.gmail.com>
- <20110409081108.GE13750@arachsys.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/4] add -u: get rid of "treewideupdate" configuration
+Date: Sat, 9 Apr 2011 17:15:12 +0700
+Message-ID: <BANLkTi=yvA1Pa2dVa2zC4ED8ZXcWDoqLPQ@mail.gmail.com>
+References: <1302138996-10006-1-git-send-email-gitster@pobox.com>
+ <1302138996-10006-3-git-send-email-gitster@pobox.com> <20110408175149.GA3917@sigill.intra.peff.net>
+ <7vaag04k8m.fsf@alter.siamese.dyndns.org> <20110408202404.GA16540@sigill.intra.peff.net>
+ <7vmxk01izn.fsf@alter.siamese.dyndns.org> <20110408223206.GA7343@sigill.intra.peff.net>
+ <7vei5c1iat.fsf@alter.siamese.dyndns.org> <7vaag01gdl.fsf@alter.siamese.dyndns.org>
+ <BANLkTimCbr+hnJNGWDBVbjZKEBDW1KR4=g@mail.gmail.com> <7vy63kyp9n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Thorsten Glaser <tg@mirbsd.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git List <git@vger.kernel.org>
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 11:10:01 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 12:15:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8UB6-0006FV-L0
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 11:10:00 +0200
+	id 1Q8VCt-0006I2-N3
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 12:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905Ab1DIJJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2011 05:09:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61687 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753870Ab1DIJJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2011 05:09:42 -0400
-Received: by iwn34 with SMTP id 34so4122434iwn.19
-        for <git@vger.kernel.org>; Sat, 09 Apr 2011 02:09:42 -0700 (PDT)
+	id S1754180Ab1DIKPp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Apr 2011 06:15:45 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56594 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754156Ab1DIKPm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2011 06:15:42 -0400
+Received: by mail-bw0-f46.google.com with SMTP id 15so3405477bwz.19
+        for <git@vger.kernel.org>; Sat, 09 Apr 2011 03:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=QjySDc5LYJHhXu7nbNaToLU+9cxlJ6v4Lo43DCoJkG8=;
-        b=Wz2G5FKn2xLKVAByqHZmW7WmdZJUyDEuaJIHR9JerN/sqvzL36qRVwFsHSBIiVlLiY
-         gUEAGpYE+BVLqtWFdsDgI28XidSqYumoh+J4yFowfv5QJAj6u3cmclW8oJfTiz5pW7NV
-         Qj8EtlhajsdxYgDWJh++jUbgudGu0fImOCZ3I=
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=IdHlInsYZmw+kgd1kanC4MOFZJGo6ze8pPg/Mz4/u8M=;
+        b=S4d4C82ACW+IxuJpb7Mtow74u9ey05/01olIk2nuZx11/Y7LSJRp98+42qHqzVun9K
+         zuUeZvkrTr4FTIPlQzsfGaMjMYHWRJoxZ90um3bm/2x7IfPSEUJChjIt8LGkw/ei9mFj
+         ttF9TeJBxnARTs75Y8FI01ALlUjsDki0y6xYw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=puhvag2K2YHqsRCbDlh3ohdK1Mpce2SPoKvT9erVy9O0+asljDBvdcFhxDlc7n0QF0
-         cnCLj2/VaMTQw03AUXKASQMrXmu3fQdf6j5SETDkgkOicRQ2wYl+aZXGwrLuHXTqJa6P
-         aiUX6anz1VKpFHO4bZGxmHy+9uLowk9cRaMCY=
-Received: by 10.231.210.148 with SMTP id gk20mr3202323ibb.110.1302340182203;
- Sat, 09 Apr 2011 02:09:42 -0700 (PDT)
-Received: by 10.231.92.16 with HTTP; Sat, 9 Apr 2011 02:09:22 -0700 (PDT)
-In-Reply-To: <20110409081108.GE13750@arachsys.com>
+         :cc:content-type:content-transfer-encoding;
+        b=DimPjg+5QTEnBBE/Ygk+uYl6XRRz8EQvBZSA3VT7pjqEhoBj8Hx5h7NvTe9CB9AcUc
+         GvzIftDk+dfPx8UmYAY3cm9FzSiDxnnVdFO9nt9QiyL6zr5QA72/n8G+iFNKdUIdVVFB
+         aUD1fVXM9eGN/ub7uNxZT24kClzSSRI/KsZag=
+Received: by 10.204.133.91 with SMTP id e27mr479467bkt.23.1302344142174; Sat,
+ 09 Apr 2011 03:15:42 -0700 (PDT)
+Received: by 10.204.139.210 with HTTP; Sat, 9 Apr 2011 03:15:12 -0700 (PDT)
+In-Reply-To: <7vy63kyp9n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171189>
 
-On Sat, Apr 9, 2011 at 10:11, Chris Webb <chris@arachsys.com> wrote:
+On Sat, Apr 9, 2011 at 12:20 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> By the way, the field in "struct pathspec_item" would need to be upda=
+ted,
+> and the matcher would need to be changed, so that each item knows up =
+to
+> which part of the "match" string came from the prefix (and remainder =
+is a
+> user supplied pattern). =C2=A0Then from a subdirectory a?a/bbb,
+>
+> =C2=A0- "c" should parse into prefix "a?a/bbb/" plus pattern "c"
+>
+> =C2=A0- ":../c" should become prefix "a?a/" plus pattern "c"
+>
+> and the matcher should match the prefix part _literally_ without
+> fnmatch(3), while using whatever magic (e.g. use_wildcard) to match t=
+he
+> pattern part. =C2=A0I think we currently match the whole thing with f=
+nmatch(3),
+> which in practice may be OK only because not many people use glob
+> characters in their directory names, but what the current matcher doe=
+s
+> logically is wrong.
 
-> (Disclaimer: I've never tried using smudge filters; maybe they can't be used
-> in the way I describe!)
+OK. Let's add nomagic_len (or plain_len) to pathspec_item for that. I
+was thinking of noglob_len but changed my mind because the same can
+also be applied for icase magic. We don't want to do strcasecmp on
+prefix.
 
-Smudge filters are on my half-read list of New Cool Stuff so I can't
-really comment on this.
-
-Another idea would be to simply tack all metadata into the same place
-as the existing chmod stuff.
-
-While one large text file would be nice in case one wanted to make
-manual changes, attaching versioned, binary information to every
-object directly is a lot more efficient. I think I am convinced the
-latter would be the cleaner approach, now. With a clean layout, this
-would not need to be a huge code drop supporting every metadata type
-in existence; it could be extended as needed.
-
-As noted above, .gitattributes could be used to manage what kind of
-metadata should be stored.
-
-
-One large question in my mind is if anyone who's familiar enough with
-the codebase and has the time would be interested in actually
-implementing this.
-
-
-Thanks,
-Richard
+> Of course, both of the above are tasks after 1.7.5 ships, but I thoug=
+ht I
+> should mention them now, as you seem to be already thinking about the
+> future.
+--=20
+Duy
