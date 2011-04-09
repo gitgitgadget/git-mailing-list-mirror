@@ -1,101 +1,82 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git rebase --continue automatic --skip?
-Date: Sat, 9 Apr 2011 15:03:09 +0200
-Message-ID: <20110409130309.GC30820@m62s10.vlinux.de>
-References: <BANLkTi=Vc6kB5fvZrqMwDD+yHFb5qENQ8g@mail.gmail.com>
- <20110409000351.GA7445@sigill.intra.peff.net>
+From: "Steven E. Harris" <seh@panix.com>
+Subject: Re: Confused over packfile and index design
+Date: Sat, 09 Apr 2011 10:30:26 -0400
+Organization: SEH Labs
+Message-ID: <m28vvj7b0d.fsf@Spindle.sehlabs.com>
+References: <m2d3kw70su.fsf@Spindle.sehlabs.com>
+	<BANLkTikXcvRf1bLJXFOHBcGcN-B0m_xSnw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: skillzero@gmail.com,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 09 15:03:22 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 09 16:30:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8Xov-0004Sx-0w
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 15:03:21 +0200
+	id 1Q8ZBU-0003GP-Tx
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 16:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753806Ab1DINDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2011 09:03:15 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:46562 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752048Ab1DINDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2011 09:03:14 -0400
-Received: (qmail invoked by alias); 09 Apr 2011 13:03:11 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp014) with SMTP; 09 Apr 2011 15:03:11 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX18dxyYQeiMdR9YXsn2jhcDn2KBPKHdRZ1Tt3qlXZA
-	OQO8ZG8uPnXRJJ
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 44116D400C; Sat,  9 Apr 2011 15:03:09 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20110409000351.GA7445@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S1754339Ab1DIOaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2011 10:30:39 -0400
+Received: from lo.gmane.org ([80.91.229.12]:38495 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754203Ab1DIOai (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2011 10:30:38 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Q8ZBN-0003AL-BV
+	for git@vger.kernel.org; Sat, 09 Apr 2011 16:30:37 +0200
+Received: from c-24-23-122-157.hsd1.pa.comcast.net ([24.23.122.157])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Apr 2011 16:30:37 +0200
+Received: from seh by c-24-23-122-157.hsd1.pa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Apr 2011 16:30:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c-24-23-122-157.hsd1.pa.comcast.net
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.50 (darwin)
+Cancel-Lock: sha1:AoxyCVaFCksalBH9nhsxKwhgT8U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171193>
 
-On Fri, Apr 08, 2011 at 08:03:51PM -0400, Jeff King wrote:
-> On Fri, Apr 08, 2011 at 01:30:01PM -0700, skillzero@gmail.com wrote:
-> 
-> > Is there a way to make git rebase --continue automatically do a --skip
-> > if a conflict resolution ends up not needing the patch? Normally, git
-> > rebase will just silently skip a patch if it's not needed, but if a
-> > patch results in a conflict and I use git mergetool and end up
-> > deleting all the changes, git rebase --continue stops and makes me
-> > explicitly use --skip.
-> 
-> This is something I have often wanted, too. The patch would look
-> something like this:
-> 
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 7a54bfc..cec15ae 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -319,6 +319,11 @@ continue)
->  		echo "mark them as resolved using git add"
->  		exit 1
->  	}
-> +	if git diff-index --quiet HEAD --; then
-> +		test -z "$GIT_QUIET" &&
-> +			echo >&2 "Commit has no changes -- skipping"
-> +		action=skip
-> +	fi
->  	read_basic_state
->  	run_specific_rebase
->  	;;
-> 
-> that is based on what is in "next", as there has been a lot of cleanup
-> in git-rebase recently[1].
-> 
-> I put it in rebase and not straight into "git am", as I'm not sure that
-> "am" would want to share the same behavior. I'm not sure why we haven't
-> done this up until now. Maybe there is some corner case I'm not thinking
-> of where the user would want to do something besides skip when we hit
-> this situation. I dunno.
-> 
+Shawn Pearce <spearce@spearce.org> writes:
 
-This was mentioned before on the list (sorry, don't have a reference, 
-but it was a long time ago). AFAIR the reason it wasn't implemented yet is that
-you will lose the commit message, which might contain precious information.
-But with reflogs this shouldn't be a problem anymore.
+> Then remaining bytes are shoved into a libz inflate() routine until
+> libz says the stream is over. As Peff mentioned elsewhere in the
+> thread, libz maintains its own markers and checksum to know when the
+> object's stream is over.
 
--Peter
+Ah, so even though you as the caller don't know how much data to feed to
+libz, so long as you continue feeding it until it signals completion, it
+will figure it out and tell you how much data it needed after all.
 
+> As a safety measure, the inflated length from the object header is
+> checked against the number of bytes returned by libz.  Any remaining
+> data that libz didn't consume is the next object's header and data.
 
+I see. This means that it's the packed object's "job" -- or, rather, the
+job of the parser for the packed object -- to determine the payload
+length. If the data was not compressed, then perhaps the deflated size
+indicated in the header could provide sufficient framing, but for now we
+don't need to worry about such flexibility.
 
-> Potentially this should also go into the rebase--am specific script. I
-> haven't really thought it through.
-> 
-> -Peff
-> 
-> [1] I hadn't really been following Martin's rebase cleanup, but it is
->     _way_ nicer to look at these days.
+[...]
+
+> Its meant to tell us how many bytes to malloc() in order to hold the
+> result of the libz inflate() call when the object is being read from
+> the packfile. That way we don't under or over allocate the result
+> buffer.
+
+Does Git always inflate the objects into an in-memory buffer? As the
+size of these objects can be very large (given the variable-length size
+encoding), is there any provision to inflate the object to a temporary
+file?
+
+-- 
+Steven E. Harris
