@@ -1,337 +1,219 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 04/11] gitweb.js: Extract and improve datetime handling
-Date: Sun, 10 Apr 2011 00:49:19 +0200
-Message-ID: <1302389366-21515-5-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 05/11] gitweb.js: Introduce gitweb/static/js/lib/cookies.js
+Date: Sun, 10 Apr 2011 00:49:20 +0200
+Message-ID: <1302389366-21515-6-git-send-email-jnareb@gmail.com>
 References: <1302389366-21515-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Kevin Cernekee <cernekee@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 10 00:50:08 2011
+X-From: git-owner@vger.kernel.org Sun Apr 10 00:50:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8gyk-00058j-Bh
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 00:50:06 +0200
+	id 1Q8gyl-00058j-F5
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 00:50:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755889Ab1DIWt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2011 18:49:56 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40519 "EHLO
+	id S1755939Ab1DIWuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2011 18:50:01 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:60231 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755796Ab1DIWty (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2011 18:49:54 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 17so2942648fxm.19
-        for <git@vger.kernel.org>; Sat, 09 Apr 2011 15:49:53 -0700 (PDT)
+	with ESMTP id S1755721Ab1DIWtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2011 18:49:55 -0400
+Received: by mail-fx0-f46.google.com with SMTP id 17so2942671fxm.19
+        for <git@vger.kernel.org>; Sat, 09 Apr 2011 15:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=dI3pNIHqy3DzdaoLt7GpbwPj/SUbgLLwDehrJH08n+w=;
-        b=FzB2qluBQ7nPhfFnZSNd5s76Qt1Kh6BXzWogkCZ5TkkPNTOBjq0GK3VxWDJzXCl8QZ
-         BKqRXXftVpaRQ2tZqYeD8Hbs/ea/EibvTXOThHiO5Jp3WlSwT9k5IF36SxrLNT895KDP
-         ZcbUe7dS0Z0Tg7XdtuMlvJNQ9uE2HnyRrIRq8=
+        bh=e+sCnIVfclm/bYAANcgjW7bytYJaON4kCYy3tHM21m4=;
+        b=WRp9vMYc6/5mX/xYoeJt5e5wzqyHwu0xsn32Th0+RtDhuefsOFA93A4yGH7PuUd5Fq
+         0z7paBYQVM+01d4lF8tXb1+UJ/Ct1N95DlpU/K4qTPXOkGRsYk59fLbO9b7PcpSfpCaR
+         rzweDcRmzg30lJd4Jqu7Ityk3+6IipTJzSUEk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VdB41gOuotWwUZPH7a3Dm4O8OcIN5y8+d8iYUWOMHDl4oYHK8TI8AMS77PGhp2zN0f
-         reT06nVldxcSyaTlXAhnPrghHnkFxyzxUYgjrADRH2LkxsDaBg2z58ICTRxy3sTvaxIV
-         xVHjxrLgH783XnqWEiCpHqGwClKqsijkBPZbk=
-Received: by 10.223.1.201 with SMTP id 9mr882489fag.91.1302389393387;
-        Sat, 09 Apr 2011 15:49:53 -0700 (PDT)
+        b=G4jg5nR2i5HemBoHDXqj7gKRn9+1uwx8f+etxnq5u8PZqse9qmWylie68wsXGDhE/F
+         bPTIuMrtnYQubX8Kxs9DPh194JkYnSPMuYBoWErGnYlXm0hx6Cu6Yh2O2HEuTIxDRjz2
+         2eLqFBLcA3tJLgeNRJKWq8QaxKEcdqij5Odr8=
+Received: by 10.223.29.73 with SMTP id p9mr299240fac.134.1302389395033;
+        Sat, 09 Apr 2011 15:49:55 -0700 (PDT)
 Received: from localhost.localdomain (abwd67.neoplus.adsl.tpnet.pl [83.8.227.67])
-        by mx.google.com with ESMTPS id j12sm1188601fax.33.2011.04.09.15.49.51
+        by mx.google.com with ESMTPS id j12sm1188601fax.33.2011.04.09.15.49.53
         (version=SSLv3 cipher=OTHER);
-        Sat, 09 Apr 2011 15:49:52 -0700 (PDT)
+        Sat, 09 Apr 2011 15:49:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3
 In-Reply-To: <1302389366-21515-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171217>
 
-Move formatDateISOLocal(epoch, timezone) function (and also helper
-timezoneOffset(timezoneInfo) function it requires) from common-lib.js to
-datetime.js
+This file provides functions for setting, getting and deleting
+cookies.
 
-Add new functions:
-* localTimezoneOffset - to get browser timezone offset in seconds
-* localTimezoneInfo   - to get browser timezone in '(+|-)HHMM' format
-* formatTimezoneInfo - turn offset in hours and minutes into '(+|-)HHMM'
-* parseRFC2822Date - to parse RFC-2822 dates that gitweb uses into epoch
-* formatDateRFC2882 - like formatDateISOLocal, only RFC-2822 format
-
-All those functions are meant to be used in future commit
-'gitweb: javascript ability to adjust time based on timezone'
-
-An alternative would be to use e.g. Datejs (http://www.datejs.com)
-library.
-
-
-While at it escape '-' in character class inside tzRe regexp, as
-recommended by JSLint (http://www.jslint.com).
+Code taken from subsection "Cookies in JavaScript" of "Professional
+JavaScript for Web Developers" by Nicholas C. Zakas and from cookie
+plugin for jQuery (dual licensed under the MIT and GPL licenses).
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-The major difference to approach taken in J.H. patch is noticing that
-while in older browsers Date constructor (Date.parse class method)
-does not like ISO-8601 format (W3CDTF variant used in microformats),
-all browsers should be able to parse RFC-822 / RFC-2822 date... which
-is what gitweb generates.
+Instead of setCookieExp and setCookie (with different behaviors) in
+J.H. patch, use single setCookie function.  The code in this patch
+consistently assumes that the name of cookie doesn't need to be
+escaped, and that value of cookie needs to escaped / unescaped
+(using encodeURIComponent rather than deprecated escape).
 
-So instead of using deprecated (because of accessibility
-considerations) datetime-design-pattern microformat, or newer
-value-class-pattern (perhaps in value-title variant), simply parse
-RFC-2822 date that gitweb generated.
+Because remembering which positional parameter (beyond name and value
+of cookie) corresponds to which cookie attribute often requires
+checking the code, follow convention used in jQery cookie plugin of
+using object literal to implement "named parameters".
 
- gitweb/Makefile                    |    1 +
- gitweb/static/js/lib/common-lib.js |   51 -----------
- gitweb/static/js/lib/datetime.js   |  161 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 162 insertions(+), 51 deletions(-)
- create mode 100644 gitweb/static/js/lib/datetime.js
+Note that J.H.'s gitweb/static/js/cookies.js had a few errors in its
+implementation.
+
+
+P.S. The summary line (subject) for this commit could be better.
+
+ gitweb/Makefile                 |    1 +
+ gitweb/static/js/lib/cookies.js |  114 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 115 insertions(+), 0 deletions(-)
+ create mode 100644 gitweb/static/js/lib/cookies.js
 
 diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 0baa9df..403265a 100644
+index 403265a..7dd1dee 100644
 --- a/gitweb/Makefile
 +++ b/gitweb/Makefile
-@@ -117,6 +117,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
- # js/lib/common-lib.js should be always first, then js/lib/*.js,
+@@ -118,6 +118,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
  # then the rest of files; js/gitweb.js should be last (if it exists)
  GITWEB_JSLIB_FILES += static/js/lib/common-lib.js
-+GITWEB_JSLIB_FILES += static/js/lib/datetime.js
+ GITWEB_JSLIB_FILES += static/js/lib/datetime.js
++GITWEB_JSLIB_FILES += static/js/lib/cookies.js
  GITWEB_JSLIB_FILES += static/js/javascript-detection.js
  GITWEB_JSLIB_FILES += static/js/blame_incremental.js
  
-diff --git a/gitweb/static/js/lib/common-lib.js b/gitweb/static/js/lib/common-lib.js
-index c45454e..d6b0c0d 100644
---- a/gitweb/static/js/lib/common-lib.js
-+++ b/gitweb/static/js/lib/common-lib.js
-@@ -89,57 +89,6 @@ function createRequestObject() {
- 
- 
- /* ............................................................ */
--/* time and data */
--
--/**
-- * used to extract hours and minutes from timezone info, e.g '-0900'
-- * @constant
-- */
--var tzRe = /^([+-])([0-9][0-9])([0-9][0-9])$/;
--
--/**
-- * convert numeric timezone +/-ZZZZ to offset from UTC in seconds
-- *
-- * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-- * @returns {Number} offset from UTC in seconds for timezone
-- *
-- * @globals tzRe
-- */
--function timezoneOffset(timezoneInfo) {
--	var match = tzRe.exec(timezoneInfo);
--	var tz_sign = (match[1] === '-' ? -1 : +1);
--	var tz_hour = parseInt(match[2],10);
--	var tz_min  = parseInt(match[3],10);
--
--	return tz_sign*(((tz_hour*60) + tz_min)*60);
--}
--
--/**
-- * return date in local time formatted in iso-8601 like format
-- * 'yyyy-mm-dd HH:MM:SS +/-ZZZZ' e.g. '2005-08-07 21:49:46 +0200'
-- *
-- * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
-- * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-- * @returns {String} date in local time in iso-8601 like format
-- */
--function formatDateISOLocal(epoch, timezoneInfo) {
--	// date corrected by timezone
--	var localDate = new Date(1000 * (epoch +
--		timezoneOffset(timezoneInfo)));
--	var localDateStr = // e.g. '2005-08-07'
--		localDate.getUTCFullYear()                 + '-' +
--		padLeft(localDate.getUTCMonth()+1, 2, '0') + '-' +
--		padLeft(localDate.getUTCDate(),    2, '0');
--	var localTimeStr = // e.g. '21:49:46'
--		padLeft(localDate.getUTCHours(),   2, '0') + ':' +
--		padLeft(localDate.getUTCMinutes(), 2, '0') + ':' +
--		padLeft(localDate.getUTCSeconds(), 2, '0');
--
--	return localDateStr + ' ' + localTimeStr + ' ' + timezoneInfo;
--}
--
--
--/* ............................................................ */
- /* unquoting/unescaping filenames */
- 
- /**#@+
-diff --git a/gitweb/static/js/lib/datetime.js b/gitweb/static/js/lib/datetime.js
+diff --git a/gitweb/static/js/lib/cookies.js b/gitweb/static/js/lib/cookies.js
 new file mode 100644
-index 0000000..b3dcedb
+index 0000000..72b51cd
 --- /dev/null
-+++ b/gitweb/static/js/lib/datetime.js
-@@ -0,0 +1,161 @@
-+// Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
-+//               2007, Petr Baudis <pasky@suse.cz>
-+//          2008-2011, Jakub Narebski <jnareb@gmail.com>
-+
++++ b/gitweb/static/js/lib/cookies.js
+@@ -0,0 +1,114 @@
 +/**
-+ * @fileOverview Datetime manipulation: parsing and formatting
++ * @fileOverview Accessing cookies from JavaScript
 + * @license GPLv2 or later
 + */
 +
-+
-+/* ............................................................ */
-+/* parsing and retrieving datetime related information */
-+
-+/**
-+ * used to extract hours and minutes from timezone info, e.g '-0900'
-+ * @constant
++/*
++ * Based on subsection "Cookies in JavaScript" of "Professional
++ * JavaScript for Web Developers" by Nicholas C. Zakas and cookie
++ * plugin from jQuery (dual licensed under the MIT and GPL licenses)
 + */
-+var tzRe = /^([+\-])([0-9][0-9])([0-9][0-9])$/;
-+
-+/**
-+ * convert numeric timezone +/-ZZZZ to offset from UTC in seconds
-+ *
-+ * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-+ * @returns {Number} offset from UTC in seconds for timezone
-+ *
-+ * @globals tzRe
-+ */
-+function timezoneOffset(timezoneInfo) {
-+	var match = tzRe.exec(timezoneInfo);
-+	var tz_sign = (match[1] === '-' ? -1 : +1);
-+	var tz_hour = parseInt(match[2],10);
-+	var tz_min  = parseInt(match[3],10);
-+
-+	return tz_sign*(((tz_hour*60) + tz_min)*60);
-+}
-+
-+/**
-+ * return local (browser) timezone as offset from UTC in seconds
-+ *
-+ * @returns {Number} offset from UTC in seconds for local timezone
-+ */
-+function localTimezoneOffset() {
-+	// getTimezoneOffset returns the time-zone offset from UTC,
-+	// in _minutes_, for the current locale
-+	return ((new Date()).getTimezoneOffset() * -60);
-+}
-+
-+/**
-+ * return local (browser) timezone as numeric timezone '(+|-)HHMM'
-+ *
-+ * @returns {String} locat timezone as -/+ZZZZ
-+ */
-+function localTimezoneInfo() {
-+	var tzOffsetMinutes = (new Date()).getTimezoneOffset() * -1;
-+
-+	return formatTimezoneInfo(0, tzOffsetMinutes);
-+}
 +
 +
 +/**
-+ * Parse RFC-2822 date into a Unix timestamp (into epoch)
++ * Create a cookie with the given name and value,
++ * and other optional parameters.
 + *
-+ * @param {String} date: date in RFC-2822 format, e.g. 'Thu, 21 Dec 2000 16:01:07 +0200'
-+ * @returns {Number} epoch i.e. seconds since '00:00:00 1970-01-01 UTC'
-+ */
-+function parseRFC2822Date(date) {
-+	// Date.parse accepts the IETF standard (RFC 1123 Section 5.2.14 and elsewhere)
-+	// date syntax, which is defined in RFC 2822 (obsoletes RFC 822)
-+	// and returns number of _milli_seconds since January 1, 1970, 00:00:00 UTC
-+	return Date.parse(date) / 1000;
-+}
-+
-+
-+/* ............................................................ */
-+/* formatting date */
-+
-+/**
-+ * format timezone offset as numerical timezone '(+|-)HHMM' or '(+|-)HH:MM'
++ * @example
++ *   setCookie('foo', 'bar'); // will be deleted when browser exits
++ *   setCookie('foo', 'bar', { expires: new Date(Date.parse('Jan 1, 2012')) });
++ *   setCookie('foo', 'bar', { expires: 7 }); // 7 days = 1 week
++ *   setCookie('foo', 'bar', { expires: 14, path: '/' });
 + *
-+ * @param {Number} hours:    offset in hours, e.g. 2 for '+0200'
-+ * @param {Number} [minutes] offset in minutes, e.g. 30 for '-4030';
-+ *                           it is split into hours if not 0 <= minutes < 60,
-+ *                           for example 1200 would give '+0100';
-+ *                           defaults to 0
-+ * @param {String} [sep] separator between hours and minutes part,
-+ *                       default is '', might be ':' for W3CDTF (rfc-3339)
-+ * @returns {String} timezone in '(+|-)HHMM' or '(+|-)HH:MM' format
++ * @param {String} sName:    Unique name of a cookie (letters, numbers, underscores).
++ * @param {String} sValue:   The string value stored in a cookie.
++ * @param {Object} [options] An object literal containing key/value pairs
++ *                           to provide optional cookie attributes.
++ * @param {String|Number|Date} [options.expires] Either literal string to be used as cookie expires,
++ *                            or an integer specifying the expiration date from now on in days,
++ *                            or a Date object to be used as cookie expiration date.
++ *                            If a negative value is specified or a date in the past),
++ *                            the cookie will be deleted.
++ *                            If set to null or omitted, the cookie will be a session cookie
++ *                            and will not be retained when the the browser exits.
++ * @param {String} [options.path] Restrict access of a cookie to particular directory
++ *                               (default: path of page that created the cookie).
++ * @param {String} [options.domain] Override what web sites are allowed to access cookie
++ *                                  (default: domain of page that created the cookie).
++ * @param {Boolean} [options.secure] If true, the secure attribute of the cookie will be set
++ *                                   and the cookie would be accessible only from secure sites
++ *                                   (cookie transmission will require secure protocol like HTTPS).
 + */
-+function formatTimezoneInfo(hours, minutes, sep) {
-+	minutes = minutes || 0; // to be able to use formatTimezoneInfo(hh)
-+	sep = sep || ''; // default format is +/-ZZZZ
-+
-+	if (minutes < 0 || minutes > 59) {
-+		hours = minutes > 0 ? Math.floor(minutes / 60) : Math.ceil(minutes / 60);
-+		minutes = Math.abs(minutes - 60*hours); // sign of minutes is sign of hours
-+		// NOTE: this works correctly because there is no UTC-00:30 timezone
++function setCookie(sName, sValue, options) {
++	options = options || {};
++	if (sValue === null) {
++		sValue = '';
++		option.expires = 'delete';
 +	}
 +
-+	var tzSign = hours >= 0 ? '+' : '-';
-+	if (hours < 0) {
-+		hours = -hours; // sign is stored in tzSign
++	var sCookie = sName + '=' + encodeURIComponent(sValue);
++
++	if (options.expires) {
++		var oExpires = options.expires, sDate;
++		if (oExpires === 'delete') {
++			sDate = 'Thu, 01 Jan 1970 00:00:00 GMT';
++		} else if (typeof oExpires === 'string') {
++			sDate = oExpires;
++		} else {
++			var oDate;
++			if (typeof oExpires === 'number') {
++				oDate = new Date();
++				oDate.setTime(oDate.getTime() + (oExpires * 24 * 60 * 60 * 1000)); // days to ms
++			} else {
++				oDate = oExpires;
++			}
++			sDate = oDate.toGMTString();
++		}
++		sCookie += '; expires=' + sDate;
 +	}
 +
-+	return tzSign + padLeft(hours, 2, '0') + sep + padLeft(minutes, 2, '0');
++	if (options.path) {
++		sCookie += '; path=' + (options.path);
++	}
++	if (options.domain) {
++		sCookie += '; domain=' + (options.domain);
++	}
++	if (options.secure) {
++		sCookie += '; secure';
++	}
++	document.cookie = sCookie;
 +}
 +
 +/**
-+ * return date in local time formatted in iso-8601 like format
-+ * 'yyyy-mm-dd HH:MM:SS +/-ZZZZ' e.g. '2005-08-07 21:49:46 +0200'
++ * Get the value of a cookie with the given name.
 + *
-+ * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
-+ * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-+ * @returns {String} date in local time in iso-8601 like format
++ * @param {String} sName: Unique name of a cookie (letters, numbers, underscores)
++ * @returns {String|null} The string value stored in a cookie
 + */
-+function formatDateISOLocal(epoch, timezoneInfo) {
-+	// date corrected by timezone
-+	var localDate = new Date(1000 * (epoch +
-+		timezoneOffset(timezoneInfo)));
-+	var localDateStr = // e.g. '2005-08-07'
-+		localDate.getUTCFullYear()                 + '-' +
-+		padLeft(localDate.getUTCMonth()+1, 2, '0') + '-' +
-+		padLeft(localDate.getUTCDate(),    2, '0');
-+	var localTimeStr = // e.g. '21:49:46'
-+		padLeft(localDate.getUTCHours(),   2, '0') + ':' +
-+		padLeft(localDate.getUTCMinutes(), 2, '0') + ':' +
-+		padLeft(localDate.getUTCSeconds(), 2, '0');
-+
-+	return localDateStr + ' ' + localTimeStr + ' ' + timezoneInfo;
++function getCookie(sName) {
++	var sRE = '(?:; )?' + sName + '=([^;]*);?';
++	var oRE = new RegExp(sRE);
++	if (oRE.test(document.cookie)) {
++		return decodeURIComponent(RegExp['$1']);
++	} else {
++		return null;
++	}
 +}
 +
 +/**
-+ * return date in local time formatted in rfc-2822 format
-+ * e.g. 'Thu, 21 Dec 2000 16:01:07 +0200'
++ * Delete cookie with given name
 + *
-+ * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
-+ * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
-+ * @param {Boolean} [padDay] e.g. 'Sun, 07 Aug' if true, 'Sun, 7 Aug' otherwise
-+ * @returns {String} date in local time in rfc-2822 format
++ * @param {String} sName:    Unique name of a cookie (letters, numbers, underscores)
++ * @param {Object} [options] An object literal containing key/value pairs
++ *                           to provide optional cookie attributes.
++ * @param {String} [options.path]   Must be the same as when setting a cookie
++ * @param {String} [options.domain] Must be the same as when setting a cookie
 + */
-+function formatDateRFC2882(epoch, timezoneInfo, padDay) {
-+	// A short textual representation of a month, three letters
-+	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-+	// A textual representation of a day, three letters
-+	var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-+	// date corrected by timezone
-+	var localDate = new Date(1000 * (epoch +
-+		timezoneOffset(timezoneInfo)));
-+	var localDateStr = // e.g. 'Sun, 7 Aug 2005' or 'Sun, 07 Aug 2005'
-+		days[localDate.getUTCDay()] + ', ' +
-+		(padDay ? padLeft(localDate.getUTCDate(),2,'0') : localDate.getUTCDate()) + ' ' +
-+		months[localDate.getUTCMonth()] + ' ' +
-+		localDate.getUTCFullYear();
-+	var localTimeStr = // e.g. '21:49:46'
-+		padLeft(localDate.getUTCHours(),   2, '0') + ':' +
-+		padLeft(localDate.getUTCMinutes(), 2, '0') + ':' +
-+		padLeft(localDate.getUTCSeconds(), 2, '0');
++function deleteCookie(sName, options) {
++	options = options || {};
++	options.expires = 'delete';
 +
-+	return localDateStr + ' ' + localTimeStr + ' ' + timezoneInfo;
++	setCookie(sName, '', options);
 +}
 +
-+/* end of datetime.js */
++/* end of cookies.js */
 -- 
 1.7.3
