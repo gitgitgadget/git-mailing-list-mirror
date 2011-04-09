@@ -1,123 +1,83 @@
-From: "Steven E. Harris" <seh@panix.com>
-Subject: Confused over packfile and index design
-Date: Fri, 08 Apr 2011 19:58:41 -0400
-Organization: SEH Labs
-Message-ID: <m2d3kw70su.fsf@Spindle.sehlabs.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git rebase --continue automatic --skip?
+Date: Fri, 8 Apr 2011 20:03:51 -0400
+Message-ID: <20110409000351.GA7445@sigill.intra.peff.net>
+References: <BANLkTi=Vc6kB5fvZrqMwDD+yHFb5qENQ8g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 01:59:00 2011
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Sat Apr 09 02:04:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8LZr-0006LI-SC
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 01:59:00 +0200
+	id 1Q8Leh-0000L2-Gr
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Apr 2011 02:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757986Ab1DHX65 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2011 19:58:57 -0400
-Received: from lo.gmane.org ([80.91.229.12]:59772 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757977Ab1DHX64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2011 19:58:56 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Q8LZm-0006Jm-OG
-	for git@vger.kernel.org; Sat, 09 Apr 2011 01:58:54 +0200
-Received: from 75-144-0-121-busname-pa.hfc.comcastbusiness.net ([75.144.0.121])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 09 Apr 2011 01:58:54 +0200
-Received: from seh by 75-144-0-121-busname-pa.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 09 Apr 2011 01:58:54 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 75-144-0-121-busname-pa.hfc.comcastbusiness.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.50 (darwin)
-Cancel-Lock: sha1:Xocap7Lsai6CWWKuwePzW4ChXKE=
+	id S1757961Ab1DIADz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2011 20:03:55 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45395
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752440Ab1DIADy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2011 20:03:54 -0400
+Received: (qmail 7318 invoked by uid 107); 9 Apr 2011 00:04:42 -0000
+Received: from 70-36-146-44.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.44)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Apr 2011 20:04:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Apr 2011 20:03:51 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTi=Vc6kB5fvZrqMwDD+yHFb5qENQ8g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171176>
 
-I was reading the Git Book discussion=C2=B9 on the packfile and index f=
-ormats,
-and there's a confusing set of assertions concerning the design choices
-that sound contradictory.
+On Fri, Apr 08, 2011 at 01:30:01PM -0700, skillzero@gmail.com wrote:
 
-=46irst, near the end of the section about the index format, we find th=
-e
-following paragraph:
+> Is there a way to make git rebase --continue automatically do a --skip
+> if a conflict resolution ends up not needing the patch? Normally, git
+> rebase will just silently skip a patch if it's not needed, but if a
+> patch results in a conflict and I use git mergetool and end up
+> deleting all the changes, git rebase --continue stops and makes me
+> explicitly use --skip.
 
-,----
-| Importantly, packfile indexes are /not/ neccesary to extract objects
-| from a packfile, they are simply used to quickly retrieve individual
-| objects from a pack. The packfile format is used in upload-pack and
-| receieve-pack programs (push and fetch protocols) to transfer objects
-| and there is no index used then - it can be built after the fact by
-| scanning the packfile.
-`----
+This is something I have often wanted, too. The patch would look
+something like this:
 
-That suggests that it's possible to read the packfile linearly and
-deduce where the various objects start and end, without the index
-available.
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 7a54bfc..cec15ae 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -319,6 +319,11 @@ continue)
+ 		echo "mark them as resolved using git add"
+ 		exit 1
+ 	}
++	if git diff-index --quiet HEAD --; then
++		test -z "$GIT_QUIET" &&
++			echo >&2 "Commit has no changes -- skipping"
++		action=skip
++	fi
+ 	read_basic_state
+ 	run_specific_rebase
+ 	;;
 
-Later, in the section on the packfile format, we find this:
+that is based on what is in "next", as there has been a lot of cleanup
+in git-rebase recently[1].
 
-,----
-| It is important to note that the size specified in the header data is
-| not the size of the data that actually follows, but the size of that
-| data /when expanded/. This is why the offsets in the packfile index a=
-re
-| so useful, otherwise you have to expand every object just to tell whe=
-n
-| the next header starts.
-`----
+I put it in rebase and not straight into "git am", as I'm not sure that
+"am" would want to share the same behavior. I'm not sure why we haven't
+done this up until now. Maybe there is some corner case I'm not thinking
+of where the user would want to do something besides skip when we hit
+this situation. I dunno.
 
-Now that makes it sound like without the index, even if one knows where
-a packed object starts, reading its header tells its /inflated/ size,
-/not/ the number of remaining payload bytes representing the object. If
-that's true, then how does one figure out where one object ends and the
-next one begins /without the index/?
+Potentially this should also go into the rebase--am specific script. I
+haven't really thought it through.
 
-Recall that the first paragraph quoted above says that the index can be
-built from the packfile, as opposed to it being essential to reading th=
-e
-packfile. Is one of these paragraphs incorrect?
+-Peff
 
-The Git documentation on the pack format=C2=B2 mentions that the packed
-object headers represent the lengths as variable-sized integers
-
-,----
-| n-byte type and length (3-bit type, (n-1)*7+4-bit length)
-`----
-
-but it doesn't say whether that's the number of (deflated) payload byte=
-s
-or the inflated object size, as the Git Book asserts.
-
-I imagine that if the format is meant to record the size of the deflate=
-d
-payload, then it would be challenging to compress the data straight int=
-o
-the packfile, because one wouldn't know the final size until it was
-written, which means that one wouldn't know how many bytes will be
-necessary to write its length in the header, which means one wouldn't
-know where to start writing the deflated payload.
-
-Are there any other clarifying documents you can recommend to understan=
-d
-the design?
-
-
-=46ootnotes:=20
-=C2=B9 http://book.git-scm.com/7_the_packfile.html
-=C2=B2 http://www.kernel.org/pub/software/scm/git/docs/technical/pack-f=
-ormat.txt
-
---=20
-Steven E. Harris
+[1] I hadn't really been following Martin's rebase cleanup, but it is
+    _way_ nicer to look at these days.
