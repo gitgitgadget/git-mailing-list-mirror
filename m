@@ -1,192 +1,110 @@
-From: Jonathon Mah <me@JonathonMah.com>
-Subject: [PATCH] mergetool: Added tests for submodule
-Date: Sun, 10 Apr 2011 03:18:24 -0700
-Message-ID: <1302430704-22754-1-git-send-email-me@JonathonMah.com>
-References: <39B95643-D7FB-436F-B407-D716D43C3922@JonathonMah.com>
-Cc: Charles Bailey <charles@hashpling.org>,
-	David Aguilar <davvid@gmail.com>,
-	Jonathon Mah <me@JonathonMah.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 10 12:18:50 2011
+From: <HH-developing@heigl-online.at>
+Subject: Weird behaviour when importing from a subversion repository (empty dir/ambiguous argument)
+Date: Sun, 10 Apr 2011 12:28:19 +0200
+Message-ID: <003701cbf76a$0329dba0$097d92e0$@heigl-online.at>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 10 12:28:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8rjF-00022v-Ki
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 12:18:49 +0200
+	id 1Q8rsk-0006oB-CX
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 12:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755958Ab1DJKSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2011 06:18:44 -0400
-Received: from ipmail05.adl6.internode.on.net ([150.101.137.143]:31896 "EHLO
-	ipmail05.adl6.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755826Ab1DJKSo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2011 06:18:44 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah+hAGiAoU1i6vJRIWdsb2JhbACJE50LCwEBAQEBAR4XMr5ShW4EhVs
-Received: from c-98-234-242-81.hsd1.ca.comcast.net (HELO Adamantium.local.net) ([98.234.242.81])
-  by ipmail05.adl6.internode.on.net with ESMTP; 10 Apr 2011 19:48:40 +0930
-X-Mailer: git-send-email 1.7.5.rc1.1.g64431
-In-Reply-To: <39B95643-D7FB-436F-B407-D716D43C3922@JonathonMah.com>
+	id S1756014Ab1DJK2W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Apr 2011 06:28:22 -0400
+Received: from xserv02.internex.at ([85.124.51.102]:58366 "HELO
+	xserv2.internex.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755826Ab1DJK2W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2011 06:28:22 -0400
+X-PDA-ORIGIN: xserv2.internex.at
+Received: (qmail 23857 invoked from network); 10 Apr 2011 10:28:20 -0000
+Received: by simscan 1.4.0 ppid: 23843, pid: 23854, t: 0.1015s
+         scanners: clamav: 0.97/m:53/d:12965
+Received: from unknown (HELO setnbheh) (Harald@heigl-online.at@84.115.25.240)
+  by xserv02.internex.at with SMTP; 10 Apr 2011 10:28:20 -0000
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Acv3aef+6zzdY9OUSb+maIVSzV009g==
+Content-Language: de-at
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171248>
 
----
- t/t7610-mergetool.sh |   50 +++++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 47 insertions(+), 3 deletions(-)
+Hi everybody!
+I=E2=80=99m a software developer in lower Austria and started introduci=
+ng subversion in my company some time ago. It was mainly for myself to =
+have a history. Now when I looked for myself I came to git.=20
+When I=E2=80=99m more comfortable with it we=E2=80=99ll switch at compa=
+ny too.
 
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index dc838c9..96d7d9b 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -22,26 +22,53 @@ test_expect_success 'setup' '
-     echo master file14 >file14 &&
-     mkdir subdir &&
-     echo master sub >subdir/file3 &&
--    git add file1 file1[1-4] subdir/file3 &&
-+    test_create_repo submod &&
-+    (
-+	cd submod &&
-+	: >foo &&
-+	git add foo &&
-+	git commit -m "Add foo"
-+    ) &&
-+    git config -f .gitmodules submodule.submod.path submod &&
-+    git config -f .gitmodules submodule.submod.url git://example.com/submod &&
-+    git config submodule.submod.url git://example.com/submod &&
-+    git config fetch.recurseSubmodules false &&
-+    git add file1 file1[1-4] subdir/file3 .gitmodules submod &&
-     git commit -m "add initial versions" &&
- 
-     git checkout -b branch1 master &&
-+    git submodule update -N &&
-     echo branch1 change >file1 &&
-     echo branch1 newfile >file2 &&
-     echo branch1 change file11 >file11 &&
-     echo branch1 change file13 >file13 &&
-     echo branch1 sub >subdir/file3 &&
--    git add file1 file11 file13 file2 subdir/file3 &&
-+    (
-+	cd submod &&
-+	echo branch1 submodule >bar &&
-+	git add bar &&
-+	git commit -m "Add bar on branch1" &&
-+	git checkout -b submod-branch1
-+    ) &&
-+    git add file1 file11 file13 file2 subdir/file3 submod &&
-     git rm file12 &&
-     git commit -m "branch1 changes" &&
- 
-     git checkout master &&
-+    git submodule update -N &&
-     echo master updated >file1 &&
-     echo master new >file2 &&
-     echo master updated file12 >file12 &&
-     echo master updated file14 >file14 &&
-     echo master new sub >subdir/file3 &&
--    git add file1 file12 file14 file2 subdir/file3 &&
-+    (
-+	cd submod &&
-+	echo master submodule >bar &&
-+	git add bar &&
-+	git commit -m "Add bar on master" &&
-+	git checkout -b submod-master
-+    ) &&
-+    git add file1 file12 file14 file2 subdir/file3 submod &&
-     git rm file11 &&
-     git commit -m "master updates" &&
- 
-@@ -52,15 +79,18 @@ test_expect_success 'setup' '
- 
- test_expect_success 'custom mergetool' '
-     git checkout -b test1 branch1 &&
-+    git submodule update -N &&
-     test_must_fail git merge master >/dev/null 2>&1 &&
-     ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-+    ( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
-     test "$(cat file1)" = "master updated" &&
-     test "$(cat file2)" = "master new" &&
-     test "$(cat subdir/file3)" = "master new sub" &&
-+    test "$(cat submod/bar)" = "branch1 submodule" &&
-     git commit -m "branch1 resolved with mergetool"
- '
- 
-@@ -73,9 +103,12 @@ test_expect_success 'mergetool crlf' '
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-+    ( yes "r" | git mergetool submod >/dev/null 2>&1 ) &&
-     test "$(printf x | cat file1 -)" = "$(printf "master updated\r\nx")" &&
-     test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
-     test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\r\nx")" &&
-+    git submodule update -N &&
-+    test "$(cat submod/bar)" = "master submodule" &&
-     git commit -m "branch1 resolved with mergetool - autocrlf" &&
-     git config core.autocrlf false &&
-     git reset --hard
-@@ -83,6 +116,7 @@ test_expect_success 'mergetool crlf' '
- 
- test_expect_success 'mergetool in subdir' '
-     git checkout -b test3 branch1 &&
-+    git submodule update -N &&
-     (
- 	cd subdir &&
- 	test_must_fail git merge master >/dev/null 2>&1 &&
-@@ -98,18 +132,22 @@ test_expect_success 'mergetool on file in parent dir' '
- 	( yes "" | git mergetool ../file2 >/dev/null 2>&1 ) &&
- 	( yes "d" | git mergetool ../file11 >/dev/null 2>&1 ) &&
- 	( yes "d" | git mergetool ../file12 >/dev/null 2>&1 ) &&
-+	( yes "l" | git mergetool ../submod >/dev/null 2>&1 ) &&
- 	test "$(cat ../file1)" = "master updated" &&
- 	test "$(cat ../file2)" = "master new" &&
-+	test "$(cat ../submod/bar)" = "branch1 submodule" &&
- 	git commit -m "branch1 resolved with mergetool - subdir"
-     )
- '
- 
- test_expect_success 'mergetool skips autoresolved' '
-     git checkout -b test4 branch1 &&
-+    git submodule update -N &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-+    ( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
-     output="$(git mergetool --no-prompt)" &&
-     test "$output" = "No files need merging" &&
-     git reset --hard
-@@ -120,10 +158,13 @@ test_expect_success 'mergetool merges all from subdir' '
- 	cd subdir &&
- 	git config rerere.enabled false &&
- 	test_must_fail git merge master &&
-+	( yes "r" | git mergetool ../submod ) &&
- 	( yes "d" "d" | git mergetool --no-prompt ) &&
- 	test "$(cat ../file1)" = "master updated" &&
- 	test "$(cat ../file2)" = "master new" &&
- 	test "$(cat file3)" = "master new sub" &&
-+	( cd .. && git submodule update -N ) &&
-+	test "$(cat ../submod/bar)" = "master submodule" &&
- 	git commit -m "branch2 resolved by mergetool from subdir"
-     )
- '
-@@ -132,8 +173,11 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
-     git config rerere.enabled true &&
-     rm -rf .git/rr-cache &&
-     git checkout -b test5 branch1
-+    git submodule update -N &&
-     test_must_fail git merge master >/dev/null 2>&1 &&
-+    ( yes "l" | git mergetool --no-prompt submod >/dev/null 2>&1 ) &&
-     ( yes "d" "d" | git mergetool --no-prompt >/dev/null 2>&1 ) &&
-+    git submodule update -N &&
-     output="$(yes "n" | git mergetool --no-prompt)" &&
-     test "$output" = "No files need merging" &&
-     git reset --hard
--- 
-1.7.5.rc1.1.g64431
+So I=E2=80=99ve tried to clone our main project and I got an error. I h=
+ave to say I cloned some other even bigger subversion projects and it w=
+orked, so something must be special here.
+I hope you read this long mail, I tried to separate it in sections and =
+tried to shorten the output a little bit.
+
+
+My command:
+git svn clone "[subversionrepo]"  [gitclonedir] -T trunk -b branches -t=
+ tags --username [subversionuser]
+
+
+
+The error:
+fatal: ambiguous argument 'a41f9bd5959dde85035bd047bf730cc62eaee12a^..1=
+cb281cf44644da76ed94764f7770bb9e11d7424': unknown revision or path not =
+in the working tree.
+Use '--' to separate paths from revisions
+rev-list a41f9bd5959dde85035bd047bf730cc62eaee12a^..1cb281cf44644da76ed=
+94764f7770bb9e11d7424: command returned error: 128
+if I do the same with --no-follow-parent, it works, but I assume then I=
+=E2=80=99m losing the branch/tag connection to the trunk. If I=E2=80=99=
+m losing the branches I can live with it (I think I did more branching =
+in the last days with git, then with subversion the last year =E2=98=BA=
+ ), but I=E2=80=99m interested and if there is a possibility I=E2=80=99=
+ll prefer to import the subversion project completely.
+
+
+
+I did some further investigation:
+=E2=80=9Egit log a41f9bd5959dde85035bd047bf730cc62eaee12a=E2=80=9C work=
+s giving me:
+    git-svn-id: [subversionrepo]/branches/Pluginstruktur-HEH@158 ebb3a9=
+44-7b90-0446-bc25-369ed2d31b3f
+git log a41f9bd5959dde85035bd047bf730cc62eaee12a^ (this should be the p=
+arent, right?) says =E2=80=9Eunknown revision or path not in the workin=
+g tree.=E2=80=9C
+
+
+
+I think it=E2=80=99s a failure I did in subversion some months ago:
+Rev 158: Created an empty folder 'Pluginstruktur-HEH'.
+Rev 159: Deleted folder =E2=80=9A Pluginstruktur-HEH=E2=80=98 (don=E2=80=
+=99t ask why)
+Rev 160: branched from trunk to branches/Pluginstruktur-HEH
+
+So in Rev 158 there was an empty folder in branches, in Rev 159 no fold=
+er and in Rev160 a non empty folder out oft he trunk.
+Perhaps this ist the problem, because between Rev 158 and Rev159 there =
+was a single empty folder an das I found out git doesn=E2=80=99t track =
+empty folders. Perhaps that=E2=80=99s why Rev158 (git: a41f9bd5959dde85=
+035bd047bf730cc62eaee12a) doesn=E2=80=99t have a parent here.
+
+
+
+Maybe you can shed some led in this and how I may solve this.  Can I ju=
+st leave out revision 158 and 159 when doing git svn clone, because it =
+was nothing more than creating an empty folder and deleting an empty fo=
+lder? I=E2=80=99ve read somewhere on the net you can also use a svndump=
+ as base for a git import, perhaps I then may leave rev 158/159 out in =
+the dumb, but I don=E2=80=99t know how to use exactly an svndump as a g=
+it import and also if this wuld be a solution for me.
+
+Thanks in advance, kind regards,
+Harald
