@@ -1,97 +1,75 @@
-From: "Steven E. Harris" <seh@panix.com>
-Subject: Re: Confused over packfile and index design
-Date: Sun, 10 Apr 2011 16:10:46 -0400
-Organization: SEH Labs
-Message-ID: <m24o657tq1.fsf@Spindle.sehlabs.com>
-References: <m2d3kw70su.fsf@Spindle.sehlabs.com>
-	<alpine.LFD.2.00.1104092147520.28032@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH v2 1/2] strbuf: make sure buffer is zero-terminated
+Date: Sun, 10 Apr 2011 22:54:17 +0200
+Message-ID: <1302468858-7376-1-git-send-email-kusmabite@gmail.com>
+Cc: jwa@urbancode.com, drew.northup@maine.edu, peff@peff.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 10 22:11:23 2011
+X-From: git-owner@vger.kernel.org Sun Apr 10 22:55:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q90yh-0005Mu-2Y
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 22:11:23 +0200
+	id 1Q91ex-0002x0-SF
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 22:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748Ab1DJULF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Apr 2011 16:11:05 -0400
-Received: from lo.gmane.org ([80.91.229.12]:58462 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751914Ab1DJULC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2011 16:11:02 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Q90yK-0005CU-ER
-	for git@vger.kernel.org; Sun, 10 Apr 2011 22:11:00 +0200
-Received: from 75-144-0-121-busname-pa.hfc.comcastbusiness.net ([75.144.0.121])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Apr 2011 22:11:00 +0200
-Received: from seh by 75-144-0-121-busname-pa.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Apr 2011 22:11:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 75-144-0-121-busname-pa.hfc.comcastbusiness.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.50 (darwin)
-Cancel-Lock: sha1:8ooTH2yUu6iHaCvAvABzUkYfqYQ=
+	id S1755201Ab1DJUy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2011 16:54:57 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41472 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755146Ab1DJUy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2011 16:54:56 -0400
+Received: by bwz15 with SMTP id 15so4018948bwz.19
+        for <git@vger.kernel.org>; Sun, 10 Apr 2011 13:54:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Lr0m5pmTjL+EzEGQdiAvzgeJ9vUqiWfsLlKZ/yUKCt8=;
+        b=WdBOsN6cpyvTfKEcIOhPy4VhLZ9/vuooGP6B1gGVSC1G1dx0gnKDfw7/qbhRdZFo2q
+         wMNT8xLQRyXc7eGziMOm/WJTW5RWqBzkB3tq/7wdL2A4AiEtAVTLBSqGT0GRaK8EomgR
+         A4dEJe0xtwBQoMkXjjsIcwPco4Tn/+ZPsTazU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=WeRc0EiJRs8pnlzbWTZDw8tEEQrePfhV03TmbJWUKhhAP1z7opJDc36OE4VYhENINm
+         31kKQq+SV0M1zci5kgl1WVvshkY/S165GMRyC1DkEmH8uNKMZVnRANbM1CgqzIz0b3Xa
+         bcmtajN9aSvysNARyP4Yf3ZV3V+YBdEoe2Ju0=
+Received: by 10.204.26.132 with SMTP id e4mr1940286bkc.142.1302468894307;
+        Sun, 10 Apr 2011 13:54:54 -0700 (PDT)
+Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
+        by mx.google.com with ESMTPS id c11sm2836082bkc.14.2011.04.10.13.54.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 10 Apr 2011 13:54:52 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.msysgit.0.916.ga2194
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171286>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+strbuf_init does not zero-terminate the initial buffer when hint is
+non-zero. Fix this so strbuf_attach does not return garbage.
 
-> So the idea is to do that once to construct the pack index and allow
-> for random access once the index is available.  Accessing a particula=
-r
-> object without the pack index would be extremely costly otherwise,
-> especially if it is towards the end of the pack.
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
+ strbuf.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-Thanks for the explanation. It's clear now.
-
-> The reason for storing only the expanded data size is to have the
-> exact buffer size allocated for the inflated data.  The zlib stream
-> that follows is encoded to consume only the needed data to produce th=
-e
-> inflated object.  When the output buffer is all used, the zlib librar=
-y
-> should flag the end of the deflated stream.  If not then there is an
-> error in the pack data.
-
-That provides some error checking, then, as we trust zlib to know when
-it's had enough input, and we have to trust its assessment on how much
-is enough, given the lack of delimiting or framing in the packfile
-format.
-
-By the way, I looked over the zlib manual=C2=B9, and I see that many of=
- the
-inflating/decompressing functions require the caller to specify the
-number of input bytes available. There is inflateBack() that uses
-callback functions to request more data upon underflow. The higher-leve=
-l
-inflate() function also looks like it can be called in a loop, refillin=
-g
-the input buffer upon underflow. Is Git using one of these two function=
-s
-here?
-
-[...]
-
-> When in doubt, the code is always the ultimate source of information.
-
-Yes, I need to learn my way around in there to find the call sites
-relevant to this discussion.
-
-
-=46ootnotes:=20
-=C2=B9 http://www.zlib.net/manual.html
-
---=20
-Steven E. Harris
+diff --git a/strbuf.c b/strbuf.c
+index 77444a9..09c43ae 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -30,8 +30,10 @@ void strbuf_init(struct strbuf *sb, size_t hint)
+ {
+ 	sb->alloc = sb->len = 0;
+ 	sb->buf = strbuf_slopbuf;
+-	if (hint)
++	if (hint) {
+ 		strbuf_grow(sb, hint);
++		sb->buf[0] = '\0';
++	}
+ }
+ 
+ void strbuf_release(struct strbuf *sb)
+-- 
+1.7.4.msysgit.0.916.ga2194
