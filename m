@@ -1,112 +1,98 @@
-From: Fraser Tweedale <frase@frase.id.au>
-Subject: Re: [PATCH] supply '-n' to gzip to produce identical tarballs
-Date: Sun, 10 Apr 2011 20:13:46 +1000
-Message-ID: <20110410101345.GD1521@bacardi.wooloowin.frase.id.au>
-References: <1302415936-7362-1-git-send-email-frase@frase.id.au>
- <m362qm4kvu.fsf@localhost.localdomain>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 6/9] gettext.h: Avoid using a non-standard C construct
+Date: Sun, 10 Apr 2011 14:54:15 +0200
+Message-ID: <BANLkTimFQjbf6pz7upcb=QJngZdPTgWLmQ@mail.gmail.com>
+References: <4D9E056C.1070906@ramsay1.demon.co.uk>
+	<20110407221015.GA20080@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 10 12:31:53 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>, bebarino@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 10 14:54:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8rvs-0008DF-8l
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 12:31:52 +0200
+	id 1Q8u9z-0002We-0H
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 14:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756035Ab1DJKbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2011 06:31:47 -0400
-Received: from 60-242-254-5.static.tpgi.com.au ([60.242.254.5]:64207 "EHLO
-	bacardi.wooloowin.frase.id.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755826Ab1DJKbq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2011 06:31:46 -0400
-X-Greylist: delayed 1069 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Apr 2011 06:31:45 EDT
-Received: from bacardi.wooloowin.frase.id.au (localhost [127.0.0.1])
-	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4) with ESMTP id p3AADnD0008800;
-	Sun, 10 Apr 2011 20:13:49 +1000 (EST)
-	(envelope-from frase@frase.id.au)
-Received: (from Fraser@localhost)
-	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4/Submit) id p3AADkfi008799;
-	Sun, 10 Apr 2011 20:13:46 +1000 (EST)
-	(envelope-from frase@frase.id.au)
-X-Authentication-Warning: bacardi.wooloowin.frase.id.au: Fraser set sender to frase@frase.id.au using -f
-Content-Disposition: inline
-In-Reply-To: <m362qm4kvu.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753439Ab1DJMyS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Apr 2011 08:54:18 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38342 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753101Ab1DJMyR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2011 08:54:17 -0400
+Received: by fxm17 with SMTP id 17so3081782fxm.19
+        for <git@vger.kernel.org>; Sun, 10 Apr 2011 05:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Aj6q1htbApygIn8wQ+EaepFEurZbSJYBDP4qrK69FPQ=;
+        b=Pb72ABPgB3uTb1MTKkwj/4hyOqUkaRTC/rBIpN+njLUKLKCXa7lkokjZl4dfGdfBnJ
+         0OC2NGmE+R+ufugSGdR9qhFsYdfwjAsj+vadLVYN8ROkl509sxak9LoOgz5WnhN9W+ox
+         At/zC/lcAF9Drv0ad4SoORDHJhrVVtZyGkWS0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vgaQF0mHjX60yXohzjP0sQRC4x+muZDkqCHzkS/wiuYmH1fAE7D7s7no/1hnTlaJfC
+         jU3SgQJ46BNf31y4tUG8KBoV6RgN3sE80mIWiaZAxcWE1/0uIcXjI71zgjHaCVTq5hM9
+         XiW94l2noZ1siJ3CsKgmQs0Zmjw4NdY/scvsA=
+Received: by 10.223.25.197 with SMTP id a5mr71032fac.29.1302440055973; Sun, 10
+ Apr 2011 05:54:15 -0700 (PDT)
+Received: by 10.223.105.201 with HTTP; Sun, 10 Apr 2011 05:54:15 -0700 (PDT)
+In-Reply-To: <20110407221015.GA20080@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171250>
 
-On Sun, Apr 10, 2011 at 12:38:32AM -0700, Jakub Narebski wrote:
-> Fraser Tweedale <frase@frase.id.au> writes:
-> 
-> > Subject: [PATCH] supply '-n' to gzip to produce identical tarballs
-> >
-> > Without the '-n' ('--no-name') argument, gzip includes timestamp in
-> > output which results in different files.  Important systems like FreeBSD
-> > ports and perhaps many others hash/checksum downloaded files to ensure
-> > integrity.  For projects that do not release official archives, gitweb's
-> > snapshot feature would be an excellent stand-in but for the fact that the
-> > files it produces are not identical.
-> > 
-> > Supply '-n' to gzip to exclude timestamp from output and produce idential
-> > output every time.
-> > 
-> > Signed-off-by: Fraser Tweedale <frase@frase.id.au>
-> 
-> Very good description, except subject line should denote which
-> subsystem this commit affects, i.e.:
-> 
->   gitweb: supply '-n' to gzip to produce identical tarballs
-> 
-Thank you.  Do I need to amend the message and resubmit the patch?  (first
-time submitting a patch to git; I used git send-email).
+On Fri, Apr 8, 2011 at 00:10, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> Hi,
+>
+> Ramsay Jones wrote:
+>
+>> +++ b/gettext.h
+>> @@ -35,6 +35,6 @@ const char *Q_(const char *msgid, const char *plu,=
+ unsigned long n)
+> [...]
+>> -#define N_(msgid) (msgid)
+>> +#define N_(msgid) msgid
+>
+> Good catch. =C2=A0Thanks!
+>
+>> In particular, standard C does not allow a parenthesized string
+>> as an array initializer.
+>
+> The subject line seems unnecessarily vague. =C2=A0Why not:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0i18n: avoid parenthesized string as array =
+initializer
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0The syntax
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0static const c=
+har ignore_error[] =3D ("something");
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0is invalid C. =C2=A0GCC and MSVC can parse=
+ it, but for example
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tcc cannot. =C2=A0So remove the parenthesi=
+s from the definition
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0of the N_() macro.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Signed-off-by: Ramsay Jones <ramsay@ramsay=
+1.demon.co.uk>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Acked-by: Jonathan Nieder <jrnieder@gmail.=
+com>
 
-> Hmmm... gzip in gitweb's 'snapshot' action gets data compressed from
-> standard input, not from filesystem.  Isn't -n / --no-name no-op then?
-> Just asking...
-> 
-It is not no-op; I have tested to confirm this.  I'm not sure whether
-a file name is recorded in the stdin case, or if so what it is, but the
-timestamp is recorded and that makes the difference.
+This looks good to me with this commit message:
 
-> > ---
-> >  gitweb/gitweb.perl |    2 +-
-> >  1 files changed, 1 insertions(+), 1 deletions(-)
-> > 
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index 46186ab..2ab08da 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -186,7 +186,7 @@ our %known_snapshot_formats = (
-> >  		'type' => 'application/x-gzip',
-> >  		'suffix' => '.tar.gz',
-> >  		'format' => 'tar',
-> > -		'compressor' => ['gzip']},
-> > +		'compressor' => ['gzip', '-n']},
-> 
-> Perhaps it would be more clear to use
-> 
->   +		'compressor' => ['gzip', '--no-name']},
-> 
-> >  
-> >  	'tbz2' => {
-> >  		'display' => 'tar.bz2',
-> > -- 
-> > 1.7.4.3
-> > 
-> 
-Definitely, if the argument is the same (or even present) on all systems.
-On FreeBSD and GNU both '-n' and '--no-name' are do the job, but an audit
-of other systems should be done to ensure they don't break.  I chose '-n'
-as it seemed the more conservative choice.
-
-> -- 
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
+Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
