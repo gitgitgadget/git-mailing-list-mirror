@@ -1,110 +1,112 @@
-From: <HH-developing@heigl-online.at>
-Subject: Weird behaviour when importing from a subversion repository (empty dir/ambiguous argument)
-Date: Sun, 10 Apr 2011 12:28:19 +0200
-Message-ID: <003701cbf76a$0329dba0$097d92e0$@heigl-online.at>
+From: Fraser Tweedale <frase@frase.id.au>
+Subject: Re: [PATCH] supply '-n' to gzip to produce identical tarballs
+Date: Sun, 10 Apr 2011 20:13:46 +1000
+Message-ID: <20110410101345.GD1521@bacardi.wooloowin.frase.id.au>
+References: <1302415936-7362-1-git-send-email-frase@frase.id.au>
+ <m362qm4kvu.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 10 12:28:39 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 10 12:31:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8rsk-0006oB-CX
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 12:28:38 +0200
+	id 1Q8rvs-0008DF-8l
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 12:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756014Ab1DJK2W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Apr 2011 06:28:22 -0400
-Received: from xserv02.internex.at ([85.124.51.102]:58366 "HELO
-	xserv2.internex.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755826Ab1DJK2W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2011 06:28:22 -0400
-X-PDA-ORIGIN: xserv2.internex.at
-Received: (qmail 23857 invoked from network); 10 Apr 2011 10:28:20 -0000
-Received: by simscan 1.4.0 ppid: 23843, pid: 23854, t: 0.1015s
-         scanners: clamav: 0.97/m:53/d:12965
-Received: from unknown (HELO setnbheh) (Harald@heigl-online.at@84.115.25.240)
-  by xserv02.internex.at with SMTP; 10 Apr 2011 10:28:20 -0000
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Acv3aef+6zzdY9OUSb+maIVSzV009g==
-Content-Language: de-at
+	id S1756035Ab1DJKbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2011 06:31:47 -0400
+Received: from 60-242-254-5.static.tpgi.com.au ([60.242.254.5]:64207 "EHLO
+	bacardi.wooloowin.frase.id.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755826Ab1DJKbq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2011 06:31:46 -0400
+X-Greylist: delayed 1069 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Apr 2011 06:31:45 EDT
+Received: from bacardi.wooloowin.frase.id.au (localhost [127.0.0.1])
+	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4) with ESMTP id p3AADnD0008800;
+	Sun, 10 Apr 2011 20:13:49 +1000 (EST)
+	(envelope-from frase@frase.id.au)
+Received: (from Fraser@localhost)
+	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4/Submit) id p3AADkfi008799;
+	Sun, 10 Apr 2011 20:13:46 +1000 (EST)
+	(envelope-from frase@frase.id.au)
+X-Authentication-Warning: bacardi.wooloowin.frase.id.au: Fraser set sender to frase@frase.id.au using -f
+Content-Disposition: inline
+In-Reply-To: <m362qm4kvu.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171249>
 
-Hi everybody!
-I=E2=80=99m a software developer in lower Austria and started introduci=
-ng subversion in my company some time ago. It was mainly for myself to =
-have a history. Now when I looked for myself I came to git.=20
-When I=E2=80=99m more comfortable with it we=E2=80=99ll switch at compa=
-ny too.
+On Sun, Apr 10, 2011 at 12:38:32AM -0700, Jakub Narebski wrote:
+> Fraser Tweedale <frase@frase.id.au> writes:
+> 
+> > Subject: [PATCH] supply '-n' to gzip to produce identical tarballs
+> >
+> > Without the '-n' ('--no-name') argument, gzip includes timestamp in
+> > output which results in different files.  Important systems like FreeBSD
+> > ports and perhaps many others hash/checksum downloaded files to ensure
+> > integrity.  For projects that do not release official archives, gitweb's
+> > snapshot feature would be an excellent stand-in but for the fact that the
+> > files it produces are not identical.
+> > 
+> > Supply '-n' to gzip to exclude timestamp from output and produce idential
+> > output every time.
+> > 
+> > Signed-off-by: Fraser Tweedale <frase@frase.id.au>
+> 
+> Very good description, except subject line should denote which
+> subsystem this commit affects, i.e.:
+> 
+>   gitweb: supply '-n' to gzip to produce identical tarballs
+> 
+Thank you.  Do I need to amend the message and resubmit the patch?  (first
+time submitting a patch to git; I used git send-email).
 
-So I=E2=80=99ve tried to clone our main project and I got an error. I h=
-ave to say I cloned some other even bigger subversion projects and it w=
-orked, so something must be special here.
-I hope you read this long mail, I tried to separate it in sections and =
-tried to shorten the output a little bit.
+> Hmmm... gzip in gitweb's 'snapshot' action gets data compressed from
+> standard input, not from filesystem.  Isn't -n / --no-name no-op then?
+> Just asking...
+> 
+It is not no-op; I have tested to confirm this.  I'm not sure whether
+a file name is recorded in the stdin case, or if so what it is, but the
+timestamp is recorded and that makes the difference.
 
+> > ---
+> >  gitweb/gitweb.perl |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> > 
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index 46186ab..2ab08da 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -186,7 +186,7 @@ our %known_snapshot_formats = (
+> >  		'type' => 'application/x-gzip',
+> >  		'suffix' => '.tar.gz',
+> >  		'format' => 'tar',
+> > -		'compressor' => ['gzip']},
+> > +		'compressor' => ['gzip', '-n']},
+> 
+> Perhaps it would be more clear to use
+> 
+>   +		'compressor' => ['gzip', '--no-name']},
+> 
+> >  
+> >  	'tbz2' => {
+> >  		'display' => 'tar.bz2',
+> > -- 
+> > 1.7.4.3
+> > 
+> 
+Definitely, if the argument is the same (or even present) on all systems.
+On FreeBSD and GNU both '-n' and '--no-name' are do the job, but an audit
+of other systems should be done to ensure they don't break.  I chose '-n'
+as it seemed the more conservative choice.
 
-My command:
-git svn clone "[subversionrepo]"  [gitclonedir] -T trunk -b branches -t=
- tags --username [subversionuser]
-
-
-
-The error:
-fatal: ambiguous argument 'a41f9bd5959dde85035bd047bf730cc62eaee12a^..1=
-cb281cf44644da76ed94764f7770bb9e11d7424': unknown revision or path not =
-in the working tree.
-Use '--' to separate paths from revisions
-rev-list a41f9bd5959dde85035bd047bf730cc62eaee12a^..1cb281cf44644da76ed=
-94764f7770bb9e11d7424: command returned error: 128
-if I do the same with --no-follow-parent, it works, but I assume then I=
-=E2=80=99m losing the branch/tag connection to the trunk. If I=E2=80=99=
-m losing the branches I can live with it (I think I did more branching =
-in the last days with git, then with subversion the last year =E2=98=BA=
- ), but I=E2=80=99m interested and if there is a possibility I=E2=80=99=
-ll prefer to import the subversion project completely.
-
-
-
-I did some further investigation:
-=E2=80=9Egit log a41f9bd5959dde85035bd047bf730cc62eaee12a=E2=80=9C work=
-s giving me:
-    git-svn-id: [subversionrepo]/branches/Pluginstruktur-HEH@158 ebb3a9=
-44-7b90-0446-bc25-369ed2d31b3f
-git log a41f9bd5959dde85035bd047bf730cc62eaee12a^ (this should be the p=
-arent, right?) says =E2=80=9Eunknown revision or path not in the workin=
-g tree.=E2=80=9C
-
-
-
-I think it=E2=80=99s a failure I did in subversion some months ago:
-Rev 158: Created an empty folder 'Pluginstruktur-HEH'.
-Rev 159: Deleted folder =E2=80=9A Pluginstruktur-HEH=E2=80=98 (don=E2=80=
-=99t ask why)
-Rev 160: branched from trunk to branches/Pluginstruktur-HEH
-
-So in Rev 158 there was an empty folder in branches, in Rev 159 no fold=
-er and in Rev160 a non empty folder out oft he trunk.
-Perhaps this ist the problem, because between Rev 158 and Rev159 there =
-was a single empty folder an das I found out git doesn=E2=80=99t track =
-empty folders. Perhaps that=E2=80=99s why Rev158 (git: a41f9bd5959dde85=
-035bd047bf730cc62eaee12a) doesn=E2=80=99t have a parent here.
-
-
-
-Maybe you can shed some led in this and how I may solve this.  Can I ju=
-st leave out revision 158 and 159 when doing git svn clone, because it =
-was nothing more than creating an empty folder and deleting an empty fo=
-lder? I=E2=80=99ve read somewhere on the net you can also use a svndump=
- as base for a git import, perhaps I then may leave rev 158/159 out in =
-the dumb, but I don=E2=80=99t know how to use exactly an svndump as a g=
-it import and also if this wuld be a solution for me.
-
-Thanks in advance, kind regards,
-Harald
+> -- 
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
