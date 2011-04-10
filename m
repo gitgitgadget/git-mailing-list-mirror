@@ -1,111 +1,109 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH/RFC 10/11] gitweb.js: Add UI for selecting common timezone to display dates
-Date: Sun, 10 Apr 2011 16:39:03 +0200
-Message-ID: <201104101639.04466.jnareb@gmail.com>
-References: <1302389366-21515-1-git-send-email-jnareb@gmail.com> <1302389366-21515-11-git-send-email-jnareb@gmail.com> <201104101136.58325.jnareb@gmail.com>
+Date: Sun, 10 Apr 2011 17:10:43 +0200
+Message-ID: <201104101710.44685.jnareb@gmail.com>
+References: <1302389366-21515-1-git-send-email-jnareb@gmail.com> <1302389366-21515-11-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Kevin Cernekee <cernekee@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 10 16:39:20 2011
+X-From: git-owner@vger.kernel.org Sun Apr 10 17:11:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8vnL-0006lD-QN
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 16:39:20 +0200
+	id 1Q8wI1-0006nQ-EU
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 17:11:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753029Ab1DJOjO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Apr 2011 10:39:14 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:46432 "EHLO
+	id S1754338Ab1DJPKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2011 11:10:55 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50444 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752817Ab1DJOjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2011 10:39:13 -0400
-Received: by fxm17 with SMTP id 17so3106873fxm.19
-        for <git@vger.kernel.org>; Sun, 10 Apr 2011 07:39:12 -0700 (PDT)
+	with ESMTP id S1753883Ab1DJPKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2011 11:10:54 -0400
+Received: by fxm17 with SMTP id 17so3115043fxm.19
+        for <git@vger.kernel.org>; Sun, 10 Apr 2011 08:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:subject:date:user-agent:cc:references
          :in-reply-to:mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        bh=waiBYuQe3hPGLsEcnNGzdwftP8rv+39D0G4uM3E6jLw=;
-        b=q6CANyQioegmFc1fzLqi0zU+lt5u5C/zCZXB4FPq78GcIyVmb8dfJRv91K1QwXqjC7
-         WXbjiQCVYsfP2TaHgfG6qI6nTxl/4e6147+r5LrBspH7cgI0IiEkkUMVdNTXduOeN0/K
-         lVctRg5gnG6B6so4JglcScUprFEhBQWbPqJSo=
+        bh=B2G3+h7uvLemhvANCt/C2m6TYoE8jvZk3yVFKpppsGc=;
+        b=vPCQS1NKzQJ81Y3o4huqJWcOfx5EqW8tFVunz76MnoyT35R0dUhCROxloPTYuj2M/8
+         yQzT/P1kJRy07NYVHGn8tprqSPELp0jzhR6MHQZlfOOzhuxX7Dh6xeI5of9CZulfX+3l
+         t33GBJ4z10ywmAUuN8Au89X7lS2poUUu7zmLc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=e4RA2JOF+QU7oGaLoflrjjjxXpEOYvjkbS+aVrYiMFAA4edRgj8RF66dGkkSw1A6t0
-         hRQtNjIBKHeOT4FRvQjGci82GxuLwSv7wHE05BQITCGA5n44tnoIKFF4kfXO1v60ePXx
-         IXGJVJTmfw+fPIBzX6jXt7KIiVk0hebTq2oX4=
-Received: by 10.223.76.147 with SMTP id c19mr1910357fak.55.1302446352686;
-        Sun, 10 Apr 2011 07:39:12 -0700 (PDT)
+        b=RkDsTNcVBkUJXheL4VDEI2+vMxSM0H7bBPT57zuioC6IF/4ojN2OG4mXXfbxG4/bNp
+         x653HK0XCeukQmXA+Zfp3TkbIH3DwvC4ssMWpK99R5Q8w1NZTIRDD4wRr5BO5l0rSVqv
+         tgOw3nRAKAOhsF6wefcDfXGUqFyZ3z7aLg9QM=
+Received: by 10.223.127.210 with SMTP id h18mr497501fas.73.1302448252546;
+        Sun, 10 Apr 2011 08:10:52 -0700 (PDT)
 Received: from [192.168.1.13] (abwa66.neoplus.adsl.tpnet.pl [83.8.224.66])
-        by mx.google.com with ESMTPS id o17sm1362528fal.25.2011.04.10.07.39.10
+        by mx.google.com with ESMTPS id p16sm1368400fax.45.2011.04.10.08.10.50
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 10 Apr 2011 07:39:11 -0700 (PDT)
+        Sun, 10 Apr 2011 08:10:51 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <201104101136.58325.jnareb@gmail.com>
+In-Reply-To: <1302389366-21515-11-git-send-email-jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171254>
 
 Jakub Narebski wrote:
-> Jakub Narebski wrote:
->=20
-> > KNOWN BUGS:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > * In 'log' view menu is generated on the right side of whole page,
-> > =A0 instead of at near date, as is the case with 'summary', 'commit=
-',
-> > =A0 'commitdiff', and 'tag' views.
->=20
-> I'm not sure if it is behavior expected by CSS visual formatting mode=
-l
-> or not: the issue is with absolutely positioned block element
->=20
-> =A0 div.popup { position: absolute; top: 0; right: 0; }
->=20
-> inside relatively positioned _inline_ element
->=20
-> =A0 span.marker { position: relative; }
->=20
-> In this case 'top: 0; right: 0' refers somehow to parent block elemen=
-t
-> of inline element... at least that's what I think. =A0Note that also =
-in
-> the case of 'summary', 'commit', 'commitdiff' and 'tag' views the pop=
-up
-> position is not entirely what one could expect...
->=20
-> What is strange is that 'top: 0; left: 0' works correctly (sic!).
 
-This looks like a bug in Mozilla 1.7.12 (Gecko/20050923) I ordinarily u=
-se.
-Checking simplified test case with Konqueror 3.5.3 shows correct behavi=
-or
-for all combinations of absolute positioning, at least when
+> KNOWN BUGS:
+> ===========
 
-    span.marker { position: relative; display: inline-block; }
+> * Replacing inline style for 'popup' and 'close-button' elements of
+>   timezone menu with style defined in gitweb.css results in menu being
+>   put between datetime and its local part, as if absolute positioning
+>   didn't remove element from the flow.
+> 
+>   Currently style is duplicated in gitweb.css (in CSS file) and in
+>   <element>.style.cssText (in JavaScript).
 
-Without "display: inline-block;" the "top: 0; right: 0;" is displaced
-compared to the end of marker.
+I'm very sorry, false alarm.  The error was mine: the CSS in gitweb.css
+is incorrect; I forgot that in CSS you have only C-like "/* foo */"
+comments, and C++ / JavaScript-like "// ... \n" doesn't work.
 
+See e.g.: http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Frepo.or.cz%2Fw%2Fgit%2Fjnareb-git.git%2Fblob_plain%2F524656258696381f9e6b9169256688165e21a3f9%3A%2Fgitweb%2Fstatic%2Fgitweb.css&lang=en&profile=css21&usermedium=all&warning=1
+  
 
-Because vger anti-spam filter doesn't like HTML attachments, you can ch=
-eck
-test case here: https://gist.github.com/912389
+Will fix.
 
-Try it also with 'display: inline-block;' uncommented.
+> diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+> index 79d7eeb..6d17e12 100644
+> --- a/gitweb/static/gitweb.css
+> +++ b/gitweb/static/gitweb.css
+> @@ -579,6 +579,31 @@ div.remote {
+>  	display: inline-block;
+>  }
+>  
+> +/* JavaScript-base timezone manipulation */
+> +
+> +.popup { // timezone selection UI
+            ^^
 
---=20
+Should be
+
+  +.popup { /* timezone selection UI */
+
+> +	position: absolute;
+> +	top: 0; right: 0;
+> +	border: 1px solid;
+> +	background-color: #f0f0f0;
+> +}
+
+-- 
 Jakub Narebski
 Poland
