@@ -1,96 +1,110 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 00/51] i18n: Shell script translations
-Date: Sun, 10 Apr 2011 15:04:26 +0200
-Message-ID: <BANLkTikhWpNfbRJDj5TXS9vokuHOnoibzw@mail.gmail.com>
-References: <1301849175-1697-1-git-send-email-avarab@gmail.com>
-	<7vhbafcg00.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] supply '-n' to gzip to produce identical tarballs
+Date: Sun, 10 Apr 2011 15:55:06 +0200
+Message-ID: <201104101555.09798.jnareb@gmail.com>
+References: <1302415936-7362-1-git-send-email-frase@frase.id.au> <m362qm4kvu.fsf@localhost.localdomain> <20110410101345.GD1521@bacardi.wooloowin.frase.id.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 10 15:04:45 2011
+To: Fraser Tweedale <frase@frase.id.au>
+X-From: git-owner@vger.kernel.org Sun Apr 10 15:55:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q8uJo-00088w-Lu
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 15:04:45 +0200
+	id 1Q8v72-0000xK-BN
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Apr 2011 15:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610Ab1DJNE2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Apr 2011 09:04:28 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50658 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751356Ab1DJNE2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2011 09:04:28 -0400
-Received: by fxm17 with SMTP id 17so3084096fxm.19
-        for <git@vger.kernel.org>; Sun, 10 Apr 2011 06:04:26 -0700 (PDT)
+	id S1751440Ab1DJNzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2011 09:55:15 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36824 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750910Ab1DJNzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2011 09:55:14 -0400
+Received: by bwz15 with SMTP id 15so3874545bwz.19
+        for <git@vger.kernel.org>; Sun, 10 Apr 2011 06:55:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xJNlm5H/MVUmkMtVpOokGshYB0SA9HBYR5kqEFWr9fY=;
-        b=u2An3Mrvc72hbTbGbSbo1+zhu6s2olbjVPh2bNivM+Ov/Td1Fcv35L39KHZ/r9Om2w
-         vM+DNBcpRo4GzSYeCxuCwk5lVSJZUXaC+5tdG/HL5JLRJzUy5uWLNHb/USsYu7TcrfNL
-         4Uny7S5yWf4z4BKtJ5iYfQrnOlKHV5UIigfwM=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=T+ASkeOKtVPkM4k3drIHSI45KhAQ9rlKo+lCMXb7J28=;
+        b=sajSFn1JIhqWNlqICpusUu+VB3GO6uTkIslS790PpDQBmgl/4lUUklQEGnBavu0/ve
+         iY9ZXSRTq2rZ6lbzY7V6oFG83anHU+I3EjlBd8+aAbl/J6QMJXjdMbsvE7Geb8F5D2by
+         uRZBtkFXykMQxfdwG28oZe5Wbgtfgy0PQn3EY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KMtoq6RgPOgzzl7KPh3REZLri1BQI3YcSfrIA9aV6NakzUi/dorG6K/G8dhkWYvsKK
-         0Dj4wExFzUlwIGIEprlzsRJN+lo1/o5ayYsuMvB57k6cPdMtdP3LoTQ3pYJ2N73kmhCv
-         6SfJFV7E4VPdLwbEnHl7BzPsQg062EVc50zXU=
-Received: by 10.223.60.81 with SMTP id o17mr1682816fah.48.1302440666675; Sun,
- 10 Apr 2011 06:04:26 -0700 (PDT)
-Received: by 10.223.105.201 with HTTP; Sun, 10 Apr 2011 06:04:26 -0700 (PDT)
-In-Reply-To: <7vhbafcg00.fsf@alter.siamese.dyndns.org>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=dFv9eAvdN+LdAu87nygvZW2N9HIA1z+xn7DQRXVOURX4fzq3lpRJiS3WOnDdWatrWX
+         /DfXU1N14tUSBaQEghOzmh+lQpe5m/M6J8b62uFEWSbSgDg2Lyq1hIiBOijvGxk8XH/o
+         4yAl0aQkn/K+5/n6HzAbJ1MS13Bde7bNQcrKo=
+Received: by 10.204.14.5 with SMTP id e5mr3875400bka.122.1302443713326;
+        Sun, 10 Apr 2011 06:55:13 -0700 (PDT)
+Received: from [192.168.1.13] (abwa66.neoplus.adsl.tpnet.pl [83.8.224.66])
+        by mx.google.com with ESMTPS id b6sm2669542bkb.10.2011.04.10.06.55.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 10 Apr 2011 06:55:12 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110410101345.GD1521@bacardi.wooloowin.frase.id.au>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171252>
 
-On Sun, Apr 3, 2011 at 21:05, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
-s:
->
->> Following the "i18n: Shell script translation infrastructure"
->> series. These are the actual shell script translations. Together the=
-se
->> series add up to everything from:
->>
->> =C2=A0 =C2=A0 git://github.com/avar/git.git ab/i18n-sh-only
->
-> I am obviously not going to queue these patches right at this moment,=
- but
-> people with topics in flight or in their head need to take a look at =
-the
-> parts of this series that may overlap with what they are touching, an=
-d
-> plan to rebase their work when the time comes.
+On Sun, 10 Apr 2011, Fraser Tweedale wrote:
+> On Sun, Apr 10, 2011 at 12:38:32AM -0700, Jakub Narebski wrote:
+> > Fraser Tweedale <frase@frase.id.au> writes:
+> > 
+> > > Subject: [PATCH] supply '-n' to gzip to produce identical tarballs
+ 
+> > Very good description, except subject line should denote which
+> > subsystem this commit affects, i.e.:
+> > 
+> >   gitweb: supply '-n' to gzip to produce identical tarballs
+>  
+> Thank you.  Do I need to amend the message and resubmit the patch?  (first
+> time submitting a patch to git; I used git send-email).
 
-So would after 1.7.5 be a good time to submit them?
+I don't think so.  I guess that Junio can do such trivial amend when
+applying, at the time he is adding his signoff.
 
-> What is more urgent at this moment in this cycle is to catch and adju=
-st
-> the fallouts from the merges of topics that started before ab/i18n to=
-pic.
-> You caught one in t2019 that didn't mark a test that examines the out=
-put
-> for a translatable string with C_LOCALE_OUTPUT (as there was no such =
-thing
-> when the topic started).
->
-> There may be other similar adjustments that are needed in tests, and =
-also
-> I suspect there are messages that are not marked with the _() markers=
- that
-> came from other topics. =C2=A0Because we shouldn't see too many new m=
-essages in
-> the code appearing from now on until 1.7.5 final, this is a perfect t=
-ime
-> to catch and adjust these kinds of issues.
+> > Hmmm... gzip in gitweb's 'snapshot' action gets data compressed from
+> > standard input, not from filesystem.  Isn't -n / --no-name no-op then?
+> > Just asking...
+> 
+> It is not no-op; I have tested to confirm this.  I'm not sure whether
+> a file name is recorded in the stdin case, or if so what it is, but the
+> timestamp is recorded and that makes the difference.
 
-I'll try to do this and submit it before 1.7.5.
+Thanks for the clarification.
+
+For what it is worth:
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+
+> > > -		'compressor' => ['gzip']},
+> > > +		'compressor' => ['gzip', '-n']},
+> > 
+> > Perhaps it would be more clear to use
+> > 
+> >   +		'compressor' => ['gzip', '--no-name']},
+
+> Definitely, if the argument is the same (or even present) on all systems.
+> On FreeBSD and GNU both '-n' and '--no-name' are do the job, but an audit
+> of other systems should be done to ensure they don't break.  I chose '-n'
+> as it seemed the more conservative choice.
+
+So you choose '-n' because it has more chance of being widely supported,
+isn't it?  Good enough for me.
+
+-- 
+Jakub Narebski
+Poland
