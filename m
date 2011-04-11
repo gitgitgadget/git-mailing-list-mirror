@@ -1,83 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug in "git diff --quiet" handling.
-Date: Mon, 11 Apr 2011 14:35:01 -0700
-Message-ID: <7v8vvgv5dm.fsf@alter.siamese.dyndns.org>
-References: <4DA36D95.6060108@windriver.com>
+Subject: Re: [PATCH] Makefile: extract Q_() source strings as ngettext()
+Date: Mon, 11 Apr 2011 14:38:43 -0700
+Message-ID: <7v1v18v57g.fsf@alter.siamese.dyndns.org>
+References: <1302464221-23381-1-git-send-email-avarab@gmail.com>
+ <20110410195436.GD28163@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Gortmaker <paul.gortmaker@windriver.com>
-X-From: git-owner@vger.kernel.org Mon Apr 11 23:35:23 2011
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 23:39:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9OlV-0005WX-8f
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 23:35:21 +0200
+	id 1Q9Op2-0007Sj-4V
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 23:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170Ab1DKVfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 17:35:13 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64244 "EHLO
+	id S1755662Ab1DKViz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 17:38:55 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38818 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753167Ab1DKVfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 17:35:12 -0400
+	with ESMTP id S1754258Ab1DKViy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 17:38:54 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B8A014B2B;
-	Mon, 11 Apr 2011 17:37:07 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3B3D14BD4;
+	Mon, 11 Apr 2011 17:40:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UOjp3ko5BMWm7I7T1j8wV3xledo=; b=I6ys8i
-	Uw0I168+jnVGTSnGKrOluilXJBkXttPXOsu9br/LQocpid0Ww8Uzvo54Ml1K1Evj
-	Jm3JLQTTueTBUjQ+Edbz0F01gFFJIlfqGzruxHmvtAER/1L0K6zySXNemUIz2u0w
-	6keVgFdfW4KHZesdFf84fIJ9Awq1tiawifRIo=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=K8NKbAhk0IGrXTG7dnSOYXtlaGs=; b=YKQxkEhEV8UTcidRh4s5
+	uXY16VgUAMUEoJNyu+KUKTYx7vQu5phaKXDbB1DHE0zztZ89YatMJwgCPmaHlz6u
+	s4YMm1J1LP834JiTs5CwrTcdHNh0J+qCJUz7V98zMF4ufkmrb/9gpL2TICcS9bVx
+	LdvCvg/elEXts+z8r3x9szw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T2gHo4/1I5KiRpMKAa7rJJu59iX8/hr6
-	G2RF3/vjzvSnjoVD4D5pMSXbm08BBmuWbnubRFNiznAekcJMpNc43kOcsnoO410V
-	FLIhO3BnN/dUsLbhHAGuVlpGodzFG5sWCnFC5JNhqY/6Mnbe7H4u//NRWBpYitws
-	luMuaHAAgN8=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=GlU8ttSyvUMSoi4J7I1igmHpoUqz6+5af8mSprC6MbYfpE
+	4B1nCViRRfAS4Bb4JxoOkqsmpKpHWvBNgY6f+wgjXB0FOemZjmsJnuVpv9+MYCtT
+	f19xZNbAdVKV598MyO7yjOz6auOMRz2Du5yCadvthZ9m8ymdf/jmqVuVrWXzg=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9236F4B2A;
-	Mon, 11 Apr 2011 17:37:04 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 090B54BCE;
+	Mon, 11 Apr 2011 17:40:48 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9C8604B1F; Mon, 11 Apr 2011
- 17:37:01 -0400 (EDT)
-In-Reply-To: <4DA36D95.6060108@windriver.com> (Paul Gortmaker's message of
- "Mon, 11 Apr 2011 17:07:33 -0400")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EA2D94BCB; Mon, 11 Apr 2011
+ 17:40:43 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D7CDDFB0-6483-11E0-8845-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 5CFBA2DA-6484-11E0-9E93-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171359>
 
-Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I'm assuming this is a bug,...
+> Ack.  The line is getting long.  Maybe it would make sense to split
+> it up (like this)?
 
-Yeah, it sounds like you found an interesting one.
+Makes sense, thanks both.
 
-As far as I know, whatever "format-patch" does in response to "--quiet"
-option is not a deliberate and designed behaviour, as squelching the patch
-output in the context of the command does not make much sense [*1*]; the
-current implementation simply writes anything off as an user error when
-"format-patch --quiet" did anything "interesting" ;-).
-
-A patch to make --quiet not to squelch the patch output, and instead
-silence any progress output would be a good addition.
-
-Thanks.
-
-[Footnote]
-
-*1* Also note that at least in the original design, the standard output
-from "format-patch" was never meant to be squelched.  It was the only way
-the calling scripts (and humans) can learn under what filenames the
-patches were output, so that the command line to fire them off as e-mails
-can be programatically formed without running "ls" and filtering non-patch
-files manually (if you use "format-patch -o newdir" and newdir did not
-have anythning in it before running the command, of course you can rely on
-the output from "ls").
+I've re-written the commit log message, by the way.  Instead of saying "X
+forgot to do Y and broke Z", I prefer to say "To make sure Z happens, we
+need to do Y to augment what X did, and W is how we do Y".
