@@ -1,77 +1,107 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: gitattributes - clean filter invoked on pull?
-Date: Mon, 11 Apr 2011 13:14:28 +0200
-Message-ID: <20110411111428.GD5146@genesis.frugalware.org>
-References: <20110411084229.GW5146@genesis.frugalware.org>
- <20110411091919.GE28959@kytes>
- <4DA2CED1.6070107@drmicha.warpmail.net>
- <20110411101614.GB5146@genesis.frugalware.org>
- <4DA2DAC6.1010009@drmicha.warpmail.net>
+From: =?UTF-8?B?SHJ2b2plIE5pa8WhacSH?= <hniksic@gmail.com>
+Subject: Converting merge to rebase in the presence of conflicts
+Date: Mon, 11 Apr 2011 16:13:53 +0200
+Message-ID: <BANLkTi=krC6JMEWj=a5CY1vRCcmh9b+BaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Guq+xBHXhbnAFmh4"
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	timar74@gmail.com
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Apr 11 13:14:41 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 11 16:14:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9F4q-0007xR-QM
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 13:14:41 +0200
+	id 1Q9HsN-0005eV-Ch
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 16:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382Ab1DKLOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 07:14:35 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:59877 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754232Ab1DKLOf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 07:14:35 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 283EA580AB;
-	Mon, 11 Apr 2011 13:14:28 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 0BE2B44965;
-	Mon, 11 Apr 2011 13:14:28 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5124F1358449; Mon, 11 Apr 2011 13:14:28 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <4DA2DAC6.1010009@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751982Ab1DKONy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 10:13:54 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:58620 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab1DKONy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 10:13:54 -0400
+Received: by yxs7 with SMTP id 7so2160540yxs.19
+        for <git@vger.kernel.org>; Mon, 11 Apr 2011 07:13:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=iFbX7oab8RW7F2ROv1DgIXVuwmnnQjpf7bGyOYlqngM=;
+        b=ALvu5omEw9Asc9DFKYzM/mXhePDZmioT8dN92I8IJNOQJ2IXqV16kIbN8Zqdn3YX6D
+         vqnmmZUDXP0kXZKXGvM9nr9lnleW+NlbKqFM9Bhmoemo81A0Hzr4HD7I2YUszoy88XcB
+         YCYcbl/EhrHc7kMJKnaPZ+K9iX2+f5jgB4mMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=aCpJFjYe1Sut8Krv3lITClVOIo4Dt8NZk0KdJLpUzKW22wCaYWOr767oJj6F70Blot
+         yWz/U87bMQGCmGJdA4pqB+Gie+N9OxX4WJcrk+k2A5mcBW4xv8kD1ratV2I/+m9/BhQd
+         4hFe5Mu6UF6nWp2UqhmXIgPDOT6LMvnM2S3/M=
+Received: by 10.91.69.37 with SMTP id w37mr4711791agk.196.1302531233478; Mon,
+ 11 Apr 2011 07:13:53 -0700 (PDT)
+Received: by 10.90.63.17 with HTTP; Mon, 11 Apr 2011 07:13:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171329>
+
+Is it possible to convert a merge with (resolved) conflicts into a rebase?
+
+I find it useful to always pull commits with "git pull" because it is
+less intrusive on my local commits (if any) than "git pull --rebase",
+and it provides a nicer change summary. Also, conflict resolution
+seems more intuitive when merging than when rebasing. And If I decide
+later to rebase after all, I can simply issue "git rebase origin/bla".
+As long as there are no conflicts.
+
+If the merge resolves conflicts, the subsequent rebase is unaware of
+that, and the conflicts must be resolved once more. Here is an example
+in a single repository that just uses 'merge' to show the scenario:
+
+# create a common file with two lines and branch off
+printf 'foo\nbar\n' > a
+git add a && git commit -m '' a
+git add a && git commit -m 'Added.' a
+git branch somebranch
+
+# now work on the file in both branches
+echo baz >> a
+git commit -m changed a
+git checkout somebranch
+echo qux >> a
+git commit -m changed2 a
+
+# we're on somebranch and decide to merge our changes with master:
+git merge master
+vi a           # resolve conflicts
+git add a
+git commit     # commit the merge
+
+At this point say the developer on somebranch changes his mind and
+wants to rebase after all. The result is, again, a conflict:
+
+# try to change merge to rebase
+git rebase master
+[... long output on conflicts ...]
+
+First, rewinding head to replay your work on top of it...
+Applying: changed2
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging a
+CONFLICT (content): Merge conflict in a
+Failed to merge in the changes.
+Patch failed at 0001 changed2
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
 
 
---Guq+xBHXhbnAFmh4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Is there a way to rebase the branch without redoing conflict
+resolution? Some option to rebase, or a trick with rebase -i? The
+conflict resolution must obviously go into some commit, it would be
+nice to be able to choose whether to amend an existing commit with the
+additional changes or to add a new commit.
 
-On Mon, Apr 11, 2011 at 12:41:10PM +0200, Michael J Gruber <git@drmicha.war=
-pmail.net> wrote:
-> git config diff.po.textconv 'msgcat - --no-wrap'
-> git config diff.po.cachetextconv true
->=20
-> If you want to normalise the repo, you may want to look at hooks instead
-> of clean/smudge if they are a performance problem.
-
-Ah - using hooks instead is indeed a better option.
-
-Thanks!
-
---Guq+xBHXhbnAFmh4
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAk2i4pQACgkQe81tAgORUJa0MQCeOSwL8d+d3w3DjgEqMBCsyOwE
-eskAoJvN5YBeoN7HzlxJfPmKeWQyveU8
-=1lGj
------END PGP SIGNATURE-----
-
---Guq+xBHXhbnAFmh4--
+Hrvoje
