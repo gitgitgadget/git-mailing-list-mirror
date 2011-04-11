@@ -1,182 +1,136 @@
-From: "Harald Heigl" <Harald@heigl-online.at>
-Subject: AW: Weird behaviour when importing from a subversion repository (empty dir/ambiguous argument)
-Date: Mon, 11 Apr 2011 10:09:46 +0200
-Message-ID: <000901cbf81f$d3c52b60$7b4f8220$@heigl-online.at>
-References: <003701cbf76a$0329dba0$097d92e0$@heigl-online.at> <4DA2A762.1020203@drmicha.warpmail.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: gitattributes - clean filter invoked on pull?
+Date: Mon, 11 Apr 2011 10:42:29 +0200
+Message-ID: <20110411084229.GW5146@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 11 10:10:09 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6nSyB+bcl/pT7+kx"
+Cc: timar74@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 11 10:42:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9CCG-00089d-42
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 10:10:08 +0200
+	id 1Q9Chi-0001q1-HG
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 10:42:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754770Ab1DKIJ4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Apr 2011 04:09:56 -0400
-Received: from xserv02.internex.at ([85.124.51.102]:39050 "HELO
-	xserv2.internex.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754115Ab1DKIJz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Apr 2011 04:09:55 -0400
-X-PDA-ORIGIN: xserv2.internex.at
-Received: (qmail 29854 invoked from network); 11 Apr 2011 08:09:49 -0000
-Received: by simscan 1.4.0 ppid: 29805, pid: 29838, t: 0.2343s
-         scanners: clamav: 0.97/m:53/d:12966
-Received: from mail.se-t.at (HELO setnbheh) (Harald@heigl-online.at@194.112.138.126)
-  by xserv02.internex.at with SMTP; 11 Apr 2011 08:09:49 -0000
-In-Reply-To: <4DA2A762.1020203@drmicha.warpmail.net>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQEXcd0yC7cUaWCOHMiUa2E+p/yQsAJXVLQSla6eR1A=
-Content-Language: de-at
+	id S1754928Ab1DKImd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 04:42:33 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:36866 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754839Ab1DKImc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 04:42:32 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id E25115809E;
+	Mon, 11 Apr 2011 10:42:29 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id A583744965;
+	Mon, 11 Apr 2011 10:42:29 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id DB7441358449; Mon, 11 Apr 2011 10:42:29 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171313>
 
-Hi!
-Thanks for your fast answer, you lead me to the right direction, proble=
-m solved! see answers below.
 
-> -----Urspr=C3=BCngliche Nachricht-----
-> Von: Michael J Gruber [mailto:git@drmicha.warpmail.net]
-> Gesendet: Montag, 11. April 2011 09:02
-> An: HH-developing@heigl-online.at
-> Cc: git@vger.kernel.org
-> Betreff: Re: Weird behaviour when importing from a subversion reposit=
-ory
-> (empty dir/ambiguous argument)
->=20
-> HH-developing@heigl-online.at venit, vidit, dixit 10.04.2011 12:28:
-> > Hi everybody!
-> > I=E2=80=99m a software developer in lower Austria and started intro=
-ducing
-> subversion in my company some time ago. It was mainly for myself to h=
-ave a
-> history. Now when I looked for myself I came to git.
-> > When I=E2=80=99m more comfortable with it we=E2=80=99ll switch at c=
-ompany too.
-> >
-> > So I=E2=80=99ve tried to clone our main project and I got an error.=
- I have to say I
-> cloned some other even bigger subversion projects and it worked, so
-> something must be special here.
-> > I hope you read this long mail, I tried to separate it in sections =
-and tried to
-> shorten the output a little bit.
-> >
-> >
-> > My command:
-> > git svn clone "[subversionrepo]"  [gitclonedir] -T trunk -b branche=
-s
-> > -t tags --username [subversionuser]
-> >
->=20
-> "git svn --version" please :)
+--6nSyB+bcl/pT7+kx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry I forgot to say: 1.7.4 on windows (msysgit) and 1.7.4.3 on linux =
-(ubuntu-server)
-Had the same behaviour on both oft hem.
+Hi,
 
->=20
-> >
-> > The error:
-> > fatal: ambiguous argument
-> 'a41f9bd5959dde85035bd047bf730cc62eaee12a^..1cb281cf44644da76ed9476
-> 4f7770bb9e11d7424': unknown revision or path not in the working tree.
-> > Use '--' to separate paths from revisions rev-list
-> >
-> a41f9bd5959dde85035bd047bf730cc62eaee12a^..1cb281cf44644da76ed94764
-> f77
-> > 70bb9e11d7424: command returned error: 128 if I do the same with --=
-no-
-> follow-parent, it works, but I assume then I=E2=80=99m losing the bra=
-nch/tag
-> connection to the trunk. If I=E2=80=99m losing the branches I can liv=
-e with it (I think I
-> did more branching in the last days with git, then with subversion th=
-e last
-> year =E2=98=BA ), but I=E2=80=99m interested and if there is a possib=
-ility I=E2=80=99ll prefer to import the
-> subversion project completely.
-> >
-> >
-> >
-> > I did some further investigation:
-> > =E2=80=9Egit log a41f9bd5959dde85035bd047bf730cc62eaee12a=E2=80=9C =
-works giving me:
-> >     git-svn-id: [subversionrepo]/branches/Pluginstruktur-HEH@158
-> > ebb3a944-7b90-0446-bc25-369ed2d31b3f
-> > git log a41f9bd5959dde85035bd047bf730cc62eaee12a^ (this should be t=
-he
-> > parent, right?) says =E2=80=9Eunknown revision or path not in the w=
-orking
-> > tree.=E2=80=9C
-> >
-> >
-> >
-> > I think it=E2=80=99s a failure I did in subversion some months ago:
-> > Rev 158: Created an empty folder 'Pluginstruktur-HEH'.
-> > Rev 159: Deleted folder =E2=80=9A Pluginstruktur-HEH=E2=80=98 (don=E2=
-=80=99t ask why) Rev 160:
-> > branched from trunk to branches/Pluginstruktur-HEH
-> >
-> > So in Rev 158 there was an empty folder in branches, in Rev 159 no =
-folder
-> and in Rev160 a non empty folder out oft he trunk.
-> > Perhaps this ist the problem, because between Rev 158 and Rev159 th=
-ere
-> was a single empty folder an das I found out git doesn=E2=80=99t trac=
-k empty folders.
-> Perhaps that=E2=80=99s why Rev158 (git:
-> a41f9bd5959dde85035bd047bf730cc62eaee12a) doesn=E2=80=99t have a pare=
-nt here.
->=20
-> The problem is that r158 has no parent - you started with an empty fo=
-lder
-> and created a new root commit (just like git checkout --orphan) which
-> happens to be empty.
->=20
-> In several places, "git svn" assumes that "A^ B" makes sense, particu=
-lar that
-> A has a parent. We fixed a couple of these in the past, which is why =
-I asked
-> for your version above.
->=20
-> > Maybe you can shed some led in this and how I may solve this.  Can =
-I just
-> leave out revision 158 and 159 when doing git svn clone, because it w=
-as
-> nothing more than creating an empty folder and deleting an empty fold=
-er?
-> I=E2=80=99ve read somewhere on the net you can also use a svndump as =
-base for a git
-> import, perhaps I then may leave rev 158/159 out in the dumb, but I d=
-on=E2=80=99t
-> know how to use exactly an svndump as a git import and also if this w=
-uld be a
-> solution for me.
->=20
-> You could first clone up to and including r157, and then fetch from r=
-160 in
-> your case. Still, "git svn" should be able to cope.
+Background: We at LibreOffice are trying to use the 'filter'
+gitattributes feature to clean up line wrappings in po files.
 
-That lead me to the right direction: I was thinking of git cloning the =
-whole history and not thinking about that you could do a partitial clon=
-e of a subversion directory and then fetch from somewhere in between, s=
-o I did:
- git svn clone "[subversionrepo]"  [gitclonedir] -T trunk -b branches -=
-t tags --username [subversionuser] -r 0:157
- git svn fetch -r 160:HEAD
+The problem is that it seems the clean filter - which is supposed to be
+invoked only in case a new blob is created - is invoked even on
+clone/pull, and other developers are claiming that it slows down their
+workflow.
 
->=20
-> Michael
+Is this a bug? I don't exactly understand why this would be necessary.
 
-So left out the two misleading revisions  and it worked! Thanks again, =
-still learning on git :-)
-Regards,
-Harald
+Here is a short script to reproduce the issue:
+
+----
+rm -rf client*
+mkdir client
+cd client
+git init
+git config filter.po.clean 'echo foo >&2 && cat'
+git config filter.po.smudge cat
+echo '*.po filter=3Dpo' > .gitattributes
+touch foo.po
+git add .gitattributes foo.po
+git commit -m foo
+cd ..
+git clone client client2
+cd client2
+git config filter.po.clean 'echo foo >&2 && cat'
+git config filter.po.smudge cat  =20
+cd ..
+cd client
+echo aaa > foo.po=20
+git commit -am second
+cd ..
+cd client2/
+git pull
+----
+
+Its output here with 1.7.4.4:
+
+----
+$ sh test.sh=20
+Initialized empty Git repository in /home/vmiklos/git/t/client/.git/
+foo
+foo
+[master (root-commit) bbf8490] foo
+foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 .gitattributes
+ create mode 100644 foo.po
+Cloning into client2...
+done.
+foo
+[master foo
+foo
+e37f5ab] second
+foo
+foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+=46rom /home/vmiklos/git/t/client
+   bbf8490..e37f5ab  master     -> origin/master
+Updating bbf8490..e37f5ab
+foo
+Fast-forward
+foo
+ foo.po |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+----
+
+Any thoughts why the clean filter is invoked on pull?
+
+Thanks.
+
+--6nSyB+bcl/pT7+kx
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk2ivvUACgkQe81tAgORUJbuhQCeLcYxbfLVbcnuurLZocjQrarh
+RpQAn3k4/5DOAmLHUOAG0+r5BT0gcAKO
+=XsFP
+-----END PGP SIGNATURE-----
+
+--6nSyB+bcl/pT7+kx--
