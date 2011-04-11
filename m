@@ -1,79 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 00/11] Sequencer Foundations
-Date: Mon, 11 Apr 2011 00:38:19 -0500
-Message-ID: <20110411053819.GA6502@elie>
-References: <1302448317-32387-1-git-send-email-artagnon@gmail.com>
- <201104110518.04413.chriscool@tuxfamily.org>
- <alpine.LNX.2.00.1104110031530.14365@iabervon.org>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: git rebase --continue automatic --skip?
+Date: Mon, 11 Apr 2011 08:10:52 +0200
+Message-ID: <20110411061052.GD30820@m62s10.vlinux.de>
+References: <BANLkTi=Vc6kB5fvZrqMwDD+yHFb5qENQ8g@mail.gmail.com>
+ <20110409000351.GA7445@sigill.intra.peff.net>
+ <20110409130309.GC30820@m62s10.vlinux.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Apr 11 07:38:46 2011
+Cc: skillzero@gmail.com,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 11 08:11:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q99pj-00021M-MA
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 07:38:44 +0200
+	id 1Q9AL3-0001Uf-Hc
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 08:11:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651Ab1DKFi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 01:38:29 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:49299 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751474Ab1DKFi2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 01:38:28 -0400
-Received: by gyd10 with SMTP id 10so2035717gyd.19
-        for <git@vger.kernel.org>; Sun, 10 Apr 2011 22:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=H7HTWJgibGlcUXWwXCE/2PCti2wOIR6uUHQE0Oqghpo=;
-        b=rTf8wfTi95RsfuYi1UhnjBjs+iyYOosjduFx2DWryqhZkgqRLUfwfzibuOGIBaQSH9
-         RJ3YFY2uDxFr4ztCj20kG6HCqiu+9pyDuv/oeTpLe2Ql/MWio08zsTFG3V1+uz50Krix
-         36mJogMkUrGENVEfUv+axF3Y+sFAeIYVS101c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=qr4NETaBtbXOZL3uG9xz9pfiYUkAIlXn9bj2JU0C3DtddW5xChMcBF1rv7xeV6PAmj
-         8rRGIOOqB0o8f+KyGId1s1i8R8UFUhSNnIlWsCCor5PM+y5NLE1gbHRxvpXZivhRrHDE
-         ZMya87SUdVyxDsUAqdVtD+XfuO6x8kPZdhM7c=
-Received: by 10.151.18.4 with SMTP id v4mr4136653ybi.265.1302500307225;
-        Sun, 10 Apr 2011 22:38:27 -0700 (PDT)
-Received: from elie (adsl-69-209-51-92.dsl.chcgil.ameritech.net [69.209.51.92])
-        by mx.google.com with ESMTPS id t16sm2515684ybe.19.2011.04.10.22.38.24
-        (version=SSLv3 cipher=OTHER);
-        Sun, 10 Apr 2011 22:38:25 -0700 (PDT)
+	id S1752099Ab1DKGK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 02:10:59 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:50413 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751315Ab1DKGK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 02:10:59 -0400
+Received: (qmail invoked by alias); 11 Apr 2011 06:10:57 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp040) with SMTP; 11 Apr 2011 08:10:57 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX19QR+I/xApQW0AAPKGxxscLxbzH8Y8hjWIbCA9gOn
+	jc4pWfwnHYYMSf
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id E81C8D400C; Mon, 11 Apr 2011 08:10:52 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.1104110031530.14365@iabervon.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20110409130309.GC30820@m62s10.vlinux.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171306>
 
-Hi,
+On Sat, Apr 09, 2011 at 03:03:09PM +0200, Peter Baumann wrote:
+> On Fri, Apr 08, 2011 at 08:03:51PM -0400, Jeff King wrote:
+> > On Fri, Apr 08, 2011 at 01:30:01PM -0700, skillzero@gmail.com wrote:
+> > 
+> > > Is there a way to make git rebase --continue automatically do a --skip
+> > > if a conflict resolution ends up not needing the patch? Normally, git
+> > > rebase will just silently skip a patch if it's not needed, but if a
+> > > patch results in a conflict and I use git mergetool and end up
+> > > deleting all the changes, git rebase --continue stops and makes me
+> > > explicitly use --skip.
 
-Daniel Barkalow wrote:
+[ ... patch left out ... ]
 
-> But it's annoying that, in order 
-> to finish a conflicted "git cherry-pick <branch>", you currently need to 
-> go back and find the instruction that says to commit it yourself, with the 
-> option "-c <sha1>" to retain authorship and message.
+> > 
+> > I put it in rebase and not straight into "git am", as I'm not sure that
+> > "am" would want to share the same behavior. I'm not sure why we haven't
+> > done this up until now. Maybe there is some corner case I'm not thinking
+> > of where the user would want to do something besides skip when we hit
+> > this situation. I dunno.
+> > 
+> 
+> This was mentioned before on the list (sorry, don't have a reference, 
+> but it was a long time ago). AFAIR the reason it wasn't implemented yet is that
+> you will lose the commit message, which might contain precious information.
+> But with reflogs this shouldn't be a problem anymore.
+> 
 
-You might like v1.7.5-rc0~88^2 (Teach commit about CHERRY_PICK_HEAD,
-2011-02-19).
+I actually managed to find the thread I was remembering:
 
-> And if you want to 
-> abort it, you need to remember "git reset --hard HEAD" (and maybe you also 
-> want "git rerere clear").
+http://thread.gmane.org/gmane.comp.version-control.git/62854/focus=62907
 
-Hm, I had assumed reset --hard (or "git reset --merge HEAD") would
-take care of the "rerere clear" but it seems that indeed it doesn't.
+-Peter
