@@ -1,129 +1,116 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: git svn dcommit errors all no-yet-commited changes are left squashed/uncommited?
-Date: Mon, 11 Apr 2011 16:32:55 +0200
-Message-ID: <BANLkTim9KwBSjmZO0G7BHM=q7Jdy9=K=4w@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Converting merge to rebase in the presence of conflicts
+Date: Mon, 11 Apr 2011 16:39:43 +0200
+Message-ID: <4DA312AF.80100@drmicha.warpmail.net>
+References: <BANLkTi=krC6JMEWj=a5CY1vRCcmh9b+BaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 11 16:33:04 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?SHJ2b2plIE5pa8WhacSH?= <hniksic@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 16:40:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9IAl-000190-SK
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 16:33:00 +0200
+	id 1Q9IHZ-0005pH-Or
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 16:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412Ab1DKOc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 10:32:56 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:46529 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752321Ab1DKOc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 10:32:56 -0400
-Received: by vws1 with SMTP id 1so4148739vws.19
-        for <git@vger.kernel.org>; Mon, 11 Apr 2011 07:32:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=PS7tTxMNmgfnMSa7Bmo75qbODNNN3yKHwa7qRibMVKQ=;
-        b=qmiAMFiSqJjV3CNo7smHgu4N4hnr6fByn8M20TG/2xN97b3SlAsMACGeOGYSXjJd4U
-         Tc789LHveow51cdrhx4T5bFiB4JhTAcNEEdGci39Ke9GGDl6qeUVt9/KjgmV4HLZ3XYF
-         4qcAgSc/+i6LcCWDfhoO8D6zRy76VYJ2t/ZyI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=TH7layyshEdbwxH7KAVOEH0PO5vhszJIJn21J1ZzUtsDF17WwVkrysR1W0QE7/2lWy
-         28QqPgd/XCUfbCarD9yU40rQ2JaS15CMk9v/JW9HbrTDk8CwF37/tWae9DTP67KwgQ7K
-         8871xq4IFOmY01lj6K28f502c612RWH+SYj7g=
-Received: by 10.220.96.130 with SMTP id h2mr1604152vcn.121.1302532375366; Mon,
- 11 Apr 2011 07:32:55 -0700 (PDT)
-Received: by 10.220.177.198 with HTTP; Mon, 11 Apr 2011 07:32:55 -0700 (PDT)
+	id S1753153Ab1DKOjr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Apr 2011 10:39:47 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35115 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752944Ab1DKOjq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Apr 2011 10:39:46 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A3DC520BD5;
+	Mon, 11 Apr 2011 10:39:45 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 11 Apr 2011 10:39:45 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=zSiywo+s2KIbTuiPU1ndW1Xn6iI=; b=cl0JqGWe1KdQ7EBZZ9VbOrgpyKktIw0HgI4EAdFtardNND8uv5lPgt4hXzQL0fa26n/+knDudnaF3S+QhCymI7nZEpFVAuCbkyYDhNq6XFK45xj9FMymV/eexNa0sdQRNIxZ0eabYFmTNmCdSFmN7lSM62Q1SVO6jQVlu1Cv2QI=
+X-Sasl-enc: r6XxEFrJXvsQZg5GePbO2se3e7RBhmAkBVFSkyOue6Yx 1302532785
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2975044740A;
+	Mon, 11 Apr 2011 10:39:45 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <BANLkTi=krC6JMEWj=a5CY1vRCcmh9b+BaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171331>
 
-Hi,
+Hrvoje Nik=C5=A1i=C4=87 venit, vidit, dixit 11.04.2011 16:13:
+> Is it possible to convert a merge with (resolved) conflicts into a re=
+base?
+>=20
+> I find it useful to always pull commits with "git pull" because it is
+> less intrusive on my local commits (if any) than "git pull --rebase",
+> and it provides a nicer change summary. Also, conflict resolution
+> seems more intuitive when merging than when rebasing. And If I decide
+> later to rebase after all, I can simply issue "git rebase origin/bla"=
+=2E
+> As long as there are no conflicts.
+>=20
+> If the merge resolves conflicts, the subsequent rebase is unaware of
+> that, and the conflicts must be resolved once more. Here is an exampl=
+e
+> in a single repository that just uses 'merge' to show the scenario:
+>=20
+> # create a common file with two lines and branch off
+> printf 'foo\nbar\n' > a
+> git add a && git commit -m '' a
+> git add a && git commit -m 'Added.' a
+> git branch somebranch
+>=20
+> # now work on the file in both branches
+> echo baz >> a
+> git commit -m changed a
+> git checkout somebranch
+> echo qux >> a
+> git commit -m changed2 a
+>=20
+> # we're on somebranch and decide to merge our changes with master:
+> git merge master
+> vi a           # resolve conflicts
+> git add a
+> git commit     # commit the merge
+>=20
+> At this point say the developer on somebranch changes his mind and
+> wants to rebase after all. The result is, again, a conflict:
+>=20
+> # try to change merge to rebase
+> git rebase master
+> [... long output on conflicts ...]
+>=20
+> First, rewinding head to replay your work on top of it...
+> Applying: changed2
+> Using index info to reconstruct a base tree...
+> Falling back to patching base and 3-way merge...
+> Auto-merging a
+> CONFLICT (content): Merge conflict in a
+> Failed to merge in the changes.
+> Patch failed at 0001 changed2
+>=20
+> When you have resolved this problem run "git rebase --continue".
+> If you would prefer to skip this patch, instead run "git rebase --ski=
+p".
+> To restore the original branch and stop rebasing run "git rebase --ab=
+ort".
+>=20
+>=20
+> Is there a way to rebase the branch without redoing conflict
+> resolution? Some option to rebase, or a trick with rebase -i? The
+> conflict resolution must obviously go into some commit, it would be
+> nice to be able to choose whether to amend an existing commit with th=
+e
+> additional changes or to add a new commit.
+>=20
+> Hrvoje
 
-I've done some changes to "local" trunk, dcomitted them to svn server,
-then cherry-picked those changes to "local" branch and tried to
-dcommit them to svn.
-Several changes where successfully dcommited, but then I got an error.
+If you enable rerere before the merge then the merge resolution is
+recorded and can be reused by rebase. It still stops but applied the
+previous resolution automatically already.
 
-Two problems:
-1. after the error I'm left with changes not sent to svn server as
-unstaged changes
-2. git-svn errors if someone commits something to svn during my commit
-even if there is no conflict
-
-Even if the second problem is intentional (which I'm not sure is a
-good idea), the first problem means it's not possible to continue
-after the error (which is not really an error but should be a warning,
-even if it stops the dcommit).
-
-
-Full story:
-
-The log looked like this:
-
-[... this is the end of older commit, which succeeded ...]
-W: -empty_dir: cptests/branches/a_branch/src/file
-r23939 = 400e84221ca15be3976ba4dcd6d7a2eb1464b00e (refs/remotes/a_branch)
-No changes between current HEAD and refs/remotes/a_branch
-Resetting to the latest refs/remotes/a_branch
-Unstaged changes after reset:
-M	src/file
-[... next commit preparation and commit ...]
-	R	src/file
-Committed r23941
-	M	etc/file.xml
-r23940 = 420c7b2c8f155563a4f4c8e5421857846bf3ebe5 (refs/remotes/a_branch)
-	D	src/file
-[...]
-r23941 = 010c5b3883c473dd236de1a146fad1e90bd323fd (refs/remotes/a_branch)
-W: bfb909cb21e26930364331660460ccd7be355a2e and refs/remotes/a_branch
-differ, using rebase:
-:040000 040000 5df0982b1cf277dd7d915d32a9ff145554fb9c94
-a662095f06bd349c1a458d52697561ba9d005bac M	etc
-Cannot rebase: You have unstaged changes.
-Please commit or stash them.
-rebase refs/remotes/a_branch: command returned error: 1
-
-Now I was left with all the remaining changes "squashed" - git status
-showed a list of unstaged changes. So all changes not yet commited
-were in fact lost as commits and left in the working tree as one bit
-not-yet-added change.
-
-I believe the reason for this was that while I was dcommiting my
-changes someone changed the "etc/file.xml"
-
-So my previous dcommit was r23939 (src/*). Then someone else checked
-into svn r23940 (etc/file.xml). Then (or earlier) git svn dcommited
-r23941 (src/*). After that dcommit stopped with error.
-
-
-In this case I have just reset --hard and cherry-picked changes that
-were not commited, and it worked this time, but I wonder what should I
-do next time.
-What if those are not cherry-picked changes, but normal changes? Will
-I have to use reflog to get back in time?
-
-Also, I think in this case svn might continue with dcommit. It already
-commited one revision after the other-person commit. The other commit
-changed a completely different directory.
-
-Even if this is left as error, it should be possible to continue
-dcommit in an easy way. Not-commited changes should not be deleted and
-left as unstaged changes.
-
-Also, the "you have unstaged changes" error is not very helpful. I
-thought it meant it commited a change partially, or maybe some other
-weird thing happened.
-
-
-Thanks,
-
--- 
-Piotr Krukowiecki
+Michael
