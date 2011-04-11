@@ -1,123 +1,96 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: What's cooking in git.git (Apr 2011, #02; Wed, 6)
-Date: Mon, 11 Apr 2011 19:55:38 +0200
-Message-ID: <4DA3409A.9090206@web.de>
-References: <7v8vvni1t3.fsf@alter.siamese.dyndns.org>	<BANLkTinTVinnDLPnHGoF9DY97ky_MFiLAQ@mail.gmail.com>	<4DA23551.4040304@web.de> <BANLkTinRRJAvMrbUUwGTcgK+9-Bh5QATcA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug Report: git add
+Date: Mon, 11 Apr 2011 10:55:31 -0700
+Message-ID: <7v1v18y8oc.fsf@alter.siamese.dyndns.org>
+References: <4D9BA35E.6040204@dcook.org> <20110406055200.GA12547@kytes>
+ <m31v1a4keq.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 11 19:55:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Darren Cook <darren@dcook.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 11 19:55:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9LL1-0008Aa-RB
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 19:55:48 +0200
+	id 1Q9LL9-0008GU-Hv
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 19:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754845Ab1DKRzn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Apr 2011 13:55:43 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:55683 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754775Ab1DKRzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 13:55:42 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 2874E18C0F126;
-	Mon, 11 Apr 2011 19:55:41 +0200 (CEST)
-Received: from [93.240.123.81] (helo=[192.168.178.43])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Q9LKv-0005Zw-00; Mon, 11 Apr 2011 19:55:41 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
-In-Reply-To: <BANLkTinRRJAvMrbUUwGTcgK+9-Bh5QATcA@mail.gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/6pbikpOU8YpgqKT1aDoDkz90k3nhC8cIkKg7J
-	mwlB3xTAS35iLieziFQD85I5iBqO+lKfznNCG9FAxWY9HcqDLa
-	/9VIW15CBCQDBWQ/epZw==
+	id S1755033Ab1DKRzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 13:55:49 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62460 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754775Ab1DKRzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 13:55:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A2F44E1E;
+	Mon, 11 Apr 2011 13:57:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vFDasFndwagreuJeMPUr+fn3oms=; b=qwql2v
+	L1yeNqBVYXtCMQlJPG3oq0yi5mw3lGQbbkTR7CyMe7rcdg4hp9OLVIk7eIJ+lINn
+	+U8GymYGg9aswTRTGE8RwjA2aZ4W28ILNmIoz53eU3wqreAPr3ewuKzWFvQzHTf/
+	4rcFcP8xqRIakU0Nhgv3kbEOQeMOgXL8aKP50=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b/OL2Q6ttY48+3h5kuPqzv/SxK0MU/ha
+	DV9oF0fxc956f96GBzz4ikxlTWfEVUCx/eEBVtl8HxvGw94WCwDZMlgq/90lkdNS
+	PAHteTVnrkdnMWOY6+TuZb+yLkjEmcGLW/ENdTuywsj4fNoIsCdcHZnxHlT2ODdR
+	I7NFL/ZWnD4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 289FC4E19;
+	Mon, 11 Apr 2011 13:57:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9007B4E15; Mon, 11 Apr 2011
+ 13:57:31 -0400 (EDT)
+In-Reply-To: <m31v1a4keq.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Sun, 10 Apr 2011 00:48:49 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2FFE030A-6465-11E0-88F0-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171340>
 
-Am 11.04.2011 11:00, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> On Mon, Apr 11, 2011 at 00:55, Jens Lehmann <Jens.Lehmann@web.de> wro=
-te:
->> Am 10.04.2011 20:52, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>> On Wed, Apr 6, 2011 at 22:04, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->>>
->>>> * jl/submodule-fetch-on-demand (2011-03-06) 7 commits
->>>>  (merged to 'next' on 2011-03-20 at a5e452d)
->>>>  + fetch/pull: Describe --recurse-submodule restrictions in the BU=
-GS section
->>>>  + submodule update: Don't fetch when the submodule commit is alre=
-ady present
->>>>  + fetch/pull: Don't recurse into a submodule when commits are alr=
-eady present
->>>>  + Submodules: Add 'on-demand' value for the 'fetchRecurseSubmodul=
-e' option
->>>>  + config: teach the fetch.recurseSubmodules option the 'on-demand=
-' value
->>>>  + fetch/pull: Add the 'on-demand' value to the --recurse-submodul=
-es option
->>>>  + fetch/pull: recurse into submodules when necessary
->>>
->>> This series needs to be fixed to not fail tests with GETTEXT_POISON=
-=3DYesPlease.
->>
->> Maybe something like this? Junio, do you want me to squash the chang=
-es in
->> the patch series and resend it or should I send a new commit?
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Ok, as that series already hit master I'll hack up a new commit.
+> Currently I have TODO file in gitweb/ subdirectory, which is stored in
+> gitweb/.git repository.  Still it doesn't prevent me from "git add"-ing
+> e.g. 'gitweb/gitweb.perl' to git repository itself.
 
-> Sorry about the short mail yesterday, I had to take care of something=
-=2E
+I would have to say that it is somewhat a sensible thing to want to do
+from an individual contributor's point of view to keep track of personal
+notes on a subpart of a project in a separate repository.
 
-Same here :-)
+It however directly contradicts with the approach I suggested earlier,
+which resulted in Peff's patch
 
-> Anyway, that looks like it'll work, but the preferred way of doing it
-> is like it's done at the bottom of t3700-add.sh. I.e.:
->=20
-> test_expect_success 'git add --dry-run --ignore-missing of
-> non-existing file' '
->     test_must_fail git add --dry-run --ignore-missing track-this
-> ignored-file >actual.out 2>actual.err
-> '
->=20
-> test_expect_success C_LOCALE_OUTPUT 'git add --dry-run
-> --ignore-missing of non-existing file output' '
->     test_cmp expect.out actual.out &&
->     test_cmp expect.err actual.err
-> '
->=20
-> That is, split up each test into a test that tests the functionality
-> (i.e. exit codes) and one that tests the output.
->=20
-> That way we make sure that only things dependent on C locale output
-> are skipped under non-C locales.
+  http://thread.gmane.org/gmane.comp.version-control.git/170937/focus=171040 
 
-Thanks for explaining, that makes sense. Jonathan mentioned some time a=
-go
-that t5526 would benefit from testing the functionality rather than the
-output like it does now, so rewriting that test is on my maintenance li=
-st
-anyway. I'll have to find a locale independent way to check if the
-submodule paths are printed correctly, but I'll see if I can chop off t=
-he
-language specific parts of the output before doing the compare.
+and will be broken, I think.
 
-> Sometimes that's hard, in which case it's fine to just skip the entir=
-e thing.
+We could skip the check for a directory D where there already is a path
+D/P (where P has one or more path components, e.g. "file", "subdir/file")
+tracked and check only if D/.git is a git directory when adding path in D
+if there is no other D/P is tracked (and perhaps require --force), if we
+really wanted to keep supporting what you are doing.  But I do not think
+it is worth doing, considering the possibility that such a loophole would
+lead to even more confusing behaviour to new users.
 
-That shouldn't be necessary for t5526, I'll tackle that when I find som=
-e
-time. The question is: Do we need a commit now adding the prerequisite =
-as
-a band aid fix to restore the ability to successfully run the test suit=
-e
-with GETTEXT_POISON=3DYesPlease, or do we have some time so I can rewri=
-te
-t5526 properly to not depend on the language anymore?
+If there is an equally easy way of keeping track of personal notes in a
+subpart of a larger project like you do, without having an unrelated .git/
+directory in a worktree that is controlled by a project and mixing files
+in a single directory in such a way that some belong to the main project
+while others belong to the unrelated "personal notes" project, I would
+rather see us recommend such an approach, and declare that your use case
+is forbidden, as it would give us a far easier to explain rule: "files in
+one directory can be controlled only by one .git/ directory".
+
+Besides, if the subpart of the project you are interested in and want to
+have personal notes about were at the top-level of the project, you
+wouldn't be using the same workflow as you currently do, as you cannot
+obviously have two .git/ at the same level.
