@@ -1,65 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] strbuf: make sure buffer is zero-terminated
-Date: Mon, 11 Apr 2011 14:49:26 -0700
-Message-ID: <7v8vvgtq55.fsf@alter.siamese.dyndns.org>
-References: <1302468858-7376-1-git-send-email-kusmabite@gmail.com>
- <20110410205711.GA2069@sigill.intra.peff.net>
- <BANLkTinKzatY-1kxLJ73TeDyMW175pr77A@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv2 3/3] Teach --dirstat to not completely ignore rearranged
+ lines within a file
+Date: Mon, 11 Apr 2011 23:56:07 +0200
+Message-ID: <201104112356.09408.johan@herland.net>
+References: <7vtye834al.fsf@alter.siamese.dyndns.org>
+ <1302475732-741-4-git-send-email-johan@herland.net>
+ <7vtye4tqmk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, jwa@urbancode.com,
-	drew.northup@maine.edu
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon Apr 11 23:49:46 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 23:56:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9OzS-0005Cn-EZ
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 23:49:46 +0200
+	id 1Q9P5r-0000RF-DS
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 23:56:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab1DKVtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 17:49:41 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53060 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753167Ab1DKVtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 17:49:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E79914D99;
-	Mon, 11 Apr 2011 17:51:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=2Pbfrm/xpu4ArZIxfOGzs6soPeE=; b=YL4izOGBuCOL3/q2Ja8y
-	pm5snPJOzJxVOxYiUpR4IMo/LvSTUQ1Sa36EftQhAFf+gWO7JSjsh0uRMEXE4sum
-	928BkyKtp9j6bZJmJL4/1TVcBhNhko+/LmQpH9R4k33TPXB9yTgIt7AM1cmmZAWm
-	ndcQ6g67xLiZdtWNcEPB2iw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=mLRDXjrirjhokshNTiQUwk0gRfPEGT9NRTDfJjoxw2+VVg
-	MReznrV3g6j2jm18rE6MUw5UZ+WyoPR88YkdpIPkWM7e4HXzRbZlYLsY8tTXF/9c
-	TyijTsKO/tX76yqJgbXxX0j23vx7idw3k8vTLoprp3a39VJ5dNzT99gRSbAao=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 92EE94D97;
-	Mon, 11 Apr 2011 17:51:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E64B64D96; Mon, 11 Apr 2011
- 17:51:25 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DD2370E0-6485-11E0-8DF9-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755982Ab1DKV4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 17:56:18 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:39407 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754507Ab1DKV4R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 17:56:17 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LJI00G4JCXRW0C0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 11 Apr 2011 23:56:15 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 0146A1EA5759_DA378FFB	for <git@vger.kernel.org>; Mon,
+ 11 Apr 2011 21:56:15 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id DA0301EA2EA9_DA378FEF	for <git@vger.kernel.org>; Mon,
+ 11 Apr 2011 21:56:14 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LJI0017ACXQ7C40@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 11 Apr 2011 23:56:14 +0200 (MEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.2; x86_64; ; )
+In-reply-to: <7vtye4tqmk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171364>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Monday 11 April 2011, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > Currently, the --dirstat analysis fails to detect when lines within a
+> > file are rearranged, because the "damage" calculated by show_dirstat()
+> > is 0. However, if the SHA1 sum has changed, we already now that there
+> > should be at least some minimum amount of damage.
+> 
+> This logic is sensible, modulo that "fails to detect" is actually
+> "ignores mere line movements on purpose".
 
-> You're right. How about something like this instead?
->
-> strbuf_init does not zero-terminate the initial buffer when hint is
-> non-zero. Fix this so we can rely on the string to be zero-terminated
-> even if we haven't filled it with anything yet.
+I apologize for my commit message not having caught up with discussion 
+around this issue. I came into the discussion from the POV of "--dirstat 
+does not pick up what --stat picks up; there must be a bug in --dirstat", 
+and my original objective was therefore to "fix" --dirstat to be "more like 
+--stat". Obviously, I now know exactly why --dirstat is different, and that 
+we don't want to fundamentally change it. My commit message should have been 
+rephrased in a more positive light as a result. Feel free to fix before 
+applying.
 
-Sounds sensible.  Thanks, both.
+> In any case, if the object names are different, we already know that
+> there is _some_ damage, and it is very unintiutive to claim that there
+> is _no_ damage.
+
+Agreed.
+
+> > This patch teaches show_dirstat() to assign a minimum amount of damage
+> > (== 1) to entries for which the analysis otherwise yields zero damage.
+> 
+> So it is perfectly in line with the above logic to give a minimum here.
+> Zero was simply just unintuitive, and this is a good fix to the problem.
+> 
+> > Obviously this is not a complete fix, but it's at least better to
+> 
+> I however do not understand what "a complete fix" means in this context.
+> You've fixed the unintuitiveness, and as far as the description in the
+> introductory paragraph of the problem goes, I think this already is a
+> complete fix.
+
+I still feel that a file with 1000 rearranged lines should somehow count 
+"more" than a file with only 1 rearranged line, but it's hard to get there 
+without futzing with diffcore_count_changes(), probably making the whole 
+thing considerably more expensive... So in that sense, I agree that the 
+current solution is probably as complete as we can get.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
