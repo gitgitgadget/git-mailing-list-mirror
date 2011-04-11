@@ -1,136 +1,161 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: gitattributes - clean filter invoked on pull?
-Date: Mon, 11 Apr 2011 10:42:29 +0200
-Message-ID: <20110411084229.GW5146@genesis.frugalware.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6nSyB+bcl/pT7+kx"
-Cc: timar74@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 11 10:42:40 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] rerere: Expose an API corresponding to 'clear' functionality
+Date: Mon, 11 Apr 2011 14:21:56 +0530
+Message-ID: <1302511916-23320-1-git-send-email-artagnon@gmail.com>
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 11 10:52:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9Chi-0001q1-HG
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 10:42:39 +0200
+	id 1Q9Cre-0007Dd-No
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 10:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754928Ab1DKImd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 04:42:33 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:36866 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754839Ab1DKImc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 04:42:32 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E25115809E;
-	Mon, 11 Apr 2011 10:42:29 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id A583744965;
-	Mon, 11 Apr 2011 10:42:29 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id DB7441358449; Mon, 11 Apr 2011 10:42:29 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755227Ab1DKIwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 04:52:49 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:47466 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755005Ab1DKIwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 04:52:49 -0400
+Received: by iyb14 with SMTP id 14so5403692iyb.19
+        for <git@vger.kernel.org>; Mon, 11 Apr 2011 01:52:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=KYkFU1yVlGQXZP8y/WhBdEvWPJoIyqC9AXpdLPa5izc=;
+        b=h8vwu/SfcyqIfGURpAqBtoe+dD7JnrKDay6XGBg0HlpBSdmAB0ZYW3y2BoP/B6CrJ8
+         tpBxNrRRHA7XbSyFLvlEnKZMPtAOqZGEiLGbENIG96fX4bXJ88aQRtFzoKhVyBkl87dj
+         yr9OxkWIQ8feQzcsSWEV9/KZdgcQo9Y/q3AsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Mt7tTZeyfjLr3YC0wj3khVlm1CfvCURSC3ulrcK/CsZ0yFbuM4jCNsmoSBBpDbzQVa
+         dPM4H21wR5KESJuSfO/jdddVz6G5BMLJcQC1bjeaRezPWSmjF9Zs/CoD8KGP5YwYHWsN
+         iCzXhQIfEfiahkNsYf/N5TaiIwk0T8KfGqOtI=
+Received: by 10.231.25.137 with SMTP id z9mr5217032ibb.53.1302511968593;
+        Mon, 11 Apr 2011 01:52:48 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id d9sm4086481ibb.19.2011.04.11.01.52.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 11 Apr 2011 01:52:47 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171314>
 
+Expose a new function called rerere_clear, and rework
+'builtin/rerere.c' to use this when the corresponding command-line
+argument is passed.
 
---6nSyB+bcl/pT7+kx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+Ref: http://thread.gmane.org/gmane.comp.version-control.git/171255/focus=171273
 
-Hi,
+ builtin/rerere.c |   19 +++----------------
+ rerere.c         |   24 ++++++++++++++++++++++++
+ rerere.h         |    2 ++
+ 3 files changed, 29 insertions(+), 16 deletions(-)
 
-Background: We at LibreOffice are trying to use the 'filter'
-gitattributes feature to clean up line wrappings in po files.
-
-The problem is that it seems the clean filter - which is supposed to be
-invoked only in case a new blob is created - is invoked even on
-clone/pull, and other developers are claiming that it slows down their
-workflow.
-
-Is this a bug? I don't exactly understand why this would be necessary.
-
-Here is a short script to reproduce the issue:
-
-----
-rm -rf client*
-mkdir client
-cd client
-git init
-git config filter.po.clean 'echo foo >&2 && cat'
-git config filter.po.smudge cat
-echo '*.po filter=3Dpo' > .gitattributes
-touch foo.po
-git add .gitattributes foo.po
-git commit -m foo
-cd ..
-git clone client client2
-cd client2
-git config filter.po.clean 'echo foo >&2 && cat'
-git config filter.po.smudge cat  =20
-cd ..
-cd client
-echo aaa > foo.po=20
-git commit -am second
-cd ..
-cd client2/
-git pull
-----
-
-Its output here with 1.7.4.4:
-
-----
-$ sh test.sh=20
-Initialized empty Git repository in /home/vmiklos/git/t/client/.git/
-foo
-foo
-[master (root-commit) bbf8490] foo
-foo
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 .gitattributes
- create mode 100644 foo.po
-Cloning into client2...
-done.
-foo
-[master foo
-foo
-e37f5ab] second
-foo
-foo
- 1 files changed, 1 insertions(+), 0 deletions(-)
-remote: Counting objects: 5, done.
-remote: Compressing objects: 100% (2/2), done.
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
-=46rom /home/vmiklos/git/t/client
-   bbf8490..e37f5ab  master     -> origin/master
-Updating bbf8490..e37f5ab
-foo
-Fast-forward
-foo
- foo.po |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-----
-
-Any thoughts why the clean filter is invoked on pull?
-
-Thanks.
-
---6nSyB+bcl/pT7+kx
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAk2ivvUACgkQe81tAgORUJbuhQCeLcYxbfLVbcnuurLZocjQrarh
-RpQAn3k4/5DOAmLHUOAG0+r5BT0gcAKO
-=XsFP
------END PGP SIGNATURE-----
-
---6nSyB+bcl/pT7+kx--
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index 8235885..f3956bf 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -28,14 +28,6 @@ static time_t rerere_last_used_at(const char *name)
+ 	return stat(rerere_path(name, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
+ }
+ 
+-static void unlink_rr_item(const char *name)
+-{
+-	unlink(rerere_path(name, "thisimage"));
+-	unlink(rerere_path(name, "preimage"));
+-	unlink(rerere_path(name, "postimage"));
+-	rmdir(git_path("rr-cache/%s", name));
+-}
+-
+ static int git_rerere_gc_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "gc.rerereresolved"))
+@@ -142,19 +134,14 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
+ 		pathspec = get_pathspec(prefix, argv + 1);
+ 		return rerere_forget(pathspec);
+ 	}
++	if (!strcmp(argv[0], "clear"))
++		return rerere_clear();
+ 
+ 	fd = setup_rerere(&merge_rr, flags);
+ 	if (fd < 0)
+ 		return 0;
+ 
+-	if (!strcmp(argv[0], "clear")) {
+-		for (i = 0; i < merge_rr.nr; i++) {
+-			const char *name = (const char *)merge_rr.items[i].util;
+-			if (!has_rerere_resolution(name))
+-				unlink_rr_item(name);
+-		}
+-		unlink_or_warn(git_path("MERGE_RR"));
+-	} else if (!strcmp(argv[0], "gc"))
++	if (!strcmp(argv[0], "gc"))
+ 		garbage_collect(&merge_rr);
+ 	else if (!strcmp(argv[0], "status"))
+ 		for (i = 0; i < merge_rr.nr; i++)
+diff --git a/rerere.c b/rerere.c
+index 22dfc84..f8da9bd 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -25,6 +25,14 @@ const char *rerere_path(const char *hex, const char *file)
+ 	return git_path("rr-cache/%s/%s", hex, file);
+ }
+ 
++void unlink_rr_item(const char *name)
++{
++	unlink(rerere_path(name, "thisimage"));
++	unlink(rerere_path(name, "preimage"));
++	unlink(rerere_path(name, "postimage"));
++	rmdir(git_path("rr-cache/%s", name));
++}
++
+ int has_rerere_resolution(const char *hex)
+ {
+ 	struct stat st;
+@@ -671,3 +679,19 @@ int rerere_forget(const char **pathspec)
+ 	}
+ 	return write_rr(&merge_rr, fd);
+ }
++
++int rerere_clear(void)
++{
++	int i, fd;
++	struct string_list merge_rr = STRING_LIST_INIT_DUP;
++
++	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
++	for (i = 0; i < merge_rr.nr; i++) {
++		const char *name = (const char *)merge_rr.items[i].util;
++		if (!has_rerere_resolution(name))
++			unlink_rr_item(name);
++	}
++	string_list_clear(&merge_rr, 1);
++	unlink_or_warn(git_path("MERGE_RR"));
++	return 0;
++}
+diff --git a/rerere.h b/rerere.h
+index 595f49f..b9ab839 100644
+--- a/rerere.h
++++ b/rerere.h
+@@ -16,8 +16,10 @@ extern void *RERERE_RESOLVED;
+ extern int setup_rerere(struct string_list *, int);
+ extern int rerere(int);
+ extern const char *rerere_path(const char *hex, const char *file);
++extern void unlink_rr_item(const char *name);
+ extern int has_rerere_resolution(const char *hex);
+ extern int rerere_forget(const char **);
++extern int rerere_clear(void);
+ extern int rerere_remaining(struct string_list *);
+ 
+ #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
+-- 
+1.7.4.rc1.7.g2cf08.dirty
