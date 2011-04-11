@@ -1,137 +1,77 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC PATCH 00/11] Sequencer Foundations
-Date: Mon, 11 Apr 2011 16:18:02 +0530
-Message-ID: <20110411104801.GA18448@kytes>
-References: <1302448317-32387-1-git-send-email-artagnon@gmail.com>
- <201104110518.04413.chriscool@tuxfamily.org>
- <20110411044900.GA20939@kytes>
- <201104110820.20342.chriscool@tuxfamily.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: gitattributes - clean filter invoked on pull?
+Date: Mon, 11 Apr 2011 13:14:28 +0200
+Message-ID: <20110411111428.GD5146@genesis.frugalware.org>
+References: <20110411084229.GW5146@genesis.frugalware.org>
+ <20110411091919.GE28959@kytes>
+ <4DA2CED1.6070107@drmicha.warpmail.net>
+ <20110411101614.GB5146@genesis.frugalware.org>
+ <4DA2DAC6.1010009@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Apr 11 12:49:00 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Guq+xBHXhbnAFmh4"
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	timar74@gmail.com
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Apr 11 13:14:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9Efv-00022C-TI
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 12:48:56 +0200
+	id 1Q9F4q-0007xR-QM
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 13:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754899Ab1DKKsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 06:48:50 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:59346 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754553Ab1DKKst (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 06:48:49 -0400
-Received: by iwn34 with SMTP id 34so5494381iwn.19
-        for <git@vger.kernel.org>; Mon, 11 Apr 2011 03:48:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=OfOciHdTZkalai5IUv6KUuBWIxktxtfF6R56dP+MXyY=;
-        b=P6Be2SdqL7WbwEEFLyLBghWWDmVQZ1VWboBNhh/dlrR+x+ISju+xV5t9NVXwOXd4lm
-         9YZeGTFJSoFXFtScYoF9L/IL0qpUE87U1iJAtJfwSlxt6pjq2zySAon92s4rUyJLnqa0
-         WbRLJMmnMDP8GoDOMnKquD31X0DGyaZb8Adko=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ec398EPkdltYyUJI1FBc8yUDmIJ9l+ZNLK1Gs0boK6TU+vtg8E9xRUrF+99ebb1uY5
-         4YMEsgYngGolLdPEmHHl0cO0fbS6vd6iejAa5Ex8tZNRMsOav+eem0pz7WiC4SVNPOoS
-         DACiivcuZrpt12kh8/OzoJ1ovK0RLLVblvDzs=
-Received: by 10.43.46.136 with SMTP id uo8mr3670799icb.346.1302518929243;
-        Mon, 11 Apr 2011 03:48:49 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id e9sm4151362ibb.15.2011.04.11.03.48.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Apr 2011 03:48:48 -0700 (PDT)
+	id S1755382Ab1DKLOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 07:14:35 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:59877 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754232Ab1DKLOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 07:14:35 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 283EA580AB;
+	Mon, 11 Apr 2011 13:14:28 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 0BE2B44965;
+	Mon, 11 Apr 2011 13:14:28 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 5124F1358449; Mon, 11 Apr 2011 13:14:28 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <201104110820.20342.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <4DA2DAC6.1010009@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171328>
 
-Hi Christian,
 
-Christian Couder writes:
-> On Monday 11 April 2011 06:49:05 Ramkumar Ramachandra wrote:
-> > > > 3. From the format of the TODO and DONE files, one more thing should
-> > > > be clear- I'm trying to stick to a slight variation of the 'rebase -i'
-> > > > format.  This part will go into the sequencer.  Then I'll use a
-> > > > cherry-pick specific file to keep the command-line options.  Yes, I'm
-> > > > trying to work on Daniel's idea [3] from the very start.  Is this a
-> > > > good idea?
-> > > 
-> > > I think that the TODO and DONE file format will need at one point to
-> > > include options and it is simpler if this change is done early. Using a
-> > > cherry-pick specific file to keep the options is not very generic for a
-> > > sequencer that could be used for many things.
-> > > 
-> > > For example, as we have rebase --interactive, we will probably want to
-> > > have cherry-pick --interactive, and when editing the TODO file we might
-> > > want to use different cherry-pick options when picking different
-> > > commits.
-> > 
-> > Point noted -- I shouldn't narrow down the various things I can do
-> > with a single commit early on and lock us into a more restrictive
-> > design.  However, I'm not in favor of making it too generic; I
-> > certainly wouldn't like to edit an instruction sheet that looks like
-> > this:
-> > 
-> > cherry-pick -m 1 -s -r 83a4fe9
-> > revert -n 3a6fe42
-> > cherry-pick -x --ff dacfe41
-> > cherry-pick -s recursive -Xpatience b31d4e2
-> 
-> I wouldn't like either, but I would like it even less if it was like this:
-> 
-> pick 83a4fe9 # -m 1 -s -r 
-> revert 3a6fe42 # -n 
-> pick dacfe41 # -x --ff 
-> pick b31d4e2 # -s recursive -Xpatience 
-> 
-> I mean that of course people should not use too many options for no good 
-> reason, but if they do need to use some options, it's better if they are shown 
-> like in a shell, as they will be more familiar with them this way.
-> 
-> There is no point of making options look different to prevent people from 
-> abusing them.
+--Guq+xBHXhbnAFmh4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You're right -- no point obscuring things.  I can't help thinking that
-there must be a more elegant representation.  I'll think about it for
-a while, and try to come up with something.
+On Mon, Apr 11, 2011 at 12:41:10PM +0200, Michael J Gruber <git@drmicha.war=
+pmail.net> wrote:
+> git config diff.po.textconv 'msgcat - --no-wrap'
+> git config diff.po.cachetextconv true
+>=20
+> If you want to normalise the repo, you may want to look at hooks instead
+> of clean/smudge if they are a performance problem.
 
-> > It'll become impossible to tell which options are disallowed over what
-> > else, and it'll become a nightmare to debug when something goes wrong.
-> > My idea is that we add commit-specific options in an optional
-> > backward-compatible manner later:
-> > 
-> > pick 83a4fe9
-> > revert 3a6fe42 # -n
-> > pick dacfe41 # -s
-> > pick b31d4e2
-> > 
-> > That way, there'll be two sets of options:
-> > 
-> > 1. One "global" set of command-line switches that applies
-> > to all the commits, which will be written to a command-specific
-> > location.  The sequencer itself knows nothing about this.
-> 
-> I don't see the point of this global set. And if the sequencer knows nothing 
-> about it, the user may not know about it too and so may not understand how 
-> things work.
+Ah - using hooks instead is indeed a better option.
 
-Hm.  I originally wanted this so that each commit in the instruction
-sheet isn't polluted with the same command-line options, but this
-doesn't seem to be a good solution.
+Thanks!
 
--- Ram
+--Guq+xBHXhbnAFmh4
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk2i4pQACgkQe81tAgORUJa0MQCeOSwL8d+d3w3DjgEqMBCsyOwE
+eskAoJvN5YBeoN7HzlxJfPmKeWQyveU8
+=1lGj
+-----END PGP SIGNATURE-----
+
+--Guq+xBHXhbnAFmh4--
