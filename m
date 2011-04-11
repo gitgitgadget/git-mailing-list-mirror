@@ -1,72 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 2/3] --dirstat-by-file: Make it faster and more correct
-Date: Mon, 11 Apr 2011 11:14:57 -0700
-Message-ID: <7vwrj0wt7i.fsf@alter.siamese.dyndns.org>
-References: <7vtye834al.fsf@alter.siamese.dyndns.org>
- <1302475732-741-1-git-send-email-johan@herland.net>
- <1302475732-741-3-git-send-email-johan@herland.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug Report: git add
+Date: Mon, 11 Apr 2011 14:20:38 -0400
+Message-ID: <20110411182038.GA17928@sigill.intra.peff.net>
+References: <4D9BA35E.6040204@dcook.org>
+ <20110406055200.GA12547@kytes>
+ <m31v1a4keq.fsf@localhost.localdomain>
+ <7v1v18y8oc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Apr 11 20:15:18 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Darren Cook <darren@dcook.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 20:20:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9Ldt-0003Uq-IS
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 20:15:17 +0200
+	id 1Q9LjE-0006oY-0Y
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 20:20:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754954Ab1DKSPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 14:15:09 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56636 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754236Ab1DKSPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 14:15:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B32C050F4;
-	Mon, 11 Apr 2011 14:17:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eT4UGmZcz4OyBRA8f9SBW1glc/0=; b=c6Ol6E
-	aevFZO1ydPSsGLUjnamYWs6+YXKxxG7eCooaCKqK4bKt7Rj4m3K2aimtJJRK3rq8
-	A4n0cT3Kx8jCOOLUlf7iBgQHVnd+OF+4k2/8LRU4Zoh1vNe+MCUPu44KVAZhZxnC
-	yOHbdWZ8GXHk8koKr4TIDFGlJ+6PyUXViy6CM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=egArpVziGeqk4fyjFrrMHZmX4F3MpjoH
-	oVU34qyCe7iKIkAouQz8+zwu8fvg3GKjuHtkKUtTv0kofkhqrQ4SesvfwALDRBPy
-	w30FNzsf7XfV43Q8p7X70XqazKXjYUictmup/JKiJd7ZNIJT1gmi227fLHawrtE9
-	t4UdwJuKWO4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6E67450F1;
-	Mon, 11 Apr 2011 14:17:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4E3D450F0; Mon, 11 Apr 2011
- 14:16:57 -0400 (EDT)
-In-Reply-To: <1302475732-741-3-git-send-email-johan@herland.net> (Johan
- Herland's message of "Mon, 11 Apr 2011 00:48:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E55C124E-6467-11E0-8AA7-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755043Ab1DKSUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 14:20:42 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34881
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752984Ab1DKSUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 14:20:42 -0400
+Received: (qmail 2994 invoked by uid 107); 11 Apr 2011 18:21:31 -0000
+Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Apr 2011 14:21:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Apr 2011 14:20:38 -0400
+Content-Disposition: inline
+In-Reply-To: <7v1v18y8oc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171344>
 
-Johan Herland <johan@herland.net> writes:
+On Mon, Apr 11, 2011 at 10:55:31AM -0700, Junio C Hamano wrote:
 
-> Currently, when using --dirstat-by-file, it first does the full --dirstat
-> analysis (using diffcore_count_changes()), and then resets 'damage' to 1,
-> if any damage was found by diffcore_count_changes().
->
-> But --dirstat-by-file is not interested in the file damage per se. It only
-> cares if the file changed at all. In that sense it only cares if the blob
-> SHA1 for a file has changed. We therefore only need to compare the SHA1s
-> of each file pair in the diff queue. As a result, we can skip the entire
-> --dirstat analysis and simply set 'damage' to 1 for each entry where the
-> SHA1 has changed.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Currently I have TODO file in gitweb/ subdirectory, which is stored in
+> > gitweb/.git repository.  Still it doesn't prevent me from "git add"-ing
+> > e.g. 'gitweb/gitweb.perl' to git repository itself.
+> 
+> I would have to say that it is somewhat a sensible thing to want to do
+> from an individual contributor's point of view to keep track of personal
+> notes on a subpart of a project in a separate repository.
+> 
+> It however directly contradicts with the approach I suggested earlier,
+> which resulted in Peff's patch
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/170937/focus=171040 
+> 
+> and will be broken, I think.
 
-Very sensible.  Thanks.
+Interestingly, I came across a similar situation yesterday. I have a
+project with asciidoc documentation, and I was looking at making the
+built forms available on a separate ref (similar to how you do the
+html/man docs in git). One way I came up was to make a repo in
+"Documentation/.git" which ignored all of the "*.txt" sources (which
+tracked by the main repo) but track all of the built "*.html" files
+(which are ignored by the main repo).
+
+Which is exactly the kind of setup my patch tries to declare invalid.
+But then I decided that what I was considering was too gross and
+error-prone, and maybe it _should_ be banned. :)
+
+In particular, some flaws I considered are:
+
+  1. it is easy to get meta-files like ".gitignore" mixed up
+     between the two repositories. And in fact, you have no way in the
+     sub-repository to ignore the files from the parent repository
+     except by using the non-tracked $GIT_DIR/info/exclude file. And
+     without that, you can never use "git clean" in the sub-repository.
+
+  2. When you want to add/commit files in the sub-directory to the main
+     repository, you must do so from _outside_ that directory. Otherwise
+     git will find the sub-repository's .git dir and you accidentally
+     add them to the sub-repository.
+
+> If there is an equally easy way of keeping track of personal notes in a
+> subpart of a larger project like you do, without having an unrelated .git/
+> directory in a worktree that is controlled by a project and mixing files
+> in a single directory in such a way that some belong to the main project
+> while others belong to the unrelated "personal notes" project, I would
+> rather see us recommend such an approach, and declare that your use case
+> is forbidden, as it would give us a far easier to explain rule: "files in
+> one directory can be controlled only by one .git/ directory".
+
+It works fine if you just put the notes in their own directory, i.e.:
+
+  git init gitweb/local &&
+  $EDITOR gitweb/local/notes
+
+And if you have just the single-file case, you can always do:
+
+  ln -s local/notes gitweb/notes &&
+  echo gitweb/notes >.git/info/exclude
+
+to overlay it in the parent tree. You do have to chdir into the sub-repo
+to actually commit, but that is a _good_ thing, because it means you're
+not accidentally commiting changes to "gitweb.perl" to the sub-repo.
+
+I do something similar with my config.mak, which I track in my own Meta
+sub-repo but symlink into place in the main git repository.
+
+-Peff
