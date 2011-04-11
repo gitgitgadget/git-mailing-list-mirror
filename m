@@ -1,80 +1,77 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Christian Couder <chriscool@tuxfamily.org>
 Subject: Re: [RFC PATCH 00/11] Sequencer Foundations
-Date: Sun, 10 Apr 2011 21:16:44 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.1104102028240.14365@iabervon.org>
-References: <1302448317-32387-1-git-send-email-artagnon@gmail.com> <20110410194739.GC28163@elie>
+Date: Mon, 11 Apr 2011 05:18:04 +0200
+Message-ID: <201104110518.04413.chriscool@tuxfamily.org>
+References: <1302448317-32387-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 11 03:16:54 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 05:18:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q95kL-0002NA-3F
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 03:16:53 +0200
+	id 1Q97ds-0006ek-Cw
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 05:18:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751663Ab1DKBQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2011 21:16:47 -0400
-Received: from iabervon.org ([66.92.72.58]:43915 "EHLO iabervon.org"
+	id S1753210Ab1DKDSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2011 23:18:14 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:53878 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751367Ab1DKBQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2011 21:16:46 -0400
-Received: (qmail 4575 invoked by uid 1000); 11 Apr 2011 01:16:44 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Apr 2011 01:16:44 -0000
-In-Reply-To: <20110410194739.GC28163@elie>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752270Ab1DKDSO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2011 23:18:14 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 092E9A62AC;
+	Mon, 11 Apr 2011 05:18:05 +0200 (CEST)
+User-Agent: KMail/1.13.5 (Linux/2.6.35-22-generic; KDE/4.5.1; x86_64; ; )
+In-Reply-To: <1302448317-32387-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171301>
 
-On Sun, 10 Apr 2011, Jonathan Nieder wrote:
-
-> > 3. From the format of the TODO and DONE files, one more thing should
-> > be clear- I'm trying to stick to a slight variation of the 'rebase -i'
-> > format.  This part will go into the sequencer.  Then I'll use a
-> > cherry-pick specific file to keep the command-line options.  Yes, I'm
-> > trying to work on Daniel's idea [3] from the very start.  Is this a
-> > good idea?
+On Sunday 10 April 2011 17:11:46 Ramkumar Ramachandra wrote:
+> Hi,
 > 
-> This is still bouncing in my head.  I think I like it --- is the idea
-> that some day you could put commands like
-> 
-> 	am topic.mbox
-> 
-> in your insn sheet, or do nested rebases with a --force-nested option?
-> That does sound useful.  How would one request "skip to the next
-> operation in the outer rebase" on the command line?  This is starting
-> to feel like a debugger.
+> I've started working on building a sequencer for Git.  
 
-The most basic idea is that, in the case of a rebase where a patch fails 
-to apply, there are actually two levels of operation that have to be 
-deferred until after the human intervention: making the commit where the 
-pick failed, and applying further patches. If there are going to be 
-multiple higher-level operations (e.g., rebase and rebase -i), they should 
-be able to share the completion of the pick operation, and a basic "git 
-cherry-pick <sha1>" ought to be able to share it, too, so you can finish 
-that up without having to remember what the command is. People should be 
-able to implement custom higher-level operations (e.g., "cherry-pick all 
-the commits attached to bugs in bugzilla that block the release tracker" 
-or something), they should be able to rely on library code that knows how 
-to finish the conflicted cherry-pick. (Another interesting example might 
-be "reconstruct the linux-next tree", which is a series of merges, and 
-which should have --continue share the post-intervention code from the 
-single merge process before going on to do the custom higher-level thing.)
+So you are starting the GSoC early! Great!
+When (or before) it really starts, just make sure you put your work on a 
+public Git repository and you send status updates regularly (weekly if 
+possible).
 
-My feeling is that "--skip" is actually "abort the pick, but continue the 
-rebase". I suppose there could be more than two levels, and people could 
-want to skip a higher-level chunk, but that's something to get to when 
-someone actually wants it; we've obviously already got the two-level 
-situation now, so we can implement that.
+> 3. From the format of the TODO and DONE files, one more thing should
+> be clear- I'm trying to stick to a slight variation of the 'rebase -i'
+> format.  This part will go into the sequencer.  Then I'll use a
+> cherry-pick specific file to keep the command-line options.  Yes, I'm
+> trying to work on Daniel's idea [3] from the very start.  Is this a
+> good idea?
 
-	-Daniel
-*This .sig left intentionally blank*
+I think that the TODO and DONE file format will need at one point to include 
+options and it is simpler if this change is done early. Using a cherry-pick 
+specific file to keep the options is not very generic for a sequencer that could 
+be used for many things.
+
+For example, as we have rebase --interactive, we will probably want to have 
+cherry-pick --interactive, and when editing the TODO file we might want to use 
+different cherry-pick options when picking different commits.
+
+This would also make the different cherry-pick options available when using 
+rebase --interactive once it uses the sequencer.
+
+> [1]:
+> http://thread.gmane.org/gmane.comp.version-control.git/170758/focus=170908
+> [2]: http://thread.gmane.org/gmane.comp.version-control.git/162183 [3]:
+> http://thread.gmane.org/gmane.comp.version-control.git/170758/focus=170834
+
+[3] is missing here.
+
+Thanks,
+Christian.
