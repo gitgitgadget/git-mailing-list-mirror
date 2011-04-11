@@ -1,156 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool: Teach about submodules
-Date: Mon, 11 Apr 2011 12:53:55 -0700
-Message-ID: <7v62qkwomk.fsf@alter.siamese.dyndns.org>
-References: <1302321570-85987-1-git-send-email-me@JonathonMah.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2] Allow git mv FileA fILEa on case ignore file systems
+Date: Mon, 11 Apr 2011 22:05:54 +0200
+Message-ID: <4DA35F22.7090006@web.de>
+References: <201103191528.34646.tboegi@web.de> <7vsjuitk59.fsf@alter.siamese.dyndns.org> <4DA144A5.2080103@web.de> <7vd3ksybfr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathon Mah <me@JonathonMah.com>
-X-From: git-owner@vger.kernel.org Mon Apr 11 21:54:17 2011
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kusmabite@gmail.com, Git Mailing List <git@vger.kernel.org>,
+	tboegi@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 22:06:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9NBf-0004ur-DB
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 21:54:15 +0200
+	id 1Q9NNM-0002wR-1a
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 22:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755723Ab1DKTyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 15:54:09 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62722 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755682Ab1DKTyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 15:54:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 79E565D88;
-	Mon, 11 Apr 2011 15:56:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5J2yML1PYuneT1TnvehzULDfAtI=; b=lSE0kT
-	NA5kfux+dRihMyZ1jxxt97cxQDyAGUaUnvzkyVh5a2NF62C1ZMfyUbjO9GJEfa//
-	ceo6Y12biMWpgywrV0wkH/z3lC0bUfnQw07r9esln6lvKiBWO5IkvRkv7LXqpBhR
-	3hrVbyjUsfd8CH1YfaMS7yUEyT6cWg+F4GZ2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NLNHBhUZ/gZicrSaSk79AaWJERyIw5FB
-	+j9GEY7NrpMZ6am6v1LY0kzEoGSiNtcf60pdN4BQz95JUnntGByUXzyDaIOGxcLe
-	HLGWJgTsbT28rsDtOEKD+BngI6XhrvawgTTWaTjou9OsZcizk3f8XibeVtlt2roX
-	FN9LQXDihHU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 499785D87;
-	Mon, 11 Apr 2011 15:55:58 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2AA845D83; Mon, 11 Apr 2011
- 15:55:54 -0400 (EDT)
-In-Reply-To: <1302321570-85987-1-git-send-email-me@JonathonMah.com> (Jonathon
- Mah's message of "Fri, 8 Apr 2011 20:59:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B801CB1E-6475-11E0-B5BE-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755853Ab1DKUGP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Apr 2011 16:06:15 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:54557 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755751Ab1DKUGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 16:06:14 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate01.web.de (Postfix) with ESMTP id E04F818C0F61C;
+	Mon, 11 Apr 2011 22:06:12 +0200 (CEST)
+Received: from [194.22.188.61] (helo=[192.168.209.16])
+	by smtp04.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #2)
+	id 1Q9NNE-0002gc-00; Mon, 11 Apr 2011 22:06:12 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110221 SUSE/3.1.8 Thunderbird/3.1.8
+In-Reply-To: <7vd3ksybfr.fsf@alter.siamese.dyndns.org>
+X-Sender: tboegi@web.de
+X-Provags-ID: V01U2FsdGVkX19AKLknljA25JNMfRQhmELAxczbMMwY4UMkClOk
+	EUaumWZ1JbG9beeSvEIyOIw/Avq4Iw+T9H63HsWLotwLQlZ9XV
+	ujjLBVDxY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171352>
 
-Jonathon Mah <me@JonathonMah.com> writes:
-
-> Mergetool mildly clobbered submodules, attempting to move and copy their
-> directories. It now recognizes submodules and offers a resolution:
-> Submodule merge conflict for 'Shared':
->   {local}: commit ad9f12e3e6205381bf2163a793d1e596a9e211d0
->   {remote}: commit f5893fb70ec5646efcd9aa643c5136753ac89253
-> Use (l)ocal or (r)emote, or (a)bort?
-
-I was confused when I first read the first sentence, because "when/under
-what condition" was missing.  I also suspect that we don't even have to
-say "mildly".  The reviewers can judge the severity themselves.
-
-When you can, please make the statement of the problem and the description
-of the solution into separate paragraphs.  It also makes it easier to read
-if you indent illustration (e.g. sample transcript) from your description.
-
-Perhaps like this:
-
-    When a merge in the superproject results in conflict at a submodule,
-    mergetool used to mildly clobber submodules, attempting to move and
-    copy their directories.
-
-    Recognize submodules and offer a resolution instead:
-
-      Submodule merge conflict for 'Shared':
-        {local}: commit ad9f12e3e6205381bf2163a793d1e596a9e211d0
-        {remote}: commit f5893fb70ec5646efcd9aa643c5136753ac89253
-      Use (l)ocal or (r)emote, or (a)bort?
-
-> Selecting a commit will stage it, but not update the submodule (as it
-> would had there been no conflict). Type changes are also supported,
-> should the path be a submodule on one side, and a file on the other.
+On 04/11/2011 06:55 PM, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen<tboegi@web.de>  writes:
 >
-> Signed-off-by: Jonathon Mah <me@JonathonMah.com>
-> ...
-> +resolve_submodule_merge () {
-> +    while true; do
-> +	printf "Use (l)ocal or (r)emote, or (a)bort? "
-> +	read ans
-> +	case "$ans" in
-> +	    [lL]*)
-> +		local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
-> +		if is_submodule "$local_mode"; then
-> +		    stage_submodule "$MERGED" $(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $2;}')
+>>> When two different _names_ "A" and "a" refer to a single file, the =
+only
+>>> thing that should happen for "git mv A a" is for the cache entry fo=
+r "A"
+>>> to be moved to cache entry for "a", and no rename("A", "a") should =
+be run,
+>>> but I don't see any such change in the code. It may happen to work =
+(or be
+>>> a no-op) on Windows, but because builtin/mv.c is supposed to be gen=
+eric
+>>> (and that is the reason you introduced the is_same_file() abstracti=
+on in
+>>> the first place), I'd still see this as a breakage.
+>>>
+>> Why shouldn't the rename() be done?
+>> "git mv A B" changes both the indes and the file system.
+>> Isn't it natural to have file name  "a" both in the index and in the
+>> file system after "git mv A a"?
+>> Note: Windows and MAC OS X allow "mv A a" from command line,
+>> while Linux on VFAT gives an error "'A' and 'a' are the same file".
+> Yeah, I forgot about the primary thing we are trying to do in this
+> discussion.  Sorry about that.  My thinking stopped at 'if we rename =
+"A"
+> to "a in the index, that is sufficient.  We already know that we can =
+still
+> open("A") because the filesystem is case insensitive.'
+>
+> In fact, we want both the index entry "A" renamed to "a" _and_ also w=
+e
+> want to see next "/bin/ls" to show "a", not "A".  For the latter, we =
+do
+> want to run rename(2) on them.
+>
+> There was another thing that made me worry about running rename(2) on=
+ two
+> equivalent filenames.  You said on Linux VFAT "mv A a" fails.  Does t=
+he
+> underlying rename(2) fail when you do this?
+>
+> 	status =3D rename("A", "a");
+>
+> If old and new resolve to the same existing directory entry or differ=
+ent
+> directory entries for the same existing file, POSIX says that rename(=
+old,
+> new) should succeed and perform no other action, so the above should
+> succeed on correctly implemented case insensitive filesystems.
+>
+> But we know not all FS implementations are perfect.  If this can resu=
+lt in
+> an unnecessary failure, it would be far better if we are careful to a=
+void
+> running rename("A", "a") and just rename the index entry to make sure=
+ "git
+> mv A a" succeeds, than trying to fulfil the "we want to see next '/bi=
+n/ls'
+> to show 'a' not 'A'" wish and make the whole "git mv A a" fail.
+>
+> But of course we can always blame the breakage on filesystems.  I am
+> leaning to prefer running rename("A", "a") unconditionally.
+>
+> Thanks.
+Thanks for reading and for the reply.
 
-If the version we had checked out and merging into has a submodule at the
-path, use that.  This part of the logic seem sensible.
+>You said on Linux VFAT "mv A a" fails
 
-Don't you already have local_mode from the caller here?  For that matter,
-don't you also have access to local_sha1 the caller already has computed?
+My excuses for being unclear, as "fails" often means returning -1 and=20
+setting errno.
+But this is not the case here. I should have said:
+rename("A", "a") returns 0 but does not rename the file.
 
-> +		else
-> +		    git checkout-index -f --stage=2 -- "$MERGED"
-> +		    git add -- "$MERGED"
+Here comes the  long version. I wrote a short program called "rename", =
+=20
+and run some tests.
+The /D is a VFAT partition, mounted writable for root only.
+-----------------------------------
+tb@wanderer:/D/test> ls
+A  B  x
+tb@wanderer:/D/test> rename A A
+rename A A res=3D0 Success
+tb@wanderer:/D/test> ls
+A  B  x
+tb@wanderer:/D/test> rename A a
+rename A a res=3D0 Success
+tb@wanderer:/D/test> ls
+A  B  x
+tb@wanderer:/D/test> rename A D
+rename A D res=3D-1 Permission denied
+tb@wanderer:/D/test>
+------------------------------------
 
-If what we had is not a submodule, then do a checkout-index.  Here you
-assume that we _must_ have a stage #2 entry, but is that always the case?
-
-Can we be in delete/modify conflict, where we had a submodule at the
-common ancestor, we removed the submodule while the other branch modified
-it?  What does this "else" clause do in such a case?
-
-The same comment applies symmetrically to the "remote" case, of course.
-
-> +stage_submodule () {
-> +    path="$1"
-> +    submodule_sha1="$2"
-> +
-> +    submodule_basename=$(basename "$path")
-> +    tree_with_module=$(echo "160000 commit $submodule_sha1	\"$submodule_basename\"" | git mktree --missing 2>/dev/null)
-> +    if test -z "$tree_with_module" ; then
-> +	echo "$path: unable to stage commit $sha1"
-> +	return 1
-> +    fi
-> +    git checkout $tree_with_module -- "$path"
-
-Are you looking for "git update-index --cacheinfo 160000 $sha1 $name"
-here, or is there something deeper going on?
-
-If not, please don't use the "primarily for debugging and hacking" command
-mktree for something like this to create a garbage tree object.
-
->  checkout_staged_file () {
->      tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
->  
-> +    if is_submodule "$local_mode" || is_submodule "$remote_mode"; then
-> +	echo "Submodule merge conflict for '$MERGED':"
-> +	local_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $2;}')
-> +	remote_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $2;}')
-> +	describe_file "$local_mode" "local" "$local_sha1"
-> +	describe_file "$remote_mode" "remote" "$remote_sha1"
-> +	resolve_submodule_merge
-> +	return
-
-I really hate these repeated "awk" invocations, here and then inside the
-callee.  As the script seems to use these as global variables, the callee
-shouldn't have to recompute local/remote-mode/sha1, no?
-
-Thanks.
+I had a short look into the Linux kernel. A comment in namei_vfat.c=20
+indicates that
+rename "filename" "FILENAME" is not supported for now.
+(and all respect and thanks from my side to the people who made VFAT=20
+working).
+(and of course to the git people)
