@@ -1,83 +1,115 @@
-From: =?UTF-8?B?SHJ2b2plIE5pa8WhacSH?= <hniksic@gmail.com>
-Subject: Re: Converting merge to rebase in the presence of conflicts
-Date: Mon, 11 Apr 2011 17:15:11 +0200
-Message-ID: <BANLkTinVUdmG56oPQXvMhFh6hLcFj3_jZg@mail.gmail.com>
-References: <BANLkTi=krC6JMEWj=a5CY1vRCcmh9b+BaQ@mail.gmail.com>
-	<4DA3182B.2030305@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [RFC PATCH] Chain squash!/fixup! commits on autosquash
+Date: Mon, 11 Apr 2011 17:34:24 +0200
+Message-ID: <1302536064-3922-1-git-send-email-cmn@elego.de>
+Cc: Kevin Ballard <kevin@sb.org>, Pat Notz <patnotz@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 11 17:15:24 2011
+X-From: git-owner@vger.kernel.org Mon Apr 11 17:34:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9Ipk-0004gz-6h
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 17:15:20 +0200
+	id 1Q9J8L-0000Ak-BQ
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 17:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754278Ab1DKPPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 11:15:12 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:38458 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754209Ab1DKPPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 11:15:11 -0400
-Received: by yia27 with SMTP id 27so2194290yia.19
-        for <git@vger.kernel.org>; Mon, 11 Apr 2011 08:15:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=OVJz6XwuLAyNCL98LzyKlr6hCrG4XgNwKnG+/pWhCjg=;
-        b=JDK/ff/awg3arWrx5DV3a+RgLhwSl35JXG14qUwGi6PMCULQdQ9AHAv+Pjgso3s/As
-         Bnc4awdKAmx4CbCg3WzsOFQZwtabVhhErpbLOtruYL2PI1lrr+wF8hZ03KwxJ9S/SVkc
-         2Pr+7hSO/Eesy19Hnv5z8puWIm4vMGeXA72tk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=w58tD+1WyANWTIttq4TE6b74hHiQTkM9u6RJfpndh238iZisD3q8zVasQohTCFVEi2
-         TyGxJvBXYgYjpz/xcW1tPo98N5k0HtTiw6yG62OQduUa8lnbeM/QEmCW+zLBvgtwryyg
-         ULgBD8JBfUT1rW7dqcDGooJy5fpRQ/bv1QNfg=
-Received: by 10.91.21.1 with SMTP id y1mr4664928agi.169.1302534911164; Mon, 11
- Apr 2011 08:15:11 -0700 (PDT)
-Received: by 10.90.63.17 with HTTP; Mon, 11 Apr 2011 08:15:11 -0700 (PDT)
-In-Reply-To: <4DA3182B.2030305@viscovery.net>
+	id S1754751Ab1DKPe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 11:34:27 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:51460 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754455Ab1DKPe1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 11:34:27 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 151364612C;
+	Mon, 11 Apr 2011 17:34:13 +0200 (CEST)
+Received: (nullmailer pid 4080 invoked by uid 1000);
+	Mon, 11 Apr 2011 15:34:24 -0000
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171334>
 
-Thanks for the responses, rerere works nicely, if somewhat cryptic. At
-the rebase step I got:
+If one has the following commits
 
-First, rewinding head to replay your work on top of it...
-Applying: changed2
-Using index info to reconstruct a base tree...
-Falling back to patching base and 3-way merge...
-Auto-merging a
-CONFLICT (content): Merge conflict in a
-Resolved 'a' using previous resolution.
-Failed to merge in the changes.
-Patch failed at 0001 changed2
+    5154127 fixup! fixup! one
+    0d130d8 fixup! one
+    0869d30 one
 
-When you have resolved this problem run "git rebase --continue".
-If you would prefer to skip this patch, instead run "git rebase --skip".
-To restore the original branch and stop rebasing run "git rebase --abort".
+current code will only rearrange 0d130d8 because it thinks it has
+already checked for commits that modify it.
 
-That's a lot of output, some of it scary-looking. (OK, maybe not
-scary-looking to me, but certainly so to someone not yet fully
-comfortable with git.)  Running "git rebase --continue" told me I
-needed to "edit all merge conflicts and then mark them as resolved",
-whereas the conflicts are in fact already resolved, but rebase doesn't
-know it.  Again, this isn't a big problem for me, but it's unfriendly.
- "git add" followed by "git rebase --continue" worked exactly as I
-hoped it would.
+Separate the idea of an 'used' and an 'applied' line. Applied lines
+are the ones that have been moved to modify some commit whilst used
+lines are the ones for which we have tried to find modifications.
+---
 
-I still wonder why rerere is necessary here. After all, even without
-the rerere metadata, the information about conflict resolution is
-right there, in the merge commit, and rebase could conceivably make
-use of it. What am I missing?
+This supports the case I originally mentioned. It however breaks quite
+badly if one has two chains, such as
 
-Hrvoje
+    0792561 fixup! squash! squash! six
+    e72100f squash! squash! six
+    90187b8 fixup! fixup! one
+    6facd7d fixup! one
+    4f48f55 one
+    733844b squash! six
+    e9de3cc six
+    76990c9 five
+    db0d525 one
+
+because it will try to add 0792561 as a fixup to e72100f. However, as
+it has moved, it is made into a fixup of 90187b8, which is definitely
+bad (not that I think anybody would ever have such a chain in real
+life).
+
+This should be fixable by modifying the loop a bit so it doesn't read
+the next line on each iteration so we can feed it the current
+line. Would you be interested in such a patch?  For me this is a bit
+more elegant than removing the "fixup!" on commit (though my shell
+skills aren't that great).
+
+ git-rebase--interactive.sh |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5873ba4..a681f47 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -692,16 +692,22 @@ rearrange_squash () {
+ 	test -s "$1.sq" || return
+ 
+ 	used=
++	applied=
+ 	while read -r pick sha1 message
+ 	do
+ 		case " $used" in
+ 		*" $sha1 "*) continue ;;
+ 		esac
+-		printf '%s\n' "$pick $sha1 $message"
++		# If it's been applied, we don't want to output the "pick" line
++		case " $applied" in
++			*" $sha1 "*) ;;
++			*) printf '%s\n' "$pick $sha1 $message";;
++		esac
+ 		used="$used$sha1 "
+ 		while read -r squash action msg
+ 		do
+-			case " $used" in
++			# Ignore the commits we've already dealt with
++			case " $used $applied " in
+ 			*" $squash "*) continue ;;
+ 			esac
+ 			emit=0
+@@ -716,7 +722,7 @@ rearrange_squash () {
+ 			esac
+ 			if test $emit = 1; then
+ 				printf '%s\n' "$action $squash $action! $msg"
+-				used="$used$squash "
++				applied="$applied$squash "
+ 			fi
+ 		done <"$1.sq"
+ 	done >"$1.rearranged" <"$1"
+-- 
+1.7.4.1
