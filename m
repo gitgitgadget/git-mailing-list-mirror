@@ -1,10 +1,10 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/11] revert: Introduce a struct to parse command-line
- options into
-Date: Mon, 11 Apr 2011 14:41:44 -0700
-Message-ID: <7vmxjwtqhz.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 05/11] revert: Catch incompatible command-line options
+ early
+Date: Mon, 11 Apr 2011 14:44:10 -0700
+Message-ID: <7vfwpotqdx.fsf@alter.siamese.dyndns.org>
 References: <1302448317-32387-1-git-send-email-artagnon@gmail.com>
- <1302448317-32387-4-git-send-email-artagnon@gmail.com>
+ <1302448317-32387-6-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
@@ -12,114 +12,102 @@ Cc: Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 11 23:42:07 2011
+X-From: git-owner@vger.kernel.org Mon Apr 11 23:44:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9Os3-0000d9-4T
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 23:42:07 +0200
+	id 1Q9OuN-0001sU-E8
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Apr 2011 23:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756028Ab1DKVmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 17:42:01 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42710 "EHLO
+	id S1755964Ab1DKVo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 17:44:27 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46034 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755928Ab1DKVmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 17:42:00 -0400
+	with ESMTP id S1753167Ab1DKVo0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 17:44:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0EFF84C75;
-	Mon, 11 Apr 2011 17:43:57 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DD6F84CC1;
+	Mon, 11 Apr 2011 17:46:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=5JWq/Vg7DJDc64uJj4eRh0GFgEE=; b=LUAjHxERYLr9zogWVNh5
-	39HmJTp9cqDqT57onQ7uD+a/7TAm55UmE7ONbnGkFTmjJ7wii9ZabMHjMtbyYCeV
-	yq5cziyyDql93ft/Uv4GBt78CDKY5nRRsW2wR5hOme1eAig+AdZvqLVBC18vRVAV
-	uYTQWlLKMcATDhztc/hDjfQ=
+	 s=sasl; bh=SqsCQM6VKf35wIAiRiQD2DE8fF4=; b=Py5yXWw3ZAedBH6XWbIl
+	eLo6wX5pJkLHxnMU7lQkZpYpdPZfj0DQw2TgZuPZaeHe9wvPGXclsJl4GMb9sXhv
+	J1zz5j/4RI9t0PH3PD64uoOqRX2NZPtFyiDC+bz2YWPTr3gyuOk7sNNNY2DYrof2
+	DOjlC/5z0/eUJvAPzJriN5k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=jX9xmmebCHsQyEXH/NjCyVkZAkCI26ih9lRbVwqZNY7YuR
-	OLp2A6dRjN89UvA+S4d8MA6TePqWKvVFMrfMMRcT7SUiA3Zorh6aru0UwraobDEb
-	R5ltIY+SdOO9l90lhGodpLjnHKsLNBwF+s5TL/L0da0pwZSqmUqZ5lugxn2Tk=
+	 q=dns; s=sasl; b=GlQl5S0t2Jt1G8diutmKD7zoKvOsRbrqtpxkgxeNfYqyxb
+	DbmQg5pYhB4UTw5FJnZ5k2+sXnOXvHgesIdfpDhElb3sJcOZ+Jv5O5PcK+J8U3AH
+	wROCFhPHPLB2rp4V4UURTwkMhB87T2Kz8Vq5R0vfJ1tRjTRIFwea80WGL2wtU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AEA554C6E;
-	Mon, 11 Apr 2011 17:43:50 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8B0E54CBB;
+	Mon, 11 Apr 2011 17:46:17 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EC94B4C6C; Mon, 11 Apr 2011
- 17:43:43 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E7AD14CB6; Mon, 11 Apr 2011
+ 17:46:10 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C9DE4BA0-6484-11E0-B259-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 21669698-6485-11E0-A0CC-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171362>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> +static void die_opt_incompatible(const char *me, const char *base_opt,
+> +				int nargs, int opt_bitarray[], ...)
+> +{
 
-Again, "In later steps, a new API that takes a single commit and replays
-it in forward (cherry-pick) or backward (revert) direction will be
-introduced, and will take this structure as a parameter to tell it what to
-do" is missing from the above description.
+This feels way overkill to use vararg.  This may be _one_ way to do what
+you want to do, and while I don't think it is the best way, it may be Ok.
 
-More importantly, the primary purpose of these variables is _not_ "to
-parse command line options into".  It is to actively affect what happens
-in the code, and "parse command line" is merely a way to assign the
-initial values to them.  So I'd rather see this patch described perhaps
-like this:
+"opt_bitarray[]" is a horrible name, though.  It does not convey what
+the variable is about (its "purpose").  It doesn't even correctly describe
+the way that unspecified purpose happens to be implemented (claims to be
+bitarray but it is just an array of ints and what matters is if any bit is
+set in the array).
 
-    cherry-pick/revert: introduce "struct replay_options"
+>  static void parse_args(int argc, const char **argv)
+>  {
+>  	const char * const * usage_str = revert_or_cherry_pick_usage();
+> @@ -112,6 +130,13 @@ static void parse_args(int argc, const char **argv)
+>  	if (cmd_opts.commit_argc < 2)
+>  		usage_with_options(usage_str, options);
+>  
+> +	if (cmd_opts.allow_ff) {
+> +		int opt_bitarray[] = {cmd_opts.signoff, cmd_opts.no_commit,
+> +				      cmd_opts.no_replay, cmd_opts.edit};
+> +		die_opt_incompatible(me, "--ff", 4, opt_bitarray, "--signoff",
+> +				"--no-commit", "-x", "--edit");
+> +	}
 
-    The current code uses a set of file-scope static variables to instruct
-    the cherry-pick/revert machinery how to replay the changes, and
-    initialises them by parsing the command line arguments. In later steps
-    in this series, we would like to introduce an API function that calls
-    into this machinery directly and have a way to tell it what to do.
+Why not do it like this instead?
 
-    Introduce a structure to group these variables, so that the API can
-    take them as a single "replay_options" parameter.
+	struct incompatible {
+        	unsigned option_bit;
+                const char *option_name;
+	} incompatible[] = {
+		{ opts->signoff, "--signoff" },
+                { opts->no_commit, "--no-commit" },
+                ...
+	};
+	verify_compatible("me", "--ff", incompatible, ARRAY_SIZE(incompatible));
 
-I strongly prefer to see this patch also update the callchain to pass a
-pointer to the options struct as parameter.  I can guess without reading
-the rest the series that at some later step you would do that, but I think
-it makes more sense to do the conversion at this step, as you will be
-touching lines that use the global variables in this patch anyway, like
+Or if you are shooting for ease-of-use, it might make sense to do it like
 this:
 
--	return action == REVERT ? revert_usage : cherry_pick_usage;
-+	return cmd_opts.action == REVERT ? revert_usage : cherry_pick_usage;
+	verify_compatible("me", "--ff",
+        		"--signoff", opts->signoff,
+                        "--no-commit", opts->no_commit,
+                        ...
+                        NULL);
 
-which should eventually become something like:
+and make verify_compatible() a varargs function that takes two optional
+arguments at a time, i.e. const char *, followed by an int.  Then there is
+no need for extra "int opt_bitarray[]" or "struct incompatible".
 
-	return opts->usage_message;
-
-at the very last step when this codepath is _fully_ libified (I don't know
-if the final result of your series still is a "choose only from these two
-canned messages" API, or gives the ability to the caller to specify the
-usage message---I am just showing how it should look like at the end of a
-full libification).  So it would make sense to see:
-
-	return opts->action == REVERT ? revert_usage : cherry_pick_usage;
-
-in this patch.
-
-> @@ -268,17 +278,17 @@ static struct tree *empty_tree(void)
->  static int error_dirty_index()
-
-It is probably a remnant of the earlier patches in this series, but this
-should start with:
-
-	static int error_dirty_index(void)
-
-Of course, you will actually be passing the options structure, so it would
-become:
-
-	static int error_dirty_index(struct replay_options *opts)
-        {
-        	...
-                if (opts->action == REVERT)
-                	...
-	}
+That would justify use of varargs, I think.
