@@ -1,101 +1,72 @@
-From: allstars <allstars.chh@gmail.com>
-Subject: rebase on remote branch
-Date: Tue, 12 Apr 2011 10:17:06 -0700 (PDT)
-Message-ID: <6b4c9a4d-075c-4805-8fad-bacecb24e9de@w7g2000pre.googlegroups.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/resend] Documentation: update to git-merge-base --octopus
+Date: Tue, 12 Apr 2011 10:31:51 -0700
+Message-ID: <7vaafvqsu0.fsf@alter.siamese.dyndns.org>
+References: <4DA47A4D.80909@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 12 19:26:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Tue Apr 12 19:32:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9hLr-0007Tl-IW
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 19:26:07 +0200
+	id 1Q9hRk-0002a0-Bj
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 19:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755658Ab1DLR0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 13:26:00 -0400
-Received: from mail-pv0-f184.google.com ([74.125.83.184]:58763 "EHLO
-	mail-pv0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755368Ab1DLR0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 13:26:00 -0400
-X-Greylist: delayed 532 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Apr 2011 13:26:00 EDT
-Received: by pvf33 with SMTP id 33so1596019pvf.1
-        for <git@vger.kernel.org>; Tue, 12 Apr 2011 10:25:59 -0700 (PDT)
-Received: by 10.142.171.2 with SMTP id t2mr1189488wfe.23.1302628626691; Tue,
- 12 Apr 2011 10:17:06 -0700 (PDT)
-Received: by w7g2000pre.googlegroups.com with HTTP; Tue, 12 Apr 2011 10:17:06
- -0700 (PDT)
-X-IP: 220.130.135.229
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.16
- (KHTML, like Gecko) Chrome/10.0.648.204 Safari/534.16,gzip(gfe)
+	id S932118Ab1DLRcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2011 13:32:06 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35539 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756255Ab1DLRcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2011 13:32:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E0EDC4CA0;
+	Tue, 12 Apr 2011 13:34:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SXfaf5BrKVIr586lDysrQB6wAi0=; b=aOuZqW
+	12szEqHHoh/vTm7w1nQfqv58Xq6q4+iegeIogUUqlLSG0YOXpWUDyu2cIrPws7JP
+	VcSd6XTPp8uy1qjGxudOd31zFo7mY+D09DpbEnZrMbVuDrOcLj1+oN9Z+sayoy1v
+	n+1DMdXxm5h1ECIbBwAdvWBiYQZsxuyvbd2VA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=q687Hl1Qma5JrpzflFrUQ2xIo8eze3ZL
+	hseOZAx6Wjs5xgTgNYrRD25mQX9BzOp0BhRVDDyV5cRMu1Zqe0NmBax1QANnUgaZ
+	YKQSS4N4sjyLgtElfKBHDsaOr8N3F2QAPn92MgxZsZmeF4mDNWQblLAQY3bHWmb2
+	W9w0aeUPFRk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A5FF64C9F;
+	Tue, 12 Apr 2011 13:33:56 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 77B204C9E; Tue, 12 Apr 2011
+ 13:33:51 -0400 (EDT)
+In-Reply-To: <4DA47A4D.80909@lyx.org> (Vincent van Ravesteijn's message of
+ "Tue, 12 Apr 2011 18:14:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0B1D64F6-652B-11E0-8BEA-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171405>
 
-hi
-first I know rebase on remote branch is bad idea
-so I am here asking for suggestions if you can kindly provide some
+Vincent van Ravesteijn <vfr@lyx.org> writes:
 
-in my server I got two branches , master and release ,
-and release is branched from master
+> Sorry for the noise caused by the previous attempt(s). Apparently my attempts
+> to let Thunderbird _not wrap_ the lines were counterproductive.
 
-0---0---0---0-- master
-        \
-           0---0-- release
+I was wondering what that was about.
 
-our work mainly focus on master, so we will keep committing code to
-master
-for some reasons, release branch is for others, and it has some
-commits that master doesn't have
+> +When the option `--octopus` is given, the result of `git merge-base A B C`
+> +will be '2', because '2' is the common ancestor of all branches.
 
-and now in every week, we have some stable code in master branch
-so we also want the release branch also has these new code
+Wouldn't it be easier to read if you had the option in the command line, i.e.
 
-0---0---0---0---*---*---* master
-        \
-           0---0-- release
+    The result of `git merge-base --octopus A B C` is '2' because...
 
-how should we do now??
-
-currently our way is doing rebase in our local pc
-
-0---0---0---0---*---*---* master
-                                    \
-                                      0'---0'-- release
-in release branch
-$>git rebase master
-
-but in that way when we want to push the release branch back
-it will fail because it's non-fast-forward updates
-so we doing git push -f origin release to force it to 'rebase' on our
-remote server
-
-
-or if we use cherry-pick model
-
-0---0---0---0---*---*---* master
-        \
-           0---0---*---*---* release
-
-but in this case , how do we do it in script?
-I mean, how do we know we need to start cherry-pick from the 1st '*'
-to the 3rd '*' in master
-
-more precisely , if A to E represents the commit SHA1
-
-0---0---0---0---A---B---C---D---E master
-        \
-           0---0---A'---B'---C' release
-
-the 3 cherry-picks A' B' C' on release branch won't have the same SHA1
-for A B C in master
-how can we know effectively we need to start cherry-pick from C to E
-on master
-
-
-thanks
+without "When ... given" that now become noisewords?
