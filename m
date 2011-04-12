@@ -1,179 +1,76 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+From: Jacek Masiulaniec <jacek.masiulaniec@gmail.com>
 Subject: Re: git archive: tar.umask ignored
-Date: Tue, 12 Apr 2011 22:02:35 +0200
-Message-ID: <4DA4AFDB.7040606@lsrfire.ath.cx>
-References: <BANLkTimTs+Qh9fNs6pLcZidYy-YjXNR2iw@mail.gmail.com> <4DA497B7.706@lsrfire.ath.cx>
+Date: Tue, 12 Apr 2011 21:39:48 +0100
+Message-ID: <BANLkTinEFPZoaUAc+8F1sPGE636u1vDOZw@mail.gmail.com>
+References: <BANLkTimTs+Qh9fNs6pLcZidYy-YjXNR2iw@mail.gmail.com>
+	<4DA497B7.706@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jacek Masiulaniec <jacekm@dobremiasto.net>, git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Apr 12 22:03:22 2011
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Apr 12 22:40:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9jo2-0007jX-1Y
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 22:03:22 +0200
+	id 1Q9kNT-00034m-Hs
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 22:39:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253Ab1DLUDB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2011 16:03:01 -0400
-Received: from india601.server4you.de ([85.25.151.105]:46224 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932144Ab1DLUDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 16:03:00 -0400
-Received: from [192.168.2.103] (p4FFDBE81.dip.t-dialin.net [79.253.190.129])
-	by india601.server4you.de (Postfix) with ESMTPSA id 697E02F806F;
-	Tue, 12 Apr 2011 22:02:58 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+	id S1757346Ab1DLUjv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2011 16:39:51 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:65403 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757341Ab1DLUjt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2011 16:39:49 -0400
+Received: by iwn34 with SMTP id 34so6990862iwn.19
+        for <git@vger.kernel.org>; Tue, 12 Apr 2011 13:39:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FZe+A75waDMybFlPbUXTrVQJSv9ECTAu4xO7JMsfm8k=;
+        b=JX6Dun1GPmSwPsMKKnmVN7s0y8mJofplHC4/EavXjQL021O6FNl23EqgdA0idmZzTJ
+         nWG0/Eieds2z1xFzrp2Vqugfk85Z4zgyBcfwe/Q1OrkBaK7q5OQPVUit/u1gdQQWBpTq
+         vAXua/qBHw1hRyFoAGf6k7UkFVpuS051Ig6KA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=g0QD9rw5YkCOEHkbF0sj3w81JZ8l6tEFu9scPlIt+xG+xbHLHvZNI+yda8yHypQEVo
+         CelfQBFCwu9/YJR6ipoid+Uaq/AGwbmkqS81GGH8rQQ+lFig0UiPnN9o56MZuQpAVeQH
+         Aznct+uByZatDMS9enUKPhcUGJYupf0/eJo/o=
+Received: by 10.231.4.139 with SMTP id 11mr7299341ibr.65.1302640788906; Tue,
+ 12 Apr 2011 13:39:48 -0700 (PDT)
+Received: by 10.231.17.71 with HTTP; Tue, 12 Apr 2011 13:39:48 -0700 (PDT)
 In-Reply-To: <4DA497B7.706@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171417>
 
-Am 12.04.2011 20:19, schrieb Ren=E9 Scharfe:
-> Would a new --umask command line option alone (that overrides any con=
-fig=20
-> setting) be sufficient for your use case?
+On 12 April 2011 19:19, Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wr=
+ote:
+> The local setting of tar.umask does not affect the archive created at=
+ the
+> remote end. =A0If your "remote" repository is in fact located on the =
+same
+> machine and accessed with the same user then of course settings in
+> ~/.gitconfig will take effect.
 
-Something like this (docs and tests missing)?
+I've eventually realised this by reading the source code.  The command
+I actually needed was:
 
-I'm not so sure about PARSE_OPT_OPTARG.  E.g. this is confusing and eve=
-n
-becomes slightly dangerous if you have a branch named 022 with a file
-named HEAD (the =3D is required):
+  cd /repo/website.git && git -c tar.umask=3D0022 archive HEAD
 
-	$ git archive --umask 022 HEAD
-	fatal: Not a valid object name
+Can't comment on the proposed diff without getting better handle on
+the whole system, but my knee-jerk reaction would be to resist the
+urge to add more switches.  Maybe the existing -c switch could be made
+to cooperate with --remote, or maybe the documentation could be edited
+to make it clearer that -c and --remote are not related in the way I
+had originally assumed.
 
-Also I'm and not sure what --no-umask should do.  In this patch it is
-equivalent to --umask=3D0; perhaps it should rather make archive use th=
-e
-configured tar.umask value, i.e. neutralize any previous --umask
-option.
----
- archive-tar.c |    5 ++++-
- archive.c     |   34 +++++++++++++++++++++++++++++++++-
- archive.h     |    1 +
- 3 files changed, 38 insertions(+), 2 deletions(-)
-
-diff --git a/archive-tar.c b/archive-tar.c
-index cee06ce..1a29f3c 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -238,7 +238,10 @@ int write_tar_archive(struct archiver_args *args)
- {
- 	int err =3D 0;
-=20
--	git_config(git_tar_config, NULL);
-+	if (args->umask =3D=3D -1)
-+		git_config(git_tar_config, NULL);
-+	else
-+		tar_umask =3D args->umask;
-=20
- 	if (args->commit_sha1)
- 		err =3D write_global_extended_header(args);
-diff --git a/archive.c b/archive.c
-index 1944ed4..2ec5391 100644
---- a/archive.c
-+++ b/archive.c
-@@ -15,13 +15,14 @@ static char const * const archive_usage[] =3D {
- };
-=20
- #define USES_ZLIB_COMPRESSION 1
-+#define USES_UMASK 2
-=20
- static const struct archiver {
- 	const char *name;
- 	write_archive_fn_t write_archive;
- 	unsigned int flags;
- } archivers[] =3D {
--	{ "tar", write_tar_archive },
-+	{ "tar", write_tar_archive, USES_UMASK },
- 	{ "zip", write_zip_archive, USES_ZLIB_COMPRESSION },
- };
-=20
-@@ -285,6 +286,30 @@ static void parse_treeish_arg(const char **argv,
- 	ar_args->time =3D archive_time;
- }
-=20
-+static int umask_callback(const struct option *opt, const char *arg, i=
-nt unset)
-+{
-+	int *target =3D opt->value;
-+	int value;
-+	const char *endp;
-+
-+	if (unset) {
-+		*target =3D 0;
-+		return 0;
-+	}
-+	if (arg) {
-+		value =3D strtol(arg, (char **)&endp, 0);
-+		if (*endp || value < 0) {
-+			return error("option `%s' %s", "umask",
-+				     "expects a non-negative numerical value");
-+		}
-+	} else {
-+		value =3D umask(0);
-+		umask(value);
-+	}
-+	*target =3D value;
-+	return 0;
-+}
-+
- #define OPT__COMPR(s, v, h, p) \
- 	{ OPTION_SET_INT, (s), NULL, (v), NULL, (h), \
- 	  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, (p) }
-@@ -305,6 +330,7 @@ static int parse_archive_args(int argc, const char =
-**argv,
- 	int i;
- 	int list =3D 0;
- 	int worktree_attributes =3D 0;
-+	int umask =3D -1;
- 	struct option opts[] =3D {
- 		OPT_GROUP(""),
- 		OPT_STRING(0, "format", &format, "fmt", "archive format"),
-@@ -325,6 +351,9 @@ static int parse_archive_args(int argc, const char =
-**argv,
- 		OPT__COMPR_HIDDEN('7', &compression_level, 7),
- 		OPT__COMPR_HIDDEN('8', &compression_level, 8),
- 		OPT__COMPR('9', &compression_level, "compress better", 9),
-+		{ OPTION_CALLBACK, 0, "umask", &umask, "umask",
-+			"apply user's umask or <umask> to archived files",
-+			PARSE_OPT_OPTARG, umask_callback },
- 		OPT_GROUP(""),
- 		OPT_BOOLEAN('l', "list", &list,
- 			"list supported archive formats"),
-@@ -370,10 +399,13 @@ static int parse_archive_args(int argc, const cha=
-r **argv,
- 					format, compression_level);
- 		}
- 	}
-+	if (umask !=3D -1 && !((*ar)->flags & USES_UMASK))
-+		die("Argument not supported for format '%s': --umask", format);
- 	args->verbose =3D verbose;
- 	args->base =3D base;
- 	args->baselen =3D strlen(base);
- 	args->worktree_attributes =3D worktree_attributes;
-+	args->umask =3D umask;
-=20
- 	return argc;
- }
-diff --git a/archive.h b/archive.h
-index 038ac35..083675c 100644
---- a/archive.h
-+++ b/archive.h
-@@ -12,6 +12,7 @@ struct archiver_args {
- 	unsigned int verbose : 1;
- 	unsigned int worktree_attributes : 1;
- 	int compression_level;
-+	int umask;
- };
-=20
- typedef int (*write_archive_fn_t)(struct archiver_args *);
---=20
-1.7.4
+Jacek
