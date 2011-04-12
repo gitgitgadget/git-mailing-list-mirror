@@ -1,66 +1,75 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: textconv not invoked when viewing merge commit
-Date: Tue, 12 Apr 2011 11:04:43 +0200
-Message-ID: <4DA415AB.9020008@drmicha.warpmail.net>
-References: <201104111912.47547.kumbayo84@arcor.de>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Error in git citool
+Date: Tue, 12 Apr 2011 11:10:28 +0200
+Message-ID: <20110412091028.GA18422@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Peter Oberndorfer <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Tue Apr 12 11:04:58 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 12 11:10:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9ZWn-0000YT-Dd
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 11:04:53 +0200
+	id 1Q9ZcJ-0004Uf-7v
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 11:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804Ab1DLJEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 05:04:47 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:40657 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753944Ab1DLJEq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2011 05:04:46 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 1336620A3D;
-	Tue, 12 Apr 2011 05:04:46 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 12 Apr 2011 05:04:46 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=k4dBGZJ9IaUgYhNyw7A+iHAd7mU=; b=c+WLS8/5TkUb0llkIDVd90nXxqRT+McDuxTs4cFOGQaDN/yDNMtF0FppMuvRgkkME7cdEkRTVet0JeSUKoMuDhla/kZqxE8NHkbOvYbqNjhixp6I2z2z7BuzKl/Ij5MkAd14CvLfYpx7UZGNsXI9b2P2syKhTw2E4HOsriUZKr8=
-X-Sasl-enc: B3f9wHJlIY9N3cqmOnNJVjO0ZZxNy6bCkWmRdoFHGhXq 1302599085
-Received: from localhost.localdomain (p54858EA8.dip0.t-ipconnect.de [84.133.142.168])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 707FC406990;
-	Tue, 12 Apr 2011 05:04:45 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <201104111912.47547.kumbayo84@arcor.de>
+	id S1754709Ab1DLJKa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2011 05:10:30 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:40473 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753303Ab1DLJK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2011 05:10:29 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Q9ZcC-00031f-Hq
+	for git@vger.kernel.org; Tue, 12 Apr 2011 11:10:28 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Q9ZcC-0004tS-GL
+	for git@vger.kernel.org; Tue, 12 Apr 2011 11:10:28 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171383>
 
-Peter Oberndorfer venit, vidit, dixit 11.04.2011 19:12:
-> Hi,
-> 
-> i currently use a textconv filter to show contents of a zip like archive in a user readable format(as a list of contained files).
-> 
-> This works fine, except for merge commits.
-> For merge commits i see the diff of the binary contents of the file.
-> 
-> Is this intentional?
-> git help gitattributes mentions no such limitation.
-> Anywhere else(gitk(on non merge commit), git gui blame) i see the the filtered textual representation of the file.
-> 
-> I tried 1.7.4 msysgit and current master
-> 
-> Greetings Peter
+Hello,
 
-textconv is applied for "diff -m" but not for combined diffs (-c, --cc)
-at the moment. They go through a completely different codepath, so it is
-expected code-wise (not a bug per se) but not ui-wise.
+from time to time after heavily mixing vim and partial staging and
+unstaging I hit from time to time:
 
-Looking at the code and trying to dig something up atm...
+	Application Error
+	can't read "file_states()": no such element in array
+	can't read "file_states()": no such element in array
+	    while executing
+	"set s $file_states($path)"
+	    (procedure "handle_empty_diff" line 6)
+	    invoked from within
+	"handle_empty_diff"
+	    (procedure "read_diff" line 129)
+	    invoked from within
+	"read_diff file6 {0.0 {force_first_diff ui_ready}}"
 
-Michael
+My tcl/tk magic is very limited, so maybe this is obvious for someone
+else.
+
+(BTW, this happens using Debian's git 1:1.7.2.3-2.2)
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
