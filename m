@@ -1,69 +1,128 @@
-From: Jacek Masiulaniec <jacekm@dobremiasto.net>
-Subject: git archive: tar.umask ignored
-Date: Tue, 12 Apr 2011 10:39:41 +0100
-Message-ID: <BANLkTimTs+Qh9fNs6pLcZidYy-YjXNR2iw@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2] git-completion: Add support for git submodule options
+Date: Tue, 12 Apr 2011 11:37:38 +0200
+Message-ID: <20110412093738.GA6817@goldbirke>
+References: <4DA33EC8.5040704@morey-chaisemartin.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 12 11:39:49 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Shawn Pearce <spearce@spearce.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 11:40:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9a4a-0000EU-0A
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 11:39:48 +0200
+	id 1Q9a59-0000cr-Ms
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 11:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756810Ab1DLJjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 05:39:42 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59925 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751844Ab1DLJjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 05:39:41 -0400
-Received: by iyb14 with SMTP id 14so6457806iyb.19
-        for <git@vger.kernel.org>; Tue, 12 Apr 2011 02:39:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
-         :message-id:subject:from:to:content-type;
-        bh=moDEdkZiyIFu1r4/EP5nen/k1Qu9k+yGzJLB1ofBI2s=;
-        b=UiUD3P5IlHIfeH1iykFJ70yIlQrRP0+7sMplG/LQGzRWneGakYkMEVKmUQDVE9vTfI
-         GmMfbERVbwqP77VT+EcFu2rj8Xi9OjzQ2NJh63IAbekX7EO3KAfYMzbjxt9mqh0saoT/
-         x9C1roenHsM4CdUh1szZ5pdO6/Lcot7klhe6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=dFpMsb5NCIpoPE0RTEqcFftbFL6U4ad0uv4DFmKaU4olJrTZZY8uM4UR+0JKwgWBE5
-         vmDs//SKbfy2lHiQLlwdu9Mi8PFB0GwBrfRtnbGhP2z9DVDT61Otc+jYQsuEMAx5D7pG
-         r5aflRta8wF73AVMwytISwm343xcCXrCt6zoI=
-Received: by 10.231.4.139 with SMTP id 11mr6645893ibr.65.1302601181191; Tue,
- 12 Apr 2011 02:39:41 -0700 (PDT)
-Received: by 10.231.17.71 with HTTP; Tue, 12 Apr 2011 02:39:41 -0700 (PDT)
-X-Google-Sender-Auth: 0eX2qgd12A8odR-byd_xAYuwI5E
+	id S1756928Ab1DLJkO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2011 05:40:14 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:56527 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756916Ab1DLJkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2011 05:40:13 -0400
+Received: from localhost6.localdomain6 (p5B130BCD.dip0.t-ipconnect.de [91.19.11.205])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0LwVKN-1PpibU1u0d-017sUF; Tue, 12 Apr 2011 11:37:39 +0200
+Content-Disposition: inline
+In-Reply-To: <4DA33EC8.5040704@morey-chaisemartin.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:kKRmUk/wVv3EC4Ze+pPb/7cZjt9d5xIYrG2hbj2urj3
+ UrfpUKhuIDyq5GC2h1RivYsWsF/GGzYRCMpTVL3oM0MzSeW2Iq
+ GRA9v7a7vjmb12HPxeXKSli/XSaqBB4eFc7O/TWMYsZjQ+xsWI
+ 4xREf/39U+ydMUtwtpWi3w+cAtuWMmFbkFJ0q1+WQVYqUMVIaB
+ ypr/PCGV5ztdnd73gUhhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171388>
 
-Hello git@,
+Hi,
 
-I believe git has an issue with command line override of configuration options.
-Notice how in both cases below the file mode is 775 despite tar.umask
-difference:
 
-[jacekm@localhost git]$ ./git --version
-git version 1.7.4.4
-[jacekm@localhost git]$ ./git archive --remote=/repo/website.git HEAD
-| tar -tvf - | head -1
-drwxrwxr-x root/root         0 2011-04-11 13:47:09 bin/
-[jacekm@localhost git]$ ./git -c tar.umask=0022 archive
---remote=/repo/website.git HEAD | tar -tvf - | head -1
-drwxrwxr-x root/root         0 2011-04-11 13:47:09 bin/
-[jacekm@localhost git]$
+On Mon, Apr 11, 2011 at 07:47:52PM +0200, Nicolas Morey-Chaisemartin wr=
+ote:
+> Completion for git submodule only handled subcommands.
+> Add support for options of each subcommand
+>=20
+> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin=
+=2Ecom>
+> ---
+> Changes:
+>  - Inlined local variables listing options.
+>
+>  contrib/completion/git-completion.bash |   32 ++++++++++++++++++++++=
++++++++++-
+>  1 files changed, 31 insertions(+), 1 deletions(-)
 
-In contrast, tweaking tar.umask in ~/.gitconfig does have the desired
-impact on the file mode.
+This change looks good overall, but I have a few nits, though.
 
-Jacek
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index 840ae38..20d0cf0 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2546,7 +2546,8 @@ _git_submodule ()
+>  	__git_has_doubledash && return
+> =20
+>  	local subcommands=3D"add status init update summary foreach sync"
+> -	if [ -z "$(__git_find_on_cmdline "$subcommands")" ]; then
+> +	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
+> +	if [ -z "$subcommand" ]; then
+>  		local cur
+>  		_get_comp_words_by_ref -n =3D: cur
+>  		case "$cur" in
+> @@ -2558,6 +2559,35 @@ _git_submodule ()
+>  			;;
+>  		esac
+>  		return
+> +	else
+> +	    local cur
+> +	    _get_comp_words_by_ref -n =3D: cur
+
+Both branches of the if-else statement start with the same
+
+	    local cur
+	    _get_comp_words_by_ref -n =3D: cur
+
+so these could be moved out in front of the if statement.
+
+> +	    case "$subcommand,$cur" in
+> +		 add,--*)
+> +		     __gitcomp "--branch=3D --force --reference=3D"
+> +		     ;;
+> +		 status,--*)
+> +		     __gitcomp "--cached --recursive"
+> +		     ;;
+> +		 update,--*)
+> +		     __gitcomp "--init --no-fetch --rebase --reference=3D --merge =
+--recursive"
+> +		     ;;
+> +		 summary,--*)
+> +		     __gitcomp "--cached --files --summary-limit=3D"
+> +		     ;;
+> +		 summary,*)
+> +		     __gitcomp "$(__git_refs)"
+> +		     ;;
+> +		 foreach,--*)
+> +		     __gitcomp "--recursive"
+> +		     ;;
+> +		 sync,*)
+> +		     COMPREPLY=3D()
+> +		     ;;
+> +		 *)
+> +		     COMPREPLY=3D()
+> +		     ;;
+
+The 'sync,*' case is not necessary, because it has the same completion
+reply as the '*' case, and that case would match it anyway.
+
+And finally, please use tabs for indentation.
+
+
+Best,
+G=E1bor
