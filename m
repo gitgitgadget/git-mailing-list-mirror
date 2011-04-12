@@ -1,82 +1,126 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-svn dying unceremoniously
-Date: Mon, 11 Apr 2011 21:12:24 -0500
-Message-ID: <20110412021202.GA17114@elie>
-References: <m2fwpov47e.wl%dave@boostpro.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Converting merge to rebase in the presence of conflicts
+Date: Tue, 12 Apr 2011 04:55:22 +0200
+Message-ID: <4DA3BF1A.7030407@alum.mit.edu>
+References: <BANLkTi=krC6JMEWj=a5CY1vRCcmh9b+BaQ@mail.gmail.com>	<4DA3182B.2030305@viscovery.net> <BANLkTinVUdmG56oPQXvMhFh6hLcFj3_jZg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Dave Abrahams <dave@boostpro.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 04:12:37 2011
+To: =?UTF-8?B?SHJ2b2plIE5pa8WhacSH?= <hniksic@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 04:55:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9T5o-0004UL-Tu
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 04:12:37 +0200
+	id 1Q9TlL-0003xr-OA
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 04:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755991Ab1DLCMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 22:12:31 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:39159 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754153Ab1DLCMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 22:12:31 -0400
-Received: by gxk21 with SMTP id 21so2389014gxk.19
-        for <git@vger.kernel.org>; Mon, 11 Apr 2011 19:12:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=mcTMXGR8/i0SkGljrW9uLEhjo8vaQbTGbihRYncAWpM=;
-        b=RWc91QWkuiZGYj/3e3lirx+bhznQODEi1wjCJHlyK15BRNXgvWas9vyYOLwj0puXMz
-         /u+0r01nZlGY5vZ1+ihjbMbbRYnIKit97aPEGtNVXdGljtiuRTjqvD9OaYD4SFqrobH3
-         Wzf8F/G4yHOWjedlv/nIuOlSIT7WqP7MV+Xeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bt2iVgrDkq8QUb4uj7twCnGjF1KQsHnocv4wEBNe1fh6flFtyeIwYOxYFeIUBuBebU
-         +zoPm/uDp9GAOcqiw4CQQ+zxCrFUcQFH98WMjW2GCYGCxr2kjBeABhn2UITuCCL30Dja
-         6nG7tfDdSFKRUE2AErT3Hk1TV1MdnaaBKLTzc=
-Received: by 10.236.180.200 with SMTP id j48mr268685yhm.14.1302574350443;
-        Mon, 11 Apr 2011 19:12:30 -0700 (PDT)
-Received: from elie (adsl-69-209-51-92.dsl.chcgil.sbcglobal.net [69.209.51.92])
-        by mx.google.com with ESMTPS id i10sm2842870yhd.10.2011.04.11.19.12.28
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Apr 2011 19:12:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <m2fwpov47e.wl%dave@boostpro.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756542Ab1DLCz1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Apr 2011 22:55:27 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:48472 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756195Ab1DLCz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 22:55:26 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.133] (p54BEA0B4.dip.t-dialin.net [84.190.160.180])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3C2tNeV006601
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 12 Apr 2011 04:55:23 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Lightning/1.0b2 Thunderbird/3.1.8
+In-Reply-To: <BANLkTinVUdmG56oPQXvMhFh6hLcFj3_jZg@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171369>
 
-Hi Dave,
+On 04/11/2011 05:15 PM, Hrvoje Nik=C5=A1i=C4=87 wrote:
+> [...]
+> I still wonder why rerere is necessary here. After all, even without
+> the rerere metadata, the information about conflict resolution is
+> right there, in the merge commit, and rebase could conceivably make
+> use of it. What am I missing?
 
-Dave Abrahams wrote:
+In general, merge and rebase are quite different animals.  In the
+example you provided, there was only one conflicting commit being
+rebased, so the difference is not so apparent.
 
-> Does anyone know a cure for this?
-> 
-> % git svn fetch
->         A       boost/boost/graph/uniform_cost_search.hpp
->         A       boost/boost/graph/properties.hpp
->         A       boost/boost/graph/smallest_last_vertex_ordering.hpp
->         A       boost/boost/graph/johnson_all_pairs_shortest_paths.hpp
->         .
->         .
->         .
->         A       boost/libs/graph/docs/MutableGraph.html
-> r7701 = c2434d3062416adac72b370ce3b993a9857e2029 (refs/remotes/trunk)
-> error: git-svn died of signal 13
+One commit merged:
 
-Very old bug, not well understood.  No cure, only workarounds.
+*--*--a--m      "master"
+    \   /
+     b--
 
-See http://thread.gmane.org/gmane.comp.version-control.git/134936/focus=134940
-and the surrounding thread for hints.
+One commit rebased:
 
-Hope that helps,
-Jonathan
+*--*--a                           *--*--a--b'        "master"
+    \              ->
+     b
+
+In either case, "git diff a..master" is identical.  Therefore,
+converting "one commit merged" into "one commit rebased" simply involve=
+s
+forgetting the second parent of commit "m".  The "rerere" facility will
+indeed help you here, as other people have suggested.
+
+But if more than one commit is being brought in from the branch, then
+merge and rebase are more distinct.  Merge forces you to resolve the
+conflicts only once, in a single merge commit, whereas rebase forces yo=
+u
+to resolve the conflicts one commit at a time.
+
+Multiple commits merged:
+
+*--*--a---M      "master"
+    \    /
+     b--c
+
+Multiple commits rebased:
+
+*--*--a                          *--*--a--b'--c'     "master"
+    \              ->
+     b--c
+
+It should still be that "git diff a..master" gives identical results in
+the two cases, but there is still a big difference--in the rebase
+example, master after commit "b'" should be a functional state that can
+be compiled and passes the unit tests.  The state at commit "b'"
+includes a combination of the changes made in "a" plus the changes made
+in the original "b".  In the merge example, there is no state of the
+tree that is equivalent; there is only a+b+c.  This lack of intermediat=
+e
+conflict resolution is what makes merges problematic for "git bisect".
+
+Now, you want a way to transform the merge into a rebase automatically.
+ In other words, given the information in the "multiple commits merged"
+example as raw material, how can you convert it into a rebase?  This is
+only possible if you are willing to squash "b", "c", and "M" into a
+single commit:
+
+*--*--a--bcM
+
+because you have only told git how to resolve the conflicts between "a"
+and "b+c", not between "a" and "b" without "c".
+
+This is why I have advocated "rebase with history" [1], which retains
+both the intermediate conflict resolutions and also the merge informati=
+on:
+
+*--*--a--b'--c'     "master"
+    \   /   /
+     --b---c
+
+Michael
+
+[1]
+http://softwareswirl.blogspot.com/2009/04/truce-in-merge-vs-rebase-war.=
+html
+
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
