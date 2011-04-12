@@ -1,131 +1,117 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/resend] Documentation: update to git-merge-base --octopus
-Date: Tue, 12 Apr 2011 14:45:58 -0500
-Message-ID: <20110412194558.GB1209@elie>
-References: <4DA47A4D.80909@lyx.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] format-patch: document --quiet option
+Date: Tue, 12 Apr 2011 12:52:22 -0700
+Message-ID: <7v8vvfp7rd.fsf@alter.siamese.dyndns.org>
+References: <1302622538-7535-1-git-send-email-cmn@elego.de>
+ <4DA36D95.6060108@windriver.com> <7v8vvgv5dm.fsf@alter.siamese.dyndns.org>
+ <1302623497-7658-1-git-send-email-cmn@elego.de>
+ <7vfwpnp9uf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Tue Apr 12 21:46:13 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Paul Gortmaker <paul.gortmaker@windriver.com>
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Tue Apr 12 21:52:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9jXR-0005v7-8D
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 21:46:13 +0200
+	id 1Q9jdi-0001av-IE
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 21:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756796Ab1DLTqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 15:46:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:50561 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756589Ab1DLTqE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 15:46:04 -0400
-Received: by iwn34 with SMTP id 34so6947937iwn.19
-        for <git@vger.kernel.org>; Tue, 12 Apr 2011 12:46:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=8sSud8vukcwfewuNDHQUN+BSBkUO+Yzw6ivRqCp0XXE=;
-        b=faXGdaZlXk2GLsYQS9YdiNg32eaKpS7BQmBnnIZIlwT/eEGS89Dk4DvnRsvnHSzJcf
-         /XmPvL+Iigei4KnrU3t3PTyByItEY85S8XIzddoJSUJKjdT5/DRAeJ7CMlC5drxelCs9
-         7lBF6gu8h5NvcEVgv0v9RJCEitPF3cFxiuTSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=CYSQBZtErv5oQiCic0yBy+P74LmXMOC89Y6w3/a3weIXmMANRSnFOiPbwfP4AJ2etf
-         oY7IelgmubWgKNO3PG3CBt1FclH+I1Xp78zL8nTdKbbuYOy+qedYY/+oEFQHTQKqR/ne
-         iq4owB1jrP1kUwU+CbX+4WOKphxStegMdvSHM=
-Received: by 10.42.145.71 with SMTP id e7mr375855icv.314.1302637563530;
-        Tue, 12 Apr 2011 12:46:03 -0700 (PDT)
-Received: from elie (adsl-69-209-64-230.dsl.chcgil.ameritech.net [69.209.64.230])
-        by mx.google.com with ESMTPS id v42sm353510ibg.28.2011.04.12.12.46.01
-        (version=SSLv3 cipher=OTHER);
-        Tue, 12 Apr 2011 12:46:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4DA47A4D.80909@lyx.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756888Ab1DLTwi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2011 15:52:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49958 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756733Ab1DLTwg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2011 15:52:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B37314016;
+	Tue, 12 Apr 2011 15:54:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7N6ES+waGTyF
+	9RQIzmiioRRTq2Q=; b=OM2OoRtJKuP2/rfnRptkHOQ/BaJFQoFiRA3FH+XL/vgR
+	gbqKaLaSYaAM4xgle4ndSj7vQHAYmIHFPOqpPQnFkhbVhF4saxMR7ZhkGyem5wf2
+	tq/SUdA/3HsZ3iINqU06h1J71Qwa9ws3cSDxeS594R7OQicdZPOT0NdZcssL7kQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Ef64yM
+	oZv/kSMOq/TrddUqdrLkj1IyaQ/31N22bWJVcsCgCh16z58Xi/BDczCMLu3Z2ib9
+	hXoivA/NeQZOHy8iwfaH+B3skuUi6tzwzOexoYF/yek7JcO88yvtOFkY/clFIMZE
+	z5ex4QnAJlqybOzEKeyn1pCwcFuDQOjwyqWz8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 81BC64015;
+	Tue, 12 Apr 2011 15:54:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 44B0E4014; Tue, 12 Apr 2011
+ 15:54:22 -0400 (EDT)
+In-Reply-To: <7vfwpnp9uf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 12 Apr 2011 12:07:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ABB9047A-653E-11E0-83AD-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171415>
 
-Hi Vincent,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Vincent van Ravesteijn wrote:
+>> @@ -192,6 +192,9 @@ will want to ensure that threading is disabled f=
+or `git send-email`.
+>>  	filenames, use specified suffix.  A common alternative is
+>>  	`--suffix=3D.txt`.  Leaving this empty will remove the `.patch`
+>>  	suffix.
+>> +
+>> +--quiet::
+>> +	Do not print the patch names to standard output.
+>
+> I see "filenames" in the context and that is "generated filenames".
+> ...
 
-> On the other hand, in the
-> case without the --octopus parameter, it is necessary to supply a single commit
-> and a set. Moreover, in the case of --octopus merging, a single commit is also valid,
-> which is not the case otherwise.
+Also the existing "Note that ..." that followed your added lines actual=
+ly
+belong to the description of the previous item.  Thusly....
 
-So to summarize: unlike plain merge-base, merge-base --octopus only
-requires at least one commit argument, and this patch updates the
-synopsis to reflect that.  Good catch.
+-- >8 --
+=46rom: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+Subject: [PATCH] format-patch: document --quiet option
 
-> 2) Add a sentence to the discussion that when --octopus is used, we do expect '2'
-> as the result.
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-format-patch.txt |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-Adding an example use of --octopus to the DISCUSSION section makes a
-lot of sense.  At first I thought this was being added to the
-DESCRIPTION section, which led me to suggest something like the
-following:
-
- DESCRIPTION
- -----------
- 'git merge-base' finds best common ancestors between two commits to
- use in a three-way merge.  [... etc etc ...] can be more than one merge
- base for a pair of commits.
-
- OPERATION MODE
- --------------
- As the most common special case, specifying only two commits on the
- command line means computing the merge base between the given two
- commits.
-
- More generally, among the two commits to compute the merge base from,
- one is specified by the first commit argument on the command line;
- the other commit is a (possibly hypothetical) commit that is a merge
- across all the remaining commits on the command line.
-
- As a consequence, the merge base is not necessarily contained in each
- of the commit arguments if more than two commits are specified.
- This is different from git-show-branch(1) when used with
- the --merge-base option.
-
- --octopus::
-	Compute the best common ancestors of all supplied commits, in
-	preparation for an n-way merge.
-	This mimics the behavior of 'git show-branch --merge-base'.
-
- --independent::
-	Instead of ...
-
- OPTIONS
- -------
- -a::
- --all::
-	...
-
- DISCUSSION
- ----------
-
-What do you think?
-
-> --- a/Documentation/git-merge-base.txt
-> +++ b/Documentation/git-merge-base.txt
-> @@ -9,7 +9,8 @@ git-merge-base - Find as good common ancestors as possible for a merge
-[...]
-> +When the option `--octopus` is given, the result of `git merge-base A B C`
-> +will be '2', because '2' is the common ancestor of all branches.
-> +
-
-For what it's worth, except for Junio's wording nitpick and the log message,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
+mat-patch.txt
+index a5525e9..f4e959d 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -20,7 +20,7 @@ SYNOPSIS
+ 		   [--ignore-if-in-upstream]
+ 		   [--subject-prefix=3DSubject-Prefix]
+ 		   [--to=3D<email>] [--cc=3D<email>]
+-		   [--cover-letter]
++		   [--cover-letter] [--quiet]
+ 		   [<common diff options>]
+ 		   [ <since> | <revision range> ]
+=20
+@@ -196,6 +196,9 @@ will want to ensure that threading is disabled for =
+`git send-email`.
+ Note that the leading character does not have to be a dot; for example=
+,
+ you can use `--suffix=3D-patch` to get `0001-description-of-my-change-=
+patch`.
+=20
++--quiet::
++	Do not print the names of the generated files to standard output.
++
+ --no-binary::
+ 	Do not output contents of changes in binary files, instead
+ 	display a notice that those files changed.  Patches generated
+--=20
+1.7.5.rc1.16.g9db19
