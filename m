@@ -1,141 +1,286 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] format-patch: don't pass on the --quiet flag
-Date: Tue, 12 Apr 2011 17:35:38 +0200
-Message-ID: <1302622538-7535-1-git-send-email-cmn@elego.de>
-References: <7v8vvgv5dm.fsf@alter.siamese.dyndns.org>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: [PATCH] Documentation: update to git-merge-base --octopus
+Date: Tue, 12 Apr 2011 17:46:32 +0200
+Message-ID: <4DA473D8.5010001@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Paul Gortmaker <paul.gortmaker@windriver.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 17:35:49 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 12 17:46:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9fd6-0005GY-5W
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 17:35:48 +0200
+	id 1Q9fnr-0003sF-Ii
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 17:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757595Ab1DLPfm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2011 11:35:42 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:34596 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756700Ab1DLPfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 11:35:41 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id AEECB4612C;
-	Tue, 12 Apr 2011 17:35:26 +0200 (CEST)
-Received: (nullmailer pid 7579 invoked by uid 1000);
-	Tue, 12 Apr 2011 15:35:38 -0000
-X-Mailer: git-send-email 1.7.4.2.437.g4fc7e.dirty
-In-Reply-To: <7v8vvgv5dm.fsf@alter.siamese.dyndns.org>
-References: <4DA36D95.6060108@windriver.com>
+	id S1757621Ab1DLPqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2011 11:46:42 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:45056 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757797Ab1DLPql (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2011 11:46:41 -0400
+Received: by eyx24 with SMTP id 24so2065956eyx.19
+        for <git@vger.kernel.org>; Tue, 12 Apr 2011 08:46:40 -0700 (PDT)
+Received: by 10.213.109.74 with SMTP id i10mr1569262ebp.5.1302623200022;
+        Tue, 12 Apr 2011 08:46:40 -0700 (PDT)
+Received: from [145.94.80.223] (x080223.tnw-m.tudelft.nl [145.94.80.223])
+        by mx.google.com with ESMTPS id m55sm2452706eei.8.2011.04.12.08.46.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 12 Apr 2011 08:46:38 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171398>
 
-The --quiet flag is not meant to be passed on to the diff, as the user
-always wants the patches to be produced so catch it and pass it to
-reopen_stdout which decides whether to print the filename or not.
+1) Make
+it
+clear
+that
+when
+the
+--octopus
+parameter
+is
+given
+to 'git
+merge-base',
+only a
+set of
+commits
+is
+expected as
+the
+parameter.
+On the
+other
+hand,
+in the
+case
+without
+the
+--octopus
+parameter,
+it is
+necessary
+to
+supply
+a
+single
+commit
+and a
+set.
+Moreover,
+in the
+case of
+--octopus
+merging, a
+single
+commit
+is also
+valid,
+which
+is not
+the
+case
+otherwise.
 
-Noticed by Paul Gortmaker
+2) Add
+a
+sentence to
+the
+discussion
+that
+when
+--octopus
+is
+used,
+we do
+expect
+'2'
+as the
+result.
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+Signed-off-by:
+Vincent
+van
+Ravesteijn
+<vfr@lyx.org>
 ---
-> A patch to make --quiet not to squelch the patch output, and instead
-> silence any progress output would be a good addition.
+ Documentation/git-merge-base.txt |    6 +++++-
+ builtin/merge-base.c             |    3 ++-
+ 2
+files
+changed, 7
+insertions(+),
+2
+deletions(-)
 
-Something like this? I guess the only use case would be together with
--o.
+diff
+--git
+a/Documentation/git-merge-base.txt
+b/Documentation/git-merge-base.txt
+index
+eedef1b..1bac04f
+100644
+---
+a/Documentation/git-merge-base.txt
++++
+b/Documentation/git-merge-base.txt
+@@ -9,7
++9,8 @@
+git-merge-base
+- Find
+as good
+common
+ancestors
+as
+possible for
+a merge
+ SYNOPSIS
+ --------
+ [verse]
+-'git
+merge-base'
+[-a|--all]
+[--octopus]
+<commit> <commit>...
++'git
+merge-base'
+[-a|--all]
+<commit> <commit>...
++'git
+merge-base'
+[-a|--all]
+--octopus
+<commit>...
+ 'git
+merge-base'
+--independent
+<commit>...
 
- builtin/log.c |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
+ DESCRIPTION
+@@
+-89,6
++90,9
+@@ and
+the
+result
+of `git
+merge-base
+A M` is
+'1'.
+Commit
+'2' is
+also a
+ common
+ancestor between
+'A' and
+'M',
+but '1'
+is a
+better
+common
+ancestor,
+ because '2' is an ancestor of '1'.  Hence, '2' is not a merge base.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 9a15d69..1ce00ba 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -623,7 +623,7 @@ static FILE *realstdout =3D NULL;
- static const char *output_directory =3D NULL;
- static int outdir_offset;
-=20
--static int reopen_stdout(struct commit *commit, struct rev_info *rev)
-+static int reopen_stdout(struct commit *commit, struct rev_info *rev, =
-int quiet)
- {
- 	struct strbuf filename =3D STRBUF_INIT;
- 	int suffix_len =3D strlen(fmt_patch_suffix) + 1;
-@@ -639,7 +639,7 @@ static int reopen_stdout(struct commit *commit, str=
-uct rev_info *rev)
-=20
- 	get_patch_filename(commit, rev->nr, fmt_patch_suffix, &filename);
-=20
--	if (!DIFF_OPT_TST(&rev->diffopt, QUICK))
-+	if (!quiet)
- 		fprintf(realstdout, "%s\n", filename.buf + outdir_offset);
-=20
- 	if (freopen(filename.buf, "w", stdout) =3D=3D NULL)
-@@ -718,7 +718,8 @@ static void print_signature(void)
- static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 			      int numbered, int numbered_files,
- 			      struct commit *origin,
--			      int nr, struct commit **list, struct commit *head)
-+			      int nr, struct commit **list, struct commit *head,
-+			      int quiet)
- {
- 	const char *committer;
- 	const char *subject_start =3D NULL;
-@@ -754,7 +755,7 @@ static void make_cover_letter(struct rev_info *rev,=
- int use_stdout,
- 			sha1_to_hex(head->object.sha1), committer, committer);
- 	}
-=20
--	if (!use_stdout && reopen_stdout(commit, rev))
-+	if (!use_stdout && reopen_stdout(commit, rev, quiet))
- 		return;
-=20
- 	if (commit) {
-@@ -995,6 +996,7 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	char *add_signoff =3D NULL;
- 	struct strbuf buf =3D STRBUF_INIT;
- 	int use_patch_format =3D 0;
-+	int quiet =3D 0;
- 	const struct option builtin_format_patch_options[] =3D {
- 		{ OPTION_CALLBACK, 'n', "numbered", &numbered, NULL,
- 			    "use [PATCH n/m] even with a single patch",
-@@ -1050,6 +1052,8 @@ int cmd_format_patch(int argc, const char **argv,=
- const char *prefix)
- 			    PARSE_OPT_OPTARG, thread_callback },
- 		OPT_STRING(0, "signature", &signature, "signature",
- 			    "add a signature"),
-+		OPT_BOOLEAN(0, "quiet", &quiet,
-+			    "don't print the patch filenames"),
- 		OPT_END()
- 	};
-=20
-@@ -1259,7 +1263,7 @@ int cmd_format_patch(int argc, const char **argv,=
- const char *prefix)
- 		if (thread)
- 			gen_message_id(&rev, "cover");
- 		make_cover_letter(&rev, use_stdout, numbered, numbered_files,
--				  origin, nr, list, head);
-+				  origin, nr, list, head, quiet);
- 		total++;
- 		start_number--;
- 	}
-@@ -1305,7 +1309,7 @@ int cmd_format_patch(int argc, const char **argv,=
- const char *prefix)
- 		}
-=20
- 		if (!use_stdout && reopen_stdout(numbered_files ? NULL : commit,
--						 &rev))
-+						 &rev, quiet))
- 			die("Failed to create output files");
- 		shown =3D log_tree_commit(&rev, commit);
- 		free(commit->buffer);
---=20
-1.7.4.2.437.g4fc7e.dirty
++When
+the
+option
+`--octopus`
+is
+given,
+the
+result
+of `git
+merge-base
+A B C`
++is
+expected to
+be '2',
+since
+'2' is
+the
+common
+ancestor of
+all
+branches.
++
+ When
+the
+history
+involves criss-cross
+merges,
+there
+can be
+more
+than
+one
+ 'best'
+common
+ancestor for
+two
+commits.
+For
+example, with
+this
+topology:
+
+diff
+--git
+a/builtin/merge-base.c
+b/builtin/merge-base.c
+index
+96dd160..4f30f1b
+100644
+---
+a/builtin/merge-base.c
++++
+b/builtin/merge-base.c
+@@
+-23,7
++23,8
+@@
+static
+int
+show_merge_base(struct
+commit
+**rev,
+int
+rev_nr,
+int
+show_all)
+ }
+
+ static
+const
+char *
+const
+merge_base_usage[]
+= {
+-	"git
+merge-base
+[-a|--all]
+[--octopus]
+<commit> <commit>...",
++	"git
+merge-base
+[-a|--all]
+<commit> <commit>...",
++	"git
+merge-base
+[-a|--all]
+--octopus
+<commit>...",
+ 	"git
+merge-base
+--independent
+<commit>...",
+ 	NULL
+ };
+-- 
+1.7.3.1.msysgit.0
