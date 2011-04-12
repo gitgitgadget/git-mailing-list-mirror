@@ -1,41 +1,41 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 4/3] --dirstat: In case of renames, use target filename
- instead of source filename
-Date: Tue, 12 Apr 2011 07:59:21 -0700
-Message-ID: <BANLkTinHcDug0A+n9N4hkApF_xBU+nEkBw@mail.gmail.com>
+Subject: Re: [RFC/PATCH 5/3] Alternative --dirstat implementation, based on
+ diffstat analysis
+Date: Tue, 12 Apr 2011 08:08:28 -0700
+Message-ID: <BANLkTi=yYU+v1Xx_YO6kpC8+1ukOdwb6SQ@mail.gmail.com>
 References: <7vtye834al.fsf@alter.siamese.dyndns.org> <7vwrj0sap3.fsf@alter.siamese.dyndns.org>
- <201104121122.56870.johan@herland.net> <201104121124.35128.johan@herland.net>
+ <201104121122.56870.johan@herland.net> <201104121126.49881.johan@herland.net> <BANLkTim9U4cOnV+5=Mp-2g_M6+JOiM5e7A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Apr 12 17:00:42 2011
+X-From: git-owner@vger.kernel.org Tue Apr 12 17:08:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9f53-0007oD-EY
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 17:00:37 +0200
+	id 1Q9fD5-0004iS-A7
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 17:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757387Ab1DLPAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 11:00:31 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57136 "EHLO
+	id S1757053Ab1DLPIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2011 11:08:49 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:60402 "EHLO
 	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756774Ab1DLPA1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2011 11:00:27 -0400
-Received: from mail-iy0-f174.google.com (mail-iy0-f174.google.com [209.85.210.174])
+	by vger.kernel.org with ESMTP id S1756705Ab1DLPIt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2011 11:08:49 -0400
+Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
 	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p3CExhpf024132
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p3CF8m07024941
 	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Tue, 12 Apr 2011 07:59:43 -0700
-Received: by iyb14 with SMTP id 14so6704818iyb.19
-        for <git@vger.kernel.org>; Tue, 12 Apr 2011 07:59:41 -0700 (PDT)
-Received: by 10.231.34.4 with SMTP id j4mr6991497ibd.83.1302620381097; Tue, 12
- Apr 2011 07:59:41 -0700 (PDT)
-Received: by 10.231.33.199 with HTTP; Tue, 12 Apr 2011 07:59:21 -0700 (PDT)
-In-Reply-To: <201104121124.35128.johan@herland.net>
-X-Spam-Status: No, hits=-103.481 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,USER_IN_WHITELIST
+	for <git@vger.kernel.org>; Tue, 12 Apr 2011 08:08:48 -0700
+Received: by iwn34 with SMTP id 34so6724637iwn.19
+        for <git@vger.kernel.org>; Tue, 12 Apr 2011 08:08:48 -0700 (PDT)
+Received: by 10.42.240.202 with SMTP id lb10mr7924972icb.297.1302620928123;
+ Tue, 12 Apr 2011 08:08:48 -0700 (PDT)
+Received: by 10.231.33.199 with HTTP; Tue, 12 Apr 2011 08:08:28 -0700 (PDT)
+In-Reply-To: <BANLkTim9U4cOnV+5=Mp-2g_M6+JOiM5e7A@mail.gmail.com>
+X-Spam-Status: No, hits=-102.88 required=5 tests=AWL,BAYES_05,OSDL_HEADER_SUBJECT_BRACKETED,USER_IN_WHITELIST
 X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
 X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
@@ -43,20 +43,38 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171396>
 
-On Tue, Apr 12, 2011 at 2:24 AM, Johan Herland <johan@herland.net> wrote:
-> This changes --dirstat analysis to count "damage" toward the target filename,
-> rather than the source filename. For renames within a directory, this won't
-> matter to the final output, but when moving files between diretories, the
-> output now lists the target directory rather than the source directory.
+On Tue, Apr 12, 2011 at 7:46 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> So I don't hate the idea, but I do hate the "use a config option"
+> part. Or rather, I hate the fact that it's the _only_ way to do it
+> (and the particular config name you chose).
 
-Ack. I think the use of the source filename was actually a bug.
+Oh, and one thing strikes me: I think the fast dirstat gave reasonable
+values when you had mixed text and binary (in the kernel tree, look
+for the Documentation/logo.gif file, for example: it changed to the
+Tasmanian devil in one release).
 
-The original dirstat code used the "struct diffstat_file_t *" pointer,
-and took the name from the ->name field of that. And that actually
-defaults to the target name (see diffstat_add()). But then commit
-c04a7155a03e changed it to use "struct dirstat_file" and picked the
-name for that from the source.
+Have you checked what happens to that when you use the diffstat one?
+Because binary files are done very differently (byte-based counts).
 
-                        Linus
+So check out
+
+   git show --dirstat 3d4f16348b77efbf81b7fa186a18a0eb815b6b84
+
+with and without your change. The old dirstat gives
+
+  44.0% Documentation/
+  55.9% drivers/video/logo/
+
+which is at least not completely insane.
+
+The reason I bring this up is because I think this was an issue at one
+point, and one of the statistics things (--stat or --numstat or
+--dirstat) gave absolutely horrid values (basically comparing "bytes
+changed" for binaries with "lines changed" for text files). Resulting
+in totally skewed statistics.
+
+                       Linus
