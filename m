@@ -1,60 +1,137 @@
-From: Kent Leonard <kleonard@accurev.com>
-Subject: Possible bug with multiple mv's and diff output
-Date: Tue, 12 Apr 2011 13:58:49 -0400
-Message-ID: <BANLkTin2FpQQ1qEZ41VArsRYZre9=U6SKA@mail.gmail.com>
+From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: rebase on remote branch
+Date: Tue, 12 Apr 2011 20:08:04 +0200
+Message-ID: <4DA49504.3030208@dirk.my1.cc>
+References: <6b4c9a4d-075c-4805-8fad-bacecb24e9de@w7g2000pre.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 12 19:59:25 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: allstars <allstars.chh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 20:08:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9hs3-0001xv-M6
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 19:59:24 +0200
+	id 1Q9i0f-00073o-59
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 20:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756108Ab1DLR7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 13:59:18 -0400
-Received: from na3sys009aog109.obsmtp.com ([74.125.149.201]:41141 "HELO
-	na3sys009aog109.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755340Ab1DLR7S (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2011 13:59:18 -0400
-Received: from mail-iy0-f170.google.com ([209.85.210.170]) (using TLSv1) by na3sys009aob109.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTaSS2XfUeJX0F5sqiZxZX/Vj45CSG+PY@postini.com; Tue, 12 Apr 2011 10:59:17 PDT
-Received: by mail-iy0-f170.google.com with SMTP id 12so13179918iyb.1
-        for <git@vger.kernel.org>; Tue, 12 Apr 2011 10:58:49 -0700 (PDT)
-Received: by 10.43.61.197 with SMTP id wx5mr9784069icb.286.1302631129037; Tue,
- 12 Apr 2011 10:58:49 -0700 (PDT)
-Received: by 10.231.207.81 with HTTP; Tue, 12 Apr 2011 10:58:49 -0700 (PDT)
+	id S1758255Ab1DLSIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2011 14:08:12 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.30]:42751 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754731Ab1DLSIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2011 14:08:11 -0400
+Received: from [84.176.52.24] (helo=[192.168.2.100])
+	by smtprelay03.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1Q9i0T-0002Yo-Tm; Tue, 12 Apr 2011 20:08:06 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
+In-Reply-To: <6b4c9a4d-075c-4805-8fad-bacecb24e9de@w7g2000pre.googlegroups.com>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171407>
 
-Hi all,
+Am 12.04.2011 19:17 schrieb allstars:
+> hi
+> first I know rebase on remote branch is bad idea
+> so I am here asking for suggestions if you can kindly provide some
+>
+> in my server I got two branches , master and release ,
+> and release is branched from master
+>
+> 0---0---0---0-- master
+>          \
+>             0---0-- release
+>
+> our work mainly focus on master, so we will keep committing code to
+> master
+> for some reasons, release branch is for others, and it has some
+> commits that master doesn't have
+>
+> and now in every week, we have some stable code in master branch
+> so we also want the release branch also has these new code
+>
+> 0---0---0---0---*---*---* master
+>          \
+>             0---0-- release
+>
+> how should we do now??
+>
+> currently our way is doing rebase in our local pc
+>
+> 0---0---0---0---*---*---* master
+>                                      \
+>                                        0'---0'-- release
+> in release branch
+> $>git rebase master
+>
+> but in that way when we want to push the release branch back
+> it will fail because it's non-fast-forward updates
+> so we doing git push -f origin release to force it to 'rebase' on our
+> remote server
+>
+>
+> or if we use cherry-pick model
+>
+> 0---0---0---0---*---*---* master
+>          \
+>             0---0---*---*---* release
+>
+> but in this case , how do we do it in script?
+> I mean, how do we know we need to start cherry-pick from the 1st '*'
+> to the 3rd '*' in master
+>
+> more precisely , if A to E represents the commit SHA1
+>
+> 0---0---0---0---A---B---C---D---E master
+>          \
+>             0---0---A'---B'---C' release
+>
+> the 3 cherry-picks A' B' C' on release branch won't have the same SHA1
+> for A B C in master
+> how can we know effectively we need to start cherry-pick from C to E
+> on master
+>
+>
+> thanks
+>
 
-When I do this in repo with files a and b:
-  git mv b c
-  git mv a b
-  git commit -m shuffle
-  git diff --summary master^ master
+Hi,
 
-I get output:
-  delete mode 100644 a
-  create mode 100644 c
-Which does not indicate that the contents of b changed.
+if you have:
 
-  git diff --summary --find-copies --find-renames master^ master
-gives output
-  delete mode 100644 a
-  copy b => c (100%)
-which also doesn't show that b changed.
+0---0---0---X---A---B---C---D---E master
+          \
+             0---0 release
 
-"git diff --raw" shows more complete information.
+then you could do
 
-I am misunderstanding what should happen, or is this incorrect?
+$ git rebase --onto release X master
 
-Thanks,
-Kent Leonard
+to get this:
+
+0---0---0---X---A---B---C---D---E master
+          \
+             0---0---A'---B'---C'---D'---E' release
+
+IOW, it rebases everything between X (w/o X itself) and master (which is 
+E, including E) onto release.
+
+Or, with
+
+$ git rebase --onto release X C
+
+you would get:
+
+0---0---0---X---A---B---C---D---E master
+          \
+             0---0---A'---B'---C' release
+
+HTH.
+
+     Dirk
