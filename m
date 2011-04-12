@@ -1,41 +1,41 @@
 From: Vincent van Ravesteijn <vfr@lyx.org>
 Subject: [PATCH] Documentation: update to git-merge-base --octopus
-Date: Tue, 12 Apr 2011 17:46:32 +0200
-Message-ID: <4DA473D8.5010001@lyx.org>
+Date: Tue, 12 Apr 2011 17:47:14 +0200
+Message-ID: <4DA47402.4010304@lyx.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: Jonathan Nieder <jrnieder@gmail.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 12 17:46:56 2011
+X-From: git-owner@vger.kernel.org Tue Apr 12 17:47:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9fnr-0003sF-Ii
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 17:46:55 +0200
+	id 1Q9foY-0004Kx-KK
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 17:47:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757621Ab1DLPqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 11:46:42 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45056 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757797Ab1DLPql (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 11:46:41 -0400
-Received: by eyx24 with SMTP id 24so2065956eyx.19
-        for <git@vger.kernel.org>; Tue, 12 Apr 2011 08:46:40 -0700 (PDT)
-Received: by 10.213.109.74 with SMTP id i10mr1569262ebp.5.1302623200022;
-        Tue, 12 Apr 2011 08:46:40 -0700 (PDT)
+	id S1757873Ab1DLPr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2011 11:47:28 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:64714 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757860Ab1DLPr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2011 11:47:28 -0400
+Received: by ewy4 with SMTP id 4so2066710ewy.19
+        for <git@vger.kernel.org>; Tue, 12 Apr 2011 08:47:26 -0700 (PDT)
+Received: by 10.213.13.212 with SMTP id d20mr2742442eba.139.1302623246454;
+        Tue, 12 Apr 2011 08:47:26 -0700 (PDT)
 Received: from [145.94.80.223] (x080223.tnw-m.tudelft.nl [145.94.80.223])
-        by mx.google.com with ESMTPS id m55sm2452706eei.8.2011.04.12.08.46.35
+        by mx.google.com with ESMTPS id q53sm4532975eeh.25.2011.04.12.08.47.22
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Apr 2011 08:46:38 -0700 (PDT)
+        Tue, 12 Apr 2011 08:47:25 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171399>
 
 1) Make
 it
