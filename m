@@ -1,337 +1,557 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 00/11] gitweb: Change timezone
-Date: Tue, 12 Apr 2011 14:44:19 +0200
-Message-ID: <201104121444.20633.jnareb@gmail.com>
-References: <1302389366-21515-1-git-send-email-jnareb@gmail.com> <BANLkTik9D6++P1rg+VbvKj9oTFhRYNmrpQ@mail.gmail.com>
+Subject: [PATCHv2 10/11] gitweb.js: Add UI for selecting common timezone to display dates
+Date: Tue, 12 Apr 2011 15:24:50 +0200
+Message-ID: <201104121524.52412.jnareb@gmail.com>
+References: <1302389366-21515-1-git-send-email-jnareb@gmail.com> <BANLkTik9D6++P1rg+VbvKj9oTFhRYNmrpQ@mail.gmail.com> <201104121444.20633.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
 	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
 To: Kevin Cernekee <cernekee@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 15:26:15 2011
+X-From: git-owner@vger.kernel.org Tue Apr 12 15:26:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9dbf-0004Te-4Q
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 15:26:11 +0200
+	id 1Q9dbt-0004fl-CY
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 15:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754795Ab1DLN0E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2011 09:26:04 -0400
+	id S1755293Ab1DLN0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2011 09:26:09 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:46227 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752673Ab1DLN0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 09:26:01 -0400
-Received: by bwz15 with SMTP id 15so5357326bwz.19
-        for <git@vger.kernel.org>; Tue, 12 Apr 2011 06:26:00 -0700 (PDT)
+	with ESMTP id S1752673Ab1DLN0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2011 09:26:05 -0400
+Received: by mail-bw0-f46.google.com with SMTP id 15so5357326bwz.19
+        for <git@vger.kernel.org>; Tue, 12 Apr 2011 06:26:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:subject:date:user-agent:cc:references
          :in-reply-to:mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        bh=y7GgfE3pl3bTHbqodO18A23YIEtbQiRCvyAR6wxSMnc=;
-        b=iUd3Tf0e3uG9FQ35sDWft5HOPXTmcv5dWyI1qpWZBj3tXlN4L3nGNR+YdaGnzaovUb
-         QTanJcWuMVEJuTtAdZzVFKS7Cv41sEJlGdVgg+VbTrRe3wK4Bzss9Fcz9fgp8IinMHXP
-         Sh9cdZEKh8ehJVcXlo6h1N0sMN5ya7PX6FOFg=
+        bh=xT+k91dggIYmWe2F5KWDlaNTMtOg/qVgzIychHsZmEU=;
+        b=OhLF3zA3o7ZijlwI3gh1cPwZWvCRJbVIjxLciFvXxPNTa0f7Ali0jAczMGezTOQ+S3
+         DIwHt3kRl2hCfdFrZbUvYNcgK/fI8bG1IwtxlVl4yCFpAocHfhWekw2s5KMqkJ748buo
+         DUvDGRwcecMn+YmgUwUnQXcWmWKkcZVIJiQzo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=UgKtCceQXwgcyBoDpo/FKEjwTJbNhytWpqIoeWyCq5Q/2oBddXpYsDLSE54drtMGKm
-         IN16Sic6SXsHgb1zMppzJlK+t2kYAZVjnupG77E78pyQYMq8PrKQdjMb5R3AlkpHRhJm
-         vEComwvqaNIGWWDjMQRa0plMRivY8SH5hTFeI=
-Received: by 10.204.84.142 with SMTP id j14mr4030060bkl.20.1302614760281;
-        Tue, 12 Apr 2011 06:26:00 -0700 (PDT)
+        b=ZMFxgjL4TRD3YATpiwoXMAZfBY7+ChtAbiOdbolFdUsIw09q6bXhIiIKrcSd8FAb8Z
+         A6LzQ0UavWAB904OwSw9oxXcrgeByOqjXWMKV0mNdQ9dyjqlo6xs/05rTaMi1caUr3+a
+         YBYdE6luf2+Rx5CnwQn2U31T4T8ACaYGH0G5M=
+Received: by 10.204.126.144 with SMTP id c16mr6076099bks.6.1302614764638;
+        Tue, 12 Apr 2011 06:26:04 -0700 (PDT)
 Received: from [192.168.1.13] (abvr44.neoplus.adsl.tpnet.pl [83.8.215.44])
-        by mx.google.com with ESMTPS id v21sm3859967bkt.23.2011.04.12.06.25.54
+        by mx.google.com with ESMTPS id v21sm3859967bkt.23.2011.04.12.06.26.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Apr 2011 06:25:56 -0700 (PDT)
+        Tue, 12 Apr 2011 06:26:03 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <BANLkTik9D6++P1rg+VbvKj9oTFhRYNmrpQ@mail.gmail.com>
+In-Reply-To: <201104121444.20633.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171389>
-
-On Tue, 12 Apr 2011, Kevin Cernekee wrote:
-> On Sat, Apr 9, 2011 at 3:49 PM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
-> >
-> > This is split version (with assorted cleanups) of J.H. patch adding
-> > JavaScript-base ability to change timezone in which dates are
-> > displayed.
->=20
-> Jakub,
->=20
-> Thanks for the update.  This UI does seem to work better than the
-> original "[+]" dropdown interface.
-
-Thanks.
-
-Notice that you can have only one timezone selection menu opened.  You
-have to close existing to be able to open it in different place (near
-different date), even though onclick handler still triggers.
-
-This is caused by the fact that appending DocumentFragment to an elemen=
-t
-"empties" it, as described in DOM 2 Core specification[1]:
-
-  appendChild
-    Adds the node newChild to the end of the list of children of this
-    node. If the newChild is already in the tree, it is first removed.
-
-    Parameters
-
-       newChild of type Node
-          The node to add.
-
-          If it is a DocumentFragment object, the entire contents of th=
-e
-          document fragment are moved into the child list of this node.
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=
-^^
-
-[1]: http://www.w3.org/TR/2000/REC-DOM-Level-2-Core-20001113/core.html#=
-ID-184E7107
-
-That is also the case that we need to read it when closing timezone
-selection menu in removeChangeTZForm():
-
-	// timezone selection UI was appended as last child
-	// see also displayChangeTZForm function
-	var removed =3D container.removeChild(popup);
-	if (documentFragment.firstChild !=3D=3D removed) { // the only child
-		// re-append it so it would be available for next time
-		documentFragment.appendChild(removed);
-	}
-
-Though it wasn't what I thought it is needed for when writing i ;-)
-
-
-You wrote in your response to original J.H. patch
-
-  "Re: [PATCH 1/1] gitweb: javascript ability to adjust time based on t=
-imezone"
-  http://thread.gmane.org/gmane.comp.version-control.git/169384/focus=3D=
-169891
-
-KC> I'm wondering if there might be a better place on the page to put t=
-he
-KC> TZ selection. =C2=A0It isn't immediately obvious to the user what t=
-he
-KC> extra " + " does, and it seems to cause some issues.
-
-Well, I am not sure if it is immediately obvious to user that he/she
-can click on date to change its timezone.
-
-Underlining on hover (like for links... though I guess that we really
-should make style similar to links but not the same: it is not true lin=
-k),
-changing cursor and title attribute hopefully help here.
-
-Ideas on having it better discoverable certainly welcome.
-
-KC> If you decide to keep it where it is, you might want to consider
-KC> absolute or fixed positioning so that other elements do not wrap
-KC> around it. =C2=A0IOW it would work more like the dropdown menus on =
-many
-KC> sites.
-
-In this version it is done using absolute positioning, though there
-are few quirks and things to know about:
-
- * To be able to position timezone menu relative to some element using
-   absolute positioning you need to make said element relatively=20
-   positioned.
-
-   	target.style.position =3D 'relative';
-
-   We might have used CSS instead...
-
- * Floating inside block element works if it has some specified size.
-   Normal, relative and fixed positioned elements have size given by
-   its parent element.  For absolutely positioned block element you hav=
-e
-   to specify width explicitly, and not have it fit to width.
-
-   That is why close-button uses absolute positioning rather than being
-   a float.
-
- * The only absolute position relative to parent inline-block relative
-   positioned element is top left.  All others doesn't work correctly
-   e.g. in my ancient Mozilla 1.17.2 -- in 'log' view timezone menu got
-   created on the right and outside viewport (page).
-
-   That is why current solution is to use "top: 0; left: 0;".
-
-
-KC> The timezone fixup javascript seemed to work reasonably well, excep=
-t
-KC> for the hiccup with IE6. =C2=A0Maybe it would be worth splitting th=
-is into
-KC> two patches: one to rewrite the timestamps, and a second one to add
-KC> the TZ selection interface.
-
-Well, I have split in more than 2 patches, but rewriting timezone of
-timestamps is separate from TZ selection interface.
-
-=20
-> The new code appears to degrade gracefully on IE6 (everything shown i=
-n UTC).
-
-I don't know about IE6, but there was bug in IE-specific code in=20
-addCssRule (was 'stylesheets' when variable is named 'stylesheet').
-Thanks for noticing this; fixed in new iteration.
-
-Now at least in IE8 (Internet Explorer 8.0.6001.18702) it works as=20
-expected.
-=20
-> Tests on Firefox 3.6.15 looked OK.
-
-Tests in the following browsers looked OK:
- * Firefox 1.7.12 (Gecko/20050123)
- * Epiphany 1.6.5 (Gecko/20050123)
- * Firefox 4.0   - note: not as extensively tested
- * Firefox 3.6.16 (Gecko/20110319)
- * Internet Explorer 8.0 (8.0.6001.18702)
-
-
-Tests in Konqueror 3.5.3 (KHTML) shown something strange: it has no
-problems with named function expressions here
-
-	document.onclick =3D function onclickHandler(event) {
-
-but was showing syntax error in similar
-
-	return function closeTZForm(event) {
-
-that I used in new version of 10/11 patch.  As we don't redeploy handle=
-r,
-we don't need function name, so in current version we use
-
-	return function (event) {
-
-
-Also after displaying timezone selection menu, and either selecting
-timezone or canceling selection, so that timezone UI vanishes, the
-date that was clicked ends up displaced a bit - moved slightly up.
-This doesn't affect layout too badly, and is probably bug in this versi=
-on
-of Konqueror.
-
-Tests in the following browsers gracefully degrade to UTC:
- * Lynx 2.8.5rel.1
- * ELinks 0.10.3
- * w3m 0.5.1+cvs-1.946
-
->=20
-> Chromium 6.0.472.62 (59676) does not like this operation:
->=20
-> Uncaught Error: NOT_FOUND_ERR: DOM Exception 8
->   removeChangeTZForm
->   /gitweb-static/gitweb.js:785
-> onTZFormChange
->=20
-> line 785: var removed =3D container.removeChild(container.lastChild);
-
-Strange.  I confirm the same behavior in Google Chrome 10.0.648.204,
-even after changes that I though should eliminate this exception.
-
-Note that this bug/exception doesn't cause timezones to be not
-translated, it only makes timezone selection menu not working.
-=20
-removeChild() is DOM 2 Core method, `container.lastChild' exists and
-is child of `container' element.  IE8, Firefox 3.6 and 4.0, Opera 10.63
-all work, it's only Chrome / Chromium that has problems...
-
-> Opera 10.63 resets target.selectedIndex to 1 after calling
-> removeChangeTZForm() from onTZFormChange().  Net effect is that you'r=
-e
-> always stuck in the "local" zone.  Here is a workaround that fixed it
-> for me:
->=20
->        var target =3D event.target || event.srcElement;
->        var selectedIndex =3D target.selectedIndex;
->=20
->        removeChangeTZForm(documentFragment, target, tzClassName);
->=20
->        var selected =3D target.options.item(selectedIndex);
-
-Or just change order of those statements:
-
-	 event =3D event || window.event;
-	 var target =3D event.target || event.srcElement;
-
-	 var selected =3D target.options.item(target.selectedIndex);
-	 removeChangeTZForm(tzSelectFragment, target, tzClassName);
-
-Could you check that this version works correctly in Opera 10?
-Thanks in advance.
-
->=20
-> Couple other random nitpicks:
->=20
-> > +	// server-side of gitweb produces datetime in UTC,
-> > +	// so if tz is 'utc' there is no need for changes
-> > +	var nochange =3D tz =3D=3D=3D 'utc';
->=20
-> If I delete my gitweb_tz cookie, then refresh the page:
->=20
->  - All times show up in my browser's local time (good)
->=20
->  - Clicking UTC/GMT on the dropdown has no immediate effect; I need t=
-o
->    refresh the page again to see the times change (bad)
-
-I'm sorry, it looks like I tried to be too clever.
-
-We should either do this _only_ in onloadTZSetup and not in fixDatetime=
-TZ,
-or abandon this micro-optimization entirely - we have to enumerate all
-elements with "datetime" class to add 'title' attribute anyway.
-
-The first solution was chosen in next version of this patch.
-=20
-> > +	my (undef, undef, $datetime_class) =3D
-> > +		gitweb_get_feature('javascript-timezone');
-> > +	if ($datetime_class) {
-> > +		$strtime =3D qq!<span class=3D"datetime">$strtime</span>!;
->=20
-> Should this hard-code class "datetime", or use $datetime_class from
-> the gitweb server configuration?
-
-Sorry, my mistake.  Fixed.
-
-> > +/* JavaScript-base timezone manipulation */
->=20
-> Might want to reword as "JavaScript-based"
-
-Done.
-=20
-> > +		// refresh cookie, so it expires 7 days from last use of gitweb
-> > +		setCookie(tzCookieName, tzCookie, { expires: 7, path: '/' });
->=20
-> Hmm, only 7 days?
-
-Well, in new version where expire time is set in one place (was one to
-set cookie after timezone selection, one to refresh cookie), and is=20
-increased to 14 days (2 week).  Please also remember that it is time
-from last visit to gitweb, not last timezone change.
-
-> > + * and instals appropriate onclick trigger (via event delegation).
->=20
-> "installs"
-
-Done.
-
-
-Thanks again for reviewing it.
-
---=20
-Jakub Narebski
-Poland
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171390>
+
+From: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
+
+This will modify HTML, add CSS rules and add DOM event handlers so
+that clicking on any date (the common part, not the localtime part)
+will display a drop down menu to choose the timezone to change to.
+
+Currently menu displays only the following timezones:
+
+  utc
+  local
+  -1200
+  -1100
+  ...
+  +1100
+  +1200
+  +1300
+  +1400
+
+In timezone selection menu each timezone is +1hr to the previous.  The
+code is capable of handling fractional timezones, but those have not
+been added to the menu.
+
+All changes are saved to a cookie, so page changes and closing /
+reopening browser retains the last known timezone setting used.
+
+[jn: Changed from innerHTML to DOM, moved to event delegation for
+onclick to trigger menu, added close button and cookie refreshing]
+
+Signed-off-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Bugs-reported-by: Kevin Cernekee <cernekee@gmail.com>
+
+Differences from v1:
+* Fixed bug in gitweb.css (only /* ... */ are comments).
+* fixDatetimeTZ didn't update timezone correctly if cookie was
+  deleted and 'utc' timezone selected from menu
+* Fix addCssRule for IE (typofix)
+* Change code so that the fact that Opera 10.63 resets
+  target.selectedIndex to 1 after calling removeChangeTZForm()
+  doesn't affect timezone selection result.
+
+* Pass all cookie parameters from gitweb.perl
+* Increase cookie expiration time from 7 to 14 days
+* Extract/refactor generateTZOptions function 
+  (this makes createChangeTZForm code shorter)
+* select.onchange, select.onblur, close-button.onclick handlers
+  are now generated (this makes createChangeTZForm code shorter)
+* removeChangeTZForm is more robust wrt future changes
+* moved from top+right to top+left positioning, because it works
+  correctly in wider range of [buggy] web browsers
+
+ gitweb/gitweb.perl                  |    3 +-
+ gitweb/static/gitweb.css            |   33 ++++
+ gitweb/static/js/adjust-timezone.js |  294 +++++++++++++++++++++++++++++++++--
+ gitweb/static/js/lib/common-lib.js  |   27 +++-
+ 4 files changed, 342 insertions(+), 15 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 6651946..b1e80ef 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3738,7 +3738,8 @@ sub git_footer_html {
+ 		      (gitweb_check_feature('javascript-actions') ?
+ 		      qq!	fixLinks();\n! : '').
+ 		      # last parameter to onloadTZSetup must be CSS class used by format_timestamp_html
+-		      qq!	onloadTZSetup('local', 'gitweb_tz', 'datetime');\n!.
++		      qq!	var tz_cookie = { name: 'gitweb_tz', expires: 14, path: '/' };\n!. # in days
++		      qq!	onloadTZSetup('local', tz_cookie, 'datetime');\n!.
+ 		      qq!};\n!.
+ 		      qq!</script>\n!;
+ 	}
+diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+index 79d7eeb..8dd0935 100644
+--- a/gitweb/static/gitweb.css
++++ b/gitweb/static/gitweb.css
+@@ -579,6 +579,39 @@ div.remote {
+ 	display: inline-block;
+ }
+ 
++/* JavaScript-based timezone manipulation */
++
++.popup { /* timezone selection UI */
++	position: absolute;
++	/* "top: 0; right: 0;" would be better, if not for bugs in browsers */
++	top: 0; left: 0;
++	border: 1px solid;
++	padding: 2px;
++	background-color: #f0f0f0;
++	font-style: normal;
++	color: #000000;
++	cursor: auto;
++}
++
++.close-button { /* close timezone selection UI without selecting */
++	/* float doesn't work within absolutely positioned container,
++	 * if width of container is not set explicitly */
++	/* float: right; */
++	position: absolute;
++	top: 0px; right: 0px;
++	border:  1px solid green;
++	margin:  1px 1px 1px 1px;
++	padding-bottom: 2px;
++	width:     12px;
++	height:    10px;
++	font-size:  9px;
++	font-weight: bold;
++	text-align: center;
++	background-color: #fff0f0;
++	cursor: pointer;
++}
++
++
+ /* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
+ 
+ /* Highlighting theme definition: */
+diff --git a/gitweb/static/js/adjust-timezone.js b/gitweb/static/js/adjust-timezone.js
+index c9b69c3..f1e97a6 100644
+--- a/gitweb/static/js/adjust-timezone.js
++++ b/gitweb/static/js/adjust-timezone.js
+@@ -7,34 +7,51 @@
+  */
+ 
+ /**
+- * Get common timezone and adjust dates to use this common timezone.
++ * Get common timezone, add UI for changing timezones, and adjust
++ * dates to use requested common timezone.
+  *
+  * This function is called during onload event (added to window.onload).
+  *
+  * @param {String} tzDefault: default timezone, if there is no cookie
+- * @param {String} tzCookieName: name of cookie to store timezone
++ * @param {Object} tzCookieInfo: object literal with info about cookie to store timezone
++ * @param {String} tzCookieInfo.name: name of cookie to store timezone
+  * @param {String} tzClassName: denotes elements with date to be adjusted
+  */
+-function onloadTZSetup(tzDefault, tzCookieName, tzClassName) {
+-	var tzCookie = getCookie(tzCookieName);
+-	var tz = tzCookie ? tzCookie : tzDefault;
++function onloadTZSetup(tzDefault, tzCookieInfo, tzClassName) {
++	var tzCookieTZ = getCookie(tzCookieInfo.name, tzCookieInfo);
++	var tz = tzDefault;
++
++	if (tzCookieTZ) {
++		// set timezone to value saved in a cookie
++		tz = tzCookieTZ;
++		// refresh cookie, so its expiration counts from last use of gitweb
++		setCookie(tzCookieInfo.name, tzCookieTZ, tzCookieInfo);
++	}
++
++	// add UI for changing timezone
++	addChangeTZ(tz, tzCookieInfo, tzClassName);
+ 
+ 	// server-side of gitweb produces datetime in UTC,
+ 	// so if tz is 'utc' there is no need for changes
+-	if (tz !== 'utc') {
+-		fixDatetimeTZ(tz, tzClassName);
+-	}
++	var nochange = tz === 'utc';
++
++	// adjust dates to use specified common timezone
++	fixDatetimeTZ(tz, tzClassName, nochange);
+ }
+ 
+ 
++/* ...................................................................... */
++/* Changing dates to use requested timezone */
++
+ /**
+  * Replace RFC-2822 dates contained in SPAN elements with tzClassName
+  * CSS class with equivalent dates in given timezone.
+  *
+  * @param {String} tz: numeric timezone in '(-|+)HHMM' format, or 'utc', or 'local'
+  * @param {String} tzClassName: specifies elements to be changed
++ * @param {Boolean} nochange: markup for timezone change, but don't change it
+  */
+-function fixDatetimeTZ(tz, tzClassName) {
++function fixDatetimeTZ(tz, tzClassName, nochange) {
+ 	// sanity check, method should be ensured by common-lib.js
+ 	if (!document.getElementsByClassName) {
+ 		return;
+@@ -48,12 +65,263 @@ function fixDatetimeTZ(tz, tzClassName) {
+ 	for (var i = 0, len = classesFound.length; i < len; i++) {
+ 		var curElement = classesFound[i];
+ 
+-		var epoch = parseRFC2822Date(curElement.innerHTML);
+-		var adjusted = formatDateRFC2882(epoch, tz);
++		curElement.title = 'Click to change timezone';
++		if (!nochange) {
++			var epoch = parseRFC2822Date(curElement.innerHTML);
++			var adjusted = formatDateRFC2882(epoch, tz);
++
++			// curElement.innerHTML = adjusted; // does not work for Mozilla 1.17.2
++			curElement.firstChild.data = adjusted;
++		}
++	}
++}
++
++
++/* ...................................................................... */
++/* Adding triggers, generating timezone menu, displaying and hiding */
++
++/**
++ * Adds triggers for UI to change common timezone used for dates in
++ * gitweb output: it marks up and/or creates item to click to invoke
++ * timezone change UI, creates timezone UI fragment to be attached,
++ * and installs appropriate onclick trigger (via event delegation).
++ *
++ * @param {String} tzSelected: pre-selected timezone,
++ *                             'utc' or 'local' or '(-|+)HHMM'
++ * @param {Object} tzCookieInfo: object literal with info about cookie to store timezone
++ * @param {String} tzClassName: specifies elements to install trigger
++ */
++function addChangeTZ(tzSelected, tzCookieInfo, tzClassName) {
++	// make link to timezone UI discoverable
++	addCssRule('.'+tzClassName + ':hover',
++	           'text-decoration: underline; cursor: help;');
++
++	// create form for selecting timezone (to be saved in a cookie)
++	var tzSelectFragment = document.createDocumentFragment();
++	tzSelectFragment = createChangeTZForm(tzSelectFragment,
++	                                      tzSelected, tzCookieInfo, tzClassName);
++
++	// event delegation handler for timezone selection UI (clicking on entry)
++	// see http://www.nczonline.net/blog/2009/06/30/event-delegation-in-javascript/
++	// assumes that there is no existing document.onclick handler
++	document.onclick = function onclickHandler(event) {
++		//IE doesn't pass in the event object
++		event = event || window.event;
++
++		//IE uses srcElement as the target
++		var target = event.target || event.srcElement;
++
++		switch (target.className) {
++		case tzClassName:
++			displayChangeTZForm(target, tzSelectFragment);
++			break;
++		} // end switch
++	};
++}
++
++/**
++ * Create DocumentFragment with UI for changing common timezone in
++ * which dates are shown in.
++ *
++ * @param {DocumentFragment} documentFragment: where attach UI
++ * @param {String} tzSelected: default (pre-selected) timezone
++ * @param {Object} tzCookieInfo: object literal with info about cookie to store timezone
++ * @returns {DocumentFragment}
++ */
++function createChangeTZForm(documentFragment, tzSelected, tzCookieInfo, tzClassName) {
++	var div = document.createElement("div");
++	div.className = 'popup';
++
++	/* '<div class="close-button" title="(click on this box to close)">X</div>' */
++	var closeButton = document.createElement('div');
++	closeButton.className = 'close-button';
++	closeButton.title = '(click on this box to close)';
++	closeButton.appendChild(document.createTextNode('X'));
++	closeButton.onclick = closeTZFormHandler(documentFragment, tzClassName);
++	div.appendChild(closeButton);
++
++	/* 'Select timezone: <br clear="all">' */
++	div.appendChild(document.createTextNode('Select timezone: '));
++	var br = document.createElement('br');
++	br.clear = 'all';
++	div.appendChild(br);
++
++	/* '<select name="tzoffset">
++	 *    ...
++	 *    <option value="-0700">UTC-07:00</option>
++	 *    <option value="-0600">UTC-06:00</option>
++	 *    ...
++	 *  </select>' */
++	var select = document.createElement("select");
++	select.name = "tzoffset";
++	//select.style.clear = 'all';
++	select.appendChild(generateTZOptions(tzSelected));
++	select.onchange = selectTZHandler(documentFragment, tzCookieInfo, tzClassName);
++	// NOTE: onblur removal might be not necessary with close button
++	select.onblur = closeTZFormHandler(documentFragment, tzClassName);
++	div.appendChild(select);
++
++	documentFragment.appendChild(div);
++
++	return documentFragment;
++}
++
++
++/**
++ * Hide (remove from DOM) timezone change UI, ensuring that it is not
++ * garbage collected and that it can be re-enabled later.
++ *
++ * @param {DocumentFragment} documentFragment: contains detached UI
++ * @param {HTMLSelectElement} target: select element inside of UI
++ * @param {String} tzClassName: specifies element where UI was installed
++ * @returns {DocumentFragment} documentFragment
++ */
++function removeChangeTZForm(documentFragment, target, tzClassName) {
++	// find containing element, where we appended timezone selection UI
++	// `target' is somewhere inside timezone menu
++	var container = target.parentNode, popup = target;
++	while (container &&
++	       container.className !== tzClassName) {
++		popup = container;
++		container = container.parentNode;
++	}
++	// safety check if we found correct container,
++	// and if it isn't deleted already
++	if (!container || !popup ||
++	    container.className !== tzClassName ||
++	    popup.className     !== 'popup') {
++		return documentFragment;
++	}
+ 
+-		// curElement.innerHTML = adjusted; // does not work for Mozilla 1.17.2
+-		curElement.firstChild.data = adjusted;
++	// timezone selection UI was appended as last child
++	// see also displayChangeTZForm function
++	var removed = container.removeChild(popup);
++	if (documentFragment.firstChild !== removed) { // the only child
++		// re-append it so it would be available for next time
++		documentFragment.appendChild(removed);
+ 	}
++	// all of inline style was added by this script
++	container.removeAttribute('style');
++
++	return documentFragment;
++}
++
++
++/**
++ * Display UI for changing common timezone for dates in gitweb output.
++ * To be used from 'onclick' event handler.
++ *
++ * @param {HTMLElement} target: where to install/display UI
++ * @param {DocumentFragment} tzSelectFragment: timezone selection UI
++ */
++function displayChangeTZForm(target, tzSelectFragment) {
++	// for absolute positioning to be related to target element
++	target.style.position = 'relative';
++	target.style.display = 'inline-block';
++
++	// show/display UI for changing timezone
++	target.appendChild(tzSelectFragment);
++}
++
++
++/* ...................................................................... */
++/* List of timezones for timezone selection menu */
++
++/**
++ * Generate list of timezones for creating timezone select UI
++ *
++ * @returns {Object[]} list of e.g. { value: '+0100', descr: 'GMT+01:00' }
++ */
++function generateTZList() {
++	var timezones = [
++		{ value: "utc",   descr: "UTC/GMT"},
++		{ value: "local", descr: "Local (per browser)"}
++	];
++
++	// generate all full hour timezones (no fractional timezones)
++	for (var x = -12, idx = timezones.length; x <= +14; x++, idx++) {
++		var hours = (x >= 0 ? '+' : '-') + padLeft(x >=0 ? x : -x, 2);
++		timezones[idx] = { value: hours + '00', descr: 'UTC' + hours + ':00'};
++		if (x === 0) {
++			timezones[idx].descr = 'UTC\u00B100:00'; // 'UTC&plusmn;00:00'
++		}
++	}
++
++	return timezones;
++}
++
++/**
++ * Generate <options> elements for timezone select UI
++ *
++ * @param {String} tzSelected: default timezone
++ * @returns {DocumentFragment} list of options elements to appendChild
++ */
++function generateTZOptions(tzSelected) {
++	var elems = document.createDocumentFragment();
++	var timezones = generateTZList();
++
++	for (var i = 0, len = timezones.length; i < len; i++) {
++		var tzone = timezones[i];
++		var option = document.createElement("option");
++		if (tzone.value === tzSelected) {
++			option.defaultSelected = true;
++		}
++		option.value = tzone.value;
++		option.appendChild(document.createTextNode(tzone.descr));
++
++		elems.appendChild(option);
++	}
++
++	return elems;
++}
++
++
++/* ...................................................................... */
++/* Event handlers and/or their generators */
++
++/**
++ * Create event handler that select timezone and closes timezone select UI.
++ * To be used as $('select[name="tzselect"]').onchange handler.
++ *
++ * @param {DocumentFragment} tzSelectFragment: timezone selection UI
++ * @param {Object} tzCookieInfo: object literal with info about cookie to store timezone
++ * @param {String} tzCookieInfo.name: name of cookie to save result of selection
++ * @param {String} tzClassName: specifies element where UI was installed
++ * @returns {Function} event handler
++ */
++function selectTZHandler(tzSelectFragment, tzCookieInfo, tzClassName) {
++	//return function selectTZ(event) {
++	return function (event) {
++		event = event || window.event;
++		var target = event.target || event.srcElement;
++
++		var selected = target.options.item(target.selectedIndex);
++		removeChangeTZForm(tzSelectFragment, target, tzClassName);
++
++		if (selected) {
++			selected.defaultSelected = true;
++			setCookie(tzCookieInfo.name, selected.value, tzCookieInfo);
++			fixDatetimeTZ(selected.value, tzClassName);
++		}
++	};
++}
++
++/**
++ * Create event handler that closes timezone select UI.
++ * To be used e.g. as $('.closebutton').onclick handler.
++ *
++ * @param {DocumentFragment} tzSelectFragment: timezone selection UI
++ * @param {String} tzClassName: specifies element where UI was installed
++ * @returns {Function} event handler
++ */
++function closeTZFormHandler(tzSelectFragment, tzClassName) {
++	//return function closeTZForm(event) {
++	return function (event) {
++		event = event || window.event;
++		var target = event.target || event.srcElement;
++
++		removeChangeTZForm(tzSelectFragment, target, tzClassName);
++	};
+ }
+ 
+ /* end of adjust-timezone.js */
+diff --git a/gitweb/static/js/lib/common-lib.js b/gitweb/static/js/lib/common-lib.js
+index b371391..018bbb7 100644
+--- a/gitweb/static/js/lib/common-lib.js
++++ b/gitweb/static/js/lib/common-lib.js
+@@ -64,7 +64,7 @@ function padLeft(input, width, ch) {
+ 
+ 
+ /* ............................................................ */
+-/* Ajax */
++/* Handling browser incompatibilities */
+ 
+ /**
+  * Create XMLHttpRequest object in cross-browser way
+@@ -88,6 +88,31 @@ function createRequestObject() {
+ }
+ 
+ 
++/**
++ * Insert rule giving specified STYLE to given SELECTOR at the end of
++ * first CSS stylesheet.
++ *
++ * @param {String} selector: CSS selector, e.g. '.class'
++ * @param {String} style: rule contents, e.g. 'background-color: red;'
++ */
++function addCssRule(selector, style) {
++	var stylesheet = document.styleSheets[0];
++
++	var theRules = [];
++	if (stylesheet.cssRules) {     // W3C way
++		theRules = stylesheet.cssRules;
++	} else if (stylesheet.rules) { // IE way
++		theRules = stylesheet.rules;
++	}
++
++	if (stylesheet.insertRule) {    // W3C way
++		stylesheet.insertRule(selector + ' { ' + style + ' }', theRules.length);
++	} else if (stylesheet.addRule) { // IE way
++		stylesheet.addRule(selector, style);
++	}
++}
++
++
+ /* ............................................................ */
+ /* Support for legacy browsers */
+ 
+-- 
+1.7.3
