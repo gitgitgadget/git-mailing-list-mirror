@@ -1,120 +1,82 @@
-From: Kevin Cernekee <cernekee@gmail.com>
-Subject: Re: [PATCH 00/11] gitweb: Change timezone
-Date: Mon, 11 Apr 2011 18:19:32 -0700
-Message-ID: <BANLkTik9D6++P1rg+VbvKj9oTFhRYNmrpQ@mail.gmail.com>
-References: <1302389366-21515-1-git-send-email-jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git-svn dying unceremoniously
+Date: Mon, 11 Apr 2011 21:12:24 -0500
+Message-ID: <20110412021202.GA17114@elie>
+References: <m2fwpov47e.wl%dave@boostpro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 03:19:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dave Abrahams <dave@boostpro.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 04:12:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9SGk-0007Gj-1p
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 03:19:50 +0200
+	id 1Q9T5o-0004UL-Tu
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Apr 2011 04:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756018Ab1DLBTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2011 21:19:33 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:34951 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751917Ab1DLBTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2011 21:19:32 -0400
-Received: by pxi2 with SMTP id 2so3274260pxi.10
-        for <git@vger.kernel.org>; Mon, 11 Apr 2011 18:19:32 -0700 (PDT)
+	id S1755991Ab1DLCMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2011 22:12:31 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:39159 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754153Ab1DLCMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2011 22:12:31 -0400
+Received: by gxk21 with SMTP id 21so2389014gxk.19
+        for <git@vger.kernel.org>; Mon, 11 Apr 2011 19:12:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=FnEx/zlixRetdOogjIBQS4KUFHvuBGEGpGew4BMsbIE=;
-        b=me2Turfh6zMSi9/mafe76ZgFIY3hEIkHB2To/VcTHPguDeOWrZ371bbaCAvjJkrFCz
-         uh2jOYXPth3oEGyEBxTTxotzNmVIl+jUobdCc1mbhZJAz7ptUOW2M5tM4c0uaaCPA/Yx
-         2KAQx6fa5plSLhdlNUmaM/qGNqa2zUDVD5hII=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mcTMXGR8/i0SkGljrW9uLEhjo8vaQbTGbihRYncAWpM=;
+        b=RWc91QWkuiZGYj/3e3lirx+bhznQODEi1wjCJHlyK15BRNXgvWas9vyYOLwj0puXMz
+         /u+0r01nZlGY5vZ1+ihjbMbbRYnIKit97aPEGtNVXdGljtiuRTjqvD9OaYD4SFqrobH3
+         Wzf8F/G4yHOWjedlv/nIuOlSIT7WqP7MV+Xeo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=XNEjaWwhNPTZjfv/83ymHaBLBOOgleXLoWHmQpSDIGehHmBo92Ph6WHAo7EWULJSYH
-         o3nWGj3gVeuL+wykTT5PWwCwBfN2s0xgLgm6aB5H5z62ABVKD68NfoPXosU2OUWaBbLA
-         g4tqC7UN6WN7fyKzVIYqw+KqayJQ32j/N5ofI=
-Received: by 10.143.137.6 with SMTP id p6mr5868507wfn.305.1302571172104; Mon,
- 11 Apr 2011 18:19:32 -0700 (PDT)
-Received: by 10.68.62.38 with HTTP; Mon, 11 Apr 2011 18:19:32 -0700 (PDT)
-In-Reply-To: <1302389366-21515-1-git-send-email-jnareb@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=bt2iVgrDkq8QUb4uj7twCnGjF1KQsHnocv4wEBNe1fh6flFtyeIwYOxYFeIUBuBebU
+         +zoPm/uDp9GAOcqiw4CQQ+zxCrFUcQFH98WMjW2GCYGCxr2kjBeABhn2UITuCCL30Dja
+         6nG7tfDdSFKRUE2AErT3Hk1TV1MdnaaBKLTzc=
+Received: by 10.236.180.200 with SMTP id j48mr268685yhm.14.1302574350443;
+        Mon, 11 Apr 2011 19:12:30 -0700 (PDT)
+Received: from elie (adsl-69-209-51-92.dsl.chcgil.sbcglobal.net [69.209.51.92])
+        by mx.google.com with ESMTPS id i10sm2842870yhd.10.2011.04.11.19.12.28
+        (version=SSLv3 cipher=OTHER);
+        Mon, 11 Apr 2011 19:12:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <m2fwpov47e.wl%dave@boostpro.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171368>
 
-On Sat, Apr 9, 2011 at 3:49 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> This is split version (with assorted cleanups) of J.H. patch adding
-> JavaScript-base ability to change timezone in which dates are
-> displayed.
+Hi Dave,
 
-Jakub,
+Dave Abrahams wrote:
 
-Thanks for the update.  This UI does seem to work better than the
-original "[+]" dropdown interface.
+> Does anyone know a cure for this?
+> 
+> % git svn fetch
+>         A       boost/boost/graph/uniform_cost_search.hpp
+>         A       boost/boost/graph/properties.hpp
+>         A       boost/boost/graph/smallest_last_vertex_ordering.hpp
+>         A       boost/boost/graph/johnson_all_pairs_shortest_paths.hpp
+>         .
+>         .
+>         .
+>         A       boost/libs/graph/docs/MutableGraph.html
+> r7701 = c2434d3062416adac72b370ce3b993a9857e2029 (refs/remotes/trunk)
+> error: git-svn died of signal 13
 
-The new code appears to degrade gracefully on IE6 (everything shown in UTC).
+Very old bug, not well understood.  No cure, only workarounds.
 
-Tests on Firefox 3.6.15 looked OK.
+See http://thread.gmane.org/gmane.comp.version-control.git/134936/focus=134940
+and the surrounding thread for hints.
 
-Chromium 6.0.472.62 (59676) does not like this operation:
-
-Uncaught Error: NOT_FOUND_ERR: DOM Exception 8
-  removeChangeTZForm
-  /gitweb-static/gitweb.js:785
-onTZFormChange
-
-line 785: var removed = container.removeChild(container.lastChild);
-
-Opera 10.63 resets target.selectedIndex to 1 after calling
-removeChangeTZForm() from onTZFormChange().  Net effect is that you're
-always stuck in the "local" zone.  Here is a workaround that fixed it
-for me:
-
-       var target = event.target || event.srcElement;
-       var selectedIndex = target.selectedIndex;
-
-       removeChangeTZForm(documentFragment, target, tzClassName);
-
-       var selected = target.options.item(selectedIndex);
-
-Couple other random nitpicks:
-
-> +	// server-side of gitweb produces datetime in UTC,
-> +	// so if tz is 'utc' there is no need for changes
-> +	var nochange = tz === 'utc';
-
-If I delete my gitweb_tz cookie, then refresh the page:
-
- - All times show up in my browser's local time (good)
-
- - Clicking UTC/GMT on the dropdown has no immediate effect; I need to
-   refresh the page again to see the times change (bad)
-
-> +	my (undef, undef, $datetime_class) =
-> +		gitweb_get_feature('javascript-timezone');
-> +	if ($datetime_class) {
-> +		$strtime = qq!<span class="datetime">$strtime</span>!;
-
-Should this hard-code class "datetime", or use $datetime_class from
-the gitweb server configuration?
-
-> +/* JavaScript-base timezone manipulation */
-
-Might want to reword as "JavaScript-based"
-
-> +		// refresh cookie, so it expires 7 days from last use of gitweb
-> +		setCookie(tzCookieName, tzCookie, { expires: 7, path: '/' });
-
-Hmm, only 7 days?
-
-> + * and instals appropriate onclick trigger (via event delegation).
-
-"installs"
+Hope that helps,
+Jonathan
