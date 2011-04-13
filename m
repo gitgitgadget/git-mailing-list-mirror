@@ -1,112 +1,130 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: Gitbox
-Date: Wed, 13 Apr 2011 13:29:42 -0700
-Message-ID: <991C9EA2-48A4-4D10-B859-F5A01E565109@gmail.com>
-References: <A2315DA1-780C-4024-B774-9AD5F9AA0DB6@medialab.com> <1302721187.21900.4.camel@drew-northup.unet.maine.edu> <1E5D7DCE-B3B3-4CC7-8F40-4ED48E76907D@gmail.com> <1302722214.22161.5.camel@drew-northup.unet.maine.edu> <86vcyigcqy.fsf@red.stonehenge.com> <1302725089.22408.11.camel@drew-northup.unet.maine.edu>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Daniel Searles <dsearles@medialab.com>, git@vger.kernel.org,
-	oleganza@gmail.com
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 13 22:29:53 2011
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] rerere: Expose an API corresponding to 'clear'
+ functionality
+Date: Wed, 13 Apr 2011 15:38:43 -0500
+Message-ID: <20110413203843.GC30630@elie>
+References: <7vmxjwws8a.fsf@alter.siamese.dyndns.org>
+ <1302700718-19093-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 22:39:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA6hD-0007kO-ND
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 22:29:52 +0200
+	id 1QA6q7-0004tm-7N
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 22:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758515Ab1DMU3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 16:29:47 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44642 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757492Ab1DMU3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 16:29:46 -0400
-Received: by iwn34 with SMTP id 34so866619iwn.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 13:29:46 -0700 (PDT)
+	id S932489Ab1DMUi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 16:38:58 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:57826 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932094Ab1DMUi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 16:38:57 -0400
+Received: by gyd10 with SMTP id 10so261077gyd.19
+        for <git@vger.kernel.org>; Wed, 13 Apr 2011 13:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        bh=arvdY+kBfsGBbpzYk0ieFb9cw858hG4q7PSUlTPNcY4=;
-        b=R+C0ZOgUMFm5MEUCkB92CYQHSNbFj8Cc5JjJowceEZL8F9eki2EVuh3waHlUeh2mPa
-         qqggwLh+yTcOUSYOEteOx1RDVfDg9WP5jEdOJpQimhoVoSnGe+D8NAjt/5msIRR3WJbi
-         rb3i3CL9NVhaSAXDb6UYeyiTa6rfSBWpp1Z4w=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=nxquLeEszM8Ih77LkRdgca42aUE9ZXqJCludwPqdtsk=;
+        b=TyYaFRK6v0YmJMGcFkuiVWuWipp1FHMiR4ZIRO6R5rzg7+HETga4ZsqLAPZfcQl/D2
+         5iQYKhGBz29oa8oro1Tp/yawiudHgQZ5Wr5eHFkuU+sdiIMTFENrGeBlKWYSYPB9fdYt
+         kH6EVFZIoW/az7JuK7kucf5Dz9t92cE776esc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=nMhNmCbyBv5aoyHixfngd7k3Es4ENZ9ddiddMfn69YHEbpyhp0VLgdX4F5eMqFsHGy
-         M1Qe47HYcYLdQCdXzBMjuIIcONqoNMPf84bezI6pPNO8FmwTjCf8/Oa+Zeq08WQ/A+SU
-         l9s7Kw2i6EjCNeCCud3/48jDQ/LllSTEqEcSc=
-Received: by 10.231.185.196 with SMTP id cp4mr8571895ibb.56.1302726586083;
-        Wed, 13 Apr 2011 13:29:46 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id i3sm654629iby.6.2011.04.13.13.29.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Apr 2011 13:29:45 -0700 (PDT)
-In-Reply-To: <1302725089.22408.11.camel@drew-northup.unet.maine.edu>
-X-Mailer: Apple Mail (2.936)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=T653AerYLvugTqWvD7HSdNs6nyO7H2fKpigkd3FCTow7CKPetwiG2OpOY7W+W8aa05
+         YAXV6XDknRwx0MDK5haq+Aytv7K+QKt8iGIWJ4v8FvKqUKve215kyTKKkPa2TZhNdbbp
+         jBVmvqXJ5E24PROFnZfTcUlQSGYOk7SSGtf5k=
+Received: by 10.150.161.2 with SMTP id j2mr1024569ybe.235.1302727136352;
+        Wed, 13 Apr 2011 13:38:56 -0700 (PDT)
+Received: from elie ([69.209.64.230])
+        by mx.google.com with ESMTPS id q34sm2317213ybk.18.2011.04.13.13.38.51
+        (version=SSLv3 cipher=OTHER);
+        Wed, 13 Apr 2011 13:38:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1302700718-19093-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171486>
 
-On Apr 13, 2011, at 1:04 PM, Drew Northup wrote:
+Hi,
 
-> On Wed, 2011-04-13 at 12:41 -0700, Randal L. Schwartz wrote:
->>>>>>> "Drew" == Drew Northup <drew.northup@maine.edu> writes:
->>
->> Drew> He also clearly stated that he's not calling git command-line  
->> tools...
->>
->> Drew> "Gitbox neither links (statically or dynamically) against Git  
->> nor uses
->> Drew> custom interfaces to interact with it. Git binaries are  
->> provided for
->> Drew> your convenience only."
->>
->> Huh?  How do you get "not using git CLI" there?  He's not using  
->> *custom*
->> interfaces, but the *standard* interfaces are more than enough.
->>
->> He's made new porcelein, and using the plumbing directly.  That's
->> exactly why we have plumbing in git, right?
->
-> If that's what he's doing then why does he state that the git binaries
-> are "for your convenience only"
+Ramkumar Ramachandra wrote:
 
-I suspect he considers it convenient to download the app and use it  
-immediately without having to install Git manually, but wants to  
-clarify that GitBox works with later versions as well.  In other  
-words, Git 1.7.3.2 is provided for *convenience*, not due to  
-compatibility restrictions.
+> Expose a new function called rerere_clear,
 
-> --strongly implying his program will work
-> in the absence thereof?
+The commit message is a good chance to quickly explain the API.  What
+does the function do?  When would one call it?  Is it equivalent to
+running "git rerere clear"?  Any gotchas?
 
-Strongly implying?  I read the exact opposite -- GitBox clearly  
-depends on an external git binary.
+> and make 'builtin/rerere.c'
+> use this when the corresponding command-line argument is passed.
 
-> I'm hoping he just made a typo--as what he said
-> is there in plain English, and is somewhat contradicted by the next
-> sentence.
+Didn't "git rerere" already use the functionality of this function?
+I'm not sure what this part means.
 
-It's ambiguous.  The next sentence clarifies it, ruling out one  
-interpretation and therefore confirming the other.  In regular  
-expressions this is called backtracking.
+> As a
+> side-effect, also expose unlink_rr_item as unlink_rerere_item.
 
-> If you wish to dispute my interpretation of his grammar
-> please contact me directly and don't bother the rest of the list.
+This is not a side-effect; you did it directly.
 
-I decline your request; I think it's better to have a public record of  
-the issue being settled, if for no other reason than that others don't  
-waste time making points that I've already made.
+I think the reason for this is that rerere_gc is not being exposed at
+the same time, right?  I suppose if I were doing it, I would have
+moved that to rerere.c, too and kept unlink_rr_item static, but there
+is also appeal in a minimal patch.  It would be clearer to say
+something to the effect that we
 
-Josh
+	Also export unlink_rr_item as unlink_rerere_item so
+	rerere_clear and the un-libified "git rerere gc" can
+	both use it.
+
+[...]
+> +++ b/builtin/rerere.c
+> @@ -142,19 +134,14 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
+>  		pathspec = get_pathspec(prefix, argv + 1);
+>  		return rerere_forget(pathspec);
+>  	}
+> +	if (!strcmp(argv[0], "clear"))
+> +		return rerere_clear();
+>  
+>  	fd = setup_rerere(&merge_rr, flags);
+[...]
+> +++ b/rerere.c
+> @@ -671,3 +679,22 @@ int rerere_clear(void)
+[...]
+> +	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
+> +	if (fd < 0)
+> +		return 0;
+
+Why RERERE_NOAUTOUPDATE instead of 0?  (Of course it doesn't matter in
+practice.   Maybe "0" would convey that more clearly?)
+
+> +
+> +	for (i = 0; i < merge_rr.nr; i++) {
+> +		const char *name = (const char *)merge_rr.items[i].util;
+> +		if (!has_rerere_resolution(name))
+> +			unlink_rerere_item(name);
+> +	}
+> +	string_list_clear(&merge_rr, 1);
+> +	unlink_or_warn(git_path("MERGE_RR"));
+> +	return 0;
+> +}
+
+The write_lock is never rolled back.  "git rerere" won't care since it
+exits moments later and the atexit handler is called, but others might
+mind that they can't perform any more rerere operations afterwards. :)
+
+Thanks and hope that helps.
+Jonathan
