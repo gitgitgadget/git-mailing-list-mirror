@@ -1,83 +1,50 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: is hosting a read-mostly git repo on a distributed file system practical?
-Date: 12 Apr 2011 23:47:15 -0400
-Message-ID: <20110413034715.15553.qmail@science.horizon.com>
-Cc: git@vger.kernel.org, linux@horizon.com, spearce@spearce.org
-To: jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 13 05:47:30 2011
+From: =?GB2312?B?0Oy1zw==?= <xudifsd@gmail.com>
+Subject: Reply in melange about GSOC proposal
+Date: Wed, 13 Apr 2011 12:48:44 +0800
+Message-ID: <BANLkTi=WRoDDUi6wYpG8zR-W3BC9-DAPFA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: =?GB2312?B?R2l0INPKvP7B0LHt?= <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 13 06:49:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9r3B-0006sU-EC
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 05:47:29 +0200
+	id 1Q9s0l-0004Gs-Ah
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 06:49:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757043Ab1DMDrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2011 23:47:17 -0400
-Received: from science.horizon.com ([71.41.210.146]:29483 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1756834Ab1DMDrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2011 23:47:16 -0400
-Received: (qmail 15554 invoked by uid 1000); 12 Apr 2011 23:47:15 -0400
+	id S1751246Ab1DMEsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 00:48:46 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42612 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071Ab1DMEsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 00:48:45 -0400
+Received: by bwz15 with SMTP id 15so269496bwz.19
+        for <git@vger.kernel.org>; Tue, 12 Apr 2011 21:48:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=g0u3DGvRJSRSUtuvDATOK5fZQOuQ90Ikpn/EizgSIfc=;
+        b=STDt/OlfcvIQbHVs/0JoWB07yfZZQl8miHk/QfVdLT9B6UdV2lN1jq61eeuWAymI6T
+         xhMaxxFQ0kDM1B9npvwTzMm4oT3lHWYtMi5UclcRcv5eAftEZvWmuux/0+AjTgSLLt+d
+         e+ZBff8vfn7fy5MaVbNovH5siYk8UE8vGDndk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=h+9FJMVA7L8VShSTqnmctta3Bw8H2Oz9qzy76IBX3My5yq0FscQu/UGcxefT4x9BEf
+         darivwkDXY8GWm0S2z9dnTLlA/BqIZAZUpdMX0rwll3B1yf4w2+g9J9sJo+hobAVJ5ow
+         BNkCPF7eYH65Sjve992w3m9qCk8o09zINrbXE=
+Received: by 10.204.20.142 with SMTP id f14mr1679403bkb.155.1302670124213;
+ Tue, 12 Apr 2011 21:48:44 -0700 (PDT)
+Received: by 10.205.83.79 with HTTP; Tue, 12 Apr 2011 21:48:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171432>
 
-> All clients, including the client that occasionally updates the
-> read-mostly repo would be mounting the DFS as a local file system. My
-> environment is one where DFS is easy, but establishing a shared server
-> is more complicated (ie. bureaucratic).
-
-> I guess I am prepared to put up with a slow initial clone (my developer
-> pool will be relatively stable and pulling from a peer via git: or ssh:
-> will usually be acceptable for this occasional need).
-
-> What I am most interested in is the incremental performance. Can my
-> integrator, who occasionally updates the shared repo, avoid automatically
-> repacking it (and hence taking the whole of repo latency hit) and can
-> my developers who are pulling the updates do so reliably without a whole
-> of repo scan?
-
-I think the answers are yes, but I have to make a vouple of things clear:
-* You can *definitely* control repack behaviour.  .keep files are the
-  simplest way to prevent repacking.
-* Are you talking about hosting only a "bare" repository, or one with
-  the unpacked source tree as well?  If you try to run git commands on
-  a large network-mounted source tree, things can get more than a bit
-  sluggish; git recursively stats the whole tree fairly frequently.
-  (There are ways to precent that, notably core.ignoreStat, but they
-  make it less friendly.)
-* You can clone from a repository mounted on the file system just as
-  easily as you can from a network server.  So there's no need to set
-  up a server if you find it onconvenient.
-* Normally, the developers will clone from the integrator's repository
-  before doing anything, so the source tree, and any changes they make,
-  will be local.
-* A local clone will try to hard link to the object directory.  I think
-  it will copy them if it fails, or you can force that with "git clone
-  --no-hardlinks".  For a more space-saving version, try "git clone
-  -s", which will make a sort of soft link to the upstream repository.
-  It's a git concept, so repacking upstream won't do any harm, but you
-  Must Not delete objects from the upstream repository or you'll create
-  dangling references in the downstream.
-* If using the objects on the DFS mount turns out to be slow, you can
-  just do the initial clone with --no-hardlinks.  Then the developers'
-  day-to-day work is all local.
-
-Indeed, you could easily do everything via DFS.  Give everyone a personal
-"public" repo to push to, which is read-only to everyone else, and let
-the integrator pull from those.
-
-> I understand that avoiding repacking for an extended period brings its
-> own problems, so I guess I could live with a local repack followed by
-> an rsync transfer to re-initial the shared remote, if this was
-> warranted.
-
-Normally, you do a generational garbage collection thing.  You repack the
-current work frequently (which is fast to do, and to share, because
-it's small), and the larger, slower, older packs less frequently.
-
-Anyway, I hope this helps!
+I just want you know that i replied in melange
+"http://socghop.appspot.com/gsoc/proposal/review/google/gsoc2011/xudifsd/1#c5001"
+just in case you disabled notification.
