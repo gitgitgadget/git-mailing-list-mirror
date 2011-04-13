@@ -1,75 +1,68 @@
-From: Joshua Juran <jjuran@gmail.com>
+From: Drew Northup <drew.northup@maine.edu>
 Subject: Re: Gitbox
-Date: Wed, 13 Apr 2011 11:55:32 -0700
-Message-ID: <31F2C72E-3949-4052-B501-E596C0C61CC4@gmail.com>
+Date: Wed, 13 Apr 2011 14:59:47 -0400
+Message-ID: <1302721187.21900.4.camel@drew-northup.unet.maine.edu>
 References: <A2315DA1-780C-4024-B774-9AD5F9AA0DB6@medialab.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Mime-Version: 1.0
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, oleganza@gmail.com
 To: Daniel Searles <dsearles@medialab.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 20:55:42 2011
+X-From: git-owner@vger.kernel.org Wed Apr 13 21:00:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA5E5-00021s-IZ
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 20:55:41 +0200
+	id 1QA5J2-00052J-1k
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 21:00:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757792Ab1DMSzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 14:55:36 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:43757 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757398Ab1DMSzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 14:55:36 -0400
-Received: by iyb14 with SMTP id 14so803798iyb.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 11:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        bh=8+bcITJxn8gsE59Z/tuxIor9TLryZBrUVX5wCNbXLvs=;
-        b=bxPTI2ZW15i6C/3pW1urKF40WabY567xhA99Vc/C5cKRsUIRObmgGSfW3EZwhdpha0
-         pR/bfxhhyyzwsMD8lVGVc1aiHJGwumf0pCx0a/6/zl9Av8WwgdZV8wm6nJFplpNBRc6p
-         MEhIlAHeTmHpyGIe/oxBkPYjK8UcLglwUIVmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=xHnr8y1t688rd644ZSGfCYi0TCT0iVkywp0Y4SQg+6xRAyArfDd8MT3Q7wzIOpGdzc
-         +h25JhSqDCu5yZ6I9IgfBEMtyiBCL3hc8VGaqXUAk93xl7SzqLqeA+dCKQh/WmzsCreC
-         b6Ycm2oAwgnArao0wG/wWLyM4Bx3hs6pteJEI=
-Received: by 10.42.151.72 with SMTP id d8mr1994231icw.26.1302720935119;
-        Wed, 13 Apr 2011 11:55:35 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id o3sm603836ibd.44.2011.04.13.11.55.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Apr 2011 11:55:34 -0700 (PDT)
+	id S1756925Ab1DMTAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 15:00:41 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:42137 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932223Ab1DMTAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 15:00:36 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3DIxrdh032316
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 13 Apr 2011 14:59:53 -0400
 In-Reply-To: <A2315DA1-780C-4024-B774-9AD5F9AA0DB6@medialab.com>
-X-Mailer: Apple Mail (2.936)
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
+	Fuz2=3
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p3DIxrdh032316
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1303326003.51488@4Tmx3d+/W73bSY4zJLlV9w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171472>
 
-On Apr 13, 2011, at 11:16 AM, Daniel Searles wrote:
 
+On Wed, 2011-04-13 at 11:16 -0700, Daniel Searles wrote:
+> Hi All,
+> 
 > I'm curious if Gitbox is in violation of the Git's GPL.
 > http://www.gitboxapp.com/
+> 
+> Thank you,
+> Daniel Searles
+> Tech Support
+> Media Lab, Inc.
 
- From <http://www.gitboxapp.com/faq.html#gpl>:
+Well, it appears that he may have implemented "git" on his own, or at
+the very least he's trying to imply that he did.
 
-"The application package contains a compiled official version 1.7.3.2  
-of the Git content tracker. Gitbox neither links (statically or  
-dynamically) against Git nor uses custom interfaces to interact with  
-it. Git binaries are provided for your convenience only. You can  
-replace  bundled binaries with any compatible build of the current  
-version of Git or newer."
+http://www.gitboxapp.com/faq.html#gpl
 
-That appears to comply with both the letter and spirit of the GPL.
+Perhaps he'll have a more enlightening reply (please use reply all).
 
-Josh
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
