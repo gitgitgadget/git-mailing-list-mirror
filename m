@@ -1,89 +1,129 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC 7/7] i18n: mark checkout plural warning for translation
-Date: Wed, 13 Apr 2011 10:30:35 +0200
-Message-ID: <BANLkTimPzYA7oYkUZ3vwefb2HAKEHW-w7w@mail.gmail.com>
-References: <1302464048-21806-1-git-send-email-avarab@gmail.com>
-	<1302464048-21806-8-git-send-email-avarab@gmail.com>
-	<7vipukq6m0.fsf@alter.siamese.dyndns.org>
-	<BANLkTimjYxz_7v8gyByjKX2Mf9vRzukWGw@mail.gmail.com>
-	<7vzknvnq6o.fsf@alter.siamese.dyndns.org>
+From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
+Subject: Re: [PATCH] format-patch: don't pass on the --quiet flag
+Date: Wed, 13 Apr 2011 11:26:20 +0200
+Message-ID: <20110413092620.GA3649@bee.lab.cmartin.tk>
+References: <7v8vvgv5dm.fsf@alter.siamese.dyndns.org>
+ <4DA36D95.6060108@windriver.com>
+ <1302622538-7535-1-git-send-email-cmn@elego.de>
+ <7vk4ezpacr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org, Paul Gortmaker <paul.gortmaker@windriver.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 10:30:57 2011
+X-From: git-owner@vger.kernel.org Wed Apr 13 11:26:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9vTV-0003QB-Eu
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 10:30:57 +0200
+	id 1Q9wLE-0007oW-GL
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 11:26:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754607Ab1DMIah convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2011 04:30:37 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59441 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234Ab1DMIag convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2011 04:30:36 -0400
-Received: by fxm17 with SMTP id 17so284691fxm.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 01:30:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7PuTMfuhRtOWKbe1wJRIeSRTTmYxH439O1pfWfIRVz4=;
-        b=odJJC3qStxHdBrmDNCc/gzWKB0muM9oAq0oAiSlFxWdeIxkknVtiva+5o23pL2xws2
-         QHrOiM6jNFEni30T7sR/J+cCcjtsnPinExISZLFhuAZ8MUkv3NXjyeQPyWwPsFfiu0m1
-         1bPV82FVjrzM5rilDPzsM7Jang9gmKQaxdMiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jb3P55nbc7FYFwJKfOE5BT6UiHLw2mfWPF428sn+/Pb5TIyUtfJOTDkubh6ZNrvb0g
-         TNk6HBuIpZPJaC7tHMX5n3uYdU5ZsGY8uEuiPywHykiFqrz518PmVy1VHjJZ7kOHJc9v
-         FXC6ITu3U5Sph22bH+yuc9HlK5ZcX35k4Nrac=
-Received: by 10.223.54.219 with SMTP id r27mr743992fag.124.1302683435055; Wed,
- 13 Apr 2011 01:30:35 -0700 (PDT)
-Received: by 10.223.105.201 with HTTP; Wed, 13 Apr 2011 01:30:35 -0700 (PDT)
-In-Reply-To: <7vzknvnq6o.fsf@alter.siamese.dyndns.org>
+	id S1757972Ab1DMJ0X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2011 05:26:23 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:60925 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752016Ab1DMJ0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 05:26:22 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id D78C54612C;
+	Wed, 13 Apr 2011 11:26:07 +0200 (CEST)
+Received: (nullmailer pid 10437 invoked by uid 1000);
+	Wed, 13 Apr 2011 09:26:20 -0000
+Content-Disposition: inline
+In-Reply-To: <7vk4ezpacr.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171436>
 
-On Tue, Apr 12, 2011 at 22:57, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "Warning: you are leav=
-ing %d commit behind, "
->>>> ...
->>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "If you want to k=
-eep them by creating a new branch, "
->>>
->>> s/them/it/ as this is a singular case, no?
->>
->> I just used the message as-is, we were using that for the singular b=
-efore.
->
-> Heh, you cannot claim innocence in this case; it used to be "leaving =
-%d
-> commit(s) behind, ... if you want _them_", which was consistent with =
-the
-> earlier use of "commit(s)" ;-).
+On Tue, Apr 12, 2011 at 11:56:20AM -0700, Junio C Hamano wrote:
+> Carlos Mart=EDn Nieto <cmn@elego.de> writes:
+>=20
+> >> A patch to make --quiet not to squelch the patch output, and inste=
+ad
+> >> silence any progress output would be a good addition.
+> >
+> > Something like this? I guess the only use case would be together wi=
+th
+> > -o.
+>=20
+> When the user gives -q without giving -o to a new or an empty directo=
+ry,
+> the user deserves to get what was asked on the command line, so I wou=
+ldn't
+> worry about this particular case.  For a casual user, it is perfectly=
+ a
+> sensible thing to say "I'll eyeball; I don't have other files whose n=
+ames
+> begin with [0-9]{4}- in my working tree" and I don't think we need sa=
+fety
+> against doing that.
+>=20
 
-No, it was:
+ Agreed.
 
-              "Warning: you are leaving %d commit%s behind, "
-               [...]
-               lost, ((1 < lost) ? "s" : "")
+> I however wonder if we should audit other commands in the "log" famil=
+y to
+> see what they do when "--quiet" is given.  I know what they do curren=
+tly
+> is whatever they happen to do for a nonsense request, and in no way i=
+s a
+> designed behaviour.  We simply did never think about that case.
+>=20
+> For example, what should "git show master^2 next^2" do with "--quiet"=
+?  Of
+> course the standard way to squelch diff output in the output from "sh=
+ow"
+> is to use "-s" (coming from "git diff-tree"), but giving "--quiet" sh=
+ould
+> at least be a no-op.
+>=20
 
-So it would be "commit" or "commits" depending on the value of the
-"lost" variable.
+ We get a similar effect to format-patch, and a line disappears
 
-Anyway I could re-submit this or you could fix it up, either is fine by=
- me.
+    carlos@bee:~/apps/git$ git show --oneline origin/master^2 origin/ne=
+xt^2
+    9973d93 t2021: mark a test as fixed
+    diff --git a/t/t2021-checkout-overwrite.sh b/t/t2021-checkout-overw=
+rite.sh
+    index 27db2ad..5da63e9 100755
+    --- a/t/t2021-checkout-overwrite.sh
+    +++ b/t/t2021-checkout-overwrite.sh
+    @@ -39,7 +39,7 @@ test_expect_success SYMLINKS 'create a commit whe=
+re dir a/b changed to symlink'
+	[...] Diff here
+    9db1941 Merge branch 'js/checkout-untracked-symlink'
+
+and
+
+    carlos@bee:~/apps/git$ git show --oneline --quiet origin/master^2 o=
+rigin/next^2
+    9973d93 t2021: mark a test as fixed
+
+so we certainly should catch it.
+
+I'm not so sure what we should do with it, though. We shouldn't
+squelch all the output, because then it just makes the command useless
+(though I guess the user asked for it in that case). Maybe making it
+behave like a --no-diff option would make sense (i.e. pretend the user
+passed -s) in order to make it behave like a prettier version of
+rev-parse.
+
+Looking at the other cmd_ functions in builtin/log.c I see:
+ - reflog ignores it
+ - cherry complains that it doesn't know about the option
+ - log -p --quiet is the same as log
+ - whatchanged --quiet shows the same as log but skips every second
+   commit
+ - show --quiet skips one of the commits
+
+and I don't see any others, so whatchanged should be tought not to
+skip the commits. I'll what cmd_log does differently from
+cmd_whatchanged when passing options.
+
+   cmn
