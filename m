@@ -1,76 +1,66 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] whatchanged: always show the header
-Date: Wed, 13 Apr 2011 14:10:44 +0200
-Message-ID: <1302696644-21809-1-git-send-email-cmn@elego.de>
-References: <20110413092620.GA3649@bee.lab.cmartin.tk>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: using aliases within the subdirectory
+Date: Wed, 13 Apr 2011 14:18:08 +0200
+Message-ID: <4DA59480.5080307@drmicha.warpmail.net>
+References: <4DA579CA.5030908@ge.infn.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 14:10:52 2011
+To: Matej Batic <matej.batic@ge.infn.it>
+X-From: git-owner@vger.kernel.org Wed Apr 13 14:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9yuK-0004of-3j
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 14:10:52 +0200
+	id 1Q9z1W-0000rp-49
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 14:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754849Ab1DMMKr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2011 08:10:47 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:43389 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754775Ab1DMMKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 08:10:46 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id CD9894612C;
-	Wed, 13 Apr 2011 14:10:31 +0200 (CEST)
-Received: (nullmailer pid 21874 invoked by uid 1000);
-	Wed, 13 Apr 2011 12:10:44 -0000
-X-Mailer: git-send-email 1.7.4.2.437.g4fc7e.dirty
-In-Reply-To: <20110413092620.GA3649@bee.lab.cmartin.tk>
+	id S1755549Ab1DMMSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 08:18:13 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48007 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755448Ab1DMMSM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2011 08:18:12 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 12D1D20B9F;
+	Wed, 13 Apr 2011 08:18:11 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute4.internal (MEProxy); Wed, 13 Apr 2011 08:18:11 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=WXnLt6IpPsJyCakvoyyIArU1JIY=; b=BHmIepgMMNCb8WKOIAjNApB91R4YLzOePcm9f0fMwVw4mM4H/7vyKL0MvR3GIuVDjSga0AGcEjNfkO9WkBpn5kxCzXhjT1PhrakFCTJhnQN3uPTgw7C7t9jpVJr7/m3eXaVfCLsm37HvDalrh/kqUmBCe1f1642XdmOz1ssRhcM=
+X-Sasl-enc: nGqvSeayL0BLy10cAXaDEq67FxZ02F8g7bE658v1i0mA 1302697090
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8F58E40F3E7;
+	Wed, 13 Apr 2011 08:18:10 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <4DA579CA.5030908@ge.infn.it>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171446>
 
-If --quiet is passed and there is no patch output, log_tree_commit
-will not print the log which is certainly not wanted.
+Matej Batic venit, vidit, dixit 13.04.2011 12:24:
+> Dear all,
+> 
+> I am facing a problem, noted previously in
+>     
+> http://git.661346.n2.nabble.com/git-alias-always-chdir-to-top-td1609456.html  
+> 
+>     http://kerneltrap.org/mailarchive/git/2010/5/5/29818/thread
+> which in practice means that I cannot pass the " -- 
+> relative_path_to_some_file_in_the_tree" argument to my alias.
+> 
+> Is there any way to get the current working dir before git changes dir 
+> to root directory?
+> 
+> Best regards,
+> Matej
 
-Set the always_show_header option to fix this.
+This may depend on your shell and rc files, but for me, $PWD gives the
+original current working dir.
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
----
+Also, revisiting that topic after 1.7.5 seems worthwhile.
 
-With this, "--quiet" just means the same as "-s" by telling
-log_tree_commit to output it. I still haven't completely understood
-what the relationship between log_tree_commit, log_tree_diff and
-log_tree_diff_flush is but AFAICS sometimes one function shows the log
-and sometimes the other one shows it, which I guess has to do with the
-QUICK option to diff.
-
-I'm sending this now because it's a one-liner and is probably the
-correct behaviour anyway, but a more general solution would be to
-convert cmd_log_init to use the option parser and catch --quiet there,
-maybe even making it mean the same as -s.
-
- builtin/log.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 1ce00ba..b24ca8a 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -322,6 +322,7 @@ int cmd_whatchanged(int argc, const char **argv, co=
-nst char *prefix)
- 	init_revisions(&rev, prefix);
- 	rev.diff =3D 1;
- 	rev.simplify_history =3D 0;
-+	rev.always_show_header =3D 1;
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def =3D "HEAD";
- 	cmd_log_init(argc, argv, prefix, &rev, &opt);
---=20
-1.7.4.2.437.g4fc7e.dirty
+Michael
