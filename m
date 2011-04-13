@@ -1,115 +1,168 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: Gitbox
-Date: Wed, 13 Apr 2011 15:13:44 -0700
-Message-ID: <86hba1hk9z.fsf@red.stonehenge.com>
-References: <A2315DA1-780C-4024-B774-9AD5F9AA0DB6@medialab.com>
-	<1302721187.21900.4.camel@drew-northup.unet.maine.edu>
-	<1E5D7DCE-B3B3-4CC7-8F40-4ED48E76907D@gmail.com>
-	<1302722214.22161.5.camel@drew-northup.unet.maine.edu>
-	<86vcyigcqy.fsf@red.stonehenge.com>
-	<7vfwpllw5g.fsf@alter.siamese.dyndns.org>
-	<1C18B4FB-BB10-4AC7-8952-D477CB4EF289@medialab.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC] Documentation/format-patch: summarize patch-sending
+ workflow
+Date: Wed, 13 Apr 2011 17:17:36 -0500
+Message-ID: <20110413221736.GA773@elie>
+References: <87d3kq6tz7.fsf@rho.meyering.net>
+ <1302719749.21047.6.camel@drew-northup.unet.maine.edu>
+ <87mxjtn8x7.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Drew Northup <drew.northup@maine.edu>,
-	Joshua Juran <jjuran@gmail.com>, git@vger.kernel.org,
-	oleganza@gmail.com, Chris Perkins <cperkins@medialab.com>
-To: Daniel Searles <dsearles@medialab.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 00:13:59 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Drew Northup <drew.northup@maine.edu>,
+	git list <git@vger.kernel.org>,
+	Yann Dirson <ydirson@altern.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Thu Apr 14 00:17:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA8Jy-0005fg-9j
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 00:13:58 +0200
+	id 1QA8Ni-0007bb-Ch
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 00:17:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933265Ab1DMWNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 18:13:53 -0400
-Received: from lax-gw08.mailroute.net ([199.89.0.108]:51177 "EHLO
-	mail.mroute.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933068Ab1DMWNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 18:13:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by lax-gw08.mroute.net (Postfix) with ESMTP id DC5AF299FAA;
-	Wed, 13 Apr 2011 22:13:45 +0000 (GMT)
-X-Virus-Scanned: by MailRoute
-Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
-	by lax-gw08.mroute.net (Postfix) with ESMTP id 8CA8E299FA8;
-	Wed, 13 Apr 2011 22:13:44 +0000 (GMT)
-Received: by red.stonehenge.com (Postfix, from userid 1001)
-	id 7A37118D3; Wed, 13 Apr 2011 15:13:44 -0700 (PDT)
-x-mayan-date: Long count = 12.19.18.5.2; tzolkin = 10 Ik; haab = 10 Pop
-In-Reply-To: <1C18B4FB-BB10-4AC7-8952-D477CB4EF289@medialab.com> (Daniel
-	Searles's message of "Wed, 13 Apr 2011 14:56:15 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
+	id S933269Ab1DMWRp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2011 18:17:45 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:63483 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933125Ab1DMWRo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2011 18:17:44 -0400
+Received: by gyd10 with SMTP id 10so293377gyd.19
+        for <git@vger.kernel.org>; Wed, 13 Apr 2011 15:17:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=lypLE/QsvBa1pG5mPzN5mHnkxbDKDJUI0zLV2TaSZdE=;
+        b=cWwDoYPIa/AFL3uvOLvtcEYbH/3ykCfkiEx19HL0zwaLH2fAQZAWDcA3T+Re/JpbC9
+         KHmHZ5vYptj8C6fKBMnDWWgjwDJ3GyRt1QErHaf7cfeiBqvOtHnwy+Gy2f5ynsFRRAWJ
+         LJ+x5I99+KdtCXJJBUsf1xtQQNEr7XgHBUoEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=w7E/imohoA5IxDMs3woIEABNXbKK4RlEe1nx2EL7XJR1gl4JILrfhSo7KiLzWjYFV3
+         dh0podlOsz0BiN1tjc6bmrd7gmc9Qm/d6ns5QCg+J8RwfgHxE9CA7JqZZVaIbZQVF65a
+         lHvzS+czUAnlvu5WSdY4/anLHTMl0drqJo8zQ=
+Received: by 10.236.182.100 with SMTP id n64mr10170269yhm.385.1302733063649;
+        Wed, 13 Apr 2011 15:17:43 -0700 (PDT)
+Received: from elie (adsl-69-209-64-230.dsl.chcgil.sbcglobal.net [69.209.64.230])
+        by mx.google.com with ESMTPS id x68sm469031yhn.57.2011.04.13.15.17.41
+        (version=SSLv3 cipher=OTHER);
+        Wed, 13 Apr 2011 15:17:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87mxjtn8x7.fsf@rho.meyering.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171492>
 
->>>>> "Daniel" == Daniel Searles <dsearles@medialab.com> writes:
+Hi Jim,
 
-Daniel> It seems to me that since gitbox is useless without git it is
-Daniel> definitely in violation of the GPL. My interpretation of the GPL
-Daniel> is based off of the following article:
-Daniel> http://clisp.cvs.sourceforge.net/viewvc/clisp/clisp/doc/Why-CLISP-is-under-GPL
+Jim Meyering wrote:
 
-And note the author of that opinion, RMS, who would always rule in favor
-of more things needing to be under the GPL as the One True License.
+> I hope I haven't caused Junio or anyone else undue trouble.
+> I know well how format-patch output can be used, but in the vast
+> majority of patch-including messages I send, I include format-patch
+> output mainly as an FYI, *following* commentary that does not
+> belong in the log, so it's ok there -- desirable, even.
 
-And it's also about readline.a, which *has* to be linked into a binary
-to make it work.  None of the git code is being *linked* in.
+Sure, that's true.  The main problem with including a patch in mbox
+format inline is that the "From " line tends to get corrupted.  How
+about something like patch?
 
-Particularly, I see this phrase in the actual license of Git (version 2,
-not version 3 under which Readline is distributed):
+-- 8< --
+Subject: Documentation/format-patch: summarize patch-sending workflow
 
-    Thus, it is not the intent of this section to claim rights or contest
-    your rights to work written entirely by you; rather, the intent is to
-    exercise the right to control the distribution of derivative or
-    collective works based on the Program.
+Add a DISCUSSION section to encourage people to send patches in a
+form that can be applied by "git am" automatically.  There are two
+such forms:
 
-    In addition, mere aggregation of another work not based on the Program
-    with the Program (or with a work based on the Program) on a volume of
-    a storage or distribution medium does not bring the other work under
-    the scope of this License.
+ 1. The default form in which most metadata goes in the mail header
+    and the message body starts with the patch description;
 
-I'd consider the git binary distribution to be an aggregation with
-gitbox, not a "linking", presuming that one of the following has also
-happened:
+ 2. The snipsnip form in which a message starts with pertinent
+    discussion and ends with a patch after a "scissors" mark.
 
-      3. You may copy and distribute the Program (or a work based on it,
-    under Section 2) in object code or executable form under the terms of
-    Sections 1 and 2 above provided that you also do one of the following:
+While at it, include a pointer to Documentation/SubmittingPatches
+for MUA-specific hints.
 
-        a) Accompany it with the complete corresponding machine-readable
-        source code, which must be distributed under the terms of Sections
-        1 and 2 above on a medium customarily used for software interchange;
-        or,
+Inspired-by: Jim Meyering <jim@meyering.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-format-patch.txt |   48 ++++++++++++++++++++++++++++=
++++++++-
+ 1 files changed, 47 insertions(+), 1 deletions(-)
 
-        b) Accompany it with a written offer, valid for at least three
-        years, to give any third party, for a charge no more than your
-        cost of physically performing source distribution, a complete
-        machine-readable copy of the corresponding source code, to be
-        distributed under the terms of Sections 1 and 2 above on a medium
-        customarily used for software interchange; or,
-
-        c) Accompany it with the information you received as to the offer
-        to distribute corresponding source code.  (This alternative is
-        allowed only for noncommercial distribution and only if you
-        received the program in object code or executable form with such
-        an offer, in accord with Subsection b above.)
-
-I cannot confirm that one of these has been done, but let's say it has.
-
-As already said in this thread, if "execve()" is considered a "linking",
-then *everything* in a typical Linux distro would *have* to be GPL.
-That's patently not the case.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-See http://methodsandmessages.posterous.com/ for Smalltalk discussion
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
+mat-patch.txt
+index a5525e9..5118fdb 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -274,9 +274,55 @@ as e-mailable patches:
+ $ git format-patch -3
+ ------------
+=20
++DISCUSSION
++----------
++The patch produced by 'git format-patch' is in UNIX mailbox format,
++like so:
++
++------------
++From f97e66080296c741200eacf1eaeb73f05b19e140 Mon Sep 17 00:00:00 2001
++From: =3D?UTF-8?q?=3DC3=3D86var=3D20Arnfj=3DC3=3DB6r=3DC3=3DB0=3D20Bja=
+rmason?=3D <avarab@gmail.com>
++Date: Sun, 10 Apr 2011 19:37:01 +0000
++Subject: [PATCH] Makefile: extract Q_() source strings as ngettext()
++MIME-Version: 1.0
++Content-Type: text/plain; charset=3DUTF-8
++Content-Transfer-Encoding: 8bit
++
++The patch adding the Q_() wrapper function around ngettext[1] didn't
++contain a corresponding update to the "pot" target in the Makefile. As
++...
++------------
++
++Typically it will be placed in a MUA's drafts folder, edited to add
++timely commentary that should not go in the changelog after the three
++dashes, and then sent as a message whose body starts with "The patch
++adding the Q_() wrapper function ...".  On the receiving end, readers
++can save interesting patches in a UNIX mailbox and apply them with
++linkgit:git-am[1].
++
++'git am --scissors' accepts an alternative format with the patch
++inline in the message:
++
++------------
++...
++> So we should do such-and-such.
++
++Makes sense to me.  How about this patch?
++
++-- 8< --
++From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
++Subject: Makefile: extract Q_() source strings as ngettext()
++
++The patch adding the Q_() wrapper function around ngettext[1] didn't
++....
++------------
++
++See linkgit:git-am[1] for details.
++
+ SEE ALSO
+ --------
+-linkgit:git-am[1], linkgit:git-send-email[1]
++linkgit:git-am[1], linkgit:git-send-email[1], linkgit:git-imap-send[1]=
+,
++Documentation/SubmittingPatches
+=20
+ GIT
+ ---
+--=20
+1.7.5.rc0
