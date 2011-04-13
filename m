@@ -1,168 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC] Documentation/format-patch: summarize patch-sending
- workflow
-Date: Wed, 13 Apr 2011 17:17:36 -0500
-Message-ID: <20110413221736.GA773@elie>
-References: <87d3kq6tz7.fsf@rho.meyering.net>
- <1302719749.21047.6.camel@drew-northup.unet.maine.edu>
- <87mxjtn8x7.fsf@rho.meyering.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Drew Northup <drew.northup@maine.edu>,
-	git list <git@vger.kernel.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Thu Apr 14 00:17:50 2011
+From: Joshua Juran <jjuran@gmail.com>
+Subject: Re: Gitbox
+Date: Wed, 13 Apr 2011 15:23:49 -0700
+Message-ID: <4238CC86-13A5-4DB8-B8B2-BC3AA2F2DA5E@gmail.com>
+References: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Drew Northup <drew.northup@maine.edu>, oleganza@gmail.com,
+	Junio C Hamano <gitster@pobox.com>,
+	Chris Perkins <cperkins@medialab.com>, git@vger.kernel.org,
+	Daniel Searles <dsearles@medialab.com>
+To: Daniel Searles <daniel.paul.searles@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 00:24:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA8Ni-0007bb-Ch
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 00:17:50 +0200
+	id 1QA8Tg-0002Lw-3z
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 00:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933269Ab1DMWRp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2011 18:17:45 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:63483 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933125Ab1DMWRo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2011 18:17:44 -0400
-Received: by gyd10 with SMTP id 10so293377gyd.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 15:17:43 -0700 (PDT)
+	id S933299Ab1DMWXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 18:23:54 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:51067 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933296Ab1DMWXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 18:23:53 -0400
+Received: by ywj3 with SMTP id 3so443820ywj.19
+        for <git@vger.kernel.org>; Wed, 13 Apr 2011 15:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=lypLE/QsvBa1pG5mPzN5mHnkxbDKDJUI0zLV2TaSZdE=;
-        b=cWwDoYPIa/AFL3uvOLvtcEYbH/3ykCfkiEx19HL0zwaLH2fAQZAWDcA3T+Re/JpbC9
-         KHmHZ5vYptj8C6fKBMnDWWgjwDJ3GyRt1QErHaf7cfeiBqvOtHnwy+Gy2f5ynsFRRAWJ
-         LJ+x5I99+KdtCXJJBUsf1xtQQNEr7XgHBUoEg=
+        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        bh=Ba7gANzZMgm3DN3CL5CCJad22ssfb/kvWAD73N484Ec=;
+        b=v4xFdZqA8LSSNZUWA+ZhuUW1Xf8LwNCxoVH7VRwp022sTHt2k2lsDPZ3GGtbAJFoyZ
+         1sTE5S7/RvyvQhjom7yIYyUfZyKVgok1yTtUYAw29xpAQUTKa387NlSD25CmHHX9u8iZ
+         in8izFUyQAfoHMX/FvKoIeLM1AUkPS1FL5OFE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=w7E/imohoA5IxDMs3woIEABNXbKK4RlEe1nx2EL7XJR1gl4JILrfhSo7KiLzWjYFV3
-         dh0podlOsz0BiN1tjc6bmrd7gmc9Qm/d6ns5QCg+J8RwfgHxE9CA7JqZZVaIbZQVF65a
-         lHvzS+czUAnlvu5WSdY4/anLHTMl0drqJo8zQ=
-Received: by 10.236.182.100 with SMTP id n64mr10170269yhm.385.1302733063649;
-        Wed, 13 Apr 2011 15:17:43 -0700 (PDT)
-Received: from elie (adsl-69-209-64-230.dsl.chcgil.sbcglobal.net [69.209.64.230])
-        by mx.google.com with ESMTPS id x68sm469031yhn.57.2011.04.13.15.17.41
-        (version=SSLv3 cipher=OTHER);
-        Wed, 13 Apr 2011 15:17:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <87mxjtn8x7.fsf@rho.meyering.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=dhm2Ltm9wOxpgILK0qc+QfTkUIID6/kMODM8sm1Mjl21n/hApKuoBwRqJ8ZgoT038n
+         1LStlxNz/ItRJuTkqCWv2VzeJosQ/FjEIE/0Fp1gCvpC/gWQZBfoaExG6FxBP3OLZfas
+         dpxfIQqyUk7IK2FnXriwX2u0K7d/otOQPV8Y8=
+Received: by 10.42.73.9 with SMTP id q9mr44407icj.44.1302733432968;
+        Wed, 13 Apr 2011 15:23:52 -0700 (PDT)
+Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
+        by mx.google.com with ESMTPS id o3sm709023ibd.27.2011.04.13.15.23.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Apr 2011 15:23:51 -0700 (PDT)
+In-Reply-To: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171493>
 
-Hi Jim,
+On Apr 13, 2011, at 3:17 PM, Daniel Searles wrote:
 
-Jim Meyering wrote:
+> I apologize for the empty email. My SMTP server is having problems.  
+> That is why I'm going to use this email address to write to the list.
 
-> I hope I haven't caused Junio or anyone else undue trouble.
-> I know well how format-patch output can be used, but in the vast
-> majority of patch-including messages I send, I include format-patch
-> output mainly as an FYI, *following* commentary that does not
-> belong in the log, so it's ok there -- desirable, even.
+Gah, stop doing that!  :-)
 
-Sure, that's true.  The main problem with including a patch in mbox
-format inline is that the "From " line tends to get corrupted.  How
-about something like patch?
+> I feel that gitbox and perhaps other commercial tools for git are in  
+> violation of the GPL simply since they rely on git in order to be  
+> useful. Take git away from gitbox and it serves no purpose. The  
+> thread in the following link goes into depth with regards to a  
+> program relying on code that is under a GPL license. The conclusion  
+> made in the thread may be due to an older version of the GPL. Could  
+> it be that gitbox isn't in violation of the GPL since git uses GPL  
+> version 2.0 exclusively?
+>
+> http://clisp.cvs.sourceforge.net/viewvc/clisp/clisp/doc/Why-CLISP-is-under-GPL
 
--- 8< --
-Subject: Documentation/format-patch: summarize patch-sending workflow
 
-Add a DISCUSSION section to encourage people to send patches in a
-form that can be applied by "git am" automatically.  There are two
-such forms:
+My shell scripts that call git are also useless without Git.  Am I not  
+allowed to distribute my scripts under non-GPL terms?  (And what about  
+a script that calls the nonexistent blort utility, and then someone  
+writes blort and distributes it under the GPL?)  As I understand it,  
+the GPL (and the thread you mention) address linking, not utility.
 
- 1. The default form in which most metadata goes in the mail header
-    and the message body starts with the patch description;
+RMS seemed to win this debate by arguing that his position was better  
+for the community.  I have colleagues who understand that Git is the  
+best VCS available but are concerned about having to train users who  
+are used to IDEs.  I've used a couple open source Git viewers and  
+would hesitate to recommend them.  The option to use GitBox makes  
+adoption of Git more likely in this case.
 
- 2. The snipsnip form in which a message starts with pertinent
-    discussion and ends with a patch after a "scissors" mark.
+CVS is a GNU project.  Did FSF go after proprietary cvs wrappers?
 
-While at it, include a pointer to Documentation/SubmittingPatches
-for MUA-specific hints.
-
-Inspired-by: Jim Meyering <jim@meyering.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-format-patch.txt |   48 ++++++++++++++++++++++++++++=
-+++++++-
- 1 files changed, 47 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
-mat-patch.txt
-index a5525e9..5118fdb 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -274,9 +274,55 @@ as e-mailable patches:
- $ git format-patch -3
- ------------
-=20
-+DISCUSSION
-+----------
-+The patch produced by 'git format-patch' is in UNIX mailbox format,
-+like so:
-+
-+------------
-+From f97e66080296c741200eacf1eaeb73f05b19e140 Mon Sep 17 00:00:00 2001
-+From: =3D?UTF-8?q?=3DC3=3D86var=3D20Arnfj=3DC3=3DB6r=3DC3=3DB0=3D20Bja=
-rmason?=3D <avarab@gmail.com>
-+Date: Sun, 10 Apr 2011 19:37:01 +0000
-+Subject: [PATCH] Makefile: extract Q_() source strings as ngettext()
-+MIME-Version: 1.0
-+Content-Type: text/plain; charset=3DUTF-8
-+Content-Transfer-Encoding: 8bit
-+
-+The patch adding the Q_() wrapper function around ngettext[1] didn't
-+contain a corresponding update to the "pot" target in the Makefile. As
-+...
-+------------
-+
-+Typically it will be placed in a MUA's drafts folder, edited to add
-+timely commentary that should not go in the changelog after the three
-+dashes, and then sent as a message whose body starts with "The patch
-+adding the Q_() wrapper function ...".  On the receiving end, readers
-+can save interesting patches in a UNIX mailbox and apply them with
-+linkgit:git-am[1].
-+
-+'git am --scissors' accepts an alternative format with the patch
-+inline in the message:
-+
-+------------
-+...
-+> So we should do such-and-such.
-+
-+Makes sense to me.  How about this patch?
-+
-+-- 8< --
-+From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-+Subject: Makefile: extract Q_() source strings as ngettext()
-+
-+The patch adding the Q_() wrapper function around ngettext[1] didn't
-+....
-+------------
-+
-+See linkgit:git-am[1] for details.
-+
- SEE ALSO
- --------
--linkgit:git-am[1], linkgit:git-send-email[1]
-+linkgit:git-am[1], linkgit:git-send-email[1], linkgit:git-imap-send[1]=
-,
-+Documentation/SubmittingPatches
-=20
- GIT
- ---
---=20
-1.7.5.rc0
+Josh
