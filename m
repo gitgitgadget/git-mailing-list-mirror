@@ -1,102 +1,79 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: small git lesson [Was: Re: Revert
- 737a3bb9416ce2a7c7a4170852473a4fcc9c67e8 ?]
-Date: Wed, 13 Apr 2011 11:36:08 +0200
-Message-ID: <20110413093608.GO18850@pengutronix.de>
-References: <BANLkTimAJ-s_3A3L1YGfoFLmd4bpu2jWVA@mail.gmail.com>
- <20110406204327.GA11148@iram.es>
- <1302185075.24704.143.camel@thor.local>
- <20110411133128.GA24344@iram.es>
- <1302535963.24704.268.camel@thor.local>
- <20110412113033.GA16649@iram.es>
- <1302608770.27054.36.camel@thor.local>
- <20110413080204.GA3871@iram.es>
- <20110413081246.GK18850__3180.67204575545$1302682420$gmane$org@pengutronix.de>
- <m339lm8r31.fsf@redhat.com>
+From: Axel <axel.ml@laposte.net>
+Subject: REMOTE_USER value propagation through http push
+Date: Wed, 13 Apr 2011 11:48:51 +0200
+Message-ID: <4DA57183.6040308@laposte.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@redhat.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 13 11:36:29 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 13 11:56:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9wUt-0004XZ-1P
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 11:36:27 +0200
+	id 1Q9woE-0007DD-QO
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 11:56:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758094Ab1DMJgN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2011 05:36:13 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:36814 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757966Ab1DMJgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 05:36:12 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Q9wUb-00041c-62; Wed, 13 Apr 2011 11:36:09 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Q9wUa-0000Vu-ML; Wed, 13 Apr 2011 11:36:08 +0200
-Content-Disposition: inline
-In-Reply-To: <m339lm8r31.fsf@redhat.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1751340Ab1DMJ4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 05:56:21 -0400
+Received: from sd-17584.dedibox.fr ([88.191.95.182]:36699 "EHLO mx2.acipia.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750748Ab1DMJ4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 05:56:21 -0400
+X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Apr 2011 05:56:20 EDT
+Received: by mx2.acipia.fr (Postfix, from userid 65534)
+	id 451538B4001; Wed, 13 Apr 2011 11:48:49 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on martine.acipia.fr
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=10.0 tests=ALL_TRUSTED autolearn=ham
+	version=3.2.5
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.acipia.fr (Postfix) with ESMTP id E45A28B4002
+	for <git@vger.kernel.org>; Wed, 13 Apr 2011 11:48:45 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at acipia.fr
+Received: from mx2.acipia.fr ([127.0.0.1])
+	by localhost (martine.acipia.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id p0KbIN6w4Nnb for <git@vger.kernel.org>;
+	Wed, 13 Apr 2011 11:48:45 +0200 (CEST)
+Received: from magina.acipia (rsa59-4-82-247-209-197.fbx.proxad.net [82.247.209.197])
+	by mx2.acipia.fr (Postfix) with ESMTP id C87DC8B4001
+	for <git@vger.kernel.org>; Wed, 13 Apr 2011 11:48:45 +0200 (CEST)
+Received: from axel-asus.acipia (unknown [IPv6:2a01:e35:2f7d:1c50:21e:8cff:febf:fce7])
+	by magina.acipia (Postfix) with ESMTP id 9A76E6806C
+	for <git@vger.kernel.org>; Wed, 13 Apr 2011 11:48:45 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110403 Fedora/3.1.9-6.fc15 Lightning/1.0b2 Thunderbird/3.1.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171439>
 
-Hello,
+Hello
 
-On Wed, Apr 13, 2011 at 10:59:14AM +0200, Andreas Schwab wrote:
-> Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> writes:
->=20
-> > $ git name-rev --refs=3Drefs/tags/v2.6\* 69a07f0b117a40fcc1a479358d=
-8e1f41793617f2
-> > 69a07f0b117a40fcc1a479358d8e1f41793617f2 tags/v2.6.39-rc2~3^2~43^2~=
-4
-> >
-> > so it was introduced just before -rc2.
->=20
-> $ git tag --contains 69a07f0b117a40fcc1a479358d8e1f41793617f2
-> v2.6.39-rc1
-> v2.6.39-rc2
-huh, I thought git name-rev prefers old[1] refs (similar to describe
-prefering newer).
+I set up a git server with HTTP authentication with Apache through LDAP 
+(Debian Squeeze + Apache 2.2 + mod_authnz_ldap).
 
-$ for rc in 1 2; do git name-rev --refs=3Drefs/tags/v2.6.39-rc$rc 69a07=
-f0b1; done
-69a07f0b1 tags/v2.6.39-rc1~79^2~31^2~4
-69a07f0b1 tags/v2.6.39-rc2~3^2~43^2~4
+I m using gitweb for browsing the repositories. At this moment, the 
+commiter name appears to be the local user who called "git push". The 
+username used for HTTP authentication is not used as commiter name, 
+though the REMOTE_USER environment variable is defined.
 
-I would prefer the v2.6.39-rc1 name even though it's nearer[1] at
-v2.6.39-rc2.
+After a quick look at http-backend.c it looks like the GIT_COMMITER_NAME 
+variable should have been defined with the REMOTE_USER variable. Is this 
+right ?
 
-If it should stay as is, what is the best way to find out the oldest
-tag?
-=20
-Best regards
-Uwe
+In Apache access logs, the REMOTE_USER appears to be defined in the last 
+request of the push :
 
-[1] as in minimizing
+127.0.1.1 - - [13/Apr/2011:11:45:08 +0200] "GET 
+/git/sandbox/info/refs?service=git-receive-pack HTTP/1.1" 200 467 "-" 
+"git/1.7.2.5"
+127.0.1.1 - - [13/Apr/2011:11:45:08 +0200] "POST 
+/git/sandbox/git-receive-pack HTTP/1.1" 401 618 "-" "git/1.7.2.5"
+127.0.1.1 - ldapuser [13/Apr/2011:11:45:08 +0200] "POST 
+/git/sandbox/git-receive-pack HTTP/1.1" 200 353 "-" "git/1.7.2.5"
 
-	git rev-list 69a07f0b117a..$ref | wc -l
+Is this behaviour expected ?
 
-(v2.6.39-rc1 -> 21281; v2.6.39-rc2 -> 21608)
-
-[2] as in minimizing the number of traversing a parent link.
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Thanks
