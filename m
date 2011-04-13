@@ -1,74 +1,64 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] remove doubled words, e.g., s/to to/to/, and fix
-	related typos
-Date: Wed, 13 Apr 2011 14:35:49 -0400
-Message-ID: <1302719749.21047.6.camel@drew-northup.unet.maine.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remove doubled words, e.g., s/to to/to/, and fix related
+ typos
+Date: Wed, 13 Apr 2011 11:47:56 -0700
+Message-ID: <7vd3kqm1ib.fsf@alter.siamese.dyndns.org>
 References: <87d3kq6tz7.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git list <git@vger.kernel.org>
 To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Apr 13 20:36:26 2011
+X-From: git-owner@vger.kernel.org Wed Apr 13 20:48:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA4vQ-0007SH-QB
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 20:36:25 +0200
+	id 1QA56t-0005uV-4O
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 20:48:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757174Ab1DMSgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 14:36:19 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:37184 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756574Ab1DMSgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 14:36:19 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3DIZseG032553
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 13 Apr 2011 14:35:54 -0400
-In-Reply-To: <87d3kq6tz7.fsf@rho.meyering.net>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p3DIZseG032553
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1303324558.41851@qRLSPZjHvyFeAqSQKN1uXA
+	id S1757209Ab1DMSsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 14:48:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40522 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757037Ab1DMSsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 14:48:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BB1524640;
+	Wed, 13 Apr 2011 14:50:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O1st6L5vK5bHT6k2hGF6OXDtNig=; b=hO8XoB
+	m8A3KyTyh/zKdhNwaCUBwBOozow1NaH1Zkz1kf0aVsmSJ4O9rzluxjjwLTq3iCfq
+	YlONeC0BTyxfFmok1dZ23JBBuO3CT3pAocHvwp+5qB+Yb4SZUzDiIlMWLHmEi2Pd
+	FbQvCPL5xaYuck6usZNnZ/tooOjyLNhmicfrQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MQugdMpWwV0GYm7CxFgakutVOWMLc6Fg
+	AG8+czU3vNRr8vbg5bmqPNKdpkBC5C7QfQWWnnkAQRAdeWoeujW1+LQ/nYyp8tpZ
+	tQgG0YxKlq5CYoM15pld5xsGuG8c/rcmV74zwDxkO6kAx2XeQlIIE6vRqsBrQwbk
+	kG/STAmD1Bc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 95FCF463C;
+	Wed, 13 Apr 2011 14:50:01 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 10C4B4637; Wed, 13 Apr 2011
+ 14:49:57 -0400 (EDT)
+In-Reply-To: <87d3kq6tz7.fsf@rho.meyering.net> (Jim Meyering's message of
+ "Wed, 13 Apr 2011 17:39:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D675908C-65FE-11E0-ABF1-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171470>
 
+Jim Meyering <jim@meyering.net> writes:
 
-On Wed, 2011-04-13 at 17:39 +0200, Jim Meyering wrote:
 > I found that some doubled words had snuck back into projects from
 > which I'd already removed them, so now there's a "syntax-check" makefile
-> rule in gnulib to help prevent recurrence.  Running the command below
-> spotted a few in git, too:
-> 
-> This patch is relative to "next".
+> rule in gnulib to help prevent recurrence.
 
-Jim,
-Try putting the output of git format-patch into your drafts folder, then
-open that draft in your mail client. The output of format-patch isn't
-meant to be pasted directly into a mail message.
-
-> 
-> >From d21d6f61bbeeba4a754cdcded66ca86a709695ee Mon Sep 17 00:00:00 2001
-> From: Jim Meyering <meyering@redhat.com>
-
-<rest of submission removed>
-
-The above tells me that you just dumped the output of format-patch into
-your mail client. There is a full tutorial in
-Documentation/SubmittingPatches in git.git.
-
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Thanks.
