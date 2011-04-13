@@ -1,69 +1,70 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [RFC/PATCH] handle_alias: provide GIT_CWD to !alias
-Date: Wed, 13 Apr 2011 20:12:40 +0700
-Message-ID: <BANLkTimubmaV437LvdG8QcmFFjyWujQRzw@mail.gmail.com>
-References: <4DA59B27.50506@ge.infn.it> <e8c9aa9160f922f728d56387e5e86eb50220774f.1302699792.git.git@drmicha.warpmail.net>
+Date: Wed, 13 Apr 2011 15:16:24 +0200
+Message-ID: <4DA5A228.2040105@drmicha.warpmail.net>
+References: <4DA59B27.50506@ge.infn.it> <e8c9aa9160f922f728d56387e5e86eb50220774f.1302699792.git.git@drmicha.warpmail.net> <BANLkTimubmaV437LvdG8QcmFFjyWujQRzw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Matej Batic <matej.batic@ge.infn.it>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 13 15:13:17 2011
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 15:16:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q9zsj-00008k-2D
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 15:13:17 +0200
+	id 1Q9zvs-0002Ey-Eu
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 15:16:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745Ab1DMNNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 09:13:12 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51983 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751317Ab1DMNNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 09:13:11 -0400
-Received: by fxm17 with SMTP id 17so427838fxm.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 06:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=4p1a/FoFnNLVLSfK/pGmC8tvLgPwlExoGYuIgi+3kKI=;
-        b=OWO7aKRAq/AotPFFbaVBZs5/SZAq3kapIRGNTDFMAB4yx3ta6SxqgN3luDVVdsgHFA
-         9pxXEO78tIeo9yZpj471XRRp2NKhd2RkNRluI/zWDGdmx1Jv4JQuOQ1eN2rR+Wl9dUQO
-         PzPOybkVJ1453EZ1Uns+TpcDdwiAItBBLfCEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=GZ2QdrbEYBH6enfltAnUTtnjvgybUrZNU1arzhmHLS94m8x2n7tqUIBzch4Uc+Y8VE
-         ZUyu0MIY6UGJFTR2iLLLyEYv4iQLJG9akmpY5GLxY4MRkgpHAAG4qN7W4EidrXO0QBKm
-         +i5c3xTJVbIE870LfvorQ+xu4g3QWxXsSaQRY=
-Received: by 10.223.76.147 with SMTP id c19mr1648966fak.55.1302700390184; Wed,
- 13 Apr 2011 06:13:10 -0700 (PDT)
-Received: by 10.223.113.13 with HTTP; Wed, 13 Apr 2011 06:12:40 -0700 (PDT)
-In-Reply-To: <e8c9aa9160f922f728d56387e5e86eb50220774f.1302699792.git.git@drmicha.warpmail.net>
+	id S1753277Ab1DMNQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 09:16:27 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:58219 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752364Ab1DMNQ0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2011 09:16:26 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D753820D93;
+	Wed, 13 Apr 2011 09:16:25 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute6.internal (MEProxy); Wed, 13 Apr 2011 09:16:25 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=xHyV0EyUWZuz38KFLZTr7fYvWlA=; b=dTekdsg5QsMsuKYemK9H2sGBDaX99cv8aZwrt5z3H/7F401UeRa+o2cKpU2iYmjqQfvFXPPSDpS/njIe6JM+DULwh4Zj5gICRSjAFf5VIxsZMDF22ESyhCeRMc4trSJZPfWtjfh9vb450cGKOpw8/0xFMPfxRHzI2WtiXKeKsIo=
+X-Sasl-enc: xRomG5Qint7CFSXGajPZeYNCFdskpnJdVNkGnru+K6VA 1302700585
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 44E71406975;
+	Wed, 13 Apr 2011 09:16:25 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <BANLkTimubmaV437LvdG8QcmFFjyWujQRzw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171454>
 
-T24gV2VkLCBBcHIgMTMsIDIwMTEgYXQgODowNSBQTSwgTWljaGFlbCBKIEdydWJlcgo8Z2l0QGRy
-bWljaGEud2FycG1haWwubmV0PiB3cm90ZToKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIHJldCA9IHJ1bl9jb21tYW5kX3Zfb3B0KGFsaWFzX2FyZ3YsIFJVTl9VU0lOR19TSEVM
-TCk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdHJidWZfYWRkc3RyKCZz
-YiwgIkdJVF9DV0Q9Iik7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAo
-c3ViZGlyKQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-c3RyYnVmX2FkZHN0cigmc2IsIHN1YmRpcik7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBlbnZbMF0gPSBzYi5idWY7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCBlbnZbMV0gPSBOVUxMOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-cmV0ID0gcnVuX2NvbW1hbmRfdl9vcHRfY2RfZW52KGFsaWFzX2FyZ3YsIFJVTl9VU0lOR19TSEVM
-TCwgTlVMTCwgZW52KTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0cmJ1
-Zl9yZWxlYXNlKCZzYik7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpZiAo
-cmV0ID49IDApIMKgIC8qIG5vcm1hbCBleGl0ICovCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBleGl0KHJldCk7CgpzdWJkaXIgY2FuIGJlIE5VTEwuIEkn
-bSBub3Qgc3VyZSBpZiBpdCBjYW4gYmUgZW1wdHkgc3RyaW5nIHRob3VnaC4gTWF5Cm5lZWQgYSBj
-aGVjayBhbmQgc2V0IGl0IHRvICcuJyBzbyAiY2QgJEdJVF9DV0QiIGRvZXMgbm90IGdvIGJhY2sg
-dG8KJEhPTUUuCi0tIApEdXkK
+Nguyen Thai Ngoc Duy venit, vidit, dixit 13.04.2011 15:12:
+> On Wed, Apr 13, 2011 at 8:05 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> -                       ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
+>> +                       strbuf_addstr(&sb, "GIT_CWD=");
+>> +                       if (subdir)
+>> +                               strbuf_addstr(&sb, subdir);
+>> +                       env[0] = sb.buf;
+>> +                       env[1] = NULL;
+>> +                       ret = run_command_v_opt_cd_env(alias_argv, RUN_USING_SHELL, NULL, env);
+>> +                       strbuf_release(&sb);
+>>                        if (ret >= 0)   /* normal exit */
+>>                                exit(ret);
+> 
+> subdir can be NULL. I'm not sure if it can be empty string though. May
+
+I'm pretty sure that my "if (subdir)" would catch that...
+
+> need a check and set it to '.' so "cd $GIT_CWD" does not go back to
+> $HOME.
+
+Well, with the current implementation you get empty or the subdir so
+that you can easily "test -n $GIT_CWD". If you want to cd around you can
+do "cd ./$GIT_CWD" unconditionally. I think this is more useful than
+having a "." there.
+
+Michael
