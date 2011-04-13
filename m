@@ -1,97 +1,127 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: Gitbox
-Date: Wed, 13 Apr 2011 15:23:49 -0700
-Message-ID: <4238CC86-13A5-4DB8-B8B2-BC3AA2F2DA5E@gmail.com>
-References: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Drew Northup <drew.northup@maine.edu>, oleganza@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Chris Perkins <cperkins@medialab.com>, git@vger.kernel.org,
-	Daniel Searles <dsearles@medialab.com>
-To: Daniel Searles <daniel.paul.searles@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 00:24:01 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] remove doubled words, e.g., s/to to/to/, and fix related typos
+Date: Wed, 13 Apr 2011 15:26:06 -0700 (PDT)
+Message-ID: <m3aaft3i2d.fsf@localhost.localdomain>
+References: <87d3kq6tz7.fsf@rho.meyering.net>
+	<1302719749.21047.6.camel@drew-northup.unet.maine.edu>
+	<87mxjtn8x7.fsf@rho.meyering.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Drew Northup <drew.northup@maine.edu>,
+	git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Thu Apr 14 00:26:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA8Tg-0002Lw-3z
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 00:24:00 +0200
+	id 1QA8Vr-0003Xz-HS
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 00:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933299Ab1DMWXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 18:23:54 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:51067 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933296Ab1DMWXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 18:23:53 -0400
-Received: by ywj3 with SMTP id 3so443820ywj.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 15:23:53 -0700 (PDT)
+	id S933309Ab1DMW0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 18:26:10 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52076 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933284Ab1DMW0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 18:26:09 -0400
+Received: by fxm17 with SMTP id 17so771959fxm.19
+        for <git@vger.kernel.org>; Wed, 13 Apr 2011 15:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        bh=Ba7gANzZMgm3DN3CL5CCJad22ssfb/kvWAD73N484Ec=;
-        b=v4xFdZqA8LSSNZUWA+ZhuUW1Xf8LwNCxoVH7VRwp022sTHt2k2lsDPZ3GGtbAJFoyZ
-         1sTE5S7/RvyvQhjom7yIYyUfZyKVgok1yTtUYAw29xpAQUTKa387NlSD25CmHHX9u8iZ
-         in8izFUyQAfoHMX/FvKoIeLM1AUkPS1FL5OFE=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=NzkrfqjF4anZLk4NMamWqmSSys/syIsxHWHzSo9vk+c=;
+        b=xWhNSAhv/exyL3rUdmZAbLBQP4PhqMbWSMcMnv/mKq4LgRWW5Q9+VzBSKyTkYwuANe
+         iVYIQ6z3wwBrtnWkQvoeirEkDPpm2IMW/NhbzeQrDBJPpM8MOvqWHsN/XDF9nwkcUXO1
+         IPb67xE56sVRnvDLs7hpPce9wGdL+2hwAtYrE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=dhm2Ltm9wOxpgILK0qc+QfTkUIID6/kMODM8sm1Mjl21n/hApKuoBwRqJ8ZgoT038n
-         1LStlxNz/ItRJuTkqCWv2VzeJosQ/FjEIE/0Fp1gCvpC/gWQZBfoaExG6FxBP3OLZfas
-         dpxfIQqyUk7IK2FnXriwX2u0K7d/otOQPV8Y8=
-Received: by 10.42.73.9 with SMTP id q9mr44407icj.44.1302733432968;
-        Wed, 13 Apr 2011 15:23:52 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id o3sm709023ibd.27.2011.04.13.15.23.50
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=LnF3CsMpWDiVCX3cT4HRumwaDJCDmuWiWkFDqfVk/rXRU3SqCaLQjtVxLBWAdgjpaR
+         daXcf/PvYDMqoXyA6lTwOrFW//jeSjmPBrFEiMZ6RJVnM85nnDBoKTjaYaNusPrL5/dI
+         RMTIdXvZqmd1UYInTCtvZ0YP0GRQwANYcrTgE=
+Received: by 10.223.97.142 with SMTP id l14mr1497fan.111.1302733567883;
+        Wed, 13 Apr 2011 15:26:07 -0700 (PDT)
+Received: from localhost.localdomain (abwc79.neoplus.adsl.tpnet.pl [83.8.226.79])
+        by mx.google.com with ESMTPS id x16sm305486fal.43.2011.04.13.15.26.05
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Apr 2011 15:23:51 -0700 (PDT)
-In-Reply-To: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com>
-X-Mailer: Apple Mail (2.936)
+        Wed, 13 Apr 2011 15:26:06 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3DMPVAF031375;
+	Thu, 14 Apr 2011 00:25:42 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3DMPFr1031370;
+	Thu, 14 Apr 2011 00:25:15 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <87mxjtn8x7.fsf@rho.meyering.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171494>
 
-On Apr 13, 2011, at 3:17 PM, Daniel Searles wrote:
+Jim Meyering <jim@meyering.net> writes:
+> Drew Northup wrote:
+>> On Wed, 2011-04-13 at 17:39 +0200, Jim Meyering wrote:
 
-> I apologize for the empty email. My SMTP server is having problems.  
-> That is why I'm going to use this email address to write to the list.
+>>> I found that some doubled words had snuck back into projects from
+>>> which I'd already removed them, so now there's a "syntax-check" makefile
+>>> rule in gnulib to help prevent recurrence.  Running the command below
+>>> spotted a few in git, too:
+>>>
+>>> This patch is relative to "next".
+>>
+>> Jim,
+>> Try putting the output of git format-patch into your drafts folder, then
+>> open that draft in your mail client. The output of format-patch isn't
+>> meant to be pasted directly into a mail message.
+> 
+> I hope I haven't caused Junio or anyone else undue trouble.
+> I know well how format-patch output can be used, but in the vast
+> majority of patch-including messages I send, I include format-patch
+> output mainly as an FYI, *following* commentary that does not
+> belong in the log, so it's ok there -- desirable, even.
+> 
+> I find it slightly backwards to have to put non-log (i.e, intro
+> commentary) *after* the real log, and that's why I've developed
+> this habit.
+> 
+> I'll try to remember to do it the other way when the
+> recipient is more likely to apply the patch.
 
-Gah, stop doing that!  :-)
+You can put patch _after_ commentary, but if you do it this way you
+should include "scissors" line to make it possible to extract commit
+part automatically by "git am --scissors", and remove unnecessary
+headers.
 
-> I feel that gitbox and perhaps other commercial tools for git are in  
-> violation of the GPL simply since they rely on git in order to be  
-> useful. Take git away from gitbox and it serves no purpose. The  
-> thread in the following link goes into depth with regards to a  
-> program relying on code that is under a GPL license. The conclusion  
-> made in the thread may be due to an older version of the GPL. Could  
-> it be that gitbox isn't in violation of the GPL since git uses GPL  
-> version 2.0 exclusively?
->
-> http://clisp.cvs.sourceforge.net/viewvc/clisp/clisp/doc/Why-CLISP-is-under-GPL
+In other words you had:
 
+> From d21d6f61bbeeba4a754cdcded66ca86a709695ee Mon Sep 17 00:00:00 2001
+> From: Jim Meyering <meyering@redhat.com>
+> Date: Wed, 13 Apr 2011 17:34:44 +0200
+> Subject: [PATCH] remove doubled words, e.g., s/to to/to/, and fix related
+>  typos
+> 
+> Run this command to identify suspects:
 
-My shell scripts that call git are also useless without Git.  Am I not  
-allowed to distribute my scripts under non-GPL terms?  (And what about  
-a script that calls the nonexistent blort utility, and then someone  
-writes blort and distributes it under the GPL?)  As I understand it,  
-the GPL (and the thread you mention) address linking, not utility.
+and you should have
 
-RMS seemed to win this debate by arguing that his position was better  
-for the community.  I have colleagues who understand that Git is the  
-best VCS available but are concerned about having to train users who  
-are used to IDEs.  I've used a couple open source Git viewers and  
-would hesitate to recommend them.  The option to use GitBox makes  
-adoption of Git more likely in this case.
+  -- >8 --
+  Run this command to identify suspects:
 
-CVS is a GNU project.  Did FSF go after proprietary cvs wrappers?
+or in case author is different from email from
 
-Josh
+  -- >8 --
+  From: Jim Meyering <meyering@redhat.com>
+
+  Run this command to identify suspects:
+
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
