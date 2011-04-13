@@ -1,88 +1,80 @@
 From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: git rebase --continue automatic --skip?
-Date: Wed, 13 Apr 2011 12:02:51 -0700
-Message-ID: <D9A445D1-C0B5-4CB4-A847-E44618A6DD90@gmail.com>
-References: <BANLkTi=Vc6kB5fvZrqMwDD+yHFb5qENQ8g@mail.gmail.com> <20110409000351.GA7445@sigill.intra.peff.net> <7vy63iyk2r.fsf@alter.siamese.dyndns.org>
+Subject: Re: Gitbox
+Date: Wed, 13 Apr 2011 12:09:40 -0700
+Message-ID: <1E5D7DCE-B3B3-4CC7-8F40-4ED48E76907D@gmail.com>
+References: <A2315DA1-780C-4024-B774-9AD5F9AA0DB6@medialab.com> <1302721187.21900.4.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, skillzero@gmail.com,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 21:03:02 2011
+Cc: Daniel Searles <dsearles@medialab.com>, git@vger.kernel.org,
+	oleganza@gmail.com
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Wed Apr 13 21:09:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA5LB-0006Wq-As
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 21:03:01 +0200
+	id 1QA5Rn-0002DM-2l
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 21:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757830Ab1DMTC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 15:02:56 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46242 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754362Ab1DMTCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 15:02:55 -0400
-Received: by iwn34 with SMTP id 34so810112iwn.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 12:02:55 -0700 (PDT)
+	id S1756859Ab1DMTJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 15:09:45 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38865 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511Ab1DMTJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 15:09:44 -0400
+Received: by iyb14 with SMTP id 14so813001iyb.19
+        for <git@vger.kernel.org>; Wed, 13 Apr 2011 12:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
          :content-transfer-encoding:mime-version:subject:date:references
          :x-mailer;
-        bh=kCahc2x7Ntk7KtIoOQ+l35L6h4FiyO0qnCdvjJdEIyU=;
-        b=vgZZUPGSV/mUaFTabdauNm8R9FeEQXPazkmKp7MTpGdUYAhRUdk1dVzPYLcdhAhIcb
-         cQDAxf9BHr1L8mVOKNQOAmO8audL6Vxnkr1WOeHPU68+sX/u2aPFQ7KSqcAD1qx2H+he
-         PY4S3kWoAV/DPDd9lpINBgIKcbkca1JPxk9mA=
+        bh=PoNq9BAZK5mGz2VNXuTECqpFo6AEJwJdA1FrEWXOZ4g=;
+        b=lriN+TS+P2OzjWWPt2xjrBUacao6zafkcGVI7c4vyvMTUb5QnDuwD9re1bPGq1M7jK
+         VLbyLFT4y0digzHpqb1VeC7WJjMWP4GhY9lpYClxFFzIJmoeZiumI/Cx18h+nA5ZNz8G
+         rfhh8sgMNCNoc5R1GT9CBXaZ516cuOBM9qSuE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=cc:message-id:from:to:in-reply-to:content-type
          :content-transfer-encoding:mime-version:subject:date:references
          :x-mailer;
-        b=iprhTt4YYfVriotC6eqBi7rL9WuBv6a5tdXDP25fEdsyPs4AOjs0zFCzbTuzPYK0GJ
-         H96kcnhh/XSoAdCsO5r4swA2at/qkgstFn3sNEUAuoRJYSfY4PIGa367niHKya/Ghetv
-         tlf1TT8Yvh5mKc/Cn8FE1gCsTvmwoGHFxVsgM=
-Received: by 10.231.39.129 with SMTP id g1mr6768265ibe.193.1302721375158;
-        Wed, 13 Apr 2011 12:02:55 -0700 (PDT)
+        b=iCf0dfrJJqBzW013vjeh9xbp4EnjoEp26tiDKQ7nNrK2EG4ojPjTSV5J9WY8Jk9EFP
+         cRFpb67Jfsy25kbDFmHxkcwISo43wyOnL1oewj6N8S1hAEiLjxOIUtA/p50OokC2vmix
+         tsNTpsneRrKuGQZnuFz9fOWaya5sre4oVeZ7A=
+Received: by 10.42.8.72 with SMTP id h8mr3496045ich.193.1302721783594;
+        Wed, 13 Apr 2011 12:09:43 -0700 (PDT)
 Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id e9sm607302ibb.49.2011.04.13.12.02.52
+        by mx.google.com with ESMTPS id jv9sm577801icb.13.2011.04.13.12.09.41
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Apr 2011 12:02:53 -0700 (PDT)
-In-Reply-To: <7vy63iyk2r.fsf@alter.siamese.dyndns.org>
+        Wed, 13 Apr 2011 12:09:42 -0700 (PDT)
+In-Reply-To: <1302721187.21900.4.camel@drew-northup.unet.maine.edu>
 X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171474>
 
-On Apr 9, 2011, at 6:24 PM, Junio C Hamano wrote:
+On Apr 13, 2011, at 11:59 AM, Drew Northup wrote:
 
-> Jeff King <peff@peff.net> writes:
+> On Wed, 2011-04-13 at 11:16 -0700, Daniel Searles wrote:
+>> Hi All,
+>>
+>> I'm curious if Gitbox is in violation of the Git's GPL.
+>> http://www.gitboxapp.com/
+>>
+>> Thank you,
+>> Daniel Searles
+>> Tech Support
+>> Media Lab, Inc.
 >
->> I put it in rebase and not straight into "git am", as I'm not sure  
->> that
->> "am" would want to share the same behavior. I'm not sure why we  
->> haven't
->> done this up until now. Maybe there is some corner case I'm not  
->> thinking
->> of where the user would want to do something besides skip when we hit
->> this situation. I dunno.
+> Well, it appears that he may have implemented "git" on his own, or at
+> the very least he's trying to imply that he did.
 >
-> I think the "rebase --continue" behaviour was more or less  
-> deliberate (I
-> do not necessarily agree with the reasoning, though).  It is to ensure
-> that the user has a chance to examine the situation and acknowledge  
-> that
-> it is fine to completely drop the now obsoleted change, as having to
-> adjust the change to an updated base, even with conflict resolution,  
-> may
-> be common, it is a rare and notable event that the resolution ends up
-> being empty.
+> http://www.gitboxapp.com/faq.html#gpl
 
-Rather than changing --continue, the proposed behavior could be added  
-as `git rebase --next`.
+He very clearly says that he ships Git, not a reimplementation.
 
 Josh
