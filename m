@@ -1,81 +1,80 @@
-From: Drew Northup <drew.northup@maine.edu>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Gitbox
-Date: Wed, 13 Apr 2011 15:16:54 -0400
-Message-ID: <1302722214.22161.5.camel@drew-northup.unet.maine.edu>
+Date: Wed, 13 Apr 2011 12:18:18 -0700 (PDT)
+Message-ID: <m3fwpm2c6p.fsf@localhost.localdomain>
 References: <A2315DA1-780C-4024-B774-9AD5F9AA0DB6@medialab.com>
-	 <1302721187.21900.4.camel@drew-northup.unet.maine.edu>
-	 <1E5D7DCE-B3B3-4CC7-8F40-4ED48E76907D@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Searles <dsearles@medialab.com>, git@vger.kernel.org,
-	oleganza@gmail.com
-To: Joshua Juran <jjuran@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 21:17:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Searles <dsearles@medialab.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 21:18:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QA5Z5-0006r9-0k
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 21:17:23 +0200
+	id 1QA5a6-0007Pi-Vy
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Apr 2011 21:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757050Ab1DMTRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 15:17:18 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:46781 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756746Ab1DMTRR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 15:17:17 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3DJGxT7014567
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 13 Apr 2011 15:17:05 -0400
-In-Reply-To: <1E5D7DCE-B3B3-4CC7-8F40-4ED48E76907D@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-URT-Metrics: basalt.its.maine.edu 1060; Body=4 Fuz1=4 Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p3DJGxT7014567
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1303327026.0827@0NC3LiQkzPW+cjO+ROPpaA
+	id S1757936Ab1DMTSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 15:18:22 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:34396 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757668Ab1DMTSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 15:18:21 -0400
+Received: by bwz15 with SMTP id 15so848187bwz.19
+        for <git@vger.kernel.org>; Wed, 13 Apr 2011 12:18:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=U27VSjkLEJxdzhA8XozTyneKlPrFr5VMIlKApuYxqUY=;
+        b=uL6lEKhzmnLaa4/1KMjWm/xUD/DYhFdY6cIZXDIEJLkZ19zA0LW11aquF34mZ8pbvE
+         EgRJPnRI48HBXtYGpJwwuoXpprjGPi95Uifdo+6OeogJC+Pm2dQKnUIq/f393EkBe40z
+         ss3Er0ofUw0lWsIWzs41EfZ6RQAeog1X6+Pyc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=eDYRyJzWMWpEOmF4q9bo5gbOlcid5oOGdOud1a1V5VCdr+iQJ8FgMI+jhl9SqzjMK0
+         jmbCGs8gr5O8yr2NmKR9oFehWVUe6Zp8g1rQF9bvb/hX5A0sS0bZ5oY/t1clFaLw3Cz+
+         QW0EdaBvbkciGydZV5lWQc0yKjGqIpbInzqzM=
+Received: by 10.204.75.1 with SMTP id w1mr1229689bkj.132.1302722299734;
+        Wed, 13 Apr 2011 12:18:19 -0700 (PDT)
+Received: from localhost.localdomain (abwp92.neoplus.adsl.tpnet.pl [83.8.239.92])
+        by mx.google.com with ESMTPS id t1sm515193bkx.19.2011.04.13.12.18.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Apr 2011 12:18:18 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3DJHkSK030251;
+	Wed, 13 Apr 2011 21:17:57 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3DJHYAm030247;
+	Wed, 13 Apr 2011 21:17:35 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <A2315DA1-780C-4024-B774-9AD5F9AA0DB6@medialab.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171476>
 
+Daniel Searles <dsearles@medialab.com> writes:
 
-On Wed, 2011-04-13 at 12:09 -0700, Joshua Juran wrote:
-> On Apr 13, 2011, at 11:59 AM, Drew Northup wrote:
+> Hi All,
 > 
-> > On Wed, 2011-04-13 at 11:16 -0700, Daniel Searles wrote:
-> >> Hi All,
-> >>
-> >> I'm curious if Gitbox is in violation of the Git's GPL.
-> >> http://www.gitboxapp.com/
-> >>
-> >> Thank you,
-> >> Daniel Searles
-> >> Tech Support
-> >> Media Lab, Inc.
-> >
-> > Well, it appears that he may have implemented "git" on his own, or at
-> > the very least he's trying to imply that he did.
-> >
-> > http://www.gitboxapp.com/faq.html#gpl
-> 
-> He very clearly says that he ships Git, not a reimplementation.
+> I'm curious if Gitbox is in violation of the Git's GPL.
+> http://www.gitboxapp.com/
 
-He also clearly stated that he's not calling git command-line tools...
+It is graphical _interface_ for Git; I assume that it _uses_ Git.
+Using a program, as opposed to including it (making derivative work),
+is not covered by GPLv2.
 
-"Gitbox neither links (statically or dynamically) against Git nor uses
-custom interfaces to interact with it. Git binaries are provided for
-your convenience only."
-
-I'm hoping he'll have a more complete statement for all of us.
-
+It's not only proprietary Git GUI: there is also Sprout, SmartGit,
+SourceTree (I think: my information might be outdated).
 -- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Jakub Narebski
+Poland
+ShadeHawk on #git
