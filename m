@@ -1,97 +1,99 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2011, #04; Tue, 12)
-Date: Thu, 14 Apr 2011 15:50:53 +0200
-Message-ID: <BANLkTin6=b9E=2gBjsWd+Y9Fg-APR1xOgw@mail.gmail.com>
-References: <7vaafvnl9t.fsf@alter.siamese.dyndns.org>
-	<BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] send-pack: abort sideband demuxer on pack-objects
+ error
+Date: Thu, 14 Apr 2011 09:54:49 -0400
+Message-ID: <20110414135449.GD12410@sigill.intra.peff.net>
+References: <20110331184243.GA12027@sigill.intra.peff.net>
+ <20110331184443.GD16906@sigill.intra.peff.net>
+ <201104132153.06429.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 14 15:51:01 2011
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Apr 14 15:54:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAMwm-0007hl-4y
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 15:51:01 +0200
+	id 1QAN0b-0001gY-4Q
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 15:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758798Ab1DNNuz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 09:50:55 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36168 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757701Ab1DNNuy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 09:50:54 -0400
-Received: by vws1 with SMTP id 1so1284517vws.19
-        for <git@vger.kernel.org>; Thu, 14 Apr 2011 06:50:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DL7vXHZSVw1ou8Vp4NUKVaactVrt2rXZKEy7/bU7mEM=;
-        b=AOBwREZw9I3rfyaNT1yTnnxVEGb0OF8jhZp2PQw8MqdBsR7zFZgfC2cZDGA0e+aN1g
-         K7IeGp25fASCgDoHpJsAhnj6h4P35vUio5oxgw+GaEhFOZqtlvFKYd97jQ2vj+prDraQ
-         rU+OaMm1zrQYslQpY5W/8MIi1mM8pUN0W2icY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LYx+7nUVHgvqXzFDE44TM56w45SYVgE4w43NAoBFJFIaAY8wuFnoCln8LZgstKK8nO
-         Gezmpp9ZXu7hhO7PH/QEEaHcqhB490Q0deTSAmbjd7LNpRHMTNt9i76g6umRbufZ627r
-         Fq8LkaeMBcebhAYW0AENvJ1xX/DwW1hYhULbc=
-Received: by 10.52.75.231 with SMTP id f7mr1092745vdw.158.1302789053459; Thu,
- 14 Apr 2011 06:50:53 -0700 (PDT)
-Received: by 10.220.180.202 with HTTP; Thu, 14 Apr 2011 06:50:53 -0700 (PDT)
-In-Reply-To: <BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>
+	id S1758711Ab1DNNyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 09:54:52 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46782
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757881Ab1DNNyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 09:54:51 -0400
+Received: (qmail 31314 invoked by uid 107); 14 Apr 2011 13:55:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Apr 2011 09:55:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2011 09:54:49 -0400
+Content-Disposition: inline
+In-Reply-To: <201104132153.06429.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171517>
 
-On Thu, Apr 14, 2011 at 3:38 PM, Piotr Krukowiecki
-<piotr.krukowiecki@gmail.com> wrote:
-> On Wed, Apr 13, 2011 at 12:43 AM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->> * mh/git-svn-automkdirs (2011-04-01) 1 commit
->> =A0(merged to 'next' on 2011-04-03 at 7fa4978)
->> =A0+ git-svn: add an option to skip the creation of empty directorie=
-s
->>
->> Should be safe, but I'd like an Ack from git-svn folks.
->
-> I wanted to test performance of this change - what's the best way to =
-do it?
->
-> I tried some ideas, but rebase was too fast for performance measureme=
-nts.
-> I did not have new commits, but just some old, already in trunk chang=
-es, which
-> I tried to rebase - probably it was just fast forward?
+On Wed, Apr 13, 2011 at 09:53:06PM +0200, Johannes Sixt wrote:
 
-I found some old not-yet-rebased branch (with 3 commits) and tried reba=
-sing it.
-I saw no time difference - maybe I'm doing it wrong?
+> > Meanwhile, the async sideband demuxer will continue trying
+> > to stream data from the remote repo until it gets EOF.
+> > Depending on what data pack-objects actually sent, the
+> > remote repo may not actually send anything (e.g., if we sent
+> > nothing and it is simply waiting for the pack). This leads
+> > to deadlock cycle in which send-pack waits on the demuxer,
+> > the demuxer waits on the remote receive-pack, and the remote
+> > receive-pack waits on send-pack to send the pack data.
+> 
+> This is an indication that a writable end of the pipe between send-pack and 
+> receive-pack is still open. This fixes the deadlock for me without having to 
+> kill the demuxer explicitly:
+> 
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> index 5e772c7..db32ded 100644
+> --- a/builtin/send-pack.c
+> +++ b/builtin/send-pack.c
+> @@ -229,6 +229,9 @@ static void print_helper_status(struct ref *ref)
+>  static int sideband_demux(int in, int out, void *data)
+>  {
+>  	int *fd = data;
+> +#ifdef NO_PTHREADS
+> +	close(fd[1]);
+> +#endif
+>  	int ret = recv_sideband("send-pack", fd[0], out);
+>  	close(out);
+>  	return ret;
+> 
+> If only I had a brilliant idea how to forge this into a re-usable pattern...
 
-I did following for both true and false config setting:
+Thanks for finding that. I had the notion that there was a pipe end
+hanging open somewhere, but looking through the async code, I found us
+closing the pipes properly. But of course I failed to check the fds
+coming into send_pack.
 
-git checkout -b test_rebase old_branch
-time git svn rebase
-git checkout master
-git branch -D test_rebase
-<repeat>
+Obviously it totally breaks the start_async abstraction if the called
+code needs to care whether it forked or not. But we can use that to our
+advantage, since it means start_async callers must assume the interface
+is very limited.  So I think we can do something like:
 
-Results I got:
-13.7s 13.4s 13.6s (config: false)
-13.6s 13.6s 16.6s (config: true)
+  1. Async code declares which file descriptors it cares about. This
+     would automatically include the pipe we give to it, of course.
+     So the declared ones for a sideband demuxer would be stderr, and
+     some network fd for reading.
 
-The last "true" result is higher because rebase had to fetch one new re=
-vision.
+  2. In the pthreads case, we do nothing. In the forked case, the child
+     closes every descriptor except the "interesting" ones.
 
+And that solves this problem, and the general case that async-callers
+have no idea if they have just leaked pipe descriptors in the forked
+case.
 
---=20
-Piotr Krukowiecki
+I'm still slightly confused, though, because I never see that descriptor
+get closed in the threaded case. So I still don't understand why it
+_doesn't_ deadlock with pthreads.
+
+-Peff
