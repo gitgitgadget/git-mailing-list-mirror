@@ -1,59 +1,97 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] contrib/completion: --notes, --no-notes
-Date: Thu, 14 Apr 2011 19:53:13 +0200
-Message-ID: <6feb8ab2eeeaed4445228893d9b1bb12f60667fe.1302803560.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 19:53:30 2011
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git archive: tar.umask ignored
+Date: Thu, 14 Apr 2011 20:04:57 +0200
+Message-ID: <4DA73749.40303@lsrfire.ath.cx>
+References: <BANLkTimTs+Qh9fNs6pLcZidYy-YjXNR2iw@mail.gmail.com>	<4DA497B7.706@lsrfire.ath.cx> <BANLkTinEFPZoaUAc+8F1sPGE636u1vDOZw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jacek Masiulaniec <jacek.masiulaniec@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 20:05:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAQjR-0005lC-R0
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 19:53:30 +0200
+	id 1QAQvX-000534-2A
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 20:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933418Ab1DNRxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 13:53:19 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:50181 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933404Ab1DNRxR (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 13:53:17 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E492420CBF
-	for <git@vger.kernel.org>; Thu, 14 Apr 2011 13:53:16 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute4.internal (MEProxy); Thu, 14 Apr 2011 13:53:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id; s=smtpout; bh=3UAlTyGRFvV0ol/eSw6E1E2VrHI=; b=HVv7Zvare8yh5UIKls3Dns/RIAX4ftxaLdXhtDj5Vkl1ZwAP5Ujw6eVdLB4vYqWfS9r+0JqtW3Xll1bCTBERsZEPeEPJxG/pQRvmZ/HuH8hHATqNGdeDo+P5KeN3kJ33+sz0otOVCAwQxjLsuG6K+djmQUNQxWGR2DwMSRU1eHo=
-X-Sasl-enc: S2+T3G/+MCzfr4I6QQv+dabiV7ZGwJtAzBhCdPJiDbZC 1302803596
-Received: from localhost (p54859211.dip0.t-ipconnect.de [84.133.146.17])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6005E44121B;
-	Thu, 14 Apr 2011 13:53:16 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.rc1.312.g1936c
+	id S933734Ab1DNSFe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 14:05:34 -0400
+Received: from india601.server4you.de ([85.25.151.105]:37474 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933729Ab1DNSFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 14:05:30 -0400
+Received: from [192.168.2.103] (p4FFDB5E2.dip.t-dialin.net [79.253.181.226])
+	by india601.server4you.de (Postfix) with ESMTPSA id AD0EC2F803B;
+	Thu, 14 Apr 2011 20:05:27 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <BANLkTinEFPZoaUAc+8F1sPGE636u1vDOZw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171531>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-on top of jk/notes-ui-updates
----
- contrib/completion/git-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Am 12.04.2011 22:39, schrieb Jacek Masiulaniec:
+> On 12 April 2011 19:19, Ren=E9 Scharfe<rene.scharfe@lsrfire.ath.cx>  =
+wrote:
+>> The local setting of tar.umask does not affect the archive created a=
+t the
+>> remote end.  If your "remote" repository is in fact located on the s=
+ame
+>> machine and accessed with the same user then of course settings in
+>> ~/.gitconfig will take effect.
+>=20
+> I've eventually realised this by reading the source code.  The comman=
+d
+> I actually needed was:
+>=20
+>    cd /repo/website.git&&  git -c tar.umask=3D0022 archive HEAD
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 840ae38..7e6a3ee 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1584,7 +1584,7 @@ __git_log_common_options="
- __git_log_gitk_options="
- 	--dense --sparse --full-history
- 	--simplify-merges --simplify-by-decoration
--	--left-right
-+	--left-right --notes --no-notes
- "
- # Options that go well for log and shortlog (not gitk)
- __git_log_shortlog_options="
--- 
-1.7.5.rc1.312.g1936c
+Yes, there's no point in using --remote if you can read the files direc=
+tly.
+I assumed you did that to make the command easier to reproduce by avoid=
+ing
+to set up a git daemon etc..
+
+> Can't comment on the proposed diff without getting better handle on
+> the whole system, but my knee-jerk reaction would be to resist the
+> urge to add more switches.  Maybe the existing -c switch could be mad=
+e
+> to cooperate with --remote, or maybe the documentation could be edite=
+d
+> to make it clearer that -c and --remote are not related in the way I
+> had originally assumed.
+
+Yes, the documentation should be updated first.
+
+-- >8 --
+Subject: archive: document limitation of tar.umask config setting
+
+The local value of the config variable tar.umask is not passed to the
+other side with --remote.  We may want to change that, but for now just
+document this fact.
+
+Reported-by: Jacek Masiulaniec <jacek.masiulaniec@gmail.com>
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ Documentation/git-archive.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.=
+txt
+index f2b8684..9c750e2 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -98,7 +98,8 @@ tar.umask::
+ 	tar archive entries.  The default is 0002, which turns off the
+ 	world write bit.  The special value "user" indicates that the
+ 	archiving user's umask will be used instead.  See umask(2) for
+-	details.
++	details.  If `--remote` is used then only the configuration of
++	the remote repository takes effect.
+=20
+ ATTRIBUTES
+ ----------
