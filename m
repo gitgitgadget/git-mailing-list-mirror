@@ -1,83 +1,69 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Gitbox
-Date: Thu, 14 Apr 2011 10:52:07 -0400
-Message-ID: <BANLkTi=n4GiD939v9G3ni4o72gt0L0EQ8w@mail.gmail.com>
-References: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com>
- <4238CC86-13A5-4DB8-B8B2-BC3AA2F2DA5E@gmail.com> <4DA654D4.5040104@medialab.com>
- <32803572.1897.1302789371873.JavaMail.trustmail@mail1.terreactive.ch> <4DA7016F.5070308@terreactive.ch>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's cooking in git.git (Apr 2011, #04; Tue, 12)
+Date: Thu, 14 Apr 2011 17:21:31 +0200
+Message-ID: <4DA710FB.7060808@alum.mit.edu>
+References: <7vaafvnl9t.fsf@alter.siamese.dyndns.org> <BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Chris Perkins <cperkins@medialab.com>,
-	Joshua Juran <jjuran@gmail.com>,
-	Daniel Searles <daniel.paul.searles@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Drew Northup <drew.northup@maine.edu>, oleganza@gmail.com,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Searles <dsearles@medialab.com>
-To: Victor Engmark <victor.engmark@terreactive.ch>
-X-From: git-owner@vger.kernel.org Thu Apr 14 16:52:39 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 17:22:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QANuN-0004o7-M5
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 16:52:36 +0200
+	id 1QAONS-0000N6-Fh
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 17:22:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754333Ab1DNOwa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 10:52:30 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:39927 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753379Ab1DNOw3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 10:52:29 -0400
-Received: by gxk21 with SMTP id 21so738200gxk.19
-        for <git@vger.kernel.org>; Thu, 14 Apr 2011 07:52:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=NPaVPgrZ+2qlKu+mnCbSNAWphiXXzJDcqY959R/Tfxk=;
-        b=ECCKLg8Orm5TO+PA/cUO1MjrSKM53z0VBKx9LaeXuiJSMhnl1tCOempTvAh+OTGHRT
-         93OscEtUXmbxHS/xy42HWQPGm3bkTGqiE/AV1GOZ2CdbtXaVghS/3cs45J1AsEBr4Cgm
-         eSZMSykV5A7VDAu0Dx/ZLnJmyGEwshlMsymKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CbBb7MyLah2K2ovOcXMXfxaRiq3HfpCVZX0iIM+fCL7ibhSXg97hJ9Hq1bPAw++N9n
-         dmRBPAwU8iiVeoC0GnsmTS6VrKaotimpTQfJMWDfbbclvAz8fgdG2vXA10qxT8Y2bMgN
-         cNMvWfdyFyP6BUtdICEnaqOhJ+4cKe5fv0tVI=
-Received: by 10.91.201.8 with SMTP id d8mr1695077agq.116.1302792747751; Thu,
- 14 Apr 2011 07:52:27 -0700 (PDT)
-Received: by 10.90.103.9 with HTTP; Thu, 14 Apr 2011 07:52:07 -0700 (PDT)
-In-Reply-To: <4DA7016F.5070308@terreactive.ch>
+	id S1757537Ab1DNPWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 11:22:33 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:40877 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754636Ab1DNPWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 11:22:32 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3EFLWse025284
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 14 Apr 2011 17:21:32 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Lightning/1.0b2 Thunderbird/3.1.8
+In-Reply-To: <BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171523>
 
-On Thu, Apr 14, 2011 at 10:15 AM, Victor Engmark
-<victor.engmark@terreactive.ch> wrote:
-> Excellent answer; it would be great to know in detail what would be a=
-n
-> effective (and efficient, if possible) procedure for validating GPL
-> compliance.
+On 04/14/2011 03:38 PM, Piotr Krukowiecki wrote:
+> On Wed, Apr 13, 2011 at 12:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * mh/git-svn-automkdirs (2011-04-01) 1 commit
+>>  (merged to 'next' on 2011-04-03 at 7fa4978)
+>>  + git-svn: add an option to skip the creation of empty directories
+>>
+>> Should be safe, but I'd like an Ack from git-svn folks.
+> 
+> I wanted to test performance of this change - what's the best way to do it?
+> 
+> I tried some ideas, but rebase was too fast for performance measurements.
+> I did not have new commits, but just some old, already in trunk changes, which
+> I tried to rebase - probably it was just fast forward?
 
-Glad you find it useful. There are some interesting FAQs in FSF's
-website. And http://gpl-violations.org/faq/sourcecode-faq.html
+The unhandled.log.gz file for trunk of our main project is 14 Mb and
+uncompresses to 233 Mb.  About 90% of it consists of svn:mergeinfo
+properties for file that were copied or renamed within the repository;
+most of the rest is other random SVN file properties.
 
-> Something like a cartoon guide
+With such a huge unhandled.log file, "git svn mkdirs" took about 10s for
+me.  I believe that "git svn rebase" should take at least as long, even
+if it is a fast-forward.
 
-Both why the lucky stiff and Hunter Thompson would be candidates if
-they were still around.
+Michael
 
-
-m
---=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- Software Architect - OLPC
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
