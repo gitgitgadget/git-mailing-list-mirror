@@ -1,76 +1,131 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: RFC: git send-email and error handling
-Date: Thu, 14 Apr 2011 16:10:12 -0400
-Message-ID: <4DA754A4.3090709@windriver.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] send-pack: abort sideband demuxer on pack-objects
+ error
+Date: Thu, 14 Apr 2011 16:21:10 -0400
+Message-ID: <20110414202110.GA6525@sigill.intra.peff.net>
+References: <20110331184243.GA12027@sigill.intra.peff.net>
+ <201104132153.06429.j6t@kdbg.org>
+ <20110414135449.GD12410@sigill.intra.peff.net>
+ <201104142136.25778.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 22:10:28 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Apr 14 22:21:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QASrx-00072A-V8
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 22:10:26 +0200
+	id 1QAT2V-0005Ao-IN
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 22:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751779Ab1DNUKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 16:10:15 -0400
-Received: from mail.windriver.com ([147.11.1.11]:33065 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040Ab1DNUKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 16:10:14 -0400
-Received: from ALA-MAIL03.corp.ad.wrs.com (ala-mail03 [147.11.57.144])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p3EKADOg023072
-	for <git@vger.kernel.org>; Thu, 14 Apr 2011 13:10:13 -0700 (PDT)
-Received: from ala-mail06.corp.ad.wrs.com ([147.11.57.147]) by ALA-MAIL03.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 14 Apr 2011 13:10:13 -0700
-Received: from [128.224.146.65] ([128.224.146.65]) by ala-mail06.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 14 Apr 2011 13:10:13 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110307 Thunderbird/3.1.9
-X-OriginalArrivalTime: 14 Apr 2011 20:10:13.0347 (UTC) FILETIME=[F6AE7330:01CBFADF]
+	id S1751792Ab1DNUVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 16:21:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42304
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751472Ab1DNUVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 16:21:13 -0400
+Received: (qmail 3077 invoked by uid 107); 14 Apr 2011 20:22:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Apr 2011 16:22:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2011 16:21:10 -0400
+Content-Disposition: inline
+In-Reply-To: <201104142136.25778.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171545>
 
-I came across a situation today where the behaviour of git send-email
-kind of surprised me -- in that it seemed definitely less than ideal
-for the use case I had.
+On Thu, Apr 14, 2011 at 09:36:25PM +0200, Johannes Sixt wrote:
 
-For stable linux kernel releases, it is very common to send
-hundreds of patches at once, to people you've never contacted before,
-simply because the are called out in CC: or SOB: lines of a patch
-that has been cherry picked.  So it is highly likely that you may
-hit full inboxes, expired accounts and so on.
+> On Donnerstag, 14. April 2011, Jeff King wrote:
+> > Obviously it totally breaks the start_async abstraction if the called
+> > code needs to care whether it forked or not. But we can use that to our
+> > advantage, since it means start_async callers must assume the interface
+> > is very limited.  So I think we can do something like:
+> >
+> >   1. Async code declares which file descriptors it cares about. This
+> >      would automatically include the pipe we give to it, of course.
+> >      So the declared ones for a sideband demuxer would be stderr, and
+> >      some network fd for reading.
+> >
+> >   2. In the pthreads case, we do nothing. In the forked case, the child
+> >      closes every descriptor except the "interesting" ones.
+> >
+> > And that solves this problem, and the general case that async-callers
+> > have no idea if they have just leaked pipe descriptors in the forked
+> > case.
+> 
+> Sounds like a plan. How do you close all file descriptors? Just iterate up to 
+> getrlimit(RLIMIT_NOFILE)?
 
-The command line (git 1.7.4.4) is typically something like:
+Sadly, yes, I think that is what we would have to do. It does feel like
+an awful hack. And it will interact badly with things like valgrind,
+which open descriptors behind the scenes (but can properly handle
+the forking).
 
-git send-email --to stable@kernel.org --to linux-kernel@vger.kernel.org \
-   --cc stable-review@kernel.org   some_patch_dir
+I just don't see another way around it for the general case.  The
+"usual" fix for this sort of thing is that the descriptors should have
+close-on-exec set, but that doesn't work for us here, because we are
+only forking.
 
-So, let me get to what happened today:  After sending 113 out of 209
-patches, it came to the 114th patch, and gave me this:
+It's sufficiently ugly (and still possible to break in the pthreads
+case!) that it may be worth not worrying about the general case at all,
+and just fixing this one with the explicit close.
 
-(mbox) Adding cc: Dmitry Torokhov <dmitry.torokhov@gmail.com> from line 'From: Dmitry Torokhov <dmitry.torokhov@gmail.com>'
-(body) Adding cc: Dmitry Torokhov <dtor@mail.ru> from line 'Signed-off-by: Dmitry Torokhov <dtor@mail.ru>'
-(body) Adding cc: Paul Gortmaker <paul.gortmaker@windriver.com> from line 'Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>'
-5.2.1 <dtor@mail.ru>... Mailbox disabled for this recipient
+> > I'm still slightly confused, though, because I never see that descriptor
+> > get closed in the threaded case. So I still don't understand why it
+> > _doesn't_ deadlock with pthreads.
+> 
+> In the threaded case, this fd is closed by start_command(), where it is passed 
+> as po.out in pack_objects(). In the fork case this is too late because a 
+> duplicate was already inherited to the sideband demuxer.
 
-Then, taking that as a hard error, it simply exited,
-leaving me scrambling to figure out how to quickly fix the
-offending patch and continue with the unsent queue.
+Hrm, I see the code now. That seems like an odd thing to do to me.
+Doesn't it disallow:
 
- From my point of view, the right thing to do here would have
-been to ignore the error on the harvested mail address, and continue
-on through the rest of the queue.  Or even interactively ask me what
-to do when it saw the 5.2.1 failure.  But maybe that wouldn't be
-right for everyone.  I didn't see anything in the GSE man page
-that would let me configure this behaviour either.
+  /* set up a command */
+  const char **argv = { "some", "command" };
+  struct child_process c;
+  c.argv = argv;
+  c.out = fd;
 
-Anyway, I thought I'd mention it and see where the discussion went.
+  /* run it */
+  run_command(&c);
 
-Thanks,
-Paul.
+  /* now tack our own output to the end */
+  write(fd, "foo", 3);
+
+And even weirder, we only do the close for high file descriptors. So you
+_can_ do that above if "fd" is stdout, but not with an arbitrary fd.
+
+I guess it is neither here nor there with respect to this problem; it
+clearly is not something we want to do a lot, as it doesn't seem to have
+come up.
+
+But at least it explains what's going on here in the threaded case.
+
+> However, pack_objects() works differently in the stateless_rpc case: then it 
+> does not close fd anywhere, and I think it should be possible to construct a 
+> similar case that hangs even in the threaded case. And the fix could simply 
+> look like this:
+> 
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> index 5e772c7..c8f601f 100644
+> --- a/builtin/send-pack.c
+> +++ b/builtin/send-pack.c
+> @@ -101,6 +101,7 @@ static int pack_objects(int fd, struct ref *refs,
+>  		free(buf);
+>  		close(po.out);
+>  		po.out = -1;
+> +		close(fd);
+>  	}
+>  
+>  	if (finish_command(&po))
+
+Yeah, from my reading of the code, you are right.
+
+-Peff
