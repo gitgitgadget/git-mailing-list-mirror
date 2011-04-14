@@ -1,99 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] send-pack: abort sideband demuxer on pack-objects
- error
-Date: Thu, 14 Apr 2011 09:54:49 -0400
-Message-ID: <20110414135449.GD12410@sigill.intra.peff.net>
-References: <20110331184243.GA12027@sigill.intra.peff.net>
- <20110331184443.GD16906@sigill.intra.peff.net>
- <201104132153.06429.j6t@kdbg.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Gitbox
+Date: Thu, 14 Apr 2011 09:55:47 -0400
+Message-ID: <BANLkTim-fKZr2Y3FCjJJV4yoXQKOoeoyLg@mail.gmail.com>
+References: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com>
+ <4238CC86-13A5-4DB8-B8B2-BC3AA2F2DA5E@gmail.com> <4DA654D4.5040104@medialab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Apr 14 15:54:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Joshua Juran <jjuran@gmail.com>,
+	Daniel Searles <daniel.paul.searles@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Drew Northup <drew.northup@maine.edu>, oleganza@gmail.com,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Daniel Searles <dsearles@medialab.com>
+To: Chris Perkins <cperkins@medialab.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 15:56:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAN0b-0001gY-4Q
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 15:54:57 +0200
+	id 1QAN1q-0002Up-OP
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 15:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758711Ab1DNNyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 09:54:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46782
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757881Ab1DNNyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 09:54:51 -0400
-Received: (qmail 31314 invoked by uid 107); 14 Apr 2011 13:55:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Apr 2011 09:55:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2011 09:54:49 -0400
-Content-Disposition: inline
-In-Reply-To: <201104132153.06429.j6t@kdbg.org>
+	id S1758029Ab1DNN4J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 09:56:09 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39945 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757881Ab1DNN4I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 09:56:08 -0400
+Received: by gyd10 with SMTP id 10so446851gyd.19
+        for <git@vger.kernel.org>; Thu, 14 Apr 2011 06:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=0n4G6LFuSJO1492MSSTm2csIqQh3eRUjhtqPra4SUTc=;
+        b=CqwIrln1T9Get4lRK5EGZuW+0iEyKHDcFKbRyzQYIzxhFs757mMxaEwqWsF4K9zsjp
+         obVQvnHN2k9TR4X0sVeakCz0nYBVymITK/P39L2pM5fdGAT7MtN1tCu1WZLZk5RVE5HZ
+         mLAzoLqffY8RyxC/AypIk2dLahyQcxXu9Z270=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=SWmjRmMmK/BUUPqW+J4DQUlKG/gofS9kpGOK7Fid0zj0YQVzilxtWNKsShw47MBZmt
+         +cecylTBWdgE988y3UsT59riXzYPff2fBulGf0l6doQnqX7RrqShQMId6teMBw5paLHG
+         3kV13Fb1hDay9zxprzPJOeccLbfDJDyndK8rI=
+Received: by 10.91.69.28 with SMTP id w28mr1633472agk.143.1302789367102; Thu,
+ 14 Apr 2011 06:56:07 -0700 (PDT)
+Received: by 10.90.103.9 with HTTP; Thu, 14 Apr 2011 06:55:47 -0700 (PDT)
+In-Reply-To: <4DA654D4.5040104@medialab.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171518>
 
-On Wed, Apr 13, 2011 at 09:53:06PM +0200, Johannes Sixt wrote:
+On Wed, Apr 13, 2011 at 9:58 PM, Chris Perkins <cperkins@medialab.com> =
+wrote:
+> Let's look at this at a slighty different way. Let's say someone writ=
+es
+> a GUI wrapper for Git, bundles it with Git, and then offers for sale =
+a
+> new proprietary SVC system. They list off all the wonderful features
+> that it has. =A0On the back page of their website is a small 'License=
+s'
+> disclosure and the source code to Git comes with the download buried =
+in
+> a subdirectory. =A0None of the users realize the software is using Gi=
+t.
+>
+> Is that a violation of the GPL? I would say that it absolutely is.
 
-> > Meanwhile, the async sideband demuxer will continue trying
-> > to stream data from the remote repo until it gets EOF.
-> > Depending on what data pack-objects actually sent, the
-> > remote repo may not actually send anything (e.g., if we sent
-> > nothing and it is simply waiting for the pack). This leads
-> > to deadlock cycle in which send-pack waits on the demuxer,
-> > the demuxer waits on the remote receive-pack, and the remote
-> > receive-pack waits on send-pack to send the pack data.
-> 
-> This is an indication that a writable end of the pipe between send-pack and 
-> receive-pack is still open. This fixes the deadlock for me without having to 
-> kill the demuxer explicitly:
-> 
-> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-> index 5e772c7..db32ded 100644
-> --- a/builtin/send-pack.c
-> +++ b/builtin/send-pack.c
-> @@ -229,6 +229,9 @@ static void print_helper_status(struct ref *ref)
->  static int sideband_demux(int in, int out, void *data)
->  {
->  	int *fd = data;
-> +#ifdef NO_PTHREADS
-> +	close(fd[1]);
-> +#endif
->  	int ret = recv_sideband("send-pack", fd[0], out);
->  	close(out);
->  	return ret;
-> 
-> If only I had a brilliant idea how to forge this into a re-usable pattern...
+It absolutely is not. Lots of companies do this, and it is perfectly
+kosher -- either bundle the src somewhere or offer a link to download
+the source somewhere.
 
-Thanks for finding that. I had the notion that there was a pipe end
-hanging open somewhere, but looking through the async code, I found us
-closing the pipes properly. But of course I failed to check the fds
-coming into send_pack.
+While IANAL, and specifically not _your_ lawyer, I have been in this
+field for >10 years, and studied law @ masters level on software
+licensing. You are reading the GPL wrong, and you're not aware of
+widespread industry practices around it.
 
-Obviously it totally breaks the start_async abstraction if the called
-code needs to care whether it forked or not. But we can use that to our
-advantage, since it means start_async callers must assume the interface
-is very limited.  So I think we can do something like:
+Anyone who is curious about this gitbox thing, and interested in
+*facts* instead of fiction, could advance our knowledge with a simple
+procedure:
 
-  1. Async code declares which file descriptors it cares about. This
-     would automatically include the pipe we give to it, of course.
-     So the declared ones for a sideband demuxer would be stderr, and
-     some network fd for reading.
+ - Download the "free" version (or payfor the paid version!). It's a
+zipfile, no need to hurt any Macs.
 
-  2. In the pthreads case, we do nothing. In the forked case, the child
-     closes every descriptor except the "interesting" ones.
+ - See if it includes the src or a link to download the src -- it will
+probably be in a corner of the documentation or license. Maybe there's
+an offer to provide the src in a different way, but a download link is
+the usual trick.
 
-And that solves this problem, and the general case that async-callers
-have no idea if they have just leaked pipe descriptors in the forked
-case.
+ - Does the link work? Can you effectively get the src?
 
-I'm still slightly confused, though, because I never see that descriptor
-get closed in the threaded case. So I still don't understand why it
-_doesn't_ deadlock with pthreads.
+ - Does the src match the binaries you got?
 
--Peff
+cheers,
+
+
+
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
