@@ -1,74 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Symbolic 'references' in Git?
-Date: Thu, 14 Apr 2011 18:20:20 -0400
-Message-ID: <20110414222020.GB19222@sigill.intra.peff.net>
-References: <BANLkTinV8niLibzOQRVraYqwB0hKW1=r1w@mail.gmail.com>
- <201104141524.15212.wjl@icecavern.net>
- <BANLkTik5tD5UOrDkpL8ahEgwFjT+suHACQ@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [BUG] format-patch does not wrap From-field after author name
+Date: Fri, 15 Apr 2011 00:21:24 +0200
+Message-ID: <BANLkTikgZH8135=o5ODcA=780-1D7YFngw@mail.gmail.com>
+References: <BANLkTimruwojkq_HNMZeCDBV6K8_aFc_XQ@mail.gmail.com>
+ <7v39lkiwoj.fsf@alter.siamese.dyndns.org> <20110414175034.GA23342@sigill.intra.peff.net>
+ <BANLkTin+K46_RSDsYWHso3v7Gpe_k+0m8Q@mail.gmail.com> <20110414214230.GB7709@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Wesley J. Landaker" <wjl@icecavern.net>, git@vger.kernel.org
-To: Chris Patti <cpatti@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 00:20:29 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 15 00:21:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAUtp-0003fb-CD
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 00:20:29 +0200
+	id 1QAUv8-0004NP-SF
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 00:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039Ab1DNWUY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 18:20:24 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50711
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753932Ab1DNWUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 18:20:23 -0400
-Received: (qmail 4467 invoked by uid 107); 14 Apr 2011 22:21:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Apr 2011 18:21:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2011 18:20:20 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTik5tD5UOrDkpL8ahEgwFjT+suHACQ@mail.gmail.com>
+	id S1754036Ab1DNWVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 18:21:45 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:54328 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753906Ab1DNWVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 18:21:44 -0400
+Received: by pzk9 with SMTP id 9so662002pzk.19
+        for <git@vger.kernel.org>; Thu, 14 Apr 2011 15:21:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=llyepboR9DkDIPQ9WPBJh7WryFP3hiHapga98yUaa8A=;
+        b=os1Y4lgtCzkdxo5ZIdJTcvd3Xj6KMAzWCQx/JBCvqab5ApSm/GMZAwDOHiNItIejll
+         bh7IYBEY0Y3Nbd7TsmgeLEKaSc82GGR0JG+GUMhQDM3BPUFzbosXD7jVRNXGMTqb8Fym
+         fh1SDoYqxmVfG6HcT8LPQ3K7FCk+qM4y2EiIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=fJJEae5vP7MgATXXo1UJJn+5CQJFuTnFoZouQoch8ktFQLLf000UDZhNIEVzOvmWOl
+         fyR8OMVncVBxkTqpkhEffSgtmNkSR4XAhD1IitwUlMboTIEw/Nb3wHyROh2jQl822DMj
+         eYFUx4MuJTHzsq5lD7cMwe3KI0rtpgSa0IMgg=
+Received: by 10.68.37.72 with SMTP id w8mr822203pbj.263.1302819704082; Thu, 14
+ Apr 2011 15:21:44 -0700 (PDT)
+Received: by 10.68.56.105 with HTTP; Thu, 14 Apr 2011 15:21:24 -0700 (PDT)
+In-Reply-To: <20110414214230.GB7709@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171567>
 
-On Thu, Apr 14, 2011 at 05:31:13PM -0400, Chris Patti wrote:
+On Thu, Apr 14, 2011 at 11:42 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Apr 14, 2011 at 11:19:09PM +0200, Erik Faye-Lund wrote:
+>> > Or we could just ignore it. AFAICS, this doesn't actually violate
+>> > rfc2047, nor rfc5322. The 78-character limit is simply a SHOULD, and
+>> > we have up to 998 for MUST. For a single-address header[1], this seems
+>> > kind of unlikely to me.
+>>
+>> True. But since the fix is as simple as it is, perhaps it's worth it
+>> just for the clean conscience?
+>
+> Fair enough. Patch to follow.
+>
 
-> >> Rather than resorting to manually copying the symbolic ref file
-> >> around, from repo to repo, is there any way to make such a symboli=
-c
-> >> 'variable' global?
-> >
-> > Why not just use a tag or a branch ?
-> >
-> > git tag -F next-release release-3.15
-> >
-> > =C2=A0OR
-> >
-> > git branch -D next-release
-> > git branch next-release release-3.15
-> >
-> > (I personally think branches are nicer for this since tags are "sup=
-posed" to
-> > be immutable.)
-> >
->=20
->=20
-> Won't either of those things create a 'next-release' that's frozen in
-> time where the release-3.15 branch is *right now*?
->=20
-> This is for a CI system (Bamboo) so we need next-release to act as if
-> we were using release-3.15 itself.
+Thinking about it a bit more, I'm getting a bit more unsure:
+- The 78-limit is about user-interfaces, not protocol robustness.
+- Since send-email unwraps the line and does not re-wrap it, even if
+we have a name like this it's likely that the work gets undone right
+away.
+- So that means that send-email should probably also be fixed. But now
+I'm wondering if we've crossed the point where this will just lead to
+less obvious code for very little gain.
 
-Yeah, a regular ref won't work for that. A symbolic ref is definitely
-what you want, but their contents are not shared via the git-protocol.
-So no, they won't make it across clones, fetches, or pushes. We do some
-ugly magic to make HEAD work.
+So I think I might have over-though this.
 
--Peff
+>> > [1] For multi-address headers like "format-patch --cc=foo --cc=bar", it
+>> > looks like we already break them across lines.
+>>
+>> Yes, but this is even worse: these fields don't get encoded at all!
+>
+> Ugh, you're right. That is a totally separate issue, and one I really
+> don't want to get into.
+
+Indeed. I have an itch around this area (I've been playing with
+porting send-email to C), so I might look at it at some point soon.
+
+> Because it means we have to _parse_ those
+> headers and understand which part is a name and which is an address.
+>
+
+That part is surprisingly easy: If it contains a '<', then it's on the form
+"Foo Bar Baz <foo@bar.baz>". If not, it's "foo@bar.baz" (assuming it's
+UTF-8 encoded rfc5322 mailbox'es we assume, which would make the most
+sense to me)
+
+> People who use "--cc" or format.headers will have to deal with that
+> themselves. I consider both to be somewhat useless, since you can
+> post-process the mbox after format-patch is run (or in your MUA).
+> Whereas quoting and encoding fields in format-patch is necessary to give
+> unambiguous input to the MUA (be it send-email or whatever).
+>
+
+I agree. I'm actually a tad surprised we support it in the first place.
