@@ -1,69 +1,83 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: What's cooking in git.git (Apr 2011, #04; Tue, 12)
-Date: Thu, 14 Apr 2011 17:21:31 +0200
-Message-ID: <4DA710FB.7060808@alum.mit.edu>
-References: <7vaafvnl9t.fsf@alter.siamese.dyndns.org> <BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [BUG] format-patch does not wrap From-field after author name
+Date: Thu, 14 Apr 2011 19:01:41 +0200
+Message-ID: <BANLkTimruwojkq_HNMZeCDBV6K8_aFc_XQ@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 17:22:43 2011
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 14 19:02:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAONS-0000N6-Fh
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 17:22:38 +0200
+	id 1QAPvl-0005aQ-UB
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 19:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757537Ab1DNPWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 11:22:33 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:40877 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754636Ab1DNPWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 11:22:32 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3EFLWse025284
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 14 Apr 2011 17:21:32 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Lightning/1.0b2 Thunderbird/3.1.8
-In-Reply-To: <BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1758165Ab1DNRCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 13:02:03 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:63016 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752181Ab1DNRCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 13:02:01 -0400
+Received: by pzk9 with SMTP id 9so561152pzk.19
+        for <git@vger.kernel.org>; Thu, 14 Apr 2011 10:02:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:from:date:message-id
+         :subject:to:content-type;
+        bh=nRMnlenNHYL8VcN8zV1WelrRreXu3ltSui4w/MXS8OI=;
+        b=TLBLBGZuiDCtorASW6uLwag6Q9eXBPNG6kdXxD7l6EeZIYfE1M51aDDqa+BhWYhqb8
+         FZTbrP4kYgGqjW5rAoI/v98MqmAI+VatZIl3pn1J93q4ZuqU8wzQuQl8gnV1MnVBjqU9
+         UuI8TBa6DIXg22R8uP3z2r51H7o6+boVzLdhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:from:date:message-id:subject:to:content-type;
+        b=C0Ttn2cO6tLegz9YtgpSEP87RyN9I2t80VImt5SwDRUZ4wL7lV5YpbJVwo31E3mG9r
+         lsSQz4zf0TNYgFs3tir3u9107QCxfEJia4O5eHBcmX/fiwbYTwAN/1A6W1alnyzDBZHj
+         fx1HGyiqFaSj/d2VR3elro6Kpw49B5qctvWrQ=
+Received: by 10.68.37.72 with SMTP id w8mr600184pbj.263.1302800521089; Thu, 14
+ Apr 2011 10:02:01 -0700 (PDT)
+Received: by 10.68.56.105 with HTTP; Thu, 14 Apr 2011 10:01:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171524>
 
-On 04/14/2011 03:38 PM, Piotr Krukowiecki wrote:
-> On Wed, Apr 13, 2011 at 12:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> * mh/git-svn-automkdirs (2011-04-01) 1 commit
->>  (merged to 'next' on 2011-04-03 at 7fa4978)
->>  + git-svn: add an option to skip the creation of empty directories
->>
->> Should be safe, but I'd like an Ack from git-svn folks.
-> 
-> I wanted to test performance of this change - what's the best way to do it?
-> 
-> I tried some ideas, but rebase was too fast for performance measurements.
-> I did not have new commits, but just some old, already in trunk changes, which
-> I tried to rebase - probably it was just fast forward?
+With certain combinations of author name and email lengths, git
+format-patch does not correctly wrap the From line to be below 78
+characters, violating rfc2047.
 
-The unhandled.log.gz file for trunk of our main project is 14 Mb and
-uncompresses to 233 Mb.  About 90% of it consists of svn:mergeinfo
-properties for file that were copied or renamed within the repository;
-most of the rest is other random SVN file properties.
+This happens because pp_user_info in pretty.c use add_rfc2047 (which
+wraps) for the name, but strbuf_add (which does not wrap) for the
+email part.
 
-With such a huge unhandled.log file, "git svn mkdirs" took about 10s for
-me.  I believe that "git svn rebase" should take at least as long, even
-if it is a fast-forward.
+Here's a test that illustrate the problem:
 
-Michael
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 9c66367..a4b8b59 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -793,4 +793,19 @@ test_expect_success 'format-patch wraps extremely
+long headers (rfc2047)' '
+ 	test_cmp expect subject
+ '
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
++M8="foo_bar_"
++M64=$M8$M8$M8$M8$M8$M8$M8$M8
++cat >expect <<'EOF'
++From: foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar_foo_bar
++ <foobar@foo.bar>
++EOF
++test_expect_success 'format-patch wraps non-quotable headers' '
++	rm -rf patches/ &&
++	echo content >>file &&
++	git add file &&
++	git commit -mfoo --author "$M64 <foobar@foo.bar>" &&
++	git format-patch --stdout -1 >patch &&
++	sed -n "/^From: /p; /^ /p; /^$/q" <patch >from &&
++	test_cmp expect from
++'
+ test_done
