@@ -1,78 +1,63 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Interdiff between amended commits
-Date: Thu, 14 Apr 2011 09:08:47 +0200
-Message-ID: <4DA69D7F.5050304@drmicha.warpmail.net>
-References: <1jzlxb0.12qxbsl1na9qhzM%lists@haller-berlin.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stefan Haller <lists@haller-berlin.de>
-X-From: git-owner@vger.kernel.org Thu Apr 14 09:09:06 2011
+Subject: [PATCH] git.txt: fix list continuation
+Date: Thu, 14 Apr 2011 09:17:26 +0200
+Message-ID: <534233ecaf1b1e364954926ddbf11d47cf9b444e.1302765412.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 14 09:17:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAGfq-0002nF-8I
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 09:09:06 +0200
+	id 1QAGo2-0007A9-N6
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 09:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757824Ab1DNHIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 03:08:51 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58021 "EHLO
+	id S1757877Ab1DNHR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 03:17:29 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45793 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757643Ab1DNHIv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 03:08:51 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DDB0320DBE;
-	Thu, 14 Apr 2011 03:08:49 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 14 Apr 2011 03:08:49 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=+BsahcJIIzzYlfOtpO/alUda7ko=; b=lLG4MgnkbfMKqHqcWQob0kmb9dUiwDPTLkdNhXlv8C6yRT+Gc29aG82VYZ29WZCCLMAsfzy+8SMmy+kqivRqCaJTlLDkKU+NB/thZQ/io/heDL6TZkJl6f604oWXTk1duA5TX7cvM5zBdVBMOgw+/deHOclEzE21v/20q7lqPWE=
-X-Sasl-enc: KSRjvjXaCMLaMFEjvauf+WWWWi1LHiNk+uC+XCiP/LK5 1302764929
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 625D2405789;
-	Thu, 14 Apr 2011 03:08:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <1jzlxb0.12qxbsl1na9qhzM%lists@haller-berlin.de>
+	by vger.kernel.org with ESMTP id S1752445Ab1DNHR3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 03:17:29 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id C5736210F8;
+	Thu, 14 Apr 2011 03:17:28 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute5.internal (MEProxy); Thu, 14 Apr 2011 03:17:28 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=eN8g9zkgIlAFTJin+NqSKXU4WcM=; b=RXQK6qLsbhFYZXeQbqYOVRVe1WUmAcD9l8jDwUBBRK9aES1cBbqhK2L/ALVViqr9HyGvANXIc+vrcxq8oFNIQ3d0fS0qLPZ7RncOgQn7o5QXriGexfahvzymkDujkY3QQ9wpaR6FXPv+d0hzejnCFetOhjlGa7dtPPg5ekK+7wI=
+X-Sasl-enc: lk47kTjGLgjIgyMB0C9iEDHBy29vgrhrRYOdo1Kndw4i 1302765448
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5600E4490A5;
+	Thu, 14 Apr 2011 03:17:28 -0400 (EDT)
+X-Mailer: git-send-email 1.7.5.rc1.312.g1936c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171507>
 
-Stefan Haller venit, vidit, dixit 13.04.2011 13:54:
-> I'd like to show an interdiff between two commits, e.g. when a commit
-> was amended.
-> 
-> I'm aware of the "intercommit" alias in the git wiki:
-> 
->   $ git show commit1 > .git/commit1 && git show commit2 > .git/commit2 && interdiff .git/commit[12]
-> 
+Remove a spurious empty line which prevented asciidoc from recognizing a
+list continuation mark ('+'), so that it does not get output literally any
+more.
 
-This basically computes the diff between two patches, using a tool which
-groks the patch format.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Should be safe for 1.7.5 :)
+---
+ Documentation/git.txt |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-> It only works for simple cases though, and I'd also like to avoid the
-> dependency to an external tool if possible.
-
-You could use git diff --no-index instead, so that would work in really
-simple cases only, probably.
-
-> 
-> So one thing I came up with is this:
-> 
->   git checkout commit1^
->   git cherry-pick --no-commit commit2
->   git diff --cached
-
-That does something completely different. It compares the tree of
-commit1^ with the tree of (commit1^ with commit2's patch applied). I
-don't see how commit1's patch plays any role here.
-
-Depending on what your actual use case, you may be happier with "git
-diff commit1 commit2". Alternatively, you may produce a fake merge with
-parents commit1 and commit2 and tree commit1^ and look at "show -R -c"
-for that. Sounds weird, I know ;)
-
-Michael
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 7df49ea..b8fa77b 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -622,7 +622,6 @@ where:
+                          contents of <old|new>,
+ 	<old|new>-hex:: are the 40-hexdigit SHA1 hashes,
+ 	<old|new>-mode:: are the octal representation of the file modes.
+-
+ +
+ The file parameters can point at the user's working file
+ (e.g. `new-file` in "git-diff-files"), `/dev/null` (e.g. `old-file`
+-- 
+1.7.5.rc1.312.g1936c
