@@ -1,67 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git.txt: fix list continuation
-Date: Thu, 14 Apr 2011 10:45:37 -0700
-Message-ID: <7vtye0hgla.fsf@alter.siamese.dyndns.org>
-References: <534233ecaf1b1e364954926ddbf11d47cf9b444e.1302765412.git.git@drmicha.warpmail.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2011, #04; Tue, 12)
+Date: Thu, 14 Apr 2011 11:46:07 -0700 (PDT)
+Message-ID: <m362qg3c5j.fsf@localhost.localdomain>
+References: <7vaafvnl9t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Apr 14 20:33:04 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 20:46:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QARLj-0005VQ-Ln
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 20:33:04 +0200
+	id 1QARYq-0005c1-UI
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 20:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932860Ab1DNScx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 14:32:53 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47211 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932844Ab1DNRps (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 13:45:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 104575AEB;
-	Thu, 14 Apr 2011 13:47:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hpnUsUjHp8fSxQuiTd49/55lS8s=; b=nXEe49
-	cKyUcwlLNyZuMRb36WKMVC2df+9gjZe5Mu971vn6fJ9JMJKqX+w00mCAgXfHTqMp
-	/sssKltcGCuQhQa/ZXeYEGvC8sVKN3Holmn6RFvrigrIVkAUxZqOoh8HUuNP9rqF
-	POJFJYTfgcEwevh7CJ2mpPc8NZLh23qIPo6Jk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S5yr5l7ZnZfIHB9jGJ9wiU0ncAhKMn05
-	pY1L8bFH6PRZNfSdzvsFtHRm7vmleTe+2dC5qgzOTflQ++F+UwQLcid1nTUa6JTr
-	43awc/LsjDTmk1eMBFy1MG2/X1ZfbmNkOSaJlmaWhYtskmld4bqfX64iiWZUBpPH
-	wma5ZONiF04=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E16595AEA;
-	Thu, 14 Apr 2011 13:47:41 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DE4FF5AE8; Thu, 14 Apr 2011
- 13:47:38 -0400 (EDT)
-In-Reply-To: <534233ecaf1b1e364954926ddbf11d47cf9b444e.1302765412.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 14 Apr 2011 09:17:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BCDF304-66BF-11E0-B83C-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932228Ab1DNSqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 14:46:14 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:48046 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759390Ab1DNSqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 14:46:11 -0400
+Received: by bwz15 with SMTP id 15so1615483bwz.19
+        for <git@vger.kernel.org>; Thu, 14 Apr 2011 11:46:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=dBJDO8AgLjUjqnKTCB7eVYQLZUSXVSp/64v/3ANQ3Yg=;
+        b=uNjHQLj5iFLuGfdW5CMX/m3+Z15aV63m4uAbfjts3kIPGOTKyUhZvicLGbl9miE/rj
+         l0HKvbhtjVia/EAxiXlpaZmsLw5drkMAFFTwxqjlvQf/ecTmd2T9LtOmDXGYe7HpvgwO
+         m8kt8ByZzU+0KunmEeQRkB5I1p27+bFBOcXxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=YKpvxsKOKVhF0eUu64V4Kv7Lhoq1TCuH9Q/z440mArEIX2h8V1upqr5TKvKFphSwFm
+         iDT+jquaosVC4IktVTdPHW457Mbe81vfPd5OFJJlPVnSXXHUEJh51NSm0fMxF2dlUSB5
+         eOfHCF8HVlLplBespjMKFeq9TvFILN3kQxnuo=
+Received: by 10.204.154.194 with SMTP id p2mr889079bkw.58.1302806769994;
+        Thu, 14 Apr 2011 11:46:09 -0700 (PDT)
+Received: from localhost.localdomain (abwc79.neoplus.adsl.tpnet.pl [83.8.226.79])
+        by mx.google.com with ESMTPS id p11sm700635fak.3.2011.04.14.11.46.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Apr 2011 11:46:07 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3EIjToE007492;
+	Thu, 14 Apr 2011 20:45:39 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3EIjDcQ007488;
+	Thu, 14 Apr 2011 20:45:13 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vaafvnl9t.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171533>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Remove a spurious empty line which prevented asciidoc from recognizing a
-> list continuation mark ('+'), so that it does not get output literally any
-> more.
+> --------------------------------------------------
+> [Stalled]
 
-Thanks.
+> * jh/gitweb-localtime (2011-03-23) 1 commit
+>  - gitweb: javascript ability to adjust time based on timezone
+> 
+> Re-roll posted on the list, but I haven't picked it up.
 
-The preformatted copies at k.org shows that there was a breakage somewhere
-between v1.6.3.4 (formatted with AsciiDoc 8.2.5) and v1.6.4.5 (formatted
-with AsciiDoc 8.4.5), but I don't see any change to the source between two
-versions that would matter.  Perhaps the older AsciiDoc was more lenient.
+Should I post v2 of re-roll, or wait for after 1.7.5?
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
