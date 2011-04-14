@@ -1,74 +1,80 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: Symbolic 'references' in Git?
-Date: Thu, 14 Apr 2011 15:24:14 -0600
-Organization: icecavern.net
-Message-ID: <201104141524.15212.wjl@icecavern.net>
-References: <BANLkTinV8niLibzOQRVraYqwB0hKW1=r1w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] format-patch does not wrap From-field after author name
+Date: Thu, 14 Apr 2011 17:42:30 -0400
+Message-ID: <20110414214230.GB7709@sigill.intra.peff.net>
+References: <BANLkTimruwojkq_HNMZeCDBV6K8_aFc_XQ@mail.gmail.com>
+ <7v39lkiwoj.fsf@alter.siamese.dyndns.org>
+ <20110414175034.GA23342@sigill.intra.peff.net>
+ <BANLkTin+K46_RSDsYWHso3v7Gpe_k+0m8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Chris Patti <cpatti@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 23:32:34 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 23:42:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAU9O-0004Cc-FM
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 23:32:30 +0200
+	id 1QAUJE-0001BW-0f
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 23:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753016Ab1DNVcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 17:32:25 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:47563 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752597Ab1DNVcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 17:32:24 -0400
-X-Greylist: delayed 484 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Apr 2011 17:32:24 EDT
-Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id 8976E3616D;
-	Thu, 14 Apr 2011 15:24:17 -0600 (MDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-amd64; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <BANLkTinV8niLibzOQRVraYqwB0hKW1=r1w@mail.gmail.com>
-X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
- =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
- =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
- =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
- =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
- =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
+	id S1753029Ab1DNVmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 17:42:35 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56011
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751152Ab1DNVme (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 17:42:34 -0400
+Received: (qmail 4157 invoked by uid 107); 14 Apr 2011 21:43:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Apr 2011 17:43:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2011 17:42:30 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTin+K46_RSDsYWHso3v7Gpe_k+0m8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171563>
 
-On Thursday, April 14, 2011 14:30:59 Chris Patti wrote:
-> We want a way to have our Bamboo configuration utilize a symbol to
-> refer to 'latest release' 'latest patch' etc. in Git, rather than
-> having to go in and change the actual branch name every time we ship a
-> release and create a new one.
+On Thu, Apr 14, 2011 at 11:19:09PM +0200, Erik Faye-Lund wrote:
+
+> > Note that it relies on the commit header having a space before the "<",
+> > which forms the continuation whitespace for the header. This is probably
+> > reasonable, but we could double-check if we want to handle malformed
+> > commit headers better.
 > 
-> We thought about using something like:
+> I think that's a reasonable assumption; this field comes straight from
+> the commit. It should already be well-formed, no?
+
+Probably; it was just something I noted while writing the patch, and I
+like to be paranoid about assumptions. :)
+
+> > Or we could just ignore it. AFAICS, this doesn't actually violate
+> > rfc2047, nor rfc5322. The 78-character limit is simply a SHOULD, and
+> > we have up to 998 for MUST. For a single-address header[1], this seems
+> > kind of unlikely to me.
 > 
-> git symbolic-ref -m'new next-release branch build for Bamboo'
-> next-release release-3.15
+> True. But since the fix is as simple as it is, perhaps it's worth it
+> just for the clean conscience?
+
+Fair enough. Patch to follow.
+
+> > [1] For multi-address headers like "format-patch --cc=foo --cc=bar", it
+> > looks like we already break them across lines.
 > 
-> However, this symbolic ref is only local to one repository, and we
-> want it to be global across all of Bamboo.
-> 
-> Rather than resorting to manually copying the symbolic ref file
-> around, from repo to repo, is there any way to make such a symbolic
-> 'variable' global?
+> Yes, but this is even worse: these fields don't get encoded at all!
 
-Why not just use a tag or a branch ?
+Ugh, you're right. That is a totally separate issue, and one I really
+don't want to get into. Because it means we have to _parse_ those
+headers and understand which part is a name and which is an address.
 
-git tag -F next-release release-3.15
+People who use "--cc" or format.headers will have to deal with that
+themselves. I consider both to be somewhat useless, since you can
+post-process the mbox after format-patch is run (or in your MUA).
+Whereas quoting and encoding fields in format-patch is necessary to give
+unambiguous input to the MUA (be it send-email or whatever).
 
-  OR
-
-git branch -D next-release
-git branch next-release release-3.15
-
-(I personally think branches are nicer for this since tags are "supposed" to 
-be immutable.)
+-Peff
