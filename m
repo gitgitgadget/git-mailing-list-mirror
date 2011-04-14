@@ -1,67 +1,78 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: [PATCH] Allow git mv FILENAME Filename when core.ignorecase = true
-Date: Wed, 13 Apr 2011 22:39:26 -0700
-Message-ID: <1B0C04AB-0710-43A9-8046-C08593752BDE@gmail.com>
-References: <201104100750.29950.tboegi@web.de>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Interdiff between amended commits
+Date: Thu, 14 Apr 2011 09:08:47 +0200
+Message-ID: <4DA69D7F.5050304@drmicha.warpmail.net>
+References: <1jzlxb0.12qxbsl1na9qhzM%lists@haller-berlin.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 14 07:39:39 2011
+To: Stefan Haller <lists@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Thu Apr 14 09:09:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAFHF-0005Rc-JH
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 07:39:37 +0200
+	id 1QAGfq-0002nF-8I
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 09:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754205Ab1DNFjb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 01:39:31 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48759 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753808Ab1DNFjb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 01:39:31 -0400
-Received: by iwn34 with SMTP id 34so1159626iwn.19
-        for <git@vger.kernel.org>; Wed, 13 Apr 2011 22:39:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        bh=RokMpRM79exUKGROmnG0SSZTchCqSyOPMaiCyCPqdQE=;
-        b=Uraki7a+I3zhLOyFsh6MGPzpa4h8kUoYmAVfBg8029zJP2uN/rZ2+BqJDppAxSCD4R
-         AmjRm6F0gvfT1SZvHQ0l12C8/VlEXrF0bowE4wO8I6h9QOnG0VITUskCmzMTYWfoKByb
-         TEFwz/uTtBrZI8KjFk+bkBVc4gRVpEfAvpYg8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=pTz+Klvg/yIfHZUgk00iZ+hgk81Pl37coDey6irjheopOY9YWUUAgjm7k3xKYJ8YPJ
-         8pxl8JhTkbEQGsqjnk2sDj10ARXN5T4P01n0gsnmckm6ZxbWQY6/qea34W4hPT5dY2zA
-         TjZFsFA88e6Yj84xP55lsUk0gucmOIufugVAk=
-Received: by 10.42.18.72 with SMTP id w8mr501607ica.352.1302759570408;
-        Wed, 13 Apr 2011 22:39:30 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id t1sm937043ibm.38.2011.04.13.22.39.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Apr 2011 22:39:28 -0700 (PDT)
-In-Reply-To: <201104100750.29950.tboegi@web.de>
-X-Mailer: Apple Mail (2.936)
+	id S1757824Ab1DNHIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 03:08:51 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58021 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757643Ab1DNHIv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 03:08:51 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id DDB0320DBE;
+	Thu, 14 Apr 2011 03:08:49 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 14 Apr 2011 03:08:49 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=+BsahcJIIzzYlfOtpO/alUda7ko=; b=lLG4MgnkbfMKqHqcWQob0kmb9dUiwDPTLkdNhXlv8C6yRT+Gc29aG82VYZ29WZCCLMAsfzy+8SMmy+kqivRqCaJTlLDkKU+NB/thZQ/io/heDL6TZkJl6f604oWXTk1duA5TX7cvM5zBdVBMOgw+/deHOclEzE21v/20q7lqPWE=
+X-Sasl-enc: KSRjvjXaCMLaMFEjvauf+WWWWi1LHiNk+uC+XCiP/LK5 1302764929
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 625D2405789;
+	Thu, 14 Apr 2011 03:08:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <1jzlxb0.12qxbsl1na9qhzM%lists@haller-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171506>
 
-On Apr 9, 2011, at 10:50 PM, Torsten B=F6gershausen wrote:
+Stefan Haller venit, vidit, dixit 13.04.2011 13:54:
+> I'd like to show an interdiff between two commits, e.g. when a commit
+> was amended.
+> 
+> I'm aware of the "intercommit" alias in the git wiki:
+> 
+>   $ git show commit1 > .git/commit1 && git show commit2 > .git/commit2 && interdiff .git/commit[12]
+> 
 
-> The following discussion assumes, that we are on a
-> "case ignoring" file system, and core.ignorecase =3D true.
+This basically computes the diff between two patches, using a tool which
+groks the patch format.
 
-Both commas should be removed.
+> It only works for simple cases though, and I'd also like to avoid the
+> dependency to an external tool if possible.
 
-Josh
+You could use git diff --no-index instead, so that would work in really
+simple cases only, probably.
+
+> 
+> So one thing I came up with is this:
+> 
+>   git checkout commit1^
+>   git cherry-pick --no-commit commit2
+>   git diff --cached
+
+That does something completely different. It compares the tree of
+commit1^ with the tree of (commit1^ with commit2's patch applied). I
+don't see how commit1's patch plays any role here.
+
+Depending on what your actual use case, you may be happier with "git
+diff commit1 commit2". Alternatively, you may produce a fake merge with
+parents commit1 and commit2 and tree commit1^ and look at "show -R -c"
+for that. Sounds weird, I know ;)
+
+Michael
