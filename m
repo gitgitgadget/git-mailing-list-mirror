@@ -1,97 +1,67 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git archive: tar.umask ignored
-Date: Thu, 14 Apr 2011 20:04:57 +0200
-Message-ID: <4DA73749.40303@lsrfire.ath.cx>
-References: <BANLkTimTs+Qh9fNs6pLcZidYy-YjXNR2iw@mail.gmail.com>	<4DA497B7.706@lsrfire.ath.cx> <BANLkTinEFPZoaUAc+8F1sPGE636u1vDOZw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git.txt: fix list continuation
+Date: Thu, 14 Apr 2011 10:45:37 -0700
+Message-ID: <7vtye0hgla.fsf@alter.siamese.dyndns.org>
+References: <534233ecaf1b1e364954926ddbf11d47cf9b444e.1302765412.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jacek Masiulaniec <jacek.masiulaniec@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 20:05:59 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Apr 14 20:33:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAQvX-000534-2A
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 20:05:59 +0200
+	id 1QARLj-0005VQ-Ln
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 20:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933734Ab1DNSFe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 14:05:34 -0400
-Received: from india601.server4you.de ([85.25.151.105]:37474 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933729Ab1DNSFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 14:05:30 -0400
-Received: from [192.168.2.103] (p4FFDB5E2.dip.t-dialin.net [79.253.181.226])
-	by india601.server4you.de (Postfix) with ESMTPSA id AD0EC2F803B;
-	Thu, 14 Apr 2011 20:05:27 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <BANLkTinEFPZoaUAc+8F1sPGE636u1vDOZw@mail.gmail.com>
+	id S932860Ab1DNScx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 14:32:53 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47211 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932844Ab1DNRps (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 13:45:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 104575AEB;
+	Thu, 14 Apr 2011 13:47:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hpnUsUjHp8fSxQuiTd49/55lS8s=; b=nXEe49
+	cKyUcwlLNyZuMRb36WKMVC2df+9gjZe5Mu971vn6fJ9JMJKqX+w00mCAgXfHTqMp
+	/sssKltcGCuQhQa/ZXeYEGvC8sVKN3Holmn6RFvrigrIVkAUxZqOoh8HUuNP9rqF
+	POJFJYTfgcEwevh7CJ2mpPc8NZLh23qIPo6Jk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S5yr5l7ZnZfIHB9jGJ9wiU0ncAhKMn05
+	pY1L8bFH6PRZNfSdzvsFtHRm7vmleTe+2dC5qgzOTflQ++F+UwQLcid1nTUa6JTr
+	43awc/LsjDTmk1eMBFy1MG2/X1ZfbmNkOSaJlmaWhYtskmld4bqfX64iiWZUBpPH
+	wma5ZONiF04=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E16595AEA;
+	Thu, 14 Apr 2011 13:47:41 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DE4FF5AE8; Thu, 14 Apr 2011
+ 13:47:38 -0400 (EDT)
+In-Reply-To: <534233ecaf1b1e364954926ddbf11d47cf9b444e.1302765412.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 14 Apr 2011 09:17:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4BCDF304-66BF-11E0-B83C-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171532>
 
-Am 12.04.2011 22:39, schrieb Jacek Masiulaniec:
-> On 12 April 2011 19:19, Ren=E9 Scharfe<rene.scharfe@lsrfire.ath.cx>  =
-wrote:
->> The local setting of tar.umask does not affect the archive created a=
-t the
->> remote end.  If your "remote" repository is in fact located on the s=
-ame
->> machine and accessed with the same user then of course settings in
->> ~/.gitconfig will take effect.
->=20
-> I've eventually realised this by reading the source code.  The comman=
-d
-> I actually needed was:
->=20
->    cd /repo/website.git&&  git -c tar.umask=3D0022 archive HEAD
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Yes, there's no point in using --remote if you can read the files direc=
-tly.
-I assumed you did that to make the command easier to reproduce by avoid=
-ing
-to set up a git daemon etc..
+> Remove a spurious empty line which prevented asciidoc from recognizing a
+> list continuation mark ('+'), so that it does not get output literally any
+> more.
 
-> Can't comment on the proposed diff without getting better handle on
-> the whole system, but my knee-jerk reaction would be to resist the
-> urge to add more switches.  Maybe the existing -c switch could be mad=
-e
-> to cooperate with --remote, or maybe the documentation could be edite=
-d
-> to make it clearer that -c and --remote are not related in the way I
-> had originally assumed.
+Thanks.
 
-Yes, the documentation should be updated first.
-
--- >8 --
-Subject: archive: document limitation of tar.umask config setting
-
-The local value of the config variable tar.umask is not passed to the
-other side with --remote.  We may want to change that, but for now just
-document this fact.
-
-Reported-by: Jacek Masiulaniec <jacek.masiulaniec@gmail.com>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- Documentation/git-archive.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.=
-txt
-index f2b8684..9c750e2 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -98,7 +98,8 @@ tar.umask::
- 	tar archive entries.  The default is 0002, which turns off the
- 	world write bit.  The special value "user" indicates that the
- 	archiving user's umask will be used instead.  See umask(2) for
--	details.
-+	details.  If `--remote` is used then only the configuration of
-+	the remote repository takes effect.
-=20
- ATTRIBUTES
- ----------
+The preformatted copies at k.org shows that there was a breakage somewhere
+between v1.6.3.4 (formatted with AsciiDoc 8.2.5) and v1.6.4.5 (formatted
+with AsciiDoc 8.4.5), but I don't see any change to the source between two
+versions that would matter.  Perhaps the older AsciiDoc was more lenient.
