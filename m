@@ -1,76 +1,90 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: textconv not invoked when viewing merge commit
-Date: Thu, 14 Apr 2011 21:35:40 +0200
-Message-ID: <4DA74C8C.509@drmicha.warpmail.net>
-References: <201104111912.47547.kumbayo84@arcor.de> <4DA415AB.9020008@drmicha.warpmail.net> <20110414190901.GA1184@sigill.intra.peff.net> <7vipughbxh.fsf@alter.siamese.dyndns.org> <20110414192839.GA6001@sigill.intra.peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 4/4] send-pack: abort sideband demuxer on pack-objects error
+Date: Thu, 14 Apr 2011 21:36:25 +0200
+Message-ID: <201104142136.25778.j6t@kdbg.org>
+References: <20110331184243.GA12027@sigill.intra.peff.net> <201104132153.06429.j6t@kdbg.org> <20110414135449.GD12410@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Peter Oberndorfer <kumbayo84@arcor.de>,
-	Git List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 14 21:35:54 2011
+X-From: git-owner@vger.kernel.org Thu Apr 14 21:36:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QASKU-00027S-Lw
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 21:35:51 +0200
+	id 1QASLG-0002kI-51
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 21:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758125Ab1DNTfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 15:35:43 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:56037 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757039Ab1DNTfn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 15:35:43 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 5FEEA20DE8;
-	Thu, 14 Apr 2011 15:35:42 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 14 Apr 2011 15:35:42 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=qkzgiGjcAmja0bxktFaGo1v5GeA=; b=BTM2jtQShAlcZIut9sNRnja+3MxCgyJYbscs2avEPpjkeOzJaks59M4sGpmVc3mS0+te50xk7Xfz6w6CmOzTZkDZJIiYQg61tJTalGBjASZqLfhP1H3rRFJdpeFpBxsbHAWRUd9AWrsqEFfJrXVDijm8MwpQZpoWTOXUqtmc9XQ=
-X-Sasl-enc: pCKgUGPak6OziGg9KmSbbWuNjdoWKmQWq9tvMnUTPhTW 1302809742
-Received: from localhost.localdomain (p54859211.dip0.t-ipconnect.de [84.133.146.17])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6F087443A23;
-	Thu, 14 Apr 2011 15:35:41 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <20110414192839.GA6001@sigill.intra.peff.net>
+	id S1758665Ab1DNTgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 15:36:32 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:61749 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757948Ab1DNTgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 15:36:31 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id BFECB2C4006;
+	Thu, 14 Apr 2011 21:36:26 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id DB45A19F610;
+	Thu, 14 Apr 2011 21:36:25 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20110414135449.GD12410@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171541>
 
-Jeff King venit, vidit, dixit 14.04.2011 21:28:
-> On Thu, Apr 14, 2011 at 12:26:18PM -0700, Junio C Hamano wrote:
-> 
->> Jeff King <peff@peff.net> writes:
->>
->>> We just dump the binary goo all over the terminal. So I think the whole
->>> combined-diff code path needs to learn how to handle binaries properly.
->>
->> How would you show multi-way diffs for binary files?
-> 
-> No clue. But anything would be better than pretending it's line oriented
-> and dumping binary goo to the terminal.
-> 
->> It would probably be sufficient to say "binary files differ" at the
->> beginning of the patch-combining codepath of the combined diff, which
->> would at least keep the --raw -c/--cc output working.
-> 
-> Yeah, something like "binary files differ" would probably be OK for
-> "-c". I think for "--cc", that is probably the best we can do, too. It
-> is about condensing uninteresting hunks, but we don't even have the
-> concept of hunks.
-> 
-> -Peff
+On Donnerstag, 14. April 2011, Jeff King wrote:
+> Obviously it totally breaks the start_async abstraction if the called
+> code needs to care whether it forked or not. But we can use that to our
+> advantage, since it means start_async callers must assume the interface
+> is very limited.  So I think we can do something like:
+>
+>   1. Async code declares which file descriptors it cares about. This
+>      would automatically include the pipe we give to it, of course.
+>      So the declared ones for a sideband demuxer would be stderr, and
+>      some network fd for reading.
+>
+>   2. In the pthreads case, we do nothing. In the forked case, the child
+>      closes every descriptor except the "interesting" ones.
+>
+> And that solves this problem, and the general case that async-callers
+> have no idea if they have just leaked pipe descriptors in the forked
+> case.
 
-I have "one half" of a partial fix cooking which applies textconv. Good
-to see that I'm not the only who is surprised by the disjointness of
-codepaths. That should give me some freedom to go wild in
-combine-diff.c... But it's rc-time, we're devoting all git time to
-regression fixes and cleanups, right?
+Sounds like a plan. How do you close all file descriptors? Just iterate up to 
+getrlimit(RLIMIT_NOFILE)?
 
-Michael
+>
+> I'm still slightly confused, though, because I never see that descriptor
+> get closed in the threaded case. So I still don't understand why it
+> _doesn't_ deadlock with pthreads.
+
+In the threaded case, this fd is closed by start_command(), where it is passed 
+as po.out in pack_objects(). In the fork case this is too late because a 
+duplicate was already inherited to the sideband demuxer.
+
+However, pack_objects() works differently in the stateless_rpc case: then it 
+does not close fd anywhere, and I think it should be possible to construct a 
+similar case that hangs even in the threaded case. And the fix could simply 
+look like this:
+
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 5e772c7..c8f601f 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -101,6 +101,7 @@ static int pack_objects(int fd, struct ref *refs,
+ 		free(buf);
+ 		close(po.out);
+ 		po.out = -1;
++		close(fd);
+ 	}
+ 
+ 	if (finish_command(&po))
+
+-- Hannes
