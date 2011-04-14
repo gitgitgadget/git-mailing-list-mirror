@@ -1,195 +1,168 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2] Documentation: summarize how format-patch output is
- consumed
-Date: Thu, 14 Apr 2011 16:11:25 -0500
-Message-ID: <20110414211125.GA15277@elie>
-References: <87d3kq6tz7.fsf@rho.meyering.net>
- <1302719749.21047.6.camel@drew-northup.unet.maine.edu>
- <87mxjtn8x7.fsf@rho.meyering.net>
- <20110413221736.GA773@elie>
- <7vzkntkc9d.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [BUG] format-patch does not wrap From-field after author name
+Date: Thu, 14 Apr 2011 23:19:09 +0200
+Message-ID: <BANLkTin+K46_RSDsYWHso3v7Gpe_k+0m8Q@mail.gmail.com>
+References: <BANLkTimruwojkq_HNMZeCDBV6K8_aFc_XQ@mail.gmail.com>
+ <7v39lkiwoj.fsf@alter.siamese.dyndns.org> <20110414175034.GA23342@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jim Meyering <jim@meyering.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	git list <git@vger.kernel.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 23:11:53 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 14 23:19:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QATpJ-00017A-9X
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 23:11:45 +0200
+	id 1QATx1-0005ke-7c
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 23:19:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543Ab1DNVLj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 17:11:39 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61330 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751611Ab1DNVLd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 17:11:33 -0400
-Received: by ywj3 with SMTP id 3so483265ywj.19
-        for <git@vger.kernel.org>; Thu, 14 Apr 2011 14:11:32 -0700 (PDT)
+	id S1753340Ab1DNVTd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 17:19:33 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:58825 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753106Ab1DNVT3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 17:19:29 -0400
+Received: by pzk9 with SMTP id 9so643760pzk.19
+        for <git@vger.kernel.org>; Thu, 14 Apr 2011 14:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=xQ4La0AhI5wHvaVit8Ho7UWjoVr45Gb1LC3dKLgAKAE=;
-        b=Sd0ygyI95SgLcIr4Sna7jXdlMO93B7bS2Om7dfnd+Z1MLt0aKYKllSOno7GEgmJ53x
-         W8qKUSJU14nTLzUmwfs5I8tSh13F2YIIW4vRdPi6oDLMfcbrBpaTOJtKgKUeicbUW66t
-         ueiTUX9vkx0hTItk9Us0ZX6o+/KaGN4/lj0d8=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=i4OR09+GEoo62y2bSrRO8s6y4YExsNKBfGcoNInOv0Q=;
+        b=sZCi3PWE8X9CwzEeL+oB7EY7KqHaO4q0vy4VJNPfSLhXGOpM+nfE0CECjA1MdG9mx1
+         3Uj28KeoJKFKgTTGwFjEZg/XzeqeNY4xgnh1WaL6wAn7NCDSZzTXiXQ7igDQ5ZsUIAEq
+         NDthmi/X6tO1TkB91fhHN7BSjTIxn2NzMGqNQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=nP43SI6EwviKNrcMdzSYXVMhN/dMESi7aKQll/GJbTmu/xGt6yYp1joIcoWtmCPLCU
-         DpAXYICWh4+t4adiJSeWu4QsbbFWcMimR94x/ybAXUAgOa/ClPEa38PfibKXqkT3y7q4
-         Tp+vQfw4HW7SU+AFiqACnwmcA7eG2fDNytQiQ=
-Received: by 10.236.185.193 with SMTP id u41mr93209yhm.374.1302815492529;
-        Thu, 14 Apr 2011 14:11:32 -0700 (PDT)
-Received: from elie (adsl-69-209-64-230.dsl.chcgil.sbcglobal.net [69.209.64.230])
-        by mx.google.com with ESMTPS id u75sm737438yhn.20.2011.04.14.14.11.29
-        (version=SSLv3 cipher=OTHER);
-        Thu, 14 Apr 2011 14:11:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzkntkc9d.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=ExK+osPBLgKButSQhKwrwc14qriNLRE7tgeM0ptIQ9ibfn/eZvl5JrZ9db9YEGkuhZ
+         qvRur3rjTg24+ZGKsR0wcYxVRXKFjGEdptqYaG85BA72Uge4Nr03lbOAoOD5MzEnY8rY
+         3a9bkvjSo8NxexBUMBmdWVMxNF4S8VcqXRj1g=
+Received: by 10.68.29.69 with SMTP id i5mr851049pbh.62.1302815969114; Thu, 14
+ Apr 2011 14:19:29 -0700 (PDT)
+Received: by 10.68.56.105 with HTTP; Thu, 14 Apr 2011 14:19:09 -0700 (PDT)
+In-Reply-To: <20110414175034.GA23342@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171558>
 
-Add a DISCUSSION section to encourage people to send patches in a
-form that can be applied by "git am" automatically.  There are two
-such forms:
+On Thu, Apr 14, 2011 at 7:50 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Apr 14, 2011 at 10:12:44AM -0700, Junio C Hamano wrote:
+>
+>> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>>
+>> > With certain combinations of author name and email lengths, git
+>> > format-patch does not correctly wrap the From line to be below 78
+>> > characters, violating rfc2047.
+>>
+>> Didn't we have this fixed quite a while ago with the series that end=
+s at
+>> c22e7de (format-patch: rfc2047-encode newlines in headers, 2011-02-2=
+3)?
+>>
+>> What version of git do you use?
 
- 1. The default form in which most metadata goes in the mail header
-    and the message body starts with the patch description;
+I believe it was straight from todays master, but I'm not still at that=
+ machine.
 
- 2. The snipsnip form in which a message starts with pertinent
-    discussion and ends with a patch after a "scissors" mark.
+> No, that doesn't fix it. The problem is a short name and a long email
+> address. We rfc2047-encode and wrap the name, but then tack the email
+> onto the end without caring about line length.
+>
+> According to rfc2047, we are specifically forbidden to use an
+> encoded-word in an addr-spec. So it would not make sense to assemble =
+the
+> header first and then feed the whole thing to add_rfc2047.
+>
+> Fortunately, this is an easy thing to wrap, since we can't actually
+> break the addr-spec across lines. We can just check if the line is lo=
+ng,
+> and if so, wrap the whole address to the next line, which is the best=
+ we
+> can do (and presumably nobody has an address portion over 78
+> characters). That patch looks something like:
+>
+> diff --git a/pretty.c b/pretty.c
+> index e1d8a8f..63a7c2f 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -287,6 +287,7 @@ void pp_user_info(const char *what, enum cmit_fmt=
+ fmt, struct strbuf *sb,
+> =A0 =A0 =A0 =A0if (fmt =3D=3D CMIT_FMT_EMAIL) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0char *name_tail =3D strchr(line, '<');
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int display_name_length;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 int final_line;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (!name_tail)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0while (line < name_tail && isspace(nam=
+e_tail[-1]))
+> @@ -294,6 +295,11 @@ void pp_user_info(const char *what, enum cmit_fm=
+t fmt, struct strbuf *sb,
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0display_name_length =3D name_tail - li=
+ne;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strbuf_addstr(sb, "From: ");
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0add_rfc2047(sb, line, display_name_len=
+gth, encoding);
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 for (final_line =3D 0; final_line < sb-=
+>len; final_line++)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (sb->buf[sb->len - f=
+inal_line - 1] =3D=3D '\n')
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (namelen - display_name_length + fin=
+al_line > 78)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_addch(sb, '\n');
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strbuf_add(sb, name_tail, namelen - di=
+splay_name_length);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strbuf_addch(sb, '\n');
+> =A0 =A0 =A0 =A0} else {
+>
 
-Use an example requiring QP encoding in the "Subject:" field intended
-for the mailer, to give the reader a chance to reflect on that (rather
-than being startled later).  By contrast, in-body "From:" and
-"Subject:" lines should be human-readable and not QP encoded.
+Yes, this is the reasonable fix. Basically copying the wrapping logic
+from add_rfc2047...
 
-A patch following "How about this patch?" is most likely to be written
-by the same person as the message is coming from, so you would rarely
-need a "From:" after the scissors.  On the other hand, such a message
-typically presents a potential solution to a problem raised in
-discussion and the original subject is likely to be a description of
-the problem or a request for help while the patch title is about the
-solution, so it is very likely that you would want a "Subject:" line
-after the scissors.  It would be nice to clarify use of the "From:",
-"Date:", and "Subject:" fields after the scissors in general, but this
-patch avoids the topic in hope of leading the reader to look to
-git-am(1) for a detailed discussion.
+> Note that it relies on the commit header having a space before the "<=
+",
+> which forms the continuation whitespace for the header. This is proba=
+bly
+> reasonable, but we could double-check if we want to handle malformed
+> commit headers better.
 
-While at it, include a pointer to Documentation/SubmittingPatches
-for MUA-specific hints.
+I think that's a reasonable assumption; this field comes straight from
+the commit. It should already be well-formed, no?
 
-Inspired-by: Jim Meyering <jim@meyering.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Improved-by: Junio C Hamano <gitster@pobox.com>
----
-Junio C Hamano wrote:
+> Or we could just ignore it. AFAICS, this doesn't actually violate
+> rfc2047, nor rfc5322. The 78-character limit is simply a SHOULD, and
+> we have up to 998 for MUST. For a single-address header[1], this seem=
+s
+> kind of unlikely to me.
 
-> It still is preferred to remove the magic "From xxxx Mon Sep 17 00:00=
-:00
-> 2001" we placed to help somebody who is inclined to write an /etc/mag=
-ic
-> entry to detect files of format-patch output type if you use the scis=
-sors
-> format.
-[and many useful suggestions]
+True. But since the fix is as simple as it is, perhaps it's worth it
+just for the clean conscience?
 
-Thanks.  Changes since v1:
+Don't get me wrong, this was just something I stumbled over. I don't
+have any real-world case where it breaks.
 
- - no more inline "From:" field
- - different patch to demonstrate qp-encoding in "Subject:" instead
- - use right-handed scissors
+> [1] For multi-address headers like "format-patch --cc=3Dfoo --cc=3Dba=
+r", it
+> looks like we already break them across lines.
 
-I didn't find a way to sneak in a comment about "file" magic; that can
-come another day.
+Yes, but this is even worse: these fields don't get encoded at all!
 
- Documentation/git-format-patch.txt |   50 ++++++++++++++++++++++++++++=
-+++++++-
- 1 files changed, 49 insertions(+), 1 deletions(-)
+> No idea if "send-email"
+> is sensible in this area or not.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
-mat-patch.txt
-index a5525e9..875ea9b 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -274,9 +274,57 @@ as e-mailable patches:
- $ git format-patch -3
- ------------
-=20
-+DISCUSSION
-+----------
-+The patch produced by 'git format-patch' is in UNIX mailbox format,
-+like so:
-+
-+------------
-+From 8f72bad1baf19a53459661343e21d6491c3908d3 Mon Sep 17 00:00:00 2001
-+From: Tony Luck <tony.luck@intel.com>
-+Date: Tue, 13 Jul 2010 11:42:54 -0700
-+Subject: [PATCH] =3D?UTF-8?q?[IA64]=3D20Put=3D20ia64=3D20config=3D20fi=
-les=3D20on=3D20the=3D20?=3D
-+ =3D?UTF-8?q?Uwe=3D20Kleine-K=3DC3=3DB6nig=3D20diet?=3D
-+MIME-Version: 1.0
-+Content-Type: text/plain; charset=3DUTF-8
-+Content-Transfer-Encoding: 8bit
-+
-+arch/arm config files were slimmed down using a python script
-+(See commit c2330e286f68f1c408b4aa6515ba49d57f05beae comment)
-+
-+Do the same for ia64 so we can have sleek & trim looking
-+...
-+------------
-+
-+Typically it will be placed in a MUA's drafts folder, edited to add
-+timely commentary that should not go in the changelog after the three
-+dashes, and then sent as a message whose body starts with "arch/arm
-+config files were".  On the receiving end, readers can save
-+interesting patches in a UNIX mailbox and apply them with
-+linkgit:git-am[1].
-+
-+'git am --scissors' accepts an alternative format with the patch
-+inline in the message:
-+
-+------------
-+...
-+> So we should do such-and-such.
-+
-+Makes sense to me.  How about this patch?
-+
-+-- >8 --
-+Subject: [IA64] Put ia64 config files on the Uwe Kleine-K=C3=B6nig die=
-t
-+
-+arch/arm config files were slimmed down using a python script
-+...
-+------------
-+
-+See linkgit:git-am[1] for details.
-+
- SEE ALSO
- --------
--linkgit:git-am[1], linkgit:git-send-email[1]
-+linkgit:git-am[1], linkgit:git-send-email[1], linkgit:git-imap-send[1]=
-,
-+Documentation/SubmittingPatches
-=20
- GIT
- ---
---=20
-1.7.5.rc0
+=2E..but luckily send-email is sensible. The first thing it does is to
+unfold each header line. Addresses are rfc2047-decoded and recoded (if
+needed, utf-8 is assumed as the encoding if none is found), and To/Cc
+headers are laid out one address per line.
+
+This still produce invalid To/Cc headers if send-email isn't used, thou=
+gh.
