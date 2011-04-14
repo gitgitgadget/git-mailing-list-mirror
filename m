@@ -1,92 +1,94 @@
-From: Chris Perkins <cperkins@medialab.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: Gitbox
-Date: Wed, 13 Apr 2011 23:28:06 -0300
-Message-ID: <4DA65BB6.5080909@medialab.com>
-References: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com> <4238CC86-13A5-4DB8-B8B2-BC3AA2F2DA5E@gmail.com> <4DA654D4.5040104@medialab.com>
+Date: Wed, 13 Apr 2011 19:34:10 -0700
+Message-ID: <86r595ef31.fsf@red.stonehenge.com>
+References: <BANLkTikfCDm-5Yde=2Cm-ROc1dcMwopvOg@mail.gmail.com>
+	<4238CC86-13A5-4DB8-B8B2-BC3AA2F2DA5E@gmail.com>
+	<4DA654D4.5040104@medialab.com> <4DA65BB6.5080909@medialab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Joshua Juran <jjuran@gmail.com>,
 	Daniel Searles <daniel.paul.searles@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
 	Drew Northup <drew.northup@maine.edu>, oleganza@gmail.com,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Daniel Searles <dsearles@medialab.com>
 To: Chris Perkins <cperkins@medialab.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 04:28:18 2011
+X-From: git-owner@vger.kernel.org Thu Apr 14 04:34:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QACI5-0002Uy-E4
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 04:28:17 +0200
+	id 1QACNx-0004bK-MF
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Apr 2011 04:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757703Ab1DNC2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2011 22:28:12 -0400
-Received: from smtp01.frii.com ([216.17.135.167]:59288 "EHLO smtp01.frii.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753398Ab1DNC2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2011 22:28:12 -0400
-Received: from s-expression.local (unknown [190.195.43.191])
-	by smtp01.frii.com (FRII) with ESMTP id 5414BE8318;
-	Wed, 13 Apr 2011 20:28:08 -0600 (MDT)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <4DA654D4.5040104@medialab.com>
-X-Enigmail-Version: 1.1.1
+	id S1758664Ab1DNCeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2011 22:34:13 -0400
+Received: from lax-gw09.mailroute.net ([199.89.0.109]:60748 "EHLO
+	mail.mroute.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758660Ab1DNCeM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2011 22:34:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by lax-gw09.mroute.net (Postfix) with ESMTP id AD9B113857D;
+	Thu, 14 Apr 2011 02:34:11 +0000 (GMT)
+X-Virus-Scanned: by MailRoute
+Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
+	by lax-gw09.mroute.net (Postfix) with ESMTP id 86C1E1384A2;
+	Thu, 14 Apr 2011 02:34:10 +0000 (GMT)
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 7761731ED; Wed, 13 Apr 2011 19:34:10 -0700 (PDT)
+x-mayan-date: Long count = 12.19.18.5.2; tzolkin = 10 Ik; haab = 10 Pop
+In-Reply-To: <4DA65BB6.5080909@medialab.com> (Chris Perkins's message of "Wed,
+	13 Apr 2011 23:28:06 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171503>
 
-On 4/13/11 11:02 PM, Randal L. Schwartz wrote:
->>>>>> "Chris" == Chris Perkins <cperkins@medialab.com> writes:
->
-> Chris> Is that a violation of the GPL? I would say that it absolutely
-> Chris> is.
->
-> Which part, then?  Name chapter and verse.
+>>>>> "Chris" == Chris Perkins <cperkins@medialab.com> writes:
 
-Section 2 b). I quoted it in whole in my email:
+>> Which part, then?  Name chapter and verse.
 
-  2 b) You must cause any work that you distribute or publish,
-  that in whole or in part contains or is derived from the Program
-  or any part thereof, to be licensed as a whole at no charge to
-  all third parties under the terms of this License.
+Chris> Section 2 b). I quoted it in whole in my email:
 
-and the last paragraph in the "how to" section is even more frank.
+Chris>   2 b) You must cause any work that you distribute or publish,
+Chris>   that in whole or in part contains or is derived from the Program
+Chris>   or any part thereof, to be licensed as a whole at no charge to
+Chris>   all third parties under the terms of this License.
 
+Broken pre-condition.  See the beginning of 2:
 
-> But if the GPL is to be treated as a legally enforceable document, "live
-> by the sword, and die by the sword".  GPL-desk-pounders can't have it
-> both ways.
+    2. You may modify your copy or copies of the Program or any portion of
+    it, thus forming a work based on the Program, and copy and distribute
+    such modifications or work under the terms of Section 1 above, provided
+    that you also meet all of these conditions:
 
-I'm not a GPL-desk-pounder. I write commercial software for a living.
-But I take the efforts I put into my software very seriously. If I were
-to release software as free software under a license like the GPL I
-would not appreciate someone attempting to profit off my hard work by
-putting a bow on it and selling it as their own.
+Gitbox is not *modifying*, or creating a work *based on the Program*.
+Separate copyrights.  The rest of your argument thus falls apart.
 
-Don't get me wrong. I don't see Gitbox as just a 'bow' atop Git.
-Frankly, the type of wrapping that Gitbox is doing seems perfectly
-reasonable to me. Gitbox is providing real value to users, it's not
-disguising or hiding Git and it's not pretending to be provide the work
-of Git as its own and it isn't trying to pretend to be anything that it
-isn't.
+Chris> However, that said, I still think it's a violation of the GPL. That
+Chris> license lays it out very clearly without much room for
+Chris> interpretation.
 
-However, that said, I still think it's a violation of the GPL. That
-license lays it out very clearly without much room for interpretation.
-You can't make commercial works based on GPL licensed software.  Without
-Git there is no Gitbox. End of story.
+Bullcrap. See above.  Get your preconditions right, and I'll play along.
 
-I'm not a lawyer, were I then perhaps I'd know solidly one way or other.
- I'm not the author nor one of the contributors to Git. Were I then
-perhaps I might feel differently about Gitbox being 'perfectly reasonable'.
+Chris> You can't make commercial works based on GPL licensed software.
 
-But I will add this, some on our team would very much like to
-incorporate Git into one of our own upcoming commercial products.
-Code-wise in the same manner as Gitbox has done. But we aren't going to
-do this, because the GPL license for Git clearly states that we cannot.
+Sure you can.  RedHat makes money somehow.  Don't play the "we must be
+starving artists for the cause of GPL" on me.
 
-Chris
+Chris> But I will add this, some on our team would very much like to
+Chris> incorporate Git into one of our own upcoming commercial products.
+Chris> Code-wise in the same manner as Gitbox has done. But we aren't going to
+Chris> do this, because the GPL license for Git clearly states that we
+Chris> cannot.
+
+Maybe you need better lawyers then.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.posterous.com/ for Smalltalk discussion
