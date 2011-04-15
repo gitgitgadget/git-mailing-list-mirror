@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 05/11] gitweb.js: Introduce gitweb/static/js/lib/cookies.js
-Date: Fri, 15 Apr 2011 16:43:59 +0200
-Message-ID: <1302878645-458-6-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 08/11] gitweb: Unify the way long timestamp is displayed
+Date: Fri, 15 Apr 2011 16:44:02 +0200
+Message-ID: <1302878645-458-9-git-send-email-jnareb@gmail.com>
 References: <1302878645-458-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Kevin Cernekee <cernekee@gmail.com>,
@@ -13,197 +13,99 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAkGV-0002G9-Vt
+	id 1QAkGW-0002G9-GF
 	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 16:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755531Ab1DOOop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 10:44:45 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:64042 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754928Ab1DOOok (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 10:44:40 -0400
-Received: by mail-ww0-f42.google.com with SMTP id 4so7176707wwk.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 07:44:39 -0700 (PDT)
+	id S1756006Ab1DOOos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 10:44:48 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49049 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754935Ab1DOOoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 10:44:46 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 36so3299523wwa.1
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 07:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=I6Ku+HvCL+tnROcCg0PG31N5pWwfToSuUbteYX+djEs=;
-        b=AKb7ROI998gmLEFo+ezrZNvqQDbLr/bsrnuqvp4cYa6+8VHKLnICaXWF7SviaFfAF8
-         BZvM3HlaDauh01SMSjXSUjYbZd5wgz7Tskf0A1yS0ekuJVMr0OhkLi0g2VlPOs69hPRj
-         Y1cbf4jMwOM07IN1mh59CdC6D78rlBULKrx3g=
+        bh=jswElSSQ3nreQlQKYP3TI2lg0bcCXos/fPjYAkl5Wn0=;
+        b=MC07M4w3p+7+sMOsSx4JwIuIbgPL5KdGnGWcWPLZDnkU/Lk0TPsycTOEHv7kXyi64Y
+         N8STRvm11wzvIpep652789BknyAYBMAtJldHpmwbDATwR6YRcV5cKeaMwYGrrDvqvqoE
+         F+v/dwBlJGxotd5drcKrXaambuHcOAVHuQVao=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=NH/2lcSNWFx+sgWPwLqtashr4VvQa+UpG7aEPkpvOUSyxTFjnPv4UcJAs0VF1HZYcT
-         VROOIkIvJnV91Nw1sthEy+MUfyuS5V6q59q1GtGO9uIbyfPsa4U4mEDt05rOFCFcqEDO
-         qR+QFbGXc/xbPkOZ79flfja1YI1nwPcGhQ/xg=
-Received: by 10.227.53.73 with SMTP id l9mr2100985wbg.19.1302878679590;
-        Fri, 15 Apr 2011 07:44:39 -0700 (PDT)
+        b=s6QWLxoEjM75Qw9izYDhNnYpEjloaNK9NDvHeGrpTH4EoZT7YqEeavrpV4x1WCcyIW
+         NHhk9Zq+N5y6Ep8q85IsGoFPc7LAwO9MqSzDlulZMyZvK7oKB7xo9pcgwmghUbnrEqWd
+         KkaWIQgYy5jsKqsxK3gVOrMH/Bj2iikMF8m/M=
+Received: by 10.227.158.2 with SMTP id d2mr2267327wbx.65.1302878685929;
+        Fri, 15 Apr 2011 07:44:45 -0700 (PDT)
 Received: from roke.localdomain (abwn60.neoplus.adsl.tpnet.pl [83.8.237.60])
-        by mx.google.com with ESMTPS id u9sm1663346wbg.34.2011.04.15.07.44.37
+        by mx.google.com with ESMTPS id u9sm1663346wbg.34.2011.04.15.07.44.44
         (version=SSLv3 cipher=OTHER);
-        Fri, 15 Apr 2011 07:44:38 -0700 (PDT)
+        Fri, 15 Apr 2011 07:44:45 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3
 In-Reply-To: <1302878645-458-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171604>
 
-This file provides functions for setting, getting and deleting
-cookies.
+format_timestamp_html loses its "-localtime => 1" option, and now
+always print the local time (in author/comitter/tagger local
+timezone), with "atnight" warning if needed.
 
-Code taken from subsection "Cookies in JavaScript" of "Professional
-JavaScript for Web Developers" by Nicholas C. Zakas and from cookie
-plugin for jQuery (dual licensed under the MIT and GPL licenses).
+This means that both 'summary' and 'log' views now display localtime.
+In the case of 'log' view this can be thought as an improvement, as
+now one can easily see which commits in a series are made "atnight"
+and should be examined closer.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Unchanged from v1 version... 
+This patch is unchanged from v1 version.
 
-Again, the summary line (subject) for this commit could be better.
-For example:
+It was marked in previous version of this series as an RFC, because I
+wasn't sure about the look of gitweb after this patch... but it grew
+up on me (well, I have a few doubts about new look of 'summary' page).
 
-  gitweb.js: Library for handling cookies
+ gitweb/gitweb.perl |    8 +++-----
+ 1 files changed, 3 insertions(+), 5 deletions(-)
 
- gitweb/Makefile                 |    1 +
- gitweb/static/js/lib/cookies.js |  114 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 115 insertions(+), 0 deletions(-)
- create mode 100644 gitweb/static/js/lib/cookies.js
-
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 403265a..7dd1dee 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -118,6 +118,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
- # then the rest of files; js/gitweb.js should be last (if it exists)
- GITWEB_JSLIB_FILES += static/js/lib/common-lib.js
- GITWEB_JSLIB_FILES += static/js/lib/datetime.js
-+GITWEB_JSLIB_FILES += static/js/lib/cookies.js
- GITWEB_JSLIB_FILES += static/js/javascript-detection.js
- GITWEB_JSLIB_FILES += static/js/blame_incremental.js
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7329db2..67bcfe8 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3939,11 +3939,9 @@ sub git_print_section {
+ }
  
-diff --git a/gitweb/static/js/lib/cookies.js b/gitweb/static/js/lib/cookies.js
-new file mode 100644
-index 0000000..72b51cd
---- /dev/null
-+++ b/gitweb/static/js/lib/cookies.js
-@@ -0,0 +1,114 @@
-+/**
-+ * @fileOverview Accessing cookies from JavaScript
-+ * @license GPLv2 or later
-+ */
-+
-+/*
-+ * Based on subsection "Cookies in JavaScript" of "Professional
-+ * JavaScript for Web Developers" by Nicholas C. Zakas and cookie
-+ * plugin from jQuery (dual licensed under the MIT and GPL licenses)
-+ */
-+
-+
-+/**
-+ * Create a cookie with the given name and value,
-+ * and other optional parameters.
-+ *
-+ * @example
-+ *   setCookie('foo', 'bar'); // will be deleted when browser exits
-+ *   setCookie('foo', 'bar', { expires: new Date(Date.parse('Jan 1, 2012')) });
-+ *   setCookie('foo', 'bar', { expires: 7 }); // 7 days = 1 week
-+ *   setCookie('foo', 'bar', { expires: 14, path: '/' });
-+ *
-+ * @param {String} sName:    Unique name of a cookie (letters, numbers, underscores).
-+ * @param {String} sValue:   The string value stored in a cookie.
-+ * @param {Object} [options] An object literal containing key/value pairs
-+ *                           to provide optional cookie attributes.
-+ * @param {String|Number|Date} [options.expires] Either literal string to be used as cookie expires,
-+ *                            or an integer specifying the expiration date from now on in days,
-+ *                            or a Date object to be used as cookie expiration date.
-+ *                            If a negative value is specified or a date in the past),
-+ *                            the cookie will be deleted.
-+ *                            If set to null or omitted, the cookie will be a session cookie
-+ *                            and will not be retained when the the browser exits.
-+ * @param {String} [options.path] Restrict access of a cookie to particular directory
-+ *                               (default: path of page that created the cookie).
-+ * @param {String} [options.domain] Override what web sites are allowed to access cookie
-+ *                                  (default: domain of page that created the cookie).
-+ * @param {Boolean} [options.secure] If true, the secure attribute of the cookie will be set
-+ *                                   and the cookie would be accessible only from secure sites
-+ *                                   (cookie transmission will require secure protocol like HTTPS).
-+ */
-+function setCookie(sName, sValue, options) {
-+	options = options || {};
-+	if (sValue === null) {
-+		sValue = '';
-+		option.expires = 'delete';
-+	}
-+
-+	var sCookie = sName + '=' + encodeURIComponent(sValue);
-+
-+	if (options.expires) {
-+		var oExpires = options.expires, sDate;
-+		if (oExpires === 'delete') {
-+			sDate = 'Thu, 01 Jan 1970 00:00:00 GMT';
-+		} else if (typeof oExpires === 'string') {
-+			sDate = oExpires;
-+		} else {
-+			var oDate;
-+			if (typeof oExpires === 'number') {
-+				oDate = new Date();
-+				oDate.setTime(oDate.getTime() + (oExpires * 24 * 60 * 60 * 1000)); // days to ms
-+			} else {
-+				oDate = oExpires;
-+			}
-+			sDate = oDate.toGMTString();
-+		}
-+		sCookie += '; expires=' + sDate;
-+	}
-+
-+	if (options.path) {
-+		sCookie += '; path=' + (options.path);
-+	}
-+	if (options.domain) {
-+		sCookie += '; domain=' + (options.domain);
-+	}
-+	if (options.secure) {
-+		sCookie += '; secure';
-+	}
-+	document.cookie = sCookie;
-+}
-+
-+/**
-+ * Get the value of a cookie with the given name.
-+ *
-+ * @param {String} sName: Unique name of a cookie (letters, numbers, underscores)
-+ * @returns {String|null} The string value stored in a cookie
-+ */
-+function getCookie(sName) {
-+	var sRE = '(?:; )?' + sName + '=([^;]*);?';
-+	var oRE = new RegExp(sRE);
-+	if (oRE.test(document.cookie)) {
-+		return decodeURIComponent(RegExp['$1']);
-+	} else {
-+		return null;
-+	}
-+}
-+
-+/**
-+ * Delete cookie with given name
-+ *
-+ * @param {String} sName:    Unique name of a cookie (letters, numbers, underscores)
-+ * @param {Object} [options] An object literal containing key/value pairs
-+ *                           to provide optional cookie attributes.
-+ * @param {String} [options.path]   Must be the same as when setting a cookie
-+ * @param {String} [options.domain] Must be the same as when setting a cookie
-+ */
-+function deleteCookie(sName, options) {
-+	options = options || {};
-+	options.expires = 'delete';
-+
-+	setCookie(sName, '', options);
-+}
-+
-+/* end of cookies.js */
+ sub format_timestamp_html {
+-	my ($date, %opts) = @_;
++	my $date = shift;
+ 	my $strtime = $date->{'rfc2822'};
+ 
+-	return $strtime unless $opts{'-localtime'};
+-
+ 	my $localtime_format = '(%02d:%02d %s)';
+ 	if ($date->{'hour_local'} < 6) {
+ 		$localtime_format = '(<span class="atnight">%02d:%02d</span> %s)';
+@@ -3965,7 +3963,7 @@ sub git_print_authorship {
+ 	my %ad = parse_date($co->{'author_epoch'}, $co->{'author_tz'});
+ 	print "<$tag class=\"author_date\">" .
+ 	      format_search_author($author, "author", esc_html($author)) .
+-	      " [".format_timestamp_html(\%ad, %opts)."]".
++	      " [".format_timestamp_html(\%ad)."]".
+ 	      git_get_avatar($co->{'author_email'}, -pad_before => 1) .
+ 	      "</$tag>\n";
+ }
+@@ -3992,7 +3990,7 @@ sub git_print_authorship_rows {
+ 		      "</td></tr>\n" .
+ 		      "<tr>" .
+ 		      "<td></td><td>" .
+-		      format_timestamp_html(\%wd, -localtime=>1) .
++		      format_timestamp_html(\%wd) .
+ 		      "</td>" .
+ 		      "</tr>\n";
+ 	}
 -- 
 1.7.3
