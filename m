@@ -1,77 +1,66 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: git rebase -p doesn't understand -X
-Date: Fri, 15 Apr 2011 12:21:24 -0500
-Message-ID: <4DA87E94.2050700@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: (Small) projects for students
+Date: Fri, 15 Apr 2011 19:31:45 +0200
+Message-ID: <vpqmxjra0am.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 19:25:43 2011
+X-From: git-owner@vger.kernel.org Fri Apr 15 19:35:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAmm6-0000Y1-JF
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 19:25:42 +0200
+	id 1QAmvI-0006bC-Aq
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 19:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581Ab1DORZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 13:25:37 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41775 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217Ab1DORZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 13:25:36 -0400
-Received: by wya21 with SMTP id 21so2428966wya.19
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 10:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=iuAI7ZJdV+7HaMDuDAi4a8eiHdtiqJPHKHde9H1XJ+g=;
-        b=VcyUO6HR8b9UP4+uInmGq8N8hobdjl4Y7JfB983Nyuv18D1Ut54/oIzxD7I/aj8K7Z
-         d4VmgP8r+tMC36iPkcF8l9cIYOQK9Y3qVNlgqnyiOI9whL9do6vZwgQMTc68wCoJGCGy
-         sTOFMCQkTFqF0WlrgWr16Iry5cGIh6cQKW1xQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=jBrbYuVKasdC/DzdRcUJWOSz6z47GzGC7dILsJ9m2a5Qf3GY487YsuawwWkMw+fk57
-         PIupeMuIy+Fn8ea5ghSKUH2VuYAJvncjYLbxzRaAmxm+bk8RsfjjEe0BCkn+kacemIeg
-         VPaZh4jD0eH/WBkAla0O/+vGbcbLlLR4cEbNA=
-Received: by 10.227.169.2 with SMTP id w2mr2266415wby.77.1302888335365;
-        Fri, 15 Apr 2011 10:25:35 -0700 (PDT)
-Received: from [192.168.1.103] (24-155-176-18.dyn.grandenetworks.net [24.155.176.18])
-        by mx.google.com with ESMTPS id h11sm1744165wbc.26.2011.04.15.10.25.31
-        (version=SSLv3 cipher=OTHER);
-        Fri, 15 Apr 2011 10:25:32 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+	id S1753726Ab1DORfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 13:35:03 -0400
+Received: from imag.imag.fr ([129.88.30.1]:49212 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752264Ab1DORfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 13:35:02 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p3FHVjPK019378
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 15 Apr 2011 19:31:45 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QAmrx-0001DK-KS; Fri, 15 Apr 2011 19:31:45 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 15 Apr 2011 19:31:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171621>
 
 Hi,
 
-I'm trying to rebase a rather large series of patches, which also 
-contains a couple of merges which I'd like to recreate in the rebase, 
-and for the other conflicts I'd like git to automatically choose 'ours'.
+Last year, I proposed to my students (in Ensimag) to contribute to Git
+as part of a school project. The students implemented nicer error
+messages when "git checkout/pull/others" have conflicts between
+untracked files and tracked files, and the textconv feature in "git
+blame" and "git gui blame".
 
-So, I run
-     git rebase -p -X ours -X patience -X ignore-all-space --onto foo 
-bar baz
-and I get
-     error: unknown switch `X'
+Last year, I asked the students to chose themselves the feature they
+wanted to implement, but it didn't work very well, students didn't have
+many ideas, and SoC projects were too big.
 
-Clearly this is because when you use the -p option, everything goes 
-through the --interactive engine, instead of the normal procedure. I 
-would still like to maintain that this is a bug, and that even though -p 
-uses a different engine, to be able to recreate the merges, it should 
-still be able to let me tune the overall merge strategy.
+To prepare this year's project, I created a wiki page listing ideas of
+projects they could implement:
 
-Is there any work around to allow me to achieve the same result?
+  https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
 
-Thanks!
+Your comments, and idea suggestions, are welcome.
+
+Regards,
 
 -- 
-.marius
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
