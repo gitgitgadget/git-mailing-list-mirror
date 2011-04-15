@@ -1,104 +1,100 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: git-p4 issue
-Date: Fri, 15 Apr 2011 22:22:29 +0200
-Message-ID: <BANLkTimmVQAcx7hiQFUBcoAGdvPhktPuMg@mail.gmail.com>
-References: <BANLkTikeQSqAhm2CwCYBkE74OxPUnA0cOg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] Documentation: describe the format of messages with
+ inline patches
+Date: Fri, 15 Apr 2011 13:24:38 -0700
+Message-ID: <7vbp07clfd.fsf@alter.siamese.dyndns.org>
+References: <87d3kq6tz7.fsf@rho.meyering.net>
+ <1302719749.21047.6.camel@drew-northup.unet.maine.edu>
+ <87mxjtn8x7.fsf@rho.meyering.net> <20110413221736.GA773@elie>
+ <7vzkntkc9d.fsf@alter.siamese.dyndns.org> <20110414211125.GA15277@elie>
+ <7vlizcfpz8.fsf@alter.siamese.dyndns.org> <20110415021100.GA19829@elie>
+ <20110415022202.GB19829@elie>
+ <1302898291.5926.9.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: Michael Horowitz <michael.horowitz@ieee.org>
-X-From: git-owner@vger.kernel.org Fri Apr 15 22:22:36 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jim Meyering <jim@meyering.net>,
+	git list <git@vger.kernel.org>,
+	Yann Dirson <ydirson@altern.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Fri Apr 15 22:25:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QApXH-0004IN-V5
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 22:22:36 +0200
+	id 1QApZe-0005jI-4I
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 22:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754307Ab1DOUWb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2011 16:22:31 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:57969 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542Ab1DOUWa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2011 16:22:30 -0400
-Received: by gyd10 with SMTP id 10so964933gyd.19
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 13:22:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yxGRPxX7Ps4SK/0pFYlSMujrNZO6tkHUJeW+tCqbU4I=;
-        b=QeiDpJjStbCdCddxRh1o/4HP1FuDna8iAUl9bamjpbrB0Va6UBqLTEL2zUhpbalg3P
-         2HY86XOxolM40J9H2o2GSLNqgaqIGpRgAfqymiV7aBHuZnCDW5jHADag24AptKGz6YlK
-         INgSRMOFkvRC7EDsDJ711u8L5sIjqETeHkLY0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DP+MqBGJKwXC4YEGelPkuGg4u1UhUqOHPutmMeD62MRxwXZzzneYp44Ro8caRPsAsQ
-         qM+kSTI5xkZPZA5Aw1fmpbSVW8fqRBzhwzjgy/sCMEnyBHLUiTjdfzarHNm0bZh1woYG
-         Bqit2/F1TkEjSRBTDalxYqa4kItQbWU0N1Mso=
-Received: by 10.42.75.196 with SMTP id b4mr3148514ick.372.1302898949507; Fri,
- 15 Apr 2011 13:22:29 -0700 (PDT)
-Received: by 10.42.170.10 with HTTP; Fri, 15 Apr 2011 13:22:29 -0700 (PDT)
-In-Reply-To: <BANLkTikeQSqAhm2CwCYBkE74OxPUnA0cOg@mail.gmail.com>
+	id S1754715Ab1DOUY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 16:24:57 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58293 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750922Ab1DOUY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 16:24:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D04164789;
+	Fri, 15 Apr 2011 16:26:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5B0NH+WRWjuvQ/7XPsyhIVswKMI=; b=taj01B
+	0Hgje0g/1PbNVImX69tHbp6zPRLJg4SXpGtwMlZ8FBwrmDKBoHldXVcwpQ/qMooB
+	7fGE+JKk2tvIyZgLgdL6nc+R5iDG9TbSZv29i8TBy4HFHqkr6uv9qu/vBsjfUGB7
+	DJsFPDUTYSzYNi7lgKneLxc3M4NvFSsmszBl8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dN4tO/KidCcDzp1pYCOQYpoL9Sb60UL3
+	7ARCwwQ9XVF4Q6pX8nAH71x7EHT8/5HUVG8nPLhqcUmtEh3k8kzCgh1N2qo+IU9F
+	UcyFYQejOoHksu7PHIjhE66MaqvSyX9RPfoOQC48GOX0s1KfN9eLE7Vg2VuzcO/m
+	A6bflrsiwlM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6FBFB4782;
+	Fri, 15 Apr 2011 16:26:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A8C284773; Fri, 15 Apr 2011
+ 16:26:38 -0400 (EDT)
+In-Reply-To: <1302898291.5926.9.camel@drew-northup.unet.maine.edu> (Drew
+ Northup's message of "Fri, 15 Apr 2011 16:11:31 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AF3FE322-679E-11E0-87D1-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171639>
 
-On Fri, Apr 15, 2011 at 5:00 AM, Michael Horowitz
-<michael.horowitz@ieee.org> wrote:
-> Pete,
+Drew Northup <drew.northup@maine.edu> writes:
+
+> Maybe I'm too picky, but I'd feel more comfortable saying:
 >
-> I was hoping you could help me out again.=C2=A0 After using git-p4 fo=
-r a
-> while without a problem, it has suddenly stopped working for me.=C2=A0=
- I am
-> using the latest master.=C2=A0 I haven't seen any recent changes that=
- I
-> think could have caused this, but maybe you'll have some insight.
->
-> The issue is that when I do a git-p4 sync on my existing repository,
-> it reports success, but seems to do nothing.=C2=A0 It does not downlo=
-ad the
-> latest changes from p4.=C2=A0 If I delete my repository and start ove=
-r, it
-> will download all the latest changes, even the ones it was not
-> downloading previously, but if I try to sync again later, it does not
-> do anything.=C2=A0 I tried running it with the "--verbose" mode, and =
-I see
-> it says it is loading each of the changes, but they are not ending up
-> in the git repository, and it is not reporting any errors.
+> ...
+> dashes, and then sent as a message which in our example stars with
+> "arch/arm config files were..." On the receiving end, readers can save
+> ...
 
-Hi, Michael.
+Surely you are ;-) I am tempted to squash the following into it.
 
-Is it possible that you expect that 'git p4 sync' should update your
-working branch and/or working tree? Assuming a simple clone with a
-local master branch, running 'git-p4 sync' will update the branch
-remotes/p4/master, but it won't do anything on my working master
-branch...
+Thanks.
 
-Maybe you want to call 'git rebase p4/master' afterwards, or use the
-shorthand 'git p4 rebase' to do a sync+rebase.
+ Documentation/git-format-patch.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Regards,
-Tor Arvid.
-
-> Any ideas of what this could be?=C2=A0 Is there anything else I can r=
-un to
-> help debug this?
->
-> Thanks,
->
-> Mike
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index c20e0ed..eebfa5c 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -255,9 +255,9 @@ Do the same for ia64 so we can have sleek & trim looking
+ 
+ Typically it will be placed in a MUA's drafts folder, edited to add
+ timely commentary that should not go in the changelog after the three
+-dashes, and then sent as a message whose body starts with "arch/arm
+-config files were".  On the receiving end, readers can save
+-interesting patches in a UNIX mailbox and apply them with
++dashes, and then sent as a message whose body, in our example, starts
++with "arch/arm config files were...".  On the receiving end, readers
++can save interesting patches in a UNIX mailbox and apply them with
+ linkgit:git-am[1].
+ 
+ When a patch is part of an ongoing discussion, the patch generated by
