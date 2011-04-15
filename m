@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/5] Documentation: explain how to check for patch corruption
-Date: Thu, 14 Apr 2011 21:24:01 -0500
-Message-ID: <20110415022401.GC19829@elie>
+Subject: [PATCH 3/5] Documentation: hints for sending patches inline with
+ Thunderbird
+Date: Thu, 14 Apr 2011 21:28:06 -0500
+Message-ID: <20110415022806.GD19829@elie>
 References: <87d3kq6tz7.fsf@rho.meyering.net>
  <1302719749.21047.6.camel@drew-northup.unet.maine.edu>
  <87mxjtn8x7.fsf@rho.meyering.net>
@@ -11,52 +12,56 @@ References: <87d3kq6tz7.fsf@rho.meyering.net>
  <7vlizcfpz8.fsf@alter.siamese.dyndns.org>
  <20110415021100.GA19829@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jim Meyering <jim@meyering.net>,
 	Drew Northup <drew.northup@maine.edu>,
 	git list <git@vger.kernel.org>,
 	Yann Dirson <ydirson@altern.org>,
-	Stephen Boyd <bebarino@gmail.com>
+	Stephen Boyd <bebarino@gmail.com>,
+	Jeremy White <jwhite@codeweavers.com>,
+	Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 04:24:16 2011
+X-From: git-owner@vger.kernel.org Fri Apr 15 04:28:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAYhi-0004ZJ-MF
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 04:24:15 +0200
+	id 1QAYle-0005wo-JI
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 04:28:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755178Ab1DOCYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 22:24:09 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:56357 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755172Ab1DOCYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 22:24:07 -0400
-Received: by gxk21 with SMTP id 21so974667gxk.19
-        for <git@vger.kernel.org>; Thu, 14 Apr 2011 19:24:06 -0700 (PDT)
+	id S1755191Ab1DOC2O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2011 22:28:14 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64233 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755175Ab1DOC2M convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2011 22:28:12 -0400
+Received: by iwn34 with SMTP id 34so1882715iwn.19
+        for <git@vger.kernel.org>; Thu, 14 Apr 2011 19:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=WADEa0g2YD/iKQ4LDT+cqeaveJCB5VYricMl5gD7ZFI=;
-        b=GBTh9vpSquHjG/3ZrMTc8okHq3mloeAmCHW7whSqvYKY1Do4ncSNj4lPjAwlwL7WiW
-         D/Ns6Zd88h1OI3K5gAZ5j2imycN70e2bLmeh8I5Z2kFgydm3Rj4wdqYdsmybr0r1hWAO
-         K2I0gvkX8nE4viIK1rwf6R1ymfKEY9V+QHWzo=
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=m4rapQ+Wr0IemoDArG/WKATQzekaXXW/87Pio5TITaE=;
+        b=O9JjA9CTYoFU5U4PVN3m5uadMHOEU7/3+ePVB0ep2Xx2lqNQ4SdSY6BqBClrLmWfQs
+         nkSdGsTqm5H/Sy+MUaDCrJ4YEg28sTMbxiLTIahi4mdKNpf+bVOgov17ViOW+m1C7ndG
+         IeqnS2aJxVwGVhKO0KgGo/jYy2C4tIm2O8fDA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=mAcJBNrrqrBilhzgZnubL0jyAJjnZhLmqNd3ub+niq++lalRNkgfAi1/ormn38Vutx
-         3SMEHF0l8eRLxRYsZZ0l4tqHxtergUK6tjoqlLDi6ZcnuW+mGWBjmXZD6Ln7dQEssJJq
-         PpnoFcZvGfThKhZyZetZCYSkNqH3L0oli4nQI=
-Received: by 10.150.141.10 with SMTP id o10mr2371217ybd.50.1302834246201;
-        Thu, 14 Apr 2011 19:24:06 -0700 (PDT)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=f2o8PmhK8BAspN9Gnitowvp8/EeS1QjfN3DG2e1d4hHkQHPb2TOGK7jCLD5CnF1N0V
+         8LBCyWBYRkwvgwyAcHg5Gs7IY0whxRh/2C0vbeGomp3DaJ9ANYvvEbEXZ/PM2vaUUs9x
+         fbK9uN49Ton9MC+amJYcrLK+1LA9JHZe6FaY8=
+Received: by 10.42.108.138 with SMTP id h10mr2062975icp.339.1302834491566;
+        Thu, 14 Apr 2011 19:28:11 -0700 (PDT)
 Received: from elie (adsl-69-209-64-230.dsl.chcgil.ameritech.net [69.209.64.230])
-        by mx.google.com with ESMTPS id m12sm2959073ybn.27.2011.04.14.19.24.04
+        by mx.google.com with ESMTPS id xg14sm1447847icb.19.2011.04.14.19.28.09
         (version=SSLv3 cipher=OTHER);
-        Thu, 14 Apr 2011 19:24:05 -0700 (PDT)
+        Thu, 14 Apr 2011 19:28:10 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20110415021100.GA19829@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -64,144 +69,227 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171579>
 
-SubmittingPatches has some excellent advice about how to check a patch
-for corruption before sending it off.  Move it to the format-patch
-manual so it can be installed with git's documentation for use by
-people not necessarily interested in the git project's practices.
+The standard reference for this information is the article
+"Plain text e-mail - Thunderbird#Completely_plain_email" at
+kb.mozillazine.org, but the hints hidden away in git's
+SubmittingPatches file are more complete.  Move them to the
+"git format-patch" manual so they can be installed with git and
+read by a wide audience.
+
+While at it, make some tweaks:
+
+ - update "Approach #1" so it might work with Thunderbird 3;
+ - remove ancient version numbers from the descriptions of both
+   approaches so current readers might have more reason to
+   complain if they don't work.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/SubmittingPatches    |   58 ++++++++---------------------------
- Documentation/git-format-patch.txt |   46 ++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 44 deletions(-)
+As mentioned in the cover letter, this is rough.  Help making it
+accurate and consistent with git-imap-send(1) would be very much
+appreciated.
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index c6a5032..20b4101 100644
+ Documentation/SubmittingPatches    |   81 +---------------------------=
+-------
+ Documentation/git-format-patch.txt |   83 ++++++++++++++++++++++++++++=
+++++++++
+ 2 files changed, 84 insertions(+), 80 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/Submitting=
+Patches
+index 20b4101..7908119 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -344,50 +344,20 @@ MUA specific hints
- 
- Some of patches I receive or pick up from the list share common
- patterns of breakage.  Please make sure your MUA is set up
--properly not to corrupt whitespaces.  Here are two common ones
--I have seen:
+@@ -416,86 +416,7 @@ it.
+ Thunderbird
+ -----------
+=20
+-(A Large Angry SCM)
 -
--* Empty context lines that do not have _any_ whitespace.
+-By default, Thunderbird will both wrap emails as well as flag them as
+-being 'format=3Dflowed', both of which will make the resulting email u=
+nusable
+-by git.
 -
--* Non empty context lines that have one extra whitespace at the
--  beginning.
+-Here are some hints on how to successfully submit patches inline using
+-Thunderbird.
 -
--One test you could do yourself if your MUA is set up correctly is:
+-There are two different approaches.  One approach is to configure
+-Thunderbird to not mangle patches.  The second approach is to use
+-an external editor to keep Thunderbird from mangling the patches.
 -
--* Send the patch to yourself, exactly the way you would, except
--  To: and Cc: lines, which would not contain the list and
--  maintainer address.
+-Approach #1 (configuration):
 -
--* Save that patch to a file in UNIX mailbox format.  Call it say
--  a.patch.
+-This recipe is current as of Thunderbird 2.0.0.19.  Three steps:
+-  1.  Configure your mail server composition as plain text
+-      Edit...Account Settings...Composition & Addressing,
+-        uncheck 'Compose Messages in HTML'.
+-  2.  Configure your general composition window to not wrap
+-      Edit..Preferences..Composition, wrap plain text messages at 0
+-  3.  Disable the use of format=3Dflowed
+-      Edit..Preferences..Advanced..Config Editor.  Search for:
+-        mailnews.send_plaintext_flowed
+-      toggle it to make sure it is set to 'false'.
 -
--* Try to apply to the tip of the "master" branch from the
--  git.git public repository:
+-After that is done, you should be able to compose email as you
+-otherwise would (cut + paste, git-format-patch | git-imap-send, etc),
+-and the patches should not be mangled.
 -
--    $ git fetch http://kernel.org/pub/scm/git/git.git master:test-apply
--    $ git checkout test-apply
--    $ git reset --hard
--    $ git am a.patch
+-Approach #2 (external editor):
 -
--If it does not apply correctly, there can be various reasons.
+-This recipe appears to work with the current [*1*] Thunderbird from Su=
+se.
 -
--* Your patch itself does not apply cleanly.  That is _bad_ but
--  does not have much to do with your MUA.  Please rebase the
--  patch appropriately.
+-The following Thunderbird extensions are needed:
+-	AboutConfig 0.5
+-		http://aboutconfig.mozdev.org/
+-	External Editor 0.7.2
+-		http://globs.org/articles.php?lng=3Den&pg=3D8
 -
--* Your MUA corrupted your patch; "am" would complain that
--  the patch does not apply.  Look at .git/rebase-apply/ subdirectory and
--  see what 'patch' file contains and check for the common
--  corruption patterns mentioned above.
+-1) Prepare the patch as a text file using your method of choice.
 -
--* While you are at it, check what are in 'info' and
--  'final-commit' files as well.  If what is in 'final-commit' is
--  not exactly what you would want to see in the commit log
--  message, it is very likely that your maintainer would end up
--  hand editing the log message when he applies your patch.
--  Things like "Hi, this is my first patch.\n", if you really
--  want to put in the patch e-mail, should come after the
--  three-dash line that signals the end of the commit message.
-+properly not to corrupt whitespaces.
-+
-+See the DISCUSSION section of git-format-patch(1) for hints on
-+checking your patch by mailing it to yourself and applying with
-+git-am(1).
-+
-+While you are at it, check the resulting commit log message from
-+a trial run of applying the patch.  If what is in the resulting
-+commit is not exactly what you would want to see, it is very
-+likely that your maintainer would end up hand editing the log
-+message when he applies your patch.  Things like "Hi, this is my
-+first patch.\n", if you really want to put in the patch e-mail,
-+should come after the three-dash line that signals the end of the
-+commit message.
- 
- 
- Pine
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index a4a9813..5c60418 100644
+-2) Before opening a compose window, use Edit->Account Settings to
+-uncheck the "Compose messages in HTML format" setting in the
+-"Composition & Addressing" panel of the account to be used to send the
+-patch. [*2*]
+-
+-3) In the main Thunderbird window, _before_ you open the compose windo=
+w
+-for the patch, use Tools->about:config to set the following to the
+-indicated values:
+-	mailnews.send_plaintext_flowed	=3D> false
+-	mailnews.wraplength		=3D> 0
+-
+-4) Open a compose window and click the external editor icon.
+-
+-5) In the external editor window, read in the patch file and exit the
+-editor normally.
+-
+-6) Back in the compose window: Add whatever other text you wish to the
+-message, complete the addressing and subject fields, and press send.
+-
+-7) Optionally, undo the about:config/account settings changes made in
+-steps 2 & 3.
+-
+-
+-[Footnotes]
+-*1* Version 1.0 (20041207) from the MozillaThunderbird-1.0-5 rpm of Su=
+se
+-9.3 professional updates.
+-
+-*2* It may be possible to do this with about:config and the following
+-settings but I haven't tried, yet.
+-	mail.html_compose			=3D> false
+-	mail.identity.default.compose_html	=3D> false
+-	mail.identity.id?.compose_html		=3D> false
+-
+-(Lukas Sandstr=C3=B6m)
+-
+-There is a script in contrib/thunderbird-patch-inline which can help
+-you include patches with Thunderbird in an easy way. To use it, do the
+-steps above and then use the script as the external editor.
++See the MUA-SPECIFIC HINTS section of git-format-patch(1).
+=20
+ Gnus
+ ----
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
+mat-patch.txt
+index 5c60418..cbf2b9c 100644
 --- a/Documentation/git-format-patch.txt
 +++ b/Documentation/git-format-patch.txt
-@@ -286,6 +286,52 @@ title is likely to be different from the subject of the discussion the
- patch is in response to, so it is likely that you would want to keep
- the Subject: line, like the example above.
- 
-+Checking for patch corruption
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+Many mailers if not set up properly will corrupt whitespace.  Here are
-+two common types of corruption:
+@@ -332,6 +332,89 @@ If it does not apply correctly, there can be vario=
+us reasons.
+   patch e-mail should come after the three-dash line that signals
+   the end of the commit message.
+=20
++MUA-SPECIFIC HINTS
++------------------
++Here are some hints on how to successfully submit patches inline using
++various mailers.
 +
-+* Empty context lines that do not have _any_ whitespace.
++Thunderbird
++~~~~~~~~~~~
++By default, Thunderbird will both wrap emails as well as flag
++them as being 'format=3Dflowed', both of which will make the
++resulting email unusable by git.
 +
-+* Non-empty context lines that have one extra whitespace at the
-+  beginning.
++There are two different approaches.  One approach is to configure
++Thunderbird to not mangle patches.  The second approach is to use
++an external editor to keep Thunderbird from mangling the patches.
 +
-+One way to test if your MUA is set up correctly is:
++Approach #1 (configuration)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^
++Three steps:
 +
-+* Send the patch to yourself, exactly the way you would, except
-+  with To: and Cc: lines that do not contain the list and
-+  maintainer address.
++1. Configure your mail server composition as plain text:
++   Edit...Account Settings...Composition & Addressing,
++   uncheck "Compose Messages in HTML".
 +
-+* Save that patch to a file in UNIX mailbox format.  Call it a.patch,
-+  say.
++2. Configure your general composition window to not wrap.
+++
++In Thunderbird 2:
++Edit..Preferences..Composition, wrap plain text messages at 0
+++
++In Thunderbird 3:
++Edit..Preferences..Advanced..Config Editor.  Search for
++"mail.wrap_long_lines".
++Toggle it to make sure it is set to `false`.
 +
-+* Apply it:
++3. Disable the use of format=3Dflowed:
++Edit..Preferences..Advanced..Config Editor.  Search for
++"mailnews.send_plaintext_flowed".
++Toggle it to make sure it is set to `false`.
 +
-+    $ git fetch <project> master:test-apply
-+    $ git checkout test-apply
-+    $ git reset --hard
-+    $ git am a.patch
++After that is done, you should be able to compose email as you
++otherwise would (cut + paste, 'git format-patch' | 'git imap-send', et=
+c),
++and the patches will not be mangled.
 +
-+If it does not apply correctly, there can be various reasons.
++Approach #2 (external editor)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
-+* The patch itself does not apply cleanly.  That is _bad_ but
-+  does not have much to do with your MUA.  You might want to rebase
-+  the patch with linkgit:git-rebase[1] before regenerating it in
-+  this case.
++The following Thunderbird extensions are needed:
++AboutConfig from http://aboutconfig.mozdev.org/ and
++External Editor from http://globs.org/articles.php?lng=3Den&pg=3D8
 +
-+* The MUA corrupted your patch; "am" would complain that
-+  the patch does not apply.  Look in the .git/rebase-apply/ subdirectory and
-+  see what 'patch' file contains and check for the common
-+  corruption patterns mentioned above.
++1. Prepare the patch as a text file using your method of choice.
 +
-+* While at it, check the 'info' and 'final-commit' files as well.
-+  If what is in 'final-commit' is not exactly what you would want to
-+  see in the commit log message, it is very likely that the
-+  receiver would end up hand editing the log message when applying
-+  your patch.  Things like "Hi, this is my first patch.\n" in the
-+  patch e-mail should come after the three-dash line that signals
-+  the end of the commit message.
++2. Before opening a compose window, use Edit->Account Settings to
++   uncheck the "Compose messages in HTML format" setting in the
++   "Composition & Addressing" panel of the account to be used to
++   send the patch.
 +
- 
++3. In the main Thunderbird window, 'before' you open the compose
++   window for the patch, use Tools->about:config to set the
++   following to the indicated values:
+++
++----------
++	mailnews.send_plaintext_flowed  =3D> false
++	mailnews.wraplength             =3D> 0
++----------
++
++4. Open a compose window and click the external editor icon.
++
++5. In the external editor window, read in the patch file and exit
++   the editor normally.
++
++Side note: it may be possible to do step 2 with
++about:config and the following settings but no one's tried yet.
++
++----------
++	mail.html_compose                       =3D> false
++	mail.identity.default.compose_html      =3D> false
++	mail.identity.id?.compose_html          =3D> false
++----------
++
++There is a script in contrib/thunderbird-patch-inline which can help
++you include patches with Thunderbird in an easy way. To use it, do the
++steps above and then use the script as the external editor.
++
+=20
  EXAMPLES
  --------
--- 
+--=20
 1.7.5.rc0
