@@ -1,74 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/resend] Documentation: update to git-merge-base --octopus
-Date: Fri, 15 Apr 2011 10:18:06 -0700
-Message-ID: <7v39lje8mp.fsf@alter.siamese.dyndns.org>
-References: <4DA47A4D.80909@lyx.org> <20110412194558.GB1209@elie>
- <4DA80549.5040600@lyx.org>
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: git rebase -p doesn't understand -X
+Date: Fri, 15 Apr 2011 12:21:24 -0500
+Message-ID: <4DA87E94.2050700@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Fri Apr 15 19:18:26 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 19:25:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAmf3-0004CK-7A
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 19:18:25 +0200
+	id 1QAmm6-0000Y1-JF
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 19:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773Ab1DORSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 13:18:20 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54793 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753452Ab1DORST (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 13:18:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D81F4ED2;
-	Fri, 15 Apr 2011 13:20:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PO9yaUxruj+kHb8nVY41S+orJbw=; b=Pz/Pyr
-	G2hmunC2utJ/T2Mf02ikDuNq6DKEyYG7o83RKkVS5rIL2U9dFQzALiPRmENEh7by
-	ZKvoUxEXokrwohicO61w9z2crCva86lDZCm6m565cvUvxYmyEYRhz3mycV8uom++
-	vsf3kNsADT/PNzfFdApF7OCCNRqgFsdSANDqY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sYxwLg+j5VihRF/GHRe05JsobUql26eI
-	u2HiHrBDYKfcGpS53bruUD/oLtBAvVqe+9eY0HKl8ANOfqZ5vc5N+h+be3Uc0vR+
-	F7YYic7n0mDN+PxmfU45RGp68IQV6hInqlFUBF7L3NnKIS8N45Kvo9ESFislnhPC
-	CvDqyCriTws=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0A9674ED0;
-	Fri, 15 Apr 2011 13:20:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E74194ECF; Fri, 15 Apr 2011
- 13:20:06 -0400 (EDT)
-In-Reply-To: <4DA80549.5040600@lyx.org> (Vincent van Ravesteijn's message of
- "Fri, 15 Apr 2011 10:43:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E422D74-6784-11E0-A685-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754581Ab1DORZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 13:25:37 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:41775 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753217Ab1DORZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 13:25:36 -0400
+Received: by wya21 with SMTP id 21so2428966wya.19
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 10:25:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :subject:content-type:content-transfer-encoding;
+        bh=iuAI7ZJdV+7HaMDuDAi4a8eiHdtiqJPHKHde9H1XJ+g=;
+        b=VcyUO6HR8b9UP4+uInmGq8N8hobdjl4Y7JfB983Nyuv18D1Ut54/oIzxD7I/aj8K7Z
+         d4VmgP8r+tMC36iPkcF8l9cIYOQK9Y3qVNlgqnyiOI9whL9do6vZwgQMTc68wCoJGCGy
+         sTOFMCQkTFqF0WlrgWr16Iry5cGIh6cQKW1xQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=jBrbYuVKasdC/DzdRcUJWOSz6z47GzGC7dILsJ9m2a5Qf3GY487YsuawwWkMw+fk57
+         PIupeMuIy+Fn8ea5ghSKUH2VuYAJvncjYLbxzRaAmxm+bk8RsfjjEe0BCkn+kacemIeg
+         VPaZh4jD0eH/WBkAla0O/+vGbcbLlLR4cEbNA=
+Received: by 10.227.169.2 with SMTP id w2mr2266415wby.77.1302888335365;
+        Fri, 15 Apr 2011 10:25:35 -0700 (PDT)
+Received: from [192.168.1.103] (24-155-176-18.dyn.grandenetworks.net [24.155.176.18])
+        by mx.google.com with ESMTPS id h11sm1744165wbc.26.2011.04.15.10.25.31
+        (version=SSLv3 cipher=OTHER);
+        Fri, 15 Apr 2011 10:25:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171620>
 
-Vincent van Ravesteijn <vfr@lyx.org> writes:
+Hi,
 
->>> +When the option `--octopus` is given, the result of `git merge-base A B C`
->>> > +will be '2', because '2' is the common ancestor of all branches.
->> 
->> Wouldn't it be easier to read if you had the option in the command line, i.e.
->> 
->>     The result of `git merge-base --octopus A B C` is '2' because...
->> 
->> without "When ... given" that now become noisewords?
->
-> Yes, that's much better. I included it in the rerolled patch series.
+I'm trying to rebase a rather large series of patches, which also 
+contains a couple of merges which I'd like to recreate in the rebase, 
+and for the other conflicts I'd like git to automatically choose 'ours'.
 
-Makes sense.  Will queue both patches.
+So, I run
+     git rebase -p -X ours -X patience -X ignore-all-space --onto foo 
+bar baz
+and I get
+     error: unknown switch `X'
 
-Thanks, both.
+Clearly this is because when you use the -p option, everything goes 
+through the --interactive engine, instead of the normal procedure. I 
+would still like to maintain that this is a bug, and that even though -p 
+uses a different engine, to be able to recreate the merges, it should 
+still be able to let me tune the overall merge strategy.
+
+Is there any work around to allow me to achieve the same result?
+
+Thanks!
+
+-- 
+.marius
