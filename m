@@ -1,90 +1,106 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: What's cooking in git.git (Apr 2011, #04; Tue, 12)
-Date: Fri, 15 Apr 2011 10:31:15 +0200
-Message-ID: <4DA80253.6010204@alum.mit.edu>
-References: <7vaafvnl9t.fsf@alter.siamese.dyndns.org>	<BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>	<4DA710FB.7060808@alum.mit.edu> <BANLkTimeiH_ohJ6yGTU0Ei3t2xvUz0zCUA@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [BUG] format-patch does not wrap From-field after author name
+Date: Fri, 15 Apr 2011 10:32:27 +0200
+Message-ID: <BANLkTinifkWJJCNGYo1gHKJGMVmRX7QfmA@mail.gmail.com>
+References: <BANLkTimruwojkq_HNMZeCDBV6K8_aFc_XQ@mail.gmail.com>
+ <7v39lkiwoj.fsf@alter.siamese.dyndns.org> <20110414175034.GA23342@sigill.intra.peff.net>
+ <BANLkTin+K46_RSDsYWHso3v7Gpe_k+0m8Q@mail.gmail.com> <20110414214230.GB7709@sigill.intra.peff.net>
+ <BANLkTikgZH8135=o5ODcA=780-1D7YFngw@mail.gmail.com> <20110414222940.GA19389@sigill.intra.peff.net>
+ <BANLkTim0Q+RaExss+U3m-=CHT6Jd1jc56Q@mail.gmail.com> <20110415033003.GB19621@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 10:31:51 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 15 10:32:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAeRS-0003QQ-CM
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 10:31:50 +0200
+	id 1QAeSW-000439-2z
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 10:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634Ab1DOIbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 04:31:44 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:45440 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752337Ab1DOIbl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 04:31:41 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3F8VG3N012129
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 15 Apr 2011 10:31:16 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Lightning/1.0b2 Thunderbird/3.1.8
-In-Reply-To: <BANLkTimeiH_ohJ6yGTU0Ei3t2xvUz0zCUA@mail.gmail.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752096Ab1DOIcu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2011 04:32:50 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:51835 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751885Ab1DOIcr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2011 04:32:47 -0400
+Received: by pvg12 with SMTP id 12so963370pvg.19
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 01:32:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ttixdRHPi5n5QgDjyKHp/GasWiANjqZxSf62adRFtRc=;
+        b=JGb/2pW4UMrFpZJ9DYgjKxdF+1cUTCs8OpoNKlrH0Ys2XdkjadJpLW0zc2/vdV+dwr
+         ZDwWC8tjLy50s6QUbKrm/jwqh73v6D56M9BgXzWwkUuG+Soxy5zjXoXwWFx+jexHrqiO
+         bTiMgH1wy7hJqthw2TRFU2gt9lcyy6A6b6xcY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=Jc27X6Yc9/WKWUqKwnt/6OwbqlzJgqeN0zzBEclOeEmfEEEGgGAuEYT0uvJ3BUjpaf
+         ua0GT/V+aYa7+AI2TZBxgThOnVZlJk5By8ffCXuHtoGrGU5lTOLlOcHkhDxNyLvLhfXK
+         kkhaP4A95EQC+ey2h+/Yiqgq/mPw+Y1QySDDM=
+Received: by 10.68.4.3 with SMTP id g3mr1662559pbg.129.1302856367034; Fri, 15
+ Apr 2011 01:32:47 -0700 (PDT)
+Received: by 10.68.56.105 with HTTP; Fri, 15 Apr 2011 01:32:27 -0700 (PDT)
+In-Reply-To: <20110415033003.GB19621@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171595>
 
-On 04/15/2011 08:24 AM, Piotr Krukowiecki wrote:
-> On Thu, Apr 14, 2011 at 5:21 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> On 04/14/2011 03:38 PM, Piotr Krukowiecki wrote:
->>> On Wed, Apr 13, 2011 at 12:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> * mh/git-svn-automkdirs (2011-04-01) 1 commit
->>>>  (merged to 'next' on 2011-04-03 at 7fa4978)
->>>>  + git-svn: add an option to skip the creation of empty directories
->>>>
->>>> Should be safe, but I'd like an Ack from git-svn folks.
->>>
->>> I wanted to test performance of this change - what's the best way to do it?
->>>
->>> I tried some ideas, but rebase was too fast for performance measurements.
->>> I did not have new commits, but just some old, already in trunk changes, which
->>> I tried to rebase - probably it was just fast forward?
+On Fri, Apr 15, 2011 at 5:30 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Apr 15, 2011 at 12:43:08AM +0200, Erik Faye-Lund wrote:
+>
+>> >> That part is surprisingly easy: If it contains a '<', then it's o=
+n the form
+>> >> "Foo Bar Baz <foo@bar.baz>". If not, it's "foo@bar.baz" (assuming=
+ it's
+>> >> UTF-8 encoded rfc5322 mailbox'es we assume, which would make the =
+most
+>> >> sense to me)
+>> >
+>> > What about:
+>> >
+>> > =A0"Foo \"The Bar\" Baz" <foo@example.com>
+>> >
+>> > or
+>> >
+>> > =A0Foo "The Bar" Baz <foo@example.com>
+>> >
+>> > or
+>> >
+>> > =A0Foo (The Bar) Baz <foo@example.com>
+>> >
+>> > I.e., are we taking rfc822-style addresses, or are we taking somet=
+hing
+>> > that looks vaguely like an email address, and just treating everyt=
+hing
+>> > left of "<" as literal?
 >>
->> The unhandled.log.gz file for trunk of our main project is 14 Mb and
->> uncompresses to 233 Mb.  About 90% of it consists of svn:mergeinfo
->> properties for file that were copied or renamed within the repository;
->> most of the rest is other random SVN file properties.
->>
->> With such a huge unhandled.log file, "git svn mkdirs" took about 10s for
->> me.  I believe that "git svn rebase" should take at least as long, even
->> if it is a fast-forward.
-> 
-> That might be the reason - my unhandled.log is 17MB (unpacked) and mkdirs
-> takes 0.5s
+>> I was just thinking of interpreting everything left of '<' literally
+>> and encode it (if needed). Currently, we interpret the entire string
+>> literally, encoding the name would an improvement.
+>
+> Won't that be a regression for people who already know that we take
+> things literally and are manually quoting and/or rfc2047-encoding the
+> contents?
 
-Yes, it is also my assumption that parsing so much text in Perl is what
-causes the slowdown.  But as long as git-svn insists on plonking so much
-information in unhandled.log but then handling it anyway, it seems like
-a good policy to prevent it from reading this file any more than
-necessary.  And for me, the creation of empty directories is not worth
-10s.  (Even your 0.5s is pretty slow by git standards :-) ).
+Yes. But won't that always be the case when someone depends on buggy be=
+havior?
 
-An alternative might be to move the emptydir information from
-unhandled.log to a separate file.  The "empty_dir" lines in my unhandled
-log are only about 0.1% of the file contents, and should be parseable in
-a negligible amount of time.  But moving the data would presumably have
-implications for backwards compatibility.
-
-[Are there any design documents for git-svn?  I have had a hard time
-deciphering the code and understanding what data it stores and where.]
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Besides, send-email takes interprets it's --to and --cc arguments as
+well as sendemail.to and sendemail.cc config options literally (i.e
+quoting if needed without any attempts on unquoting first). IMO having
+two closely related programs with similar options that behave
+different in border-cases is pretty ugly. ESPECIALLY when one of them
+has a habit of forwarding unknown options to the other, like
+send-email does...
