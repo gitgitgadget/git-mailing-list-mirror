@@ -1,87 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: textconv not invoked when viewing merge commit
-Date: Fri, 15 Apr 2011 08:54:49 +0200
-Message-ID: <vpq62qg3sxy.fsf@bauges.imag.fr>
-References: <201104111912.47547.kumbayo84@arcor.de>
-	<4DA415AB.9020008@drmicha.warpmail.net>
-	<20110414190901.GA1184@sigill.intra.peff.net>
-	<7vipughbxh.fsf@alter.siamese.dyndns.org>
-	<7vd3kohb5n.fsf@alter.siamese.dyndns.org>
-	<7v8vvcha2s.fsf@alter.siamese.dyndns.org>
-	<20110414202356.GB6525@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH/RFC 6/5] Documentation/format-patch: suggest Toggle Word Wrap
+ add-on for Thunderbird
+Date: Fri, 15 Apr 2011 09:41:52 +0200
+Message-ID: <4DA7F6C0.4050707@viscovery.net>
+References: <87d3kq6tz7.fsf@rho.meyering.net> <1302719749.21047.6.camel@drew-northup.unet.maine.edu> <87mxjtn8x7.fsf@rho.meyering.net> <20110413221736.GA773@elie> <7vzkntkc9d.fsf@alter.siamese.dyndns.org> <20110414211125.GA15277@elie> <7vlizcfpz8.fsf@alter.siamese.dyndns.org> <20110415021100.GA19829@elie>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Peter Oberndorfer <kumbayo84@arcor.de>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 15 08:58:40 2011
+	Jim Meyering <jim@meyering.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	git list <git@vger.kernel.org>,
+	Yann Dirson <ydirson@altern.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 09:42:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAczF-0001Zv-Vn
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 08:58:38 +0200
+	id 1QAdfK-0000Pp-Vy
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 09:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754692Ab1DOG6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 02:58:32 -0400
-Received: from imag.imag.fr ([129.88.30.1]:45380 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753178Ab1DOG6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 02:58:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p3F6sog3019872
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 15 Apr 2011 08:54:50 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QAcvZ-0002RZ-V2; Fri, 15 Apr 2011 08:54:49 +0200
-In-Reply-To: <20110414202356.GB6525@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 14 Apr 2011 16:23:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 15 Apr 2011 08:54:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1754949Ab1DOHl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 03:41:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:11598 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753749Ab1DOHl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 03:41:59 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QAdf7-0007pv-4e; Fri, 15 Apr 2011 09:41:53 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A4EA41660F;
+	Fri, 15 Apr 2011 09:41:52 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <20110415021100.GA19829@elie>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171591>
 
-Jeff King <peff@peff.net> writes:
+From: Johannes Sixt <j6t@kdbg.org>
 
-> On Thu, Apr 14, 2011 at 01:06:19PM -0700, Junio C Hamano wrote:
->
->> Instead, I think we should just use "Binary blob $SHA-1\n" as if that is
->> the textconv of a binary file without textconv filter.  That would
->> certainly make the code much simpler, and more importantly, the output
->> would become more pleasant. We would show something like:
->> 
->>     - Binary blob bc3c57058faba66f6a7a947e1e9642f47053b5bb
->>      -Binary blob 536e55524db72bd2acf175208aef4f3dfc148d42
->>     ++Binary blob 67cfeb2016b24df1cb406c18145efd399f6a1792
->> 
->> if we did so.
->
-> Yeah, I think that is pretty readable. But it gives me a funny feeling
-> to encode magic strings inside actual diff output. That is, the output
-> is indistinguishable from a file which contained the "Binary blob..."
-> strings.
->
-> I can't think of a case where it matters, though, so maybe it is just
-> paranoia.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ How about this as 6/5? I used the method described for this submission, so if
+ what you got is unusable, you know what to think of the suggestion ;)
 
-A line-counting, statistics tool would think that 1 line has been
-removed from both branches, and one new added by the merge.
+ I put this suggestion as approach #1 because I think it is superior to the
+ other two (iff it worked).
 
-Well, I know no tool parsing combined diff actually, so it's indeed a
-hypothetical case.
+ -- Hannes
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+ Documentation/git-format-patch.txt |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -343,11 +343,21 @@ By default, Thunderbird will both wrap emails as well as flag
+ them as being 'format=flowed', both of which will make the
+ resulting email unusable by git.
+ 
+-There are two different approaches.  One approach is to configure
+-Thunderbird to not mangle patches.  The second approach is to use
++There are three different approaches: use an add-on to turn off line wraps,
++configure Thunderbird to not mangle patches, or use
+ an external editor to keep Thunderbird from mangling the patches.
+ 
+-Approach #1 (configuration)
++Approach #1 (add-on)
++^^^^^^^^^^^^^^^^^^^^
++
++Install the Toggle Word Wrap add-on that is available from
++https://addons.mozilla.org/thunderbird/addon/toggle-word-wrap/
++It adds a menu entry "Enable Word Wrap" that you can tick off. Now you
++can compose the message as you otherwise do (cut + paste,
++'git format-patch' | 'git imap-send', etc), but you have to insert
++line breaks manually in any additional text that you type.
++
++Approach #2 (configuration)
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ Three steps:
+ 
+@@ -374,7 +384,7 @@ After that is done, you should be able to compose email as you
+ otherwise would (cut + paste, 'git format-patch' | 'git imap-send', etc),
+ and the patches will not be mangled.
+ 
+-Approach #2 (external editor)
++Approach #3 (external editor)
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+ The following Thunderbird extensions are needed:
