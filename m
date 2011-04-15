@@ -1,100 +1,64 @@
-From: B Smith-Mannschott <bsmith.occs@gmail.com>
-Subject: Re: git incorrectly infers rename i.e. (delete file1 + creation of
- new file2) != (file => file2)
-Date: Fri, 22 Apr 2011 07:22:24 +0200
-Message-ID: <BANLkTimcL2D_FbKnDREQPNLGG2i8wsoLCg@mail.gmail.com>
-References: <BANLkTimqk5xP6X7NcGqZ6w05GfYe02iAhA@mail.gmail.com>
+From: "jessica" <noreply@netlogmail.com>
+Subject: my photo l
+Date: Fri, 15 Apr 2011 19:19:38 +0100
+Message-ID: <20110415182856.AD5B4E413F9@yt333.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mike <xandrani@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 07:22:46 2011
+Content-Type: text/plain;
+	charset="Windows-1250"
+Content-Transfer-Encoding: 7bit
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Fri Apr 22 11:44:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QD8pI-0006uz-BY
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 07:22:44 +0200
+	id 1QDCuP-0000nc-1R
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 11:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006Ab1DVFW1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Apr 2011 01:22:27 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47421 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750812Ab1DVFW0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2011 01:22:26 -0400
-Received: by iwn34 with SMTP id 34so275108iwn.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 22:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7rh7x8sY1O1T4ePUQ7A5S9M3gknBvtEnZ0UmfodWeeU=;
-        b=jG2WsGTBjmIRZgK1VxVYSmIa3SRJtFENXaJYvuDB0tveIE3pwtZ3VU4ht2/JqOUsFt
-         9IdWppi7e14kGjcVFwjkhqQAbr/yrQn70ba2LyypF3bGT6VJVNKmMoP11vX5IGIsj+vJ
-         Xq3gRo7uucCcHJ5xSZpCRxFSng3qvUlr9q2Qk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bIln1VYBeMv74BEfph4Bz8xZj0i2tMGLcO68qxb5uun3DwpU0eZEXB9/fB7d6LR4ft
-         i5o1yd81RiP9FXxRTg3zpkdkm5UbXc7iMvVY2R04WK6Fa7MQ9APZWRUK4DiLCUoGfF5B
-         nFnv+E/Wl+B85uBLi+zZCX5yFL4wWbfpLaGOg=
-Received: by 10.43.60.205 with SMTP id wt13mr860333icb.253.1303449744122; Thu,
- 21 Apr 2011 22:22:24 -0700 (PDT)
-Received: by 10.43.61.4 with HTTP; Thu, 21 Apr 2011 22:22:24 -0700 (PDT)
-In-Reply-To: <BANLkTimqk5xP6X7NcGqZ6w05GfYe02iAhA@mail.gmail.com>
+	id S1754474Ab1DVJoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2011 05:44:12 -0400
+Received: from [210.21.117.13] ([210.21.117.13]:34699 "EHLO yt333.com"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754204Ab1DVJoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2011 05:44:11 -0400
+X-Greylist: delayed 132708 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Apr 2011 05:44:11 EDT
+Received: from User (mail.irwingroup.com [88.212.164.253])
+	by yt333.com (yt333.com) with ESMTPA id AD5B4E413F9;
+	Sat, 16 Apr 2011 02:28:55 +0800 (CST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1081
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171932>
+X-Spam-Report: 9.2 points;
+ *  0.0 HS_INDEX_PARAM URI: Link contains a common tracker pattern.
+ * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
+ *      [score: 0.1238]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?88.212.164.253>]
+ *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
+ *      [URIs: sendspace.com]
+ *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171933>
 
-On Fri, Apr 22, 2011 at 02:31, Mike <xandrani@gmail.com> wrote:
-> Hi
->
-> I deleted a file called 'class.NumberOfResultsCache.php' and created =
-a
-> completely different file called
-> 'cgi-bin/___php/class.NumberOfResults.php'.
+i wannted to send u my photo long ago, but i was afraid that u dont like to see me . check on the links u see my photo, i hope u like it
+ 
+Download that and see my photo...
 
-"completely different" in what they mean to you, or in their actual con=
-tent?
-Please be more specific.
-
-> I deleted the file using
-> rm followed by 'git rm'.
->
-> When I do a 'git status' I now get told:
->
-> =C2=A0 renamed: =C2=A0 =C2=A0cgi-bin/___php/class.NumberOfResultsCach=
-e.php ->
-> cgi-bin/___php/class.NumberOfResults.php
->
-> However I want to commit 'class.NumberOfResultsCache.php' as having
-> been deleted, and I want to commit 'class.NumberOfResults.php' as a
-> brand new file.
-
-Git doesn't care about individual files or renames, it tracks whole tre=
-es.
-What it shows as a rename is just its best guess based on the contents
-of the two files.
-
-> How do I get git to do this? Apologies for a 'noob' question. Only
-> been using the superb git for a couple of weeks!
-
-You could commit the deletion and the add separately, but before doing
-that, why is it important to you that git not show this change as a
-potential rename?
-
-// Ben
-
-> Thanks :)
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+http://www.speedyshare.com/files/27984571/DSC01626921.zip
+or
+http://www.sendspace.com/file/4rq41r
+or
+http://www.mediafire.com/?6zvza2s22x3z5i4
+or
+http://www.filefactory.com/file/cbccd00/n/DSC01626921.zip 
+or
+http://turboupload.com/l4a7bijswotu
+or
+http://www.mlfat4arab.com/lp2x2z5z0ed3/DSC01626921.zip.html
