@@ -1,124 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2/RFC 10/11] gitweb.js: Add UI for selecting common timezone to display dates
-Date: Fri, 15 Apr 2011 19:43:10 +0200
-Message-ID: <201104151943.11537.jnareb@gmail.com>
-References: <1302878645-458-1-git-send-email-jnareb@gmail.com> <1302878645-458-11-git-send-email-jnareb@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCHv2] doc: Clarify that "cherry-pick -x" does not use "git notes"
+Date: Fri, 15 Apr 2011 19:53:51 +0200
+Message-ID: <4DA8862F.5070102@gmail.com>
+References: <4DA7F73B.9050007@gmail.com> <7v7have8wo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	Kevin Cernekee <cernekee@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 19:50:47 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 19:54:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAnAM-0000D1-8d
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 19:50:46 +0200
+	id 1QAnDV-0002X4-1w
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 19:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755442Ab1DORul convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2011 13:50:41 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63866 "EHLO
+	id S1755493Ab1DORx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 13:53:56 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:32859 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753764Ab1DORul (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 13:50:41 -0400
-Received: by fxm17 with SMTP id 17so1961612fxm.19
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 10:50:39 -0700 (PDT)
+	with ESMTP id S1753979Ab1DORx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 13:53:56 -0400
+Received: by fxm17 with SMTP id 17so1963252fxm.19
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 10:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=DDg1nElVDFiXQNCgHTKG+Jddzsgu+wUtqm0uOLG29CU=;
-        b=V6ku1iQn08qD+ERe+HZYhrg+6FHzhSL9n/8kTJ8oEbcWjeTfbEbKXUbfF5U+MKlylI
-         4oIQc5CQvWa4hDmvNwWNhuH5A3x+yAderKuA4CSqwtf7xiDQuo5mE1Osbl9NLeDVcxh1
-         QYDVYbiyZOJa/WZPrSXri2JyKpJIE5IYFY6gc=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version
+         :newsgroups:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ucf5NQ2xSvuahz23uMfPZ2NHliaU2d1C+m7mG0LffEk=;
+        b=BWkMhkWWLkC4oB8nwtzVre3fFJwixDojSFl+ZhXCarfasuTVx9YlyAwUtMvMaYMXov
+         W2zCPpmOJQBJMXxaiwo3p+dF+NI/Le1ZyV8Hb6CkcUztc9oPdTQlpq6zHO9aACI/17fH
+         +N+TMPDoVZdTlQAru5gQg3SlAyf3yRtUUl+N4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=i6Kl4yREYxeU3pXFTw6SVV1I4XvHHoyDxEIaLFUxTU/Pr2aH+Zu+GhE0lPscCzLivo
-         zqpozeUfTwGO0F4maEV7FzL26ex9UJ/iLUFtlg+REbm89LW6x+w8z4K/Dlli/ufZgWBL
-         CJsI7b/5idR91Ftt18lUDBWKfUrF21l2L1YXA=
-Received: by 10.223.15.141 with SMTP id k13mr872207faa.30.1302889399966;
-        Fri, 15 Apr 2011 10:43:19 -0700 (PDT)
-Received: from [192.168.1.13] (abwn60.neoplus.adsl.tpnet.pl [83.8.237.60])
-        by mx.google.com with ESMTPS id n2sm860609fam.4.2011.04.15.10.43.16
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=hGlshhqnre4p6+1s8I6as3o8o43tgCgvwWsQjRbVhsTBm6b6ZT/Ro0DdMnK1TuKcDA
+         7wu2IlifQ7tM9JDto9jdWWnrSiOtCP2npmlNL+M5fhuUYM676nZhbK7cldLw1B3tbWQS
+         e4LDbbs0PQ0mEuyUUkMECHTdkJ61TPZbO6iRo=
+Received: by 10.223.117.134 with SMTP id r6mr2393482faq.147.1302890034708;
+        Fri, 15 Apr 2011 10:53:54 -0700 (PDT)
+Received: from [130.73.68.143] (berry.zib.de [130.73.68.143])
+        by mx.google.com with ESMTPS id x16sm862266fal.19.2011.04.15.10.53.53
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 15 Apr 2011 10:43:17 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1302878645-458-11-git-send-email-jnareb@gmail.com>
-Content-Disposition: inline
+        Fri, 15 Apr 2011 10:53:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7v7have8wo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171624>
 
-On Fri, 15 Apr 2011, Jakub Narebski wrote:
+The documentation for "cherry-pick -x" could be misread in the way that a
+"git notes" object is attached to the new commit, which is not the case.
 
-> KNOWN BUGS:
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> * Timezone selection doesn't work in Chromium 6.0.472.62 (59676) and
-> =A0 Google Chrome 10.0.648.204:
->=20
-> =A0 Uncaught Error: NOT_FOUND_ERR: DOM Exception 8
-> =A0 =A0 removeChangeTZForm
-> =A0 =A0 /gitweb-static/gitweb.js:785
-> =A0 onTZFormChange
->=20
-> =A0 line 785: var removed =3D container.removeChild(popup);
->=20
-> =A0 It works in Mozilla 1.17.2, Konqueror 3.5.3, Firefox 3.6.15, 3.6.=
-16
-> =A0 and 4.0, Internet Explorer 8.0, Opera 10.63.
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ Documentation/git-cherry-pick.txt |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-Something strange is happening here.  removeChangeTZForm looks like thi=
-s:
-
-  function removeChangeTZForm(documentFragment, target, tzClassName) {
-	// find containing element, where we appended timezone selection UI
-	// `target' is somewhere inside timezone menu
-	var container =3D target.parentNode, popup =3D target;
-	while (container &&
-	       container.className !=3D=3D tzClassName) {
-		popup =3D container;
-		container =3D container.parentNode;
-	}
-	// safety check if we found correct container,
-	// and if it isn't deleted already
-	if (!container || !popup ||
-	    container.className !=3D=3D tzClassName ||
-	    popup.className     !=3D=3D 'popup') {
-		return documentFragment;
-	}
-
-	// timezone selection UI was appended as last child
-	// see also displayChangeTZForm function
-	var removed =3D container.removeChild(popup); // <--- !!! here Chrome =
-throws exception !!!
-	if (documentFragment.firstChild !=3D=3D removed) { // the only child
-		// re-append it so it would be available for next time
-		documentFragment.appendChild(removed);
-	}
-	// all of inline style was added by this script
-	container.removeAttribute('style');
-
-	return documentFragment;
-  }
-
-Note that from above code one would assume that after first loop we
-would assert that we always have  popup.parentNode =3D=3D=3D contained.
-When working with JavaScript debugger in Google Chrome I have found
-that at the time that exception is thrown popup.parentNode is
-DocumentFragment, not HTMLElement / HTMLSpanElement.
-
-Something strange is going there.  I'd check if not setting 'onblur'
-event handler (which doesn't work as expected anyway) would help.
-
---=20
-Jakub Narebski
-Poland
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 01db830..9d8fe0d 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -51,9 +51,10 @@ OPTIONS
+ 	message prior to committing.
+ 
+ -x::
+-	When recording the commit, append to the original commit
+-	message a note that indicates which commit this change
+-	was cherry-picked from.  Append the note only for cherry
++	When recording the commit, append a line that says
++	"(cherry picked from commit ...)" to the original commit
++	message in order to indicate which commit this change was
++	cherry-picked from.  This is done only for cherry
+ 	picks without conflicts.  Do not use this option if
+ 	you are cherry-picking from your private branch because
+ 	the information is useless to the recipient.  If on the
+-- 
+1.7.3.2.msysgit.11
