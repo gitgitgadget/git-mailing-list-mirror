@@ -1,164 +1,163 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv2 00/11] gitweb: Change timezone in dates using JavaScript
-Date: Fri, 15 Apr 2011 16:43:54 +0200
-Message-ID: <1302878645-458-1-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 07/11] gitweb: Refactor generating of long dates into format_timestamp_html
+Date: Fri, 15 Apr 2011 16:44:01 +0200
+Message-ID: <1302878645-458-8-git-send-email-jnareb@gmail.com>
+References: <1302878645-458-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Kevin Cernekee <cernekee@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 16:44:45 2011
+X-From: git-owner@vger.kernel.org Fri Apr 15 16:44:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAkGK-00027a-1O
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 16:44:44 +0200
+	id 1QAkGX-0002G9-22
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 16:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281Ab1DOOoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 10:44:30 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:43845 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966Ab1DOOo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 10:44:29 -0400
-Received: by wya21 with SMTP id 21so2304119wya.19
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 07:44:28 -0700 (PDT)
+	id S1756040Ab1DOOot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 10:44:49 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49049 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754157Ab1DOOoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 10:44:44 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 36so3299523wwa.1
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 07:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=KQpcPG0Jhpcfe+G788X8DzcjPsjbSuSxAwZR5UWJq8g=;
-        b=qhju3xSv+k8I17kB31zPOkRDGK+eW9E9nrVqz04EzX+mPojzkp2bV828aA8rUbTb5V
-         8MH4hctcpQZIajtLnb6eTiLf6Gtd+l7lCeWBzttmPvFLp/lJz9Q5359+h1RgUexKnd3r
-         MSL4m5OUp+ZWr7a/1PygMpP9Dp80mJTM2bQrk=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=+d+rucrYLBGVS3EJJSS06JdHlmFjTd11ECt4qnEjkt4=;
+        b=N+Q1hrA0HmZMCKITg+7CWmKCnA6EE0aOkJKEk4UBJrcokdo2l4hQHYLsJAri0C3Q4/
+         5WTxHVOd+333SYNTeLnyC4qT3KhjWT9WOcMaTLhouzAtkeaMY2n908naDOjbC+2ZzsqE
+         HmuC4AllH5gnY7HIUEnjmapqK+rHwM+e5X9Xs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=vwJNZiXkGqgbE8HToUucqVngRDvsew79zm4Fw2eNSGP7DgiRjPReSUhD65ADO3cXVp
-         dtC4TlBS0BPK4+bMn6W9N3NnUKlFfmF9Cj7bKTop82ZDNAMKak66QHid7xLwI6yzlGAj
-         bYEpmk2X8KECpVY9uj8iAzko3PAyLfiXM7Cq0=
-Received: by 10.227.177.13 with SMTP id bg13mr2116093wbb.92.1302878668313;
-        Fri, 15 Apr 2011 07:44:28 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=qvYSw/9PkoDGmZ0ev+NokoFglk3OUvGf/vpz3axknoEBC+/1zlEFbA+dDw2vpqWHep
+         XxccGd5s+QFDOaD2Yd/y93L72y75Jox8wQluFDpfY+Tjtva43OXl15Ff3AZyd50vC1Lm
+         Wg8HJxoF/zqa2EvgK8l+eDBSKpIL53Jy7Am1M=
+Received: by 10.227.196.2 with SMTP id ee2mr2106054wbb.129.1302878683941;
+        Fri, 15 Apr 2011 07:44:43 -0700 (PDT)
 Received: from roke.localdomain (abwn60.neoplus.adsl.tpnet.pl [83.8.237.60])
-        by mx.google.com with ESMTPS id u9sm1663346wbg.34.2011.04.15.07.44.25
+        by mx.google.com with ESMTPS id u9sm1663346wbg.34.2011.04.15.07.44.41
         (version=SSLv3 cipher=OTHER);
-        Fri, 15 Apr 2011 07:44:26 -0700 (PDT)
+        Fri, 15 Apr 2011 07:44:43 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3
+In-Reply-To: <1302878645-458-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171601>
 
-This is second version of this series.  First version was sent as
+It is pure refactoring and doesn't change gitweb output, though this
+could potentially affect 'summary', 'log', and 'commit'-like views
+('commit', 'commitdiff', 'tag').
 
-  [PATCH 00/11] gitweb: Change timezone
-  http://thread.gmane.org/gmane.comp.version-control.git/171212
-
-The major issue left is that changing (selecting) timezone doesn't
-work on Chrome / Chromium, as reported by Kevin Cernekee.  See patch
-10/11 for more details.
-
-NOTE that this time, in this version of series, the path-by-patch
-comparison with original J.H. patches is not provided.  It would be
-re-added in the final version.
+Remove print_local_time and format_local_time, as their use is now
+replaced (indirectly) by using format_timestamp_html.
 
 
-This is split version (with assorted cleanups) of J.H. patch adding
-JavaScript-base ability to change timezone in which dates are
-displayed.
+While at it improve whitespace formatting.
 
-  [PATCH 0/1] Gitweb: Change timezone
-    [PATCH 1/1] gitweb: javascript ability to adjust time based on timezone
-  Message-Id: <1300925335-3212-1-git-send-email-warthog9@eaglescrag.net>
-  http://thread.gmane.org/gmane.comp.version-control.git/169384/focus=169881
+Inspired-by-code-by: Kevin Cernekee <cernekee@gmail.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This patch is unchanged from previous v1 version.
 
-Below there is copy of original J.H. announcement:
-JH>
-JH> This is just a javascript implementation of Kevin's localtime
-JH> feature.  It's pretty straight forward, though date handling in
-JH> Javascript is, special (head bangingly so).
-JH> 
-JH> This should be good to run on any browser, with the safe fallback
-JH> of UTC being the default output should Javascript not work / be
-JH> available.
+Note that this patch could be squashed with the next patch in series,
+but I think that split version (pure refactoring + change in behavior)
+is easier to review.
 
-Table of contents:
-~~~~~~~~~~~~~~~~~~
-* [PATCH 01/11] gitweb: Split JavaScript for maintability, combining on build
-  [PATCH 02/11] gitweb.js: Update and improve comments in JavaScript files
-  [PATCH 03/11] gitweb.js: Provide default values for padding in padLeftStr and padLeft
-  [PATCH 04/11] gitweb.js: Extract and improve datetime handling
-  [PATCH 05/11] gitweb.js: Introduce gitweb/static/js/lib/cookies.js
-  [PATCH 06/11] gitweb.js: Provide getElementsByClassName method (if it not exists)
-  [PATCH 07/11] gitweb: Refactor generating of long dates into format_timestamp_html
-  [PATCH 08/11] gitweb: Unify the way long timestamp is displayed
+ gitweb/gitweb.perl |   45 ++++++++++++++++++++++-----------------------
+ 1 files changed, 22 insertions(+), 23 deletions(-)
 
-  Unchanged from previous version of this series.
-
-* [PATCH 09/11] gitweb: JavaScript ability to adjust time based on timezone
-  
-  Cosmetic changes compared to previous version of this patch.
-
-* [PATCHv2/RFC 10/11] gitweb.js: Add UI for selecting common timezone to display dates
-  [PATCHv2/RFC 11/11] gitweb: Make JavaScript ability to adjust timezones configurable
-
-  The main part.  The major part of changes is fixing noted issues,
-  and bugs reported by Kevin Cernekee in response to v1 of series.
-
-  The first patch of two, 10/11, includes additionally some
-  refactorings that should make code cleaner and easier to follow
-  (reducing size of functions).
-
-  This is the same or nearly the same version of those two patches as
-  sent to git mailing list as:
-
-    http://thread.gmane.org/gmane.comp.version-control.git/171212/focus=171389
-
-
-Shortlog:
-~~~~~~~~~
-Jakub Narebski (9):
-  gitweb: Split JavaScript for maintability, combining on build
-  gitweb.js: Update and improve comments in JavaScript files
-  gitweb.js: Provide default values for padding in padLeftStr and padLeft
-  gitweb.js: Extract and improve datetime handling
-  gitweb.js: Introduce gitweb/static/js/lib/cookies.js
-  gitweb.js: Provide getElementsByClassName method (if it not exists)
-  gitweb: Refactor generating of long dates into format_timestamp_html
-  gitweb: Unify the way long timestamp is displayed
-  gitweb: Make JavaScript ability to adjust timezones configurable
-
-John 'Warthog9' Hawley (2):
-  gitweb: JavaScript ability to adjust time based on timezone
-  gitweb.js: Add UI for selecting common timezone to display dates
-
-Diffstat:
-~~~~~~~~~
- .gitignore                                         |    1 +
- gitweb/Makefile                                    |   19 +-
- gitweb/gitweb.perl                                 |   76 +++--
- gitweb/static/gitweb.css                           |   33 ++
- gitweb/static/js/README                            |   20 ++
- gitweb/static/js/adjust-timezone.js                |  330 ++++++++++++++++++++
- .../static/{gitweb.js => js/blame_incremental.js}  |  228 +-------------
- gitweb/static/js/javascript-detection.js           |   43 +++
- gitweb/static/js/lib/common-lib.js                 |  224 +++++++++++++
- gitweb/static/js/lib/cookies.js                    |  114 +++++++
- gitweb/static/js/lib/datetime.js                   |  176 +++++++++++
- 11 files changed, 1023 insertions(+), 241 deletions(-)
- create mode 100644 gitweb/static/js/README
- create mode 100644 gitweb/static/js/adjust-timezone.js
- rename gitweb/static/{gitweb.js => js/blame_incremental.js} (74%)
- create mode 100644 gitweb/static/js/javascript-detection.js
- create mode 100644 gitweb/static/js/lib/common-lib.js
- create mode 100644 gitweb/static/js/lib/cookies.js
- create mode 100644 gitweb/static/js/lib/datetime.js
-
-Dirstat:
-~~~~~~~~
-  40.1% gitweb/static/js/lib/
-  32.7% gitweb/static/js/
-  18.3% gitweb/static/
-   8.7% gitweb/
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ee69ea6..7329db2 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3938,22 +3938,21 @@ sub git_print_section {
+ 	print $cgi->end_div;
+ }
+ 
+-sub print_local_time {
+-	print format_local_time(@_);
+-}
++sub format_timestamp_html {
++	my ($date, %opts) = @_;
++	my $strtime = $date->{'rfc2822'};
+ 
+-sub format_local_time {
+-	my $localtime = '';
+-	my %date = @_;
+-	if ($date{'hour_local'} < 6) {
+-		$localtime .= sprintf(" (<span class=\"atnight\">%02d:%02d</span> %s)",
+-			$date{'hour_local'}, $date{'minute_local'}, $date{'tz_local'});
+-	} else {
+-		$localtime .= sprintf(" (%02d:%02d %s)",
+-			$date{'hour_local'}, $date{'minute_local'}, $date{'tz_local'});
++	return $strtime unless $opts{'-localtime'};
++
++	my $localtime_format = '(%02d:%02d %s)';
++	if ($date->{'hour_local'} < 6) {
++		$localtime_format = '(<span class="atnight">%02d:%02d</span> %s)';
+ 	}
++	$strtime .= ' ' .
++	            sprintf($localtime_format,
++	                    $date->{'hour_local'}, $date->{'minute_local'}, $date->{'tz_local'});
+ 
+-	return $localtime;
++	return $strtime;
+ }
+ 
+ # Outputs the author name and date in long form
+@@ -3966,10 +3965,9 @@ sub git_print_authorship {
+ 	my %ad = parse_date($co->{'author_epoch'}, $co->{'author_tz'});
+ 	print "<$tag class=\"author_date\">" .
+ 	      format_search_author($author, "author", esc_html($author)) .
+-	      " [$ad{'rfc2822'}";
+-	print_local_time(%ad) if ($opts{-localtime});
+-	print "]" . git_get_avatar($co->{'author_email'}, -pad_before => 1)
+-		  . "</$tag>\n";
++	      " [".format_timestamp_html(\%ad, %opts)."]".
++	      git_get_avatar($co->{'author_email'}, -pad_before => 1) .
++	      "</$tag>\n";
+ }
+ 
+ # Outputs table rows containing the full author or committer information,
+@@ -3986,16 +3984,16 @@ sub git_print_authorship_rows {
+ 		my %wd = parse_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
+ 		print "<tr><td>$who</td><td>" .
+ 		      format_search_author($co->{"${who}_name"}, $who,
+-			       esc_html($co->{"${who}_name"})) . " " .
++		                           esc_html($co->{"${who}_name"})) . " " .
+ 		      format_search_author($co->{"${who}_email"}, $who,
+-			       esc_html("<" . $co->{"${who}_email"} . ">")) .
++		                           esc_html("<" . $co->{"${who}_email"} . ">")) .
+ 		      "</td><td rowspan=\"2\">" .
+ 		      git_get_avatar($co->{"${who}_email"}, -size => 'double') .
+ 		      "</td></tr>\n" .
+ 		      "<tr>" .
+-		      "<td></td><td> $wd{'rfc2822'}";
+-		print_local_time(%wd);
+-		print "</td>" .
++		      "<td></td><td>" .
++		      format_timestamp_html(\%wd, -localtime=>1) .
++		      "</td>" .
+ 		      "</tr>\n";
+ 	}
+ }
+@@ -5410,7 +5408,8 @@ sub git_summary {
+ 	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
+ 	      "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
+ 	if (defined $cd{'rfc2822'}) {
+-		print "<tr id=\"metadata_lchange\"><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
++		print "<tr id=\"metadata_lchange\"><td>last change</td>" .
++		      "<td>".format_timestamp_html(\%cd)."</td></tr>\n";
+ 	}
+ 
+ 	# use per project git URL list in $projectroot/$project/cloneurl
 -- 
 1.7.3
