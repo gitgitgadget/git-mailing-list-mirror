@@ -1,73 +1,92 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] doc: Use the term "remark" in "cherry-pick -x" to disambiguate
- from "git notes"
-Date: Fri, 15 Apr 2011 09:43:55 +0200
-Message-ID: <4DA7F73B.9050007@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Symbolic 'references' in Git?
+Date: Fri, 15 Apr 2011 10:27:14 +0200
+Message-ID: <4DA80162.1070703@drmicha.warpmail.net>
+References: <BANLkTinV8niLibzOQRVraYqwB0hKW1=r1w@mail.gmail.com>	<201104141524.15212.wjl@icecavern.net> <BANLkTik5tD5UOrDkpL8ahEgwFjT+suHACQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 09:44:15 2011
+Cc: "Wesley J. Landaker" <wjl@icecavern.net>, git@vger.kernel.org
+To: Chris Patti <cpatti@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 10:27:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAdhO-0001e4-Hl
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 09:44:14 +0200
+	id 1QAeNV-000199-GK
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 10:27:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755296Ab1DOHoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 03:44:09 -0400
-Received: from lo.gmane.org ([80.91.229.12]:48877 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754672Ab1DOHoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 03:44:08 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QAdhH-0001aN-7p
-	for git@vger.kernel.org; Fri, 15 Apr 2011 09:44:07 +0200
-Received: from berry.zib.de ([130.73.68.143])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 09:44:07 +0200
-Received: from sschuberth by berry.zib.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 09:44:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: berry.zib.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1752063Ab1DOI1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 04:27:40 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:60005 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751788Ab1DOI1R (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2011 04:27:17 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3300F21AB6;
+	Fri, 15 Apr 2011 04:27:16 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute4.internal (MEProxy); Fri, 15 Apr 2011 04:27:16 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ypysi1qquZkpUvzdUASQqePXJdo=; b=FLH06MIDIua3czviu4Z8tnztST51LjP4Y7Cxr+arOxp7bogZ/DlKSKeHmo9jxItwWauWzMR32rqRjZv1g8qfB/4JytB/WSBBcj8/st0HGwvSTyQd/7DgjL6EsoOFLs8iXLJ7+EBPsWOPqa+cdL9/Kss6wO2psYZNtjc5nSCp5QA=
+X-Sasl-enc: JSLR6edwE1B+dtB7glPSLL4HHuW8fHI5sLSi5LLDFbMn 1302856035
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8F905401A66;
+	Fri, 15 Apr 2011 04:27:15 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <BANLkTik5tD5UOrDkpL8ahEgwFjT+suHACQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171593>
 
-The documentation for "cherry-pick -x" can be misread in the way that a
-"git notes" object is attached to the new commit, which is not the case.
-Instead, just some text is appended to the original commit message. Make this
-more clear by simply using the term "remark" instead of "note".
+Chris Patti venit, vidit, dixit 14.04.2011 23:31:
+> On Thu, Apr 14, 2011 at 5:24 PM, Wesley J. Landaker <wjl@icecavern.net> wrote:
+>> On Thursday, April 14, 2011 14:30:59 Chris Patti wrote:
+>>> We want a way to have our Bamboo configuration utilize a symbol to
+>>> refer to 'latest release' 'latest patch' etc. in Git, rather than
+>>> having to go in and change the actual branch name every time we ship a
+>>> release and create a new one.
+>>>
+>>> We thought about using something like:
+>>>
+>>> git symbolic-ref -m'new next-release branch build for Bamboo'
+>>> next-release release-3.15
+>>>
+>>> However, this symbolic ref is only local to one repository, and we
+>>> want it to be global across all of Bamboo.
+>>>
+>>> Rather than resorting to manually copying the symbolic ref file
+>>> around, from repo to repo, is there any way to make such a symbolic
+>>> 'variable' global?
+>>
+>> Why not just use a tag or a branch ?
+>>
+>> git tag -F next-release release-3.15
+>>
+>>  OR
+>>
+>> git branch -D next-release
+>> git branch next-release release-3.15
+>>
+>> (I personally think branches are nicer for this since tags are "supposed" to
+>> be immutable.)
+>>
+> 
+> 
+> Won't either of those things create a 'next-release' that's frozen in
+> time where the release-3.15 branch is *right now*?
+> 
+> This is for a CI system (Bamboo) so we need next-release to act as if
+> we were using release-3.15 itself.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- Documentation/git-cherry-pick.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Maybe add a refspec
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 01db830..5afc2b0 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -52,8 +52,8 @@ OPTIONS
- 
- -x::
- 	When recording the commit, append to the original commit
--	message a note that indicates which commit this change
--	was cherry-picked from.  Append the note only for cherry
-+	message a remark that indicates which commit this change
-+	was cherry-picked from.  Append the remark only for cherry
- 	picks without conflicts.  Do not use this option if
- 	you are cherry-picking from your private branch because
- 	the information is useless to the recipient.  If on the
--- 
-1.7.3.2.msysgit.11
+refs/heads/release-3.15:refs/heads/release
+
+which ensures that you push that branch out under two names? When you
+(integrator/release manager) switch to a different release branch you
+just need to change your config (and probably push -f).
+
+Michael
