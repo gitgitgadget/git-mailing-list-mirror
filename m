@@ -1,91 +1,126 @@
 From: Seth Jennings <spartacus06@gmail.com>
-Subject: [PATCH] git-daemon: fix segfaulting in child_handler() in AIX
-Date: Fri, 15 Apr 2011 11:51:00 -0500
-Message-ID: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
-Cc: Seth Jennings <spartacus06@gmail.com>
+Subject: Re: [PATCH] git-daemon: fix segfaulting in child_handler() in AIX
+Date: Fri, 15 Apr 2011 11:54:12 -0500
+Message-ID: <BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
+References: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 18:52:03 2011
+X-From: git-owner@vger.kernel.org Fri Apr 15 18:54:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAmFW-0003r7-PU
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 18:52:03 +0200
+	id 1QAmHj-0005Ux-K0
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 18:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753846Ab1DOQv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 12:51:57 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60143 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753773Ab1DOQv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 12:51:56 -0400
-Received: by ywj3 with SMTP id 3so735167ywj.19
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 09:51:56 -0700 (PDT)
+	id S1753934Ab1DOQyP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2011 12:54:15 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52005 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753770Ab1DOQyO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2011 12:54:14 -0400
+Received: by wwa36 with SMTP id 36so3437331wwa.1
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 09:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=IzQrpyj2PTTbUrqIrxw+HoSCPbASyLkQwGMVh8f6F3Q=;
-        b=gx5YHecYL35nKD/KfIuIBBVMMGNVfqg8ap4XmWgABIn62xlrGSa6m3W46y7cmBsBI2
-         YXzyRyOeTq3JpReDIQCe9CBdczGcseDw8qsSnKEPeyOAJPInfe+t4dViLU0D4g0VZdY6
-         y8hyOEnz7cbOfH1vZbzedMhzkcH9Hdl1G+Y3o=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type:content-transfer-encoding;
+        bh=kvM7kAeQZDjnnhb2LKjc0QdH8lG/NUV82baCGW1XT6s=;
+        b=ga4lKdmnW47e1tSVysOS0iIxW6tIWGy2aG/3zwrrr5Niz9jiJBD7yB9zDgCfOb43Gq
+         Hhrek6P421vkgEBzKKNb4Uu5uV2MSUFFoPq4Ug4AKpneKDnUMiJuisUTr4X8ccasR31M
+         pu5lprmSK+cuHlR8RgY8NyrFn3BbbI2TRCOrs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=fZeuZbY3I/844VTIvPKovZ2Ttq7XFAMjqV+hPgL322jMqZ34DsnINqXiMAFzMf+5Wo
-         dvGE/vkWC1FUAK5FgMiXzHLAlC+wIEiKcbnud5sUdUHTBR/FZo0fw1eXq9DpLOlatFHB
-         zCDQpiT/pJGSR+J8da/iuO0Malae7EhQrh21Q=
-Received: by 10.101.184.12 with SMTP id l12mr1306644anp.93.1302886315905;
-        Fri, 15 Apr 2011 09:51:55 -0700 (PDT)
-Received: from localhost.localdomain ([32.97.110.56])
-        by mx.google.com with ESMTPS id c4sm2776064ana.23.2011.04.15.09.51.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 15 Apr 2011 09:51:55 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=e07//VtqfWYm12scciZEdTE+8VysIaTVvQ+hjwaXODGJoquaybwIZ3/vbusxn0TPAE
+         VFJMZHZAk8HB9QbgsIOR/tTWocWmVOlAa15NHiT0RqiR92qd4FZZy+aPzFflxbWx45le
+         /NEpqMaiJmH09mnabD6jHuhMQOWQ2/L+SABaM=
+Received: by 10.216.64.16 with SMTP id b16mr2227056wed.5.1302886452961; Fri,
+ 15 Apr 2011 09:54:12 -0700 (PDT)
+Received: by 10.216.171.1 with HTTP; Fri, 15 Apr 2011 09:54:12 -0700 (PDT)
+In-Reply-To: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171617>
 
-This issue seems to be specific to git-daemon on AIX built with xlc.
-After commit 695605b5080e1957bd9dab1fed35a7fee9814297 (from Aug 2008),
-git-daemon segfaults in child_handler() inside the signal() syscall
-immediately after any remote clone/pull operation.  While it is not
-fully understood why this happens, changing signal() to sigaction()
-resolves the issue.
+There is a git-daemon segfault issue that seems to be specific to AIX.
 
-This commit converts singal() to sigaction() in child_handler().
----
- daemon.c |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
+Whenever a remote user pulls or clones, the operation succeeds but
+git-daemon crashes immediately afterward.
 
-diff --git a/daemon.c b/daemon.c
-index 4c8346d..3ea5b2c 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -715,7 +715,10 @@ static void child_handler(int signo)
- 	 * upon signal receipt
- 	 * SysV needs the handler to be rearmed
- 	 */
--	signal(SIGCHLD, child_handler);
-+	struct sigaction sigact;
-+	memset(&sigact, 0, sizeof(sigact));
-+	sigact.sa_handler = child_handler;
-+	sigaction(SIGCHLD, &sigact, NULL);
- }
- 
- static int set_reuse_addr(int sockfd)
-@@ -889,7 +892,10 @@ static int service_loop(struct socketlist *socklist)
- 		pfd[i].events = POLLIN;
- 	}
- 
--	signal(SIGCHLD, child_handler);
-+	struct sigaction sigact;
-+	memset(&sigact, 0, sizeof(sigact));
-+	sigact.sa_handler = child_handler;
-+	sigaction(SIGCHLD, &sigact, NULL);
- 
- 	for (;;) {
- 		int i;
--- 
-1.7.0.4
+$ gdb git-daemon core
+=2E..
+Core was generated by `git-daemon'.
+Program terminated with signal 11, Segmentation fault.
+#0  0xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xpg5.o=
+)
+(gdb) where
+#0  0xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xpg5.o=
+)
+#1  0xd04f1874 in _p_sigaction () from /usr/lib/libpthreads.a(shr_xpg5.=
+o)
+#2  0xd013ae34 in sigaction () from /usr/lib/libc.a(shr.o)
+#3  0xd0217cd8 in signal () from /usr/lib/libc.a(shr.o)
+#4  0x10000b90 in child_handler (signo=3D0) at daemon.c:718
+#5  <signal handler called>
+
+Through experimentation, I found that using sigaction() instead of
+signal() resolves the issue.  I'm not entirely sure why this is.
+
+Any feedback about the issue or the patch is welcome.  There might be
+a better solution.
+
+On Fri, Apr 15, 2011 at 11:51 AM, Seth Jennings <spartacus06@gmail.com>=
+ wrote:
+> This issue seems to be specific to git-daemon on AIX built with xlc.
+> After commit 695605b5080e1957bd9dab1fed35a7fee9814297 (from Aug 2008)=
+,
+> git-daemon segfaults in child_handler() inside the signal() syscall
+> immediately after any remote clone/pull operation. =A0While it is not
+> fully understood why this happens, changing signal() to sigaction()
+> resolves the issue.
+>
+> This commit converts singal() to sigaction() in child_handler().
+> ---
+> =A0daemon.c | =A0 10 ++++++++--
+> =A01 files changed, 8 insertions(+), 2 deletions(-)
+>
+> diff --git a/daemon.c b/daemon.c
+> index 4c8346d..3ea5b2c 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -715,7 +715,10 @@ static void child_handler(int signo)
+> =A0 =A0 =A0 =A0 * upon signal receipt
+> =A0 =A0 =A0 =A0 * SysV needs the handler to be rearmed
+> =A0 =A0 =A0 =A0 */
+> - =A0 =A0 =A0 signal(SIGCHLD, child_handler);
+> + =A0 =A0 =A0 struct sigaction sigact;
+> + =A0 =A0 =A0 memset(&sigact, 0, sizeof(sigact));
+> + =A0 =A0 =A0 sigact.sa_handler =3D child_handler;
+> + =A0 =A0 =A0 sigaction(SIGCHLD, &sigact, NULL);
+> =A0}
+>
+> =A0static int set_reuse_addr(int sockfd)
+> @@ -889,7 +892,10 @@ static int service_loop(struct socketlist *sockl=
+ist)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0pfd[i].events =3D POLLIN;
+> =A0 =A0 =A0 =A0}
+>
+> - =A0 =A0 =A0 signal(SIGCHLD, child_handler);
+> + =A0 =A0 =A0 struct sigaction sigact;
+> + =A0 =A0 =A0 memset(&sigact, 0, sizeof(sigact));
+> + =A0 =A0 =A0 sigact.sa_handler =3D child_handler;
+> + =A0 =A0 =A0 sigaction(SIGCHLD, &sigact, NULL);
+>
+> =A0 =A0 =A0 =A0for (;;) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int i;
+> --
+> 1.7.0.4
+>
+>
