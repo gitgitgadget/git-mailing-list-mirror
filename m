@@ -1,78 +1,88 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/RFC 6/5] Documentation/format-patch: suggest Toggle Word
- Wrap add-on for Thunderbird
-Date: Fri, 15 Apr 2011 20:01:35 +0200
-Message-ID: <4DA887FF.4070606@drmicha.warpmail.net>
-References: <87d3kq6tz7.fsf@rho.meyering.net> <1302719749.21047.6.camel@drew-northup.unet.maine.edu> <87mxjtn8x7.fsf@rho.meyering.net> <20110413221736.GA773@elie> <7vzkntkc9d.fsf@alter.siamese.dyndns.org> <20110414211125.GA15277@elie> <7vlizcfpz8.fsf@alter.siamese.dyndns.org> <20110415021100.GA19829@elie> <4DA7F6C0.4050707@viscovery.net> <7vtydzcse4.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2/RFC 10/11] gitweb.js: Add UI for selecting common timezone to display dates
+Date: Fri, 15 Apr 2011 20:06:26 +0200
+Message-ID: <201104152006.27211.jnareb@gmail.com>
+References: <1302878645-458-1-git-send-email-jnareb@gmail.com> <1302878645-458-11-git-send-email-jnareb@gmail.com> <201104151943.11537.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jim Meyering <jim@meyering.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	git list <git@vger.kernel.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 20:01:47 2011
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	Kevin Cernekee <cernekee@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 20:06:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAnL0-0007VS-J3
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 20:01:46 +0200
+	id 1QAnPk-0002QV-OG
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 20:06:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755894Ab1DOSBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 14:01:41 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:37127 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755639Ab1DOSBl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2011 14:01:41 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EB3ED2093D;
-	Fri, 15 Apr 2011 14:01:39 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 15 Apr 2011 14:01:39 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=DS6gLRIqCS6jkEgKoOyTDpVxzl0=; b=Zv9KRjqkZx8mI3jO/AJKx+gvrp2xNmDw4d0jKf/gwB5DVG8uGpxuWvvP9c22gE545Jijv3Wm2aCEnny4x8++QXSKk2Nv0Z69KqbmakvisCTDjdhWzpQePFHMuIKxR2O+ILTV+imliwIaIXXfCT1zIzgbauBxli4J85BApgEEMpg=
-X-Sasl-enc: 9QRxFTEqggtYST2esr9FF/Y01C2oxpSt0NIQUQZkQub7 1302890499
-Received: from localhost.localdomain (p54859254.dip0.t-ipconnect.de [84.133.146.84])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B3CFC4456D5;
-	Fri, 15 Apr 2011 14:01:37 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7vtydzcse4.fsf@alter.siamese.dyndns.org>
+	id S1756223Ab1DOSGg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2011 14:06:36 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:48295 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755510Ab1DOSGf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 14:06:35 -0400
+Received: by bwz15 with SMTP id 15so2385438bwz.19
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 11:06:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=3n9/9zgGhkdzzR/kNfMO979cfrwC/zew1/zquv7nPOg=;
+        b=xZ9TM4BolIBAfjctjDOVncItRFGpZEgjMfTVPGMOAAebjJmhmsdlJpuSSH5wf2ahgF
+         ufV05CT9byTvVHfWrdhEBV5P2dpYpKs4wJIdRD4uqQqkicahFIK1TdojZNuB/NwYq6yI
+         djL68ypj8thTcOQI5eR8vvMm2zyjX2wqNjLs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=XyaDPII8nN4Rk9yqc2g7SeAxWIZsw3e5iEv0xGG9BOFEJpGCSMu+8ulHmfy2nbSrYw
+         2u6B+47N5ZwJn33iKE8Ddcyq7rLCSX5FMg1KTqXzJ/O16cmzH1eDwTxyEaxi1NquMC7R
+         gprhr2j1gNXxakE3RRLn9pHkzJSM35H9xa2ro=
+Received: by 10.204.20.139 with SMTP id f11mr110043bkb.177.1302890794116;
+        Fri, 15 Apr 2011 11:06:34 -0700 (PDT)
+Received: from [192.168.1.13] (abvp82.neoplus.adsl.tpnet.pl [83.8.213.82])
+        by mx.google.com with ESMTPS id y9sm1685823faj.2.2011.04.15.11.06.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 15 Apr 2011 11:06:33 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201104151943.11537.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171627>
 
-Junio C Hamano venit, vidit, dixit 15.04.2011 19:54:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> From: Johannes Sixt <j6t@kdbg.org>
->>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->> ---
->>  How about this as 6/5? I used the method described for this submission, so if
->>  what you got is unusable, you know what to think of the suggestion ;)
-> 
-> It seems to apply fine ;-).
-> 
->>  I put this suggestion as approach #1 because I think it is superior to the
->>  other two (iff it worked).
-> 
-> Care to reword "superior" in a less subjective way (which should be very
-> easy --- both existing suggestions seem to force plain-text no-wrap on any
-> and all outgoing mails and to make it cumbersome to flip back and forth,
-> as opposed to this one that gives a one-click on-demand way to do so only
-> when you are sending a patch) and put it in the log message?
+Jakub Narebski wrote:
+> On Fri, 15 Apr 2011, Jakub Narebski wrote:
+>=20
+> > KNOWN BUGS:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > * Timezone selection doesn't work in Chromium 6.0.472.62 (59676) an=
+d
+> > =A0 Google Chrome 10.0.648.204:
+> >=20
+> > =A0 Uncaught Error: NOT_FOUND_ERR: DOM Exception 8
+> > =A0 =A0 removeChangeTZForm
+> > =A0 =A0 /gitweb-static/gitweb.js:785
+> > =A0 onTZFormChange
+> >=20
+> > =A0 line 785: var removed =3D container.removeChild(popup);
+> >=20
+> > =A0 It works in Mozilla 1.17.2, Konqueror 3.5.3, Firefox 3.6.15, 3.=
+6.16
+> > =A0 and 4.0, Internet Explorer 8.0, Opera 10.63.
 
-Does this add-on toggle "format fl[oa]wed" also? Otherwise you have to
-make this is off also.
+> [...] I'd check if not setting 'onblur' event handler (which doesn't
+> work as expected anyway) would help.=20
 
-BTW: "AboutConfig" was great while it was needed, but these days you can
-access Thunderbird's about:config from the options.
+It helps -- Google Chrome works correctly now.
 
-Michael
+--=20
+Jakub Narebski
+Poland
