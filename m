@@ -1,126 +1,89 @@
-From: Seth Jennings <spartacus06@gmail.com>
-Subject: Re: [PATCH] git-daemon: fix segfaulting in child_handler() in AIX
-Date: Fri, 15 Apr 2011 11:54:12 -0500
-Message-ID: <BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
-References: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] doc: Use the term "remark" in "cherry-pick -x" to
+ disambiguate from "git notes"
+Date: Fri, 15 Apr 2011 10:12:07 -0700
+Message-ID: <7v7have8wo.fsf@alter.siamese.dyndns.org>
+References: <4DA7F73B.9050007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 18:54:20 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 19:12:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAmHj-0005Ux-K0
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 18:54:19 +0200
+	id 1QAmZC-000055-JR
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 19:12:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934Ab1DOQyP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2011 12:54:15 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:52005 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753770Ab1DOQyO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2011 12:54:14 -0400
-Received: by wwa36 with SMTP id 36so3437331wwa.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2011 09:54:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=kvM7kAeQZDjnnhb2LKjc0QdH8lG/NUV82baCGW1XT6s=;
-        b=ga4lKdmnW47e1tSVysOS0iIxW6tIWGy2aG/3zwrrr5Niz9jiJBD7yB9zDgCfOb43Gq
-         Hhrek6P421vkgEBzKKNb4Uu5uV2MSUFFoPq4Ug4AKpneKDnUMiJuisUTr4X8ccasR31M
-         pu5lprmSK+cuHlR8RgY8NyrFn3BbbI2TRCOrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=e07//VtqfWYm12scciZEdTE+8VysIaTVvQ+hjwaXODGJoquaybwIZ3/vbusxn0TPAE
-         VFJMZHZAk8HB9QbgsIOR/tTWocWmVOlAa15NHiT0RqiR92qd4FZZy+aPzFflxbWx45le
-         /NEpqMaiJmH09mnabD6jHuhMQOWQ2/L+SABaM=
-Received: by 10.216.64.16 with SMTP id b16mr2227056wed.5.1302886452961; Fri,
- 15 Apr 2011 09:54:12 -0700 (PDT)
-Received: by 10.216.171.1 with HTTP; Fri, 15 Apr 2011 09:54:12 -0700 (PDT)
-In-Reply-To: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
+	id S1753333Ab1DORMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 13:12:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61953 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005Ab1DORMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 13:12:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0788C4E01;
+	Fri, 15 Apr 2011 13:14:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BVN//fQ9yeyTRqHhZ8hHmzGe/fk=; b=VJrq9T
+	BmSBabyJuOxK1YMHAH6x/laHsDqkvsnWAay4bn+Nk4i3wEDw46D8RtmmR6uu/Qpp
+	+lCpDOLHHTTd3O2kBO+Ru3BjpGlsIvh87owiY4C5LpGrLKWDetCMQq2vtzKwNjQ6
+	MsZ43GigFEjNi67mknaEcs8UDUFuDmkMUzik0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PLXRC1RVf/aZtDFV7P0RdG8/A67YinHh
+	xSuX118GSVqZMY81GGnmNoUlJTP6BX8T/XmRtrwOCCDiV5p+J3J4UmTnN4t4c761
+	mq9cddfDxx4f097j2ufBjtgCmbPmboq7yumFS7OHNWJdI2Fec1tJ0OmJqjN/SsYG
+	tJEodwyFGeQ=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CA1204DFF;
+	Fri, 15 Apr 2011 13:14:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BD6C94DF2; Fri, 15 Apr 2011
+ 13:14:07 -0400 (EDT)
+In-Reply-To: <4DA7F73B.9050007@gmail.com> (Sebastian Schuberth's message of
+ "Fri, 15 Apr 2011 09:43:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C78B47DE-6783-11E0-BA87-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171618>
 
-There is a git-daemon segfault issue that seems to be specific to AIX.
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-Whenever a remote user pulls or clones, the operation succeeds but
-git-daemon crashes immediately afterward.
+> The documentation for "cherry-pick -x" can be misread in the way that a
+> "git notes" object is attached to the new commit, which is not the case.
+> Instead, just some text is appended to the original commit message. Make this
+> more clear by simply using the term "remark" instead of "note".
 
-$ gdb git-daemon core
-=2E..
-Core was generated by `git-daemon'.
-Program terminated with signal 11, Segmentation fault.
-#0  0xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xpg5.o=
-)
-(gdb) where
-#0  0xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xpg5.o=
-)
-#1  0xd04f1874 in _p_sigaction () from /usr/lib/libpthreads.a(shr_xpg5.=
-o)
-#2  0xd013ae34 in sigaction () from /usr/lib/libc.a(shr.o)
-#3  0xd0217cd8 in signal () from /usr/lib/libc.a(shr.o)
-#4  0x10000b90 in child_handler (signo=3D0) at daemon.c:718
-#5  <signal handler called>
+A sensible concern, I guess, even though "_append_ to the original _commit
+message_" should signal that this sentence cannot be referring to a note
+object separate from the commit.
 
-Through experimentation, I found that using sigaction() instead of
-signal() resolves the issue.  I'm not entirely sure why this is.
+> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> index 01db830..5afc2b0 100644
+> --- a/Documentation/git-cherry-pick.txt
+> +++ b/Documentation/git-cherry-pick.txt
+> @@ -52,8 +52,8 @@ OPTIONS
+>  
+>  -x::
+>  	When recording the commit, append to the original commit
+> +	message a remark that indicates which commit this change
+> +	was cherry-picked from.  Append the remark only for cherry
+>  	picks without conflicts.  ...
 
-Any feedback about the issue or the patch is welcome.  There might be
-a better solution.
+I wonder if it is better to be even more explicit and say:
 
-On Fri, Apr 15, 2011 at 11:51 AM, Seth Jennings <spartacus06@gmail.com>=
- wrote:
-> This issue seems to be specific to git-daemon on AIX built with xlc.
-> After commit 695605b5080e1957bd9dab1fed35a7fee9814297 (from Aug 2008)=
-,
-> git-daemon segfaults in child_handler() inside the signal() syscall
-> immediately after any remote clone/pull operation. =A0While it is not
-> fully understood why this happens, changing signal() to sigaction()
-> resolves the issue.
->
-> This commit converts singal() to sigaction() in child_handler().
-> ---
-> =A0daemon.c | =A0 10 ++++++++--
-> =A01 files changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/daemon.c b/daemon.c
-> index 4c8346d..3ea5b2c 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -715,7 +715,10 @@ static void child_handler(int signo)
-> =A0 =A0 =A0 =A0 * upon signal receipt
-> =A0 =A0 =A0 =A0 * SysV needs the handler to be rearmed
-> =A0 =A0 =A0 =A0 */
-> - =A0 =A0 =A0 signal(SIGCHLD, child_handler);
-> + =A0 =A0 =A0 struct sigaction sigact;
-> + =A0 =A0 =A0 memset(&sigact, 0, sizeof(sigact));
-> + =A0 =A0 =A0 sigact.sa_handler =3D child_handler;
-> + =A0 =A0 =A0 sigaction(SIGCHLD, &sigact, NULL);
-> =A0}
->
-> =A0static int set_reuse_addr(int sockfd)
-> @@ -889,7 +892,10 @@ static int service_loop(struct socketlist *sockl=
-ist)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0pfd[i].events =3D POLLIN;
-> =A0 =A0 =A0 =A0}
->
-> - =A0 =A0 =A0 signal(SIGCHLD, child_handler);
-> + =A0 =A0 =A0 struct sigaction sigact;
-> + =A0 =A0 =A0 memset(&sigact, 0, sizeof(sigact));
-> + =A0 =A0 =A0 sigact.sa_handler =3D child_handler;
-> + =A0 =A0 =A0 sigaction(SIGCHLD, &sigact, NULL);
->
-> =A0 =A0 =A0 =A0for (;;) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int i;
-> --
-> 1.7.0.4
->
->
+	... append a line that says "(cherry picked from commit ...)" to
+        the original commit message in order to indicate which commit this
+        change was cherry-picked from.  This is done only for ...
+
+so that we don't have to worry about having to change this in 10 years
+when we notice that description can easily be misread that it is done
+using the remark feature introduced a few years back?
