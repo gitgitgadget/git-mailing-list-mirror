@@ -1,95 +1,87 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2011, #04; Tue, 12)
-Date: Fri, 15 Apr 2011 08:24:09 +0200
-Message-ID: <BANLkTimeiH_ohJ6yGTU0Ei3t2xvUz0zCUA@mail.gmail.com>
-References: <7vaafvnl9t.fsf@alter.siamese.dyndns.org>
-	<BANLkTi=7YSfKe=Pc5n-BNr30=ADM-jRXrg@mail.gmail.com>
-	<4DA710FB.7060808@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: textconv not invoked when viewing merge commit
+Date: Fri, 15 Apr 2011 08:54:49 +0200
+Message-ID: <vpq62qg3sxy.fsf@bauges.imag.fr>
+References: <201104111912.47547.kumbayo84@arcor.de>
+	<4DA415AB.9020008@drmicha.warpmail.net>
+	<20110414190901.GA1184@sigill.intra.peff.net>
+	<7vipughbxh.fsf@alter.siamese.dyndns.org>
+	<7vd3kohb5n.fsf@alter.siamese.dyndns.org>
+	<7v8vvcha2s.fsf@alter.siamese.dyndns.org>
+	<20110414202356.GB6525@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Apr 15 08:24:19 2011
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Peter Oberndorfer <kumbayo84@arcor.de>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 15 08:58:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAcS1-0008VL-Dx
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 08:24:17 +0200
+	id 1QAczF-0001Zv-Vn
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 08:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753421Ab1DOGYM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2011 02:24:12 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:56158 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341Ab1DOGYK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2011 02:24:10 -0400
-Received: by vws1 with SMTP id 1so1870523vws.19
-        for <git@vger.kernel.org>; Thu, 14 Apr 2011 23:24:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rzwYpSwDE730YBpuCzFi2MDuNqleCFl0JxOv2CFvYcc=;
-        b=Qg+iDCEHbo5Xpl533yarOjAAppydL+kv8QzheCAWeS0d83szHd8I05YqGDUVDv4SJ/
-         kJM4fGFhBHpp4W1LJza9yJrTWiSI64z4RIuD3zQjI/vefUgPjsGXiqyK/Xxn5tSN9gOq
-         BzW9MgUlyJm0t28Oi0pgzu6vnsGI4M8JhYtE0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VJLZ/HN/yCBZw8pMqOH/OH2aRR4+SvuMfOpS7nTKRn0b78c6St3vQPvXQVJoKiE7+K
-         W23YvZp02skz6yqMykNcJX/LhSPUAftkGYvtjQL7cyq95lnmJtBCWcRP8g9QDJKrdwxB
-         h+PcIgtRGGNiRHzUFb9u0ymC734PDHg404vtw=
-Received: by 10.220.117.148 with SMTP id r20mr514092vcq.16.1302848649593; Thu,
- 14 Apr 2011 23:24:09 -0700 (PDT)
-Received: by 10.220.180.202 with HTTP; Thu, 14 Apr 2011 23:24:09 -0700 (PDT)
-In-Reply-To: <4DA710FB.7060808@alum.mit.edu>
+	id S1754692Ab1DOG6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 02:58:32 -0400
+Received: from imag.imag.fr ([129.88.30.1]:45380 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753178Ab1DOG6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 02:58:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p3F6sog3019872
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 15 Apr 2011 08:54:50 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QAcvZ-0002RZ-V2; Fri, 15 Apr 2011 08:54:49 +0200
+In-Reply-To: <20110414202356.GB6525@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 14 Apr 2011 16:23:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 15 Apr 2011 08:54:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171590>
 
-On Thu, Apr 14, 2011 at 5:21 PM, Michael Haggerty <mhagger@alum.mit.edu=
-> wrote:
-> On 04/14/2011 03:38 PM, Piotr Krukowiecki wrote:
->> On Wed, Apr 13, 2011 at 12:43 AM, Junio C Hamano <gitster@pobox.com>=
- wrote:
->>> * mh/git-svn-automkdirs (2011-04-01) 1 commit
->>> =A0(merged to 'next' on 2011-04-03 at 7fa4978)
->>> =A0+ git-svn: add an option to skip the creation of empty directori=
-es
->>>
->>> Should be safe, but I'd like an Ack from git-svn folks.
->>
->> I wanted to test performance of this change - what's the best way to=
- do it?
->>
->> I tried some ideas, but rebase was too fast for performance measurem=
-ents.
->> I did not have new commits, but just some old, already in trunk chan=
-ges, which
->> I tried to rebase - probably it was just fast forward?
+Jeff King <peff@peff.net> writes:
+
+> On Thu, Apr 14, 2011 at 01:06:19PM -0700, Junio C Hamano wrote:
 >
-> The unhandled.log.gz file for trunk of our main project is 14 Mb and
-> uncompresses to 233 Mb. =A0About 90% of it consists of svn:mergeinfo
-> properties for file that were copied or renamed within the repository=
-;
-> most of the rest is other random SVN file properties.
+>> Instead, I think we should just use "Binary blob $SHA-1\n" as if that is
+>> the textconv of a binary file without textconv filter.  That would
+>> certainly make the code much simpler, and more importantly, the output
+>> would become more pleasant. We would show something like:
+>> 
+>>     - Binary blob bc3c57058faba66f6a7a947e1e9642f47053b5bb
+>>      -Binary blob 536e55524db72bd2acf175208aef4f3dfc148d42
+>>     ++Binary blob 67cfeb2016b24df1cb406c18145efd399f6a1792
+>> 
+>> if we did so.
 >
-> With such a huge unhandled.log file, "git svn mkdirs" took about 10s =
-for
-> me. =A0I believe that "git svn rebase" should take at least as long, =
-even
-> if it is a fast-forward.
+> Yeah, I think that is pretty readable. But it gives me a funny feeling
+> to encode magic strings inside actual diff output. That is, the output
+> is indistinguishable from a file which contained the "Binary blob..."
+> strings.
+>
+> I can't think of a case where it matters, though, so maybe it is just
+> paranoia.
 
-That might be the reason - my unhandled.log is 17MB (unpacked) and mkdi=
-rs
-takes 0.5s
+A line-counting, statistics tool would think that 1 line has been
+removed from both branches, and one new added by the merge.
 
+Well, I know no tool parsing combined diff actually, so it's indeed a
+hypothetical case.
 
---=20
-Piotr Krukowiecki
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
