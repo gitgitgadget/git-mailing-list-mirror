@@ -1,78 +1,106 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: Commit hashes differ from local and remote
-Date: Thu, 14 Apr 2011 21:46:52 -0400
-Message-ID: <BANLkTi=oXF95aE90Wn=E=yX8P6r79vOOcQ@mail.gmail.com>
-References: <BANLkTimhx1tN7EzU94bpKK64P1F8P7MG0g@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: The future of gitweb - part 2: JavaScript
+Date: Thu, 14 Apr 2011 18:56:24 -0700 (PDT)
+Message-ID: <alpine.DEB.2.00.1104141854210.13309@asgard.lang.hm>
+References: <201102142039.59416.jnareb@gmail.com> <201104141154.55078.jnareb@gmail.com> <BANLkTik1dZ-_DGmj70=-+9j0EsUQZ=BbaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>
-To: Arthur Debert <arthur@stimuli.com.br>
-X-From: git-owner@vger.kernel.org Fri Apr 15 03:47:15 2011
+Content-Type: MULTIPART/MIXED; BOUNDARY="680960-1365741227-1302832584=:13309"
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	John Hawley <warthog9@kernel.org>,
+	Kevin Cernekee <cernekee@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, Petr Baudis <pasky@ucw.cz>
+To: =?ISO-8859-2?Q?Micha=B3_=A3owicki?= <mlowicki@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 03:56:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAY7u-0007MK-3m
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 03:47:14 +0200
+	id 1QAYH6-0002Wo-4R
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Apr 2011 03:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755049Ab1DOBqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2011 21:46:54 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:63775 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755029Ab1DOBqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2011 21:46:53 -0400
-Received: by wwa36 with SMTP id 36so2666593wwa.1
-        for <git@vger.kernel.org>; Thu, 14 Apr 2011 18:46:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=Vy9CDFmRKmFKwhkqg+wU5La3AxoGInhUiDbMHHM2bAw=;
-        b=AeJMVVXRq8FWSo9VDazTEWizyGlevgvurZUoztQIM/kWTol7u6kZQJ3DNoMxxaEbN2
-         xcsYePyWP/jsRxkP56L0Umpk+9VdHUrORW1dRntaL8boF5YUtiqRY3xyHQR8MrxKVflf
-         mJt3iOCuO1ul3YrX1Te+ndjgd3ZGoBii0q9Qw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=eJUz6Y1YnAqAd1r6sRtUInCpYIu9s2FfoQpedN0BJm/i6ZBa5O5EjLe/ksoqyQuBjI
-         NDIqCOd0ybyBw5fGbg/K8XS7FCo/FPdPSON3aFnvkvfWvfD+L7OCUqvXCyGTHBGaiQi9
-         CqhktajwI3oLcE+AXEdWOE5MHKnmPDnKNPbnQ=
-Received: by 10.216.246.12 with SMTP id p12mr1361154wer.91.1302832012163; Thu,
- 14 Apr 2011 18:46:52 -0700 (PDT)
-Received: by 10.216.187.141 with HTTP; Thu, 14 Apr 2011 18:46:52 -0700 (PDT)
-In-Reply-To: <BANLkTimhx1tN7EzU94bpKK64P1F8P7MG0g@mail.gmail.com>
-X-Google-Sender-Auth: cg3wd8GRcjNecZsPbpNLn-xeFBY
+	id S1755144Ab1DOB4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2011 21:56:38 -0400
+Received: from mail.lang.hm ([64.81.33.126]:38290 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755092Ab1DOB4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2011 21:56:38 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id p3F1uOJQ015777;
+	Thu, 14 Apr 2011 18:56:24 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <BANLkTik1dZ-_DGmj70=-+9j0EsUQZ=BbaQ@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171575>
 
-On Wed, Apr 13, 2011 at 3:38 PM, Arthur Debert <arthur@stimuli.com.br> wrote:
-> Hi Folks.
->
-> I'm seeing some behavior that my git-fu isn't quite capable of explaining.
->
-> On a local branch the last commit has a hash different than the remote
-> branch it is tracking from. Nothing has been committed locally and
-> doing:
-> $ git diff branch-name origin/branch-name
-> Comes up empty
-> git pull also says my branch is already up to date.
->
-> It seems that git pull has generated a bogus commit (a merge commit),
-> but I can't quite figure out why.
-> This is specially important since we need our app servers to have the
-> same commit hash once git pull is done.
->
-> Anything obvious I'm missing out? Any extra info that can help
-> pinpoint what the issue is?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Maybe you did a git merge instead of a git pull?  Does 'gitk --all'
-show you anything interesting?  I find it useful in understanding
-issues like this.  It does sound like a merge happened, without having
-any more information to go on.
+--680960-1365741227-1302832584=:13309
+Content-Type: TEXT/PLAIN; charset=ISO-8859-2; format=flowed
+Content-Transfer-Encoding: 8BIT
 
--John
+On Thu, 14 Apr 2011, Micha? ?owicki wrote:
+
+> 2011/4/14 Jakub Narebski <jnareb@gmail.com>:
+>>
+>> Second issue is how to use it / how to include it:
+>>
+>> * Use some external Content Delivery Network (CDN), like
+>>  Google Libraries API
+>>     http://code.google.com/apis/libraries/devguide.html
+>>  e.g.:
+>>
+>>  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+>>  <script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+>>
+>>  or
+>>
+>>  <script src="https://ajax.googleapis.com/ajax/libs/mootools/1.3.1/mootools-yui-compressed.js"></script>
+>>
+>>  This is nice solution... if we don't need plugin / extension
+>>  which usually are not available in CDN version of library.
+>>
+>>  Also this makes gitweb dependent on third-party service, and require
+>>  network connectivity to Internet to have access to JavaScript-based
+>>  features.
+>>
+>> * Mark appropriate JavaScript library as dependency in gitweb/INSTALL
+>>  to be downloaded in appropriate place but do not provide sources.
+>>  Perhaps add target in gitweb/Makefile that automatically downloads
+>>  it.
+>>
+>>  This would make installing gitweb correctly more complicated.
+>>  JavaScript-based features would not work if somebody instals gitweb
+>>  incorrectly.
+>>
+>>  I think we can set up gitweb build so that one can configure at
+>>  build stage whether to use CDN or download library, or use
+>>  pre-downloaded (and perhaps instaled somewhere) version of framework
+>>  (combining JavaScript on build in all but first case).
+>
+> I'm not sure about pre-downloaded version of libs. Most of the time
+> it's not a big deal but sometimes it may introduce hard to detect
+> issues when someone use different version of the lib -
+> http://ejohn.org/blog/learning-from-twitter/ .But the idea with
+> options - CDN or download is very good. CDNs can improve the page
+> download speed by increasing simultaneous connections if files are
+> downloaded from many hostnames but for companies where instances of
+> gitweb are on the Intrantet the 2nd option could be better I think (at
+> least in my case). Additionaly CDNs can save some money when you pay
+> for data traffic :)
+
+another advantage of using the library from a CDN is that the user may 
+already have it cached in their browser and not have to download it at 
+all.
+
+as long as there is a build-time option to make a version that does not 
+depend on being able to get to the Internet I think it's a good idea to 
+make the default use the Internet.
+
+David Lang
+--680960-1365741227-1302832584=:13309--
