@@ -1,57 +1,51 @@
-From: "D. A. van Delft" <davd@bart.nl>
-Subject: spurious fail of git merge after rebasing
-Date: Sat, 16 Apr 2011 00:45:12 +0200
-Message-ID: <201104160045.12633.davd@bart.nl>
+From: Avner <avnermoshkovitz@lighthauslogic.com>
+Subject: Re: [1.8.0] perl/Git.pm: moving away from using Error.pm module
+Date: Fri, 15 Apr 2011 16:35:45 -0700 (PDT)
+Message-ID: <1302910545319-6277964.post@n2.nabble.com>
+References: <201102202346.36410.jnareb@gmail.com> <7v4o7xluph.fsf@alter.siamese.dyndns.org> <4D624632.80904@letterboxes.org> <AANLkTimwhYwQz9W3tAa2=Q0nJY8AoZYq=7KeX5O2Ca_G@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 01:21:37 2011
+X-From: git-owner@vger.kernel.org Sat Apr 16 01:35:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAsKX-0001KC-G4
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 01:21:37 +0200
+	id 1QAsYK-00083y-Bl
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 01:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753981Ab1DOXVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 19:21:32 -0400
-Received: from claranetnl-outbound-smtp04.mail.eu.clara.net ([195.8.64.69]:35205
-	"EHLO claranetnl-outbound-smtp04.mail.eu.clara.net"
+	id S1752273Ab1DOXfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2011 19:35:46 -0400
+Received: from sam.nabble.com ([216.139.236.26]:59656 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753926Ab1DOXVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 19:21:31 -0400
-X-Greylist: delayed 2176 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Apr 2011 19:21:31 EDT
-Received: from dsl-235-27541.iae.nl ([212.61.235.109]:10981 helo=tilia.localnet)
-	by relay04.mail.eu.clara.net (smtp-vh.nl.clara.net [213.253.3.44]:2025)
-	with esmtp id 1QArlJ-0001Rs-DF  for git@vger.kernel.org
-	(return-path <davd@bart.nl>); Fri, 15 Apr 2011 22:45:13 +0000
-User-Agent: KMail/1.13.5 (Linux/2.6.34.7-0.7-default; KDE/4.4.4; x86_64; ; )
+	id S1751400Ab1DOXfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2011 19:35:45 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.69)
+	(envelope-from <avnermoshkovitz@lighthauslogic.com>)
+	id 1QAsYD-0004gp-AX
+	for git@vger.kernel.org; Fri, 15 Apr 2011 16:35:45 -0700
+In-Reply-To: <AANLkTimwhYwQz9W3tAa2=Q0nJY8AoZYq=7KeX5O2Ca_G@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171648>
 
-Hi,
+Using the packages Exception::Class and Carp together, compete to set the
+eval_error variable ($@)
+For example, throwing an object (of type Exception::Class) can result in the
+eval_error variable ($@) getting a scalar type after the eval statement if
+the Carp is fast enough to set a string (of type scalar) that contains the
+error stack.
+The result is that following the eval statement the catch sees a different
+type than what it expects and does not react as planned.
 
-not sure if this is the right place, but I couldn't find a 
-bugzilla or something for git.
+Avi
 
-Point is, I have found a scenario where sometimes git fails on 
-a specific merge.
-Each time I start with the same identical git repository 
-(archived once and restored each time before a run) and run 
-the same fixed series of rebases and merges on it. Once in a 
-while it fails with a merge conflict, sometimes at first try, 
-sometimes after 10+ times. I have a canned set of testcases 
-which reproduces this behaviour. I have also narrowed it down 
-somewhat on how to work around, or prevent it from occurring. 
 
-However, given that it doesn't always fail or succeed, is 
-unexpected.
-
-regards,
-Danny A. van Delft
+--
+View this message in context: http://git.661346.n2.nabble.com/1-8-0-perl-Git-pm-moving-away-from-using-Error-pm-module-tp6046799p6277964.html
+Sent from the git mailing list archive at Nabble.com.
