@@ -1,87 +1,97 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 2/2] http-push: refactor curl_easy_setup madness
-Date: Sun, 17 Apr 2011 02:24:14 +0800
-Message-ID: <BANLkTinv4M7biQ_Wd3rWYbGLSwgGBmhbUA@mail.gmail.com>
-References: <1301535531-1244-1-git-send-email-dpmcgee@gmail.com>
-	<1301535531-1244-2-git-send-email-dpmcgee@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: The future of gitweb - part 2: JavaScript
+Date: Sat, 16 Apr 2011 21:32:56 +0200
+Message-ID: <201104162132.57650.jnareb@gmail.com>
+References: <201102142039.59416.jnareb@gmail.com> <201104141154.55078.jnareb@gmail.com> <20110416171200.GB8201@external.screwed.box>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="koi8-r"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 16 20:24:24 2011
+To: Peter Vereshagin <peter@vereshagin.org>
+X-From: git-owner@vger.kernel.org Sat Apr 16 21:33:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBAAQ-00080H-Jz
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 20:24:22 +0200
+	id 1QBBF4-0002O7-Cu
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 21:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567Ab1DPSYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2011 14:24:17 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44633 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751545Ab1DPSYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2011 14:24:15 -0400
-Received: by iwn34 with SMTP id 34so2890787iwn.19
-        for <git@vger.kernel.org>; Sat, 16 Apr 2011 11:24:14 -0700 (PDT)
+	id S1752261Ab1DPTdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2011 15:33:05 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53265 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752165Ab1DPTdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 15:33:01 -0400
+Received: by bwz15 with SMTP id 15so2932328bwz.19
+        for <git@vger.kernel.org>; Sat, 16 Apr 2011 12:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Pt8gg5KxlpYmbORZqqsq8P8J9lTJ29wNvnQaJPbPfyU=;
-        b=EPHyrmmAglwFWilzWgMwUS2y1KK3GPrXlrH7b29736+VVtSnK9Xwx/sk9Gee9Z/fTx
-         SkcUX6fm4p82tLXx+4ezQC8zDwpWzzNR+dG0L64sDdhealXQSoI5nJ4JUF0rwHzHkEvH
-         yzq+NtL9HUfLJ4ymG52w+Ueo5YzBoA7pbffFE=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=1Ro9Q22YsUPjyJZ/aPaucDiWox3j1XnEu+VrG7JL8sI=;
+        b=WPV7uVOC7qj1/iSevlu14IXU4RaPO36QZ4sUeKASEy768WPyk9LBDIGGboWxLoim3t
+         rVpYt0RsaJ/iQLFqnc4ygysEcoJm843CoxevRtYYbb4noB0aLWjX5FRKECJUXXgRK4yo
+         eDWvT4fmBXDOaUgkIbfS+SC1Bi3VKZp4IEOsg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=QTF4Eggh6+GxlbwTo/j1vGsGzA/M3JYCyyXarQpdQP6yaA2Im32hA18VgK36ZPzytj
-         UO8Q2hTSNWfuygFtfRXe2wpjWnctKxJPr4py9GRymC681R5Nb0etczQebcUBUxwvLSB2
-         qkmJsa+hs+wpaKHFKrdL1tChf0K90f8tOhYz0=
-Received: by 10.42.146.196 with SMTP id k4mr4319016icv.105.1302978254458; Sat,
- 16 Apr 2011 11:24:14 -0700 (PDT)
-Received: by 10.43.55.10 with HTTP; Sat, 16 Apr 2011 11:24:14 -0700 (PDT)
-In-Reply-To: <1301535531-1244-2-git-send-email-dpmcgee@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=mhzcalQ0RWYD3q2M3HOfXGAYQJKvuqZM6Rlu5+shUnLgAG/G2lE6T0bKAPGuAmI8zs
+         NowCYhprppBpkOEm8qln0ipoBumF7BQKhr+PsVEpJRq+E4cs7oRym5nyL+avgd52WE3z
+         Yo8ZLlcU6e87ZDFmlV2PNvVIlH7BYpZC2GsVI=
+Received: by 10.204.19.82 with SMTP id z18mr2624013bka.175.1302982380379;
+        Sat, 16 Apr 2011 12:33:00 -0700 (PDT)
+Received: from [192.168.1.13] (abvu151.neoplus.adsl.tpnet.pl [83.8.218.151])
+        by mx.google.com with ESMTPS id t1sm2256925bkx.19.2011.04.16.12.32.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 16 Apr 2011 12:32:58 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110416171200.GB8201@external.screwed.box>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171691>
 
-On Thu, Mar 31, 2011 at 9:38 AM, Dan McGee <dpmcgee@gmail.com> wrote:
-> We were doing (nearly) the same thing all over the place, in slightly
-> different orders, different variable names, etc. Refactor most calls
-> into two helper functions, one for GET and one for everything else, that
-> do the heavy lifting leaving most callsites a lot cleaner in the
-> process.
->
-> Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+On Sat, 16 Apr 2011, Peter Vereshagin wrote:
+> Any time of year you can find me here Jakub.
+> 2011/04/14 11:54:53 +0200 Jakub Narebski <jnareb@gmail.com> => To git@vger.kernel.org :
+> JN>
+> JN> So what are your ideas and comments on the issue of JavaScript code
+> JN> and JavaScript libraries / frameworks in gitweb?
+> 
+> I'd like to note here that js use intensification may be need to be kept
+> separated from extending of the http functions of the regular git use which I
+> believe is currently implemented by mean of gitweb.
 
-Nice work.
+No, fetching and pushing using HTTP transport, be it "smart" or "dumb"
+is _not_ the domain of gitweb.  
 
-Perhaps you should mention in the commit message that the setting of
-CURLOPT_PUT at the callsites of curl_setup_http() which previously
-didn't do it (eg. locking_available(), remote_ls()) is ok, since that
-option is deprecated in place of, and has the same effect as,
-CURLOPT_UPLOAD.
 
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -169,7 +169,7 @@ enum dav_header_flag {
->        DAV_HEADER_TIMEOUT = (1u << 2)
->  };
->
-> -static char *xml_entities(char *s)
-> +static char *xml_entities(const char *s)
->  {
->        struct strbuf buf = STRBUF_INIT;
->        while (*s) {
+Gitweb is web interface for _viewing and browsing_ repositories using
+a web browser (e.g.: http://git.kernel.org, http://repo.or.cz).  It
+requires web server that can run CGI scripts, or FastCGI, or mod_perl
+with ModPerl::Registry.
 
-Perhaps the addition of "const", and elsewhere in this patch, should
-be placed in a separate patch.
 
---
-Cheers,
-Ray Chuan
+To fetch or push via "dumb" HTTP transport all you need is web server
+(for push you need WebDAV configured), and a file generated by
+'git update-server-info'.  You don't need git on server... but this
+transport is inefficient.
+
+To fetch or push via "smart" HTTP transport you need git installed on
+server (git-upload-pack and git-receive-pack), and web server that can
+run CGI scripts and e.g. git-http-backend installed.
+
+Neither of those require JavaScript... and neither of those is accessed
+by web browser.  You use git to fetch/push, not a web browser.
+
+[cut]
+-- 
+Jakub Narebski
+Poland
