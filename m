@@ -1,79 +1,110 @@
-From: madmarcos <fru574@my.utsa.edu>
-Subject: Java Inflater problem decompressing packfile
-Date: Fri, 15 Apr 2011 19:05:05 -0700 (PDT)
-Message-ID: <1302919505984-6278154.post@n2.nabble.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] status: store format option as an int
+Date: Sat, 16 Apr 2011 00:27:04 -0500
+Message-ID: <20110416052704.GA10807@elie>
+References: <BANLkTimKO7ihPpJ80Ad1kbYaMv1ycu0y9A@mail.gmail.com>
+ <20110416000918.GB9334@sigill.intra.peff.net>
+ <20110416004544.GA5628@elie>
+ <20110416013723.GA23105@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 04:05:33 2011
+Cc: Jacek Masiulaniec <jacekm@dobremiasto.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 16 07:27:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QAutA-0004we-F4
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 04:05:32 +0200
+	id 1QAy2U-000686-6k
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 07:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756827Ab1DPCFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2011 22:05:07 -0400
-Received: from sam.nabble.com ([216.139.236.26]:43392 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756750Ab1DPCFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2011 22:05:06 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.69)
-	(envelope-from <fru574@my.utsa.edu>)
-	id 1QAusj-0005EI-Vy
-	for git@vger.kernel.org; Fri, 15 Apr 2011 19:05:05 -0700
+	id S1751140Ab1DPF1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2011 01:27:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45763 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751057Ab1DPF1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 01:27:12 -0400
+Received: by iwn34 with SMTP id 34so2632992iwn.19
+        for <git@vger.kernel.org>; Fri, 15 Apr 2011 22:27:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=zeLsgR5xC8af+GpdiDWWeRqekRikDdxTApCHHkMVazo=;
+        b=QQsvnL6dHGX1kMxB+9uCVugKuV1ZTpUXMJTGD4Ub5Xwl8iFJY4958dfJNdZJuPdG5r
+         HySXXvoWJ9Yv87X/znv2a4ul8k+W1Xgt/Nl+6rjE1nrMLsoV60H5Sd4KKegdoaqTKKn1
+         C1QEOioztDan0qgIHzGDKQJE3kr3h1YTdbDFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=RXuaWIoDhioKT8/eWrKcFLybFu1XgxBBGxPvOQkv5ZUGxBvEibAaqAUEEuasmkyB7p
+         wkLGovgtPDGvtjAaKYfjCHjTd/OWKhmoCoGV+WzonjAxcVLrK0CY1oYTwkQvZLtrLqdX
+         JOiZ6gTerRgZzukQADJXbchBnjlkuZErESm0s=
+Received: by 10.43.69.19 with SMTP id ya19mr3603390icb.324.1302931631761;
+        Fri, 15 Apr 2011 22:27:11 -0700 (PDT)
+Received: from elie (adsl-69-209-51-5.dsl.chcgil.ameritech.net [69.209.51.5])
+        by mx.google.com with ESMTPS id ww2sm1817034icb.15.2011.04.15.22.27.09
+        (version=SSLv3 cipher=OTHER);
+        Fri, 15 Apr 2011 22:27:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110416013723.GA23105@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171657>
 
-This may be better suited for the Java forums but I will ask it here just in
-case someone has run into it before.
+It is unsafe to pass a pointer to a value of enumerated type to
+OPT_SET_INT (as v1.7.0-rc0~137^2~14, 2009-0905) does, since it might
+have the wrong alignment or width (C99 only says "Each enumerated type
+shall be compatible with char, a signed integer type, or an unsigned
+integer type.  The choice of type is implementation-defined, but shall
+be capable of representing the values of all the members of the
+enumeration.)
 
-I have a packfile that I have saved as a file from the git-upload-pack
-command. I want to read through the packfile, decompressing each of the
-objects. 
+Probably this didn't come up in practice because by default GCC uses
+an 'int' to represent small enums unless passed -fshort-enums (except
+on certain architectures where -fshort-enums is the default).
 
-My little inflater procedure works fine for a tiny HelloWorld project. So, I
-decided to mix it up a little and use the jEdit source for a larger test. I
-am 99% certain the jEdit.git packfile itself is ok as I have passed it
-through directly to eGit's Import using an SSH proxy and eGit unpacked it
-just fine.
+Noticed-by: Jeff King <peff@peff.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Jeff King wrote:
 
-So, my inflater method decompresses the first 7 objects fine (a commit, a
-couple of trees, and several blobs) and a cursory visual inspection of the
-decompressed data seems fine. The eighth object becomes a problem, though.
-It is a blob with the name build.xml that is 51,060 bytes decompressed
-(looking at the original pre-git-pushed jEdit source). The actual file size
-matches the decompressed data content size in the packfile object header. 
-The inflater procedure outputs the decompressed data to System.out for
-visual inspection. Approximately the first 1/3 looks like the original
-build.xml but after that, the output is garbled. The procedure continues
-decompressing objects after the 8th, but garbled, object but it dies on the
-9th object with an "unknown compression method" error.
+> Hmm. That does work (with either option, or both), but it is somewhat of
+> an accident. There is an enum specifying the format the user wants. We
+> hand it to parse-options for those options, telling it that the value is
+> an int.
 
-So I created a new test inflater to focus only on decompressing the 8th
-object. Simply opening the packfile, copying out the compressed data (7793
-bytes), and inflating it yields the same 2/3 garbled xml. 
+Yikes.  That's an accident waiting to happen.  How about this, to start?
 
-As a further test, I then take the original build.xml file, compress it
-using java's Deflater (yielding a 7793 byte array), and then inflate it
-using my same procedure and it decompresses fine. All of the xml is
-readable.
+ builtin/commit.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-Now, I have tried several variations of an inflater procedure, including an
-patchwork variation from jGit's WindowCursor.inflate method. But they all
-yield the same garbled result for the compressed build.xml data.
-
-Any suggestions. I can post some of my ugly code if asked.
-
-Thanks!
-
---
-View this message in context: http://git.661346.n2.nabble.com/Java-Inflater-problem-decompressing-packfile-tp6278154p6278154.html
-Sent from the git mailing list archive at Nabble.com.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 6e32166..b28848d 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -94,11 +94,12 @@ static const char *only_include_assumed;
+ static struct strbuf message;
+ 
+ static int null_termination;
+-static enum {
+-	STATUS_FORMAT_LONG,
++enum status_format {
++	STATUS_FORMAT_LONG = 0,
+ 	STATUS_FORMAT_SHORT,
+ 	STATUS_FORMAT_PORCELAIN
+-} status_format = STATUS_FORMAT_LONG;
++};
++static int status_format;
+ static int status_show_branch;
+ 
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+-- 
+1.7.5.rc2
