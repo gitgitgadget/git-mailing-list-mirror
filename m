@@ -1,55 +1,45 @@
-From: Timo Schmiade <timo.schmiade@gmx.de>
-Subject: Strange behaviour of --tags when adding remotes
-Date: Sat, 16 Apr 2011 12:50:17 +0200
-Message-ID: <20110416105017.GA2887@Discworld>
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: Retry on all A/AAAA records
+Date: Sat, 16 Apr 2011 13:14:27 +0200 (CEST)
+Message-ID: <alpine.LNX.2.01.1104161312590.11706@obet.zrqbmnf.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 12:50:27 2011
+X-From: git-owner@vger.kernel.org Sat Apr 16 13:14:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QB359-0007cx-4C
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 12:50:27 +0200
+	id 1QB3SV-0003np-Q8
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 13:14:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759294Ab1DPKuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2011 06:50:21 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:48848 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1759154Ab1DPKuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2011 06:50:20 -0400
-Received: (qmail invoked by alias); 16 Apr 2011 10:50:17 -0000
-Received: from dslb-084-060-105-052.pools.arcor-ip.net (EHLO localhost) [84.60.105.52]
-  by mail.gmx.net (mp006) with SMTP; 16 Apr 2011 12:50:17 +0200
-X-Authenticated: #18738959
-X-Provags-ID: V01U2FsdGVkX1+VVEtNHJKVWCDyqen7gKCZzhylXT/Bp9kt5nBPqI
-	VXtHvtO0zxEEEK
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Y-GMX-Trusted: 0
+	id S1759309Ab1DPLOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2011 07:14:30 -0400
+Received: from borg.medozas.de ([188.40.89.202]:55946 "EHLO borg.medozas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759277Ab1DPLOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 07:14:30 -0400
+Received: by borg.medozas.de (Postfix, from userid 25121)
+	id D9E7CF0C32BC8; Sat, 16 Apr 2011 13:14:27 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by borg.medozas.de (Postfix) with ESMTP id C4A0464C0
+	for <git@vger.kernel.org>; Sat, 16 Apr 2011 13:14:27 +0200 (CEST)
+User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171670>
 
-Hi all,
 
-I just stumbled upon what I think is a bit of a strange behaviour when
-using "git remote add" with the --tags option. The remote I added was
-fetch'able after the command (it was added to .git/config), but there
-was no remote tracking branch set up for it (i.e. the
-.git/refs/remotes/<shortname> directory didn't exist).
+Just now, some git server that is in the DNS rotation seems to have an 
+issue,
+$ telnet git.eu.kernel.org git
+Trying 199.6.1.166...
+Connected to git.eu.kernel.org.
+Escape character is '^]'.
+Connection closed by foreign host.
 
-Only after removing the "tagopt = --tags" option from .git/config was it
-that "git fetch <shortname>" created a remote tracking branch for the
-remote.
-
-After double-checking the "man git-fetch", I still think this behaviour
-is quite confusing, so I wanted to inform you about this.
-
-Kind regards,
-
-Timo
+I thought it would be nice if git-fetch would retry the operation on 
+the other DNS records that were returned if the connection breaks.
