@@ -1,45 +1,51 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Retry on all A/AAAA records
-Date: Sat, 16 Apr 2011 13:14:27 +0200 (CEST)
-Message-ID: <alpine.LNX.2.01.1104161312590.11706@obet.zrqbmnf.qr>
+From: madmarcos <fru574@my.utsa.edu>
+Subject: Re: Java Inflater problem decompressing packfile
+Date: Sat, 16 Apr 2011 07:23:52 -0700 (PDT)
+Message-ID: <1302963832717-6279028.post@n2.nabble.com>
+References: <1302919505984-6278154.post@n2.nabble.com> <20110416063729.GC28853@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 13:14:36 2011
+X-From: git-owner@vger.kernel.org Sat Apr 16 16:24:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QB3SV-0003np-Q8
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 13:14:36 +0200
+	id 1QB6Pv-00082V-4q
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 16:24:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759309Ab1DPLOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2011 07:14:30 -0400
-Received: from borg.medozas.de ([188.40.89.202]:55946 "EHLO borg.medozas.de"
+	id S1755237Ab1DPOYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2011 10:24:03 -0400
+Received: from sam.nabble.com ([216.139.236.26]:55874 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759277Ab1DPLOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2011 07:14:30 -0400
-Received: by borg.medozas.de (Postfix, from userid 25121)
-	id D9E7CF0C32BC8; Sat, 16 Apr 2011 13:14:27 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by borg.medozas.de (Postfix) with ESMTP id C4A0464C0
-	for <git@vger.kernel.org>; Sat, 16 Apr 2011 13:14:27 +0200 (CEST)
-User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
+	id S1754154Ab1DPOXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 10:23:54 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.69)
+	(envelope-from <fru574@my.utsa.edu>)
+	id 1QB6Ph-0005lQ-2K
+	for git@vger.kernel.org; Sat, 16 Apr 2011 07:23:53 -0700
+In-Reply-To: <20110416063729.GC28853@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171671>
+
+No, my inflater doesn't handle deltas, yet. 
+But there are a few reasons why I don't think that's the case.
+1. The project has only been pushed once to the git repository before my
+tests. No updates to the git repository project or anything like that. 
+2. If it were a delta, would the first 1/3 of it be completely normal and
+readable? There is no pattern that I can see to the remaining 2/3. It looks
+as if the characters in the 2/3 part were interleaved with the other
+characters about 10 times.
+3. The object type in the header is parsed as 3, or a blob. Aren't the delta
+object types higher numbers than that?
 
 
-Just now, some git server that is in the DNS rotation seems to have an 
-issue,
-$ telnet git.eu.kernel.org git
-Trying 199.6.1.166...
-Connected to git.eu.kernel.org.
-Escape character is '^]'.
-Connection closed by foreign host.
-
-I thought it would be nice if git-fetch would retry the operation on 
-the other DNS records that were returned if the connection breaks.
+--
+View this message in context: http://git.661346.n2.nabble.com/Java-Inflater-problem-decompressing-packfile-tp6278154p6279028.html
+Sent from the git mailing list archive at Nabble.com.
