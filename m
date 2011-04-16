@@ -1,121 +1,92 @@
-From: Peter Vereshagin <peter@vereshagin.org>
-Subject: Re: The future of gitweb - part 2: JavaScript
-Date: Sun, 17 Apr 2011 03:00:53 +0400
-Organization: '
-Message-ID: <20110416225729.GB5739@external.screwed.box>
-References: <201102142039.59416.jnareb@gmail.com>
- <201104162317.56045.jnareb@gmail.com>
- <20110416215328.GA5739@external.screwed.box>
- <201104170019.07997.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Re: Applicatioin of contribution for Git Chinese version
+Date: Sat, 16 Apr 2011 18:07:57 -0500
+Message-ID: <20110416230757.GA5606@elie>
+References: <20110416223310.GA5149@elie>
+ <559debc.6920e.12f5f0bdfc0.Coremail.cyrus_evans@163.com>
+ <BANLkTi=29fvnLYVnsjpYXfaB20=H6D6fcg@mail.gmail.com>
+ <6e8d0165.486.12f608bb3de.Coremail.cyrus@drupalgate.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 01:01:14 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git <git@vger.kernel.org>, Erik Faye-Lund <kusmabite@gmail.com>
+To: Cyrus <cyrus@drupalgate.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 01:08:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBEUL-00027V-KJ
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 01:01:13 +0200
+	id 1QBEb6-00053u-Mk
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 01:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964Ab1DPXBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2011 19:01:06 -0400
-Received: from ns1.skyriver.ru ([89.108.118.221]:55737 "EHLO mx1.skyriver.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751008Ab1DPXBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2011 19:01:03 -0400
-Received: from localhost (tor12.anonymizer.ccc.de [62.113.219.5])
-	by mx1.skyriver.ru (Postfix) with ESMTPSA id F3F2F5AEF;
-	Sun, 17 Apr 2011 02:36:47 +0400 (MSD)
+	id S1759338Ab1DPXII convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Apr 2011 19:08:08 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:63073 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751008Ab1DPXIE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2011 19:08:04 -0400
+Received: by iyb14 with SMTP id 14so2988266iyb.19
+        for <git@vger.kernel.org>; Sat, 16 Apr 2011 16:08:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Wt40frPOYx4dxRzkW94InB5TpfDDjyAg2POAzF4gn0s=;
+        b=PzDFjomiJe+L1VyvPlvcCAtCdK4GnWKg3TXP+wSKhF/hvBgRbzzq8A84FEuZEbhpwK
+         4udrngZL/RD31Gb0wU7H7mnx6RPE+b5Dfa6J925a7kNG4mufu//bL3bXriIrGs4P8/SK
+         PKdL241BGiqY1S2yQn+3vjJ/t5OyJkNk82AxY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=T3NDz7B3u0cl07yHy7Nk5Geumm7F3kKLe2cI3AoIaxZlYYSlTql72FBaOIglaN6wy/
+         tOOUrfqHM/HmsxooN/4NmgoqxMyZw2Ku89xTrXGnDEijubtB66KD246c/KvdQYyvGmOs
+         bawODX7shG45RVK8hrj0sZsq1lgdSG37dsW7I=
+Received: by 10.42.213.132 with SMTP id gw4mr4638207icb.59.1302995283429;
+        Sat, 16 Apr 2011 16:08:03 -0700 (PDT)
+Received: from elie (adsl-69-209-51-5.dsl.chcgil.sbcglobal.net [69.209.51.5])
+        by mx.google.com with ESMTPS id xg14sm2062425icb.7.2011.04.16.16.08.01
+        (version=SSLv3 cipher=OTHER);
+        Sat, 16 Apr 2011 16:08:02 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <201104170019.07997.jnareb@gmail.com>
-X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
- 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
+In-Reply-To: <6e8d0165.486.12f608bb3de.Coremail.cyrus@drupalgate.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171703>
 
-You're face to face with man who sold the world, Jakub!
-2011/04/17 00:19:07 +0200 Jakub Narebski <jnareb@gmail.com> => To Peter Vereshagin :
-JN> > There are more disadvantages of such  an approach:
-JN> > - for CGI, the process is being executed on every request. On some systems, e.
-JN> >   g., Windows, launching a process is very expensive, sometimes more than
-JN> git-http-backend is written in C, not Perl.
+Cyrus wrote:
+> At 2011-04-17 06:33:10=EF=BC=8C"Jonathan Nieder" <jrnieder@gmail.com>=
+ wrote:
 
-Yes, it's about it.
+>> 2. Msysgit does not include a pre-compiled copy of gettext yet, but
+>>    Erik Faye-Lund has done the necessary work.  Make use of it like
+>>    so:
+>>
+>> 	cd /
+>> 	git checkout devel
+>> 	cd /src/gettext
+>> 	sh release.sh
+>>
+>>    Now "gettext --help" should work.
+>
+> When I go to step 2 as you mentioned in the mail, I meet errors.
+> Please see my screenshot in the attachment. Thanks .
+>
+> | error: Your local changes to the following files would be overwritt=
+en by checkout:
+> |
+> |	bin/astextplain
+[...]
 
-JN> > - for development, some different parts of the code for the same purpose do
-JN> >   exist, e. g., client and storage i/o. The more it is being developed, the
-JN> >   more features it satisfies, the more such a code.
-JN> 
-JN> Gitweb is written in Perl.  This language is good for prototyping, for
-JN> fast development, and for easy writing of a web app.  Gitweb works on
-JN> porcelain level - it is an user interface (a web one).
-JN> 
-JN> C is good for performance.  git-http-backend is only an example
-JN> implementation.  The "smart" HTTP protocol works on porcelain level.
+Sorry about that.
 
-It doesn't mean that different parts of code do exist in them for the same purpose.
-It doesn't mean that such a code can not be reused by both.
-C code can be used by Perl.
+	git checkout -f -t origin/devel
 
-JN> >   For example, I suppose git-http-backend will have 'get a particular
-JN> >   commitdiff quickly without fetching all the repo' feature one day
-JN> >   to be used in web clients' scripts, e.g. will serve the same way
-JN> >   for git cli as a file system. This will make it have the same
-JN> >   feature like 'commitdiff' feature of a gitweb but implemented 
-JN> >   differently.
-JN> 
-JN> Unix philosophy which Git tries to follow is "do one thing and do it
-JN> well".
-
-This is why the code must not be reused?
-Does it mean "there is more than one way to do it and we will use all of them for the same purpose in the same project"?
-
-JN> I don't believe git-http-backend would ever talk to web browsers, and
-JN> it is quite unlikely for git to acquire non-distributed client-server
-JN> mode.
-
-This is why I must not have a possibility to check out N latest commitdiffs easily from my script to recognize current state of the particular repo's art without fetching all over the repo? Suppose repo doesn't have a porcelain web interface, but even if it does, it's not for it.
-
-JN> And if it does acquire such feature, then gitweb will be simply modified
-JN> to use it...
-
-or git-http-backend? or both?
-isn't it just better for them to reuse the same code?
-
-JN> > - the routing of the request, the deciding what to do with the particular
-JN> >   HTTP request, becomes more obfuscated. First, web server decides what CGI
-JN> >   should approve it. Plus two more decision makers are those 2 CGI, all different.
-JN> > 
-JN> > It's just why I never supposed git to have 2 different native web interfaces,
-JN> > especially in sight of plumbing vs porcelain contrast in cli, sorry for
-JN> > confusion.
-JN> 
-JN> Those are not two _web interfaces_.  Gitweb is one of web interfaces
-JN> to git repositories; more at
-JN>   https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Web_Interfaces
-JN> 
-JN> Fetching and pushing via HTTP is not web interface, is HTTP _transport_.
-
-but HTTP is an application protocol, not a transport protocol. And the what the application supplies by the protocol is the interface.
-Do you mean the Git's plumbing is a protocol and not an interface to be used by application? And porcelain is an interface, correspondently.
-
-JN> For one you use web browser, for other you use git itself.
-
-on the client side those are different projects.
-on the server side those are the same. 
-
-Different technologies, right. But not incompatible.
-
-JN> But this discussion got very off-topic...
-
-Not about Javascript, right.
-
-73! Peter pgp: A0E26627 (4A42 6841 2871 5EA7 52AB  12F8 0CE1 4AAC A0E2 6627)
---
-http://vereshagin.org
+should work, I hope.
