@@ -1,97 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Peter Vereshagin <peter@vereshagin.org>
 Subject: Re: The future of gitweb - part 2: JavaScript
-Date: Sat, 16 Apr 2011 21:32:56 +0200
-Message-ID: <201104162132.57650.jnareb@gmail.com>
-References: <201102142039.59416.jnareb@gmail.com> <201104141154.55078.jnareb@gmail.com> <20110416171200.GB8201@external.screwed.box>
+Date: Sun, 17 Apr 2011 00:48:23 +0400
+Organization: '
+Message-ID: <20110416204823.GA5586@external.screwed.box>
+References: <201102142039.59416.jnareb@gmail.com>
+ <201104141154.55078.jnareb@gmail.com>
+ <20110416171200.GB8201@external.screwed.box>
+ <201104162132.57650.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="koi8-r"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=koi8-r
 Cc: git@vger.kernel.org
-To: Peter Vereshagin <peter@vereshagin.org>
-X-From: git-owner@vger.kernel.org Sat Apr 16 21:33:16 2011
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 16 22:49:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBBF4-0002O7-Cu
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 21:33:14 +0200
+	id 1QBCQP-0007F1-Dq
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 22:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752261Ab1DPTdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2011 15:33:05 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53265 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752165Ab1DPTdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2011 15:33:01 -0400
-Received: by bwz15 with SMTP id 15so2932328bwz.19
-        for <git@vger.kernel.org>; Sat, 16 Apr 2011 12:33:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=1Ro9Q22YsUPjyJZ/aPaucDiWox3j1XnEu+VrG7JL8sI=;
-        b=WPV7uVOC7qj1/iSevlu14IXU4RaPO36QZ4sUeKASEy768WPyk9LBDIGGboWxLoim3t
-         rVpYt0RsaJ/iQLFqnc4ygysEcoJm843CoxevRtYYbb4noB0aLWjX5FRKECJUXXgRK4yo
-         eDWvT4fmBXDOaUgkIbfS+SC1Bi3VKZp4IEOsg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=mhzcalQ0RWYD3q2M3HOfXGAYQJKvuqZM6Rlu5+shUnLgAG/G2lE6T0bKAPGuAmI8zs
-         NowCYhprppBpkOEm8qln0ipoBumF7BQKhr+PsVEpJRq+E4cs7oRym5nyL+avgd52WE3z
-         Yo8ZLlcU6e87ZDFmlV2PNvVIlH7BYpZC2GsVI=
-Received: by 10.204.19.82 with SMTP id z18mr2624013bka.175.1302982380379;
-        Sat, 16 Apr 2011 12:33:00 -0700 (PDT)
-Received: from [192.168.1.13] (abvu151.neoplus.adsl.tpnet.pl [83.8.218.151])
-        by mx.google.com with ESMTPS id t1sm2256925bkx.19.2011.04.16.12.32.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 16 Apr 2011 12:32:58 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110416171200.GB8201@external.screwed.box>
+	id S1753495Ab1DPUsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2011 16:48:47 -0400
+Received: from ns1.skyriver.ru ([89.108.118.221]:50126 "EHLO mx1.skyriver.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752262Ab1DPUsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 16:48:46 -0400
+Received: from localhost (manning.torservers.net [68.68.27.156])
+	by mx1.skyriver.ru (Postfix) with ESMTPSA id 813AB5AFF;
+	Sun, 17 Apr 2011 00:24:30 +0400 (MSD)
 Content-Disposition: inline
+In-Reply-To: <201104162132.57650.jnareb@gmail.com>
+X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
+ 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171692>
 
-On Sat, 16 Apr 2011, Peter Vereshagin wrote:
-> Any time of year you can find me here Jakub.
-> 2011/04/14 11:54:53 +0200 Jakub Narebski <jnareb@gmail.com> => To git@vger.kernel.org :
-> JN>
-> JN> So what are your ideas and comments on the issue of JavaScript code
-> JN> and JavaScript libraries / frameworks in gitweb?
-> 
-> I'd like to note here that js use intensification may be need to be kept
-> separated from extending of the http functions of the regular git use which I
-> believe is currently implemented by mean of gitweb.
+God love is hard to find. You got lucky Jakub!
+2011/04/16 21:32:56 +0200 Jakub Narebski <jnareb@gmail.com> => To Peter Vereshagin :
 
-No, fetching and pushing using HTTP transport, be it "smart" or "dumb"
-is _not_ the domain of gitweb.  
+JN> No, fetching and pushing using HTTP transport, be it "smart" or "dumb"
+JN> Gitweb is web interface for _viewing and browsing_ repositories using
 
+Good for purposes I described earlier.
+Bad for users to have different URLs as "URL is UI element" (c)
 
-Gitweb is web interface for _viewing and browsing_ repositories using
-a web browser (e.g.: http://git.kernel.org, http://repo.or.cz).  It
-requires web server that can run CGI scripts, or FastCGI, or mod_perl
-with ModPerl::Registry.
+JN> with ModPerl::Registry.
 
+but not PerlRun?
 
-To fetch or push via "dumb" HTTP transport all you need is web server
-(for push you need WebDAV configured), and a file generated by
-'git update-server-info'.  You don't need git on server... but this
-transport is inefficient.
-
-To fetch or push via "smart" HTTP transport you need git installed on
-server (git-upload-pack and git-receive-pack), and web server that can
-run CGI scripts and e.g. git-http-backend installed.
-
-Neither of those require JavaScript... and neither of those is accessed
-by web browser.  You use git to fetch/push, not a web browser.
-
-[cut]
--- 
-Jakub Narebski
-Poland
+73! Peter pgp: A0E26627 (4A42 6841 2871 5EA7 52AB  12F8 0CE1 4AAC A0E2 6627)
+--
+http://vereshagin.org
