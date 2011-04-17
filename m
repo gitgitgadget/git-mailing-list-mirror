@@ -1,91 +1,78 @@
-From: Luke Hutchison <luke.hutch@gmail.com>
-Subject: git leaves repo in bad state in out-of-space situation
-Date: Sun, 17 Apr 2011 02:40:26 -0400
-Message-ID: <BANLkTi=4EvRZK_bK=JrwiZgfaeHvNgj-dQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: How to manage multiple repos using submodules?
+Date: Sun, 17 Apr 2011 01:48:19 -0500
+Message-ID: <20110417064818.GA25344@elie>
+References: <4DA9C7A7.4010503@sohovfx.com>
+ <20110416182053.GA11017@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 08:41:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Andrew Wong <andrew.w@sohovfx.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 08:48:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBLfV-0008K8-R9
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 08:41:14 +0200
+	id 1QBLmc-00038j-K8
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 08:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301Ab1DQGlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2011 02:41:08 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:50869 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026Ab1DQGlH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2011 02:41:07 -0400
-Received: by pwi15 with SMTP id 15so1706992pwi.19
-        for <git@vger.kernel.org>; Sat, 16 Apr 2011 23:41:06 -0700 (PDT)
+	id S1751353Ab1DQGsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2011 02:48:30 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:50658 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750997Ab1DQGs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2011 02:48:29 -0400
+Received: by iyb14 with SMTP id 14so3121678iyb.19
+        for <git@vger.kernel.org>; Sat, 16 Apr 2011 23:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=aqzGa3gw7tiJDIfimdjolOuIcKFromXnZOm32hs4SI4=;
-        b=iISAV0c8swHwxKeicIxr4HgBcgC3vLem8Hvst4aUwpoyo0DI8Xv544kxnOCIUd1Ma+
-         6Gz3+TYtZdewpybKmYGv0c3R712AGPcI1ua5wrK/aq2/GkQljCyrva2XBeApLL49rbAL
-         zhv1J4OHXiAtIcN7oesNrvF7RNLpniHtOvHiw=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=1TUsJ/ZIZQJIzkSZETMNybunbY0tCZnWwXImrHiG1lA=;
+        b=b5qn3+qFNwKBsP67qSQiQb+d7oSkWHwujOsD2bJJA9P0b10wYt8GgfKfDKzMxC5g8w
+         iODpAIoDK9K75zAEtm60qIU4uYEjt4FuzN83+KosANa/PjKn0/BlWeKdayUS/L0ngZDW
+         bGkZwMIeIb60C6e5C+eJhyg3+ynIhfYqKNVIs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=xIzgHKkrDaNxeDAEhASmlw/Q+AE/ONsh0aWV7oIWMJ0ApQyGhT0DvLkLRAQ/1itith
-         kwTv/N0otGY7EQKFlta+lt70/HgHpD6tBVfPHrNFHEU3JW4vU8L1hL2Qedh9aBNSFLT6
-         +pdT6mZc3JPI2i2J4lqgIhmp+A8gKm9NSSHjw=
-Received: by 10.68.2.167 with SMTP id 7mr4738556pbv.310.1303022466043; Sat, 16
- Apr 2011 23:41:06 -0700 (PDT)
-Received: by 10.68.64.229 with HTTP; Sat, 16 Apr 2011 23:40:26 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XIIAoRFVloQYgVZLzTxFXfCTRp43DTcupxdpoXyvQbRyzhto8uh9aYp9EKkmk9VmQM
+         dl7ayY/DKM/kW8L1ZTZ4Sb49ME2hvNxEV4ZZn35raKHAKpRg43ZqIecg71We+AKf4EwP
+         uEsnTjC7bERWBKHaxubkaRqDLojal8E9vR354=
+Received: by 10.42.163.68 with SMTP id b4mr4562068icy.120.1303022908253;
+        Sat, 16 Apr 2011 23:48:28 -0700 (PDT)
+Received: from elie (adsl-69-209-51-5.dsl.chcgil.ameritech.net [69.209.51.5])
+        by mx.google.com with ESMTPS id i3sm2339180iby.23.2011.04.16.23.48.25
+        (version=SSLv3 cipher=OTHER);
+        Sat, 16 Apr 2011 23:48:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110416182053.GA11017@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171716>
 
-I just did a git pull and ran out of disk space halfway through, which
-left me with a bunch of "Could not create file <filename>" errors.  I
-freed up space and tried to repeat the git pull.  Now my repo is
-b0rked:
+Hi,
 
-$ git pull
-Updating eedace8..a37dbb1
-error: Your local changes to the following files would be overwritten by merge:
-        <list of some of the pulled files>
-Please, commit your changes or stash them before you can merge.
-error: The following untracked working tree files would be overwritten by merge:
-        <a lot more of the pulled files>
+Jonathan Nieder wrote:
 
-I wasn't sure how to fix this, and this was probably the wrong
-response, but I tried "git add . ; git commit -a -m test ; git push"
-and got a bunch of merge conflicts due to zero-length binary files
-(PNGs etc.).  Repeating this again I get "up to date" but some of my
-files have now been replaced in the repo with zero-length versions,
-which seems dangerous if I didn't notice it and just assumed that git
-had worked its magic and fixed the situation.
+> Yep, if you want to keep track of the state of a bunch of repos over
+> time, submodules are not so bad[*].
 
-I know that gracefully handling out-of-diskspace situations is a pain,
-and it's hard to catch each corner case.  But it seems like git could
-degrade a little more elegantly in this situation (e.g. files should
-not just be created with zero length if there is no disk space left).
-Thoughts?
+A kind person pointed out that I left out a footnote.  I think all I
+had been planning to say is that, roughly speaking, submodules are
+about[1] saying that a specific commit is known to work well with the
+rest of the code.  A supermodule like the one discussed in [2] is only
+likely to be useful if you are interested in what historical
+combinations of repositories were published and meant to work well
+together.
 
-Not sure of the right way to fix my current situation, I'll probably
-just overwrite my local copy of the repo with a remote copy using scp
-and then try pushing again.
+Ciao,
+Jonathan
 
-I assume this mailing list is the right place to report bugs, since I
-don't see a bug tracker?  I tried looking in the FAQ at
-https://git.wiki.kernel.org/index.php/GitFaq , but got:
-
-Database error
-A database error has occurred
-Query: SELECT lc_value FROM `l10n_cache` WHERE lc_lang = 'en' AND
-lc_key = 'deps' LIMIT 1
-Function: LCStore_DB::get
-Error: 1146 Table 'gitwiki.l10n_cache' doesn't exist (127.0.0.1:4040)
-
-Thanks,
-Luke Hutchison
+[1] e.g., http://thread.gmane.org/gmane.comp.version-control.git/27803/focus=27830
+[2] http://lists.x.org/archives/xorg-devel/2009-September/001966.html
