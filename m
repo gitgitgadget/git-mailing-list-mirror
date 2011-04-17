@@ -1,92 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Re: Applicatioin of contribution for Git Chinese version
-Date: Sat, 16 Apr 2011 18:07:57 -0500
-Message-ID: <20110416230757.GA5606@elie>
-References: <20110416223310.GA5149@elie>
- <559debc.6920e.12f5f0bdfc0.Coremail.cyrus_evans@163.com>
- <BANLkTi=29fvnLYVnsjpYXfaB20=H6D6fcg@mail.gmail.com>
- <6e8d0165.486.12f608bb3de.Coremail.cyrus@drupalgate.com>
+From: madmarcos <fru574@my.utsa.edu>
+Subject: Re: Java Inflater problem decompressing packfile
+Date: Sat, 16 Apr 2011 17:40:24 -0700 (PDT)
+Message-ID: <1303000824677-6280097.post@n2.nabble.com>
+References: <1302919505984-6278154.post@n2.nabble.com> <20110416063729.GC28853@sigill.intra.peff.net> <1302963832717-6279028.post@n2.nabble.com> <1302964576373-6279050.post@n2.nabble.com> <1302965899845-6279085.post@n2.nabble.com> <1302969047343-6279183.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git <git@vger.kernel.org>, Erik Faye-Lund <kusmabite@gmail.com>
-To: Cyrus <cyrus@drupalgate.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 01:08:17 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 02:40:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBEb6-00053u-Mk
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 01:08:13 +0200
+	id 1QBG2R-00006H-A1
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 02:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759338Ab1DPXII convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Apr 2011 19:08:08 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63073 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751008Ab1DPXIE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2011 19:08:04 -0400
-Received: by iyb14 with SMTP id 14so2988266iyb.19
-        for <git@vger.kernel.org>; Sat, 16 Apr 2011 16:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Wt40frPOYx4dxRzkW94InB5TpfDDjyAg2POAzF4gn0s=;
-        b=PzDFjomiJe+L1VyvPlvcCAtCdK4GnWKg3TXP+wSKhF/hvBgRbzzq8A84FEuZEbhpwK
-         4udrngZL/RD31Gb0wU7H7mnx6RPE+b5Dfa6J925a7kNG4mufu//bL3bXriIrGs4P8/SK
-         PKdL241BGiqY1S2yQn+3vjJ/t5OyJkNk82AxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=T3NDz7B3u0cl07yHy7Nk5Geumm7F3kKLe2cI3AoIaxZlYYSlTql72FBaOIglaN6wy/
-         tOOUrfqHM/HmsxooN/4NmgoqxMyZw2Ku89xTrXGnDEijubtB66KD246c/KvdQYyvGmOs
-         bawODX7shG45RVK8hrj0sZsq1lgdSG37dsW7I=
-Received: by 10.42.213.132 with SMTP id gw4mr4638207icb.59.1302995283429;
-        Sat, 16 Apr 2011 16:08:03 -0700 (PDT)
-Received: from elie (adsl-69-209-51-5.dsl.chcgil.sbcglobal.net [69.209.51.5])
-        by mx.google.com with ESMTPS id xg14sm2062425icb.7.2011.04.16.16.08.01
-        (version=SSLv3 cipher=OTHER);
-        Sat, 16 Apr 2011 16:08:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <6e8d0165.486.12f608bb3de.Coremail.cyrus@drupalgate.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752964Ab1DQAk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2011 20:40:27 -0400
+Received: from sam.nabble.com ([216.139.236.26]:33873 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751518Ab1DQAkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 20:40:25 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.69)
+	(envelope-from <fru574@my.utsa.edu>)
+	id 1QBG2K-0001GM-M9
+	for git@vger.kernel.org; Sat, 16 Apr 2011 17:40:24 -0700
+In-Reply-To: <1302969047343-6279183.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171705>
 
-Cyrus wrote:
-> At 2011-04-17 06:33:10=EF=BC=8C"Jonathan Nieder" <jrnieder@gmail.com>=
- wrote:
+someone on the Java forums asked if I knew that the file was being read
+completely before inflating. Well... I just assumed (yes, I know not a good
+thing to do).
+So here is my readFile code in case you want to see it:
 
->> 2. Msysgit does not include a pre-compiled copy of gettext yet, but
->>    Erik Faye-Lund has done the necessary work.  Make use of it like
->>    so:
->>
->> 	cd /
->> 	git checkout devel
->> 	cd /src/gettext
->> 	sh release.sh
->>
->>    Now "gettext --help" should work.
->
-> When I go to step 2 as you mentioned in the mail, I meet errors.
-> Please see my screenshot in the attachment. Thanks .
->
-> | error: Your local changes to the following files would be overwritt=
-en by checkout:
-> |
-> |	bin/astextplain
-[...]
+public byte [] readFile(String fileName) {
+		byte [] input2 = null;
+	    File tempPackInputFile2 = new File(fileName);
+		InputStream tempPackInputStream2;
+		try {
+			tempPackInputStream2 = new FileInputStream(tempPackInputFile2);
+			long tempPackLength2 = tempPackInputFile2.length();
+			input2 = new byte[(int) tempPackLength2];
+			// Read in the bytes
+		    int offset2 = 0;
+		    int numRead2 = 0;
+		    while (offset2 < input2.length
+		           && (numRead2 = tempPackInputStream2.read(input2, offset2,
+input2.length-offset2)) >= 0) {
+		        offset2 += numRead2;
+		    }
+		    tempPackInputStream2.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	    return input2;
+	}
 
-Sorry about that.
-
-	git checkout -f -t origin/devel
-
-should work, I hope.
+--
+View this message in context: http://git.661346.n2.nabble.com/Java-Inflater-problem-decompressing-packfile-tp6278154p6280097.html
+Sent from the git mailing list archive at Nabble.com.
