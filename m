@@ -1,68 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Java Inflater problem decompressing packfile
-Date: Sun, 17 Apr 2011 00:36:07 -0400
-Message-ID: <20110417043607.GA10831@sigill.intra.peff.net>
-References: <1302919505984-6278154.post@n2.nabble.com>
- <20110416063729.GC28853@sigill.intra.peff.net>
- <1302963832717-6279028.post@n2.nabble.com>
+From: Luke Hutchison <luke.hutch@gmail.com>
+Subject: git leaves repo in bad state in out-of-space situation
+Date: Sun, 17 Apr 2011 02:40:26 -0400
+Message-ID: <BANLkTi=4EvRZK_bK=JrwiZgfaeHvNgj-dQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: madmarcos <fru574@my.utsa.edu>
-X-From: git-owner@vger.kernel.org Sun Apr 17 06:36:33 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 08:41:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBJip-0001xY-F3
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 06:36:31 +0200
+	id 1QBLfV-0008K8-R9
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 08:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751139Ab1DQEgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2011 00:36:14 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36767
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750713Ab1DQEgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2011 00:36:13 -0400
-Received: (qmail 24909 invoked by uid 107); 17 Apr 2011 04:37:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Apr 2011 00:37:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Apr 2011 00:36:07 -0400
-Content-Disposition: inline
-In-Reply-To: <1302963832717-6279028.post@n2.nabble.com>
+	id S1751301Ab1DQGlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2011 02:41:08 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:50869 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026Ab1DQGlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2011 02:41:07 -0400
+Received: by pwi15 with SMTP id 15so1706992pwi.19
+        for <git@vger.kernel.org>; Sat, 16 Apr 2011 23:41:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=aqzGa3gw7tiJDIfimdjolOuIcKFromXnZOm32hs4SI4=;
+        b=iISAV0c8swHwxKeicIxr4HgBcgC3vLem8Hvst4aUwpoyo0DI8Xv544kxnOCIUd1Ma+
+         6Gz3+TYtZdewpybKmYGv0c3R712AGPcI1ua5wrK/aq2/GkQljCyrva2XBeApLL49rbAL
+         zhv1J4OHXiAtIcN7oesNrvF7RNLpniHtOvHiw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=xIzgHKkrDaNxeDAEhASmlw/Q+AE/ONsh0aWV7oIWMJ0ApQyGhT0DvLkLRAQ/1itith
+         kwTv/N0otGY7EQKFlta+lt70/HgHpD6tBVfPHrNFHEU3JW4vU8L1hL2Qedh9aBNSFLT6
+         +pdT6mZc3JPI2i2J4lqgIhmp+A8gKm9NSSHjw=
+Received: by 10.68.2.167 with SMTP id 7mr4738556pbv.310.1303022466043; Sat, 16
+ Apr 2011 23:41:06 -0700 (PDT)
+Received: by 10.68.64.229 with HTTP; Sat, 16 Apr 2011 23:40:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171715>
 
-On Sat, Apr 16, 2011 at 07:23:52AM -0700, madmarcos wrote:
+I just did a git pull and ran out of disk space halfway through, which
+left me with a bunch of "Could not create file <filename>" errors.  I
+freed up space and tried to repeat the git pull.  Now my repo is
+b0rked:
 
-> No, my inflater doesn't handle deltas, yet. 
-> But there are a few reasons why I don't think that's the case.
-> 1. The project has only been pushed once to the git repository before my
-> tests. No updates to the git repository project or anything like that. 
+$ git pull
+Updating eedace8..a37dbb1
+error: Your local changes to the following files would be overwritten by merge:
+        <list of some of the pulled files>
+Please, commit your changes or stash them before you can merge.
+error: The following untracked working tree files would be overwritten by merge:
+        <a lot more of the pulled files>
 
-You can still have deltas between blobs in a single commit, but only if
-you have similar blobs.
+I wasn't sure how to fix this, and this was probably the wrong
+response, but I tried "git add . ; git commit -a -m test ; git push"
+and got a bunch of merge conflicts due to zero-length binary files
+(PNGs etc.).  Repeating this again I get "up to date" but some of my
+files have now been replaced in the repo with zero-length versions,
+which seems dangerous if I didn't notice it and just assumed that git
+had worked its magic and fixed the situation.
 
-> 2. If it were a delta, would the first 1/3 of it be completely normal and
-> readable? There is no pattern that I can see to the remaining 2/3. It looks
-> as if the characters in the 2/3 part were interleaved with the other
-> characters about 10 times.
+I know that gracefully handling out-of-diskspace situations is a pain,
+and it's hard to catch each corner case.  But it seems like git could
+degrade a little more elegantly in this situation (e.g. files should
+not just be created with zero length if there is no disk space left).
+Thoughts?
 
-It wouldn't be completely normal, but you might see chunks of the file
-along with binary patch instructions (like "put this chunk at offset
-...").
+Not sure of the right way to fix my current situation, I'll probably
+just overwrite my local copy of the repo with a remote copy using scp
+and then try pushing again.
 
-> 3. The object type in the header is parsed as 3, or a blob. Aren't the delta
-> object types higher numbers than that?
+I assume this mailing list is the right place to report bugs, since I
+don't see a bug tracker?  I tried looking in the FAQ at
+https://git.wiki.kernel.org/index.php/GitFaq , but got:
 
-Yeah, if it is coming up as type 3, then it should definitely be a
-whole, literal blob.
+Database error
+A database error has occurred
+Query: SELECT lc_value FROM `l10n_cache` WHERE lc_lang = 'en' AND
+lc_key = 'deps' LIMIT 1
+Function: LCStore_DB::get
+Error: 1146 Table 'gitwiki.l10n_cache' doesn't exist (127.0.0.1:4040)
 
-As far as your Java code, I don't see anything overtly wrong, but then,
-I know absolutely nothing about any of the classes you are using.
-
--Peff
+Thanks,
+Luke Hutchison
