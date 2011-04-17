@@ -1,68 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: History for Strbuf and ParseOpts?
-Date: Sun, 17 Apr 2011 11:51:08 -0700
-Message-ID: <7vtydwaezn.fsf@alter.siamese.dyndns.org>
-References: <BANLkTimg-a-k8wR-gotEYUQ+C3LcwsBGuw@mail.gmail.com>
+From: Luke Hutchison <luke.hutch@gmail.com>
+Subject: Re: git leaves repo in bad state in out-of-space situation
+Date: Sun, 17 Apr 2011 15:09:18 -0400
+Message-ID: <BANLkTimVBVwz7c4=U0-zHhAWztewWYs7Qw@mail.gmail.com>
+References: <BANLkTi=4EvRZK_bK=JrwiZgfaeHvNgj-dQ@mail.gmail.com> <BANLkTim4=eKQ2wq73Lf5zrjOND-r1n0XCw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: David Chanters <david.chanters@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 20:51:23 2011
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 21:10:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBX46-0007yP-T7
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 20:51:23 +0200
+	id 1QBXMC-0000oC-1O
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 21:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753534Ab1DQSvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2011 14:51:18 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62765 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753231Ab1DQSvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2011 14:51:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9724A5D32;
-	Sun, 17 Apr 2011 14:53:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N6S3PnQLv2DGwv17H1XTI5Jr/FQ=; b=dqRH5R
-	rYm4KO7HyGE8wv3AwoMXPF9CA/WU02lvbHBRd9AlNqgs39V4CgacSlUkMXuBZJnP
-	jcuSJVxcRR4nktsotnM/prMMeJtXnJsH9t4dWxDh5/eFO0MKbjtvi+2VLl9F47te
-	hsOluc9DWcy5vg5vT/P9MQ75pld6pliKWYZ18=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HAqE0OiXfH6VnbqBHEXCfo9ozw4VudhZ
-	GKEjMgBhPtY6Nor/ZYuUY0D53ufYyj+uQsUEdFnMwJ/z+vV/ra+7lBWPVp6zrzYp
-	zycaKb1b/8YuB1Xb0QlKbaYpgVrVmf3AaN0qfV1wcD5M8ez9udqc/GO8elTUGvyh
-	sE96rXtCyfc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 762A75D31;
-	Sun, 17 Apr 2011 14:53:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9B46A5D30; Sun, 17 Apr 2011
- 14:53:10 -0400 (EDT)
-In-Reply-To: <BANLkTimg-a-k8wR-gotEYUQ+C3LcwsBGuw@mail.gmail.com> (David
- Chanters's message of "Sun, 17 Apr 2011 16:13:45 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F27AD4D6-6923-11E0-9DEF-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754326Ab1DQTJ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Apr 2011 15:09:59 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:58519 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754292Ab1DQTJ6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2011 15:09:58 -0400
+Received: by pvg12 with SMTP id 12so1838564pvg.19
+        for <git@vger.kernel.org>; Sun, 17 Apr 2011 12:09:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=Aid+grpO+7Cw30RLPK/MqcOr0RhZttuv20YxXll91qc=;
+        b=pCeMwowaPL+ZIcwCJDOMcThIJfXh/kLYZy0b1tZto6z9osH8OCpavUYhQdbpr6KmdD
+         zlogV0ucwzy6j/AjI5jM1zB4697E4PIS7HYcgjWpZElg/OIBIGNz2zha7PKdjtp94sCg
+         kzLhEXOwBvdzkrjLkGvNnku7PJWjtD8gAHf5c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=xQe3+axTBusG9+xIw066CcEsoRsOPtH42y+C1Ea7tCA17mL9xwyl87oS/SbLV2BOFO
+         St+tYbBDev9MjjS0WyoTqzgdq8jR9N4o6pv4ShBu9RuWRubmTz4cISPrBRbbR73zRrQo
+         ER9kzD7h1Q5GXe0N8eKk9H0eNmalL8ImLRkNo=
+Received: by 10.68.42.65 with SMTP id m1mr4638865pbl.511.1303067398118; Sun,
+ 17 Apr 2011 12:09:58 -0700 (PDT)
+Received: by 10.68.64.229 with HTTP; Sun, 17 Apr 2011 12:09:18 -0700 (PDT)
+In-Reply-To: <BANLkTim4=eKQ2wq73Lf5zrjOND-r1n0XCw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171729>
 
-David Chanters <david.chanters@googlemail.com> writes:
+Hi Dmitry,
 
-> I shouldn't conflate to two (parseopts and strbuf) but can someone
-> tell me how these two things came about -- that is, when/why/how?
+On Sun, Apr 17, 2011 at 9:38 AM, Dmitry Potapov <dpotapov@gmail.com> wr=
+ote:
+> The repository is not borked, it's just your working tree is in an
+> inconsistent state, but it is easy to fix:
+>
+> git reset --hard HEAD
 
-I do this sort of digging fairly often.
+Ah, sounds like my intuition that simply freeing up space and then
+re-pulling should have fixed the problem was wrong.  Your explanation
+makes sense.
 
-I am not going to do this particular one myself, but the general procedure
-is to first run "git log --diff-filter=A strbuf.[ch] parse-options.[ch]"
-to find which commits introduced them (hence, learn who did it, when and
-why), then go back to the list archive to find the discussions that lead
-to these changes.
+> BTW, did you mean "git pull" above? Because if you did "git push"
+> then those bogus changes are at the server now.
+
+No, I work with a centralized repository which requires push
+operations.  I know this negates the benefit of distributed SCM.
+
+> It always helps to run "gitk --all" to see what you are doing.
+> [...]
+> So, the general solution is only one:
+>
+> =C2=A0git reset --hard HEAD
+
+Thank you for your patient responses to what turned out to be a very
+basic question!  My typical git workflow is very simple and has worked
+fine until I ran out of disk space.
+
+Luke
