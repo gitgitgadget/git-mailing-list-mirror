@@ -1,82 +1,65 @@
-From: Luke Hutchison <luke.hutch@gmail.com>
-Subject: Re: git leaves repo in bad state in out-of-space situation
-Date: Sun, 17 Apr 2011 15:09:18 -0400
-Message-ID: <BANLkTimVBVwz7c4=U0-zHhAWztewWYs7Qw@mail.gmail.com>
-References: <BANLkTi=4EvRZK_bK=JrwiZgfaeHvNgj-dQ@mail.gmail.com> <BANLkTim4=eKQ2wq73Lf5zrjOND-r1n0XCw@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: The future of gitweb - part 2: JavaScript
+Date: Sun, 17 Apr 2011 22:14:21 +0200
+Message-ID: <20110417201421.GV3258@machine.or.cz>
+References: <201102142039.59416.jnareb@gmail.com>
+ <201104141154.55078.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 21:10:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, John Hawley <warthog9@kernel.org>,
+	Kevin Cernekee <cernekee@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 22:23:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBXMC-0000oC-1O
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 21:10:04 +0200
+	id 1QBYV9-0003jk-P9
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 22:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754326Ab1DQTJ7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Apr 2011 15:09:59 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:58519 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754292Ab1DQTJ6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2011 15:09:58 -0400
-Received: by pvg12 with SMTP id 12so1838564pvg.19
-        for <git@vger.kernel.org>; Sun, 17 Apr 2011 12:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=Aid+grpO+7Cw30RLPK/MqcOr0RhZttuv20YxXll91qc=;
-        b=pCeMwowaPL+ZIcwCJDOMcThIJfXh/kLYZy0b1tZto6z9osH8OCpavUYhQdbpr6KmdD
-         zlogV0ucwzy6j/AjI5jM1zB4697E4PIS7HYcgjWpZElg/OIBIGNz2zha7PKdjtp94sCg
-         kzLhEXOwBvdzkrjLkGvNnku7PJWjtD8gAHf5c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=xQe3+axTBusG9+xIw066CcEsoRsOPtH42y+C1Ea7tCA17mL9xwyl87oS/SbLV2BOFO
-         St+tYbBDev9MjjS0WyoTqzgdq8jR9N4o6pv4ShBu9RuWRubmTz4cISPrBRbbR73zRrQo
-         ER9kzD7h1Q5GXe0N8eKk9H0eNmalL8ImLRkNo=
-Received: by 10.68.42.65 with SMTP id m1mr4638865pbl.511.1303067398118; Sun,
- 17 Apr 2011 12:09:58 -0700 (PDT)
-Received: by 10.68.64.229 with HTTP; Sun, 17 Apr 2011 12:09:18 -0700 (PDT)
-In-Reply-To: <BANLkTim4=eKQ2wq73Lf5zrjOND-r1n0XCw@mail.gmail.com>
+	id S1751926Ab1DQUXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2011 16:23:04 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:40573 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751619Ab1DQUXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2011 16:23:01 -0400
+X-Greylist: delayed 517 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Apr 2011 16:23:01 EDT
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 423FA1700280; Sun, 17 Apr 2011 22:14:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <201104141154.55078.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171730>
 
-Hi Dmitry,
+  Hi!
 
-On Sun, Apr 17, 2011 at 9:38 AM, Dmitry Potapov <dpotapov@gmail.com> wr=
-ote:
-> The repository is not borked, it's just your working tree is in an
-> inconsistent state, but it is easy to fix:
->
-> git reset --hard HEAD
+On Thu, Apr 14, 2011 at 11:54:53AM +0200, Jakub Narebski wrote:
+> Unfortunately the decision to use JavaScript framework brings its own
+> new problems.
+> 
+> First issue is which JavaScript framework or library to use:
+> * jQuery (lightweight, most popular, used e.g. by MediaWiki)
+> * MooTools (lightweight, 2nd most popular, opbject-oriented)
+> * YUI, The Yahoo! User Interface Library 
+> * other: Prototype, Dojo, ExtJS, SproutCore,...
 
-Ah, sounds like my intuition that simply freeing up space and then
-re-pulling should have fixed the problem was wrong.  Your explanation
-makes sense.
+  Girocco uses MooTools, and I also used it in an old private branch
+of gitweb. I have had pretty good experience with it. But since I wasn't
+able to find anyone to maintain Girocco's gitweb (or even keep it in
+sync with upstream) and the patch flow to core git has dried up, it's
+probably not too relevant argument. :-)
 
-> BTW, did you mean "git pull" above? Because if you did "git push"
-> then those bogus changes are at the server now.
+> So what are your ideas and comments on the issue of JavaScript code
+> and JavaScript libraries / frameworks in gitweb?
 
-No, I work with a centralized repository which requires push
-operations.  I know this negates the benefit of distributed SCM.
+  It seems most common sense to use CDN by default but allow providing
+pre-downloaded file with the library at build time as an alternative.
 
-> It always helps to run "gitk --all" to see what you are doing.
-> [...]
-> So, the general solution is only one:
->
-> =C2=A0git reset --hard HEAD
-
-Thank you for your patient responses to what turned out to be a very
-basic question!  My typical git workflow is very simple and has worked
-fine until I ran out of disk space.
-
-Luke
+-- 
+				Petr "Pasky" Baudis
+UNIX is user friendly, it's just picky about who its friends are.
