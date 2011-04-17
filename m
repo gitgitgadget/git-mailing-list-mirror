@@ -1,78 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: How to manage multiple repos using submodules?
-Date: Sun, 17 Apr 2011 01:48:19 -0500
-Message-ID: <20110417064818.GA25344@elie>
-References: <4DA9C7A7.4010503@sohovfx.com>
- <20110416182053.GA11017@elie>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCHv2] doc: Clarify that "cherry-pick -x" does not use "git notes"
+Date: Sun, 17 Apr 2011 09:20:50 +0200
+Message-ID: <BANLkTink3uzx3xz5_pG6FmFctD_2W6HiCg@mail.gmail.com>
+References: <4DA7F73B.9050007@gmail.com>
+	<7v7have8wo.fsf@alter.siamese.dyndns.org>
+	<4DA8862F.5070102@gmail.com>
+	<BANLkTi=HecmdGbEX5inqUi4FZ5Ty+L1Ybg@mail.gmail.com>
+	<BANLkTi=jr0hkmBUGj7tHURSj5XiJkyyQqg@mail.gmail.com>
+	<7vk4eub1g9.fsf@alter.siamese.dyndns.org>
+	<BANLkTim2=Jg4QcgKwO=J6343zWAoCkyXZQ@mail.gmail.com>
+	<7vaafqay9f.fsf@alter.siamese.dyndns.org>
+	<7v39lhbnzj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Andrew Wong <andrew.w@sohovfx.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 08:48:36 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 09:21:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBLmc-00038j-K8
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 08:48:34 +0200
+	id 1QBMI7-0000Dw-7M
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 09:21:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751353Ab1DQGsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2011 02:48:30 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50658 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750997Ab1DQGs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2011 02:48:29 -0400
-Received: by iyb14 with SMTP id 14so3121678iyb.19
-        for <git@vger.kernel.org>; Sat, 16 Apr 2011 23:48:28 -0700 (PDT)
+	id S1751301Ab1DQHUx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Apr 2011 03:20:53 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:33773 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751057Ab1DQHUv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2011 03:20:51 -0400
+Received: by qyg14 with SMTP id 14so2453474qyg.19
+        for <git@vger.kernel.org>; Sun, 17 Apr 2011 00:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=1TUsJ/ZIZQJIzkSZETMNybunbY0tCZnWwXImrHiG1lA=;
-        b=b5qn3+qFNwKBsP67qSQiQb+d7oSkWHwujOsD2bJJA9P0b10wYt8GgfKfDKzMxC5g8w
-         iODpAIoDK9K75zAEtm60qIU4uYEjt4FuzN83+KosANa/PjKn0/BlWeKdayUS/L0ngZDW
-         bGkZwMIeIb60C6e5C+eJhyg3+ynIhfYqKNVIs=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hfYbHrbr23FiSFishqW9crCkynlPAxUsWJLTz7wmfpQ=;
+        b=fJueNggGHC9fq0gG0c+4MkuubUN7rHUpfM8s4ZixsRxy2i9+tpTYDITdaepBH+5TVd
+         OSh5FL4292bhKDvHDWL4BsEj/suX9AzDDkB/HSGBpydke0v6lTdMNWyRyZ859BbFVg6R
+         k7ySUyaYzT1NfTaw5/odhNunfXn3KDjvPk0BY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XIIAoRFVloQYgVZLzTxFXfCTRp43DTcupxdpoXyvQbRyzhto8uh9aYp9EKkmk9VmQM
-         dl7ayY/DKM/kW8L1ZTZ4Sb49ME2hvNxEV4ZZn35raKHAKpRg43ZqIecg71We+AKf4EwP
-         uEsnTjC7bERWBKHaxubkaRqDLojal8E9vR354=
-Received: by 10.42.163.68 with SMTP id b4mr4562068icy.120.1303022908253;
-        Sat, 16 Apr 2011 23:48:28 -0700 (PDT)
-Received: from elie (adsl-69-209-51-5.dsl.chcgil.ameritech.net [69.209.51.5])
-        by mx.google.com with ESMTPS id i3sm2339180iby.23.2011.04.16.23.48.25
-        (version=SSLv3 cipher=OTHER);
-        Sat, 16 Apr 2011 23:48:26 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110416182053.GA11017@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=U9GCpHmHCaWHlYGv+WpHUmOVBjVSe7CeNhreXqUENUqCJ66iGblIn46MblumTMtCb3
+         Wz6pKemapF2cnYd2ZfD3pLYpIsLUvEpwnyfq8LXYxpzoaFkIiQDLx22ctQ/AwhB70vhj
+         uc5wE1zvB5+cJy+IaVd7OpIE/JJbiGANH9Z9o=
+Received: by 10.229.50.193 with SMTP id a1mr2569271qcg.177.1303024850849; Sun,
+ 17 Apr 2011 00:20:50 -0700 (PDT)
+Received: by 10.229.241.17 with HTTP; Sun, 17 Apr 2011 00:20:50 -0700 (PDT)
+In-Reply-To: <7v39lhbnzj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171717>
 
-Hi,
+On Sun, Apr 17, 2011 at 04:39, Junio C Hamano <gitster@pobox.com> wrote=
+:
 
-Jonathan Nieder wrote:
+> So to conclude,...
+>
+>>> + =C2=A0 =C2=A0 =C2=A0 cherry-picked from. =C2=A0This is done only =
+for cherry
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0picks without conflicts. =C2=A0Do not us=
+e this option if
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0you are cherry-picking from your private=
+ branch because
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0the information is useless to the recipi=
+ent. =C2=A0If on the
+>
+> ... we could just remove the "This is done only for cherry picks with=
+out
+> conflicts." =C2=A0We could explain that the user may want to remove t=
+he line
+> depending on the nature of the conflict resolution, but I guess it ca=
+n
+> be left without saying.
 
-> Yep, if you want to keep track of the state of a bunch of repos over
-> time, submodules are not so bad[*].
+Still, I believe it would be more consistent to do this change as part
+of the CHERRY_PICK_HEAD series itself, then.
 
-A kind person pointed out that I left out a footnote.  I think all I
-had been planning to say is that, roughly speaking, submodules are
-about[1] saying that a specific commit is known to work well with the
-rest of the code.  A supermodule like the one discussed in [2] is only
-likely to be useful if you are interested in what historical
-combinations of repositories were published and meant to work well
-together.
-
-Ciao,
-Jonathan
-
-[1] e.g., http://thread.gmane.org/gmane.comp.version-control.git/27803/focus=27830
-[2] http://lists.x.org/archives/xorg-devel/2009-September/001966.html
+--=20
+Sebastian Schuberth
