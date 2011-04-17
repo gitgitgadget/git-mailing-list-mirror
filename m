@@ -1,85 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: History for Strbuf and ParseOpts?
-Date: Sun, 17 Apr 2011 11:19:31 -0700 (PDT)
-Message-ID: <m3wriswxku.fsf@localhost.localdomain>
-References: <BANLkTimg-a-k8wR-gotEYUQ+C3LcwsBGuw@mail.gmail.com>
+From: Andrew Wong <andrew.w@sohovfx.com>
+Subject: Re: How to manage multiple repos using submodules?
+Date: Sun, 17 Apr 2011 14:42:29 -0400
+Message-ID: <4DAB3495.3090200@sohovfx.com>
+References: <4DA9C7A7.4010503@sohovfx.com> <20110416182053.GA11017@elie> <20110417064818.GA25344@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Chanters <david.chanters@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 20:19:39 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 20:42:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBWZP-0008Jt-5i
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 20:19:39 +0200
+	id 1QBWvi-0003iu-5m
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 20:42:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990Ab1DQSTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2011 14:19:35 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61220 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751655Ab1DQSTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2011 14:19:33 -0400
-Received: by fxm17 with SMTP id 17so2619456fxm.19
-        for <git@vger.kernel.org>; Sun, 17 Apr 2011 11:19:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=/OTvaFo7pDSXtch+13/tXm+5mI08ulEoP3h18MJ9vQA=;
-        b=pXqcdiwnO/hovTKHlG+WrhAtJF8YoagGYy8Bhq9VZFVAea9cNpAWkiFa0PBGtKTycH
-         2HejWxGYoaBsIPfJk8A05oxrp8MRrS+Xnd3CH6hqZNUX4HIUOxe6XbY+LvvilFDBB/tJ
-         Fv5J86GhbzKRFAHHcZHbeUr9yc+aXcXLplQkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=DPDgC0uawsPq1+aQjAf8sNJ0XejNFnWrMbCajv4Jbxs4xO6Z6wWkef7ddYcAKoLcJm
-         ODzN/8XBvmU3TIcmXOmUgSGdYiFK1SBXTjUokaqX7Gs/t/jDpYeFnE4ZzFx68kwW+f0v
-         5WB56ljenfiIFkCFRFmdIj3SH68XUhfNRbxC8=
-Received: by 10.223.79.79 with SMTP id o15mr4239799fak.16.1303064372364;
-        Sun, 17 Apr 2011 11:19:32 -0700 (PDT)
-Received: from localhost.localdomain (abvn58.neoplus.adsl.tpnet.pl [83.8.211.58])
-        by mx.google.com with ESMTPS id t2sm1423291faa.47.2011.04.17.11.19.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 17 Apr 2011 11:19:31 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3HIIxjL003340;
-	Sun, 17 Apr 2011 20:19:10 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3HIIg6c003330;
-	Sun, 17 Apr 2011 20:18:42 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <BANLkTimg-a-k8wR-gotEYUQ+C3LcwsBGuw@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753525Ab1DQSmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2011 14:42:38 -0400
+Received: from smtp01.beanfield.com ([76.9.193.170]:58983 "EHLO
+	smtp03.beanfield.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753432Ab1DQSmg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2011 14:42:36 -0400
+X-Spam-Status: No
+X-beanfield-mta01-MailScanner-From: andrew.w@sohovfx.com
+X-beanfield-mta01-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
+	BAYES_00 -1.90)
+X-beanfield-mta01-MailScanner: Found to be clean
+X-beanfield-mta01-MailScanner-ID: 1QBWvY-000EJW-4J
+Received: from [99.231.190.188] (helo=ZanarkandMac.local)
+	by mta01.beanfield.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
+	(Exim 4.72)
+	(envelope-from <andrew.w@sohovfx.com>)
+	id 1QBWvY-000EJW-4J; Sun, 17 Apr 2011 14:42:32 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <20110417064818.GA25344@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171726>
 
-David Chanters <david.chanters@googlemail.com> writes:
+Thanks for the mail archives! They were a very good read.
 
-> I shouldn't conflate to two (parseopts and strbuf) but can someone
-> tell me how these two things came about -- that is, when/why/how?  If
-> I understand strbuf correctly, it's a transparent and dynamic way of
-> handling strings?  If so, how useful would it be as a separate
-> project?
+The smaller projects I have are fairly independent, so there isn't a 
+situation where a commit works well with the other commits. I just 
+wanted some ways to split each project out to its own repo. So that when 
+I want to do some git operations on one project, I don't have to worry 
+about the other projects. While submodules isn't an ideal solution, it 
+seems to be the closest. Maybe what I need from submodules is a way for 
+the super-repo to not record the commit of the sub-repos. i.e. Just use 
+the head of a branch. But if that's the case, maybe it's out of the 
+scope of a SCM, since I'm not really tracking a history anymore.
 
-I don't have a pointers to exchange of emails that started the road to
-strbuf and parseopt, but both are described in the techical
-documentation (GIT API Documents):
+I haven't tried it yet, but the mr tool you mentioned seems interesting 
+too. I'll check it out.
 
-  Documentation/techical/*
-  http://www.kernel.org/pub/software/scm/git/docs/technical/api-index.html
-  
-  http://www.kernel.org/pub/software/scm/git/docs/technical/api-strbuf.html
-  http://www.kernel.org/pub/software/scm/git/docs/technical/api-parse-options.html
+Thanks!
+Andrew
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+
+On 11-04-17 2:48 AM, Jonathan Nieder wrote:
+> Hi,
+>
+> Jonathan Nieder wrote:
+>
+>> Yep, if you want to keep track of the state of a bunch of repos over
+>> time, submodules are not so bad[*].
+> A kind person pointed out that I left out a footnote.  I think all I
+> had been planning to say is that, roughly speaking, submodules are
+> about[1] saying that a specific commit is known to work well with the
+> rest of the code.  A supermodule like the one discussed in [2] is only
+> likely to be useful if you are interested in what historical
+> combinations of repositories were published and meant to work well
+> together.
+>
+> Ciao,
+> Jonathan
+>
+> [1] e.g., http://thread.gmane.org/gmane.comp.version-control.git/27803/focus=27830
+> [2] http://lists.x.org/archives/xorg-devel/2009-September/001966.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
