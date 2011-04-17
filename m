@@ -1,90 +1,100 @@
-From: Michael O'Cleirigh <michael.ocleirigh@rivulet.ca>
-Subject: Re: [PATCH] git-filter-branch: add --egrep-filter option
-Date: Sat, 16 Apr 2011 21:45:50 -0400
-Message-ID: <4DAA464E.7010804@rivulet.ca>
-References: <4DA8CBB0.6080103@rivulet.ca> <201104161016.51690.j6t@kdbg.org>
+From: "Marcus D. Hanwell" <marcus.hanwell@kitware.com>
+Subject: Re: Generating GNU-style Changelog from git commits
+Date: Sat, 16 Apr 2011 21:47:58 -0400
+Message-ID: <BANLkTikQvOkoFSXXC3oUKQfASo8==qdgxA@mail.gmail.com>
+References: <BANLkTi=j_Ge9h8+r8R-a5Fppan_2dtu5LA@mail.gmail.com> <4DAA3A0D.6070904@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Apr 17 03:46:01 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Chanters <david.chanters@googlemail.com>, git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 03:48:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBH3p-0007vi-04
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 03:46:01 +0200
+	id 1QBH6P-0000IV-AY
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Apr 2011 03:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187Ab1DQBp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2011 21:45:56 -0400
-Received: from rivulet.ca ([69.164.222.54]:42651 "EHLO smtp.rivulet.ca"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751788Ab1DQBpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2011 21:45:54 -0400
-Received: from [10.79.81.13] (24-246-84-164.cable.teksavvy.com [24.246.84.164])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.rivulet.ca (Postfix) with ESMTPSA id 4C0106195;
-	Sat, 16 Apr 2011 21:45:51 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <201104161016.51690.j6t@kdbg.org>
+	id S1752398Ab1DQBsh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Apr 2011 21:48:37 -0400
+Received: from na3sys009aog113.obsmtp.com ([74.125.149.209]:44468 "HELO
+	na3sys009aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751364Ab1DQBsg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 21:48:36 -0400
+Received: from mail-iy0-f179.google.com ([209.85.210.179]) (using TLSv1) by na3sys009aob113.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTapG48/PCwZUzNK2O0FLP+Shw6Q6ormH@postini.com; Sat, 16 Apr 2011 18:48:36 PDT
+Received: by iym7 with SMTP id 7so4062660iym.24
+        for <git@vger.kernel.org>; Sat, 16 Apr 2011 18:48:19 -0700 (PDT)
+Received: by 10.42.246.72 with SMTP id lx8mr4506902icb.276.1303004898146; Sat,
+ 16 Apr 2011 18:48:18 -0700 (PDT)
+Received: by 10.231.38.218 with HTTP; Sat, 16 Apr 2011 18:47:58 -0700 (PDT)
+In-Reply-To: <4DAA3A0D.6070904@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171708>
 
-Hi Johannes,
-
-Thanks for commenting on this patch.
-
-> On Samstag, 16. April 2011, Michael O'Cleirigh wrote:
->> The --subdirectory-filter will look for a single directory and then rewrite
->> history to make its content the root.  This is ok except for cases where we
->> want to retain history of those files before they were moved into that
->> directory.
+On Sat, Apr 16, 2011 at 8:53 PM, Chris Packham <judge.packham@gmail.com=
+> wrote:
+> On 17/04/11 10:46, David Chanters wrote:
 >>
->> The --egrep-filter option allows specifying an egrep regex for the files in
->> the tree of each commit to keep.  For example:
+>> [Please Cc me on replies. =A0Thanks!]
 >>
->> Directories we want are A, B, C, D and they exist in several different
->> lifetimes.  A and B exist sometimes together then B and C and finally then
->> D.
+>> Hi,
 >>
->> e.g. git-filter-branch --egrep-filter "(A|B|C|D)"
+>> Some projects maintain a ChangeLog file, which looks something like =
+this:
 >>
->> Each commit will then contain different combination's of A or B or C or D
->> (up to A and B and C and D).
-> Why do you need a new --...-filter option for this? Your implementation is
-> merely an instance of an --index-filter, and at that a very specialized one,
-> which operates only at the top-most directory level.
+>> 2011-01-01 =A0David Chanters<d.c@example.com>
+>> =A0 =A0 =A0 =A0 * foo/bar.c (some_function):
+>> =A0 =A0 =A0 =A0 =A0Changed static variable in some_function to auto.
+>>
+>> etc., etc.
+>>
+>> Here "foo" is some directory relative to the top-level directory the
+>> .git one is in.
+>>
+>> These ChangeLog files are maintained manually, irrespective of the/a=
+ny
+>> revision control system in use. =A0I am wondering if it's possible i=
+f
+>> the project is in Git to be able to automatically append to such a
+>> ChangeLog file with each commit automatically, and have it formatted
+>> in the style above.
+>>
+>> Is this possible? =A0Is it a solved problem? =A0If not, and I wanted=
+ to
+>> try myself, could someone point me at the git-specific tools I'd nee=
+d
+>> to know to use to achieve it?
 >
+> Shouldn't be to hard, there are numerous hooks that could be used eit=
+her on
+> the developer end (post-commit), on the server end (post-update) or e=
+ven
+> when a maintainer applies a patch (post-applypatch). See githooks(5) =
+for
+> more info on what hooks are available and what args are passed.
+>
+> There is also the possibility of generating this changelog at the tim=
+e of
+> release. I'd advocate this approach as it would allow you to edit the
+> changelog to make it more useful to readers.
 
-At work we needed to split out 2 more modules from a 1400 revision 
-repository that we imported from subversion.
+Something I wrote a few years ago does this for us. It may not be
+perfect, but there was a desire to have a Changelog in our released
+tarballs,
 
-Each had been originally created under different names at the top level 
-and then only recently moved into a more logical single directory per 
-project structure.  When we first ran filter-branch with the 
---subdirectory-filter we only had 6 commits instead of the 100 commits 
-we ended up with after using the --egrep-filter method.
+https://github.com/cryos/avogadro/blob/master/scripts/gitlog2changelog.=
+py
 
-I tried a tree-filter first but it was slow and then the same method as 
-an index filter was slower (I would search for the paths that didn't 
-match the filter (egrep -v "pattern") and then remove each of them).
+If there are better ways of doing this I would certainly be
+interested, but have not spent much time on this since writing the
+initial script. We had a similar desire, but didn't want to end up
+resolving conflicts around a file in version control.
 
-By using this egrep-filter option it only took 5 minutes per repo vs >8 
-hours for the tree-filter approach.
-
-I posted to the list incase it might be useful to others;  But I didn't 
-really know if it would be useful or not.
-
-After considering your comment I have to agree with you that it is a 
-special case of index-filter and probably not useful/general for enough 
-other cases to justify adding in a new command line option.
-
-Regards,
-
-Mike
+Marcus
