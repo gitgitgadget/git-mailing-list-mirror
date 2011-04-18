@@ -1,72 +1,117 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Applicatioin of contribution for Git Chinese version
-Date: Mon, 18 Apr 2011 09:57:17 +0200
-Message-ID: <BANLkTi=68WR3EB4FnnS1uq6Px2NzWt0yog@mail.gmail.com>
-References: <559debc.6920e.12f5f0bdfc0.Coremail.cyrus_evans@163.com>
-	<BANLkTi=29fvnLYVnsjpYXfaB20=H6D6fcg@mail.gmail.com>
-	<BANLkTintJ6FsYAQ1iV1kygwOdtsFtCs3EA@mail.gmail.com>
-	<m362qexgb1.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Inconsistency with -a vs -A
+Date: Mon, 18 Apr 2011 02:56:34 -0700
+Message-ID: <7vbp03ann1.fsf@alter.siamese.dyndns.org>
+References: <loom.20110418T051443-551@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Cyrus.Evans" <cyrus_evans@163.com>, git <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 09:57:32 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bradly Feeley <bradlyf@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 18 11:57:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBjKt-00016o-Uk
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 09:57:32 +0200
+	id 1QBlCW-0004L2-Fd
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 11:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753346Ab1DRH5U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Apr 2011 03:57:20 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61190 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751411Ab1DRH5S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2011 03:57:18 -0400
-Received: by bwz15 with SMTP id 15so3594758bwz.19
-        for <git@vger.kernel.org>; Mon, 18 Apr 2011 00:57:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AdOJBxzAXD/7gad/FIhUfUXW8e1yEflTTXjjgRBdJR0=;
-        b=G5APjBLdlbB0QLEDKosgvJSVEN6HzVQaSom8qQ1nKuFbFKUTfE312+6Ef0kkLQv/J3
-         HpmI/wCQSaOh0q8i1oXtyEwdoJYctBBBHtB00gYXR28gM5W7r7aoHlHNr4rVEmQ/GPsO
-         H8N+ZtZcTftonESBnl4Xzi5+++q7DFVE/cWco=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=s5iRXMSQJk4KIgz/guf8Oaessy5KTO82WhGvLVAwy5cshHjCZ342DNJstgL7M/sxze
-         79H1/+nTE5PSep8ExgCfK4ABvHcIIDOQH9TgeSmAl6tAmdVHb6yhgUj3/eZNVyMBxMdq
-         4kzQNPjfHJHqN/Ia+DHfeDadJS5Fe7Qor7VoY=
-Received: by 10.204.20.143 with SMTP id f15mr1884043bkb.173.1303113437292;
- Mon, 18 Apr 2011 00:57:17 -0700 (PDT)
-Received: by 10.204.101.132 with HTTP; Mon, 18 Apr 2011 00:57:17 -0700 (PDT)
-In-Reply-To: <m362qexgb1.fsf@localhost.localdomain>
+	id S1753518Ab1DRJ4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2011 05:56:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37640 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753394Ab1DRJ4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2011 05:56:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2B974344F;
+	Mon, 18 Apr 2011 05:58:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6PPTCowmsFXJqLVABN+i2/6ytvc=; b=HwGWCo
+	/FXjyUPSqkVGaOoFTb62+cthcs1zSqFxEplZjHVGpi60TL+Tl9UymdBpgLZgsVji
+	GcqhU60iVk9+spn3+FZSjyA6t7X4S386TX5rZfu+SPzV4NnWRLb6c+NDIIsHg24C
+	aYFcT5UlPmoEqRc4wNRu/ztHjqvrUqLsNt3a8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iSt2SH6yYYlWwoqvQO0VadFhFZo3YhU6
+	QSEgC/qCoP3eusdtwqgo1Izdpis8ob/rZWq1HRpzBJ3zPjsLy2WqYcSqOP0W5ydj
+	nAJfBg+YzKEOxES+xHtZ1VlFTUIPf3Pue+4B+GWwLFVd/aJpdzC+yzeVRhHVqBoZ
+	fo8BM4Ux4V8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 096FF344E;
+	Mon, 18 Apr 2011 05:58:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1BBC1344B; Mon, 18 Apr 2011
+ 05:58:35 -0400 (EDT)
+In-Reply-To: <loom.20110418T051443-551@post.gmane.org> (Bradly Feeley's
+ message of "Mon, 18 Apr 2011 03:20:55 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F086076-69A2-11E0-AEAB-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171741>
 
-On Sat, Apr 16, 2011 at 19:22, Jakub Narebski <jnareb@gmail.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->> Translating there will work once the Launchpad people review & accep=
-t
->> the POT file I uploaded. I have no idea how long that takes.
->
-> Why not use Pootle?
->
-> =C2=A0http://translate.sourceforge.net/wiki/
+Bradly Feeley <bradlyf@gmail.com> writes:
 
-Just because I knew about Launchpad and not that.
+> I was curious if there was a reason that some command use -a and some command
+> use -A.
 
-But as far as I'm concerned these web UI's are as interchangable as
-the editors people use to edit *.po files. We could just upload the
-POT template to whatever people want to use, then they can submit
-their *.po files for inclusion.
+In the context of SCM, the word "all" is unfortunately ambiguous. In most
+cases, when you say "all", you do not mean everything under the sun, but
+only mean the tracked subset of everything.
+
+For example, "commit -a" only includes the paths that have been tracked,
+and grabs the up-to-date contents in them in your working tree. It does
+not add paths that have been untracked to the set of tracked paths. This
+was historically useful because we started out without a good .gitignore
+support and "commit ." is not "everything" when run from a subdirectory.
+
+Also many commands (e.g. "git diff", "git grep") work on "all tracked"
+when you do not explicitly name what to operate on.  Even when you specify
+what subset to operate on, that subset is still taken from "all tracked",
+not "everything in the working tree" (e.g. "git grep -e frotz ." does not
+look into any untracked paths).
+
+When you think about "tracked" vs "untracked", you would realize that
+"add" is and has to be an oddball. It is the primary mechanism to start
+tracking hitherto untracked paths.  For this reason, "git add ." has to
+look at untracked paths and add them (contrast this with the "git grep"
+example above).
+
+We named the "update contents for all tracked paths" option "-u", avoiding
+to say "-a" on purpose, because "all" is an ambiguous word, especially in
+the context of "git add" command.  It perhaps was being overly cautious in
+hindsight.
+
+One important case to think about is that "git commit -a". Most commands
+limit the set of paths they operate on from all tracked paths, and this
+command has to mean "take the up-to-date contents from all tracked files
+and make a commit".  So does "git commit ." run from the top-level of the
+tree.
+
+Now, what if you have a bunch of hitherto untracked paths, have a well
+maintained .gitignore file, want to add and commit them, and want to be
+lazy (i.e. you hate that "git add . && git commit" are two commands)?
+There needs a way to say "everything under the sun" to please such people.
+
+That is where "git commit -A" came from. "add -A" is an option that is
+unnecessary ("git add ." would do just fine), but was added to give a
+warm-fuzzy feel of consistency between "commit" and "add", in preparation
+of the planned addition of "git commit -A" that didn't happen.
+
+The only uppercase "-A" I am aware of are these two, and both are about
+"everything under the sun", which is a special case in the context of SCM.
+All the other usual "all" options are spelled "-a".
+
+I think we could give "add -a" as a synonym to "add -u", which would be a
+safe addition that would not break any existing user, if we wanted to be
+picky and really make things more consistent.
+
+Also in the longer term, I suspect we probably should deprecate "add -A"
+as a failed experiment, if we are not going to do "commit -A" after all.
+"add ." and "add :/" (from a subdirectory) would be much less ambiguous,
+and it will get rid of the only instance of "-A" that means something
+slightly different from the usual "all".
