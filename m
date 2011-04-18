@@ -1,109 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: The future of gitweb - part 2: JavaScript
-Date: Mon, 18 Apr 2011 16:15:13 +0200
-Message-ID: <201104181615.13548.jnareb@gmail.com>
-References: <201102142039.59416.jnareb@gmail.com> <201104181534.31408.jnareb@gmail.com> <20110418135037.GE3258@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, John Hawley <warthog9@kernel.org>,
-	Kevin Cernekee <cernekee@gmail.com>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Apr 18 16:15:31 2011
+From: Stefan Sperling <stsp@stsp.name>
+Subject: [PATCH] remove noise and inaccuracies from git-svn docs
+Date: Mon, 18 Apr 2011 16:46:40 +0200
+Message-ID: <1303138000-27807-1-git-send-email-stsp@stsp.name>
+Cc: Stefan Sperling <stsp@stsp.name>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 16:47:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBpEb-0007fM-JK
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 16:15:25 +0200
+	id 1QBpjj-0002YT-Ab
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 16:47:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754324Ab1DROPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2011 10:15:20 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59304 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753018Ab1DROPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2011 10:15:19 -0400
-Received: by fxm17 with SMTP id 17so2845469fxm.19
-        for <git@vger.kernel.org>; Mon, 18 Apr 2011 07:15:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=7u2tjESOlgeSEmbGDEvtnCgD0U4OSc7HcIXkJEr96Ts=;
-        b=CtZ3gkCBKyeCJVrqm8UCpttUcogyb6lacPJnFJkghd+czwzv0vt7nbhL89769jBVPE
-         U1Is4bC5mckgggBojEkn61m36SLr20UrpLUUlmgXuBM8L/X7uGep3b/LrvyLizj1BRsM
-         C3rwEc6mVJds6+C79EkzrfMLdB1N6jBxzx2OY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Q3w2SiERWqR8KEkRTaRmbysnZTfryjvacRllghSHAwiv6Y0Sh9NaLZzyzbhKvKwoqz
-         H4wxE+r7yUFiinFDFeARhLK5cviWRLwVN90Tu9rubB3xkYNHps+ZaxVcH23QoUTwpOhf
-         c5/+EkpuhzV9TvrCtQ3l0HUKZFoZuyV5OKEVE=
-Received: by 10.223.14.207 with SMTP id h15mr4059453faa.50.1303136117866;
-        Mon, 18 Apr 2011 07:15:17 -0700 (PDT)
-Received: from [192.168.1.13] (abvc126.neoplus.adsl.tpnet.pl [83.8.200.126])
-        by mx.google.com with ESMTPS id c21sm1686020fac.22.2011.04.18.07.15.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 18 Apr 2011 07:15:16 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110418135037.GE3258@machine.or.cz>
-Content-Disposition: inline
+	id S1753873Ab1DROrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2011 10:47:31 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:40697 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752575Ab1DROr3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2011 10:47:29 -0400
+X-Envelope-From: stsp@stsp.name
+Received: from jack.stsp.name (jack.stsp.name [217.197.84.35])
+	(authenticated bits=128)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3IElQw2004995
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 18 Apr 2011 16:47:27 +0200
+Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
+	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id p3IElQxa025681;
+	Mon, 18 Apr 2011 16:47:26 +0200 (CEST)
+Received: (from stsp@localhost)
+	by jack.stsp.name (8.14.3/8.14.3/Submit) id p3IElPL4016788;
+	Mon, 18 Apr 2011 16:47:25 +0200 (CEST)
+X-Mailer: git-send-email 1.7.3.5
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171747>
 
-On Mon, 18 Apr 2011, Petr Baudis wrote:
-> On Mon, Apr 18, 2011 at 03:34:30PM +0200, Jakub Narebski wrote:
-> > On Sun, 17 Apr 2011, Petr Baudis wrote:
+---
+ Documentation/git-svn.txt |   16 +++++++---------
+ 1 files changed, 7 insertions(+), 9 deletions(-)
 
-> > >   Girocco uses MooTools, and I also used it in an old private branch
-> > > of gitweb. I have had pretty good experience with it. But since I wasn't
-> > > able to find anyone to maintain Girocco's gitweb (or even keep it in
-> > > sync with upstream) and the patch flow to core git has dried up, it's
-> > > probably not too relevant argument. :-)
-> > 
-> > Thanks.  The information about MooTools is certain helpful.
-> > 
-> > Do you remember why did you choose MooTools from other existing JavaScript
-> > frameworks, including more popular jQuery?
-> 
->   Unfortunately, it was few years back so I don't remember clearly
-> anymore - it certainly was not a very educated guess, however, since I'm
-> not really a JavaScript hacker. Possibly I just stumbled on a nicer
-> guide for MooTools than jQuery at that time. By now, it's quite possible
-> that jQuery is a friendlier alternative.
-
-Well, I am also partial to MooTools.  I haven't examined all JavaScript
-frameworks, or did examination in much detail, but from jQuery, MooTools
-and YUI I think MooTools looks best.  jQuery looks a bit too little,
-being mainly about DOM manipulation (though it has lots of plugins), YUI
-being a bit too much (gitweb doesn't need and shouldn't need all this);
-MooTools look about right (and has More and forge / plugins)... and is
-second most popular after jQuery ;-)
-
-But I'm willing to be persuaded.
-
-What gitweb needs currently (meaning existing JavaScrip and patches
-in flight):
- * support for old browsers that might not have findElementsByClassName
-   of querySelectorAll
- * formatting Date in RFC2822-like format
- * event delegation (live events)
- * support for onprogress for XHR, emulated if necessary
- * attaching / detaching simple floating menu
-
-References:
-^^^^^^^^^^^
-* http://jqueryvsmootools.com/ (by MooTools developer)
-* http://stackoverflow.com/questions/394601/which-javascript-framework-jquery-vs-dojo-vs
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index ea8fafd..a3b4c91 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -757,10 +757,9 @@ use `git svn rebase` to update your work branch instead of `git pull` or
+ when committing into SVN, which can lead to merge commits reversing
+ previous commits in SVN.
+ 
+-DESIGN PHILOSOPHY
+------------------
+-Merge tracking in Subversion is lacking and doing branched development
+-with Subversion can be cumbersome as a result.  While 'git svn' can track
++MERGE TRACKING
++--------------
++While 'git svn' can track
+ copy history (including branches and tags) for repositories adopting a
+ standard layout, it cannot yet represent merge history that happened
+ inside git back upstream to SVN users.  Therefore it is advised that
+@@ -770,16 +769,15 @@ compatibility with SVN (see the CAVEATS section below).
+ CAVEATS
+ -------
+ 
+-For the sake of simplicity and interoperating with a less-capable system
+-(SVN), it is recommended that all 'git svn' users clone, fetch and dcommit
++For the sake of simplicity and interoperating with Subversion,
++it is recommended that all 'git svn' users clone, fetch and dcommit
+ directly from the SVN server, and avoid all 'git clone'/'pull'/'merge'/'push'
+ operations between git repositories and branches.  The recommended
+ method of exchanging code between git branches and users is
+ 'git format-patch' and 'git am', or just 'dcommit'ing to the SVN repository.
+ 
+ Running 'git merge' or 'git pull' is NOT recommended on a branch you
+-plan to 'dcommit' from.  Subversion does not represent merges in any
+-reasonable or useful fashion; so users using Subversion cannot see any
++plan to 'dcommit' from because Subversion users cannot see any
+ merges you've made.  Furthermore, if you merge or pull from a git branch
+ that is a mirror of an SVN branch, 'dcommit' may commit to the wrong
+ branch.
+@@ -829,7 +827,7 @@ Renamed and copied directories are not detected by git and hence not
+ tracked when committing to SVN.  I do not plan on adding support for
+ this as it's quite difficult and time-consuming to get working for all
+ the possible corner cases (git doesn't do it, either).  Committing
+-renamed and copied files are fully supported if they're similar enough
++renamed and copied files is fully supported if they're similar enough
+ for git to detect them.
+ 
+ CONFIGURATION
 -- 
-Jakub Narebski
-Poland
+1.7.3.5
