@@ -1,73 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remove noise and inaccuracies from git-svn docs
-Date: Mon, 18 Apr 2011 10:55:18 -0700
-Message-ID: <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
-References: <1303138000-27807-1-git-send-email-stsp@stsp.name>
- <vpqhb9vplu4.fsf@bauges.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: The future of gitweb - part 2: JavaScript
+Date: Mon, 18 Apr 2011 20:13:13 +0200
+Message-ID: <201104182013.14475.jnareb@gmail.com>
+References: <201102142039.59416.jnareb@gmail.com> <201104171659.02950.jnareb@gmail.com> <BANLkTin80KQzp9=2Bu4rxJSwcnUj-aXaHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Sperling <stsp@stsp.name>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 18 19:55:37 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John Hawley <warthog9@kernel.org>,
+	Kevin Cernekee <cernekee@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, Petr Baudis <pasky@ucw.cz>
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Mon Apr 18 20:13:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBsfg-0005Ab-SU
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 19:55:37 +0200
+	id 1QBsx0-0000gC-Hk
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 20:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756169Ab1DRRzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2011 13:55:32 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54022 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754235Ab1DRRzb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2011 13:55:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78D3450C2;
-	Mon, 18 Apr 2011 13:57:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WPWmXQ6ij4aAH+3qSq3PLV+DE58=; b=kKCnom
-	2i4ErRttEu/jU7FoWqJpzlFQMj5kcE/4WxFaloO8UVoUXJMLotbxtf2qVy9Hq+Sj
-	jHmQpiIOu+RCmg/dFNSS2NXvi0a/ARLJuodk6TTSlzqT7nq1+K8VismD6XulrRiI
-	uKGBaZ56I4eC3ZEpCGe4Nj3OfSsczwZJ8bquo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nmNM2ZmZAuOb21LmA+I74VQ89uwjKW2i
-	AJmIAkF8QAYWGcLCMAEcZaf/S1qGy4LcKMTwJ6l/x6ubXC8vK/gQY2kgMrvPiNDb
-	xOSTNm7l/BEeSaRnNospEcSdcU17Px4YDvnr05zYBgL6d30WM3CdD+x+O0s9c+VN
-	XAOgebRTHHc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A04250C1;
-	Mon, 18 Apr 2011 13:57:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3D8AD50BC; Mon, 18 Apr 2011
- 13:57:18 -0400 (EDT)
-In-Reply-To: <vpqhb9vplu4.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 18 Apr 2011 18:26:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5007FFE0-69E5-11E0-8E05-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1756251Ab1DRSN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2011 14:13:26 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:64389 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754324Ab1DRSNY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2011 14:13:24 -0400
+Received: by bwz15 with SMTP id 15so4054359bwz.19
+        for <git@vger.kernel.org>; Mon, 18 Apr 2011 11:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Ii+5VwK5Pl3btaLkR/Mo6Djv5j0Cmx1vYW0KaBsVYKo=;
+        b=btRaaPw6D+3GclDItHYIVDmvKKKjKvBgBeeVwQWtpe8J7Fngati2oDZT6UtiSJdp4I
+         iXpXPk6DEd56155YZHiaJ8lYICN/0guAGPPnzk78UdoetDOvYGXNA6eCIX8Syog00p4Y
+         /nudMuISQ8tLEHBw8MYET6oF/HAWNFNfF3DYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=MukutTwSsw6NUHma8uxN4JAt6tRC6ywn/JAqOSW4kkrFPTr4THlg8ZcV/wksRlWSBf
+         /F7qGr6MuLuJKKRpFdl0jfflQ8HP6J7nX/Dp41l0VpHAGHkVevhaUcQBZKsg6DHzhMcS
+         D3+CJO1v2m5Tt74GaXnl2wnvA+29N+Nop7KBg=
+Received: by 10.204.17.19 with SMTP id q19mr4392698bka.46.1303150403491;
+        Mon, 18 Apr 2011 11:13:23 -0700 (PDT)
+Received: from [192.168.1.13] (abvc126.neoplus.adsl.tpnet.pl [83.8.200.126])
+        by mx.google.com with ESMTPS id l1sm3371553bkl.13.2011.04.18.11.13.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Apr 2011 11:13:20 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <BANLkTin80KQzp9=2Bu4rxJSwcnUj-aXaHw@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171751>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Sun, 17 Apr 2011, Pau Garcia i Quiles wrote:
+> On Sun, Apr 17, 2011 at 4:59 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+>>> My suggestion is going to be tremendously unpopular, but still: if I
+>>> were to develop my own gitweb, I'd use Wt ( http://webtoolkit.eu ) +
+>>> libgit2. In fact, there is a very basic gitweb-like example bundled
+>>> with Wt sources, it's available online at
+>>> http://www.webtoolkit.eu/wt/examples/git
+>>
+>> Well, nothing prevents you or anybody else from writing (yet another)
+>> web interface in C++ + Wt + libgit2.
+> 
+> I do not have the slightest intention of doing that, at least not in
+> my spare time. The existing interfaces (gitweb, cgit, etc) are good 
+> enough for me. 
 
-> Stefan Sperling <stsp@stsp.name> writes:
->
->> -DESIGN PHILOSOPHY
->> ------------------
->> -Merge tracking in Subversion is lacking and doing branched development
->> -with Subversion can be cumbersome as a result.  While 'git svn' can
->> track
->
-> Agreed (this and the rest of the patch). Users reading git-svn's doc
-> don't want a dissertation about how bad SVN is, and if they do, they can
-> read whygitisbetterthanx ;-)
+I can certainly understand that... ;-)
 
-I agree the change in the patch is good.  It needs to be signed-off,
-though.
+> I made the suggestion of going with Wt just in case a 
+> rewrite of gitweb was in mind.
+
+No, major rewrite of gitweb is certainly not on agenda.  Besides IMVVHO
+rewriting a long-lived existing application / project from scratch is
+usually a bad idea; you would almost certainly repeat old mistakes.
+If code is bad enough that it hinders maintenance and development, it is
+better to do refactoring, trying to keep project working as it was.
+
+The question was more about future features.
+
+[...]
+>> BTW. do I understand correctly that Wt generates JavaScript code, in
+>> similar vein to GWT for Java, or Pyjamas for Python?
+> 
+> Wt generates Javascript only if the visitor has Javascript enabled. If
+> Javascript is not available, it will generate plain HTML pages, with
+> "update" buttons, etc and it will do that automatically: there is no
+> need for you to write code "if Javascript is available { ... } else {
+> ... }".
+
+Well, actually sometimes you need to know if JavaScript is available...
+for example in the case of gitweb there is separate 'blame' view which
+runs 'git blame --porcelain' which can take a while, and Ajax-y
+'blame_incremental' which runs 'git cat-file -p' + 'git blame --incremental'
+in background via XmlHttpRequest.  Different server-side reactions;
+and doing both would be really counterproductive wrt. performance.
+ 
+On the other hand it would be nice to write almost the same algorithm
+of parsing 'git blame --porcelain' and 'git blame --incremental' output,
+and of generating or manipulating output to the same look ONCE, and not
+one time in Perl, one time in JavaScript.
+
+
+Unfortunately I haven't found anything on CPAN that would be Perl
+equivalent of Java's GWT, C++'s Wt, or Python's Pyjamas... well except
+not quite here CGI::Ajax.  Besides even using CGI::Ajax goes against
+current "no non-core dependencies" policy...
+
+BTW. there is Continuity Perl web framework which I think is similar
+to Wt in that it manages state of web app like Wt does.
+
+> The advantage of Wt is you can compile a hypothetical gitwebwt as a
+> static executable and the result will be a single executable file that
+> depends only on libc (or libc + git, if you call git instead of
+> linking to libgit.a or libgit2). Also, performance and memory
+> requirements are very good, which is important for not-that-powerful
+> devices such as routers, etc.
+
+Nice.
+
+-- 
+Jakub Narebski
+Poland
