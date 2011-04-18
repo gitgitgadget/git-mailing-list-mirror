@@ -1,67 +1,95 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: Tracking file metadata in git -- fix metastore or enhance git?
-Date: Mon, 18 Apr 2011 02:21:32 +0200
-Message-ID: <BANLkTimTszUC+4d3tMTP-cxG3AoWmr08HA@mail.gmail.com>
+Date: Sun, 17 Apr 2011 19:45:51 -0500
+Message-ID: <20110418004550.GA2529@elie>
 References: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
+ <BANLkTimTszUC+4d3tMTP-cxG3AoWmr08HA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thorsten Glaser <tg@mirbsd.de>, Harley J Pig <harleypig@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 18 02:22:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Thorsten Glaser <tg@mirbsd.de>,
+	Harley J Pig <harleypig@gmail.com>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 18 02:46:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QBcE5-0003QE-PP
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 02:22:02 +0200
+	id 1QBcbL-0004vj-1S
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Apr 2011 02:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985Ab1DRAVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2011 20:21:54 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:57915 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751584Ab1DRAVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2011 20:21:52 -0400
-Received: by ywj3 with SMTP id 3so1131350ywj.19
-        for <git@vger.kernel.org>; Sun, 17 Apr 2011 17:21:52 -0700 (PDT)
+	id S1753992Ab1DRAp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2011 20:45:59 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47313 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753869Ab1DRAp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2011 20:45:57 -0400
+Received: by iwn34 with SMTP id 34so3491673iwn.19
+        for <git@vger.kernel.org>; Sun, 17 Apr 2011 17:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=QUXwrxhfw8ZCrT20bOupNC7lfvKCfnhmmE8PtQo2pDU=;
-        b=Rx2SZOIsUibCRq8QZ9EsSNX8uMHAH1MLxcPIVS98OVYVEwhav8czNiqJE+HXCfMvon
-         vMO2nwlhU8h4z9jnE/ulbmxFR476Rvs9rDa9PHuSzF949/WzO/XuPdfcg3gVmzeJBfIb
-         h+KVq8li/j8Vgp334YmQhn2/sqyHT4Eir/r0M=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=s5k08rGgdAt6W1NbuvTWXljUptyq3cX22SjCHVyeDEQ=;
+        b=xQpyDE2qFDQ025CPj0z8q74X64Sx/DYUExU6oUsDPi7RtSnSI0mBO7LR2ZhfTKL/xN
+         b833B7Z62PbpI3j3O+srqsYurW+TfKE5i2FYlILiVCIJ4ARMPC+gR+/mAIn/7jWwcA5B
+         XEzTtA1W7g5BfB+NnmNKgUo1ozdsaVek0WT44=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Dpg4C/Hqi1cSFSXMRkQs+VT8a8YpcG2qMUOl5WFGneJGmb5hNVkyffVprWKf7Hjegt
-         tik23iTvVlckM7yZKyifPYe5IocgN0RHZJKwComCn7k3+9/Ks/VJhmB6kJPt7gQsgqnS
-         UDs8mS8MeGLmk82Hd9RCyFFUa9uZbeTycGEd4=
-Received: by 10.236.197.35 with SMTP id s23mr2947194yhn.57.1303086112070; Sun,
- 17 Apr 2011 17:21:52 -0700 (PDT)
-Received: by 10.236.109.130 with HTTP; Sun, 17 Apr 2011 17:21:32 -0700 (PDT)
-In-Reply-To: <BANLkTikkb3DUOtP9NUtNMNV5Z+oJ7AFHfg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=s8Y0ptCzcqN8K2VzBfbc4eJ6pSgO3MttqAMWC3+DlvUYcZBTTC+eDHA4wyc3n4cSvX
+         P9s8GFMdZViQHSyn/Bw2sjokT8Qy2ns30TzTkasu8cPqXgXDKm5TrfeV8j1rWT2ZQzml
+         g2yWXtuPHQ+qhQvWUNPQcFhvWAE1FqsrJjpZg=
+Received: by 10.231.117.36 with SMTP id o36mr3420242ibq.64.1303087557221;
+        Sun, 17 Apr 2011 17:45:57 -0700 (PDT)
+Received: from elie (adsl-69-209-55-4.dsl.chcgil.sbcglobal.net [69.209.55.4])
+        by mx.google.com with ESMTPS id t1sm2629723ibm.55.2011.04.17.17.45.54
+        (version=SSLv3 cipher=OTHER);
+        Sun, 17 Apr 2011 17:45:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTimTszUC+4d3tMTP-cxG3AoWmr08HA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171733>
 
-Hi all,
+Hi again,
 
-as I don't want to let this go stale, here are the three options:
+Not sure if my thoughts will be useful here since you dropped me from
+the cc list.  But anyway:
 
-1) fix metastore
-2) default to gitperms
-3) extend git
+Richard Hartmann wrote:
 
+> here are the three options:
+>
+> 1) fix metastore
+> 2) default to gitperms
+> 3) extend git
+>
+> I still think 3) would be best, but someone would need to step up to
+> do this. Is anyone up for this task? If not, we will have to resort to
+> 1) or 2)
 
-I still think 3) would be best, but someone would need to step up to
-do this. Is anyone up for this task? If not, we will have to resort to
-1) or 2)
+The usual practice in git development is
 
+ (1) people make scripts wrapping plumbing commands (see git(1)) that
+     work well for themselves
+ (2) they tell the git list about it and publish it
+ (3) an idea emerges that this is suitable for inclusion, and it
+     gets included
 
-Thanks again,
-Richard
+In particular, git's design is not so monolithic --- "extend git" can
+mean "add a script" or "add a builtin" so it is not so involved as you
+seem to think.  See also contrib/README for a place to stop on the
+way.
+
+Anyway, if you want something the just works, my suggestion is (4) use
+the hook scripts from etckeeper.  Last time I looked into this they
+worked better than metastore.
+
+Hope that helps.
+Jonathan
