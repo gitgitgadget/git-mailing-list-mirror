@@ -1,72 +1,63 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: rebasing branch with reverted patches
-Date: Tue, 19 Apr 2011 11:39:24 +0200
-Message-ID: <BANLkTim_QNFhChme=nxGf1_Dw8LedTS3Ag@mail.gmail.com>
-References: <BANLkTim5mf6okFN8V5V+B=Ns1JORD47a5A@mail.gmail.com>
- <4DAD4B0F.9030908@drmicha.warpmail.net> <BANLkTimbSes-B8zK2a2t1Jp1v+29HdNvqw@mail.gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: git-p4 issue
+Date: Tue, 19 Apr 2011 09:59:09 +0000 (UTC)
+Message-ID: <loom.20110419T115354-846@post.gmane.org>
+References: <BANLkTikeQSqAhm2CwCYBkE74OxPUnA0cOg@mail.gmail.com> <BANLkTimmVQAcx7hiQFUBcoAGdvPhktPuMg@mail.gmail.com> <BANLkTikDDDtyJB992DFNtvgMrGvbWf=rMw@mail.gmail.com> <BANLkTinJecAsXt+5JzscFYEx_ez2q9DioQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 11:46:17 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 11:59:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QC7Vh-0001xA-Bl
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 11:46:17 +0200
+	id 1QC7iW-0000H4-DY
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 11:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753828Ab1DSJqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 05:46:12 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:59996 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753197Ab1DSJqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 05:46:11 -0400
-X-Greylist: delayed 386 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Apr 2011 05:46:10 EDT
-Received: by pzk12 with SMTP id 12so3930609pzk.11
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 02:46:10 -0700 (PDT)
-Received: by 10.68.49.169 with SMTP id v9mr2258710pbn.363.1303205984170; Tue,
- 19 Apr 2011 02:39:44 -0700 (PDT)
-Received: by 10.68.46.134 with HTTP; Tue, 19 Apr 2011 02:39:24 -0700 (PDT)
-In-Reply-To: <BANLkTimbSes-B8zK2a2t1Jp1v+29HdNvqw@mail.gmail.com>
+	id S1754153Ab1DSJ71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 05:59:27 -0400
+Received: from lo.gmane.org ([80.91.229.12]:41990 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753803Ab1DSJ71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 05:59:27 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QC7iJ-0000BO-U9
+	for git@vger.kernel.org; Tue, 19 Apr 2011 11:59:22 +0200
+Received: from 57.79.130.188 ([57.79.130.188])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 11:59:19 +0200
+Received: from vitor.hda by 57.79.130.188 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 11:59:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 57.79.130.188 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0) Gecko/20100101 Firefox/4.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171789>
 
-On Tue, Apr 19, 2011 at 11:09 AM, Francis Moreau <francis.moro@gmail.com> wrote:
-> On Tue, Apr 19, 2011 at 10:42 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Francis Moreau venit, vidit, dixit 19.04.2011 09:32:
->>> Hello,
->>>
->>> I'm wondering if it would be a good idea for git rebase to allow not
->>> rebasing reverted patch which are part of the rebased branch.
->>>
->>> For example I'm currently rebasing my branch 'devel' onto master. This
->>> branch have several commits and specially one called A and another one
->>> called A' which reverts A.
->>>
->>> When rebasing 'devel' branch, rebase could try to drop both A and A'.
->>>
->>> What do you think ?
->>>
->>> BTW is there a way to do this currently ?
->>
->> You can do this with "rebase -i" by removing A and A' from the commit
->> list (or squashing them or dealing with them in whatever way you like).
->
-> Of course, but my point was to make this automatically...
+Hi Mike,
 
-You can also change the A' commit title to "fixup! original_title"
-while reverting (there is no --fixup argument like "git commit" has),
-then git rebase -i would reorder the todo file for you.
+Could you please search for the following set of patches in this mailing list?
 
-git revert gets confused by the resulting empty change but you can
-"git rebase --continue", or now that both are next to the other just
-remove them.
+[PATCH v2 0/3] git-p4: Improve branch support
 
-HTH,
-Santi
+I think I sent v2 twice somehow, so please make sure you pick the latest ;)
+In these patches I add the possibility to use a "git-p4.branchList"
+configuration to define the branches. The patch is still to be approved because
+most people in the mailing list do not use branch detection, but I use it daily
+and it is working in my side. Could you please test it?
+
+Thanks,
+Vitor
+
+P.S. - It's better that you do not apply "[PATCH v2 1/3] git-p4: Correct branch
+base depot path detection", as it may require you to clone the all depot again.
