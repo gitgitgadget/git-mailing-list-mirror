@@ -1,85 +1,84 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [PATCH] git-filter-branch: add --egrep-filter option
-Date: Tue, 19 Apr 2011 12:03:13 -0400
-Message-ID: <4DADB241.1060602@cisco.com>
-References: <4DA8CBB0.6080103@rivulet.ca> <201104161016.51690.j6t@kdbg.org> <4DAA464E.7010804@rivulet.ca> <20110419080143.GA17915@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 00/11] gitweb: Change timezone in dates using
+ JavaScript
+Date: Tue, 19 Apr 2011 09:58:49 -0700
+Message-ID: <7vmxjm5gae.fsf@alter.siamese.dyndns.org>
+References: <1302878645-458-1-git-send-email-jnareb@gmail.com>
+ <7vei4z6omh.fsf@alter.siamese.dyndns.org>
+ <201104190326.29922.jnareb@gmail.com> <201104190836.16221.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Michael O'Cleirigh" <michael.ocleirigh@rivulet.ca>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 18:03:21 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	Kevin Cernekee <cernekee@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 18:59:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCDOa-0001xD-Qc
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 18:03:21 +0200
+	id 1QCEGd-0003lb-Uc
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 18:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213Ab1DSQDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 12:03:16 -0400
-Received: from sj-iport-6.cisco.com ([171.71.176.117]:58059 "EHLO
-	sj-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752929Ab1DSQDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 12:03:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1277; q=dns/txt;
-  s=iport; t=1303228995; x=1304438595;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=zB4K30EM+fLRYDFHH4W/79qVxZoWJ4RzkVTNbTOjrZE=;
-  b=UxaSaW1SkBikAdtxRzwdEiFNVDd2/0AydLE41c6XqLjiwpSUvTk1R0KA
-   mmjvxtB+n30ho/tFdhqIXu2Yn4cuYUoLUPt3HItH6C9CfOh2/IrFrskgD
-   IzyRaWNCckOReTgJ3p0LeA+Wz3UxMnTB7rQ7lkFkVJN4IidKRlSqtwgDh
-   c=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAA2yrU2tJXG+/2dsb2JhbAClLHeoBpxmhXEEjgeDfA
-X-IronPort-AV: E=Sophos;i="4.64,240,1301875200"; 
-   d="scan'208";a="683931194"
-Received: from rcdn-core2-3.cisco.com ([173.37.113.190])
-  by sj-iport-6.cisco.com with ESMTP; 19 Apr 2011 16:03:14 +0000
-Received: from [64.100.104.120] (dhcp-64-100-104-120.cisco.com [64.100.104.120])
-	by rcdn-core2-3.cisco.com (8.14.3/8.14.3) with ESMTP id p3JG3EKO017370;
-	Tue, 19 Apr 2011 16:03:14 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <20110419080143.GA17915@elie>
-X-Enigmail-Version: 1.1.2
+	id S1753261Ab1DSQ7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 12:59:06 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35439 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751626Ab1DSQ7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 12:59:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D1D7040F1;
+	Tue, 19 Apr 2011 13:01:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=acBlEpKT8t20Nhmldwqn4UWSXyI=; b=ji5yOM
+	/zW3InSIfTWnyX5Q5dmTMu1Q8m8amWKetptXf3r2oyD+h64NiXL51MtDpn7BZ3a2
+	mmQ438Onlvp+iyCyv19SGlfejln7DV/MnNSf3Thcr/PC47GufbJbHiGN9XkDeWp6
+	kd6K4dvC3lZRxaKXSAcftH25rGgef476RgrHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KDtgEH2SZ/CJsvZrrFlwIqkZTwHOLwcK
+	Lq68byVvcwkyWUvkiJRFiNyRNiRbSBCEkhSRJDMmWID25KqLOH0Xqv5OpaupP4AY
+	GFYJDQoVVKZTck2uHCuLTKeBvKSNMSS0gSbDlpaLRJAsjyOooolb7k3tBybTbq+l
+	SfX6wh0MRyU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 881F740EF;
+	Tue, 19 Apr 2011 13:00:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2FFA640EE; Tue, 19 Apr 2011
+ 13:00:52 -0400 (EDT)
+In-Reply-To: <201104190836.16221.jnareb@gmail.com> (Jakub Narebski's message
+ of "Tue, 19 Apr 2011 08:36:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98FA6D52-6AA6-11E0-BA09-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171801>
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
+> Perhaps something like that would be a good change, what do you think?
 
-On 04/19/2011 04:01 AM, Jonathan Nieder wrote:
-> Hi,
->
-> Michael O'Cleirigh wrote:
->
->> After considering your comment I have to agree with you that it is a
->> special case of index-filter and probably not useful/general for
->> enough other cases to justify adding in a new command line option.
-> Now, why do you give up so easily? ;-)
->
-> Surely what your patch is hinting at is the possibility of an
-> --ls-tree-filter (for lack of a better name) that works with trees
-> without the overhead of unpacking them.
+Should be a lot saner thing to do.
 
-I have invented something similar[*] for git three different times in
-three different ways.  The last one is the fastest and uses
-git-fast-import instead of filter-branch, but I was sure one of the
-filter-branch methods would have been more efficient.  More examples
-would be very welcome.
+Do we even need to know about JSMIN, GITWEB_JS, etc., in our main
+Makefile?  Shouldn't we be delegating both the build and the install
+targets to "$(MAKE) -C gitweb $@"?
 
-Phil
-
-[*] My implementations mostly focused on applying a ".gitignore" file to
-the repo history.  I spent many hours on this.  I wound up with a script
-that also handles file and branch renaming (the latter important so I
-can run different filters on the same repo and drop results into
-different branches).  It's not patch-worthy (yet), but I would have
-loved to have more examples along the way such as the mktree one you
-just provided.
+> diff --git i/Makefile w/Makefile
+> index cbc3fce..8960cee 100644
+> --- i/Makefile
+> +++ w/Makefile
+> @@ -1773,7 +1773,7 @@ gitweb/static/gitweb.min.css: gitweb/static/gitweb.css
+>  endif # CSSMIN
+>  
+>  
+> -git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/static/gitweb.css gitweb/static/gitweb.js
+> +git-instaweb: git-instaweb.sh gitweb
+>  	$(QUIET_GEN)$(RM) $@ $@+ && \
+>  	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+>  	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
