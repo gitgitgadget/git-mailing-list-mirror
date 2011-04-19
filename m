@@ -1,93 +1,90 @@
-From: Raphael Zimmerer <killekulla@rdrz.de>
-Subject: [PATCH] gitk: When a commit contains a note, mark it with a yellow
-	box.
-Date: Tue, 19 Apr 2011 22:37:09 +0200
-Message-ID: <20110419203709.GA17397@rdrz.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Pass empty file to p4merge where no base is
+ suitable.
+Date: Tue, 19 Apr 2011 14:33:06 -0700
+Message-ID: <7vwriq3p0t.fsf@alter.siamese.dyndns.org>
+References: <BANLkTimXBayYAScPfk2j9spxcYrmtMJKxg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Apr 19 22:44:59 2011
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Ciaran <ciaranj@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 23:33:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCHn8-0004wp-EN
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 22:44:58 +0200
+	id 1QCIY0-0005zC-4p
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 23:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755381Ab1DSUoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 16:44:34 -0400
-Received: from rdrz.de ([217.160.107.209]:47274 "HELO rdrz.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755124Ab1DSUod (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 16:44:33 -0400
-X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Apr 2011 16:44:32 EDT
-Received: (qmail 27170 invoked by uid 1009); 19 Apr 2011 20:37:09 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754226Ab1DSVdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 17:33:18 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49412 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753567Ab1DSVdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 17:33:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E20EC4203;
+	Tue, 19 Apr 2011 17:35:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vnBMHI6KnAGn/gv8zThskXDS7PM=; b=dujrA0
+	2gMvWZgr3fGT740fqtWf+6aVn04ZFi/spqLUzFz9MYu+9ODbqTLXg3BT/Uv7cObQ
+	N6SeydnDIoQeW6f0MthS1od/tTCrHDPQd7oaA+2T9tEMjglcikgpwM4L1xW0J8fg
+	iAMJYEQSpJiznIQX1N4XZCZQ9t+1BHTakQAt4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cozU/dmKIxHAtg1VY/P072x+SfS2Q1vJ
+	9tZJClOM/7EEIYVMrL+ea/wy8FByu8Hi8AfEJwTkwdejsN8UteHSn3qmRsKvN3R9
+	yCTDrxTqvrviGi6rmOAKvH9Zy76rLOLJ5cKg0rHZ0JguDvG6CPrm9PudjgpI1SjG
+	C1EcXMLdNfI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AF8004200;
+	Tue, 19 Apr 2011 17:35:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D0BF41FC; Tue, 19 Apr 2011
+ 17:35:08 -0400 (EDT)
+In-Reply-To: <BANLkTimXBayYAScPfk2j9spxcYrmtMJKxg@mail.gmail.com> (Ciaran's
+ message of "Tue, 19 Apr 2011 20:46:11 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E86C2418-6ACC-11E0-8D25-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171817>
 
-It is desirable to see at a glance which commits do contain notes.
-Therefore mark them with a yellow rectangle.
+Ciaran <ciaranj@gmail.com> writes:
 
-That can be suppressed with `gitk --no-notes`.
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -262,7 +262,9 @@ run_merge_tool () {
+>  			if $base_present; then
+>  				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+>  			else
+> -				"$merge_tool_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
+> +				touch "$GIT_DIR/.no_base"
+> +				"$merge_tool_path" "$GIT_DIR/.no_base" "$LOCAL" "$REMOTE" "$MERGED"
+> +				rm "$GIT_DIR/.no_base"
 
-Signed-off-by: Raphael Zimmerer <killekulla@rdrz.de>
----
+The calling script "git-mergetool.sh" seems to take pains to construct
+these filenames to have the same .ext, presumably so that the tool can
+take advantage of it to determine the type of contents and do something
+intelligent about it (e.g. syntax highlighting).
 
-Maybe this patch is helpful. Sorry for any tcl/tk nonsense, it's not
-my first language...
+Does the use of .no_base interfere with that effort?
 
- gitk |   17 ++++++++++++++++-
- 1 files changed, 16 insertions(+), 1 deletions(-)
+I suspect that you may be able to simply use "$BASE" for that, no?  It
+will be cleaned up when cleanup_temp_files() is run anyway (warning: I do
+not use mergetool, and I am writing this only from my cursory looking of
+the script, so take this with a large grain of salt).
 
-diff --git a/gitk b/gitk
-index 4cde0c4..b182c75 100755
---- a/gitk
-+++ b/gitk
-@@ -1674,8 +1674,9 @@ proc parsecommit {id contents listed} {
-     if {$comdate != {}} {
- 	set cdate($id) $comdate
-     }
-+    set hasnote [string first "\nNotes:\n" $contents]
-     set commitinfo($id) [list $headline $auname $audate \
--			     $comname $comdate $comment]
-+			     $comname $comdate $comment $hasnote]
- }
- 
- proc getcommit {id} {
-@@ -5899,6 +5900,9 @@ proc drawcmittext {id row col} {
- 	|| [info exists idotherrefs($id)]} {
- 	set xt [drawtags $id $x $xt $y]
-     }
-+    if {[lindex $commitinfo($id) 6] > 0} {
-+	set xt [drawnotesign $xt $y]
-+    }
-     set headline [lindex $commitinfo($id) 0]
-     set name [lindex $commitinfo($id) 1]
-     set date [lindex $commitinfo($id) 2]
-@@ -6345,6 +6349,17 @@ proc drawtags {id x xt y1} {
-     return $xt
- }
- 
-+proc drawnotesign {xt y} {
-+    global linespc canv fgcolor
-+
-+    set orad [expr {$linespc / 3}]
-+    set t [$canv create rectangle [expr {$xt - $orad}] [expr {$y - $orad}] \
-+	       [expr {$xt + $orad - 1}] [expr {$y + $orad - 1}] \
-+	       -fill yellow -outline $fgcolor -width 1 -tags circle]
-+    set xt [expr {$xt + $orad * 3}]
-+    return $xt
-+}
-+
- proc xcoord {i level ln} {
-     global canvx0 xspc1 xspc2
- 
--- 
-1.7.5.rc1.12.gff46a
+Also, the command to use when you want to get an empty file is not "touch".
+It is not likely that you would have an existing file there, but the whole
+point of the updated codepath is to have an empty file, and not a file
+with recent timestamp, it would be far more sensible to say
+
+	: >"$BASE"
+
+i.e. redirect into the path, with a no-op command.
