@@ -1,97 +1,125 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH -01/11] git-instaweb: Simplify build dependency on gitweb
-Date: Tue, 19 Apr 2011 13:54:16 +0200
-Message-ID: <201104191354.17923.jnareb@gmail.com>
-References: <1302878645-458-1-git-send-email-jnareb@gmail.com>
+From: Stefan Sperling <stsp@stsp.name>
+Subject: Re: [PATCH] remove noise and inaccuracies from git-svn docs
+Date: Tue, 19 Apr 2011 14:00:31 +0200
+Message-ID: <20110419120031.GE4134@ted.stsp.name>
+References: <1303138000-27807-1-git-send-email-stsp@stsp.name>
+ <vpqhb9vplu4.fsf@bauges.imag.fr>
+ <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
+ <20110419093108.GA7440@ted.stsp.name>
+ <4DAD6FC4.6060004@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	Kevin Cernekee <cernekee@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 13:54:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Apr 19 14:01:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QC9Vq-000156-DF
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 13:54:34 +0200
+	id 1QC9cx-0005II-Kc
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 14:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794Ab1DSLy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 07:54:29 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:37959 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751407Ab1DSLy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 07:54:28 -0400
-Received: by bwz15 with SMTP id 15so4456621bwz.19
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 04:54:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=x2xBsGIKrIfZu/hWgW5prsaN+7xP8xo4DdeIFgFvk/s=;
-        b=mUkeuULSiMP2HYZ3ipJrA1NJ/LPH7TljqqH6FZiuIVocpCT8jvAUO+Qh6LVVMpnWsq
-         TVOS5T9BXHh/ettDIiCg5HwA2ocXRzKp5kDavJmbzf0e4f0pqHZebnNEZElpRP3PClA/
-         Yi9+1sfChShXHTviSJQ3hVx/d43QiFjVhME64=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=n1UrUZojeVYXcTDZol5UifsRmZd+ghy3AaZR3XssxRQmaOEk6tEYGYO5fnlAjw03Nk
-         qmKAiKJk5FKyK42Ijo/sgUe+0I6kWoEfEpA4SMLujcoIcoJD1JdsiyFwTYnCRCN1ijfK
-         vkGb2zhI2xkC8rKEnAO8f0FuXfftjCxbMwjfw=
-Received: by 10.204.74.167 with SMTP id u39mr5159356bkj.144.1303214067166;
-        Tue, 19 Apr 2011 04:54:27 -0700 (PDT)
-Received: from [192.168.1.13] (abvx167.neoplus.adsl.tpnet.pl [83.8.221.167])
-        by mx.google.com with ESMTPS id b6sm3791092bkb.10.2011.04.19.04.54.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2011 04:54:25 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1302878645-458-1-git-send-email-jnareb@gmail.com>
+	id S1754195Ab1DSMBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 08:01:50 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:47714 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751530Ab1DSMBt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 08:01:49 -0400
+X-Envelope-From: stsp@stsp.name
+Received: from ted.stsp.name (ted.stsp.name [217.197.84.34])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3JC0XrF008386
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 19 Apr 2011 14:00:33 +0200
+Received: from ted.stsp.name (stsp@localhost [127.0.0.1])
+	by ted.stsp.name (8.14.3/8.14.3) with ESMTP id p3JC0XRG023902;
+	Tue, 19 Apr 2011 14:00:33 +0200 (CEST)
+Received: (from stsp@localhost)
+	by ted.stsp.name (8.14.3/8.14.3/Submit) id p3JC0V1c003950;
+	Tue, 19 Apr 2011 14:00:31 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <4DAD6FC4.6060004@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171793>
 
-Since c0cb4ed (git-instaweb: Configure it to work with new gitweb
-structure, 2010-05-28) git-instaweb does not re-create gitweb.cgi
-etc., but makes use of installed gitweb.  Therefore simplify
-git-instaweb dependency on gitweb subsystem in main Makefile from
-'gitweb/gitweb.cgi gitweb/static/gitweb.css gitweb/static/gitweb.js'
-to simply 'gitweb'.
+On Tue, Apr 19, 2011 at 01:19:32PM +0200, Michael J Gruber wrote:
+> Stefan Sperling venit, vidit, dixit 19.04.2011 11:31:
+> > On Mon, Apr 18, 2011 at 10:55:18AM -0700, Junio C Hamano wrote:
+> >> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> >>
+> >>> Stefan Sperling <stsp@stsp.name> writes:
+> >>>
+> >>>> -DESIGN PHILOSOPHY
+> >>>> ------------------
+> >>>> -Merge tracking in Subversion is lacking and doing branched development
+> >>>> -with Subversion can be cumbersome as a result.  While 'git svn' can
+> >>>> track
+> >>>
+> >>> Agreed (this and the rest of the patch). Users reading git-svn's doc
+> >>> don't want a dissertation about how bad SVN is, and if they do, they can
+> >>> read whygitisbetterthanx ;-)
+> > 
+> > Exactly :)
+> > 
+> > And they might rather want to learn more about how Subversion has improved
+> > since version 1.4. It seems that these parts of the text were written
+> > before Subversion's 1.5 release. SVN is a lot more capable now than the
+> > git-svn docs suggest and I'm surprised that git-svn's development seems
+> > to have gotten stuck at the 1.4 level of functionality. Not even CentOS
+> > ships with 1.4 anymore these days.
+> > 
+> > E.g. git-svn could be taught to generate svn mergeinfo compatible with other
+> > Subversion clients. It's not easy to come up with a generic mapping between
+> > the two systems but for some use cases it should be reasonably straightforward.
+> > This would be a nice improvement towards making git-svn a proper drop-in
+> > replacement for the standard svn client. Currently, git-svn cannot be
+> > used without disturbing other users doing merges with Subversion itself
+> > which is a pity.
+> 
+> 6abd933 (git-svn: allow the mergeinfo property to be set, 2010-09-24)
+> 
+> made a first step in that direction so that you can at least add
+> mergeinfo manually.
 
-This is preparation for splitting gitweb.perl script, and for
-splitting gitweb.js (to be reassembled / combined on build).  This way
-we don't have to duplicate parts of gitweb/Makefile in main
-Makefile... it is also more correct description of git-instaweb
-dependency.
+Interesting. I didn't see this since I'm using the released version.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is to be inserted as first patch in the series.
+But I've been reading the most recent documentation file.
+How come the documentation wasn't updated?
+Is it intentionally not documented yet?
 
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> But, git-svn.perl is basically in maintenance mode
+> it seems, and more work is being done to implement a new svn remote helper.
 
-diff --git a/Makefile b/Makefile
-index cbc3fce..8960cee 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1773,7 +1773,7 @@ gitweb/static/gitweb.min.css: gitweb/static/gitweb.css
- endif # CSSMIN
+Is there already code for this new helper I can look at?
  
- 
--git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/static/gitweb.css gitweb/static/gitweb.js
-+git-instaweb: git-instaweb.sh gitweb
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
--- 
-1.7.3
+> Also, I think merge tracking wasn't that reliable in svn 1.5 before svn
+> 1.6, and we try to support older versions. In particular, we want to
+> support the versions on typical svn hosting sites which are not always
+> that recent.
+
+"Not that reliable" is a pretty fuzzy statement that I cannot really
+provide a specific answer to.
+
+There were various implementation bugs in early 1.5 releases causing
+miscalculations of mergeinfo. Those were client-side problems.
+The client calculates mergeinfo and uses it to determine which revisions
+to request during a merge. The server only stores mergeinfo and does not
+evaluate it, expect in case of the -g option for "svn log" which makes
+revisions from merged branches show up in the log output (analogous to
+how individual branch commits are shown in gitk).
+
+So it shouldn't matter much which version of the server a hosting site
+is running. As long as the server is running some 1.5 release git-svn should,
+in general, be able to cope just fine. Even with a 1.4 server git-svn could
+commit svn:mergeinfo properties, though other svn clients won't bother using
+them until the server and repository format is upgraded.
+
+Maybe there was some server-side problem that prevented you from doing
+something specific? In general it really shouldn't matter.
