@@ -1,63 +1,76 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git-p4 issue
-Date: Tue, 19 Apr 2011 09:59:09 +0000 (UTC)
-Message-ID: <loom.20110419T115354-846@post.gmane.org>
-References: <BANLkTikeQSqAhm2CwCYBkE74OxPUnA0cOg@mail.gmail.com> <BANLkTimmVQAcx7hiQFUBcoAGdvPhktPuMg@mail.gmail.com> <BANLkTikDDDtyJB992DFNtvgMrGvbWf=rMw@mail.gmail.com> <BANLkTinJecAsXt+5JzscFYEx_ez2q9DioQ@mail.gmail.com>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: rebasing branch with reverted patches
+Date: Tue, 19 Apr 2011 12:21:45 +0200
+Message-ID: <BANLkTim9vKpp6=AwSG9pkWZrw9YKCuFS9w@mail.gmail.com>
+References: <BANLkTim5mf6okFN8V5V+B=Ns1JORD47a5A@mail.gmail.com>
+	<4DAD4B0F.9030908@drmicha.warpmail.net>
+	<BANLkTimbSes-B8zK2a2t1Jp1v+29HdNvqw@mail.gmail.com>
+	<BANLkTim_QNFhChme=nxGf1_Dw8LedTS3Ag@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 11:59:36 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Tue Apr 19 12:22:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QC7iW-0000H4-DY
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 11:59:32 +0200
+	id 1QC84F-0003uD-Gy
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 12:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754153Ab1DSJ71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 05:59:27 -0400
-Received: from lo.gmane.org ([80.91.229.12]:41990 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753803Ab1DSJ71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 05:59:27 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QC7iJ-0000BO-U9
-	for git@vger.kernel.org; Tue, 19 Apr 2011 11:59:22 +0200
-Received: from 57.79.130.188 ([57.79.130.188])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 11:59:19 +0200
-Received: from vitor.hda by 57.79.130.188 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 11:59:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 57.79.130.188 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0) Gecko/20100101 Firefox/4.0)
+	id S1754846Ab1DSKVt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2011 06:21:49 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:38028 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754768Ab1DSKVq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2011 06:21:46 -0400
+Received: by pxi2 with SMTP id 2so4381870pxi.10
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 03:21:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JyBRZQtGx3ZMMN01NVEko3Uq1dhWuWX+dHHDdvYA9RE=;
+        b=mWe5iw4lhgezNM3qC0Ktk+nWAJI3upDqV60y7v33r+5NHxt7LmxlhKztpnhU5UIoFX
+         QEhpPV/GLiPMHOzAeHbmq5/llYR8o+pzUxFXYpu9Ct+G5KekwMwvRuB+so3AL5BDuCGG
+         O1T8ZJaa9yI/cDgTF4U83n7B1vGsadB4B8SZU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=R2dSZ743iKgn02FN2qKB5ahNl3LO29w+XeDJ5Qa7GK/VZxGlGLkIIYbRvQ30htvdw8
+         mm5laYR86l46kueOG+qridI3ZjELKLnGhr4q6zZawaXrginsPkCa9RyvG02uHpYJMFyQ
+         8SpGs+0xuspBRlxE34hyTX3mf4HrMg6mcVZ6c=
+Received: by 10.143.25.22 with SMTP id c22mr3291474wfj.267.1303208505778; Tue,
+ 19 Apr 2011 03:21:45 -0700 (PDT)
+Received: by 10.143.18.11 with HTTP; Tue, 19 Apr 2011 03:21:45 -0700 (PDT)
+In-Reply-To: <BANLkTim_QNFhChme=nxGf1_Dw8LedTS3Ag@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171790>
 
-Hi Mike,
+Hello,
 
-Could you please search for the following set of patches in this mailing list?
+On Tue, Apr 19, 2011 at 11:39 AM, Santi B=E9jar <santi@agolina.net> wro=
+te:
+>
+> You can also change the A' commit title to "fixup! original_title"
+> while reverting (there is no --fixup argument like "git commit" has),
+> then git rebase -i would reorder the todo file for you.
 
-[PATCH v2 0/3] git-p4: Improve branch support
+Interesting I wasn't aware of --autosquash option, thanks.
 
-I think I sent v2 twice somehow, so please make sure you pick the latest ;)
-In these patches I add the possibility to use a "git-p4.branchList"
-configuration to define the branches. The patch is still to be approved because
-most people in the mailing list do not use branch detection, but I use it daily
-and it is working in my side. Could you please test it?
+This is almost what I was asking for actually, the only part which is
+missing is the fact that git-rebase detect the "Revert: " magic
+string, check that the revert is sane (by comparing the diff of the
+revert with the diff of the original commit) and do the same as
+"fixup!" would do without the confusion of the resulting empty commit.
 
-Thanks,
-Vitor
-
-P.S. - It's better that you do not apply "[PATCH v2 1/3] git-p4: Correct branch
-base depot path detection", as it may require you to clone the all depot again.
+Thanks
+--=20
+=46rancis
