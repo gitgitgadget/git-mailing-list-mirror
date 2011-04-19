@@ -1,96 +1,77 @@
-From: Stefan Sperling <stsp@stsp.name>
-Subject: [PATCH] remove noise and inaccuracies from git-svn docs
-Date: Tue, 19 Apr 2011 11:06:46 +0200
-Message-ID: <1303204006-24191-1-git-send-email-stsp@stsp.name>
-References: <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
-Cc: Stefan Sperling <stsp@stsp.name>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 11:07:37 2011
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: rebasing branch with reverted patches
+Date: Tue, 19 Apr 2011 11:09:33 +0200
+Message-ID: <BANLkTimbSes-B8zK2a2t1Jp1v+29HdNvqw@mail.gmail.com>
+References: <BANLkTim5mf6okFN8V5V+B=Ns1JORD47a5A@mail.gmail.com>
+	<4DAD4B0F.9030908@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Apr 19 11:09:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QC6uG-0006sR-Ir
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 11:07:36 +0200
+	id 1QC6wF-0007le-ER
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 11:09:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836Ab1DSJHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 05:07:32 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:46478 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751793Ab1DSJHb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 05:07:31 -0400
-X-Envelope-From: stsp@stsp.name
-Received: from ted.stsp.name (ted.stsp.name [217.197.84.34])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3J97T7h028780
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 19 Apr 2011 11:07:29 +0200
-Received: from ted.stsp.name (stsp@localhost [127.0.0.1])
-	by ted.stsp.name (8.14.3/8.14.3) with ESMTP id p3J97T55026315;
-	Tue, 19 Apr 2011 11:07:29 +0200 (CEST)
-Received: (from stsp@localhost)
-	by ted.stsp.name (8.14.3/8.14.3/Submit) id p3J97Ttq021710;
-	Tue, 19 Apr 2011 11:07:29 +0200 (CEST)
-X-Mailer: git-send-email 1.7.3.5
-In-Reply-To: <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752296Ab1DSJJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 05:09:35 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52581 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751793Ab1DSJJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 05:09:34 -0400
+Received: by pwi15 with SMTP id 15so2653044pwi.19
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 02:09:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ORm2SzjvO3JSJ6otmz8iYzxjzBsMC3D9hyX057vNpLs=;
+        b=lRFKSCmUWz5smY62n5yGAv2U/Np8ZuoQSBOBWxe2S8+2Jlq6jK6vJBf2Y+oHIZpMw/
+         tJGlBPozeDjIxgOUx9tYSTtlaB03Im9BpRs3F7jMxjgOmKOKbZkrr1eWfk3xr33vC7mb
+         GOHTAYJgsampOxImY78t85ygo/iSwsTHXtPmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=bNz8or7p++GIi9SUiwoxfwwP6FG3REuaOzT/V2A0AC7MGjeuO4oehuHPoHvH32tewy
+         fDlI4Og4GoXfrBXD/FzJGmZ+oGhjGvWtDsPjcPWeEXedB18Gr2d8HL48X7fGirTYi3X3
+         YSENP+KPDq6g/nngM6gUwcUrujyG21inUIUE0=
+Received: by 10.143.3.8 with SMTP id f8mr3332440wfi.39.1303204173944; Tue, 19
+ Apr 2011 02:09:33 -0700 (PDT)
+Received: by 10.143.18.11 with HTTP; Tue, 19 Apr 2011 02:09:33 -0700 (PDT)
+In-Reply-To: <4DAD4B0F.9030908@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171784>
 
-Signed-off-by: Stefan Sperling <stsp@stsp.name>
----
- Documentation/git-svn.txt |   16 +++++++---------
- 1 files changed, 7 insertions(+), 9 deletions(-)
+On Tue, Apr 19, 2011 at 10:42 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Francis Moreau venit, vidit, dixit 19.04.2011 09:32:
+>> Hello,
+>>
+>> I'm wondering if it would be a good idea for git rebase to allow not
+>> rebasing reverted patch which are part of the rebased branch.
+>>
+>> For example I'm currently rebasing my branch 'devel' onto master. This
+>> branch have several commits and specially one called A and another one
+>> called A' which reverts A.
+>>
+>> When rebasing 'devel' branch, rebase could try to drop both A and A'.
+>>
+>> What do you think ?
+>>
+>> BTW is there a way to do this currently ?
+>
+> You can do this with "rebase -i" by removing A and A' from the commit
+> list (or squashing them or dealing with them in whatever way you like).
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 4aa6404..fedf310 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -767,10 +767,9 @@ use `git svn rebase` to update your work branch instead of `git pull` or
- when committing into SVN, which can lead to merge commits reversing
- previous commits in SVN.
- 
--DESIGN PHILOSOPHY
-------------------
--Merge tracking in Subversion is lacking and doing branched development
--with Subversion can be cumbersome as a result.  While 'git svn' can track
-+MERGE TRACKING
-+--------------
-+While 'git svn' can track
- copy history (including branches and tags) for repositories adopting a
- standard layout, it cannot yet represent merge history that happened
- inside git back upstream to SVN users.  Therefore it is advised that
-@@ -780,16 +779,15 @@ compatibility with SVN (see the CAVEATS section below).
- CAVEATS
- -------
- 
--For the sake of simplicity and interoperating with a less-capable system
--(SVN), it is recommended that all 'git svn' users clone, fetch and dcommit
-+For the sake of simplicity and interoperating with Subversion,
-+it is recommended that all 'git svn' users clone, fetch and dcommit
- directly from the SVN server, and avoid all 'git clone'/'pull'/'merge'/'push'
- operations between git repositories and branches.  The recommended
- method of exchanging code between git branches and users is
- 'git format-patch' and 'git am', or just 'dcommit'ing to the SVN repository.
- 
- Running 'git merge' or 'git pull' is NOT recommended on a branch you
--plan to 'dcommit' from.  Subversion does not represent merges in any
--reasonable or useful fashion; so users using Subversion cannot see any
-+plan to 'dcommit' from because Subversion users cannot see any
- merges you've made.  Furthermore, if you merge or pull from a git branch
- that is a mirror of an SVN branch, 'dcommit' may commit to the wrong
- branch.
-@@ -839,7 +837,7 @@ Renamed and copied directories are not detected by git and hence not
- tracked when committing to SVN.  I do not plan on adding support for
- this as it's quite difficult and time-consuming to get working for all
- the possible corner cases (git doesn't do it, either).  Committing
--renamed and copied files are fully supported if they're similar enough
-+renamed and copied files is fully supported if they're similar enough
- for git to detect them.
- 
- CONFIGURATION
+Of course, but my point was to make this automatically...
+
 -- 
-1.7.3.5
+Francis
