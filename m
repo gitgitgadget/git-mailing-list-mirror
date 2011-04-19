@@ -1,90 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git notes list/show <revision-range>
-Date: Tue, 19 Apr 2011 09:17:51 +0200
-Message-ID: <4DAD371F.9040003@drmicha.warpmail.net>
-References: <4DAC80CF.8020704@lyx.org> <20110418182724.GB11250@sigill.intra.peff.net>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: rebasing branch with reverted patches
+Date: Tue, 19 Apr 2011 09:32:37 +0200
+Message-ID: <BANLkTim5mf6okFN8V5V+B=Ns1JORD47a5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Vincent van Ravesteijn <vfr@lyx.org>,
-	Git Mailing List <git@vger.kernel.org>, bebarino@gmail.com,
-	johan@herland.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 19 09:18:01 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 09:32:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QC5CC-0003gB-Gz
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 09:18:00 +0200
+	id 1QC5QT-0002Az-NY
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 09:32:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991Ab1DSHR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 03:17:56 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:58192 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751943Ab1DSHRy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2011 03:17:54 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E7C112054D;
-	Tue, 19 Apr 2011 03:17:53 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 19 Apr 2011 03:17:53 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OkAnfW1NRbS/FtifIt6HU+Ta2Mo=; b=klCUUxsM2ny88Exg44koEwiktoe/dJmejKSB924TQaG2DCkmNn/VD6Hrs4hnrVzreWPf/KDZlNobfHe7zx90EYChWphn6IIds8hkqcI7qKSzysYE8SIs+5aPa3hRN5vkuifFJeh7hx528E05xNV0Ag7pRjpiO5ugpbsmaNmcgjw=
-X-Sasl-enc: V6OR/uO7BERUNq6LIGQBZKyAeBrSvbCCHSF51NT0ON2u 1303197473
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 19AFD446C6F;
-	Tue, 19 Apr 2011 03:17:52 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <20110418182724.GB11250@sigill.intra.peff.net>
+	id S1751921Ab1DSHcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 03:32:39 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:51687 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795Ab1DSHci (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 03:32:38 -0400
+Received: by pxi2 with SMTP id 2so4245368pxi.10
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 00:32:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=wurBFGwg492CVkG3zTwP/vxny/+NopESm+JS01JM2aM=;
+        b=ZB7BjM5YdjBMalBlKf7iQK8gpx91L01+VxrGNeb+ar/pzlG0dBMkduW+VnlJ4wExNR
+         MowG57J49Fr+8OXLC/p63LTyJpVvLVsBcApPPabVzxvxUxlBzZE6tV/Babm0BJOzv2IJ
+         0/Kd/snlhsqEnVED4GcXMBgJG96J0xJygcBmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=eNwtUZs5TW+p9pwGOePeAcJb6PRv8vVhJHZikcrUvtVqjq/PkZ1VcqM+Eq1pD599Ke
+         F2iFhtihltnHhcisIhUJaIBPpBeQacyfnKxwtBDmcECC1GfhLKJUFSx0+R6AH5KKpt//
+         RSZM6YeWbKoUJfzhby/KqpNJT9tPgHqAsgg+k=
+Received: by 10.142.249.39 with SMTP id w39mr3232410wfh.96.1303198357591; Tue,
+ 19 Apr 2011 00:32:37 -0700 (PDT)
+Received: by 10.143.18.11 with HTTP; Tue, 19 Apr 2011 00:32:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171778>
 
-Jeff King venit, vidit, dixit 18.04.2011 20:27:
-> On Mon, Apr 18, 2011 at 08:19:59PM +0200, Vincent van Ravesteijn wrote:
-> 
->> When a feature/patch is proposed, it will "cook" for a while in "pu"
->> and "next". During this period people can comment on the patch. These
->> comments can be stored in git notes added to the commits on which is
->> commented.
-> 
-> If you haven't already seen it, you might find the "notes/*" refs here:
-> 
->   git://repo.or.cz/git/trast.git
-> 
-> They reference the messages discussing the patch on the mailing list by
-> message-id and gmane link.
-> 
->> That's why I want to (try to) implement the feature that 'git notes
->> list' and 'git notes show' accept a revision range and collect all
->> notes for the commits in this range.
-> 
-> You can do more-or-less what you want with something like:
-> 
->   git log --format="%h %s%n%N"
+Hello,
 
-Exactly, the log family does that and more, since it makes the whole
-revision walk machinery available.
+I'm wondering if it would be a good idea for git rebase to allow not
+rebasing reverted patch which are part of the rebased branch.
 
-But since the OP is volunteering to code for notes :-)
-We could need a feature which allows to log the history of a note. The alias
+For example I'm currently rebasing my branch 'devel' onto master. This
+branch have several commits and specially one called A and another one
+called A' which reverts A.
 
-`git noteslog' is aliased to `!sh -c 'git log $(git notes get-ref) "$@"' -'
+When rebasing 'devel' branch, rebase could try to drop both A and A'.
 
-gives you the history of the notes tree (try it with "-p"), but
-sometimes I would like the history of the notes to a specific commit, and in
+What do you think ?
 
-git noteslog -p -- $(commit)
+BTW is there a way to do this currently ?
 
-I would have to use for $(commit) all possible breakdowns of the sha1 of
-the commit for all possible notes tree structures. It feels as of the
-revision walker needs to learn another pathspec, say
-
-":(note):<sha1>"
-
-in line with our magic pathspec discussion.
-
-Michael
+Thanks
+-- 
+Francis
