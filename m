@@ -1,75 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Pass empty file to p4merge where no base is
- suitable.
-Date: Tue, 19 Apr 2011 15:01:47 -0700
-Message-ID: <7vfwpd529g.fsf@alter.siamese.dyndns.org>
-References: <BANLkTimXBayYAScPfk2j9spxcYrmtMJKxg@mail.gmail.com>
- <7vwriq3p0t.fsf@alter.siamese.dyndns.org>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Cloning a remote tag without using git-fetch-pack directly?
+Date: Tue, 19 Apr 2011 15:20:53 -0700
+Message-ID: <20110419222050.GA3304@feather>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Ciaran <ciaranj@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:02:15 2011
+Cc: Jamey Sharp <jamey@minilop.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:21:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCIzp-0003RI-QI
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 00:02:10 +0200
+	id 1QCJIf-0004Cw-1T
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 00:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496Ab1DSWCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 18:02:04 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49475 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753493Ab1DSWCC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 18:02:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3C763467B;
-	Tue, 19 Apr 2011 18:03:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=chmstuvHOVdIdoCQDuuVFDnHbFo=; b=P+jrZ9
-	Ph+msTCoQTEkmeh8ltJSA5Moc4Dm86mRAbT074JhislGmAte4QWcRwNsDeij/9+a
-	KiyZPtHO8fKKZjkgscgqVnHcEsjDFeRwrLU/qOzMUhbXAdLA4O3y+FUf+FqSoIEZ
-	JIYsGVaf8OCwK0pxDp4Vzn+NCNJkAYPwbuSLo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gpfw2DDmPMpZRUngFSsNnh2yXI6B9Ehf
-	bc4ozsYCmsW3NzNvzcfEi9evyxLPRePIsPw9KJkDZuASSEgsn6pKyuNLxpzx5VzQ
-	lPvi8Wusat0HE67KJA2WtQlGmNKqJfovl5eROBEeblTh1HLc3pcTP0BJSoI6KfHh
-	mYIXa5ZOCXc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0AC23467A;
-	Tue, 19 Apr 2011 18:03:54 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E05E64677; Tue, 19 Apr 2011
- 18:03:49 -0400 (EDT)
-In-Reply-To: <7vwriq3p0t.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 19 Apr 2011 14:33:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EA692C3A-6AD0-11E0-AC62-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753620Ab1DSWVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 18:21:30 -0400
+Received: from slow3-v.mail.gandi.net ([217.70.178.89]:59797 "EHLO
+	slow3-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751543Ab1DSWV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 18:21:29 -0400
+X-WhiteListed: mail was accepted with no delay
+X-WhiteListed: mail was accepted with no delay
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+	by slow3-v.mail.gandi.net (Postfix) with ESMTP id F1C4287544
+	for <git@vger.kernel.org>; Wed, 20 Apr 2011 00:21:25 +0200 (CEST)
+X-Originating-IP: 217.70.178.137
+Received: from mfilter8-d.gandi.net (mfilter8-d.gandi.net [217.70.178.137])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id D39F2172079;
+	Wed, 20 Apr 2011 00:21:00 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter8-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter8-d.gandi.net (mfilter8-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id YBstnCjM1s3r; Wed, 20 Apr 2011 00:20:59 +0200 (CEST)
+X-Originating-IP: 131.252.247.124
+Received: from feather (host-247-124.pubnet.pdx.edu [131.252.247.124])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 9BC1B172081;
+	Wed, 20 Apr 2011 00:20:55 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171822>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Using fetch-pack, I can clone a single tag from a repository:
 
-> Also, the command to use when you want to get an empty file is not "touch".
-> It is not likely that you would have an existing file there, but the whole
-> point of the updated codepath is to have an empty file, and not a file
-> with recent timestamp, it would be far more sensible to say
->
-> 	: >"$BASE"
->
-> i.e. redirect into the path, with a no-op command.
+/tmp/testrepo$ git init
+Initialized empty Git repository in /tmp/testrepo/.git/
+/tmp/testrepo$ git fetch-pack /home/josh/src/linux-2.6/.git refs/tags/v2.6.12
+remote: Counting objects: 31617, done.
+remote: Compressing objects: 100% (21083/21083), done.
+Receiving objects: 100% (31617/31617), 52.56 MiB | 5.27 MiB/s, done.
+remote: Total 31617 (delta 12862), reused 19495 (delta 10331)
+Resolving deltas: 100% (12862/12862), done.
+keep    c80bd1def293bc11591159c96970d8becfe3b2d9
+26791a8bcf0e6d33f43aef7682bdb555236d56de refs/tags/v2.6.12
+/tmp/testrepo$ git show 26791a8bcf0e6d33f43aef7682bdb555236d56de | head -20
+tag v2.6.12
 
-By the way, you may want to study what git-merge-one-file.sh script does
-when given a "both sides added, but differently" situation (look for a
-string "--no-add" in the script).  It first tries to see if there are many
-common material that are added in both sides, and if so tries to use that
-common material as the "fake" base.  If there isn't enough common
-material, it uses an empty file as the base.
+This is the final 2.6.12 release
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQBCsykyF3YsRnbiHLsRAvPNAJ482tCZwuxp/bJRz7Q98MHlN83TpACdHr37
+o6X/3T+vm8K3bf3driRr34c=
+=sBHn
+-----END PGP SIGNATURE-----
+
+commit 9ee1c939d1cb936b1f98e8d81aeffab57bae46ab
+Author: Linus Torvalds <torvalds@ppc970.osdl.org>
+Date:   Fri Jun 17 12:48:29 2005 -0700
+
+    Linux 2.6.12
+
+diff --git a/Makefile b/Makefile
+index 9e005e1..0d1e74d 100644
+--- a/Makefile
+
+
+
+However, I can't seem to find any way to convince git clone to do the
+same thing for me.  git clone will clone a branch, but not a tag.
+
+/tmp/testrepo$ git clone /home/josh/src/linux-2.6/.git -b refs/tags/v2.6.12
+Cloning into linux-2.6...
+done.
+warning: Remote branch refs/tags/v2.6.12 not found in upstream origin, using HEAD instead
+
+
+On a different note, git fetch-pack seems to silently fail if asked to
+fetch a remote tag which points at a tree object rather than a commit
+object:
+
+/tmp/testrepo$ git init
+Initialized empty Git repository in /tmp/testrepo/.git/
+/tmp/testrepo$ git fetch-pack /home/josh/src/linux-2.6/.git refs/tags/v2.6.12-tree
+(1) /tmp/testrepo$ echo $?
+1
+
+
+I realize that I want to do something strange here, but it seems like a
+kind of strange that git already supports in at least some ways, just
+not in others.  Am I missing something?
+
+Thanks,
+Josh Triplett
