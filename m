@@ -1,146 +1,187 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 12/11] Remove gitweb/gitweb.cgi and other legacy targets from main Makefile
-Date: Tue, 19 Apr 2011 19:18:25 +0200
-Message-ID: <201104191918.26909.jnareb@gmail.com>
-References: <1302878645-458-1-git-send-email-jnareb@gmail.com> <201104190836.16221.jnareb@gmail.com> <7vmxjm5gae.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH v2 7/9] sparse: Fix errors due to missing target-specific
+ variables
+Date: Tue, 19 Apr 2011 18:32:25 +0100
+Message-ID: <4DADC729.5060705@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	Kevin Cernekee <cernekee@gmail.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, bebarino@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 19:18:43 2011
+X-From: git-owner@vger.kernel.org Tue Apr 19 19:47:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCEZW-0007mw-3L
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 19:18:42 +0200
+	id 1QCF1a-0008St-Fk
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 19:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab1DSRSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 13:18:37 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:54006 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753780Ab1DSRSg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 13:18:36 -0400
-Received: by bwz15 with SMTP id 15so4715924bwz.19
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 10:18:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=kauEsGUBElenETBCDIhOpZWtZPiEgy1l2FjoQnB7QZM=;
-        b=t29hP0iRfkiFIYThgkX9UWXGy/VmEFYHGBkGXB2yxp5C2SeUgGm54HndZK8wBHUgQo
-         Ej2+51thpRIiSkBZJI04xlRzbC/4Xf8/l1vKBw/Zj6DCrD1gNdImk3R7MDQE8xBKo1hk
-         jpOUDEOjfOla9JPUQFmqJ4S1x4EOGAKQLwQQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=IJ/TAWosSYYN56gzT5qeZgm6qCUVlS9r3Ysg84nqu7mmiMphtk3NiixhOhzS+mcddd
-         iue+YCKllpTiD9MGQmw4I0csI2e1oiD4/kjBAGikCWMMEO49ZAQgEX2xOnospysR0SOm
-         n4bzwkzCbQ+/KvzhtH/xrcI80xhGDHP8Epmcc=
-Received: by 10.204.22.204 with SMTP id o12mr19228bkb.76.1303233514866;
-        Tue, 19 Apr 2011 10:18:34 -0700 (PDT)
-Received: from [192.168.1.13] (abvx167.neoplus.adsl.tpnet.pl [83.8.221.167])
-        by mx.google.com with ESMTPS id a23sm55357bkc.16.2011.04.19.10.18.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2011 10:18:33 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vmxjm5gae.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753999Ab1DSRrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 13:47:32 -0400
+Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:58680 "EHLO
+	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753984Ab1DSRrb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2011 13:47:31 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1QCF1N-0002Gz-Y2; Tue, 19 Apr 2011 17:47:30 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171803>
 
-On Tue, 19 Apr 2011, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Perhaps something like that would be a good change, what do you think?
-> 
-> Should be a lot saner thing to do.
-> 
-> Do we even need to know about JSMIN, GITWEB_JS, etc., in our main
-> Makefile?  Shouldn't we be delegating both the build and the install
-> targets to "$(MAKE) -C gitweb $@"?
-> 
-> > diff --git i/Makefile w/Makefile
-> > index cbc3fce..8960cee 100644
-> > --- i/Makefile
-> > +++ w/Makefile
-> > @@ -1773,7 +1773,7 @@ gitweb/static/gitweb.min.css: gitweb/static/gitweb.css
-> >  endif # CSSMIN
-> >  
-> >  
-> > -git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/static/gitweb.css gitweb/static/gitweb.js
-> > +git-instaweb: git-instaweb.sh gitweb
-> >  	$(QUIET_GEN)$(RM) $@ $@+ && \
-> >  	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-> >  	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+In particular, sparse issues the following errors:
 
-How about that?
+    attr.c:472:43: error: undefined identifier 'ETC_GITATTRIBUTES'
+    config.c:821:43: error: undefined identifier 'ETC_GITCONFIG'
+    exec_cmd.c:14:37: error: undefined identifier 'PREFIX'
+    exec_cmd.c:83:28: error: undefined identifier 'GIT_EXEC_PATH'
+    builtin/help.c:328:46: error: undefined identifier 'GIT_MAN_PATH'
+    builtin/help.c:374:40: error: undefined identifier 'GIT_INFO_PATH'
+    builtin/help.c:382:45: error: undefined identifier 'GIT_HTML_PATH'
+    git.c:96:42: error: undefined identifier 'GIT_HTML_PATH'
+    git.c:241:35: error: invalid initializer
+    http.c:293:43: error: undefined identifier 'GIT_HTTP_USER_AGENT'
 
-The patch below is to be after just sent "git-instaweb: Simplify build
-dependency on gitweb", not necessary as last patch in series.
+which is caused by not passing the target-specific additions to
+the EXTRA_CPPFLAGS variable to cgcc.
 
-Note that I have left duplicated description of JSMIN and CSSMIN in main
-Makefile; perhaps they also should be removed...
+In order to fix the problem, we define a new sparse target which
+depends on a set of non-existent "sparse object" files (*.sp)
+which correspond to the set of C source files. In addition to the
+new target, we also provide a new pattern rule for "creating" the
+sparse object files from the source files by running cgcc.  This
+allows us to add '*.sp' to the rules setting the target-specific
+EXTRA_CPPFLAGS variable, which is then included in the new pattern
+rule to run cgcc.
 
--- >8 --
-Subject: [PATCH 12/11] Remove gitweb/gitweb.cgi and other legacy targets from main Makefile
+Also, we change the 'check' target to re-direct the user to the
+new sparse target.
 
-Now that there is gitweb/Makefile, let's leave only "gitweb" and
-"install-gitweb" targets in main Makefile.  Those targets just
-delegate to gitweb's Makefile.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
- Makefile |   26 --------------------------
- 1 files changed, 0 insertions(+), 26 deletions(-)
+
+Junio,
+
+I decided not to mark the $(SP_OBJ) as .PHONY targets; after some
+testing, it seems that it is not necessary, even if users do
+something like:
+    make git.sp 2>git.sp
+Do you know of any advantages to doing so that I have missed?
+
+Changes since v1:
+    - added missing "common-cmds.h" dependencies
+
+ATB,
+Ramsay Jones
+
+ Makefile |   44 +++++++++++++++++++++++++++-----------------
+ 1 files changed, 27 insertions(+), 17 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 8960cee..d0c577b 100644
+index 385193a..57eacb5 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1747,32 +1747,6 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
- gitweb:
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+@@ -1581,6 +1581,7 @@ ifndef V
+ 	QUIET_LNCP     = @echo '   ' LN/CP $@;
+ 	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
+ 	QUIET_GCOV     = @echo '   ' GCOV $@;
++	QUIET_SP       = @echo '   ' SP $<;
+ 	QUIET_SUBDIR0  = +@subdir=
+ 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+ 			 $(MAKE) $(PRINT_DIR) -C $$subdir
+@@ -1676,17 +1677,17 @@ strip: $(PROGRAMS) git$X
+ 	$(STRIP) $(STRIP_OPTS) $(PROGRAMS) git$X
  
--ifdef JSMIN
--GITWEB_PROGRAMS += gitweb/static/gitweb.min.js
--GITWEB_JS = gitweb/static/gitweb.min.js
--else
--GITWEB_JS = gitweb/static/gitweb.js
--endif
--ifdef CSSMIN
--GITWEB_PROGRAMS += gitweb/static/gitweb.min.css
--GITWEB_CSS = gitweb/static/gitweb.min.css
--else
--GITWEB_CSS = gitweb/static/gitweb.css
--endif
--OTHER_PROGRAMS +=  gitweb/gitweb.cgi  $(GITWEB_PROGRAMS)
--gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_PROGRAMS)
--	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
--
--ifdef JSMIN
--gitweb/static/gitweb.min.js: gitweb/static/gitweb.js
--	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
--endif # JSMIN
--ifdef CSSMIN
--gitweb/static/gitweb.min.css: gitweb/static/gitweb.css
--	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
--endif # CSSMIN
--
--
- git-instaweb: git-instaweb.sh gitweb
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ git.o: common-cmds.h
+-git.s git.o: EXTRA_CPPFLAGS = -DGIT_VERSION='"$(GIT_VERSION)"' \
++git.sp git.s git.o: EXTRA_CPPFLAGS = -DGIT_VERSION='"$(GIT_VERSION)"' \
+ 	'-DGIT_HTML_PATH="$(htmldir_SQ)"'
+ 
+ git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
+ 		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
+ 
+-help.o: common-cmds.h
++help.sp help.o: common-cmds.h
+ 
+-builtin/help.o: common-cmds.h
+-builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
++builtin/help.sp builtin/help.o: common-cmds.h
++builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_HTML_PATH="$(htmldir_SQ)"' \
+ 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
+ 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
+@@ -1972,30 +1973,34 @@ $(VCSSVN_OBJS) $(VCSSVN_TEST_OBJS): $(LIB_H) \
+ test-svn-fe.o: vcs-svn/svndump.h
+ endif
+ 
+-exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
++exec_cmd.sp exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
+ 	'-DBINDIR="$(bindir_relative_SQ)"' \
+ 	'-DPREFIX="$(prefix_SQ)"'
+ 
+-builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
++builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
+ 	-DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"'
+ 
+-config.s config.o: EXTRA_CPPFLAGS = -DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
++config.sp config.s config.o: EXTRA_CPPFLAGS = \
++	-DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
+ 
+-attr.s attr.o: EXTRA_CPPFLAGS = -DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
++attr.sp attr.s attr.o: EXTRA_CPPFLAGS = \
++	-DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
+ 
+-http.s http.o: EXTRA_CPPFLAGS = -DGIT_HTTP_USER_AGENT='"git/$(GIT_VERSION)"'
++http.sp http.s http.o: EXTRA_CPPFLAGS = \
++	-DGIT_HTTP_USER_AGENT='"git/$(GIT_VERSION)"'
+ 
+ ifdef NO_EXPAT
+-http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
++http-walker.sp http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
+ endif
+ 
+ ifdef NO_REGEX
+-compat/regex/regex.o: EXTRA_CPPFLAGS = -DGAWK -DNO_MBSUPPORT
++compat/regex/regex.sp compat/regex/regex.o: EXTRA_CPPFLAGS = \
++	-DGAWK -DNO_MBSUPPORT
+ endif
+ 
+ ifdef USE_NED_ALLOCATOR
+-compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
++compat/nedmalloc/nedmalloc.sp compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
+ 	-DNDEBUG -DOVERRIDE_STRDUP -DREPLACE_SYSTEM_ALLOCATOR
+ endif
+ 
+@@ -2161,14 +2166,19 @@ test-%$X: test-%.o $(GITLIBS)
+ check-sha1:: test-sha1$X
+ 	./test-sha1.sh
+ 
++SP_OBJ = $(patsubst %.o,%.sp,$(C_OBJ))
++
++%.sp: %.c GIT-CFLAGS FORCE
++	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
++		$(SPARSE_FLAGS) $<
++
++sparse: common-cmds.h $(SP_OBJ)
++
+ check: common-cmds.h
+ 	@if sparse; \
+ 	then \
+-		for i in $(patsubst %.o, %.c, $(GIT_OBJS)); \
+-		do \
+-			echo '   ' SP $$i; \
+-			cgcc -no-compile $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; \
+-		done; \
++		echo 2>&1 "Use 'make sparse' instead"; \
++		$(MAKE) --no-print-directory sparse; \
+ 	else \
+ 		echo 2>&1 "Did you mean 'make test'?"; \
+ 		exit 1; \
 -- 
-1.7.3
+1.7.4
