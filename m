@@ -1,187 +1,50 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH v2 7/9] sparse: Fix errors due to missing target-specific
- variables
-Date: Tue, 19 Apr 2011 18:32:25 +0100
-Message-ID: <4DADC729.5060705@ramsay1.demon.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, bebarino@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 19:47:43 2011
+From: Luke Diamand <luke@diamand.org>
+Subject: [PATCH] git-p4: add option to preserve user names
+Date: Tue, 19 Apr 2011 19:01:17 +0100
+Message-ID: <1303236078-14011-1-git-send-email-luke@diamand.org>
+Cc: Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 20:02:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCF1a-0008St-Fk
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 19:47:43 +0200
+	id 1QCFFS-00009U-Hn
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 20:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753999Ab1DSRrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 13:47:32 -0400
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:58680 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753984Ab1DSRrb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2011 13:47:31 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1QCF1N-0002Gz-Y2; Tue, 19 Apr 2011 17:47:30 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1754043Ab1DSSBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 14:01:54 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:40828 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753445Ab1DSSBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 14:01:53 -0400
+Received: by wwa36 with SMTP id 36so7262680wwa.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 11:01:52 -0700 (PDT)
+Received: by 10.227.172.7 with SMTP id j7mr1916250wbz.60.1303236112148;
+        Tue, 19 Apr 2011 11:01:52 -0700 (PDT)
+Received: from localhost.localdomain ([212.183.128.32])
+        by mx.google.com with ESMTPS id x1sm89143wbh.19.2011.04.19.11.01.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 19 Apr 2011 11:01:51 -0700 (PDT)
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.7.1
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171804>
 
-In particular, sparse issues the following errors:
+Patches from git passed into p4 end up with the committer
+being identified as the person who ran git-p4.
 
-    attr.c:472:43: error: undefined identifier 'ETC_GITATTRIBUTES'
-    config.c:821:43: error: undefined identifier 'ETC_GITCONFIG'
-    exec_cmd.c:14:37: error: undefined identifier 'PREFIX'
-    exec_cmd.c:83:28: error: undefined identifier 'GIT_EXEC_PATH'
-    builtin/help.c:328:46: error: undefined identifier 'GIT_MAN_PATH'
-    builtin/help.c:374:40: error: undefined identifier 'GIT_INFO_PATH'
-    builtin/help.c:382:45: error: undefined identifier 'GIT_HTML_PATH'
-    git.c:96:42: error: undefined identifier 'GIT_HTML_PATH'
-    git.c:241:35: error: invalid initializer
-    http.c:293:43: error: undefined identifier 'GIT_HTTP_USER_AGENT'
+With "submit --preserve-user", git-p4 sets P4USER. If the
+submitter has sufficient p4 permissions, the p4 equivalent
+of the git email committer will be passed into perforce.
 
-which is caused by not passing the target-specific additions to
-the EXTRA_CPPFLAGS variable to cgcc.
+Luke Diamand (1):
+  git-p4: add option to preserve user names
 
-In order to fix the problem, we define a new sparse target which
-depends on a set of non-existent "sparse object" files (*.sp)
-which correspond to the set of C source files. In addition to the
-new target, we also provide a new pattern rule for "creating" the
-sparse object files from the source files by running cgcc.  This
-allows us to add '*.sp' to the rules setting the target-specific
-EXTRA_CPPFLAGS variable, which is then included in the new pattern
-rule to run cgcc.
-
-Also, we change the 'check' target to re-direct the user to the
-new sparse target.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Junio,
-
-I decided not to mark the $(SP_OBJ) as .PHONY targets; after some
-testing, it seems that it is not necessary, even if users do
-something like:
-    make git.sp 2>git.sp
-Do you know of any advantages to doing so that I have missed?
-
-Changes since v1:
-    - added missing "common-cmds.h" dependencies
-
-ATB,
-Ramsay Jones
-
- Makefile |   44 +++++++++++++++++++++++++++-----------------
- 1 files changed, 27 insertions(+), 17 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 385193a..57eacb5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1581,6 +1581,7 @@ ifndef V
- 	QUIET_LNCP     = @echo '   ' LN/CP $@;
- 	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
- 	QUIET_GCOV     = @echo '   ' GCOV $@;
-+	QUIET_SP       = @echo '   ' SP $<;
- 	QUIET_SUBDIR0  = +@subdir=
- 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
- 			 $(MAKE) $(PRINT_DIR) -C $$subdir
-@@ -1676,17 +1677,17 @@ strip: $(PROGRAMS) git$X
- 	$(STRIP) $(STRIP_OPTS) $(PROGRAMS) git$X
- 
- git.o: common-cmds.h
--git.s git.o: EXTRA_CPPFLAGS = -DGIT_VERSION='"$(GIT_VERSION)"' \
-+git.sp git.s git.o: EXTRA_CPPFLAGS = -DGIT_VERSION='"$(GIT_VERSION)"' \
- 	'-DGIT_HTML_PATH="$(htmldir_SQ)"'
- 
- git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
- 		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
- 
--help.o: common-cmds.h
-+help.sp help.o: common-cmds.h
- 
--builtin/help.o: common-cmds.h
--builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
-+builtin/help.sp builtin/help.o: common-cmds.h
-+builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_HTML_PATH="$(htmldir_SQ)"' \
- 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
- 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
-@@ -1972,30 +1973,34 @@ $(VCSSVN_OBJS) $(VCSSVN_TEST_OBJS): $(LIB_H) \
- test-svn-fe.o: vcs-svn/svndump.h
- endif
- 
--exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
-+exec_cmd.sp exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
- 	'-DBINDIR="$(bindir_relative_SQ)"' \
- 	'-DPREFIX="$(prefix_SQ)"'
- 
--builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
-+builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
- 	-DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"'
- 
--config.s config.o: EXTRA_CPPFLAGS = -DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
-+config.sp config.s config.o: EXTRA_CPPFLAGS = \
-+	-DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
- 
--attr.s attr.o: EXTRA_CPPFLAGS = -DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
-+attr.sp attr.s attr.o: EXTRA_CPPFLAGS = \
-+	-DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
- 
--http.s http.o: EXTRA_CPPFLAGS = -DGIT_HTTP_USER_AGENT='"git/$(GIT_VERSION)"'
-+http.sp http.s http.o: EXTRA_CPPFLAGS = \
-+	-DGIT_HTTP_USER_AGENT='"git/$(GIT_VERSION)"'
- 
- ifdef NO_EXPAT
--http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
-+http-walker.sp http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
- endif
- 
- ifdef NO_REGEX
--compat/regex/regex.o: EXTRA_CPPFLAGS = -DGAWK -DNO_MBSUPPORT
-+compat/regex/regex.sp compat/regex/regex.o: EXTRA_CPPFLAGS = \
-+	-DGAWK -DNO_MBSUPPORT
- endif
- 
- ifdef USE_NED_ALLOCATOR
--compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
-+compat/nedmalloc/nedmalloc.sp compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
- 	-DNDEBUG -DOVERRIDE_STRDUP -DREPLACE_SYSTEM_ALLOCATOR
- endif
- 
-@@ -2161,14 +2166,19 @@ test-%$X: test-%.o $(GITLIBS)
- check-sha1:: test-sha1$X
- 	./test-sha1.sh
- 
-+SP_OBJ = $(patsubst %.o,%.sp,$(C_OBJ))
-+
-+%.sp: %.c GIT-CFLAGS FORCE
-+	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
-+		$(SPARSE_FLAGS) $<
-+
-+sparse: common-cmds.h $(SP_OBJ)
-+
- check: common-cmds.h
- 	@if sparse; \
- 	then \
--		for i in $(patsubst %.o, %.c, $(GIT_OBJS)); \
--		do \
--			echo '   ' SP $$i; \
--			cgcc -no-compile $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; \
--		done; \
-+		echo 2>&1 "Use 'make sparse' instead"; \
-+		$(MAKE) --no-print-directory sparse; \
- 	else \
- 		echo 2>&1 "Did you mean 'make test'?"; \
- 		exit 1; \
--- 
-1.7.4
+ contrib/fast-import/git-p4     |   33 +++++++++++++++++++++++++++++++++
+ contrib/fast-import/git-p4.txt |    6 ++++++
+ 2 files changed, 39 insertions(+), 0 deletions(-)
