@@ -1,74 +1,147 @@
-From: MR <by.marcis@gmail.com>
-Subject: 'gittutorial(7)' translation
-Date: Tue, 19 Apr 2011 17:09:36 +0300
-Message-ID: <4DAD97A0.2050207@gmail.com>
-Reply-To: "bozograf@gmail.com" <bozograf@gmail.com>
+From: =?us-ascii?B?PT9VVEYtOD9xP0Nhcmxvcz0yME1hcnQ9QzM9QURuPTIwTmlldG8/?=
+	 =?us-ascii?Q?=3D?= <cmn@elego.de>
+Subject: [RFC PATCH v2] Chain squash!/fixup! commits on autosquash
+Date: Tue, 19 Apr 2011 17:54:22 +0200
+Message-ID: <20110419155417.GA13042@bee.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 16:09:34 2011
+X-From: git-owner@vger.kernel.org Tue Apr 19 17:54:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCBcT-0006vb-El
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 16:09:33 +0200
+	id 1QCDG2-0005MP-TK
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 17:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176Ab1DSOJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 10:09:28 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56894 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908Ab1DSOJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 10:09:27 -0400
-Received: by fxm17 with SMTP id 17so3394463fxm.19
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 07:09:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:reply-to:user-agent
-         :mime-version:to:subject:content-type:content-transfer-encoding;
-        bh=j6c1z/x8RhU8pzBte0TDFd9vT5pcqrLY+Refv098zKY=;
-        b=mDTL3v9xkn1UKTbUvStSo4vUA7KXnzTTXN8gP3o26TR3CePiAKDw6JLvUg96IveQWP
-         27vEy0OnDDBSUIaGyAjJUrHnbnv/7/hdGqC4NibejzkTKvm7v2pzsdcZZj1XewjWb2Qy
-         DXWZDbahlaETvZQy4C8UZXHU91y2cEnB5HPQw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=xEWwdaOgUkEgl6Ret2vbArog20AUQ8s0dG3E8khZBTkxRBD5/uJsrNfS11FYkLA/jY
-         q45f1i+O2yStGjj1+6zb7IvlOVnPgnjQ5AP4VvhTNXnfKyceMUavlJsA5mBggrRSmwKG
-         AVJMJVI8D5ABOyJJAcIRI3i8TZUkkAiuaeX30=
-Received: by 10.223.57.5 with SMTP id a5mr889720fah.90.1303222166278;
-        Tue, 19 Apr 2011 07:09:26 -0700 (PDT)
-Received: from [192.168.1.26] ([178.121.1.67])
-        by mx.google.com with ESMTPS id g5sm1945724faa.26.2011.04.19.07.09.25
-        (version=SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2011 07:09:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; ru; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+	id S1753210Ab1DSPyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 11:54:24 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:40345 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753192Ab1DSPyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 11:54:24 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id E222846132
+	for <git@vger.kernel.org>; Tue, 19 Apr 2011 17:54:07 +0200 (CEST)
+Received: (nullmailer pid 13063 invoked by uid 1000);
+	Tue, 19 Apr 2011 15:54:22 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171798>
 
-Hi!
+Separate the idea of an 'used' and an 'applied' line. Applied lines
+are the ones that have been moved to modify some commit whilst used
+lines are the ones for which we have tried to find
+modifications. Applied lines are given priority when looking for
+modifications. Thus, if one has these commits
 
-I'm willing to translate publication located at 
-http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html to the 
-Belorussian language (my mother tongue). What I'm asking for is your 
-written permission, so you don't mind after I'll post the translation to 
-my blog. The translation is intended only for web, no print copies planned.
-Visitors of your website, who come from Minsk (Belorussia) will be the 
-ones, who will read this blogpost, that's the only way to spread them, 
-no additional instruments we can use. Every translation we ever do does 
-not costs a penny for the webpage, which is translated. All we ask is to 
-link back in whatever way you feel confident about it.
+    944f57d fixup! squash! six
+    3512067 fixup! squash! squash! six
+    49af780 fixup! fixup! one
+    df6f708 fixup! one
+    6ac57d9 one
+    6e754da squash! squash! six
+    733844b squash! six
+    e9de3cc six
+    76990c9 five
 
-Thank you for the article.
-You can leave a voice message and I will call you back, if you prefer a 
-call instead of emails.
+they will be correctly reordered to
 
-Sincerely,
-Bohdan Zograf
-+(360) 488-0303
+    pick e9de3cc six
+    squash 733844b squash! six
+    squash 6e754da squash! squash! six
+    fixup 944f57d fixup! squash! six
+    fixup 3512067 fixup! squash! squash! six
+    pick 6ac57d9 one
+    fixup df6f708 fixup! one
+    fixup 49af780 fixup! fixup! one
+---
+
+To be honest, I'm not sure if we want to support something like this,
+but it seemed too crazy not to try.
+
+This is an attempt to fix
+http://thread.gmane.org/gmane.comp.version-control.git/170883 (rebase
+autosquash doesn't recognise a chain of fixups, 2011-04-05)
+
+Cheers,
+   cmn
+
+ git-rebase--interactive.sh |   36 +++++++++++++++++++++++++++++++-----
+ 1 files changed, 31 insertions(+), 5 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5873ba4..5e7b393 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -692,16 +692,28 @@ rearrange_squash () {
+ 	test -s "$1.sq" || return
+ 
+ 	used=
++	applied=
++	RE="$1.re"
++	skiplines=0
++	# Initialize the list with the first line from the input
++	head -n 1 "$1" > $RE
+ 	while read -r pick sha1 message
+ 	do
++		echo "dealing with $sha1 skiplines=$skiplines" >> "rebase.log"
+ 		case " $used" in
+-		*" $sha1 "*) continue ;;
++		*" $sha1 "*) next_input_line "$skiplines" "$1" "$RE"; skiplines="$(expr $skiplines + 1)"; continue ;;
++		esac
++		# If it's been applied, we don't want to output the "pick" line
++		case " $applied" in
++			*" $sha1 "*) ;;
++			*) printf '%s\n' "$pick $sha1 $message";;
+ 		esac
+-		printf '%s\n' "$pick $sha1 $message"
+ 		used="$used$sha1 "
++		emitted=0;
+ 		while read -r squash action msg
+ 		do
+-			case " $used" in
++			# Ignore the commits we've already dealt with
++			case " $used $applied " in
+ 			*" $squash "*) continue ;;
+ 			esac
+ 			emit=0
+@@ -715,15 +727,29 @@ rearrange_squash () {
+ 				case "$message" in "$msg"*) emit=1;; esac ;;
+ 			esac
+ 			if test $emit = 1; then
++				emitted=1
+ 				printf '%s\n' "$action $squash $action! $msg"
+-				used="$used$squash "
++				applied="$applied$squash "
++				echo "$action $squash $action! $msg" >> "$RE"
+ 			fi
+ 		done <"$1.sq"
+-	done >"$1.rearranged" <"$1"
++
++		# If no lines were emitted, it means we don't need take an
++		# early look to any more lines, so put the next one from the input into the queue
++		if test "$emmited" != 1; then
++			next_input_line "$skiplines" "$1" "$RE"
++			skiplines="$(expr $skiplines + 1)"
++		fi
++
++	done >"$1.rearranged" <"$RE"
+ 	cat "$1.rearranged" >"$1"
+ 	rm -f "$1.sq" "$1.rearranged"
+ }
+ 
++next_input_line () {
++	tail --lines="+$1" "$2" | head -n 1 >> "$3"
++}
++
+ LF='
+ '
+ parse_onto () {
+-- 
+1.7.4.2.437.g4fc7e.dirty
