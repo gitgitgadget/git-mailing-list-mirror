@@ -1,107 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC/PATCH] git add: notice removal of tracked paths by default
-Date: Tue, 19 Apr 2011 12:18:20 -0700
-Message-ID: <7v1v0y59tv.fsf@alter.siamese.dyndns.org>
+From: Ciaran <ciaranj@gmail.com>
+Subject: [RFC PATCH] Pass empty file to p4merge where no base is suitable.
+Date: Tue, 19 Apr 2011 20:46:11 +0100
+Message-ID: <BANLkTimXBayYAScPfk2j9spxcYrmtMJKxg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: David Aguilar <davvid@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 21:18:37 2011
+X-From: git-owner@vger.kernel.org Tue Apr 19 21:46:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCGRY-0003y2-GN
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 21:18:36 +0200
+	id 1QCGsL-0003QI-K3
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 21:46:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753188Ab1DSTSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 15:18:31 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56964 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753145Ab1DSTSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 15:18:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 31FFD5296;
-	Tue, 19 Apr 2011 15:20:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=9
-	WWflOKmagAOIRn3bxDBZq6ivuA=; b=pU6QW4HtiTBPLRcEYrcnVJmx5Jfk3JKLg
-	F+qguCmNPDySmtarROK0W77ZqRZW/qDMslENfDipnxkHHZQ1c7btyQ4dDzheaMWY
-	zR+zy76nYkRQut9E7DHxp1p/3aToBiO1F2QeCAcnzIXTbnok31zPqNUVh5o9Mk8T
-	JIDxY2sqf4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=q0F
-	do+QWAGVYnjpTXzZJKYTxX2KMG4CNsJpxmkUv28PJidbEe0VFOdrCdW2ftJF9+1Y
-	PCKsZgdXwZqnGz37R6pIG0JHxozSB5sDeaxCmFXzXER+K7YuXKkTnnlbRP82kISQ
-	REfDuWSsqIcRRhaJ2qWBoHPC+DVCzI9J37a84Eqc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1FEF85295;
-	Tue, 19 Apr 2011 15:20:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 592CE5294; Tue, 19 Apr 2011
- 15:20:23 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 13D88E24-6ABA-11E0-9E9F-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753700Ab1DSTqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 15:46:12 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:63910 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483Ab1DSTqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 15:46:12 -0400
+Received: by pwi15 with SMTP id 15so33861pwi.19
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 12:46:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=eaQlS0x9H15tE4DkLzqaAM7Ue1AU8fAhFSPEwsLC9xY=;
+        b=IociRunJKJuu2LK0PMJBcvNzZ4UCI5W1aB3fe7X3mwXvYKgGiM1RQvK0rEZ1eTrPw8
+         5Gwxnr1Hrbq9kNu0T0VtQRIC8lBTbaMLI7o+SvKUo+985iZhgCQGqX+Zz/tV7FTZ5tn0
+         cKkXqlKBR/pdS/YGCW8nDsBVBfduuIV2EUfBE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=nGQTmw3iWWjlFKFeK2kAylvp4SgcZNog29tq/laZyBIfOOwQlQr7MDQ8IVkpJ645IN
+         ZzDe33rgqXY4JesJOCmHaKDmyQ6qYO2+i9G5fzuSGiOvM2QLCwqHHZNF9W5/dceTRazJ
+         oTdjCtJjcbTG7pKZ9Iv/Bzm35bkePK4p8zADQ=
+Received: by 10.68.63.2 with SMTP id c2mr10100618pbs.54.1303242371210; Tue, 19
+ Apr 2011 12:46:11 -0700 (PDT)
+Received: by 10.68.62.6 with HTTP; Tue, 19 Apr 2011 12:46:11 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171812>
 
-When run without "-u" or "-A" option,
+Modify the p4merge client command to pass a reference to an empty file
+instead of the local file when no base revision available.
 
-    $ edit subdir/x
-    $ create subdir/y
-    $ rm subdir/z
-    $ git add subdir/
+In the situation where a merge tries to add a file from one branch
+into a branch that already contains that file (by name), p4merge
+currently seems to have successfully automatically resolved the
+'conflict' when it is opened (correctly if the files differed by
+just whitespace for example) but leaves the save button disabled. This
+means the user of the p4merge client cannot commit the resolved
+changes back to disk and merely exits, leaving the original
+(merge-conflicted) file in-tact on the disk.
 
-does not notice removal of paths (e.g. subdir/z) from the working tree.
-Make "git add" to pretend as if "-A" is given when there is a pathspec on
-the command line.  "git add" without any argument continues to be a no-op.
+Provide an empty base file to p4merge so that it leaves the save
+button enabled.  This will allow saving of the auto-resolution to
+disk.
 
-When resolving a conflict to remove a path, the current code tells you to
-"git rm $path", but now with this patch you can say "git add $path".  Of
-course you can do "git add -A $path" without this patch.
+Please note that the empty file is temporarily stored in the location
+specified as GIT_DIR/.no_base
 
-In either case, the operation "git add" is about "adding the state of the
-path in the working tree to the index".  The state may happen to be "path
-removed", not "path has an updated content".
-
-The semantic change can be seen by a breakage in t2200, test #15.  There,
-a merge has conflicts in path4 (which is removed from the working tree),
-and test checks "git add path4" to resolve it must fail, and makes sure
-that the user must use "git rm path4" for that.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ciaran Jessup <ciaranj@gmail.com>
 ---
+Thank you to David Aguilar for his feedback previously on this patch,
+hopefully I've followed the submission guidelines correctly this time.
+ This patch is to improve the interaction of p4merge and git in the
+case where merge conflicts have no common ancestor.  For more detailed
+discussion please see: http://marc.info/?l=git&m=130190735601527&w=2
+(I was unsure if it was ok to repost inline, sorry)
 
- This might not be such a good idea, and I do not have a strong opinion
- for this change, but merely a weatherbaloon.
+ git-mergetool--lib.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
- Having "git add ." notice removals might lead to mistakes ("oh, I only
- meant to record additions, and didn't want to record the removals"), but
- at the same time, leaving it not notice removals would lead to mistakes
- by the other people ("I added, removed and edited different paths, but
- why only removals are ignored?").
-
----
- builtin/add.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index d39a6ab..0f534e3 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -386,6 +386,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	if (addremove && take_worktree_changes)
- 		die(_("-A and -u are mutually incompatible"));
-+	/* default "git add pathspec..." to "git add -A pathspec..." */
-+	if (!take_worktree_changes && argc)
-+		addremove = 1;
- 	if (!show_only && ignore_missing)
- 		die(_("Option --ignore-missing can only be used together with --dry-run"));
- 	if ((addremove || take_worktree_changes) && !argc) {
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index fb3f52b..3e007e9 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -262,7 +262,9 @@ run_merge_tool () {
+ 			if $base_present; then
+ 				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+ 			else
+-				"$merge_tool_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
++				touch "$GIT_DIR/.no_base"
++				"$merge_tool_path" "$GIT_DIR/.no_base" "$LOCAL" "$REMOTE" "$MERGED"
++				rm "$GIT_DIR/.no_base"
+ 			fi
+ 			check_unchanged
+ 		else
 -- 
-1.7.5.rc3
+1.7.4.1
