@@ -1,101 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git notes list/show <revision-range>
-Date: Tue, 19 Apr 2011 16:32:11 -0400
-Message-ID: <20110419203211.GA12071@sigill.intra.peff.net>
-References: <4DAC80CF.8020704@lyx.org>
- <20110418182724.GB11250@sigill.intra.peff.net>
- <4DAD371F.9040003@drmicha.warpmail.net>
+From: Raphael Zimmerer <killekulla@rdrz.de>
+Subject: [PATCH] gitk: When a commit contains a note, mark it with a yellow
+	box.
+Date: Tue, 19 Apr 2011 22:37:09 +0200
+Message-ID: <20110419203709.GA17397@rdrz.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vincent van Ravesteijn <vfr@lyx.org>,
-	Git Mailing List <git@vger.kernel.org>, bebarino@gmail.com,
-	johan@herland.net
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Apr 19 22:32:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Apr 19 22:44:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCHay-00067g-Bt
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 22:32:24 +0200
+	id 1QCHn8-0004wp-EN
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 22:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281Ab1DSUcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 16:32:16 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34100
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751630Ab1DSUcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 16:32:15 -0400
-Received: (qmail 12781 invoked by uid 107); 19 Apr 2011 20:33:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Apr 2011 16:33:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Apr 2011 16:32:11 -0400
+	id S1755381Ab1DSUoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 16:44:34 -0400
+Received: from rdrz.de ([217.160.107.209]:47274 "HELO rdrz.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755124Ab1DSUod (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 16:44:33 -0400
+X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Apr 2011 16:44:32 EDT
+Received: (qmail 27170 invoked by uid 1009); 19 Apr 2011 20:37:09 -0000
 Content-Disposition: inline
-In-Reply-To: <4DAD371F.9040003@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171816>
 
-On Tue, Apr 19, 2011 at 09:17:51AM +0200, Michael J Gruber wrote:
+It is desirable to see at a glance which commits do contain notes.
+Therefore mark them with a yellow rectangle.
 
-> But since the OP is volunteering to code for notes :-)
-> We could need a feature which allows to log the history of a note. The alias
-> 
-> `git noteslog' is aliased to `!sh -c 'git log $(git notes get-ref) "$@"' -'
-> 
-> gives you the history of the notes tree (try it with "-p"),
+That can be suppressed with `gitk --no-notes`.
 
-Hmm, I just use "git log notes/<whatever>", which works fine. It does
-help if you know that the default ref is "notes/commits", though.
+Signed-off-by: Raphael Zimmerer <killekulla@rdrz.de>
+---
 
-It's not something I do often, though (most of my notes use has been
-things that automatically make notes, so the history tends to be
-uninteresting and useful only for debugging the note-making code).
+Maybe this patch is helpful. Sorry for any tcl/tk nonsense, it's not
+my first language...
 
-> sometimes I would like the history of the notes to a specific commit, and in
-> 
-> git noteslog -p -- $(commit)
-> 
-> I would have to use for $(commit) all possible breakdowns of the sha1 of
-> the commit for all possible notes tree structures. It feels as of the
-> revision walker needs to learn another pathspec, say
-> 
-> ":(note):<sha1>"
-> 
-> in line with our magic pathspec discussion.
+ gitk |   17 ++++++++++++++++-
+ 1 files changed, 16 insertions(+), 1 deletions(-)
 
-That's a clever solution. It is a little non-intuitive for a user to
-need to know about notes storage, though. Maybe you were already
-thinking this, but we could have something like:
-
-  git notes log [revs] [--] [pathspec]
-
-where "[revs]" are checked for in refs/notes/*, defaulting to
-"refs/notes/commits". And each element of the pathspec gets the
-":(note):" magic automatically. I wonder if we could even resolve the
-pathspec bits as regular refs.
-
-So you could write:
-
-  # long form, just as you can do with "git log"
-  git notes log notes/commits -- ":(note):`git rev-parse HEAD`"
-
-  # or with automagic ref lookup for pathspec
-  git notes log notes/commits -- HEAD
-
-  # and automagic default ref
-  git notes log -- HEAD
-
-  # and I think you should be able to write a disambiguator similar to
-  # what we use for the revs/paths distinction, but this time for
-  # notes-refs versus regular refs. And then drop the "--":
-  git notes log HEAD
-
-I think it would need a little refactoring of setup_revisions() to be
-more flexible, but most of the hard work is already done by the usual
-revision traversal mechanism.
-
--Peff
+diff --git a/gitk b/gitk
+index 4cde0c4..b182c75 100755
+--- a/gitk
++++ b/gitk
+@@ -1674,8 +1674,9 @@ proc parsecommit {id contents listed} {
+     if {$comdate != {}} {
+ 	set cdate($id) $comdate
+     }
++    set hasnote [string first "\nNotes:\n" $contents]
+     set commitinfo($id) [list $headline $auname $audate \
+-			     $comname $comdate $comment]
++			     $comname $comdate $comment $hasnote]
+ }
+ 
+ proc getcommit {id} {
+@@ -5899,6 +5900,9 @@ proc drawcmittext {id row col} {
+ 	|| [info exists idotherrefs($id)]} {
+ 	set xt [drawtags $id $x $xt $y]
+     }
++    if {[lindex $commitinfo($id) 6] > 0} {
++	set xt [drawnotesign $xt $y]
++    }
+     set headline [lindex $commitinfo($id) 0]
+     set name [lindex $commitinfo($id) 1]
+     set date [lindex $commitinfo($id) 2]
+@@ -6345,6 +6349,17 @@ proc drawtags {id x xt y1} {
+     return $xt
+ }
+ 
++proc drawnotesign {xt y} {
++    global linespc canv fgcolor
++
++    set orad [expr {$linespc / 3}]
++    set t [$canv create rectangle [expr {$xt - $orad}] [expr {$y - $orad}] \
++	       [expr {$xt + $orad - 1}] [expr {$y + $orad - 1}] \
++	       -fill yellow -outline $fgcolor -width 1 -tags circle]
++    set xt [expr {$xt + $orad * 3}]
++    return $xt
++}
++
+ proc xcoord {i level ln} {
+     global canvx0 xspc1 xspc2
+ 
+-- 
+1.7.5.rc1.12.gff46a
