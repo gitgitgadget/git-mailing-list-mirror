@@ -1,66 +1,86 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: rebasing branch with reverted patches
-Date: Tue, 19 Apr 2011 11:19:27 +0200
-Message-ID: <BANLkTi=2LZGdZ7+QfVbd3g9dTKEcjNwsHw@mail.gmail.com>
-References: <BANLkTim5mf6okFN8V5V+B=Ns1JORD47a5A@mail.gmail.com>
-	<4DAD4B0F.9030908@drmicha.warpmail.net>
-	<BANLkTimbSes-B8zK2a2t1Jp1v+29HdNvqw@mail.gmail.com>
-	<4DAD52BA.5000206@op5.se>
+From: Stefan Sperling <stsp@stsp.name>
+Subject: Re: [PATCH] remove noise and inaccuracies from git-svn docs
+Date: Tue, 19 Apr 2011 11:31:08 +0200
+Message-ID: <20110419093108.GA7440@ted.stsp.name>
+References: <1303138000-27807-1-git-send-email-stsp@stsp.name>
+ <vpqhb9vplu4.fsf@bauges.imag.fr>
+ <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Apr 19 11:19:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 11:31:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QC75p-0004g2-3J
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 11:19:33 +0200
+	id 1QC7HI-0002Yx-3m
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 11:31:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833Ab1DSJT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 05:19:29 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:40244 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751422Ab1DSJT2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 05:19:28 -0400
-Received: by pwi15 with SMTP id 15so2656506pwi.19
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 02:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=nOj9od7VeiFJeNR5ax0DXIzCbNHQ33R8xo9YImv2bIM=;
-        b=HL0ucVFEIfaqqrfQrHNYbXHgsBEm1Gv83xSmkXtSfFvJC+lZtIjb76d1xtv5Wu0I4l
-         h5ES+rjJZi6XnMI1IjrhgRGOpe+IxJffpz8Fz+fR9tSW3cX6rGkBNH5rcg6hF/GLqqbT
-         +iEVLk1nIxZTMD5EUnanbq0hSdhVc+e5lUk30=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Zn/GMV2iI+c3R+HGCOpG6uBPxh/jdZ6Go093t3h9fketCQydEUolDgxTtFkNDWsJJH
-         e4JUKoOP962FrLwYh/Fq6qP4hCPFdarqXLVyj3ezXtDkOeBUTi0UEtbtSTnsLrcR1TaC
-         Kpk6mQ3Ij3xTBLvUkvpws0zi/zCM1/EJsbQdE=
-Received: by 10.143.25.22 with SMTP id c22mr3261423wfj.267.1303204767546; Tue,
- 19 Apr 2011 02:19:27 -0700 (PDT)
-Received: by 10.143.18.11 with HTTP; Tue, 19 Apr 2011 02:19:27 -0700 (PDT)
-In-Reply-To: <4DAD52BA.5000206@op5.se>
+	id S1753172Ab1DSJbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 05:31:19 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:46609 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752296Ab1DSJbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 05:31:17 -0400
+X-Envelope-From: stsp@stsp.name
+Received: from ted.stsp.name (ted.stsp.name [217.197.84.34])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3J9V9kK030404
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 19 Apr 2011 11:31:09 +0200
+Received: from ted.stsp.name (stsp@localhost [127.0.0.1])
+	by ted.stsp.name (8.14.3/8.14.3) with ESMTP id p3J9V9Bv009326;
+	Tue, 19 Apr 2011 11:31:09 +0200 (CEST)
+Received: (from stsp@localhost)
+	by ted.stsp.name (8.14.3/8.14.3/Submit) id p3J9V8rs006943;
+	Tue, 19 Apr 2011 11:31:08 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171787>
 
-On Tue, Apr 19, 2011 at 11:15 AM, Andreas Ericsson <ae@op5.se> wrote:
->
-> That would be akin to removing in-code comments of why it's a bad idea
-> to implement a particular solution in a particular way, and it also
-> removes the capability of reverting the revert (ie, re-doing the change)
-> at a later time when stability can be sacrificed temporarily.
+On Mon, Apr 18, 2011 at 10:55:18AM -0700, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+> > Stefan Sperling <stsp@stsp.name> writes:
+> >
+> >> -DESIGN PHILOSOPHY
+> >> ------------------
+> >> -Merge tracking in Subversion is lacking and doing branched development
+> >> -with Subversion can be cumbersome as a result.  While 'git svn' can
+> >> track
+> >
+> > Agreed (this and the rest of the patch). Users reading git-svn's doc
+> > don't want a dissertation about how bad SVN is, and if they do, they can
+> > read whygitisbetterthanx ;-)
 
-That's right but OTOH I use git-rebase for development stuff where all
-correct points you raised don't apply.
+Exactly :)
 
--- 
-Francis
+And they might rather want to learn more about how Subversion has improved
+since version 1.4. It seems that these parts of the text were written
+before Subversion's 1.5 release. SVN is a lot more capable now than the
+git-svn docs suggest and I'm surprised that git-svn's development seems
+to have gotten stuck at the 1.4 level of functionality. Not even CentOS
+ships with 1.4 anymore these days.
+
+E.g. git-svn could be taught to generate svn mergeinfo compatible with other
+Subversion clients. It's not easy to come up with a generic mapping between
+the two systems but for some use cases it should be reasonably straightforward.
+This would be a nice improvement towards making git-svn a proper drop-in
+replacement for the standard svn client. Currently, git-svn cannot be
+used without disturbing other users doing merges with Subversion itself
+which is a pity.
+
+I don't have time to work on this myself but I would be more than happy
+to assist with design and review.
+
+> I agree the change in the patch is good.  It needs to be signed-off,
+> though.
+
+I've sent a signed-off version with git send-email. Thanks!
