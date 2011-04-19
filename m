@@ -1,112 +1,101 @@
-From: Ciaran <ciaranj@gmail.com>
-Subject: [PATCH RFC] Rename detection and whitespace
-Date: Tue, 19 Apr 2011 21:13:19 +0100
-Message-ID: <BANLkTikiH7bfWFGjFCDL-SnO9HQR-9Uofw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git notes list/show <revision-range>
+Date: Tue, 19 Apr 2011 16:32:11 -0400
+Message-ID: <20110419203211.GA12071@sigill.intra.peff.net>
+References: <4DAC80CF.8020704@lyx.org>
+ <20110418182724.GB11250@sigill.intra.peff.net>
+ <4DAD371F.9040003@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 22:13:26 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Vincent van Ravesteijn <vfr@lyx.org>,
+	Git Mailing List <git@vger.kernel.org>, bebarino@gmail.com,
+	johan@herland.net
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Apr 19 22:32:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCHIc-0002av-3T
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 22:13:26 +0200
+	id 1QCHay-00067g-Bt
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Apr 2011 22:32:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931Ab1DSUNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 16:13:20 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:39268 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751478Ab1DSUNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 16:13:20 -0400
-Received: by pzk9 with SMTP id 9so32138pzk.19
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 13:13:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=H/TwwbcUn01dezfIVCYDIbXJFXSIznnd77lPU22zrMo=;
-        b=IVp3YfCleGDPO7UFokuXyCdOqnEcll4PRjCEfWNvZ9Vriybbt3mNNhYjb5iSNNJkpA
-         y/PAsR4cH+FekArCzFutbp7KMnntjl8YX40SllLD6tsSaB/VkpIEWpsS9hH7yV7HiAxz
-         qWD0SO+trrd6QTcVOYxTJL7d6FHD/RLeGBER4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=UZs40gZliOL9/dH5UKogf3SI+SAqUnWcUpprrKUkZ5bP3DtPlIYIrL3oO6j460fSMf
-         bCqSJwk2wwNHY+EZa3ALchg4Gsro9guynQKhPlA4cDYF39Do2m+hpgetLhq9DRUxTJQl
-         fxv4bNasY1xrdxs3ckUXouboMuzM5GydvWhws=
-Received: by 10.68.49.166 with SMTP id v6mr9662215pbn.322.1303243999574; Tue,
- 19 Apr 2011 13:13:19 -0700 (PDT)
-Received: by 10.68.62.6 with HTTP; Tue, 19 Apr 2011 13:13:19 -0700 (PDT)
+	id S1754281Ab1DSUcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 16:32:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34100
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751630Ab1DSUcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 16:32:15 -0400
+Received: (qmail 12781 invoked by uid 107); 19 Apr 2011 20:33:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Apr 2011 16:33:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Apr 2011 16:32:11 -0400
+Content-Disposition: inline
+In-Reply-To: <4DAD371F.9040003@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171815>
 
-Hi,
+On Tue, Apr 19, 2011 at 09:17:51AM +0200, Michael J Gruber wrote:
 
-I recently had an issue with a merge where there was a branch of some
-code made to do some format standardisation e.g. re-indenting,
-normalising of whitespace etc. etc. and another branch to do with
-tidying up the codebase (moving some files around etc.)
+> But since the OP is volunteering to code for notes :-)
+> We could need a feature which allows to log the history of a note. The alias
+> 
+> `git noteslog' is aliased to `!sh -c 'git log $(git notes get-ref) "$@"' -'
+> 
+> gives you the history of the notes tree (try it with "-p"),
 
-When we brought the two branches back together git struggled (failed)
-to apply the formatting changes to the files that were moved (-s
-recursive -X ignore-all-space).  Now in terms of best practice
-obviously what we did was stupid, and we should never have
-parallelised the two pieces of work and I imagine that this may well
-be considered 'known behaviour / won't fix' but I wanted to raise it
-and get told that rather than assume it :)
+Hmm, I just use "git log notes/<whatever>", which works fine. It does
+help if you know that the default ref is "notes/commits", though.
 
-After a minimal amount of investigation I found that with a small
-patch I could make my local git instance perform the merge flawlessly
-(in my case).
+It's not something I do often, though (most of my notes use has been
+things that automatically make notes, so the history tends to be
+uninteresting and useful only for debugging the note-making code).
 
-For me I tracked the behaviour down to the blob similarity calculation
-that takes place in the diffcore-delta.c#hash_chars method.  In our
-case the problem was we were adjusting the whitespace at the front of
-each line which meant that the 64 byte segment hashes were
-different/mis-aligned between the 2 equivalent files.   This code
-already 'normalises' out CRLF/LF differences by skipping any CR
-characters when followed by LF so my question is that would it be
-considered wrong/evil to ignore *all* whitespace characters when -X
-ignore-all-space has been passed.
+> sometimes I would like the history of the notes to a specific commit, and in
+> 
+> git noteslog -p -- $(commit)
+> 
+> I would have to use for $(commit) all possible breakdowns of the sha1 of
+> the commit for all possible notes tree structures. It feels as of the
+> revision walker needs to learn another pathspec, say
+> 
+> ":(note):<sha1>"
+> 
+> in line with our magic pathspec discussion.
 
-The behaviour is trivial to reproduce without a merge:
-  i) Create a text file with a few lines in it.
- ii) Add the file and commit it.
-iii) Insert a space at the front of each line and rename the file
-iv) git add -A .
-v) git status will now show a 'new file' and a 'deleted file'
+That's a clever solution. It is a little non-intuitive for a user to
+need to know about notes storage, though. Maybe you were already
+thinking this, but we could have something like:
 
-With the patch inlined below (not suitable for inclusion, naive in so
-many ways (what is whitespace, and should be optional/configurable to
-name just two!) git status will report a rename instead.  This
-behaviour carries across to merging.
+  git notes log [revs] [--] [pathspec]
 
-Presumably I'm missing something important, but the improved rename
-detection for us was outstanding!
+where "[revs]" are checked for in refs/notes/*, defaulting to
+"refs/notes/commits". And each element of the pathspec gets the
+":(note):" magic automatically. I wonder if we could even resolve the
+pathspec bits as regular refs.
 
----
- diffcore-delta.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+So you could write:
 
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index 7cf431d..5429b8d 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -146,6 +146,9 @@ static struct spanhash_top *hash_chars(struct
-diff_filespec *one)
- 		if (is_text && c == '\r' && sz && *buf == '\n')
- 			continue;
+  # long form, just as you can do with "git log"
+  git notes log notes/commits -- ":(note):`git rev-parse HEAD`"
 
-+		if (is_text && ( c == '\t' || c ==' ' ) )
-+			continue;
-+
- 		accum1 = (accum1 << 7) ^ (accum2 >> 25);
- 		accum2 = (accum2 << 7) ^ (old_1 >> 25);
- 		accum1 += c;
--- 
-1.7.4.1
+  # or with automagic ref lookup for pathspec
+  git notes log notes/commits -- HEAD
+
+  # and automagic default ref
+  git notes log -- HEAD
+
+  # and I think you should be able to write a disambiguator similar to
+  # what we use for the revs/paths distinction, but this time for
+  # notes-refs versus regular refs. And then drop the "--":
+  git notes log HEAD
+
+I think it would need a little refactoring of setup_revisions() to be
+more flexible, but most of the hard work is already done by the usual
+revision traversal mechanism.
+
+-Peff
