@@ -1,111 +1,86 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Cloning a remote tag without using git-fetch-pack directly?
-Date: Tue, 19 Apr 2011 15:20:53 -0700
-Message-ID: <20110419222050.GA3304@feather>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.4.5
+Date: Tue, 19 Apr 2011 15:52:06 -0700
+Message-ID: <7v39ld4zxl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jamey Sharp <jamey@minilop.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:21:39 2011
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:52:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCJIf-0004Cw-1T
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 00:21:37 +0200
+	id 1QCJmO-0000Tq-8e
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 00:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620Ab1DSWVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 18:21:30 -0400
-Received: from slow3-v.mail.gandi.net ([217.70.178.89]:59797 "EHLO
-	slow3-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751543Ab1DSWV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 18:21:29 -0400
-X-WhiteListed: mail was accepted with no delay
-X-WhiteListed: mail was accepted with no delay
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	by slow3-v.mail.gandi.net (Postfix) with ESMTP id F1C4287544
-	for <git@vger.kernel.org>; Wed, 20 Apr 2011 00:21:25 +0200 (CEST)
-X-Originating-IP: 217.70.178.137
-Received: from mfilter8-d.gandi.net (mfilter8-d.gandi.net [217.70.178.137])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id D39F2172079;
-	Wed, 20 Apr 2011 00:21:00 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter8-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([217.70.183.196])
-	by mfilter8-d.gandi.net (mfilter8-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id YBstnCjM1s3r; Wed, 20 Apr 2011 00:20:59 +0200 (CEST)
-X-Originating-IP: 131.252.247.124
-Received: from feather (host-247-124.pubnet.pdx.edu [131.252.247.124])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 9BC1B172081;
-	Wed, 20 Apr 2011 00:20:55 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751926Ab1DSWwO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2011 18:52:14 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34712 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751856Ab1DSWwN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2011 18:52:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CAC554BDC;
+	Tue, 19 Apr 2011 18:54:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=UmktiOk6O1QsmsXHkA6PCQynl
+	sY=; b=EY18oLBKrQrRWnVlKiJzUZ1pwP7ztZGxgbAYyrSkLJ/ehOTPi41n2B3Qq
+	I7ms5VoM/PCHtOcLa7RcDFGSENIgcr/gV/+k52ovVuVfLJ9eCJxuqVradHRYTX/g
+	BMyiYF2jzWfeNmAuasH7wOPR2BR8H40VIOgsL2HuSa7lAphnqI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=RA5deQmoUpkXRkfO1gw
+	7p2tJWOXA2I9jHEV3QwCtXL6+u6AHedTVYvv83bUMX5mhFez+ijQOno1OnlYhJEM
+	SIU+NRwC3P2kPGYowlBtRCJzsb22m6GQ+fObi7NskP/Y4ZRvXY/YiwFCGYKjocJT
+	hQ/6sTBVkcdO0kFLCZSKkyXg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A99604BDB;
+	Tue, 19 Apr 2011 18:54:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D893F4BD9; Tue, 19 Apr 2011
+ 18:54:08 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F0757DCA-6AD7-11E0-AD41-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171823>
 
-Using fetch-pack, I can clone a single tag from a repository:
+The latest maintenance release Git 1.7.4.5 is available at the
+usual places:
 
-/tmp/testrepo$ git init
-Initialized empty Git repository in /tmp/testrepo/.git/
-/tmp/testrepo$ git fetch-pack /home/josh/src/linux-2.6/.git refs/tags/v2.6.12
-remote: Counting objects: 31617, done.
-remote: Compressing objects: 100% (21083/21083), done.
-Receiving objects: 100% (31617/31617), 52.56 MiB | 5.27 MiB/s, done.
-remote: Total 31617 (delta 12862), reused 19495 (delta 10331)
-Resolving deltas: 100% (12862/12862), done.
-keep    c80bd1def293bc11591159c96970d8becfe3b2d9
-26791a8bcf0e6d33f43aef7682bdb555236d56de refs/tags/v2.6.12
-/tmp/testrepo$ git show 26791a8bcf0e6d33f43aef7682bdb555236d56de | head -20
-tag v2.6.12
+  http://www.kernel.org/pub/software/scm/git/
 
-This is the final 2.6.12 release
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
+  git-1.7.4.5.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.4.5.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.4.5.tar.{gz,bz2}		(preformatted docs)
 
-iD8DBQBCsykyF3YsRnbiHLsRAvPNAJ482tCZwuxp/bJRz7Q98MHlN83TpACdHr37
-o6X/3T+vm8K3bf3driRr34c=
-=sBHn
------END PGP SIGNATURE-----
+The RPM binary packages for a few architectures are found in:
 
-commit 9ee1c939d1cb936b1f98e8d81aeffab57bae46ab
-Author: Linus Torvalds <torvalds@ppc970.osdl.org>
-Date:   Fri Jun 17 12:48:29 2005 -0700
+  RPMS/$arch/git-*-1.7.4.5-1.fc13.$arch.rpm	(RPM)
 
-    Linux 2.6.12
+This contains only minor documentation fixes accumulated since 1.7.4.4.
 
-diff --git a/Makefile b/Makefile
-index 9e005e1..0d1e74d 100644
---- a/Makefile
+----------------------------------------------------------------
 
+Changes since v1.7.4.4 are as follows:
 
+Johannes Sixt (1):
+      t2021: mark a test as fixed
 
-However, I can't seem to find any way to convince git clone to do the
-same thing for me.  git clone will clone a branch, but not a tag.
+Junio C Hamano (2):
+      "log --cherry-pick" documentation regression fix
+      Git 1.7.4.5
 
-/tmp/testrepo$ git clone /home/josh/src/linux-2.6/.git -b refs/tags/v2.6.12
-Cloning into linux-2.6...
-done.
-warning: Remote branch refs/tags/v2.6.12 not found in upstream origin, using HEAD instead
+Michael J Gruber (3):
+      git.txt: fix list continuation
+      t3306,t5304: avoid clock skew issues
+      git-svn.txt: Document --mergeinfo
 
-
-On a different note, git fetch-pack seems to silently fail if asked to
-fetch a remote tag which points at a tree object rather than a commit
-object:
-
-/tmp/testrepo$ git init
-Initialized empty Git repository in /tmp/testrepo/.git/
-/tmp/testrepo$ git fetch-pack /home/josh/src/linux-2.6/.git refs/tags/v2.6.12-tree
-(1) /tmp/testrepo$ echo $?
-1
-
-
-I realize that I want to do something strange here, but it seems like a
-kind of strange that git already supports in at least some ways, just
-not in others.  Am I missing something?
-
-Thanks,
-Josh Triplett
+Ren=C3=A9 Scharfe (1):
+      archive: document limitation of tar.umask config setting
