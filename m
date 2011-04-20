@@ -1,128 +1,84 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] git-daemon: fix segfaulting in child_handler() in AIX
-Date: Wed, 20 Apr 2011 14:53:03 +0200
-Message-ID: <BANLkTimtfXgy9UcdQ8b-8dLrO-qgXFgQnw@mail.gmail.com>
-References: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
-	<BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [RFC 0/5] Date Mode: Add --time-zone; deprecate --date=local
+Date: Wed, 20 Apr 2011 14:21:11 +0000
+Message-ID: <4a235331-951f-481e-8603-896af4e67df9-mfwitten@gmail.com>
+References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
+            <20110420064318.GF28597@sigill.intra.peff.net>
 Cc: git@vger.kernel.org
-To: Seth Jennings <spartacus06@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 14:53:13 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 16:25:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCWu9-0003s6-9t
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 14:53:13 +0200
+	id 1QCYLA-0000S6-Gu
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 16:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567Ab1DTMxH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2011 08:53:07 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:55776 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752292Ab1DTMxG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2011 08:53:06 -0400
-Received: by wwa36 with SMTP id 36so837791wwa.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 05:53:04 -0700 (PDT)
+	id S1753842Ab1DTOZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 10:25:05 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:63273 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753304Ab1DTOZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 10:25:04 -0400
+Received: by pwi15 with SMTP id 15so417999pwi.19
+        for <git@vger.kernel.org>; Wed, 20 Apr 2011 07:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UCcwSR2KdCGxlXdp9etg2uJkOEDFhWEtdtXVUaHi5B0=;
-        b=ayrRTUi/ZxhjQJOa/7FaFT0rcGu8r17QR9b7qq5Y6RC6gBmcpYc8Q9XY28is7t8Qgu
-         574eniVCA5YAKRX5kFdqE0TJ5JK5AvtX/l+6mWTRgAI6tbE+uKsaAWBxQX+GsRd6D02x
-         bFQlpiF/4mLLJVSofQoyOR1QPfU3lXlt93lSk=
+        h=domainkey-signature:subject:date:from:to:cc:message-id:in-reply-to
+         :references;
+        bh=V031aGmc6Wsw8qbgRfuLaiE+Hq0pkAVHSABkPQUkFhE=;
+        b=WE0D1HIzte5IaJv7FycEt0Q24j1F9rJgzYjLTzlnT0b5NpMRNlCVUaNwth3TFhCQ/F
+         cyfQLMXh0eXhOZ8v15tSTAEjzltSINMPUAYfSOlOXukWol8Dl1zP0XGcJ/4IDsSG+EhH
+         BxDAClc2Aa/2sprbrtQV5sHxriysVSp5bJguc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XfQvGhCqP8Pm5VjpcRMy1/iureExU2Kop0WAeQM35OVkBXjC5YOix+giN/JVpnJSIy
-         trjmTmEBt2h6dOMC3cfdF+5WcSpZO+ttEPlCjFi9su0wPGDTSATS5Ybrae6FH1PCODJk
-         SXEmwp2h4K3x82sat349rcOZaHEdHrZp0+ioI=
-Received: by 10.216.123.74 with SMTP id u52mr7101347weh.24.1303303984143; Wed,
- 20 Apr 2011 05:53:04 -0700 (PDT)
-Received: by 10.216.89.76 with HTTP; Wed, 20 Apr 2011 05:53:03 -0700 (PDT)
-In-Reply-To: <BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        b=VJqft+MDFKG4X5ln9rsEP17dwfdPmSvVE7B+J1eeehTgsNQBPSdzHwgw6YdwS6Xuzz
+         jj9xytQrirCOZ5YDg0NNoxghJCFcVP7V3eM7Ikk0SmWnzHQ+DE52K8c8rIo+/IUT8Cox
+         SQtrq6tUve9WE+PhUKSS/aEZSvbJXoZSevUwI=
+Received: by 10.68.5.74 with SMTP id q10mr320987pbq.457.1303309504222;
+        Wed, 20 Apr 2011 07:25:04 -0700 (PDT)
+Received: from gmail.com (tor-exit-router45-readme.formlessnetworking.net [199.48.147.45])
+        by mx.google.com with ESMTPS id k7sm661412pbh.37.2011.04.20.07.25.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 20 Apr 2011 07:25:02 -0700 (PDT)
+In-Reply-To: <20110420064318.GF28597@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171863>
 
-Hi,
+On Wed, 20 Apr 2011 02:43:18 -0400, Jeff King wrote:
 
-I have no idea what the problem could be, but maybe I will be lucky
-with my suggestions.
-
-On Fri, Apr 15, 2011 at 6:54 PM, Seth Jennings <spartacus06@gmail.com> =
-wrote:
-> There is a git-daemon segfault issue that seems to be specific to AIX=
-=2E
+> On Wed, Apr 20, 2011 at 02:53:36AM +0000, Michael Witten wrote:
 >
-> Whenever a remote user pulls or clones, the operation succeeds but
-> git-daemon crashes immediately afterward.
+>> One of the possible values for a date format is `local', which
+>> specifies that a date should be output as though the date format
+>> were instead `default' but in terms of the user's time zone
+>> instead of the time zone stored by git; clearly, then, `local'
+>> does not really provide just another format, but rather the
+>> combination of 2 specifications:
+>> 
+>>   * A format for the date (`default')
+>>   * A time zone in which to interpret the date (`local', if you will)
+>>
+>> [...]
+>>
+>> This patch series reimplements the original purpose of `--date' by allowing
+>> the time zone mode to be specified independently of the date format
+>> (see the commit message for [2] and the documentation provided by [3]):
 >
-> $ gdb git-daemon core
-> ...
-> Core was generated by `git-daemon'.
-> Program terminated with signal 11, Segmentation fault.
-> #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xp=
-g5.o)
-> (gdb) where
-> #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xp=
-g5.o)
-> #1 =A00xd04f1874 in _p_sigaction () from /usr/lib/libpthreads.a(shr_x=
-pg5.o)
-> #2 =A00xd013ae34 in sigaction () from /usr/lib/libc.a(shr.o)
-> #3 =A00xd0217cd8 in signal () from /usr/lib/libc.a(shr.o)
-
-signal() is calling sigaction() so sigaction() must be called with
-different parameters in your patch and when it crashes.
-Could you have a look at the difference between parameters?
-
-> #4 =A00x10000b90 in child_handler (signo=3D0) at daemon.c:718
-> #5 =A0<signal handler called>
+> I think the intent of this series is good. See also this thread from
+> quite a while back:
 >
-> Through experimentation, I found that using sigaction() instead of
-> signal() resolves the issue. =A0I'm not entirely sure why this is.
->
-> Any feedback about the issue or the patch is welcome. =A0There might =
-be
-> a better solution.
->
-> On Fri, Apr 15, 2011 at 11:51 AM, Seth Jennings <spartacus06@gmail.co=
-m> wrote:
->> This issue seems to be specific to git-daemon on AIX built with xlc.
->> After commit 695605b5080e1957bd9dab1fed35a7fee9814297 (from Aug 2008=
-),
->> git-daemon segfaults in child_handler() inside the signal() syscall
->> immediately after any remote clone/pull operation.
+>  http://article.gmane.org/gmane.comp.version-control.git/112026
 
-Could you try some variants that revert or change parts of this commit?
+I took a cursory look, but I've spent so much time on this series already
+that I don't really care what it says; if there are particular concerns
+that you think I might not have met, then let me know in this discussion :-)
 
-=46or example you could revert only this hunk:
-
-@@ -1036,11 +1032,6 @@ int main(int argc, char **argv)
-        gid_t gid =3D 0;
-        int i;
-
--       /* Without this we cannot rely on waitpid() to tell
--        * what happened to our children.
--        */
--       signal(SIGCHLD, SIG_DFL);
--
-        for (i =3D 1; i < argc; i++) {
-                char *arg =3D argv[i];
-
-
->>=A0While it is not
->> fully understood why this happens, changing signal() to sigaction()
->> resolves the issue.
-
-Yeah but it would be nice to understand.
-
-Thanks in advance,
-Christian.
+In any case, my approach is not only infintely cleaner than some of the
+stuff I saw in that thread, but it's also complete and working (and it is
+extensive without being invasive).
