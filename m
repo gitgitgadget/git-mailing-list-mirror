@@ -1,140 +1,116 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Re: Cloning a remote tag without using git-fetch-pack directly?
-Date: Wed, 20 Apr 2011 00:27:20 -0700
-Message-ID: <20110420072720.GC1790@feather>
-References: <20110419222050.GA3304@feather>
- <20110420062653.GE28597@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git notes list/show <revision-range>
+Date: Wed, 20 Apr 2011 03:35:17 -0400
+Message-ID: <20110420073517.GB1971@sigill.intra.peff.net>
+References: <4DAC80CF.8020704@lyx.org>
+ <20110418182724.GB11250@sigill.intra.peff.net>
+ <4DAD371F.9040003@drmicha.warpmail.net>
+ <20110419203211.GA12071@sigill.intra.peff.net>
+ <4DAE8867.8010704@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jamey Sharp <jamey@minilop.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 09:27:34 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Vincent van Ravesteijn <vfr@lyx.org>,
+	Git Mailing List <git@vger.kernel.org>, bebarino@gmail.com,
+	johan@herland.net
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 09:35:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCRoz-0000Z5-Vw
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:27:34 +0200
+	id 1QCRwb-0004RF-Ab
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934Ab1DTH13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 03:27:29 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:56722 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753364Ab1DTH12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 03:27:28 -0400
-X-Greylist: delayed 32785 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Apr 2011 03:27:27 EDT
-X-Originating-IP: 217.70.178.130
-Received: from mfilter10-d.gandi.net (mfilter10-d.gandi.net [217.70.178.130])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id D77A5172070;
-	Wed, 20 Apr 2011 09:27:25 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter10-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([217.70.183.196])
-	by mfilter10-d.gandi.net (mfilter10-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id 2MEtVmUpyM1j; Wed, 20 Apr 2011 09:27:24 +0200 (CEST)
-X-Originating-IP: 50.43.15.19
-Received: from feather (static-50-43-15-19.bvtn.or.frontiernet.net [50.43.15.19])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 9EAF31720A9;
-	Wed, 20 Apr 2011 09:27:22 +0200 (CEST)
+	id S1753854Ab1DTHfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 03:35:20 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53485
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753160Ab1DTHfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 03:35:19 -0400
+Received: (qmail 16999 invoked by uid 107); 20 Apr 2011 07:36:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Apr 2011 03:36:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2011 03:35:17 -0400
 Content-Disposition: inline
-In-Reply-To: <20110420062653.GE28597@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <4DAE8867.8010704@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171847>
 
-On Wed, Apr 20, 2011 at 02:26:54AM -0400, Jeff King wrote:
-> On Tue, Apr 19, 2011 at 03:20:53PM -0700, Josh Triplett wrote:
-> 
-> > Using fetch-pack, I can clone a single tag from a repository:
+On Wed, Apr 20, 2011 at 09:16:55AM +0200, Michael J Gruber wrote:
+
+> > So you could write:
 > > 
-> > /tmp/testrepo$ git init
-> > Initialized empty Git repository in /tmp/testrepo/.git/
-> > /tmp/testrepo$ git fetch-pack /home/josh/src/linux-2.6/.git refs/tags/v2.6.12
+> >   # long form, just as you can do with "git log"
+> >   git notes log notes/commits -- ":(note):`git rev-parse HEAD`"
 > 
-> I don't think there is any reason to use fetch-pack here instead of
-> fetch. The latter will handle other non-git protocols like dumb http and
-> git-over-http.
+> I don't think "notes log" should take a notes ref argument like that. It
+> already has "--ref" for that purpose, so I would suggest
 > 
-> > However, I can't seem to find any way to convince git clone to do the
-> > same thing for me.  git clone will clone a branch, but not a tag.
-> > 
-> > /tmp/testrepo$ git clone /home/josh/src/linux-2.6/.git -b refs/tags/v2.6.12
-> > Cloning into linux-2.6...
-> > done.
-> > warning: Remote branch refs/tags/v2.6.12 not found in upstream origin, using HEAD instead
+> git notes [--ref <notesref>] log [<rev>]
+
+Hmm. You are probably right. I was modeling it after "log", but it is a
+notes subcommand. I was thinking you could also do something like:
+
+  git notes log commits some-other-notes $sha1
+
+or even
+
+  # see what any notes ref has to say about this commit
+  git notes log --all $sha1
+
+but it is probably a better idea to keep the interface more consistent
+with the other notes subcommands.
+
+> git notes [--ref <notesref>] log [<rev>]
+>
+> with <rev> being mapped to :(notes):<rev> automatically, <rev>
+> defaulting to HEAD. That is much more in line with the other notes
+> subcommands. (We may or may note check for ":(notes):" being there already.)
+
+I think it should be more like:
+
+  git notes [--ref <notesref] log [<rev options>] [<rev> ...]
+
+That is:
+
+  1. There may be arbitrary rev options. Because you might want "log
+     -p", or "log --format".
+
+  2. We may want to allow multiple revs (e.g., if you have a patch
+     series with 5 commits, you may want to see the history of any notes
+     that refer to any of those commits).
+
+I think (1) means we may need to feed the result to the revision
+options-parser.
+
+> > I think it would need a little refactoring of setup_revisions() to be
+> > more flexible, but most of the hard work is already done by the usual
+> > revision traversal mechanism.
 > 
-> Right. There is no way to do what you want with clone. The "-b" option
-> is not "just clone this one thing", it is "clone everything, but the
-> branch I am interested in is ...". The fetch refspec remains
-> "+refs/heads/*:refs/remotes/origin/*".
-
-Oh, good to know; I hadn't yet figured out that -b didn't change the
-refspec.
-
-> To clone a subset of a repository, you have to do the init+fetch trick,
-> as you did above.  If you want the configuration set up by clone, you
-> can do that, too, with "git config". So the equivalent commands to the
-> clone you want are:
+> ? I haven't checked in detail, but I think all we need is:
 > 
->   git init linux-2.6
->   cd linux-2.6
->   git config remote.origin.url /home/josh/src/linux-2.6
->   git config remote.origin.fetch refs/tags/v2.6.12
->   git fetch origin
-> 
-> We could make clone more flexible with respect to such things, but I
-> don't know how useful that would be. A very small minority of power
-> users want to use weird fetch refspecs, and it is simple enough to
-> configure them manually, as above.
+> - Make "git notes --ref <notesref> log <rev>" call "git log
+> <resolvednotesref> -- :(notes):<rev>" (and pass on log options).
 
-I'd certainly appreciate having a "git clone --refspec=..." or similar,
-but thanks for suggesting fetch rather than fetch-pack!  I actually
-don't always want the remote set up for this particular purpose, so
-using fetch works out well.
+I was worried about how to get the log options. If you see:
 
-> > On a different note, git fetch-pack seems to silently fail if asked to
-> > fetch a remote tag which points at a tree object rather than a commit
-> > object:
-> > 
-> > /tmp/testrepo$ git init
-> > Initialized empty Git repository in /tmp/testrepo/.git/
-> > /tmp/testrepo$ git fetch-pack /home/josh/src/linux-2.6/.git refs/tags/v2.6.12-tree
-> > (1) /tmp/testrepo$ echo $?
-> > 1
-> 
-> Did you mean v2.6.11-tree? There is no v2.6.12-tree in standard
-> linux-2.6 repositories. So fetch-pack is failing because there are no
-> matching refs to fetch. This works for me:
-> 
->   $ git init
->   $ git fetch-pack /home/peff/compile/linux-2.6 refs/tags/v2.6.11-tree
->   remote: Counting objects...
->   ...
-> 
-> If you want better error messages, use the fetch porcelain:
-> 
->   $ git init
->   $ git fetch /home/peff/compile/linux-2.6 refs/tags/v2.6.12-tree
->   fatal: Couldn't find remote ref refs/tags/v2.6.12-tree
->   fatal: The remote end hung up unexpectedly
+  git notes log --foo bar
 
-Well, *that's* embarassing.  I thought I'd tested that with a couple of
-other repositories and tree-tag objects, but apparently not.
+is "bar" a revision, or an argument to --foo? I think right now the
+answer is always "revision", but that is only because the revision
+options do not currently use parse-options, which would allow
+"--format=foo" to be written as "--format foo". So I'd rather not rely
+on that.
 
-Sadly, though, I still can't check out the result:
+> - Make the pathspec ":(notes):<rev>" resolve <rev> to <sha1> and match
+> with all possible breakdowns of <sha1> which we accept for a notes tree.
 
-/tmp/linux-2.6$ git checkout FETCH_HEAD
-fatal: Cannot switch branch to a non-commit.
-(128) /tmp/linux-2.6$ git checkout -b master FETCH_HEAD
-fatal: Cannot switch branch to a non-commit.
+I was assuming that :(notes): would only accept a sha1. But it probably
+makes sense for it to handle resolution itself.
 
-I guess I'd hoped for something similar to "detached HEAD" mode.
-
-Based on this, I need still to switch to using faked commits rather than
-trees.
-
-- Josh Triplett
+-Peff
