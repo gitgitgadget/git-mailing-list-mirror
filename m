@@ -1,116 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git notes list/show <revision-range>
-Date: Wed, 20 Apr 2011 03:35:17 -0400
-Message-ID: <20110420073517.GB1971@sigill.intra.peff.net>
-References: <4DAC80CF.8020704@lyx.org>
- <20110418182724.GB11250@sigill.intra.peff.net>
- <4DAD371F.9040003@drmicha.warpmail.net>
- <20110419203211.GA12071@sigill.intra.peff.net>
- <4DAE8867.8010704@drmicha.warpmail.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] report which $PATH entry had trouble running execvp(3)
+Date: Wed, 20 Apr 2011 09:37:34 +0200
+Message-ID: <4DAE8D3E.8000705@viscovery.net>
+References: <7v8vv78eld.fsf@alter.siamese.dyndns.org> <7vipub6r3s.fsf@alter.siamese.dyndns.org> <7vaafl371q.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vincent van Ravesteijn <vfr@lyx.org>,
-	Git Mailing List <git@vger.kernel.org>, bebarino@gmail.com,
-	johan@herland.net
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 09:35:26 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 09:37:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCRwb-0004RF-Ab
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:35:25 +0200
+	id 1QCRyr-0005g8-69
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753854Ab1DTHfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 03:35:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53485
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753160Ab1DTHfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 03:35:19 -0400
-Received: (qmail 16999 invoked by uid 107); 20 Apr 2011 07:36:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Apr 2011 03:36:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2011 03:35:17 -0400
-Content-Disposition: inline
-In-Reply-To: <4DAE8867.8010704@drmicha.warpmail.net>
+	id S1752984Ab1DTHhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 03:37:40 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:14164 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752670Ab1DTHhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 03:37:40 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QCRyh-0000LD-6k; Wed, 20 Apr 2011 09:37:35 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id ECA6B1660F;
+	Wed, 20 Apr 2011 09:37:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <7vaafl371q.fsf_-_@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171848>
 
-On Wed, Apr 20, 2011 at 09:16:55AM +0200, Michael J Gruber wrote:
+Am 4/20/2011 6:01, schrieb Junio C Hamano:
+> Add an internal function sane_execvp() that emulates execvp(3), skipping
+> ENOENT and EACCES while remembering a path that resulted in EACCES while
+> trying later directories on $PATH.  When failing the request at the end,
+> report the path that we had trouble with, and use it when reporting the
+> error.
 
-> > So you could write:
-> > 
-> >   # long form, just as you can do with "git log"
-> >   git notes log notes/commits -- ":(note):`git rev-parse HEAD`"
-> 
-> I don't think "notes log" should take a notes ref argument like that. It
-> already has "--ref" for that purpose, so I would suggest
-> 
-> git notes [--ref <notesref>] log [<rev>]
+I don't think this is worth the trouble. In which way is git different
+from other tools that execvp other programs?
 
-Hmm. You are probably right. I was modeling it after "log", but it is a
-notes subcommand. I was thinking you could also do something like:
+And how do you help when the script is executable, but the interpreter is not:
 
-  git notes log commits some-other-notes $sha1
+$ chmod -x git	# use git itself just for exposition
+$ echo '#!'"$(pwd)/git" > git-frotz
+$ chmod +x git-frotz
+$ git --exec-path=. frotz
+fatal: cannot exec 'git-frotz': Permission denied
+$ # WTF, git-frotz *is* executable and readable!?!?
 
-or even
+IOW, when you get strange behavior, you still have to dig around to know
+what went wrong.
 
-  # see what any notes ref has to say about this commit
-  git notes log --all $sha1
-
-but it is probably a better idea to keep the interface more consistent
-with the other notes subcommands.
-
-> git notes [--ref <notesref>] log [<rev>]
->
-> with <rev> being mapped to :(notes):<rev> automatically, <rev>
-> defaulting to HEAD. That is much more in line with the other notes
-> subcommands. (We may or may note check for ":(notes):" being there already.)
-
-I think it should be more like:
-
-  git notes [--ref <notesref] log [<rev options>] [<rev> ...]
-
-That is:
-
-  1. There may be arbitrary rev options. Because you might want "log
-     -p", or "log --format".
-
-  2. We may want to allow multiple revs (e.g., if you have a patch
-     series with 5 commits, you may want to see the history of any notes
-     that refer to any of those commits).
-
-I think (1) means we may need to feed the result to the revision
-options-parser.
-
-> > I think it would need a little refactoring of setup_revisions() to be
-> > more flexible, but most of the hard work is already done by the usual
-> > revision traversal mechanism.
-> 
-> ? I haven't checked in detail, but I think all we need is:
-> 
-> - Make "git notes --ref <notesref> log <rev>" call "git log
-> <resolvednotesref> -- :(notes):<rev>" (and pass on log options).
-
-I was worried about how to get the log options. If you see:
-
-  git notes log --foo bar
-
-is "bar" a revision, or an argument to --foo? I think right now the
-answer is always "revision", but that is only because the revision
-options do not currently use parse-options, which would allow
-"--format=foo" to be written as "--format foo". So I'd rather not rely
-on that.
-
-> - Make the pathspec ":(notes):<rev>" resolve <rev> to <sha1> and match
-> with all possible breakdowns of <sha1> which we accept for a notes tree.
-
-I was assuming that :(notes): would only accept a sha1. But it probably
-makes sense for it to handle resolution itself.
-
--Peff
+-- Hannes
