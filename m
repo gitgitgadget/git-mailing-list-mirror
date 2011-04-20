@@ -1,416 +1,399 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: [RFC 4/5] Date Mode: Documentation
-Date: Wed, 20 Apr 2011 02:45:20 +0000
-Message-ID: <7671f2f1-73d3-4978-ba1c-54e5dcaecadb-mfwitten@gmail.com>
+Subject: [RFC 5/5] Date Mode: Tests
+Date: Wed, 20 Apr 2011 02:45:23 +0000
+Message-ID: <bbf61df6-b7fa-429e-866e-899354953cbd-mfwitten@gmail.com>
 References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 04:58:35 2011
+X-From: git-owner@vger.kernel.org Wed Apr 20 04:58:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCNcf-00058d-0q
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 04:58:33 +0200
+	id 1QCNd5-0005HF-6U
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 04:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023Ab1DTC61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 22:58:27 -0400
+	id S1753522Ab1DTC6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 22:58:54 -0400
 Received: from mail-ey0-f174.google.com ([209.85.215.174]:44807 "EHLO
 	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753778Ab1DTC60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 22:58:26 -0400
-Received: by eyx24 with SMTP id 24so82338eyx.19
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 19:58:25 -0700 (PDT)
+	with ESMTP id S1752098Ab1DTC6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 22:58:53 -0400
+Received: by mail-ey0-f174.google.com with SMTP id 24so82338eyx.19
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 19:58:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:subject:date:from:to:message-id:in-reply-to
          :references;
-        bh=fGZLuDFcbBDRrjsOdLE4T5nnL4E11NLcaJXj6YF1waM=;
-        b=mAQCkrApje4Wvqi9p5x/0aBeKWa81KeKEKYtzKKnLPw+8UrPzlnlNsM8uRSBOkFh6e
-         CrCDZ6TwcnSzIDPVYoJOZd5RPNFm1vgRkamGuXsJMrMdxsp5sxxnSx03TXlpVe6t+Qdz
-         CH5mm9H+LRDOGH/U86XPaG55X9hnd0WipCHF0=
+        bh=tXrM/uPwtYWtVo7bVn5wrAYmCxbPggYDD0U9v+ty9S0=;
+        b=gnPR7uXcDUf1iGrZqHlHu2ZKnQwlKajAcBxAtwoUAh7MvaEcG+X36tIFhQa0/HQoOA
+         yyVzhzFW6Y36fMLMuwCZFD+AIypCKYvFksIeJ7m4RLXm69KwJxCGA25BEQbk9iAU3nev
+         xHHOJqcI3vjtVYrhdFfiuhY8+OGNWvJ/M6/PA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=subject:date:from:to:message-id:in-reply-to:references;
-        b=ECzPcVbFkUyI2j7Znw5QSDGISDkh5cou0MeYYtgkxz5ljizIpZYQxp/IpvYfxaDWbn
-         +ZGMrz0ez/h7+EkQKnkSv7bFJ0dLlBD87PKYdpVJF8etJYaa32W6/2bZfhcxBJMPdKqo
-         uOSPf4Qj6i+JllQblg3/xq4G75kgcNBH5XGhI=
-Received: by 10.213.20.218 with SMTP id g26mr2975351ebb.133.1303268305054;
-        Tue, 19 Apr 2011 19:58:25 -0700 (PDT)
+        b=L/HhSy93DuyKLfhd7BwIe8P1iLQZwVOVKppqFkKVyPLUOYzFR8n9IGvIaWtVch1C3o
+         QhVdf+d7w3XiT9cr/hSaC92RkzMbHeoFL3OjkQNNjaYPEeShbhpSRgCN10m895Oi5/bs
+         mETI8BycVgthwjfHvqaTv8GYMXO0bHz6bsxl0=
+Received: by 10.14.133.139 with SMTP id q11mr2193619eei.11.1303268333021;
+        Tue, 19 Apr 2011 19:58:53 -0700 (PDT)
 Received: from gmail.com (server105708.santrex.net [188.165.236.117])
-        by mx.google.com with ESMTPS id x54sm330743eeh.19.2011.04.19.19.58.22
+        by mx.google.com with ESMTPS id u1sm335979eeh.6.2011.04.19.19.58.50
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2011 19:58:24 -0700 (PDT)
+        Tue, 19 Apr 2011 19:58:52 -0700 (PDT)
 In-Reply-To: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171836>
 
-Date: Tue, 19 Apr 2011 19:06:02 +0000
-This commit updates the git documentation to reflect the new
-date mode time zone features. As a result, the common date
-mode documentation has been factored out into one file:
+Date: Mon, 14 Mar 2011 20:39:44 +0000
+This commit introduces infrastructure for testing nearly all
+combinations of date mode input (only the format `relative'
+is currently excluded); test scripts source a date mode shell
+library to set up the environment and define the general date
+mode testing driver that is then started with a test-specific
+callback and optional parameters.
 
-  Documentation/date-mode-docs.txt
-
-which is included where necessary (sometimes with attribute
-reference substitutions); this file is somewhat messy at
-first glance (AsciiDoc is difficult to tame), but now all
-of the essential information is centralized and quite
-modular.
+Care was taken to reduce the amount of runtime overhead,
+particularly by only updating the values of git configuration
+variables when necessary.
 
 Signed-off-by: Michael Witten <mfwitten@gmail.com>
 ---
- Documentation/blame-options.txt    |    9 +---
- Documentation/config.txt           |   32 +++++++------
- Documentation/date-mode-docs.txt   |   87 ++++++++++++++++++++++++++++++++++++
- Documentation/git-for-each-ref.txt |   19 +++++++-
- Documentation/git-log.txt          |   43 ------------------
- Documentation/git-rev-list.txt     |    4 +-
- Documentation/git-svn.txt          |    2 +-
- Documentation/rev-list-options.txt |   28 +-----------
- 8 files changed, 128 insertions(+), 96 deletions(-)
- create mode 100644 Documentation/date-mode-docs.txt
+ t/date-modes-lib.sh          |  168 ++++++++++++++++++++++++++++++++++++++++++
+ t/date-modes-permutator.perl |   94 +++++++++++++++++++++++
+ t/t4202-log.sh               |    3 +
+ t/t6300-for-each-ref.sh      |   11 +++
+ t/t8002-blame.sh             |    9 ++
+ 5 files changed, 285 insertions(+), 0 deletions(-)
+ create mode 100755 t/date-modes-lib.sh
+ create mode 100755 t/date-modes-permutator.perl
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 16e3c68..deb824e 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -70,13 +70,8 @@ of lines before or after the line given by <start>.
- 	tree copy has the contents of the named file (specify
- 	`-` to make the command read from the standard input).
- 
----date <format>::
--	The value is one of the following alternatives:
--	{relative,local,default,iso,rfc,short}. If --date is not
--	provided, the value of the blame.date config variable is
--	used. If the blame.date config variable is also not set, the
--	iso format is used. For more information, See the discussion
--	of the --date option at linkgit:git-log[1].
-+:date mode options:
-+include::date-mode-docs.txt[]
- 
- -M|<num>|::
- 	Detect moved or copied lines within a file. When a commit
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 480dd0a..5bf9366 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -607,6 +607,9 @@ apply.whitespace::
- 	Tells 'git apply' how to handle whitespaces, in the same way
- 	as the '--whitespace' option. See linkgit:git-apply[1].
- 
-+:date mode config: blame
-+include::date-mode-docs.txt[]
-+
- branch.autosetupmerge::
- 	Tells 'git branch' and 'git checkout' to set up new branches
- 	so that linkgit:git-pull[1] will appropriately merge from the
-@@ -1262,7 +1265,8 @@ i18n.commitEncoding::
- 
- i18n.logOutputEncoding::
- 	Character encoding the commit messages are converted to when
--	running 'git log' and friends.
-+	running 'git log' and friends.  Defaults to the value of
-+	`i18n.commitEncoding` if set, UTF-8 otherwise.
- 
- imap::
- 	The configuration variables in the 'imap' section are described
-@@ -1300,12 +1304,8 @@ interactive.singlekey::
- 	linkgit:git-add[1].  Note that this setting is silently
- 	ignored if portable keystroke input is not available.
- 
--log.date::
--	Set the default date-time mode for the 'log' command.
--	Setting a value for log.date is similar to using 'git log''s
--	`\--date` option.  Possible values are `relative`, `local`,
--	`default`, `iso`, `rfc`, and `short`; see linkgit:git-log[1]
--	for details.
-+:date mode config: log
-+include::date-mode-docs.txt[]
- 
- log.decorate::
- 	Print out the ref names of any commits that are shown by the log
-@@ -1315,10 +1315,11 @@ log.decorate::
- 	This is the same as the log commands '--decorate' option.
- 
- log.showroot::
--	If true, the initial commit will be shown as a big creation event.
--	This is equivalent to a diff against an empty tree.
--	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
--	normally hide the root commit will now show it. True by default.
-+	If `true`, the initial commit will be shown as a big creation event;
-+	this is equivalent to a diff against an empty tree. If `false`,
-+	'git log' and related commands will not treat the initial commit as
-+	a big creation event.  Any root commits in `git log -p` output would
-+	be shown without a diff attached.  The default is `true`.
- 
- mailmap.file::
- 	The location of an augmenting mailmap file. The default
-@@ -1391,13 +1392,14 @@ notes.displayRef::
- 	exist, but a glob that does not match any refs is silently
- 	ignored.
- +
--This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
--environment variable, which must be a colon separated list of refs or
--globs.
--+
- The effective value of "core.notesRef" (possibly overridden by
- GIT_NOTES_REF) is also implicitly added to the list of refs to be
- displayed.
-++
-+This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
-+environment variable, which must be a colon separated list of refs or
-+globs. It can also be overridden with 'git log''s `--notes` option.
-+Also, this setting can be disabled by using 'git log''s `--no-notes` option.
- 
- notes.rewrite.<command>::
- 	When rewriting commits with <command> (currently `amend` or
-diff --git a/Documentation/date-mode-docs.txt b/Documentation/date-mode-docs.txt
-new file mode 100644
-index 0000000..8f07d3f
+diff --git a/t/date-modes-lib.sh b/t/date-modes-lib.sh
+new file mode 100755
+index 0000000..5ff6192
 --- /dev/null
-+++ b/Documentation/date-mode-docs.txt
-@@ -0,0 +1,87 @@
-+ifdef::datemodeoptions[]
++++ b/t/date-modes-lib.sh
+@@ -0,0 +1,168 @@
++#!/bin/sh
++#
++# Copyright (c) 2011 Michael F Witten
 +
-+:datemodeoptions!:
++if ! test_have_prereq PERL; then
++	skip_all='skipping all date mode tests; perl not available'
++	test_done
++fi
 +
-+--time-zone=<zone>::
++date_mode_file=d.$$
 +
-+	Only takes effect for timestamps shown in a human-readable format (such
-+	as when using "--pretty") and when the timestamp is interpreted in terms
-+	of a time zone (for instance, this option has no effect when
-+	`--date=raw` is specified).
-++
-+The <zone> may be one of the following:
-++
-+:date mode time zone values:
-+include::date-mode-docs.txt[]
++test_expect_success 'date mode: prepare reference commit' "
++	time='2131675200 -0400'
 +
-+--date=<format>::
++	export GIT_COMMITTER_DATE=\"\$time\"  \
++	       GIT_COMMITTER_NAME=C           \
++	       GIT_COMMITTER_EMAIL=C@test.git \
++	       GIT_AUTHOR_DATE=\"\$time\"     \
++	       GIT_AUTHOR_NAME=A              \
++	       GIT_AUTHOR_EMAIL=A@test.git
 +
-+	Only takes effect for timestamps shown in a human-readable format (such
-+	as when using "--pretty").
-++
-+The <format> may be one of the following:
-++
-+:date mode format values:
-+include::date-mode-docs.txt[]
++	d=$date_mode_file
 +
-+--relative-date::
++	echo > \$d && git add \$d && git commit -am d
++"
 +
-+	Synonym for `--date=relative`.
++date_mode_perm=$TEST_DIRECTORY/date-modes-permutator.perl
 +
-+endif::datemodeoptions[]
++# $1 : Configuration section (the command name being configured, such as
++#      the `log' in `log.date', etc.).
++#
++date_mode_unset_configs()
++{
++	var_t=$1.timezone
++	var_d=$1.date
 +
-+ifdef::datemodetimezonevalues[]
-+* *default* causes timestamps to be interpreted in terms of the time zone
-+            recorded in the history.
-+* *local*   causes timestamps to be interpreted in terms of the user's
-+            time zone; on POSIX systems, the time zone may be selected
-+            by setting the `TZ` environment variable appropriately
-+            (for example, on GNU systems, the timestamps could be
-+            interpreted in the `+0000` (UTC) time zone by something
-+            like the following: `TZ=:UTC git log --time-zone=local`).
++	test_expect_success "date mode: unset configs: '$var_t' and '$var_d'" "
++		git config --unset-all $var_t
++		git config --unset-all $var_d
++		! git config $var_t &&
++		! git config $var_d
++	"
 +
-+:datemodetimezonevalues!:
-+endif::datemodetimezonevalues[]
++	return 0
++}
 +
-+ifdef::datemodeformatvalues[]
-+* *default*  shows timestamps in git's original human-friendly format,
-+             e.g. "Sat Jul 20 00:00:00 1985 -0400".
-+* *relative* shows timestamps relative to the current time,
-+             e.g. "2 hours ago".
-+* *iso8601* (or *iso*) shows timestamps in ISO 8601 format,
-+             kke.g. "1985-07-20 00:00:00 -0400".
-+* *rfc2822* (or *rfc*) shows timestamps in RFC 2822 format
-+            (which is used in email messages),
-+             e.g. "Sat, 20 Jul 1985 00:00:00 -0400".
-+* *short*    shows timestamps as only the date (no time) in `YYYY-MM-DD` format,
-+             e.g. "1985-07-20".
-+* *raw*      shows timestamps in the internal git format (as in GNU `date`'s
-+            `"+%s %z"` format; that is,
-+            "<seconds since The Epoch> <time zone in +HHMM format>"),
-+             e.g. "490680000 -0400".
++# $1    : `section.variable'
++#
++# stdin : One line that is a value that is suitable for setting "$1";
++#         an empty line commands that "$1" be unset.
++#
++date_mode_set_config()
++{
++	read -r v || return 1
 +
-+:datemodeformatvalues!:
-+endif::datemodeformatvalues[]
++	if [ -z "$v" ]; then
++		test_expect_success \
++			"date mode: unset config '$1'" \
++			"git config --unset-all '$1';! git config '$1'"
++	else
++		test_expect_success \
++			"date mode: set config: '$1 = $v'" \
++			"git config '$1' '$v'"
++	fi
 +
-+ifdef::datemodeconfig[]
-+:command: {datemodeconfig}
-+:datemodeconfig!:
++	return 0
++}
 +
-+{command}.timezone::
-+	Set the default date mode time zone for the '{command}' command.
-+	Setting a value for `{command}.timezone` is similar to using
-+	'git {command}''s `\--time-zone` option.  Possible values are:
-++
-+:date mode time zone values:
-+include::date-mode-docs.txt[]
++date_mode_set_configs()
++{
++	date_mode_set_config "$1.timezone" &&
++	read -r; # skip `=' line
++	date_mode_set_config "$1.date"
++}
 +
-+{command}.date::
-+	Set the default date mode format for the '{command}' command.
-+	Setting a value for `{command}.date` is similar to using
-+	'git {command}''s `\--date` option.  Possible values are:
-++
-+:date mode format values:
-+include::date-mode-docs.txt[]
++# $1    : A value that is suitable as a date mode time zone.
++#
++# stdin : 2 lines:
++#
++#           A value that is suitable as a date mode format.
++#
++#           Expected output from running "$date_mode_test_code" (see below)
++#
++#         If "$1" or the first line is empty, then the corresponding option
++#         is not used.
++#
++# Global variable `date_mode_test_code':
++#
++#         Shell code that can accept the arguments "$1" and the value of the
++#         first line of stdin, and then output a date that is equal to the
++#         second line of stdin.
++#
++date_mode_run_test()
++{
++	read -r format   &&
++	read -r expected || return 1
 +
-+:command!:
-+endif::datemodeconfig[]
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 152e695..a91d2bf 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -114,9 +114,22 @@ the object referred by the ref does not cause an error.  It
- returns an empty string instead.
++	test_expect_success "date mode:${1:+ '$1'}${format:+ '$format'}" "
++		$date_mode_test_code '$1' '$format' > actual   &&
++		echo '$expected'                    > expected &&
++		test_cmp expected actual
++	"
++
++	return 0
++}
++
++date_mode_error()
++{
++	error "date mode: The test is in a confused state; aborting..."
++}
++
++# $1    : Shell code that can accept the following input (empty strings
++#         represent no specified value):
++#
++#           $1 : A value suitable as a date mode time zone.
++#           $2 : A value suitable as a date mode format.
++#
++#         and then output a date.
++#
++# $2    : Configuration section (the command name being configured, such as
++#         the `log' in `log.date', etc.); this may be the empty string, in
++#         which case git configuration variables are not tested.
++#
++# $3    : The date format that is the default; the default is `default'.
++# $4    : The date timzezone that is the default; the default is `default'.
++#
++# stdin : See the "$date_mode_perm" script.
++#
++date_mode_run_tests()
++{
++	date_mode_test_code=$1
++
++	if [ -z "$2" ]; then
++
++		"$PERL_PATH" "$date_mode_perm" '' "$3" "$4" |
++		while read -r line; do
++			date_mode_run_test "$line" || date_mode_error
++		done
++
++	else
++		date_mode_unset_configs "$2"
++
++		"$PERL_PATH" "$date_mode_perm" config "$3" "$4" |
++		while read -r line; do
++
++			if   [ "$line" = = ]; then
++				date_mode_set_config  "$2.date" && read -r line
++			elif [ "$line" = - ]; then
++				date_mode_set_configs "$2"      && read -r line
++			fi &&
++
++			date_mode_run_test "$line" || date_mode_error
++
++		done
++	fi
++
++	return 0
++}
++
++date_mode_std_args()
++{
++	echo "_date_mode_std_args '$(echo "$1" | sed "s/'/'\\\\''/g")'";
++}
++
++_date_mode_std_args()
++{
++	eval "$1${2:+ --time-zone='$2'}${3:+ --date='$3'}"
++}
+diff --git a/t/date-modes-permutator.perl b/t/date-modes-permutator.perl
+new file mode 100755
+index 0000000..729e3e7
+--- /dev/null
++++ b/t/date-modes-permutator.perl
+@@ -0,0 +1,94 @@
++#!/usr/bin/perl
++#
++# Copyright (c) 2011 Michael F Witten
++
++use strict;
++use warnings;
++
++# The values expected to be generated by the test
++# when the given {zone}{format} is in use;
++my %expected = ();
++
++#########   ZONES    FORMATS            EXPECTED
++$expected {default} {default} = 'Mon Jul 20 00:00:00 2037 -0400';
++$expected {default} {  ''   } = $expected{default}{default};
++$expected {default} {rfc2822} = 'Mon, 20 Jul 2037 00:00:00 -0400';
++$expected {default} {  rfc  } = $expected{default}{rfc2822};
++$expected {default} {iso8601} = '2037-07-20 00:00:00 -0400';
++$expected {default} {  iso  } = $expected{default}{iso8601};
++$expected {default} { short } = '2037-07-20';
++$expected {default} {  raw  } = '2131675200 -0400';
++$expected {default} { local } = 'Mon Jul 20 04:00:00 2037 +0000';
++$expected {  ''   }           = $expected{default};
++$expected { local } {default} = 'Mon Jul 20 04:00:00 2037 +0000';
++$expected { local } {  ''   } = $expected{local}{default};
++$expected { local } {rfc2822} = 'Mon, 20 Jul 2037 04:00:00 +0000';
++$expected { local } {  rfc  } = $expected{local}{rfc2822};
++$expected { local } {iso8601} = '2037-07-20 04:00:00 +0000';
++$expected { local } {  iso  } = $expected{local}{iso8601};
++$expected { local } { short } = '2037-07-20';
++$expected { local } {  raw  } = '2131675200 -0400';
++$expected { local } { local } = 'Mon Jul 20 04:00:00 2037 +0000';
++
++my @zones   = keys %expected;
++my @formats = keys %{$expected{$zones[0]}}; # Assuming unvarying formats
++
++my ($config_zone, $config_format);
++
++sub print_option_sets_and_expected_outputs
++{
++	foreach my $z (@zones)
++	{
++		foreach my $f (@formats)
++		{
++			print $z, "\n", $f, "\n";
++			print $expected { $z ||  $config_zone  }
++					{ $f || $config_format },
++					"\n";
++		}
++	}
++}
++
++sub print_config_sets_and_option_sets_and_expected_outputs
++{
++	foreach (@zones)
++	{
++		$config_zone = $_;
++		print "-\n", $_, "\n";
++
++		foreach (@formats)
++		{
++			$config_format = $_;
++			print "=\n", $_, "\n";
++			print_option_sets_and_expected_outputs();
++		}
++	}
++}
++
++#########################
++#### Start of Output ####
++#########################
++
++if (defined $ARGV[1])
++{
++	foreach (@zones)
++	{
++		my $e = $expected{$_};
++		$e->{''} = $e->{$ARGV[1]};
++	}
++}
++
++if (defined $ARGV[2])
++{
++	foreach (@formats) {
++		$expected{''} = $expected{$ARGV[2]};
++	}
++}
++
++
++if (defined $ARGV[0] && $ARGV[0] eq 'config') {
++	print_config_sets_and_option_sets_and_expected_outputs();
++} else {
++	$config_zone = $config_format = '';
++	print_option_sets_and_expected_outputs();
++}
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 2fcc31a..cdfea8b 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -463,4 +463,7 @@ test_expect_success 'show added path under "--follow -M"' '
+ 	)
+ '
  
- As a special case for the date-type fields, you may specify a format for
--the date by adding one of `:default`, `:relative`, `:short`, `:local`,
--`:iso8601` or `:rfc2822` to the end of the fieldname; e.g.
--`%(taggerdate:relative)`.
-+the date by adding one of the following to the end of the fieldname
-+(e.g. `%(taggerdate:rfc)`):
++. "$TEST_DIRECTORY"/date-modes-lib.sh
++date_mode_run_tests "$(date_mode_std_args 'git log -1 --format=%ad')" log
 +
-+:date mode format values:
-+include::date-mode-docs.txt[]
+ test_done
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 050ed7d..d6ac4dd 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -359,4 +359,15 @@ test_expect_success 'an unusual tag with an incomplete line' '
+ 
+ '
+ 
++. "$TEST_DIRECTORY"/date-modes-lib.sh
++date_mode_run_tests '
++	b()
++	{
++		git for-each-ref \
++			--count=1 \
++			--format="%(authordate${2:+:$2}${1:+@$1})" \
++			"$(git symbolic-ref HEAD)"
++	}
++	b'
 +
-+Similarly, you may specify the time zone in which to interpret the
-+date by adding one of the following to the end of the fieldname
-+(e.g. `%(taggerdate&#64;local)`):
+ test_done
+diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+index d3a51e1..f049439 100755
+--- a/t/t8002-blame.sh
++++ b/t/t8002-blame.sh
+@@ -11,4 +11,13 @@ test_expect_success 'Blame --show-email works' '
+     check_count "<A@test.git>" 1 "<B@test.git>" 1 "<B1@test.git>" 1 "<B2@test.git>" 1 "<author@example.com>" 1 "<C@test.git>" 1 "<D@test.git>" 1
+ '
+ 
++. "$TEST_DIRECTORY"/date-modes-lib.sh
++date_mode_run_tests "$(date_mode_std_args "
++	b()
++	{
++		git blame -c -L1,1 \"\$@\" '$date_mode_file' |
++			awk -F'\t' '{print \$3}'
++	}
++	b")" blame iso8601
 +
-+:date mode time zone values:
-+include::date-mode-docs.txt[]
-+
-+Of course, both the format and time zone specifications may be added
-+at the same time (e.g. `%(taggerdate:rfc@local)` or, equivalently,
-+`%(taggerdate&#64;local:rfc)`).
- 
- 
- EXAMPLES
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index de5c0d3..03e0ae3 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -139,49 +139,6 @@ Discussion
- 
- include::i18n.txt[]
- 
--Configuration
---------------
--
--See linkgit:git-config[1] for core variables and linkgit:git-diff[1]
--for settings related to diff generation.
--
--format.pretty::
--	Default for the `--format` option.  (See "PRETTY FORMATS" above.)
--	Defaults to "medium".
--
--i18n.logOutputEncoding::
--	Encoding to use when displaying logs.  (See "Discussion", above.)
--	Defaults to the value of `i18n.commitEncoding` if set, UTF-8
--	otherwise.
--
--log.date::
--	Default format for human-readable dates.  (Compare the
--	`--date` option.)  Defaults to "default", which means to write
--	dates like `Sat May 8 19:35:34 2010 -0500`.
--
--log.showroot::
--	If `false`, 'git log' and related commands will not treat the
--	initial commit as a big creation event.  Any root commits in
--	`git log -p` output would be shown without a diff attached.
--	The default is `true`.
--
--mailmap.file::
--	See linkgit:git-shortlog[1].
--
--notes.displayRef::
--	Which refs, in addition to the default set by `core.notesRef`
--	or 'GIT_NOTES_REF', to read notes from when showing commit
--	messages with the 'log' family of commands.  See
--	linkgit:git-notes[1].
--+
--May be an unabbreviated ref name or a glob and may be specified
--multiple times.  A warning will be issued for refs that do not exist,
--but a glob that does not match any refs is silently ignored.
--+
--This setting can be disabled by the `--no-notes` option,
--overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable,
--and overridden by the `--notes=<ref>` option.
--
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 415f4f0..5909913 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -44,7 +44,9 @@ SYNOPSIS
- 	     [ \--regexp-ignore-case | -i ]
- 	     [ \--extended-regexp | -E ]
- 	     [ \--fixed-strings | -F ]
--	     [ \--date=(local|relative|default|iso|rfc|short) ]
-+	     [ \--time-zone=<zone> ]
-+	     [ \--date=<format> ]
-+	     [ \--time-zone=<zone> ]
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 71fc0ae..3e3ef7f 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -104,7 +104,7 @@ COMMANDS
- 
- --localtime;;
- 	Store Git commit times in the local timezone instead of UTC.  This
--	makes 'git log' (even without --date=local) show the same times
-+	makes 'git log' (even without --time-zone=local) show the same times
- 	that `svn log` would in the local timezone.
- +
- This doesn't interfere with interoperating with the Subversion
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 73111bb..1494247 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -634,32 +634,8 @@ endif::git-rev-list[]
- 
- include::pretty-options.txt[]
- 
----relative-date::
--
--	Synonym for `--date=relative`.
--
----date=(relative|local|default|iso|rfc|short|raw)::
--
--	Only takes effect for dates shown in human-readable format, such
--	as when using "--pretty". `log.date` config variable sets a default
--	value for log command's --date option.
--+
--`--date=relative` shows dates relative to the current time,
--e.g. "2 hours ago".
--+
--`--date=local` shows timestamps in user's local timezone.
--+
--`--date=iso` (or `--date=iso8601`) shows timestamps in ISO 8601 format.
--+
--`--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
--format, often found in E-mail messages.
--+
--`--date=short` shows only date but not time, in `YYYY-MM-DD` format.
--+
--`--date=raw` shows the date in the internal raw git format `%s %z` format.
--+
--`--date=default` shows timestamps in the original timezone
--(either committer's or author's).
-+:date mode options:
-+include::date-mode-docs.txt[]
- 
- ifdef::git-rev-list[]
- --header::
+ test_done
 -- 
 1.7.4.18.g68fe8
