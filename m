@@ -1,168 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] report which $PATH entry had trouble running execvp(3)
-Date: Tue, 19 Apr 2011 21:01:21 -0700
-Message-ID: <7vaafl371q.fsf_-_@alter.siamese.dyndns.org>
-References: <7v8vv78eld.fsf@alter.siamese.dyndns.org>
- <7vipub6r3s.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH/RFH] date: avoid "X years, 12 months" in relative dates
+Date: Wed, 20 Apr 2011 01:24:35 -0400
+Message-ID: <20110420052435.GA28597@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 06:01:42 2011
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 07:24:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCObh-0002YK-Mo
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 06:01:38 +0200
+	id 1QCPuK-0000Tf-Rk
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 07:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750741Ab1DTEBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 00:01:31 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62291 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709Ab1DTEBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 00:01:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7FCE34ABC;
-	Wed, 20 Apr 2011 00:03:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0cJUGBdSX4+w5/S72If5vUEc91w=; b=J4Crxc
-	tvRb8fmh5irDfL1ff6EaA1D+NfZsuiSYTABiuMgTb0KXPtNrDNSK2mIfngE/2Q9L
-	nSqiA/UJQjyyWscKioWBADkbVf2inkZ/3q9ffKnPPIFHDYmk1Sic44YZevJbqD9U
-	6SLsS7pomtr8Y7hZzd//kASAKmtnIKGuFGt6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n+8Bugdr7Qelnif+k9m1kVFPgp1FTzFo
-	pPCwf+QPcCxCuuBEUBli4GHUjRD1PWosHblHNQNT/zZGLXMLp6h0ZyZl16NZkQOi
-	ZQ48B2MPexX0VpPl2peVCdjARCc/2hfsyyX0uaB31i4JgbYiT27waNNJ4aKUsvsw
-	nMSdd2QIRv8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6EC3E4ABB;
-	Wed, 20 Apr 2011 00:03:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 33DB54ABA; Wed, 20 Apr 2011
- 00:03:23 -0400 (EDT)
-In-Reply-To: <7vipub6r3s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 18 Apr 2011 17:07:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2529DE46-6B03-11E0-A4DE-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751630Ab1DTFYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 01:24:40 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38475
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751543Ab1DTFYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 01:24:39 -0400
+Received: (qmail 16173 invoked by uid 107); 20 Apr 2011 05:25:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Apr 2011 01:25:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2011 01:24:35 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171839>
 
-You can add your own custom subcommand 'frotz' to the system by adding
-'git-frotz' in a directory somewhere in your $PATH environment variable.
-When you ask "git frotz" from the command line, "git-frotz" is run via
-execvp(3).
+When relative dates are more than about a year ago, we start
+writing them as "Y years, M months".  At the point where we
+calculate Y and M, we have the time delta specified as a
+number of days. We calculate these integers as:
 
-Three plausible scenarios that the execvp(3) would fail for us are:
+  Y = days / 365
+  M = (days % 365 + 15) / 30
 
- * The first 'git-frotz' found in a directory on $PATH was not a proper
-   executable binary, and we got "Exec format error" (ENOEXEC);
+This rounds days in the latter half of a month up to the
+nearest month, so that day 16 is "1 month" (or day 381 is "1
+year, 1 month").
 
- * The only 'git-frotz' found in the directories listed on $PATH were not
-   marked with executable bit, and we got "Permission denied" (EACCES); or
+We don't round the year at all, though, meaning we can end
+up with "1 year, 12 months", which is silly; it should just
+be "2 years".
 
- * No 'git-frotz' was found in the directories listed on $PATH, but one of
-   the directories were unreadable, and we got EACCES.
+The implementation is crude but effective: we check for this
+silly case with a conditional and tweak the values:
 
-The first one is easy to understand and to rectify.  Most likely, the user
-made a typo, either on the command line, or when creating the custom
-subcommand.  However, the latter two cases are harder to notice, as we do
-not report 'git-frotz' in which directory we had trouble with.  We could
-do better if we implemented the command search behaviour of execvp(3)
-ourselves.
+  if (M == 12) {
+	  Y++;
+	  M = 0;
+  }
 
-Add an internal function sane_execvp() that emulates execvp(3), skipping
-ENOENT and EACCES while remembering a path that resulted in EACCES while
-trying later directories on $PATH.  When failing the request at the end,
-report the path that we had trouble with, and use it when reporting the
-error.
+It's tempting to look for a purely numerical solution, like
+just rounding better. But it is made difficult by the fact
+that our approximation of a month is "30 days", which means
+that a year does not actually contain 12 of our approximate
+months (there is a 5-day discrepancy).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+So you could do:
+
+  Y = (days + 15) / 365
+
+which will round up the year if we are in the last 15 days.
+And then you would make a matching tweak for months:
+
+  M = (days + 15) % 365 / 30;
+
+so that they both round at exactly the same day.
+
+But that doesn't quite work. Day 715 will be properly
+rounded to "2 years, 0 months", which is what we want. But
+days 710 through 714 remain at "1 year, 12 months", due to
+the 5-day discrepancy.
+
+Another attempt would be to write it as the much more
+readable:
+
+  total_months = (days + 15) / 30;
+  Y = total_months / 12;
+  M = total_months % 12;
+
+But our 5-day discrepancy hits us again, and this time much
+worse, since the error compounds with each year. On day
+3650, we should be exactly at "10 years", but the above puts
+us at "10 years, 2 months".
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+So I thought this patch would take me about 2 minutes to write, and (as
+you can probably guess from the length of the commit message), it turned
+out much more complex. I'd be curious to see if anybody has a numerical
+solution using integers.
 
-  Junio C Hamano <gitster@pobox.com> writes:
+With floating point, it's pretty simple:
 
-  >> The following is a tangent that was brought up at $work.
-  > ...
-  > We would need to emulate what execvp() does ourselves (i.e. split $PATH,
-  > prefix each component and try execv(), ignoring ENOENT or EACCES while
-  > trying next component in $PATH), plus note the first path that got EACCES
-  > so that we can report which script (including its leading directories) had
-  > trouble executing.  Perhaps a simple enough task for beginners.
+  double one_month = 365 / 12;
+  unsigned long total_months = ((double)days + (one_month / 2)) / one_month;
+  unsigned long years = total_months / 12;
+  unsigned long months = total_months % 12;
 
- run-command.c |   48 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 47 insertions(+), 1 deletions(-)
+but I'm beginning to think it's not possible to make a simple formula
+with just integers. Which maybe means we should just use floating point
+here. Or maybe somebody can prove me to be an idiot.
 
-diff --git a/run-command.c b/run-command.c
-index f91e446..4c95f50 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -135,6 +135,52 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- 	return code;
- }
- 
-+static const char *sane_execvp(const char *arg0, const char **argv)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct strbuf failed_path = STRBUF_INIT;
-+	char *path = getenv("PATH");
-+	char *next;
+ date.c          |    5 +++++
+ t/t0006-date.sh |    1 +
+ 2 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/date.c b/date.c
+index 00f9eb5..3dfade2 100644
+--- a/date.c
++++ b/date.c
+@@ -132,6 +132,11 @@ const char *show_date_relative(unsigned long time, int tz,
+ 		unsigned long years = diff / 365;
+ 		unsigned long months = (diff % 365 + 15) / 30;
+ 		int n;
 +
-+	if (!path)
-+		path = "";
-+
-+	for (;;) {
-+		next = strchrnul(path, ':');
-+		if (path < next)
-+			strbuf_add(&sb, path, next - path);
-+		else
-+			strbuf_addch(&sb, '.');
-+		if (sb.len && sb.buf[sb.len - 1] != '/')
-+			strbuf_addch(&sb, '/');
-+		strbuf_addstr(&sb, arg0);
-+		execv(sb.buf, (char * const*) argv);
-+
-+		/*
-+		 * execvp() skips EACCES and ENOENT and goes on to try
-+		 * the next entry in the $PATH, but sets errno to EACCES
-+		 * when it fails at the end.
-+		 */
-+		if (errno == EACCES && !failed_path.len)
-+			strbuf_add(&failed_path, sb.buf, sb.len);
-+		if (errno != ENOENT) {
-+			strbuf_release(&failed_path);
-+			return strbuf_detach(&sb, NULL);
++		if (months == 12) {
++			years++;
++			months = 0;
 +		}
-+		strbuf_release(&sb);
-+		if (!*next)
-+			break;
-+		path = next + 1;
-+	}
-+	if (failed_path.len) {
-+		errno = EACCES;
-+		return strbuf_detach(&failed_path, NULL);
-+	}
-+	strbuf_release(&sb);
-+	strbuf_release(&failed_path);
-+	return arg0;
-+}
-+
- int start_command(struct child_process *cmd)
- {
- 	int need_in, need_out, need_err;
-@@ -278,7 +324,7 @@ fail_pipe:
- 		} else if (cmd->use_shell) {
- 			execv_shell_cmd(cmd->argv);
- 		} else {
--			execvp(cmd->argv[0], (char *const*) cmd->argv);
-+			cmd->argv[0] = sane_execvp(cmd->argv[0], cmd->argv);
- 		}
- 		/*
- 		 * Do not check for cmd->silent_exec_failure; the parent
+ 		n = snprintf(timebuf, timebuf_size, "%lu year%s",
+ 				years, (years > 1 ? "s" : ""));
+ 		if (months)
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 1d4d0a5..f87abb5 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -25,6 +25,7 @@ check_show 37500000 '1 year, 2 months ago'
+ check_show 55188000 '1 year, 9 months ago'
+ check_show 630000000 '20 years ago'
+ check_show 31449600 '12 months ago'
++check_show 62985600 '2 years ago'
+ 
+ check_parse() {
+ 	echo "$1 -> $2" >expect
+-- 
+1.7.5.rc2.4.gc3ad3
