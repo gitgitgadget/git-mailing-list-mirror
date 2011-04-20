@@ -1,235 +1,106 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: [RFC 1/5] Light refactoring of date infrastructure
-Date: Wed, 20 Apr 2011 02:45:03 +0000
-Message-ID: <650ac72c-fa55-491e-a2e8-427b04d8bee3-mfwitten@gmail.com>
+Subject: [RFC 2/5] Pretty Print: show tz when using DATE_LOCAL
+Date: Wed, 20 Apr 2011 02:45:15 +0000
+Message-ID: <acbcf231-e0a6-440e-be42-5f25da3e318d-mfwitten@gmail.com>
 References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 04:57:11 2011
+X-From: git-owner@vger.kernel.org Wed Apr 20 04:57:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCNbJ-0004lY-9q
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 04:57:09 +0200
+	id 1QCNbq-0004uu-G8
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 04:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752915Ab1DTC5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2011 22:57:03 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:62713 "EHLO
+	id S1753451Ab1DTC5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2011 22:57:38 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:49673 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098Ab1DTC5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2011 22:57:01 -0400
-Received: by ewy4 with SMTP id 4so83395ewy.19
-        for <git@vger.kernel.org>; Tue, 19 Apr 2011 19:57:00 -0700 (PDT)
+	with ESMTP id S1753247Ab1DTC5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2011 22:57:37 -0400
+Received: by ewy4 with SMTP id 4so83526ewy.19
+        for <git@vger.kernel.org>; Tue, 19 Apr 2011 19:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:subject:date:from:to:message-id:in-reply-to
          :references;
-        bh=Z7lVG3p3Iaaqpavnk+SGISbqw2HM6wZeltELMM0Uwng=;
-        b=XnJ/LK3nETE7jMksKrPWdRS4Z8w9UeNy8yJdTYpwwzu2bGS+JLsmJgHLMzwwrt+RKY
-         NO3rY7UvYf/rntMNExGxVHVQ+AlKqUAU8aar9MOM3bjdwxqDAisLCz6QhmF+kl3SDXS8
-         H4LYwvehBBeaeVJt0cMjDONPOIdh3/Z8xNDgY=
+        bh=JA1lLMV52vdDmI3s6dhsPzp7ZpvJK6y+sITGKscNzIg=;
+        b=fNjIQ1iwwCdmFyivypcGiVDmregpNTNXs4B8kmrnlPTNNyN9YHi9JC7obGvMn4Wonb
+         zuMSC5+tghZ2aErFe3/BH7vEuAyeLkIuJOhM896KIJK8dwpqXF2Dg41ZuCMZOxvNLSI4
+         vlwOgU87RPwnF1VHnR4ozl+GxXU+wgWL0jzCA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=subject:date:from:to:message-id:in-reply-to:references;
-        b=xIUbPAHN6WF+qK3EL8o4JrmVV8Y5yC8DXm/HpuwYni4yRaLDY5AZAufJ3C/vMgPocI
-         TBzI8R97rbAjxLsbdO4hsIjM4dObGI1pedCChgq2UlMR9x8AynXZGW0Fs+najvZajrW+
-         dPK8MrHeoJJjpumqtTPlR8QaPYv7ZFCqfQ4cQ=
-Received: by 10.14.4.32 with SMTP id 32mr2326311eei.141.1303268220307;
-        Tue, 19 Apr 2011 19:57:00 -0700 (PDT)
+        b=ouv50YGbw0umgbfu/0VdnGp1jpi+j+bE/jQKa46Be8Vgw5Rwcv/DCh75AwRX7kmb9m
+         EMRs4dCqauaQjFytHi2J4kRIJPRg0ovRESouNEOZaJ4vrwqEFWR5CiKmjUQerC0Bnr0M
+         CnfdBI+8AiI6vkZyo9wtxqitsew0dEdYE9WfA=
+Received: by 10.213.35.137 with SMTP id p9mr2743710ebd.115.1303268256390;
+        Tue, 19 Apr 2011 19:57:36 -0700 (PDT)
 Received: from gmail.com (server105708.santrex.net [188.165.236.117])
-        by mx.google.com with ESMTPS id x54sm332297eeh.12.2011.04.19.19.56.57
+        by mx.google.com with ESMTPS id u1sm335478eeh.6.2011.04.19.19.57.34
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2011 19:56:59 -0700 (PDT)
+        Tue, 19 Apr 2011 19:57:35 -0700 (PDT)
 In-Reply-To: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171833>
 
-Date: Fri, 11 Feb 2011 18:34:29 +0000
-date_mode_explicit -> date_mode_from_command_line
-    It's more understandable by itself now.
+Date: Fri, 11 Feb 2011 16:06:36 +0000
+Currently, when the date mode is DATE_LOCAL, the
+time zone is never pretty printed; this seems
+to be an unnecessary pecularliarity, especially
+when the time zone data could be useful to
+the user.
 
-DATE_NORMAL -> DATE_DEFAULT
-    The user input to select this value is `default'.
+This commit removes that special handling of
+time zones.
+
+Now, for instance, fast-import.c's write_crash_report()
+will produce reports that provide more meaningful
+dates.
 
 Signed-off-by: Michael Witten <mfwitten@gmail.com>
 ---
- archive.c              |    2 +-
- builtin/blame.c        |    3 +--
- builtin/commit.c       |    2 +-
- builtin/for-each-ref.c |    2 +-
- builtin/shortlog.c     |    2 +-
- cache.h                |    2 +-
- date.c                 |    2 +-
- log-tree.c             |    6 +++---
- revision.c             |    4 ++--
- revision.h             |    2 +-
- submodule.c            |    2 +-
- 11 files changed, 14 insertions(+), 15 deletions(-)
+ date.c                  |    3 +--
+ t/t6300-for-each-ref.sh |    4 ++--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 42f2d2f..dd871ca 100644
---- a/archive.c
-+++ b/archive.c
-@@ -32,7 +32,7 @@ static void format_subst(const struct commit *commit,
- 	char *to_free = NULL;
- 	struct strbuf fmt = STRBUF_INIT;
- 	struct pretty_print_context ctx = {0};
--	ctx.date_mode = DATE_NORMAL;
-+	ctx.date_mode = DATE_DEFAULT;
- 	ctx.abbrev = DEFAULT_ABBREV;
- 
- 	if (src == buf->buf)
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4639788..dd597f4 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2377,9 +2377,8 @@ parse_done:
- 		blame_date_width = sizeof("2006-10-19");
- 		break;
- 	case DATE_RELATIVE:
--		/* "normal" is used as the fallback for "relative" */
- 	case DATE_LOCAL:
--	case DATE_NORMAL:
-+	case DATE_DEFAULT:
- 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
- 		break;
- 	}
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 67757e9..194db99 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -933,7 +933,7 @@ static const char *find_author_by_nickname(const char *name)
- 	commit = get_revision(&revs);
- 	if (commit) {
- 		struct pretty_print_context ctx = {0};
--		ctx.date_mode = DATE_NORMAL;
-+		ctx.date_mode = DATE_DEFAULT;
- 		strbuf_release(&buf);
- 		format_commit_message(commit, "%an <%ae>", &buf, &ctx);
- 		return strbuf_detach(&buf, NULL);
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 89e75c6..60d6b32 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -367,7 +367,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
- 	char *zone;
- 	unsigned long timestamp;
- 	long tz;
--	enum date_mode date_mode = DATE_NORMAL;
-+	enum date_mode date_mode = DATE_DEFAULT;
- 	const char *formatp;
- 
- 	/*
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index f5efc67..5815f55 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -165,7 +165,7 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- 		ctx.abbrev = log->abbrev;
- 		ctx.subject = "";
- 		ctx.after_subject = "";
--		ctx.date_mode = DATE_NORMAL;
-+		ctx.date_mode = DATE_DEFAULT;
- 		pretty_print_commit(CMIT_FMT_USERFORMAT, commit, &ufbuf, &ctx);
- 		buffer = ufbuf.buf;
- 	} else if (*buffer) {
-diff --git a/cache.h b/cache.h
-index 5b896d9..bf639f7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -829,7 +829,7 @@ extern struct object *peel_to_type(const char *name, int namelen,
- 				   struct object *o, enum object_type);
- 
- enum date_mode {
--	DATE_NORMAL = 0,
-+	DATE_DEFAULT = 0,
- 	DATE_RELATIVE,
- 	DATE_SHORT,
- 	DATE_LOCAL,
 diff --git a/date.c b/date.c
-index 00f9eb5..096468f 100644
+index 096468f..caa14fe 100644
 --- a/date.c
 +++ b/date.c
-@@ -669,7 +669,7 @@ enum date_mode parse_date_format(const char *format)
- 	else if (!strcmp(format, "local"))
- 		return DATE_LOCAL;
- 	else if (!strcmp(format, "default"))
--		return DATE_NORMAL;
-+		return DATE_DEFAULT;
- 	else if (!strcmp(format, "raw"))
- 		return DATE_RAW;
+@@ -186,13 +186,12 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 			month_names[tm->tm_mon], tm->tm_year + 1900,
+ 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
  	else
-diff --git a/log-tree.c b/log-tree.c
-index 2a1e3a9..b059446 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -272,7 +272,7 @@ void get_patch_filename(struct commit *commit, int nr, const char *suffix,
- 	if (commit) {
- 		int max_len = start_len + FORMAT_PATCH_NAME_MAX - suffix_len;
- 		struct pretty_print_context ctx = {0};
--		ctx.date_mode = DATE_NORMAL;
-+		ctx.date_mode = DATE_DEFAULT;
+-		sprintf(timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
++		sprintf(timebuf, "%.3s %.3s %d %02d:%02d:%02d %d %+05d",
+ 				weekday_names[tm->tm_wday],
+ 				month_names[tm->tm_mon],
+ 				tm->tm_mday,
+ 				tm->tm_hour, tm->tm_min, tm->tm_sec,
+ 				tm->tm_year + 1900,
+-				(mode == DATE_LOCAL) ? 0 : ' ',
+ 				tz);
+ 	return timebuf;
+ }
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 7dc8a51..050ed7d 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -175,8 +175,8 @@ test_expect_success 'Check format "short" date fields output' '
+ '
  
- 		format_commit_message(commit, "%f", buf, &ctx);
- 		if (max_len < buf->len)
-@@ -465,9 +465,9 @@ void show_log(struct rev_info *opt)
- 			 */
- 			show_reflog_message(opt->reflog_info,
- 				    opt->commit_format == CMIT_FMT_ONELINE,
--				    opt->date_mode_explicit ?
-+				    opt->date_mode_from_command_line ?
- 					opt->date_mode :
--					DATE_NORMAL);
-+					DATE_DEFAULT);
- 			if (opt->commit_format == CMIT_FMT_ONELINE)
- 				return;
- 		}
-diff --git a/revision.c b/revision.c
-index 541f09e..462c311 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1434,10 +1434,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->simplify_history = 0;
- 	} else if (!strcmp(arg, "--relative-date")) {
- 		revs->date_mode = DATE_RELATIVE;
--		revs->date_mode_explicit = 1;
-+		revs->date_mode_from_command_line = 1;
- 	} else if ((argcount = parse_long_opt("date", argv, &optarg))) {
- 		revs->date_mode = parse_date_format(optarg);
--		revs->date_mode_explicit = 1;
-+		revs->date_mode_from_command_line = 1;
- 		return argcount;
- 	} else if (!strcmp(arg, "--log-size")) {
- 		revs->show_log_size = 1;
-diff --git a/revision.h b/revision.h
-index 9fd8f30..e5ca939 100644
---- a/revision.h
-+++ b/revision.h
-@@ -92,7 +92,7 @@ struct rev_info {
- 			abbrev_commit:1,
- 			use_terminator:1,
- 			missing_newline:1,
--			date_mode_explicit:1;
-+			date_mode_from_command_line:1;
- 	unsigned int	disable_stdin:1;
+ cat >expected <<\EOF
+-'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
+-'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
++'refs/heads/master' 'Mon Jul 3 15:18:43 2006 +0000' 'Mon Jul 3 15:18:44 2006 +0000'
++'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006 +0000'
+ EOF
  
- 	enum date_mode date_mode;
-diff --git a/submodule.c b/submodule.c
-index 5294cef..0a45da9 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -605,7 +605,7 @@ static void print_commit(struct commit *commit)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	struct pretty_print_context ctx = {0};
--	ctx.date_mode = DATE_NORMAL;
-+	ctx.date_mode = DATE_DEFAULT;
- 	format_commit_message(commit, " %h: %m %s", &sb, &ctx);
- 	fprintf(stderr, "%s\n", sb.buf);
- 	strbuf_release(&sb);
+ test_expect_success 'Check format "local" date fields output' '
 -- 
 1.7.4.18.g68fe8
