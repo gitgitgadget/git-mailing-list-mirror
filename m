@@ -1,64 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] report which $PATH entry had trouble running execvp(3)
-Date: Wed, 20 Apr 2011 09:37:34 +0200
-Message-ID: <4DAE8D3E.8000705@viscovery.net>
-References: <7v8vv78eld.fsf@alter.siamese.dyndns.org> <7vipub6r3s.fsf@alter.siamese.dyndns.org> <7vaafl371q.fsf_-_@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Cloning a remote tag without using git-fetch-pack directly?
+Date: Wed, 20 Apr 2011 03:38:05 -0400
+Message-ID: <20110420073805.GA2285@sigill.intra.peff.net>
+References: <20110419222050.GA3304@feather>
+ <20110420062653.GE28597@sigill.intra.peff.net>
+ <20110420072720.GC1790@feather>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 09:37:47 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Jamey Sharp <jamey@minilop.net>
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Wed Apr 20 09:38:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCRyr-0005g8-69
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:37:45 +0200
+	id 1QCRzJ-0005xJ-NZ
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984Ab1DTHhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 03:37:40 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:14164 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670Ab1DTHhk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 03:37:40 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QCRyh-0000LD-6k; Wed, 20 Apr 2011 09:37:35 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id ECA6B1660F;
-	Wed, 20 Apr 2011 09:37:34 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <7vaafl371q.fsf_-_@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1753318Ab1DTHiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 03:38:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53491
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753170Ab1DTHiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 03:38:08 -0400
+Received: (qmail 17057 invoked by uid 107); 20 Apr 2011 07:39:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Apr 2011 03:39:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2011 03:38:05 -0400
+Content-Disposition: inline
+In-Reply-To: <20110420072720.GC1790@feather>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171849>
 
-Am 4/20/2011 6:01, schrieb Junio C Hamano:
-> Add an internal function sane_execvp() that emulates execvp(3), skipping
-> ENOENT and EACCES while remembering a path that resulted in EACCES while
-> trying later directories on $PATH.  When failing the request at the end,
-> report the path that we had trouble with, and use it when reporting the
-> error.
+On Wed, Apr 20, 2011 at 12:27:20AM -0700, Josh Triplett wrote:
 
-I don't think this is worth the trouble. In which way is git different
-from other tools that execvp other programs?
+> Sadly, though, I still can't check out the result:
+> 
+> /tmp/linux-2.6$ git checkout FETCH_HEAD
+> fatal: Cannot switch branch to a non-commit.
+> (128) /tmp/linux-2.6$ git checkout -b master FETCH_HEAD
+> fatal: Cannot switch branch to a non-commit.
+> 
+> I guess I'd hoped for something similar to "detached HEAD" mode.
 
-And how do you help when the script is executable, but the interpreter is not:
+No, it wouldn't make any sense to have a non-commit in HEAD, detached or
+otherwise, since you couldn't build commits on top of it (what would the
+new commit's parent pointer have in it?).
 
-$ chmod -x git	# use git itself just for exposition
-$ echo '#!'"$(pwd)/git" > git-frotz
-$ chmod +x git-frotz
-$ git --exec-path=. frotz
-fatal: cannot exec 'git-frotz': Permission denied
-$ # WTF, git-frotz *is* executable and readable!?!?
+If you just want to check the files out into the working tree, you can
+do:
 
-IOW, when you get strange behavior, you still have to dig around to know
-what went wrong.
+  git read-tree --reset -u FETCH_HEAD
 
--- Hannes
+But I'm not really clear on what you're trying to accomplish with all of
+this. If you can describe your ultimate goal, I might be able to help
+more.
+
+-Peff
