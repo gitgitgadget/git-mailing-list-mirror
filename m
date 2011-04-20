@@ -1,90 +1,74 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git-p4 issue
-Date: Wed, 20 Apr 2011 10:51:13 +0000 (UTC)
-Message-ID: <loom.20110420T121500-4@post.gmane.org>
-References: <BANLkTikeQSqAhm2CwCYBkE74OxPUnA0cOg@mail.gmail.com> <BANLkTimmVQAcx7hiQFUBcoAGdvPhktPuMg@mail.gmail.com> <BANLkTikDDDtyJB992DFNtvgMrGvbWf=rMw@mail.gmail.com> <BANLkTinJecAsXt+5JzscFYEx_ez2q9DioQ@mail.gmail.com> <20110420003100.GC28768@arf.padd.com> <BANLkTikYDR+bzJQGip9BFo-BSgsBqEcQjQ@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] date: avoid "X years, 12 months" in relative dates
+Date: Wed, 20 Apr 2011 13:00:07 +0200
+Message-ID: <4DAEBCB7.80707@drmicha.warpmail.net>
+References: <20110420052435.GA28597@sigill.intra.peff.net> <1d0633318ffc778dfcc1c32ecf80fca0327349d6.1303290693.git.git@drmicha.warpmail.net> <20110420101800.GA24035@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 12:51:36 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 13:00:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCV0Q-0003Ik-Kj
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 12:51:34 +0200
+	id 1QCV8s-0008S9-PA
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 13:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137Ab1DTKv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 06:51:29 -0400
-Received: from lo.gmane.org ([80.91.229.12]:39030 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753944Ab1DTKv3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 06:51:29 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QCV0H-0003BN-Lu
-	for git@vger.kernel.org; Wed, 20 Apr 2011 12:51:28 +0200
-Received: from 57.79.130.188 ([57.79.130.188])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 12:51:25 +0200
-Received: from vitor.hda by 57.79.130.188 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 12:51:25 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 57.79.130.188 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0) Gecko/20100101 Firefox/4.0)
+	id S1754231Ab1DTLAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 07:00:11 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:44516 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754202Ab1DTLAK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2011 07:00:10 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 2061220B1B;
+	Wed, 20 Apr 2011 07:00:10 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute5.internal (MEProxy); Wed, 20 Apr 2011 07:00:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=7HTFOrhaY3Qj0EoGmCm1Mt0CGdA=; b=CdUwff+PKk+yI77ywhThDUZh/dOPknDHrKfnkunher7zLStRxgMcS/8waxlprbQzOU+pK+gqCHN9b8ZuTaDCoDL8pP6dCGX98odBaIaaDTuP+Ao9kWdu+8QAWL/aYIPLlY1H6A8s7ij31Y7fAD4JDSquhDFIZwMQW8SqAgDnrng=
+X-Sasl-enc: cBkmMJwWfAqUqauJ/ly3kUHltQEJCsElf292FRTjV9Sw 1303297209
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9E0ED44532B;
+	Wed, 20 Apr 2011 07:00:09 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <20110420101800.GA24035@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171859>
 
-Hi Mike,
-
-Michael Horowitz <michael.horowitz <at> ieee.org> writes:
-
-> I don't have a problem with the branch detection if other people use
-> it in ways I don't, but it would be nice to have more options and
-> documentation around it.
-
-Yes, documentation is a bit scarce. And looking again at my patch the
-description text also does not seem quite good enough.
-
-> The best I can do to describe what I want is for it to use what is
-> returned by "git-p4 branches", at minimum. If there is some optional
-> additional "new branch detection" logic, I don't have a problem with
-> that, but that should only be in addition to the branches it already
-> knows about from "git-p4 branches". So, when I do a "git-p4 sync" or
-> "git-p4 rebase", and it is importing changes from/to multiple
-> branches, then it should get that list of branches using the same
-> method "git-p4 branches" uses. Does that make sense?
-
-I think I understand your point and it may make sense. Currently,
-"self.knownBranches" is the list used during import from P4. The idea
-behind making this list different from "self.p4BranchesInGit" might have
-been to allow stop following a given branch by removing its definition
-from P4. Of course, if you already imported it earlier and there is a
-commit into it I think it makes sense to import the new commit instead
-of ignoring it as it is being done now. With that said, I think it would
-be a good idea to somehow merge the two lists together. But, as Pete
-already pointed out, the branch code is too complex as it is now and it
-needs a deep review. So it might make sense to include this feature as
-part of that review.
-
-The patch I directed you to ([1]) allows you to create a list of
-branch-origin to branch-destination pairs independent of "p4 branches"
-output. So you should be able to use this as a workaround for now.
-
-> Thanks,
+Jeff King venit, vidit, dixit 20.04.2011 12:18:
+> On Wed, Apr 20, 2011 at 11:12:11AM +0200, Michael J Gruber wrote:
 > 
-> Mike
+>> Implement this differently with months of size
+>>
+>>   onemonth = 365/12
+>>
+>> so that
+>>
+>>   totalmonths = (long)( (days + onemonth/2)/onemonth )
+>>   years = totalmonths / 12
+>>   months = totalmonths % 12
+>>
+>> In order to do this without floats, we write the first formula as
+>>
+>>   totalmonths = (days*12*2 + 365) / (365*2)
+> 
+> Well now I feel like an idiot. Algebra to the rescue.
 
-Regards,
-Vitor
+:)
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/168001
+> The extra multiplications introduce the possibility of overflow, but
+> since the number of days was arrived at by dividing an unsigned long
+> number of seconds by 86400, we are guaranteed to have room to multiply
+> by 24. :)
+
+Also, this is inside "if (diff < 1825)", so no matter where diff comes
+from, "long" is really long enough.
+
+Cheers,
+Michael
