@@ -1,61 +1,128 @@
-From: "Steven E. Harris" <seh@panix.com>
-Subject: Using format-patch and apply against files with CRLF line endings
-Date: Wed, 20 Apr 2011 07:48:02 -0400
-Organization: SEH Labs
-Message-ID: <m2tydt5ekt.fsf@Spindle.sehlabs.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] git-daemon: fix segfaulting in child_handler() in AIX
+Date: Wed, 20 Apr 2011 14:53:03 +0200
+Message-ID: <BANLkTimtfXgy9UcdQ8b-8dLrO-qgXFgQnw@mail.gmail.com>
+References: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
+	<BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 13:48:23 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Seth Jennings <spartacus06@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 14:53:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCVtO-00042R-Hv
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 13:48:22 +0200
+	id 1QCWu9-0003s6-9t
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 14:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754412Ab1DTLsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 07:48:17 -0400
-Received: from lo.gmane.org ([80.91.229.12]:55290 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754302Ab1DTLsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 07:48:16 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QCVtH-0003wn-8v
-	for git@vger.kernel.org; Wed, 20 Apr 2011 13:48:15 +0200
-Received: from c-24-23-122-157.hsd1.pa.comcast.net ([24.23.122.157])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 13:48:15 +0200
-Received: from seh by c-24-23-122-157.hsd1.pa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 13:48:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-23-122-157.hsd1.pa.comcast.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.50 (darwin)
-Cancel-Lock: sha1:vwOPrhRLIrIsd3FtTlvNFmxjLS4=
+	id S1753567Ab1DTMxH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2011 08:53:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:55776 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752292Ab1DTMxG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2011 08:53:06 -0400
+Received: by wwa36 with SMTP id 36so837791wwa.1
+        for <git@vger.kernel.org>; Wed, 20 Apr 2011 05:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UCcwSR2KdCGxlXdp9etg2uJkOEDFhWEtdtXVUaHi5B0=;
+        b=ayrRTUi/ZxhjQJOa/7FaFT0rcGu8r17QR9b7qq5Y6RC6gBmcpYc8Q9XY28is7t8Qgu
+         574eniVCA5YAKRX5kFdqE0TJ5JK5AvtX/l+6mWTRgAI6tbE+uKsaAWBxQX+GsRd6D02x
+         bFQlpiF/4mLLJVSofQoyOR1QPfU3lXlt93lSk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XfQvGhCqP8Pm5VjpcRMy1/iureExU2Kop0WAeQM35OVkBXjC5YOix+giN/JVpnJSIy
+         trjmTmEBt2h6dOMC3cfdF+5WcSpZO+ttEPlCjFi9su0wPGDTSATS5Ybrae6FH1PCODJk
+         SXEmwp2h4K3x82sat349rcOZaHEdHrZp0+ioI=
+Received: by 10.216.123.74 with SMTP id u52mr7101347weh.24.1303303984143; Wed,
+ 20 Apr 2011 05:53:04 -0700 (PDT)
+Received: by 10.216.89.76 with HTTP; Wed, 20 Apr 2011 05:53:03 -0700 (PDT)
+In-Reply-To: <BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171862>
 
-Is it the case that format-patch will always emit text with LF line
-endings, or is it respecting whatever the host platform considers to be
-the proper line ending? Is the line ending in use configurable?
+Hi,
 
-I ask because I see that git-p4 uses format-patch and apply internally
-to apply changes against files in the Perforce workspace, and those
-files have CRLF line endings, but it looks like format-patch is emitting
-patches with LF line endings, and none of those patches will apply
-cleanly.
+I have no idea what the problem could be, but maybe I will be lucky
+with my suggestions.
 
-Perhaps I just need to pipe the output from format-patch through
-unix2dos before feeding it to apply, but I'm wondering whether I'm
-barking up the wrong tree here.
+On Fri, Apr 15, 2011 at 6:54 PM, Seth Jennings <spartacus06@gmail.com> =
+wrote:
+> There is a git-daemon segfault issue that seems to be specific to AIX=
+=2E
+>
+> Whenever a remote user pulls or clones, the operation succeeds but
+> git-daemon crashes immediately afterward.
+>
+> $ gdb git-daemon core
+> ...
+> Core was generated by `git-daemon'.
+> Program terminated with signal 11, Segmentation fault.
+> #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xp=
+g5.o)
+> (gdb) where
+> #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_xp=
+g5.o)
+> #1 =A00xd04f1874 in _p_sigaction () from /usr/lib/libpthreads.a(shr_x=
+pg5.o)
+> #2 =A00xd013ae34 in sigaction () from /usr/lib/libc.a(shr.o)
+> #3 =A00xd0217cd8 in signal () from /usr/lib/libc.a(shr.o)
 
--- 
-Steven E. Harris
+signal() is calling sigaction() so sigaction() must be called with
+different parameters in your patch and when it crashes.
+Could you have a look at the difference between parameters?
+
+> #4 =A00x10000b90 in child_handler (signo=3D0) at daemon.c:718
+> #5 =A0<signal handler called>
+>
+> Through experimentation, I found that using sigaction() instead of
+> signal() resolves the issue. =A0I'm not entirely sure why this is.
+>
+> Any feedback about the issue or the patch is welcome. =A0There might =
+be
+> a better solution.
+>
+> On Fri, Apr 15, 2011 at 11:51 AM, Seth Jennings <spartacus06@gmail.co=
+m> wrote:
+>> This issue seems to be specific to git-daemon on AIX built with xlc.
+>> After commit 695605b5080e1957bd9dab1fed35a7fee9814297 (from Aug 2008=
+),
+>> git-daemon segfaults in child_handler() inside the signal() syscall
+>> immediately after any remote clone/pull operation.
+
+Could you try some variants that revert or change parts of this commit?
+
+=46or example you could revert only this hunk:
+
+@@ -1036,11 +1032,6 @@ int main(int argc, char **argv)
+        gid_t gid =3D 0;
+        int i;
+
+-       /* Without this we cannot rely on waitpid() to tell
+-        * what happened to our children.
+-        */
+-       signal(SIGCHLD, SIG_DFL);
+-
+        for (i =3D 1; i < argc; i++) {
+                char *arg =3D argv[i];
+
+
+>>=A0While it is not
+>> fully understood why this happens, changing signal() to sigaction()
+>> resolves the issue.
+
+Yeah but it would be nice to understand.
+
+Thanks in advance,
+Christian.
