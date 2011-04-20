@@ -1,96 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Gitweb != HTTP back-end {Was: Re: The future of gitweb - part 2: JavaScript}
-Date: Wed, 20 Apr 2011 20:47:28 +0200
-Message-ID: <201104202047.29401.jnareb@gmail.com>
-References: <201102142039.59416.jnareb@gmail.com> <201104171211.14118.jnareb@gmail.com> <1303323892.20895.22.camel@drew-northup.unet.maine.edu>
+From: Joe Perches <joe@perches.com>
+Subject: Re: problem when using --cc-cmd
+Date: Wed, 20 Apr 2011 12:48:20 -0700
+Message-ID: <1303328900.24766.29.camel@Joe-Laptop>
+References: <BANLkTikdaSG_jbzaJ7UCpG5JnwneARfx3Q@mail.gmail.com>
+	 <20110419215239.GA22632@elie> <1303268630.24766.9.camel@Joe-Laptop>
+	 <BANLkTinfbF3xyfrdgfmgHQF7RHCHk8ardw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Peter Vereshagin <peter@vereshagin.org>, git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 20 20:47:47 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 21:48:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCcRE-0005Gx-5h
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 20:47:44 +0200
+	id 1QCdNz-0002Lj-7p
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 21:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754100Ab1DTSrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 14:47:39 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37357 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976Ab1DTSri (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 14:47:38 -0400
-Received: by fxm17 with SMTP id 17so570405fxm.19
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 11:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=VSlcZqYyNTEu1EHl/C64yov1xzaUrc+viGn0hYkVlng=;
-        b=saR0e2ntb3/+sTZtsqbXsAPQNApFeucQVCo2KFT8l0PZVmCtqj0+untaqEGWzrMfj6
-         LKfA2eAp3kbPjZjfBZXmssisiF5As7S6gX7FblEhjmfJYlB5hW0jo5DQQRL1uthHFhpe
-         pB+p8gF0glubBXmaGZo13EfGmE/z8fYCp1iz8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=qnhXkvgMzVY+TL2ByooclUarEADkUHju8Bi0qmT0bi6AOwGum1IaqwzDDik3UfF731
-         7pxIFyt0zKDpDskZQm6kH1X/4Swpli39+McgHZmDmeK0CRTbZuiH3JkdjnhPf9TI5C2j
-         4KdiD08+dMilpy+wWrgn2cgs9gfaT1u+34bCk=
-Received: by 10.223.76.129 with SMTP id c1mr2443555fak.107.1303325257527;
-        Wed, 20 Apr 2011 11:47:37 -0700 (PDT)
-Received: from [192.168.1.13] (aeho232.neoplus.adsl.tpnet.pl [79.186.196.232])
-        by mx.google.com with ESMTPS id 23sm370431fay.4.2011.04.20.11.47.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 20 Apr 2011 11:47:35 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1303323892.20895.22.camel@drew-northup.unet.maine.edu>
-Content-Disposition: inline
+	id S1755671Ab1DTTsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 15:48:21 -0400
+Received: from mail.perches.com ([173.55.12.10]:4853 "EHLO mail.perches.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753441Ab1DTTsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 15:48:21 -0400
+Received: from [192.168.1.162] (unknown [192.168.1.162])
+	by mail.perches.com (Postfix) with ESMTP id 4DEA024368;
+	Wed, 20 Apr 2011 12:48:20 -0700 (PDT)
+In-Reply-To: <BANLkTinfbF3xyfrdgfmgHQF7RHCHk8ardw@mail.gmail.com>
+X-Mailer: Evolution 2.32.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171874>
 
-On Wed, 20 Apr 2011, Drew Northup wrote:
-> On Sun, 2011-04-17 at 12:11 +0200, Jakub Narebski wrote:
->> On Sun, 17 Apr 2011, Peter Vereshagin wrote:
->>> 2011/04/17 00:19:07 +0200 Jakub Narebski <jnareb@gmail.com> => To Peter Vereshagin :
- 
->>> JN> Fetching and pushing via HTTP is not web interface, is HTTP _transport_.
->>> 
->>> But HTTP is an application protocol, not a transport protocol.
-> 
-> Forgive me, but this is seriously off-base. 
-> HTTP := Hyper-Text Transport Protocol. 
->
-> It is a generic, stateless, way of moving text (Base-64 encoded for
-> binary data) over the wire. Sure, the ISO/OSI model may classify it as
-> an "application," but that term does not mean the same thing in all
-> contexts. As far as Git is concerned it is a transport; as far as the
-> ISO/OSI model of networking is concerned it is an application. We aren't
-> talking here about the latter.
- 
-Note that it is the same relation as Git has with SSH: for Git it is
-(statefull and binary-safe, and authenthicated and encrypted) way
-of transporting data.
+On Wed, 2011-04-20 at 12:45 -0300, Thiago Farina wrote:
+> On Wed, Apr 20, 2011 at 12:03 AM, Joe Perches <joe@perches.com> wrote:
+> > On Tue, 2011-04-19 at 16:52 -0500, Jonathan Nieder wrote:
+> >> Thiago Farina wrote:
+> >> > when I run:
+> >> > $ git send-email --to linux-kernel@vger.kernel.org --cc-cmd
+> >> > scripts/get_maintainer.pl foo
+> >> > I'm getting some lines like:
+> >> > Use of uninitialized value $cc in string eq at
+> >> > /home/tfarina/libexec/git-core/git-send-email line 964.
+> >> Yes, sounds like a bug.  Cc-ing some send-email people for tips.
+> > I haven't seen this.
+> > What versions of ./scripts/get_maintainer.pl and git are
+> > you using?
+> $ scripts/get_maintainer.pl --version
+> scripts/get_maintainer.pl 0.26
+> $ git version
+> git version 1.7.5.rc2.5.g60e19
 
->> 
->> Fetching via "smart" HTTP protocol is actually git-over-http, with
->> some extra work due to the fact that HTTP is stateless.
-> 
-> ...and Base-64 encoded, and chunked, and so on...
+To get this to work properly, the output of cc-cmd
+(scripts/get_maintainer.pl) must be valid email addresses.
 
-But with git-http-backend being a CGI script, this is what web server
-does; git doesn't need to worry about it, but it has to worry about
-HTTP being stateless.
+The git send-email --help for cc-cmd says:
 
--- 
-Jakub Narebski
-Poland
+       --cc-cmd=<command>
+           Specify a command to execute once per patch file which should
+           generate patch file specific "Cc:" entries. Output of this command
+           must be single email address per line. Default is the value of
+           sendemail.cccmd configuration value.
+
+You'll need to add "--norolestats" to the cc-cmd if
+you use scripts/get_maintainer.pl.
+
+$ git send-email --to linux-kernel@vger.kernel.org \
+	--cc-cmd "scripts/get_maintainer.pl --norolestats" foo
+
+I suppose you could call it a defect that the
+output of cc-cmd isn't screened for invalid
+email addresses but I think it's not really a
+problem.
