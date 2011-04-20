@@ -1,94 +1,107 @@
 From: Drew Northup <drew.northup@maine.edu>
-Subject: Gitweb != HTTP back-end {Was: Re: The future of gitweb - part 2:
-	JavaScript}
-Date: Wed, 20 Apr 2011 14:24:52 -0400
-Message-ID: <1303323892.20895.22.camel@drew-northup.unet.maine.edu>
+Subject: Re: The future of gitweb - part 2: JavaScript
+Date: Wed, 20 Apr 2011 14:39:24 -0400
+Message-ID: <1303324764.20895.35.camel@drew-northup.unet.maine.edu>
 References: <201102142039.59416.jnareb@gmail.com>
-	 <201104170019.07997.jnareb@gmail.com>
-	 <20110416225729.GB5739@external.screwed.box>
-	 <201104171211.14118.jnareb@gmail.com>
+	 <201104141154.55078.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Peter Vereshagin <peter@vereshagin.org>
-X-From: git-owner@vger.kernel.org Wed Apr 20 20:25:56 2011
+Cc: git@vger.kernel.org, John Hawley <warthog9@kernel.org>,
+	Kevin Cernekee <cernekee@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, Petr Baudis <pasky@ucw.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 20:41:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCc67-00059z-Py
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 20:25:56 +0200
+	id 1QCcLa-0000gs-Hs
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 20:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752413Ab1DTSZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 14:25:50 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:45509 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751847Ab1DTSZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 14:25:49 -0400
+	id S1755495Ab1DTSll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 14:41:41 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:39154 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755147Ab1DTSli (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 14:41:38 -0400
 Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3KIOvIG001533
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3KIdT4e020070
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 20 Apr 2011 14:24:57 -0400
-In-Reply-To: <201104171211.14118.jnareb@gmail.com>
+	Wed, 20 Apr 2011 14:39:34 -0400
+In-Reply-To: <201104141154.55078.jnareb@gmail.com>
 X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
-	Fuz2=3
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=6
+	Fuz1=6 Fuz2=6
 X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p3KIOvIG001533
+X-UmaineSystem-MailScanner-ID: p3KIdT4e020070
 X-MailScanner: Found to be clean
 X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1303928714.48419@wIYLxP2B6o5cLHgASUianw
+X-UmaineSystem-MailScanner-Watermark: 1303929613.8079@NebEqWH4yPfd5k43jRDDLw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171871>
 
 
-On Sun, 2011-04-17 at 12:11 +0200, Jakub Narebski wrote:
-> On Sun, 17 Apr 2011, Peter Vereshagin wrote:
-> > 2011/04/17 00:19:07 +0200 Jakub Narebski <jnareb@gmail.com> => To Peter Vereshagin :
+On Thu, 2011-04-14 at 11:54 +0200, Jakub Narebski wrote:
 
-> > JN> > - the routing of the request, the deciding what to do with the particular
-> > JN> >   HTTP request, becomes more obfuscated. First, web server decides what CGI
-> > JN> >   should approve it. Plus two more decision makers are those 2 CGI, all different.
-> > JN> > 
-> > JN> > It's just why I never supposed git to have 2 different native web interfaces,
-> > JN> > especially in sight of plumbing vs porcelain contrast in cli, sorry for
-> > JN> > confusion.
-> > JN> 
-> > JN> Those are not two _web interfaces_.  Gitweb is one of web interfaces
-> > JN> to git repositories; more at
-> > JN>   https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Web_Interfaces
-> > JN> 
-> > JN> Fetching and pushing via HTTP is not web interface, is HTTP _transport_.
-> > 
-> > But HTTP is an application protocol, not a transport protocol.
-
-Forgive me, but this is seriously off-base. 
-HTTP := Hyper-Text Transport Protocol. 
-It is a generic, stateless, way of moving text (Base-64 encoded for
-binary data) over the wire. Sure, the ISO/OSI model may classify it as
-an "application," but that term does not mean the same thing in all
-contexts. As far as Git is concerned it is a transport; as far as the
-ISO/OSI model of networking is concerned it is an application. We aren't
-talking here about the latter.
-Or perhaps you are confusing an HTTP-speaking "application" (Gitweb) and
-the Git-over-HTTP back-end. They do not have the same purpose. As far as
-I'm aware only the "cgit" web interface supports the Git-over-HTTP
-"client" directly (and only the dumb one apparently). This may be what
-has you confused.
-
+> * incremental blame (Ajax-y, requires server side knowing above)
+> * setting local timezone in which dates are shown
 > 
-> Fetching via "smart" HTTP protocol is actually git-over-http, with
-> some extra work due to the fact that HTTP is stateless.
+> Possible other JavaScript-based enhancements include:
+> * sorting tables like in Wikipedia, avoiding trip to server
+> * MediaWiki-like history view for selecting commits to compare
+>   (base does not exist yet, and could be used without JavaScript)
 
-...and Base-64 encoded, and chunked, and so on...
+> First issue is which JavaScript framework or library to use:
+> * jQuery (lightweight, most popular, used e.g. by MediaWiki)
+> * MooTools (lightweight, 2nd most popular, opbject-oriented)
+> * YUI, The Yahoo! User Interface Library 
+> * other: Prototype, Dojo, ExtJS, SproutCore,...
+> 
+> 
+> Second issue is how to use it / how to include it:
+> 
+> * Use some external Content Delivery Network (CDN), like 
+>   Google Libraries API 
 
-None of this has anything to do with Javascript.
+> * Mark appropriate JavaScript library as dependency in gitweb/INSTALL
+>   to be downloaded in appropriate place but do not provide sources.
+>   Perhaps add target in gitweb/Makefile that automatically downloads
+>   it.
 
+> * Provide copy in git sources (in git.git repository), minified or
+>   development version or both.  This would bloat git repository a bit,
+>   and we would probably want/have to update library at its releases.
+
+> * Instead of including source code or build (minified) version in git
+>   repository, we could include JavaScript library as a _submodule_.
+
+> * WordPress (jQuery)::
+> 
+>     jQuery (development version) is in wp-includes/js/jquery/*
+>     in wordpress RPM
+
+> So what are your ideas and comments on the issue of JavaScript code
+> and JavaScript libraries / frameworks in gitweb?
+
+I would like to note that we are going to have to stick with a specific
+version of whatever we end up using during a release/bugfix family. A
+failure to do this has led to numerous headaches over in WordPress land.
+Some theme designers were going out on a limb and overriding the version
+of jQuery that WordPress itself includes (sometimes with a newer one,
+sometimes with an older one). The substitution led to a lot of
+brokenness all over the place. It apparently isn't that easy to debug
+either.
+If we do not insist on lockstep updating of our use of a JS library
+we're probably just as well off not using one at all. The easiest way is
+to distribute it with the sources, but it may not be the best.
+Also, we are under no obligation to stay bleeding edge with whatever JS
+library we choose. This is a good thing as we don't need the random
+breakage that a "flavor of the month" updating policy would cause.
 -- 
 -Drew Northup
 ________________________________________________
