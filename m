@@ -1,89 +1,152 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] log: convert to parse-options
-Date: Wed, 20 Apr 2011 16:51:20 +0200
-Message-ID: <20110420145120.GC5236@bee.lab.cmartin.tk>
-References: <7v7hawiww7.fsf@alter.siamese.dyndns.org>
- <20110419123325.GA10814@bee.lab.cmartin.tk>
- <20110420023817.GA14201@sigill.intra.peff.net>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: problem when using --cc-cmd
+Date: Wed, 20 Apr 2011 12:45:47 -0300
+Message-ID: <BANLkTinfbF3xyfrdgfmgHQF7RHCHk8ardw@mail.gmail.com>
+References: <BANLkTikdaSG_jbzaJ7UCpG5JnwneARfx3Q@mail.gmail.com>
+	<20110419215239.GA22632@elie>
+	<1303268630.24766.9.camel@Joe-Laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 16:51:30 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 17:46:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCYkb-0002jp-8h
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 16:51:29 +0200
+	id 1QCZbP-0005eh-MY
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 17:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238Ab1DTOvY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2011 10:51:24 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:48047 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751020Ab1DTOvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 10:51:23 -0400
-Received: from bee.lab.cmartin.tk (z39c5.pia.fu-berlin.de [87.77.57.197])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id A210546132;
-	Wed, 20 Apr 2011 16:51:06 +0200 (CEST)
-Received: (nullmailer pid 18644 invoked by uid 1000);
-	Wed, 20 Apr 2011 14:51:20 -0000
-Content-Disposition: inline
-In-Reply-To: <20110420023817.GA14201@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755273Ab1DTPpu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2011 11:45:50 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:57551 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755242Ab1DTPps convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2011 11:45:48 -0400
+Received: by wya21 with SMTP id 21so722059wya.19
+        for <git@vger.kernel.org>; Wed, 20 Apr 2011 08:45:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4NDmAdir+l6xHBfmctjYRSq5SIdRniq/Icaa5b/Q6HY=;
+        b=q6vkaQUGrQcLPZhDM/C2BVXnP6kNFq5T8+DxIJ51t1ldnKTNOW+oxwm/pOJXyI4HhS
+         1bLRz5tOPLqykYBybqZrZf8MahOYzJOS540WdPshe2fbBTiaDgInVuphaPu5nxhO60KY
+         +KYF2PWexru3odcJki1KmtF53x+a+hXanj3bE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=b+Vte8HiMqkjF0/7xEoZafpM8owxrhPmty4+YpJAVWDl6QWaP2zssoiXK2SG9hYhnh
+         J4PD4BC/lDy+9I3oAT+146IwYEx46sSN2q9TZMp883bXHconALXOTYs46ilRkGEJyidA
+         fbwV1O6hQM/YBs6Pe59ZnbAJzM8FG2YD8djr0=
+Received: by 10.216.188.20 with SMTP id z20mr2833372wem.66.1303314347607; Wed,
+ 20 Apr 2011 08:45:47 -0700 (PDT)
+Received: by 10.216.175.73 with HTTP; Wed, 20 Apr 2011 08:45:47 -0700 (PDT)
+In-Reply-To: <1303268630.24766.9.camel@Joe-Laptop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171868>
 
-On Tue, Apr 19, 2011 at 10:38:17PM -0400, Jeff King wrote:
-> On Tue, Apr 19, 2011 at 02:33:31PM +0200, =3D?UTF-8?q?Carlos=3D20Mart=
-=3DC3=3DADn=3D20Nieto?=3D wrote:
->=20
-> > Signed-off-by: Carlos Mart=EDn Nieto <cmn@elego.de>
->=20
-> This is not about your patch at all, but rather that I notice in your
-> "From" header that your name is doubly rfc2047-encoded. It looks like
-> this:
->=20
->   From: =3D?us-ascii?B?PT9VVEYtOD9xP0Nhcmxvcz0yME1hcnQ9QzM9QURuPTIwTm=
-lldG8/?=3D
->     =3D?us-ascii?Q?=3D3D?=3D <cmn@elego.de>
->=20
-> which decodes to the literal string:
->=20
->   =3D?UTF-8?q?Carlos=3D20Mart=3DC3=3DADn=3D20Nieto?=3D
->=20
-> which in turn decodes again to your proper name.
->=20
+On Wed, Apr 20, 2011 at 12:03 AM, Joe Perches <joe@perches.com> wrote:
+> On Tue, 2011-04-19 at 16:52 -0500, Jonathan Nieder wrote:
+>> Thiago Farina wrote:
+>> > when I run:
+>> > $ git send-email --to linux-kernel@vger.kernel.org --cc-cmd
+>> > scripts/get_maintainer.pl foo
+>> > I'm getting some lines like:
+>> > Use of uninitialized value $cc in string eq at
+>> > /home/tfarina/libexec/git-core/git-send-email line 964.
+>> Yes, sounds like a bug. =C2=A0Cc-ing some send-email people for tips=
+=2E
+>
+> I haven't seen this.
+>
+> What versions of ./scripts/get_maintainer.pl and git are
+> you using?
+>
 
-Ah, so that's what been going on.
+$ scripts/get_maintainer.pl --version
+scripts/get_maintainer.pl 0.26
 
-> We made some changes to format-patch's quoting recently, and I want t=
-o
-> make sure this is not a regression. Can you describe your workflow fo=
-r
-> sending these patches? What I think probably happened is:
->=20
->   1. format-patch encoded your name because of the non-ascii characte=
-rs
->=20
->   2. the result was fed literally into mutt via cut-and-paste or
->      otherwise pulled into the editor, rather than "mutt -f patch-fil=
-e".
->=20
-> Which is not a regression, but just an annoying behavior that has bee=
-n
-> there for a while[1]. But I wanted to double-check.
+$ git version
+git version 1.7.5.rc2.5.g60e19
 
-As I was only sending one patch, I did what the intertubes suggested
-and used "mutt -H patch-file" which I guess that's the problem. I only
-noticed this because someone mentioned it, after I sent another patch.
+>> On the other hand, using --cc-cmd=3Dscripts/get_maintainer.pl does n=
+ot
+>> sound like a great idea to me. =C2=A0On one hand the output of
+>> get_maintainer.pl is not an unadorned address per line like --cc-cmd
+>> expects. =C2=A0On the other hand, at least some versions of
+>> get_maintainer.pl returned more addresses than are likely to be
+>> interested people (by using --git by default).
+>>
+>> I think get_maintainer.pl is meant to be a starting point for tracki=
+ng
+>> down who might be interested in a patch and should be followed by
+>> careful investigation. =C2=A0(That means making sure that there is a
+>> reasonable number of people and the reasons given by --roles ouput
+>> make sense, and maybe even glancing at some messages by them from th=
+e
+>> relevant mailing list to make sure the script has not gone haywire.)
+>
+> Jonathan is basically correct in the what he writes above.
+>
+> I also think git history isn't a very good mechanism to
+> rely on for determining MAINTAINERS, it should only be a
+> fallback to determine who should receive a copy of a patch.
+>
+> That said, I use scripts/get_maintainer.pl to generate
+> to's and cc's. =C2=A0I do not use --git or --git-fallback
+> and rely only on the MAINTAINERS file pattern matching.
+>
+> Here are the settings I use:
+>
+Cool, thanks for sharing it. I'll add that to my config file.
 
-So no regression, and a --leave-utf8-alone option would be useful here.
-
-Cheers,
-   cmn
+> $ cat ~/.gitconfig
+> [sendemail]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0chainreplyto =3D false
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0thread =3D false
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0suppresscc =3D self
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tocmd =3D ~/bin/to.sh
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0cccmd =3D ~/bin/cc.sh
+>
+> $ cat ~/bin/to.sh
+> #!/bin/bash
+>
+> opts=3D"--nogit --nogit-fallback --norolestats --pattern-depth=3D1"
+>
+> if [[ $(basename $1) =3D~ ^0000- ]] ; then
+> =C2=A0 =C2=A0./scripts/get_maintainer.pl --nom $opts $(dirname $1)/*
+> else
+> =C2=A0 =C2=A0maint=3D$(./scripts/get_maintainer.pl --nol $opts $1)
+>
+> =C2=A0 =C2=A0if [ "$maint" =3D=3D "" ] ; then
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "linux-kernel@vger.kernel.org"
+> =C2=A0 =C2=A0else
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "$maint"
+> =C2=A0 =C2=A0fi
+> fi
+>
+> $ cat ~/bin/cc.sh
+> #!/bin/bash
+>
+> opts=3D"--nogit --nogit-fallback --norolestats"
+>
+> if [[ $(basename $1) =3D~ ^0000- ]] ; then
+> =C2=A0 =C2=A0./scripts/get_maintainer.pl --nom $opts $(dirname $1)/*
+> else
+> =C2=A0 =C2=A0./scripts/get_maintainer.pl $opts $1
+> fi
+>
+>
+>
+>
