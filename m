@@ -1,109 +1,64 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] date: avoid "X years, 12 months" in relative dates
-Date: Wed, 20 Apr 2011 11:12:11 +0200
-Message-ID: <1d0633318ffc778dfcc1c32ecf80fca0327349d6.1303290693.git.git@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] date: avoid "X years, 12 months" in relative dates
+Date: Wed, 20 Apr 2011 06:18:00 -0400
+Message-ID: <20110420101800.GA24035@sigill.intra.peff.net>
 References: <20110420052435.GA28597@sigill.intra.peff.net>
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 11:12:25 2011
+ <1d0633318ffc778dfcc1c32ecf80fca0327349d6.1303290693.git.git@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 12:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCTSP-0005cf-L1
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 11:12:21 +0200
+	id 1QCUUA-00013U-Jj
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 12:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400Ab1DTJMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 05:12:15 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:48228 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752762Ab1DTJMN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2011 05:12:13 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 6662820CB2;
-	Wed, 20 Apr 2011 05:12:13 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 20 Apr 2011 05:12:13 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=s7iUM7ZSvCTf5bBkHAuy/sUAzSQ=; b=JgAB7d/IKKyGXVP6kXf7dVet19A0tO1XnSkFnm5kvhvX7B+fyKtd9BIxQmfCqsOBQtDNrajjtqzKscwm2eqW9Dg4t5FdrYlaG1LPOpT//G2lc76oaqBhsmdA8slgiW0UVmPSvvE043OG0xyZa7sTgNFyuuN6TlRHvmRKO/34/+A=
-X-Sasl-enc: nm4YoSEX/QJoU5ozXPljykfHB8WoD40/6C9PSaq7j1V6 1303290732
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B2C5A40EA7F;
-	Wed, 20 Apr 2011 05:12:12 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.rc1.312.g1936c
-In-Reply-To: <20110420052435.GA28597@sigill.intra.peff.net>
+	id S1753923Ab1DTKSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 06:18:07 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45388
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753717Ab1DTKSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 06:18:06 -0400
+Received: (qmail 3149 invoked by uid 107); 20 Apr 2011 10:19:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Apr 2011 06:19:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2011 06:18:00 -0400
+Content-Disposition: inline
+In-Reply-To: <1d0633318ffc778dfcc1c32ecf80fca0327349d6.1303290693.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171854>
 
-When relative dates are more than about a year ago, we start
-writing them as "Y years, M months".  At the point where we
-calculate Y and M, we have the time delta specified as a
-number of days. We calculate these integers as:
+On Wed, Apr 20, 2011 at 11:12:11AM +0200, Michael J Gruber wrote:
 
-  Y = days / 365
-  M = (days % 365 + 15) / 30
+> Implement this differently with months of size
+> 
+>   onemonth = 365/12
+> 
+> so that
+> 
+>   totalmonths = (long)( (days + onemonth/2)/onemonth )
+>   years = totalmonths / 12
+>   months = totalmonths % 12
+> 
+> In order to do this without floats, we write the first formula as
+> 
+>   totalmonths = (days*12*2 + 365) / (365*2)
 
-This rounds days in the latter half of a month up to the
-nearest month, so that day 16 is "1 month" (or day 381 is "1
-year, 1 month").
+Well now I feel like an idiot. Algebra to the rescue.
 
-We don't round the year at all, though, meaning we can end
-up with "1 year, 12 months", which is silly; it should just
-be "2 years".
+The extra multiplications introduce the possibility of overflow, but
+since the number of days was arrived at by dividing an unsigned long
+number of seconds by 86400, we are guaranteed to have room to multiply
+by 24. :)
 
-Implement this differently with months of size
+So looks good to me.
 
-  onemonth = 365/12
-
-so that
-
-  totalmonths = (long)( (days + onemonth/2)/onemonth )
-  years = totalmonths / 12
-  months = totalmonths % 12
-
-In order to do this without floats, we write the first formula as
-
-  totalmonths = (days*12*2 + 365) / (365*2)
-
-Tests and inspiration by Jeff King.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- date.c          |    5 +++--
- t/t0006-date.sh |    1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/date.c b/date.c
-index 00f9eb5..cde239c 100644
---- a/date.c
-+++ b/date.c
-@@ -129,8 +129,9 @@ const char *show_date_relative(unsigned long time, int tz,
- 	}
- 	/* Give years and months for 5 years or so */
- 	if (diff < 1825) {
--		unsigned long years = diff / 365;
--		unsigned long months = (diff % 365 + 15) / 30;
-+		unsigned long totalmonths = (diff*12*2 + 365)/(365*2);
-+		unsigned long years = totalmonths / 12;
-+		unsigned long months = totalmonths % 12;
- 		int n;
- 		n = snprintf(timebuf, timebuf_size, "%lu year%s",
- 				years, (years > 1 ? "s" : ""));
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 1d4d0a5..f87abb5 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -25,6 +25,7 @@ check_show 37500000 '1 year, 2 months ago'
- check_show 55188000 '1 year, 9 months ago'
- check_show 630000000 '20 years ago'
- check_show 31449600 '12 months ago'
-+check_show 62985600 '2 years ago'
- 
- check_parse() {
- 	echo "$1 -> $2" >expect
--- 
-1.7.5.rc1.312.g1936c
+-Peff
