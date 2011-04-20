@@ -1,64 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] date: avoid "X years, 12 months" in relative dates
-Date: Wed, 20 Apr 2011 06:18:00 -0400
-Message-ID: <20110420101800.GA24035@sigill.intra.peff.net>
-References: <20110420052435.GA28597@sigill.intra.peff.net>
- <1d0633318ffc778dfcc1c32ecf80fca0327349d6.1303290693.git.git@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2 0/2] Re: run-command: write full error message in die_child
+Date: Wed, 20 Apr 2011 05:33:19 -0500
+Message-ID: <20110420103319.GA6027@elie>
+References: <7v8vv78eld.fsf@alter.siamese.dyndns.org>
+ <7v4o5v8dlp.fsf@alter.siamese.dyndns.org>
+ <20110419070510.GB28291@elie>
+ <4DAE8E66.5060705@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 12:18:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 12:33:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCUUA-00013U-Jj
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 12:18:14 +0200
+	id 1QCUj1-0001KZ-E9
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 12:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753923Ab1DTKSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 06:18:07 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45388
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753717Ab1DTKSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 06:18:06 -0400
-Received: (qmail 3149 invoked by uid 107); 20 Apr 2011 10:19:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Apr 2011 06:19:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2011 06:18:00 -0400
+	id S1753235Ab1DTKd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 06:33:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42261 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752095Ab1DTKd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 06:33:27 -0400
+Received: by iwn34 with SMTP id 34so481939iwn.19
+        for <git@vger.kernel.org>; Wed, 20 Apr 2011 03:33:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=el3A5xgeAP+JsBYSHdJHIrfk8xaNy9396bCm2uLudcQ=;
+        b=xqa+2dfbkEqZQqSGZEMJ7C17S1LfNv4vLfrxX+hPtJOXVxDB0+eraaZS4h23iwOOlx
+         83/1swMWhTLde4BuzOqRVYvChYcRPMdxdBHDTzYAhMUxD/893LkyGRGTQO0ZqDURMWZF
+         CjwMgA44WXbDcxxqqSfhYelD5mpe08dZTcJCE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tDfibtec6G60+1gzh/N7hjCMiaI0WrhsVrP6Q4bOKy73oCR0h4Slckaih9rCC/3nqs
+         tyyQT5J6L+AzlfDNYf8lzp5/BH4OXChltSVDZi3zFEcUGR4lgtkET1h/HGL9DhkuQS6q
+         kn+Q4BX7XKIgi8lDSGSSN39MXdBrFCskic7V0=
+Received: by 10.42.155.73 with SMTP id t9mr244659icw.456.1303295606371;
+        Wed, 20 Apr 2011 03:33:26 -0700 (PDT)
+Received: from elie (adsl-69-209-64-141.dsl.chcgil.ameritech.net [69.209.64.141])
+        by mx.google.com with ESMTPS id vr5sm295467icb.12.2011.04.20.03.33.23
+        (version=SSLv3 cipher=OTHER);
+        Wed, 20 Apr 2011 03:33:24 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1d0633318ffc778dfcc1c32ecf80fca0327349d6.1303290693.git.git@drmicha.warpmail.net>
+In-Reply-To: <4DAE8E66.5060705@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171855>
 
-On Wed, Apr 20, 2011 at 11:12:11AM +0200, Michael J Gruber wrote:
+Johannes Sixt wrote:
 
-> Implement this differently with months of size
-> 
->   onemonth = 365/12
-> 
-> so that
-> 
->   totalmonths = (long)( (days + onemonth/2)/onemonth )
->   years = totalmonths / 12
->   months = totalmonths % 12
-> 
-> In order to do this without floats, we write the first formula as
-> 
->   totalmonths = (days*12*2 + 365) / (365*2)
+> Unfortunately, on Windows, the bash spawnd by git converts LF to CRLF...
+[...]
+> ... therefore, we fail here. Can we have this squashed in, because 'cat'
+> leaves LFs alone?
 
-Well now I feel like an idiot. Algebra to the rescue.
+Thanks for catching this...
 
-The extra multiplications introduce the possibility of overflow, but
-since the number of days was arrived at by dividing an unsigned long
-number of seconds by 86400, we are guaranteed to have room to multiply
-by 24. :)
+[...]
+> I did not check whether
+> SANITY is really needed; I trust you did.
 
-So looks good to me.
+... and this.  No, SANITY is not needed.
 
--Peff
+Here's a reroll, on top of v1.7.5-rc3~2 (Revert "run-command: prettify
+-D_FORTIFY_SOURCE workaround", 2011-04-18).  It even applies on maint
+this way (not that anyone would need that :)).
+
+Jonathan Nieder (2):
+  tests: check error message from run_command
+  run-command: handle short writes and EINTR in die_child
+
+ run-command.c          |   15 +++++++++------
+ t/t0061-run-command.sh |   23 +++++++++++++++++++++++
+ test-run-command.c     |    2 ++
+ 3 files changed, 34 insertions(+), 6 deletions(-)
