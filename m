@@ -1,103 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Cloning a remote tag without using git-fetch-pack directly?
-Date: Wed, 20 Apr 2011 02:40:17 -0500
-Message-ID: <20110420073955.GA809@elie>
-References: <20110419222050.GA3304@feather>
- <20110420062653.GE28597@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] run-command: write full error message in die_child
+Date: Wed, 20 Apr 2011 09:42:30 +0200
+Message-ID: <4DAE8E66.5060705@viscovery.net>
+References: <7v8vv78eld.fsf@alter.siamese.dyndns.org> <7v4o5v8dlp.fsf@alter.siamese.dyndns.org> <20110419070510.GB28291@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org,
-	Jamey Sharp <jamey@minilop.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 09:40:35 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 09:42:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCS1W-0006xK-0f
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:40:30 +0200
+	id 1QCS3b-00084b-Hv
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 09:42:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753981Ab1DTHkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 03:40:24 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37401 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753203Ab1DTHkY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 03:40:24 -0400
-Received: by iyb14 with SMTP id 14so392407iyb.19
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 00:40:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=31BlCH+8HWoHPi32jvY1PocjcOCeIuO2iH+pn5ikEg0=;
-        b=DGNuLMhJR+9MIMQfWssc5peVVhcTo9F0GOK0L2VbXYojjVx9KoiQHLi8LF54Tt/x/r
-         rtx+MWjMhf9i/zGnmyU5Cjlnpknn1De4I8cEViP6Wfb+gJBZE/HABHf03W8iQcsr0tYD
-         YlcPTLRYKh40IONAHTpuY8qOEHuFL8/CeJ6WA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UsZ4w0cbnhp4gqrq6kQ2AC+nQN9IEPfs6Y6qHjABSQLJ8+oQRd+CiHkn9BwGr3hGAn
-         bUPAV5wkZC5iDYRIoh1U14bALs+N05EpkK2SAEvLjy1pUN/PU5EFmnTncDadQNZo+uby
-         mMdoGEZjyk8uMiX0l0T1pI9z6KO8YDAr6BUEg=
-Received: by 10.42.147.199 with SMTP id o7mr244654icv.448.1303285223431;
-        Wed, 20 Apr 2011 00:40:23 -0700 (PDT)
-Received: from elie ([69.209.64.141])
-        by mx.google.com with ESMTPS id 13sm285500ibo.25.2011.04.20.00.40.21
-        (version=SSLv3 cipher=OTHER);
-        Wed, 20 Apr 2011 00:40:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110420062653.GE28597@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753910Ab1DTHme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 03:42:34 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:19739 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753530Ab1DTHmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 03:42:33 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QCS3S-0004CO-Hg; Wed, 20 Apr 2011 09:42:31 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 4B02B1660F;
+	Wed, 20 Apr 2011 09:42:30 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <20110419070510.GB28291@elie>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171851>
 
-Hi,
+Am 4/19/2011 9:05, schrieb Jonathan Nieder:
+> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+> index 10b26e4..be602fd 100755
+> --- a/t/t0061-run-command.sh
+> +++ b/t/t0061-run-command.sh
+> @@ -7,8 +7,32 @@ test_description='Test run command'
+>  
+>  . ./test-lib.sh
+>  
+> +cat >hello-script <<-EOF
+> +	#!$SHELL_PATH
+> +	echo hello
+> +EOF
+> +>empty
+> +
 
-Some quick additional thoughts.
+Unfortunately, on Windows, the bash spawnd by git converts LF to CRLF...
 
-Jeff King wrote:
+>  test_expect_success 'start_command reports ENOENT' '
+>  	test-run-command start-command-ENOENT ./does-not-exist
+>  '
+>  
+> +test_expect_success 'run_command can run a command' '
+> +	echo hello >expect &&
+> +	cat hello-script >hello.sh &&
+> +	chmod +x hello.sh &&
+> +	test-run-command run-command ./hello.sh >actual 2>err &&
+> +
+> +	test_cmp expect actual &&
 
-> To clone a subset of a repository, you have to do the init+fetch trick,
-> as you did above.  If you want the configuration set up by clone, you
-> can do that, too, with "git config". So the equivalent commands to the
-> clone you want are:
->
->   git init linux-2.6
->   cd linux-2.6
->   git config remote.origin.url /home/josh/src/linux-2.6
->   git config remote.origin.fetch refs/tags/v2.6.12
->   git fetch origin
+... therefore, we fail here. Can we have this squashed in, because 'cat'
+leaves LFs alone?
 
-Someone fetching v2.6.12 to build on it today is probably not planning
-to run "git fetch origin" to fetch the same tag tomorrow.  So
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index be602fd..979b478 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -9,7 +9,7 @@ test_description='Test run command'
+ 
+ cat >hello-script <<-EOF
+ 	#!$SHELL_PATH
+-	echo hello
++	cat hello-script
+ EOF
+ >empty
+ 
+@@ -18,12 +18,11 @@ test_expect_success 'start_command reports ENOENT' '
+ '
+ 
+ test_expect_success 'run_command can run a command' '
+-	echo hello >expect &&
+ 	cat hello-script >hello.sh &&
+ 	chmod +x hello.sh &&
+ 	test-run-command run-command ./hello.sh >actual 2>err &&
+ 
+-	test_cmp expect actual &&
++	test_cmp hello-script actual &&
+ 	test_cmp empty err
+ '
+ 
 
-	git init linux-2.6
-	cd linux-2.6
-	git remote add origin ~/src/linux-2.6
-	git fetch origin refs/tags/v2.6.12
 
-or even "...; git fetch ~/src/linux-2.6 refs/tags/v2.6.12" could be
-closer to what is needed.
+> +test_expect_success POSIXPERM,SANITY 'run_command reports EACCES' '
 
-If for some reason you do want to track how the remote v2.6.12 tag
-evolves, "git remote" has a funny way to do that:
+Thanks for this detail (POSIXPERM). It's required. I did not check whether
+SANITY is really needed; I trust you did.
 
-	git remote add --mirror=fetch -ttags/v2.6.12 origin ~/src/linux.2.6
-
-The documentation calls the argument to -t "<branch>", but in mirror
-mode it is actually a refspec relative to refs/.
-
-With luck (depending on what you are looking to do),
-git-new-workdir[1] or "git archive --remote" could also be helpful.
-
-Regards,
-Jonathan
-
-[1] with the usual avoidable caveats described at
-https://git.wiki.kernel.org/index.php/SoC2011Ideas#Multiple_work_trees
+-- Hannes
