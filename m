@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/2] tests: check error message from run_command
-Date: Wed, 20 Apr 2011 05:35:08 -0500
-Message-ID: <20110420103508.GB6027@elie>
+Subject: [PATCH 2/2] run-command: handle short writes and EINTR in die_child
+Date: Wed, 20 Apr 2011 05:40:05 -0500
+Message-ID: <20110420104005.GC6027@elie>
 References: <7v8vv78eld.fsf@alter.siamese.dyndns.org>
  <7v4o5v8dlp.fsf@alter.siamese.dyndns.org>
  <20110419070510.GB28291@elie>
@@ -12,45 +12,45 @@ Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 12:35:21 2011
+X-From: git-owner@vger.kernel.org Wed Apr 20 12:40:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCUki-0002LS-Ud
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 12:35:21 +0200
+	id 1QCUpc-00056x-06
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Apr 2011 12:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754151Ab1DTKfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 06:35:14 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:49597 "EHLO
+	id S1753700Ab1DTKkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 06:40:18 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:59965 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753983Ab1DTKfN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 06:35:13 -0400
-Received: by iwn34 with SMTP id 34so482901iwn.19
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 03:35:13 -0700 (PDT)
+	with ESMTP id S1752758Ab1DTKkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 06:40:17 -0400
+Received: by iwn34 with SMTP id 34so485541iwn.19
+        for <git@vger.kernel.org>; Wed, 20 Apr 2011 03:40:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=JK15jumOoZRMcp4qXtmdgQQz5l2JRVzlheqLY8idx9E=;
-        b=XyZPTKZs62LIS/2oyjb0vBYOsxj3lQz1EzEqfxImiGUw0R8vqsTdk9GPWGIJJdA3BQ
-         RVuQV/mApynpsbsaBX4izLjoT0XrSuP55Bia6/0WRTUDv3mfOH2v5Zeyv18MB5Ci7nCC
-         Q7AE0t1iJvHdRATNvn3qCuYsJ9F8xpRq1rT9s=
+        bh=m98r1xAfLUJsHk/IhMdDtLL+rc1XEMCrRS/glI4e/7M=;
+        b=tU5EC5N2398mAn9MoPZ0Z8olzkCS67BYuhSV0p3gghrq1GXI3Q6OHF9rhFI75+69oj
+         L3kaUE1aaDsC4jAS2iIs9snfWIfSwCmDbIa1CgI/Gq8+6P9hfRIljt0zC+fT3Jcwfmdm
+         J/RcwR1j+f7Nfx0eZ7+DUKtZ/ZwO3NsBnGYbk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=a/lJ7DWbbnMiXdZd0OYXcKNQbIXdoRA6hsU1yMFEilRbw3W22zGhkGhzvAgg4IaRug
-         7ISUGzO9iGZrZ5o8/R6X28/yqLrvtkFUnh06U/EZdDauywE4HjN+Pf67miDiHzzML5mb
-         4Qp6LSTnURrWPHBkz6Hski08QxCkLGXsW5tG8=
-Received: by 10.42.151.138 with SMTP id e10mr6609576icw.251.1303295712744;
-        Wed, 20 Apr 2011 03:35:12 -0700 (PDT)
+        b=YbnRBcXqVl+GYlalQpZ+h8AZ7lAhfTOoTFUL8MkgCmzS8fTsRERVxYq92USUK5U81s
+         O6iSNnRu0j6dX50ikvuCudziJ5f/wrxh+15reDifeNA0zfeawDEGlEM/sfsTLcB/Vdfe
+         HmEILDVCuGjH8BH2JM5Rnp6KmH3Ekwmpwi3AY=
+Received: by 10.43.65.75 with SMTP id xl11mr8924731icb.497.1303296016352;
+        Wed, 20 Apr 2011 03:40:16 -0700 (PDT)
 Received: from elie (adsl-69-209-64-141.dsl.chcgil.ameritech.net [69.209.64.141])
-        by mx.google.com with ESMTPS id d9sm330719ibb.19.2011.04.20.03.35.11
+        by mx.google.com with ESMTPS id xg14sm298542icb.7.2011.04.20.03.40.10
         (version=SSLv3 cipher=OTHER);
-        Wed, 20 Apr 2011 03:35:11 -0700 (PDT)
+        Wed, 20 Apr 2011 03:40:11 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20110420103319.GA6027@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -58,92 +58,76 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171857>
 
-In git versions starting at v1.7.5-rc0~29^2 until v1.7.5-rc3~2 (Revert
-"run-command: prettify -D_FORTIFY_SOURCE workaround", 2011-04-18)
-fixed it, the run_command facility would write a truncated error
-message when the command is present but cannot be executed for some
-other reason.  For example, if I add a 'hello' command to git:
+If start_command fails after forking and before exec finishes, there
+is not much use in noticing an I/O error on top of that.
+finish_command will notice that the child exited with nonzero status
+anyway.  So as noted in v1.7.0.3~20^2 (run-command.c: fix build
+warnings on Ubuntu, 2010-01-30) and v1.7.5-rc0~29^2 (2011-03-16), it
+is safe to ignore errors from write in this codepath.
 
-	$ echo 'echo hello' >git-hello
-	$ chmod +x git-hello
-	$ PATH=.:$PATH git hello
-	hello
+Even so, the result from write contains useful information: it tells
+us if the write was cancelled by a signal (EINTR) or was only
+partially completed (e.g., when writing to an almost-full pipe).
+Let's use write_in_full to loop until the desired number of bytes have
+been written (still ignoring errors if that fails).
 
-and make it non-executable, this is what I normally get:
+As a happy side effect, the assignment to a dummy variable to appease
+gcc -D_FORTIFY_SOURCE is no longer needed.  xwrite and write_in_full
+check the return value from write(2).
 
-	$ chmod -x git-hello
-	$ git hello
-	fatal: cannot exec 'git-hello': Permission denied
-
-But with the problematic versions, we get disturbing output:
-
-	$ PATH=.:$PATH git hello
-	fatal: $
-
-Add some tests to make sure it doesn't happen again.
-
-The hello-script used in these tests uses cat instead of echo because
-on Windows the bash spawned by git converts LF to CRLF in text written
-by echo while the bash running tests does not, causing the test to
-fail if "echo" is used.  Thanks to Hannes for noticing.
+Noticed with gcc -Wunused-but-set-variable.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Improved-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/t0061-run-command.sh |   23 +++++++++++++++++++++++
- test-run-command.c     |    2 ++
- 2 files changed, 25 insertions(+), 0 deletions(-)
+Changes from v1:
 
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 10b26e4..8d4938f 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -7,8 +7,31 @@ test_description='Test run command'
+ - rewrite the commit message from the pov of a person who does not
+   care about this patch's origin as a brown paper bag
+
+ - drop the "if"s.  If the fussy compiler/library combination was
+   right in some strange sense after all, then it does not make much
+   sense to take the opportunity to make another token effort to
+   appease it as a preventative step.
+
+ run-command.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index f91e446..70e8a24 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -67,21 +67,24 @@ static int child_notifier = -1;
  
- . ./test-lib.sh
+ static void notify_parent(void)
+ {
+-	ssize_t unused;
+-	unused = write(child_notifier, "", 1);
++	/*
++	 * execvp failed.  If possible, we'd like to let start_command
++	 * know, so failures like ENOENT can be handled right away; but
++	 * otherwise, finish_command will still report the error.
++	 */
++	xwrite(child_notifier, "", 1);
+ }
  
-+cat >hello-script <<-EOF
-+	#!$SHELL_PATH
-+	cat hello-script
-+EOF
-+>empty
-+
- test_expect_success 'start_command reports ENOENT' '
- 	test-run-command start-command-ENOENT ./does-not-exist
- '
+ static NORETURN void die_child(const char *err, va_list params)
+ {
+ 	char msg[4096];
+-	ssize_t unused;
+ 	int len = vsnprintf(msg, sizeof(msg), err, params);
+ 	if (len > sizeof(msg))
+ 		len = sizeof(msg);
  
-+test_expect_success 'run_command can run a command' '
-+	cat hello-script >hello.sh &&
-+	chmod +x hello.sh &&
-+	test-run-command run-command ./hello.sh >actual 2>err &&
-+
-+	test_cmp hello-script actual &&
-+	test_cmp empty err
-+'
-+
-+test_expect_success POSIXPERM 'run_command reports EACCES' '
-+	cat hello-script >hello.sh &&
-+	chmod -x hello.sh &&
-+	test_must_fail test-run-command run-command ./hello.sh 2>err &&
-+
-+	grep "fatal: cannot exec.*hello.sh" err
-+'
-+
- test_done
-diff --git a/test-run-command.c b/test-run-command.c
-index 0612bfa..37918e1 100644
---- a/test-run-command.c
-+++ b/test-run-command.c
-@@ -29,6 +29,8 @@ int main(int argc, char **argv)
- 		fprintf(stderr, "FAIL %s\n", argv[1]);
- 		return 1;
- 	}
-+	if (!strcmp(argv[1], "run-command"))
-+		exit(run_command(&proc));
- 
- 	fprintf(stderr, "check usage\n");
- 	return 1;
+-	unused = write(child_err, "fatal: ", 7);
+-	unused = write(child_err, msg, len);
+-	unused = write(child_err, "\n", 1);
++	write_in_full(child_err, "fatal: ", 7);
++	write_in_full(child_err, msg, len);
++	write_in_full(child_err, "\n", 1);
+ 	exit(128);
+ }
+ #endif
 -- 
 1.7.5.rc2
