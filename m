@@ -1,113 +1,99 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: Cloning into an existing, non-empty directory?
-Date: Thu, 21 Apr 2011 23:27:15 +0200
-Message-ID: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [WRONG/PATCH 1/3] revisions: clarify handling of --no-walk and
+ --do-walk
+Date: Thu, 21 Apr 2011 16:30:14 -0500
+Message-ID: <20110421213014.GB18418@elie>
+References: <20110421102241.GA16185@elie>
+ <20110421103926.GA16260@elie>
+ <4DB02B24.4030503@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 23:27:43 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pierre Habouzit <madcoder@madism.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Apr 21 23:30:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QD1Pa-0002Jk-Mb
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 23:27:43 +0200
+	id 1QD1SF-000428-LE
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 23:30:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792Ab1DUV1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 17:27:37 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42080 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754390Ab1DUV1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2011 17:27:36 -0400
-Received: by iwn34 with SMTP id 34so101027iwn.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 14:27:36 -0700 (PDT)
+	id S1754778Ab1DUVaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 17:30:21 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52164 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754722Ab1DUVaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2011 17:30:20 -0400
+Received: by gyd10 with SMTP id 10so38815gyd.19
+        for <git@vger.kernel.org>; Thu, 21 Apr 2011 14:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=BhczStrjkCjgh1e3y+X5R5orD8MEh6tGwQzQzHAaNXU=;
-        b=Vvqw1rhp+vGzFYrDK6qJlJi+bHx2wO+NLf7sV2oZqah2o/5hfVux0/jpASGQQMZc7q
-         bSTfL2+cg3ZrCe9tCBZN2PYd6xFdzU83vKtyi6UkN/F1Al5QHHUGIscUC4hWIu6tn8wr
-         QIZnNhJ95gibjyabUOlv9WWsbAbCSmcvS+5qE=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=BWiEQFBYIqIB1zJhrEM22V9SAXr0FjqK2oXzahDFWA0=;
+        b=ImaALYxNOu7bjUw2xJLg+VK2Ug4SsVyE/F6wYZ4P/wBuXvaa388R18Ds7C66vbgLRv
+         tak4Wio9VwPPKGa/yqLyKQ9nDxOwPoSurFHLT5L82g9/NjmCpKiuAq0ZWNWLjOmbP+1L
+         IhTmB8AcccFKJa6vfoSvn40GHj3vL8J+OFoNs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=HsN0Ycs9pM64ivNrQA6vp5OLkmQquLfnJ6+pNcGgiWWwFJTD978nkv2NO3tC678Exu
-         xOB5D+I8x5i7r1KOD6zFKjlJ504JulbjE10GO74V2MWBmsFIxO5WZbh4Q9grqVZu1tUZ
-         VOcMPVSYUsZo6Fd1AXeX0J3uVJKfgYEcLZC1k=
-Received: by 10.231.61.198 with SMTP id u6mr304019ibh.160.1303421256072; Thu,
- 21 Apr 2011 14:27:36 -0700 (PDT)
-Received: by 10.231.92.16 with HTTP; Thu, 21 Apr 2011 14:27:15 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=c2lModf920HepAjoBftNejiVVltdMmfxF1B9F8Qg4VGwfq7bFcgeEh8uQNFQWm29tx
+         1LAEz1yUIgePxPPt1uYWGmzdGjauP9zNXxsstHAnR98SNW2F6LLqN3733YqAk7cNvrWB
+         07+h9Mjl3JbZghKQaDgOVS96RB8V3a7PAmHTc=
+Received: by 10.151.145.17 with SMTP id x17mr847684ybn.411.1303421419799;
+        Thu, 21 Apr 2011 14:30:19 -0700 (PDT)
+Received: from elie (adsl-69-209-64-141.dsl.chcgil.sbcglobal.net [69.209.64.141])
+        by mx.google.com with ESMTPS id p41sm2268834ybk.14.2011.04.21.14.30.17
+        (version=SSLv3 cipher=OTHER);
+        Thu, 21 Apr 2011 14:30:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4DB02B24.4030503@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171921>
 
-Hi all,
+Michael J Gruber wrote:
 
-I know that the manpage explicitly states that it's not possible to
-clones into an existing, non-empty directory, but I wanted to see if
-anyone is aware of a workaround or if I can convince people that is it
-of use in specific circumstances.
+> This is not unrelated to the tip of gitster/mg/show-without-prune, i.e.
+>
+> 0c738b6 (builtin/show: do not prune by pathspec, 2011-04-01)
 
-Some of you will be keeping their RC files in git repo(s) which means
-you are basically left with two options:
+True.
 
-1) Use soft-/hardlinks
-2) Change your working tree
+> We should rethink the ui balance between deviating from the usual log
+> option processing and the usefulness here.
 
-I went for option two which looks like:
+Could you expand on that?  I think --no-walk being a positional
+argument is just an ugly consequence of the code that permits
 
-richih@roadwarrior ~/.config/vcsh/repo.d/mr.git % ls -a
-.   branches        config       FETCH_HEAD  hooks  info  objects    packed-refs
-..  COMMIT_EDITMSG  description  HEAD        index  logs  ORIG_HEAD  refs
-richih@roadwarrior ~/.config/vcsh/repo.d/mr.git % cat config
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-	worktree = /home/richih/
-[remote "origin"]
-	fetch = +refs/heads/*:refs/remotes/origin/*
-	url = <remote>
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
-richih@roadwarrior ~/.config/vcsh/repo.d/mr.git %
+	git show -5 master
+	git show maint..
+	git show --do-walk master
 
-This works just fine as long as you're using
+while making sure
 
-  git --work-tree=$HOME \
-    --git-dir=$HOME/.config/vcsh/repo.d/mr.git \
-    pull
+	git show master
+	git show --do-walk --no-walk master
 
-or similar on an existing, manually mangled repo. The only real
-problem left is that I can't clone initially as $HOME is obviously
-non-empty, resulting in
+still show only one commit.  I'm not convinced it's meant to be useful
+beyond that.
 
-  git --work-tree=$HOME \
-    --git-dir=$HOME/.config/vcsh/repo.d/mr.git \
-    clone <remote> .config/vcsh/repo.d/mr.git
-fatal: working tree '/home/richih' already exists.
+(Maybe "git log --no-walk maint..HEAD" should be an error because
+meaningless, while "git rev-list --no-walk maint..HEAD" should be
+accepted so people can continue write their own "git show"-like
+commands.  Unfortunately the popular idiom of using git log
+--format=... instead of
 
-This means I am down to cloning, creating the directories I need,
-moving .git and the actual files around, making git aware that tracked
-files were not deleted, just moved, and then finally being able to use
-my repo.
+	git rev-list ... |
+	git diff-tree -s --format=... --stdin
 
-Obviously, this would imply some sort of conflict handling during cloning.
-
-Anyway, I would _really_ love to have a way to avoid all this manual
-work and just clone into $HOME, telling git that it's OK and I know
-what I am doing.
-
-
-Thanks,
-Richard
-
-PS: In case you are interested in keeping your RC files (and the rest
-of your life) in git, there's a vcs-home mailing list and #vcs-home on
-irc.oftc.net.
+in scripts makes this porcelain-plumbing distinction more fuzzy than I
+would like.)
