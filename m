@@ -1,82 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Fork or branch?
-Date: Thu, 21 Apr 2011 07:38:08 -0700 (PDT)
-Message-ID: <m3sjtbwu01.fsf@localhost.localdomain>
-References: <1303390999618-6293910.post@n2.nabble.com>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: Re: [PATCH] combine-diff: use textconv for combined diff format
+Date: Thu, 21 Apr 2011 18:08:05 +0200
+Message-ID: <201104211808.06400.kumbayo84@arcor.de>
+References: <20110414213006.GA7709@sigill.intra.peff.net> <36a715a966a22207135f60532e723f6d87dd1ffb.1302881295.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: adam_kb <a-kyle@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 16:38:20 2011
+Content-Type: Text/Plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Apr 21 19:23:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCv1N-0002wT-GU
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 16:38:17 +0200
+	id 1QCxb1-0000vY-Fy
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 19:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979Ab1DUOiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 10:38:12 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:54101 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753287Ab1DUOiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2011 10:38:11 -0400
-Received: by bwz15 with SMTP id 15so1463216bwz.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 07:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=2mzzRKnCaN1X28bhZ4nvHDswr8QMvoAHXP2kSJQ0Mr8=;
-        b=HO6skU8xADPn1f1gp0URTAdaeK9T5198fm3Eo5XYhC2kwMUfO2ME/fJ2Iy5vfZdNpP
-         7hQYjDpVr8kWz7PEcddAtlGKTEJmAuArLmTEh2aPRKNolyaQhkuMMT7SmNxdRCd1D95a
-         q0ge6Ic8E0vTdJoBCAm4ZaBHHZRFkYKyAJwqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=CxPQKls5t5MToInAzvVrTc9llqZkr2FWuCbEg10/EDYGJi8Pgsd2Mlnc6QJ29lmX66
-         D6xtmAvL4kSitvsjDTU8CcwvDIRG8uqJV0V8+6ayyE/wXRZcNI7+vsiPfCAGgHo68bJG
-         zg/5c1V1Xgqc78lrlEDPy3PHrgbw7F2Pdv4ok=
-Received: by 10.204.32.9 with SMTP id a9mr7887bkd.182.1303396689849;
-        Thu, 21 Apr 2011 07:38:09 -0700 (PDT)
-Received: from localhost.localdomain (abwt1.neoplus.adsl.tpnet.pl [83.8.243.1])
-        by mx.google.com with ESMTPS id x6sm1161987bkv.12.2011.04.21.07.38.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Apr 2011 07:38:08 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3LEbaWQ005663;
-	Thu, 21 Apr 2011 16:37:46 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3LEbJkI005656;
-	Thu, 21 Apr 2011 16:37:19 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1303390999618-6293910.post@n2.nabble.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755191Ab1DURXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 13:23:09 -0400
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:46196 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755104Ab1DURXH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2011 13:23:07 -0400
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mx.arcor.de (Postfix) with ESMTP id 73E123034B;
+	Thu, 21 Apr 2011 19:23:05 +0200 (CEST)
+Received: from mail-in-14.arcor-online.net (mail-in-14.arcor-online.net [151.189.21.54])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 5EA8FCE;
+	Thu, 21 Apr 2011 19:23:05 +0200 (CEST)
+Received: from soybean.localnet (178-190-20-49.adsl.highway.telekom.at [178.190.20.49])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-14.arcor-online.net (Postfix) with ESMTPSA id 3984C9C989;
+	Thu, 21 Apr 2011 19:23:05 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-14.arcor-online.net 3984C9C989
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1303406585; bh=hB/1ed0qmL1UOpE+0omNj+Zb6OPhtcFPxyHC7xwmZ/Y=;
+	h=From:To:Subject:Date:Cc:References:In-Reply-To:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id;
+	b=DhEddbwgkUUcq0aYRBH6qEYd6BCGS1WAFbwoFJfj19UNFoBzxA1fQmWZTY4HOd1Nt
+	 wcLBOdgRjpqulsGFBrgykC72G/sBQfx0PgrI3BJq07JteobzgxAy+5NGM1kcv0Ny89
+	 3Ykxnfr4QXEMXstCrwj54PYJzyqsrQYMLY1/tApw=
+User-Agent: KMail/1.13.5 (Linux/2.6.35-28-generic-pae; KDE/4.5.1; i686; ; )
+In-Reply-To: <36a715a966a22207135f60532e723f6d87dd1ffb.1302881295.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171909>
 
-adam_kb <a-kyle@hotmail.com> writes:
+On Freitag, 15. April 2011, Michael J Gruber wrote:
+> Currently, we ignore textconv and binary status for the combined diff
+> formats (-c, -cc) which was never intended.
+> 
+> Change this so that combined diff uses the same helpers.
+> 
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> So, just so that I don't get the vapor patch award, here's a WIP passing
+> Jeff's test.
+> 
+> Before looking at free()ing what I've introduced and the binary issue I'll
+> check whether the whole blob/file read hunk in show_patch_diff() can't be
+> simply subsumed in the fill_textconv() call. It is almost a copy of
+> diff_populate_filespec() but not quite.
+> 
+> Also, the situation with worktree is even worse than I thought:
+> 
+> git diff -m produces a combined diff!
+> 
+> Also, my patch does not cure "diff -c" against worktree so far, I'm not
+> textconv'ing the worktree file yet. But then again, "diff -m" sucks here also.
+> 
+> I'll probably pick this up later today.
 
-> I am new to git and understand most of it except for merge. My question is -
-> if I have project X on branch master and its coded in python but I then want
-> to take that same project and code it in say C or C++ would I fork or branch
-> the project? 
+Hi,
 
-If you do not plan to merge your changes / your rewrite into project
-X, then it is a fork (like e.g. LibreOffice.org is a fork of
-OpenOffice.org).
+thanks for working on this.
+I tried this patch on my msysgit system and now gitk shows a nice diff
+for my merged archives. :-)
+For merges of other binary files without textconf filter (jar)
+i still get binary output.
+(but i expected this from the notes above/discussion)
 
-Branch is in-repository line of development, e.g. 'stable' and
-'unstable', or 'maint', 'master' and 'next' branches.
-
-HTH
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+thanks,
+Greetings Peter
