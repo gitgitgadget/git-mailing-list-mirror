@@ -1,180 +1,221 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Fork or branch?
-Date: Thu, 21 Apr 2011 17:39:00 -0500
-Message-ID: <20110421223845.GA3993@elie>
-References: <1303390999618-6293910.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 3/5] Date Mode: Implementation
+Date: Thu, 21 Apr 2011 15:44:22 -0700
+Message-ID: <7vk4enusvt.fsf@alter.siamese.dyndns.org>
+References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
+ <4e4fea2a-c9fe-47ff-b947-64aa4662adae-mfwitten@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>
-To: adam_kb <a-kyle@hotmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 00:39:15 2011
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 00:44:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QD2Wo-0001WJ-H3
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 00:39:15 +0200
+	id 1QD2c3-0005Me-0P
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 00:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755439Ab1DUWjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 18:39:08 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37142 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753658Ab1DUWjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2011 18:39:07 -0400
-Received: by iyb14 with SMTP id 14so133695iyb.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 15:39:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=h9BP/jVNy6tv0EQV+few6wdX/xCISbIZAsfy8Xk6Mow=;
-        b=FWT7DaaqrV/G9GaIGlixju4bxtKSGf9t9+vxLfkcfNGZvLdb+O5cR1Fn83WWv+SeS3
-         r0rjM/v8HouBf+HkiovEEaIsu6oeYNirU7btF0sbWjXsHAKDkKt+MsOlCAs7sQSAYW25
-         4KRVb7uA9x0swpUrTpmAOg4ZF1AB6rn9n+GoE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=l5Ktk9CQf8xrBv2d+Ok2XSynXzVOdpIydQDDAsLqtfQnBhMSCFxUV24F/V/mE/YPYA
-         W5ltdzG4jCk9LOagEuE5q+JnQ2IGUsuIFa0z3U64iD1qu76fbTcpLvHPoZYgov17D+Ud
-         IbNiyrykVcgHhBLW/95CJat7pii0JatPxTwJ8=
-Received: by 10.42.158.67 with SMTP id g3mr571346icx.94.1303425546980;
-        Thu, 21 Apr 2011 15:39:06 -0700 (PDT)
-Received: from elie (adsl-69-209-64-141.dsl.chcgil.sbcglobal.net [69.209.64.141])
-        by mx.google.com with ESMTPS id g16sm911721ibb.3.2011.04.21.15.39.05
-        (version=SSLv3 cipher=OTHER);
-        Thu, 21 Apr 2011 15:39:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1303390999618-6293910.post@n2.nabble.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755536Ab1DUWoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 18:44:34 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41576 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753658Ab1DUWoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2011 18:44:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 83C934C6F;
+	Thu, 21 Apr 2011 18:46:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=oKr/jF+SRx07hxa8zSSzxmTfcCI=; b=uPeDu1vt3uZRUE271vAX
+	IguIJolbPl0MH6ESjUkHd7pfY8kr5EcQ3t0wifAelBbTzCJVna4yocwq3Vx26v18
+	Wgu2sM4MWn4b/t3L7QszRQIhvo86DIk7iJKgO8ED9/cO8zgUpCVd2c238UVR0r6U
+	fAs+hjk/gayZhpaQ1zZrhXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=eW7ixvSgv3OdE2s94FW1fqKKl5l68GhYICTmcb865I+sw9
+	xb1ad647+f2DPX13cRlYATJEZHJCsxDfA5LmdR3iIDtvvkWRKyLFNSIBr5eUoU9F
+	buPMv3zwtLUA20Y56T+ak/WpVKzXUxf25LB3coqGCz/RIiYqS2kJthjtZOaYs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6142B4C6B;
+	Thu, 21 Apr 2011 18:46:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2114E4C66; Thu, 21 Apr 2011
+ 18:46:25 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3254B296-6C69-11E0-A719-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171926>
 
-Hi,
+Michael Witten <mfwitten@gmail.com> writes:
 
-adam_kb wrote:
+> Date: Sat, 12 Feb 2011 03:56:17 +0000
+> This introduces and employs infrastructure for manipulating
+> and bundling time zone and date format specifications in
+> code, on the command line, and in git configuration files.
+>
+> In particular, this commit includes the following:
 
-> I am new to git and understand most of it except for merge. My question is -
-> if I have project X on branch master and its coded in python but I then want
-> to take that same project and code it in say C or C++ would I fork or branch
-> the project? 
+Even though I think it is going in the right direction to separate "in
+what timezone do we show timestamps (original vs user-specified)" and "in
+what format do we show them (short? with tz? like in e-mail? iso? etc.),
+this particular commit seems to do too many things at once.
 
-It depends what you would like the resulting history to look like
-("gitk --all" can help a lot here).
+Can you think of a way split this into smaller steps?  I am not asking
+"Could you pretty please split this?" nor "Are you willing to do so?"
+I am asking if the task is possible to begin with.
 
-In practice, rewriting a project in another language tends to be a big
-step, almost as big as starting a new project.  None of the original
-code gets kept.  It can take a long time before the rewrite gains all
-the functionality of the original.
+A valid answer could be "everything is so intertwined that this patch is
+the smallest logical unit of change", and I would be somewhat sympathetic
+to that.  Once you change the type of revs->date_mode from the current
+single scalar to a struct, all the callers need to change the way they
+initialize and update the field, and I understand that such a change would
+have to touch a major part of the system.
 
-So let's imagine a few different scenarios.
+But if that step can be done without changing the semantics nor behaviour
+at all, it would be easier to review and verify. The the next patch can
+enhance the struct in revs->date_mode to express timezone information as a
+new field, opening the door to the new command line option.
 
-1. Replacing pieces of the Python project with C++ incrementally
-----------------------------------------------------------------
+> Essentially, what was:
+>
+>   git log --date=local
+>
+> should now be:
+>
+>   git log --time-zone=local
 
-Perhaps I am writing an extension module or a standalone helper that the
-Python code calls.  When finished, I'll be able to discard the Python
-skeleton.
+The above _should_ read something like:
 
-In this case, it is a perfect opportunity to use a topic branch (see
-gitworkflows(7) for what this means).  To start out, I make a new
-branch:
+	"git log --date=local"
 
-	git checkout -b go-faster
+        is now a short-hand for
 
-Now I hack as usual, telling git about my changes as I go:
+        "git log --date-format=local --time-zone=local"
 
-	... hack hack hack ...
-	git add .
-	git add -u
-	git diff --cached;	# looks good?
-	make
-	... test test test ...
-	git commit;	# all right, commit the first change.
+        It specifies that the timestamps should be stringified using the
+        local timezone, and the value should be shown like "Tue Apr 19
+        12:34:56 2011" without the timezone.
 
-	... hack hack hack ...
+        "git log --time-zone=local" would give the same output but you
+        will also see the timezone, e.g. "Tue Apr 19 12:34:56 2011 -0800",
+        because --date-format defaults to "default".
 
-Suppose I notice a bug that already existed in the original Python
-implementation.  I fix it there first, since the C++ changes are up in
-the air:
+In other words, this new feature should allow people who do not care about
+it to keep saying "--date=local" without being told that they now _should_
+say things differently.
 
-	git checkout master
-	... fix fix fix ...
-	git add -A
-	make test
-	git diff --cached;	# looks good?
-	git commit;	# ok, describe the fix.
-	... test test test ...;	# one final test.
+If it is absolutely impossible to implement the separation between the
+timezone and the format without breaking existing option handling, we
+would have to consider if the new feature (i.e. separation of zone and
+format) is worth breaking scripts and existing users, and we may end up
+rejecting the implementation of new feature.  I however do think this
+particular feature is possible to implement without such a regression.
 
-But I want to make sure the bugfix works well with the C++ changes,
-too:
+This patch makes the date-related infrastructure rich enough to deserve
+its own "date.h" that is included by "cache.h" near the beginning of it.
+The documentation part in [4/5] has such a separation, which I think is a
+sensible thing to do, except that date-mode-docs.txt is probably a wrong
+name for the file.  If you followed the precedence set by most other
+includable pieces about the set of options, you would probably call it
+date-opts.txt or something.
 
-	git checkout go-faster
-	git merge master;	# merge in the bugfix
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index 60d6b32..add9299 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -361,26 +360,58 @@ static const char *copy_email(const char *buf)
+>  	return xmemdupz(email, eoemail + 1 - email);
+>  }
+>  
+> +#define PARSE_DATE_MODE(marker_0, parser_0, date_mode_member_0, \
+> +                        marker_1, parser_1, date_mode_member_1) \
+> +	if (*atomname == marker_0) { \
+> +		const char *spec_0 = ++atomname; \
+> +		do { \
+> +			if (*atomname == marker_1) { \
+> +				date_mode_member_1 = parser_1(atomname+1); \
+> +				char *spec_0_dup  = xmemdupz(spec_0, atomname - spec_0); \
+> +				date_mode_member_0 = parser_0(spec_0_dup); \
+> +				free(spec_0_dup); \
+> +				goto finish; \
+> +			} \
 
-The code the bugfix touched might overlap with my changes, in which
-case I should look at the conflicts with "git diff" and figure out
-how to resolve them (see the user manual and git-merge(1) for details
-on this process).  Hopefully the result works well.  If it does not,
-I might go back to "master" and rethink the fix or use "git commit
---amend" to tweak the merge resolution.
+This introduces:
 
-When all looks good, I run
+builtin/for-each-ref.c:386: error: ISO C90 forbids mixed declarations and code
+builtin/for-each-ref.c:390: error: ISO C90 forbids mixed declarations and code
 
-	git push
+> diff --git a/date.c b/date.c
+> index caa14fe..879b0e1 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -147,40 +147,42 @@ const char *show_date_relative(unsigned long time, int tz,
+>  	return timebuf;
+>  }
+>  
+> -const char *show_date(unsigned long time, int tz, enum date_mode mode)
+> +const char *show_date(unsigned long time, int tz, struct date_mode date_mode)
+>  {
+> ...
 
-to publish my changes.  This does not automatically push the go-faster
-branch, which has not been made public yet; once I have announced it, I
-might use
+I may be being old-fashioned, but I'd really prefer to see structures
+passed by pointer, not by value, even if the structure starts out as a
+small container for just two enum fields.  There are a few other places
+you pass this structure by value.
 
-	git push origin go-faster
+> @@ -653,7 +655,7 @@ int parse_date(const char *date, char *result, int maxlen)
+>  	return date_string(timestamp, offset, result, maxlen);
+>  }
+>  
+> -enum date_mode parse_date_format(const char *format)
+> +enum date_format parse_date_format(const char *format)
+>  {
+>  	if (!strcmp(format, "relative"))
+>  		return DATE_RELATIVE;
+> @@ -675,6 +677,67 @@ enum date_mode parse_date_format(const char *format)
+>  		die("unknown date format %s", format);
+>  }
+>  
+> +enum time_zone parse_time_zone(const char *time_zone)
+> +{
+> +	if (!strcmp(time_zone, "local"))
+> +		return TIME_ZONE_LOCAL;
+> +	else if (!strcmp(time_zone, "default"))
+> +		return TIME_ZONE_DEFAULT;
+> +	else
+> +		die("unknown time zone %s", time_zone);
+> +}
 
-to make it public, and then plain "git push" will push it from that
-point on.
+Hmm, I was hoping that we can enhance this to allow feeding a string
+(e.g. "GMT", "+0900"), but "enum time_zone" makes it almost impossible.
 
-2. Reimplementing with the Python code as an inspiration
---------------------------------------------------------
+> +int parse_date_mode_config_internal(const char *var_date,
+> +                                     const char *var_timezone,
+> +                                     const char *var,
+> +                                     const char *value,
+> +                                     struct date_mode *d,
+> +                                     int *ret)
+> +{
 
-Now suppose I instead want to start the C version from scratch, adding
-features one at a time from the Python version.
+I'd rather see you drop the preprocessor trick to synthesize "blame.date"
+and "blame.timezone" out of "blame", drop _internal from this function
+(which is not static to the file scope to begin with), and take a single
+"const char *var" as the first parameter.  Otherwise, future users of the
+API cannot pass a variable to (your version of) parse_date_mode_config().
+It is not implausible that someday somebody might want to parse per-branch
+timezone specification out of "branch.master.timezone", and most likely
+"branch.master" part would be created runtime in a strbuf, not limited to
+hardcoded program names such as "blame".
 
-In this case, it is probably simplest to start a new repository.
+No other config callback function uses "a pointer to int as an argument to
+store the return value"; if you absolutely need a new calling convention,
+it needs to be documented better.  What do *ret and the return value from
+this function mean from the caller's point of view?
 
-	git init project-x-c
-	cd project-x-c
-
-Eventually it is time to tell users of project-x that project-x-c is
-working as well or better and that project-x will be abandoned.  Git
-does not care.
-
-3. Reimplementing in the context of a larger project
-----------------------------------------------------
-
-Lastly, suppose I want to reimplement the Python version in C in one
-go, but this is just one file of many in a larger project.
-
-This is conceptually very similar to case (2).  It can make sense to
-at first treat the reimplementation as a new and separate feature
-(maintaining both side-by-side within the same tree), and only once
-the reimplementation is finished eliminating the old version.  This is
-how the migration from the old ide_* to the new libata_* drivers in
-Linux has been proceeding, for example.
-
-Another alternative is to do the reimplementation in one commit,
-replacing the old command at the same time.
-
-Both methods have happened in the history of git itself a few times.
-Various commands written in Python or Perl were rewritten in C; one
-can find some examples with
-
-	git log --diff-filter=D -- 'git-*.sh' 'git-*.perl' 'git-*.py'
-
-using git 1.7.5.
-
-Hope that helps.
-Jonathan
+Thanks.
