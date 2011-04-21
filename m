@@ -1,76 +1,76 @@
-From: =?iso-8859-1?Q?Peter_J=F6nsson_P?= <peter.p.jonsson@ericsson.com>
-Subject: RE: Fork or branch?
-Date: Thu, 21 Apr 2011 15:23:01 +0200
-Message-ID: <41F80411E3CC644A844E6BED6E472FD91AE14979CC@ESESSCMS0363.eemea.ericsson.se>
-References: <1303390999618-6293910.post@n2.nabble.com>
+From: Damien Wyart <damien.wyart@gmail.com>
+Subject: Re: libreoffice merge issue ...
+Date: Thu, 21 Apr 2011 16:01:32 +0200
+Message-ID: <20110421140132.GA6696@brouette>
+References: <1297699635.31477.253.camel@lenovo-w500>
+ <20110215094546.GA25530@sigill.intra.peff.net>
+ <7vaahxp250.fsf@alter.siamese.dyndns.org>
+ <20110216025726.GC7085@sigill.intra.peff.net>
+ <7vfwrnis50.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: adam_kb <a-kyle@hotmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 15:23:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 16:10:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCtqh-0005zh-Kj
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 15:23:11 +0200
+	id 1QCuaE-00063o-11
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 16:10:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179Ab1DUNXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 09:23:06 -0400
-Received: from mailgw10.se.ericsson.net ([193.180.251.61]:52365 "EHLO
-	mailgw10.se.ericsson.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750981Ab1DUNXF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2011 09:23:05 -0400
-X-AuditID: c1b4fb3d-b7bd5ae000002ba3-03-4db02fb65a84
-Received: from esessmw0184.eemea.ericsson.se (Unknown_Domain [153.88.253.125])
-	by mailgw10.se.ericsson.net (Symantec Mail Security) with SMTP id 9C.27.11171.6BF20BD4; Thu, 21 Apr 2011 15:23:02 +0200 (CEST)
-Received: from ESESSCMS0363.eemea.ericsson.se ([169.254.1.202]) by
- esessmw0184.eemea.ericsson.se ([153.88.115.81]) with mapi; Thu, 21 Apr 2011
- 15:23:02 +0200
-Thread-Topic: Fork or branch?
-Thread-Index: AcwAJIWoWVvO7xVeTM+6J6AlAVg6QgAAkVeg
-In-Reply-To: <1303390999618-6293910.post@n2.nabble.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Brightmail-Tracker: AAAAAA==
+	id S1752561Ab1DUOKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 10:10:07 -0400
+Received: from mailhost-k4-p1.nerim.net ([195.5.209.41]:22721 "EHLO
+	smtp-delay1.nerim.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750915Ab1DUOKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2011 10:10:06 -0400
+X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Apr 2011 10:10:06 EDT
+Received: from maiev.nerim.net (smtp-154-thursday.nerim.net [194.79.134.154])
+	by smtp-delay1.nerim.net (Postfix) with ESMTP id 2C66122E870
+	for <git@vger.kernel.org>; Thu, 21 Apr 2011 15:54:09 +0200 (CEST)
+Received: from brouette (damien.wyart.pck.nerim.net [213.41.244.197])
+	by maiev.nerim.net (Postfix) with ESMTP id DD7232E031;
+	Thu, 21 Apr 2011 16:01:32 +0200 (CEST)
+Received: by brouette (Postfix, from userid 1000)
+	id A8641401186; Thu, 21 Apr 2011 16:01:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vfwrnis50.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171907>
 
-Hi!
+Hi,
 
-Will you be sharing anything between the projects? If you have data that will be shared between the two different implementations it would be enough with just a simple directory structure while still inside the same git repo.
+Sorry to wake up an old thread.
 
-repo.git:
- - <python based>
- - <c based>
- - ... 
- - <some other language based>
- - shared_data
+* Junio C Hamano <gitster@pobox.com> [2011-02-16 13:30]:
+> Yeah, the reverted 83c9031 (unpack_trees(): skip trees that are the
+> same in all input, 2010-12-22) also seems to have seriously broken
+> intermediate merge merge-recursive makes. I actually recall scratching
+> my head when I made 00e6ee7 (Merge branch 'maint', 2011-02-11) that
+> was causing add/add conflict when it shouldn't. It turns out that
+> quite a lot of entries were missing in contrib/ area from the virtual
+> common ancestry tree synthesized by merge-recursive that called into
+> the botched unpack_trees()---it of course would result in add/add
+> conflict if a merge is done using such a tree as the common.
 
-Just create a new branch on the current code based and start working on the C based one. Then you can merge it back to the "main" code line if it works out.
+> No, I haven't had a chance nor energy to dig further than what
+> I reported above.
 
-Good luck!
+Out of curiosity, I would like to know if digging further into this
+issue is still on your TODO list. I feel understanding exactly what was
+wrong in 83c9031 would be interesting ; having just the revert is a bit
+frustrating.
 
-// Peter
+The initial optimization in 83c9031 seemed right at first glance, so
+I would be interesting in having a more final answer to this.
 
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of adam_kb
-Sent: den 21 april 2011 15:03
-To: git@vger.kernel.org
-Subject: Fork or branch?
 
-I am new to git and understand most of it except for merge. My question is - if I have project X on branch master and its coded in python but I then want to take that same project and code it in say C or C++ would I fork or branch the project? 
-
---
-View this message in context: http://git.661346.n2.nabble.com/Fork-or-branch-tp6293910p6293910.html
-Sent from the git mailing list archive at Nabble.com.
---
-To unsubscribe from this list: send the line "unsubscribe git" in the body of a message to majordomo@vger.kernel.org More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Many thanks in advance,
+-- 
+Damien Wyart
