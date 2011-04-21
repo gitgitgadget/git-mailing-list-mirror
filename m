@@ -1,99 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Cloning into an existing, non-empty directory?
-Date: Thu, 21 Apr 2011 17:03:27 -0500
-Message-ID: <20110421220327.GA3396@elie>
-References: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 00:03:42 2011
+From: Josh Stone <jistone@redhat.com>
+Subject: [PATCH] blame: Improve parsing for emails with spaces
+Date: Thu, 21 Apr 2011 15:07:36 -0700
+Message-ID: <1303423656-32002-1-git-send-email-jistone@redhat.com>
+Cc: Josh Stone <jistone@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 00:10:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QD1yP-0001wm-Gf
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 00:03:41 +0200
+	id 1QD25M-00070f-GW
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 00:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755274Ab1DUWDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 18:03:36 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:44686 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752428Ab1DUWDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2011 18:03:35 -0400
-Received: by gyd10 with SMTP id 10so44600gyd.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 15:03:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=wzcyuEHnB0cpL3BiFiqd+FukbxiAWgMdnw2wPEMSTT0=;
-        b=v73ICTgMhe5RE3zWTyG3ZbizXai9ZsDjlLXV5m6WLTW6vr2cm72+TjzdSTkmH6QwXD
-         NKKi4loaKUOhi8N9By6h2SC+U+qGhAa+ymNkoPfZs/aTxr8vz0R4KtWGaYNFH5YeM3Yq
-         3Yy6Kon/8a0Tc+AkODEmUp6FXnXRoULUIXMYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=hK1LBARr+qNRXnJlG+DGcEi3S/SbJ7TUTAkIV8czAy13K7D4h1/8D/KO5jbgsPIvZN
-         xWlgM8hs1Pr8HBM0pupqF+0Yh69TxMCUs7PW9g9O7w0OGJ6M0JnrnHXJS066ifiX+wzj
-         mTw3ra+XbQ+nrM/l9ZJNmzr+7gNJhcl3yY8xo=
-Received: by 10.236.143.41 with SMTP id k29mr524745yhj.64.1303423414597;
-        Thu, 21 Apr 2011 15:03:34 -0700 (PDT)
-Received: from elie (adsl-69-209-64-141.dsl.chcgil.ameritech.net [69.209.64.141])
-        by mx.google.com with ESMTPS id p51sm1026173yhm.56.2011.04.21.15.03.32
-        (version=SSLv3 cipher=OTHER);
-        Thu, 21 Apr 2011 15:03:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755521Ab1DUWKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 18:10:44 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:51804 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755307Ab1DUWKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2011 18:10:44 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p3LMAhAS019336
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Thu, 21 Apr 2011 18:10:44 -0400
+Received: from jistone-t61.redhat.com (ovpn-113-81.phx2.redhat.com [10.3.113.81])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id p3LMAh3x023031;
+	Thu, 21 Apr 2011 18:10:43 -0400
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171923>
 
-Hi,
+One of my git repositories has some old commits where the authors
+obfuscated their email address as <author at example dot com>.  To
+handle this, blame needs to look for the leading '<' when scanning
+to split the "name <email>", rather then only a space delimiter.
 
-Richard Hartmann wrote:
+Signed-off-by: Josh Stone <jistone@redhat.com>
+---
+ builtin/blame.c     |    2 +-
+ t/annotate-tests.sh |   12 +++++++++++-
+ t/t8002-blame.sh    |    2 +-
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-> The only real
-> problem left is that I can't clone initially as $HOME is obviously
-> non-empty, resulting in
->
->   git --work-tree=$HOME \
->     --git-dir=$HOME/.config/vcsh/repo.d/mr.git \
->     clone <remote> .config/vcsh/repo.d/mr.git
-> fatal: working tree '/home/richih' already exists.
->
-> This means I am down to cloning, creating the directories I need,
-> moving .git and the actual files around, making git aware that tracked
-> files were not deleted, just moved, and then finally being able to use
-> my repo.
-
-Have you tried something like the following?
-
-	cd $CROWDED_DIRECTORY
-	GIT_DIR=/path/to/git/dir
-	GIT_WORK_TREE=$(pwd)
-	export GIT_DIR GIT_WORK_TREE
-
-	git init
-	git remote add origin <remote>
-	git pull
-
-Two more caveats for the road. :)
-
- - git does not track detailed file permissions or secret/non-secret
-   status.  Please be careful about ssh private keys and so on.
-
- - when updating the worktree, git will unlink existing files before
-   replacing them and does not fsync the result.  So one should be
-   careful when tracking files that will cause major harm if they go
-   missing temporarily (though I can't think of any major examples in
-   $HOME offhand).
-
-Happy hacking,
-Jonathan
+diff --git a/builtin/blame.c b/builtin/blame.c
+index f6b03f7..41525f1 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1377,7 +1377,7 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 	timepos = tmp;
+ 
+ 	*tmp = 0;
+-	while (person < tmp && *tmp != ' ')
++	while (person < tmp && !(*tmp == ' ' && tmp[1] == '<'))
+ 		tmp--;
+ 	if (tmp <= person)
+ 		return;
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index d34208c..abb1885 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -1,5 +1,5 @@
+ # This file isn't used as a test script directly, instead it is
+-# sourced from t8001-annotate.sh and t8001-blame.sh.
++# sourced from t8001-annotate.sh and t8002-blame.sh.
+ 
+ check_count () {
+ 	head=
+@@ -124,3 +124,13 @@ test_expect_success \
+ test_expect_success \
+     'some edit' \
+     'check_count A 1 B 1 B1 1 B2 1 "A U Thor" 1 C 1 D 1'
++
++test_expect_success \
++    'an obfuscated email added' \
++    'sed -e "1i No robots allowed" < file > file.new &&
++     mv file.new file &&
++     GIT_AUTHOR_NAME="E" GIT_AUTHOR_EMAIL="E at test dot git" git commit -a -m "norobots"'
++
++test_expect_success \
++    'obfuscated email parsed' \
++    'check_count A 1 B 1 B1 1 B2 1 "A U Thor" 1 C 1 D 1 E 1'
+diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+index d3a51e1..e2896cf 100755
+--- a/t/t8002-blame.sh
++++ b/t/t8002-blame.sh
+@@ -8,7 +8,7 @@ PROG='git blame -c'
+ 
+ PROG='git blame -c -e'
+ test_expect_success 'Blame --show-email works' '
+-    check_count "<A@test.git>" 1 "<B@test.git>" 1 "<B1@test.git>" 1 "<B2@test.git>" 1 "<author@example.com>" 1 "<C@test.git>" 1 "<D@test.git>" 1
++    check_count "<A@test.git>" 1 "<B@test.git>" 1 "<B1@test.git>" 1 "<B2@test.git>" 1 "<author@example.com>" 1 "<C@test.git>" 1 "<D@test.git>" 1 "<E at test dot git>" 1
+ '
+ 
+ test_done
+-- 
+1.7.4.4
