@@ -1,64 +1,100 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: Tabs and spaces
-Date: Thu, 21 Apr 2011 00:25:32 -0300
-Message-ID: <BANLkTin4kD96Fw_hpJCGW1K8Khfc=A=n_Q@mail.gmail.com>
-References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
-	<20110420064318.GF28597@sigill.intra.peff.net>
-	<d74e95d4-ef16-42fb-ae8f-b1d7a8b9d91e-mfwitten@gmail.com>
-	<20110421000701.GA10987@elie>
-	<1235e29d-6cbb-445b-9b6f-4e174c03ba8f-mfwitten@gmail.com>
-	<20110421021825.GA23373@elie>
-	<BANLkTi=XqynMpRkR=cRMTXYjr+p=Jxt=Ng@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 05:25:38 2011
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [PATCH] git-rebase--interactive.sh: preserve-merges fails on merges created with no-ff
+Date: Wed, 20 Apr 2011 23:38:00 -0400
+Message-ID: <1303357080-25840-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 05:38:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCkWQ-00011U-HB
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 05:25:38 +0200
+	id 1QCkiw-0006dn-9K
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 05:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753428Ab1DUDZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2011 23:25:34 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47513 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753287Ab1DUDZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2011 23:25:33 -0400
-Received: by iwn34 with SMTP id 34so1096088iwn.19
-        for <git@vger.kernel.org>; Wed, 20 Apr 2011 20:25:33 -0700 (PDT)
+	id S1753909Ab1DUDi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2011 23:38:29 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:33809 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753775Ab1DUDi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2011 23:38:28 -0400
+Received: by yxs7 with SMTP id 7so390658yxs.19
+        for <git@vger.kernel.org>; Wed, 20 Apr 2011 20:38:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=YBOJ7VKHt0KIDyfpiBZybO7jtkX73BRGwobAy200yAo=;
-        b=XuQ7IEVtEGKKpXy3hei2BM8e3av6TtAWUJRSvqM4NlLT9WAAC5oiK7+eO04nFtoCjO
-         VNj3GkimYRlCtZ/uBwTNucTvM0735H2Twhf1/vsmpnqkgEwGFeoB7w09Xr31JCLiPKRe
-         IqaWVaghUJNYQFZHfXdF0EryJvx247xUcPtmw=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=tOi96grp2ZyseTFD04ZphSsqAiM/yQ6DTpeSmqNKJh0=;
+        b=vC92cA0nJrN8bCdGCHtCBCt7xLIaCpfnN6JkyWAtzUw2ZCKEwcm+1s/eoX0nZ8+gd+
+         iZMk5dn2xJ2huiF30UYGVEqAkp1d2XF19GzW/74rPaokTkvJpDNYSP42fj5BgmWlAyoc
+         dBtEpYvXU6StsusFHAcmHsQrn7fOKwrKoGjQg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=MVN/78WidibdNjfUMSEAlKjMXvQU01oGwL0dlLyOGkWdPeQltUIAso/aQp/QKNPacJ
-         78UVaINJ+quZTxB8DK1TXDcnGDIfRkA4AQoCcz/MjqBpc6YTYLS4uIrJLkzng8XYwf5F
-         tkbMwd1mIBL5/+twplO/bZoQ3VQ0qTV3CFWRQ=
-Received: by 10.42.21.204 with SMTP id l12mr10141185icb.341.1303356332553;
- Wed, 20 Apr 2011 20:25:32 -0700 (PDT)
-Received: by 10.42.230.193 with HTTP; Wed, 20 Apr 2011 20:25:32 -0700 (PDT)
-In-Reply-To: <BANLkTi=XqynMpRkR=cRMTXYjr+p=Jxt=Ng@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=iin/7JyQSBWjIqmqIY/av/vzs980HbTyy8Vsc3S2Tj4iSPwjCjZyLey/GlRR5feieL
+         oEmXeZthjXLmD6VFDGvORLKPoQbP6dYyUCqrQYVgZRFA9n3wBOcF+ebq8Szwni7iIMXE
+         ZJdINmG7l2JMxIv1BhoH9DWC+wFunglSDj0WQ=
+Received: by 10.150.214.11 with SMTP id m11mr108196ybg.254.1303357108212;
+        Wed, 20 Apr 2011 20:38:28 -0700 (PDT)
+Received: from localhost.localdomain (CPE687f74883d54-CM001692fb632e.cpe.net.cable.rogers.com [99.231.190.188])
+        by mx.google.com with ESMTPS id v35sm1989870yba.19.2011.04.20.20.38.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 20 Apr 2011 20:38:27 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171892>
 
-On Thu, Apr 21, 2011 at 12:15 AM, Michael Witten <mfwitten@gmail.com> wrote:
->> Oh, I still think a tabstop of 2 is insane (for various reasons, some
->> explained in the thread you mentioned).
->
-tabstop of 2 is what we use on Chromium code (with spaces, no tabs).
-And works very well. Just my 0.02 cents. ;)
+'git rebase' uses 'git merge' to preserve merges (-p).  This preserves
+the original merge commit correctly, except when the original merge
+commit was created by 'git merge --no-ff'.  In this case, 'git rebase'
+will fail to preserve the merge, because during 'git rebase', 'git
+merge' will simply fast-forward and skip the commit.  For example:
+
+               B
+              / \
+             A---M
+            /
+    ---o---O---P---Q
+
+If we try to rebase M onto P, we lose the merge commit and this happens:
+
+                 A---B
+                /
+    ---o---O---P---Q
+
+To correct this, we simply do a "no fast-forward" on all merge commits
+when rebasing.  Since by the time we decided to do a 'git merge' inside
+'git rebase', it means there was a merge originally, so 'git merge'
+should always create a merge commit regardless of what the merge
+branches look like. This way, when rebase M onto P from the above
+example, we get:
+
+                   B
+                  / \
+                 A---M
+                /
+    ---o---O---P---Q
+
+Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+---
+ git-rebase--interactive.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5873ba4..c308529 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -339,7 +339,7 @@ pick_one_preserving_merges () {
+ 			# No point in merging the first parent, that's HEAD
+ 			new_parents=${new_parents# $first_parent}
+ 			if ! do_with_author output \
+-				git merge $STRATEGY -m "$msg" $new_parents
++				git merge --no-ff $STRATEGY -m "$msg" $new_parents
+ 			then
+ 				printf "%s\n" "$msg" > "$GIT_DIR"/MERGE_MSG
+ 				die_with_patch $sha1 "Error redoing merge $sha1"
+-- 
+1.7.2.2
