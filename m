@@ -1,76 +1,84 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Fork or branch?
-Date: Thu, 21 Apr 2011 22:33:20 +0400
-Message-ID: <20110421183320.GA17298@dpotapov.dyndns.org>
-References: <1303390999618-6293910.post@n2.nabble.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v2 7/9] sparse: Fix errors due to missing target-specific
+ variables
+Date: Thu, 21 Apr 2011 20:06:52 +0100
+Message-ID: <4DB0804C.10908@ramsay1.demon.co.uk>
+References: <4DADC729.5060705@ramsay1.demon.co.uk> <7vbp025clq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: adam_kb <a-kyle@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 20:33:32 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>, bebarino@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 21:31:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QCyh0-00024H-DR
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 20:33:30 +0200
+	id 1QCzbG-000364-U0
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 21:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752382Ab1DUSd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 14:33:26 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64646 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157Ab1DUSdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2011 14:33:25 -0400
-Received: by bwz15 with SMTP id 15so33627bwz.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 11:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=0OWh5BEv2wlnsNDafblT/UwrrF2641cCByViH4p993M=;
-        b=mC71cmhcUFcKPs5f2YWdJZ9EjwAkJVt6Lu4+8IQYSF7KjW04wpwnawuMzPGoTQGkr9
-         0rk4hDcsxpUUACWkKM8dL3F8xvcyDSOwtmQmAr108gsKvgqIFKthVsQeHkPj4CvMiZPk
-         E9R9PU4eXrAihjHY1pE8vL4YY+rcbfPwhCC0M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IuefhRsmzYsNLWucohvFfIWowBVAq8S5sCoPGIfL4o3mvKqJJx3926QKLfSWZNK9n1
-         iaC0OwYgMWwSmHnZYifZVoLvTBVVpzXKDFNDOByQUlIku87YbBbgF3TeLVRCNYxZYq3G
-         TJSNyqJ5trKW7rJCIKaELzagYkSFpeqQgPxJU=
-Received: by 10.204.82.74 with SMTP id a10mr226387bkl.96.1303410804075;
-        Thu, 21 Apr 2011 11:33:24 -0700 (PDT)
-Received: from localhost (ppp91-76-213-107.pppoe.mtu-net.ru [91.76.213.107])
-        by mx.google.com with ESMTPS id q24sm1267026bks.9.2011.04.21.11.33.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Apr 2011 11:33:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1303390999618-6293910.post@n2.nabble.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752542Ab1DUTbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 15:31:33 -0400
+Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:64897 "EHLO
+	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752223Ab1DUTbd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2011 15:31:33 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1QCzb9-00050T-hv; Thu, 21 Apr 2011 19:31:32 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <7vbp025clq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171913>
 
-On Thu, Apr 21, 2011 at 06:03:19AM -0700, adam_kb wrote:
-> I am new to git and understand most of it except for merge. My question is -
-> if I have project X on branch master and its coded in python but I then want
-> to take that same project and code it in say C or C++ would I fork or branch
-> the project? 
+Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
+>> I decided not to mark the $(SP_OBJ) as .PHONY targets; after some
+>> testing, it seems that it is not necessary, even if users do
+>> something like:
+>>     make git.sp 2>git.sp
+[...]
+>> -help.o: common-cmds.h
+>> +help.sp help.o: common-cmds.h
+> 
+> I am not sure if you even want any dependency listed for any %.sp target
+> to begin with. 
 
-It depends whether you want to have separate repositories (with separate
-working tree) or you want to have in the same repository. Actually, it
-does not matter all that much what decision you make now, you can always
-change that later -- it is very easy to unite two repositories in one,
-and, on contrary, it is always possible to split branches. Obviously, if
-you split branches having some common commits, each clone will have them.
+without these common-cmds.h dependencies, I get something like:
 
-Personally, if I re-wrote some Python code in C or C++, I would probably
-make a separate clone just to have two working tree. If necessary, it
-is possible to merge changes between them using 'git pull'.
+    $ make clean
+        ...
+    $ make help.sp
+    GIT_VERSION = 1.7.5.rc2.10.g4d94
+        * new build flags or prefix
+        SP help.c
+    help.c:6:10: error: unable to open 'common-cmds.h'
+    make: *** [help.sp] Error 1
 
+whereas, with them:
 
-Dmitry
+    $ make clean
+        ...
+    $ make help.sp
+    GIT_VERSION = 1.7.5.rc2.10.g937d2
+        * new build flags or prefix
+        GEN common-cmds.h
+        SP help.c
+
+[...]
+> So why list any dependency?  If it is sensible to treat "sparse" target
+> just like "clean" target, it would make sense not to give it any
+> dependencies and mark it as .PHONY, no?
+
+After some experiments, looking through the output of "make -d ...", I think
+I have a solution which (hopefully) addresses your concerns ...
+
+Version 3 of the patch coming up ...
+
+ATB,
+Ramsay Jones
