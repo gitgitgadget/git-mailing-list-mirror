@@ -1,99 +1,99 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [WRONG/PATCH 1/3] revisions: clarify handling of --no-walk and
- --do-walk
-Date: Thu, 21 Apr 2011 16:30:14 -0500
-Message-ID: <20110421213014.GB18418@elie>
-References: <20110421102241.GA16185@elie>
- <20110421103926.GA16260@elie>
- <4DB02B24.4030503@drmicha.warpmail.net>
+Subject: Re: Cloning into an existing, non-empty directory?
+Date: Thu, 21 Apr 2011 17:03:27 -0500
+Message-ID: <20110421220327.GA3396@elie>
+References: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Pierre Habouzit <madcoder@madism.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Apr 21 23:30:28 2011
+Cc: Git List <git@vger.kernel.org>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 00:03:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QD1SF-000428-LE
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Apr 2011 23:30:27 +0200
+	id 1QD1yP-0001wm-Gf
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 00:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778Ab1DUVaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 17:30:21 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:52164 "EHLO
+	id S1755274Ab1DUWDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 18:03:36 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:44686 "EHLO
 	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754722Ab1DUVaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2011 17:30:20 -0400
-Received: by gyd10 with SMTP id 10so38815gyd.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 14:30:19 -0700 (PDT)
+	with ESMTP id S1752428Ab1DUWDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2011 18:03:35 -0400
+Received: by gyd10 with SMTP id 10so44600gyd.19
+        for <git@vger.kernel.org>; Thu, 21 Apr 2011 15:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=BWiEQFBYIqIB1zJhrEM22V9SAXr0FjqK2oXzahDFWA0=;
-        b=ImaALYxNOu7bjUw2xJLg+VK2Ug4SsVyE/F6wYZ4P/wBuXvaa388R18Ds7C66vbgLRv
-         tak4Wio9VwPPKGa/yqLyKQ9nDxOwPoSurFHLT5L82g9/NjmCpKiuAq0ZWNWLjOmbP+1L
-         IhTmB8AcccFKJa6vfoSvn40GHj3vL8J+OFoNs=
+        bh=wzcyuEHnB0cpL3BiFiqd+FukbxiAWgMdnw2wPEMSTT0=;
+        b=v73ICTgMhe5RE3zWTyG3ZbizXai9ZsDjlLXV5m6WLTW6vr2cm72+TjzdSTkmH6QwXD
+         NKKi4loaKUOhi8N9By6h2SC+U+qGhAa+ymNkoPfZs/aTxr8vz0R4KtWGaYNFH5YeM3Yq
+         3Yy6Kon/8a0Tc+AkODEmUp6FXnXRoULUIXMYc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=c2lModf920HepAjoBftNejiVVltdMmfxF1B9F8Qg4VGwfq7bFcgeEh8uQNFQWm29tx
-         1LAEz1yUIgePxPPt1uYWGmzdGjauP9zNXxsstHAnR98SNW2F6LLqN3733YqAk7cNvrWB
-         07+h9Mjl3JbZghKQaDgOVS96RB8V3a7PAmHTc=
-Received: by 10.151.145.17 with SMTP id x17mr847684ybn.411.1303421419799;
-        Thu, 21 Apr 2011 14:30:19 -0700 (PDT)
-Received: from elie (adsl-69-209-64-141.dsl.chcgil.sbcglobal.net [69.209.64.141])
-        by mx.google.com with ESMTPS id p41sm2268834ybk.14.2011.04.21.14.30.17
+        b=hK1LBARr+qNRXnJlG+DGcEi3S/SbJ7TUTAkIV8czAy13K7D4h1/8D/KO5jbgsPIvZN
+         xWlgM8hs1Pr8HBM0pupqF+0Yh69TxMCUs7PW9g9O7w0OGJ6M0JnrnHXJS066ifiX+wzj
+         mTw3ra+XbQ+nrM/l9ZJNmzr+7gNJhcl3yY8xo=
+Received: by 10.236.143.41 with SMTP id k29mr524745yhj.64.1303423414597;
+        Thu, 21 Apr 2011 15:03:34 -0700 (PDT)
+Received: from elie (adsl-69-209-64-141.dsl.chcgil.ameritech.net [69.209.64.141])
+        by mx.google.com with ESMTPS id p51sm1026173yhm.56.2011.04.21.15.03.32
         (version=SSLv3 cipher=OTHER);
-        Thu, 21 Apr 2011 14:30:18 -0700 (PDT)
+        Thu, 21 Apr 2011 15:03:33 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4DB02B24.4030503@drmicha.warpmail.net>
+In-Reply-To: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171922>
 
-Michael J Gruber wrote:
+Hi,
 
-> This is not unrelated to the tip of gitster/mg/show-without-prune, i.e.
+Richard Hartmann wrote:
+
+> The only real
+> problem left is that I can't clone initially as $HOME is obviously
+> non-empty, resulting in
 >
-> 0c738b6 (builtin/show: do not prune by pathspec, 2011-04-01)
+>   git --work-tree=$HOME \
+>     --git-dir=$HOME/.config/vcsh/repo.d/mr.git \
+>     clone <remote> .config/vcsh/repo.d/mr.git
+> fatal: working tree '/home/richih' already exists.
+>
+> This means I am down to cloning, creating the directories I need,
+> moving .git and the actual files around, making git aware that tracked
+> files were not deleted, just moved, and then finally being able to use
+> my repo.
 
-True.
+Have you tried something like the following?
 
-> We should rethink the ui balance between deviating from the usual log
-> option processing and the usefulness here.
+	cd $CROWDED_DIRECTORY
+	GIT_DIR=/path/to/git/dir
+	GIT_WORK_TREE=$(pwd)
+	export GIT_DIR GIT_WORK_TREE
 
-Could you expand on that?  I think --no-walk being a positional
-argument is just an ugly consequence of the code that permits
+	git init
+	git remote add origin <remote>
+	git pull
 
-	git show -5 master
-	git show maint..
-	git show --do-walk master
+Two more caveats for the road. :)
 
-while making sure
+ - git does not track detailed file permissions or secret/non-secret
+   status.  Please be careful about ssh private keys and so on.
 
-	git show master
-	git show --do-walk --no-walk master
+ - when updating the worktree, git will unlink existing files before
+   replacing them and does not fsync the result.  So one should be
+   careful when tracking files that will cause major harm if they go
+   missing temporarily (though I can't think of any major examples in
+   $HOME offhand).
 
-still show only one commit.  I'm not convinced it's meant to be useful
-beyond that.
-
-(Maybe "git log --no-walk maint..HEAD" should be an error because
-meaningless, while "git rev-list --no-walk maint..HEAD" should be
-accepted so people can continue write their own "git show"-like
-commands.  Unfortunately the popular idiom of using git log
---format=... instead of
-
-	git rev-list ... |
-	git diff-tree -s --format=... --stdin
-
-in scripts makes this porcelain-plumbing distinction more fuzzy than I
-would like.)
+Happy hacking,
+Jonathan
