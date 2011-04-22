@@ -1,120 +1,83 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Dates in Commits and other issues of style
-         (Re: [RFC 2/5] Pretty Print: show tz when using DATE_LOCAL)
-Date: Fri, 22 Apr 2011 14:08:42 +0000
-Message-ID: <811b01a9-f10e-4444-9e5e-581adaf059c2-mfwitten@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 2/5] Pretty Print: show tz when using DATE_LOCAL
+Date: Fri, 22 Apr 2011 08:06:26 -0700
+Message-ID: <7vvcy6tjf1.fsf@alter.siamese.dyndns.org>
 References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
-            <acbcf231-e0a6-440e-be42-5f25da3e318d-mfwitten@gmail.com>
-            <7vtydrutbq.fsf@alter.siamese.dyndns.org>
+ <acbcf231-e0a6-440e-be42-5f25da3e318d-mfwitten@gmail.com>
+ <7vtydrutbq.fsf@alter.siamese.dyndns.org>
+ <08195d5d-bd90-49d3-a1a6-63be0d833110-mfwitten@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 16:58:10 2011
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 17:06:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDHo7-0003t1-PG
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 16:58:08 +0200
+	id 1QDHwQ-0001s7-5q
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 17:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755905Ab1DVO6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2011 10:58:04 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:39621 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752281Ab1DVO6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2011 10:58:00 -0400
-Received: by vxi39 with SMTP id 39so494059vxi.19
-        for <git@vger.kernel.org>; Fri, 22 Apr 2011 07:57:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:date:to:from:cc:message-id:in-reply-to
-         :references;
-        bh=Av5ZALHgmK2uZxWn75M+/0GwsFVlQOpDy1DRCGX3+ZQ=;
-        b=v0hGLVcLfVOROabSh6VzIpKNFKvUnNThim/Q81NXdRqx0bI86Skf47tJKhv++Q0qQr
-         bJOlmje6JUT8ADbdDsrV01f5b3jyl0AjJq4pctOymRNX22COZp4ePcUonPeJ+O7kgS3r
-         s0W9lYTCXIeRf5TNONHDW4DurKOs2D8qHdBeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:date:to:from:cc:message-id:in-reply-to:references;
-        b=s4lXS/q3ddzL7eJGorcnWWH8VyCXuv8ciV8mm6gFz4MlROAHYJI63V9z+pGYwLtnnv
-         05fH4Ot4z3INmQtFBa1P9wbA49J5uTjdmIFjorGejtJkeyLVSwhQMUOcqgjUyVV8e+VP
-         nr87gvEAKjx2PUpfW/ijkm/wecoYP+Gbjxupw=
-Received: by 10.52.187.42 with SMTP id fp10mr1794389vdc.270.1303484279406;
-        Fri, 22 Apr 2011 07:57:59 -0700 (PDT)
-Received: from gmail.com (pool-96-249-153-44.hrbgpa.fios.verizon.net [96.249.153.44])
-        by mx.google.com with ESMTPS id b7sm259106vci.45.2011.04.22.07.57.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 22 Apr 2011 07:57:58 -0700 (PDT)
-In-Reply-To: <7vtydrutbq.fsf@alter.siamese.dyndns.org>
+	id S1755939Ab1DVPGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2011 11:06:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48942 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753275Ab1DVPGh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2011 11:06:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E95CA530E;
+	Fri, 22 Apr 2011 11:08:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0+cc2akgztT6VopNy6k3cLxQ2/Y=; b=NtDngp
+	XZ78pWo36smkOqPdMDkGFqN307aSwNyetgKVB/TD3NgUBhiSHnRvPtEZCaDLiaTT
+	HxiNgscngQbws4lND18vcMpqejBUE8h6wYQhKidQ3T5qFyFek16qEEmA0Ns18TvQ
+	5r4g7JWzy0hOmJbGngzyjceiVeOGUGXF6l4lw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=c02ZgmeMdeQE1yo7TVvnJPFVQhunHDCW
+	SQgn9VF/1l0NdGzKYk10iXHlhBiKdUCX8MyXaD8/l3kUdQm52XCfrZROiVeGLRd5
+	PhoeyssFxkpa+uek8FqZGWkpal2GQHuuoeMhvWH0fRhbDNpr6/D3MtfYj1wY5cZt
+	sXhlHX1KzqY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C3E18530C;
+	Fri, 22 Apr 2011 11:08:32 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DC3D6530B; Fri, 22 Apr 2011
+ 11:08:29 -0400 (EDT)
+In-Reply-To: <08195d5d-bd90-49d3-a1a6-63be0d833110-mfwitten@gmail.com>
+ (Michael Witten's message of "Fri, 22 Apr 2011 14:36:13 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 636B1FF8-6CF2-11E0-8B43-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171937>
 
-On Thu, 21 Apr 2011 15:34:49 -0700, Junio C Hamano wrote:
+Michael Witten <mfwitten@gmail.com> writes:
 
-> Michael Witten <mfwitten@gmail.com> writes:
+> Allow me to restate what I think you are saying:
 >
->> Date: Fri, 11 Feb 2011 16:06:36 +0000
->> Currently, when the date mode is DATE_LOCAL, the
->> time zone is never pretty printed;...
+> How about having [the still deprecated] --date=local (that is, DATE_LOCAL)
+> option produce the old behavior, but have every combination of date mode
+> options that does not involve DATE_LOCAL always emit the time zone.
 >
-> This is a tangent but it is funny to see the unnecessary Date: in-body
-> header for a series about date display.  Please drop it.
-
-No.
-
-> Backdating the author timestamp will make it harder to find the related
-> discussion from the list archive; the only plausible benefit I can see is
-> that you may get "I thought of this much earlier than when I posted it to
-> the public for the first time" pee-in-the-snow value out of doing so, but
-> that is done at the cost to all others who need to inspect the history
-> later.  Please don't.
-
-What if I had submitted a pull request instead of inlined patches? Would
-you be asking me to wipe the dates in my repository? Would you rewrite
-the commits on your end?
-
-Let's suppose that I like backdating specifically for the "pee-in-the-snow"
-value; well, that's one of the prime motivators for doing unpaid, volunteer
-work, and that's one of the reasons that distributed SCM tools like git are
-so great: Unlike with, say, CVS, the actual author gets his or her information
-officially recorded.
-
-Perhaps you think we should dispense with identity information as well, given
-that it's just a pee-in-the-snow value...
-
-BUT WAIT!
-
-Names and email addresses are important because of copyright issues; we need
-to know whence came a contribution, after all.
-
-Well... don't you think the particular date at which something was written
-might be similarly valuable in a dispute over copyright?
-
-Junio, you'll take my pee-in-the-snow and you'll like it.
-
-> As a future reference, when you have a valid reason to override the
-> header information your MUA would give your message with an in-body
-> header, please leave a blank line after the in-body header to make the
-> result easier to read, like this:
+> In other words, all of these do not emit a time zone:
 >
->         Date: Fri, 11 Feb 2011 16:06:36 +0000
->
->         Currently, when the date mode is DATE_LOCAL, the
->         time zone is never pretty printed;...
+>   --date=local
+>   --date=local --time-zone=local
+>   --date=local --time-zone=default   # --time-zone is ignored for simplicity.
 
-Fair enough.
+Yeah.  It is even plausible to extend --date further so that we can
+express things like
 
-> Also paragraphs that wrap lines at too narrow a margin is just as hard to
-> read as paragraphs wrapped at a margin that is too wide.
+    --date='%a %b %d %H:%M:%S %Y'
+    --date='%a %b %d %H:%M:%S %Y %z'
 
-I disagree that
-it's too narrow,
-and I feel like
-you are now
-nitpicking.
+The former would be equivalent to --date[-format]=local, the latter would
+be equivalent to --date[-format]=default.
 
-Sincerely,
-Michael Witten
+Or something like that [warning: without morning caffeine yet] :-) 
