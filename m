@@ -1,72 +1,68 @@
-From: Qianqian Fang <fangqq@gmail.com>
-Subject: slowness in pulling data to mobile devices using git
-Date: Thu, 21 Apr 2011 18:56:08 -0400
-Message-ID: <4DB0B608.5090704@gmail.com>
+From: Mike <xandrani@gmail.com>
+Subject: git incorrectly infers rename i.e. (delete file1 + creation of new
+ file2) != (file => file2)
+Date: Fri, 22 Apr 2011 01:31:06 +0100
+Message-ID: <BANLkTimqk5xP6X7NcGqZ6w05GfYe02iAhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 00:56:18 2011
+X-From: git-owner@vger.kernel.org Fri Apr 22 02:31:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QD2nI-0004xx-IJ
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 00:56:16 +0200
+	id 1QD4HO-0007A9-6h
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 02:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755597Ab1DUW4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2011 18:56:11 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:53435 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754062Ab1DUW4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2011 18:56:10 -0400
-Received: by vws1 with SMTP id 1so141957vws.19
-        for <git@vger.kernel.org>; Thu, 21 Apr 2011 15:56:10 -0700 (PDT)
+	id S1753511Ab1DVAbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2011 20:31:09 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:55433 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751994Ab1DVAbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2011 20:31:08 -0400
+Received: by vxi39 with SMTP id 39so175845vxi.19
+        for <git@vger.kernel.org>; Thu, 21 Apr 2011 17:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=JYyII4vZhagPMHNXetnC0UyRw2+kDUbrVyQvHvm8PXM=;
-        b=CxfHI6LMqz3nwliIG7evRU3NsokQX3Wea8tj35hczoGM1uXre2M37sUHcawsUgKFKp
-         ohEz7rkn9FMYwB0F+v3zVJPkusZ0NTNPmJRnLVlE2E7kBF+c5dPI9cHveEnc81HEvB2s
-         UUzMwR9QKL7lDxU5pA64ZR8WR5g3vbb07NQu4=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=7A751KagxIy3RQ6c5F4uSL+s1PbEqv5VsjdMz0Lfefc=;
+        b=cKy352Z8oMm4S6fS0vWU0E/95x03+rRnSmhpqtMb401vwMgBK5hgSDTYlGTjcEZUfO
+         4FdD1doGtiGQMSEqnw6vOE1vuLO1TJ6/Lr/zZUDQ9VjicMqIIZTe9WyuPR+W3PCL1Sm8
+         q8qyYYyF7dx2XVNVHLugoh8/NYwiX1iHc0uKA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=LRFbptHATzwirRDtR7oNjLuT8b8ftcFgfb85RetFLxdjM7uBmohIetVPjadDHlo2db
-         +R9iid5RDFwmMpZS9CudLWF2I3AWvNzlg26SiiLV9VpgJsEo1ZXqaNFoWpkSKmL91tK1
-         GVFppIrPLRE1fnCqPrY4Aj1Qr9W3UATTj6b3w=
-Received: by 10.52.74.36 with SMTP id q4mr711681vdv.134.1303426570079;
-        Thu, 21 Apr 2011 15:56:10 -0700 (PDT)
-Received: from [132.183.136.67] (kwafoo.nmr.mgh.harvard.edu [132.183.136.67])
-        by mx.google.com with ESMTPS id u11sm445970vdt.25.2011.04.21.15.56.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Apr 2011 15:56:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=XzxNx9Y7BhVXllLJnhztpm9Nab7NnzKb1OkLxHumt8n55zgFvGqXfxJgqnIOnU8Xbn
+         ZStHHq8JdfIF11UXnUArykcpji2oTRB2vczSzNCvoydEXmmrhjoRdVHDX6GhjwOSAjmF
+         PQONlKroKmKPr1l34aAKWdzZ3qZy+Nz29lPcA=
+Received: by 10.52.95.46 with SMTP id dh14mr490460vdb.60.1303432266353; Thu,
+ 21 Apr 2011 17:31:06 -0700 (PDT)
+Received: by 10.52.161.39 with HTTP; Thu, 21 Apr 2011 17:31:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171929>
 
-hi list
+Hi
 
-I am not sure if this is the right place to ask. I am having
-some difficulties to speed up synchronization of a large git
-repo (~4GB) to a mobile phone via USB cable. It appears that
-the "git pull" command has to read through the entire
-history to make a single update, even the update is very
-minor.
+I deleted a file called 'class.NumberOfResultsCache.php' and created a
+completely different file called
+'cgi-bin/___php/class.NumberOfResults.php'. I deleted the file using
+rm followed by 'git rm'.
 
-I post my full question at this link:
+When I do a 'git status' I now get told:
 
-http://groups.google.com/group/git-users/browse_thread/thread/9f33536257535b28?hl=en
+   renamed:    cgi-bin/___php/class.NumberOfResultsCache.php ->
+cgi-bin/___php/class.NumberOfResults.php
 
-does this make sense? is there a way to speed up
-the updating without letting git to do all the file readings?
+However I want to commit 'class.NumberOfResultsCache.php' as having
+been deleted, and I want to commit 'class.NumberOfResults.php' as a
+brand new file.
 
-thanks
+How do I get git to do this? Apologies for a 'noob' question. Only
+been using the superb git for a couple of weeks!
 
-Qianqian
+Thanks :)
