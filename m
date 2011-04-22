@@ -1,113 +1,106 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: Re: Cloning into an existing, non-empty directory?
-Date: Fri, 22 Apr 2011 13:21:42 +0200
-Message-ID: <BANLkTikY7c7rP+yv5vt2vxw5nu84k_H=Xw@mail.gmail.com>
-References: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com> <20110421220327.GA3396@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 13:22:11 2011
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [RFC 2/5] Pretty Print: show tz when using DATE_LOCAL
+Date: Fri, 22 Apr 2011 14:36:13 +0000
+Message-ID: <08195d5d-bd90-49d3-a1a6-63be0d833110-mfwitten@gmail.com>
+References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
+            <acbcf231-e0a6-440e-be42-5f25da3e318d-mfwitten@gmail.com>
+            <7vtydrutbq.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 16:36:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDER8-00069t-EL
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 13:22:10 +0200
+	id 1QDHTL-0004XG-Im
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 16:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754951Ab1DVLWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2011 07:22:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:43030 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754832Ab1DVLWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2011 07:22:03 -0400
-Received: by iwn34 with SMTP id 34so411180iwn.19
-        for <git@vger.kernel.org>; Fri, 22 Apr 2011 04:22:02 -0700 (PDT)
+	id S1752281Ab1DVOge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2011 10:36:34 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:46237 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751654Ab1DVOgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2011 10:36:33 -0400
+Received: by pwi15 with SMTP id 15so352113pwi.19
+        for <git@vger.kernel.org>; Fri, 22 Apr 2011 07:36:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=aX+Ln29DU7PQCX55hu+pl+GdiMdlg/AVcYHnbgkR0Ac=;
-        b=IJLFzspcRbLTOGSvzVP3KNismqCCSqPS6CWwhuU5spvvq6P60kwtmMBfXHkDU+vduv
-         WLq+qI1G9rCzoDBnuTQxTlHfwMGMv9830K7bwfIpH/86OW6lVJShsIIJVBOQqgiPrwPS
-         XuL4fB4gq+0SGwXQ9avIbqxAahY3g+nQN6B+0=
+        h=domainkey-signature:subject:date:to:from:cc:message-id:in-reply-to
+         :references;
+        bh=58qY1A+oeAZ9mFR/HZRjp4wOHGuigvJ8vUq/Rv8GfZA=;
+        b=Z4O4g2A2HCYOuuH5UdoEslKMcJX7SKfP9dG9EWy5YmuYbp+3nW41F5E3C2ZFrfMJVx
+         aUQuBlgWU/fM3o7yrk6kt41mvtxBLUsWe7Pufz8VOMT4C6DXVviASq74Nh/9U0527uWq
+         ByQ07jlnmRf8ebUGhQOaWCoTQX7+YN1DcG8Q4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=xgvo3N5qQ1ntZPv2T2ib3kcp1ytMZ4HAUfhq5SC+GMpejnZwXdMWzTy7NJ5DW+g+dY
-         mQfFNvnQNkNGiTqL6ZLh+nSjxGxPH2fvotxHYspiCm8zQZq1COl5LY9pAd26W01U2SqO
-         wGHJiR9mpm7xtcerBA2KVnzN87ctlSbAPNq1o=
-Received: by 10.231.210.148 with SMTP id gk20mr756176ibb.110.1303471322311;
- Fri, 22 Apr 2011 04:22:02 -0700 (PDT)
-Received: by 10.231.92.16 with HTTP; Fri, 22 Apr 2011 04:21:42 -0700 (PDT)
-In-Reply-To: <20110421220327.GA3396@elie>
+        h=subject:date:to:from:cc:message-id:in-reply-to:references;
+        b=lUwFzW4Ln4fJ0MXwosjAqRFRfvTDLp8yE4wHCtWWX82EdmyFVrOxa0VI2rEs2icCrr
+         pRnFKBECjRIkChFfxcyiBXYI4G0bUm6VOc2zNosazw8K0mskgOZqPCsc9NWcEcCK0/bm
+         RY14A29+iEPr9NvlhyU+cNz8qSMvX7+kJNf4s=
+Received: by 10.68.49.66 with SMTP id s2mr646368pbn.139.1303482993493;
+        Fri, 22 Apr 2011 07:36:33 -0700 (PDT)
+Received: from gmail.com (tor-exit-router37-readme.formlessnetworking.net [199.48.147.37])
+        by mx.google.com with ESMTPS id k3sm1615916pbc.0.2011.04.22.07.36.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 22 Apr 2011 07:36:32 -0700 (PDT)
+In-Reply-To: <7vtydrutbq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171935>
 
-On Fri, Apr 22, 2011 at 00:03, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Thu, 21 Apr 2011 15:34:49 -0700, Junio C Hamano wrote:
 
-> Have you tried something like the following?
+> Michael Witten <mfwitten@gmail.com> writes:
+>
+>> Date: Fri, 11 Feb 2011 16:06:36 +0000
+>> Currently, when the date mode is DATE_LOCAL, the
+>> time zone is never pretty printed;...
+>
+> I am not opposed to have a new mode that shows timestamps in local
+> timezone with zone information, but this change is a regression to people
+> who have known and relied upon that asking for timestamps in their local
+> timezone will give everything in the local timezone and result in a short
+> output by the virtue of not needing to repeat the zone string, as they are
+> the same (this is not strictly true near your dst boundary, and that is
+> why I am open to the idea as a separate option).
 
-I didn't. Thanks a lot for your feedback.
+Allow me to restate what I think you are saying:
 
-My tentative script, which is pretty ham-fisted, takes care of most
-(all?) possible errors, feedback on it is very welcome.
+How about having [the still deprecated] --date=local (that is, DATE_LOCAL)
+option produce the old behavior, but have every combination of date mode
+options that does not involve DATE_LOCAL always emit the time zone.
 
-Two issues remain, though:
+In other words, all of these do not emit a time zone:
 
-1) git merge does not seem to understand either of those parameters.
-This means that I have to pull, not merge, which introduces a race
-condition into my safety checks. Which leads me to
+  --date=local
+  --date=local --time-zone=local
+  --date=local --time-zone=default   # --time-zone is ignored for simplicity.
 
-2) running `git pull` as suggested results in:
+and all of these always emit a time zone:
 
-fatal: /usr/lib/git-core/git-pull cannot be used without a working tree.
-
-which can be worked around by using --work-tree and --git-dir . Not
-ideal, but workeable if I accept the race condition.
-
-
-
-
-#!/bin/sh
-set -x
-
-[[ $# -lt 2 ]] && echo "not enough arguments" && exit 1
-[[ $# -eq 2 ]] && GIT_WORK_TREE="$HOME/killme/fgit/target-default"
-[[ $# -eq 3 ]] && GIT_WORK_TREE="$3"
-[[ $# -gt 3 ]] && echo "too many arguments" && exit 2
-
-GIT_REMOTE="$1"
-GIT_DIR="$2"
-export GIT_REMOTE GIT_DIR GIT_WORK_TREE
-mkdir -p $GIT_WORK_TREE
-cd $GIT_WORK_TREE ||
-  (echo "$(basename $0): fatal: could not enter $GIT_WORK_TREE" &&
-   exit 20) || exit 20
-git init
-git remote add origin $GIT_REMOTE
-git config branch.master.remote origin
-git config branch.master.merge  refs/heads/master
-git fetch
-for i in $(git ls-tree -r origin/master | awk '{print $4}'); do
-	[[ -e $i ]] &&
-	  echo "$(basename $0): error: $i exists." &&
-	  CONFLICT=1;
-done
-
-[[ -n $CONFLICT ]] &&
-  echo "$(basename $0): Will stop after fetching and not try to merge!\n" &&
-  exit 3
-
-git --work-tree="$GIT_WORK_TREE" --git-dir="$GIT_DIR" pull
-#git --work-tree="$GIT_WORK_TREE" --git-dir="$GIT_DIR" merge
-
-
-As usual, any and all feedback appreciated,
-thanks,
-Richard
+  --date=default
+  --date=rfc
+  --date=rfc2822
+  --date=iso
+  --date=iso8601
+  --date=short
+  --date=raw
+  --date=default --time-zone=default
+  --date=rfc     --time-zone=default
+  --date=rfc2822 --time-zone=default
+  --date=iso     --time-zone=default
+  --date=iso8601 --time-zone=default
+  --date=short   --time-zone=default
+  --date=raw     --time-zone=default
+  --date=default --time-zone=local
+  --date=rfc2822 --time-zone=local
+  --date=rfc     --time-zone=local
+  --date=iso     --time-zone=local
+  --date=iso8601 --time-zone=local
+  --date=short   --time-zone=local
+  --date=raw     --time-zone=local
+                 --time-zone=local
+                 --time-zone=default
