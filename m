@@ -1,444 +1,346 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 20/23] test: git test cleanups.
-Date: Sat, 23 Apr 2011 17:22:49 +1000
-Message-ID: <1303543372-77843-21-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH 21/23] Introduce git-atomic.
+Date: Sat, 23 Apr 2011 17:22:50 +1000
+Message-ID: <1303543372-77843-22-git-send-email-jon.seymour@gmail.com>
 References: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
 Cc: Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 23 09:25:02 2011
+X-From: git-owner@vger.kernel.org Sat Apr 23 09:25:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDXDC-0005Iv-AS
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 09:25:02 +0200
+	id 1QDXDD-0005Iv-2V
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 09:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746Ab1DWHYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Apr 2011 03:24:49 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:44129 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752696Ab1DWHYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2011 03:24:47 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 12so585772pvg.19
-        for <git@vger.kernel.org>; Sat, 23 Apr 2011 00:24:47 -0700 (PDT)
+	id S1752752Ab1DWHYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Apr 2011 03:24:52 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:39715 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752696Ab1DWHYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2011 03:24:50 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 9so584380pzk.19
+        for <git@vger.kernel.org>; Sat, 23 Apr 2011 00:24:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=uIFd1zf7M8nz+O2kvNXHYKtYFqonf+b9cc3HIXxnmSI=;
-        b=k84pTJcjihpaeL2/tZtbEOH/5clGKhOSppEEt4cauegHNTkXTPf0gnyhLJrcPLE96Y
-         hjT+KLT4m/YajE+GyL84Wd38y2HG73r43Ll0dNE/rbDzcYQOj2Sbdf+N6FI6jlqAbWBq
-         nu5+ecSV9o7KD1lr4uarzBGU6nfVoY/sOd8QQ=
+        bh=2L/Zw0d5C12qFvb7l6gaVHod5SA9bB+hOKVA00peLF8=;
+        b=qyP2pP/NMLBazFUpW0V7lavNEJM08g87SUKcGZj/0Mrc78eggC1/vLGmWkybyuTuA1
+         QG3CvCpObldrVjBsTruI4PrJf3m3Wsk+beMg17ef8oYcKtnEq3eFcYS7wdz6BrStXhZN
+         m3wAdrGjRIx4jM4usn96qUkpY40BK6WyCwTB8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZvDF8neoakn89F70jFyilcACnHt0iyspu6T4TapczioH9AdUcEpSCQwrH09+kc+9JO
-         XffRp6cXz5M26oCZBBpBzmwpjNw34ufrH8FuGDTr+j/FuLo7xmuW0SdLS88dplZmb20y
-         7ESjOI05v4B/gDwJLjXhc43Mi0dIMaTgxTkRE=
-Received: by 10.142.248.38 with SMTP id v38mr329484wfh.15.1303543487026;
-        Sat, 23 Apr 2011 00:24:47 -0700 (PDT)
+        b=MwIv5Y8eUKMNu4U4Agiu5k8OafIj02HAyQEhgdg9L6d/zDpEXD1Y7QclfwdUloBeil
+         YTUuh0uxzhqP3DtIeK0RVYF1oJddE3kQaG9Qfh1SarJBKuf9myTakUiwP1fuxltPNAX/
+         elNt336MCObmy0dDVxsT5vHLP1cOHlEX5ZNkA=
+Received: by 10.68.41.41 with SMTP id c9mr2023823pbl.32.1303543490018;
+        Sat, 23 Apr 2011 00:24:50 -0700 (PDT)
 Received: from localhost.localdomain (124-169-133-110.dyn.iinet.net.au [124.169.133.110])
-        by mx.google.com with ESMTPS id v8sm2498310pbk.95.2011.04.23.00.24.43
+        by mx.google.com with ESMTPS id v8sm2498310pbk.95.2011.04.23.00.24.47
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 23 Apr 2011 00:24:45 -0700 (PDT)
+        Sat, 23 Apr 2011 00:24:48 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.rc1.23.g7f622
 In-Reply-To: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171974>
 
+git atomic is intended to provide a simple way to for porcelains to
+execute atomic operations on the git repository.
+
+An atomic operation either completes successfully or the
+working tree, index and selected references are returned to their
+original state.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- Documentation/git-test.txt |   48 +++++++++++++++++++++---------------------
- git-conditions-lib.sh      |    4 +-
- git-test-lib.sh            |   11 +++++----
- t/t1520-test.sh            |   50 ++++++++++++++++++++++----------------------
- 4 files changed, 57 insertions(+), 56 deletions(-)
+ .gitignore                   |    2 +
+ Documentation/git-atomic.txt |   92 ++++++++++++++++++++++++++++++++++++++++++
+ Makefile                     |    2 +
+ git-atomic-lib.sh            |   58 ++++++++++++++++++++++++++
+ git-atomic.sh                |    5 ++
+ t/t3419-atomic.sh            |   59 +++++++++++++++++++++++++++
+ 6 files changed, 218 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-atomic.txt
+ create mode 100644 git-atomic-lib.sh
+ create mode 100755 git-atomic.sh
+ create mode 100755 t/t3419-atomic.sh
 
-diff --git a/Documentation/git-test.txt b/Documentation/git-test.txt
-index b7c3161..4fa765b 100644
---- a/Documentation/git-test.txt
-+++ b/Documentation/git-test.txt
-@@ -7,7 +7,7 @@ git-test - evaluates one or more conditions about the state of the git working t
+diff --git a/.gitignore b/.gitignore
+index aa0eb8fb..5efc43c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -11,6 +11,8 @@
+ /git-apply
+ /git-archimport
+ /git-archive
++/git-atomic
++/git-atomic-lib
+ /git-bisect
+ /git-bisect--helper
+ /git-blame
+diff --git a/Documentation/git-atomic.txt b/Documentation/git-atomic.txt
+new file mode 100644
+index 0000000..02bbee6
+--- /dev/null
++++ b/Documentation/git-atomic.txt
+@@ -0,0 +1,92 @@
++git-atomic(1)
++===========
++
++NAME
++----
++git-atomic - conditionally execute a command and, if it fails, restore the working tree, index and HEAD to their original state.
++
++SYNOPSIS
++--------
++[verse]
++'git atomic' [options] [--] [cmd args...]
++. $(git --exec-path)/git-atomic-lib.sh
++
++DESCRIPTION
++-----------
++The first form conditionally executes a command depending on whether the pre-conditions are satisified. If the command exits with a non-zero exit code, restores the
++working tree, index and HEAD to their orignal state. If no command is specified, sets the exit code according to the pre-conditions.
++
++'git atomic' exits with:
++
++0::
++	if the pre-conditions are satisified and the command executes successfully
++128::
++	if the command exited with an exit code of 128, 129, 130 or 131.
++129::
++	if git atomic failed during setup or argument parsing
++130::
++	if the pre-conditions were not satisified.
++131::
++	if the command failed and the original state could not be restored.
++
++Otherwise, exits with the actual exit code of the command.
++
++The second form is used to import the definition of a shell function called atomic that can be called by shell scripts that perform git operations. This is useful when the operations to be given atomic behaviour are themselves shell functions rather than external commands.
++
++OPTIONS
++-------
++The following options specify pre-condition tests on various lists which are assumed to be empty in the clean state and non-empty in the dirty state.
++
++The default required state for each specified pre-condition option is clean. The default required state for each unspecified pre-condition option is any, which
++means no tests are applied.
++
++--unstaged [any|clean|dirty]::
++	Fail unless the list of unstaged changes is empty (clean) or non-empty (dirty).	
++--staged   [any|clean|dirty]::
++	Fail unless the list of staged changes is empty (clean) or non-empty (dirty).
++--untracked [any|clean|dirty]::
++	Fail unless the list of untracked files is empty (clean) or non-empty (dirty).
++--tracked [any|clean|dirty]::
++	Fail unless the list of staged and unstaged changes is empty (clean) or non-empty (dirty).
++--unmerged [any|clean|dirty]::
++	Fail unless the list of unmerged files is empty (clean) or non-empty (dirty).
++--rebase [any|clean|dirty]::
++	Fail unless a rebase is not (clean) or is (dirty) in progress.
++--all::
++	Fail unless the list of staged, unstaged changes and untracked files is empty (clean) or non-empty (dirty)
++
++EXAMPLES
++--------
++* Reset the tree only if there are no staged or unstaged changes and no untracked files.
+++
++-----------
++git atomic --all clean git reset --hard upstream/master
++-----------
++* Conditionally perform a merge, but rollback and die if it fails.
+++
++-----------
++git atomic --all clean git merge topic || die "unable to merge"
++-----------
++* Import git-atomic-lib.sh into a script and make the execution of the function foo atomic with respect to the state of the git workspace
+++
++-----------
++. $(git --exec-path)/git-atomic-lib.sh
++foo()
++{
++    git merge $1
++}
++
++atomic foo $1
++-----------
++
++Author
++------
++Written by Jon Seymour <jon.seymour@gmail.com>
++
++Documentation
++-------------
++Documentation by Jon Seymour
++
++GIT
++---
++Part of the linkgit:git[7] suite
+diff --git a/Makefile b/Makefile
+index 93ff6c6..9ed877a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -360,6 +360,7 @@ TEST_PROGRAMS_NEED_X =
+ unexport CDPATH
  
- SYNOPSIS
- --------
--The git test API is available in the form of a command and also as a shell library. 
-+The git test API is available in the form of a command and also as a shell library.
+ SCRIPT_SH += git-am.sh
++SCRIPT_SH += git-atomic.sh
+ SCRIPT_SH += git-bisect.sh
+ SCRIPT_SH += git-difftool--helper.sh
+ SCRIPT_SH += git-filter-branch.sh
+@@ -379,6 +380,7 @@ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-test.sh
+ SCRIPT_SH += git-web--browse.sh
  
- COMMAND SYNOPSIS
- ----------------
-@@ -27,28 +27,28 @@ DESCRIPTION
- `git test` provides a uniform, extensible API for evaluating various conditions that
- pertain to the state of a git working tree, index and repository.
- 
--Specified conditions are evaluated from left to right. If any condition evaluates to false, 
--the command conditionally prints a diagnostic message to stderr and sets a 
--non-zero status code. Otherwise, sets a status code of zero. 
-+Specified conditions are evaluated from left to right. If any condition evaluates to false,
-+the command conditionally prints a diagnostic message to stderr and sets a
-+non-zero status code. Otherwise, sets a status code of zero.
- 
- The message used to report a assertion failure may be overidden by specifying the --message option.
- 
--Diagnostic output resulting from an assertion failure may be suppressed with the -q option. 
--Note that the -q option does not suppress diagnostic output that results from the failure to 
-+Diagnostic output resulting from an assertion failure may be suppressed with the -q option.
-+Note that the -q option does not suppress diagnostic output that results from the failure to
- successfully parse the arguments that configure the test API.
- 
--The `assert` and `test_condition` functions differ according to how they handle failing conditions. 
-+The `assert` and `test_condition` functions differ according to how they handle failing conditions.
- 
--The `assert` function behaves like the test command but assertion failures will cause 
-+The `assert` function behaves like the test command but assertion failures will cause
- the current shell to exit with a non-zero status code. To prevent this occurring, invoke
- the `assert` function within a subshell or use the `test_condition` function instead.
- 
- The `test_condition` function will not exit the current shell in the event that an assertion failure
--is detected nor will it generate diagnostic relating to an assertion failure to stderr. 
-+is detected nor will it generate diagnostic relating to an assertion failure to stderr.
- 
--Note, however, that `test_condition` may still exit the current shell with a non-zero status code 
--if it is unable to successfully parse the arguments presented to it. Callers who need to protect 
--against this possibility either guarantee that the required arguments are available or 
-+Note, however, that `test_condition` may still exit the current shell with a non-zero status code
-+if it is unable to successfully parse the arguments presented to it. Callers who need to protect
-+against this possibility either guarantee that the required arguments are available or
- imbed calls to `test_condition` within a subshell.
- 
- The `require_condition_libs` function may be used to include any condition libs listed
-@@ -77,7 +77,7 @@ CONDITIONS
- '--detached'|'--not-detached'::
- 	Tests if the head is (not) detached.
- '--branch-exists'|'--not-branch-exists branch'::
--        Tests if the specified branch does (not) exist.				    
-+	Tests if the specified branch does (not) exist.
- '--tag-exists'|'--not-tag-exists tag'::
-         Tests if the specified tag does (not) exist.
- '--ref-exists'|'--not-ref-exists tag'::
-@@ -95,15 +95,15 @@ CONDITIONS
- 
- EXTENDING THE CONDITION LIBRARY
- -------------------------------
--The library of conditions that the assert API can process may be extended by 
--adding functions of the form check_\{dehyphenated_condition_name\}_N to the 
--shell environment, where \{dehyphenated_condition_name\} is the result of 
--replacing any occurrence of \'-\' in the condition name with \'_\' and 
-+The library of conditions that the assert API can process may be extended by
-+adding functions of the form check_\{dehyphenated_condition_name\}_N to the
-+shell environment, where \{dehyphenated_condition_name\} is the result of
-+replacing any occurrence of \'-\' in the condition name with \'_\' and
- N is the number of arguments that need to be passed to the function.
- 
--For example, suppose you are writing a script, foo.sh, that includes the git test library 
--and that you want to add a new, 1-argument, condition, foo-X to the library of 
--conditions that can be tested by the git testion framework. 
-+For example, suppose you are writing a script, foo.sh, that includes the git test library
-+and that you want to add a new, 1-argument, condition, foo-X to the library of
-+conditions that can be tested by the git testion framework.
- 
- ---------
- #/bin/sh
-@@ -133,8 +133,8 @@ executes without generating any output on stdout. The resulting
- state will then be interpreted as condition evaluation failure
- rather than an assertion failure.
- 
--To make such conditions available to the git test command line, put the 
--function in a file called ~/foo-lib,sh add a reference 
-+To make such conditions available to the git test command line, put the
-+function in a file called ~/foo-lib,sh add a reference
- to the library to the git configuration, like so:
- 
- ---------
-@@ -163,9 +163,9 @@ git test --not-staged --not-unstaged && git reset --hard another-commit
- -----------
- . $(git --exec-path)/git-test-lib
- assert --not-staged   	      	                              # die if there are any staged files
--assert --message "there are staged files" --not-staged	      # die with an alternative message 
-+assert --message "there are staged files" --not-staged	      # die with an alternative message
-                                                               # if there are any staged files
--test_condition --not-staged || echo "there are staged files"  # check whether there are staged files, 
-+test_condition --not-staged || echo "there are staged files"  # check whether there are staged files,
-                                                               # but do not die if there are
- -----------
- 
-diff --git a/git-conditions-lib.sh b/git-conditions-lib.sh
-index ec9b516..8933321 100644
---- a/git-conditions-lib.sh
-+++ b/git-conditions-lib.sh
-@@ -141,13 +141,13 @@ check_reachable_2()
- 	first=$(git rev-parse --quiet --verify "$1" 2>/dev/null) || die "'$1' is not a commit"
- 	second=$(git rev-parse --quiet --verify "$2" 2>/dev/null) || die "'$2' is not a commit"
- 	if test "$first" = "$second" \
--                -o -z "$(git rev-list -n1 "$first" ^"$second")" 
-+	    -o -z "$(git rev-list -n1 "$first" ^"$second")"
- 	then
- 		echo "'$1' is reachable from '$2'."
- 	else
- 		echo "'$1' is not reachable from '$2'."
- 		false
--	fi     
++SCRIPT_LIB += git-atomic-lib
+ SCRIPT_LIB += git-conditions-lib
+ SCRIPT_LIB += git-mergetool--lib
+ SCRIPT_LIB += git-parse-remote
+diff --git a/git-atomic-lib.sh b/git-atomic-lib.sh
+new file mode 100644
+index 0000000..db48300
+--- /dev/null
++++ b/git-atomic-lib.sh
+@@ -0,0 +1,58 @@
++#!/bin/sh
++#
++# Provides a function that provides for robust recovery from
++#
++. git-test-lib
++atomic()
++{
++    assert --not-conflicted --message "cannot perform an atomic operation while there are merge conflicts"
++    HEAD=$(git rev-parse --verify HEAD) || setup_failed "failed to resolve HEAD"
++    if REF=$(git symbolic-ref -q HEAD)
++    then
++          BRANCH=${REF#refs/heads/}
++    else
++        BRANCH=${HEAD}
++    fi
++
++    STASH=$(git stash create) || setup_failed "failed to stash"
++    REF=$(git rev-parse --symbolic-full-name HEAD) || setup_failed "failed to acquire REF"
++    REBASE_COUNT=1
++    test_condition -q --rebasing || REBASE_COUNT=0
++
++    (
++      "$@"
++    ) || (
++       RC=$?
++
++       command_failed()
++       {
++           rc=$1
++	   shift
++           echo "command failed: $* rc=$rc" 1>&2
++           exit 1
++       }
++
++       restore_failed()
++       {
++           echo "restore failed: $*" 1>&2
++           exit 2
++       }
++
++       if test $REBASE_COUNT -eq 0 && test -d "$REBASE_DIR"
++       then
++            git rebase --abort || restore_failed "failed to abort rebase"
++       fi
++
++	{
++		git reset --hard HEAD &&
++		git checkout -q ${BRANCH}
++	} || restore_failed "failed to checkout ${BRANCH}"
++
++	if test -n "$STASH"
++	then
++		git stash apply --index "$STASH" || restore_failed "failed to reapply stash $STASH to $HEAD"
++		echo "restored $REF to $(git describe --always --abbrev=6 $HEAD), reapplied stash $(git describe --always --abbrev=6 $STASH)" 1>&2
 +	fi
- }
- 
- check_tree_same_2()
-diff --git a/git-test-lib.sh b/git-test-lib.sh
-index 159cea6..e0395eb 100644
---- a/git-test-lib.sh
-+++ b/git-test-lib.sh
-@@ -34,7 +34,7 @@ require_lib()
- require_condition_libs() {
- 	eval $(
- 		git config --get-all condition.lib | while read lib
--		do 
-+		do
- 			echo "require_lib \"$lib\" \;"
- 		done	
- 	)
-@@ -42,7 +42,7 @@ require_condition_libs() {
- 
- assertion_failed() {
- 	rc=$1
--	shift 
-+	shift
- 	message="${MESSAGE:-$*}"
- 	if ! ${QUIET:-false}
- 	then
-@@ -98,6 +98,7 @@ impl() {
- 		shift
- 		case $word in
- 			--message)
-+			test $# -gt 0 || die "--message requires the following argument to be a message"
- 			MESSAGE=$1
- 			shift
- 			continue
-@@ -106,7 +107,7 @@ impl() {
- 				test $# -gt 0 || die "can't shift 1 argument for --include option"
- 				test -f "$1" || die "'$1' must be a file"
- 				require_lib "$1"
--				shift 
-+				shift
- 				continue
- 			;;
- 			-q)
-@@ -143,7 +144,7 @@ impl() {
- 
- 		exprs="${exprs}${exprs:+ }${negation}${negation:+ }$word $try check_${dehyphenated}_$try $args"
- 
--	done 
-+	done
- 
- 	set -- $exprs
- 	while test $# -gt 0
-@@ -158,7 +159,7 @@ impl() {
- 		word=$1
- 		nargs=$2
- 		shift 2
--		message=$(eval $negation "$@") 
-+		message=$(eval $negation "$@")
- 		rc=$?
- 		if test $rc -ne 0
- 		then
-diff --git a/t/t1520-test.sh b/t/t1520-test.sh
-index 1db3598..3e0571b 100755
---- a/t/t1520-test.sh
-+++ b/t/t1520-test.sh
-@@ -46,7 +46,7 @@ test_expect_assertion_failure()
- {
- 	test=$1
- 	message=$2
--	shift 
-+	shift
- 	test_expect_success $1 \
- "
- 	! actual_message=$(git test "$@" 1>&2) &&
-@@ -62,11 +62,11 @@ test_expect_assertion_failure()
- 
- test_expect_success 'setup' \
- '
--	git add test-assertions-lib.sh empty-assertions-lib.sh && 
-+	git add test-assertions-lib.sh empty-assertions-lib.sh &&
- 	test_commit base &&
- 	test_commit A &&
- 	git checkout A^1 &&
--	test_commit B && 
-+	test_commit B &&
- 	git checkout master &&
- 	test_merge M B &&
- 	echo C >> B.t &&
-@@ -85,7 +85,7 @@ test_expect_success 'setup' \
- 	git checkout A^0 -- &&
- 	test_commit G &&
- 	git checkout master &&
--	git reset --hard D     
-+	git reset --hard D
- '
- 
- test_expect_success 'git test # no arguments' \
-@@ -194,7 +194,7 @@ test_expect_success 'git test --not-unstaged' \
- 
- test_expect_success 'git test --unstaged # when there are unstaged files' \
- '
--	test_when_finished "git reset --hard HEAD && git checkout master" && 
-+	test_when_finished "git reset --hard HEAD && git checkout master" &&
- 	git checkout -f M^0 &&
- 	git stash apply --index STASH_UNSTAGED &&
- 	git test --unstaged
-@@ -202,7 +202,7 @@ test_expect_success 'git test --unstaged # when there are unstaged files' \
- 
- test_expect_success 'git test --not-unstaged # when there are unstaged files - should fail' \
- '
--	test_when_finished "git reset --hard HEAD && git checkout master" && 
-+	test_when_finished "git reset --hard HEAD && git checkout master" &&
- 	git checkout -f M^0 &&
- 	git stash apply --index STASH_UNSTAGED &&
- 	test_must_fail git test --not-unstaged
-@@ -210,7 +210,7 @@ test_expect_success 'git test --not-unstaged # when there are unstaged files - s
- 
- test_expect_success 'git test --unstaged # when there are only staged files' \
- '
--	test_when_finished "git reset --hard HEAD && git checkout master" && 
-+	test_when_finished "git reset --hard HEAD && git checkout master" &&
- 	git checkout -f M^0 &&
- 	git stash apply --index STASH_STAGED &&
- 	git test --not-unstaged
-@@ -228,7 +228,7 @@ test_expect_success 'git test --not-staged' \
- 
- test_expect_success 'git test --staged # when there are staged files' \
- '
--	test_when_finished "git reset --hard HEAD && git checkout master" && 
-+	test_when_finished "git reset --hard HEAD && git checkout master" &&
- 	git checkout -f M^0 &&
- 	git stash apply --index STASH_STAGED &&
- 	git test --staged
-@@ -236,7 +236,7 @@ test_expect_success 'git test --staged # when there are staged files' \
- 
- test_expect_success 'git test --not-staged # when there are staged files - should fail' \
- '
--	test_when_finished "git reset --hard HEAD && git checkout master" && 
-+	test_when_finished "git reset --hard HEAD && git checkout master" &&
- 	git checkout -f M^0 &&
- 	git stash apply --index STASH_STAGED &&
- 	test_must_fail git test --not-staged
-@@ -244,7 +244,7 @@ test_expect_success 'git test --not-staged # when there are staged files - shoul
- 
- test_expect_success 'git test --staged # when there are only unstaged files' \
- '
--	test_when_finished "git reset --hard HEAD && git checkout master" && 
-+	test_when_finished "git reset --hard HEAD && git checkout master" &&
- 	git checkout -f M^0 &&
- 	git stash apply --index STASH_UNSTAGED &&
- 	git test --not-staged
-@@ -262,14 +262,14 @@ test_expect_success 'git test --not-untracked' \
- 
- test_expect_success 'git test --untracked # when there are untracked files' \
- '
--	test_when_finished "git clean -fd" && 
-+	test_when_finished "git clean -fd" &&
- 	:> untracked &&
- 	git test --untracked
- '
- 
- test_expect_success 'git test --not-untracked # when there are untracked files - should fail' \
- '
--	test_when_finished "git clean -fd" && 
-+	test_when_finished "git clean -fd" &&
- 	:> untracked &&
- 	test_must_fail git test --not-untracked
- '
-@@ -286,14 +286,14 @@ test_expect_success 'git test --detached # should fail' \
- 
- test_expect_success 'git test --not-detached # when detached, should fail' \
- '
--	test_when_finished "git checkout -f master" && 
-+	test_when_finished "git checkout -f master" &&
- 	git checkout HEAD^0 &&
- 	test_must_fail git test --not-detached
- '
- 
- test_expect_success 'git test --detached # when detached' \
- '
--	test_when_finished "git checkout -f master" && 
-+	test_when_finished "git checkout -f master" &&
- 	git checkout HEAD^0 &&
- 	git test --detached
- '
-@@ -413,7 +413,7 @@ test_expect_success 'same' \
-    git test \
-       --same master HEAD \
-       --not-same D D1 \
--      --not-same C D 
-+      --not-same C D
- '
- 
- test_expect_success 'clean' \
-@@ -424,7 +424,7 @@ test_expect_success 'clean' \
-        --not-detached \
-        --not-untracked \
-        --not-rebasing \
--       --not-conflicted 
-+       --not-conflicted
- '
- 
- test_expect_success 'existence' \
-@@ -439,7 +439,7 @@ test_expect_success 'existence' \
-        --tag-exists D \
-        --not-tag-exists N \
-        --not-tag-exists master \
--       --not-branch-exists A 
-+       --not-branch-exists A
- '
- 
- test_expect_success 'git test --conflicted # should fail' \
-@@ -454,17 +454,17 @@ test_expect_success 'git test --not-conflicted' \
- 
- test_expect_success 'git test --conflicted' \
- '
--	test_when_finished "git reset --hard HEAD" && 
-+	test_when_finished "git reset --hard HEAD" &&
-         ! git merge F &&
--	git test --conflicted 
-+	git test --conflicted
- 	
- '
- 
- test_expect_success 'git test --not-conflicted # should fail when there are conflcted files' \
- '
--	test_when_finished "git reset --hard HEAD" && 
-+	test_when_finished "git reset --hard HEAD" &&
-         ! git merge F &&
--	test_must_fail git test --not-conflicted 
-+	test_must_fail git test --not-conflicted
- 	
- '
- 
-@@ -482,12 +482,12 @@ test_expect_success 'git test --rebasing' \
- '
- 	test_when_finished "
- 		git reset --hard HEAD &&
--		git checkout -f master && 
-+		git checkout -f master &&
- 		git branch -D rebase
--	" && 
-+	" &&
-         git branch rebase F &&
-         ! git rebase --onto D F~1 F
--	git test --rebasing 
-+	git test --rebasing
- 	
- '
- 
-@@ -497,7 +497,7 @@ test_expect_success 'git test --not-rebasing' \
- 		git reset --hard HEAD &&
- 		git checkout -f master &&
- 		git branch -D rebase
--	" && 
-+	" &&
-         git branch rebase F &&
-         ! git rebase --onto D F~1 F
- 	test_must_fail git test --not-rebasing
++	command_failed $RC "$*"
++    )
++}
+diff --git a/git-atomic.sh b/git-atomic.sh
+new file mode 100755
+index 0000000..aa14e68
+--- /dev/null
++++ b/git-atomic.sh
+@@ -0,0 +1,5 @@
++#!/bin/sh
++SUBDIRECTORY_OK=true
++. git-sh-setup
++. git-atomic-lib
++atomic "$@"
+diff --git a/t/t3419-atomic.sh b/t/t3419-atomic.sh
+new file mode 100755
+index 0000000..2b651d2
+--- /dev/null
++++ b/t/t3419-atomic.sh
+@@ -0,0 +1,59 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Jon Seymour
++#
++
++test_description='git atomic tests
++
++Performs tests on the functions of git atomic
++'
++. ./test-lib.sh
++
++GIT_AUTHOR_NAME=author@name
++GIT_AUTHOR_EMAIL=bogus@email@address
++export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
++
++test_expect_success \
++    'setup' \
++    '
++    test_commit A &&
++    test_commit B &&
++    test_commit C &&
++    test_commit D &&
++    git checkout -b branch A &&
++    test_commit X &&
++    echo >> B.t &&
++    git add B.t &&
++    test_commit Y
++    true
++'
++
++test_expect_success 'no arguments' '
++    git atomic
++'
++
++test_expect_success 'successful command' \
++'
++    git atomic true
++'
++
++test_expect_success 'unsuccessful command' \
++'
++    ! git atomic false
++'
++
++test_expect_success 'rebase' \
++'
++     git reset --hard HEAD &&
++     git checkout master &&
++     MASTER=$(git rev-parse HEAD) &&
++     ! git rebase --onto D A Y &&
++     git test --conflicted &&
++     git rebase --abort &&
++     git checkout master &&
++     ! git atomic git rebase --onto D A Y &&
++     git test --same HEAD refs/heads/master &&
++     git test --same HEAD $MASTER
++'
++
++test_done
 -- 
 1.7.5.rc1.23.g7f622
