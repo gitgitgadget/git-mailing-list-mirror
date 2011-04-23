@@ -1,80 +1,207 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Time zone option name (Re: [RFC 5/5] Date Mode: Tests)
-Date: Fri, 22 Apr 2011 22:27:51 -0700
-Message-ID: <7vfwp9mt9k.fsf@alter.siamese.dyndns.org>
-References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
- <bbf61df6-b7fa-429e-866e-899354953cbd-mfwitten@gmail.com>
- <7vd3kfusva.fsf@alter.siamese.dyndns.org>
- <453b72ab-40cc-431b-9865-3080c250a7dd-mfwitten@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 23 07:28:09 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 00/23] RFC: Introducing git-test, git-atomic, git-base and git-work
+Date: Sat, 23 Apr 2011 17:22:29 +1000
+Message-ID: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
+Cc: Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 23 09:24:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDVO4-0008Qc-Mm
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 07:28:09 +0200
+	id 1QDXCB-0004YJ-M8
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 09:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442Ab1DWF2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Apr 2011 01:28:04 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61334 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751288Ab1DWF2C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2011 01:28:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CDF5D3790;
-	Sat, 23 Apr 2011 01:29:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vtCfpu3XUCujW4hiYJzqJMacP0Y=; b=r40uaZ
-	9Z0JTQNdPql0tuopo2hW4sYIsr7M4gGOwg3/C2ltfxajtrCnalCMnw10g/agWy6h
-	vmMC+8MFsudoVCICnuySBUjIi/IZzK1myg0dsVWFCygJlfYqRWtaRP+EwTpsAN0a
-	m/ajEDrh4DfbKhLNoCPd3agEkQaSkhIPYBtsk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RkRfT/PZtYEqc43TGwCgr8JElxw2I+fp
-	SCadwkyFxiU+dUr5iibCq6ZxvlgmZsDESaoXGyc2PHWBlY3zkCqHzOpe81rVJDng
-	Sh2pRJF7GfC/WCvOhzgNGOQSyT9hZ4faxMWrGuXYUij0cnKpN4XvNiSxL5rgKFVS
-	TZdMpHLaQb8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AC287378F;
-	Sat, 23 Apr 2011 01:29:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D0262378C; Sat, 23 Apr 2011
- 01:29:53 -0400 (EDT)
-In-Reply-To: <453b72ab-40cc-431b-9865-3080c250a7dd-mfwitten@gmail.com>
- (Michael Witten's message of "Sat, 23 Apr 2011 03:45:51 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B9709EA0-6D6A-11E0-A766-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751738Ab1DWHXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Apr 2011 03:23:42 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:44129 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab1DWHXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2011 03:23:42 -0400
+Received: by pvg12 with SMTP id 12so585772pvg.19
+        for <git@vger.kernel.org>; Sat, 23 Apr 2011 00:23:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=kz6dStD8O0QxmwlXhqoONzW+Vuh9tT9TSynha+G2MpA=;
+        b=AT/3aYSuiZ4wN1Cp/TDQNqy9kdybMVqhymuSt2nxUJyBYuR7rJ0Us8poNygDVugIDK
+         r6H9IXqd5c0OOslqU9MSDO0tufEfPKjacnoAXgg7OTGa3BJ6ta1PGmjQxiEbexApq5bH
+         Ifwi9F3UVUlKREjICG4qlc+fFA6eVyGasx/pw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=JxaumY+zXdiVehRRaescHLG7qVEJmf1H0bVQCuj+12ab9j2lVUNf6MtzP/dG5/OKn0
+         nrHRAwdQTyThKx0ScAL7FLWm45XrhUTIeKrmdiijYwl7p1RaH+uW59WQL0IEGGZktKbT
+         MCIuJui77+ZAsN90oVnXERt0vtWgFEfQlmWSg=
+Received: by 10.68.6.135 with SMTP id b7mr2302533pba.296.1303543421688;
+        Sat, 23 Apr 2011 00:23:41 -0700 (PDT)
+Received: from localhost.localdomain (124-169-133-110.dyn.iinet.net.au [124.169.133.110])
+        by mx.google.com with ESMTPS id v8sm2498310pbk.95.2011.04.23.00.23.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 23 Apr 2011 00:23:40 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.rc1.23.g7f622
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171954>
 
-Michael Witten <mfwitten@gmail.com> writes:
+This series is posted in order to solicit feedback about some commands I'd like to propose for inclusion in git. 
 
-> I'd like to clarify what you intend the new time zone option to be named; my
-> patch series currently uses `--time-zone' (which is admittedly long), but it
-> would appear here that you find `--zone' attractive.
+The commands are:
+   git test
+   git atomic
+   git base
+   git work
 
-Sorry, that was just me being sloppy, writing barely enough for you and
-readers to be able to tell which one of the two options you used in your
-patch is what I was referring to.
+git work
+========
 
-The word "zone" may mean something other than timezone in future versions
-of git, and I do not want to see us regret this feature squatting on a
-short and sweet "--zone" option if/when it happens.  Your "--time-zone"
-(or a single-word "--timezone") would be far better.
+git work depends on the other 3 commands. 
 
-The "--date={local,default,short,...}" option might want to have a longer
-synonym "--date-format={...ditto...}", as some commands take the value of
-the timestamp as a parameter to their "--date=" option, but that is minor
-and definitely should not be part of this series.
+git work is the command I have been using every day myself for the last 8 months. It is the primary means
+I use to manage my working tree.
 
-Thanks.
+The basic idea of git work is to help manage a private working tree using the following principles:
+
+* all dependencies received from others are merged into the 'base' of the working tree
+
+  git work merge some-dependency
+
+     - merges some-dependency into $(git base) producing (1)
+     - rebases $(git base)..HEAD onto (1) producing (2)
+     - resets the current branch to (2)
+     - updates $(git base) to refer to (1)
+
+* all unpublished work is managed as a linear sequence of commits on top of the 'base' of the working tree
+
+  so, 
+   git work --as-refs # shows you a symbolic range for your current work
+   git work # shows you a SHA1 range for your current work
+   gitk $(git work) # shows you your unpublished work
+   git diff $(git work) # shows you the diff of your current work
+
+* prior to publishing work, you rebase it onto an appropriate base commit
+
+  so,
+
+  git branch topic upstream/master # choose the base commit for the topic
+  git work update topic HEAD~3     # pull the top 3 commits off the working tree onto the topic
+
+    - rebases HEAD~3..HEAD onto topic to produce (1)
+    - merges topic into $(git base) to produce (2)
+    - rebases $(git base)..HEAD~3 onto (2) to produce (3)
+    - resets the current branch to (3)
+    - resets $(git base) to (2)
+
+The nice thing about managing your work tree this way is that your working tree remains
+relatively stable (it always contains everything you have recently been working on)
+and your topic branches remain clean (i.e. they never contain any other cruft from your 
+working tree).
+
+git base
+========
+
+git base is a command that is heavily relied on by git work, and is occasionally used by
+the user to reset the base of their working tree.
+
+git base tries to automagically maintain the base of the working tree by maintaining
+an invariant that the path between the base and the tip of the current branch should
+never traverse a merge. If it ever finds the invariant violated, it calls 'git base reset'
+to attempt to restore the invariant. 
+
+For more information about git base, refer to the Documentation/git-base.txt
+
+git atomic
+==========
+git atomic is more an experiment than anything else. The idea is to run another git operation "atomically".
+The git operation either succeeds or it fails. If it fails, git branch attempts to restore the
+working tree and current branch to the state they were in to their original state prior to the comamnd being run.
+
+The reason I need something like this is that git work performs several operations in sequence some
+of which I can't guarantee will work. I don't want the user to work out what they have to do
+to recover, so I try to restore to the state they were originally in.
+
+Note: the current implementation doesn't handle rebase failures properly and would probably needed
+to be cleaned up a little before being accepted into the mainline.
+
+git test
+========
+This is another experiment. The idea is to provide a uniform way to test for various conditions
+into the working tree, index and repo. For example:
+
+    git test --not-unstaged --branch-exists foobar
+
+will fail if there are unstaged files in the working tree or the branch foobar does not exist.
+
+As I say, git atomic and git test are somewhat experimental. I don't really care about those commands
+and if the consensus is that git doesn't need them, I am happy to rework git base and git work
+to not use them.
+
+However, I would like to propose git base and git work as being very useful additions to the git toolset.
+
+Let me know if the consensus is that I should proceed with a submission and I will prepare one.
+
+Jon Seymour (23):
+  Introduce git-test.sh and git-test-lib.sh
+  Introduce --unstaged.
+  Introduce --staged
+  Introduce --untracked.
+  Introduce --conflicted
+  Introduce --rebasing
+  Introduce --detached
+  Introduce --branch-exists
+  Introduce --tag-exists
+  Introduce --ref-exists
+  Introduce --commit-exists.
+  Introduce --checked-out
+  Introduce --reachable
+  Introduce --tree-same.
+  Introduce --same
+  misc
+  whitespace fix.
+  tests --conflicted.
+  rebasing: add tests
+  test: git test cleanups.
+  Introduce git-atomic.
+  Introduce git base.
+  Introduce support for the git-work command.
+
+ .gitignore                   |    7 +
+ Documentation/config.txt     |   10 +
+ Documentation/git-atomic.txt |   92 ++++++++
+ Documentation/git-base.txt   |  216 ++++++++++++++++++
+ Documentation/git-test.txt   |  182 +++++++++++++++
+ Documentation/git-work.txt   |  163 ++++++++++++++
+ Makefile                     |    7 +
+ git-atomic-lib.sh            |   58 +++++
+ git-atomic.sh                |    5 +
+ git-base.sh                  |  378 +++++++++++++++++++++++++++++++
+ git-conditions-lib.sh        |  176 +++++++++++++++
+ git-test-lib.sh              |  188 ++++++++++++++++
+ git-test.sh                  |   11 +
+ git-work.sh                  |  323 +++++++++++++++++++++++++++
+ t/t1520-test.sh              |  506 ++++++++++++++++++++++++++++++++++++++++++
+ t/t3418-base.sh              |  214 ++++++++++++++++++
+ t/t3419-atomic.sh            |   59 +++++
+ t/t3421-work.sh              |  174 +++++++++++++++
+ 18 files changed, 2769 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-atomic.txt
+ create mode 100644 Documentation/git-base.txt
+ create mode 100644 Documentation/git-test.txt
+ create mode 100644 Documentation/git-work.txt
+ create mode 100644 git-atomic-lib.sh
+ create mode 100755 git-atomic.sh
+ create mode 100644 git-base.sh
+ create mode 100644 git-conditions-lib.sh
+ create mode 100644 git-test-lib.sh
+ create mode 100755 git-test.sh
+ create mode 100644 git-work.sh
+ create mode 100755 t/t1520-test.sh
+ create mode 100755 t/t3418-base.sh
+ create mode 100755 t/t3419-atomic.sh
+ create mode 100755 t/t3421-work.sh
+
+-- 
+1.7.5.rc1.23.g7f622
