@@ -1,63 +1,73 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH 00/23] RFC: Introducing git-test, git-atomic, git-base and git-work
-Date: Sun, 24 Apr 2011 04:37:05 +1000
-Message-ID: <BANLkTi=UDYT1hjpFT0LcgL6XvAGtTXMBLw@mail.gmail.com>
-References: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
-	<20110423091300.GC9206@m62s10.vlinux.de>
-	<BANLkTinhjMtNc257NnOCZe6askr2i=4g6Q@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Log not displaying properly?
+Date: Sat, 23 Apr 2011 15:24:53 -0500
+Message-ID: <20110423202453.GA31200@elie>
+References: <1303529113364-6298788.post@n2.nabble.com>
+ <1303577279897-6299742.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 23 20:37:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: adam_kb <a-kyle@hotmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 23 22:25:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDhhj-0002IY-OV
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 20:37:16 +0200
+	id 1QDjOS-0006lP-GJ
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 22:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754500Ab1DWShI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Apr 2011 14:37:08 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:34841 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754039Ab1DWShH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2011 14:37:07 -0400
-Received: by ewy4 with SMTP id 4so413443ewy.19
-        for <git@vger.kernel.org>; Sat, 23 Apr 2011 11:37:06 -0700 (PDT)
+	id S1755685Ab1DWUZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Apr 2011 16:25:00 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:53158 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755529Ab1DWUZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2011 16:25:00 -0400
+Received: by iyb14 with SMTP id 14so1094973iyb.19
+        for <git@vger.kernel.org>; Sat, 23 Apr 2011 13:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=zQe9s5WimU3+MG1HCgXQeaGEFL/1kbLhT1XkHl+38Og=;
-        b=D0ryAQJgjX6T7WEvSsk1NJd9mGzlhN6vzMr0IIsrV26GIoHRVvIgWCxufiaBuk53wq
-         J9DhTJPdC+Jkac8ebXAqxHgYyBSFCMkM2rYwtk7OJwQtEvOs3t5Hq7Fkb31CPmGJD6Ig
-         sjYV6r0RcRRBz07d4m51ycYuWGeY5p5EmyNbs=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=ddYmwoaOhEE4VUzTfHPmoPytFscRGtcQiUVffphn8qM=;
+        b=f6+FVgORgE9/mK15EAD4hJxfkgatVH5qFR+TNoRIa4hwbu99Je+lRsOZuaZvpDaUrg
+         85tFdf6UwskCOYoa+VbOu54cWy2aIM9tLajQocFNa7EbmFSKyufJuMESvtjibDSGr10+
+         f5F3r4rPxdBqm4z4huWd92Hx8AnPv8oO76lMo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Fozyx6BJ4ZpFMtRoA661i38Igod88xIHXR3CWKitNZ/f1aSEWLk3sQVAP5ahchVa4z
-         +zUEC+Ls125YMGFKGmiXn2K+QtIgkzeCb+MPlmRuQn1FndcGhOeHtza9faYJ7qGrA0kT
-         /PveYpmk5dbpCf72pW2VHBzSN3HEejZpZ7+1o=
-Received: by 10.14.17.23 with SMTP id i23mr630762eei.234.1303583826244; Sat,
- 23 Apr 2011 11:37:06 -0700 (PDT)
-Received: by 10.14.45.3 with HTTP; Sat, 23 Apr 2011 11:37:05 -0700 (PDT)
-In-Reply-To: <BANLkTinhjMtNc257NnOCZe6askr2i=4g6Q@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ICItHobqBnqnNpT0bwzn9hkrE9TjKH+IT27nNevG7GkpFaeSKDIPp/NbXwzWcsIvIc
+         +VrTY9nCccQWh6joOeJsk+P/75u2mijEwmjaeokSkKsseq4GQcaqmiaWbFOFJGUjQyt1
+         vc2i/YSy+F/RJ7YognHxX/3N62Yagstu04kNw=
+Received: by 10.42.108.7 with SMTP id f7mr3001837icp.460.1303590299639;
+        Sat, 23 Apr 2011 13:24:59 -0700 (PDT)
+Received: from elie (adsl-69-209-64-141.dsl.chcgil.sbcglobal.net [69.209.64.141])
+        by mx.google.com with ESMTPS id i20sm1602499iby.14.2011.04.23.13.24.57
+        (version=SSLv3 cipher=OTHER);
+        Sat, 23 Apr 2011 13:24:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1303577279897-6299742.post@n2.nabble.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171987>
 
-BTW anyone interested in trying git work can fetch the tag containing
-this series from my github fork
+Hi,
 
-Web link here:
+adam_kb wrote:
 
-https://github.com/jonseymour/git/tree/work-20110423
+> Hi guys Could I get some help on this issue? Thanks
 
-git://github.com/jonseymour/git, tag  work-20110423
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html
 
-jon.
+By this I don't mean that it's a bug necessarily, just that the
+interested people on the list might have had trouble imagining what
+exactly went wrong (or in other words, how to reproduce it).  So it
+can help to show us.
+
+Thanks for writing,
+Jonathan
