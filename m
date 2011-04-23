@@ -1,326 +1,242 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 22/23] Introduce git base.
-Date: Sat, 23 Apr 2011 17:22:51 +1000
-Message-ID: <1303543372-77843-23-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH 23/23] Introduce support for the git-work command.
+Date: Sat, 23 Apr 2011 17:22:52 +1000
+Message-ID: <1303543372-77843-24-git-send-email-jon.seymour@gmail.com>
 References: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
 Cc: Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 23 09:25:08 2011
+X-From: git-owner@vger.kernel.org Sat Apr 23 09:25:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDXDD-0005Iv-JB
+	id 1QDXDE-0005Iv-93
 	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 09:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801Ab1DWHY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752809Ab1DWHY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Apr 2011 03:24:59 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:44129 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752753Ab1DWHY5 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 23 Apr 2011 03:24:57 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:34280 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752696Ab1DWHYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2011 03:24:53 -0400
-Received: by mail-px0-f179.google.com with SMTP id 2so862616pxi.10
-        for <git@vger.kernel.org>; Sat, 23 Apr 2011 00:24:53 -0700 (PDT)
+Received: by mail-pv0-f174.google.com with SMTP id 12so585772pvg.19
+        for <git@vger.kernel.org>; Sat, 23 Apr 2011 00:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=gylOs75c/omnWph8iAsBvEEPUSCyR2cvBL0eKp/E/Oo=;
-        b=hmMNFouHjnd1NbwIOv38OCGGTJP9wSnwONLiuGK/0wcGKkf80YPZvYd+GPQ665bpPb
-         z+1zWaTRbw//24iKQUzS95fe7Jl93lnT9mMgq06rWLen+u+MUcSr82J0brn7DkMpRSlf
-         hyjOxAfvyX9O8rqyUAbLze78VuqcqqY2VqSnQ=
+        bh=XrBy9VXgW+5RBhAsp7lnYEV/wxNzcqKdlJxW8uTRmeM=;
+        b=wGux37RDnyV+tExobLHdz7eO5ABuuUrf8OKyZb1G65F5MW/rRh2WypMobAQAVBrJ+V
+         jZFxMFWi7PW+avvCYGF3x38BJ6iW+Dn1b9uYa1UsrCGosRM0GypViDsAbxoCa5evua+z
+         CdXx6O3eOV+3QGLbTV+4Ty9WCG9gcaRGudixU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=pJFYWQMnTHoSX9yEm2N+88frxhMC4xy4/VkS500Y2LUnppPpvHCpiYlVP2lAXpV310
-         TFEVd+r9UMesstpCru4eSCAd1boYwS2WXqTENs3v2jP3tNpgKI5yya6QOMsMPAuA9Qee
-         FVbLg8u3fIn0GBV0aamqwzk+ZdaaVjjOlSQaQ=
-Received: by 10.68.29.230 with SMTP id n6mr3050112pbh.130.1303543493427;
-        Sat, 23 Apr 2011 00:24:53 -0700 (PDT)
+        b=ZH5bTEvppr8OhWDN9mkf0cdhOdu+fbqjMs0XEmiReP6x55sAxo+xCnLNjUjrtc1gmC
+         sFgy8WLUpl34EcQKqwFUHVFsXY8eQ/WvVcKYLapb+j8JAfgHqRAStL/YD511ClGiM3Ny
+         p0Rbz7+NFvJNDRG4j7qlNZKClilRA3q+VoapA=
+Received: by 10.68.48.228 with SMTP id p4mr604987pbn.490.1303543496883;
+        Sat, 23 Apr 2011 00:24:56 -0700 (PDT)
 Received: from localhost.localdomain (124-169-133-110.dyn.iinet.net.au [124.169.133.110])
-        by mx.google.com with ESMTPS id v8sm2498310pbk.95.2011.04.23.00.24.50
+        by mx.google.com with ESMTPS id v8sm2498310pbk.95.2011.04.23.00.24.53
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 23 Apr 2011 00:24:52 -0700 (PDT)
+        Sat, 23 Apr 2011 00:24:55 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.rc1.23.g7f622
 In-Reply-To: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171976>
 
-git base is intended to provide a way to track the 'base'
-of the current branch, where the base is one of several possible
-commits that satisfies the following invariant.
+The git work command uses the implicit base defined by git base
+to help perform dependency management on a working branch.
 
-The base is reachable from the head the output
-git rev-list base..head --merges is empty.
-
-git base is intended to provide a sane way to keep
-track of the commit at the base of the current branch
-and thereby simplify the process of rebasing, or more
-generally, dependency managment.
-
-For example of how it is used, see the following git-work
-command.
+See the Documentation for a description of the philosophy
+underlying git-work.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
  .gitignore                 |    1 +
- Documentation/config.txt   |   10 ++
- Documentation/git-base.txt |  216 +++++++++++++++++++++++++
+ Documentation/git-work.txt |  163 ++++++++++++++++++++++
  Makefile                   |    1 +
- git-base.sh                |  378 ++++++++++++++++++++++++++++++++++++++++++++
- t/t3418-base.sh            |  214 +++++++++++++++++++++++++
- 6 files changed, 820 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-base.txt
- create mode 100644 git-base.sh
- create mode 100755 t/t3418-base.sh
+ git-work.sh                |  323 ++++++++++++++++++++++++++++++++++++++++++++
+ t/t3421-work.sh            |  174 ++++++++++++++++++++++++
+ 5 files changed, 662 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-work.txt
+ create mode 100644 git-work.sh
+ create mode 100755 t/t3421-work.sh
 
 diff --git a/.gitignore b/.gitignore
-index 5efc43c..54fa567 100644
+index 54fa567..5fb3119 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -13,6 +13,7 @@
- /git-archive
- /git-atomic
- /git-atomic-lib
-+/git-base
- /git-bisect
- /git-bisect--helper
- /git-blame
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 750c86d..52f149b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -636,6 +636,16 @@ branch.autosetuprebase::
- 	branch to track another branch.
- 	This option defaults to never.
- 
-+branch.<name>.baseresetoptions::
-+	The options passed to 'git base set' when 'git base' detects
-+	that the current base reference is either not set or no longer
-+	satisfies the base invariant.
-+	See the description of the `init` command in linkgit:git-base[1]
-+	for details of how this value is initialized.
-+	See the description of the `set` command in linkgit:git-base[1]
-+	for details about this value is interpreted.
-+	Defaults to --fail unless set.
-+
- branch.<name>.remote::
- 	When in branch <name>, it tells 'git fetch' and 'git push' which
- 	remote to fetch from/push to.  It defaults to `origin` if no remote is
-diff --git a/Documentation/git-base.txt b/Documentation/git-base.txt
+@@ -159,6 +159,7 @@
+ /git-verify-tag
+ /git-web--browse
+ /git-whatchanged
++/git-work
+ /git-write-tree
+ /git-core-*/?*
+ /gitk-git/gitk-wish
+diff --git a/Documentation/git-work.txt b/Documentation/git-work.txt
 new file mode 100644
-index 0000000..7a7a710
+index 0000000..1cae786
 --- /dev/null
-+++ b/Documentation/git-base.txt
-@@ -0,0 +1,216 @@
-+git-base(1)
++++ b/Documentation/git-work.txt
+@@ -0,0 +1,163 @@
++git-work(1)
 +===========
 +
 +NAME
 +----
-+git-base - display, check, set, clear and reset the base of a working branch
++git-work - manage the current branch as a working branch
 +
 +SYNOPSIS
 +--------
 +[verse]
-+'git base' [-b branch] [--as-ref]|[<default-commit>]
-+'git base' [-b branch] 'check' <commit>
-+'git base' [-b branch] 'set' [-f] <commit>
-+'git base' [-b branch] 'clear'
-+'git base' [-b branch] 'init' [-d]|[<reset-cmd>]
-+'git base' [-b branch] 'reset'
++'git work'
++'git work' 'list'   ['commit'|'dependency']
++'git work' 'merge'  [merge-options] [dependency ...]
++'git work' 'remerge' [--keep-tree]
++'git work' 'rebase' ['-i'|[dependency [rebase-options]]]
++'git work' 'pivot'  [pivot]
++'git work' 'create' ['--pivot-first'] topic [pivot [on-base]]
++'git work' 'update' ['--pivot-first'] topic [pivot]
 +
 +DESCRIPTION
 +-----------
-+In the discussion that follows, the current branch or the branch specified by -b is referred to by the symbol `<branch>` and the commit at the base of `<branch>` is referred to by the symbol `<base>`. `<head>` is used to refer to the commit at the tip of `<branch>` as distinct from the branch reference itself.
-+
-+`git base` helps to track the base of a working branch. For the purposes of the exposition here, the base of the working branch is defined as the
-+last commit in the history that is not part of your current work - it is the basis of your current work, but is not part of the work itself. Furthermore,
-+to be classified as a base, the path from the tip of the branch to the base must not traverse a merge commit. This constraint means that the range
-+`<base>..<bramch>` is always a linear series of commits that can be easily rebased and re-organized as required.
++In the discussion that follows, the current branch is referred to by the symbol \{branch\} and the commit at the base of \{branch\} is referred to by the symbol \{base\}. The symbol \{head\} is used to refer to the commit at the tip of \{branch\}.
 +
 +COMMANDS
 +--------
-+Without positional arguments, this command checks whether the base reference satisfies the base invariant. If it does, prints the SHA1 hash of the base commit
-+to stdout and exits with a status code of 0.
++Without arguments, reports the base and head of the current branch as a range suitable for use with git rev-list. Use --as-refs to print the range with symbolic references.
 +
-+Otherwise, if `<default-commit>` is specified, calls `set <default-commit>`. If this fails to establish the base invariant or if no `<default-commit>`
-+is specified then calls `reset`. If the base reference now satisfies the base invariant, print its SHA1 has to stdout and
-+exits with a status code of 0. Otherwise, prints a warning message to stderr and exits with a non-zero status code.
++'list'::
++	Lists the commits in the working branch or the dependencies of the working branch.
 +
-+If `--as-ref` is specifed, then the symbolic name of the base reference is printed instead of the SHA1 hash but `reset` is not called, even
-+if the base reference does not satisfy the base invariant.
++'merge'::
++	Merge the specified dependencies with \{base\}, then rebase \{base\}..\{head\} onto that merge. The head reference is updated with the result of the merge. The base reference is updated with dependency. If not specified, dependency defaults to the tracked branch, if any.
 +
-+If a `<default-commit>` is specified `set <default-commit>` is called
++'remerge'::
++	Rebuild the base of the branch using the current dependencies. Unless --keep-tree is specified, perform a piece-wise merge of each dependency. If --keep-tree is specified, then perform an information only merge of the current dependencies and preserve the tree of existing base.
 +
-+`init [-d]|[<reset-cmd>]`::
++'rebase'::
++	Rebase \{base\}..\{head\} onto dependency and the base reference is updated to refer to dependency. If the -i option is specified, invokes git rebase -i \{base\}..\{branch\}. If not specified, dependency defaults to the tracked branch, if any.
 +
-+Initializes the command to be used when `reset` is called. It must be one of `set <commit>`, `clear` or `check`.
-+`<reset-cmd>` defaults to the `set <upstream-branch>` if there is one or to `set <head>`, otherwise.
-+Use a `<reset-cmd>` of `check` to prevent the default `git base` command automatically
-+adjusting an inconsistent base reference. Use a `<reset-cmd>` of `clear` to automatically clear an inconsistent base reference.
++'pivot'::
++	Rebase pivot..\{head\} onto \{base\} and then rebase \{base\}..pivot onto the result of the first rebase. The head reference of the branch is updated to refer to the result of the final rebase. The pivot argument must satisfy the base invariant of \{branch\}.
 +
-+Use -d to delete the base reference and reset configuration associated with the branch.
++'create'::
 +
-+`clear`::
++	Rebase pivot..\{branch\} onto on-base and initialize the topic head reference to the resulting commit; the topic base reference to on-base and the head reference of \{branch\} to pivot. Then merge the topic head into the base of \{branch\} using git work merge. If specified, pivot must satisfy the base invariant. If not specified, on-base and pivot default to \{base\}.
 +
-+Clears the base reference, if any. The status code is always set to a non-zero value and a warning message is printed to stderr. No output is
-+printed to stdout.
++'update'::
++	Performs the same operation as create but uses the head of an existing topic as on-base.
 +
-+`set [-f] <commit>`::
-+
-+Checks that the specified base satisifies the base invariant of `<branch>`, and if so, updates the base reference with the specified commit.
-+Otherwise, updates the base reference to the commit closest to both `<commit>` and `<branch>` which does satisfy the base invariant. The selected
-+commit will always be reachable from `<branch>` but may not be reachable from `<commit>`. In particular, if the merge base of `<commit>` and `<branch>`
-+is hidden by a merge commit, then the selected commit will be (the only) merge commit that satisfies the base invariant of `<branch>`.
-++
-+The status and output are set/generated as per `git base`.
-++
-+`-f` can be used to force the update of the base reference to the specified `<commit>` even if the `<commit>` does not satify the base
-+invariant. Note: however, that unless the effective `reset` command is set to `check`, this value will not stick beyond the next
-+call to `git base`.
-+
-+`check` [<commit>]::
-+
-+If `<commit>` is specified, performs the same function as `set` but does not actually update the base reference. The status code and output are set/generated as they would be if `set` had been called.
-++
-+If `<commit>` is not specified, sets the status code according to whether (0) or not (non-zero) the base reference is well-defined and consistent with the base invariant. The output that is generated is the same output that would be generated if `set` was called with the same arguments.
-++
-+`check` NEVER adjusts the base reference.
-+
-+`reset`::
-+
-+Resets the base reference by calling the git base with the configured `<reset-cmd>` or `clear` if there is no such configuration. The status
-+and output are set/generated as per `git base`.
-+
-+OUTPUT
-+------
-+Unless --as-ref is used, the only output git base generates is the SHA1 hash of a commit that satisfies the base invariant.  If `git base`, `git base set` or `git check` (without arguments) generate output, then the output will be the current base reference at the time the command completes.  If `git check` is called with an
-+argument, then the output is set as if `git set` had been called. If --as-ref is used, the generated output is always the symbolic name of the base reference, whether or not the base reference actually exists or satisfies the base invariant.
-+
-+EXIT CODE
-+---------
-+Except for the `init` command, `git base` exits with status code of zero if command has written the SHA1 hash of a commit that satisfies the base invariant to stdout, and exits with a non-zero status code otherwise.
++Unless otherwise specified, if this command completes successfully the base reference will be updated to reflect the current calculated base for \{branch\}.
 +
 +OPTIONS
 +-------
-+-b,--branch branch::
-+	If this option is specified and supported, the commands apply to the specified branch. Otherwise, the commands apply to the current branch.
-+-f::
-+	Force the update of the base reference even if the specified value does not satisfy the base invariant.
-+-q::
-+	Use this option to suppress data output, information and warning messages.
-+--as-ref::
-+	Print the SHA1 hash of the base as a symbolic reference.
++--as-refs::
++	For the default subcommand, report the SHA1 hashes as symbolic reference names, not as SHA1 hashes.
++--pivot-first::
++	If this option is specified on a create or update subcommand, a pivot operation is logically performed first, in effect allowing
++        the commits below, rather than above, the pivot point to be moved from the current topic to the specified topic.
 +
-+CONFIGURATION
-+-------------
-+branch.<name>.baseresetcmd::
-+	Configures the `git base` subcommand used by `git base reset`. Must be one of `set <commit>`, `check` or `clear`. Defaults to `clear`, if not specified.
-+
-+THE BASE INVARIANT
-+------------------
-+The base invariant applies to all commits that can be described as a base of a branch.
-+
-+The invariant is that the base commit is reachable from the head of the branch and that the path between the head of the branch and the base contains no merge commits other than, possibly, the base commit itself.
-+
-+The head of a branch is also a base commit for the branch. As such, each branch has at least one commit that satisfies the base invariant.
-+For any given branch there is at most one merge commit that satisifies the base invariant.
-+
-+The base invariant is defined as it is because the history between a commit satisifying the base invariant and the head of the branch is, by definition,
-+guaranteed to be linear.
-+
-+BASE REFERENCE
++ERROR HANDLING
 +--------------
-+The base reference is semi-automatically managed by the git.
++Any rebases and merges performed by git work must succeed otherwise the working tree, index and references touched by git base are rolled back to their initial state, which must be clean to begin with.
 +
-+It is explicitly updated by the `set` and `clear` commands and sometimes by the `reset` command, depending on how it has been configured.
-+It may be implicitly updated by the default command (via a call to `reset`) but only when it is undefined or does not satisfy the base reference.
-+It is never updated by the `check` or `init` commands. Other git tools such as linkgit:git-work[1] use git base to update the base reference as required.
++DISCUSSION
++----------
++git work is designed to support workflows where a developer's workspace perpetually contains a mixture of work items at different levels of maturity. Examples of such work items might be:
 +
-+Users may use the `set` command with the -f option to modify the base reference to any value but values that fail to match the base invariant will quickly
-+be reset by the automatic operation of `git base` unless the reset operation is configured to be `check`.
++* the upstream integration branch
++* published topics that are yet to be integrated into the integraton branch
++* completed, but unpublished topics
++* published topics received from other developers that have not yet been integrated in the integration branch
++* adhoc patches
 +
-+A non-empty output from `git base`, `git base reset` or `git base set` is guaranteed to be consistent with the base invariant immediately after the command
-+completes.
++One way to manage such complexity is to maintain separate topic branches for each work item and then create temporary or throw-away branches to test the combined work. Such a practice has the advantage of keeping the artifacts of each work stream separate but can potentially incur significant process overheads and can be confusing for a developer to manage since at any given point in time a given work item that was recently worked on may, or may not be, integrated into the current work tree.
 +
-+THE STATE MACHINE VIEW
-+----------------------
-+A good way to think about `git base` is as the controls of a 3-state state machine: a machine that has the states: UNDEFINED, INCONSISTENT and CONSISTENT
-+which correspond to an undefined base reference, a base reference that does not satisfy the base invariant and a base reference that does satisfy
-+the base invariant, respectively.
++From an individual developer's point of view, it can be more productive to work on a single working branch which accretes recent work and dependencies over time and only use isolated topic branches for the purposes of sharing stabilised work with others.
 +
-+The state machine prefers to be in the CONSISTENT state. `git base` without arguments will leave the state of the base reference unchanged if is CONSISTENT
-+or will call `git base reset` otherwise.  `git base reset` uses the `<reset-cmd>` defined with `git base init` to implement the auto-recovery policy
-+of the state machine when it finds itself in the INCONSISTENT or UNDEFINED states.
++The key to making this work is to ensure that dependencies are always merged into the base of the working branch, new work is done on the head of the branch, and mature work is rebased from the head of the working branch to heads of stable topic branches and then reintegrated back into the base of the working branch.
 +
-+`git base check` tests the state of the base reference, but leaves its state unchanged.
++With such a practice, the developer gains the convenience of a single working branch without sacrificing the cleanliness of topic-based development.
 +
-+`git base clear` unconditionally clears base reference forcing the state to be UNDEFINED.
++git work is a porcelain that enables such work practices by providing commands that understand the concept of a branch base, how it relates to the branch head and the importance of merging dependencies into the branch base, rather than into the branch head. In particular, git work knows how to discover, establish and maintain the base of a branch as the maturity of work items merged into the branch evolves over time.
 +
-+`git base set` without a `-f` option is used to force the machine into a CONSISTENT state.
++In summary, git work allows a developer to keep his working tree stable while keeping his commit history sane.
 +
 +EXAMPLES
 +--------
-+* Initialize the branch so that the base reference is always reset, when required, relative to upstream/master
-++
-+----------
-+git base init set upstream/master
-+----------
-+* Display the current base
++* print the range of commits in the current working branch
 ++
 +---------
-+git base
++$ git work
 +---------
-+* Display the current base reference without updating it
++* lists the commits in the current working branch
 ++
 +---------
-+git base check
++$ git work list
 +---------
-+* Display the current base as a symbolic reference
++* list the dependencies of the current working branch
 ++
 +---------
-+git base --as-ref
++$ git work list dependency
 +---------
-+* Set the base of the current branch to the 3rd commit from the tip
++* start gitk, showing only the current work
 ++
 +---------
-+git base set HEAD~3
++$ git work $(git work)
 +---------
-+* Interactively rebase the current work
++* list the commits in the current working branch with a one line description
 ++
 +---------
-+git rebase -i $(git base) HEAD
++$ git rev-list --oneline $(git work)
 +---------
-+* Perform a rebase, but only if the base reference is currently valid
++* merge the upstream/master into the base of the current branch
 ++
 +---------
-+git base check -q && git rebase -i $(git base) HEAD
++$ git work merge upstream/master
 +---------
-+* Set the base relative to an upstream branch
++* rebase the working branch onto the upstream/master
 ++
 +---------
-+git base set origin/master
++$ git work rebase upstream/master
 +---------
-+
-+
-+FILES
-+-----
-+
-+.git/refs/bases/`<branch>`::
-+	Contains the last calculated value of the base for a specific branch. This value is not guaranteed to be correct except immediately after a successful execution of git base. Users that require an accurate value should use the output of git base -b `<branch>`.
-+
-+.git/refs/BASE::
-+	If HEAD is a symbolic reference of the form `refs/heads/<branch>`, then BASE will be a symbolic reference of the form `refs/bases/<branch>`. Otherwise,
-+	it contains the base commit corresponding to the detached HEAD, if one has been specified.
++* create a topic branch based on upstream/master from the top 2 commits of the current branch
+++
++---------
++$ git work create mytopic HEAD~2 upstream/master
++---------
++* create a topic branch using the commits under the top 2 commits of the current branch
+++
++---------
++$ git work --pivot-first create mytopic HEAD~2 upstream/master
++---------
++* update an existing topic branch with the top commit of the current branch
+++
++---------
++$ git work update mytopic HEAD~1
++---------
++* clean up the base history by rewriting the base as an octopus merge with the same tree as the current base
+++
++---------
++$ git work remerge --keep-tree
++---------
++* visualize the merge structure of the dependencies of the current work
+++
++---------
++gitk $(git base) --not $(git work list dependency)
++---------
 +
 +SEE ALSO
 +--------
-+linkgit:git-work[1]
++linkgit:git-base[1]
 +
 +Author
 +------
@@ -334,618 +250,523 @@ index 0000000..7a7a710
 +---
 +Part of the linkgit:git[7] suite
 diff --git a/Makefile b/Makefile
-index 9ed877a..6aee4a8 100644
+index 6aee4a8..42854cb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -361,6 +361,7 @@ unexport CDPATH
+@@ -380,6 +380,7 @@ SCRIPT_SH += git-stash.sh
+ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-test.sh
+ SCRIPT_SH += git-web--browse.sh
++SCRIPT_SH += git-work.sh
  
- SCRIPT_SH += git-am.sh
- SCRIPT_SH += git-atomic.sh
-+SCRIPT_SH += git-base.sh
- SCRIPT_SH += git-bisect.sh
- SCRIPT_SH += git-difftool--helper.sh
- SCRIPT_SH += git-filter-branch.sh
-diff --git a/git-base.sh b/git-base.sh
+ SCRIPT_LIB += git-atomic-lib
+ SCRIPT_LIB += git-conditions-lib
+diff --git a/git-work.sh b/git-work.sh
 new file mode 100644
-index 0000000..14c64c9
+index 0000000..f6b378d
 --- /dev/null
-+++ b/git-base.sh
-@@ -0,0 +1,378 @@
++++ b/git-work.sh
+@@ -0,0 +1,323 @@
 +#!/bin/sh
-+#
-+# (c) Copyright Jon Seymour 2010
-+#
-+USAGE='[help|set|check|reset|init]'
++USAGE='[help|list|merge|remerge|rebase|pivot|create|update]'
 +LONG_USAGE='
-+git base [--as-ref]
-+        print the SHA1 hash of the base reference or its symbolic name (--as-ref)
-+git base set [-f] <commit>
-+        set the base of the branch to commit nearest <commit> that satisifies the base invariant.
-+git base clear
-+        As per set, but never update the base reference.
-+git base check <commit>
-+        test if the specified commit satisfies the base invariant
-+git base init <reset-cmd>
-+	Initialise the git base command to be called when git base reset is invoked.
-+git base reset
-+	Invoke the configured reset command (see git base init) or git base clear, if not such command is configured.
-+git base help
-+        print this help
++git work
++    Print the range that defines the boundaries of the branch
++git work list [commit|dependency]
++    List the commits or dependencies of the current working branch.
++git work merge [dependency ...]
++    Merge the specified dependencies into the base of the branch
++git work remerge [--keep-tree]
++    Rebuild the base of the current working branch from the dependencies
++git work pivot [pivot]
++    Swap two segments of the working branch at the commit specified by the pivot
++git work rebase [-i]
++    Invoke an interactive rebase on the branch
++git work rebase [dependency]
++    Rebase the current working branch onto the specified dependency.
++git work create [--pivot-first] topic [pivot] [on-base]
++    Rebase the top N commits onto new topic based on a specified commit, then merge the result into the base of the current branch
++git work update [--pivot-first] topic [pivot]
++    Rebase the top N commits onto an existing topic, then merge the updated topic into the base of the current branch
++git work help
++    Print this help
 +
-+Please use "git help base" to get the full man page.'
-+
-+OPTIONS_SPEC=
++Please use "git help work" to get the full man page.'
 +
 +SUBDIRECTORY_OK=true
++OPTIONS_SPEC="
++$LONG_USAGE
++--
++pivot-first perform a pivot first, then do..
++as-refs print the range as references
++X pass-thru options to merge or rebase
++i,interactive perform an interactive rebase
++"
 +. git-sh-setup
-+require_work_tree
++. git-atomic-lib
 +
 +warn()
 +{
-+    test -n "$QUIET" || echo "$*" 1>&2
++    echo "warn: $*" 1>&2
 +}
 +
-+info()
++not_implemented()
 +{
-+    test -n "$QUIET" || echo "$*" 1>&2
++    die "not yet implemented"
 +}
 +
-+data()
++work_default()
 +{
-+	if test "$*" != ""
-+	then
-+		echo "$*"
-+		true
-+	else
-+		false
-+	fi
++   if $AS_REFS
++   then
++       echo $BASEREF..$BRANCH
++   else
++       echo $(git base)..$(git rev-parse HEAD)
++   fi
 +}
 +
-+quietly()
++work_list_dependency()
 +{
-+	if test -n "$QUIET"
-+	then
-+		"$@" >/dev/null 2>/dev/null
-+	else
-+		"$@"
-+	fi
++    limits=''
++    while true
++    do
++         top=$(git rev-list $BASE $limits --no-merges --max-count=1)
++	 if test -z "$top"
++         then
++             break;
++         else
++	     echo $top
++             limits="$limits ^$top"
++         fi
++    done
 +}
 +
-+assert_valid_branch()
++work_list()
 +{
-+	test -n "${VALID_BRANCH}" || die "${BRANCH} is not a branch"
++    type=$1
++    case "$type" in
++       ""|commit)
++	    git rev-list $(work_default)
++       ;;
++       dependency)
++            work_list_dependency "$@"
++       ;;
++       *)
++	    die "$type is not a supported type for this command"
++       ;;
++    esac
 +}
 +
-+invariant_state()
++work_merge()
 +{
-+	commit=$1
-+	if test -z "$commit"
-+	then
-+		echo "UNDEFINED"
-+		false
-+	elif ! git rev-parse --quiet --verify "$commit" >/dev/null
-+	then
-+		echo "INVALID"
-+		false
-+	elif ! git test -q --reachable $commit $HEAD
-+	then
-+		echo "UNREACHABLE"
-+		false
-+	elif ! test -z "$(last_merge $HEAD $commit)"
-+	then
-+		echo "HIDDEN"
-+		false
-+	else
-+		echo "CONSISTENT"
-+		true
-+	fi
++   DEPENDENCY=$1
++   shift
++
++   test -n "${DEPENDENCY}" || die "usage: git work merge [dependency [merge-options]]"
++
++   assert --not-staged --not-unstaged --commit-exists "${DEPENDENCY}"
++
++   atomic eval \
++"
++	DEPENDENCY=${DEPENDENCY} &&
++	BASE=${BASE} &&
++	BASEREF=${BASEREF} &&
++	BRANCH=${BRANCH} &&
++	MERGE_OPTIONS='${MERGE_OPTIONS}'
++	git checkout -q \${BASE} &&
++	git merge -q \${DEPENDENCY} \${MERGE_OPTIONS} &&
++	MERGE=\$(git rev-parse HEAD) &&
++	git rebase --onto HEAD \${BASE} \${BRANCH} &&
++	git update-ref \${BASEREF} \${MERGE}
++"
 +}
 +
-+closest()
++work_remerge()
 +{
-+	commit=$1
-+	state=${2:-$(invariant_state $commit)}
-+	
-+	case $state in	
-+		UNDEFINED|INVALID)
-+			:
-+		;;
-+		UNREACHABLE)
-+			closest $(git merge-base $HEAD $commit)
-+		;;
-+		HIDDEN)
-+			last_merge $HEAD $commit
-+		;;
-+		CONSISTENT)
-+			echo $commit
-+		;;
-+	esac
++   assert --not-staged --not-unstaged
++   not_yet_implemented
 +}
 +
-+describe()
++work_rebase()
 +{
-+	commit=$1
-+	state=$2
-+	
-+	case $state in
-+		UNDEFINED)
-+			echo "No commit specified."
-+		;;
-+		INVALID)
-+			echo "$commit is not a valid reference."
-+		;;
-+		HIDDEN)
-+			echo "The commit $(short_ref $commit) is not a base of ${BRANCH} because it is hidden by the merge commit $(short_ref $(last_merge $HEAD $commit))."
-+		;;
-+		UNREACHABLE)
-+			echo "The commit $(short_ref $commit) is not a base of ${BRANCH} because it is unreachable from $(short_ref $HEAD)."
-+		;;
-+		CONSISTENT)
-+			echo "The commit $(short_ref $commit) satisfies the base invariant of $(short_ref $HEAD)."
-+		;;
-+	esac
++   git base -q check || die "use 'git base' to establish a base for this branch"
++   if test -n "${INTERACTIVE}"
++   then
++        PIVOT=${1:-$(git base)}
++	git base -q check ${PIVOT} || die "${PIVOT} is not a valid pivot commit"
++	git rebase -i ${PIVOT} HEAD "$@"
++   else
++
++      DEPENDENCY=$1
++
++      assert --not-staged --not-unstaged --commit-exists "${DEPENDENCY}"
++      atomic eval "
++      git rebase --onto \${DEPENDENCY} \${BASE} \${BRANCH} &&
++      git update-ref \${BASEREF} \${DEPENDENCY}
++"
++   fi
 +}
 +
-+last_merge()
++work_create()
 +{
-+    head=$1
-+    commit=$2
-+    data $(git rev-list --max-count=1 --merges ${head} ^$commit)
++   TOPIC=$1
++   PIVOT=$2
++   DEPENDENCY=$3
++
++   test -n "${DEPENDENCY}" || die "usage: git work create topic [pivot [dependency]]"
++
++   PIVOT=$(git rev-parse --verify "$PIVOT" 2>/dev/null) || die "$2 is not a commit"
++
++   git base check "${PIVOT}" > /dev/null || die "$PIVOT does not lie between $BASE and $HEAD"
++
++   assert --commit-exists "${DEPENDENCY}" --not-branch-exists "${TOPIC}" --not-staged --not-unstaged
++
++   if $PIVOT_FIRST
++   then
++   atomic eval "
++	BASE=${BASE} &&
++	TOPIC=${TOPIC} &&
++	PIVOT=${PIVOT} &&
++	HEAD=${HEAD} &&
++	BRANCHREF=${BRANCHREF} &&
++	DEPENDENCY=${DEPENDENCY} &&
++	git rebase -q --onto \${DEPENDENCY} \${BASE} \${PIVOT} &&
++	git branch \${TOPIC} &&
++	git base -q -b \${TOPIC} set \${DEPENDENCY} &&
++	git rebase -q --onto \${BASE} \${PIVOT} \${BRANCH} &&
++	git work merge \${TOPIC}
++"
++   else
++   atomic eval "
++	TOPIC=${TOPIC} &&
++	PIVOT=${PIVOT} &&
++	HEAD=${HEAD} &&
++	BRANCHREF=${BRANCHREF} &&
++	DEPENDENCY=${DEPENDENCY} &&
++	git rebase -q --onto \${DEPENDENCY} \${PIVOT} \${HEAD} &&
++	git branch \${TOPIC} &&
++	git base -b \${TOPIC} set \${DEPENDENCY} &&
++	git update-ref \${BRANCHREF} \${PIVOT} &&
++	git checkout \${BRANCH} &&
++	git work merge \${TOPIC}
++"
++   fi
++
 +}
 +
-+short_ref()
++work_update()
 +{
-+    data "($(git rev-parse --short $1))"
++   TOPIC=$1
++   PIVOT=$2
++
++   test -n "${PIVOT}" || die "usage: git work update topic [pivot [dependency]]"
++
++   PIVOT=$(git rev-parse --verify "$PIVOT" 2>/dev/null) || die "$2 is not a commit"
++
++   git base check "${PIVOT}" > /dev/null || die "$PIVOT does not lie between $BASE and $HEAD"
++
++   assert --branch-exists "${TOPIC}" --not-staged --not-unstaged
++
++   if $PIVOT_FIRST
++   then
++   atomic eval "
++	TOPIC=${TOPIC} &&
++	PIVOT=${PIVOT} &&
++	BASE=${BASE} &&
++	HEAD=${HEAD} &&
++	BRANCHREF=${BRANCHREF} &&
++	git base -q -b \${TOPIC} \${TOPIC} &&
++	git rebase -q --onto \${TOPIC} \${BASE} \${PIVOT} &&
++	git branch -f \${TOPIC} &&
++	git rebase -q --onto \${BASE} \${PIVOT} \${BRANCH} &&
++	git work merge \${TOPIC}
++"
++   else
++   atomic eval "
++	TOPIC=${TOPIC} &&
++	PIVOT=${PIVOT} &&
++	HEAD=${HEAD} &&
++	BRANCHREF=${BRANCHREF} &&
++	git base -q -b \${TOPIC} \${TOPIC} &&
++	git rebase -q --onto \${TOPIC} \${PIVOT} \${HEAD} &&
++	git branch -f \${TOPIC} &&
++	git update-ref \${BRANCHREF} \${PIVOT} &&
++	git checkout \${BRANCH} &&
++	git work merge \${TOPIC}
++"
++   fi
++
 +}
 +
-+base_default()
++work_pivot()
 +{
-+	assert_valid_branch
++   PIVOT=$1
 +
-+	revs=$(git rev-parse --revs-only "$@")
++   test -n "${PIVOT}" || die "usage: git work update topic [pivot [dependency]]"
 +
-+	if state=$(invariant_state "${BASEREF}")	
-+	then
-+		if test -z "$ASREF"
-+		then
-+			git rev-parse ${BASEREF}
-+		else
-+			echo "${BASEREF}"
-+		fi
-+	else
-+		if test -z "$ASREF"
-+		then
-+			if test -n "$revs"
-+			then
-+				base_set $revs && return 0
-+			fi
-+	
-+			describe "${BASEREF}" $state 1>&2
-+			base_reset
-+		else
-+			describe "${BASEREF}" $state 1>&2
-+			echo "${BASEREF}"
-+			false
-+		fi
-+	fi
++   PIVOT=$(git rev-parse --verify "$PIVOT" 2>/dev/null) || die "$1 is not a commit"
++
++   git base check "${PIVOT}" > /dev/null || die "$PIVOT does not lie between $BASE and $HEAD"
++
++   assert --not-staged --not-unstaged
++
++   atomic eval "
++      git rebase -q --onto \${BASE} \${PIVOT} \${HEAD} &&
++      git rebase -q --onto HEAD \${BASE} \${PIVOT} &&
++      git update-ref \${BRANCHREF} HEAD &&
++      git checkout -q \${BRANCH}
++"
 +}
 +
-+base_init()
-+{
-+	if test -n "$DELETE"
-+	then
-+		git update-ref -d ${BASEREF} &&
-+		git config branch.${BRANCH}.baseresetcmd clear &&
-+		git config --unset branch.${BRANCH}.baseresetcmd
-+		return 0
-+	fi
++INTERACTIVE=
++CURRENT_BRANCH=$(git branch | grep "^\* [^(]" | cut -c3-)
++AS_REFS=false
++PIVOT_FIRST=false
++if test -n "$CURRENT_BRANCH"
++then
++   BRANCHREF=refs/heads/${CURRENT_BRANCH}
++   BASEREF=refs/bases/${CURRENT_BRANCH}
++   BRANCH=${CURRENT_BRANCH}
++else
++   BRANCHREF=HEAD
++   BASEREF=BASE
++   BRANCH=HEAD
++fi
 +
-+	assert_valid_branch
-+
-+	if test $# -eq 0
-+	then
-+		set -- $(git config branch.${BRANCH}.merge)
-+		MERGE=$1
-+		set -- $(git config branch.${BRANCH}.remote)
-+		case "$1" in	
-+		.)
-+			OPTION="set ${MERGE}"
-+		;;
-+		"")
-+			OPTION="set $(git rev-parse ${BRANCH})"
-+		;;
-+		*)
-+			OPTION="set $1/${MERGE#refs/heads/}"
-+		;;
-+		esac
-+		set -- ${OPTION}
-+	else
-+		case "$1" in	
-+			set|clear|check)
-+			:
-+			;;
-+		*)
-+			die "$1 is not a valid 'git base' command"
-+			;;
-+		esac
-+	fi
-+
-+	warn "The reset command for ${BRANCH} is now '$*'."
-+	git config branch.${BRANCH}.baseresetcmd "$*" || die "failed to update branch.${BRANCH}.baseresetcmd"
-+}
-+
-+base_reset()
-+{
-+	assert_valid_branch
-+
-+	options=$(git config branch.${BRANCH}.baseresetcmd)
-+	options=${options:-clear}
-+
-+	warn "Resetting the base of ${BRANCH} with 'git base ${options}'."
-+	git base -b ${BRANCH} ${options}
-+}
-+
-+base_check()
-+{
-+	assert_valid_branch
-+
-+	specified=$1
-+	commit=${specified:-${BASEREF}}
-+
-+	if state=$(invariant_state "$commit")
-+	then
-+		git rev-parse $commit
-+	else
-+		describe "$commit" $state 1>&2
-+		false
-+	fi
-+}
-+
-+base_set()
-+{
-+	assert_valid_branch
-+
-+	USAGE="usage: git base set [-f] <commit>"
-+	test -n "$1" || die "$USAGE"
-+
-+	commit=$1
-+	
-+	if state=$(invariant_state "$commit")
-+	then
-+		git update-ref "${BASEREF}" "$commit" || die "failed to update $BASEREF"
-+		echo $(git rev-parse $commit)
-+	else
-+
-+		case $state in	
-+			INVALID)
-+				die "The specified reference $commit is not a valid."
-+			;;
-+			HIDDEN|UNREACHABLE)
-+				closest=$(closest $commit)
-+				describe "$commit" "$state" 1>&2
-+				if test -z "$FORCE"
-+				then
-+					warn "Updating the base of ${BRANCH} to a consistent value $(short_ref $closest)."
-+					git update-ref ${BASEREF} $closest || die "failed to update $BASEREF"
-+					echo $closest
-+					true
-+				else
-+					warn "Updating the base of ${BRANCH} to an inconsistent value $(short_ref $commit)."
-+					git update-ref ${BASEREF} $commit || die "failed to update $BASEREF"
-+					false
-+				fi
-+			;;
-+			CONSISTENT)
-+				git update-ref ${BASEREF} $commit || die "failed to update $BASEREF"
-+				echo $commit
-+				true
-+			;;
-+			*)
-+				die "should never happen - invalid state $state"
-+			;;
-+		esac
-+
-+	fi
-+}
-+
-+base_clear()
-+{
-+   git update-ref -d ${BASEREF} >/dev/null || die "failed to clear $BASEREF"
-+   warn "The base of ${BRANCH} has been cleared."
-+   false
-+}
-+
-+base_help()
-+{
-+   git base -h "$@"
-+}
-+
-+VALID_BRANCH=
-+QUIET=
-+POSITIONAL=
-+FORCE=
-+DELETE=
-+
-+BRANCHREF=$(git symbolic-ref -q HEAD) || BRANCHREF=HEAD
-+BRANCH=${BRANCHREF#refs/heads/}
-+VALID_BRANCH=t
-+
-+while test $# -gt 0
++while test $# != 0
 +do
-+	arg=$1
-+	shift
-+
-+	case "$arg" in
-+	       -b)
-+			test -n "$1" || die "-b requires a branch to be specified"
-+		        BRANCH=$1 && shift
-+			BRANCHREF=$(git rev-parse --quiet --symbolic-full-name --verify "${BRANCH}" --)
-+			BRANCH=${BRANCHREF#refs/heads/}
-+			test "${BRANCH}" = "${BRANCHREF}" || VALID_BRANCH=t
-+			test "${BRANCH}" = "HEAD" && VALID_BRANCH=t
-+			test -n "${BRANCHREF}"  || VALID_BRANCH=
++	case $1 in
++		-b)
++		shift
++		BRANCHREF=refs/heads/$1
++		BASEREF=refs/bases/$1
++		shift
++		(git rev-parse --verify $BRANCHREF 1>/dev/null) || die "$1 is not a valid local branch"
 +		;;
-+		-f)
-+			FORCE=-f;
++		-i)
++			INTERACTIVE=-i
++			shift
 +		;;
-+                -d)
-+                        DELETE=-d;
-+                ;;
-+		-q)
-+			QUIET=-q
-+	        ;;
++		--as-refs)
++		shift
++		AS_REFS=true
++		;;
++		--pivot-first)
++		shift
++		PIVOT_FIRST=true
++		;;
 +		--)
-+			break;			
-+		;;
-+		--as-ref)	
-+			ASREF=--as-ref;
-+		;;	
-+		default|check|clear|init|reset|set|help)
-+			if test -z "$CMD"
-+			then	
-+				CMD=$arg
-+			else
-+				POSITIONAL="${POSITIONAL}${POSITIONAL:+ }$arg"
-+			fi
++		shift
++		break;
 +		;;
 +		*)
-+			POSITIONAL="${POSITIONAL}${POSITIONAL:+ }$arg"
-+	        ;;
++		break;
++		;;
 +	esac
 +done
 +
-+CMD=${CMD:-default}
 +
-+set -- $POSITIONAL
++# ensure that a base is established.
++git base -q || die "Please use 'git base init' to initialise the reset command for this branch."
 +
-+if test "${BRANCH}" = "HEAD"
-+then
-+	BASEREF=BASE
-+else
-+	BASEREF=refs/bases/${BRANCH}
-+fi
++HEAD=$(git rev-parse --verify ${BRANCHREF} 2>/dev/null)
++BASE=$(git rev-parse --verify ${BASEREF} 2>/dev/null)
 +
-+HEAD=$(git rev-parse --quiet --verify ${BRANCHREF})
-+BASE=$(git rev-parse --quiet --verify ${BASEREF})
++test -n "$BASE" || die "can't derive BASE from BASEREF=${BASEREF}"
 +
-+quietly base_$CMD "$@"
-diff --git a/t/t3418-base.sh b/t/t3418-base.sh
++case "$#" in
++0)
++    work_default "$@" ;;
++*)
++    cmd="$1"
++    shift
++    if test $cmd = 'trace'; then set -x; cmd=$1; shift; fi
++    case "$cmd" in
++    help)
++	    git work -h "$@" ;;
++    list|merge|remerge|rebase|pivot|create|update)
++	    work_$cmd "$@" ;;
++    *)
++	    usage "$@" ;;
++    esac
++esac
+diff --git a/t/t3421-work.sh b/t/t3421-work.sh
 new file mode 100755
-index 0000000..8e2defb
+index 0000000..9c6ed35
 --- /dev/null
-+++ b/t/t3418-base.sh
-@@ -0,0 +1,214 @@
++++ b/t/t3421-work.sh
+@@ -0,0 +1,174 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2010 Jon Seymour
 +#
 +
-+test_description='git base tests
++test_description='git work tests
 +
-+Checks that git base implements its specification.
-+
++Performs tests on the functions of git work
 +'
-+
 +#
-+#          G
-+#         /
-+# base - A - M - C - D - master - E
-+#     \     / \
-+#        B     F
++#       H-I
++#      /
++# A-B-C---M-P-Q
++#  \     /
++#   X-Y-Z
 +#
 +
 +. ./test-lib.sh
++. $(git --exec-path)/git-test-lib
 +
 +GIT_AUTHOR_NAME=author@name
 +GIT_AUTHOR_EMAIL=bogus@email@address
 +export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
 +
-+ensure_initial_state()
++reset_test()
 +{
 +    git reset --hard HEAD &&
 +    git checkout master &&
-+    git reset --hard D && {
-+        git update-ref -d refs/bases/master || true
-+    } && {
-+        git config --unset branch.master.baseresetcmd || true
++    git base set M && {
++       test_condition -q --not-branch-exists test ||
++       git branch -D test
 +    } &&
-+    ! git base clear
++    test_condition -q --not-branch-exists topic || {
++        git base init -d -b topic &&
++	git branch -D topic
++    }
 +}
 +
 +test_expect_success 'setup' \
-+'
-+    test_commit base &&
++    '
 +    test_commit A &&
-+    git checkout A^1 &&
 +    test_commit B &&
-+    git checkout master &&
-+    test_merge M B &&
 +    test_commit C &&
-+    test_commit D &&
-+    test_commit E &&
-+    git checkout M^0 -- &&
-+    test_commit F &&
-+    git checkout A^0 -- &&
-+    test_commit G &&
++    git checkout -b fork-X A &&
++    test_commit X &&
++    test_commit Y &&
++    test_commit Z &&
 +    git checkout master &&
-+    git reset --hard D
++    test_merge M Z &&
++    git base -q set HEAD &&
++    test_commit P &&
++    test_commit Q &&
++    git checkout -b fork-H C &&
++    test_commit H &&
++    test_commit I &&
++    git checkout master &&
++    true
 +'
 +
-+test_expect_success 'empty check when base missing' \
++test_expect_success 'work --as-refs' \
 +'
-+	ensure_initial_state &&
-+	! git base clear &&
-+	! git base check &&
-+	! git rev-parse --verify refs/bases/master
++   test "$(git work --as-refs)" = "refs/bases/master..master"
 +'
 +
-+test_expect_success 'empty check when base hidden (A)' \
++test_expect_success 'work' \
 +'
-+	ensure_initial_state &&
-+	! git base set -f A &&
-+	! git base check &&
-+	test "$(git base check)" = "" &&
-+	git rev-parse --verify refs/bases/master &&
-+	test "$(git rev-parse refs/bases/master)" = "$(git rev-parse A)"
++   test "$(git work)" = "$(git rev-parse M)..$(git rev-parse Q)"
 +'
 +
-+test_expect_success 'empty check when base unreachable (E)' \
++test_expect_success 'work list' \
 +'
-+	ensure_initial_state &&
-+	! git base set -f E &&
-+	! git base check &&
-+	test "$(git base check)" = "" &&
-+	git rev-parse --verify refs/bases/master &&
-+	test "$(git rev-parse refs/bases/master)" = "$(git rev-parse E)"
++   test "$(git rev-parse Q; git rev-parse P)" = "$(git work list)"
 +'
 +
-+test_expect_success 'empty check when base unreachable and hidden (G)' \
++test_expect_success 'git work rebase Z <=> rebase --onto Z M..Q' \
 +'
-+	ensure_initial_state &&
-+	! git base set -f G &&
-+	! git base check &&
-+	test "$(git base check)" = "" &&
-+	git rev-parse --verify refs/bases/master &&
-+	test "$(git rev-parse refs/bases/master)" = "$(git rev-parse G)"
-+'
-+
-+test_expect_success 'empty check when base reachable and visible (M)' \
-+'
-+	ensure_initial_state &&
-+	git base set -f M &&
-+	git base check &&
-+	test "$(git base check)" = "$(git rev-parse M)" &&
-+	git rev-parse --verify refs/bases/master &&
-+	test "$(git rev-parse refs/bases/master)" = "$(git rev-parse M)"
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git work rebase Z &&
++    test_condition --same $(git base) Z &&
++    test_condition --checked-out test &&
++    test "$(git diff M Q | git patch-id)" = "$(git diff $(git work) | git patch-id)"
 +'
 +
-+test_expect_success 'test default commit when clear' \
++test_expect_success 'git work merge I <=> rebase --onto I M..Q' \
 +'
-+	ensure_initial_state &&
-+        ! git base clear &&
-+	git base M &&
-+	test "$(git base check)" = "$(git rev-parse M)"
-+'
-+
-+test_expect_success 'test default commit when set' \
-+'
-+	ensure_initial_state &&
-+        git base set C &&
-+	git base M &&
-+	test "$(git base check)" = "$(git rev-parse C)"
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git work merge I &&
++    test_condition --not-same I $(git base) &&
++    test_condition --checked-out test &&
++    test "$(git diff M Q | git patch-id)" = "$(git diff $(git work) | git patch-id)"
 +'
 +
-+test_expect_success 'git base - base not set initially' \
++test_expect_success 'git work create topic I from P..Q' \
 +'
-+    ensure_initial_state &&
-+    ! git base clear &&
-+    ! git rev-parse --verify refs/bases/master &&
-+    ! git base &&
-+    ! git rev-parse --verify refs/bases/master &&
-+    test -z "$(git base)"
-+'
-+test_expect_success 'test default when reference stale' \
-+'
-+    ensure_initial_state &&
-+    ! git base set -f base &&
-+    ! git base &&
-+    ! git rev-parse --verify refs/bases/master &&
-+    test -z "$(git base)"
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git work create topic P I &&
++    test_condition --same $(git base -b topic) I &&
++    test_condition --checked-out test &&
++    test "$(git diff I topic | git patch-id)" = "$(git diff P Q | git patch-id)" &&
++    test "$(git diff $(git base) test | git patch-id)" = "$(git diff M P | git patch-id)"
 +'
 +
-+test_expect_success 'test --as-ref does not create or check reference even when empty or stale' \
++test_expect_success 'git work create topic --pivot-first I from P..Q' \
 +'
-+    ! git base clear &&
-+    test "$(git base --as-ref)" = "refs/bases/master" &&
-+    ! git base check &&
-+    ! git base set -f base &&
-+    ! git base --as-ref &&
-+    test "$(git rev-parse refs/bases/master)" = "$(git rev-parse base)"
-+'
-+
-+test_expect_success 'test set to stale reference ' \
-+'
-+    ! git base clear &&
-+    git base set A &&
-+    test "$(git base)" = $(git rev-parse M) &&
-+    git base set B &&
-+    test $(git base) = $(git rev-parse M) &&
-+    git base set F &&
-+    test $(git base) = $(git rev-parse M) &&
-+    git base set G &&
-+    test $(git base) = $(git rev-parse M) &&
-+    git base set E &&
-+    test $(git base) = $(git rev-parse D)
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git work create --pivot-first topic P I &&
++    test_condition  --same $(git base -b topic) I &&
++    test_condition  --checked-out test &&
++    test "$(git diff I topic | git patch-id)" = "$(git diff M P | git patch-id)" &&
++    test "$(git diff $(git base)  test | git patch-id)" = "$(git diff P Q | git patch-id)"
 +'
 +
-+test_expect_success 'test set to good reference ' \
++test_expect_success 'git work update topic I from P..Q' \
 +'
-+    ! git base clear &&
-+    git base set C &&
-+    test $(git base) = $(git rev-parse C) &&
-+    git base set D &&
-+    test $(git base) = $(git rev-parse D)
-+'
-+
-+test_expect_success 'exit codes: ! clear && default' \
-+'
-+    ! git base clear &&
-+    ! git base
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git branch topic I &&
++    git work update topic P &&
++    test_condition  --same "$(git base -b topic)" I &&
++    test_condition  --checked-out test &&
++    test "$(git diff I topic | git patch-id)" = "$(git diff P Q | git patch-id)" &&
++    test "$(git diff $(git base)  test | git patch-id)" = "$(git diff M P | git patch-id)"
 +'
 +
-+test_expect_success 'exit codes: ! clear && !check && ! default' \
++test_expect_success 'git work update --pivot-first topic I from P..Q' \
 +'
-+    ! git base clear &&
-+    ! git base check &&
-+    ! git base
-+'
-+
-+test_expect_success 'exit codes: ! clear && ! set && ! default' \
-+'
-+    ! git base clear &&
-+    ! git base set &&
-+    ! git base
-+'
-+
-+test_expect_success 'test detached head' \
-+'
-+    git checkout master^0 &&
-+    test "$(git base --as-ref)" = "BASE" &&
-+    git base set base &&
-+    git base check &&
-+    git base set M &&
-+    test "$(git base)" = "$(git rev-parse M)"
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git branch topic I &&
++    git work update --pivot-first topic P &&
++    test_condition  --same "$(git base -b topic)" I &&
++    test_condition  --checked-out test &&
++    test "$(git diff I topic | git patch-id)" = "$(git diff M P | git patch-id)" &&
++    test "$(git diff $(git base)  test | git patch-id)" = "$(git diff P Q | git patch-id)"
 +'
 +
-+test_expect_success 'test -b master' \
++test_expect_success 'git work update topic I from P..Q - unitialized topic' \
 +'
-+    ! git base -b master clear &&
-+    git checkout master^0 &&
-+    test "$(git base -b master --as-ref)" = "refs/bases/master" &&
-+    git base -b master set base &&
-+    git base -b master check &&
-+    git base -b master set M &&
-+    test "$(git base -b master)" = "$(git rev-parse M)"
++    git base init -d topic &&
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git branch topic I &&
++    git work update topic P &&
++    test_condition  --same "$(git base -b topic)" I &&
++    test_condition  --checked-out test &&
++    test "$(git diff I topic | git patch-id)" = "$(git diff P Q | git patch-id)" &&
++    test "$(git diff $(git base)  test | git patch-id)" = "$(git diff M P | git patch-id)"
++'
++
++test_expect_success 'git work pivot P' \
++'
++    reset_test &&
++    git checkout -b test Q &&
++    git base -q set M &&
++    git work pivot P &&
++    test_condition  --same "$(git base -b test)" M &&
++    test_condition  --checked-out test &&
++    test "$(git diff M test | git patch-id)" = "$(git diff M Q | git patch-id)" &&
++    test "$(git diff M test~1 | git patch-id)" = "$(git diff P Q | git patch-id)" &&
++    test "$(git diff test~1 test | git patch-id)" = "$(git diff M P | git patch-id)"
 +'
 +
 +test_done
