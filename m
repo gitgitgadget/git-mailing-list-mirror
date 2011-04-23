@@ -1,91 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: Cloning into an existing, non-empty directory?
-Date: Sat, 23 Apr 2011 05:15:00 -0500
-Message-ID: <20110423101500.GB1500@elie>
+Date: Sat, 23 Apr 2011 17:28:48 +0700
+Message-ID: <BANLkTi=uNpruRhPcxKMUy4CH2V5q-z9U7Q@mail.gmail.com>
 References: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
- <20110421220327.GA3396@elie>
- <BANLkTikY7c7rP+yv5vt2vxw5nu84k_H=Xw@mail.gmail.com>
+ <20110421220327.GA3396@elie> <BANLkTikY7c7rP+yv5vt2vxw5nu84k_H=Xw@mail.gmail.com>
+ <20110423101500.GB1500@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 23 12:15:25 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 23 12:29:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDZs4-0004tx-E7
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 12:15:24 +0200
+	id 1QDa5e-000560-OO
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Apr 2011 12:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928Ab1DWKPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Apr 2011 06:15:07 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38163 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751223Ab1DWKPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2011 06:15:05 -0400
-Received: by iwn34 with SMTP id 34so913202iwn.19
-        for <git@vger.kernel.org>; Sat, 23 Apr 2011 03:15:05 -0700 (PDT)
+	id S1753036Ab1DWK3W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Apr 2011 06:29:22 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33660 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752493Ab1DWK3U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2011 06:29:20 -0400
+Received: by bwz15 with SMTP id 15so815393bwz.19
+        for <git@vger.kernel.org>; Sat, 23 Apr 2011 03:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=46EyFymYGAvFXLD6TtJJC4VFDwe8qOGySKrN/9SnIJE=;
-        b=WCTNh1e+c3/PjcTMgoZUfyvBGXz0/y3NMUXYLkto+3n5dmK1pdLp6wi5QOgNmg6jqm
-         fn8beDJQfBnMAkcQ92X/1sliqZqSbd9C/PweTjbYMll4B2tSToz+iXoVQtXsx0UME8Mu
-         j5Vrwr+R8M2Ux+ZKWSOUfbWeWhfKUwjx3gJOg=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=vQ1DoQ8JbkQJg3T/DPaBufkNq8kNOojMhVgDNVIU3xE=;
+        b=BDEnAMk3GS1hXby+VCL4UfGQhzN2kvToNFG9RFY36HiyvlgvzUThyUfRHJ9GViBNKj
+         BPjN4jWxXDVzH2lGoxGd/lLubsMUFcBVIoUAwb1GKXaQC6ni5N9O0RgLMOrmvAt5N8pZ
+         Q34nXnHDkAQSHJMlWaU+TPV3aWOSMs3wbzgXI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=SrOjj1KsK/Up8GvXt7h77qy3/qthV6csFPGuXFWwq2TLTE9E1q+1Hwz5iE/9vrSQAs
-         6I+aF8MMzmzZXKRkK3oTf7Sy1bGlir8bbU1PiDURwhqrOFLnJ6fIkbJuNFY5FEIvijPY
-         n3JL8x+b77dekQZewRcdIJjED+sdu7J9YEGHU=
-Received: by 10.42.157.67 with SMTP id c3mr2131760icx.95.1303553704950;
-        Sat, 23 Apr 2011 03:15:04 -0700 (PDT)
-Received: from elie (adsl-69-209-64-141.dsl.chcgil.sbcglobal.net [69.209.64.141])
-        by mx.google.com with ESMTPS id f28sm1438844ibh.67.2011.04.23.03.15.02
-        (version=SSLv3 cipher=OTHER);
-        Sat, 23 Apr 2011 03:15:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTikY7c7rP+yv5vt2vxw5nu84k_H=Xw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Pn3eug40EXWn4hmCoaxCWRsSk61abM0K0DuyQBi7It6mUmQko9ULx94BMY2G4i4iFv
+         YLitj+BjV70OnJZVZOOiBqC1biVD5QyEN/FPxtuxLA2mR2pwSSMcTCqQ82hWr0YEiigR
+         67CNfqVbTKqwbpIyPmJR4glmoXvfdsK/2GK04=
+Received: by 10.204.0.71 with SMTP id 7mr1728276bka.11.1303554558192; Sat, 23
+ Apr 2011 03:29:18 -0700 (PDT)
+Received: by 10.204.17.14 with HTTP; Sat, 23 Apr 2011 03:28:48 -0700 (PDT)
+In-Reply-To: <20110423101500.GB1500@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171980>
 
-Hi again,
-
-Richard Hartmann wrote[1]:
-
-> 1) git merge does not seem to understand either of those parameters.
-
-I assume you mean --work-tree and --git-dir.  But if true, that would
-be a bug.
-
-Based on the script, it looks like you are not passing a branch name
-to "git merge".  Maybe that is the problem.  In any case, it would be
-nice to see what command you used, what result was expected, and what
-result actually occured.
-
-Side note: git commands respect the GIT_DIR and GIT_WORK_TREE
-environment variables in addition to the corresponding command-line
-parameters, which can save some typing.
-
-[...]
-> 2) running `git pull` as suggested results in:
+2011/4/23 Jonathan Nieder <jrnieder@gmail.com>:
+>> 2) running `git pull` as suggested results in:
+>>
+>> fatal: /usr/lib/git-core/git-pull cannot be used without a working t=
+ree.
+>>
+>> which can be worked around by using --work-tree and --git-dir . Not
+>> ideal, but workeable if I accept the race condition.
 >
-> fatal: /usr/lib/git-core/git-pull cannot be used without a working tree.
->
-> which can be worked around by using --work-tree and --git-dir . Not
-> ideal, but workeable if I accept the race condition.
+> Weird. =C2=A0Maybe chdir-ing into the work tree will help? =C2=A0(Tra=
+ditionally,
+> git commands tend to be run from within the work tree, so I wouldn't
+> be too surprised if some commands do not like being run from outside.=
+)
 
-Weird.  Maybe chdir-ing into the work tree will help?  (Traditionally,
-git commands tend to be run from within the work tree, so I wouldn't
-be too surprised if some commands do not like being run from outside.)
+Does this patch help?
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/171920/focus=171934
+http://article.gmane.org/gmane.comp.version-control.git/150986
+--=20
+Duy
