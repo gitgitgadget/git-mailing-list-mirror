@@ -1,67 +1,86 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Off-topic Thunderbird wrapping (was Re: GIT cloning(or pull/push)
- doesn't work properly if you have a sub-folder as its own GIT repo)
-Date: Sun, 24 Apr 2011 23:25:58 +1200
-Message-ID: <4DB408C6.3080400@gmail.com>
-References: <BANLkTi=YsEr9hOz7-u_t3BJUiMt+34P+ZA@mail.gmail.com> <4DB3D863.4080500@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [WRONG/PATCH 1/3] revisions: clarify handling of --no-walk and
+ --do-walk
+Date: Sun, 24 Apr 2011 13:28:01 +0200
+Message-ID: <4DB40941.5030903@drmicha.warpmail.net>
+References: <20110421102241.GA16185@elie> <20110421103926.GA16260@elie> <4DB02B24.4030503@drmicha.warpmail.net> <20110421213014.GB18418@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 13:25:03 2011
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Pierre Habouzit <madcoder@madism.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 24 13:28:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDxQv-0004w4-B3
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Apr 2011 13:24:57 +0200
+	id 1QDxU5-000726-3O
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Apr 2011 13:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756837Ab1DXLYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2011 07:24:39 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:61792 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756597Ab1DXLYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2011 07:24:38 -0400
-Received: by pvg12 with SMTP id 12so861260pvg.19
-        for <git@vger.kernel.org>; Sun, 24 Apr 2011 04:24:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=munmhk04rSHqa5druNG9K84HkUbGHkTs0tZ0sZ/bQ2U=;
-        b=Y+lOlVvTuetI1iG9k7j6mzRnbPsy+cavR16LmYRvuCM6jkS0DMH7B/vCyaN8aiKUOZ
-         Jf6c+v/yh1gQ/i9bPrKXzKp17pgxS11/MQ4Ab8KFx5B426bGFJrdc5HOgZt27zxBFual
-         RMceHKc4EInnMPics0/Ie4yG+Arf5icZskrLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=inBNa7i16OqEtC+HIe19N97lBDDiayMpfoPy6GOCgE+PWGgbhpz26PHH6JWRM/LC89
-         bqTrIczO175jTgH7whbF1q+1J6S1wgdCfUa0R2T1C9jpxXdQ/vsXHW6CRXWLJopmqAFW
-         /LWH26vrbDuQyBk6NsS1Cs6hBJ5lyH8CE0or8=
-Received: by 10.142.61.18 with SMTP id j18mr1925839wfa.75.1303644278261;
-        Sun, 24 Apr 2011 04:24:38 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
-        by mx.google.com with ESMTPS id w11sm6364011wfh.18.2011.04.24.04.24.36
-        (version=SSLv3 cipher=OTHER);
-        Sun, 24 Apr 2011 04:24:37 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.14) Gecko/20110221 SUSE/3.1.8 Thunderbird/3.1.8
-In-Reply-To: <4DB3D863.4080500@gmail.com>
+	id S1756953Ab1DXL2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2011 07:28:08 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:50255 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756597Ab1DXL2G (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2011 07:28:06 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7CDCC20785;
+	Sun, 24 Apr 2011 07:28:04 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Sun, 24 Apr 2011 07:28:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=s1SrGaloJiVV98KvbIF1y6dr4eg=; b=U+H46YtBqSDJpV97YUwlBnBspTyaA1pLIMjwb8f68sou84nCXfvigd8n6BHkonGUugdsEdEXRUodj7YyvW41eos/MMEg2SYXHx7iB1MZVu7diPBhgDrMvAViHa7rpPuddVg3FGC932j8TdsF8Sl39s6p/73uj7OXHn4IJW3dVkU=
+X-Sasl-enc: agOgb2S3glSu+uCkG5EZNG5pc+6bzW8Q9fi4jQCH/JsC 1303644484
+Received: from localhost.localdomain (p5485971C.dip0.t-ipconnect.de [84.133.151.28])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5ABFE4088EC;
+	Sun, 24 Apr 2011 07:28:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <20110421213014.GB18418@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171992>
 
-On 24/04/11 19:59, Chris Packham wrote:
->
-> That's expected behaviour as far as I'm concerned (based on your
-> example). ParentGITRepo and Child1Repo are completely independent at
-> this point. Cloning ParentGITRepo won't get you any untracked files that
-> happen to be in the work-tree of the repository you're cloning.
+Jonathan Nieder venit, vidit, dixit 21.04.2011 23:30:
+> Michael J Gruber wrote:
+> 
+>> This is not unrelated to the tip of gitster/mg/show-without-prune, i.e.
+>>
+>> 0c738b6 (builtin/show: do not prune by pathspec, 2011-04-01)
+> 
+> True.
+> 
+>> We should rethink the ui balance between deviating from the usual log
+>> option processing and the usefulness here.
+> 
+> Could you expand on that?  I think --no-walk being a positional
+> argument is just an ugly consequence of the code that permits
+> 
 
-So this is the 2nd response I've sent recently that Thunderbird didn't 
-wrap correctly (yet it looks fine in the composer). Can anybody tell me 
-(or point me at a webpage) how to set it up to post to mailing lists nicely?
+Sorry for being fuzzy. What I meant was: There is the systematic
+approach which gives the user exactly what he asks for, i.e.: log,
+rev-list default to walking, show to not walking (and rev-parse of
+course), and when a user feeds a range it may or may may not make sense.
+Similarly, "git show commit -- path" returns nothing at all if path is
+not touched by commit because the commit gets pruned.
+
+We don't do the systematic approach now. In some situations, some
+commands switch on the walker automatically (I think "show A..B") to
+make things more useful (to most users) but less systematic, even less
+predictable if you don't know these deviations/exceptions. I've
+suggested such a "usefulness exception" myself (don't prune commits by
+path for "show").
+
+The strict, systematic approach produces some command/argument
+combinations which are not useful or rarely useful.
+
+The "helpful" approach produces special casing which may make things
+confusing if there's too much of it.
+
+Finding the right balance is probably more difficult than being
+radically systematic...
+
+Michael
