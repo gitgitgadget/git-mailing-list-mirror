@@ -1,125 +1,67 @@
-From: Mathias Lafeldt <misfire@debugon.org>
-Subject: [PATCH] t/README: unify documentation of test function args
-Date: Sun, 24 Apr 2011 12:52:59 +0200
-Message-ID: <4DB4010B.6080804@debugon.org>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Off-topic Thunderbird wrapping (was Re: GIT cloning(or pull/push)
+ doesn't work properly if you have a sub-folder as its own GIT repo)
+Date: Sun, 24 Apr 2011 23:25:58 +1200
+Message-ID: <4DB408C6.3080400@gmail.com>
+References: <BANLkTi=YsEr9hOz7-u_t3BJUiMt+34P+ZA@mail.gmail.com> <4DB3D863.4080500@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 12:53:28 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 13:25:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDwwR-0003Jq-6n
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Apr 2011 12:53:27 +0200
+	id 1QDxQv-0004w4-B3
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Apr 2011 13:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756551Ab1DXKxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2011 06:53:07 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:54631 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756505Ab1DXKxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2011 06:53:05 -0400
-Received: from [192.168.2.111] (pD95546C1.dip.t-dialin.net [217.85.70.193])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0Lsaqr-1PqH7U1bcf-012L6k; Sun, 24 Apr 2011 12:53:01 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
-X-Provags-ID: V02:K0:tPsh80w7LhrBfBKzFI+ccodrk+PV1lNU9ZvV9hWn1HR
- BnsDzDYS2hPA2zLQsRjf7Ps49EPHEq2yKFl0Uq5j+Jiu925XeP
- 6TSYe03OdRpaZCjtCdxM30Ujgbd5Qh7t8kZmOIhiEip2eI/LZm
- NTKTf4SKU+IvsrltYGbjhm+F9sxYeaGNoym4hq0no7CoYyMsVY
- 40esSuqvYr4mYhS2q33ghjREeVVDipLXjYF/TzTdRc=
+	id S1756837Ab1DXLYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2011 07:24:39 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:61792 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756597Ab1DXLYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2011 07:24:38 -0400
+Received: by pvg12 with SMTP id 12so861260pvg.19
+        for <git@vger.kernel.org>; Sun, 24 Apr 2011 04:24:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=munmhk04rSHqa5druNG9K84HkUbGHkTs0tZ0sZ/bQ2U=;
+        b=Y+lOlVvTuetI1iG9k7j6mzRnbPsy+cavR16LmYRvuCM6jkS0DMH7B/vCyaN8aiKUOZ
+         Jf6c+v/yh1gQ/i9bPrKXzKp17pgxS11/MQ4Ab8KFx5B426bGFJrdc5HOgZt27zxBFual
+         RMceHKc4EInnMPics0/Ie4yG+Arf5icZskrLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        b=inBNa7i16OqEtC+HIe19N97lBDDiayMpfoPy6GOCgE+PWGgbhpz26PHH6JWRM/LC89
+         bqTrIczO175jTgH7whbF1q+1J6S1wgdCfUa0R2T1C9jpxXdQ/vsXHW6CRXWLJopmqAFW
+         /LWH26vrbDuQyBk6NsS1Cs6hBJ5lyH8CE0or8=
+Received: by 10.142.61.18 with SMTP id j18mr1925839wfa.75.1303644278261;
+        Sun, 24 Apr 2011 04:24:38 -0700 (PDT)
+Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
+        by mx.google.com with ESMTPS id w11sm6364011wfh.18.2011.04.24.04.24.36
+        (version=SSLv3 cipher=OTHER);
+        Sun, 24 Apr 2011 04:24:37 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.14) Gecko/20110221 SUSE/3.1.8 Thunderbird/3.1.8
+In-Reply-To: <4DB3D863.4080500@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171991>
 
-Document all test function arguments in the same way.
+On 24/04/11 19:59, Chris Packham wrote:
+>
+> That's expected behaviour as far as I'm concerned (based on your
+> example). ParentGITRepo and Child1Repo are completely independent at
+> this point. Cloning ParentGITRepo won't get you any untracked files that
+> happen to be in the work-tree of the repository you're cloning.
 
-While at it, correct some grammatical errors.
-
-Signed-off-by: Mathias Lafeldt <misfire@debugon.org>
----
- t/README |   26 +++++++++++++-------------
- 1 files changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/t/README b/t/README
-index 428ee05..e8372d7 100644
---- a/t/README
-+++ b/t/README
-@@ -379,7 +379,7 @@ library for your script to use.
- 
-  - test_expect_success [<prereq>] <message> <script>
- 
--   Usually takes two strings as parameter, and evaluates the
-+   Usually takes two strings as parameters, and evaluates the
-    <script>.  If it yields success, test is considered
-    successful.  <message> should state what it is testing.
- 
-@@ -389,7 +389,7 @@ library for your script to use.
- 	    'git-write-tree should be able to write an empty tree.' \
- 	    'tree=$(git-write-tree)'
- 
--   If you supply three parameters the first will be taken to be a
-+   If you supply three parameters, the first will be taken to be a
-    prerequisite, see the test_set_prereq and test_have_prereq
-    documentation below:
- 
-@@ -446,7 +446,7 @@ library for your script to use.
-    Merges the given rev using the given message.  Like test_commit,
-    creates a tag and calls test_tick before committing.
- 
-- - test_set_prereq SOME_PREREQ
-+ - test_set_prereq <prereq>
- 
-    Set a test prerequisite to be used later with test_have_prereq. The
-    test-lib will set some prerequisites for you, see the
-@@ -456,7 +456,7 @@ library for your script to use.
-    test_have_prereq directly, or the three argument invocation of
-    test_expect_success and test_expect_failure.
- 
-- - test_have_prereq SOME PREREQ
-+ - test_have_prereq <prereq>
- 
-    Check if we have a prerequisite previously set with
-    test_set_prereq. The most common use of this directly is to skip
-@@ -503,18 +503,18 @@ library for your script to use.
- 		test_expect_code 1 git merge "merge msg" B master
- 	'
- 
-- - test_must_fail <git-command>
-+ - test_must_fail <command>
- 
--   Run a git command and ensure it fails in a controlled way.  Use
--   this instead of "! <git-command>".  When git-command dies due to a
--   segfault, test_must_fail diagnoses it as an error; "! <git-command>"
--   treats it as just another expected failure, which would let such a
--   bug go unnoticed.
-+   Run a command and ensure it fails in a controlled way.  Use this
-+   instead of "! <command>".  When the command dies due to a segfault,
-+   test_must_fail diagnoses it as an error; "! <command>" treats it as
-+   just another expected failure, which would let such a bug go
-+   unnoticed.
- 
-- - test_might_fail <git-command>
-+ - test_might_fail <command>
- 
-    Similar to test_must_fail, but tolerate success, too.  Use this
--   instead of "<git-command> || :" to catch failures due to segv.
-+   instead of "<command> || :" to catch failures due to segfault.
- 
-  - test_cmp <expected> <actual>
- 
-@@ -530,7 +530,7 @@ library for your script to use.
-    test_path_is_dir <dir> [<diagnosis>]
-    test_path_is_missing <path> [<diagnosis>]
- 
--   Check whether a file/directory exists or doesn't. <diagnosis> will
-+   Check whether a file/directory exists or not. <diagnosis> will
-    be displayed if the test fails.
- 
-  - test_when_finished <script>
--- 
-1.7.5.rc3
+So this is the 2nd response I've sent recently that Thunderbird didn't 
+wrap correctly (yet it looks fine in the composer). Can anybody tell me 
+(or point me at a webpage) how to set it up to post to mailing lists nicely?
