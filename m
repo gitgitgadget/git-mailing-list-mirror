@@ -1,66 +1,79 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: Off-topic Thunderbird wrapping (was Re: GIT cloning(or pull/push)
- doesn't work properly if you have a sub-folder as its own GIT repo)
-Date: Sun, 24 Apr 2011 13:54:33 +0200
-Message-ID: <BANLkTim0TDf0+evU+zBf8fe0at7QQb5W0A@mail.gmail.com>
-References: <BANLkTi=YsEr9hOz7-u_t3BJUiMt+34P+ZA@mail.gmail.com>
-	<4DB3D863.4080500@gmail.com>
-	<4DB408C6.3080400@gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH 00/23] RFC: Introducing git-test, git-atomic, git-base and git-work
+Date: Mon, 25 Apr 2011 01:47:28 +1000
+Message-ID: <BANLkTi=K_Mb-+-5DOE3o6m7pQsQcH0qz-g@mail.gmail.com>
+References: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
+	<20110423091300.GC9206@m62s10.vlinux.de>
+	<BANLkTinhjMtNc257NnOCZe6askr2i=4g6Q@mail.gmail.com>
+	<BANLkTi=UDYT1hjpFT0LcgL6XvAGtTXMBLw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 13:54:44 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Apr 24 17:47:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDxtg-0004uM-UE
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Apr 2011 13:54:41 +0200
+	id 1QE1XI-0007od-Fi
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Apr 2011 17:47:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756873Ab1DXLyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2011 07:54:35 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:50824 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756598Ab1DXLye (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2011 07:54:34 -0400
-Received: by qwk3 with SMTP id 3so701034qwk.19
-        for <git@vger.kernel.org>; Sun, 24 Apr 2011 04:54:33 -0700 (PDT)
+	id S1757588Ab1DXPrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2011 11:47:31 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:62733 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757576Ab1DXPra convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2011 11:47:30 -0400
+Received: by ewy4 with SMTP id 4so533502ewy.19
+        for <git@vger.kernel.org>; Sun, 24 Apr 2011 08:47:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=EmTz5oWump3BWEpQiDdpwXR9pOVgR9vuKS61u0bq8wk=;
-        b=if9sTalvk1Prw1TzF5OJoy4RBwFka/bdY+7Unkk2siAIQB1aTxRVbHYh8WiinlSWOm
-         5dljqWsaQqXwy8PsZTamCc7zCDjl6Xun51J/Q1cUhhLOvae5/RH3+6wp14XsLnDrE1Yb
-         YUTBy7XuGPMsarA6v/QrXEkJLK/iKpEOb2/eY=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PvFvWnOM5i6I2Wv5iz9bS0Ym+FKI+2wRu4PIPTT8/P4=;
+        b=b3k+kLqAHUElP6pbXYYJVtT4aLCEhgSGt3xclv4Xu+8ENVsZmyydC2o2gRmMjkReU4
+         Nu0wje3g457RX9/qlEiG1VuiweKHA/gnKe9My3VrgSF005NzVkhkz7y1MIMMwUfb5k+0
+         ieRl37i5pVAR3qfYm0uJSB4nU+tzK5eLluygc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=acNeqSfAyOSzgkVsGhecmdsoLKLWpiRRU1G/5mzZhb/lDnjyHl7Vv9r1dr8Jrv3LlT
-         O+PHE/4UjXuTtFDg36wP0EVDs790THLSAHVPDMq9A1Cfgzn+ZKorUILZKBUzlhgmbIOP
-         rBpmBgfbb66N7bWwZ/FEhMQlPhpTCzYhuh/Hg=
-Received: by 10.229.253.8 with SMTP id my8mr2056456qcb.236.1303646073713; Sun,
- 24 Apr 2011 04:54:33 -0700 (PDT)
-Received: by 10.229.81.71 with HTTP; Sun, 24 Apr 2011 04:54:33 -0700 (PDT)
-In-Reply-To: <4DB408C6.3080400@gmail.com>
-X-Google-Sender-Auth: S0X8Has7YnwOJXdQeea0RqcdWy8
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XK3M9t7SyqbkMQ6RnqAtyD1qR2ZMKCEx4hO+bs1i+KA7mE440Lh8xfphi/DTHCTfPo
+         LKaWrBUHQ4NB0dPa7NtHkK/UunmS4LyrT9FcUNogjp/Au2eeUhVSsuFmeBR+DcWD42bw
+         xKJGxRNX4Nqz7kgkKOchx8JOgBJMJI3B9uKwI=
+Received: by 10.14.50.15 with SMTP id y15mr1071776eeb.149.1303660048216; Sun,
+ 24 Apr 2011 08:47:28 -0700 (PDT)
+Received: by 10.14.22.68 with HTTP; Sun, 24 Apr 2011 08:47:28 -0700 (PDT)
+In-Reply-To: <BANLkTi=UDYT1hjpFT0LcgL6XvAGtTXMBLw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171994>
 
-On Sun, Apr 24, 2011 at 13:25, Chris Packham <judge.packham@gmail.com> wrote:
+Also, anyone interested in browsing the HTML documentation for these
+commands can read:
 
-> So this is the 2nd response I've sent recently that Thunderbird didn't wrap
-> correctly (yet it looks fine in the composer). Can anybody tell me (or point
-> me at a webpage) how to set it up to post to mailing lists nicely?
+   https://s3.amazonaws.com/jonseymour/git-work.html
+   https://s3.amazonaws.com/jonseymour/git-base.html
+   https://s3.amazonaws.com/jonseymour/git-atomic.html
+   https://s3.amazonaws.com/jonseymour/git-test.html
 
-See SubmittingPatches in the Git Documentation/ subdirectory (comes
-with the distro).
-I used that to fix my own Thunderbird setup.
+jon.
 
--Tor
+On Sun, Apr 24, 2011 at 4:37 AM, Jon Seymour <jon.seymour@gmail.com> wr=
+ote:
+> BTW anyone interested in trying git work can fetch the tag containing
+> this series from my github fork
+>
+> Web link here:
+>
+> https://github.com/jonseymour/git/tree/work-20110423
+>
+> git://github.com/jonseymour/git, tag =C2=A0work-20110423
+>
+> jon.
+>
