@@ -1,116 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Dates in Commits and other issues of style (Re: [RFC 2/5] Pretty
- Print: show tz when using DATE_LOCAL)
-Date: Sun, 24 Apr 2011 20:57:50 -0700
-Message-ID: <7vhb9nkmo1.fsf@alter.siamese.dyndns.org>
-References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
- <acbcf231-e0a6-440e-be42-5f25da3e318d-mfwitten@gmail.com>
- <7vtydrutbq.fsf@alter.siamese.dyndns.org>
- <811b01a9-f10e-4444-9e5e-581adaf059c2-mfwitten@gmail.com>
- <87sjt76rzo.fsf@catnip.gol.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Cloning into an existing, non-empty directory?
+Date: Mon, 25 Apr 2011 03:00:10 -0500
+Message-ID: <20110425075750.GA28172@elie>
+References: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
+ <20110421220327.GA3396@elie>
+ <BANLkTikY7c7rP+yv5vt2vxw5nu84k_H=Xw@mail.gmail.com>
+ <20110423101500.GB1500@elie>
+ <BANLkTinV4cFC5vzr25V-D3PMwWx284zgoQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 05:58:20 2011
+Cc: Git List <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 10:00:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QECwG-0000To-KF
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 05:58:20 +0200
+	id 1QEGij-0006Q7-Em
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 10:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758082Ab1DYD6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2011 23:58:05 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35711 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757064Ab1DYD6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2011 23:58:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4112648ED;
-	Mon, 25 Apr 2011 00:00:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P/uE/WKQn3iedkye5Upmtql93E4=; b=twSXEC
-	5tg1SgtGRvip6QoLqXFkTmEYk3gvD8072RlgdZUMBKl5Hmj1L2o9Rz0q2RPEojC/
-	v8bvRD4W7QZaF3U3Ya7XA8sZksZVi0kfOX1KrdQSkh9SpwMdK+OHaGP7tKsi2BmN
-	Cxn7dPy8jdtI2fJ0i8OVXOx2kbJrILcSXi1Ao=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qUiEmivzRp5hkMi2zwsA46F33M2VIJ7Q
-	/7zn7c66WNsQkbl0Q8pubTepCt09nAzP/qbnyqnzrMm8wKnJVUEsc12cCfI9fegE
-	ZuoZ7B/1u3hwhLgZxxpQ50Ih2D47B6Fd3fvM3W8KKDsfO9Vy/oUBPHjqPbbrXgkz
-	ba9cn98lprw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D5A2E48E9;
-	Sun, 24 Apr 2011 23:59:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BCB5448E6; Sun, 24 Apr 2011
- 23:59:53 -0400 (EDT)
-In-Reply-To: <87sjt76rzo.fsf@catnip.gol.com> (Miles Bader's message of "Mon,
- 25 Apr 2011 10:26:35 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7C503D00-6EF0-11E0-91AA-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1756994Ab1DYIAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 04:00:18 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:49251 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756650Ab1DYIAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 04:00:16 -0400
+Received: by iwn34 with SMTP id 34so1686116iwn.19
+        for <git@vger.kernel.org>; Mon, 25 Apr 2011 01:00:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=e+18xR8kCqFBOSYB9v/dyB1V0pcQP5BOt7oduHpDCow=;
+        b=Mw/XUtp79UyjCgW86HsU7b5wVQ/uTtgd970cuXHDAEd4qBc80nbOIzNiP0bOnM6g/r
+         CO6HG+eimCcGOQbNbeNxavNpBT+WT8M2J0eobRJrpIamoWKbM8z7/HMg3qeBEeFpBIC2
+         srGWvZfXW7nvfmU/+GRcT9aAGsDfJp7lhpdio=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KjU27270XcDX3Baq3SVoF8IjF5IB2Juvu8IPxWLg5wyQ2M00brCLHOgCjyLYXdjJmg
+         mj6yZjZSOLNtzj/z6Mf1ls8EAp5wTF+1pFZWyiNLDj7I0PjhfdF/lMbyjjvCgDLCCthW
+         yvHbhgOMZyZw/FTzVFwYFJZzg97qpguLuDwi0=
+Received: by 10.42.132.71 with SMTP id c7mr4630275ict.147.1303718415931;
+        Mon, 25 Apr 2011 01:00:15 -0700 (PDT)
+Received: from elie (adsl-68-255-96-190.dsl.chcgil.sbcglobal.net [68.255.96.190])
+        by mx.google.com with ESMTPS id wu17sm1743021icb.23.2011.04.25.01.00.13
+        (version=SSLv3 cipher=OTHER);
+        Mon, 25 Apr 2011 01:00:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTinV4cFC5vzr25V-D3PMwWx284zgoQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172015>
 
-Miles Bader <miles@gnu.org> writes:
+Hi,
 
-> Michael Witten <mfwitten@gmail.com> writes:
->> and I feel like
->> you are now
->> nitpicking.
->
-> Wait, isn't nitpicking his job?!
+Richard Hartmann wrote:
 
-Enforcing consistency is one of the important tasks the maintainers do in
-their projects.  Besides ensuring that the intent of the change each patch
-brings to the codebase is good, that the log entry describes the change in
-a useful way for future readers, and that the patch correctly implements
-the described change, we also need to make sure that the resulting code
-matches the style of the surrounding code, and the style, structure and
-tone the log messages are delivered in a consistent voice.  Otherwise it
-would quickly get very tiring when you have to dig into the history of the
-codebase.  The code and the history are read a lot more often than are
-written.
+> I think I reduced the test-case as much as I can
 
-When a casual and occasional contributor sends in a good change whose only
-sin is style violation, I do not mind touching up its proposed commit log
-message or the patch text, and I often do.
+All right, sorry to be so dense.  I tried:
 
-But I expect contributors who return here often to be more considerate
-than one-time contributors, and that is why I give style reminders.
+	git init test && cd test
+	git remote add origin ~/src/some-repo
+	git fetch origin
 
-The purpose of the style reminder is so that they can help me and other
-reviewers concentrate on the substance (Is what it does good? Is it
-explained well? Is it implemented well?) without having to spend
-unnecessary time fixing the form (Does the new code fit well with the
-surrounding code? Does the message flow well in "git log" and easy to
-understand?) when they submit their changes the next time.
+and then:
 
-Please do not mistake a style reminder as an opportunity to promote your
-own style that would not match what we have established here.  I could
-make a black-list of people I should avoid giving style reminders and
-instead fix all of their submissions silently, because giving style
-remainders to them will waste people's time by creating a discussion
-thread like this one.
+	$ git merge origin
+	fatal: origin - not something we can merge
 
-I really wish I do not have to do so.
+Is this what you mean?  "git merge" is not advertised as taking the
+name of a remote repository as a parameter.  The usual usage is
+instead to pass a commit, as in "git merge origin/master".
 
-Such an arrangement would not scale.  Given two sets of patches with equal
-goodness in substance, if one also matches our style and the other
-deliberately asks me to spend extra time to whip it into our style, the
-latter naturally has to be assigned a lower priority.  After all, there is
-only 24 hours in a day, and my time is better spent on substance not form,
-and definitely not on responding to quibblings about styles.
+I'm not sure what a good meaning for "git merge <repository>" would
+be.  "git pull <repository>" does "git fetch <repository>" and then,
+if one of the fetched branches from <repository> is the configured
+upstream for the current branch, merges it.
 
-The only two "workable" solutions are either (1) everybody tries to be
-consistent with the project's style, or (2) allow everybody to stick to
-their own style, making the resulting code and history unpleasant to read.
+Ideas?  Probably the documentation or error message could use help
+from someone less blind to see what a first-time reader would see.
 
-I'd be failing the community if I took the latter approach.
+Regards,
+Jonathan
