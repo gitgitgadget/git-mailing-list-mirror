@@ -1,92 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Announcing Gitspread - Spread Git commits to several servers with a single push
-Date: Mon, 25 Apr 2011 03:35:02 -0700 (PDT)
-Message-ID: <m3k4eiwrfe.fsf@localhost.localdomain>
-References: <BANLkTikuCfnSuY2r+YzWu1PegP3baniOjA@mail.gmail.com>
+From: Michael Treibton <mtreibton@googlemail.com>
+Subject: Submodules or separate repos?
+Date: Mon, 25 Apr 2011 11:35:10 +0100
+Message-ID: <BANLkTinAC2Thuf_z_-DMEHotgF-tqpQYZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?iso-8859-15?q?=D8yvind_A._Holm?=" <sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 12:35:22 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 12:35:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEJ8T-00050H-H8
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 12:35:21 +0200
+	id 1QEJ8Z-00053I-8x
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 12:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758293Ab1DYKfK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2011 06:35:10 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56730 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758284Ab1DYKfF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2011 06:35:05 -0400
-Received: by bwz15 with SMTP id 15so1528117bwz.19
-        for <git@vger.kernel.org>; Mon, 25 Apr 2011 03:35:03 -0700 (PDT)
+	id S1758298Ab1DYKfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 06:35:16 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64969 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758284Ab1DYKfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 06:35:12 -0400
+Received: by fxm17 with SMTP id 17so1228079fxm.19
+        for <git@vger.kernel.org>; Mon, 25 Apr 2011 03:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type:content-transfer-encoding;
-        bh=WXvZsyGvCjZHHPHVoVhuOimlR+krhdPzQUdYb+qlEWQ=;
-        b=wRgcZ4q6FJE49/mMdv0NfataKHpe46uf5rCOIJkJy68vzrCsbLn0VcfbazsENjNBLR
-         gy56JKmIcETY+zGVhOGtYTtgYkhYkCBLn0s7c0ww4VUCKhunoLIZ0f4LiO5hk7o2gmnO
-         0IrWzSKemU/Z7Td0s2ksOlNMLMWZ7jeacFq8o=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=G4l7fmbqB8EuvchCwZpmAiU0EtF7TQ4bMPRr2rULwK8=;
+        b=wvvz0uvTbmr7f4WtgfPeHZMNXRsKxnpUioA4OoBLD7m/cfofVEg+CzUDCz4y3/I8FX
+         3n439+8K4ABsoxj9AEEKoblOgzmKgnfUEVymM6dEAW6ndMN/PPYn5CGvwqQwSk9F5s+S
+         JjiaudVlhPXXnPAg099dtEiHOAMM9FWhuZ5fU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=fIQIhnF0+LrMm6HD4jnzUlSf/j7YdGT3pFikXUgNhDGzkdukAyUZNzjyYv2Gjq/VIT
-         sqpDs5nwViG4FonDNBq2ati/g7ta2eFRThiIZZmDamiPh5tJnIOxUi7uHF9Mt16aK5Qq
-         1ZgMU82f8GQDVT3F+KY8mvMGV2+7nj2+UCbSE=
-Received: by 10.204.74.7 with SMTP id s7mr2947295bkj.57.1303727703602;
-        Mon, 25 Apr 2011 03:35:03 -0700 (PDT)
-Received: from localhost.localdomain (abwn49.neoplus.adsl.tpnet.pl [83.8.237.49])
-        by mx.google.com with ESMTPS id l1sm3191879bkl.13.2011.04.25.03.35.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 25 Apr 2011 03:35:02 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3PAYOCn019758;
-	Mon, 25 Apr 2011 12:34:39 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3PAYDW8019731;
-	Mon, 25 Apr 2011 12:34:13 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <BANLkTikuCfnSuY2r+YzWu1PegP3baniOjA@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=iC0mGFAH/eFVIntYrZWW+6oOh9FcMwYejVu9NKt6ol4b+u6X+w66wznqZlCm9+HxWL
+         glonnFkahxoBBfwDTmAExqy4sBsGbjA0ccNtZBgFI9is+zCM/fVCOEwCCd621VpBceEK
+         p/+swVA5iOLx7nu7zny2KwAWgUpOHgYqFDIp4=
+Received: by 10.223.14.207 with SMTP id h15mr3115122faa.50.1303727711038; Mon,
+ 25 Apr 2011 03:35:11 -0700 (PDT)
+Received: by 10.223.86.208 with HTTP; Mon, 25 Apr 2011 03:35:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172022>
 
-=C3=98yvind A. Holm <sunny@sunbase.org> writes:
+hi,
 
-> A project is often stored on several hosting services like Gitorious,
-> GitHub, repo.or.cz or similar for backup purposes. Ideally, all these
-> repositories should be updated at the same time when pushing. If you=E2=
-=80=99re
-> using a slow Internet connection, like a mobile connection from a
-> laptop, this process tends to be rather slow because the commits have=
- to
-> be pushed several times over a slow connection. Gitspread aims to sol=
-ve
-> this by pushing the commits once to a server with a fast connection, =
-and
-> pushing the commits from there to all the defined remotes.
-[...]
+please CC me as i am not subscribed
 
-Could you please add short info about this tool to
+ive recently converted a project that was in svn to use git - and
+that's gone well.
 
-  https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
+in doing this ive been wondering if i can't split up the respository
+more.  currently we have this:
 
-page on Git Wiki?
+project/
+    core/
+    modules/
+        moduleA/
+        moduleB/
 
-Thanks in advance
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Which i think is fairly typical of most projects.
+
+i was wondering how feasible it would be to split out "moduleA" and
+"moduleB" into their own repositories? to me that makes sense.  but by
+themselves neither "moduleA" or "moduleB" would compile without the
+core.
+
+So...
+
+does this make more sense for submodules or separate repositories?
+
+And if they were separate repositories, how would this work from a
+development point of view?  what about a release of the project? would
+there be a makefile which pulled in a known version of tarball
+released from each moduleX repository?
+
+What do most other people do in this situation?
+
+TIA!
+
+Michael
