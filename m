@@ -1,76 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Dates in Commits and other issues of style (Re: [RFC 2/5] Pretty
- Print: show tz when using DATE_LOCAL)
-Date: Mon, 25 Apr 2011 11:29:58 -0700
-Message-ID: <7vipu2jiah.fsf@alter.siamese.dyndns.org>
-References: <0f30e048-7dd2-4aff-8c1f-00bf0dfa3d34-mfwitten@gmail.com>
- <acbcf231-e0a6-440e-be42-5f25da3e318d-mfwitten@gmail.com>
- <7vtydrutbq.fsf@alter.siamese.dyndns.org>
- <811b01a9-f10e-4444-9e5e-581adaf059c2-mfwitten@gmail.com>
- <87sjt76rzo.fsf@catnip.gol.com> <7vhb9nkmo1.fsf@alter.siamese.dyndns.org>
- <m3bozuwqyz.fsf@localhost.localdomain>
+From: Mathias Lafeldt <misfire@debugon.org>
+Subject: Re: [PATCH] t/README: unify documentation of test function args
+Date: Mon, 25 Apr 2011 20:30:22 +0200
+Message-ID: <4DB5BDBE.308@debugon.org>
+References: <4DB4010B.6080804@debugon.org> <7v62q2l3ft.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miles Bader <miles@gnu.org>, Michael Witten <mfwitten@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 20:30:24 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 20:30:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEQY9-0001mN-DR
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 20:30:21 +0200
+	id 1QEQYM-0001uP-18
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 20:30:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758808Ab1DYSaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 14:30:14 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64401 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758203Ab1DYSaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 14:30:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F2AB05476;
-	Mon, 25 Apr 2011 14:32:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=0TEF6sdakieT2qAq9/dIfAS1leI=; b=tsyBkfovhgkC2wyKyiA0
-	k9NlzD+FiNoIPLM3Za5n7cUDtonpcK165CHi/cbdOd3ayWG8dVe1aaxk0HCC/XVo
-	hKAzY3DPuMFIdV/nf6D8/2us0OUbhjlGvD9LsZOIAIsXbVCiq4Pf2OwPeWxo1Klv
-	eI72jLcmLLHiZu3ucwbGz6M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=lzuLYAXsvC5XuTOA9zN/hh95bh5giXGVwYsi1pBBsVdGS4
-	Q0XVTTMjgc/lLYt8J3nkabMis+bK8FZJJmNvq/Zv/C8nCuC0cdAcg2ZiRKWCX7a8
-	JC+PttJc5RAauyVcEt8hIWHAvp1FnV7xXdsIw/Z3kOOu2uX8uW2rOMUmnfek4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AEEBA5466;
-	Mon, 25 Apr 2011 14:32:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 535045464; Mon, 25 Apr 2011
- 14:32:02 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 53525166-6F6A-11E0-BF28-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1758702Ab1DYSa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 14:30:28 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:64054 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758203Ab1DYSa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 14:30:28 -0400
+Received: from [192.168.2.111] (pD9E3BB0D.dip.t-dialin.net [217.227.187.13])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MVHmU-1QKU1f13EM-00YeIP; Mon, 25 Apr 2011 20:30:26 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+In-Reply-To: <7v62q2l3ft.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:ZNCVKIk0ayK+UMv/mF4FktaQaO8IaZehJX3n6qd4Nd4
+ Tt25BkB0PZj96rZEs0B7CvvwrLzHrzCBCYlCVN2LbAqTGnXOay
+ h7YRGPIImXt3n/aEogbX/2CzxfJaJnjlHvMy5bqMXkXdVCG62p
+ 0E357bfrxRzqo4db23ZI8Nr7uHqhVxOECtcZzG8NOP4pLHpqw4
+ qFKrkMPV9+n2ZEsw3ZlcenRTUBVrlnbO0liyCvwTcE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172037>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+[...] 
+> Everything before this hunk looks sensible.
+> 
+>> @@ -503,18 +503,18 @@ library for your script to use.
+>>  		test_expect_code 1 git merge "merge msg" B master
+>>  	'
+>>  
+>> - - test_must_fail <git-command>
+>> + - test_must_fail <command>
+>> ...  
+>> +   Run a command and ensure it fails in a controlled way.  Use this
+>> +   instead of "! <command>".  When the command dies due to a segfault,
+>> +   test_must_fail diagnoses it as an error; "! <command>" treats it as
+>> +   just another expected failure, which would let such a bug go
+>> +   unnoticed.
+>>  
+>> - - test_might_fail <git-command>
+>> + - test_might_fail <command>
+>>  
+>>     Similar to test_must_fail, but tolerate success, too...
+> 
+> But the above two deliberately say "git-command" to clarify that these are
+> special cases and meant to be used only to run a git command.  If we
+> expect a failure from a command that is not "git", say "date", we would
+> want to say "! date", not "test_must_fail date".
+> 
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Enforcing consistency is one of the important tasks the maintainers do...
->
-> This information should be put e.g. in SubmittingPatches, or
-> CodingGuidelines, or MaintNotes, isn't it?
+Ah, okay. Is this true for test_expect_code too? It also has a git command
+in the example, but it says <command>, not <git-command>:
 
-The above "we value consistency" should be already inferrable by reading
-SubmittingPatches and CodingStyle in reverse?  If it were up to the
-contributors to ignore them, there is no point to have these guides to
-begin with.
+ - test_expect_code <exit-code> <command>
 
-If we want to keep these words somewhere, I think the place to put it
-would probably be the Policy section of Doc/howto/maintain-git.txt.
+   Run a command and ensure that it exits with the given exit code.
+   For example:
+
+	test_expect_success 'Merge with d/f conflicts' '
+		test_expect_code 1 git merge "merge msg" B master
+	'
+
+>> @@ -530,7 +530,7 @@ library for your script to use.
+>>     test_path_is_dir <dir> [<diagnosis>]
+>>     test_path_is_missing <path> [<diagnosis>]
+>>  
+>> -   Check whether a file/directory exists or doesn't. <diagnosis> will
+>> +   Check whether a file/directory exists or not. <diagnosis> will
+> 
+> Is the original really a grammo, or is this change just your personal
+> taste?  If I were rewriting this, I would probably say something like:
+> 
+> 	- test_path_is_file <path> [<diagnosis>]
+>           test_path_is_dir <path> [<diagnosis>]
+>           test_path_is_missing <path> [<diagnosis>]
+> 
+> 	  Check if the named path is a file, if the named path is a
+>           directory, or if the named path does not exist, respectively,
+>           and fail otherwise, showing the <diagnosis> text.
+
+Yes, it's just a matter of taste, but your rewrite is even better.
+
+-Mathias
