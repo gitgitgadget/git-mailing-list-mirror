@@ -1,111 +1,319 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2] send-pack: avoid deadlock when pack-object dies early
-Date: Mon, 25 Apr 2011 23:04:10 +0200
-Message-ID: <4DB5E1CA.8000105@kdbg.org>
-References: <20110331184243.GA12027@sigill.intra.peff.net> <201104142136.25778.j6t@kdbg.org> <20110414202110.GA6525@sigill.intra.peff.net> <201104142243.33522.j6t@kdbg.org> <20110414205113.GA7451@sigill.intra.peff.net> <7vsjtkfs10.fsf@alter.siamese.dyndns.org> <4DB48B2C.2090904@kdbg.org> <4DB48CCD.40304@kdbg.org> <20110425165007.GB1589@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: A Note from the Maintainer
+Date: Mon, 25 Apr 2011 14:05:38 -0700
+Message-ID: <7vvcy2hwil.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 25 23:04:44 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 23:05:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QESxW-0008A3-H7
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 23:04:42 +0200
+	id 1QESyh-0000Qf-6a
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 23:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755977Ab1DYVEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 17:04:20 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:47111 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755357Ab1DYVEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 17:04:16 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id C64CEA7EEB;
-	Mon, 25 Apr 2011 23:01:07 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 10C6219F396;
-	Mon, 25 Apr 2011 23:04:10 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.14) Gecko/20110221 SUSE/3.1.8 Thunderbird/3.1.8
-In-Reply-To: <20110425165007.GB1589@sigill.intra.peff.net>
+	id S1753255Ab1DYVFt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2011 17:05:49 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61384 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752590Ab1DYVFs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2011 17:05:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5F53248E4;
+	Mon, 25 Apr 2011 17:07:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=GLNV88ro5la8pSq7tBWJ1uEWj
+	VY=; b=JSUdmcw/+BLp1uPLQLbeOSx8aJM+eMm0TXrFWqtKzYXEDabWvf2cC8wRX
+	j2eCCrF8LvCS38XD3R/BOAozPgtav1sNPCVd8pwJiCco3Dj6XE4vg8dGlDLBA31/
+	uHiT1QMjYUAvEaT5d1P8dXSuq/PSF8Q+6hy/A3yoE3o0BBHPsw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=ARE6o3xVUrMn9Rd8jW0
+	nihHL8ts2NXw5bB1LhBmZ5h0y/gjS0qPj6BJRIeKjW58c9Mtwrzubq2rKiaXojjF
+	Fkwn61hWRan+GR6hi7oIMg2NEMCWFH5Fjso2pmB90gD8WGfKC7a5kyUyJIptwEja
+	p/CMF6jlnsx3nOpbJ2fgIOX4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4BE3B48E3;
+	Mon, 25 Apr 2011 17:07:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 38DCC48E1; Mon, 25 Apr 2011
+ 17:07:44 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1226873C-6F80-11E0-911D-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172046>
 
-Send-pack deadlocks in two ways when pack-object dies early (for example,
-because there is some repo corruption).
+Welcome to git development community.
 
-The first deadlock happens with the smart push protocol (--stateless-rpc).
-After the initial rev-exchange, the remote is waiting for the pack data
-to arrive, and the sideband demuxer at the local side continues trying to
-stream data from the remote repository until it gets EOF. Meanwhile,
-send-pack (in function pack_objects()) has noticed that pack-objects did
-not produce output and died. Back in send_pack(), it now tries to clean
-up the sideband demuxer using finish_async(). The demuxer, however, waits
-for the remote end to close down, the remote waits for pack data, and
-the reason that it still waits is that send-pack forgot to close the
-outgoing channel. Add the missing close() in pack_objects().
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-The second deadlock happens in a similar constellation when the sideband
-demuxer runs in a forked process (rather than in a thread). Again, the
-remote end waits for pack data to arrive, the sideband demuxer waits for
-the remote to shut down, and send-pack (in the regular clean-up) waits for
-the demuxer to terminate. This time, the send-pack parent process closes
-the writable end of the outgoing channel (in start_command() that spawned
-pack-objects) so that after the death of the pack-objects process all
-writable ends should have been closed and the remote repo should see EOF.
-This does not happen, however, because when the sideband demuxer was forked
-earlier, it also inherited a writable end; it remains open and keeps the
-remote repo from seeing EOF. To break this deadlock, close the writable end
-in the demuxer.
+* Mailing list and the community
 
-Analyzed-by: Jeff King <peff@peff.net>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Am 25.04.2011 18:50, schrieb Jeff King:
-> In the comments for 1/2, you said this goes directly on 38a81b4e. But in
-> that commit, we use #ifndef WIN32 to decide whether or not to fork for
-> async code. So shouldn't this use the same test (I don't even see
-> ASYNC_AS_THREAD defined anywhere else)?
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to ask "Please Cc: me,
+I am not subscribed".
 
-Here's the fixed patch. I squashed both earlier patches into a single patch
-because they are about the same topic, as you showed with your tests of
-git-push via smart http.
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-Again, this should go on top of 38a81b4e. When it is merged to f6b60983 or
-later, the '#ifndef WIN32' must be changed to '#ifdef NO_PTHREADS'.
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise is a sign that people involved don't have
+enough mental/time bandwidth to process them right at the moment, and
+it often helps to wait until the list traffic becomes calmer before
+sending such a reminder.
 
--- Hannes
+The list archive is available at a few public sites as well:
 
- builtin-send-pack.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=3Dgit
+        http://www.spinics.net/lists/git/
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 2478e18..6516288 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -97,6 +97,7 @@ static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *ext
- 		free(buf);
- 		close(po.out);
- 		po.out = -1;
-+		close(fd);
- 	}
- 
- 	if (finish_command(&po))
-@@ -375,6 +376,9 @@ static void print_helper_status(struct ref *ref)
- static int sideband_demux(int in, int out, void *data)
- {
- 	int *fd = data;
-+#ifndef WIN32
-+	close(fd[1]);
-+#endif
- 	int ret = recv_sideband("send-pack", fd[0], out);
- 	close(out);
- 	return ret;
--- 
-1.7.5.rc1.97.ge0653
+and some people seem to prefer to read it over NNTP:
+
+        nntp://news.gmane.org/gmane.comp.version-control.git
+
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
+
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
+=3D217
+
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
+
+Some members of the development community can sometimes also be found
+on the #git IRC channel on Freenode.  Its log is available at:
+
+        http://colabti.org/irclogger/irclogger_log/git
+
+* Reporting bugs
+
+When you think git does not behave as you expect, please do not stop yo=
+ur
+bug report with just "git does not work".  "I tried to do X but it did =
+not
+work" is not much better, neither is "I tried to do X and git did Y, wh=
+ich
+is broken".  It often is that what you expect is _not_ what other peopl=
+e
+expect, and chances are that what you expect is very different from wha=
+t
+people who have worked on git have expected (otherwise, the behavior
+would have been changed to match that expectation long time ago).
+
+Please remember to always state
+
+ - what you wanted to do;
+
+ - what you did (the version of git and the command sequence to reprodu=
+ce
+   the behavior);
+
+ - what you saw happen;
+
+ - what you expected to see; and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+
+Immediately after I publish to the primary repository at kernel.org, I
+also push into an alternate here:
+
+        git://repo.or.cz/alt-git.git/
+
+Impatient people might have better luck with the latter one (there are =
+a
+few other mirrors I push into at sourceforge and github as well).
+
+Their gitweb interfaces are found at:
+
+        http://git.kernel.org/?p=3Dgit/git.git
+        http://repo.or.cz/w/alt-git.git
+
+There are three branches in git.git repository that are not about the
+source tree of git: "html", "man", and "todo".
+
+The "html" and "man" are auto-generated documentation from the tip of
+the "master" branch; the tip of "html" is extracted to be visible at
+kernel.org at:
+
+        http://www.kernel.org/pub/software/scm/git/docs/
+
+The above URL is the top-level documentation page, and it has links to
+documentation of older releases.
+
+The "todo" branch was originally meant to contain a TODO list for me,
+but is mostly used to keep some helper scripts I use to maintain git.
+=46or example, the script to maintain the two documentation branches ar=
+e
+found there as dodoc.sh, which may be a good demonstration of how to
+use a post-update hook to automate a task after pushing into a
+repository.
+
+There are four branches in git.git repository that track the source tre=
+e
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a "featu=
+re
+release" is cut from the tip of this branch and they typically are name=
+d
+with three dotted decimal digits.  The last such release was 1.7.5 done=
+ on
+Apr 24, 2011.  You can expect that the tip of the "master" branch is
+always more stable than any of the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious, safe and urgent fixes after a feature
+release are applied to this branch and maintenance releases are cut fro=
+m
+it.  The maintenance releases are named with four dotted decimal, named
+after the feature release they are updates to; the last such release wa=
+s
+1.7.4.5.  New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out.  The quality =
+of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. =
+In
+general, the "next" branch always contains the tip of "master".  It mig=
+ht
+not be quite rock-solid production ready, but is expected to work more =
+or
+less without major breakage. The "next" branch is where new and excitin=
+g
+things take place. A topic that is in "next" is expected to be polished=
+ to
+perfection before it is merged to "master" (that's why "master" can be
+expected to stay more stable than any released version).
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches. The topics on the branch are not complete, well tested, nor w=
+ell
+documented and need further work. When a topic that was in "pu" proves =
+to
+be in testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns ou=
+t
+to be not so good and the topic can be dropped from "pu" in such a case=
+=2E
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master", o=
+r a
+topic that already was in "next" was reverted from "next" because fatal
+flaws were found in it after it was merged.
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have th=
+eir
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://git.kernel.org/pub/scm/gitk/gitk.git
+
+I would like to thank everybody who helped to raise git into the curren=
+t
+shape.  Especially I would like to thank the git list regulars whose he=
+lp
+I have relied on and expect to continue relying on heavily:
+
+ - Linus Torvalds, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
+   Ren=C3=A9 Scharfe, Jeff King, Jonathan Nieder, Johan Herland, Johann=
+es
+   Sixt, Sverre Rabbelier, Michael J Gruber, Nguy=E1=BB=85n Th=C3=A1i N=
+g=E1=BB=8Dc Duy,
+   =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Thomas Rast on general de=
+sign and
+   implementation issues and reviews on the mailing list.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff, Frank Lichtenheld and =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason on
+   cvsserver and cvsimport.
+
+ - Paul Mackerras on gitk.
+
+ - Eric Wong, David D. Kilzer and Sam Vilain on git-svn.
+
+ - Simon Hausmann and Pete Wyckoff on git-p4.
+
+ - Jakub Narebski, John Hawley, Petr Baudis, Luben Tuikov, Giuseppe Bil=
+otta on
+   gitweb.
+
+ - J. Bruce Fields, Jonathan Nieder, Michael J Gruber and Thomas Rast o=
+n
+   documentation (and countless others for proofreading and fixing).
+
+ - Alexandre Julliard on Emacs integration.
+
+ - David Aguilar and Charles Bailey for taking good care of git-mergeto=
+ol
+   (and Theodore Ts'o for creating it in the first place) and git-difft=
+ool.
+
+ - Johannes Schindelin, Johannes Sixt, Erik Faye-Lund and others for th=
+eir
+   effort to move things forward on the Windows front.
+
+ - People on non-Linux platforms for keeping their eyes on portability;
+   especially, Randal Schwartz, Theodore Ts'o, Jason Riedy, Thomas Glan=
+zmann,
+   Brandon Casey, Jeff King, Alex Riesen and countless others.
+
+* This document
+
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
