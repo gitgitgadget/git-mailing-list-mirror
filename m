@@ -1,78 +1,113 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Cloning into an existing, non-empty directory?
-Date: Mon, 25 Apr 2011 03:59:13 -0500
-Message-ID: <20110425085913.GB28885@elie>
-References: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
- <20110421220327.GA3396@elie>
- <BANLkTikY7c7rP+yv5vt2vxw5nu84k_H=Xw@mail.gmail.com>
- <20110423101500.GB1500@elie>
- <BANLkTinV4cFC5vzr25V-D3PMwWx284zgoQ@mail.gmail.com>
- <20110425075750.GA28172@elie>
- <m2pqoa9121.fsf@linux-m68k.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.5
+Date: Mon, 25 Apr 2011 03:32:45 -0700 (PDT)
+Message-ID: <m3oc3uwrja.fsf@localhost.localdomain>
+References: <7v39l7mlwh.fsf@alter.siamese.dyndns.org>
+	<BANLkTikhkCDZ5Crw+KGWBprXd6qoFOH8kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 10:59:26 2011
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: Sebastien Douche <sdouche@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 12:32:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEHdc-0000ec-1e
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 10:59:24 +0200
+	id 1QEJ66-0003sD-Sk
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 12:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758139Ab1DYI7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 04:59:19 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:43275 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758135Ab1DYI7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 04:59:18 -0400
-Received: by iyb14 with SMTP id 14so1704037iyb.19
-        for <git@vger.kernel.org>; Mon, 25 Apr 2011 01:59:18 -0700 (PDT)
+	id S1758258Ab1DYKcu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2011 06:32:50 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45392 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758151Ab1DYKct convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2011 06:32:49 -0400
+Received: by bwz15 with SMTP id 15so1527344bwz.19
+        for <git@vger.kernel.org>; Mon, 25 Apr 2011 03:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=UM/kcxG1zILSPgpksFZmWXG4m47INAZxsGMib09LK04=;
-        b=xMw8J7WQv1aKr/FviKe8ZKJ6F+bX76SwGbzkKAzK96VUQ2JUBaD7sjnDBeWyVxuP/d
-         PBuE4NMCVvUqAhcB6J4ZdAxmIFMgytqApdVX/NJaSBJDkSmchLhisi7BnrZTbxQLg3sd
-         J5t6HNVyPFPZ8L1JJcKw/ABueR1Erh4fxC8mg=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=j1ofDBdh8u54HgxrQWMyPi/5FcJRbzZXwtZziXVS3jk=;
+        b=Kd8WkaUFduDTINBUn3Jq+Et0jjrmaKLskX2xWuIVGc0P5MV3b0Ygh8pPTd2I611d2b
+         qKAcqy+TjQFEYyNc8FP7+05O2T0y7rVsZ176BIbgy+f8GQDIIOWn7fz7HuJdzQejqM06
+         55zyUGWKeiTC+PX3pW5oP2Svu+0FhgOuGvhl8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=l5is4TKKc9XsbO1UH9CPyp0Ospdgut7f6Raz5m7Crnsx4la+OX2WJSY5IuQuNLEwgr
-         AhOrHKlUTGgdoj1iEg2MFlPHVIPcsupycsje345CK3iOrj0+LFXisK4a9vFeI/SyR0DJ
-         +b+Ta6ToGsqYGHY2PF3FaL0oVECvdyvqCmLE8=
-Received: by 10.42.133.1 with SMTP id f1mr4657913ict.129.1303721958048;
-        Mon, 25 Apr 2011 01:59:18 -0700 (PDT)
-Received: from elie (adsl-68-255-96-190.dsl.chcgil.ameritech.net [68.255.96.190])
-        by mx.google.com with ESMTPS id ww2sm1978839icb.3.2011.04.25.01.59.16
-        (version=SSLv3 cipher=OTHER);
-        Mon, 25 Apr 2011 01:59:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <m2pqoa9121.fsf@linux-m68k.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=t25VnKGp0Nzyvig5wrotZcKnAMw7qLu/Co/OSHo5VrUnFnwUeFuaQDcahMw7CNBqXA
+         /GQMTLDaqQEEEp0tXBn9noJIwMt212yM9F+7Y8KQmSdNvtW5+rV4DxOYLUvJqu1oj2IN
+         11aVfT1UZF2KZ07pWwh8gKTDvBUyyFM1DTV0Y=
+Received: by 10.204.143.141 with SMTP id v13mr3287308bku.203.1303727568022;
+        Mon, 25 Apr 2011 03:32:48 -0700 (PDT)
+Received: from localhost.localdomain (abwn49.neoplus.adsl.tpnet.pl [83.8.237.49])
+        by mx.google.com with ESMTPS id q25sm2387912bkk.10.2011.04.25.03.32.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Apr 2011 03:32:45 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3PAWAvN019379;
+	Mon, 25 Apr 2011 12:32:21 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3PAVsxR019339;
+	Mon, 25 Apr 2011 12:31:54 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <BANLkTikhkCDZ5Crw+KGWBprXd6qoFOH8kg@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172020>
 
-Andreas Schwab wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Sebastien Douche <sdouche@gmail.com> writes:
 
->> I'm not sure what a good meaning for "git merge <repository>" would
->> be.
->
-> It's equivalent to refs/remotes/<repository>/HEAD if that exists.
+> On Sun, Apr 24, 2011 at 22:31, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> > The latest feature release Git 1.7.5 is available at the usual
+> > places:
+>=20
+> Great! Thank you for this new release. Btw, I've some questions, sorr=
+y
+> if these seem like frivolous or stupid questions.
+>=20
+> > =A0* The codebase is getting prepared for i18n/l10n; no translated
+> > =A0  strings nor translation mechanism in the code yet, but the str=
+ings
+> > =A0  are being marked for l10n.
+>=20
+> Where are pot files for Git and Gitweb?
 
-Ah, I should have checked gitrevisions(7).  Thank you.
+Actually only programs in C and shell scripts are prepared for
+translation.  Currently there is no infrastructure for translating
+scripts implemented in Perl... including Git.pm module and gitweb.
+=20
+> > =A0* "git checkout --detach <commit>" is a more user friendly synon=
+ym for
+> > =A0  "git checkout <commit>^0".
+>=20
+> What is the interest?
 
-Jonathan
-who wonders where his origin/HEAD symref came from and if
-"git remote set-head --auto origin" was ever automatic
+What do you mean?  "git checkout <commit>^0" is quite cryptic way to
+detach HEAD, and requires deeper knowledge of Git... though I am not
+sure why somebody not knowledgeable in Git might want to detach HEAD
+explicitly at given commmit / branch.
+
+> > =A0* "git checkout" performed on detached HEAD gives a warning and
+> > =A0  advice when the commit being left behind will become unreachab=
+le from
+> > =A0  any branch or tag.
+>=20
+> No sure to understand, it's not already the case?
+
+It is reworked to show warning and advice only when it is really
+needed.
+
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
