@@ -1,99 +1,77 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Submodules or separate repos?
-Date: Mon, 25 Apr 2011 21:57:57 +0200
-Message-ID: <4DB5D245.6030800@web.de>
-References: <BANLkTinAC2Thuf_z_-DMEHotgF-tqpQYZw@mail.gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: "git clone --depth=2 git://git.sv.gnu.org/gnulib" hangs
+Date: Mon, 25 Apr 2011 22:28:10 +0200
+Message-ID: <87aafedqjp.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Treibton <mtreibton@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 21:58:10 2011
+Content-Type: text/plain
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 25 22:28:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QERv8-0000z8-4i
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 21:58:10 +0200
+	id 1QESOt-0002Ep-Nl
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 22:28:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758339Ab1DYT6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 15:58:00 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:53716 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758289Ab1DYT57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 15:57:59 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate02.web.de (Postfix) with ESMTP id A54B819CE1DD2;
-	Mon, 25 Apr 2011 21:57:57 +0200 (CEST)
-Received: from [93.240.99.96] (helo=[192.168.178.43])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QERuv-0007EO-00; Mon, 25 Apr 2011 21:57:57 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.15) Gecko/20110303 Lightning/1.0b2 Thunderbird/3.1.9
-In-Reply-To: <BANLkTinAC2Thuf_z_-DMEHotgF-tqpQYZw@mail.gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+n+HHmJTpUcf/Pms20P1bQfGN24fxjUtpAon7r
-	R0fw2EF6MQ4XsU2gCmVHZYvP428BTbPq7FDZBS6l9FRvBeByr2
-	d6YZ8GWZb9HG5N0rTtTw==
+	id S932531Ab1DYU2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 16:28:21 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:33965 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932459Ab1DYU2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 16:28:18 -0400
+Received: from mx.meyering.net (unknown [82.230.74.64])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id DC0DE9401D8
+	for <git@vger.kernel.org>; Mon, 25 Apr 2011 22:28:11 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id A95EF6013A; Mon, 25 Apr 2011 22:28:10 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172042>
 
-Am 25.04.2011 12:35, schrieb Michael Treibton:
-> ive recently converted a project that was in svn to use git - and
-> that's gone well.
-> 
-> in doing this ive been wondering if i can't split up the respository
-> more.  currently we have this:
-> 
-> project/
->     core/
->     modules/
->         moduleA/
->         moduleB/
-> 
-> Which i think is fairly typical of most projects.
-> 
-> i was wondering how feasible it would be to split out "moduleA" and
-> "moduleB" into their own repositories? to me that makes sense.
+Hello,
 
-In my experience that only makes sense when one of the following
-conditions is met for "moduleA" and "moduleB":
+We've had a report that this command is hanging:
 
-* they are developed by someone else
+    git clone --depth=2 git://git.sv.gnu.org/gnulib
 
-* they contain code shared between superprojects
+cloning without --depth=N works, as well as when using an ssh:// URL,
+but most people can use ssh:// URLs.
 
-* they consist of huge and/or many files that would hurt performance
-  of everyday git commands.
+Normally it wouldn't be much of a problem, but many projects
+use gnulib as a submodule, and one of the recommended (scripted)
+ways to get a copy is via a shallow clone.
 
-(See https://git.wiki.kernel.org/index.php/SubprojectSupport for a
-more complete discussion of submodules and other subproject
-techniques)
+savannah's server is running git-1.7.2.5.
+I've confirmed it using these client versions:
 
-I can't see that splitting up the repository just because you can is
-buying anything - except extra overhead for everyday development. So
-I think you have to have a good reason to do that (but you didn't
-mention any ;).
+    1.7.5.rc3.316.gd1ff9
+    1.7.4.4
 
-> but by
-> themselves neither "moduleA" or "moduleB" would compile without the
-> core.
+GIT_TRACE didn't give much info:
 
-That rather looks like an argument against splitting them off. Even
-though we have submodules depending on the presence of other
-submodules at my dayjob, they almost never depend on anything in
-the superproject (the only exception being a file containing a
-project version which is then to be used for all build artifacts,
-but that is a convention used in all our superprojects).
+    xx$ GIT_TRACE=1 git clone --depth 2 git://git.sv.gnu.org/gnulib
+    trace: built-in: git 'clone' '--depth' '2' 'git://git.sv.gnu.org/gnulib'
+    Cloning into gnulib...
+    trace: run_command: 'index-pack' '--stdin' '-v' '--fix-thin' \
+      '--keep=fetch-pack 645 on xx.meyering.net'
+    trace: exec: 'git' 'index-pack' '--stdin' '-v' '--fix-thin' \
+      '--keep=fetch-pack 645 on xx.meyering.net'
+    trace: built-in: git 'index-pack' '--stdin' '-v' '--fix-thin' \
+      '--keep=fetch-pack 645 on xx.meyering.net'
 
-> And if they were separate repositories, how would this work from a
-> development point of view?  what about a release of the project? would
-> there be a makefile which pulled in a known version of tarball
-> released from each moduleX repository?
+It appears to be something specific to the gnulib repository,
+since I can do a shallow clone of e.g., this one just fine:
 
-That depends on the technique you choose. But I really can't answer
-that question until you share your motivation for having separate
-repositories in the first place.
+    git://git.savannah.gnu.org/parallel.git
+
+Any hints?
+
+At worst I'll set up a git server on a private system and debug it --
+eventually.
+
+Regards,
+
+Jim
