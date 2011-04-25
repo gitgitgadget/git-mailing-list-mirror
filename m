@@ -1,84 +1,88 @@
-From: Michael Treibton <mtreibton@googlemail.com>
-Subject: Submodules or separate repos?
-Date: Mon, 25 Apr 2011 11:35:10 +0100
-Message-ID: <BANLkTinAC2Thuf_z_-DMEHotgF-tqpQYZw@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: RFC: Folder Git
+Date: Mon, 25 Apr 2011 03:39:31 -0700 (PDT)
+Message-ID: <m3fwp6wr7h.fsf@localhost.localdomain>
+References: <BANLkTim=xKxN9JovToVuOg=SQ2Mba1LvxQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 25 12:35:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Victor Engmark <victor.engmark@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 12:39:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEJ8Z-00053I-8x
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 12:35:27 +0200
+	id 1QEJCc-00075l-Qk
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 12:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758298Ab1DYKfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 06:35:16 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64969 "EHLO
+	id S1758269Ab1DYKje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 06:39:34 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37895 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758284Ab1DYKfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 06:35:12 -0400
-Received: by fxm17 with SMTP id 17so1228079fxm.19
-        for <git@vger.kernel.org>; Mon, 25 Apr 2011 03:35:11 -0700 (PDT)
+	with ESMTP id S1758232Ab1DYKjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 06:39:33 -0400
+Received: by fxm17 with SMTP id 17so1229431fxm.19
+        for <git@vger.kernel.org>; Mon, 25 Apr 2011 03:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=G4l7fmbqB8EuvchCwZpmAiU0EtF7TQ4bMPRr2rULwK8=;
-        b=wvvz0uvTbmr7f4WtgfPeHZMNXRsKxnpUioA4OoBLD7m/cfofVEg+CzUDCz4y3/I8FX
-         3n439+8K4ABsoxj9AEEKoblOgzmKgnfUEVymM6dEAW6ndMN/PPYn5CGvwqQwSk9F5s+S
-         JjiaudVlhPXXnPAg099dtEiHOAMM9FWhuZ5fU=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=8AHwPU9Z3jvO/Au5XZe+DulkyP/cMzhg902dHe03TZE=;
+        b=cgipkVxRumeWuGJs64NmJJPF307PNNmnvqdXzGI0HCUPgNEcJ6YnkvsQt5pNoC4APr
+         SuLmoTutZUA4+U5y8XAhsG3O/ExYdCTADI+Yjq00efVnl/wQNCxUkTxMGHDzWXdmNUaa
+         WGjAhHQBN+jZJo+UYEPv4yU6rX+5snew2J52c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=iC0mGFAH/eFVIntYrZWW+6oOh9FcMwYejVu9NKt6ol4b+u6X+w66wznqZlCm9+HxWL
-         glonnFkahxoBBfwDTmAExqy4sBsGbjA0ccNtZBgFI9is+zCM/fVCOEwCCd621VpBceEK
-         p/+swVA5iOLx7nu7zny2KwAWgUpOHgYqFDIp4=
-Received: by 10.223.14.207 with SMTP id h15mr3115122faa.50.1303727711038; Mon,
- 25 Apr 2011 03:35:11 -0700 (PDT)
-Received: by 10.223.86.208 with HTTP; Mon, 25 Apr 2011 03:35:10 -0700 (PDT)
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=XtXwH8MIg3tze9eoIn7L9XFt1nvLG3i+2QKyyTj0qRvbr9fNrPErEailv/g/cxh/NE
+         LiZN2lA/sJjtwL15Ahn9cIo5FKnttis/ahjvR7XcogMP5omBstaMhQqzgvIcsiLd0dKI
+         t7aG7EcX8jNYsxJtWvCzhocBevWIvmV+SBVgA=
+Received: by 10.223.28.19 with SMTP id k19mr500784fac.139.1303727972647;
+        Mon, 25 Apr 2011 03:39:32 -0700 (PDT)
+Received: from localhost.localdomain (abwn49.neoplus.adsl.tpnet.pl [83.8.237.49])
+        by mx.google.com with ESMTPS id l3sm1653050fap.12.2011.04.25.03.39.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Apr 2011 03:39:31 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3PAd9QD020930;
+	Mon, 25 Apr 2011 12:39:19 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3PAcwrg020689;
+	Mon, 25 Apr 2011 12:38:58 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <BANLkTim=xKxN9JovToVuOg=SQ2Mba1LvxQ@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172023>
 
-hi,
+Victor Engmark <victor.engmark@gmail.com> writes:
 
-please CC me as i am not subscribed
+[...]
+> I wrote a script for it: fgit
+> <https://github.com/l0b0/fgit/blob/master/fgit.sh>. Features include:
+> * Runs the Git command given in all specified directories which have a
+> .git subdirectory, and warns about any that lack this directory.
+> * Should work with any path, containing spaces, newlines or other
+> exotic characters.
+> * Should work with any Git command that doesn't require the "--"
+> separator between the options and arguments.
+> * Prints the Git command before running it, for logging and repetition.
+> * errexit and nounset are active for each line, with one exception:
+> errexit is disabled for the running of the command, to allow it to
+> continue to other repositories.
 
-ive recently converted a project that was in svn to use git - and
-that's gone well.
+Do you think this tool is mature and stable enough to add it to
 
-in doing this ive been wondering if i can't split up the respository
-more.  currently we have this:
+  https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
 
-project/
-    core/
-    modules/
-        moduleA/
-        moduleB/
-
-Which i think is fairly typical of most projects.
-
-i was wondering how feasible it would be to split out "moduleA" and
-"moduleB" into their own repositories? to me that makes sense.  but by
-themselves neither "moduleA" or "moduleB" would compile without the
-core.
-
-So...
-
-does this make more sense for submodules or separate repositories?
-
-And if they were separate repositories, how would this work from a
-development point of view?  what about a release of the project? would
-there be a makefile which pulled in a known version of tarball
-released from each moduleX repository?
-
-What do most other people do in this situation?
-
-TIA!
-
-Michael
+page on Git Wiki?
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
