@@ -1,77 +1,68 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: "git clone --depth=2 git://git.sv.gnu.org/gnulib" hangs
-Date: Mon, 25 Apr 2011 22:28:10 +0200
-Message-ID: <87aafedqjp.fsf@rho.meyering.net>
+From: Motiejus =?utf-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>
+Subject: Re: French translation project started
+Date: Mon, 25 Apr 2011 21:49:36 +0100
+Message-ID: <20110425204936.GB17714@jakstys.lt>
+References: <BANLkTikTmDTP-1=NFSm=yOC-JirOEhF=gA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 22:28:56 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Sebastien Douche <sdouche@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 22:49:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QESOt-0002Ep-Nl
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 22:28:56 +0200
+	id 1QESjA-00078n-5w
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 22:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932531Ab1DYU2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 16:28:21 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:33965 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932459Ab1DYU2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 16:28:18 -0400
-Received: from mx.meyering.net (unknown [82.230.74.64])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id DC0DE9401D8
-	for <git@vger.kernel.org>; Mon, 25 Apr 2011 22:28:11 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id A95EF6013A; Mon, 25 Apr 2011 22:28:10 +0200 (CEST)
+	id S932892Ab1DYUto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 16:49:44 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33730 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932890Ab1DYUtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 16:49:41 -0400
+Received: by wwa36 with SMTP id 36so3141wwa.1
+        for <git@vger.kernel.org>; Mon, 25 Apr 2011 13:49:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=pyJIWC8yqIdckOGWM67n0VK8jk/2PpbL2zVo9JEiZEk=;
+        b=BsnnH1l73h3p/S48LH0otoG2wVMNuIA6YH6qKVwWqYehi9ObO+L1wY/56Kix2xKeAf
+         jd5xgTqME+X0VM062Yo08u5FVKvYFEIMBvDe3qyWU5IaSq4s4j6sEocdhbOvrbiu33m0
+         DMop2NDb1ebmPEL3UfxT9IGmT18OFsKDcsYVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=IipNPKfNV7ygzZ+rLwtZ/6+DaX2uVWgkx4bQ/qfhTE32Mo6IrPzONgqMZ+P8vgtUZI
+         UK68CV1zaV+6r1HRxN088b7u1bROgtHYRF278gRIdHN4YmL1pH+owMXvLtg9RGrgsy5l
+         zQJjijz1KrQ+droRAx9wdIry6fM8CZnjd4NKU=
+Received: by 10.227.168.68 with SMTP id t4mr4239075wby.26.1303764579930;
+        Mon, 25 Apr 2011 13:49:39 -0700 (PDT)
+Received: from localhost ([109.246.247.245])
+        by mx.google.com with ESMTPS id z13sm3458892wbd.29.2011.04.25.13.49.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Apr 2011 13:49:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTikTmDTP-1=NFSm=yOC-JirOEhF=gA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172043>
 
-Hello,
+On Mon, Apr 25, 2011 at 04:29:17AM +0200, Sebastien Douche wrote:
+> I created a GitHub repository for the french translation[1].
 
-We've had a report that this command is hanging:
+Same with Lithuanian translation. 44% of git core done:
 
-    git clone --depth=2 git://git.sv.gnu.org/gnulib
+https://github.com/Motiejus/git-lithuanian-translation/
 
-cloning without --depth=N works, as well as when using an ssh:// URL,
-but most people can use ssh:// URLs.
+Just informing. Hope to make this 100% available soon. Thank you so
+much, guys, for making this possible.
 
-Normally it wouldn't be much of a problem, but many projects
-use gnulib as a submodule, and one of the recommended (scripted)
-ways to get a copy is via a shallow clone.
-
-savannah's server is running git-1.7.2.5.
-I've confirmed it using these client versions:
-
-    1.7.5.rc3.316.gd1ff9
-    1.7.4.4
-
-GIT_TRACE didn't give much info:
-
-    xx$ GIT_TRACE=1 git clone --depth 2 git://git.sv.gnu.org/gnulib
-    trace: built-in: git 'clone' '--depth' '2' 'git://git.sv.gnu.org/gnulib'
-    Cloning into gnulib...
-    trace: run_command: 'index-pack' '--stdin' '-v' '--fix-thin' \
-      '--keep=fetch-pack 645 on xx.meyering.net'
-    trace: exec: 'git' 'index-pack' '--stdin' '-v' '--fix-thin' \
-      '--keep=fetch-pack 645 on xx.meyering.net'
-    trace: built-in: git 'index-pack' '--stdin' '-v' '--fix-thin' \
-      '--keep=fetch-pack 645 on xx.meyering.net'
-
-It appears to be something specific to the gnulib repository,
-since I can do a shallow clone of e.g., this one just fine:
-
-    git://git.savannah.gnu.org/parallel.git
-
-Any hints?
-
-At worst I'll set up a git server on a private system and debug it --
-eventually.
-
-Regards,
-
-Jim
+Motiejus
