@@ -1,68 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Cloning into an existing, non-empty directory?
-Date: Mon, 25 Apr 2011 14:37:16 -0400
-Message-ID: <20110425183715.GA24069@sigill.intra.peff.net>
-References: <BANLkTi=VwiqN99AMEJb6jb1uFya2Hipibw@mail.gmail.com>
- <20110421220327.GA3396@elie>
- <BANLkTikY7c7rP+yv5vt2vxw5nu84k_H=Xw@mail.gmail.com>
- <20110423101500.GB1500@elie>
- <BANLkTinV4cFC5vzr25V-D3PMwWx284zgoQ@mail.gmail.com>
- <20110425075750.GA28172@elie>
- <m2pqoa9121.fsf@linux-m68k.org>
- <20110425085913.GB28885@elie>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: symlinked working tree gotcha
+Date: Mon, 25 Apr 2011 15:09:38 -0400
+Message-ID: <20110425190938.GA24744@gnu.kitenet.net>
+References: <20110424165825.GA21062@gnu.kitenet.net>
+ <7vpqoajiz0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 20:37:27 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 21:10:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEQf0-0005th-SE
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 20:37:27 +0200
+	id 1QERBC-0007tE-QN
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Apr 2011 21:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758811Ab1DYShT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 14:37:19 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46511
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758696Ab1DYShT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 14:37:19 -0400
-Received: (qmail 12692 invoked by uid 107); 25 Apr 2011 18:38:58 -0000
-Received: from c-67-172-212-47.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.212.47)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Apr 2011 14:38:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Apr 2011 14:37:16 -0400
+	id S1758847Ab1DYTKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 15:10:37 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:39655 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758203Ab1DYTKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 15:10:37 -0400
+Received: from gnu.kitenet.net (dialup-4.154.39.85.Dial1.Atlanta1.Level3.net [4.154.39.85])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 46C9B118294
+	for <git@vger.kernel.org>; Mon, 25 Apr 2011 15:10:35 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 707B24AD2E; Mon, 25 Apr 2011 15:09:38 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20110425085913.GB28885@elie>
+In-Reply-To: <7vpqoajiz0.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172039>
 
-On Mon, Apr 25, 2011 at 03:59:13AM -0500, Jonathan Nieder wrote:
 
-> who wonders where his origin/HEAD symref came from and if
-> "git remote set-head --auto origin" was ever automatic
+--sdtB3X0nJg68CQEu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is created by "clone", but not by "git remote add". The "auto" in
-remote's "set-head" means "right now, look up the HEAD on the remote and
-set our $remote/HEAD based on it". Not anything about being set up or
-tracked automatically.
+Junio C Hamano wrote:
+> Two 'foo's makes it confusing to read so let's rephrase.
+>=20
+> Given this structure:
+>=20
+>     /tmp/foo/
+>     /tmp/foo/.git/
+>     /tmp/foo/hello
+>     /tmp/sym@ -> foo
+>=20
+> when you refer to /tmp/sym/hello where $(/bin/pwd) is /tmp/foo, should it
+> be considered to be within the bounds of the working tree that is governed
+> by your current $GIT_DIR (which is ".git")?
 
-Perhaps "git remote add" should automatically do "set-head --auto", just
-as if you had cloned. I think the main reason against it is that doing
-so requires hitting the network, which "remote add" (without "-f") does
-not otherwise need to do.
+Hmm, my /bin/pwd does not return "/tmp/foo" when I've cd'd to "/tmp/sym".
 
-Certainly if we are doing "-f", it would not be a big deal. In other
-cases, we could perhaps fill in the value on the first "fetch", but we
-may need infrastructure to know when we are on the first fetch (and it
-is not simply the case that the user deleted $remote/HEAD themselves).
+> The answer is "perhaps yes, ideally speaking, but does it really matter in
+> practice, or is it just nice to have?".
 
--Peff
+FWIW, my motivation for using the absolute path was that I wanted to
+always add $GIT_WORK_TREE/hello, but the add could be run when in a
+subdirectory of the repository, so "git add hello" might not add the
+right file.
+
+--=20
+see shy jo
+
+--sdtB3X0nJg68CQEu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTbXG8ckQ2SIlEuPHAQjAag/+NvFmvWw6ClnW0wBuPJ43JH+KcnGjyaq6
+b3fAHo3wpHox+kF/VIaDchPTK1tUTRon92/1H5uvlwnVb64dzxU4+2P98IibtrDR
+eyJbc64HBZBUZ7/X1f+NJk4/EHjgMy1tisn75Fg4mqsdnQFR6d5KCbxaN/zOyJVU
+Zu+TbE3YI8OvmGzCGR4WVTtlKGLv4fHaK87+0eOsqLc/UAevnQRjXp1qUaelMgA+
+tp7QvI3JZjmZB1xpFj8PyF/yyx0hZg1YpeJK2A9cpY5q8a0m5zXxJyPH7FwX4GXh
+vjsRr0lJjHudESeaTblCV70LMKgoMSPvmE/f2xyqfPoxhKLXZ8jncps09yW1pkO5
+8+lVh0SVDIyG5vRESBvCtHQl+g9OIJtp7LB0tfoeSdadtGE/pHGdhU18JxawW5Cp
+0hi6Wv+Xfekt0tStohleD2zKGBsccley1w0tuIFBQVl3Vl81NQYaRLAOBeL2Wiey
+wJy4HEMzBO0GALhk/QRvoUVF7YnPYKP1uXaUKypDEQuFb0KiZXB0gUUp0zxX8RuC
+Bq6Aan/Q8mZCcFAD9UiiRY30QfWgnlTbf01/M7ljCFUyGsshGyJ02qNdcdBCqzxG
+E4YrrgoKlSY9NCmVXQV6o/LHAxuwgU0Aqs6Uqh1waCn3YVs84oPrQUBJm10jAoxz
+pk8Tcw1Ey4k=
+=D1y2
+-----END PGP SIGNATURE-----
+
+--sdtB3X0nJg68CQEu--
