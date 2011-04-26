@@ -1,108 +1,89 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] run-command.c: Fix unused variables warning with gcc
- 4.6
-Date: Tue, 26 Apr 2011 15:45:17 +0200
-Message-ID: <4DB6CC6D.1030105@op5.se>
-References: <4DB6BA5E.3040306@elegosoft.com> <4DB6C501.6000705@drmicha.warpmail.net> <4DB6C83A.4040900@elegosoft.com>
+From: David Deller <david@horizon-nigh.org>
+Subject: [BUG] git pull does not understand --strategy-option
+Date: Tue, 26 Apr 2011 10:06:36 -0400
+Message-ID: <BANLkTinFcob1RrOxEDDG+B6UAZGYg-smtg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 15:45:29 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 16:06:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEiZz-00075c-B1
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 15:45:27 +0200
+	id 1QEiug-0002ki-Qo
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 16:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755539Ab1DZNpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 09:45:21 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33032 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755273Ab1DZNpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 09:45:21 -0400
-Received: by fxm17 with SMTP id 17so423096fxm.19
-        for <git@vger.kernel.org>; Tue, 26 Apr 2011 06:45:19 -0700 (PDT)
-Received: by 10.223.74.201 with SMTP id v9mr883834faj.26.1303825519521;
-        Tue, 26 Apr 2011 06:45:19 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id o17sm2010435fal.1.2011.04.26.06.45.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Apr 2011 06:45:18 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Thunderbird/3.1.9 ThunderGit/0.1a
-In-Reply-To: <4DB6C83A.4040900@elegosoft.com>
+	id S1756282Ab1DZOGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 10:06:38 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:54197 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756233Ab1DZOGh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 10:06:37 -0400
+Received: by vws1 with SMTP id 1so474499vws.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 07:06:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
+         :message-id:subject:from:to:content-type;
+        bh=vCX7t8B/4LWJuSudm0xdMMKXDgnZXLNRBbSBDcYr5y4=;
+        b=AnOIKN+ceUYKoeLtjs4RxdwTIoWUH1SvsaXfFPqXMxUa+c03nUdVdneDK6gMfQbxJE
+         /Sca9CtZkQO2DCRT+8HDfkJzwmT6IXZt91NCT3FeR2B21Iczs2hbwxdR2QiDSS66gc/t
+         x5fzNI3wco/N2oj0e7gPWF6YBZhdI6dGNzS+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=nut61O7cc/OLn60m6trSKtFsdqulZjRskueRQIZD/QcINA8brYEzTQvtLCVJa3TzJL
+         UaoOVqYOm2zpuWLKY2j3HfTT+Zo//pULqi4g80Pf8X5VqLMymzDT3+qX6o6G9sx1gvpX
+         c2Vbmlqpmq1Buu/jZ4rYFR3kZY2GHN8O066HY=
+Received: by 10.220.193.1 with SMTP id ds1mr230494vcb.148.1303826796624; Tue,
+ 26 Apr 2011 07:06:36 -0700 (PDT)
+Received: by 10.220.77.5 with HTTP; Tue, 26 Apr 2011 07:06:36 -0700 (PDT)
+X-Google-Sender-Auth: 0vDYGqOAawcsFXruGbXcEsQj3pY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172096>
 
-On 04/26/2011 03:27 PM, Michael Schubert wrote:
-> On 04/26/2011 03:13 PM, Michael J Gruber wrote:
->> Michael Schubert venit, vidit, dixit 26.04.2011 14:28:
->>> As of gcc 4.6 -Wall includes -Wunused-but-set-variable. Remove all
->>> unused variables to prevent those warnings.
->>>
->>> Signed-off-by: Michael Schubert<mschub@elegosoft.com>
->>> ---
->>>   run-command.c |   10 ++++------
->>>   1 files changed, 4 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/run-command.c b/run-command.c
->>> index f91e446..6e0be54 100644
->>> --- a/run-command.c
->>> +++ b/run-command.c
->>> @@ -67,21 +67,19 @@ static int child_notifier = -1;
->>>
->>>   static void notify_parent(void)
->>>   {
->>> -	ssize_t unused;
->>> -	unused = write(child_notifier, "", 1);
->>> +	write(child_notifier, "", 1);
->>>   }
->>>
->>>   static NORETURN void die_child(const char *err, va_list params)
->>>   {
->>>   	char msg[4096];
->>> -	ssize_t unused;
->>>   	int len = vsnprintf(msg, sizeof(msg), err, params);
->>>   	if (len>  sizeof(msg))
->>>   		len = sizeof(msg);
->>>
->>> -	unused = write(child_err, "fatal: ", 7);
->>> -	unused = write(child_err, msg, len);
->>> -	unused = write(child_err, "\n", 1);
->>> +	write(child_err, "fatal: ", 7);
->>> +	write(child_err, msg, len);
->>> +	write(child_err, "\n", 1);
->>>   	exit(128);
->>>   }
->>>   #endif
->>
->> git log -S"unused" origin/master run-command.c
->>
->> shows that these dummies were introduced for a reason. How do you
->> invalidate that?
-> 
-> Sorry, just missed that.
-> 
+Works using short form (-X). Works with 'git merge' using either short
+or long form.
 
-A better solution than reverting the prettifying commit
-ebec842773932e6f853acac70c80f84209b5f83e would be to rework it to use
-logical AND instead of logical OR, as the AND-chain won't short-circuit
-the statement chain early and prevent output from being printed when
-write() returns non-zero. When it *does* return zero, it's likely due
-to problems on the receiving ends, making further writing totally
-pointless anyway.
+Apologies, I do not have the current version of Git, but I did not see
+any mention of a related fix in changelogs.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+$ git --version
+git version 1.7.4.1
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+$ git pull --strategy=recursive --strategy-option=theirs origin master
+error: unknown option `strategy-option=theirs'
+usage: git fetch [<options>] [<repository> [<refspec>...]]
+   or: git fetch [<options>] <group>
+   or: git fetch --multiple [<options>] [(<repository> | <group>)...]
+   or: git fetch --all [<options>]
+
+    -v, --verbose         be more verbose
+    -q, --quiet           be more quiet
+    --all                 fetch from all remotes
+    -a, --append          append to .git/FETCH_HEAD instead of overwriting
+    --upload-pack <PATH>  path to upload pack on remote end
+    -f, --force           force overwrite of local branch
+    -m, --multiple        fetch from multiple remotes
+    -t, --tags            fetch all tags and associated objects
+    -n                    do not fetch all tags (--no-tags)
+    -p, --prune           prune remote-tracking branches no longer on remote
+    --recurse-submodules  control recursive fetching of submodules
+    --dry-run             dry run
+    -k, --keep            keep downloaded pack
+    -u, --update-head-ok  allow updating of HEAD ref
+    --progress            force progress reporting
+    --depth <DEPTH>       deepen history of shallow clone
+
+$ git pull --strategy=recursive -X theirs origin master
+From ssh://git.internal/repos.git
+ * branch            master     -> FETCH_HEAD
+Already up-to-date.
+
+
+David
