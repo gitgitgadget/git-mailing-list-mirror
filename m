@@ -1,70 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Automatically autoload bashcompinit for ZSH, when needed
-Date: Tue, 26 Apr 2011 14:55:25 -0700
-Message-ID: <7vd3k8d6eq.fsf@alter.siamese.dyndns.org>
-References: <7vtydkddto.fsf@alter.siamese.dyndns.org>
- <1303849690-20894-1-git-send-email-mstormo@gmail.com>
- <vpqbozszqnu.fsf@bauges.imag.fr> <1303851177.9740.2.camel@Nokia-N900>
+Subject: Re: [RFC/PATCH] handle_alias: provide GIT_CWD to !alias
+Date: Tue, 26 Apr 2011 15:22:44 -0700
+Message-ID: <7v1v0od557.fsf@alter.siamese.dyndns.org>
+References: <4DA59B27.50506@ge.infn.it>
+ <e8c9aa9160f922f728d56387e5e86eb50220774f.1302699792.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Marius Storm-Olsen <mstormo@gmail.com>
-To: Marius Storm-Olsen <marius@storm-olsen.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:55:54 2011
+Cc: git@vger.kernel.org, Matej Batic <matej.batic@ge.infn.it>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 00:23:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEqEW-0005D0-RM
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 23:55:49 +0200
+	id 1QEqer-0001Er-Nl
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 00:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932944Ab1DZVzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 17:55:43 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35047 "EHLO
+	id S1753425Ab1DZWW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 18:22:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54709 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932488Ab1DZVzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 17:55:42 -0400
+	with ESMTP id S1751438Ab1DZWWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 18:22:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3E5D0544C;
-	Tue, 26 Apr 2011 17:57:42 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E949056BC;
+	Tue, 26 Apr 2011 18:24:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p3k403ueeCQkNcIJ69b4ovE7pJs=; b=DsHs5Z
-	KtFC1/tDdgb+IxdNcWKHYtBDQfrKowZa9FX86/lHqHrA3Hbn/0Jd0Ii8M/DBUUvl
-	tQWChnVgLmMFJ2A8Cad9wWiZVVsKsDJLn/Zf1+WyGXp7sV8WtE7hECdMXssKGdBE
-	k8wUPj0WygRrprNK3i42XWz+8JSg98uCWXvG0=
+	:content-type; s=sasl; bh=llw6SrTIbWpv+iwSUJN9DpGGado=; b=q1j8Nh
+	QdSAks7nft/yQ3vV5XSqXmkKdrU69BthYEgDbVfrInPnMRLyndm1B0+/IttiXrLM
+	K1zPhok5/53mloDL0daUWp6g1z4rcKW2iOZNDjeZEZ7RJY5w7y8ZlDHDM48QCuPD
+	ChZxu/Fo6oMfQzcI/y0WF5WZe1ibS/CjjhEOY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=okD10333iyUO4ratZqbgyNDVJc+aXWR3
-	pNo7SdcyR5lSqT341RMJfxlcc6fpKHXssYxrJU/v0Ie6aphCZVX7seycpZZXgPjN
-	TANXhoDael8NfFWvSGxqakrrJPK8I1OeqivoUaIWrtZHoNrEVlx28DGxWQscO8Eg
-	xiVLy82MnEQ=
+	:content-type; q=dns; s=sasl; b=vmFQfwgY4UEeV92l9yAqqJacmteyKjEC
+	Irn5Cn+o/+wXkl9OZ3tHqpMGgEtI/ptWsd4RtDSZ5eg1TDIilti9QvCU9rmJf2lQ
+	RoGf7mgIfmJCcBzrilospMHHWFjeFiQuJ7e3ZZq3/ST8L7qDg62kWF+1MlhxwiiT
+	FdLjgJfkkKk=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E0BA15449;
-	Tue, 26 Apr 2011 17:57:35 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B6AC756BB;
+	Tue, 26 Apr 2011 18:24:51 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 638615448; Tue, 26 Apr 2011
- 17:57:29 -0400 (EDT)
-In-Reply-To: <1303851177.9740.2.camel@Nokia-N900> (Marius Storm-Olsen's
- message of "Tue, 26 Apr 2011 15:52:57 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9106656B5; Tue, 26 Apr 2011
+ 18:24:47 -0400 (EDT)
+In-Reply-To: <e8c9aa9160f922f728d56387e5e86eb50220774f.1302699792.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Wed, 13 Apr 2011 15:05:20 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 31EC4FEA-7050-11E0-B890-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 00F0BA94-7054-11E0-8B8B-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172131>
 
-Marius Storm-Olsen <marius@storm-olsen.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Or Junio could just fix it up when/if picking it.
+> Provide an environment variable GIT_CWD which contains the subdirectory
+> from which a !alias was called since these cd to the to level directory
+> before they are executed.
 
-Surely, no problem.
-
-I do not use zsh myself, so unless a real zsh user complains, I'll queue
-it directly on 'master' as part of the batch for the first week.
-
-Thanks.
+Isn't this what we usually call "prefix", though?
