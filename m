@@ -1,107 +1,81 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: Creating remote branch called HEAD corrupts remote clones
-Date: Tue, 26 Apr 2011 14:09:04 +0200
-Message-ID: <BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
-References: <ih1449$ul6$1@dough.gmane.org>
-	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
-	<20110120203840.GA11468@sigill.intra.peff.net>
-	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
-	<20110120215456.GB11468@sigill.intra.peff.net>
-	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
-	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
-	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
-	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] strbuf: allocate enough space when strbuf_setlen() is called first time
+Date: Tue, 26 Apr 2011 19:24:20 +0700
+Message-ID: <1303820660-744-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 14:09:14 2011
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 14:24:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEh4s-0004MY-6F
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 14:09:14 +0200
+	id 1QEhJh-0004Iu-UO
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 14:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515Ab1DZMJI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2011 08:09:08 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41550 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837Ab1DZMJH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2011 08:09:07 -0400
-Received: by bwz15 with SMTP id 15so441445bwz.19
-        for <git@vger.kernel.org>; Tue, 26 Apr 2011 05:09:05 -0700 (PDT)
+	id S1751706Ab1DZMY3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2011 08:24:29 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:64666 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751129Ab1DZMY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 08:24:28 -0400
+Received: by pwi15 with SMTP id 15so400540pwi.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 05:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GQH0vy5KQVmTqywKh+estV277dS9g6OvuZ/LZ1ETbjI=;
-        b=ocKhTIUn2WEbkjIxN/73Wyy0AbJ3ycwGZNRKGld49y6BQumIQSofgr16a92o8X5Mp6
-         pTbAihCqssOnRNsQh1/MDIgxcx4KSrIEPCy6JNsxvIVqJiXFwlFfsMzaBkWcMCeSZ9NC
-         cUNPphytg7nQ62kQpTdqmYSs4AoMn8fTyVR1g=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=NNs9wBAn49bqVoNtWTlAUe13ROV9d81xaUtt6ExfJz0=;
+        b=moSLm9t27AOx/mfQZymCyHXavp8Z3zGjNqCvYhArTzknCouo/h3HCo8ZGa9UgrKN0A
+         XQQLMzjWuyE+SQhbrOdnBVGWtv0/0oUfI6ap/OZTwk5WTLSQXnN07FARzfa9M+JayRqO
+         +sAOfasOlk3oL6t4pm/gwJ1J9YWc8HH/wQCPw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EfbnemWe4NzzvpXoghpboobwn5Yj01O0PGkFtpolG9AgC6tJUg82LYYpO84prJOhME
-         VPhsOmbUx9aClMObM8DjzpftWlshRSqV0ptWRPfa9ZF1OLB6GslnVQzImTay2ldgWrLR
-         LzrwbDe70PDYHl2oUDk+0U65raCh6ve131KNo=
-Received: by 10.204.84.137 with SMTP id j9mr607419bkl.120.1303819745419; Tue,
- 26 Apr 2011 05:09:05 -0700 (PDT)
-Received: by 10.204.120.195 with HTTP; Tue, 26 Apr 2011 05:09:04 -0700 (PDT)
-In-Reply-To: <AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=RiHG0fH8dHTdXZmm4JJdfJwN+lLtG2l9OvsmI+EnqWN5YIH5tKgVTB1KLGxV2QVgqi
+         1azAu4OeAR3McQHw1aanPdlX5zGzmAjbOnF5uH5C1lxV4XCfMwsKHpLaOyqDIaXV32+0
+         mNFRe6I+tyy8qmsuDvzmDXFbr2kPOK28Q9IKM=
+Received: by 10.142.215.19 with SMTP id n19mr344042wfg.143.1303820668338;
+        Tue, 26 Apr 2011 05:24:28 -0700 (PDT)
+Received: from tre ([115.73.248.91])
+        by mx.google.com with ESMTPS id f4sm535701pbd.13.2011.04.26.05.24.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2011 05:24:27 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Tue, 26 Apr 2011 19:24:21 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172090>
 
-Can git have a bug tracker please?
+strbuf_grow(sb, 0) may allocate less than requested len and violate the
+next assertion.
 
-This is another reminder to fix this bug which is otherwise untrackable=
-=2E
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ strbuf.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Thanks,
-
-Steve.
-
-On Sun, Feb 20, 2011 at 2:17 PM, Stephen Kelly <steveire@gmail.com> wro=
-te:
-> bump.
->
-> I don't think this issue was fixed, was it?
->
-> (no need to put kdepim back in the cc list)
->
-> On Sat, Jan 22, 2011 at 1:46 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Fri, Jan 21, 2011 at 7:37 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> I don't fully understand the issue, so excuse me if this is totall=
-y
->>>> wrong, but wouldn't a rule like 'you can't create a branch for whi=
-ch
->>>> there's already a symbolic ref' do the trick?
->>>
->>> But whose symbolic ref are you checking against? =A0Your own, or on=
-es in
->>> somebody else's repository that you haven't recently updated from?
->>
->> The local ones. That means that somebody can't create a 'HEAD' branc=
-h
->> locally, and can't push a 'HEAD' branch either, as the remote server
->> would already have a 'HEAD' symbolic link. And actually, if for some
->> reason I have a FOO_HEAD, and I fetch a branch called bob/FOO_HEAD,
->> obviously the local symbolic ref without namespace should take
->> precedence.
->>
->> --
->> Felipe Contreras
->>
->
+diff --git a/strbuf.h b/strbuf.h
+index 07060ce..ab213da 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -34,7 +34,7 @@ extern void strbuf_grow(struct strbuf *, size_t);
+=20
+ static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
+ 	if (!sb->alloc)
+-		strbuf_grow(sb, 0);
++		strbuf_grow(sb, len);
+ 	assert(len < sb->alloc);
+ 	sb->len =3D len;
+ 	sb->buf[len] =3D '\0';
+--=20
+1.7.4.74.g639db
