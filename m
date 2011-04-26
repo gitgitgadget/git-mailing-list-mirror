@@ -1,72 +1,151 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] send-pack: avoid deadlock when pack-object dies early
-Date: Tue, 26 Apr 2011 04:23:02 -0400
-Message-ID: <20110426082302.GC26874@sigill.intra.peff.net>
-References: <20110331184243.GA12027@sigill.intra.peff.net>
- <201104142136.25778.j6t@kdbg.org>
- <20110414202110.GA6525@sigill.intra.peff.net>
- <201104142243.33522.j6t@kdbg.org>
- <20110414205113.GA7451@sigill.intra.peff.net>
- <7vsjtkfs10.fsf@alter.siamese.dyndns.org>
- <4DB48B2C.2090904@kdbg.org>
- <4DB48CCD.40304@kdbg.org>
- <20110425165007.GB1589@sigill.intra.peff.net>
- <4DB5E1CA.8000105@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 10:23:16 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] rev-list --count: separate count for --cherry-mark
+Date: Tue, 26 Apr 2011 10:24:29 +0200
+Message-ID: <3e743b672c3e20a245055e47671bc1af1039b60a.1303806237.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 10:24:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEdYB-0003D0-J1
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 10:23:15 +0200
+	id 1QEdZX-0003nr-FX
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 10:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213Ab1DZIXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 04:23:09 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50588
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750932Ab1DZIXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 04:23:05 -0400
-Received: (qmail 16316 invoked by uid 107); 26 Apr 2011 08:24:45 -0000
-Received: from c-67-172-212-47.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.212.47)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Apr 2011 04:24:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Apr 2011 04:23:02 -0400
-Content-Disposition: inline
-In-Reply-To: <4DB5E1CA.8000105@kdbg.org>
+	id S1751216Ab1DZIYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 04:24:33 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:36639 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750903Ab1DZIYb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2011 04:24:31 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 4E97B20CFC
+	for <git@vger.kernel.org>; Tue, 26 Apr 2011 04:24:31 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute4.internal (MEProxy); Tue, 26 Apr 2011 04:24:31 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id; s=smtpout; bh=yFPzCNKCmCEGANZ9ZpLOaSBZDJA=; b=eKRkguwM3DUNve8FJPKdgwHdgipgFvAYpLsetvOZjpp44AlCHfVbeaa8mnFLdlNagvarqVbqqODohOnpu3hhMvJD+2L5jbOjwPzyqAANIEo0Q7x0nNVNyJFh4Ci4yLESzveEw/kfPpzaXB68pfuwq1a7X+5BvgXkHXHkQcN7oQo=
+X-Sasl-enc: t2CTAD3ze2yH8WzPNWc9gZ0w/sitBAy9QOrUHmVcUOQ1 1303806270
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9CCD74402AC;
+	Tue, 26 Apr 2011 04:24:30 -0400 (EDT)
+X-Mailer: git-send-email 1.7.5.270.gafca7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172078>
 
-On Mon, Apr 25, 2011 at 11:04:10PM +0200, Johannes Sixt wrote:
+When --count is used with --cherry-mark, omit the patch equivalent
+commits from the count for left and right commits and print the count of
+equivalent commits separately.
 
-> > In the comments for 1/2, you said this goes directly on 38a81b4e. But in
-> > that commit, we use #ifndef WIN32 to decide whether or not to fork for
-> > async code. So shouldn't this use the same test (I don't even see
-> > ASYNC_AS_THREAD defined anywhere else)?
-> 
-> Here's the fixed patch. I squashed both earlier patches into a single patch
-> because they are about the same topic, as you showed with your tests of
-> git-push via smart http.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+I noticed this in passing. It does not break anything and can be done
+easily. It might even be useful for gitprompt, branch -vv and the like.
 
-Thanks, this one looks good to me, and I think the squash is sensible.
+Resent for the new cycle.
+---
+ Documentation/rev-list-options.txt   |    5 ++++-
+ builtin/rev-list.c                   |   10 ++++++++--
+ revision.h                           |    1 +
+ t/t6007-rev-list-cherry-pick-file.sh |   27 +++++++++++++++++++++++++++
+ 4 files changed, 40 insertions(+), 3 deletions(-)
 
-> Again, this should go on top of 38a81b4e. When it is merged to f6b60983 or
-> later, the '#ifndef WIN32' must be changed to '#ifdef NO_PTHREADS'.
-
-I see Junio has an evil merge in pu that takes care of this.
-
-I wonder if it might have been nicer to "cherry-pick -n" the old fix on
-top of master, fixing up the tree to use NO_PTHREADS, and then resolving
-the ensuing merge conflict in favor of the cherry-picked version. . I
-guess it is just a matter of style (the fact that a few of our
-archaeology tools do not find content in evil merges very well is a
-downside, but that just means we should fix the tools :) ).
-
--Peff
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 5c6850f..e092a7c 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -715,7 +715,10 @@ ifdef::git-rev-list[]
+ 	Print a number stating how many commits would have been
+ 	listed, and suppress all other output.  When used together
+ 	with '--left-right', instead print the counts for left and
+-	right commits, separated by a tab.
++	right commits, separated by a tab. When used together with
++	'--cherry-mark', omit patch equivalent commits from these
++	counts and print the count for equivalent commits separated
++	by a tab.
+ endif::git-rev-list[]
+ 
+ 
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index f458cb7..8761e9a 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -51,7 +51,9 @@ static void show_commit(struct commit *commit, void *data)
+ 	graph_show_commit(revs->graph);
+ 
+ 	if (revs->count) {
+-		if (commit->object.flags & SYMMETRIC_LEFT)
++		if (commit->object.flags & PATCHSAME)
++			revs->count_same++;
++		else if (commit->object.flags & SYMMETRIC_LEFT)
+ 			revs->count_left++;
+ 		else
+ 			revs->count_right++;
+@@ -402,8 +404,12 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			     &info);
+ 
+ 	if (revs.count) {
+-		if (revs.left_right)
++		if (revs.left_right && revs.cherry_mark)
++			printf("%d\t%d\t%d\n", revs.count_left, revs.count_right, revs.count_same);
++		else if (revs.left_right)
+ 			printf("%d\t%d\n", revs.count_left, revs.count_right);
++		else if (revs.cherry_mark)
++			printf("%d\t%d\n", revs.count_left + revs.count_right, revs.count_same);
+ 		else
+ 			printf("%d\n", revs.count_left + revs.count_right);
+ 	}
+diff --git a/revision.h b/revision.h
+index ae94860..08900b3 100644
+--- a/revision.h
++++ b/revision.h
+@@ -141,6 +141,7 @@ struct rev_info {
+ 	/* commit counts */
+ 	int count_left;
+ 	int count_right;
++	int count_same;
+ };
+ 
+ #define REV_TREE_SAME		0
+diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
+index cacf3de..28d4f6b 100755
+--- a/t/t6007-rev-list-cherry-pick-file.sh
++++ b/t/t6007-rev-list-cherry-pick-file.sh
+@@ -157,6 +157,33 @@ test_expect_success '--cherry' '
+ 	test_cmp actual.named expect
+ '
+ 
++cat >expect <<EOF
++1	1
++EOF
++
++test_expect_success '--cherry --count' '
++	git rev-list --cherry --count F...E -- bar > actual &&
++	test_cmp actual expect
++'
++
++cat >expect <<EOF
++2	2
++EOF
++
++test_expect_success '--cherry-mark --count' '
++	git rev-list --cherry-mark --count F...E -- bar > actual &&
++	test_cmp actual expect
++'
++
++cat >expect <<EOF
++1	1	2
++EOF
++
++test_expect_success '--cherry-mark --left-right --count' '
++	git rev-list --cherry-mark --left-right --count F...E -- bar > actual &&
++	test_cmp actual expect
++'
++
+ test_expect_success '--cherry-pick with independent, but identical branches' '
+ 	git symbolic-ref HEAD refs/heads/independent &&
+ 	rm .git/index &&
+-- 
+1.7.5.270.gafca7
