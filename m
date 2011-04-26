@@ -1,78 +1,60 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] wt-status.c: Increase readability.
-Date: Tue, 26 Apr 2011 09:50:19 +0200
-Message-ID: <vpqaafd8n9g.fsf@bauges.imag.fr>
-References: <1303801713-22639-1-git-send-email-henrik@fiktivkod.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git clone --depth=2 git://git.sv.gnu.org/gnulib" hangs
+Date: Tue, 26 Apr 2011 03:59:17 -0400
+Message-ID: <20110426075917.GA26874@sigill.intra.peff.net>
+References: <87aafedqjp.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Henrik Hautakoski <henrik@fiktivkod.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 09:50:36 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Tue Apr 26 09:59:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEd2X-0006Nu-VD
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 09:50:34 +0200
+	id 1QEdBa-0002CM-Q9
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 09:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932299Ab1DZHu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 03:50:27 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43230 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932253Ab1DZHuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 03:50:25 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p3Q7oJr6004729
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 26 Apr 2011 09:50:19 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QEd2J-0001R6-U0; Tue, 26 Apr 2011 09:50:19 +0200
-In-Reply-To: <1303801713-22639-1-git-send-email-henrik@fiktivkod.org> (Henrik
-	Hautakoski's message of "Tue, 26 Apr 2011 09:08:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 26 Apr 2011 09:50:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p3Q7oJr6004729
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1304409022.34632@k4YAwbYmc/FaVZP3Zj+DrQ
+	id S1758587Ab1DZH7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 03:59:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36027
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758413Ab1DZH7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 03:59:20 -0400
+Received: (qmail 16171 invoked by uid 107); 26 Apr 2011 08:01:00 -0000
+Received: from c-67-172-212-47.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.212.47)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Apr 2011 04:01:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Apr 2011 03:59:17 -0400
+Content-Disposition: inline
+In-Reply-To: <87aafedqjp.fsf@rho.meyering.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172074>
 
-Henrik Hautakoski <henrik@fiktivkod.org> writes:
+On Mon, Apr 25, 2011 at 10:28:10PM +0200, Jim Meyering wrote:
 
-> Subject: [PATCH] wt-status.c: Increase readability.
+> We've had a report that this command is hanging:
+> 
+>     git clone --depth=2 git://git.sv.gnu.org/gnulib
 
-Maybe "increase code readability" instead, I originally thought you
-wanted to increase the readability of the output.
+It might be related to this deadlock which impacts upload-pack on a
+server with pthreads serving a shallow clone:
 
-> Add braces to if/else statements to make the code more readable.
+  http://thread.gmane.org/gmane.comp.version-control.git/170789
 
-Git's coding style usually do not use "useless" braces. I think you're
-only adding some in if statements that already had one branch (then or
-else) braced, which is OK, but you should state that in the commit
-message.
+Unfortunately the fix I posted is not yet in any released version of
+git. It is in the current 'next'.
 
-I don't care much either way about the application of this patch, but
-expect others to say "this is useless code churn, not worth the
-trouble".
+> It appears to be something specific to the gnulib repository,
+> since I can do a shallow clone of e.g., this one just fine:
+> 
+>     git://git.savannah.gnu.org/parallel.git
 
-> -	} else if (s->commitable)
-> +	} else if (s->commitable) {
->  		status_printf_ln(s, GIT_COLOR_NORMAL, _("Untracked files not listed%s"),
->  			advice_status_hints
->  			? _(" (use -u option to show untracked files)") : "");
-> +    }
+It's a race condition on filling up a rev-list buffer, so certain repos
+may be more prone to triggering the race than others.
 
-Whitespace damage on the last }.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
