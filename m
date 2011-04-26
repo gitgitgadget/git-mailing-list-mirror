@@ -1,97 +1,67 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] fetch: show remote name instead of URL if available
-Date: Tue, 26 Apr 2011 13:36:26 -0400
-Message-ID: <1303839386.18603.19.camel@drew-northup.unet.maine.edu>
-References: <1303830807-21966-1-git-send-email-dpmcgee@gmail.com>
-	 <7v1v0ogbnn.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff-index ignores color config
+Date: Tue, 26 Apr 2011 10:42:03 -0700
+Message-ID: <7voc3sewpg.fsf@alter.siamese.dyndns.org>
+References: <1303830261.3387.21.camel@dhcp-141.kontor.deklomp.se>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 19:40:54 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Elias Persson <delreich@takeit.se>
+X-From: git-owner@vger.kernel.org Tue Apr 26 19:42:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEmFp-00079K-Jo
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 19:40:53 +0200
+	id 1QEmHA-0008E5-Va
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 19:42:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757856Ab1DZRkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 13:40:49 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:37969 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757829Ab1DZRks (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 13:40:48 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3QHaWYA001260
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 26 Apr 2011 13:36:37 -0400
-In-Reply-To: <7v1v0ogbnn.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=3
-	Fuz1=3 Fuz2=3
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p3QHaWYA001260
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1304444295.53013@t/1wQB5+8eRIOw2qhSmcKw
+	id S1757829Ab1DZRmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 13:42:12 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38146 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757540Ab1DZRmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 13:42:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0AB3634BD;
+	Tue, 26 Apr 2011 13:44:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FvPwbIm/B58ltd89tG/JEakn9eI=; b=CENV6c
+	aF+Jg4CtBfjYqfNwWo9KeZAcjEvrCJwb41VThjNn6ybaNpEnpG8ZiXgKzDWGlbZV
+	5ugy1zhTe2UYXtie4GKQqdQnURsJhk8ugP5+Dcr8vtEQGz0jpHjGdT0z3FUadJpp
+	wegiNpnzBjJxQYoOGjLSspN41aFK7Z2BY40lg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vcJFibZfqO/0ZxkXgnS5h5SJ/99YX+Au
+	7pgtZefUQG0TYzm/blkewg7magIRrxctNv5OaI2WuLlljy4s6rkAtd3nYmr6p7WC
+	kr53+GEnADwzUAdoMCdlfwZrC2/0ZnTTn4fpwkZcXmzC6BUoiAhfgeWEw4qbFJT0
+	RqsLhhnLJ+M=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DD72434BB;
+	Tue, 26 Apr 2011 13:44:09 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 09DAD34B8; Tue, 26 Apr 2011
+ 13:44:06 -0400 (EDT)
+In-Reply-To: <1303830261.3387.21.camel@dhcp-141.kontor.deklomp.se> (Elias
+ Persson's message of "Tue, 26 Apr 2011 17:04:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CA6F1E92-702C-11E0-9A2C-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172119>
 
+Elias Persson <delreich@takeit.se> writes:
 
-On Tue, 2011-04-26 at 10:33 -0700, Junio C Hamano wrote:
-> Dan McGee <dpmcgee@gmail.com> writes:
-> 
-> >     $ git fetch -v
-> >     From git://git.kernel.org/pub/scm/git/git
-> >      = [up to date]      html       -> origin/html
-> >     ...
-> 
-> I see this full URL output as a nice reminder of what "origin" refers to,
-> especially when you said "git fetch -v origin".  This is especially useful
-> when you are fetching from different locations that house repositories of
-> the same project (e.g. among my multiple git.git working trees on my
-> notebook, some of them fetch from my private, primaty development machine
-> and others from public k.org).
-> 
-> Changing this output ...
-> 
-> > Versus the new output:
-> >
-> >     $ ./git fetch -v
-> >     From origin
-> 
-> ... this way feels like a regression to me.
-> 
-> > Alternatively, we could do something like
-> >     From origin (git://git.kernel.org/pub/scm/git/git)
-> 
-> That is much less problematic.
-> 
-> But let's step back a bit.  What problem are you trying to solve?
-> 
-> Are you trying to give a reminder that you are interacting with 'origin'
-> when you said "git fetch -v" without saying where you are fetching from?
-> I think that is a good thing to aim for (the same reasoning behind the
-> comment of mine above).  If so, the ideal change from my gut feeling is to
-> add an extra " (origin)" at the end, like so:
-> 
-> 	From git://git.kernel.org/pub/scm/git/git (origin)
-> 
-> when and only when the fetch is done without mentioning any remote
-> nickname; iow, "git fetch -v origin" or "git fetch -v git://.../git" won't
-> get the extra " (origin)" at the end.
+> Having color.ui (and/or color.diff) set to auto, doing
+>
+>    git diff-index --check <some refspec>
+>
+> on a set with e.g. trailing whitespace does not produce colored
+> output.
 
-I was about to compose mail to the same effect, so I'll just agree
-instead.
-
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Isn't that very much on purpose?  diff-{index,tree,files} plumbings should
+not be affected by UI related configuration variables.
