@@ -1,68 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-list --count: separate count for --cherry-mark
-Date: Tue, 26 Apr 2011 10:37:30 -0700
-Message-ID: <7vwrigewx1.fsf@alter.siamese.dyndns.org>
-References: <3e743b672c3e20a245055e47671bc1af1039b60a.1303806237.git.git@drmicha.warpmail.net>
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Re: [PATCH] Refactor git-completion to allow ZSH usage of PS1 functions
+Date: Tue, 26 Apr 2011 12:37:42 -0500
+Message-ID: <4DB702E6.5090105@gmail.com>
+References: <1303824288-15591-1-git-send-email-mstormo@gmail.com> <7v62q1exnj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 19:37:45 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 19:38:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEmCm-00056s-8T
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 19:37:44 +0200
+	id 1QEmDC-0005Om-Dv
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 19:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757762Ab1DZRhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 13:37:40 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62847 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754872Ab1DZRhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 13:37:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7857D3456;
-	Tue, 26 Apr 2011 13:39:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zBse5bbkcExHYBKI9IE1DpFombQ=; b=orvkWc
-	3ZOYoiA572PdbP7IOYNSXMlW/cu6cqdvXusm4Vdic6ZWPCRgzLWsqdNDbo1qUtgk
-	3PXVaMyA+0ffxkzn7msnv5AURSYIrDeTi8qn3iQgqg2QF4tIV79DvE/sy57Z//mB
-	ItIwoYbpYnJG0T/ZqxvzdKYbD9XoewhGHjqiI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JO7RAprB6Lka0LAfengraM+d1N+eEzy9
-	WX6hmSJGnflUTVHcPKiEz6177ncIwvnyOTkjIeNENfA6MxJbWoGJRyDKEm4Rlc9b
-	zhCfEzpWDEAXekeS0NZnx/FcUngp0xcB39nM8uuVizEjL36Wr3e97c/iVVS1hZXr
-	PoEawnqnOpE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 53F623455;
-	Tue, 26 Apr 2011 13:39:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 727853454; Tue, 26 Apr 2011
- 13:39:34 -0400 (EDT)
-In-Reply-To: <3e743b672c3e20a245055e47671bc1af1039b60a.1303806237.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue, 26 Apr 2011 10:24:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 27F940AC-702C-11E0-9A2C-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1757878Ab1DZRh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 13:37:56 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55687 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757862Ab1DZRhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 13:37:55 -0400
+Received: by gyd10 with SMTP id 10so308763gyd.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 10:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=v5b+LjP5zUaNx3nXQ2ovKbV/wKR42W2l8ky3tQF7wag=;
+        b=BURBhZtokRD8yH4c9/hMp0Rc+cvxLjVsyGnEmVe3r9TXOSLXowPkRV4+ioxwyFMK3S
+         djjWQNwFWJlngVMs3zzpc36oKVz5RMkdEW4rKU1w+dF5gpL34aY46MOqDhA/80EUuCZ7
+         NmBF1h75X/OdN7xPKsQ4BO6YKZ5XLOYlNhIEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=rKOcyeH6/OCEubjU+Rr+45yLYaSzkjQUxLe6X9LPt0ZdSdNNem70a8QFtrWjCtJ6gQ
+         Syj0dmw4pDwAZ+9HnOlRUSonZQ+mRsoWjqERPTGwCdMdk1GU0PoOlOAtm7d7xnczulN1
+         atgkWOWanXYOJ2FyZyQk4aGxUrUlTFG0mEo/g=
+Received: by 10.236.19.100 with SMTP id m64mr1367184yhm.77.1303839474662;
+        Tue, 26 Apr 2011 10:37:54 -0700 (PDT)
+Received: from [192.168.1.100] (24-155-176-18.dyn.grandenetworks.net [24.155.176.18])
+        by mx.google.com with ESMTPS id t42sm2067839yhm.43.2011.04.26.10.37.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2011 10:37:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <7v62q1exnj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172116>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano said the following on 26.04.2011 12:21:
+> I'd be very negative on splitting this file into more than one files.
 
-> When --count is used with --cherry-mark, omit the patch equivalent
-> commits from the count for left and right commits and print the count of
-> equivalent commits separately.
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> I noticed this in passing. It does not break anything and can be done
-> easily. It might even be useful for gitprompt, branch -vv and the like.
+The only other option would be duplication. Is that preferred?
 
-This is in the same spirit as your earlier change to not count filtered
-commits, right?  Sensible.
+I was hoping to more easily keep the implementations in sync, given 
+that the code is trivial enough for both shells to interpret. However, 
+having two separate implementations would allow for more advanced 
+options in the ZSH PSx handling, I guess.
+
+-- 
+.marius
