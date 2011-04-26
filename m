@@ -1,75 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/6] Use floating point for --dirstat percentages
-Date: Tue, 26 Apr 2011 09:52:28 -0700
-Message-ID: <7vpqo9ez03.fsf@alter.siamese.dyndns.org>
-References: <BANLkTim9U4cOnV+5=Mp-2g_M6+JOiM5e7A@mail.gmail.com>
- <1303776102-9085-1-git-send-email-johan@herland.net>
- <1303776102-9085-6-git-send-email-johan@herland.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] strbuf: allocate enough space when strbuf_setlen() is
+ called first time
+Date: Tue, 26 Apr 2011 18:54:43 +0200
+Message-ID: <4DB6F8D3.6040200@lsrfire.ath.cx>
+References: <1303820660-744-1-git-send-email-pclouds@gmail.com> <7v7hahghls.fsf@alter.siamese.dyndns.org> <BANLkTi=ECjmjBLfS=s6fMWXgtxDYmxcP5g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:52:46 2011
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:55:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QElVG-0007tX-4Y
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 18:52:46 +0200
+	id 1QElY7-0001DM-Bp
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 18:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754614Ab1DZQwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 12:52:41 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46812 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753182Ab1DZQwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 12:52:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 42DDF4DDF;
-	Tue, 26 Apr 2011 12:54:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6ayUdud0lgnPwztIBpNNZ/8SQs8=; b=c82t95
-	ZBT5zeAHB9uWS24wnbdF8pQVytF18DyvJu2amH3exz2yYj5HnbfzTNeY9qPv1p0y
-	5jDi/+TSPy6u6JbIMjqsa1tj3zg8yKlX37JoPC2R2KIuq+lo55a2A6OXYZ9M+TR4
-	Csads0wd/Z6mTPaYPUma7bRlHVp3VoUSLf5as=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=snZvn6xSVQbkYey9ovFpg/3RSTO/456t
-	LdSnCPRE6LMU7gf2QY1UaPQfOdHb8pW8iYgjQrW2vOdTlAVa7KH+XejkrtvI+oeq
-	LwN1r6fsgEYj7qDZAATGaQTTlQ3OeMUPQW8Qtrl4wIBtEUdio40fhrzWDStnlADl
-	uK6R8F9YOy4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0D7514DDE;
-	Tue, 26 Apr 2011 12:54:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D81C74DDB; Tue, 26 Apr 2011
- 12:54:32 -0400 (EDT)
-In-Reply-To: <1303776102-9085-6-git-send-email-johan@herland.net> (Johan
- Herland's message of "Tue, 26 Apr 2011 02:01:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DE79B700-7025-11E0-994A-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754553Ab1DZQzi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2011 12:55:38 -0400
+Received: from india601.server4you.de ([85.25.151.105]:55753 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754140Ab1DZQzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 12:55:38 -0400
+Received: from [192.168.2.106] (p4FFDA9E5.dip.t-dialin.net [79.253.169.229])
+	by india601.server4you.de (Postfix) with ESMTPSA id 534752F8050;
+	Tue, 26 Apr 2011 18:55:36 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <BANLkTi=ECjmjBLfS=s6fMWXgtxDYmxcP5g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172108>
 
-Johan Herland <johan@herland.net> writes:
-
-> Allow specifying --dirstat cut-off percentage as a floating point number.
+Am 26.04.2011 17:32, schrieb Nguyen Thai Ngoc Duy:
+> 2011/4/26 Junio C Hamano<gitster@pobox.com>:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy<pclouds@gmail.com>  writes=
+:
+>>
+>>> strbuf_grow(sb, 0) may allocate less than requested len and violate=
+ the
+>>> next assertion.
+>>>
+>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy<pclouds@gm=
+ail.com>
+>>> ---
+>>>   strbuf.h |    2 +-
+>>>   1 files changed, 1 insertions(+), 1 deletions(-)
+>>>
+>>> diff --git a/strbuf.h b/strbuf.h
+>>> index 07060ce..ab213da 100644
+>>> --- a/strbuf.h
+>>> +++ b/strbuf.h
+>>> @@ -34,7 +34,7 @@ extern void strbuf_grow(struct strbuf *, size_t);
+>>>
+>>>   static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
+>>>        if (!sb->alloc)
+>>> -             strbuf_grow(sb, 0);
+>>> +             strbuf_grow(sb, len);
+>>>        assert(len<  sb->alloc);
+>>
+>> This looks so obviously correct that it is scary.
+>>
+>> How could 60 callsites of this function manage to have run without c=
+rashes
+>> so far?  They all happen to use the function on a buffer that alread=
+y has
+>> something on it?
 >
-> When printing the dirstat output, floating point numbers are presented in
-> rounded form (as opposed to truncated).
+> I guess no current call site does _setlen right after initialization.
+> It's new code that triggers it.
 
-Why isn't it sufficient to change
+Documentation/technical/api-strbuf.txt says that you can't use=20
+strbuf_setlen() to allocate more space for a strbuf, i.e. you can use i=
+t=20
+only to shorten a string or set it to its current length.  If the strbu=
+f=20
+in question hasn't allocated any buffer at all (sb->alloc =3D=3D 0) the=
+n the=20
+only valid len is zero.
 
-	permille = this_dir * 1000 / changed
+Where is it used to extend strbufs, i.e. which is the new code you=20
+mentioned?
 
-to
-
-	permille = (this_dir * 2000 + changed) / (changed * 2)
-
-or something?  If rounding is the only issue that bothers you (I admit
-that it does bother me, now that you brought it up), that is.
+Ren=C3=A9
