@@ -1,62 +1,76 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: symlinked working tree gotcha
-Date: Mon, 25 Apr 2011 23:41:29 -0400
-Message-ID: <BANLkTik8Pn0b9sgejb2Uawkb=J5tYR9MAA@mail.gmail.com>
-References: <20110424165825.GA21062@gnu.kitenet.net> <7vpqoajiz0.fsf@alter.siamese.dyndns.org>
- <20110425190938.GA24744@gnu.kitenet.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [GSoC 11] Sequencer: Acceptance
+Date: Tue, 26 Apr 2011 10:20:18 +0530
+Message-ID: <20110426045016.GA20182@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 05:42:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 26 06:51:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEZA7-0007zN-Qt
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 05:42:08 +0200
+	id 1QEaEz-0006VM-BM
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 06:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932919Ab1DZDmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 23:42:00 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42715 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758005Ab1DZDmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2011 23:42:00 -0400
-Received: by iyb14 with SMTP id 14so195272iyb.19
-        for <git@vger.kernel.org>; Mon, 25 Apr 2011 20:41:59 -0700 (PDT)
+	id S1751517Ab1DZEvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 00:51:07 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:44003 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751296Ab1DZEvF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 00:51:05 -0400
+Received: by pvg12 with SMTP id 12so205134pvg.19
+        for <git@vger.kernel.org>; Mon, 25 Apr 2011 21:51:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=5m3TpKG+OlMaGg3uJu/lGX9QDGK8E5b7dq+7eHVUg9Q=;
-        b=BUdtFwtnH0Y7Rgpl26oI3Xb3oN+3JWDOyXy7xuG7Vgj2nH0TXb+J7Gya+MlY73ifIJ
-         pcjEb3iWVqUvTOrddD+FuG+xZUX2oGeQ9R6R6Ik3RsrUqb/evZXA27gjNxLxnw8wf/rA
-         P5cEtDedXbjOf+BW5ja8EuNvaVIuujTcN3Nm0=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=C2Pa7s4B2+CqfQrdXWZyh8wv6k7UvabeI8466gyTEuw=;
+        b=A0hvvGVqmEM3Heyr1QNyUlIAQKPrlwWHTYXODPNd4IQ/C5jEQRJFvutg3urvtvhwfS
+         mikPr9zdk6i7mu2PGoSOgYaGjuRolaFhNbs6pzMMlbIYCLMesfDkPpi/ftPRhlSzitaW
+         GhFaNc67bJoWdyoATqhH1zp1KP5s0bzm00z/A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=LmRUjK9xjaqMmCNJ/TrcVgkhEV5wcvusfdsKrABNe6BOSkiiEJ6kn/6nuV1G/txSW3
-         ggPdbRIzyTp9okWioClVP6hiaTbNI/itrImIuccIIXp+WANaY6xzu3T4G1lt+NAZxn/n
-         FWE+WZ5EEi/lPyAllirWt1boECh+2lefPOFqY=
-Received: by 10.42.154.129 with SMTP id q1mr243441icw.316.1303789319108; Mon,
- 25 Apr 2011 20:41:59 -0700 (PDT)
-Received: by 10.42.218.7 with HTTP; Mon, 25 Apr 2011 20:41:29 -0700 (PDT)
-In-Reply-To: <20110425190938.GA24744@gnu.kitenet.net>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=l79CXtBsTkVA2bc1TUF17ol4QpRXc8UTZ9P2ReODa9r+2wcjeYUFmhxpCbtB3wKXcI
+         XcQ6MSnRx8ngNIALHRnARnafKqjsf/iprHOkWkkLkEbLWQmLHFtv2z6EbGCScATKPzPQ
+         PRLKBtko2vUSqu9CzqlomgiyoCLJzL8sr4f1Q=
+Received: by 10.68.4.38 with SMTP id h6mr470381pbh.143.1303793464672;
+        Mon, 25 Apr 2011 21:51:04 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id n7sm4308840pbi.2.2011.04.25.21.51.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Apr 2011 21:51:03 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172064>
 
-On Mon, Apr 25, 2011 at 3:09 PM, Joey Hess <joey@kitenet.net> wrote:
-> Hmm, my /bin/pwd does not return "/tmp/foo" when I've cd'd to "/tmp/sym".
+Hi,
 
-A pwd misfeature IMO. Try:
+I've been accepted into the GSoC 2011 program to work on the
+sequencer, and Chistian has graciously agreed to mentor me [1].  For
+more details, please refer to the series I posted a few weeks ago
+[2]. All updates related to the project will be prefixed with "[GSoC
+11] Sequencer: " in the subject line, so it should be easy to follow.
 
-$ pwd -P
+I have exams until the end of the month, so I expect to start working
+early next month.
 
-You can make -P the default in bash with "shopt -s -o physical"
+I look forward to working with Christian and the Git community.
 
-j.
+Thanks.
+
+[1]: http://socghop.appspot.com/gsoc/project/google/gsoc2011/artagnon/9001
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/171255
+
+-- Ram
