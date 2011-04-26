@@ -1,75 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Refactor git-completion to allow ZSH usage of PS1
- functions
-Date: Tue, 26 Apr 2011 12:15:15 -0700
-Message-ID: <7vtydkddto.fsf@alter.siamese.dyndns.org>
-References: <1303824288-15591-1-git-send-email-mstormo@gmail.com>
- <7v62q1exnj.fsf@alter.siamese.dyndns.org> <4DB702E6.5090105@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] t0081-*.sh: Fix failure of the 'long read' tests
+Date: Tue, 26 Apr 2011 14:35:39 -0500
+Message-ID: <20110426193539.GA2616@elie>
+References: <4DB70972.20308@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 21:15:36 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Apr 26 21:35:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEnjS-000779-Lk
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 21:15:35 +0200
+	id 1QEo35-00032P-Tw
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 21:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003Ab1DZTP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 15:15:29 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52714 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123Ab1DZTP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 15:15:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B0B8141C9;
-	Tue, 26 Apr 2011 15:17:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0vh+EWHDWTfx5RK1U31G/2DQFT4=; b=RbrzVu
-	+Tx2VYoJhbB+hpuIOA27NL6zsrZEhUutoHjh1XrV2BTOexiCFLnxA06gzSPM7N8j
-	SUW3+YtwfXgTd2I/pZDjyQA8qhxkSXlAJozK4JknRgwZagb2DxyVXeSqDldvLHkU
-	dhICAyjCdXMGez5X/qcinMqdtKnCiQW6WffDY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aB7/+KSlyLko+KScU4w1pkXMFgh7c2FT
-	s/sWtMzsQxjSUMPgyWpG6vygIylE83mEQbrOEcEzPCXRqN3zcEVrXaEFInZwX3OQ
-	A6OofeniyvdCKC0t1TZN0ZuctSHQdQJfhIUJe1Ctw5xQMEQvABa+tpufNUL4oLtf
-	t9SoSJSxn5A=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 707E841C2;
-	Tue, 26 Apr 2011 15:17:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 293B441B1; Tue, 26 Apr 2011
- 15:17:18 -0400 (EDT)
-In-Reply-To: <4DB702E6.5090105@gmail.com> (Marius Storm-Olsen's message of
- "Tue, 26 Apr 2011 12:37:42 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D10A3DC4-7039-11E0-BC14-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755334Ab1DZTfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 15:35:46 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46431 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753912Ab1DZTfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 15:35:46 -0400
+Received: by iwn34 with SMTP id 34so787546iwn.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 12:35:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=/9gGRJFE8MYyG+GIYfNvbPQF1POGda4PlwwGHU2iYDo=;
+        b=koXphxTFpYXzge4Lp2fx8jvnljXU7BIx8BW/qe9atiGK1hqDsJNIz0J+NnkMUKRTnz
+         OsvYQ9vlfIlWGEbi9FhezR58uFTz96h6PAI5mYnNyZ0rlGtxUwJEBI0o1XlUsnygxI6d
+         xpHP0uxUneCYqXXaf+d6j5MCmjZh661XLA89Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ZbqsN59elxsmLl9TXed/hIfUolzPWBXWWyjOXBaXGsXAsr0MYmP3EOrQSa0o9uEQ7Z
+         0ocHJ3YyhMDYnGfYVNgS0W5RhQpZVaYEvv6kWATkP09JgItSh1FO085DHNhm3IGmUYlw
+         BztGtxWMNYyksURcptYd8rxUrwC6niirY+uQ4=
+Received: by 10.43.57.16 with SMTP id we16mr1488021icb.130.1303846545619;
+        Tue, 26 Apr 2011 12:35:45 -0700 (PDT)
+Received: from elie (adsl-68-255-96-190.dsl.chcgil.ameritech.net [68.255.96.190])
+        by mx.google.com with ESMTPS id d9sm15862ibb.19.2011.04.26.12.35.43
+        (version=SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2011 12:35:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4DB70972.20308@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172123>
 
-Marius Storm-Olsen <mstormo@gmail.com> writes:
+Ramsay Jones wrote:
 
-> Junio C Hamano said the following on 26.04.2011 12:21:
->> I'd be very negative on splitting this file into more than one files.
->
-> The only other option would be duplication. Is that preferred?
+> --- a/t/t0081-line-buffer.sh
+> +++ b/t/t0081-line-buffer.sh
+> @@ -25,8 +25,7 @@ generate_tens_of_lines () {
+>  		do
+>  			echo "$line"
+>  		done &&
+> -		: $((i = $i + 1)) ||
+> -		return
+> +		i=$(($i + 1))
+>  	done
 
-That is not the answer I was hoping to hear.  Can't we think of a way to
-share without duplication the common parts and have tweaks per two shell
-implementations?
+This test is a mess.  Could you try the patch from the tip of
 
-A conditional that says "Do this part only if I am zsh" in a single file
-is fine.  Makefile that concatenates the common one and specific one among
-two would also be acceptable, even though it makes things more cumbersome
-to the user.  But no matter what you do, I would really prefer for the
-user to have to copy just _one_ file, not two.
+	git://repo.or.cz/git/jrn.git svn-fe
+
+which just gets rid of it instead?
+
+Thanks for a reminder.
