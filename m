@@ -1,71 +1,62 @@
-From: Fraser Tweedale <frase@frase.id.au>
-Subject: [PATCH] gitweb: supply '-n' to gzip for identical output
-Date: Tue, 26 Apr 2011 11:32:00 +1000
-Message-ID: <1303781520-95861-1-git-send-email-frase@frase.id.au>
-Cc: Fraser Tweedale <frase@frase.id.au>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 26 03:33:10 2011
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: symlinked working tree gotcha
+Date: Mon, 25 Apr 2011 23:41:29 -0400
+Message-ID: <BANLkTik8Pn0b9sgejb2Uawkb=J5tYR9MAA@mail.gmail.com>
+References: <20110424165825.GA21062@gnu.kitenet.net> <7vpqoajiz0.fsf@alter.siamese.dyndns.org>
+ <20110425190938.GA24744@gnu.kitenet.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Tue Apr 26 05:42:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEX9J-0005e5-1S
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 03:33:09 +0200
+	id 1QEZA7-0007zN-Qt
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 05:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932739Ab1DZBdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 21:33:03 -0400
-Received: from 60-242-254-5.static.tpgi.com.au ([60.242.254.5]:52719 "EHLO
-	bacardi.wooloowin.frase.id.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932724Ab1DZBdB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2011 21:33:01 -0400
-Received: from bacardi.wooloowin.frase.id.au (localhost [127.0.0.1])
-	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4) with ESMTP id p3Q1WoFL095908;
-	Tue, 26 Apr 2011 11:32:50 +1000 (EST)
-	(envelope-from Fraser@bacardi.wooloowin.frase.id.au)
-Received: (from Fraser@localhost)
-	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4/Submit) id p3Q1WmJZ095907;
-	Tue, 26 Apr 2011 11:32:48 +1000 (EST)
-	(envelope-from Fraser)
-X-Mailer: git-send-email 1.7.4.5
+	id S932919Ab1DZDmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 23:42:00 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42715 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758005Ab1DZDmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2011 23:42:00 -0400
+Received: by iyb14 with SMTP id 14so195272iyb.19
+        for <git@vger.kernel.org>; Mon, 25 Apr 2011 20:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=5m3TpKG+OlMaGg3uJu/lGX9QDGK8E5b7dq+7eHVUg9Q=;
+        b=BUdtFwtnH0Y7Rgpl26oI3Xb3oN+3JWDOyXy7xuG7Vgj2nH0TXb+J7Gya+MlY73ifIJ
+         pcjEb3iWVqUvTOrddD+FuG+xZUX2oGeQ9R6R6Ik3RsrUqb/evZXA27gjNxLxnw8wf/rA
+         P5cEtDedXbjOf+BW5ja8EuNvaVIuujTcN3Nm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=LmRUjK9xjaqMmCNJ/TrcVgkhEV5wcvusfdsKrABNe6BOSkiiEJ6kn/6nuV1G/txSW3
+         ggPdbRIzyTp9okWioClVP6hiaTbNI/itrImIuccIIXp+WANaY6xzu3T4G1lt+NAZxn/n
+         FWE+WZ5EEi/lPyAllirWt1boECh+2lefPOFqY=
+Received: by 10.42.154.129 with SMTP id q1mr243441icw.316.1303789319108; Mon,
+ 25 Apr 2011 20:41:59 -0700 (PDT)
+Received: by 10.42.218.7 with HTTP; Mon, 25 Apr 2011 20:41:29 -0700 (PDT)
+In-Reply-To: <20110425190938.GA24744@gnu.kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172063>
 
-Without the '-n' ('--no-name') argument, gzip includes a timestamp in
-output which results in different files.  Important systems like FreeBSD
-ports and perhaps several others hash/checksum downloaded files to ensure
-integrity.  For projects that do not release official archives, gitweb's
-snapshot feature would be an excellent alternative, except that the files
-it produces are not identical.
+On Mon, Apr 25, 2011 at 3:09 PM, Joey Hess <joey@kitenet.net> wrote:
+> Hmm, my /bin/pwd does not return "/tmp/foo" when I've cd'd to "/tmp/sym".
 
-Whilst '--no-name' is more descriptive, the long version of the flag is
-not supported on all systems.  In particular, OpenBSD does not appear to
-support it.
+A pwd misfeature IMO. Try:
 
-Supply '-n' to gzip to exclude timestamp from output and produce idential
-output every time.
+$ pwd -P
 
-Signed-off-by: Fraser Tweedale <frase@frase.id.au>
-Acked-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+You can make -P the default in bash with "shopt -s -o physical"
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ee69ea6..f8db40a 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -186,7 +186,7 @@ our %known_snapshot_formats = (
- 		'type' => 'application/x-gzip',
- 		'suffix' => '.tar.gz',
- 		'format' => 'tar',
--		'compressor' => ['gzip']},
-+		'compressor' => ['gzip', '-n']},
- 
- 	'tbz2' => {
- 		'display' => 'tar.bz2',
--- 
-1.7.4.5
+j.
