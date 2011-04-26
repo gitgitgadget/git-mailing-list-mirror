@@ -1,78 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] t0081-*.sh: Fix failure of the 'long read' tests
-Date: Tue, 26 Apr 2011 14:35:39 -0500
-Message-ID: <20110426193539.GA2616@elie>
-References: <4DB70972.20308@ramsay1.demon.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Apr 26 21:35:52 2011
+From: Marius Storm-Olsen <marius@storm-olsen.com>
+Subject: [PATCH] Automatically autoload bashcompinit for ZSH, when needed
+Date: Tue, 26 Apr 2011 15:28:10 -0500
+Message-ID: <1303849690-20894-1-git-send-email-mstormo@gmail.com>
+References: <7vtydkddto.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Marius Storm-Olsen <mstormo@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 22:28:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEo35-00032P-Tw
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 21:35:52 +0200
+	id 1QEos5-0000Ul-Jz
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 22:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755334Ab1DZTfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 15:35:46 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46431 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753912Ab1DZTfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 15:35:46 -0400
-Received: by iwn34 with SMTP id 34so787546iwn.19
-        for <git@vger.kernel.org>; Tue, 26 Apr 2011 12:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=/9gGRJFE8MYyG+GIYfNvbPQF1POGda4PlwwGHU2iYDo=;
-        b=koXphxTFpYXzge4Lp2fx8jvnljXU7BIx8BW/qe9atiGK1hqDsJNIz0J+NnkMUKRTnz
-         OsvYQ9vlfIlWGEbi9FhezR58uFTz96h6PAI5mYnNyZ0rlGtxUwJEBI0o1XlUsnygxI6d
-         xpHP0uxUneCYqXXaf+d6j5MCmjZh661XLA89Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZbqsN59elxsmLl9TXed/hIfUolzPWBXWWyjOXBaXGsXAsr0MYmP3EOrQSa0o9uEQ7Z
-         0ocHJ3YyhMDYnGfYVNgS0W5RhQpZVaYEvv6kWATkP09JgItSh1FO085DHNhm3IGmUYlw
-         BztGtxWMNYyksURcptYd8rxUrwC6niirY+uQ4=
-Received: by 10.43.57.16 with SMTP id we16mr1488021icb.130.1303846545619;
-        Tue, 26 Apr 2011 12:35:45 -0700 (PDT)
-Received: from elie (adsl-68-255-96-190.dsl.chcgil.ameritech.net [68.255.96.190])
-        by mx.google.com with ESMTPS id d9sm15862ibb.19.2011.04.26.12.35.43
-        (version=SSLv3 cipher=OTHER);
-        Tue, 26 Apr 2011 12:35:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4DB70972.20308@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755682Ab1DZU23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 16:28:29 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:51691 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752047Ab1DZU22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 16:28:28 -0400
+Received: by wya21 with SMTP id 21so770437wya.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 13:28:26 -0700 (PDT)
+Received: by 10.216.184.129 with SMTP id s1mr5116827wem.32.1303849706484;
+        Tue, 26 Apr 2011 13:28:26 -0700 (PDT)
+Received: from localhost.localdomain (24-155-176-18.dyn.grandenetworks.net [24.155.176.18])
+        by mx.google.com with ESMTPS id l5sm42643wej.8.2011.04.26.13.28.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2011 13:28:25 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.rc2.4.g4d8b3
+In-Reply-To: <7vtydkddto.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172124>
 
-Ramsay Jones wrote:
+If bashcompinit has not already been autoloaded, do so
+automatically, as it is required to properly parse the
+git-completion file with ZSH.
 
-> --- a/t/t0081-line-buffer.sh
-> +++ b/t/t0081-line-buffer.sh
-> @@ -25,8 +25,7 @@ generate_tens_of_lines () {
->  		do
->  			echo "$line"
->  		done &&
-> -		: $((i = $i + 1)) ||
-> -		return
-> +		i=$(($i + 1))
->  	done
+Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
+---
+ Since I rebased the previous version, I didn't notice that some
+ effort had already gone into making git-completion.bash parsable
+ with ZSH.
+ 
+ I've therefore dropped everything from the previous patch, and
+ rather added some code to automatically do the required steps
+ for ZSH, should it not have been done already; as well as
+ simplified the 'documentation'.
+ 
+ My appologies for not more closely inspecting the recent changes
+ to the file.
+ 
+ contrib/completion/git-completion.bash |   19 +++++++++++--------
+ 1 files changed, 11 insertions(+), 8 deletions(-)
 
-This test is a mess.  Could you try the patch from the tip of
-
-	git://repo.or.cz/git/jrn.git svn-fe
-
-which just gets rid of it instead?
-
-Thanks for a reminder.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 840ae38..35d1c9b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1,6 +1,6 @@
+ #!bash
+ #
+-# bash completion support for core Git.
++# bash/zsh completion support for core Git.
+ #
+ # Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
+ # Conceptually based on gitcompletion (http://gitweb.hawaga.org.uk/).
+@@ -18,16 +18,12 @@
+ # To use these routines:
+ #
+ #    1) Copy this file to somewhere (e.g. ~/.git-completion.sh).
+-#    2) Added the following line to your .bashrc:
+-#        source ~/.git-completion.sh
+-#
+-#       Or, add the following lines to your .zshrc:
+-#        autoload bashcompinit
+-#        bashcompinit
++#    2) Added the following line to your .bashrc/.zshrc:
+ #        source ~/.git-completion.sh
+ #
+ #    3) Consider changing your PS1 to also show the current branch:
+-#        PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
++#         Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
++#         ZSH:  PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+ #
+ #       The argument to __git_ps1 will be displayed only if you
+ #       are currently in a git repository.  The %s token will be
+@@ -77,6 +73,13 @@
+ #       git@vger.kernel.org
+ #
+ 
++if [[ -n ${ZSH_VERSION-} ]]; then
++	if ! bashcompinit >/dev/null 2>&1; then
++		autoload -U bashcompinit
++		bashcompinit
++	fi
++fi
++
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+ *)   COMP_WORDBREAKS="$COMP_WORDBREAKS:"
+-- 
+1.7.5.rc2.4.g4d8b3
