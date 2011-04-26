@@ -1,69 +1,107 @@
-From: Valentin Haenel <valentin.haenel@gmx.de>
-Subject: [PATCHv2 2/2] git-svn.txt: small typeface improvements
-Date: Tue, 26 Apr 2011 13:34:19 +0200
-Message-ID: <1303817659-26541-3-git-send-email-valentin.haenel@gmx.de>
-References: <20110425210623.GB13953@dcvr.yhbt.net>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Valentin Haenel <valentin.haenel@gmx.de>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 13:52:18 2011
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Tue, 26 Apr 2011 14:09:04 +0200
+Message-ID: <BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org>
+	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
+	<20110120203840.GA11468@sigill.intra.peff.net>
+	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
+	<20110120215456.GB11468@sigill.intra.peff.net>
+	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
+	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
+	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 14:09:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEgoT-0004fp-Pd
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 13:52:18 +0200
+	id 1QEh4s-0004MY-6F
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 14:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754689Ab1DZLwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 07:52:13 -0400
-Received: from kudu.in-berlin.de ([192.109.42.123]:39293 "EHLO
-	kudu.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751598Ab1DZLwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 07:52:12 -0400
-Received: from kudu.in-berlin.de (localhost [127.0.0.1])
-	by kudu.in-berlin.de (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p3QBYb5T026630;
-	Tue, 26 Apr 2011 13:34:37 +0200
-Received: (from esc@localhost)
-	by kudu.in-berlin.de (8.14.3/8.14.3/Submit) id p3QBYbLV026629;
-	Tue, 26 Apr 2011 13:34:37 +0200
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <20110425210623.GB13953@dcvr.yhbt.net>
+	id S1751515Ab1DZMJI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2011 08:09:08 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41550 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837Ab1DZMJH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2011 08:09:07 -0400
+Received: by bwz15 with SMTP id 15so441445bwz.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 05:09:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GQH0vy5KQVmTqywKh+estV277dS9g6OvuZ/LZ1ETbjI=;
+        b=ocKhTIUn2WEbkjIxN/73Wyy0AbJ3ycwGZNRKGld49y6BQumIQSofgr16a92o8X5Mp6
+         pTbAihCqssOnRNsQh1/MDIgxcx4KSrIEPCy6JNsxvIVqJiXFwlFfsMzaBkWcMCeSZ9NC
+         cUNPphytg7nQ62kQpTdqmYSs4AoMn8fTyVR1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EfbnemWe4NzzvpXoghpboobwn5Yj01O0PGkFtpolG9AgC6tJUg82LYYpO84prJOhME
+         VPhsOmbUx9aClMObM8DjzpftWlshRSqV0ptWRPfa9ZF1OLB6GslnVQzImTay2ldgWrLR
+         LzrwbDe70PDYHl2oUDk+0U65raCh6ve131KNo=
+Received: by 10.204.84.137 with SMTP id j9mr607419bkl.120.1303819745419; Tue,
+ 26 Apr 2011 05:09:05 -0700 (PDT)
+Received: by 10.204.120.195 with HTTP; Tue, 26 Apr 2011 05:09:04 -0700 (PDT)
+In-Reply-To: <AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172089>
 
-Signed-off-by: Valentin Haenel <valentin.haenel@gmx.de>
-Acked-by: Eric Wong <normalperson@yhbt.net>
----
- Documentation/git-svn.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Can git have a bug tracker please?
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index ba8a95e..713e523 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -564,14 +564,14 @@ For 'branch' and 'tag', display the urls that will be used for copying when
- creating the branch or tag.
- 
- --use-log-author::
--	When retrieving svn commits into git (as part of fetch, rebase, or
--	dcommit operations), look for the first From: or Signed-off-by: line
-+	When retrieving svn commits into git (as part of 'fetch', 'rebase', or
-+	'dcommit' operations), look for the first `From:` or `Signed-off-by:` line
- 	in the log message and use that as the author string.
- --add-author-from::
- 	When committing to svn from git (as part of 'commit-diff', 'set-tree' or 'dcommit'
- 	operations), if the existing log message doesn't already have a
--	From: or Signed-off-by: line, append a From: line based on the
--	git commit's author string.  If you use this, then --use-log-author
-+	`From:` or `Signed-off-by:` line, append a `From:` line based on the
-+	git commit's author string.  If you use this, then `--use-log-author`
- 	will retrieve a valid author string for all commits.
- 
- 
--- 
-1.7.1
+This is another reminder to fix this bug which is otherwise untrackable=
+=2E
+
+Thanks,
+
+Steve.
+
+On Sun, Feb 20, 2011 at 2:17 PM, Stephen Kelly <steveire@gmail.com> wro=
+te:
+> bump.
+>
+> I don't think this issue was fixed, was it?
+>
+> (no need to put kdepim back in the cc list)
+>
+> On Sat, Jan 22, 2011 at 1:46 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Fri, Jan 21, 2011 at 7:37 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> I don't fully understand the issue, so excuse me if this is totall=
+y
+>>>> wrong, but wouldn't a rule like 'you can't create a branch for whi=
+ch
+>>>> there's already a symbolic ref' do the trick?
+>>>
+>>> But whose symbolic ref are you checking against? =A0Your own, or on=
+es in
+>>> somebody else's repository that you haven't recently updated from?
+>>
+>> The local ones. That means that somebody can't create a 'HEAD' branc=
+h
+>> locally, and can't push a 'HEAD' branch either, as the remote server
+>> would already have a 'HEAD' symbolic link. And actually, if for some
+>> reason I have a FOO_HEAD, and I fetch a branch called bob/FOO_HEAD,
+>> obviously the local symbolic ref without namespace should take
+>> precedence.
+>>
+>> --
+>> Felipe Contreras
+>>
+>
