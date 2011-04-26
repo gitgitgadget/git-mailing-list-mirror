@@ -1,54 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/6] --dirstat fixes, part 2
-Date: Mon, 25 Apr 2011 17:15:41 -0700
-Message-ID: <BANLkTi=sP3zu45R_s_3w-oMuMh1fGGv=vQ@mail.gmail.com>
-References: <BANLkTim9U4cOnV+5=Mp-2g_M6+JOiM5e7A@mail.gmail.com> <1303776102-9085-1-git-send-email-johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 02:16:12 2011
+From: Fraser Tweedale <frase@frase.id.au>
+Subject: [PATCH] gitweb: supply '-n' to gzip for identical output
+Date: Tue, 26 Apr 2011 11:32:00 +1000
+Message-ID: <1303781520-95861-1-git-send-email-frase@frase.id.au>
+Cc: Fraser Tweedale <frase@frase.id.au>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Apr 26 03:33:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEVwp-0003Zw-Qa
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 02:16:12 +0200
+	id 1QEX9J-0005e5-1S
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Apr 2011 03:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932459Ab1DZAQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2011 20:16:06 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51141 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932233Ab1DZAQF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2011 20:16:05 -0400
-Received: from mail-vw0-f46.google.com (mail-vw0-f46.google.com [209.85.212.46])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p3Q0G3qV007494
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Mon, 25 Apr 2011 17:16:04 -0700
-Received: by vws1 with SMTP id 1so103322vws.19
-        for <git@vger.kernel.org>; Mon, 25 Apr 2011 17:16:01 -0700 (PDT)
-Received: by 10.52.100.10 with SMTP id eu10mr133056vdb.208.1303776961084; Mon,
- 25 Apr 2011 17:16:01 -0700 (PDT)
-Received: by 10.52.114.202 with HTTP; Mon, 25 Apr 2011 17:15:41 -0700 (PDT)
-In-Reply-To: <1303776102-9085-1-git-send-email-johan@herland.net>
-X-Spam-Status: No, hits=-103.469 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S932739Ab1DZBdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2011 21:33:03 -0400
+Received: from 60-242-254-5.static.tpgi.com.au ([60.242.254.5]:52719 "EHLO
+	bacardi.wooloowin.frase.id.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932724Ab1DZBdB (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2011 21:33:01 -0400
+Received: from bacardi.wooloowin.frase.id.au (localhost [127.0.0.1])
+	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4) with ESMTP id p3Q1WoFL095908;
+	Tue, 26 Apr 2011 11:32:50 +1000 (EST)
+	(envelope-from Fraser@bacardi.wooloowin.frase.id.au)
+Received: (from Fraser@localhost)
+	by bacardi.wooloowin.frase.id.au (8.14.4/8.14.4/Submit) id p3Q1WmJZ095907;
+	Tue, 26 Apr 2011 11:32:48 +1000 (EST)
+	(envelope-from Fraser)
+X-Mailer: git-send-email 1.7.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172062>
 
-On Mon, Apr 25, 2011 at 5:01 PM, Johan Herland <johan@herland.net> wrote:
->
-> I finally found the time to re-roll the remaining dirstat fixes,
-> incorporating feedback from Linus and Junio in the surrounding thread.
+Without the '-n' ('--no-name') argument, gzip includes a timestamp in
+output which results in different files.  Important systems like FreeBSD
+ports and perhaps several others hash/checksum downloaded files to ensure
+integrity.  For projects that do not release official archives, gitweb's
+snapshot feature would be an excellent alternative, except that the files
+it produces are not identical.
 
-After a _very_ superficial walk-through of the patches, I have no real
-issues. Looks ok by me,
+Whilst '--no-name' is more descriptive, the long version of the flag is
+not supported on all systems.  In particular, OpenBSD does not appear to
+support it.
 
-                 Linus
+Supply '-n' to gzip to exclude timestamp from output and produce idential
+output every time.
+
+Signed-off-by: Fraser Tweedale <frase@frase.id.au>
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ee69ea6..f8db40a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -186,7 +186,7 @@ our %known_snapshot_formats = (
+ 		'type' => 'application/x-gzip',
+ 		'suffix' => '.tar.gz',
+ 		'format' => 'tar',
+-		'compressor' => ['gzip']},
++		'compressor' => ['gzip', '-n']},
+ 
+ 	'tbz2' => {
+ 		'display' => 'tar.bz2',
+-- 
+1.7.4.5
