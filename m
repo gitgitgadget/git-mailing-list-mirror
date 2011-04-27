@@ -1,131 +1,120 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] strbuf: allocate enough space when strbuf_setlen() is
- called first time
-Date: Wed, 27 Apr 2011 19:24:50 +0200
-Message-ID: <4DB85162.6000204@lsrfire.ath.cx>
-References: <1303820660-744-1-git-send-email-pclouds@gmail.com> <7vaafdexsp.fsf@alter.siamese.dyndns.org> <4DB738A1.8020706@lsrfire.ath.cx> <7vhb9kd6kp.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t/test-lib.sh: minor readability improvements
+Date: Wed, 27 Apr 2011 10:28:25 -0700
+Message-ID: <7vmxjb8uyu.fsf@alter.siamese.dyndns.org>
+References: <4DB810E1.3080102@debugon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 19:25:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mathias Lafeldt <misfire@debugon.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 19:28:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF8Um-0007qa-7i
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 19:25:48 +0200
+	id 1QF8Xa-00017D-QG
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 19:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756590Ab1D0RZn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 13:25:43 -0400
-Received: from india601.server4you.de ([85.25.151.105]:41228 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756236Ab1D0RZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 13:25:42 -0400
-Received: from [192.168.2.106] (p4FFDB579.dip.t-dialin.net [79.253.181.121])
-	by india601.server4you.de (Postfix) with ESMTPSA id 905212F8050;
-	Wed, 27 Apr 2011 19:25:40 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <7vhb9kd6kp.fsf@alter.siamese.dyndns.org>
+	id S1759675Ab1D0R2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 13:28:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55271 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759626Ab1D0R2h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 13:28:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 92E594A22;
+	Wed, 27 Apr 2011 13:30:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NIkIWRNoNdYluoABret9SjIpNX4=; b=xJaPy0
+	J7YhQ8/F34LxTi8JyNgLyiFKFmF/rFB7x4UCEPDZfjLVX6B9fP7kjVlFFn7UUSha
+	fSAgMqxbzJibopehE3GTH5TTxAZiEnCLWMhQ72xQgFnU16TsBpTJ2nv+N1mvqn6R
+	R28LfrEUtddO6QCSWBFIesQJITy3tvEqnaeHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WNrGCAAER7CvmwFxNPbSXwoYxlPbAPWL
+	JYWXQLbLBOFjn3zU+Hy4HFdwcwLms6fHx+6Yfrzx2zDH2WNjrq/fPx+uqAtP/kER
+	/wP+Pkjrr5OmWlPzHTAbE9kE/tAfT+mIXpR5F7dLRJapyF5IEBYP+AHf7x93fCWe
+	87iRp5xx2YE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 647204A20;
+	Wed, 27 Apr 2011 13:30:32 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 62B334A1A; Wed, 27 Apr 2011
+ 13:30:29 -0400 (EDT)
+In-Reply-To: <4DB810E1.3080102@debugon.org> (Mathias Lafeldt's message of
+ "Wed, 27 Apr 2011 14:49:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D9478BC-70F4-11E0-BD8F-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172250>
 
-Am 26.04.2011 23:51, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->=20
->> How about something like this instead?  The call to strbuf_grow() wa=
-s
->> introduced in a8f3e2219 when there was no strbuf_slopbuf buffer that
->> nowadays makes sure we always have a place to write an initial NUL.
->> We can take it out again now, simplifying the code and hopefully
->> avoiding future confusion.
->=20
-> Thanks; I think that makes sense.
->=20
-> It further may make sense to turn the assert into BUG() though, to cl=
-arify
-> what kind of programming error we are trying to catch.  Perhaps like:
->=20
->>   static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
->> +	assert(len<  (sb->alloc ? sb->alloc : 1));
->=20
-> 	if (len<  (sb->alloc ? sb->alloc : 1))
-> 		die("programming error: using strbuf_setlen() to extend a strbuf");
->=20
->>   	sb->len =3D len;
->>   	sb->buf[len] =3D '\0';
->>   }
+Mathias Lafeldt <misfire@debugon.org> writes:
 
-I like the idea, except the comparison needs to be inverted.
+> Tweak/apply parameter expansion. Also use here document to save
+> test results instead of appending each line with ">>".
 
-Compiled, but not tested.  The test suite takes too long and skips too
-many tests on my Windows box and I don't have any other machine
-available right now. :-/
+Thanks.  A few minor nits.
 
--- >8 --
-Subject: strbuf: clarify assertion in strbuf_setlen()
+> Signed-off-by: Mathias Lafeldt <misfire@debugon.org>
+> ---
+>  t/test-lib.sh |   18 ++++++++++--------
+>  1 files changed, 10 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index abc47f3..b30725f 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -24,7 +24,7 @@ done,*)
+>  *' --tee '*|*' --va'*)
+>  	mkdir -p test-results
+>  	BASE=test-results/$(basename "$0" .sh)
+> -	(GIT_TEST_TEE_STARTED=done ${SHELL-sh} "$0" "$@" 2>&1;
+> +	(GIT_TEST_TEE_STARTED=done ${SHELL-"sh"} "$0" "$@" 2>&1;
 
-Commit a8f3e2219 introduced the strbuf_grow() call to strbuf_setlen() t=
-o
-make ensure that there was at least one byte available to write the
-mandatory trailing NUL, even for previously unallocated strbufs.
+Looks unnecessary.  Superstition?
 
-Then b315c5c0 added strbuf_slopbuf for the same reason, only globally f=
-or
-all uses of strbufs.
+>  	 echo $? > $BASE.exit) | tee $BASE.out
+>  	test "$(cat $BASE.exit)" = 0
+>  	exit
+> @@ -575,7 +575,7 @@ test_external () {
+>  test_external_without_stderr () {
+>  	# The temporary file has no (and must have no) security
+>  	# implications.
+> -	tmp="$TMPDIR"; if [ -z "$tmp" ]; then tmp=/tmp; fi
+> +	tmp=${TMPDIR:-"/tmp"}
+>  	stderr="$tmp/git-external-stderr.$$.tmp"
+>  	test_external "$@" 4> "$stderr"
+>  	[ -f "$stderr" ] || error "Internal error: $stderr disappeared."
+> @@ -801,12 +801,14 @@ test_done () {
+>  		mkdir -p "$test_results_dir"
+>  		test_results_path="$test_results_dir/${0%.sh}-$$.counts"
+>  
+> -		echo "total $test_count" >> $test_results_path
+> -		echo "success $test_success" >> $test_results_path
+> -		echo "fixed $test_fixed" >> $test_results_path
+> -		echo "broken $test_broken" >> $test_results_path
+> -		echo "failed $test_failure" >> $test_results_path
+> -		echo "" >> $test_results_path
+> +		cat >> "$test_results_path" <<EOF
+> +total $test_count
+> +success $test_success
+> +fixed $test_fixed
+> +broken $test_broken
+> +failed $test_failure
+> +
+> +EOF
 
-Thus the strbuf_grow() call can be removed now.  This avoids readers of
-strbuf.h from mistakenly thinking that strbuf_setlen() can be used to
-extend a strbuf.
+It may probably be even easier to read if you indented the whole thing,
+using the dash before the here-doc marker, like so:
 
-The following assert() needs to be changed to cope with the fact that
-sb->alloc can now be zero, which is OK as long as len is also zero.  As
-suggested by Junio, use the chance to convert it to a die() with a shor=
-t
-explanatory message.  The pattern of 'die("BUG: ...")' is already used =
-in
-strbuf.c.
-
-This was the only assert() in strbuf.[ch], so assert.h doesn't have to =
-be
-included anymore either.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- strbuf.h |    7 ++-----
- 1 files changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/strbuf.h b/strbuf.h
-index 07060ce..9e6d9fa 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -3,8 +3,6 @@
-=20
- /* See Documentation/technical/api-strbuf.txt */
-=20
--#include <assert.h>
--
- extern char strbuf_slopbuf[];
- struct strbuf {
- 	size_t alloc;
-@@ -33,9 +31,8 @@ static inline size_t strbuf_avail(const struct strbuf=
- *sb) {
- extern void strbuf_grow(struct strbuf *, size_t);
-=20
- static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
--	if (!sb->alloc)
--		strbuf_grow(sb, 0);
--	assert(len < sb->alloc);
-+	if (len > (sb->alloc ? sb->alloc - 1 : 0))
-+		die("BUG: strbuf_setlen() beyond buffer");
- 	sb->len =3D len;
- 	sb->buf[len] =3D '\0';
- }
---=20
-1.7.5
+	cat >>"$test_results_path" <<-EOF
+	total $test_count
+        success $test_success
+        ...
+        EOF
