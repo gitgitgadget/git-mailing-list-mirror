@@ -1,120 +1,112 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 01:10:12 +0200
-Message-ID: <20110427231012.GA17807@elte.hu>
+Date: Wed, 27 Apr 2011 18:18:12 -0500
+Message-ID: <20110427231748.GA26632@elie>
 References: <20110427225114.GA16765@elte.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Peter Zijlstra <a.p.zijlstra@chello.nl>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?iso-8859-1?Q?Fr=E9d=E9ric?= Weisbecker <fweisbec@gmail.com>,
+	=?utf-8?B?RnLDqWTDqXJpYw==?= Weisbecker <fweisbec@gmail.com>,
 	Pekka Enberg <penberg@cs.helsinki.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:13:51 2011
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:18:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFDvY-00010L-U0
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 01:13:49 +0200
+	id 1QFE01-0003C2-0V
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 01:18:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760157Ab1D0XNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 19:13:44 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:51174 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757148Ab1D0XNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 19:13:43 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1QFDs7-0005q8-32
-	from <mingo@elte.hu>; Thu, 28 Apr 2011 01:10:20 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id B35543E250F; Thu, 28 Apr 2011 01:10:13 +0200 (CEST)
+	id S1757154Ab1D0XSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 19:18:20 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:60034 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755396Ab1D0XST (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 19:18:19 -0400
+Received: by iyb14 with SMTP id 14so1767805iyb.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 16:18:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=4wTvBVIt9NeR+Hts0eE3rcq+GtCbbq7grb2U6H4DdPo=;
+        b=mgHry5iN7jOgdUEZw3fuZNoJocJxiUFHC0ndfj5kbxBpdkEYuKR/9fcb8uZ12JLaEL
+         WRkG3u5pcxYlYfNxDQxNBIlPr4ptllX/RgcmAZLm3j8XNGKtrcSYOOAO1ZZKz/iRNtcO
+         WWMRgp7mR3CbxA5PxnRUFnDW+mC7QzJDhfTco=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=SDHchVWkqrMBXSfpW5ZWjmUSHo1HNN/TucAEHDC70zh14QArAw79/mcRRJBEeshkaE
+         m2PlD88cexYrubcmSm3LZSr64FdXVARJcFBDYJ3DZJgWIzyq/pbB3Wa5TM2f+a97o2jh
+         msU/BT1hx50YsBFqQzdFvHcBusbaGZ2bw/b0g=
+Received: by 10.42.162.10 with SMTP id v10mr2658526icx.8.1303946298595;
+        Wed, 27 Apr 2011 16:18:18 -0700 (PDT)
+Received: from elie (adsl-69-209-61-200.dsl.chcgil.sbcglobal.net [69.209.61.200])
+        by mx.google.com with ESMTPS id a8sm469406ibg.65.2011.04.27.16.18.16
+        (version=SSLv3 cipher=OTHER);
+        Wed, 27 Apr 2011 16:18:17 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20110427225114.GA16765@elte.hu>
-User-Agent: Mutt/1.5.20 (2009-08-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172289>
 
+Ingo Molnar wrote:
 
-* Ingo Molnar <mingo@elte.hu> wrote:
+> Most overhead is in hashcmp(), which uses memcmp(), which falls back to 
+> assembly string operations.
+>
+> But we know that hashcmp() compares hashes, which if they do not match, the first byte
+> will differ in 99% of the cases.
+>
+> So i tried the patch below: instead of relying on GCC putting in the string 
+> ops, i used an open-coded loop for this relatively short comparison, which does 
+> not go beyond the first byte in 99% of the cases.
+[...]
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -675,14 +675,33 @@ extern char *sha1_pack_name(const unsigned char *sha1);
+[...]
+> +static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+>  {
+> -	return memcmp(sha1, sha2, 20);
+> +	int i;
+> +
+> +	for (i = 0; i < 20; i++, sha1++, sha2++) {
 
-> I suspect 'git fsck' got faster as well, but i have not measured that.
+Hm.  This would be very sensitive to the compiler, since a too-smart
+optimizer could take this loop and rewrite it back to memcmp!  So I
+wonder if it's possible to convey this to the compiler more precisely:
 
-It got faster a bit:
+	return memcmp_probably_differs_early(sha1, sha2, 20);
 
- #
- # Before:
- #
+E.g., how would something like
 
- $ perf stat --sync --repeat 5 ./git fsck >/dev/null
+	const unsigned int *start1 = (const unsigned int *) sha1;
+	const unsigned int *start2 = (const unsigned int *) sha2;
 
- Performance counter stats for './git fsck' (5 runs):
+	if (likely(*start1 != *start2)) {
+		if (*start1 < *start2)
+			return -1;
+		return +1;
+	}
+	return memcmp(sha1 + 4, sha2 + 4, 16);
 
-      32011.163574 task-clock               #    0.998 CPUs utilized            ( +-  0.08% )
-                46 context-switches         #    0.000 M/sec                    ( +-  2.77% )
-                 0 CPU-migrations           #    0.000 M/sec                    ( +-  0.00% )
-            60,279 page-faults              #    0.002 M/sec                    ( +- 12.21% )
-   102,597,312,322 cycles                   #    3.205 GHz                      ( +-  0.08% )
-    27,303,254,781 stalled-cycles           #   26.61% of all cycles are idle   ( +-  2.51% )
-   152,359,589,474 instructions             #    1.49  insns per cycle        
-                                            #    0.18  stalled cycles per insn  ( +-  0.03% )
-    13,225,673,730 branches                 #  413.158 M/sec                    ( +-  0.06% )
-     1,226,749,384 branch-misses            #    9.28% of all branches          ( +-  0.08% )
+perform?
 
-       32.083499222  seconds time elapsed  ( +-  0.07% )
+I suspect we don't have to worry about endianness as long as hashcmp
+yields a consistent ordering, but I haven't checked.
 
- #
- # After:
- #
+Thanks, that was interesting.
 
- Performance counter stats for './git fsck' (5 runs):
-
-      31605.868825 task-clock               #    0.998 CPUs utilized            ( +-  0.08% )
-                42 context-switches         #    0.000 M/sec                    ( +-  3.92% )
-                 0 CPU-migrations           #    0.000 M/sec                    ( +-100.00% )
-            62,979 page-faults              #    0.002 M/sec                    ( +- 14.72% )
-   101,297,181,916 cycles                   #    3.205 GHz                      ( +-  0.08% )
-    27,173,614,721 stalled-cycles           #   26.83% of all cycles are idle   ( +-  0.49% )
-   155,074,859,385 instructions             #    1.53  insns per cycle        
-                                            #    0.18  stalled cycles per insn  ( +-  0.01% )
-    14,132,018,558 branches                 #  447.133 M/sec                    ( +-  0.02% )
-     1,207,054,592 branch-misses            #    8.54% of all branches          ( +-  0.03% )
-
-       31.675135938  seconds time elapsed  ( +-  0.08% )
-
-so there's a +1.3% speedup.
-
-But git fsck stalls are dominated by libz and other external libraries:
-
-# Events: 30K stalled-cycles
-#
-# Overhead  Command          Shared Object                        Symbol
-# ........  .......  .....................  ............................
-#
-    36.13%      git  libz.so.1.2.5          [.] 0x90be          
-    18.27%      git  libc-2.13.90.so        [.] __memcpy_ssse3_back
-    13.68%      git  libcrypto.so.1.0.0d    [.] sha1_block_data_order
-     5.85%      git  libz.so.1.2.5          [.] inflate
-     4.69%      git  git                    [.] lookup_object
-     4.58%      git  libz.so.1.2.5          [.] adler32
-     4.30%      git  libz.so.1.2.5          [.] 0xc280          
-     2.19%      git  libc-2.13.90.so        [.] _int_malloc
-
-So those dominate execution time.
-
-	Ingo
+Regards,
+Jonathan
