@@ -1,244 +1,105 @@
-From: =?us-ascii?B?PT9VVEYtOD9xP01vdGllanVzPTIwSmFrPUM1PUExdHlzPz0=?= 
-	<desired.mta@gmail.com>
-Subject: [PATCH/RFC] inconsistent error messages for translation
-Date: Wed, 27 Apr 2011 13:22:50 +0100
-Message-ID: <20110427122250.GA10919@jakstys.lt>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Wed, 27 Apr 2011 15:26:00 +0300
+Message-ID: <BANLkTi=pPtsRMbJpgqMZy0Qq+HqT0uR_wQ@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org>
+	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
+	<20110120203840.GA11468@sigill.intra.peff.net>
+	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
+	<20110120215456.GB11468@sigill.intra.peff.net>
+	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
+	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
+	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+	<BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
+	<BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+	<BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com>
+	<BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
+	<BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com>
+	<BANLkTi=-d+8ynv5NQ1SZA3V7PMiGiHauCw@mail.gmail.com>
+	<BANLkTikCQkt+e-kA2hbtMh+OFqrrZHt-NQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 14:23:02 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 14:26:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF3lk-0004SL-BA
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 14:23:00 +0200
+	id 1QF3on-0006LV-HS
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 14:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759013Ab1D0MWz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 08:22:55 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:36378 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756221Ab1D0MWy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 08:22:54 -0400
-Received: by wwa36 with SMTP id 36so1818215wwa.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 05:22:53 -0700 (PDT)
+	id S1757548Ab1D0M0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 08:26:04 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45031 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756247Ab1D0M0C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 08:26:02 -0400
+Received: by fxm17 with SMTP id 17so1074757fxm.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 05:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :user-agent;
-        bh=apbT+tgG3eHpL0YqH7////DmZMr9OKxW4gpsINre4mE=;
-        b=wVPfXVSCJy39XqC8NWSxEB03USJMLjXdzCnr2ZQEtFFUL8ia4fCTJ4TQCGCbbo0/48
-         eGdt905wo8ZaHllaRN/iC1iwJfiJ/tudx74dEEUCMSPuVIhKJjek4RmYj+etTUjSdCI/
-         DOwp+cut3yqKwg/MCRWCcIrDN5KMsqgU8QusE=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=pr68t8v8Nop4ifjdxic5csj5KUfaGpYbQQMFauw/JTc=;
+        b=Kz2pVQWPYmw8XIqby542BSYDjNoLZlrsQKC/iBjkRHlYAzlerAT0IpnkWO/+OAyuO3
+         wlOiDwBYIN0CoAxGFynkSsANdaUbV6NLKX5vja58bZaRugMEu48xB9sL/ymQPYkHypOA
+         RfnCOO7IFzr60+jCOfNFgQhh/jNm2D8JLmgUo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=KQgiR3Wpfv0fgLStq6xWKpx4ZFYXdSwaziuco4GFppgYeanP2Uz43XAOwfXHNcYVMu
-         ifbeFurqoIwyWj20KiV7cexxtcoB0fLWF94gKebnWC3jeHXerYU26a5o5gtq4DKa7jLr
-         uogd0kuDV0rXL6tNG4cdExWVxtAq0RnG0JT9A=
-Received: by 10.227.130.78 with SMTP id r14mr2101460wbs.101.1303906972993;
-        Wed, 27 Apr 2011 05:22:52 -0700 (PDT)
-Received: from localhost ([109.246.247.245])
-        by mx.google.com with ESMTPS id y29sm424529wbd.55.2011.04.27.05.22.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Apr 2011 05:22:52 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=PNyl/bn6g3JsKPdQTII5hzqKtY6OrwAYknjNV9xyUHyh6YNfXQHBWiYRgwV1d8WlHn
+         PS7UIYrPWXE0xPF24WuT0uUecTxwx8qfsgDMwdEsfhO0hY6HuadGhqffRai0Y7vqTThh
+         U0PQITqbDwZOqqXQwfgM5pxqmIhf65/jADwoI=
+Received: by 10.223.87.215 with SMTP id x23mr2298711fal.32.1303907160788; Wed,
+ 27 Apr 2011 05:26:00 -0700 (PDT)
+Received: by 10.223.74.130 with HTTP; Wed, 27 Apr 2011 05:26:00 -0700 (PDT)
+In-Reply-To: <BANLkTikCQkt+e-kA2hbtMh+OFqrrZHt-NQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172231>
 
-There are lots of variants of the same message:
+On Wed, Apr 27, 2011 at 2:37 PM, Stephen Kelly <steveire@gmail.com> wrote:
+> It is not expected.
+>
+> Alices repo is fubar'd. gitk doesn't work. The info about master being
+> ahead of remote etc is wrong or git push tells me it worked, though it
+> doesn't seem to.
 
-msgid "cannot stat '%s'"
-msgid "failed to stat '%s'"
-msgid "failed to stat %s\n"
-msgid "Could not stat '%s'"
+gitk --all works fine, and gitk show a precise warning explaining the problem.
 
-This patch makes them all "Could not stat %s" and "Could not stat '%s'\=
-n".
-That makes .po file shorter.
+Also, the 'git push' worked fine. Perhaps what you didn't expect is
+that when push.default=current, instead of pushing the current branch,
+the 'HEAD' branch is being pushed.
 
-Also same trivial fix:
--		return error(_("path '%s' does not have all three versions"),
-+		return error(_("path '%s' does not have all 3 versions"),
+So the test can be simplified to:
 
-Signed-off-by: Motiejus Jak=C5=A1tys <desired.mta@gmail.com>
----
+mkdir remote
+cd remote/
+git init --bare
+cd ../
+git clone remote/ alice
+cd alice/
+echo test >> file
+git add file
+git commit -am w
+git push origin master
+echo test >> file
+git commit -am w
+git branch HEAD
+git push origin HEAD
+git -c push.default=current push
+git diff master origin/master
 
-DRY:
+And the diff should be empty. With that in mind, it should be easy to
+create a test script that does something similar, and add it to the
+suite.
 
-#: builtin/fetch.c:282
-sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : '-',
-    TRANSPORT_SUMMARY_WIDTH, _("[tag update]"), REFCOL_WIDTH, remote,
-    pretty_ref, r ? _("  (unable to update local ref)") : "");
-
-#: builtin/fetch.c:338
-sprintf(display, "%c %-*s %-*s -> %s  (%s)", r ? '!' : '+',
-    TRANSPORT_SUMMARY_WIDTH, quickref, REFCOL_WIDTH, remote,
-    pretty_ref,
-    r ? _("unable to update local ref") : _("forced update"));
-
-It produces
-#: builtin/fetch.c:282 builtin/fetch.c:307 builtin/fetch.c:323
-msgid "  (unable to update local ref)"
-#: builtin/fetch.c:338
-msgid "unable to update local ref"
-
-I would like to have one string to translate instead of two.
-
-How I would solve this:
-// or similar, unsure if this will work
-char *without_brackets =3D _("unable to update local ref");
-char *with_brackets;
-snprintf(with_brackets, 20, "  (%s)", trans);
-
-// -- code --
-    pretty_ref, r ? with_brackets : "");
-
-It introduces 2 more variables. Is there a more elegant way?
-
-Motiejus
-
- builtin/checkout.c |    2 +-
- builtin/grep.c     |    2 +-
- builtin/init-db.c  |   24 ++++++++++++------------
- 3 files changed, 14 insertions(+), 14 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index eece5d6..417f03d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -118,7 +118,7 @@ static int check_all_stages(struct cache_entry *ce,=
- int pos)
- 	    ce_stage(active_cache[pos+1]) !=3D 2 ||
- 	    strcmp(active_cache[pos+2]->name, ce->name) ||
- 	    ce_stage(active_cache[pos+2]) !=3D 3)
--		return error(_("path '%s' does not have all three versions"),
-+		return error(_("path '%s' does not have all 3 versions"),
- 			     ce->name);
- 	return 0;
- }
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 10a1f65..24d19b8 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -413,7 +413,7 @@ static void *load_file(const char *filename, size_t=
- *sz)
- 	if (lstat(filename, &st) < 0) {
- 	err_ret:
- 		if (errno !=3D ENOENT)
--			error(_("'%s': %s"), filename, strerror(errno));
-+			error("'%s': %s", filename, strerror(errno));
- 		return NULL;
- 	}
- 	if (!S_ISREG(st.st_mode))
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index b7370d9..f1bee61 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -64,20 +64,20 @@ static void copy_templates_1(char *path, int basele=
-n,
- 		memcpy(template + template_baselen, de->d_name, namelen+1);
- 		if (lstat(path, &st_git)) {
- 			if (errno !=3D ENOENT)
--				die_errno(_("cannot stat '%s'"), path);
-+				die_errno(_("Could not stat '%s'"), path);
- 		}
- 		else
- 			exists =3D 1;
-=20
- 		if (lstat(template, &st_template))
--			die_errno(_("cannot stat template '%s'"), template);
-+			die_errno(_("Could not stat template '%s'"), template);
-=20
- 		if (S_ISDIR(st_template.st_mode)) {
- 			DIR *subdir =3D opendir(template);
- 			int baselen_sub =3D baselen + namelen;
- 			int template_baselen_sub =3D template_baselen + namelen;
- 			if (!subdir)
--				die_errno(_("cannot opendir '%s'"), template);
-+				die_errno(_("Could not opendir '%s'"), template);
- 			path[baselen_sub++] =3D
- 				template[template_baselen_sub++] =3D '/';
- 			path[baselen_sub] =3D
-@@ -94,16 +94,16 @@ static void copy_templates_1(char *path, int basele=
-n,
- 			int len;
- 			len =3D readlink(template, lnk, sizeof(lnk));
- 			if (len < 0)
--				die_errno(_("cannot readlink '%s'"), template);
-+				die_errno(_("Could not readlink '%s'"), template);
- 			if (sizeof(lnk) <=3D len)
- 				die(_("insanely long symlink %s"), template);
- 			lnk[len] =3D 0;
- 			if (symlink(lnk, path))
--				die_errno(_("cannot symlink '%s' '%s'"), lnk, path);
-+				die_errno(_("Could not symlink '%s' '%s'"), lnk, path);
- 		}
- 		else if (S_ISREG(st_template.st_mode)) {
- 			if (copy_file(path, template, st_template.st_mode))
--				die_errno(_("cannot copy '%s' to '%s'"), template,
-+				die_errno(_("Could not copy '%s' to '%s'"), template,
- 					  path);
- 		}
- 		else
-@@ -437,7 +437,7 @@ static int guess_repository_type(const char *git_di=
-r)
- 	if (!strcmp(".", git_dir))
- 		return 1;
- 	if (!getcwd(cwd, sizeof(cwd)))
--		die_errno(_("cannot tell cwd"));
-+		die_errno(_("Could not tell cwd"));
- 	if (!strcmp(git_dir, cwd))
- 		return 1;
- 	/*
-@@ -518,18 +518,18 @@ int cmd_init_db(int argc, const char **argv, cons=
-t char *prefix)
- 					errno =3D EEXIST;
- 					/* fallthru */
- 				case -1:
--					die_errno(_("cannot mkdir %s"), argv[0]);
-+					die_errno(_("Could not mkdir %s"), argv[0]);
- 					break;
- 				default:
- 					break;
- 				}
- 				shared_repository =3D saved;
- 				if (mkdir(argv[0], 0777) < 0)
--					die_errno(_("cannot mkdir %s"), argv[0]);
-+					die_errno(_("Could not mkdir %s"), argv[0]);
- 				mkdir_tried =3D 1;
- 				goto retry;
- 			}
--			die_errno(_("cannot chdir to %s"), argv[0]);
-+			die_errno(_("Could not chdir to %s"), argv[0]);
- 		}
- 	} else if (0 < argc) {
- 		usage(init_db_usage[0]);
-@@ -575,14 +575,14 @@ int cmd_init_db(int argc, const char **argv, cons=
-t char *prefix)
- 		if (!git_work_tree_cfg) {
- 			git_work_tree_cfg =3D xcalloc(PATH_MAX, 1);
- 			if (!getcwd(git_work_tree_cfg, PATH_MAX))
--				die_errno (_("Cannot access current working directory"));
-+				die_errno (_("Could not access current working directory"));
- 		}
- 		if (work_tree)
- 			set_git_work_tree(real_path(work_tree));
- 		else
- 			set_git_work_tree(git_work_tree_cfg);
- 		if (access(get_git_work_tree(), X_OK))
--			die_errno (_("Cannot access work tree '%s'"),
-+			die_errno (_("Could not access work tree '%s'"),
- 				   get_git_work_tree());
- 	}
- 	else {
---=20
-1.7.2.5
+-- 
+Felipe Contreras
