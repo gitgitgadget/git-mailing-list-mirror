@@ -1,85 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Tue, 26 Apr 2011 22:58:25 -0500
-Message-ID: <20110427035825.GA4546@elie>
-References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] Use floating point for --dirstat percentages
+Date: Tue, 26 Apr 2011 21:42:25 -0700
+Message-ID: <7vipu0b8zy.fsf@alter.siamese.dyndns.org>
+References: <BANLkTim9U4cOnV+5=Mp-2g_M6+JOiM5e7A@mail.gmail.com>
+ <1303776102-9085-6-git-send-email-johan@herland.net>
+ <7vpqo9ez03.fsf@alter.siamese.dyndns.org>
+ <201104270402.29085.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 06:07:41 2011
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 06:42:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEw2P-0008AX-8s
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 06:07:41 +0200
+	id 1QEwaW-00065d-1I
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 06:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754234Ab1D0D6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 23:58:32 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:63152 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752188Ab1D0D6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 23:58:32 -0400
-Received: by ywj3 with SMTP id 3so487039ywj.19
-        for <git@vger.kernel.org>; Tue, 26 Apr 2011 20:58:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=CQKUUGW5s/8Iyo2IPUvNeKS0P81Chs4ACz7e/n4N4/E=;
-        b=ERizlqp+wlNH/M9GvriLT8K2YQNyYaRHGhf8YIvsQergSX50UOdN2/1JjmOai6JAAk
-         L5888AC6dx2UnPT0V3TC2gobEJfS9JX4YM3q8Cs1GKSxb3UguJUx6Eolnr4D6BQDPOv8
-         5yYQPCOFJdb1aQ+ykNOs0MqY3yO/y3YPKwt3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=uRSzUOvlGRHSZvDtfHzkHQSOoDewXaRm9rmD+kKMHHWr3T0DDJSq7PQB4QBQRjqEi8
-         Hnq+TY8w8E9Wt4fnMLKO8i0hpNq5DcrsjNUpg7wJ8BAy9Ct3CCt/nyQ3cjiy0ofgO6Or
-         ami0Y0AtmOjVRjkvX+9RxvKMOsHJKmIJ5cHmc=
-Received: by 10.91.68.35 with SMTP id v35mr1436021agk.98.1303876711201;
-        Tue, 26 Apr 2011 20:58:31 -0700 (PDT)
-Received: from elie ([68.255.96.190])
-        by mx.google.com with ESMTPS id e9sm414873ann.50.2011.04.26.20.58.29
-        (version=SSLv3 cipher=OTHER);
-        Tue, 26 Apr 2011 20:58:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751870Ab1D0Emi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 00:42:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50696 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751099Ab1D0Emh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 00:42:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D945859F0;
+	Wed, 27 Apr 2011 00:44:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=d7nj8Iq3+ReHYSjKgljEHUx8X38=; b=ALnRBU
+	bBrpjtULQOeFffkqLgMs2dfX5tilzyHGkNJxFLlbz+SgDR+jktgZ7OF1j078KNHL
+	2SQuc2HiRAOWwOf+mFD4aFw7krzo2oqjYHjrE0zhEyi+XbkkMPHBaES9AXVK+Msj
+	wqapf5Xg07+usRKMlNmoln3+S5z8g0o6AJX0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Om1XKoXSbOoBjpNS7xrM0N6ttOlAIJQ7
+	TnChq0zsrdMBbIET3+S0WDhorEeDgmpBJlm0LlR6dVkLGJo0GSBQu2tXrguW3ArC
+	rFVOPK48oSKzewFU0PfX3KPQ+mbw0ly+GSRHo+yxJpzwsCCh+NxQwhGop9FcdoSY
+	knVv3bj+sls=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A388159EB;
+	Wed, 27 Apr 2011 00:44:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7E9C659E9; Wed, 27 Apr 2011
+ 00:44:30 -0400 (EDT)
+In-Reply-To: <201104270402.29085.johan@herland.net> (Johan Herland's message
+ of "Wed, 27 Apr 2011 04:02:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0CA15972-7089-11E0-8E45-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172163>
 
-Hi Jon,
+Johan Herland <johan@herland.net> writes:
 
-Jon Seymour wrote:
-
-> Has anyone ever given consideration to git supporting a plugin
-> architecture for git extensions?
+> On Tuesday 26 April 2011, Junio C Hamano wrote:
+>> Johan Herland <johan@herland.net> writes:
+>> > Allow specifying --dirstat cut-off percentage as a floating point
+>> > number.
+>> > 
+>> > When printing the dirstat output, floating point numbers are presented
+>> > in rounded form (as opposed to truncated).
+>> 
+>> Why isn't it sufficient to change
+>> 
+>> 	permille = this_dir * 1000 / changed
+>> 
+>> to
+>> 
+>> 	permille = (this_dir * 2000 + changed) / (changed * 2)
+>> 
+>> or something?  If rounding is the only issue that bothers you (I admit
+>> that it does bother me, now that you brought it up), that is.
 >
-> The idea would be to provide a consistent way to install, and address
-> extensions to the core git functionality in a manner that does not
-> require the extension to actually be integrated into the git core.
+> Actually, rounding doesn't bother me at all (or rather, I don't really care 
+> if we round or truncate, as long as we're consistent).
 
-I haven't looked into 'git work' yet, but for my own private tweaks,
-two mechanisms have sufficed:
+If that is the case, I would rather not see us use floating point for
+this.
 
- * adding a program named git-foo to the $PATH introduces a
-   'git foo' command.  For the git command look and feel, scripts
-   tend to start with
-
-	. "$(git --exec-path)"/git-sh-setup
-
-   (see git-sh-setup(1) for details).
-
- * various existing git commands can have their behavior modified
-   through configuration and hooks.
-
-Does 'git work' require changing the behavior of existing commands,
-and if so, are there hooks that could be introduced to help in doing
-that?
+I have used "#define MAX_SCORE 60000.0" to sneakily run rename similarity
+score in floating point, feeling ashamed of it, and have been meaning to
+fix that for quite a long time, but other than that, I do not think we
+have anything that uses float.
