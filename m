@@ -1,82 +1,103 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Wed, 27 Apr 2011 16:16:36 -0400
-Message-ID: <1303935396.25134.79.camel@drew-northup.unet.maine.edu>
-References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
-	 <4DB80747.8080401@op5.se>
-	 <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
-	 <4DB82D90.6060200@op5.se> <7vbozr8uo8.fsf@alter.siamese.dyndns.org>
-	 <7vpqo77dlr.fsf@alter.siamese.dyndns.org>
-	 <1303930175.25134.38.camel@drew-northup.unet.maine.edu>
-	 <20110427194233.GA16717@gnu.kitenet.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/1] Documentation/git-filter-branch: add --index-filter
+ example
+Date: Wed, 27 Apr 2011 22:32:00 +0200
+Message-ID: <4DB87D40.9090302@kdbg.org>
+References: <1303927684-6513-1-git-send-email-michael.ocleirigh@rivulet.ca> <1303927684-6513-2-git-send-email-michael.ocleirigh@rivulet.ca>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:16:54 2011
+Cc: git@vger.kernel.org
+To: Michael O'Cleirigh <michael.ocleirigh@rivulet.ca>
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:32:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFBAL-0004uB-9V
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 22:16:53 +0200
+	id 1QFBP8-0005Z3-R7
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 22:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755680Ab1D0UQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 16:16:47 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:54710 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752913Ab1D0UQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 16:16:46 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3RKGhbn015934
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 27 Apr 2011 16:16:43 -0400
-In-Reply-To: <20110427194233.GA16717@gnu.kitenet.net>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p3RKGhbn015934
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1304540203.4987@tb4jnYbP2+l6bPcn/5g/8w
+	id S1756920Ab1D0UcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 16:32:04 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:1876 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755722Ab1D0UcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 16:32:03 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 04A6C13005A;
+	Wed, 27 Apr 2011 22:32:00 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 81A1C19F35B;
+	Wed, 27 Apr 2011 22:32:00 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.14) Gecko/20110221 SUSE/3.1.8 Thunderbird/3.1.8
+In-Reply-To: <1303927684-6513-2-git-send-email-michael.ocleirigh@rivulet.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172269>
 
+I like the example, particularly because it shows that it is not
+necessary to start off with index's content in an --index-filter, and
+that the index can be replaced with read-tree -i, i.e., GIT_INDEX_FILE
+juggling is not necessary for some tasks.
 
-On Wed, 2011-04-27 at 15:42 -0400, Joey Hess wrote:
-> Drew Northup wrote:
-> > I was just thinking of that, and for hoots and hollers I
-> > copied /usr/share/man/man1/git-am.1.gz
-> > to /usr/share/man/man1/git-amp.1.gz and tried "git help amp" on it.
-> > 
-> > 	[dnorthup@drew-northup ~]$ git help amp
-> > 	No manual entry for gitamp
-> > 
-> > So, that doesn't work. I haven't checked yet how Git "knows" what valid
-> > pages are available for "git help" but just putting another file in the
-> > same directory as the others didn't do the job (at least not on my
-> > workstation).
+Am 27.04.2011 20:08, schrieb Michael O'Cleirigh:
+> Added an example using git ls-tree on the $GIT_COMMIT and then filtering
+> what should remain in the history using egrep.
 > 
-> If git-amp is available in $PATH, 'git help amp' runs 'man git-amp'.
-> Otherwise, it runs 'man gitamp'.
+> This allows multiple paths accross history to be retained when filtering a branch.
 
-That's what I thought too, but it didn't work! (<still scratching head
-here>) I'll have to try a couple of other ways to break it later on.
+Sign-off is missing. Please keep lines well below 75 characters. Write
+'Add an example...' rather than 'Added an example...'.
 
-> Tools like autoconf etc already know how to install man pages into the
-> right places. I don't see the need for any additional support for git
-> here.
+> ---
+>  Documentation/git-filter-branch.txt |   13 +++++++++++++
+>  1 files changed, 13 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+> index 9dc1f2a..e80bc01 100644
+> --- a/Documentation/git-filter-branch.txt
+> +++ b/Documentation/git-filter-branch.txt
+> @@ -248,6 +248,19 @@ To set a commit (which typically is at the tip of another
+>  history) to be the parent of the current initial commit, in
+>  order to paste the other history behind the current history:
+>  
+> +-----------------------------------------------------------------------------------------------------------------------------------
+> +git filter-branch --prune-empty --index-filter 'git ls-tree $GIT_COMMIT | egrep \
+> +"(top-dir-A|top-dir-B|consolidated-dir-C)" | git mktree | xargs git read-tree -i -m'
+> +-----------------------------------------------------------------------------------------------------------------------------------
+> +
+> +The --subdirectory-filter works great when all commits of interest have
+> +that path but sometimes you have a history that contains an irregular 
+> +structure. i.e. that was reorganized at some point and you would like to 
+> +keep the prior history.
+> +
+> +For each commit the top-dir-A, top-dir-B and consolidated-dir-C paths (if they exist)
+> +are kept (and everything else discarded). 
+> +
+>  -------------------------------------------------------------------
+>  git filter-branch --parent-filter 'sed "s/^\$/-p <graft-id>/"' HEAD
+>  -------------------------------------------------------------------
 
-I'm not saying there should be--in fact quite the opposite.
+This places the new text in the middle of another example, doesn't it?
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+The prefered style of examples to give motivation first, then the
+example command, then a description of command details. I would drop the
+sentence "i.e. ... was reoranized... history" because it does not add
+value for the reader (I can think of other equally or even more likely
+reason why the interesting path structure is irregular).
+
+The example looks better when it is broken into more lines, e.g. like this:
+
+-----------------------------------------------------------
+git filter-branch --prune-empty --index-filter '
+		git ls-tree $GIT_COMMIT |
+		egrep "(top-dir-A|top-dir-B|other-dir-C)" |
+ 		git mktree | xargs git read-tree -i -m'
+-----------------------------------------------------------
+
+And the dash lines are just as long as necessary.
+
+-- Hannes
