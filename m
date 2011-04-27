@@ -1,90 +1,107 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFC/PATCH 2/2] branch: introduce --list argument
-Date: Wed, 27 Apr 2011 14:15:19 +0200
-Message-ID: <90570cc5b04bf1f73833f365dc58a3d5ae200a21.1303906496.git.git@drmicha.warpmail.net>
+Subject: [RFC/PATCH 1/2] branch: allow pattern arguments
+Date: Wed, 27 Apr 2011 14:15:18 +0200
+Message-ID: <2d9a4893bd2ac8a402526c9876fa1a15f7cd8191.1303906496.git.git@drmicha.warpmail.net>
 References: <cover.1303906496.git.git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 14:15:31 2011
+X-From: git-owner@vger.kernel.org Wed Apr 27 14:15:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF3eV-0000XD-4A
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 14:15:31 +0200
+	id 1QF3eU-0000XD-JB
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 14:15:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140Ab1D0MP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 08:15:26 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:43870 "EHLO
+	id S1758928Ab1D0MPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 08:15:25 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50649 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932071Ab1D0MPZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 08:15:25 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0E11620D25
-	for <git@vger.kernel.org>; Wed, 27 Apr 2011 08:15:25 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 27 Apr 2011 08:15:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id:in-reply-to:references; s=smtpout; bh=Dwo03YYqleLYSUqob575FkfDy34=; b=NVISDur+GcfuxsH54ngkuDKpcQj8DH9mG6+Zp1zoU021CmG1QVXZr1m1K4EnBy4GWXR8CmLIo7wqIM3uznLjphWHQw9rw4y3o3Jq54SYd2r+TWeh+enR0Ow7B2cqhDoaQC5/Hg4gmEHYfV5YFGB5Gp73842mI7lDCHvXSJdHpeM=
-X-Sasl-enc: 9IFeUQNcndoumb899h8qOcWLWL9Ht9J997wBU/44sTZ5 1303906524
+	by vger.kernel.org with ESMTP id S1758821Ab1D0MPX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 08:15:23 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3A0C620D31
+	for <git@vger.kernel.org>; Wed, 27 Apr 2011 08:15:23 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute6.internal (MEProxy); Wed, 27 Apr 2011 08:15:23 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id:in-reply-to:references; s=smtpout; bh=bzqwbynhEA5tBK3viKyZKFwovMI=; b=bUXtEKZgCJBlhJGG+ug2DDH40FCWEc0BrBbOSHj6zudaAUtsETNqsvkssWMrHw3gOduZlH5MAtqOVfalkA9NnOHXsR0JhSQt9eXPLfLbhotpEpdvQxPLbxIUmB49aOPP3cU2VMVapWRNj6rCRBwOUjyqpgCyFacTc6dRep85rl4=
+X-Sasl-enc: wokGBdvvwIJxy50wMvvjmfdLgsIwZ3Y7BhsWgWwTfFlZ 1303906522
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 82166448947;
-	Wed, 27 Apr 2011 08:15:24 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 90B46400F0D;
+	Wed, 27 Apr 2011 08:15:22 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.270.gafca7
 In-Reply-To: <cover.1303906496.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172228>
 
-Currently, there is no way to invoke the list mode with a pattern
-because this is interpreted as branch creation.
-
-Introduce a --list argument which invokes the list mode.
+Allow pattern arguments for the list mode just like for git tag -l.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- builtin/branch.c |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
+ builtin/branch.c |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 10292ab..4ccd89c 100644
+index 9cca1b9..10292ab 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -619,7 +619,7 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
+@@ -260,6 +260,7 @@ static char *resolve_symref(const char *src, const char *prefix)
  
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
--	int delete = 0, rename = 0, force_create = 0;
-+	int delete = 0, rename = 0, force_create = 0, list = 0;
- 	int verbose = 0, abbrev = DEFAULT_ABBREV, detached = 0;
- 	int reflog = 0;
- 	enum branch_track track;
-@@ -658,6 +658,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('D', NULL, &delete, "delete branch (even if not merged)", 2),
- 		OPT_BIT('m', NULL, &rename, "move/rename a branch and its reflog", 1),
- 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
-+		OPT_BOOLEAN(0, "list", &list, "list branch names"),
- 		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
- 		OPT__FORCE(&force_create, "force creation (when already exists)"),
- 		{
-@@ -700,12 +701,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ struct append_ref_cb {
+ 	struct ref_list *ref_list;
++	const char *pattern;
+ 	int ret;
+ };
  
- 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
- 			     0);
--	if (!!delete + !!rename + !!force_create > 1)
-+	if (!!delete + !!rename + !!force_create + !!list > 1)
- 		usage_with_options(builtin_branch_usage, options);
+@@ -297,6 +298,9 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 	if ((kind & ref_list->kinds) == 0)
+ 		return 0;
  
-+	if (argc == 0 || (verbose && argc == 1))
-+		list = 1;
++	if (cb->pattern && fnmatch(cb->pattern, refname, 0))
++		return 0;
 +
+ 	commit = NULL;
+ 	if (ref_list->verbose || ref_list->with_commit || merge_filter != NO_FILTER) {
+ 		commit = lookup_commit_reference_gently(sha1, 1);
+@@ -494,7 +498,7 @@ static void show_detached(struct ref_list *ref_list)
+ 	}
+ }
+ 
+-static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit)
++static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit, const char *pattern)
+ {
+ 	int i;
+ 	struct append_ref_cb cb;
+@@ -508,6 +512,7 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 	if (merge_filter != NO_FILTER)
+ 		init_revisions(&ref_list.revs, NULL);
+ 	cb.ref_list = &ref_list;
++	cb.pattern = pattern;
+ 	cb.ret = 0;
+ 	for_each_rawref(append_ref, &cb);
+ 	if (merge_filter != NO_FILTER) {
+@@ -525,7 +530,7 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
+ 
+ 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
+-	if (detached)
++	if (detached && (!pattern || !fnmatch(pattern, "HEAD", 0)))
+ 		show_detached(&ref_list);
+ 
+ 	for (i = 0; i < ref_list.index; i++) {
+@@ -700,8 +705,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
  	if (delete)
  		return delete_branches(argc, argv, delete > 1, kinds);
--	else if (argc == 0 || (verbose && argc == 1))
-+	else if (list)
- 		return print_ref_list(kinds, detached, verbose, abbrev, with_commit, argc ? argv[0] : NULL);
+-	else if (argc == 0)
+-		return print_ref_list(kinds, detached, verbose, abbrev, with_commit);
++	else if (argc == 0 || (verbose && argc == 1))
++		return print_ref_list(kinds, detached, verbose, abbrev, with_commit, argc ? argv[0] : NULL);
  	else if (rename && (argc == 1))
  		rename_branch(head, argv[0], rename > 1);
+ 	else if (rename && (argc == 2))
 -- 
 1.7.5.270.gafca7
