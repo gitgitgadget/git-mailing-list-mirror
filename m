@@ -1,600 +1,94 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv2 5/6] Use floating point for --dirstat percentages
-Date: Wed, 27 Apr 2011 04:12:38 +0200
-Message-ID: <1303870359-26083-6-git-send-email-johan@herland.net>
-References: <1303776102-9085-1-git-send-email-johan@herland.net>
- <1303870359-26083-1-git-send-email-johan@herland.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git-completion: fix zsh support
+Date: Tue, 26 Apr 2011 21:21:17 -0500
+Message-ID: <20110427022117.GA16697@elie>
+References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johan Herland <johan@herland.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 04:13:11 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	Mark Lodato <lodatom@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 04:21:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEuFa-0001oQ-FN
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 04:13:10 +0200
+	id 1QEuNf-0005BY-10
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 04:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756899Ab1D0CMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2011 22:12:53 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:46164 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756674Ab1D0CMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 22:12:50 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LKA0015HGT9JN30@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 27 Apr 2011 04:12:45 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 108871EA5937_DB77B9DB	for <git@vger.kernel.org>; Wed,
- 27 Apr 2011 02:12:45 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 0CDA31EA3896_DB77B9CF	for <git@vger.kernel.org>; Wed,
- 27 Apr 2011 02:12:44 +0000 (GMT)
-Received: from alpha.herland ([84.215.68.234]) by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LKA00ENJGT6U700@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 27 Apr 2011 04:12:43 +0200 (MEST)
-X-Mailer: git-send-email 1.7.5.rc1.3.g4d7b
-In-reply-to: <1303870359-26083-1-git-send-email-johan@herland.net>
+	id S1756556Ab1D0CVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 22:21:25 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59928 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755479Ab1D0CVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 22:21:25 -0400
+Received: by gyd10 with SMTP id 10so458538gyd.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 19:21:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=OpDTQO0ZgOPCesS3PN3lc+JDYknW0pafB8WaO5lh9Mk=;
+        b=aMCrNRhPk1ZGiVHuglIuJBRd1xn00imd+NKhprHijN5Gq3KeQN2oP2geDaw0N6Ofoz
+         zkLvud+s0tNIPdg8AntgmRsOiqhcCfH3y/OjtzzHz3DmnBiVZp4/+SdJHXAL1+gUnzbJ
+         G8H1O9f541H1likvqP8GhgvtShLB+yhQ3EOGM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Kjl5L4+Y5QLIViIiBNekfASLOSci6RFbLWp2MhCz1BIfdhwNPj/BkgALaPyf9M35AC
+         GQd9AiUTQ2PIROfDDpOlIfhEJMAUJV2NDDhfOQeKLMjH4IN3jl+lNiFAYXQ9giymGzT2
+         pW6zf/gpomnjkH4K8AgU0pAZaAVJzfo9y0CqU=
+Received: by 10.101.167.37 with SMTP id u37mr1015236ano.33.1303870884080;
+        Tue, 26 Apr 2011 19:21:24 -0700 (PDT)
+Received: from elie (adsl-68-255-96-190.dsl.chcgil.ameritech.net [68.255.96.190])
+        by mx.google.com with ESMTPS id d36sm354228and.4.2011.04.26.19.21.21
+        (version=SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2011 19:21:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172157>
 
-Allow specifying --dirstat cut-off percentage as a floating point number.
+Felipe Contreras wrote:
 
-When printing the dirstat output, floating point numbers are presented in
-rounded form (as opposed to truncated). Therefore, this patch includes a
-significant churn in the expected output of the dirstat selftests.
+> +++ b/contrib/completion/git-completion.bash
+[...]
+> @@ -739,12 +739,12 @@ __git_complete_revlist ()
+>  
+>  __git_complete_remote_or_refspec ()
+>  {
+> -	local cur words cword
+> -	_get_comp_words_by_ref -n =: cur words cword
+> -	local cmd="${words[1]}"
+> +	local cur cwords cword
+> +	_get_comp_words_by_ref -n =: cur cwords cword
 
-A selftest verifying floating-point percentage input has been added.
+Hmm, on second thought, this will break the following case, in bash:
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
+	. /etc/bash_completion;	# defines _get_comp_words_by_ref
+	. contrib/completion/git-completion.bash
 
-Remaining questions:
+Not sure how to salvage that.  Maybe we need a git-specific API
+that wraps _get_comp_words_by_ref when the latter is available.
 
- - Locale issues with strod(), e.g. decimal separator is a comma in certain
-   locales.
-
-...Johan
-
- diff.c                  |   14 +-
- diff.h                  |    2 +-
- t/t4046-diff-dirstat.sh |  327 ++++++++++++++++++++++++++---------------------
- 3 files changed, 190 insertions(+), 153 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 1b6e8c0..eb26104 100644
---- a/diff.c
-+++ b/diff.c
-@@ -31,7 +31,7 @@ static const char *external_diff_cmd_cfg;
- int diff_auto_refresh_index = 1;
- static int diff_mnemonic_prefix;
- static int diff_no_prefix;
--static int diff_dirstat_percent_default = 3;
-+static double diff_dirstat_percent_default = 3.0;
- static struct diff_options default_diff_options;
- 
- static char diff_colors[][COLOR_MAXLEN] = {
-@@ -95,7 +95,7 @@ static void parse_dirstat_params(struct diff_options *options, const char *param
- 		}
- 		else if (isdigit(*p)) {
- 			char *end;
--			options->dirstat_percent = strtoul(p, &end, 10);
-+			options->dirstat_percent = strtod(p, &end);
- 			p = end;
- 		}
- 		else
-@@ -1504,7 +1504,8 @@ struct dirstat_file {
- 
- struct dirstat_dir {
- 	struct dirstat_file *files;
--	int alloc, nr, percent, cumulative;
-+	double percent;
-+	int alloc, nr, cumulative;
- };
- 
- static long gather_dirstat(struct diff_options *opt, struct dirstat_dir *dir,
-@@ -1552,11 +1553,10 @@ static long gather_dirstat(struct diff_options *opt, struct dirstat_dir *dir,
- 	 */
- 	if (baselen && sources != 1) {
- 		if (this_dir) {
--			int permille = this_dir * 1000 / changed;
--			int percent = permille / 10;
-+			double percent = this_dir * 100.0 / changed;
- 			if (percent >= dir->percent) {
--				fprintf(opt->file, "%s%4d.%01d%% %.*s\n", line_prefix,
--					percent, permille % 10, baselen, base);
-+				fprintf(opt->file, "%s%6.1f%% %.*s\n", line_prefix,
-+					percent, baselen, base);
- 				if (!dir->cumulative)
- 					return 0;
- 			}
-diff --git a/diff.h b/diff.h
-index 0083d92..781c620 100644
---- a/diff.h
-+++ b/diff.h
-@@ -111,13 +111,13 @@ struct diff_options {
- 	int rename_score;
- 	int rename_limit;
- 	int warn_on_too_large_rename;
--	int dirstat_percent;
- 	int setup;
- 	int abbrev;
- 	const char *prefix;
- 	int prefix_length;
- 	const char *stat_sep;
- 	long xdl_opts;
-+	double dirstat_percent;
- 
- 	int stat_width;
- 	int stat_name_width;
-diff --git a/t/t4046-diff-dirstat.sh b/t/t4046-diff-dirstat.sh
-index fa1885c..3cafd0d 100755
---- a/t/t4046-diff-dirstat.sh
-+++ b/t/t4046-diff-dirstat.sh
-@@ -301,31 +301,31 @@ test_expect_success 'sanity check setup (--stat)' '
- 
- # changed/text and rearranged/text falls below default 3% threshold
- cat <<EOF >expect_diff_dirstat
--  10.8% dst/copy/changed/
--  10.8% dst/copy/rearranged/
--  10.8% dst/copy/unchanged/
--  10.8% dst/move/changed/
--  10.8% dst/move/rearranged/
--  10.8% dst/move/unchanged/
--  10.8% src/move/changed/
--  10.8% src/move/rearranged/
--  10.8% src/move/unchanged/
-+  10.9% dst/copy/changed/
-+  10.9% dst/copy/rearranged/
-+  10.9% dst/copy/unchanged/
-+  10.9% dst/move/changed/
-+  10.9% dst/move/rearranged/
-+  10.9% dst/move/unchanged/
-+  10.9% src/move/changed/
-+  10.9% src/move/rearranged/
-+  10.9% src/move/unchanged/
- EOF
- 
- # rearranged/text falls below default 3% threshold
- cat <<EOF >expect_diff_dirstat_M
--   5.8% changed/
-+   5.9% changed/
-   29.3% dst/copy/changed/
-   29.3% dst/copy/rearranged/
-   29.3% dst/copy/unchanged/
--   5.8% dst/move/changed/
-+   5.9% dst/move/changed/
- EOF
- 
- # rearranged/text falls below default 3% threshold
- cat <<EOF >expect_diff_dirstat_CC
--  32.6% changed/
--  32.6% dst/copy/changed/
--  32.6% dst/move/changed/
-+  32.7% changed/
-+  32.7% dst/copy/changed/
-+  32.7% dst/move/changed/
- EOF
- 
- test_expect_success 'vanilla --dirstat' '
-@@ -389,36 +389,36 @@ test_expect_success 'non-defaults in config overridden by explicit defaults on c
- '
- 
- cat <<EOF >expect_diff_dirstat
--   2.1% changed/
--  10.8% dst/copy/changed/
--  10.8% dst/copy/rearranged/
--  10.8% dst/copy/unchanged/
--  10.8% dst/move/changed/
--  10.8% dst/move/rearranged/
--  10.8% dst/move/unchanged/
-+   2.2% changed/
-+  10.9% dst/copy/changed/
-+  10.9% dst/copy/rearranged/
-+  10.9% dst/copy/unchanged/
-+  10.9% dst/move/changed/
-+  10.9% dst/move/rearranged/
-+  10.9% dst/move/unchanged/
-    0.0% rearranged/
--  10.8% src/move/changed/
--  10.8% src/move/rearranged/
--  10.8% src/move/unchanged/
-+  10.9% src/move/changed/
-+  10.9% src/move/rearranged/
-+  10.9% src/move/unchanged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_M
--   5.8% changed/
-+   5.9% changed/
-   29.3% dst/copy/changed/
-   29.3% dst/copy/rearranged/
-   29.3% dst/copy/unchanged/
--   5.8% dst/move/changed/
-+   5.9% dst/move/changed/
-    0.1% dst/move/rearranged/
-    0.1% rearranged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_CC
--  32.6% changed/
--  32.6% dst/copy/changed/
--   0.6% dst/copy/rearranged/
--  32.6% dst/move/changed/
--   0.6% dst/move/rearranged/
--   0.6% rearranged/
-+  32.7% changed/
-+  32.7% dst/copy/changed/
-+   0.7% dst/copy/rearranged/
-+  32.7% dst/move/changed/
-+   0.7% dst/move/rearranged/
-+   0.7% rearranged/
- EOF
- 
- test_expect_success '--dirstat=0' '
-@@ -449,46 +449,46 @@ test_expect_success 'diff.dirstat=0' '
- '
- 
- cat <<EOF >expect_diff_dirstat
--   2.1% changed/
--  10.8% dst/copy/changed/
--  10.8% dst/copy/rearranged/
--  10.8% dst/copy/unchanged/
--  32.5% dst/copy/
--  10.8% dst/move/changed/
--  10.8% dst/move/rearranged/
--  10.8% dst/move/unchanged/
--  32.5% dst/move/
--  65.1% dst/
-+   2.2% changed/
-+  10.9% dst/copy/changed/
-+  10.9% dst/copy/rearranged/
-+  10.9% dst/copy/unchanged/
-+  32.6% dst/copy/
-+  10.9% dst/move/changed/
-+  10.9% dst/move/rearranged/
-+  10.9% dst/move/unchanged/
-+  32.6% dst/move/
-+  65.2% dst/
-    0.0% rearranged/
--  10.8% src/move/changed/
--  10.8% src/move/rearranged/
--  10.8% src/move/unchanged/
--  32.5% src/move/
-+  10.9% src/move/changed/
-+  10.9% src/move/rearranged/
-+  10.9% src/move/unchanged/
-+  32.6% src/move/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_M
--   5.8% changed/
-+   5.9% changed/
-   29.3% dst/copy/changed/
-   29.3% dst/copy/rearranged/
-   29.3% dst/copy/unchanged/
-   88.0% dst/copy/
--   5.8% dst/move/changed/
-+   5.9% dst/move/changed/
-    0.1% dst/move/rearranged/
--   5.9% dst/move/
-+   6.0% dst/move/
-   94.0% dst/
-    0.1% rearranged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_CC
--  32.6% changed/
--  32.6% dst/copy/changed/
--   0.6% dst/copy/rearranged/
-+  32.7% changed/
-+  32.7% dst/copy/changed/
-+   0.7% dst/copy/rearranged/
-   33.3% dst/copy/
--  32.6% dst/move/changed/
--   0.6% dst/move/rearranged/
-+  32.7% dst/move/changed/
-+   0.7% dst/move/rearranged/
-   33.3% dst/move/
--  66.6% dst/
--   0.6% rearranged/
-+  66.7% dst/
-+   0.7% rearranged/
- EOF
- 
- test_expect_success '--dirstat=0 --cumulative' '
-@@ -537,36 +537,36 @@ test_expect_success 'diff.dirstat=0 & --dirstat=cumulative' '
- '
- 
- cat <<EOF >expect_diff_dirstat
--   9.0% changed/
--   9.0% dst/copy/changed/
--   9.0% dst/copy/rearranged/
--   9.0% dst/copy/unchanged/
--   9.0% dst/move/changed/
--   9.0% dst/move/rearranged/
--   9.0% dst/move/unchanged/
--   9.0% rearranged/
--   9.0% src/move/changed/
--   9.0% src/move/rearranged/
--   9.0% src/move/unchanged/
-+   9.1% changed/
-+   9.1% dst/copy/changed/
-+   9.1% dst/copy/rearranged/
-+   9.1% dst/copy/unchanged/
-+   9.1% dst/move/changed/
-+   9.1% dst/move/rearranged/
-+   9.1% dst/move/unchanged/
-+   9.1% rearranged/
-+   9.1% src/move/changed/
-+   9.1% src/move/rearranged/
-+   9.1% src/move/unchanged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_M
--  14.2% changed/
--  14.2% dst/copy/changed/
--  14.2% dst/copy/rearranged/
--  14.2% dst/copy/unchanged/
--  14.2% dst/move/changed/
--  14.2% dst/move/rearranged/
--  14.2% rearranged/
-+  14.3% changed/
-+  14.3% dst/copy/changed/
-+  14.3% dst/copy/rearranged/
-+  14.3% dst/copy/unchanged/
-+  14.3% dst/move/changed/
-+  14.3% dst/move/rearranged/
-+  14.3% rearranged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_CC
--  16.6% changed/
--  16.6% dst/copy/changed/
--  16.6% dst/copy/rearranged/
--  16.6% dst/move/changed/
--  16.6% dst/move/rearranged/
--  16.6% rearranged/
-+  16.7% changed/
-+  16.7% dst/copy/changed/
-+  16.7% dst/copy/rearranged/
-+  16.7% dst/move/changed/
-+  16.7% dst/move/rearranged/
-+  16.7% rearranged/
- EOF
- 
- test_expect_success '--dirstat-by-file' '
-@@ -597,28 +597,28 @@ test_expect_success 'diff.dirstat=files' '
- '
- 
- cat <<EOF >expect_diff_dirstat
--  27.2% dst/copy/
--  27.2% dst/move/
--  27.2% src/move/
-+  27.3% dst/copy/
-+  27.3% dst/move/
-+  27.3% src/move/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_M
--  14.2% changed/
--  14.2% dst/copy/changed/
--  14.2% dst/copy/rearranged/
--  14.2% dst/copy/unchanged/
--  14.2% dst/move/changed/
--  14.2% dst/move/rearranged/
--  14.2% rearranged/
-+  14.3% changed/
-+  14.3% dst/copy/changed/
-+  14.3% dst/copy/rearranged/
-+  14.3% dst/copy/unchanged/
-+  14.3% dst/move/changed/
-+  14.3% dst/move/rearranged/
-+  14.3% rearranged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_CC
--  16.6% changed/
--  16.6% dst/copy/changed/
--  16.6% dst/copy/rearranged/
--  16.6% dst/move/changed/
--  16.6% dst/move/rearranged/
--  16.6% rearranged/
-+  16.7% changed/
-+  16.7% dst/copy/changed/
-+  16.7% dst/copy/rearranged/
-+  16.7% dst/move/changed/
-+  16.7% dst/move/rearranged/
-+  16.7% rearranged/
- EOF
- 
- test_expect_success '--dirstat-by-file=10' '
-@@ -649,46 +649,46 @@ test_expect_success 'diff.dirstat=10,files' '
- '
- 
- cat <<EOF >expect_diff_dirstat
--   9.0% changed/
--   9.0% dst/copy/changed/
--   9.0% dst/copy/rearranged/
--   9.0% dst/copy/unchanged/
--  27.2% dst/copy/
--   9.0% dst/move/changed/
--   9.0% dst/move/rearranged/
--   9.0% dst/move/unchanged/
--  27.2% dst/move/
-+   9.1% changed/
-+   9.1% dst/copy/changed/
-+   9.1% dst/copy/rearranged/
-+   9.1% dst/copy/unchanged/
-+  27.3% dst/copy/
-+   9.1% dst/move/changed/
-+   9.1% dst/move/rearranged/
-+   9.1% dst/move/unchanged/
-+  27.3% dst/move/
-   54.5% dst/
--   9.0% rearranged/
--   9.0% src/move/changed/
--   9.0% src/move/rearranged/
--   9.0% src/move/unchanged/
--  27.2% src/move/
-+   9.1% rearranged/
-+   9.1% src/move/changed/
-+   9.1% src/move/rearranged/
-+   9.1% src/move/unchanged/
-+  27.3% src/move/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_M
--  14.2% changed/
--  14.2% dst/copy/changed/
--  14.2% dst/copy/rearranged/
--  14.2% dst/copy/unchanged/
--  42.8% dst/copy/
--  14.2% dst/move/changed/
--  14.2% dst/move/rearranged/
--  28.5% dst/move/
-+  14.3% changed/
-+  14.3% dst/copy/changed/
-+  14.3% dst/copy/rearranged/
-+  14.3% dst/copy/unchanged/
-+  42.9% dst/copy/
-+  14.3% dst/move/changed/
-+  14.3% dst/move/rearranged/
-+  28.6% dst/move/
-   71.4% dst/
--  14.2% rearranged/
-+  14.3% rearranged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_CC
--  16.6% changed/
--  16.6% dst/copy/changed/
--  16.6% dst/copy/rearranged/
-+  16.7% changed/
-+  16.7% dst/copy/changed/
-+  16.7% dst/copy/rearranged/
-   33.3% dst/copy/
--  16.6% dst/move/changed/
--  16.6% dst/move/rearranged/
-+  16.7% dst/move/changed/
-+  16.7% dst/move/rearranged/
-   33.3% dst/move/
--  66.6% dst/
--  16.6% rearranged/
-+  66.7% dst/
-+  16.7% rearranged/
- EOF
- 
- test_expect_success '--dirstat-by-file --cumulative' '
-@@ -719,35 +719,35 @@ test_expect_success 'diff.dirstat=cumulative,files' '
- '
- 
- cat <<EOF >expect_diff_dirstat
--  27.2% dst/copy/
--  27.2% dst/move/
-+  27.3% dst/copy/
-+  27.3% dst/move/
-   54.5% dst/
--  27.2% src/move/
-+  27.3% src/move/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_M
--  14.2% changed/
--  14.2% dst/copy/changed/
--  14.2% dst/copy/rearranged/
--  14.2% dst/copy/unchanged/
--  42.8% dst/copy/
--  14.2% dst/move/changed/
--  14.2% dst/move/rearranged/
--  28.5% dst/move/
-+  14.3% changed/
-+  14.3% dst/copy/changed/
-+  14.3% dst/copy/rearranged/
-+  14.3% dst/copy/unchanged/
-+  42.9% dst/copy/
-+  14.3% dst/move/changed/
-+  14.3% dst/move/rearranged/
-+  28.6% dst/move/
-   71.4% dst/
--  14.2% rearranged/
-+  14.3% rearranged/
- EOF
- 
- cat <<EOF >expect_diff_dirstat_CC
--  16.6% changed/
--  16.6% dst/copy/changed/
--  16.6% dst/copy/rearranged/
-+  16.7% changed/
-+  16.7% dst/copy/changed/
-+  16.7% dst/copy/rearranged/
-   33.3% dst/copy/
--  16.6% dst/move/changed/
--  16.6% dst/move/rearranged/
-+  16.7% dst/move/changed/
-+  16.7% dst/move/rearranged/
-   33.3% dst/move/
--  66.6% dst/
--  16.6% rearranged/
-+  66.7% dst/
-+  16.7% rearranged/
- EOF
- 
- test_expect_success '--dirstat=files,cumulative,10' '
-@@ -768,4 +768,41 @@ test_expect_success 'diff.dirstat=10,cumulative,files' '
- 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
- '
- 
-+cat <<EOF >expect_diff_dirstat
-+  27.3% dst/copy/
-+  27.3% dst/move/
-+  54.5% dst/
-+  27.3% src/move/
-+EOF
-+
-+cat <<EOF >expect_diff_dirstat_M
-+  42.9% dst/copy/
-+  28.6% dst/move/
-+  71.4% dst/
-+EOF
-+
-+cat <<EOF >expect_diff_dirstat_CC
-+  33.3% dst/copy/
-+  33.3% dst/move/
-+  66.7% dst/
-+EOF
-+
-+test_expect_success '--dirstat=files,cumulative,16.7' '
-+	git diff --dirstat=files,cumulative,16.7 HEAD^..HEAD >actual_diff_dirstat &&
-+	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=files,cumulative,16.7 -M HEAD^..HEAD >actual_diff_dirstat_M &&
-+	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=files,cumulative,16.7 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
-+	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
-+'
-+
-+test_expect_success 'diff.dirstat=16.7,cumulative,files' '
-+	git -c diff.dirstat=16.7,cumulative,files diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
-+	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git -c diff.dirstat=16.7,cumulative,files diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
-+	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git -c diff.dirstat=16.7,cumulative,files diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
-+	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
-+'
-+
- test_done
--- 
-1.7.5.rc1.3.g4d7b
+	if type _get_comp_words_by_ref >/dev/null 2>&1; then
+		_git_get_comp_words_by_ref () {
+			_get_comp_words_by_ref "$@"
+			if test "${words+set}"
+			then
+				cword="${words[@]}"
+			fi
+		}
+	else
+		_git_get_comp_words_by_ref () {
+			...
+		}
+	fi
