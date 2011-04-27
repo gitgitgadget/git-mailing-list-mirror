@@ -1,89 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Wed, 27 Apr 2011 16:32:12 -0700
-Message-ID: <7voc3r5kzn.fsf@alter.siamese.dyndns.org>
-References: <20110427225114.GA16765@elte.hu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Wed, 27 Apr 2011 18:42:24 -0500
+Message-ID: <20110427234224.GA26854@elie>
+References: <4DB80747.8080401@op5.se>
+ <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
+ <4DB82D90.6060200@op5.se>
+ <7vbozr8uo8.fsf@alter.siamese.dyndns.org>
+ <7vpqo77dlr.fsf@alter.siamese.dyndns.org>
+ <1303930175.25134.38.camel@drew-northup.unet.maine.edu>
+ <20110427194233.GA16717@gnu.kitenet.net>
+ <7vwrif5q93.fsf@alter.siamese.dyndns.org>
+ <20110427220748.GA19578@elie>
+ <7vsjt35l84.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?utf-8?B?RnLDqWTDqXJpYw==?= Weisbecker <fweisbec@gmail.com>,
-	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:32:43 2011
+Cc: Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:42:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFEDp-0001i9-5r
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 01:32:41 +0200
+	id 1QFENf-0006wY-55
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 01:42:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760222Ab1D0Xcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 19:32:35 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49839 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757162Ab1D0Xce (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 19:32:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0A0F75539;
-	Wed, 27 Apr 2011 19:34:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+rX++UbzgJvq7VqMVr6FV/Lu3jw=; b=CRQvGP
-	kR35wgV8b2RjC3SSVtnnF1kgX8APehokBUHhTH2cSB4SQRXBWQ6iXxqQoledQRLl
-	gEQkwF1aPNiUrj2lMgoeHSuU75ghX53yGZPOnoNlgCXcWmJXIpm2VgZed19TstRA
-	XwCypMCF+rWgef2sonUchqBfIFbK8NCpm9EK8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uqVX8SUsawdDIEAaXt26Nopm/tEazNSP
-	kA4z9C0koj0RbDfyfPiJtRWfzr3AMMuCd2HfdgKF6qVmqSDp7L22nX2YWY+p6tBK
-	EUXV6I6vDU4nH3XtN81BteD0O8lmQiN2yMr0BKnWXsbFyZZwDXyqM7M9EFY9jEqV
-	HKoqvB+wQJM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7D5F05532;
-	Wed, 27 Apr 2011 19:34:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4BF7A552D; Wed, 27 Apr 2011
- 19:34:17 -0400 (EDT)
-In-Reply-To: <20110427225114.GA16765@elte.hu> (Ingo Molnar's message of "Thu,
- 28 Apr 2011 00:51:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E4514916-7126-11E0-8B63-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1760162Ab1D0Xml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 19:42:41 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47020 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757202Ab1D0Xmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 19:42:31 -0400
+Received: by gyd10 with SMTP id 10so789053gyd.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 16:42:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=0c6yB4fCLUFTI01EH4snfK8AgnbKItvkBVlK6gJK0/U=;
+        b=wgUSDgWJACzCsju8F+nBqNUAW2iMNpZJRJyh7YfWXDelGe5kg5kKSol++aYOc+TmOg
+         Fx6MqZBVYEudrhMTg+oT/8YerlNTdVJcqahS2WVfNFT3Tq0EiwuFw5TDTpot6zSS+25M
+         0YwP/t/7FX17LCRkLq8hSOkcnhdKZcshOl8tM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=aHrioyt7PIFTngAZUjKM0/PAusTgjhwdqJACLhV6TGaZjBdl6LWaCo0odpviQcrzgn
+         IwG4fznxnn5bqitsmsbF0IG/vfAsHULtTFR0DQgy5ubgSD0bSlyBv1auWSNwtC96GeaF
+         H4pGf3/TzmU8YlPyVozoIFq0lxbuSFtZvlF+w=
+Received: by 10.236.25.164 with SMTP id z24mr3662888yhz.314.1303947750290;
+        Wed, 27 Apr 2011 16:42:30 -0700 (PDT)
+Received: from elie (adsl-69-209-61-200.dsl.chcgil.ameritech.net [69.209.61.200])
+        by mx.google.com with ESMTPS id l74sm629193yhn.96.2011.04.27.16.42.28
+        (version=SSLv3 cipher=OTHER);
+        Wed, 27 Apr 2011 16:42:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vsjt35l84.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172292>
 
-Ingo Molnar <mingo@elte.hu> writes:
+Junio C Hamano wrote:
 
-> +static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
->  {
-> -	return !memcmp(sha1, null_sha1, 20);
-> +	int i;
-> +
-> +	for (i = 0; i < 20; i++, sha1++, sha2++) {
-> +		if (*sha1 != *sha2) {
-> +			if (*sha1 < *sha2)
-> +				return -1;
-> +			return +1;
-> +		}
-> +	}
-> +
-> +	return 0;
+> I was thinking it, and the location git-work binary gets installed, should
+> depend on where "git" and its subcommand binaries are installed.  The word
+> plug-in mentioned in the thread implied that whatever plugs in is not by
+> itself full fledged thing that is useful standalone, so it seemed a very
+> natural thing to do.
 
-This is very unfortunate, as it is so trivially correct and we shouldn't
-have to do it.  If the compiler does not use a good inlined memcmp(), this
-patch may fly, but I fear it may hurt other compilers, no?
+With the goal of making some commands available to git without putting
+them on the $PATH in mind, this all makes more sense.  Sorry I missed
+that before.
 
-> +static inline int is_null_sha1(const unsigned char *sha1)
->  {
-> -	return memcmp(sha1, sha2, 20);
-> +	const unsigned long long *sha1_64 = (void *)sha1;
-> +	const unsigned int *sha1_32 = (void *)sha1;
+>> Or is the idea to blindly install (a symlink to) git-work to $(git
+>> --exec-path)/ rather than a place on the $PATH?
+>
+> You can call it _blindly_ if you like, but that is what I meant.  "git"
+> tells where the binary and help material for a "plugin" to be installed,
+> so that it can find them where it expects to.
 
-Can everybody do unaligned accesses just fine?
+Right, my worry was based on the usual way programs find their way
+onto my $PATH.  That is:
+
+ - if they are installed via a package from the distro, they are in
+   /usr/bin.
+
+ - if they are installed with "make install" by the local sysadmin for
+   all users, they are in /usr/local/bin.
+
+ - if I am trying them out for myself, they are in $HOME/opt/foo/bin
+   and when it is time to remove it, "rm -fr $HOME/opt/foo".
+
+ - if I have adopted them, symlinks go in $HOME/bin.
+
+With a local gcc-4.6 in $HOME/bin, if the sysadmin upgrades gcc so
+gcc-4.6 is to appear in /usr/bin or /usr/local/bin, my setup still
+works without trouble.  So, barring bugs, each installation method
+does not interfere with the other ones.
+
+Call it overengineering, but I would want a way for installing new git
+commands to have the same attributes (installable by normal users in
+multiuser systems and name conflicts not being a terrible
+administrative burden).  A simple way would be to introduce
+GIT_MAN_PATH as you described and to teach "git help" to accept a
+GIT_EXEC_PATH consisting of a colon-delimited (semicolon-delimited on
+Windows) list of directories.
