@@ -1,57 +1,91 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: translation difficulties :: revision and commit
-Date: Wed, 27 Apr 2011 13:29:21 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1104271327550.23722@ds9.cixit.se>
-References: <20110427103406.GA7186@jakstys.lt>
+From: Mathias Lafeldt <misfire@debugon.org>
+Subject: [PATCH] t/test-lib.sh: minor readability improvements
+Date: Wed, 27 Apr 2011 14:49:37 +0200
+Message-ID: <4DB810E1.3080102@debugon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Motiejus_Jak=A8tys?= <desired.mta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 14:40:59 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 14:49:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF439-0006JF-Aq
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 14:40:59 +0200
+	id 1QF4Bg-0002bF-Ky
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 14:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756262Ab1D0Mkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 08:40:53 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:53705 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754522Ab1D0Mkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 08:40:52 -0400
-X-Greylist: delayed 686 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Apr 2011 08:40:52 EDT
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p3RCTM8u018870
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 27 Apr 2011 14:29:22 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id p3RCTL3L018867;
-	Wed, 27 Apr 2011 14:29:21 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20110427103406.GA7186@jakstys.lt>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 27 Apr 2011 14:29:22 +0200 (CEST)
+	id S1758316Ab1D0Mtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 08:49:43 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:56249 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756992Ab1D0Mtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 08:49:42 -0400
+Received: from [192.168.2.111] (pD955464F.dip.t-dialin.net [217.85.70.79])
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0M4HbP-1PyV8b2NhD-00rn2Q; Wed, 27 Apr 2011 14:49:38 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
+X-Provags-ID: V02:K0:cY5yMq+9bh6skwKTu3KfnKefNhquIEi1m8qF3+iXmMd
+ LkVi0SMeq4Xv33SVyE970Xm0euW8MtSaHPbQzJ7GQ4PZQqIEHx
+ K1//mk8XCCIGEpQ1+/Mf+UOZLlt4DELGoR3jBG70Ut3Qk+sM1B
+ vfX5DgIjfOZq5fL/M1U2phvw/toGA8ANS2Etm88K3yZTOQXL/a
+ uE+A142qILE1o8Y8kragzobtn0pTbgytVyMAy9Z2lw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172233>
 
-Motiejus Jak?tys:
+Tweak/apply parameter expansion. Also use here document to save
+test results instead of appending each line with ">>".
 
-> I am doing git translation to Lithuanian, and cannot find the difference
-> between "revision" and "commit", as I need to create a word for
-> "commit". It is confusing.
+Signed-off-by: Mathias Lafeldt <misfire@debugon.org>
+---
+ t/test-lib.sh |   18 ++++++++++--------
+ 1 files changed, 10 insertions(+), 8 deletions(-)
 
-For Swedish, I used a translation of "check-in" (as when checking in at an 
-airport) for "commit", both in the verb and noun forms.
-
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index abc47f3..b30725f 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -24,7 +24,7 @@ done,*)
+ *' --tee '*|*' --va'*)
+ 	mkdir -p test-results
+ 	BASE=test-results/$(basename "$0" .sh)
+-	(GIT_TEST_TEE_STARTED=done ${SHELL-sh} "$0" "$@" 2>&1;
++	(GIT_TEST_TEE_STARTED=done ${SHELL-"sh"} "$0" "$@" 2>&1;
+ 	 echo $? > $BASE.exit) | tee $BASE.out
+ 	test "$(cat $BASE.exit)" = 0
+ 	exit
+@@ -575,7 +575,7 @@ test_external () {
+ test_external_without_stderr () {
+ 	# The temporary file has no (and must have no) security
+ 	# implications.
+-	tmp="$TMPDIR"; if [ -z "$tmp" ]; then tmp=/tmp; fi
++	tmp=${TMPDIR:-"/tmp"}
+ 	stderr="$tmp/git-external-stderr.$$.tmp"
+ 	test_external "$@" 4> "$stderr"
+ 	[ -f "$stderr" ] || error "Internal error: $stderr disappeared."
+@@ -801,12 +801,14 @@ test_done () {
+ 		mkdir -p "$test_results_dir"
+ 		test_results_path="$test_results_dir/${0%.sh}-$$.counts"
+ 
+-		echo "total $test_count" >> $test_results_path
+-		echo "success $test_success" >> $test_results_path
+-		echo "fixed $test_fixed" >> $test_results_path
+-		echo "broken $test_broken" >> $test_results_path
+-		echo "failed $test_failure" >> $test_results_path
+-		echo "" >> $test_results_path
++		cat >> "$test_results_path" <<EOF
++total $test_count
++success $test_success
++fixed $test_fixed
++broken $test_broken
++failed $test_failure
++
++EOF
+ 	fi
+ 
+ 	if test "$test_fixed" != 0
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.7.5
