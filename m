@@ -1,104 +1,66 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: Creating remote branch called HEAD corrupts remote clones
-Date: Wed, 27 Apr 2011 11:18:36 +0200
-Message-ID: <BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com>
-References: <ih1449$ul6$1@dough.gmane.org>
-	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
-	<20110120203840.GA11468@sigill.intra.peff.net>
-	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
-	<20110120215456.GB11468@sigill.intra.peff.net>
-	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
-	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
-	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
-	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
-	<BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
-	<BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/2] handle_alias: provide GIT_PREFIX to !alias
+Date: Wed, 27 Apr 2011 11:36:28 +0200
+Message-ID: <4DB7E39C.1040609@drmicha.warpmail.net>
+References: <3422485b672000ecdc72d82ffce8c89f258831b9.1303893279.git.git@drmicha.warpmail.net> <4DB7CF72.3080205@drmicha.warpmail.net> <5058a9853a75bff71187f553e67632997761de44.1303893279.git.git@drmicha.warpmail.net> <BANLkTi=gjuOqLEArk_0Nj1faEu62dzjbZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 11:18:44 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Matej Batic <matej.batic@ge.infn.it>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 11:36:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF0tQ-0003Wt-DA
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 11:18:44 +0200
+	id 1QF1Ak-0003JQ-S4
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 11:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755626Ab1D0JSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 05:18:39 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46343 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755561Ab1D0JSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 05:18:38 -0400
-Received: by bwz15 with SMTP id 15so1207738bwz.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 02:18:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=H1zY89eqJwI32BvV6TtA4dbLak4+qZizg0kLBQ3A7Vs=;
-        b=VFppnCab79oyKHp+MgUWU+xlGvUsy/UPq06GVSUzKqD3ZXfHk2+/HH1HroDH2tCWp6
-         3C+jTuuFmU6hbvmfypnkNFyse1/VzDKjzzJ/ugD04f8KD02V2HgctNRkziWHyMGKONML
-         9rmBKOn0HHl8MAiuXYqirnyAth+T3ZTcvqmuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=sD3RvxahL2M2WOXrPvRpcDzQ8nortphE4ZfC0O1QOX1W99eWvDaCxTPJ+anffRVCsW
-         ct82srI4QJF1YmJsIrsZGOoQVSNwYCFLLunOLlEn08151ngpRArKiJrfqELvM2ZmIoDb
-         lELg9i8/Mi1OQkFVirzbJmu6jp3zRZNEDd60Y=
-Received: by 10.204.20.79 with SMTP id e15mr1754163bkb.147.1303895916955; Wed,
- 27 Apr 2011 02:18:36 -0700 (PDT)
-Received: by 10.204.120.195 with HTTP; Wed, 27 Apr 2011 02:18:36 -0700 (PDT)
-In-Reply-To: <BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+	id S1756536Ab1D0Jgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 05:36:32 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:55081 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756443Ab1D0Jgb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 05:36:31 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6EBCC20164;
+	Wed, 27 Apr 2011 05:36:30 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute6.internal (MEProxy); Wed, 27 Apr 2011 05:36:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Z0e7h8KCFBSY8Sh2wg4QuqiBYOY=; b=aqo1lCbDPnVkMJQ6i6KRpgbE8vYzVX14vDSvhV+TzMpYvylFSKmqo8UJ6QjqMfkKsZa/rwsGRhqsvuKHibHBS6duuCu+9tb2XicrhjeOSvBGSPnjZrrsOXYfBdf1Y6w46+lLgFr5iEMsnDvrsYjYsMjBg3QRB4a3q7YrH5h36eo=
+X-Sasl-enc: g+6dzzNFs+macPQ2ykAPZrB+JOq/81DZZ1OY9nKQ6QRP 1303896990
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B2404401720;
+	Wed, 27 Apr 2011 05:36:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
+In-Reply-To: <BANLkTi=gjuOqLEArk_0Nj1faEu62dzjbZA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172206>
 
-On Tue, Apr 26, 2011 at 8:18 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Tue, Apr 26, 2011 at 3:09 PM, Stephen Kelly <steveire@gmail.com> wrote:
->> Can git have a bug tracker please?
->
-> So that you would feel comfortable that there would be a bug report
-> gathering dust? Or that it's closed as invalid for lack of
-> information?
+Nguyen Thai Ngoc Duy venit, vidit, dixit 27.04.2011 11:06:
+> 2011/4/27 Michael J Gruber <git@drmicha.warpmail.net>:
+>> @@ -589,6 +589,8 @@ it will be treated as a shell command.  For example, defining
+>>  "gitk --all --not ORIG_HEAD".  Note that shell commands will be
+>>  executed from the top-level directory of a repository, which may
+>>  not necessarily be the current directory.
+>> +'GIT_PREFIX' is set as returned by running 'git rev-parse --show-prefix'
+>> +from the original current directory. See linkgit:git-rev-parse[1].
+> 
+> It made me wonder "but then why should not we just do GIT_PREFIX=`git
+> rev-parse --show-prefix` in the alias?" then realized by the time we
+> do that, it's already too late. Maybe
+> 
+>> +'GIT_PREFIX' is set as returned by running 'git rev-parse --show-prefix'
+>> +before current directory is changed to top-level directory. See linkgit:git-rev-parse[1].
+> 
+> ?
 
-If you believe that it is a foregone conclusion that that is the fate
-of all bug trackers, and that that's a reasonable reason for git not
-to have one, then you have had very different experiences to me.
+Well, the text says already that the alias is not run from the "original
+current directory", so it's two ways of saying the same thing.
 
-I don't think there's more I can say than that.
-
->
->> This is another reminder to fix this bug which is otherwise untrackable.
->
-> Let's imagine you are posting this to bugzilla: first question?
-> How do you reproduce this?
-
-My initial mail illustrated the problem as best I could:
-
-http://thread.gmane.org/gmane.comp.kde.devel.pim/29534
-
->
-> But I already asked you this[1], and you didn't reply. What should one
-> assume but that you don't care enough to help get this fixed.
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/165320
-
-Someone else replied. Isn't that enough?
-
-Other git developers confirmed it's probably an issue. Isn't that enough?
-
-http://thread.gmane.org/gmane.comp.kde.devel.pim/29534/focus=165326
-
-Anyway, we've had a work around in place since January. From the git
-POV, this just falls through the cracks. Consider the bug marked as
-can not reproduce/needs info/whatever you prefer. I'm outie.
-
-Steve.
+Michael
