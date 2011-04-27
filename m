@@ -1,65 +1,80 @@
-From: David Deller <david@horizon-nigh.org>
-Subject: Re: [BUG] git pull does not understand --strategy-option
-Date: Wed, 27 Apr 2011 14:27:57 -0400
-Message-ID: <BANLkTiniVvLe7Wb9-OsKNb8nY23jxo-vQw@mail.gmail.com>
-References: <BANLkTinFcob1RrOxEDDG+B6UAZGYg-smtg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Wed, 27 Apr 2011 11:28:48 -0700
+Message-ID: <7vpqo77dlr.fsf@alter.siamese.dyndns.org>
+References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
+ <4DB80747.8080401@op5.se>
+ <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
+ <4DB82D90.6060200@op5.se> <7vbozr8uo8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 20:28:05 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Seymour <jon.seymour@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Apr 27 20:29:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF9T2-00046O-F3
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 20:28:04 +0200
+	id 1QF9U3-0004dY-Ua
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 20:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756480Ab1D0S17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 14:27:59 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35108 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754303Ab1D0S16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 14:27:58 -0400
-Received: by vws1 with SMTP id 1so1526796vws.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 11:27:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=+Cqre4twBlve0TVzWOLnebqES9QzvT4Ubr4NxI0Jx2s=;
-        b=EVmQB4KuVJM0QJna09vNrNxcKesZZF7Pj2quBP/RbM2KzhReifKgd+UXi/XuoQTTEZ
-         H9cua8AzmW9rRjSYos8yDns1wbgaSyU6QaSwBJP7aRdI2LW9wxPXopqJaqnewYxdaPOu
-         DeVijDOn4A3CR7sFrYOMv/XSGlOLzHENeD1Vs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        b=Em7/AnAsTrWlGF65DmIeSbW/OAgJG09E8XQhqwYzm8/zZaveUsgDRTw1VUbI6QCByQ
-         T06+DZ3bQzlbT3DzgnPQyryXT+iMty1wx7Qtm3JC+2N4PFVaHOMzERb7tcH8tRv1Da+u
-         HgisrjSFeaVNSGkTmHtd9Q3mv9rvaFGoeqpXE=
-Received: by 10.52.184.5 with SMTP id eq5mr206016vdc.219.1303928877288; Wed,
- 27 Apr 2011 11:27:57 -0700 (PDT)
-Received: by 10.220.72.75 with HTTP; Wed, 27 Apr 2011 11:27:57 -0700 (PDT)
-In-Reply-To: <BANLkTinFcob1RrOxEDDG+B6UAZGYg-smtg@mail.gmail.com>
-X-Google-Sender-Auth: gFu2uqmClrU7HQ6aCYjLY6-CNDU
+	id S1755920Ab1D0S3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 14:29:01 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54779 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753535Ab1D0S3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 14:29:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CF320440A;
+	Wed, 27 Apr 2011 14:31:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WFp6ql52w42eYBcGFlbFxl33E5Q=; b=Etgu6w
+	t7zG5bvsy+iE7EYYIYM68F6M7f9ypYfilPRulysgHiu64SODLysMyY6HrrY681Kb
+	m56g8LxeRDZYyIPI9qKtdImW/p6H7MJ1qKioyoGCiCDUClhU/kJpSYgqCPyWk8Y4
+	scTALdH2FZdfRNYlhDaTnHEJ57eyqy7F+33/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vm4jsH+ESvdwALx3Qqul98K17ckYJhBa
+	I9DjHgbDttPo+SogXq+6BUxsSU3dwKEqv0LE9pULmsZV/ZOaA86syq4bo8V/O0lz
+	6x0TbZYQ3QFFV596B5iy1A8scO40lAXiZb/T5zjAQG0XKEtojesuZsjbhe4uSBkh
+	56IrHaYLiIo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 972FE4409;
+	Wed, 27 Apr 2011 14:30:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 852EC4407; Wed, 27 Apr 2011
+ 14:30:53 -0400 (EDT)
+In-Reply-To: <7vbozr8uo8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 27 Apr 2011 10:34:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7EF7A2EC-70FC-11E0-BF2A-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172257>
 
-> $ git pull --strategy=recursive --strategy-option=theirs origin master
-> error: unknown option `strategy-option=theirs'
-> usage: git fetch [<options>] [<repository> [<refspec>...]]
+Junio C Hamano <gitster@pobox.com> writes:
 
-I was able to confirm that the bug still exists in the latest version
-of Git, 1.7.5. The docs say the option should work.
+> Andreas Ericsson <ae@op5.se> writes:
+>
+>> You're utterly horribly wrong. ...
+>> ...
+>> So the complete description would be
+>>
+>>   git clone git://somerepo/gitworks
+>>   cd gitworks
+>>   make install
+>>
+>> and the rest is in developer hands.
+>
+> Yeah, I like this as the conclusion of this thread ;-).
 
-This affects Phing's[1] Git Pull task[2], which always outputs the
-long form whenever the corresponding option is used.
-
-David
-
-[1] PHP build tool
-[2] http://www.phing.info/docs/guide/stable/chapters/appendixes/AppendixC-OptionalTasks.html#GitPullTask
+Having said that, to make this work well not just for the command but for
+documentation and help, there needs a way for the build procedure of such
+user-script project to query the manpage and the documentation paths, just
+like we let them query the executable path via "git --exec-path".
