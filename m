@@ -1,57 +1,85 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] handle_alias: provide GIT_CWD to !alias
-Date: Wed, 27 Apr 2011 10:10:26 +0200
-Message-ID: <4DB7CF72.3080205@drmicha.warpmail.net>
-References: <4DA59B27.50506@ge.infn.it> <e8c9aa9160f922f728d56387e5e86eb50220774f.1302699792.git.git@drmicha.warpmail.net> <7v1v0od557.fsf@alter.siamese.dyndns.org> <4DB7BBEF.8010409@drmicha.warpmail.net> <BANLkTinEiT1_8czdY2DtBnY-5CqN1XAVcw@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Wed, 27 Apr 2011 18:15:37 +1000
+Message-ID: <BANLkTinrU8LhA0RORde0e5a1TM5VB5gVNQ@mail.gmail.com>
+References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
+	<7vwrig9ta7.fsf@alter.siamese.dyndns.org>
+	<BANLkTinFX24gTR-0PK8Tyi5aOf8rnLk6Cg@mail.gmail.com>
+	<7vsjt49stq.fsf@alter.siamese.dyndns.org>
+	<BANLkTinRUaGmF5xqmVGWFurGMtO8Cgb9Hg@mail.gmail.com>
+	<7vk4eg9rsf.fsf@alter.siamese.dyndns.org>
+	<BANLkTi=UafJRc76ePmVXo2gF+CNVnEL41Q@mail.gmail.com>
+	<4DB7CC7C.2050508@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Matej Batic <matej.batic@ge.infn.it>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 10:10:46 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 10:15:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEzpd-00022Z-Pq
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 10:10:46 +0200
+	id 1QEzua-0004bj-Qk
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 10:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752973Ab1D0IKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 04:10:37 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:45391 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752226Ab1D0IK2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 04:10:28 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 51C9E20E02;
-	Wed, 27 Apr 2011 04:10:28 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 27 Apr 2011 04:10:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=3D1fHMLe1FbT0gJIz3Y+YNkMyDk=; b=ABiMuny91ZVeLJ0J3z2wU0E9OSTzcINqPi3sOtnc8TQWnvJYpJmTYhgQ/RAjIF12ksLHWhljSa0/IHwbcfzLYjWtSGkBvuvipy25oz3y2lVN15snGxjmE1KxnvW2n0tgxk/oFS1GkvxAc9lgct9V++kOCexLqC0QxhTZiyxIo1I=
-X-Sasl-enc: vCB/lqG8TyYgYWtctKzCJUQNd3TyC4sfZbnSPPZSdqlI 1303891828
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 99330440E52;
-	Wed, 27 Apr 2011 04:10:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <BANLkTinEiT1_8czdY2DtBnY-5CqN1XAVcw@mail.gmail.com>
+	id S1754654Ab1D0IPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 04:15:43 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:50464 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753813Ab1D0IPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 04:15:38 -0400
+Received: by vxi39 with SMTP id 39so1107364vxi.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 01:15:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=0gEqke/0mMC8ksljEdcsiOjMCAi8KWDKXTX3a9fdwGc=;
+        b=S6aCxqNN72lIO8uiP4ALA/o9NmhDYQLrCGA3fjAuuKQgleIJ4x4HoJ/OctgrA52lT/
+         eBOtS3uIEcUKUcBgKIxge491iTwAe5bPn9eppqytcTqGk6NnD51rorYM3vTraWZrZktk
+         LIQwx/blzS4OKxq2j+0zq2hbZ8Z5daRKT8WtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=YU662Gc8cU4OfTdVPVHQmGkXd8AnzV68mkmX6EsXIGHa+wX++XwIMhWSeP1SFJPzYF
+         yukRFMej8ma1DGBir+nxxeD4u8NCuv4afWS9U6f8IoXnz60KaUzkcJpL7HKt+CppanIC
+         fORIexvwHymhOVdtWQvJbsV/ku/aaHirPms5o=
+Received: by 10.52.71.148 with SMTP id v20mr2720911vdu.266.1303892137307; Wed,
+ 27 Apr 2011 01:15:37 -0700 (PDT)
+Received: by 10.52.160.66 with HTTP; Wed, 27 Apr 2011 01:15:37 -0700 (PDT)
+In-Reply-To: <4DB7CC7C.2050508@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172187>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 27.04.2011 09:40:
-> On Wed, Apr 27, 2011 at 1:47 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> A more important point is the prefix-less case (i.e. we are in topdir):
->> Should GIT_YOUNAMEIT be empty then? I would say yes (just like
->> "rev-parse --show-prefix"), Duy said no. We need a third vote :)
-> 
-> I said no because you named it GIT_CWD. If it's GIT_PREFIX, then empty
-> prefix is normal, no objections.
+On Wed, Apr 27, 2011 at 5:57 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+>
+> I'm sorry to spoil the party before it started but I'm not very fond of
+> having yet another package manager orthogonal to what distributions have
+> already. This is definitely not a way to get anything like that into a
+> distribution which has proper policies.
 
-We have a winner then! Patch upcoming.
+I am happy to defer work on a full-blown package manager for now. I do
+agree, the world already has a surfeit of
+package managers. As I say, I'd prefer a minimal interface that could
+be back-ended by one or more of those if possible.
 
-Michael
+Initially I'd like to focus on:
+
+* a descriptor format for packages providing hints about how to
+activate an extension
+* guidelines for the filesystem layout of extensions themselves
+* a way to locally locate extensions that might be subject to activation
+* the interface between the git runtime and the activated package repository
+* the interface to activate/deactivate a locally located package
+
+I also want to avoid baking in any too many decisions about things
+like registries and distribution models. That can come later.
+
+jon.
