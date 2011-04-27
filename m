@@ -1,95 +1,99 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH] completion: avoid "words" as variable name for zsh portability
-Date: Wed, 27 Apr 2011 13:09:28 +0300
-Message-ID: <BANLkTikN7iMa_z7wRN8pUS07SMatpyoDPQ@mail.gmail.com>
-References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
-	<20110427013534.GA14286@elie>
-	<7v62q0b8e0.fsf@alter.siamese.dyndns.org>
-	<20110427064033.GB4226@elie>
-	<BANLkTinA5hfddqpGwOBjk+2oFDpwqORrSg@mail.gmail.com>
-	<20110427091140.GB14849@elie>
-	<BANLkTi=3T2B=Gtyk7V_3DB3V+GkbXAaqPw@mail.gmail.com>
+From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Wed, 27 Apr 2011 12:21:33 +0200
+Message-ID: <20110427102133.GA10057@bee.lab.cmartin.tk>
+References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
+ <7vwrig9ta7.fsf@alter.siamese.dyndns.org>
+ <BANLkTinFX24gTR-0PK8Tyi5aOf8rnLk6Cg@mail.gmail.com>
+ <7vsjt49stq.fsf@alter.siamese.dyndns.org>
+ <BANLkTinRUaGmF5xqmVGWFurGMtO8Cgb9Hg@mail.gmail.com>
+ <7vk4eg9rsf.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=UafJRc76ePmVXo2gF+CNVnEL41Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stefan Haller <lists@haller-berlin.de>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Mark Lodato <lodatom@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 12:09:36 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="X1bOJ3K7DJ5YkBrT"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 12:21:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF1gd-0002ky-Nm
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 12:09:36 +0200
+	id 1QF1sL-0000fM-J7
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 12:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757554Ab1D0KJa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 06:09:30 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45556 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755756Ab1D0KJ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 06:09:29 -0400
-Received: by fxm17 with SMTP id 17so1014588fxm.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 03:09:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PsDtemkQJ9ZI0NYAeWWcp2v04vTSOuhvr3W9gXw5VTg=;
-        b=IKbNw7466xS0L3m/qXV3fF+zlMI78etXNZ4Vf8xMJI0kb/L2sxyL8cSUKm46XluieZ
-         H7696coWzYRiMvDN333fwZ8kzEGiK9qE0ugrzlahBRUSxEF3mmJagUdrPWhLmV8bh/HW
-         scoAXuQ905Ua4P33jKgE442DnCW5Mg5satWxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HvMX9t95BTRawgGRGqOm0HhGDCoseOXvkItaYNu3a3HxuswvyWYgwE0Elv5Pl/3fKV
-         XngC8ivPX4YJPhOrynfdfJCEelBPcC9k5+rIB6RdnFFCkOYPNYSQT0XYcF3fybck0Rhw
-         kLVGJ7C98jkJBzjdIi2LrHImAd9GHHh/vS58s=
-Received: by 10.223.87.215 with SMTP id x23mr2145195fal.32.1303898968707; Wed,
- 27 Apr 2011 03:09:28 -0700 (PDT)
-Received: by 10.223.74.130 with HTTP; Wed, 27 Apr 2011 03:09:28 -0700 (PDT)
-In-Reply-To: <BANLkTi=3T2B=Gtyk7V_3DB3V+GkbXAaqPw@mail.gmail.com>
+	id S1757813Ab1D0KVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 06:21:36 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:56809 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756040Ab1D0KVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 06:21:35 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id BBD2346138;
+	Wed, 27 Apr 2011 12:21:16 +0200 (CEST)
+Received: (nullmailer pid 10285 invoked by uid 1000);
+	Wed, 27 Apr 2011 10:21:33 -0000
+Content-Disposition: inline
+In-Reply-To: <BANLkTi=UafJRc76ePmVXo2gF+CNVnEL41Q@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172213>
 
-On Wed, Apr 27, 2011 at 12:49 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Wed, Apr 27, 2011 at 12:11 PM, Jonathan Nieder <jrnieder@gmail.com=
-> wrote:
->> Thanks. =C2=A0It looks like to get the semantics I expect from "loca=
-l"
->> in zsh, one needs to use "typeset -h" (which bash does not support,
->> unfortunately). =C2=A0Probably it is best to steer clear of zsh's sp=
-ecial
->> variables anyway.
->
-> Hmm, interesting, maybe we should try to find a way to replace those
-> 'local' with 'typeset -h'.
 
-This seems to do it:
+--X1bOJ3K7DJ5YkBrT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -75,6 +75,10 @@
+On Wed, Apr 27, 2011 at 05:15:50PM +1000, Jon Seymour wrote:
+> On Wed, Apr 27, 2011 at 3:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Jon Seymour <jon.seymour@gmail.com> writes:
+> >
+> >> My thoughts about this are inspired by how the node project manages
+> >> packages with its npm package manager and also the fact that I have
+> >> several ideas on the boil at the moment that would definitely benefit
+> >> from a standard way to manage these concerns.
+> >
+> > Sounds like you have a plan ;-)
+> >
+>=20
+> Ok, here we go:
+>=20
+>     https://github.com/jonseymour/gpm
+>=20
+> Anyone who violently objects to the suggested name of a package
+> manager interface - gpm, please speak up now because it'll be easier
+> to change now.
 
- if [[ -n ${ZSH_VERSION-} ]]; then
-        autoload -U +X bashcompinit && bashcompinit
-+
-+       # 'words' has special meaning in zsh, and only typeset -h seems=
- to
-+       # override that
-+       alias local=3D"typeset -h"
- fi
+I'm not objecting, but when I see gpm, I think of the mouse daemon for
+Linux virtual consoles[0] and whose git clone address also ends in gpm.
 
- case "$COMP_WORDBREAKS" in
+I find a name like gem (git extension manager) nicer, though that's
+taken by ruby.
 
---=20
-=46elipe Contreras
+[0] http://www.nico.schottelius.org/software/gpm/
+
+   cmn
+
+--X1bOJ3K7DJ5YkBrT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJNt+4tAAoJEHKRP1jG7ZzT72QH/0uWeCebvTF5scIjRPmhtKus
+2O0F+fArP5oHWDnmeRp/5QKXh4CLBtfhvDpRm4dMNBrYSl0sDvP5IGV9jPplN66O
+H0krfc0q1v4CS0vr0+To6yYrDvzAZPF8DdLP+D/x0+8iPfSGG5znAeMVlyKX1v3y
+Ze18ZMouOZjJa72ma3Q+KyA3fLranONdP7+pujkz1AC8N/RrLnOnW24yXxQLV8wB
+WDFq9cN9ix2uXbfUm1y/faxxB6AFKZRNlh2Dj0qLX6FxVLkHX2yE4EJprvaCk/l/
+/vpT8ks8Q7q5CD4n5zT8OeyLaatUOb/wk+GL4YvVBP5VhRt74VCC5Mxl6vP736Q=
+=ldf7
+-----END PGP SIGNATURE-----
+
+--X1bOJ3K7DJ5YkBrT--
