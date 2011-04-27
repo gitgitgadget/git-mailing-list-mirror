@@ -1,90 +1,85 @@
 From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Wed, 27 Apr 2011 14:49:35 -0400
-Message-ID: <1303930175.25134.38.camel@drew-northup.unet.maine.edu>
-References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
-	 <4DB80747.8080401@op5.se>
-	 <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
-	 <4DB82D90.6060200@op5.se> <7vbozr8uo8.fsf@alter.siamese.dyndns.org>
-	 <7vpqo77dlr.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 01/23] Introduce git-test.sh and git-test-lib.sh
+Date: Wed, 27 Apr 2011 15:11:11 -0400
+Message-ID: <1303931471.25134.54.camel@drew-northup.unet.maine.edu>
+References: <1303543372-77843-1-git-send-email-jon.seymour@gmail.com>
+	 <1303543372-77843-2-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Jon Seymour <jon.seymour@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 20:50:19 2011
+Cc: git@vger.kernel.org
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 21:12:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF9oY-0000KZ-Li
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 20:50:19 +0200
+	id 1QFA9X-0004ib-Rx
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 21:12:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756579Ab1D0SuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 14:50:09 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:56717 "EHLO
+	id S1756589Ab1D0TLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 15:11:55 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:58144 "EHLO
 	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754763Ab1D0SuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 14:50:08 -0400
+	with ESMTP id S1753773Ab1D0TLy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 15:11:54 -0400
 Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3RInfFB007898
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3RJBHQU027451
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 27 Apr 2011 14:49:46 -0400
-In-Reply-To: <7vpqo77dlr.fsf@alter.siamese.dyndns.org>
+	Wed, 27 Apr 2011 15:11:22 -0400
+In-Reply-To: <1303543372-77843-2-git-send-email-jon.seymour@gmail.com>
 X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
-	Fuz1=4 Fuz2=4
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
+	Fuz1=2 Fuz2=2
 X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p3RInfFB007898
+X-UmaineSystem-MailScanner-ID: p3RJBHQU027451
 X-MailScanner: Found to be clean
 X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1304534987.55957@U1mvKYTxNVVCaknALu4XAQ
+X-UmaineSystem-MailScanner-Watermark: 1304536285.77742@iMUev2bPxxKvsGPp5tJTtw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172260>
 
-
-On Wed, 2011-04-27 at 11:28 -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Sat, 2011-04-23 at 17:22 +1000, Jon Seymour wrote:
+> This command is intended provide a uniform command line interface
+> to a suite of assertions that can be made about the state of
+> the working tree, index and repository.
 > 
-> > Andreas Ericsson <ae@op5.se> writes:
-> >
-> >> You're utterly horribly wrong. ...
-> >> ...
-> >> So the complete description would be
-> >>
-> >>   git clone git://somerepo/gitworks
-> >>   cd gitworks
-> >>   make install
-> >>
-> >> and the rest is in developer hands.
-> >
-> > Yeah, I like this as the conclusion of this thread ;-).
-> 
-> Having said that, to make this work well not just for the command but for
-> documentation and help, there needs a way for the build procedure of such
-> user-script project to query the manpage and the documentation paths, just
-> like we let them query the executable path via "git --exec-path".
+> This commit introduces the core assert infrastructure. Subsequent
+> commits will introduce check functions that extend the infrastructure
+> in a modular way with additional tests.
+.....
+> +'test_condition' [--<condition> [ arg ... ]] ...
+> +'require_condition_libs'
+> +
+> +
+> +DESCRIPTION
+> +-----------
+> +`git test` provides a uniform, extensible API for evaluating various conditions that
+> +pertain to the state of a git working tree, index and repository.
+> +
+> +Specified conditions are evaluated from left to right. If any condition evaluates to false, 
+> +the command conditionally prints a diagnostic message to stderr and sets a 
+> +non-zero status code. Otherwise, sets a status code of zero. 
+> +
+> +The message used to report a assertion failure may be overidden by specifying the --message option.
+> +
+> +Diagnostic output resulting from an assertion failure may be suppressed with the -q option. 
+> +Note that the -q option does not suppress diagnostic output that results from the failure to 
+> +successfully parse the arguments that configure the test API.
+.....
+Is this supposed to be a porcelain or plumbing? 
 
-I was just thinking of that, and for hoots and hollers I
-copied /usr/share/man/man1/git-am.1.gz
-to /usr/share/man/man1/git-amp.1.gz and tried "git help amp" on it.
+The name could probably be better to avoid confusion with the "unit
+testing" code in t/.
 
-	[dnorthup@drew-northup ~]$ git help amp
-	No manual entry for gitamp
-
-So, that doesn't work. I haven't checked yet how Git "knows" what valid
-pages are available for "git help" but just putting another file in the
-same directory as the others didn't do the job (at least not on my
-workstation).
-
-However, as noted earlier, copying /usr/bin/git-am to /usr/bin/git-amp
-did work. Executing "git amp -h" resulted in the built-in help text for
-'git am' being printed to the screen, exactly as expected.
+Additionally, I'd like to know why this shouldn't be implemented as some
+sort of 
+'git status --assert="XXXX"' 
+call...
 
 -- 
 -Drew Northup
