@@ -1,99 +1,297 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Wed, 27 Apr 2011 13:38:40 +0200
-Message-ID: <20110427113840.GF31730@paksenarrion.iveqy.com>
-References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
- <7vwrig9ta7.fsf@alter.siamese.dyndns.org>
- <BANLkTinFX24gTR-0PK8Tyi5aOf8rnLk6Cg@mail.gmail.com>
- <7vsjt49stq.fsf@alter.siamese.dyndns.org>
- <BANLkTinRUaGmF5xqmVGWFurGMtO8Cgb9Hg@mail.gmail.com>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Wed, 27 Apr 2011 13:29:50 +0200
+Message-ID: <BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org>
+	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
+	<20110120203840.GA11468@sigill.intra.peff.net>
+	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
+	<20110120215456.GB11468@sigill.intra.peff.net>
+	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
+	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
+	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+	<BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
+	<BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+	<BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com>
+	<BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 13:23:31 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 13:30:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF2q8-0007BF-Qc
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 13:23:29 +0200
+	id 1QF2wR-00022N-8m
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 13:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758627Ab1D0LXX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 07:23:23 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:61630 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756125Ab1D0LXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 07:23:22 -0400
-Received: by ewy4 with SMTP id 4so475164ewy.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 04:23:21 -0700 (PDT)
+	id S1758690Ab1D0L3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 07:29:54 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36148 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758613Ab1D0L3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 07:29:53 -0400
+Received: by bwz15 with SMTP id 15so1288377bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 04:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=fAa9l7JOsRfi1JGZRvQFhdvRmca6SQU/kh0KKcl3tbE=;
-        b=NLITwZgqJV8tSvDhpOjEu63rZmq4hybLnLathS5iEPcbEyq79Zh1lNg886bRr8l0Q/
-         GhqxfR92gGYPBNkT4DEtwYJQgNwF2S7A9DpHm/ltzL1ufnwiJ/Fa9cAEdiEdUJSAYrO/
-         l0YxwIJodKPta1BMuopUTKM4PeUUynzQ6SM6Q=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=hhBC+muEympnD4f4B8Tz0DqXahII1DbjFpXBFVO0jLA=;
+        b=xG+58QMGWWHYPoZUoJgMaRUhD5DED4813UseI04Bx4JCpXK/ju2FMbglvslcZElcvE
+         0z4iB/iKySE8r+RTakhd3Kfpj2DgGzXioOjeljsHPjvw7Y1VHE2JMTibzhPN0wSOAgUv
+         d3+vlnbEO15AhUSf7R1QiJ/HeMFaS946G0aF4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=E323Un7iaAbYG+kRNvl2n61qd2rvt/LVAI4zCQpuRNuRW97t+Pm3Mrieq9tlgoyGh+
-         M5cskZce/VB8wQna8Q36D3CfvtMmIMz3vUqEBVCqQ8mrQThN7FOaKv2SO/bmFVq04WM3
-         4FCh1IDZJDnm2n06H5vv/FsbdX662P5MucJbo=
-Received: by 10.14.4.157 with SMTP id 29mr854250eej.135.1303903401566;
-        Wed, 27 Apr 2011 04:23:21 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (h-185-240.A189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id s49sm481129eei.12.2011.04.27.04.23.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Apr 2011 04:23:19 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1QF34q-0003Wd-Oe; Wed, 27 Apr 2011 13:38:40 +0200
-Content-Disposition: inline
-In-Reply-To: <BANLkTinRUaGmF5xqmVGWFurGMtO8Cgb9Hg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=H8TG0V7A+lv06egCLiK12HEecTJ25AyLyXD2nqS/Cjf6D/pj4hcsVIgwBGaNKAzKU1
+         reWKdHI+ecboC3e5EYO8VnwFOPJ+Q0D4BJkn1KQ0hWYD9jPeGtYoghTCQyC9dfDe+P8T
+         gbIgzDY+EcEmXGnkM6pyKCE4ZykfQ61NjS8a0=
+Received: by 10.204.84.137 with SMTP id j9mr142392bkl.120.1303903791530; Wed,
+ 27 Apr 2011 04:29:51 -0700 (PDT)
+Received: by 10.204.120.195 with HTTP; Wed, 27 Apr 2011 04:29:50 -0700 (PDT)
+In-Reply-To: <BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172220>
 
-On Wed, Apr 27, 2011 at 03:33:57PM +1000, Jon Seymour wrote:
-> So, I think at a very minimum, a plugin architecture should specify
-> the file system layout of packages to be managed by a plugin/package
-> manager.
+On Wed, Apr 27, 2011 at 11:48 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> No problems here:
 
-As I recall, Junios initial plan was to have gitk-git as a submodule at
-some point. I still thinks this is a good idea.
+I had another go.
 
-If we extends the submodule concept, of not only having a list of
-submodules, but also state weather a submodule is 'active' or 'inactive=
-'
-we could easily get a _very_ customable git.git.
+mkdir remote
+cd remote/
+git init --bare
+cd ../
+git clone remote/ alice
+cd alice/
+echo test >> file
+git add file
+git commit -am w
+git push origin master
+echo test >> file
+git commit -am w
+git branch HEAD
+git push origin HEAD
+git push
+cd ..
+git clone remote bob
+cd bob/
+git branch
+git pull --rebase
+echo test >> file
+git commit -am w
+git push
+git pull
+git pull
+git pull
+echo test >> file
+git commit -am w
+git push
+cd ../alice
+git branch
+git status
+echo test >> file
+git commit -am w
+git push
+echo test2 >> file
+git commit -am w
+git push
+git pull
+echo test3 >> file
+git commit -am w
+git status
+git push
+gitk
 
-Imagine git.git only containing git. A 'git submodule init' would load
-the default 'active' submodules (for example git-gui, gitk-gui and
-gitweb), everything in contrib is 'inactive'. The point here is to be
-able to ship references to nice things to have (contrib) but not force
-the use (download, diskspace, etc.) of it.
 
-If a user finds an other awesome "plugin" to use with git, it's easy to
-add it to h{er,i}s repository with 'git submodule add'.
+stephen@bishop:/tmp/git$ mkdir remote
 
-Once the code is downloaded to the git-workspace (via 'git submodule
-update') the git build system ('make') would take care of building and
-installation, just as it does today.
+stephen@bishop:/tmp/git$ cd remote/
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+stephen@bishop:/tmp/git/remote$ git init --bare
+Initialized empty Git repository in /tmp/git/remote/
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+stephen@bishop:/tmp/git/remote$ cd ../
+
+stephen@bishop:/tmp/git$ git clone remote/ alice
+Cloning into alice...
+done.
+warning: You appear to have cloned an empty repository.
+
+stephen@bishop:/tmp/git$ cd alice/
+
+stephen@bishop:/tmp/git/alice$ echo test >> file
+
+stephen@bishop:/tmp/git/alice$ git add file
+
+stephen@bishop:/tmp/git/alice$ git commit -am w
+[master (root-commit) 072df32] w
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 file
+
+stephen@bishop:/tmp/git/alice{master}$ git push origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 210 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+To /tmp/git/remote/
+ * [new branch]      master -> master
+
+stephen@bishop:/tmp/git/alice{master}$ echo test >> file
+
+stephen@bishop:/tmp/git/alice{master}$ git commit -am w
+[master b39d099] w
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+stephen@bishop:/tmp/git/alice{master}$ git branch HEAD
+
+stephen@bishop:/tmp/git/alice{master}$ git push origin HEAD
+Counting objects: 5, done.
+Writing objects: 100% (3/3), 242 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+To /tmp/git/remote/
+ * [new branch]      HEAD -> HEAD
+
+stephen@bishop:/tmp/git/alice{master}$ git push
+Everything up-to-date
+
+stephen@bishop:/tmp/git/alice{master}$ cd ..
+
+stephen@bishop:/tmp/git$ git clone remote bob
+Cloning into bob...
+done.
+
+stephen@bishop:/tmp/git$ cd bob/
+
+stephen@bishop:/tmp/git/bob{master}$ git pull --rebase
+From /tmp/git/remote
+   072df32..b39d099  HEAD       -> origin/HEAD
+Current branch master is up to date.
+
+stephen@bishop:/tmp/git/bob{master}$ echo test >> file
+
+stephen@bishop:/tmp/git/bob{master}$ git commit -am w
+[master b39d099] w
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+stephen@bishop:/tmp/git/bob{master}$ git push
+Total 0 (delta 0), reused 0 (delta 0)
+To /tmp/git/remote
+   072df32..b39d099  HEAD -> master
+
+stephen@bishop:/tmp/git/bob{master}$ git pull
+Current branch master is up to date.
+
+stephen@bishop:/tmp/git/bob{master}$ git pull
+Current branch master is up to date.
+
+stephen@bishop:/tmp/git/bob{master}$ git pull
+Current branch master is up to date.
+
+stephen@bishop:/tmp/git/bob{master}$ echo test >> file
+
+stephen@bishop:/tmp/git/bob{master}$ git commit -am w
+[master 47699a9] w
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+stephen@bishop:/tmp/git/bob{master}$ git push
+Counting objects: 5, done.
+Writing objects: 100% (3/3), 240 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+To /tmp/git/remote
+   b39d099..47699a9  HEAD -> master
+
+stephen@bishop:/tmp/git/bob{master}$ cd ../alice
+
+stephen@bishop:/tmp/git/alice{master}$ git branch
+  HEAD
+* master
+
+stephen@bishop:/tmp/git/alice{master}$ git status
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
+nothing to commit (working directory clean)
+
+stephen@bishop:/tmp/git/alice{master}$ echo test >> file
+
+stephen@bishop:/tmp/git/alice{master}$ git commit -am w
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+[master 7e83bed] w
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+stephen@bishop:/tmp/git/alice{master}$ git push
+Everything up-to-date
+
+stephen@bishop:/tmp/git/alice{master}$ echo test2 >> file
+
+stephen@bishop:/tmp/git/alice{master}$ git commit -am w
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+[master b4f5b5b] w
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+stephen@bishop:/tmp/git/alice{master}$ git push
+Everything up-to-date
+
+stephen@bishop:/tmp/git/alice{master}$ git pull
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+remote: Counting objects: 5, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From /tmp/git/remote
+   072df32..47699a9  master     -> origin/master
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+First, rewinding head to replay your work on top of it...
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+Applying: w
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+
+stephen@bishop:/tmp/git/alice{master}$ echo test3 >> file
+
+stephen@bishop:/tmp/git/alice{master}$ git commit -am w
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+[master cc2088e] w
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+stephen@bishop:/tmp/git/alice{master}$ git status
+warning: refname 'HEAD' is ambiguous.
+warning: refname 'HEAD' is ambiguous.
+# On branch master
+# Your branch is ahead of 'origin/master' by 2 commits.
+#
+nothing to commit (working directory clean)
+
+stephen@bishop:/tmp/git/alice{master}$ git push
+Everything up-to-date
+
+stephen@bishop:/tmp/git/alice{master}$
+
+stephen@bishop:/tmp/git/alice{master}$ git --version
+git version 1.7.4.1
