@@ -1,67 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] config.txt,diff-options.txt: porcelain vs. plumbing for
- color.diff
-Date: Wed, 27 Apr 2011 17:12:15 -0500
-Message-ID: <20110427221215.GC18596@elie>
-References: <7voc3sewpg.fsf@alter.siamese.dyndns.org>
- <24a6907cade7aedb51dc20ab5977603ca21e70bb.1303889849.git.git@drmicha.warpmail.net>
- <20110427090323.GA14849@elie>
- <7v7hafabsj.fsf@alter.siamese.dyndns.org>
- <7vliyv7djb.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Thu, 28 Apr 2011 08:32:48 +1000
+Message-ID: <BANLkTikSsoCP_d34wdBHX=r336zJSHSWEQ@mail.gmail.com>
+References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
+	<4DB80747.8080401@op5.se>
+	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
+	<4DB82D90.6060200@op5.se>
+	<7vbozr8uo8.fsf@alter.siamese.dyndns.org>
+	<7vpqo77dlr.fsf@alter.siamese.dyndns.org>
+	<1303930175.25134.38.camel@drew-northup.unet.maine.edu>
+	<20110427194233.GA16717@gnu.kitenet.net>
+	<7vwrif5q93.fsf@alter.siamese.dyndns.org>
+	<20110427220748.GA19578@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 00:19:52 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 00:32:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFD5L-0007a2-30
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 00:19:51 +0200
+	id 1QFDHz-0005eD-Nd
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 00:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309Ab1D0WTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 18:19:46 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:56025 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751227Ab1D0WTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 18:19:45 -0400
-Received: by yia27 with SMTP id 27so777701yia.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 15:19:45 -0700 (PDT)
+	id S1758964Ab1D0Wcv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 18:32:51 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:40522 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754386Ab1D0Wcu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 18:32:50 -0400
+Received: by eyx24 with SMTP id 24so657958eyx.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 15:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=KyuwQDIrFBx0vOEaOz27YeOda3ZcdG8LMCUHW2SJI9I=;
-        b=tNPNHVu/Ju3qJn6/0S0lvcidHY4dWWRwQ965F/HAoRJdvcAOux1HiObPZiZzt81W8h
-         1XMQliiO2vlgazEWgaDUsXqMqqmpw3HZjG/ngesGGhKqjZ0c+UUdH6BZHgo2LHoW86tY
-         yKMxZ6iwVJXBgrj1w5a4gnkZx2uhoPhqk3zdQ=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jkIisUD7v5L3Y1KSfezQlfnAGIc7KBsbE05g52hCq9k=;
+        b=AQQdODnZBY5aTSLlIK50aMUuZwJoY0Xt1tfu2ZHbCMsZ2XEanEJ+ZkiMoMT4f4ofhv
+         qSFxlH8Kz0Oc9yXOCV6W7Feg2RCSzJDO/mOSvmVUyftWqmoOJ83cdKSHFuvo+UjbV1BW
+         OxDP9bv1JYRVZbzXlXcTwZxMOS9r/4/Tg9e40=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ctcYK+RvcCdUMLF3JQ6r50bfDBaKiUFXazzVvARF1fCL7f3dDlce13ME/qtfj77DAT
-         8np+OuvvEwbl94bzJThkPcWUDyKdt/8lkFfg6BUkSqpBhDXT2N7pdy5pPcID1WKbUIHf
-         HDH7F9zWUBqswN/HOy1zJmHZDM0JYmqTVaRSc=
-Received: by 10.146.33.3 with SMTP id g3mr2388621yag.23.1303942339815;
-        Wed, 27 Apr 2011 15:12:19 -0700 (PDT)
-Received: from elie (adsl-69-209-61-200.dsl.chcgil.sbcglobal.net [69.209.61.200])
-        by mx.google.com with ESMTPS id g37sm1174975anj.28.2011.04.27.15.12.17
-        (version=SSLv3 cipher=OTHER);
-        Wed, 27 Apr 2011 15:12:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vliyv7djb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=yHxr2No2D2O4znvr0hcTXV1mumfs6mOGTnfJiHmxiN2JusVwY5Hw7Eo3lbhU5PQNLl
+         398QGR+mwn2ySIQSsVcHuSAulxfPBaqGPL4qSDca3/sYtU8//6h1U75dal8r/GpUABND
+         s/Xq6rWHU4Bs2HmTZMpIDDebkFveIPIbMpTfE=
+Received: by 10.14.52.65 with SMTP id d41mr1309334eec.85.1303943568657; Wed,
+ 27 Apr 2011 15:32:48 -0700 (PDT)
+Received: by 10.14.22.68 with HTTP; Wed, 27 Apr 2011 15:32:48 -0700 (PDT)
+In-Reply-To: <20110427220748.GA19578@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172282>
 
-Junio C Hamano wrote:
+On Thu, Apr 28, 2011 at 8:08 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Junio C Hamano wrote:
 
-> I'll queue the following.
+> Or is the idea to blindly install (a symlink to) git-work to $(git
+> --exec-path)/ rather than a place on the $PATH? =C2=A0In this case, I=
+ would
+> be a little worried. =C2=A0How will the helper deal with uninstallati=
+on and
+> with namespace conflicts? =C2=A0(On the $PATH, these are expected pro=
+blems
+> and I'd expect each user has some way of dealing with them already.)
 
-Thanks; looks good.
+I see 'git pm activate' managing symbolic links in a directory
+dedicated to the purpose (.e.g. ~/.git-pm/activated).
+
+One thing 'git pm activate' could do is check that the commands
+exported by the 'gitwork' descriptor do not conflict with what is
+already activated.
+
+If the user has done something like:
+
+    git clone https://repo/gitwork.git ~/hub/gitwork
+
+and then:
+
+    git activate pm ~/hub/gitwork
+
+the symbolic links would be established to ~/hub/gitwork, wherever
+that happens to be.
+
+If the user has done:
+
+   apt-get install gitwork
+
+then given a package-manager adapter for apt-get, it could extract the
+=2Egpm file from the list of installed files, and resume activation fro=
+m
+there. Ultimately, the end result is the same ~/.git-pm/activated is
+updated, it has always been on the paths it needs to be.
+
+If the descriptor did have a list of exported commands (e.g. git-work,
+git-base, git-atomic, git-test), then a global registry could use this
+list of exported commands to detect conflicts early - at package
+registration time which might help avoid grief down the track.
