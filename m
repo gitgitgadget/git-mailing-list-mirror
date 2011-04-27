@@ -1,127 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] config.txt,diff-options.txt: porcelain vs. plumbing for
- color.diff
-Date: Wed, 27 Apr 2011 04:03:23 -0500
-Message-ID: <20110427090323.GA14849@elie>
-References: <7voc3sewpg.fsf@alter.siamese.dyndns.org>
- <24a6907cade7aedb51dc20ab5977603ca21e70bb.1303889849.git.git@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] handle_alias: provide GIT_PREFIX to !alias
+Date: Wed, 27 Apr 2011 16:06:09 +0700
+Message-ID: <BANLkTi=gjuOqLEArk_0Nj1faEu62dzjbZA@mail.gmail.com>
+References: <3422485b672000ecdc72d82ffce8c89f258831b9.1303893279.git.git@drmicha.warpmail.net>
+ <4DB7CF72.3080205@drmicha.warpmail.net> <5058a9853a75bff71187f553e67632997761de44.1303893279.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elias Persson <delreich@takeit.se>
+	Matej Batic <matej.batic@ge.infn.it>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 27 11:03:37 2011
+X-From: git-owner@vger.kernel.org Wed Apr 27 11:06:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF0en-0003zr-H5
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 11:03:37 +0200
+	id 1QF0hr-0005Vv-2m
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 11:06:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755460Ab1D0JDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 05:03:32 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44195 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755427Ab1D0JDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 05:03:31 -0400
-Received: by iwn34 with SMTP id 34so1193488iwn.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 02:03:30 -0700 (PDT)
+	id S1755493Ab1D0JGm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 05:06:42 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:40218 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754822Ab1D0JGk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 05:06:40 -0400
+Received: by bwz15 with SMTP id 15so1201072bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 02:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=asV6dwEmygLeQcYlykYnkp6/41HhwC3bEFdX3BtAXU0=;
-        b=Rk8qXKwOP6WVUVmNvpcnRu6H7HIAO61arIxzz0E2trhNrLAJ/J+RRT83nKAAeA+q+n
-         0nrmUxEhqk7ytjh3Igey0f2ueXVKvwHEKz4quQTm5WrmVnilscOxTvE2opJXdgT/OIan
-         3RJnE7+mXNPzH0WBqWBhXIYXIO33rbhjLm8vc=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=VNrXppzu5omElXBNwDfybT7j/M+vXEguWkLb4vowF4k=;
+        b=gsBx9PgEly2eLKoQdKGwBDZoaVlRX5xA+lacrzAVfS0wR/DNyDTlJVmQGcKJfo1Ff2
+         n8LZyqPp5S+n6eFunRTivwF+73X89lPuxGPvWryQLvvYFHzl05GaRN54zQ19kk6/XyMo
+         /ZL1Z7+Hq+o6I+tafsuxibhTkhvgfyV5VbDI0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=fedEn0Tls0497QQW8s/w3/QJnYYsxZtP19U7+0GosfWDFHJ8sXiNER2QF4L3ljRlhD
-         Gyck4fgpwZSuf2hhvLqUySzyV0V2hMXtifxVpcIIWDwohZxEHDic53l/1+g4n3tUN2oe
-         dsw9xSS8A86vZzi8yuN4m5zbQJQQ063V24H4Q=
-Received: by 10.231.199.77 with SMTP id er13mr1465304ibb.52.1303895010386;
-        Wed, 27 Apr 2011 02:03:30 -0700 (PDT)
-Received: from elie (adsl-68-255-96-190.dsl.chcgil.ameritech.net [68.255.96.190])
-        by mx.google.com with ESMTPS id f28sm257249ibh.16.2011.04.27.02.03.28
-        (version=SSLv3 cipher=OTHER);
-        Wed, 27 Apr 2011 02:03:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <24a6907cade7aedb51dc20ab5977603ca21e70bb.1303889849.git.git@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=JlRE/Esw/1nrkfWIFspTIPqSRwYC3mhwuqvAE84q44tRKUGh+AZJ44uxBEVcvoJ7eA
+         UEw/o04MOFBRnyEHAt1vbdpQSVcBjB3JVQ3vmdW7e9KwC8NCYu2i1Dg1LMpwzStJ/PsW
+         rL2VEd4f8/9XpeqCzEk9HzCP+1CbEkGL1uQyQ=
+Received: by 10.204.20.143 with SMTP id f15mr1674846bkb.173.1303895199178;
+ Wed, 27 Apr 2011 02:06:39 -0700 (PDT)
+Received: by 10.204.17.14 with HTTP; Wed, 27 Apr 2011 02:06:09 -0700 (PDT)
+In-Reply-To: <5058a9853a75bff71187f553e67632997761de44.1303893279.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172203>
 
-Michael J Gruber wrote:
+2011/4/27 Michael J Gruber <git@drmicha.warpmail.net>:
+> @@ -589,6 +589,8 @@ it will be treated as a shell command. =C2=A0For =
+example, defining
+> =C2=A0"gitk --all --not ORIG_HEAD". =C2=A0Note that shell commands wi=
+ll be
+> =C2=A0executed from the top-level directory of a repository, which ma=
+y
+> =C2=A0not necessarily be the current directory.
+> +'GIT_PREFIX' is set as returned by running 'git rev-parse --show-pre=
+fix'
+> +from the original current directory. See linkgit:git-rev-parse[1].
 
-> Reading the diff-family and config man pages one may think that the
-> color.diff and color.ui settings apply to all diff commands. Make it
-> clearer that they do not apply to the plumbing variants
-> diff-{files,index,tree}.
+It made me wonder "but then why should not we just do GIT_PREFIX=3D`git
+rev-parse --show-prefix` in the alias?" then realized by the time we
+do that, it's already too late. Maybe
 
-Sounds like a good idea.  Quick reactions:
+> +'GIT_PREFIX' is set as returned by running 'git rev-parse --show-pre=
+fix'
+> +before current directory is changed to top-level directory. See link=
+git:git-rev-parse[1].
 
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -708,7 +708,7 @@ second is the background.  The position of the attribute, if any,
->  doesn't matter.
->  
->  color.diff::
-> -	When set to `always`, always use colors in patch.
-> +	When set to `always`, always use colors in patch for porcelain commands.
->  	When false (or `never`), never.  When set to `true` or `auto`, use
->  	colors only when the output is to the terminal. Defaults to false.
-
-I am not sure I like promising that all porcelain commands will use
-color; for example, "git commit -v" does not (though "commit -v
---dry-run" does).  Maybe:
-
-	Whether to use ANSI escape sequences to add color to patches.
-	If this is set to `always`, linkgit:git-diff[1],
-	linkgit:git-log[1], and linkgit:git-show[1] will use color
-	for all patches.  If it is set to `true` or `auto`, those
-	commands will only use color when output is to the terminal.
-	Defaults to false.
-+
-This does not affect linkgit:git-format-patch[1] or the
-'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
-command line with the `--color[=<when>]` option.
-
-> @@ -796,7 +796,7 @@ color.status.<slot>::
->  	color.branch.<slot>.
->  
->  color.ui::
-> -	When set to `always`, always use colors in all git commands which
-> +	When set to `always`, always use colors in all porcelain commands which
->  	are capable of colored output. When false (or `never`), never. When
-
-Nitpick: the grammatical subject of the dependent clause ("when set to
-always") and the rest of the sentence ("always use colors") differ, so
-the sentence sounds awkward.  Not your fault, but while we're here, it
-might be nice to change that.
-
-I think the intent is something like
-
-	This variable determines the default for color.branch,
-	color.diff, color.grep, color.interactive, color.showbranch,
-	and color.status, and its scope will expand as other commands
-	learn configuration to set a default for the --color option.
-	Set it to "always" if you want all output not intended for
-	machine consumption to use color, to "true" or "auto" if you
-	want such output to use color when written to the terminal,
-	or to "false" or "never" if you prefer git commands not to
-	use color unless enabled explicitly with some other
-	configuration or the --color option.
-
-In other words, it's closer to "all appropriate commands" than "all
-porcelain".  format-patch is porcelain.  Not sure what a concise way
-to say that is, though.
-
-Thanks, and hope that helps.
-Jonathan
+?
+--=20
+Duy
