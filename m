@@ -1,94 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-completion: fix zsh support
-Date: Wed, 27 Apr 2011 09:56:18 -0700
-Message-ID: <7vzknb8wgd.fsf@alter.siamese.dyndns.org>
-References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
- <20110427013534.GA14286@elie> <7v62q0b8e0.fsf@alter.siamese.dyndns.org>
- <BANLkTinep961dg9v3TD8hZZAvTYL3_H+xg@mail.gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Wed, 27 Apr 2011 13:07:49 -0400
+Message-ID: <4DB84D65.6070906@gmail.com>
+References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>	<4DB80747.8080401@op5.se>	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>	<4DB82D90.6060200@op5.se>	<BANLkTi=XcR9FTPC8oe100fMneNf1nca4_Q@mail.gmail.com> <BANLkTikGZgEb-4jzHt+t2k__s7BMgbU9gg@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Stefan Haller <lists@haller-berlin.de>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Mark Lodato <lodatom@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 18:56:43 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 19:08:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF82c-0005KM-FM
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 18:56:42 +0200
+	id 1QF8Db-0004ht-EF
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 19:08:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759515Ab1D0Q4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 12:56:37 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55245 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759345Ab1D0Q4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 12:56:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B65F544CD;
-	Wed, 27 Apr 2011 12:58:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iM+HAomb0ouID1jF9QBOelUigZU=; b=U+56x9
-	3XHjXRtPO4s2A7gGMRFP6WxrZkFRem1YYbOueaS8rrv6BWLy26WDidskoBKmsQ/o
-	ZqiH78SEAcfDQXEYApYSGLd2FthzPxmSetuVCf0jeYPc++OhtU06I08T3aCves3B
-	YeSQDjkbvh9CKSVrMm+oVo3vWmtjDSpu02YNs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QxcwF2RF3npoeGTtIZb83i3miwjpAcB0
-	+zCMYSx2VEYAs5AnlCpzGfIgwZW4gSEf41JA/igUKRDXBBcwQ15rtNZ2bveBKVQh
-	rQzBn7djcnwQ96qbwbcSTze4Y9G2eFMg2qLIm6qXJ2gfXeFqd2AbFYhkvkxIPQBR
-	X6QJIX143wI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 56A5944C2;
-	Wed, 27 Apr 2011 12:58:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9530D44B8; Wed, 27 Apr 2011
- 12:58:21 -0400 (EDT)
-In-Reply-To: <BANLkTinep961dg9v3TD8hZZAvTYL3_H+xg@mail.gmail.com> (Felipe
- Contreras's message of "Wed, 27 Apr 2011 11:20:42 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 935A021E-70EF-11E0-A248-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1759573Ab1D0RH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 13:07:58 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:45022 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759568Ab1D0RH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 13:07:56 -0400
+Received: by vws1 with SMTP id 1so1470645vws.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 10:07:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:disposition-notification-to:date
+         :from:reply-to:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=ghQaWLSJygn5E6BaZhWrS1LLYW+nPVSmtqam4JgLaps=;
+        b=f+0UyMPu1frCEObVMUESlXMxOv09bEV7MXRayJFkvSClJ5/HvJILTAn8/D+Dv3sW22
+         vNgqgxfqBwUb+PcVHUihmncY+XOIxnUN6odsB7BxgC/S6qEIR/X2mKoZuFZaHtVa1X1p
+         6gFD1GzJ1+30yrYrTFYHvQNifKdCCahrwLKnE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=cge0JLm6Mw2o9XWuEhksn1u191xVtM6PLoQLIKAu/rqxjGnF0UUWI/LtomQ+aXTDer
+         pUdsEW8BPyBvJ94kQVgNX98uzoi4GoGdx4oKvquMkmGLIyne3kuCH6ShgMUynOYU8oyJ
+         sDHDU/BW5lqZakU90KA8fu6FA+QNWgaCIXFls=
+Received: by 10.220.110.39 with SMTP id l39mr722596vcp.7.1303924076085;
+        Wed, 27 Apr 2011 10:07:56 -0700 (PDT)
+Received: from [10.0.1.131] (cpe-67-248-185-165.nycap.res.rr.com [67.248.185.165])
+        by mx.google.com with ESMTPS id x29sm212573vcf.2.2011.04.27.10.07.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 27 Apr 2011 10:07:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20110307 Iceowl/1.0b1 Icedove/3.0.11
+In-Reply-To: <BANLkTikGZgEb-4jzHt+t2k__s7BMgbU9gg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172245>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> On Wed, Apr 27, 2011 at 7:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->> I'd love to share the enthusiasm, but find that "as we can see" needs a
->> much more clarification.
+On 04/27/2011 12:13 PM, Jon Seymour wrote:
+> I think my use of the word package was unfortunate, since it suggests
+> I am proposing an alternative to tools such as apt-get, brew, rpm etc.
 >
-> Jonathan already described it:
-> http://article.gmane.org/gmane.comp.version-control.git/170665
+> This is not the intention. The intention is to manage _plugins_ to
+> git, treating git itself as a platform.
 >
-> And this snipped demonstrates it:
-> ...
+> Plugins will be delivered via platform-specific package managers
+> (perhaps sequenced by git-pm), but once they arrive on the OS platform
+> they will be _activated_ by the plugin manager and this made available
+> to the git command line.
+>
+> Platform specific concerns such as building and (most) dependency
+> management will be delegated to platform specific package managers.
+>
+> The overriding objective is to allow a git user to install a git
+> plugin called foobar with 4 words:
+>
+>       git pm install foobar
+>
+> given that someone, somwhere, has done the work to create a plugin
+> descriptor and create an installable package of some kind for whatever
+> package managers are required in order to successfully install the
+> plugin on the target platform.
+>
+> The same command should work whether your git platform is hosted on
+> MAC OSX, cygwin, Debian, Fedora, AIX or Windows.
+>
+> Where git can be used as the underlying package manager, it will be
+> (for extensions which really are just source repos). If more
+> sophisticated build support is required, then that will be delegated
+> to a platform specific package manager via one of a small number of
+> package manager adapters.
 
-When I say "needs more clarification" during a review, I am not asking the
-contributor to explain it in the discussion thread to _me_ who happen to
-be asking at that moment.  I am asking the contributor to explain it to
-people who will read "git log" output 6 months down the road.
-
-You have been here long enough to know that "Jonathan already described
-it" that is not connected in the commit that is going to be recorded is
-not something we appreciate, no?
-
-In any case, the message of Jonathan's
-
-    Subject: [RFC/PATCH] completion: avoid "words" as variable name for zsh portability
-    Date: Wed, 27 Apr 2011 01:40:34 -0500
-    Message-ID: <20110427064033.GB4226@elie>
-
-seems to explain it better.  The naming of variables and other details
-might need to be settled, but other than that is it correct to understand
-that we will see a final version along the line of that patch?
-
-Thanks.
+For a git plugin ecosystem to work, a (relatively) stable API/ABI is 
+necessary for the plugin authors to code to. Where is your proposal for 
+that.
