@@ -1,124 +1,93 @@
-From: Jon Seymour <jon.seymour@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Thu, 28 Apr 2011 07:47:25 +1000
-Message-ID: <BANLkTi=H3oU5SxwJJZ9ZYJBWy+VS2CvJ7w@mail.gmail.com>
+Date: Wed, 27 Apr 2011 17:08:27 -0500
+Message-ID: <20110427220748.GA19578@elie>
 References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
-	<20110427212943.GA2646@jakstys.lt>
+ <4DB80747.8080401@op5.se>
+ <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
+ <4DB82D90.6060200@op5.se>
+ <7vbozr8uo8.fsf@alter.siamese.dyndns.org>
+ <7vpqo77dlr.fsf@alter.siamese.dyndns.org>
+ <1303930175.25134.38.camel@drew-northup.unet.maine.edu>
+ <20110427194233.GA16717@gnu.kitenet.net>
+ <7vwrif5q93.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Motiejus_Jak=C5=A1tys?= <desired.mta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 23:47:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 00:08:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFCa5-0007kf-N3
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 23:47:34 +0200
+	id 1QFCuW-0001oM-Gt
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 00:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760060Ab1D0Vr2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 17:47:28 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:64523 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756990Ab1D0Vr1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 17:47:27 -0400
-Received: by ewy4 with SMTP id 4so649828ewy.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 14:47:26 -0700 (PDT)
+	id S1753291Ab1D0WIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 18:08:35 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:55848 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752452Ab1D0WIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 18:08:34 -0400
+Received: by iyb14 with SMTP id 14so1729241iyb.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 15:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2i5JZ6POO/7sTVkayTqPtGqBJ0Ezj9zWpYwWbJFIDHk=;
-        b=vsH1jRHkpJCTudYFqPkZ+bVvj5MQtPpb5J0w2qXOdIFQRyop7dDkdeWG+zXsFYGiTa
-         PpQeYnscV3rSUW4BWbM34vO0bSD+i8gIwdSyGsDoABwa78gpYt+x/H4yACPJd+OpxWL8
-         p9qCks6WbZfXSBzAVNgo7YeuXD8cB7alYrvJg=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mFUjDafQDDtPOsFfCcXtyUnKGorEw32GZ09GRtrBWCk=;
+        b=IjAzUeq3u3/QIgsYVN+h3g4++uSIgqOxFoBrWKZYvQigHI5m5+fAAA+2GWvbLQieQ3
+         4nOlCg+/8nDz7ObzT227WjNX8YVLXxB/thUGvp/fJVkAbtQjhCnB4yuhYCBG3+odbcmZ
+         3JdHntm21QWHBXqXCSpE5eHyTLPjIHCgDTK1E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Z/wb8vQ45QhwPBxt2Cx8dJAGI3q8u440J2DynNlPJ0Vp702FGEwSVlPl3FSO1bkkyx
-         z7Yi5fRK3R3QOnn13i/8vjIvpu/LHIA3ArlsbxeVfo1TMSgj9EnxtxesWuJKXGgOoz92
-         yQPdbaax7/uepEb9d6R49KG27+7bgkVcpdZFg=
-Received: by 10.14.123.9 with SMTP id u9mr1209120eeh.53.1303940846269; Wed, 27
- Apr 2011 14:47:26 -0700 (PDT)
-Received: by 10.14.22.68 with HTTP; Wed, 27 Apr 2011 14:47:25 -0700 (PDT)
-In-Reply-To: <20110427212943.GA2646@jakstys.lt>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=DJw6KjmNpQuTMzkyel34xrlls8xLvhv+bvnsntQ9S1tOPxvDz21HV6oqBESJQwjdlu
+         1ZX7qDYPfkfkaomP0hLkZ6eam7IPnGVL/GPeu6D76LNjUADdaQzuQ8rLCQjERvaxx1PP
+         4fymr7VdkZSL+3LOjwn92WIqC3sxeGHwcVeJA=
+Received: by 10.42.150.66 with SMTP id z2mr3294244icv.462.1303942114023;
+        Wed, 27 Apr 2011 15:08:34 -0700 (PDT)
+Received: from elie (adsl-69-209-61-200.dsl.chcgil.ameritech.net [69.209.61.200])
+        by mx.google.com with ESMTPS id f28sm451965ibh.50.2011.04.27.15.08.31
+        (version=SSLv3 cipher=OTHER);
+        Wed, 27 Apr 2011 15:08:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vwrif5q93.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172280>
 
-2011/4/28 Motiejus Jak=C5=A1tys <desired.mta@gmail.com>:
-- Hide quoted text -
-> On Wed, Apr 27, 2011 at 01:36:44PM +1000, Jon Seymour wrote:
->> Has anyone ever given consideration to git supporting a plugin
->> architecture for git extensions?
->>
->
-> How about this proposition? From the user perspective:
-> $ cd /somewhere/might/be/home/or/project/.git/ext/
-> $ git clone git://github.com/jonseymour/gitwork.git
->
-> What user finds in gitwork/ is totally up to maintainer. git cares ab=
-out
-> two files:
->    .git/ext/git-work(.exe)
->    .git/ext/git-work.1.gz
->
-> $ cd gitwork;
-> $ (c)make|./waf|scons|what_the_hell_just_produce_git-work
-> $ git config ext.work.enabled true
->
-> What git does when git <command> is invoked:
-> -------------------------------------------
-> * config.ext.<command>.enabled is true. If not, do nothing new.
-> * if above is true, search for git-work in:
->  ** project directory
->  ** user home directory
-> * if found, execute it
-> * if not found, fallback to default mechanism (check in
->    cmd_struct_commands, etc)
->
-> Similar with man pages.
->
-> Think about how Vim plugins are distributed. Vim developers assumed t=
-hat
-> users are educated enough to download the plugin and extract it to th=
-e
-> right place. Are git users less intelligent to download & install it,
-> especially in a case when they need an *extension*?
->
-> Are you trying to kill a bird with a rock?
->
-> Motiejus
->
+Junio C Hamano wrote:
 
-I think that is a little more invasive of git-core than it needs to be.
+> For example, on my primary development box, I do not have any git
+> installed from distribution, but I do have git on my $PATH.  For such
+> users, "make install" should be able to find out that the right place to
+> install git-work.1 is in $HOME/some/where/man/man1 directory.
 
-I was thinking more along the lines of, having solved the distribution
-and build problem _some other way_, resulting in a foobar.gpm file
-ending up in, say, /usr/local/lib/git-pm/foobar.gpm.
+Sorry to be dense, but: isn't the right place to install git-work.1
+one of
 
-You would then run:
+	/usr/local/share/man
+	/usr/share/man
+	/opt/man
+	$HOME/man
+	$prefix/man
 
-   git pm activate foobar
+depending on where the git-work binary was installed?  In the $prefix
+case, the same snippet in .profile that adds $prefix/bin to the $PATH
+would also say
 
-which would then link:
+	MANPATH=$prefix/man:$(manpath)
 
-  ln -sf /usr/local/bin/git-foobar ~/.git-pm/activated/libexec/git-foob=
-ar
-  ln -sf /usr/local/share/man/man1 ~/.git-pm/activated/share/man/man1
-
-One would have to have previously arranged for the sub directories of
-~/git-pm/activated to be in the PATH and MANPATH paths.
-
-Deactivating would involve removing the links.
-
-Deciding which links to link during activation and de-activation would
-be driven by a short descriptor file.
-
-jon.
+Or is the idea to blindly install (a symlink to) git-work to $(git
+--exec-path)/ rather than a place on the $PATH?  In this case, I would
+be a little worried.  How will the helper deal with uninstallation and
+with namespace conflicts?  (On the $PATH, these are expected problems
+and I'd expect each user has some way of dealing with them already.)
