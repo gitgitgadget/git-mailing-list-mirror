@@ -1,128 +1,131 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] git-completion: fix zsh support
-Date: Wed, 27 Apr 2011 20:17:15 +0300
-Message-ID: <BANLkTi=tsgfteYRj8iODZifZuepVCJGq1w@mail.gmail.com>
-References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
-	<20110427013534.GA14286@elie>
-	<7v62q0b8e0.fsf@alter.siamese.dyndns.org>
-	<BANLkTinep961dg9v3TD8hZZAvTYL3_H+xg@mail.gmail.com>
-	<7vzknb8wgd.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] strbuf: allocate enough space when strbuf_setlen() is
+ called first time
+Date: Wed, 27 Apr 2011 19:24:50 +0200
+Message-ID: <4DB85162.6000204@lsrfire.ath.cx>
+References: <1303820660-744-1-git-send-email-pclouds@gmail.com> <7vaafdexsp.fsf@alter.siamese.dyndns.org> <4DB738A1.8020706@lsrfire.ath.cx> <7vhb9kd6kp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Stefan Haller <lists@haller-berlin.de>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Mark Lodato <lodatom@gmail.com>
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 19:20:31 2011
+X-From: git-owner@vger.kernel.org Wed Apr 27 19:25:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF8Pe-0004Zb-Ou
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 19:20:31 +0200
+	id 1QF8Um-0007qa-7i
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 19:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756499Ab1D0RU0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 13:20:26 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37812 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756236Ab1D0RUZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 13:20:25 -0400
-Received: by fxm17 with SMTP id 17so1276664fxm.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 10:20:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EJcPbzelvauzWly+d1pPGSckeI2uMR+o5ypCj1ngtfI=;
-        b=hufV3DRgqzpp9m7BQtLYlkJhcoP+TM79EDtJBvEy8zs6H8RRWm00ckFzs5H0rfS3wG
-         purCH0QNenmY6s8bULepjJ2zTj4NY8yp10oiyPR4np9oLNpqwDMXLJLSRq86R8EFIiU8
-         s13SLKODAiE7gC0XgNYGi3md3uzwk/CMthA5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hKgbj9TTbEu0b6fe8E9um/yBLx500SqibMvWaXRjiB1+wCmY1ba0YfGUgDkmyctnSB
-         gYgkvwM+lbiyG9HwIq/coHGlZ2tk3l4QhSGHZeRlRbiKb3wi0Id8T4Vsqo2AdO4mDY8m
-         rBM6js8yI0FKKqTBrJf3E4W3ZvdlU7ATsU/c0=
-Received: by 10.223.87.16 with SMTP id u16mr2651988fal.13.1303924635535; Wed,
- 27 Apr 2011 10:17:15 -0700 (PDT)
-Received: by 10.223.74.130 with HTTP; Wed, 27 Apr 2011 10:17:15 -0700 (PDT)
-In-Reply-To: <7vzknb8wgd.fsf@alter.siamese.dyndns.org>
+	id S1756590Ab1D0RZn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 13:25:43 -0400
+Received: from india601.server4you.de ([85.25.151.105]:41228 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756236Ab1D0RZm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 13:25:42 -0400
+Received: from [192.168.2.106] (p4FFDB579.dip.t-dialin.net [79.253.181.121])
+	by india601.server4you.de (Postfix) with ESMTPSA id 905212F8050;
+	Wed, 27 Apr 2011 19:25:40 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <7vhb9kd6kp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172249>
 
-On Wed, Apr 27, 2011 at 7:56 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Wed, Apr 27, 2011 at 7:55 AM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->> ...
->>> I'd love to share the enthusiasm, but find that "as we can see" nee=
-ds a
->>> much more clarification.
->>
->> Jonathan already described it:
->> http://article.gmane.org/gmane.comp.version-control.git/170665
->>
->> And this snipped demonstrates it:
->> ...
->
-> When I say "needs more clarification" during a review, I am not askin=
-g the
-> contributor to explain it in the discussion thread to _me_ who happen=
- to
-> be asking at that moment. =C2=A0I am asking the contributor to explai=
-n it to
-> people who will read "git log" output 6 months down the road.
->
-> You have been here long enough to know that "Jonathan already describ=
-ed
-> it" that is not connected in the commit that is going to be recorded =
-is
-> not something we appreciate, no?
+Am 26.04.2011 23:51, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
+>=20
+>> How about something like this instead?  The call to strbuf_grow() wa=
+s
+>> introduced in a8f3e2219 when there was no strbuf_slopbuf buffer that
+>> nowadays makes sure we always have a place to write an initial NUL.
+>> We can take it out again now, simplifying the code and hopefully
+>> avoiding future confusion.
+>=20
+> Thanks; I think that makes sense.
+>=20
+> It further may make sense to turn the assert into BUG() though, to cl=
+arify
+> what kind of programming error we are trying to catch.  Perhaps like:
+>=20
+>>   static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
+>> +	assert(len<  (sb->alloc ? sb->alloc : 1));
+>=20
+> 	if (len<  (sb->alloc ? sb->alloc : 1))
+> 		die("programming error: using strbuf_setlen() to extend a strbuf");
+>=20
+>>   	sb->len =3D len;
+>>   	sb->buf[len] =3D '\0';
+>>   }
 
-How is one supposed to know when the clarification is sufficient or
-not? Are you advocating communication through git patches?
+I like the idea, except the comparison needs to be inverted.
 
-I prefer to discuss in the mailing list, and when there's consensus
-fire 'git send-email', that's what they do in lkml.
+Compiled, but not tested.  The test suite takes too long and skips too
+many tests on my Windows box and I don't have any other machine
+available right now. :-/
 
-> In any case, the message of Jonathan's
->
-> =C2=A0 =C2=A0Subject: [RFC/PATCH] completion: avoid "words" as variab=
-le name for zsh portability
-> =C2=A0 =C2=A0Date: Wed, 27 Apr 2011 01:40:34 -0500
-> =C2=A0 =C2=A0Message-ID: <20110427064033.GB4226@elie>
->
-> seems to explain it better. =C2=A0The naming of variables and other d=
-etails
-> might need to be settled, but other than that is it correct to unders=
-tand
-> that we will see a final version along the line of that patch?
+-- >8 --
+Subject: strbuf: clarify assertion in strbuf_setlen()
 
-I prefer something short, and to the point:
+Commit a8f3e2219 introduced the strbuf_grow() call to strbuf_setlen() t=
+o
+make ensure that there was at least one byte available to write the
+mandatory trailing NUL, even for previously unallocated strbufs.
 
+Then b315c5c0 added strbuf_slopbuf for the same reason, only globally f=
+or
+all uses of strbufs.
+
+Thus the strbuf_grow() call can be removed now.  This avoids readers of
+strbuf.h from mistakenly thinking that strbuf_setlen() can be used to
+extend a strbuf.
+
+The following assert() needs to be changed to cope with the fact that
+sb->alloc can now be zero, which is OK as long as len is also zero.  As
+suggested by Junio, use the chance to convert it to a die() with a shor=
+t
+explanatory message.  The pattern of 'die("BUG: ...")' is already used =
+in
+strbuf.c.
+
+This was the only assert() in strbuf.[ch], so assert.h doesn't have to =
+be
+included anymore either.
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
-git-completion: fix zsh support
+ strbuf.h |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
 
-Support for zsh was broken on commit da48616f1d[1], due to the fact
-that 'words' is a is a special variable used by zsh completion[2].
-
-Jonathan Nieder found that 'typset -h' resets that special behavior,
-which is exactly what we want. So alias the currently used 'local' to
-that.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/170665
-[2] http://article.gmane.org/gmane.comp.shells.zsh.devel/22484
----
-
+diff --git a/strbuf.h b/strbuf.h
+index 07060ce..9e6d9fa 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -3,8 +3,6 @@
+=20
+ /* See Documentation/technical/api-strbuf.txt */
+=20
+-#include <assert.h>
+-
+ extern char strbuf_slopbuf[];
+ struct strbuf {
+ 	size_t alloc;
+@@ -33,9 +31,8 @@ static inline size_t strbuf_avail(const struct strbuf=
+ *sb) {
+ extern void strbuf_grow(struct strbuf *, size_t);
+=20
+ static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
+-	if (!sb->alloc)
+-		strbuf_grow(sb, 0);
+-	assert(len < sb->alloc);
++	if (len > (sb->alloc ? sb->alloc - 1 : 0))
++		die("BUG: strbuf_setlen() beyond buffer");
+ 	sb->len =3D len;
+ 	sb->buf[len] =3D '\0';
+ }
 --=20
-=46elipe Contreras
+1.7.5
