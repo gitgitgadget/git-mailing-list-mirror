@@ -1,77 +1,76 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Automatically autoload bashcompinit for ZSH, when needed
-Date: Wed, 27 Apr 2011 04:11:26 +0300
-Message-ID: <BANLkTindtTVcLetYs1wJ0K9BcQO7YNYpvw@mail.gmail.com>
-References: <7vtydkddto.fsf@alter.siamese.dyndns.org>
-	<1303849690-20894-1-git-send-email-mstormo@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] run-command.c: Fix unused variables warning with gcc 4.6
+Date: Tue, 26 Apr 2011 20:16:14 -0500
+Message-ID: <20110427011614.GA14181@elie>
+References: <4DB6BA5E.3040306@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Marius Storm-Olsen <mstormo@gmail.com>
-To: Marius Storm-Olsen <marius@storm-olsen.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 03:11:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Andreas Ericsson <ae@op5.se>
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 03:16:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEtHx-0002Zf-2L
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 03:11:33 +0200
+	id 1QEtMh-0004i1-CW
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 03:16:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752504Ab1D0BL2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2011 21:11:28 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56759 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438Ab1D0BL1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2011 21:11:27 -0400
-Received: by fxm17 with SMTP id 17so818856fxm.19
-        for <git@vger.kernel.org>; Tue, 26 Apr 2011 18:11:26 -0700 (PDT)
+	id S1755277Ab1D0BQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 21:16:22 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60724 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753726Ab1D0BQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 21:16:21 -0400
+Received: by yxs7 with SMTP id 7so284161yxs.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 18:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6kSXZuKUHqNFc5/NjxKDKLRFNDEwrO+weZccOEy6HWk=;
-        b=LFrcwtobdwfh21h4kYJZgrFxG1YeAC30iqCheCsA8HrABtWK1mEdG7rHqB5ThzhHQE
-         SUhQm8WBjPSY3mSzzfMJ7AB6yUXc3FymEv1qdJvk1ealGOEPMweqQJkfC97NEi+vyLza
-         JfFDGkQMBQBwKLiznn38a6oylxk4idNrhiiRg=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=e7acOOmNcpmySozAcJ+SRse6fX7nYT3tg0w97YmeTyM=;
+        b=AlsR8uylGR9IgIND+dmaT6+gXcI4BkQsTNSZosF4I9/LAjLNr+4K2Io0c6ce9uG1R8
+         MZMdnw9g42wbXElBfAhoH66E9f+LxiDSLuERLAoPlm1U/Ena0VAnmhFg6LBxjneAGaLW
+         I5RPBLapEkIUGS2JJIjU6VR9iX3N4Pr0DAJ7o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VdvAhwzNiJ3lzAnOuPMlrQLz+QpjZYPVcH27zTrO0o2BNxGtv66CWtX/0HzX6MkXCZ
-         SxFTssgU/fPlQR2A7YLq1o13M9F4CxVIdoOZMtbXYeF3kavEFTfdDIVa/332bC40bfjp
-         NBRQP8O+FU5nEq1kbVXtBcjoa7VraMVHt7gTw=
-Received: by 10.223.87.16 with SMTP id u16mr1601378fal.13.1303866686271; Tue,
- 26 Apr 2011 18:11:26 -0700 (PDT)
-Received: by 10.223.74.130 with HTTP; Tue, 26 Apr 2011 18:11:26 -0700 (PDT)
-In-Reply-To: <1303849690-20894-1-git-send-email-mstormo@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=dQRHBJZf3272+xqi8z0EgiE230bG2N7Ijav3SLhmil1v/4iuPrfGwKMqOF/Vc9YRJn
+         hJ8yHisE7uz+6M8IIsH/kXLqtcIKoZUqAhWnI07ZAv0Va3ZSaE5Uc40l2sUfK5sVbn/m
+         Eu7Ct7/xl9kkeu4V86UH6kqlrnhb+zY9b+HRQ=
+Received: by 10.101.46.13 with SMTP id y13mr952045anj.136.1303866980957;
+        Tue, 26 Apr 2011 18:16:20 -0700 (PDT)
+Received: from elie (adsl-68-255-96-190.dsl.chcgil.ameritech.net [68.255.96.190])
+        by mx.google.com with ESMTPS id c38sm300004anc.18.2011.04.26.18.16.18
+        (version=SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2011 18:16:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4DB6BA5E.3040306@elegosoft.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172140>
 
-On Tue, Apr 26, 2011 at 11:28 PM, Marius Storm-Olsen
-<marius@storm-olsen.com> wrote:
-> If bashcompinit has not already been autoloaded, do so
-> automatically, as it is required to properly parse the
-> git-completion file with ZSH.
->
-> Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
-> ---
+Hi Michael,
 
-> +if [[ -n ${ZSH_VERSION-} ]]; then
-> + =C2=A0 =C2=A0 =C2=A0 if ! bashcompinit >/dev/null 2>&1; then
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 autoload -U bashco=
-mpinit
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bashcompinit
-> + =C2=A0 =C2=A0 =C2=A0 fi
+Michael Schubert wrote:
 
-How about this instead?
-autoload -UX bashcompinit && bashcompinit
+> As of gcc 4.6 -Wall includes -Wunused-but-set-variable. Remove all
+> unused variables to prevent those warnings.
 
---=20
-=46elipe Contreras
+As the other Michael mentioned, this patch replaces one warning with
+another.  You might like a111eb7 (run-command: handle short writes and
+EINTR in die_child, 2011-04-20, aka jn/run-command-error-failure in
+"pu"), which eliminates both.
+
+Andreas, a patch on top to short-circuit away the later writes on
+error doesn't sound bad to me if you'd like, though it seems like a
+bit of an edge case.
+
+Thanks, all.
+Jonathan
