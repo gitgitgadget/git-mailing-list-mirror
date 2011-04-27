@@ -1,78 +1,104 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] handle_alias: provide GIT_PREFIX to !alias
-Date: Wed, 27 Apr 2011 16:06:09 +0700
-Message-ID: <BANLkTi=gjuOqLEArk_0Nj1faEu62dzjbZA@mail.gmail.com>
-References: <3422485b672000ecdc72d82ffce8c89f258831b9.1303893279.git.git@drmicha.warpmail.net>
- <4DB7CF72.3080205@drmicha.warpmail.net> <5058a9853a75bff71187f553e67632997761de44.1303893279.git.git@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] completion: avoid "words" as variable name for zsh
+ portability
+Date: Wed, 27 Apr 2011 04:11:40 -0500
+Message-ID: <20110427091140.GB14849@elie>
+References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
+ <20110427013534.GA14286@elie>
+ <7v62q0b8e0.fsf@alter.siamese.dyndns.org>
+ <20110427064033.GB4226@elie>
+ <BANLkTinA5hfddqpGwOBjk+2oFDpwqORrSg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Matej Batic <matej.batic@ge.infn.it>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 27 11:06:48 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Stefan Haller <lists@haller-berlin.de>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	Mark Lodato <lodatom@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 11:11:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF0hr-0005Vv-2m
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 11:06:47 +0200
+	id 1QF0mm-0008CB-TY
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 11:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755493Ab1D0JGm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 05:06:42 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40218 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754822Ab1D0JGk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 05:06:40 -0400
-Received: by bwz15 with SMTP id 15so1201072bwz.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 02:06:39 -0700 (PDT)
+	id S1755555Ab1D0JLr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 05:11:47 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:60464 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755494Ab1D0JLq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 05:11:46 -0400
+Received: by iyb14 with SMTP id 14so1194046iyb.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 02:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=VNrXppzu5omElXBNwDfybT7j/M+vXEguWkLb4vowF4k=;
-        b=gsBx9PgEly2eLKoQdKGwBDZoaVlRX5xA+lacrzAVfS0wR/DNyDTlJVmQGcKJfo1Ff2
-         n8LZyqPp5S+n6eFunRTivwF+73X89lPuxGPvWryQLvvYFHzl05GaRN54zQ19kk6/XyMo
-         /ZL1Z7+Hq+o6I+tafsuxibhTkhvgfyV5VbDI0=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=5Q8LrYTOsV0VOT6cPpd3ooYjqc4Lj1gAGMdxiOrSRR0=;
+        b=NSvEe58k0gVHArYhTV+fFa1Wdc/PJfSZF87RRBtMJ8hPc9zrjVEanN0TMzvrXEbqwx
+         wTav+1f2j2Ih7ISYiDeIguuxIexphP7xKyngPkGFJWbW607fK4HzKrFiz6Ipm30EshRN
+         aECAhn/ht2Y2I42QQiG0sXMA0WkdmleXlUjrk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=JlRE/Esw/1nrkfWIFspTIPqSRwYC3mhwuqvAE84q44tRKUGh+AZJ44uxBEVcvoJ7eA
-         UEw/o04MOFBRnyEHAt1vbdpQSVcBjB3JVQ3vmdW7e9KwC8NCYu2i1Dg1LMpwzStJ/PsW
-         rL2VEd4f8/9XpeqCzEk9HzCP+1CbEkGL1uQyQ=
-Received: by 10.204.20.143 with SMTP id f15mr1674846bkb.173.1303895199178;
- Wed, 27 Apr 2011 02:06:39 -0700 (PDT)
-Received: by 10.204.17.14 with HTTP; Wed, 27 Apr 2011 02:06:09 -0700 (PDT)
-In-Reply-To: <5058a9853a75bff71187f553e67632997761de44.1303893279.git.git@drmicha.warpmail.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Kl6DNdRMZVpJ35ogN1OJRjDJXY2PHl7gS5m2OJOwebwGfaAP3Q8Nq6T3bzhGMJtZc/
+         2tmjRcWTQd/YXqs/LGkoq2HeKPPmhbcfiSYkFVrcbDYZUuNTXCLH8O2UOgnAqGqfacSt
+         NJojrDyWGj4QpIwuU29gna3WC+VDPhm7YnACk=
+Received: by 10.43.58.148 with SMTP id wk20mr2495530icb.242.1303895506006;
+        Wed, 27 Apr 2011 02:11:46 -0700 (PDT)
+Received: from elie (adsl-68-255-96-190.dsl.chcgil.ameritech.net [68.255.96.190])
+        by mx.google.com with ESMTPS id a8sm259366ibg.14.2011.04.27.02.11.43
+        (version=SSLv3 cipher=OTHER);
+        Wed, 27 Apr 2011 02:11:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTinA5hfddqpGwOBjk+2oFDpwqORrSg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172204>
 
-2011/4/27 Michael J Gruber <git@drmicha.warpmail.net>:
-> @@ -589,6 +589,8 @@ it will be treated as a shell command. =C2=A0For =
-example, defining
-> =C2=A0"gitk --all --not ORIG_HEAD". =C2=A0Note that shell commands wi=
-ll be
-> =C2=A0executed from the top-level directory of a repository, which ma=
-y
-> =C2=A0not necessarily be the current directory.
-> +'GIT_PREFIX' is set as returned by running 'git rev-parse --show-pre=
-fix'
-> +from the original current directory. See linkgit:git-rev-parse[1].
+=46elipe Contreras wrote:
+> On Wed, Apr 27, 2011 at 9:40 AM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
 
-It made me wonder "but then why should not we just do GIT_PREFIX=3D`git
-rev-parse --show-prefix` in the alias?" then realized by the time we
-do that, it's already too late. Maybe
+>> Sorry, I got carried away (I am happy to see someone has made some
+>> headway in investigating this old bug). =C2=A0How about this?
+>
+> What's wrong with my patch?
 
-> +'GIT_PREFIX' is set as returned by running 'git rev-parse --show-pre=
-fix'
-> +before current directory is changed to top-level directory. See link=
-git:git-rev-parse[1].
+As mentioned at
+http://thread.gmane.org/gmane.comp.version-control.git/172142/focus=3D1=
+72157
+it breaks the tab completion in the common case that the user uses
+the standard bash completion library (usually provided at
+/etc/bash_completion) and git uses its _get_comp_words_by_ref
+function.  You can test like so:
 
-?
---=20
-Duy
+	% bash
+	$ . /etc/bash_completion
+	$ . contrib/completion/git-completion.bash
+	$ git fetch origin <TAB>
+
+I also made a small cosmetic change which is less important (sorry, I
+should have mentioned it before): the patch I sent spells out
+comp_words instead of writing cwords to avoid a false analogy between
+the array of all completion words (cwords) and the current word index
+(cword).
+
+>> There is still a "for unknown reasons" in the above explanation.
+>
+> I'm asking zsh guys:
+> http://www.zsh.org/mla/workers/2011/msg00515.html
+
+Thanks.  It looks like to get the semantics I expect from "local"
+in zsh, one needs to use "typeset -h" (which bash does not support,
+unfortunately).  Probably it is best to steer clear of zsh's special
+variables anyway.
