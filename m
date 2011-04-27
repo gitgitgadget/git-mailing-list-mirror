@@ -1,193 +1,401 @@
 From: Jon Seymour <jon.seymour@gmail.com>
 Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Thu, 28 Apr 2011 01:36:15 +1000
-Message-ID: <BANLkTi=XcR9FTPC8oe100fMneNf1nca4_Q@mail.gmail.com>
+Date: Thu, 28 Apr 2011 02:13:56 +1000
+Message-ID: <BANLkTikGZgEb-4jzHt+t2k__s7BMgbU9gg@mail.gmail.com>
 References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
 	<4DB80747.8080401@op5.se>
 	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
 	<4DB82D90.6060200@op5.se>
+	<BANLkTi=XcR9FTPC8oe100fMneNf1nca4_Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Apr 27 17:36:24 2011
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 18:14:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF6mt-0003xN-Oa
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 17:36:24 +0200
+	id 1QF7NN-0003cl-Sg
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 18:14:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755826Ab1D0PgS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 11:36:18 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:50304 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823Ab1D0PgR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 11:36:17 -0400
-Received: by ewy4 with SMTP id 4so551001ewy.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 08:36:16 -0700 (PDT)
+	id S1759152Ab1D0QN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 12:13:59 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:33640 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756311Ab1D0QN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 12:13:58 -0400
+Received: by eyx24 with SMTP id 24so561973eyx.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 09:13:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wKqq3yvgNgsmakgUFDgSaMEURDeWKjHCjcOFyONr/Fk=;
-        b=R4okPeABpwqT4BTaS2bKW2vdKZbp15MyUOvvCGLWGmmezKBqvdd6PV4gZl9vizj38A
-         /LCI5SPFuwbMA8OsPV/A+FRE4UsVHNh7OfUPM3g235094S62KAIaoHvcpRQGdLnVdES2
-         likbmnL8ZbVGzf9nzcMlIbrAKb8aP4wjfruIs=
+         :message-id:subject:from:to:content-type;
+        bh=BR6KQ7LR6H3nVMVHqdXS6pw7Oi5eRTRmKmtrmDKpvIg=;
+        b=HQp7aHv6zKTz+uv4ylKnlNp2uNwvtxfEoPGwWMu2GyJ6BGkCDNliDaCgVCBWt7/rRK
+         qJ01WSrwyyfMxgHgAAdDsuwYrSGZlXIQ6+Yg8xFQBTh/VKwSn74US8M4BZct6H9qqoR8
+         pLcp5W3BVSoxp0oBFP8szqW3f4rBTj9dUyl+Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tHjE0qczW2VPInWI99tU+BGbWl8KhGN2M+d0c+lmpAy5fQO7QcnnnObxWoM+rUWUVg
-         5buG0WN8n2Wz0CDworL/KK7pJOJ0Bbd0YabYwClveR600zKWJ9tEZqh5ebyNDS4hmasg
-         6VE3rP+sMg6DpZlwnCPiT3WdufcTRXMHLl0uM=
-Received: by 10.14.52.65 with SMTP id d41mr1088825eec.85.1303918575963; Wed,
- 27 Apr 2011 08:36:15 -0700 (PDT)
-Received: by 10.14.22.68 with HTTP; Wed, 27 Apr 2011 08:36:15 -0700 (PDT)
-In-Reply-To: <4DB82D90.6060200@op5.se>
+         :content-type;
+        b=ew2pWYm2RX1hAinh97e7+Ugkt7kV8GeHsS78fZ+Lon3x1sOGQw6lsZ6yNRmSN9WIaO
+         RTvh4jFuSAJc4oKZv7tW/+59VZY3xUEC5TVS4X0AGSda6OyaGKMzcBfa3+Le59YOdNZC
+         WkAaP5VvJdm05dV1TtLLC3YJQ0WrPRIY4hBMM=
+Received: by 10.14.10.130 with SMTP id 2mr1032446eev.181.1303920836379; Wed,
+ 27 Apr 2011 09:13:56 -0700 (PDT)
+Received: by 10.14.22.68 with HTTP; Wed, 27 Apr 2011 09:13:56 -0700 (PDT)
+In-Reply-To: <BANLkTi=XcR9FTPC8oe100fMneNf1nca4_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172241>
 
-On Thu, Apr 28, 2011 at 12:52 AM, Andreas Ericsson <ae@op5.se> wrote:
-> On 04/27/2011 02:50 PM, Jon Seymour wrote:
->> On Wednesday, April 27, 2011, Andreas Ericsson =C2=A0wrote:
->>> On 04/27/2011 05:36 AM, Jon Seymour wrote:
->>>> Has anyone ever given consideration to git supporting a plugin
->>>> architecture for git extensions?
->>>>
->>>> The idea would be to provide a consistent way to install, and addr=
-ess
->>>> extensions to the core git functionality in a manner that does not
->>>> require the extension to actually be integrated into the git core.
->>>>
->>>
->>
->>> Horrible idea. There are already as many package managers as there
->>> are packages without us throwing another one into the mix.
->>>
->>
->> I agree that there are too many package managers. But do you know
->> what? There isn't a single package manager that reliably works acros=
-s
->> platform. apt-get? great. Except you need something else for Mac,
->> cywgin, or, um Fedora. Brew? Fine then you only need to worry about
->> Linux and cygwin. Cygwin? ...
->>
->> The platform for my extension is git. Not Mac. Not Debian. Not Fedor=
-a.
->> Not cygwin. git.
->>
->> The lowest common denominator across these environments is, um, git.
->>
->
-> You're utterly horribly wrong. It'll work well enough for scripted
-> languages but when you start mixing in compiler requirements and
-> whatnot the scheme falls apart. Quickly. Binary packages are popular
-> for (very good) reasons: They are simple, fast and there's a
-> reasonable chance they've been tested fairly well with the rest of
-> the system so nothing breaks horribly once you install it.
-> Perl, Ruby, Python and PHP all have their own extension installers.
-> That makes perfect sense since the same code runs unchanged on all
-> platforms (with some few exceptions).
->
+I think my use of the word package was unfortunate, since it suggests
+I am proposing an alternative to tools such as apt-get, brew, rpm etc.
 
-Yeah, but that's when you delegate to a OS-specific package manager.
+This is not the intention. The intention is to manage _plugins_ to
+git, treating git itself as a platform.
 
-Concens. Separated. Good principle, that.
+Plugins will be delivered via platform-specific package managers
+(perhaps sequenced by git-pm), but once they arrive on the OS platform
+they will be _activated_ by the plugin manager and this made available
+to the git command line.
 
->> I challenge the sceptIcs to specify a one line command script that
->> works across all possible environment that is more succinct than:
->>
->> =C2=A0 =C2=A0 git pm install gitwork
->>
->
-> That's not the point. Mac users supposedly already know about brew.
-> Fedora users already know about yum. Cygwin users... well, I have
-> no idea what they know about, but whatever it is, it's fairly safe
-> to assume they already know about it. That means they'll turn to
-> that familiar tool for managing packages when they want to install
-> something new. What you're proposing would force users on *all*
-> systems to have to learn a new one.
->
->> It shouldn't be too hard. A tar command here, an enviroment =C2=A0va=
-riable
->> edit there. Perhaps a curl command or a browser download.
->>
->
-> And what you get in the end is a f*cking mess of spaghetti shell
-> code that works worse than the existing package managers.
->
+Platform specific concerns such as building and (most) dependency
+management will be delegated to platform specific package managers.
 
-I guess that really depends on who you ask to write the shell script.
+The overriding objective is to allow a git user to install a git
+plugin called foobar with 4 words:
 
-Most package managers have fairly straight forward interfaces.
+     git pm install foobar
 
-   brew install blah
-   apt-get install blah
-   git clone git://github.com/blah/blah
+given that someone, somwhere, has done the work to create a plugin
+descriptor and create an installable package of some kind for whatever
+package managers are required in order to successfully install the
+plugin on the target platform.
 
-There is no reason why some with a modicum of shell scripting nous
-could not whip together
-a simple meta interface for platform-specific package managers that
-knows how to:
+The same command should work whether your git platform is hosted on
+MAC OSX, cygwin, Debian, Fedora, AIX or Windows.
 
-* read a specification from a git config file
-* apply that specification to the task of invoking a platform specific
+Where git can be used as the underlying package manager, it will be
+(for extensions which really are just source repos). If more
+sophisticated build support is required, then that will be delegated
+to a platform specific package manager via one of a small number of
+package manager adapters.
+
+Here is an updated README that hopefully makes this clear.
+
+[ An easier to read version is here - https://github.com/jonseymour/gpm ]
+
+--------------------
+
+NAME
+====
+git-pm - a plugin manager for git extensions
+
+DESCRIPTION
+===========
+The initial deliverable of the project will be a plugin architecture
+proposal. The intent of this deliverable is to create specifications
+that will allow plugin authors to create descriptors for their plugins
+that will be sufficient to enable git-pm to locate an appropriate
+package manager and delegate installation of the plugin to that package manager.
+
+In parallel to this deliverable, a plugin manager interface (git-pm)
+will be developed. Such an interface will manage git plugins on
+behalf of git by delegating to whatever package-managers are available
+and installed on the platform.
+
+PRINCIPLES
+==========
+* define a repository layout specification
+* define a plugin descriptor (using the git config syntax)
+* package manager agnostic repo and plugin specifications
+ * perhaps define a pluggable plugin manager interface
+* support for:
+ * existing contrib/ directory
+ * existing git patterns for finding and using extensions
+ * man pages
+ * plugin specific configuration help
+ * bash completions
+ * scripts
+* build support:
+ * for documentation, archives
+* layers
+ * repo, plugin descriptors
+ * tool interface specifications
+ * tool implementations
+ * global plugin registry and repository
+
+INTENDED SCENARIOS
+==================
+
+Installation and Removal
+------------------------
+There is completely understandable resistance to YAPM - yet another
+package manager. This is not the goal of git-pm. In particular, git-pm
+will delegate platform-specific build
+and deployment concerns to platform-specific package managers such as
+apt-get, rpm, brew and cygwin. That said, there is no good reason why
+git-pm shouldn't know how to delegate such concerns to a
+platform-specific package manager.
+
+The basic intent is to allow plugin authors to provide simple
+instructions to potential consumers of their plugin.
+
+<hr/>
+Installing a plugin should be as simple as:
+
+	   git pm install foobar
+
+Such a comamnd should work whether the platform is Linux, cygwin or
+Mac OSX. In fact, the only
+common denominator should be git itself, and its dependencies (POSIX
+shell and perl).
+<hr/>
+Install a plugin, given a URL that can locate its descriptor:
+
+	   git pm install [ plugin-url | plugin-archive | plugin-name ]
+
+<hr/>
+Remove a plugin, given a name that can identify it:
+
+	   git pm remove plugin-name
+
+<hr/>
+Update an installed plugin:
+
+	   git pm update plugin-name
+
+<hr/>
+Inspect a registry of available available, installed, active or
+inactive plugins:
+
+	   git pm list available|installed|active|inactive
+
+<hr/>
+Describe the current installation, availability or activation status
+of a plugin:
+
+	   git pm status plugin-name
+
+<hr/>
+
+Activation/De-activation
+------------------------
+Activation is the means by which a locally available plugin can be
+made available to the git command line. The idea is to
+
+	   git-pm activate plugin-name
+	   git-pm deactivate plugin-name
+
+WHAT GIT-PM IS:
+===============
+* a native extension manager for the git platform
+* an _activator_ for git extensions
+* distribution and platform package mamager friendly
+* git-aware
+
+WHAT GIT-PM IS NOT:
+===================
+* a build tool
+* a replacement for a package manager
+* useful for anything other than git extensions
+
+CONCEPTS
+========
+
+plugin
+------
+An extension to git that exports 1 or more commands to the git command line
+
+package
+-------
+A platform-specific archive that is installable by a platform-specific
+package manager. Packages will _package_ plugins.
+
+plugin-descriptor
+-----------------
+A package-manager agnostic descriptor that describes a plugin to the
+git platform, in particular git-pm.
+
+package-descriptor
+------------------
+A package-manager specific descriptor that describes a package to a
 package manager.
 
-Some one really smart could probably do it in an extensible way that
-coped with the concept that different OS-platforms have different
-package managers.
+plugin manager
+--------------
+A command, such as git-pm, that can install, remove, activate or
+deactive plugins by delegating platform specific
+concerns to a platform-specific package manager.
 
-Most of this pasta can be cooked once, by the person who writes
-gpm/git-pm. Sauce would be extra, of course.
+package-manager
+---------------
+A platform-specific manager of packages.
 
-> And you're right. It's not too hard, so long as every extension
-> manager maintains some short list of requirements in the proper
-> format, which current package maintainers will have to learn if
-> they want some modules to be part of the "default" system install,
-> the way a whole bunch of Perl modules are.
->
->> You have 4 words. Knock yourself out.
->>
->
-> make install
+plugin author
+-------------
+An author of git plugins.
 
->
-> Made it in 2. What you described is what the user does to get
-> new extensions. What I described below is what developers have
-> to do to make their extensions easy to install *without* a
-> package manager even if the distro the user is on doesn't ship
-> that particular extension.
->
+package author
+--------------
+An author of package specifications for a package manager. In
+particular, the author of a package specification that allows
+a git plugin to be bundled into a package for the purposes of
+distribution and management.
 
-Again, there is a package called gitwork, available. It is available
-as a tarball. Somewhere.
-Install it.
+package-manager-adapter
+-----------------------
+A pluggable component of git-pm that exposes a platform-specific
+package manager via a uniform interface.
 
-* look up the url (google, might help)
-* dowload it with your favourite download tool (browser, curl)
-* unpack it
-* install its dependencies, if required
-* configure it
-* buiild it
+DEPENDENCY MANAGEMENT
+=====================
+It is unclear yet how important dependency management will be. Where
+possible, such concerns will be delegated to
+platform-specific package managers. That said, there may still be
+value in managing dependencies between git-pm
+packages at the git-pm level.
 
-Your two words only specified the very last step. I needed 6 bullet
-points merely to explain the details you omitted.
+PACKAGE NAME
+============
+The package name is currently gpm. Howeve, the "General Purpose Mouse"
+package has already claimed this name in the apt space, at least.
 
->
-> So the complete description would be
->
-> =C2=A0git clone git://somerepo/gitworks
-> =C2=A0cd gitworks
-> =C2=A0make install
+So, it might be better to use 'git-pm' as the package name, which
+isn't so bad since idiomatic use of the package should be 'git pm
+blah'.
 
-Still more than 4 words.
+SUPPORTED PACKAGE MANGERS
+=========================
+The intent of git-pm is not to duplicate the functionality of existing
+package managers. The intent is to provide a package manager for git
+as a platform itself. To the extent that a build process is required
+to install a git extension, then such concerns will be delegated
+to a real package manager that knows how to deal with such concerns.
 
-jon.
+The intent is that a minimal plugin that depends only on the
+availability of a shell, should be installable with something as
+simple as:
+
+    git pm install foobar
+
+This should work whether your git install is running on Linux, cywgin,
+Windows (MSYSGIT), MAC, AIX or whatever.
+
+If a compilation is required, then delegation to a platform package
+manager will be requried.
+
+Linux
+-----
+* git
+* rpm
+* apt
+
+Mac
+---
+* git
+* brew
+
+cygwin
+---
+* git
+
+CONTRACTS
+=========
+The following contracts will be required between:
+
+<dl>
+<dt>the git user and git-pm</dt>
+<dd>
+This contract will be specified in terms of the git-pm man page. It
+will specify the plugin management commands offered by
+the git-pm interface to the user.
+</dd>
+<dt>the git runtime and git-pm</dt>
+<dd>
+This contract will specify the technique by which git-pm exposes git
+extensions to the git command line. It will include
+support for exposing:
+<ul>
+<li>sub-commands</li>
+<li>man pages</li>
+<li>shell completions</li>
+</ul>
+</dd>
+<dt>git-pm and package-manager adapters</dt>
+<dd>
+This contract will specify how to add a new package-manager adapter.
+The purpose will be to allow git-pm to delegate
+its interface to backend package managers that know how to manage
+platform specific concerns such as building,
+dependency management, package distribution etc.
+</dd>
+</dd>
+<dt>package-manager adapters and package managers</dt>
+<dt>extension authors and the git-pm package manager</dt>
+</dl>
+
+INFLUENCES
+==========
+The following programs have influenced the design of git-pm.
+
+npm
+---
+The node package manager.
+
+Node is an interesting, V8-JavaScript based runtime for implementing
+servers. Node comes with a tightly coupled package manager npm. If
+node is your platform, npm
+is the package manager for that platform. In particular, npm works the
+same way irrespective of which platform you have node installed on.
+
+brew
+----
+A Mac OSX specific package manager.
+
+Brew is a relatively new package manager for the Mac OSX operating
+system. It has several nice features, including its formula registry
+that allows
+authors to specify succinct package management formulae as short ruby
+scripts. Brew also uses git as an integral part of its registry and
+run-time.
+
+SCEPTICS CHALLENGE
+==================
+Some people doubt there is value in a 'git plugin mamager'. In
+response to this scepticism, I pose the following
+challenge.
+
+1. take an arbitrary git extension.
+2. specify installation instructions for that extension in 4 words or less.
+3. make sure those 4 words work on Linux, Cygwin, MAC OSX and AIX.
+4. verify that following installation, the man pages work.
+
+As an example, there is a package called gitwork. It is available
+somewhere on the Internet. I think, as a tarball. Or perhaps a zip. I
+don't think it has any dependencies, but I am really not sure. Why
+don't you suck it and see?
+
+MAILING LIST
+============
+Until noted otherwise, please use the
+[http://dir.gmane.org/gmane.comp.version-control.git](git@vger.kernel.org)
+mailing list for discussions about design decisions. gpm: is suggested
+a good prefix for such discussions.
+
+REVISIONS
+=========
+Ordered most recent, to less recent:
+
+* changed 'gpm' to 'git pm' on the assumption that 'git-pm' will be in
+the path and that 'General Purpose Mouse' has already nabbed 'gpm'
+* changed terminology from 'package' to 'plugin' to help reduce
+consfusion about the objectives of the project
+
+AUTHOR
+======
+Jon Seymour
