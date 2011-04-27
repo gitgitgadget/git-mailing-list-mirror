@@ -1,119 +1,87 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/2] handle_alias: provide GIT_PREFIX to !alias
-Date: Wed, 27 Apr 2011 10:36:27 +0200
-Message-ID: <5058a9853a75bff71187f553e67632997761de44.1303893279.git.git@drmicha.warpmail.net>
-References: <4DB7CF72.3080205@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Matej Batic <matej.batic@ge.infn.it>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 10:36:59 2011
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCHv3 5/6] Allow specifying --dirstat cut-off percentage as a
+ floating point number
+Date: Wed, 27 Apr 2011 01:37:17 -0700
+Message-ID: <BANLkTi=xJXFKwzu4cCZAW_T2dXQ8wOq70w@mail.gmail.com>
+References: <1303870359-26083-1-git-send-email-johan@herland.net>
+ <1303892653-3958-1-git-send-email-johan@herland.net> <1303892653-3958-6-git-send-email-johan@herland.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 10:37:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF0F0-0006ud-HF
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 10:36:58 +0200
+	id 1QF0Fr-0007OT-96
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 10:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754831Ab1D0Igj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 04:36:39 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:52057 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754821Ab1D0Igb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 04:36:31 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 40547206FF;
-	Wed, 27 Apr 2011 04:36:31 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 27 Apr 2011 04:36:31 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=ssgwVWZajVWVUnhbdJYIXsOyEWM=; b=bcHoCNIcdFjAyyVY8NmHMKKny1AFrtwSg5mChbSqhIFeyIH0Qoh4sAjbrZQCM3KSVBO9l3yjPzFzA8DMvTbk4ahjBBhhiOgDVhwkAjPdMhoecsaTGW7BBKKMe2OmOVtjP5vApb20uXHiC4yEa4CvqFdZjOjTgzGJTdbVbBBsImw=
-X-Sasl-enc: Ymhy6dC+KI8shvwK0pi3h+INZe2poh0F65mvxgk/ZUKq 1303893390
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 90DDD445080;
-	Wed, 27 Apr 2011 04:36:30 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.270.gafca7
-In-Reply-To: <4DB7CF72.3080205@drmicha.warpmail.net>
-In-Reply-To: <3422485b672000ecdc72d82ffce8c89f258831b9.1303893279.git.git@drmicha.warpmail.net>
-References: <3422485b672000ecdc72d82ffce8c89f258831b9.1303893279.git.git@drmicha.warpmail.net>
+	id S1754882Ab1D0Ihm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 04:37:42 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58419 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754689Ab1D0Ihk convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 04:37:40 -0400
+Received: from mail-ey0-f174.google.com (mail-ey0-f174.google.com [209.85.215.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p3R8bbrh024384
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Wed, 27 Apr 2011 01:37:39 -0700
+Received: by eyx24 with SMTP id 24so437199eyx.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 01:37:37 -0700 (PDT)
+Received: by 10.14.1.71 with SMTP id 47mr822525eec.128.1303893457293; Wed, 27
+ Apr 2011 01:37:37 -0700 (PDT)
+Received: by 10.14.124.148 with HTTP; Wed, 27 Apr 2011 01:37:17 -0700 (PDT)
+In-Reply-To: <1303892653-3958-6-git-send-email-johan@herland.net>
+X-Spam-Status: No, hits=-103.466 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172199>
 
-Provide an environment variable GIT_PREFIX which contains the subdirectory
-from which a !alias was called (i.e. 'git rev-parse --show-prefix') since
-these cd to the to level directory before they are executed.
+On Wed, Apr 27, 2011 at 1:24 AM, Johan Herland <johan@herland.net> wrot=
+e:
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 options->dirstat_permil=
+le =3D strtoul(p, &end, 10) * 10;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0p =3D end;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (*p =3D=3D '.' && is=
+digit(*(++p))) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 int per=
+mille =3D strtoul(p, &end, 10);
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 p =3D e=
+nd;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 while (=
+permille >=3D 10)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 permille /=3D 10; /* only use first digit */
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 options=
+->dirstat_permille +=3D permille;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/config.txt |    2 ++
- git.c                    |   10 +++++++++-
- t/t1020-subdirectory.sh  |   10 ++++++++++
- 3 files changed, 21 insertions(+), 1 deletions(-)
+Heh. That's both unnecessarily complicated, and doesn't work.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 750c86d..66281dd 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -589,6 +589,8 @@ it will be treated as a shell command.  For example, defining
- "gitk --all --not ORIG_HEAD".  Note that shell commands will be
- executed from the top-level directory of a repository, which may
- not necessarily be the current directory.
-+'GIT_PREFIX' is set as returned by running 'git rev-parse --show-prefix'
-+from the original current directory. See linkgit:git-rev-parse[1].
- 
- am.keepcr::
- 	If true, git-am will call git-mailsplit for patches in mbox format
-diff --git a/git.c b/git.c
-index ef598c3..ed89951 100644
---- a/git.c
-+++ b/git.c
-@@ -179,6 +179,8 @@ static int handle_alias(int *argcp, const char ***argv)
- 		if (alias_string[0] == '!') {
- 			const char **alias_argv;
- 			int argc = *argcp, i;
-+			struct strbuf sb = STRBUF_INIT;
-+			const char *env[2];
- 
- 			commit_pager_choice();
- 
-@@ -189,7 +191,13 @@ static int handle_alias(int *argcp, const char ***argv)
- 				alias_argv[i] = (*argv)[i];
- 			alias_argv[argc] = NULL;
- 
--			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
-+			strbuf_addstr(&sb, "GIT_PREFIX=");
-+			if (subdir)
-+				strbuf_addstr(&sb, subdir);
-+			env[0] = sb.buf;
-+			env[1] = NULL;
-+			ret = run_command_v_opt_cd_env(alias_argv, RUN_USING_SHELL, NULL, env);
-+			strbuf_release(&sb);
- 			if (ret >= 0)   /* normal exit */
- 				exit(ret);
- 
-diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
-index 66e40d3..ddc3921 100755
---- a/t/t1020-subdirectory.sh
-+++ b/t/t1020-subdirectory.sh
-@@ -129,6 +129,16 @@ test_expect_success '!alias expansion' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'GIT_PREFIX for !alias' '
-+	printf "dir/" >expect &&
-+	(
-+		git config alias.test "!sh -c \"printf \$GIT_PREFIX\"" &&
-+		cd dir &&
-+		git test >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'no file/rev ambiguity check inside .git' '
- 	git commit -a -m 1 &&
- 	(
--- 
-1.7.5.270.gafca7
+It gets the wrong answer for something like "0.0001", since 'permille'
+in that case ends up starting out as '0001', ie just 1, so you never
+actually do that whole while-loop.
+
+So the right approach is just something like
+
+  if (*p =3D=3D '.' && isdigit(*++p)) {
+    /* only use first digit */
+    options->dirstat_permille +=3D *p - '0';
+    /* .. and ignore any further digits */
+    while (isdigit(*++p))
+      /* nothing */;
+  }
+
+(totally untested, of course)
+
+                    Linus
