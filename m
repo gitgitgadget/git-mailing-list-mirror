@@ -1,95 +1,99 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCHv2 5/6] Use floating point for --dirstat percentages
-Date: Tue, 26 Apr 2011 19:45:33 -0700
-Message-ID: <BANLkTi=uWxpyJhEGt97K_qSZV_VPuD5JcQ@mail.gmail.com>
-References: <1303776102-9085-1-git-send-email-johan@herland.net>
- <1303870359-26083-1-git-send-email-johan@herland.net> <1303870359-26083-6-git-send-email-johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Apr 27 04:46:23 2011
+From: Marius Storm-Olsen <marius@storm-olsen.com>
+Subject: [PATCH v2] Automatically autoload bashcompinit for ZSH, when needed
+Date: Tue, 26 Apr 2011 22:23:35 -0500
+Message-ID: <1303874615-24718-1-git-send-email-mstormo@gmail.com>
+References: <BANLkTi=qzBGmp80088hVrc+yicH2ofDGEg@mail.gmail.com>
+Cc: git@vger.kernel.org, Marius Storm-Olsen <mstormo@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 05:23:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEulj-00058U-9y
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 04:46:23 +0200
+	id 1QEvM2-00016x-Cv
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 05:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758101Ab1D0CqS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2011 22:46:18 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:55552 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757169Ab1D0CqR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2011 22:46:17 -0400
-Received: from mail-ew0-f46.google.com (mail-ew0-f46.google.com [209.85.215.46])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p3R2jtK9012100
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Tue, 26 Apr 2011 19:45:56 -0700
-Received: by ewy4 with SMTP id 4so379688ewy.19
-        for <git@vger.kernel.org>; Tue, 26 Apr 2011 19:45:53 -0700 (PDT)
-Received: by 10.14.9.97 with SMTP id 73mr675026ees.29.1303872353069; Tue, 26
- Apr 2011 19:45:53 -0700 (PDT)
-Received: by 10.14.124.148 with HTTP; Tue, 26 Apr 2011 19:45:33 -0700 (PDT)
-In-Reply-To: <1303870359-26083-6-git-send-email-johan@herland.net>
-X-Spam-Status: No, hits=-103.466 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754121Ab1D0DXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2011 23:23:49 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:52286 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753988Ab1D0DXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2011 23:23:48 -0400
+Received: by yxs7 with SMTP id 7so312897yxs.19
+        for <git@vger.kernel.org>; Tue, 26 Apr 2011 20:23:48 -0700 (PDT)
+Received: by 10.236.122.243 with SMTP id t79mr1946528yhh.167.1303874627286;
+        Tue, 26 Apr 2011 20:23:47 -0700 (PDT)
+Received: from localhost.localdomain (24-155-176-18.dyn.grandenetworks.net [24.155.176.18])
+        by mx.google.com with ESMTPS id z73sm220915yhc.47.2011.04.26.20.23.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2011 20:23:45 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.rc2.4.g4d8b3
+In-Reply-To: <BANLkTi=qzBGmp80088hVrc+yicH2ofDGEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172160>
 
-On Tue, Apr 26, 2011 at 7:12 PM, Johan Herland <johan@herland.net> wrot=
-e:
-> Allow specifying --dirstat cut-off percentage as a floating point num=
-ber.
->
-> When printing the dirstat output, floating point numbers are presente=
-d in
-> rounded form (as opposed to truncated). Therefore, this patch include=
-s a
-> significant churn in the expected output of the dirstat selftests.
+If bashcompinit has not already been autoloaded, do so
+automatically, as it is required to properly parse the
+git-completion file with ZSH.
 
-Hmm. So thinking more about this, I do think it's preferable that the
-percentages never be rounded up.
+Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
+---
+ Changes since v2:
+ -----------------
+ 'Added' -> 'Add'
+ Simplified test for bashcompinit, as per advice from Felipe Contreras
 
-Why? Having them add up to 99.9 due to rounding error makes a ton more
-sense to me than having percentages add up to 100.1 But I guess I
-don't care _that_ much, since most of the time I use "cumulative",
-where you don't much have that issue anyway.
+ contrib/completion/git-completion.bash |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
-Also:
-
-> Remaining questions:
->
-> =A0- Locale issues with strod(), e.g. decimal separator is a comma in=
- certain
-> =A0 locales.
-
-I think this is a serious issue. Of course, any sane user will have
-the numeric locale be set to "C", but we know that any argument that
-depends on sane users is likely broken.
-
-So regardless of the rounding, I do think we should make sure that we h=
-ave a
-
-  setlocale(LC_NUMERIC, "C");
-
-both for the parsing _and_ for the printout. And if somebody really
-wants the locale to affect these kinds of things, we might have a
-config option to allow it, but I think we should default to a nice
-fixed format in this case.
-
-(I don't know anybody who uses LC_NUMERIC that actually sets the
-decimal point character to ',' though - it is bound to break a ton of
-applications. And I say that as somebody who grew up with a "decimal
-comma").
-
-                   Linus
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 840ae38..9150ea6 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1,6 +1,6 @@
+ #!bash
+ #
+-# bash completion support for core Git.
++# bash/zsh completion support for core Git.
+ #
+ # Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
+ # Conceptually based on gitcompletion (http://gitweb.hawaga.org.uk/).
+@@ -18,16 +18,12 @@
+ # To use these routines:
+ #
+ #    1) Copy this file to somewhere (e.g. ~/.git-completion.sh).
+-#    2) Added the following line to your .bashrc:
+-#        source ~/.git-completion.sh
+-#
+-#       Or, add the following lines to your .zshrc:
+-#        autoload bashcompinit
+-#        bashcompinit
++#    2) Add the following line to your .bashrc/.zshrc:
+ #        source ~/.git-completion.sh
+ #
+ #    3) Consider changing your PS1 to also show the current branch:
+-#        PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
++#         Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
++#         ZSH:  PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+ #
+ #       The argument to __git_ps1 will be displayed only if you
+ #       are currently in a git repository.  The %s token will be
+@@ -77,6 +73,10 @@
+ #       git@vger.kernel.org
+ #
+ 
++if [[ -n ${ZSH_VERSION-} ]]; then
++	autoload -U +X bashcompinit && bashcompinit
++fi
++
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+ *)   COMP_WORDBREAKS="$COMP_WORDBREAKS:"
+-- 
+1.7.5.rc2.4.g4d8b3
