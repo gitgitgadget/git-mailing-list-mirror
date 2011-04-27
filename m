@@ -1,104 +1,63 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] config.txt,diff-options.txt: porcelain vs. plumbing for color.diff
-Date: Wed, 27 Apr 2011 09:38:27 +0200
-Message-ID: <24a6907cade7aedb51dc20ab5977603ca21e70bb.1303889849.git.git@drmicha.warpmail.net>
-References: <7voc3sewpg.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Elias Persson <delreich@takeit.se>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 09:38:42 2011
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH] handle_alias: provide GIT_CWD to !alias
+Date: Wed, 27 Apr 2011 14:40:00 +0700
+Message-ID: <BANLkTinEiT1_8czdY2DtBnY-5CqN1XAVcw@mail.gmail.com>
+References: <4DA59B27.50506@ge.infn.it> <e8c9aa9160f922f728d56387e5e86eb50220774f.1302699792.git.git@drmicha.warpmail.net>
+ <7v1v0od557.fsf@alter.siamese.dyndns.org> <4DB7BBEF.8010409@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Matej Batic <matej.batic@ge.infn.it>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 09:40:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QEzKZ-0003OQ-9J
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 09:38:39 +0200
+	id 1QEzMS-0004QK-TB
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 09:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753875Ab1D0Hie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 03:38:34 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50419 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753856Ab1D0Hid (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 03:38:33 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A8A5B20CBA;
-	Wed, 27 Apr 2011 03:38:32 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Wed, 27 Apr 2011 03:38:32 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=cs/2RUuVQhGBa23ppwAAQvCsEs0=; b=LL6bmH67vxZrwUEl3dJ2OZws3jA0q2My+Y0fx5FEh+Fdd00J1P4zzQUCYM+wQCFQkrbAf7VPboxfqSQLoq7bJ26pa4IT4r+XOcchFdYuGyKpUPPS60+mDtFtvIAxw1GZIcrQa8s5CfYEAOWB7tR7EumXVaCHX1+9VuBaJe/J9Js=
-X-Sasl-enc: 51yri+Ed3LwpLAK3e7gEEKwIEjtaefkhGk/yV1k/knSz 1303889912
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 28ABA4406E1;
-	Wed, 27 Apr 2011 03:38:32 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.270.gafca7
-In-Reply-To: <7voc3sewpg.fsf@alter.siamese.dyndns.org>
+	id S1752213Ab1D0Hkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 03:40:32 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54038 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295Ab1D0Hkb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 03:40:31 -0400
+Received: by bwz15 with SMTP id 15so1155019bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 00:40:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=stBJpy2iIhLezQNg3ZAvHOSEPdFCf8rQFZkagdJPmWA=;
+        b=KhzzCWba1qjFHudWi4xyilAURl7Sgw9u3CmoFbYMLVkWUsZ0HlF84s9BSIm/+tK36d
+         OGczP2VgRCpQVKjSDO2FtqMDReK6e/wwB6ry2tCeNrviNM6uJ8qcS0o6eDO5moJtG8FS
+         CbwB+RLvHltuPsO6MrAi57GRqArjwpVP/bqvU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Go76KVVTB4/WEZEykIQrp3UMVRJPQ3bLUr0zMJF6n5fIWpIk+dTRbSlj0lDJPTbHpK
+         ODYl9OgY8hHvd8Pn+JwlKsbexL0bc2opAr9v6scAX+HhpZAw2SWUSYB9Qr+nX7dd65Wc
+         QJeL+FcZ4+5M4WF7GVM8Y3Q6qSC0dblOQWLQo=
+Received: by 10.204.20.143 with SMTP id f15mr1604538bkb.173.1303890030169;
+ Wed, 27 Apr 2011 00:40:30 -0700 (PDT)
+Received: by 10.204.17.14 with HTTP; Wed, 27 Apr 2011 00:40:00 -0700 (PDT)
+In-Reply-To: <4DB7BBEF.8010409@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172184>
 
-Reading the diff-family and config man pages one may think that the
-color.diff and color.ui settings apply to all diff commands. Make it
-clearer that they do not apply to the plumbing variants
-diff-{files,index,tree}.
+On Wed, Apr 27, 2011 at 1:47 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> A more important point is the prefix-less case (i.e. we are in topdir):
+> Should GIT_YOUNAMEIT be empty then? I would say yes (just like
+> "rev-parse --show-prefix"), Duy said no. We need a third vote :)
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/config.txt       |    4 ++--
- Documentation/diff-options.txt |   15 +++++++++++----
- 2 files changed, 13 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 750c86d..1e22832 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -708,7 +708,7 @@ second is the background.  The position of the attribute, if any,
- doesn't matter.
- 
- color.diff::
--	When set to `always`, always use colors in patch.
-+	When set to `always`, always use colors in patch for porcelain commands.
- 	When false (or `never`), never.  When set to `true` or `auto`, use
- 	colors only when the output is to the terminal. Defaults to false.
- 
-@@ -796,7 +796,7 @@ color.status.<slot>::
- 	color.branch.<slot>.
- 
- color.ui::
--	When set to `always`, always use colors in all git commands which
-+	When set to `always`, always use colors in all porcelain commands which
- 	are capable of colored output. When false (or `never`), never. When
- 	set to `true` or `auto`, use colors only when the output is to the
- 	terminal. When more specific variables of color.* are set, they always
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index c93124b..c26e494 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -120,12 +120,19 @@ any of those replacements occurred.
- 
- --color[=<when>]::
- 	Show colored diff.
--	The value must be always (the default), never, or auto.
-+	The value must be `always` (the default for `<when>`), `never`, or `auto`.
-+	The default value is `never`.
-+ifdef::git-diff[]
-+	It can be changed by the `color.ui` and `color.diff`
-+	configuration settings.
-+endif::git-diff[]
- 
- --no-color::
--	Turn off colored diff, even when the configuration file
--	gives the default to color output.
--	Same as `--color=never`.
-+	Turn off colored diff.
-+ifdef::git-diff[]
-+	This can be used to override configuration settings.
-+endif::git-diff[]
-+	It is the same as `--color=never`.
- 
- --word-diff[=<mode>]::
- 	Show a word diff, using the <mode> to delimit changed words.
+I said no because you named it GIT_CWD. If it's GIT_PREFIX, then empty
+prefix is normal, no objections.
 -- 
-1.7.5.270.gafca7
+Duy
