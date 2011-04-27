@@ -1,161 +1,112 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Wed, 27 Apr 2011 22:50:04 +1000
-Message-ID: <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
-References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
-	<4DB80747.8080401@op5.se>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Wed, 27 Apr 2011 14:49:47 +0200
+Message-ID: <BANLkTikxS-_9h4rBdbbJ2e-RkjMWyiC1Mg@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org> <7v62tjs66r.fsf@alter.siamese.dyndns.org>
+ <20110120203840.GA11468@sigill.intra.peff.net> <7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
+ <20110120215456.GB11468@sigill.intra.peff.net> <AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
+ <7vk4hyp38i.fsf@alter.siamese.dyndns.org> <AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+ <AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+ <BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com> <BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+ <BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com> <BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
+ <BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com> <BANLkTimLnggco_+mQZ2_T_myAHsDD-=g1w@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
 X-From: git-owner@vger.kernel.org Wed Apr 27 14:50:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QF4C6-0002qZ-Vm
+	id 1QF4C7-0002qZ-Ia
 	for gcvg-git-2@lo.gmane.org; Wed, 27 Apr 2011 14:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759049Ab1D0MuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2011 08:50:07 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:62394 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758450Ab1D0MuF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2011 08:50:05 -0400
-Received: by vxi39 with SMTP id 39so1263934vxi.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 05:50:04 -0700 (PDT)
+	id S1759050Ab1D0MuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 08:50:10 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:50476 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758830Ab1D0MuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 08:50:07 -0400
+Received: by pvg12 with SMTP id 12so1148597pvg.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 05:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EtwJsfT/KejZXjfYFkeA+5ynRHe0evOK27PwaGS0M64=;
-        b=ULm4RZFivHw6ViPULY7Enhnxk8ENfN84tq46xRGzVhzKjMv/TnAUMO0UQvGk/owu+i
-         6Jy4RoXdfx1BkuwGlodw4jlG/HEVhBUEsfKheO7wG2HW0zZYpFPVA5xlJjGftgFb9wdT
-         utWi4NqCL4Y2uOgv2fZE5HaK4gHDKEFOmYtRQ=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=3CapTDW1mY32FMWvRMTmsl2b+AehylEdn02bw1XGtY8=;
+        b=ubrTTu4MMeHMrdNeBH7aEP9DkmscKkbY418OSGztG2IVPuPcu2WMuKj5f07yAXbOYJ
+         pLRpfKIiO08P2hhYCvC0G8co/UhsAJ8WJH1MK0jt3iivjqWQ2KrP1R0omoqVOVDSeaci
+         t5Ed7cRzwJruNC0uqk7ugyyZkBFFciLBkf5GQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FObOsMhQBGFgSV4o85mOlu8R/wPesZvxuqoWT0qQo3GeBIiejogcZgr+fFY3Un8T/W
-         q8sIBHq+8jVITuf8ezTQQ8TyxEAzmgoKwSnoBVKEsl2zSj1IXKgNlcTHFwfoiW0lEfqj
-         2Ii0YxTUP4Pupac1vusqmJwaB1ZCBhHPScLNo=
-Received: by 10.52.99.98 with SMTP id ep2mr3060992vdb.159.1303908604770; Wed,
- 27 Apr 2011 05:50:04 -0700 (PDT)
-Received: by 10.52.160.66 with HTTP; Wed, 27 Apr 2011 05:50:04 -0700 (PDT)
-In-Reply-To: <4DB80747.8080401@op5.se>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=sW4JNvTVLovA+pBpUjUkGWmGzk5ha9XB8tGI4UstdHPfLxfSAjshdpAUI8ZooniuJq
+         S5ELPaEdpbSxB/NDRGJ8hTBomTj4JukOFVE/960Iv0E+1WakRCV2SNw6I0KOkhbNZdrl
+         evy4V9J+9C4qiK+wyoJhWLqdfZGuKbqEpERQk=
+Received: by 10.68.48.161 with SMTP id m1mr2185499pbn.489.1303908607082; Wed,
+ 27 Apr 2011 05:50:07 -0700 (PDT)
+Received: by 10.68.46.5 with HTTP; Wed, 27 Apr 2011 05:49:47 -0700 (PDT)
+In-Reply-To: <BANLkTimLnggco_+mQZ2_T_myAHsDD-=g1w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172235>
 
-On Wednesday, April 27, 2011, Andreas Ericsson  wrote:
-> On 04/27/2011 05:36 AM, Jon Seymour wrote:
->> Has anyone ever given consideration to git supporting a plugin
->> architecture for git extensions?
+On Wed, Apr 27, 2011 at 2:21 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> On Wed, Apr 27, 2011 at 1:29 PM, Stephen Kelly <steveire@gmail.com> wrote:
+>> On Wed, Apr 27, 2011 at 11:48 AM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>> No problems here:
 >>
->> The idea would be to provide a consistent way to install, and addres=
-s
->> extensions to the core git functionality in a manner that does not
->> require the extension to actually be integrated into the git core.
+>> I had another go.
 >>
+>> mkdir remote
+>> cd remote/
+>> git init --bare
+>> cd ../
+>> git clone remote/ alice
+>> cd alice/
+>> echo test >> file
+>> git add file
+>> git commit -am w
+>> git push origin master
+>> echo test >> file
+>> git commit -am w
+>> git branch HEAD
 >
-
-> Horrible idea. There are already as many package managers as there
-> are packages without us throwing another one into the mix.
+> I'll stop you here. You reproduce the issue a lot simpler:
 >
-
-I agree that there are too many package managers. But do you know
-what? There isn't a single package manager that reliably works across
-platform. apt-get? great. Except you need something else for Mac,
-cywgin, or, um Fedora. Brew? Fine then you only need to worry about
-Linux and cygwin. Cygwin? ...
-
-The platform for my extension is git. Not Mac. Not Debian. Not Fedora.
-Not cygwin. git.
-
-The lowest common denominator across these environments is, um, git.
-
-I challenge the sceptIcs to specify a one line command script that
-works across all possible environment that is more succinct than:
-
-   git pm install gitwork
-
-It shouldn't be too hard. A tar command here, an enviroment  variable
-edit there. Perhaps a curl command or a browser download.
-
-You have 4 words. Knock yourself out.
-
->> For example, I have recently proposed a new command 'git work'
->> https://github.com/jonseymour/git/blob/master/README.md which I thin=
-k
->> is a really useful extension to git.
->>
->> I haven't had much feedback for the concept. I am not sure if it is
->> because people are too busy, just don't grok it, or grok it and don'=
-t
->> think it is useful.
->>
+> git init foo &&
+> cd foo &&
+> echo "foo" > bar &&
+> git add bar &&
+> git commit -m. &&
+> git branch HEAD &&
+> gitk
 >
-> I had a look at the manpage. It seems to do more or less exactly what
-> the same command would do without the word "work" thrown in, so eithe=
-r
-> it's quite useless or you've failed to describe its usefulness in the
-> manpage.
+> No need to involve remote branches. While remote branches makes the
+> issue worse, because you can get in a situation where gitk doesn't
+> when someone else made a nasty branch, and you fetched it.
 >
-
-It is far from useless, so I have clearly failed with the explanation.
-I will post later,perhaps with some diagrams.
-
-> "git atomic" seems nice though.
+> The real problem is that "git rev-parse HEAD" outputs "warning:
+> refname 'HEAD' is ambiguous." to stderr (even if stderr is a non-tty),
+> and gitk does not like that.
 >
+> This can be fixed by either doing "git -c core.warnambiguousrefs=0
+> rev-parse HEAD", which strikes me as ugly, or by making sure that we
+> don't issue this warning when not attached to a tty:
 
-Thank you!
+Of course, a third (and probably even better) option is to make gitk
+warn about the ambiguous refname (like other commands will), but not
+treat it as a fatal problem. But I'm not motivated enough to give that
+solution a stab myself.
 
->> So, perhaps it won't be included in git. That's fine, I can build my
->> own fork of git which includes the proposed extension [ indeed, this
->> is how I originally developed it]. That's fine for
->> me, but it isn't the most practical way to distribute it to others
->> since I'll have to produce distribution packages for a variety of
->> different distribution formats or fallback to tars and zips.
->>
->
-> What you can do is let your Makefile (or some other install-script)
-> take the destination path for "make install" (or equivalent) from
-> the output of "git --exec-path".
->
-> That way, you can ship "git extadd" or whatever you want to call it
-> as a simple installer that installs executable and man-page in their
-> proper locations. If the commands you install require configuration
-> by default I'd say they're broken to begin with, but even that can
-> be remedied by running "git config --add key value" from the installe=
-r.
->
-> So in a way, git is already its own pkg-config binary and anyone
-> clever enough to write useful scripts that enhances git will almost
-> certainly see that and use it from their favourite language quite
-> without having to learn some new magic format for package management.
->
-
-Those 3 paragraphs were substantially longer than 4 words. Again,
-there is a tar ball, let me know how I can install it across alll
-environments that got runs on. Make sure the man pages work.
-
-jon.
-
-
-> --
-> Andreas Ericsson =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 andreas.ericsson@op5.se
-> OP5 AB =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 www.op5.se
-> Tel: +46 8-230225 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0Fax: +46 8-230231
->
-> Considering the successes of the wars on alcohol, poverty, drugs and
-> terror, I think we should give some serious thought to declaring war
-> on peace.
->
+Not outputting that warning might be a regression for other users of
+rev-parse (and/or the underlying mechanics).
