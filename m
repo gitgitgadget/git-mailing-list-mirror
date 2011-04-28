@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 6/7] New --dirstat=lines mode,
- doing dirstat analysis based on diffstat
-Date: Thu, 28 Apr 2011 03:17:21 +0200
-Message-ID: <1303953442-26536-7-git-send-email-johan@herland.net>
+Subject: [PATCHv5 5/7] Allow specifying --dirstat cut-off percentage as a
+ floating point number
+Date: Thu, 28 Apr 2011 03:17:20 +0200
+Message-ID: <1303953442-26536-6-git-send-email-johan@herland.net>
 References: <1303892653-3958-1-git-send-email-johan@herland.net>
  <1303953442-26536-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
@@ -12,34 +12,34 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Johan Herland <johan@herland.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 03:17:57 2011
+X-From: git-owner@vger.kernel.org Thu Apr 28 03:18:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFFrg-0005BT-GZ
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 03:17:56 +0200
+	id 1QFFrh-0005BT-Mw
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 03:17:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758592Ab1D1BRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 21:17:35 -0400
+	id S1759043Ab1D1BRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 21:17:43 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:46644 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758101Ab1D1BRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 21:17:32 -0400
+	id S1756149Ab1D1BRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 21:17:31 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LKC00GNZ8X4P940@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 28 Apr 2011 03:17:28 +0200 (MEST)
+ with ESMTP id <0LKC00GNN8X3P940@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Apr 2011 03:17:27 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id F32BF1EA5971_DB8C027B	for <git@vger.kernel.org>; Thu,
+ with SMTP id 661631EA5956_DB8C027B	for <git@vger.kernel.org>; Thu,
  28 Apr 2011 01:17:27 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 4F5051EA3847_DB8C026F	for <git@vger.kernel.org>; Thu,
- 28 Apr 2011 01:17:26 +0000 (GMT)
+ with ESMTP id A858E1EA391C_DB8C025F	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 01:17:25 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LKC0058L8X0LO10@get-mta-in02.get.basefarm.net> for
@@ -50,316 +50,186 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172307>
 
-This patch adds an alternative implementation of show_dirstat(), called
-show_dirstat_by_line(), which uses the more expensive diffstat analysis
-(as opposed to show_dirstat()'s own (relatively inexpensive) analysis)
-to derive the numbers from which the --dirstat output is computed.
+Only the first digit after the decimal point is kept, as the dirstat
+calculations all happen in permille.
 
-The alternative implementation is controlled by the new "lines" parameter
-to the --dirstat option (or the diff.dirstat config variable).
-
-For binary files, the diffstat analysis counts bytes instead of lines,
-so to prevent binary files from dominating the dirstat results, the
-byte counts for binary files are divided by 64 before being compared to
-their textual/line-based counterparts. This is a stupid and ugly - but
-very cheap - heuristic.
-
-In linux-2.6.git, running the three different --dirstat modes:
-
-  time git diff v2.6.20..v2.6.30 --dirstat=changes > /dev/null
-vs.
-  time git diff v2.6.20..v2.6.30 --dirstat=lines > /dev/null
-vs.
-  time git diff v2.6.20..v2.6.30 --dirstat=files > /dev/null
-
-yields the following average runtimes on my machine:
-
- - "changes" (default): ~6.0 s
- - "lines":             ~9.6 s
- - "files":             ~0.1 s
-
-So, as expected, there's a considerable performance hit (~60%) by going
-through the full diffstat analysis as compared to the default "changes"
-analysis (obviously, "files" is much faster than both). As such, the
-"lines" mode is probably only useful if you really need the --dirstat
-numbers to be consistent with the numbers returned from the other
---*stat options.
-
-The patch also includes documentation and tests for the new dirstat mode.
+Selftests verifying floating-point percentage input has been added.
 
 Improved-by: Junio C Hamano <gitster@pobox.com>
+Improved-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/config.txt       |    8 +++
- Documentation/diff-options.txt |    8 +++
- diff.c                         |   61 +++++++++++++++++++++++-
- diff.h                         |    1 +
- t/t4047-diff-dirstat.sh        |  100 ++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 176 insertions(+), 2 deletions(-)
+ diff.c                  |   26 +++++++++++-------
+ diff.h                  |    2 +-
+ t/t4047-diff-dirstat.sh |   64 +++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 81 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c18dd5a..0cad75c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -837,6 +837,14 @@ diff.dirstat::
- 	the amount of pure code movements within a file.  In other words,
- 	rearranging lines in a file is not counted as much as other changes.
- 	This is the default behavior when no parameter is given.
-+`lines`;;
-+	Compute the dirstat numbers by doing the regular line-based diff
-+	analysis, and summing the removed/added line counts. (For binary
-+	files, count 64-byte chunks instead, since binary files have no
-+	natural concept of lines). This is a more expensive `--dirstat`
-+	behavior than the `changes` behavior, but it does count rearranged
-+	lines within a file as much as other changes. The resulting output
-+	is consistent with what you get from the other `--*stat` options.
- `files`;;
- 	Compute the dirstat numbers by counting the number of files changed.
- 	Each changed file counts equally in the dirstat analysis. This is
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 4ad50b9..327d10a 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -81,6 +81,14 @@ endif::git-format-patch[]
- 	the amount of pure code movements within a file.  In other words,
- 	rearranging lines in a file is not counted as much as other changes.
- 	This is the default behavior when no parameter is given.
-+`lines`;;
-+	Compute the dirstat numbers by doing the regular line-based diff
-+	analysis, and summing the removed/added line counts. (For binary
-+	files, count 64-byte chunks instead, since binary files have no
-+	natural concept of lines). This is a more expensive `--dirstat`
-+	behavior than the `changes` behavior, but it does count rearranged
-+	lines within a file as much as other changes. The resulting output
-+	is consistent with what you get from the other `--*stat` options.
- `files`;;
- 	Compute the dirstat numbers by counting the number of files changed.
- 	Each changed file counts equally in the dirstat analysis. This is
 diff --git a/diff.c b/diff.c
-index e0de4fa..8703763 100644
+index 92508b0..e0de4fa 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -73,9 +73,15 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
- 	while (*p) {
- 		if (!prefixcmp(p, "changes")) {
- 			p += 7;
-+			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
-+			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
-+		} else if (!prefixcmp(p, "lines")) {
-+			p += 5;
-+			DIFF_OPT_SET(options, DIRSTAT_BY_LINE);
- 			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
- 		} else if (!prefixcmp(p, "files")) {
- 			p += 5;
-+			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
- 			DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
- 		} else if (!prefixcmp(p, "noncumulative")) {
- 			p += 13;
-@@ -1669,6 +1675,50 @@ found_damage:
- 	gather_dirstat(options, &dir, changed, "", 0);
- }
+@@ -31,7 +31,7 @@ static const char *external_diff_cmd_cfg;
+ int diff_auto_refresh_index = 1;
+ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
+-static int diff_dirstat_percent_default = 3;
++static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
  
-+static void show_dirstat_by_line(struct diffstat_t *data, struct diff_options *options)
-+{
-+	int i;
-+	unsigned long changed;
-+	struct dirstat_dir dir;
-+
-+	if (data->nr == 0)
-+		return;
-+
-+	dir.files = NULL;
-+	dir.alloc = 0;
-+	dir.nr = 0;
+ static char diff_colors[][COLOR_MAXLEN] = {
+@@ -85,8 +85,15 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+ 			DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
+ 		} else if (isdigit(*p)) {
+ 			char *end;
+-			options->dirstat_percent = strtoul(p, &end, 10);
++			options->dirstat_permille = strtoul(p, &end, 10) * 10;
+ 			p = end;
++			if (*p == '.' && isdigit(*++p)) {
++				/* only use first digit */
++				options->dirstat_permille += *p - '0';
++				/* .. and ignore any further digits */
++				while (isdigit(*++p))
++					; /* nothing */
++			}
+ 		} else
+ 			return error("Unknown --dirstat parameter '%s'", p);
+ 
+@@ -182,9 +189,9 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 	}
+ 
+ 	if (!strcmp(var, "diff.dirstat")) {
+-		default_diff_options.dirstat_percent = diff_dirstat_percent_default;
++		default_diff_options.dirstat_permille = diff_dirstat_permille_default;
+ 		(void) parse_dirstat_params(&default_diff_options, value);
+-		diff_dirstat_percent_default = default_diff_options.dirstat_percent;
++		diff_dirstat_permille_default = default_diff_options.dirstat_permille;
+ 		return 0;
+ 	}
+ 
+@@ -1496,7 +1503,7 @@ struct dirstat_file {
+ 
+ struct dirstat_dir {
+ 	struct dirstat_file *files;
+-	int alloc, nr, percent, cumulative;
++	int alloc, nr, permille, cumulative;
+ };
+ 
+ static long gather_dirstat(struct diff_options *opt, struct dirstat_dir *dir,
+@@ -1545,10 +1552,9 @@ static long gather_dirstat(struct diff_options *opt, struct dirstat_dir *dir,
+ 	if (baselen && sources != 1) {
+ 		if (this_dir) {
+ 			int permille = this_dir * 1000 / changed;
+-			int percent = permille / 10;
+-			if (percent >= dir->percent) {
++			if (permille >= dir->permille) {
+ 				fprintf(opt->file, "%s%4d.%01d%% %.*s\n", line_prefix,
+-					percent, permille % 10, baselen, base);
++					permille / 10, permille % 10, baselen, base);
+ 				if (!dir->cumulative)
+ 					return 0;
+ 			}
+@@ -1574,7 +1580,7 @@ static void show_dirstat(struct diff_options *options)
+ 	dir.files = NULL;
+ 	dir.alloc = 0;
+ 	dir.nr = 0;
+-	dir.percent = options->dirstat_percent;
 +	dir.permille = options->dirstat_permille;
-+	dir.cumulative = DIFF_OPT_TST(options, DIRSTAT_CUMULATIVE);
-+
-+	changed = 0;
-+	for (i = 0; i < data->nr; i++) {
-+		struct diffstat_file *file = data->files[i];
-+		unsigned long damage = file->added + file->deleted;
-+		if (file->is_binary)
-+			/*
-+			 * binary files counts bytes, not lines. Must find some
-+			 * way to normalize binary bytes vs. textual lines.
-+			 * The following heuristic assumes that there are 64
-+			 * bytes per "line".
-+			 * This is stupid and ugly, but very cheap...
-+			 */
-+			damage = (damage + 63) / 64;
-+		ALLOC_GROW(dir.files, dir.nr + 1, dir.alloc);
-+		dir.files[dir.nr].name = file->name;
-+		dir.files[dir.nr].changed = damage;
-+		changed += damage;
-+		dir.nr++;
-+	}
-+
-+	/* This can happen even with many files, if everything was renames */
-+	if (!changed)
-+		return;
-+
-+	/* Show all directories with more than x% of the changes */
-+	qsort(dir.files, dir.nr, sizeof(dir.files[0]), dirstat_compare);
-+	gather_dirstat(options, &dir, changed, "", 0);
-+}
-+
- static void free_diffstat_info(struct diffstat_t *diffstat)
- {
- 	int i;
-@@ -4058,6 +4108,7 @@ void diff_flush(struct diff_options *options)
- 	struct diff_queue_struct *q = &diff_queued_diff;
- 	int i, output_format = options->output_format;
- 	int separator = 0;
-+	int dirstat_by_line = 0;
+ 	dir.cumulative = DIFF_OPT_TST(options, DIRSTAT_CUMULATIVE);
  
- 	/*
- 	 * Order: raw, stat, summary, patch
-@@ -4078,7 +4129,11 @@ void diff_flush(struct diff_options *options)
- 		separator++;
- 	}
+ 	changed = 0;
+@@ -2929,7 +2935,7 @@ void diff_setup(struct diff_options *options)
+ 	options->line_termination = '\n';
+ 	options->break_opt = -1;
+ 	options->rename_limit = -1;
+-	options->dirstat_percent = diff_dirstat_percent_default;
++	options->dirstat_permille = diff_dirstat_permille_default;
+ 	options->context = 3;
  
--	if (output_format & (DIFF_FORMAT_DIFFSTAT|DIFF_FORMAT_SHORTSTAT|DIFF_FORMAT_NUMSTAT)) {
-+	if (output_format & DIFF_FORMAT_DIRSTAT && DIFF_OPT_TST(options, DIRSTAT_BY_LINE))
-+		dirstat_by_line = 1;
-+
-+	if (output_format & (DIFF_FORMAT_DIFFSTAT|DIFF_FORMAT_SHORTSTAT|DIFF_FORMAT_NUMSTAT) ||
-+	    dirstat_by_line) {
- 		struct diffstat_t diffstat;
- 
- 		memset(&diffstat, 0, sizeof(struct diffstat_t));
-@@ -4093,10 +4148,12 @@ void diff_flush(struct diff_options *options)
- 			show_stats(&diffstat, options);
- 		if (output_format & DIFF_FORMAT_SHORTSTAT)
- 			show_shortstats(&diffstat, options);
-+		if (output_format & DIFF_FORMAT_DIRSTAT)
-+			show_dirstat_by_line(&diffstat, options);
- 		free_diffstat_info(&diffstat);
- 		separator++;
- 	}
--	if (output_format & DIFF_FORMAT_DIRSTAT)
-+	if ((output_format & DIFF_FORMAT_DIRSTAT) && !dirstat_by_line)
- 		show_dirstat(options);
- 
- 	if (output_format & DIFF_FORMAT_SUMMARY && !is_summary_empty(q)) {
+ 	options->change = diff_change;
 diff --git a/diff.h b/diff.h
-index 08b4fe0..1a8b685 100644
+index 0083d92..08b4fe0 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -78,6 +78,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES (1 << 25)
- #define DIFF_OPT_IGNORE_DIRTY_SUBMODULES (1 << 26)
- #define DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG (1 << 27)
-+#define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 28)
- 
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
+@@ -111,7 +111,7 @@ struct diff_options {
+ 	int rename_score;
+ 	int rename_limit;
+ 	int warn_on_too_large_rename;
+-	int dirstat_percent;
++	int dirstat_permille;
+ 	int setup;
+ 	int abbrev;
+ 	const char *prefix;
 diff --git a/t/t4047-diff-dirstat.sh b/t/t4047-diff-dirstat.sh
-index b3062b4..8ca1d58 100755
+index fa1885c..b3062b4 100755
 --- a/t/t4047-diff-dirstat.sh
 +++ b/t/t4047-diff-dirstat.sh
-@@ -832,4 +832,104 @@ test_expect_success '--dirstat=files,cumulative,27.09' '
+@@ -768,4 +768,68 @@ test_expect_success 'diff.dirstat=10,cumulative,files' '
  	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
  '
  
 +cat <<EOF >expect_diff_dirstat
-+  10.6% dst/copy/changed/
-+  10.6% dst/copy/rearranged/
-+  10.6% dst/copy/unchanged/
-+  10.6% dst/move/changed/
-+  10.6% dst/move/rearranged/
-+  10.6% dst/move/unchanged/
-+  10.6% src/move/changed/
-+  10.6% src/move/rearranged/
-+  10.6% src/move/unchanged/
++  27.2% dst/copy/
++  27.2% dst/move/
++  54.5% dst/
++  27.2% src/move/
 +EOF
 +
 +cat <<EOF >expect_diff_dirstat_M
-+   5.2% changed/
-+  26.3% dst/copy/changed/
-+  26.3% dst/copy/rearranged/
-+  26.3% dst/copy/unchanged/
-+   5.2% dst/move/changed/
-+   5.2% dst/move/rearranged/
-+   5.2% rearranged/
++  42.8% dst/copy/
++  28.5% dst/move/
++  71.4% dst/
 +EOF
 +
 +cat <<EOF >expect_diff_dirstat_CC
-+  16.6% changed/
-+  16.6% dst/copy/changed/
-+  16.6% dst/copy/rearranged/
-+  16.6% dst/move/changed/
-+  16.6% dst/move/rearranged/
-+  16.6% rearranged/
++  33.3% dst/copy/
++  33.3% dst/move/
++  66.6% dst/
 +EOF
 +
-+test_expect_success '--dirstat=lines' '
-+	git diff --dirstat=lines HEAD^..HEAD >actual_diff_dirstat &&
++test_expect_success '--dirstat=files,cumulative,16.7' '
++	git diff --dirstat=files,cumulative,16.7 HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=lines -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff --dirstat=files,cumulative,16.7 -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=lines -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff --dirstat=files,cumulative,16.7 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
-+test_expect_success 'diff.dirstat=lines' '
-+	git -c diff.dirstat=lines diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
++test_expect_success 'diff.dirstat=16.7,cumulative,files' '
++	git -c diff.dirstat=16.7,cumulative,files diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git -c diff.dirstat=lines diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git -c diff.dirstat=16.7,cumulative,files diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git -c diff.dirstat=lines diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git -c diff.dirstat=16.7,cumulative,files diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
-+cat <<EOF >expect_diff_dirstat
-+   2.1% changed/
-+  10.6% dst/copy/changed/
-+  10.6% dst/copy/rearranged/
-+  10.6% dst/copy/unchanged/
-+  10.6% dst/move/changed/
-+  10.6% dst/move/rearranged/
-+  10.6% dst/move/unchanged/
-+   2.1% rearranged/
-+  10.6% src/move/changed/
-+  10.6% src/move/rearranged/
-+  10.6% src/move/unchanged/
-+EOF
-+
-+cat <<EOF >expect_diff_dirstat_M
-+   5.2% changed/
-+  26.3% dst/copy/changed/
-+  26.3% dst/copy/rearranged/
-+  26.3% dst/copy/unchanged/
-+   5.2% dst/move/changed/
-+   5.2% dst/move/rearranged/
-+   5.2% rearranged/
-+EOF
-+
-+cat <<EOF >expect_diff_dirstat_CC
-+  16.6% changed/
-+  16.6% dst/copy/changed/
-+  16.6% dst/copy/rearranged/
-+  16.6% dst/move/changed/
-+  16.6% dst/move/rearranged/
-+  16.6% rearranged/
-+EOF
-+
-+test_expect_success '--dirstat=lines,0' '
-+	git diff --dirstat=lines,0 HEAD^..HEAD >actual_diff_dirstat &&
++test_expect_success 'diff.dirstat=16.70,cumulative,files' '
++	git -c diff.dirstat=16.70,cumulative,files diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=lines,0 -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git -c diff.dirstat=16.70,cumulative,files diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=lines,0 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git -c diff.dirstat=16.70,cumulative,files diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
-+test_expect_success 'diff.dirstat=0,lines' '
-+	git -c diff.dirstat=0,lines diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
++test_expect_success '--dirstat=files,cumulative,27.2' '
++	git diff --dirstat=files,cumulative,27.2 HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git -c diff.dirstat=0,lines diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff --dirstat=files,cumulative,27.2 -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git -c diff.dirstat=0,lines diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff --dirstat=files,cumulative,27.2 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
++'
++
++test_expect_success '--dirstat=files,cumulative,27.09' '
++	git diff --dirstat=files,cumulative,27.09 HEAD^..HEAD >actual_diff_dirstat &&
++	test_cmp expect_diff_dirstat actual_diff_dirstat &&
++	git diff --dirstat=files,cumulative,27.09 -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
++	git diff --dirstat=files,cumulative,27.09 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
