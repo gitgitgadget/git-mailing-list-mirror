@@ -1,93 +1,102 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 11:37:03 +0200
-Message-ID: <20110428093703.GB15349@elte.hu>
-References: <20110427225114.GA16765@elte.hu>
- <7voc3r5kzn.fsf@alter.siamese.dyndns.org>
- <20110428062717.GA952@elte.hu>
- <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
+Date: Thu, 28 Apr 2011 11:42:19 +0200
+Message-ID: <4DB9367B.2050607@op5.se>
+References: <20110427225114.GA16765@elte.hu> <7voc3r5kzn.fsf@alter.siamese.dyndns.org> <20110428003541.GA18382@linux-mips.org> <20110428081817.GA29344@pcpool00.mathematik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Ralf Baechle <ralf@linux-mips.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Peter Zijlstra <a.p.zijlstra@chello.nl>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?iso-8859-1?Q?Fr=E9d=E9ric?= Weisbecker <fweisbec@gmail.com>,
-	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:40:28 2011
+	=?ISO-8859-15?Q?Fr=E9d=E9ric?= =?ISO-8859-15?Q?_Weisbecker?= 
+	<fweisbec@gmail.com>, Pekka Enberg <penberg@cs.helsinki.fi>
+To: "Bernhard R. Link" 
+	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Thu Apr 28 11:42:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFNi0-0008TM-C5
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:40:28 +0200
+	id 1QFNk3-0001N1-7r
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752575Ab1D1JkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 05:40:23 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:58681 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751131Ab1D1JkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 05:40:22 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1QFNek-0002F3-RT
-	from <mingo@elte.hu>; Thu, 28 Apr 2011 11:37:07 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id C62CA3E236B; Thu, 28 Apr 2011 11:36:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-08-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1753529Ab1D1Jmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 05:42:32 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45269 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559Ab1D1Jma (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 05:42:30 -0400
+Received: by bwz15 with SMTP id 15so2136737bwz.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:42:29 -0700 (PDT)
+Received: by 10.204.181.7 with SMTP id bw7mr3020806bkb.16.1303983749128;
+        Thu, 28 Apr 2011 02:42:29 -0700 (PDT)
+Received: from vix.int.op5.se (m83-186-240-35.cust.tele2.se [83.186.240.35])
+        by mx.google.com with ESMTPS id f21sm910409bkd.11.2011.04.28.02.42.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 28 Apr 2011 02:42:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Thunderbird/3.1.9 ThunderGit/0.1a
+In-Reply-To: <20110428081817.GA29344@pcpool00.mathematik.uni-freiburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172337>
 
-
-* Erik Faye-Lund <kusmabite@gmail.com> wrote:
-
-> > Secondly, the combined speedup of the cached case with my two patches 
-> > appears to be more than 30% on my testbox so it's a very nifty win from two 
-> > relatively simple changes.
+On 04/28/2011 10:18 AM, Bernhard R. Link wrote:
+> * Ralf Baechle<ralf@linux-mips.org>  [110428 02:35]:
+>> On Wed, Apr 27, 2011 at 04:32:12PM -0700, Junio C Hamano wrote:
+>>
+>>>> +static inline int is_null_sha1(const unsigned char *sha1)
+>>>>   {
+>>>> -	return memcmp(sha1, sha2, 20);
+>>>> +	const unsigned long long *sha1_64 = (void *)sha1;
+>>>> +	const unsigned int *sha1_32 = (void *)sha1;
+>>>
+>>> Can everybody do unaligned accesses just fine?
+>>
+>> Misaligned accesses cause exceptions on some architectures which then
+>> are fixed up in software making these accesses _very_ slow.  You can
+>> use __attribute__((packed)) to work around that but that will on the
+>> affected architectures make gcc generate code pessimistically that is
+>> slower than not using __attribute__((packed)) in case of proper
+>> alignment.  And __attribute__((packed)) only works with GCC.
 > 
-> That speed-up was on ONE test vector, no? There are a lot of other uses of 
-> hash-comparisons in Git, did you measure those?
-
-I picked this hash function because it showed up in the profile (see the 
-profile i posted). There's one other hash that mattered as well in the profile, 
-see the lookup_object() patch i sent yesterday.
-
-> > I have added some quick debug code and none of the sha1 pointers (in my 
-> > admittedly very limited) testing showed misaligned pointers on 64-bit 
-> > systems.
-> >
-> > On 32-bit systems the pointer might be 32-bit aligned only - the patch 
-> > below implements the function 32-bit comparisons.
+> Even __attribute__((packed)) usually does not allow arbitrary aligned
+> data, but can intruct the code to generate code to access code
+> misaligned in a special way. (I have already seen code where thus
+> accessing a properly aligned long caused a SIGBUS, because it was
+> aligned because being in a misaligned packed struct).
 > 
-> That's simply wrong. Unsigned char arrays can and will be unaligned, and this 
-> causes exceptions on most architectures (x86 is pretty much the exception 
-> here). While some systems for these architectures support unaligned reads 
-> from the exception handler, others doesn't. So this patch is pretty much 
-> guaranteed to cause a crash in some setups.
+> In short: misaligning stuff works on x86, everywhere else it is disaster
+> waiting to happen. (And people claiming compiler bugs or broken
+> architectures, just because they do not know the basic rules of C).
+> 
 
-If unsigned char arrays are allocated unaligned then that's another bug i 
-suspect that should be fixed. Unaligned access on x86 is not free either - 
-there's cycle penalties.
+Given that the vast majority of user systems are x86 style ones, it's
+probably worth using this patch on such systems and stick to a
+partially unrolled byte-by-byte comparison that finishes early on
+the rest of them. Properly pipelined, it will just mean that the early
+return undoes the fetch steps for the 3-4 unrolled bytes that it
+computes in advance, so if the diff comes in the first 10-12 bytes,
+it will still be a win.
 
-Alas, i have not seen these sha1 hash buffers being allocated unaligned (in my 
-very limited testing). In which spots are they allocated unaligned?
+For bonus points, check if both bytestrings are equally (un)aligned
+first and, if they are, half-Duff it out with a fallthrough switch
+statement (without the while() loop) to compare byte-by-byte first
+and then word-for-word on the rest of it. The setup and complexity
+is probably not worth it for our meager 20-byte strings though.
 
-Thanks,
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-	Ingo
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
