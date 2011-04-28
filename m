@@ -1,102 +1,110 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv5 7/7] Improve error handling when parsing dirstat
- parameters
-Date: Fri, 29 Apr 2011 01:16:28 +0200
-Message-ID: <201104290116.28647.johan@herland.net>
-References: <1303892653-3958-1-git-send-email-johan@herland.net>
- <7vhb9i43sl.fsf@alter.siamese.dyndns.org>
- <7vd3k641zn.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: RFC: a minimal plugin architecture
+Date: Fri, 29 Apr 2011 09:22:49 +1000
+Message-ID: <BANLkTi=53dShgcsyTUP2aA+hvm6p+93XrA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 01:16:41 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>,
+	Andreas Ericsson <ae@op5.se>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, david@lang.hm,
+	Pau Garcia i Quiles <pg
+X-From: git-owner@vger.kernel.org Fri Apr 29 01:22:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFaRs-0008TA-Th
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 01:16:41 +0200
+	id 1QFaXw-00030X-MZ
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 01:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757162Ab1D1XQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 19:16:36 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:49383 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754605Ab1D1XQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 19:16:34 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LKD00I2XXZLTG00@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Fri, 29 Apr 2011 01:16:33 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 644241EA561D_DB9F551B	for <git@vger.kernel.org>; Thu,
- 28 Apr 2011 23:16:33 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 4AF351EA391C_DB9F551F	for <git@vger.kernel.org>; Thu,
- 28 Apr 2011 23:16:33 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LKD00M37XZG7W10@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 29 Apr 2011 01:16:33 +0200 (MEST)
-User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.2; x86_64; ; )
-In-reply-to: <7vd3k641zn.fsf@alter.siamese.dyndns.org>
+	id S933046Ab1D1XWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 19:22:52 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:50732 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932556Ab1D1XWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 19:22:51 -0400
+Received: by ewy4 with SMTP id 4so982794ewy.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 16:22:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=p/bRxPP4YiqVhCu+0FiRwS/CjLYR0TG4xgW9/o6zmCc=;
+        b=q7Ui2rJo10H87EkODqGe+GNdIr81FcPmR/32IgC0Cv4jlFNX0/9pmmmgqMiGJy+3mF
+         p+2GXs22ttLL6gfZBikq7xwZ+1jmKPLBrLOZH8+1afpW12eVvlnBnC8qJmmDxUrUEonM
+         njMmF7VhSFZByphDYNZ4RZ311GBTuQeD57+j4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=Lxygcl35q0mDK2JUHQ5jAnX7WQHIc+sLjohBo3TQ4EyNdRt9vSk2acsIfNsVkAUB9W
+         0EQekB3HFzt0m6aEqpNeBUN5Uw/Un1mlcleaOYCm4JMPmhIRAWosXKIiszhMwMzbWTMU
+         GoRxTdgJWAMl2Jg9E6/6IMYdxhFH0Cmqzjm+M=
+Received: by 10.14.6.10 with SMTP id 10mr1799241eem.117.1304032969345; Thu, 28
+ Apr 2011 16:22:49 -0700 (PDT)
+Received: by 10.14.22.68 with HTTP; Thu, 28 Apr 2011 16:22:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172419>
 
-On Thursday 28 April 2011, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > I am not sure if three combinations (vanilla, -M and -C -C) need to be
-> > tested to produce an empty result.  If so, it would make it easier to
-> > read if they are split into three tests, or at least have a blank line
-> > between them, but I suspect that you would agree that it is not worth
-> > to have three separate test_expect_success for these.
-> 
-> I think it makes sense to cull these three cases into one for the case we
-> expect the command to stop without doing anything, but we would still
-> want to validate the output for three variants in the "config" case.
+Hi,
 
-Agreed.
+I am starting to get the idea that everyone feels I am being a little
+too ambitious. Slow learner, I know.
 
-> Also I forgot to say that the new "grep" invocations added to check the
-> error output might have to be test_i18ngrep.  Please check with
-> 
->     make GETTEXT_POISON=YesPlease test
-> 
-> The configuration variable names and typo in user input should appear
-> somewhere in the output for any real locale, but I think gettext-poison
-> would throw these away.
+I think this is because my visions are much grander than people are
+willing to swallow right now, so I want to scale back to where I think
+there is some consensus and get some feedback about what a minimal
+plugin architecture would be.
 
-Hmm. Not exactly sure how this is supposed to work. I ran the above command 
-(after a test merge with 'pu' to get GETTEXT_POISON in my working tree), and 
-it succeeded. But then, I have not marked my added strings for translation 
-with "_()". Should I? AFAICS no other strings in diff.c are marked for 
-translation either...
+I understand that I am yet to convince people of the merits of either
+git -mediated plugin management or package management, so let's assume
+that the contents of a "git-plugins" directory is managed only by
+package managers or plugin authors, following guidelines established
+by git-core.
 
-> By the way, should the following two entries make any difference, and if
-> so how?
-> 
-> 	[diff]
->           dirstat = unknown,0,lines
->           dirstat = 0,lines,unknown
+I observed that Pau, Junio and Jonathan are receptive to the idea of a
+"standard" directory into which plugins could be installed. Pau would
+prefer one directory per package, and with that I would concur.
 
-No difference. The "rules" that apply in this case are:
-- Tokens are separated by commas
-- Unrecognized tokens are ignored
+However, let's start simple, what would a minimal plugin directory
+look like and, assuming there was one per git-install, where would it
+be located relative to the prefix?
 
-This is fundamentally what 7/7 tries to accomplish.
+Here's a suggestion for the layout:
 
+bin/
+   - all scripts and sh libraries
+man/
+   - all man pages
+html/
+   - all html pages
 
-...Johan
+What about location?
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+   ${prefix}/git-plugins
+   ${prefix}/lib/git-plugins
+
+Or, decided by distribution?
+
+Is there support for the idea of adding a --man-path switch to the main line?
+
+What about a --plugins-path, that would answer the question about
+where plugins should go?
+
+Per Jonathan's and Junio's suggestions, the idea of having a plugins
+search path seems like a reasonable one, so that users without control
+over the git install can at least customize it themselves.
+
+How would this path be configured by the user? Would the user
+configuration edit the git default or would it override it?
+
+If there are multiple plugin directories, how would a plugin discover
+which one it has been installed in so that it can find any
+plugin-specific resource it might need?
+
+Regards,
+
+jon.
