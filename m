@@ -1,54 +1,95 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] config.txt,diff-options.txt: porcelain vs. plumbing for
- color.diff
-Date: Thu, 28 Apr 2011 09:47:33 +0200
-Message-ID: <4DB91B95.2020308@drmicha.warpmail.net>
-References: <7voc3sewpg.fsf@alter.siamese.dyndns.org> <24a6907cade7aedb51dc20ab5977603ca21e70bb.1303889849.git.git@drmicha.warpmail.net> <20110427090323.GA14849@elie> <7v7hafabsj.fsf@alter.siamese.dyndns.org> <7vliyv7djb.fsf@alter.siamese.dyndns.org> <20110427221215.GC18596@elie>
+From: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Thu, 28 Apr 2011 09:40:08 +0200
+Message-ID: <BANLkTi=VLKoKxib+_NDOJYKL-R=AZWDi6g@mail.gmail.com>
+References: <4DB80747.8080401@op5.se> <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
+ <4DB82D90.6060200@op5.se> <7vbozr8uo8.fsf@alter.siamese.dyndns.org>
+ <7vpqo77dlr.fsf@alter.siamese.dyndns.org> <1303930175.25134.38.camel@drew-northup.unet.maine.edu>
+ <20110427194233.GA16717@gnu.kitenet.net> <7vwrif5q93.fsf@alter.siamese.dyndns.org>
+ <20110427220748.GA19578@elie> <7vsjt35l84.fsf@alter.siamese.dyndns.org>
+ <20110427234224.GA26854@elie> <7viptz5j82.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com> <alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
+ <BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 09:47:57 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: david@lang.hm, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 09:48:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFLx4-0005lW-Is
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 09:47:54 +0200
+	id 1QFLxV-0005yc-Ky
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 09:48:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754385Ab1D1Hrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 03:47:37 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:41348 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754150Ab1D1Hrg (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2011 03:47:36 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 145D420886;
-	Thu, 28 Apr 2011 03:47:36 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute5.internal (MEProxy); Thu, 28 Apr 2011 03:47:36 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=+Wt6tUk8O6WLRqAuGVcPJwEWG5s=; b=s7bOg6MxcZ/nFDMywHEmEhTItMeD6Tt7rphcjW0zbS56/g67pKxaQAB4FcdtvG25tsPfjxPxqKKA4Gq7AlM8mpZt9ud3p86KVrGgkYugxkVswWFKhx3OFOBgz6PQyuPJ9g/RUrSuF3DccqhUGPXOm+M0sWtb6vCui57H3OUmr1Q=
-X-Sasl-enc: 7rTe6wvxQoOP8vmLNIaY/K4UyGOQab34UnbmmwiNEDDV 1303976855
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 754F3449775;
-	Thu, 28 Apr 2011 03:47:35 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110305 Remi/fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <20110427221215.GC18596@elie>
+	id S1754786Ab1D1HsI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 03:48:08 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:64578 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754683Ab1D1Hrx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2011 03:47:53 -0400
+Received: by pzk9 with SMTP id 9so1519471pzk.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 00:47:53 -0700 (PDT)
+Received: by 10.68.39.105 with SMTP id o9mr3463665pbk.45.1303976873010; Thu,
+ 28 Apr 2011 00:47:53 -0700 (PDT)
+Received: by 10.68.55.163 with HTTP; Thu, 28 Apr 2011 00:40:08 -0700 (PDT)
+In-Reply-To: <BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172321>
 
-Jonathan Nieder venit, vidit, dixit 28.04.2011 00:12:
-> Junio C Hamano wrote:
-> 
->> I'll queue the following.
-> 
-> Thanks; looks good.
+On Thu, Apr 28, 2011 at 4:08 AM, Jon Seymour <jon.seymour@gmail.com> wr=
+ote:
 
-Yep, thanks both of you!
+>>> I guess an unmanaged solution could use separate directories for ea=
+ch
+>>> plugin, but this would imply scanning all these paths each time you
+>>> invoke git. In my view, symbolic links from a dir already
+>>> GIT_EXEC_PATH to plugin directories would be a more efficient way t=
+o
+>>> do this.
+>>
+>> I think you are overanalyzing the problem
+>
+> I don't think so. =A0Perhaps Pau can give us his view on the
+> desirability of a single directory for all plugins artifacts from a
+> distribution maintainers perspective.
 
-Michael
+You are thinking too much, this is simpler than what you are trying to =
+do :-)
+
+What packages in Linux distributions do is essentially placing files
+where the FHS says, i. e:
+
+- Binaries intended to be used by an average Joe go to /usr/bin
+- Binaries for internal consumption go to /usr/lib/packagename
+- Libraries go to /usr/lib
+- Documentation goes to /usr/share/doc/packagename
+- Manual pages to go /usr/share/man/manX/command.X.gz
+- etc
+
+Define something like that inside the prefix where git is installed
+and you are done. As Junio said, git already checks for git-* presence
+for help, etc.
+
+If you want to see more about package organization, go to
+http://www.debian.org/Packages/unstable/ , go to that package's page
+and at the bottom there is a "List of files" link. For instance
+
+http://packages.debian.org/experimental/git
+http://packages.debian.org/experimental/amd64/git/filelist
+
+BTW, I fail to see why an "activation" step is needed. Either it is
+installed or it is not.
+
+--=20
+Pau Garcia i Quiles
+http://www.elpauer.org
+(Due to my workload, I may need 10 days to answer)
