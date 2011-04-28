@@ -1,130 +1,52 @@
-From: Kacper Kornet <kornet@camk.edu.pl>
-Subject: Re: [PATCH] Respect definition of prefix from autotools in
- ETC_GITCONFIG and ETC_GITATTRIBUTES
-Date: Thu, 28 Apr 2011 19:49:36 +0200
-Message-ID: <20110428174935.GD4833@camk.edu.pl>
-References: <20110428022922.GC4833@camk.edu.pl>
- <7v62py5nbp.fsf@alter.siamese.dyndns.org>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: [PATCH] remove noise and inaccuracies from git-svn docs
+Date: Thu, 28 Apr 2011 19:57:28 +0200
+Message-ID: <4DB9AA88.8040505@elegosoft.com>
+References: <1303138000-27807-1-git-send-email-stsp@stsp.name> <vpqhb9vplu4.fsf@bauges.imag.fr> <7v39lfa1h5.fsf@alter.siamese.dyndns.org> <20110419093108.GA7440@ted.stsp.name> <20110428173416.GC15785@ted.stsp.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 19:49:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Stefan Sperling <stsp@stsp.name>
+X-From: git-owner@vger.kernel.org Thu Apr 28 19:57:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFVLZ-0007fi-HZ
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 19:49:49 +0200
+	id 1QFVTA-0004IA-R7
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 19:57:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756862Ab1D1Rto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 13:49:44 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:59215 "EHLO moat.camk.edu.pl"
+	id S1757556Ab1D1R5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 13:57:36 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:34125 "EHLO mx0.elegosoft.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751318Ab1D1Rtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 13:49:43 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id BEA955F0047;
-	Thu, 28 Apr 2011 19:49:41 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id EsOw0wdDlWH9; Thu, 28 Apr 2011 19:49:36 +0200 (CEST)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 214EC5F0046;
-	Thu, 28 Apr 2011 19:49:36 +0200 (CEST)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id 121D280A1F; Thu, 28 Apr 2011 19:49:36 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v62py5nbp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754103Ab1D1R5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 13:57:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id C4457DE8C7;
+	Thu, 28 Apr 2011 19:57:33 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LJe8+XYDRWkV; Thu, 28 Apr 2011 19:57:28 +0200 (CEST)
+Received: from [192.168.1.103] (g230121199.adsl.alicedsl.de [92.230.121.199])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id A2FADDE8C6;
+	Thu, 28 Apr 2011 19:57:28 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110307 Lanikai/3.1.9
+In-Reply-To: <20110428173416.GC15785@ted.stsp.name>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172380>
 
-On Thu, Apr 28, 2011 at 09:54:02AM -0700, Junio C Hamano wrote:
-> Kacper Kornet <kornet@camk.edu.pl> writes:
+>> I've sent a signed-off version with git send-email. Thanks!
+> 
+> Ping.  Apparently this hasn't been committed yet.
 
-> > Definitions of ETC_GITCONFIG and ETC_GITATTRIBUTES depend on value of
-> > prefix. As prefix can be changed in config.mak.autogen, all if blocks
-> > with conditions based on prefix should be placed after the file is
-> > included in Makefile.
+It's queued in next:
 
-> This is _not_ just about autogen, is it?  The same issue exists if the
-> user wants to manually tweak prefix in config.mak, no?
-
-> If so, perhaps the patch needs to be retitled to avoid confusion,
-> something like:
-
->     Subject: Honor $(prefix) set in config.mak* when defining ETC_GIT* variables
-
-You are right.
-
-> > diff --git a/Makefile b/Makefile
-> > index cbc3fce..5b4ae40 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -291,15 +291,8 @@ sharedir = $(prefix)/share
-> >  gitwebdir = $(sharedir)/gitweb
-> >  template_dir = share/git-core/templates
-> >  htmldir = share/doc/git-doc
-> > -ifeq ($(prefix),/usr)
-> > -sysconfdir = /etc
-> >  ETC_GITCONFIG = $(sysconfdir)/gitconfig
-> >  ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
-> > -else
-> > -sysconfdir = $(prefix)/etc
-> > -ETC_GITCONFIG = etc/gitconfig
-> > -ETC_GITATTRIBUTES = etc/gitattributes
-> > -endif
-> >  lib = lib
-> >  # DESTDIR=
-> >  pathsep = :
-> > @@ -1192,6 +1185,12 @@ endif
-> >  -include config.mak.autogen
-> >  -include config.mak
-
-> > +ifeq ($(prefix),/usr)
-> > +sysconfdir = /etc
-> > +else
-> > +sysconfdir = etc
-> > +endif
-
-Actually I have made a mistake here. I meant the last hunk to be:
-
-@@ -1192,6 +1185,12 @@ endif
- -include config.mak.autogen
- -include config.mak
-
-+ifeq ($(prefix),/usr)
-+sysconfdir = /etc
-+else
-+sysconfdir = $(prefix)/etc
-+endif
-
-> But this part in the Makefile outside the context of the patch bothers
-> me.  It seems to imply that sysconfdir is _not_ that variable you want to
-> define later.
-
->    # Among the variables below, these:
->    #   gitexecdir
->    #   template_dir
->    #   mandir
->    #   infodir
->    #   htmldir
->    #   ETC_GITCONFIG (but not sysconfdir)
->    #   ETC_GITATTRIBUTES
->    # can be specified as a relative path some/where/else;
-
-> So I have a suspicion that your patch as is will break when prefix is set
-> to something other than /usr directory.  I don't think anybody in-tree
-> currently uses sysconfdir, but that does not mean nobody will ever do.
-
-See the corrected hunk above. I will be prepare the corrected patch.
-
--- 
-  Kacper Kornet
+http://article.gmane.org/gmane.comp.version-control.git/172274
