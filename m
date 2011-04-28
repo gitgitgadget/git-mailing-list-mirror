@@ -1,92 +1,139 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 13:32:56 +0400
-Message-ID: <BANLkTin+qb6j8p+kOTEkQ2iK29ZWOsRk-g@mail.gmail.com>
+Date: Thu, 28 Apr 2011 11:33:07 +0200
+Message-ID: <20110428093307.GA15349@elte.hu>
 References: <20110427225114.GA16765@elte.hu>
-	<20110427231748.GA26632@elie>
+ <7voc3r5kzn.fsf@alter.siamese.dyndns.org>
+ <20110428062717.GA952@elte.hu>
+ <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Peter Zijlstra <a.p.zijlstra@chello.nl>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?ISO-8859-1?Q?Fr=E9d=E9ric_Weisbecker?= <fweisbec@gmail.com>,
+	=?iso-8859-1?Q?Fr=E9d=E9ric?= Weisbecker <fweisbec@gmail.com>,
 	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:33:03 2011
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 11:36:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFNap-0004qQ-E4
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:33:03 +0200
+	id 1QFNeJ-0006Ya-5U
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753049Ab1D1Jc6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 05:32:58 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:64368 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752074Ab1D1Jc5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2011 05:32:57 -0400
-Received: by qyg14 with SMTP id 14so1322308qyg.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:32:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=eBChYy3L6B1itLsevMp8mwoO+qduYPP/Wvzc2hetP3Q=;
-        b=WhPIfaDnS7dg7vQkCZBhpCZRdOwG1fZsN1Z4SvrL5cOhZdJrCBeep4rGhLH5LUhSNh
-         tZ28MfrxjWj/GNdjWyFeRtQShnybJBoVLNjFgdQ3OkmX0+n+0IWpToAtfsXoevXsZPnV
-         jJXnRJeNrQhDJrRb7U2f2YPX9xNJ52SgflujE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sjclNEYfxxvAhUbEhXzAjstmKi41g8iGxKjpbvhuI3MRRsKGPx3SC2KGNVqT8zPh1y
-         NCkziUrDWzigRJ9VM3sejSX14fc0Ci+bdX+03Veg8inVz8DqIlKf3N8MY0uHJu6QonUy
-         EPH6VjO2r0uxYlmC2sfWXUXr5SwJ0pUBYMdGo=
-Received: by 10.229.65.73 with SMTP id h9mr2528980qci.269.1303983176826; Thu,
- 28 Apr 2011 02:32:56 -0700 (PDT)
-Received: by 10.229.251.85 with HTTP; Thu, 28 Apr 2011 02:32:56 -0700 (PDT)
-In-Reply-To: <20110427231748.GA26632@elie>
+	id S932140Ab1D1Jgd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 05:36:33 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:45182 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752512Ab1D1Jgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 05:36:31 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1QFNax-0006s4-1j
+	from <mingo@elte.hu>; Thu, 28 Apr 2011 11:33:16 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id DC3743E236B; Thu, 28 Apr 2011 11:33:06 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-08-17)
+Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-SpamScore: -2.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
+	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172334>
 
-2011/4/28 Jonathan Nieder <jrnieder@gmail.com>:
->
-> Hm. =A0This would be very sensitive to the compiler, since a too-smar=
-t
-> optimizer could take this loop and rewrite it back to memcmp! =A0So I
-> wonder if it's possible to convey this to the compiler more precisely=
-:
->
-> =A0 =A0 =A0 =A0return memcmp_probably_differs_early(sha1, sha2, 20);
->
-> E.g., how would something like
->
-> =A0 =A0 =A0 =A0const unsigned int *start1 =3D (const unsigned int *) =
-sha1;
-> =A0 =A0 =A0 =A0const unsigned int *start2 =3D (const unsigned int *) =
-sha2;
->
-> =A0 =A0 =A0 =A0if (likely(*start1 !=3D *start2)) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (*start1 < *start2)
 
-It can be a problem with unalligned access. So, IMHO, it is
-better to use get_be32 here:
+* Erik Faye-Lund <kusmabite@gmail.com> wrote:
 
- =A0 =A0 =A0 =A0unsigned start1 =3D get_be32(sha1);
- =A0 =A0 =A0 =A0unsigned start2 =3D get_be32(sha2);
+> 2011/4/28 Ingo Molnar <mingo@elte.hu>:
+> >
+> > * Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> >> Ingo Molnar <mingo@elte.hu> writes:
+> >>
+> >> > +static inline int hashcmp(const unsigned char *sha1, const unsi=
+gned char *sha2)
+> >> > =A0{
+> >> > - =A0 return !memcmp(sha1, null_sha1, 20);
+> >> > + =A0 int i;
+> >> > +
+> >> > + =A0 for (i =3D 0; i < 20; i++, sha1++, sha2++) {
+> >> > + =A0 =A0 =A0 =A0 =A0 if (*sha1 !=3D *sha2) {
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (*sha1 < *sha2)
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return -1;
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return +1;
+> >> > + =A0 =A0 =A0 =A0 =A0 }
+>=20
+> Why not just:
+>=20
+> if (*sha1 !=3D *sha2)
+>         return *sha2 - *sha1;
 
- =A0 =A0 =A0 =A0if (likely(start1 !=3D start2)) {
- =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (start1 < start2)
+You mean "*sha1 - *sha2", right?
 
-=2E..
+> memcmp isn't guaranteed to return onlt the values -1, 0, +1, it can
+> return any value, just as long as it's sign of a non-zero return
+> express the relationship between the first mis-matching byte.
 
-Dmitry
+Yeah, agreed, updated patch below. Seems to work fine here.
+
+	Ingo
+
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+
+diff --git a/cache.h b/cache.h
+index 2674f4c..574c948 100644
+--- a/cache.h
++++ b/cache.h
+@@ -675,14 +675,30 @@ extern char *sha1_pack_name(const unsigned char *=
+sha1);
+ extern char *sha1_pack_index_name(const unsigned char *sha1);
+ extern const char *find_unique_abbrev(const unsigned char *sha1, int);
+ extern const unsigned char null_sha1[20];
+-static inline int is_null_sha1(const unsigned char *sha1)
++
++static inline int hashcmp(const unsigned char *sha1, const unsigned ch=
+ar *sha2)
+ {
+-	return !memcmp(sha1, null_sha1, 20);
++	int i;
++
++	for (i =3D 0; i < 20; i++, sha1++, sha2++) {
++		if (*sha1 !=3D *sha2)
++			return *sha1 - *sha2;
++	}
++
++	return 0;
+ }
+-static inline int hashcmp(const unsigned char *sha1, const unsigned ch=
+ar *sha2)
++
++static inline int is_null_sha1(const unsigned char *sha1)
+ {
+-	return memcmp(sha1, sha2, 20);
++	const unsigned long long *sha1_64 =3D (void *)sha1;
++	const unsigned int *sha1_32 =3D (void *)sha1;
++
++	if (sha1_64[0] || sha1_64[1] || sha1_32[4])
++		return 0;
++
++	return 1;
+ }
++
+ static inline void hashcpy(unsigned char *sha_dst, const unsigned char=
+ *sha_src)
+ {
+ 	memcpy(sha_dst, sha_src, 20);
