@@ -1,102 +1,140 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 11:42:19 +0200
-Message-ID: <4DB9367B.2050607@op5.se>
-References: <20110427225114.GA16765@elte.hu> <7voc3r5kzn.fsf@alter.siamese.dyndns.org> <20110428003541.GA18382@linux-mips.org> <20110428081817.GA29344@pcpool00.mathematik.uni-freiburg.de>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Thu, 28 Apr 2011 19:42:43 +1000
+Message-ID: <BANLkTin2Ts5C=Sp60w7xnkJ078MaNiroVw@mail.gmail.com>
+References: <4DB80747.8080401@op5.se>
+	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
+	<4DB82D90.6060200@op5.se>
+	<7vbozr8uo8.fsf@alter.siamese.dyndns.org>
+	<7vpqo77dlr.fsf@alter.siamese.dyndns.org>
+	<1303930175.25134.38.camel@drew-northup.unet.maine.edu>
+	<20110427194233.GA16717@gnu.kitenet.net>
+	<7vwrif5q93.fsf@alter.siamese.dyndns.org>
+	<20110427220748.GA19578@elie>
+	<7vsjt35l84.fsf@alter.siamese.dyndns.org>
+	<20110427234224.GA26854@elie>
+	<7viptz5j82.fsf@alter.siamese.dyndns.org>
+	<BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com>
+	<alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
+	<BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
+	<BANLkTi=VLKoKxib+_NDOJYKL-R=AZWDi6g@mail.gmail.com>
+	<BANLkTi=skWHp+ALSqg9BOTqAjqw5Si_-4Q@mail.gmail.com>
+	<BANLkTi=b3bSt8VUvFJw2TiXZNXf0+wLj+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Ralf Baechle <ralf@linux-mips.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: "david@lang.hm" <david@lang.hm>,
 	Junio C Hamano <gitster@pobox.com>,
-	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?ISO-8859-15?Q?Fr=E9d=E9ric?= =?ISO-8859-15?Q?_Weisbecker?= 
-	<fweisbec@gmail.com>, Pekka Enberg <penberg@cs.helsinki.fi>
-To: "Bernhard R. Link" 
-	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:42:35 2011
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 11:42:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFNk3-0001N1-7r
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:42:35 +0200
+	id 1QFNkN-0001ar-Mu
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab1D1Jmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 05:42:32 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:45269 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752559Ab1D1Jma (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 05:42:30 -0400
-Received: by bwz15 with SMTP id 15so2136737bwz.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:42:29 -0700 (PDT)
-Received: by 10.204.181.7 with SMTP id bw7mr3020806bkb.16.1303983749128;
-        Thu, 28 Apr 2011 02:42:29 -0700 (PDT)
-Received: from vix.int.op5.se (m83-186-240-35.cust.tele2.se [83.186.240.35])
-        by mx.google.com with ESMTPS id f21sm910409bkd.11.2011.04.28.02.42.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 28 Apr 2011 02:42:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Thunderbird/3.1.9 ThunderGit/0.1a
-In-Reply-To: <20110428081817.GA29344@pcpool00.mathematik.uni-freiburg.de>
+	id S1753708Ab1D1Jmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 05:42:45 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:37972 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751200Ab1D1Jmn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 05:42:43 -0400
+Received: by vxi39 with SMTP id 39so1889494vxi.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:42:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=zYGpvjG1x+K+bT7L9x/P2mm5lVmpUtbEAq/lWYb9mdk=;
+        b=m19sxO+FsheiNOrwSBRGUqbaZP+Ga9beFMf5xkh2h97bGvVUh206mehoePaf7Ca4iP
+         mMxCpXBJwltKAd4L1VpGd2nKZlQM6TYvhnHE5EYTYhYlFLXINlo+8Wn1sO1ONjNXwf96
+         QVi9HUWvONfk/bgEkd67CBZ87YyuaUbbDxp6I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=kJUnYOJlmtN4Y1b8raadZ1W9Y8roz8Fr6Iw5i3kgwj0Oz3hlDhx75NK3ZfUPaDjtsX
+         /yHIBAF8fuBfgSyBN3urSgJ3vD10zyJx66nUi8HPA6fj8he3Kr8vAcRUQwRKqObzhzFi
+         pQaO9lJdv1MvOSGLvPPEKI40xuE4YoIoVGGpg=
+Received: by 10.52.169.135 with SMTP id ae7mr4661190vdc.79.1303983763174; Thu,
+ 28 Apr 2011 02:42:43 -0700 (PDT)
+Received: by 10.52.160.66 with HTTP; Thu, 28 Apr 2011 02:42:43 -0700 (PDT)
+In-Reply-To: <BANLkTi=b3bSt8VUvFJw2TiXZNXf0+wLj+Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172338>
 
-On 04/28/2011 10:18 AM, Bernhard R. Link wrote:
-> * Ralf Baechle<ralf@linux-mips.org>  [110428 02:35]:
->> On Wed, Apr 27, 2011 at 04:32:12PM -0700, Junio C Hamano wrote:
->>
->>>> +static inline int is_null_sha1(const unsigned char *sha1)
->>>>   {
->>>> -	return memcmp(sha1, sha2, 20);
->>>> +	const unsigned long long *sha1_64 = (void *)sha1;
->>>> +	const unsigned int *sha1_32 = (void *)sha1;
->>>
->>> Can everybody do unaligned accesses just fine?
->>
->> Misaligned accesses cause exceptions on some architectures which then
->> are fixed up in software making these accesses _very_ slow.  You can
->> use __attribute__((packed)) to work around that but that will on the
->> affected architectures make gcc generate code pessimistically that is
->> slower than not using __attribute__((packed)) in case of proper
->> alignment.  And __attribute__((packed)) only works with GCC.
-> 
-> Even __attribute__((packed)) usually does not allow arbitrary aligned
-> data, but can intruct the code to generate code to access code
-> misaligned in a special way. (I have already seen code where thus
-> accessing a properly aligned long caused a SIGBUS, because it was
-> aligned because being in a misaligned packed struct).
-> 
-> In short: misaligning stuff works on x86, everywhere else it is disaster
-> waiting to happen. (And people claiming compiler bugs or broken
-> architectures, just because they do not know the basic rules of C).
-> 
+On Thursday, April 28, 2011, Pau Garcia i Quiles <pgquiles@elpauer.org> wrote:
+> On Thu, Apr 28, 2011 at 10:09 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
+>
+>> Ok, I have tried to explain why separating the concerns of package
+>> management and plugin management is an appropriate thing to do, and
+>> why one directory for each plugin is also a good thing to do. BTW: I
+>> thought you actually suggested this concept yourself in your earlier
+>> post.
+>
+> Please, re-read my mails. I *am* suggesting that plugins store data in
+> different directories!
 
-Given that the vast majority of user systems are x86 style ones, it's
-probably worth using this patch on such systems and stick to a
-partially unrolled byte-by-byte comparison that finishes early on
-the rest of them. Properly pipelined, it will just mean that the early
-return undoes the fetch steps for the 3-4 unrolled bytes that it
-computes in advance, so if the diff comes in the first 10-12 bytes,
-it will still be a win.
+Good. Sorry I explained why an activation step is good for
+performance, particularly if you have a plugin architecture that uses
+multiple directories, one per plugin. I misinterpreted your confusion
+about why an activate step was necessary as an explicit rejection of
+my arguments that an activation step was a plus for performance and
+conflict detection in an environment in which each plugin is installed
+in it's own directory. Apologies.
 
-For bonus points, check if both bytestrings are equally (un)aligned
-first and, if they are, half-Duff it out with a fallthrough switch
-statement (without the while() loop) to compare byte-by-byte first
-and then word-for-word on the rest of it. The setup and complexity
-is probably not worth it for our meager 20-byte strings though.
+Supposed you have 100 plugins. Suppose the user invoked git foobar
+where foobar is an installed plugin. How does git find the plugin to
+invoke? Why it has to scan 100 directories looking for a match.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+If you use an activation step (just after installation) you get O(1)
+performance instead of O(n). Small gain for 2 plugins, I agree.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+But then that isn't the only reason to use an activation step. As I
+said, an activation step alllows precise detection and prevention of
+conflicts that just isn't possible if you rely on first-in-PATH
+semantics.
+
+It is true, you can delegate conflict detection to the package
+manager, but do you know what, that would be in Andreas"s words
+"Brilliant" as it would force package maintainers become git extension
+experts.
+
+My proposal makes the git-core maintainerrthathe experts on git
+extension management and relieves plugin authors, package authors and
+package-manager authors of this responsibility.
+
+I ask. is that not a very good thing?
+
+>
+> - The "main command" (git-atomic, for instance) would be stored in
+> GIT_PREFIX/lib/git-plugins (instead of GIT_PREFIX/lib/git-core, which
+> is where git stores its commands). Git would have to learn to search
+> in GIT_PREFIX/lib/git-plugins in addition to git-core, of course.
+>
+> - Porcelain for git-atomic would go to
+> GIT_PREFIX/lib/git-plugins/git-atomic (or something like this)
+>
+> - The documentation would be stored in GIT_PREFIX/doc/git-atomic
+>
+> - Resources in GIT_PREFIX/share/git-atomic
+>
+> - etc
+>
+> I. e. each plugin stores its stuff in a separate directory, it's just
+> that directory is not a *single* directory but *many* directories,
+> each one inside the proper path under GIT_PREFIX, just like it is for
+> anything you install on a Unix system
+>
+> --
+> Pau Garcia i Quiles
+> http://www.elpauer.org
+> (Due to my workload, I may need 10 days to answer)
+>
