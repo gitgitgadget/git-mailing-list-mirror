@@ -1,7 +1,7 @@
 From: Jon Seymour <jon.seymour@gmail.com>
 Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Thu, 28 Apr 2011 12:08:23 +1000
-Message-ID: <BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
+Date: Thu, 28 Apr 2011 12:15:19 +1000
+Message-ID: <BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com>
 References: <4DB80747.8080401@op5.se>
 	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
 	<4DB82D90.6060200@op5.se>
@@ -16,138 +16,83 @@ References: <4DB80747.8080401@op5.se>
 	<7viptz5j82.fsf@alter.siamese.dyndns.org>
 	<BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com>
 	<alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
+	<BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+To: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Thu Apr 28 04:08:31 2011
+	Git Mailing List <git@vger.kernel.org>, david@lang.hm,
+	Pau Garcia i Quiles <pg
+X-From: git-owner@vger.kernel.org Thu Apr 28 04:15:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFGec-0008Bj-V2
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 04:08:31 +0200
+	id 1QFGlO-0002fF-ER
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 04:15:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047Ab1D1CI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 22:08:26 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45170 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167Ab1D1CIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 22:08:25 -0400
-Received: by eyx24 with SMTP id 24so687973eyx.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 19:08:23 -0700 (PDT)
+	id S1754967Ab1D1CPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 22:15:23 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:57630 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753351Ab1D1CPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 22:15:21 -0400
+Received: by ewy4 with SMTP id 4so689076ewy.19
+        for <git@vger.kernel.org>; Wed, 27 Apr 2011 19:15:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=yGE3TBIWC/lRkXl4afgMh71gJWhg4widFuuxdq9bYDk=;
-        b=mwKMBDFCjNPb9BQl6pqPL2mFDuTs8efTBG+RHjaYxVX1A2Cev9nMezPZSaTDAufX0U
-         2hXViEXhZCRbTHK7gm7a566kW3uD8cnY8MhkEXuVP1QT3zo3h/nc10na4Gx70Maa6Kuy
-         4/NTH9GxC+Qpx4kPD8Bfh4lVYRS4MHjRxGb2M=
+         :message-id:subject:from:to:content-type;
+        bh=Y7Q7DdnEuKHc8vZ416QxgA+GSSebUl2Psypy5TT1QVk=;
+        b=WdTBkbBnUWbjLDZTvSK0qA+D4Oq1fNj+JvYA1M3hf+9qhwJfv3il1QYnsO6IBDVl0K
+         wQpJPhp2j10M5AsOAAxfywm/tXFF88eUdIpEw0GVj6xrLC71F7hTQ4TsK2oI29lVZnlh
+         g6GHbiHdpj7h/jaiCxoVhJdNCgX6vjJOe4Pb8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=OzXxLzkLpq2VEpb9mja0Y70bXo9CHFRMay7pc+NWV7f4MCYecKwON+9eIDh7Lt+xup
-         zBHgXSaWqFAl+H7/gJnp0wDYioh/S6Q75mZqQ46PeeoQ+A1tktLnll9goJd7osd5we9Z
-         sFKu7rSAL/faCyaJl7uPk26n4MMSGEGXEriaI=
-Received: by 10.14.32.13 with SMTP id n13mr1359613eea.21.1303956503802; Wed,
- 27 Apr 2011 19:08:23 -0700 (PDT)
-Received: by 10.14.22.68 with HTTP; Wed, 27 Apr 2011 19:08:23 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
+         :content-type;
+        b=IOEda8oGKA6ZsDiiKvg9FNKB1ns7haMRmyua+tJ8tc94psvw2KaB7I/KvdnuzoAjHh
+         TYv7p/9RlalIJj+w5pXJG+YmVvUzOHcyLPr1c5o/csHb0xoItn4G2vUL7aGF6AJh7ZYR
+         QxZWgyo5+p1f+8EBbuMBwgoTdvT1bMioAmQxw=
+Received: by 10.14.50.15 with SMTP id y15mr1291675eeb.149.1303956919825; Wed,
+ 27 Apr 2011 19:15:19 -0700 (PDT)
+Received: by 10.14.22.68 with HTTP; Wed, 27 Apr 2011 19:15:19 -0700 (PDT)
+In-Reply-To: <BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172310>
 
-On Thu, Apr 28, 2011 at 10:55 AM,  <david@lang.hm> wrote:
-> On Thu, 28 Apr 2011, Jon Seymour wrote:
->
->> On Thu, Apr 28, 2011 at 10:10 AM, Junio C Hamano <gitster@pobox.com>
->> wrote:
->>>
->>> Jonathan Nieder <jrnieder@gmail.com> writes:
->>>
->>
->> I agree. Apologies for confusing things by talking too much about a
->> git pm install command.
->>
->> I think there are 3 levels of functionality. FWIW, I am suggesting
->> git-core stops at #2.
->>
->> 0. unmanaged plugins
->>
->> git doesn't provide any explicit management of plugins, but will use
->> them if finds them.
->>
->> Without some kind of management, however, you will be forced to dump
->> the man pages and scripts
->> for the plugins in one place.
->>
->> This would be very distribution manager unfriendly since there could
->> be conflicts galore.
->
-> every package manager I know of has no problem with multiple packages owning
-> files in one directory.
->
-> if the files are named the same thing you will have a conflict, but if the
-> files are named the same thing, the commands are probably going to be named
-> the same, and so you will have conflicts in any case.
->
+Assuming for the moment that the concept of a managed plugin is accepted, then.
 
-Suppose a plugin contains a file called LICENSE or README.txt. Which
-LICENSE or README.txt wins?
+The relationship between distribution managers and the git-plugin
+architecture would be as follows:
 
->> I guess an unmanaged solution could use separate directories for each
->> plugin, but this would imply scanning all these paths each time you
->> invoke git. In my view, symbolic links from a dir already
->> GIT_EXEC_PATH to plugin directories would be a more efficient way to
->> do this.
->
-> I think you are overanalyzing the problem
+- distributions would know how to locate the git instance it manages
+- distributions would know how to install their own packages that
+contain plugins into plugins/ subdirectory of this git instance
+- distributions would know how to run git plugin activate and properly
+handle non-zero return codes from same
 
-I don't think so.  Perhaps Pau can give us his view on the
-desirability of a single directory for all plugins artifacts from a
-distribution maintainers perspective.
+make install scripts would act like a kind of distribution in this regard.
 
->> 1. managed plugins
->>
->> git provides minimal plugin management functionality. Each plugin has
->> its own directory, but an activate step is required to make the plugin
->> available to the GIT_EXEC_PATH and GIT_MAN_PATH.
->>
->> This has the advantage that conflicts between plugins would be more
->> readily avoided and is potentially more performant. As Pau suggests,
->> this option is much more package manager friendly
->
-> I don't see how this will avoid conflicts. what files are you thinking that
-> the different plugins will make that won't conflict any more than the
-> commands themselves will?
+Now consider this:
 
-No, but you can manage the conflicts. Hence _managed_ plugins.
+* suppose that git-core defined a git install _interface contract_ but
+did not define an implementation.
 
-   git plugin activate
+Then, a distribution could install its own implementation of the
+git-install plugin into git installations it manages.
 
-can fail with a non-zero exit code if there will be a conflict.
+Then a command like:
 
->
->> It probably does require a git plugin command of some kind, however,
->> in order to perform the activation step.
->
-> only if you think you need a 'installed but not active' mode of operation,
-> and I don't understand why you would want that.
->
+    git install gitwork
 
-For the reasons of managed conflict management.
-
-I don't want to drop a new plugin into a common directory only to find
-it has blitzed some other plugin I previously did the same with.
-
-Still, I guess it is horses for courses.
+would trivially work across all distributions precisely because the
+distribution has provided the implementation of the git install
+interface contract that git-core has helpfully mandated.
 
 jon.
