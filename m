@@ -1,89 +1,74 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 22:32:05 +0200
-Message-ID: <20110428203205.GD24755@elte.hu>
-References: <20110428093703.GB15349@elte.hu>
- <BANLkTim+Kk_ah_4+pQKCi8bXtA8thRVRjQ@mail.gmail.com>
- <4DB93D16.4000603@cs.helsinki.fi>
- <BANLkTimD7KZz4fS0QynPui7-JQS10AkLtg@mail.gmail.com>
- <4DB941CD.2050403@cs.helsinki.fi>
- <BANLkTik-uk-mpdHZxcz8Nem=nEzED_tuJg@mail.gmail.com>
- <20110428123617.GA2062@elie>
- <20110428133708.GA31383@elte.hu>
- <20110428151409.GA32025@elte.hu>
- <BANLkTim90XOLRBPtVCXFb1ptkmUvHGRqeg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] completion: avoid "words" as variable name for zsh
+ portability
+Date: Thu, 28 Apr 2011 13:52:03 -0700
+Message-ID: <7v4o5i3xqk.fsf@alter.siamese.dyndns.org>
+References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
+ <20110427013534.GA14286@elie> <7v62q0b8e0.fsf@alter.siamese.dyndns.org>
+ <20110427064033.GB4226@elie> <20110428160115.GA19003@goldbirke>
+ <BANLkTikt=Em6kP93aZfuZ3DEXdXN+7sAzg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Pekka Enberg <penberg@cs.helsinki.fi>,
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?iso-8859-1?Q?Fr=E9d=E9ric?= Weisbecker <fweisbec@gmail.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 22:35:32 2011
+	Stefan Haller <lists@haller-berlin.de>,
+	Mark Lodato <lodatom@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 22:52:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFXvv-0000LB-M2
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 22:35:32 +0200
+	id 1QFYCK-0001v2-AZ
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 22:52:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310Ab1D1Uf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 16:35:26 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:55643 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750755Ab1D1UfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 16:35:25 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1QFXse-0008PZ-Ed
-	from <mingo@elte.hu>; Thu, 28 Apr 2011 22:32:08 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 2C02B3E2514; Thu, 28 Apr 2011 22:32:05 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <BANLkTim90XOLRBPtVCXFb1ptkmUvHGRqeg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-08-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
+	id S932693Ab1D1UwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 16:52:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53580 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932611Ab1D1UwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 16:52:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 45D3A52C6;
+	Thu, 28 Apr 2011 16:54:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kan1B1LOkuDPccBtAcZZS47229A=; b=kxrrtO
+	iXR2tzgrQMCP4MTP5DQfbYLtsP9ftBqo8WRhbjvkGnislVDxueTIiSnTe3IFHxp4
+	zLIjZs+B9qWSTL8/MHbE0TE681/5q5GEZUBHfX8WocHazkxDMJDG6cZXD3mKeQBy
+	Lt3YbncEM3Uk9Scd40mh8v2fcgwNjJpbJPZas=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MDJS9vCQRWpE/xqGuwbQW7Nkm4AAfIfz
+	EaQG2VlgE/eYNZGlp9Svf+Jq4N974UEEI7mlpWVtpeZvBaAHWd24Dsb+C07z1dIM
+	yaUWkj/Ccnw0+R+q1hQi50TouE7MtyxNvVmBSG8IshfzCUtwlK+4L9i9bwWSxW/Z
+	PPXBy/GMEKE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D787A52C5;
+	Thu, 28 Apr 2011 16:54:16 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E952052C2; Thu, 28 Apr 2011
+ 16:54:07 -0400 (EDT)
+In-Reply-To: <BANLkTikt=Em6kP93aZfuZ3DEXdXN+7sAzg@mail.gmail.com> (Felipe
+ Contreras's message of "Thu, 28 Apr 2011 23:24:05 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AE58387A-71D9-11E0-8D59-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172405>
 
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-* Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> Nice! Much better approach.
+>
+> I also noticed that behavior when not defining 'words' as local, but
+> though modifying all those instances was overkill.
+>
+> Acked-by: Felipe Contreras <felipe.contreras@gmail.com>
 
-> Thanks. I also timed on my end (on Windows), and I came to the same 
-> conclusion (but the improvements of your original was somewhat smaller in my 
-> end; could be due to the test-case). It seems like the early-out wasn't the 
-> only reason your original patch performed faster. It could be that memcmp 
-> (probably) didn't get inlined, and the extra function call outweighs the 
-> complexity. [...]
-
-Function calls arent that heavy really. My measurements identified the 
-following effects:
-
- - profiling of stalled cycles clearly pinpointed the REP MOV string 
-   instruction.
-
- - the patched code had less branch-misses - the clearer and inlined open-coded 
-   loop is probably easier for the CPU to speculate along - while REP MOV 
-   string ops are 'opaque' and the result might be harder to speculate.
-
-So i think the main benefit of my patch is that it avoids the REP MOV 
-instruction.
-
-Thanks,
-
-	Ingo
+Do you mean reviewed-by or even better tested-by?
