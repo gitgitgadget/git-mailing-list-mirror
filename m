@@ -1,76 +1,97 @@
-From: Pekka Enberg <penberg@cs.helsinki.fi>
-Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 15:12:13 +0300
-Message-ID: <4DB9599D.3010208@cs.helsinki.fi>
-References: <20110427225114.GA16765@elte.hu> <7voc3r5kzn.fsf@alter.siamese.dyndns.org> <20110428062717.GA952@elte.hu> <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com> <20110428093703.GB15349@elte.hu> <BANLkTim+Kk_ah_4+pQKCi8bXtA8thRVRjQ@mail.gmail.com> <4DB93D16.4000603@cs.helsinki.fi> <BANLkTimD7KZz4fS0QynPui7-JQS10AkLtg@mail.gmail.com> <4DB941CD.2050403@cs.helsinki.fi> <BANLkTik-uk-mpdHZxcz8Nem=nEzED_tuJg@mail.gmail.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: translation difficulties :: revision and commit
+Date: Thu, 28 Apr 2011 08:14:35 -0400
+Message-ID: <1303992875.1148.23.camel@drew-northup.unet.maine.edu>
+References: <20110427103406.GA7186@jakstys.lt>
+	 <alpine.DEB.2.00.1104271327550.23722@ds9.cixit.se>
+	 <1303934784.25134.74.camel@drew-northup.unet.maine.edu>
+	 <alpine.DEB.2.00.1104281058560.7540@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Ingo Molnar <mingo@elte.hu>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	"=?ISO-8859-1?Q?Fr=E9d=E9ric_Weisbecker?=" <fweisbec@gmail.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Apr 28 14:12:22 2011
+Cc: Motiejus =?UTF-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>,
+	git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Apr 28 14:14:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFQ4z-0002wl-Cu
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 14:12:21 +0200
+	id 1QFQ7O-0004Dj-5z
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 14:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978Ab1D1MMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 08:12:15 -0400
-Received: from courier.cs.helsinki.fi ([128.214.9.1]:34145 "EHLO
-	mail.cs.helsinki.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751473Ab1D1MMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 08:12:14 -0400
-Received: from l227.local ([192.100.124.156])
-  (AUTH: PLAIN penberg, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by mail.cs.helsinki.fi with esmtp; Thu, 28 Apr 2011 15:12:13 +0300
-  id 0008D33F.4DB9599D.00006933
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
-In-Reply-To: <BANLkTik-uk-mpdHZxcz8Nem=nEzED_tuJg@mail.gmail.com>
+	id S1756161Ab1D1MOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 08:14:45 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:51021 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755149Ab1D1MOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 08:14:44 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3SCEcl9030149
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 28 Apr 2011 08:14:38 -0400
+In-Reply-To: <alpine.DEB.2.00.1104281058560.7540@perkele.intern.softwolves.pp.se>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
+	Fuz2=3
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p3SCEcl9030149
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1304597678.55698@1utOuAGJJyA5+XWIKbZ6gQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172357>
 
-On 4/28/11 2:59 PM, Erik Faye-Lund wrote:
-> So my preference is still something like this. Call me conservative ;)
->
-> diff --git a/cache.h b/cache.h
-> index c730c58..8bc03c6 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -681,13 +681,17 @@ extern char *sha1_pack_name(const unsigned char *sha1);
->   extern char *sha1_pack_index_name(const unsigned char *sha1);
->   extern const char *find_unique_abbrev(const unsigned char *sha1, int);
->   extern const unsigned char null_sha1[20];
-> -static inline int is_null_sha1(const unsigned char *sha1)
-> +static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
->   {
-> -	return !memcmp(sha1, null_sha1, 20);
-> +	/* early out for fast mis-match */
-> +	if (*sha1 != *sha2)
-> +		return *sha1 - *sha2;
-> +
-> +	return memcmp(sha1 + 1, sha2 + 1, 19);
->   }
-> -static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
-> +static inline int is_null_sha1(const unsigned char *sha1)
->   {
-> -	return memcmp(sha1, sha2, 20);
-> +	return !hashcmp(sha1, null_sha1);
->   }
->   static inline void hashcpy(unsigned char *sha_dst, const unsigned
-> char *sha_src)
->   {
 
-Yup, might be the most reasonable thing to do if it still speeds things up.
+On Thu, 2011-04-28 at 11:02 +0200, Peter Krefting wrote:
+> Drew Northup:
+> 
+> >> For Swedish, I used a translation of "check-in" (as when checking in at an
+> >> airport) for "commit", both in the verb and noun forms.
+> 
+> > If you seek to avoid SVN-isms I suggest thinking about the
+> > deconstruction of "commit" in the context we are using it:
+> 
+> I don't know much about Subversionisms, never really having used Subversion 
+> (but I have used CVS extensively, so I am a bit damaged), so I cannot 
+> comment on that.
 
-			Pekka
+I feel your pain. Somewhere around here I (think I) still have the full
+CVS dump of Plex86 that I never properly found a new home for (11 years
+ago). As it won't compile on anything newer than 2.4.x and Kevin Lawton
+folded most of it back into Bochs I highly doubt there's a lot of people
+looking for it.
+
+> > "to commit the current state of the working directory as known by Git to 
+> > the recorded history."
+> 
+> The problem, at least for Swedish, is that if I want to translate that 
+> sentence, finding a good word to replace "commit" is very difficult, even 
+> when it is used properly like this. Some things just don't translate very 
+> well into other languages.
+
+Well, that is a problem then! I had thought the problem was fashioning a
+replacement for our jargon noun-form. Now that I think of it, English
+has got to be hard to start from in general with its 45k word
+"canonical" (approximate current use) set--and that's when we don't
+compound or conjugate them in odd new ways or otherwise exercise
+implements of linguistic destruction upon them.
+> 
+> > So far as the language element is concerned, it could have been chosen to 
+> > be a "flubberbudget" and provided nobody attempted suggesting to Linus 
+> > that he'd be insane for calling it that it would have had a decent chance 
+> > of staying that way. ;-)
+> 
+> Speaking of Linus, his native tounge is the same as mine, so I will let him 
+> have the power to override my Swedish translation of Git & co, if he sees 
+> fit :-)
+
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
