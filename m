@@ -1,129 +1,128 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Respect definition of prefix from autotools in
- ETC_GITCONFIG and ETC_GITATTRIBUTES
-Date: Thu, 28 Apr 2011 09:54:02 -0700
-Message-ID: <7v62py5nbp.fsf@alter.siamese.dyndns.org>
-References: <20110428022922.GC4833@camk.edu.pl>
+Subject: Re: [PATCH] strbuf: allocate enough space when strbuf_setlen() is
+ called first time
+Date: Thu, 28 Apr 2011 09:57:58 -0700
+Message-ID: <7vtydi48kp.fsf@alter.siamese.dyndns.org>
+References: <1303820660-744-1-git-send-email-pclouds@gmail.com>
+ <7vaafdexsp.fsf@alter.siamese.dyndns.org> <4DB738A1.8020706@lsrfire.ath.cx>
+ <7vhb9kd6kp.fsf@alter.siamese.dyndns.org> <4DB85162.6000204@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kacper Kornet <kornet@camk.edu.pl>
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:54:20 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:58:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFUTr-00073C-OK
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 18:54:20 +0200
+	id 1QFUXg-00016m-U2
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 18:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757321Ab1D1QyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 12:54:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56427 "EHLO
+	id S1758439Ab1D1Q6L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 12:58:11 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59692 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755427Ab1D1QyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 12:54:13 -0400
+	with ESMTP id S1757291Ab1D1Q6K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2011 12:58:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C204F582B;
-	Thu, 28 Apr 2011 12:56:13 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4DA8458C1;
+	Thu, 28 Apr 2011 13:00:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N0sE9QsgBHOTY+I5cR+rGbEWPAA=; b=nyUxGM
-	9gn3jJLf3a1An/k11V+1OFKubkiAonegLljgN418oCQRS/yRa4N2V1jstRxiIAi+
-	WVl4644WC1tnZBWUNnctV7tFPyijhgxBhkck5ectbbgU+8zXpJxUsC/dRPRpYW2O
-	fS5rKqb+kI5HOQgGeTzriC0eVtL+W0MSnEdyk=
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=tVB1rzoFwBEycTwG8YGR0U5vY
+	M4=; b=W+eTsScbQlejrdMLR6te12+NbJoXxQ0HcY18dcDuXtHeP0shhrgNlnKx6
+	itBuPIGh4V9DjIZGpGndpdB7eQzxpuD6/sHSHyPvWt9jWUitllzXymdg2PxmcKvh
+	uUH2N/vdvceM8M3PlMbwAn/Y85lVWZsc4SGroLfBoJcwuqfmQE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z7MBKEcOjDFIbSLxtaME1vOGqUlSPZVs
-	qlKvrnTyLpBKRdxtTRD3FRGas9YT3ORPZGcwewsl4Ativrgd8D1Vtrhi+kgTCERL
-	//pnOptrMtwbx5mAfKP9Hga7Qt0ObjpKT01yufwcBVdHHS1JNFGyMhJCk0R/fGUv
-	odK76CDw5h0=
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=A4dhTgesOtpMidCt/kN
+	W3QMFdbKYesaqKBYEamkvqkZsoR3TMuJQAkjiynBdub3DQHEq4K5qOabUWw9Ax4h
+	p62AKbU8QcFeHzS6e23PmaVd8RQGWFUkKzkoq6uDZ36lKLJKa2iDg7E6yohNAB5v
+	sAVGK5cfrl8b2Fai7sdkp4Ow=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9E5945827;
-	Thu, 28 Apr 2011 12:56:10 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1B4DE58BD;
+	Thu, 28 Apr 2011 13:00:08 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AC3E85826; Thu, 28 Apr 2011
- 12:56:07 -0400 (EDT)
-In-Reply-To: <20110428022922.GC4833@camk.edu.pl> (Kacper Kornet's message of
- "Thu, 28 Apr 2011 04:29:23 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DC54758BC; Thu, 28 Apr 2011
+ 13:00:03 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B172A6A-71B8-11E0-BEC4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: F89D182C-71B8-11E0-A84B-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172377>
 
-Kacper Kornet <kornet@camk.edu.pl> writes:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> Definitions of ETC_GITCONFIG and ETC_GITATTRIBUTES depend on value of
-> prefix. As prefix can be changed in config.mak.autogen, all if blocks
-> with conditions based on prefix should be placed after the file is
-> included in Makefile.
+> Subject: strbuf: clarify assertion in strbuf_setlen()
+>
+> Commit a8f3e2219 introduced the strbuf_grow() call to strbuf_setlen()=
+ to
+> make ensure that there was at least one byte available to write the
+> mandatory trailing NUL, even for previously unallocated strbufs.
+>
+> Then b315c5c0 added strbuf_slopbuf for the same reason, only globally=
+ for
+> all uses of strbufs.
+>
+> Thus the strbuf_grow() call can be removed now.  This avoids readers =
+of
+> strbuf.h from mistakenly thinking that strbuf_setlen() can be used to
+> extend a strbuf.
+>
+> The following assert() needs to be changed to cope with the fact that
+> sb->alloc can now be zero, which is OK as long as len is also zero.  =
+As
+> suggested by Junio, use the chance to convert it to a die() with a sh=
+ort
+> explanatory message.  The pattern of 'die("BUG: ...")' is already use=
+d in
+> strbuf.c.
+>
+> This was the only assert() in strbuf.[ch], so assert.h doesn't have t=
+o be
+> included anymore either.
+>
+> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-This is _not_ just about autogen, is it?  The same issue exists if the
-user wants to manually tweak prefix in config.mak, no?
+Very nicely explained.  I wish everybody wrote his log message as clear=
+ly
+as this.
 
-If so, perhaps the patch needs to be retitled to avoid confusion,
-something like:
+Thanks, will queue.
 
-    Subject: Honor $(prefix) set in config.mak* when defining ETC_GIT* variables
-
-> diff --git a/Makefile b/Makefile
-> index cbc3fce..5b4ae40 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -291,15 +291,8 @@ sharedir = $(prefix)/share
->  gitwebdir = $(sharedir)/gitweb
->  template_dir = share/git-core/templates
->  htmldir = share/doc/git-doc
-> -ifeq ($(prefix),/usr)
-> -sysconfdir = /etc
->  ETC_GITCONFIG = $(sysconfdir)/gitconfig
->  ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
-> -else
-> -sysconfdir = $(prefix)/etc
-> -ETC_GITCONFIG = etc/gitconfig
-> -ETC_GITATTRIBUTES = etc/gitattributes
-> -endif
->  lib = lib
->  # DESTDIR=
->  pathsep = :
-> @@ -1192,6 +1185,12 @@ endif
->  -include config.mak.autogen
->  -include config.mak
->  
-> +ifeq ($(prefix),/usr)
-> +sysconfdir = /etc
-> +else
-> +sysconfdir = etc
-> +endif
-
-It makes sense to change the definition of ETC_GIT* variables to a form
-that depends on a variable like your patch did, i.e.
-
-    ETC_GITCONFIG = $(some_etc_prefix)/gitconfig
-    ETC_GITATTRIBUTES = $(some_etc_prefix)/gitattributes
-
-and define that variable, whose definition depends on $(prefix), after we
-have read config.mak* files.  So I like the general direction of this
-patch.
-
-But this part in the Makefile outside the context of the patch bothers
-me.  It seems to imply that sysconfdir is _not_ that variable you want to
-define later.
-
-   # Among the variables below, these:
-   #   gitexecdir
-   #   template_dir
-   #   mandir
-   #   infodir
-   #   htmldir
-   #   ETC_GITCONFIG (but not sysconfdir)
-   #   ETC_GITATTRIBUTES
-   # can be specified as a relative path some/where/else;
-
-So I have a suspicion that your patch as is will break when prefix is set
-to something other than /usr directory.  I don't think anybody in-tree
-currently uses sysconfdir, but that does not mean nobody will ever do.
+> ---
+>  strbuf.h |    7 ++-----
+>  1 files changed, 2 insertions(+), 5 deletions(-)
+>
+> diff --git a/strbuf.h b/strbuf.h
+> index 07060ce..9e6d9fa 100644
+> --- a/strbuf.h
+> +++ b/strbuf.h
+> @@ -3,8 +3,6 @@
+> =20
+>  /* See Documentation/technical/api-strbuf.txt */
+> =20
+> -#include <assert.h>
+> -
+>  extern char strbuf_slopbuf[];
+>  struct strbuf {
+>  	size_t alloc;
+> @@ -33,9 +31,8 @@ static inline size_t strbuf_avail(const struct strb=
+uf *sb) {
+>  extern void strbuf_grow(struct strbuf *, size_t);
+> =20
+>  static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
+> -	if (!sb->alloc)
+> -		strbuf_grow(sb, 0);
+> -	assert(len < sb->alloc);
+> +	if (len > (sb->alloc ? sb->alloc - 1 : 0))
+> +		die("BUG: strbuf_setlen() beyond buffer");
+>  	sb->len =3D len;
+>  	sb->buf[len] =3D '\0';
+>  }
