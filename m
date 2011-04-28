@@ -1,117 +1,81 @@
-From: david@lang.hm
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Wed, 27 Apr 2011 17:55:58 -0700 (PDT)
-Message-ID: <alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
-References: <4DB80747.8080401@op5.se> <BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com> <4DB82D90.6060200@op5.se> <7vbozr8uo8.fsf@alter.siamese.dyndns.org> <7vpqo77dlr.fsf@alter.siamese.dyndns.org> <1303930175.25134.38.camel@drew-northup.unet.maine.edu>
- <20110427194233.GA16717@gnu.kitenet.net> <7vwrif5q93.fsf@alter.siamese.dyndns.org> <20110427220748.GA19578@elie> <7vsjt35l84.fsf@alter.siamese.dyndns.org> <20110427234224.GA26854@elie> <7viptz5j82.fsf@alter.siamese.dyndns.org>
- <BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCHv5 0/7]  --dirstat fixes, part 2
+Date: Thu, 28 Apr 2011 03:17:15 +0200
+Message-ID: <1303953442-26536-1-git-send-email-johan@herland.net>
+References: <1303892653-3958-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 02:56:21 2011
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johan Herland <johan@herland.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 03:17:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFFWk-000510-35
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 02:56:18 +0200
+	id 1QFFrL-00051R-3X
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 03:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755940Ab1D1A4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 20:56:13 -0400
-Received: from mail.lang.hm ([64.81.33.126]:60411 "EHLO bifrost.lang.hm"
+	id S1757754Ab1D1BR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 21:17:28 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:46644 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751541Ab1D1A4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 20:56:13 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id p3S0twxc017919;
-	Wed, 27 Apr 2011 17:55:58 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1752421Ab1D1BR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 21:17:27 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LKC00GMU8X1P940@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Apr 2011 03:17:25 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 9A4961EA58BB_DB8C025B	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 01:17:25 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id CAC4F1EA3836_DB8C024F	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 01:17:24 +0000 (GMT)
+Received: from alpha.herland ([84.215.68.234]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LKC0058L8X0LO10@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Apr 2011 03:17:24 +0200 (MEST)
+X-Mailer: git-send-email 1.7.5.rc1.3.g4d7b
+In-reply-to: <1303892653-3958-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172301>
 
-On Thu, 28 Apr 2011, Jon Seymour wrote:
+Hi,
 
-> On Thu, Apr 28, 2011 at 10:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->>
->
-> I agree. Apologies for confusing things by talking too much about a
-> git pm install command.
->
-> I think there are 3 levels of functionality. FWIW, I am suggesting
-> git-core stops at #2.
->
-> 0. unmanaged plugins
->
-> git doesn't provide any explicit management of plugins, but will use
-> them if finds them.
->
-> Without some kind of management, however, you will be forced to dump
-> the man pages and scripts
-> for the plugins in one place.
->
-> This would be very distribution manager unfriendly since there could
-> be conflicts galore.
+Here's version 5 incorporating Junio's feedback and patch from elsewhere
+in this thread.
 
-every package manager I know of has no problem with multiple packages 
-owning files in one directory.
+Have fun! :)
 
-if the files are named the same thing you will have a conflict, but if the 
-files are named the same thing, the commands are probably going to be 
-named the same, and so you will have conflicts in any case.
+...Johan
 
-> I guess an unmanaged solution could use separate directories for each
-> plugin, but this would imply scanning all these paths each time you
-> invoke git. In my view, symbolic links from a dir already
-> GIT_EXEC_PATH to plugin directories would be a more efficient way to
-> do this.
 
-I think you are overanalyzing the problem
+Johan Herland (7):
+  Add several testcases for --dirstat and friends
+  Make --dirstat=0 output directories that contribute < 0.1% of changes
+  Refactor --dirstat parsing; deprecate --cumulative and --dirstat-by-file
+  Add config variable for specifying default --dirstat behavior
+  Allow specifying --dirstat cut-off percentage as a floating point number
+  New --dirstat=lines mode, doing dirstat analysis based on diffstat
+  Improve error handling when parsing dirstat parameters
 
-> 1. managed plugins
->
-> git provides minimal plugin management functionality. Each plugin has
-> its own directory, but an activate step is required to make the plugin
-> available to the GIT_EXEC_PATH and GIT_MAN_PATH.
->
-> This has the advantage that conflicts between plugins would be more
-> readily avoided and is potentially more performant. As Pau suggests,
-> this option is much more package manager friendly
+ Documentation/config.txt       |   44 ++
+ Documentation/diff-options.txt |   54 ++-
+ diff.c                         |  158 ++++++-
+ diff.h                         |    3 +-
+ t/t4047-diff-dirstat.sh        |  965 ++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 1192 insertions(+), 32 deletions(-)
+ create mode 100755 t/t4047-diff-dirstat.sh
 
-I don't see how this will avoid conflicts. what files are you thinking 
-that the different plugins will make that won't conflict any more than the 
-commands themselves will?
-
-> It probably does require a git plugin command of some kind, however,
-> in order to perform the activation step.
-
-only if you think you need a 'installed but not active' mode of operation, 
-and I don't understand why you would want that.
-
-David Lang
-
-> 2. managed packages
->
-> A meta-package manager for plugins, that delegates plugin installation
-> concerns to a platform package manager.
->
-> The thing is, you may absolutely hate #2, but if approach #1 is
-> adopted by git-core, someone can at least attempt this by, well,
-> writing a plugin for it.
->
-> jon.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-- 
+1.7.5.rc1.3.g4d7b
