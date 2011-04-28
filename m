@@ -1,98 +1,93 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Thu, 28 Apr 2011 12:15:19 +1000
-Message-ID: <BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com>
-References: <4DB80747.8080401@op5.se>
-	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
-	<4DB82D90.6060200@op5.se>
-	<7vbozr8uo8.fsf@alter.siamese.dyndns.org>
-	<7vpqo77dlr.fsf@alter.siamese.dyndns.org>
-	<1303930175.25134.38.camel@drew-northup.unet.maine.edu>
-	<20110427194233.GA16717@gnu.kitenet.net>
-	<7vwrif5q93.fsf@alter.siamese.dyndns.org>
-	<20110427220748.GA19578@elie>
-	<7vsjt35l84.fsf@alter.siamese.dyndns.org>
-	<20110427234224.GA26854@elie>
-	<7viptz5j82.fsf@alter.siamese.dyndns.org>
-	<BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com>
-	<alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
-	<BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
+From: Kacper Kornet <kornet@camk.edu.pl>
+Subject: [PATCH] Respect definition of prefix from autotools in
+ ETC_GITCONFIG and ETC_GITATTRIBUTES
+Date: Thu, 28 Apr 2011 04:29:23 +0200
+Message-ID: <20110428022922.GC4833@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>, david@lang.hm,
-	Pau Garcia i Quiles <pg
-X-From: git-owner@vger.kernel.org Thu Apr 28 04:15:30 2011
+Content-Type: text/plain; charset=iso-8859-2
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 04:29:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFGlO-0002fF-ER
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 04:15:30 +0200
+	id 1QFGzF-000808-DN
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 04:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754967Ab1D1CPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 22:15:23 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:57630 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753351Ab1D1CPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 22:15:21 -0400
-Received: by ewy4 with SMTP id 4so689076ewy.19
-        for <git@vger.kernel.org>; Wed, 27 Apr 2011 19:15:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=Y7Q7DdnEuKHc8vZ416QxgA+GSSebUl2Psypy5TT1QVk=;
-        b=WdTBkbBnUWbjLDZTvSK0qA+D4Oq1fNj+JvYA1M3hf+9qhwJfv3il1QYnsO6IBDVl0K
-         wQpJPhp2j10M5AsOAAxfywm/tXFF88eUdIpEw0GVj6xrLC71F7hTQ4TsK2oI29lVZnlh
-         g6GHbiHdpj7h/jaiCxoVhJdNCgX6vjJOe4Pb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=IOEda8oGKA6ZsDiiKvg9FNKB1ns7haMRmyua+tJ8tc94psvw2KaB7I/KvdnuzoAjHh
-         TYv7p/9RlalIJj+w5pXJG+YmVvUzOHcyLPr1c5o/csHb0xoItn4G2vUL7aGF6AJh7ZYR
-         QxZWgyo5+p1f+8EBbuMBwgoTdvT1bMioAmQxw=
-Received: by 10.14.50.15 with SMTP id y15mr1291675eeb.149.1303956919825; Wed,
- 27 Apr 2011 19:15:19 -0700 (PDT)
-Received: by 10.14.22.68 with HTTP; Wed, 27 Apr 2011 19:15:19 -0700 (PDT)
-In-Reply-To: <BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
+	id S1751372Ab1D1C3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 22:29:31 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:48141 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751213Ab1D1C3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 22:29:30 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 7B6E95F0047
+	for <git@vger.kernel.org>; Thu, 28 Apr 2011 04:29:29 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id gK4AUZ3u-PnE for <git@vger.kernel.org>;
+	Thu, 28 Apr 2011 04:29:23 +0200 (CEST)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 222FB5F0046
+	for <git@vger.kernel.org>; Thu, 28 Apr 2011 04:29:23 +0200 (CEST)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 0B416808C3; Thu, 28 Apr 2011 04:29:23 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172311>
 
-Assuming for the moment that the concept of a managed plugin is accepted, then.
+Definitions of ETC_GITCONFIG and ETC_GITATTRIBUTES depend on value of
+prefix. As prefix can be changed in config.mak.autogen, all if blocks
+with conditions based on prefix should be placed after the file is
+included in Makefile.
 
-The relationship between distribution managers and the git-plugin
-architecture would be as follows:
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
+ Makefile |   13 ++++++-------
+ 1 files changed, 6 insertions(+), 7 deletions(-)
 
-- distributions would know how to locate the git instance it manages
-- distributions would know how to install their own packages that
-contain plugins into plugins/ subdirectory of this git instance
-- distributions would know how to run git plugin activate and properly
-handle non-zero return codes from same
+diff --git a/Makefile b/Makefile
+index cbc3fce..5b4ae40 100644
+--- a/Makefile
++++ b/Makefile
+@@ -291,15 +291,8 @@ sharedir = $(prefix)/share
+ gitwebdir = $(sharedir)/gitweb
+ template_dir = share/git-core/templates
+ htmldir = share/doc/git-doc
+-ifeq ($(prefix),/usr)
+-sysconfdir = /etc
+ ETC_GITCONFIG = $(sysconfdir)/gitconfig
+ ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
+-else
+-sysconfdir = $(prefix)/etc
+-ETC_GITCONFIG = etc/gitconfig
+-ETC_GITATTRIBUTES = etc/gitattributes
+-endif
+ lib = lib
+ # DESTDIR=
+ pathsep = :
+@@ -1192,6 +1185,12 @@ endif
+ -include config.mak.autogen
+ -include config.mak
+ 
++ifeq ($(prefix),/usr)
++sysconfdir = /etc
++else
++sysconfdir = etc
++endif
++
+ ifdef CHECK_HEADER_DEPENDENCIES
+ COMPUTE_HEADER_DEPENDENCIES =
+ USE_COMPUTED_HEADER_DEPENDENCIES =
+-- 
+1.7.5
 
-make install scripts would act like a kind of distribution in this regard.
-
-Now consider this:
-
-* suppose that git-core defined a git install _interface contract_ but
-did not define an implementation.
-
-Then, a distribution could install its own implementation of the
-git-install plugin into git installations it manages.
-
-Then a command like:
-
-    git install gitwork
-
-would trivially work across all distributions precisely because the
-distribution has provided the implementation of the git install
-interface contract that git-core has helpfully mandated.
-
-jon.
+-- 
+  Kacper Kornet
