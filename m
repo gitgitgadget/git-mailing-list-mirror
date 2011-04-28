@@ -1,114 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 13:20:54 -0700
-Message-ID: <7v8vuu3z6h.fsf@alter.siamese.dyndns.org>
-References: <20110427225114.GA16765@elte.hu>
- <7voc3r5kzn.fsf@alter.siamese.dyndns.org> <20110428062717.GA952@elte.hu>
- <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
- <20110428093703.GB15349@elte.hu>
- <BANLkTim+Kk_ah_4+pQKCi8bXtA8thRVRjQ@mail.gmail.com>
- <20110428101902.GA17257@elte.hu>
+Date: Thu, 28 Apr 2011 13:19:04 -0700
+Message-ID: <4DB9CBB8.8050605@zytor.com>
+References: <20110427225114.GA16765@elte.hu> <7voc3r5kzn.fsf@alter.siamese.dyndns.org> <20110428003541.GA18382@linux-mips.org> <20110428081817.GA29344@pcpool00.mathematik.uni-freiburg.de> <4DB9367B.2050607@op5.se> <BANLkTikU3evfo86WmQeVS_Z41s3xSK1DJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>,
+	"Bernhard R. Link" 
+	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>,
+	Ralf Baechle <ralf@linux-mips.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Peter Zijlstra <a.p.zijlstra@chello.nl>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?utf-8?B?RnLDqWTDqXJpYw==?= Weisbecker <fweisbec@gmail.com>,
-	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Apr 28 22:21:30 2011
+	=?ISO-8859-1?Q?Fr=E9d=E9ric_?= =?ISO-8859-1?Q?Weisbecker?= 
+	<fweisbec@gmail.com>, Pekka Enberg <penberg@cs.helsinki.fi>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu Apr 28 22:22:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFXiK-0000CN-Qc
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 22:21:29 +0200
+	id 1QFXjB-0000ql-Fb
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 22:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933482Ab1D1UVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 16:21:23 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50877 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933479Ab1D1UVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 16:21:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DCA534FA1;
-	Thu, 28 Apr 2011 16:23:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9BKGO72qFR4H+8cOmCnGlsifObo=; b=HGGIIL
-	hud/CfM/SbGBofoluEvecbVuxMc+J5dEAUidgsFcXuPZRk/oxOtafP8Ypy+HVL9w
-	InR0nDFIL+HLOTRpXjRjNynaD1v8fLScYSJTnu9D931+K4Bnxm9PYaQleaSsNckE
-	N/r66aL4YxSnrm8bB30r026vaJ6OWS2q3FATk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iCY7+KFaO3yyscqab5OCZd3mZcjTMQt6
-	/+mHe6U8touV/oTalUspWqIgCjlRKoOUHpbij9Wo0eqKiqv5NS7lSrGzS/PdtRnC
-	3UVPmnAkeMORcYK6TXncHS0Sc5goGmtFFXsYthRbQ86oOFMvDGt24Re/5tndOwkp
-	YY5PRK+/0qI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4121F4F99;
-	Thu, 28 Apr 2011 16:23:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3AFAB4F95; Thu, 28 Apr 2011
- 16:22:59 -0400 (EDT)
-In-Reply-To: <20110428101902.GA17257@elte.hu> (Ingo Molnar's message of "Thu,
- 28 Apr 2011 12:19:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 578BA102-71D5-11E0-9D90-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S933487Ab1D1UWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 16:22:17 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:44156 "EHLO mail.zytor.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932892Ab1D1UWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 16:22:16 -0400
+Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
+	(authenticated bits=0)
+	by mail.zytor.com (8.14.4/8.14.3) with ESMTP id p3SKJ4DN008883
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Thu, 28 Apr 2011 13:19:05 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Thunderbird/3.1.9
+In-Reply-To: <BANLkTikU3evfo86WmQeVS_Z41s3xSK1DJw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172401>
 
-Ingo Molnar <mingo@elte.hu> writes:
+On 04/28/2011 02:55 AM, Erik Faye-Lund wrote:
+> 
+> I disagree. We have no guarantee that the SHA-1s are aligned on x86
+> either, and unaligned accesses are slow on x86.
+> 
 
-> In any case, i'll retract the null case as it really isnt called that often in 
-> the tests i've done - updated patch below - it simply falls back on to hashcmp.
->
-> Thanks,
->
-> 	Ingo
->
-> Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Not particularly, especially not statistically.  Furthermore, for a
+sizable chunk like a SHA-1, not all accesses will have the cross-grain
+penalities that you sometimes can have.
 
-Thanks, will queue this version.
+> I think it's much much cleaner to add an early-out on the first byte,
+> and hope that memcmp is optimized properly. If it's not, those
+> platforms can add an override to memcmp in git-compat-util and/or
+> compat/*.
 
-> diff --git a/cache.h b/cache.h
-> index 2674f4c..39fa9cd 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -675,14 +675,24 @@ extern char *sha1_pack_name(const unsigned char *sha1);
->  extern char *sha1_pack_index_name(const unsigned char *sha1);
->  extern const char *find_unique_abbrev(const unsigned char *sha1, int);
->  extern const unsigned char null_sha1[20];
-> -static inline int is_null_sha1(const unsigned char *sha1)
-> +
-> +static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
->  {
-> -	return !memcmp(sha1, null_sha1, 20);
-> +	int i;
-> +
-> +	for (i = 0; i < 20; i++, sha1++, sha2++) {
-> +		if (*sha1 != *sha2)
-> +			return *sha1 - *sha2;
-> +	}
-> +
-> +	return 0;
->  }
-> -static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
-> +
-> +static inline int is_null_sha1(const unsigned char *sha1)
->  {
-> -	return memcmp(sha1, sha2, 20);
-> +	return !hashcmp(sha1, null_sha1);
->  }
-> +
->  static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
->  {
->  	memcpy(sha_dst, sha_src, 20);
+Overall, doing an architecture optimization library especially for
+widely used architectures like x86 is not a bad idea.
+
+	-hpa
