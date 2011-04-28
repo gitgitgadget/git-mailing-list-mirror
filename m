@@ -1,120 +1,92 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: 'gittutorial(7)' translation
-Date: Thu, 28 Apr 2011 11:59:15 +0200
-Message-ID: <BANLkTi=2je_B-G4exQQCcRyfukpJEDPL1Q@mail.gmail.com>
-References: <4DAD97A0.2050207@gmail.com>
-	<BANLkTin+5v2_ZkumNr0XtRoP1p4yAMTgQg@mail.gmail.com>
-	<4DB92F61.3090202@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: translation difficulties :: revision and commit
+Date: Thu, 28 Apr 2011 11:02:03 +0200 (CEST)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1104281058560.7540@perkele.intern.softwolves.pp.se>
+References: <20110427103406.GA7186@jakstys.lt>
+ <alpine.DEB.2.00.1104271327550.23722@ds9.cixit.se>
+ <1303934784.25134.74.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Bohdan Zograf <bozograf@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:59:27 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: =?ISO-8859-15?Q?Motiejus_Jak=A8tys?= <desired.mta@gmail.com>,
+	git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 28 12:01:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFO0K-0001s7-5x
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:59:24 +0200
+	id 1QFO2i-000367-7W
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 12:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756077Ab1D1J7T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 05:59:19 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35779 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754950Ab1D1J7R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2011 05:59:17 -0400
-Received: by bwz15 with SMTP id 15so2145986bwz.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:59:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=RWYNjA/00Vmn4p9Eew7a28GmhyMLIWMMdy6151Prv2Y=;
-        b=qMugG7av6v5TWKEZTx7g84MFVxsj3CmNe5ZPNacENmgPrN2678fTeS3+c6fGgEf2yp
-         sgJU7sQis7W9/Sok17AYkLILedxMBBX/Yh21NUIiIMJ2b/GNwuFMikvu1fLvU4V0LHkK
-         ntQkSZnOnnNsUx8Skmu/bVgpPs67pBjzljOwE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=F+lK7ZG30z18nXfKc1XYQ/2a1hnfRoBCwEIhirj5iLEeVgWu5/Ps8EvLws9Ml8yzC4
-         L0khns5WGpCZHQeBkbiLDhdYqVLLBt56v5sMlT+sE1M9AlFKEkGXoC/GPrHIOHVFQEua
-         zVy5LUnJjoJB03+UIt9/gUktG1jySHyL2XSxU=
-Received: by 10.205.83.199 with SMTP id ah7mr400398bkc.146.1303984756073; Thu,
- 28 Apr 2011 02:59:16 -0700 (PDT)
-Received: by 10.204.101.132 with HTTP; Thu, 28 Apr 2011 02:59:15 -0700 (PDT)
-In-Reply-To: <4DB92F61.3090202@gmail.com>
+	id S1758564Ab1D1KBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 06:01:45 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:51125 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758244Ab1D1KBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 06:01:43 -0400
+X-Greylist: delayed 3608 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Apr 2011 06:01:43 EDT
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LKC001E6UEM0BB0@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Apr 2011 11:01:34 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 551341EA599E_DB92CEEB	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 09:01:34 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 3EA2C1EA391B_DB92CEEF	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 09:01:34 +0000 (GMT)
+Received: from perkele ([84.215.168.43]) by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LKC00HNFUEMQS10@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Apr 2011 11:01:34 +0200 (MEST)
+Received: by perkele (Postfix, from userid 501)	id 0B64C2FBF5; Thu,
+ 28 Apr 2011 11:02:04 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 07CDD2FBEE; Thu, 28 Apr 2011 11:02:04 +0200 (CEST)
+In-reply-to: <1303934784.25134.74.camel@drew-northup.unet.maine.edu>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172343>
 
-On Thu, Apr 28, 2011 at 11:12, Bohdan Zograf <bozograf@gmail.com> wrote=
-:
-> 19.04.2011 21:19, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =D0=BF=D0=B8=
-=D1=88=D0=B5=D1=82:
->>
->> On Tue, Apr 19, 2011 at 16:09, MR<by.marcis@gmail.com> =C2=A0wrote:
->>>
->>> I'm willing to translate publication located at
->>> http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html to=
- the
->>> Belorussian language (my mother tongue). What I'm asking for is you=
-r
->>> written
->>> permission, so you don't mind after I'll post the translation to my=
- blog.
->>> The translation is intended only for web, no print copies planned.
->>> Visitors of your website, who come from Minsk (Belorussia) will be =
-the
->>> ones,
->>> who will read this blogpost, that's the only way to spread them, no
->>> additional instruments we can use. Every translation we ever do doe=
-s not
->>> costs a penny for the webpage, which is translated. All we ask is t=
-o link
->>> back in whatever way you feel confident about it.
->>
->> Git, including its documentation, is a freely licensed project under
->> the GNU General Public License version 2. You do not need written
->> permission to translate gittutorial, and it would be great if you di=
-d
->> so.
->>
->> See e.g. this for more:
->>
->>
->> http://www.gnu.org/licenses/old-licenses/gpl-2.0-faq.html#WhyDoesThe=
-GPLPermitUsersToPublishTheirModifiedVersions
->
-> Hi,
->
-> Was a pleasure to translate this publication! It's kinda fresh and re=
-lated
-> to my professional interests, so I thought - why not, if the author a=
-llows
-> to do so.
->
-> Posted my Belorussian translation on
-> http://webhostingrating.com/libs/gittutorial. If you don't mind can y=
-ou
-> publish a tiny link with a text
->
-> <a href=3D"http://webhostingrating.com/libs/gittutorial">Belorussian
-> translation</a> or whatever you feel is right.
+Drew Northup:
 
-(CC-ing the Git mailing list)
+>> For Swedish, I used a translation of "check-in" (as when checking in at an
+>> airport) for "commit", both in the verb and noun forms.
 
-It's great that you've translated it, I'm not sure where this should
-be linked from in Git's documentation, if at all.
+> If you seek to avoid SVN-isms I suggest thinking about the
+> deconstruction of "commit" in the context we are using it:
 
-I'm currently working no getting i18n support for Git's core commands
-up and running, after that I wanted to try getting support for
-http://po4a.alioth.debian.org/ going.
+I don't know much about Subversionisms, never really having used Subversion 
+(but I have used CVS extensively, so I am a bit damaged), so I cannot 
+comment on that.
 
-That we way could translate any of our documentation and ship it as
-part of Git itself, so you could have a Russian gittutorial manpage
-installed along with Git.
+> "to commit the current state of the working directory as known by Git to 
+> the recorded history."
+
+The problem, at least for Swedish, is that if I want to translate that 
+sentence, finding a good word to replace "commit" is very difficult, even 
+when it is used properly like this. Some things just don't translate very 
+well into other languages.
+
+> So far as the language element is concerned, it could have been chosen to 
+> be a "flubberbudget" and provided nobody attempted suggesting to Linus 
+> that he'd be insane for calling it that it would have had a decent chance 
+> of staying that way. ;-)
+
+Speaking of Linus, his native tounge is the same as mine, so I will let him 
+have the power to override my Swedish translation of Git & co, if he sees 
+fit :-)
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
