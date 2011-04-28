@@ -1,68 +1,82 @@
-From: Marcin =?iso-8859-2?q?Wi=B6nicki?= <mwisnicki@gmail.com>
-Subject: Re: cvsimport does not work with passwords ?
-Date: Thu, 28 Apr 2011 22:50:53 +0000 (UTC)
-Message-ID: <ipcr0c$jc3$1@dough.gmane.org>
-References: <ipckgd$krd$2@dough.gmane.org> <ipcmjp$krd$4@dough.gmane.org>
-	<20110428224510.GA16065@sigill.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv5 7/7] Improve error handling when parsing dirstat
+ parameters
+Date: Fri, 29 Apr 2011 01:13:26 +0200
+Message-ID: <201104290113.26481.johan@herland.net>
+References: <1303892653-3958-1-git-send-email-johan@herland.net>
+ <1303953442-26536-8-git-send-email-johan@herland.net>
+ <7vhb9i43sl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 00:51:18 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 01:13:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFa3J-0005Rr-38
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 00:51:17 +0200
+	id 1QFaOt-0007B8-GA
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 01:13:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933547Ab1D1WvM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 18:51:12 -0400
-Received: from lo.gmane.org ([80.91.229.12]:37880 "EHLO lo.gmane.org"
+	id S1755300Ab1D1XNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 19:13:30 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:64765 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932352Ab1D1WvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 18:51:11 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QFa3A-0005KV-R1
-	for git@vger.kernel.org; Fri, 29 Apr 2011 00:51:08 +0200
-Received: from static-78-8-147-77.ssp.dialog.net.pl ([78.8.147.77])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Apr 2011 00:51:08 +0200
-Received: from mwisnicki by static-78-8-147-77.ssp.dialog.net.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Apr 2011 00:51:08 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: static-78-8-147-77.ssp.dialog.net.pl
-User-Agent: Pan/0.134 (Wait for Me; Unknown)
+	id S1754605Ab1D1XN3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 19:13:29 -0400
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LKD00EXUXUFDB30@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 29 Apr 2011 01:13:27 +0200 (MEST)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 77D0C1EEF71A_DB9F497B	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 23:13:27 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id EAFA51EEF56B_DB9F496F	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 23:13:26 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LKD006FYXUEF100@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 29 Apr 2011 01:13:26 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.2; x86_64; ; )
+In-reply-to: <7vhb9i43sl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172417>
 
-On Thu, 28 Apr 2011 18:45:10 -0400, Jeff King wrote:
+(I've snipped the comments that I don't dispute or need to comment on)
 
-> On Thu, Apr 28, 2011 at 09:35:53PM +0000, Marcin Wi=C5=9Bnicki wrote:
->=20
->> I have tried another mirror that uses ssh:
->>=20
->> > export CVSROOT=3D:ext:anoncvs@anoncvs1.FreeBSD.org:/home/ncvs expo=
-rt
->> > SSH_RSH=3Dssh
->>=20
->> And this also does not work because git tries to use rsh. According =
-to
->> google this should work.
->>=20
->> Any ideas why cvsimport is so broken for me ?
->=20
-> It has (thankfully) been a long time since I've had to touch CVS, but
-> shouldn't that be CVS_RSH on the second line?
->=20
-> -Peff
+On Thursday 28 April 2011, Junio C Hamano wrote:
+> The error output shows "error:" followed by "warning:", which looked
+> somewhat questionable.  Perhaps allow a pointer to a structure be passed
+> in to describe the nature of a breakage to parse_dirstat_params()?
 
-Ahh yes indeed. I made a silly typo, now it works.
+Not sure what you mean here. You want the caller to supply a string_list, to 
+which parse_dirstat_params() appends error messages, and then the caller 
+determines how to display those error messages to the user after 
+parse_dirstat_params() has returned?
+
+I'd rather go the simpler way, and simply turn the first "error:" into a 
+"warning:". In other words, parse_dirstat_params() should only output 
+"warning:", and then it's up to the caller whether to follow up with another 
+"warning:" (in the diff.dirstat case), or a "fatal:" (in the --dirstat 
+case).
+
+
+Otherwise, I agree with all your comments, and the next re-roll will be 
+updated accordingly.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
