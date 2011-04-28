@@ -1,97 +1,78 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: translation difficulties :: revision and commit
-Date: Thu, 28 Apr 2011 08:14:35 -0400
-Message-ID: <1303992875.1148.23.camel@drew-northup.unet.maine.edu>
-References: <20110427103406.GA7186@jakstys.lt>
-	 <alpine.DEB.2.00.1104271327550.23722@ds9.cixit.se>
-	 <1303934784.25134.74.camel@drew-northup.unet.maine.edu>
-	 <alpine.DEB.2.00.1104281058560.7540@perkele.intern.softwolves.pp.se>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
+Date: Thu, 28 Apr 2011 14:16:20 +0200
+Message-ID: <BANLkTikKUuBMDR2-OBYXw7jzs_+1wGacuA@mail.gmail.com>
+References: <20110427225114.GA16765@elte.hu>
+	<7voc3r5kzn.fsf@alter.siamese.dyndns.org>
+	<20110428062717.GA952@elte.hu>
+	<BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
+	<20110428093703.GB15349@elte.hu>
+	<BANLkTim+Kk_ah_4+pQKCi8bXtA8thRVRjQ@mail.gmail.com>
+	<4DB93D16.4000603@cs.helsinki.fi>
+	<BANLkTimD7KZz4fS0QynPui7-JQS10AkLtg@mail.gmail.com>
+	<4DB941CD.2050403@cs.helsinki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Motiejus =?UTF-8?Q?Jak=C5=A1tys?= <desired.mta@gmail.com>,
-	git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Thu Apr 28 14:14:50 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: kusmabite@gmail.com, Ingo Molnar <mingo@elte.hu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?ISO-8859-1?Q?Fr=E9d=E9ric_Weisbecker?= <fweisbec@gmail.com>
+To: Pekka Enberg <penberg@cs.helsinki.fi>
+X-From: git-owner@vger.kernel.org Thu Apr 28 14:16:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFQ7O-0004Dj-5z
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 14:14:50 +0200
+	id 1QFQ8y-000539-4u
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 14:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756161Ab1D1MOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 08:14:45 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:51021 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755149Ab1D1MOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 08:14:44 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p3SCEcl9030149
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 28 Apr 2011 08:14:38 -0400
-In-Reply-To: <alpine.DEB.2.00.1104281058560.7540@perkele.intern.softwolves.pp.se>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
-	Fuz2=3
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p3SCEcl9030149
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1304597678.55698@1utOuAGJJyA5+XWIKbZ6gQ
+	id S1753879Ab1D1MQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 08:16:23 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46793 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751473Ab1D1MQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 08:16:21 -0400
+Received: by bwz15 with SMTP id 15so2233075bwz.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 05:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=d3h5ckeSuS9pPp2G4moSp3e9aS+oG1/2fsxqDlwc+Bk=;
+        b=k+Ok6PoHUgSiNJPtTppiJmzLG2yjcYag5Q6rN3CsPJ0s/7CMD4wWleb1HOZnaJP8nn
+         xD3lSE9XFlDZH6MYYMOdQf8SxTHx/UEfGB3+/cMYH5dGxwvO5E87t7np25hL2aNOJOkE
+         tI9POep0ONfvOolyVBgl9WxMv7bA59Y4IPvnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=I/ybkp8vCeSa8I+SQHwtjYNa8G/ma4LWjh2s/w5PMfwrqfbL/7eXQu5XRtdr33bBmy
+         PiNbRNju//z9DvkkoseDs3Hjdkf75qvy0Ty+oqrRZlnkmlP/2t5h+/z8aF8F1cP4pgbA
+         yVlZa+8BmbGzH2YIXg+DRnCHbIo1gOMPYd6G8=
+Received: by 10.204.83.82 with SMTP id e18mr455463bkl.71.1303992980404; Thu,
+ 28 Apr 2011 05:16:20 -0700 (PDT)
+Received: by 10.204.51.133 with HTTP; Thu, 28 Apr 2011 05:16:20 -0700 (PDT)
+In-Reply-To: <4DB941CD.2050403@cs.helsinki.fi>
+X-Google-Sender-Auth: h6--SBSHrZ01BUxAPs-I7LTxcTM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172358>
 
+On Thu, Apr 28, 2011 at 12:30, Pekka Enberg <penberg@cs.helsinki.fi> wrote:
+> Hi,
+>
+> On 4/28/11 1:19 PM, Erik Faye-Lund wrote:
+[alignment issues]
+>
+> Yes, ARM is a problem and I didn't try to claim otherwise. However, it's not
+> "impossible to fix" as you say with memalign().
 
-On Thu, 2011-04-28 at 11:02 +0200, Peter Krefting wrote:
-> Drew Northup:
-> 
-> >> For Swedish, I used a translation of "check-in" (as when checking in at an
-> >> airport) for "commit", both in the verb and noun forms.
-> 
-> > If you seek to avoid SVN-isms I suggest thinking about the
-> > deconstruction of "commit" in the context we are using it:
-> 
-> I don't know much about Subversionisms, never really having used Subversion 
-> (but I have used CVS extensively, so I am a bit damaged), so I cannot 
-> comment on that.
+MIPS (e.g. SGI machines) also bus-errors on non-aligned data.
 
-I feel your pain. Somewhere around here I (think I) still have the full
-CVS dump of Plex86 that I never properly found a new home for (11 years
-ago). As it won't compile on anything newer than 2.4.x and Kevin Lawton
-folded most of it back into Bochs I highly doubt there's a lot of people
-looking for it.
-
-> > "to commit the current state of the working directory as known by Git to 
-> > the recorded history."
-> 
-> The problem, at least for Swedish, is that if I want to translate that 
-> sentence, finding a good word to replace "commit" is very difficult, even 
-> when it is used properly like this. Some things just don't translate very 
-> well into other languages.
-
-Well, that is a problem then! I had thought the problem was fashioning a
-replacement for our jargon noun-form. Now that I think of it, English
-has got to be hard to start from in general with its 45k word
-"canonical" (approximate current use) set--and that's when we don't
-compound or conjugate them in odd new ways or otherwise exercise
-implements of linguistic destruction upon them.
-> 
-> > So far as the language element is concerned, it could have been chosen to 
-> > be a "flubberbudget" and provided nobody attempted suggesting to Linus 
-> > that he'd be insane for calling it that it would have had a decent chance 
-> > of staying that way. ;-)
-> 
-> Speaking of Linus, his native tounge is the same as mine, so I will let him 
-> have the power to override my Swedish translation of Git & co, if he sees 
-> fit :-)
-
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+-Tor
