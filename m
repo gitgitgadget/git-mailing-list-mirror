@@ -1,107 +1,130 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Thu, 28 Apr 2011 11:25:50 +0200
-Message-ID: <4DB9329E.7000703@op5.se>
-References: <4DB80747.8080401@op5.se>	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>	<4DB82D90.6060200@op5.se>	<7vbozr8uo8.fsf@alter.siamese.dyndns.org>	<7vpqo77dlr.fsf@alter.siamese.dyndns.org>	<1303930175.25134.38.camel@drew-northup.unet.maine.edu>	<20110427194233.GA16717@gnu.kitenet.net>	<7vwrif5q93.fsf@alter.siamese.dyndns.org>	<20110427220748.GA19578@elie>	<7vsjt35l84.fsf@alter.siamese.dyndns.org>	<20110427234224.GA26854@elie>	<7viptz5j82.fsf@alter.siamese.dyndns.org>	<BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com>	<alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>	<BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>	<BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com> <BANLkTinQny-M0rL+Vs9L_cQhtVLyv6rqMw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
+Date: Thu, 28 Apr 2011 04:31:21 -0500
+Message-ID: <20110428093120.GA377@elie>
+References: <20110427225114.GA16765@elte.hu>
+ <20110427231748.GA26632@elie>
+ <20110428063625.GB952@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>, david@lang.hm,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:26:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?utf-8?B?RnLDqWTDqXJpYw==?= Weisbecker <fweisbec@gmail.com>,
+	Pekka Enberg <penberg@cs.helsinki.fi>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Thu Apr 28 11:31:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFNU4-0001Ma-SS
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:26:05 +0200
+	id 1QFNZP-0004Ee-OB
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754421Ab1D1JZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 05:25:59 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63920 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754097Ab1D1JZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 05:25:58 -0400
-Received: by bwz15 with SMTP id 15so2127008bwz.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:25:57 -0700 (PDT)
-Received: by 10.204.81.224 with SMTP id y32mr860456bkk.152.1303982755314;
-        Thu, 28 Apr 2011 02:25:55 -0700 (PDT)
-Received: from vix.int.op5.se (m83-186-240-35.cust.tele2.se [83.186.240.35])
-        by mx.google.com with ESMTPS id q25sm895428bkk.22.2011.04.28.02.25.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 28 Apr 2011 02:25:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Thunderbird/3.1.9 ThunderGit/0.1a
-In-Reply-To: <BANLkTinQny-M0rL+Vs9L_cQhtVLyv6rqMw@mail.gmail.com>
+	id S1757301Ab1D1Jb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 05:31:29 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64498 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752074Ab1D1Jb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 05:31:27 -0400
+Received: by iwn34 with SMTP id 34so2059604iwn.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:31:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=dtFj/MdjPmO24ETImTU/mf4smssiGGHlvJ0X/SbaEUA=;
+        b=o4B/q7PcBzmUuXKU1CqXXBDE6SSA2n0isOrSKIkzQDwUwzGwiT0cnFfaafVr/jm9OC
+         CJ6GCWJ2Wtf/IFj+t85KOPvfmK1H7t7HpgD59lNbFRnhmjsOGbOR85cXI9ivI9xP3Y4V
+         uNA6QCIdZ94BNHNDO2xQ2E7GryVvoDifhP/aQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=V6oNoURwg9MNMYU4GVkW2PQ3u6QDeynrfHQJwbo4h33X7AfdF12un0dNuAxNeFp7Al
+         A5AVcTAMXqjck5+G3hRIB/eQl2xc3dCQHcqg85t3pI0BQxnYurOLcCqLPDfc2O4QwDQu
+         zy5Jb0WYxue9Rc39qAMePsqYRga3zMSNlTyiA=
+Received: by 10.42.157.7 with SMTP id b7mr3959619icx.427.1303983086679;
+        Thu, 28 Apr 2011 02:31:26 -0700 (PDT)
+Received: from elie (adsl-68-255-106-84.dsl.chcgil.ameritech.net [68.255.106.84])
+        by mx.google.com with ESMTPS id 19sm652652ibx.52.2011.04.28.02.31.24
+        (version=SSLv3 cipher=OTHER);
+        Thu, 28 Apr 2011 02:31:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110428063625.GB952@elte.hu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172331>
 
-On 04/28/2011 04:49 AM, Jon Seymour wrote:
-> On Thu, Apr 28, 2011 at 12:15 PM, Jon Seymour<jon.seymour@gmail.com>  wrote:
->> Then a command like:
+Ingo Molnar wrote:
+> * Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+>> E.g., how would something like
 >>
->>     git install gitwork
+>> 	const unsigned int *start1 = (const unsigned int *) sha1;
+>> 	const unsigned int *start2 = (const unsigned int *) sha2;
 >>
->> would trivially work across all distributions precisely because the
->> distribution has provided the implementation of the git install
->> interface contract that git-core has helpfully mandated.
+>> 	if (likely(*start1 != *start2)) {
+>> 		if (*start1 < *start2)
+>> 			return -1;
+>> 		return +1;
+>> 	}
+>> 	return memcmp(sha1 + 4, sha2 + 4, 16);
 >>
-> 
-> Or better yet, git-core could provide a trivial git install
-> implementation that selects between different distribution manager
-> supplied plugins selected according to some heuristic, allowing
-> several distribution managers to happily manage plugins in the same
-> git instance.
-> 
-> I have to ask.
-> 
-> Is such an architecture really "absolutely horrid"? Is it  "crap"? Really?
-> 
+>> perform?
+>
+> Note that this function wont work on like 99% of the systems out there due to 
+> endianness assumptions in Git.
 
-Yes, because it forces all distributions to name their extensions
-the same and it forces all distributions to carry the same extensions.
-It also makes it impossible to support 3rd party extensions that core
-git doesn't know about and that aren't already packaged, unless you
-want the "git install" command to have knowledge about all package
-management systems and *very, very good* heuristics when guessing what
-a particular extension is called on that system.
+Yes, I was greedy and broke the semantics, and my suggestion was
+nonsensical for other reasons (e.g., alignment), too.  I should have
+written something like:
 
-What will happen though is that the distributions will happily ignore
-that and the "git install" command will fail for some extensions on
-some distributions.
+	if (likely(*sha1 != *sha2)) {
+		if (*sha1 < *sha2)
+			return -1;
+		return +1;
+	}
+	return memcmp(sha1, sha2, 20);
 
-Besides that, it forces users to install git from their distribution
-packages so we're hard-shafting the git developers who usually have
-at least some installations done from source.
+since speeding it up 255/256 times seems good enough already.
 
-We just went far beyond "absolutely horrid" and into the realms of
-"steaming pile of abominably manure-like ideas whose inventor should
-be slapped silly for their own good".
+> Also, your hypothetical smart compiler would recognize the above as equivalent 
+> to memcmp(sha1, sha2, 20) and could rewrite it again - so we'd be back to 
+> square 1.
 
-So let's get back to the basic wish you have here. You want people
-to be able to easily find, download and install "git work" so that it
-works nicely with man-pages and all.
+True.  The real point is a "likely" to explain to human readers what
+is happening.
 
-The wiki-page with known extensions and the patch to core git so that
-"make install" can put man-pages in the right directory are the first,
-simplest and smallest steps that takes us the farthest towards that
-wish without burdening people you have no control over with more labor.
-In short; It's both good engineering and polite to implement that and
-then consider what new possibilities open up and see what people do
-with those possibilities. You might be surprised.
+> Having said that, it would be nice if someone could test these two patches on a 
+> modern AMD box, using the perf stat from here:
+>
+>   http://people.redhat.com/mingo/tip.git/README
+>
+>   cd tools/perf/
+>   make -j install
+>
+> and do something like this to test git gc's performance:
+>
+>   $ perf stat --sync --repeat 10 ./git gc
+>
+> ... to see whether these speedups are generic, or somehow Intel CPU specific.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Sounds like fun.  Will try to find time to play around with this in
+the next few days.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+> Well i messed up endianness in an early version of this patch and 'git gc' was
+> eminently unhappy about it! I have not figured out which part of Git relies on
+> the comparison result though - most places seem to use the result as a boolean.
+
+I think hashcmp is used to run binary searches within a packfile
+index.  Thanks for explaining.
+
+Regards,
+Jonathan
