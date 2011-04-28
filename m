@@ -1,8 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 3/7] Refactor --dirstat parsing; deprecate --cumulative and
- --dirstat-by-file
-Date: Thu, 28 Apr 2011 03:17:18 +0200
-Message-ID: <1303953442-26536-4-git-send-email-johan@herland.net>
+Subject: [PATCHv5 1/7] Add several testcases for --dirstat and friends
+Date: Thu, 28 Apr 2011 03:17:16 +0200
+Message-ID: <1303953442-26536-2-git-send-email-johan@herland.net>
 References: <1303892653-3958-1-git-send-email-johan@herland.net>
  <1303953442-26536-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
@@ -18,27 +17,27 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFFrf-0005BT-37
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 03:17:55 +0200
+	id 1QFFrh-0005BT-0t
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 03:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758187Ab1D1BRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2011 21:17:32 -0400
+	id S1758846Ab1D1BRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2011 21:17:42 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:46644 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752421Ab1D1BR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2011 21:17:29 -0400
+	id S1758209Ab1D1BRd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2011 21:17:33 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LKC00GN48X2P940@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 28 Apr 2011 03:17:26 +0200 (MEST)
+ with ESMTP id <0LKC00GOA8X4P940@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Apr 2011 03:17:28 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 505DE1EA591E_DB8C026B	for <git@vger.kernel.org>; Thu,
- 28 Apr 2011 01:17:26 +0000 (GMT)
+ with SMTP id A88A71EA5981_DB8C028B	for <git@vger.kernel.org>; Thu,
+ 28 Apr 2011 01:17:28 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 5E7EF1EA3908_DB8C025F	for <git@vger.kernel.org>; Thu,
+ with ESMTP id 162B51EA38CE_DB8C025F	for <git@vger.kernel.org>; Thu,
  28 Apr 2011 01:17:25 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
@@ -50,305 +49,585 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172305>
 
-Instead of having multiple interconnected dirstat-related options, teach
-the --dirstat option itself to accept all behavior modifiers as parameters.
+Currently, t4013 is the only selftest that exercises the --dirstat machinery,
+but it only does a superficial verification of --dirstat's output.
 
- - Preserve the current --dirstat=<limit> (where <limit> is an integer
-   specifying a cut-off percentage)
- - Add --dirstat=cumulative, replacing --cumulative
- - Add --dirstat=files, replacing --dirstat-by-file
- - Also add --dirstat=changes and --dirstat=noncumulative for specifying the
-   current default behavior. These allow the user to reset other --dirstat
-   parameters (e.g. 'cumulative' and 'files') occuring earlier on the
-   command line.
+This patch adds a new selftest - t4047-diff-dirstat.sh - which prepares a
+commit containing:
+ - unchanged files, changed files and files with rearranged lines
+ - copied files, moved files, and unmoved files
 
-The deprecated options (--cumulative and --dirstat-by-file) are still
-functional, although they have been removed from the documentation.
+It then verifies the correct dirstat output for that commit in the following
+dirstat modes:
+ - --dirstat
+ - -X
+ - --dirstat=0
+ - -X0
+ - --cumulative
+ - --dirstat-by-file
+ - (plus combinations of the above)
 
-Allow multiple parameters to be separated by commas, e.g.:
-  --dirstat=files,10,cumulative
+Each of the above tests are also run with:
+ - no rename detection
+ - rename detection (-M)
+ - expensive copy detection (-C -C)
 
-Update the documentation accordingly, and add testcases verifying the
-behavior of the new syntax.
-
-Improved-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/diff-options.txt |   44 +++++++++++----
- diff.c                         |   69 ++++++++++++++++++++---
- t/t4047-diff-dirstat.sh        |  119 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 211 insertions(+), 21 deletions(-)
+ t/t4047-diff-dirstat.sh |  580 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 580 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4047-diff-dirstat.sh
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 7e4bd42..6a3a9c1 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -66,19 +66,39 @@ endif::git-format-patch[]
- 	number of modified files, as well as number of added and deleted
- 	lines.
- 
----dirstat[=<limit>]::
--	Output the distribution of relative amount of changes (number of lines added or
--	removed) for each sub-directory. Directories with changes below
--	a cut-off percent (3% by default) are not shown. The cut-off percent
--	can be set with `--dirstat=<limit>`. Changes in a child directory are not
--	counted for the parent directory, unless `--cumulative` is used.
-+--dirstat[=<param1,param2,...>]::
-+	Output the distribution of relative amount of changes for each
-+	sub-directory. The behavior of `--dirstat` can be customized by
-+	passing it a comma separated list of parameters.
-+	The following parameters are available:
- +
--Note that the `--dirstat` option computes the changes while ignoring
--the amount of pure code movements within a file.  In other words,
--rearranging lines in a file is not counted as much as other changes.
--
----dirstat-by-file[=<limit>]::
--	Same as `--dirstat`, but counts changed files instead of lines.
-+--
-+`changes`;;
-+	Compute the dirstat numbers by counting the lines that have been
-+	removed from the source, or added to the destination. This ignores
-+	the amount of pure code movements within a file.  In other words,
-+	rearranging lines in a file is not counted as much as other changes.
-+	This is the default behavior when no parameter is given.
-+`files`;;
-+	Compute the dirstat numbers by counting the number of files changed.
-+	Each changed file counts equally in the dirstat analysis. This is
-+	the computationally cheapest `--dirstat` behavior, since it does
-+	not have to look at the file contents at all.
-+`cumulative`;;
-+	Count changes in a child directory for the parent directory as well.
-+	Note that when using `cumulative`, the sum of the percentages
-+	reported may exceed 100%. The default (non-cumulative) behavior can
-+	be specified with the `noncumulative` parameter.
-+<limit>;;
-+	An integer parameter specifies a cut-off percent (3% by default).
-+	Directories contributing less than this percentage of the changes
-+	are not shown in the output.
-+--
-++
-+Example: The following will count changed files, while ignoring
-+directories with less than 10% of the total amount of changed files,
-+and accumulating child directory counts in the parent directories:
-+`--dirstat=files,10,cumulative`.
- 
- --summary::
- 	Output a condensed summary of extended header information
-diff --git a/diff.c b/diff.c
-index cfbfa92..0e4a510 100644
---- a/diff.c
-+++ b/diff.c
-@@ -66,6 +66,41 @@ static int parse_diff_color_slot(const char *var, int ofs)
- 	return -1;
- }
- 
-+static int parse_dirstat_params(struct diff_options *options, const char *params)
-+{
-+	const char *p = params;
-+	while (*p) {
-+		if (!prefixcmp(p, "changes")) {
-+			p += 7;
-+			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
-+		} else if (!prefixcmp(p, "files")) {
-+			p += 5;
-+			DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
-+		} else if (!prefixcmp(p, "noncumulative")) {
-+			p += 13;
-+			DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
-+		} else if (!prefixcmp(p, "cumulative")) {
-+			p += 10;
-+			DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
-+		} else if (isdigit(*p)) {
-+			char *end;
-+			options->dirstat_percent = strtoul(p, &end, 10);
-+			p = end;
-+		} else
-+			return error("Unknown --dirstat parameter '%s'", p);
-+
-+		if (*p) {
-+			/* more parameters, swallow separator */
-+			if (*p != ',')
-+				return error("Missing comma separator at char "
-+					"%"PRIuMAX" of '%s'",
-+					(uintmax_t) (p - params), params);
-+			p++;
-+		}
-+	}
-+	return 0;
-+}
-+
- static int git_config_rename(const char *var, const char *value)
- {
- 	if (!value)
-@@ -3144,6 +3179,18 @@ static int stat_opt(struct diff_options *options, const char **av)
- 	return argcount;
- }
- 
-+static int parse_dirstat_opt(struct diff_options *options, const char *params)
-+{
-+	if (parse_dirstat_params(options, params))
-+		die("Failed to parse --dirstat/-X option parameter");
-+	/*
-+	 * The caller knows a dirstat-related option is given from the command
-+	 * line; allow it to say "return this_function();"
-+	 */
-+	options->output_format |= DIFF_FORMAT_DIRSTAT;
-+	return 1;
-+}
-+
- int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- {
- 	const char *arg = av[0];
-@@ -3163,15 +3210,19 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->output_format |= DIFF_FORMAT_NUMSTAT;
- 	else if (!strcmp(arg, "--shortstat"))
- 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
--	else if (opt_arg(arg, 'X', "dirstat", &options->dirstat_percent))
--		options->output_format |= DIFF_FORMAT_DIRSTAT;
--	else if (!strcmp(arg, "--cumulative")) {
--		options->output_format |= DIFF_FORMAT_DIRSTAT;
--		DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
--	} else if (opt_arg(arg, 0, "dirstat-by-file",
--			   &options->dirstat_percent)) {
--		options->output_format |= DIFF_FORMAT_DIRSTAT;
--		DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
-+	else if (!strcmp(arg, "-X") || !strcmp(arg, "--dirstat"))
-+		return parse_dirstat_opt(options, "");
-+	else if (!prefixcmp(arg, "-X"))
-+		return parse_dirstat_opt(options, arg + 2);
-+	else if (!prefixcmp(arg, "--dirstat="))
-+		return parse_dirstat_opt(options, arg + 10);
-+	else if (!strcmp(arg, "--cumulative"))
-+		return parse_dirstat_opt(options, "cumulative");
-+	else if (!strcmp(arg, "--dirstat-by-file"))
-+		return parse_dirstat_opt(options, "files");
-+	else if (!prefixcmp(arg, "--dirstat-by-file=")) {
-+		parse_dirstat_opt(options, "files");
-+		return parse_dirstat_opt(options, arg + 18);
- 	}
- 	else if (!strcmp(arg, "--check"))
- 		options->output_format |= DIFF_FORMAT_CHECKDIFF;
 diff --git a/t/t4047-diff-dirstat.sh b/t/t4047-diff-dirstat.sh
-index 6ff7f9f..0ede619 100755
---- a/t/t4047-diff-dirstat.sh
+new file mode 100755
+index 0000000..eb6bf47
+--- /dev/null
 +++ b/t/t4047-diff-dirstat.sh
-@@ -346,6 +346,39 @@ test_expect_success 'vanilla -X' '
- 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
- '
- 
-+test_expect_success 'explicit defaults: --dirstat=changes,noncumulative,3' '
-+	git diff --dirstat=changes,noncumulative,3 HEAD^..HEAD >actual_diff_dirstat &&
+@@ -0,0 +1,580 @@
++#!/bin/sh
++
++test_description='diff --dirstat tests'
++. ./test-lib.sh
++
++# set up two commits where the second commit has these files
++# (10 lines in each file):
++#
++#   unchanged/text           (unchanged from 1st commit)
++#   changed/text             (changed 1st line)
++#   rearranged/text          (swapped 1st and 2nd line)
++#   dst/copy/unchanged/text  (copied from src/copy/unchanged/text, unchanged)
++#   dst/copy/changed/text    (copied from src/copy/changed/text, changed)
++#   dst/copy/rearranged/text (copied from src/copy/rearranged/text, rearranged)
++#   dst/move/unchanged/text  (moved from src/move/unchanged/text, unchanged)
++#   dst/move/changed/text    (moved from src/move/changed/text, changed)
++#   dst/move/rearranged/text (moved from src/move/rearranged/text, rearranged)
++
++test_expect_success 'setup' '
++	mkdir unchanged &&
++	mkdir changed &&
++	mkdir rearranged &&
++	mkdir src &&
++	mkdir src/copy &&
++	mkdir src/copy/unchanged &&
++	mkdir src/copy/changed &&
++	mkdir src/copy/rearranged &&
++	mkdir src/move &&
++	mkdir src/move/unchanged &&
++	mkdir src/move/changed &&
++	mkdir src/move/rearranged &&
++	cat <<EOF >unchanged/text &&
++unchanged       line #0
++unchanged       line #1
++unchanged       line #2
++unchanged       line #3
++unchanged       line #4
++unchanged       line #5
++unchanged       line #6
++unchanged       line #7
++unchanged       line #8
++unchanged       line #9
++EOF
++	cat <<EOF >changed/text &&
++changed         line #0
++changed         line #1
++changed         line #2
++changed         line #3
++changed         line #4
++changed         line #5
++changed         line #6
++changed         line #7
++changed         line #8
++changed         line #9
++EOF
++	cat <<EOF >rearranged/text &&
++rearranged      line #0
++rearranged      line #1
++rearranged      line #2
++rearranged      line #3
++rearranged      line #4
++rearranged      line #5
++rearranged      line #6
++rearranged      line #7
++rearranged      line #8
++rearranged      line #9
++EOF
++	cat <<EOF >src/copy/unchanged/text &&
++copy  unchanged line #0
++copy  unchanged line #1
++copy  unchanged line #2
++copy  unchanged line #3
++copy  unchanged line #4
++copy  unchanged line #5
++copy  unchanged line #6
++copy  unchanged line #7
++copy  unchanged line #8
++copy  unchanged line #9
++EOF
++	cat <<EOF >src/copy/changed/text &&
++copy    changed line #0
++copy    changed line #1
++copy    changed line #2
++copy    changed line #3
++copy    changed line #4
++copy    changed line #5
++copy    changed line #6
++copy    changed line #7
++copy    changed line #8
++copy    changed line #9
++EOF
++	cat <<EOF >src/copy/rearranged/text &&
++copy rearranged line #0
++copy rearranged line #1
++copy rearranged line #2
++copy rearranged line #3
++copy rearranged line #4
++copy rearranged line #5
++copy rearranged line #6
++copy rearranged line #7
++copy rearranged line #8
++copy rearranged line #9
++EOF
++	cat <<EOF >src/move/unchanged/text &&
++move  unchanged line #0
++move  unchanged line #1
++move  unchanged line #2
++move  unchanged line #3
++move  unchanged line #4
++move  unchanged line #5
++move  unchanged line #6
++move  unchanged line #7
++move  unchanged line #8
++move  unchanged line #9
++EOF
++	cat <<EOF >src/move/changed/text &&
++move    changed line #0
++move    changed line #1
++move    changed line #2
++move    changed line #3
++move    changed line #4
++move    changed line #5
++move    changed line #6
++move    changed line #7
++move    changed line #8
++move    changed line #9
++EOF
++	cat <<EOF >src/move/rearranged/text &&
++move rearranged line #0
++move rearranged line #1
++move rearranged line #2
++move rearranged line #3
++move rearranged line #4
++move rearranged line #5
++move rearranged line #6
++move rearranged line #7
++move rearranged line #8
++move rearranged line #9
++EOF
++	git add . &&
++	git commit -m "initial" &&
++	mkdir dst &&
++	mkdir dst/copy &&
++	mkdir dst/copy/unchanged &&
++	mkdir dst/copy/changed &&
++	mkdir dst/copy/rearranged &&
++	mkdir dst/move &&
++	mkdir dst/move/unchanged &&
++	mkdir dst/move/changed &&
++	mkdir dst/move/rearranged &&
++	cat <<EOF >changed/text &&
++CHANGED XXXXXXX line #0
++changed         line #1
++changed         line #2
++changed         line #3
++changed         line #4
++changed         line #5
++changed         line #6
++changed         line #7
++changed         line #8
++changed         line #9
++EOF
++	cat <<EOF >rearranged/text &&
++rearranged      line #1
++rearranged      line #0
++rearranged      line #2
++rearranged      line #3
++rearranged      line #4
++rearranged      line #5
++rearranged      line #6
++rearranged      line #7
++rearranged      line #8
++rearranged      line #9
++EOF
++	cat <<EOF >dst/copy/unchanged/text &&
++copy  unchanged line #0
++copy  unchanged line #1
++copy  unchanged line #2
++copy  unchanged line #3
++copy  unchanged line #4
++copy  unchanged line #5
++copy  unchanged line #6
++copy  unchanged line #7
++copy  unchanged line #8
++copy  unchanged line #9
++EOF
++	cat <<EOF >dst/copy/changed/text &&
++copy XXXCHANGED line #0
++copy    changed line #1
++copy    changed line #2
++copy    changed line #3
++copy    changed line #4
++copy    changed line #5
++copy    changed line #6
++copy    changed line #7
++copy    changed line #8
++copy    changed line #9
++EOF
++	cat <<EOF >dst/copy/rearranged/text &&
++copy rearranged line #1
++copy rearranged line #0
++copy rearranged line #2
++copy rearranged line #3
++copy rearranged line #4
++copy rearranged line #5
++copy rearranged line #6
++copy rearranged line #7
++copy rearranged line #8
++copy rearranged line #9
++EOF
++	cat <<EOF >dst/move/unchanged/text &&
++move  unchanged line #0
++move  unchanged line #1
++move  unchanged line #2
++move  unchanged line #3
++move  unchanged line #4
++move  unchanged line #5
++move  unchanged line #6
++move  unchanged line #7
++move  unchanged line #8
++move  unchanged line #9
++EOF
++	cat <<EOF >dst/move/changed/text &&
++move XXXCHANGED line #0
++move    changed line #1
++move    changed line #2
++move    changed line #3
++move    changed line #4
++move    changed line #5
++move    changed line #6
++move    changed line #7
++move    changed line #8
++move    changed line #9
++EOF
++	cat <<EOF >dst/move/rearranged/text &&
++move rearranged line #1
++move rearranged line #0
++move rearranged line #2
++move rearranged line #3
++move rearranged line #4
++move rearranged line #5
++move rearranged line #6
++move rearranged line #7
++move rearranged line #8
++move rearranged line #9
++EOF
++	git add . &&
++	git rm -r src/move/unchanged &&
++	git rm -r src/move/changed &&
++	git rm -r src/move/rearranged &&
++	git commit -m "changes"
++'
++
++cat <<EOF >expect_diff_stat
++ changed/text             |    2 +-
++ dst/copy/changed/text    |   10 ++++++++++
++ dst/copy/rearranged/text |   10 ++++++++++
++ dst/copy/unchanged/text  |   10 ++++++++++
++ dst/move/changed/text    |   10 ++++++++++
++ dst/move/rearranged/text |   10 ++++++++++
++ dst/move/unchanged/text  |   10 ++++++++++
++ rearranged/text          |    2 +-
++ src/move/changed/text    |   10 ----------
++ src/move/rearranged/text |   10 ----------
++ src/move/unchanged/text  |   10 ----------
++ 11 files changed, 62 insertions(+), 32 deletions(-)
++EOF
++
++cat <<EOF >expect_diff_stat_M
++ changed/text                      |    2 +-
++ dst/copy/changed/text             |   10 ++++++++++
++ dst/copy/rearranged/text          |   10 ++++++++++
++ dst/copy/unchanged/text           |   10 ++++++++++
++ {src => dst}/move/changed/text    |    2 +-
++ {src => dst}/move/rearranged/text |    2 +-
++ {src => dst}/move/unchanged/text  |    0
++ rearranged/text                   |    2 +-
++ 8 files changed, 34 insertions(+), 4 deletions(-)
++EOF
++
++cat <<EOF >expect_diff_stat_CC
++ changed/text                      |    2 +-
++ {src => dst}/copy/changed/text    |    2 +-
++ {src => dst}/copy/rearranged/text |    2 +-
++ {src => dst}/copy/unchanged/text  |    0
++ {src => dst}/move/changed/text    |    2 +-
++ {src => dst}/move/rearranged/text |    2 +-
++ {src => dst}/move/unchanged/text  |    0
++ rearranged/text                   |    2 +-
++ 8 files changed, 6 insertions(+), 6 deletions(-)
++EOF
++
++test_expect_success 'sanity check setup (--stat)' '
++	git diff --stat HEAD^..HEAD >actual_diff_stat &&
++	test_cmp expect_diff_stat actual_diff_stat &&
++	git diff --stat -M HEAD^..HEAD >actual_diff_stat_M &&
++	test_cmp expect_diff_stat_M actual_diff_stat_M &&
++	git diff --stat -C -C HEAD^..HEAD >actual_diff_stat_CC &&
++	test_cmp expect_diff_stat_CC actual_diff_stat_CC
++'
++
++# changed/text and rearranged/text falls below default 3% threshold
++cat <<EOF >expect_diff_dirstat
++  10.8% dst/copy/changed/
++  10.8% dst/copy/rearranged/
++  10.8% dst/copy/unchanged/
++  10.8% dst/move/changed/
++  10.8% dst/move/rearranged/
++  10.8% dst/move/unchanged/
++  10.8% src/move/changed/
++  10.8% src/move/rearranged/
++  10.8% src/move/unchanged/
++EOF
++
++# rearranged/text falls below default 3% threshold
++cat <<EOF >expect_diff_dirstat_M
++   5.8% changed/
++  29.3% dst/copy/changed/
++  29.3% dst/copy/rearranged/
++  29.3% dst/copy/unchanged/
++   5.8% dst/move/changed/
++EOF
++
++# rearranged/text falls below default 3% threshold
++cat <<EOF >expect_diff_dirstat_CC
++  32.6% changed/
++  32.6% dst/copy/changed/
++  32.6% dst/move/changed/
++EOF
++
++test_expect_success 'vanilla --dirstat' '
++	git diff --dirstat HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=changes,noncumulative,3 -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff --dirstat -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=changes,noncumulative,3 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff --dirstat -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
-+test_expect_success 'explicit defaults: -Xchanges,noncumulative,3' '
-+	git diff -Xchanges,noncumulative,3 HEAD^..HEAD >actual_diff_dirstat &&
++test_expect_success 'vanilla -X' '
++	git diff -X HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff -Xchanges,noncumulative,3 -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff -X -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff -Xchanges,noncumulative,3 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff -X -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
-+test_expect_success 'later options override earlier options:' '
-+	git diff --dirstat=files,10,cumulative,changes,noncumulative,3 HEAD^..HEAD >actual_diff_dirstat &&
++# rearranged/text falls below 0% threshold (1 / (240 * 9 + 48 + 1) ~= 0.045 %)
++cat <<EOF >expect_diff_dirstat
++   2.1% changed/
++  10.8% dst/copy/changed/
++  10.8% dst/copy/rearranged/
++  10.8% dst/copy/unchanged/
++  10.8% dst/move/changed/
++  10.8% dst/move/rearranged/
++  10.8% dst/move/unchanged/
++  10.8% src/move/changed/
++  10.8% src/move/rearranged/
++  10.8% src/move/unchanged/
++EOF
++
++cat <<EOF >expect_diff_dirstat_M
++   5.8% changed/
++  29.3% dst/copy/changed/
++  29.3% dst/copy/rearranged/
++  29.3% dst/copy/unchanged/
++   5.8% dst/move/changed/
++   0.1% dst/move/rearranged/
++   0.1% rearranged/
++EOF
++
++cat <<EOF >expect_diff_dirstat_CC
++  32.6% changed/
++  32.6% dst/copy/changed/
++   0.6% dst/copy/rearranged/
++  32.6% dst/move/changed/
++   0.6% dst/move/rearranged/
++   0.6% rearranged/
++EOF
++
++test_expect_success '--dirstat=0' '
++	git diff --dirstat=0 HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=files,10,cumulative,changes,noncumulative,3 -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff --dirstat=0 -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=files,10,cumulative,changes,noncumulative,3 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
-+	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
-+	git diff --dirstat=files --dirstat=10 --dirstat=cumulative --dirstat=changes --dirstat=noncumulative -X3 HEAD^..HEAD >actual_diff_dirstat &&
-+	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=files --dirstat=10 --dirstat=cumulative --dirstat=changes --dirstat=noncumulative -X3 -M HEAD^..HEAD >actual_diff_dirstat_M &&
-+	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=files --dirstat=10 --dirstat=cumulative --dirstat=changes --dirstat=noncumulative -X3 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff --dirstat=0 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
- cat <<EOF >expect_diff_dirstat
-    2.1% changed/
-   10.8% dst/copy/changed/
-@@ -449,6 +482,24 @@ test_expect_success '--dirstat=0 --cumulative' '
- 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
- '
- 
-+test_expect_success '--dirstat=0,cumulative' '
-+	git diff --dirstat=0,cumulative HEAD^..HEAD >actual_diff_dirstat &&
++test_expect_success '-X0' '
++	git diff -X0 HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=0,cumulative -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff -X0 -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=0,cumulative -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff -X0 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
-+test_expect_success '-X0,cumulative' '
-+	git diff -X0,cumulative HEAD^..HEAD >actual_diff_dirstat &&
++# rearranged/text falls below 0% threshold (1 / (240 * 9 + 48 + 1) ~= 0.045 %)
++cat <<EOF >expect_diff_dirstat
++   2.1% changed/
++  10.8% dst/copy/changed/
++  10.8% dst/copy/rearranged/
++  10.8% dst/copy/unchanged/
++  32.5% dst/copy/
++  10.8% dst/move/changed/
++  10.8% dst/move/rearranged/
++  10.8% dst/move/unchanged/
++  32.5% dst/move/
++  65.1% dst/
++  10.8% src/move/changed/
++  10.8% src/move/rearranged/
++  10.8% src/move/unchanged/
++  32.5% src/move/
++EOF
++
++cat <<EOF >expect_diff_dirstat_M
++   5.8% changed/
++  29.3% dst/copy/changed/
++  29.3% dst/copy/rearranged/
++  29.3% dst/copy/unchanged/
++  88.0% dst/copy/
++   5.8% dst/move/changed/
++   0.1% dst/move/rearranged/
++   5.9% dst/move/
++  94.0% dst/
++   0.1% rearranged/
++EOF
++
++cat <<EOF >expect_diff_dirstat_CC
++  32.6% changed/
++  32.6% dst/copy/changed/
++   0.6% dst/copy/rearranged/
++  33.3% dst/copy/
++  32.6% dst/move/changed/
++   0.6% dst/move/rearranged/
++  33.3% dst/move/
++  66.6% dst/
++   0.6% rearranged/
++EOF
++
++test_expect_success '--dirstat=0 --cumulative' '
++	git diff --dirstat=0 --cumulative HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff -X0,cumulative -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff --dirstat=0 --cumulative -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff -X0,cumulative -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff --dirstat=0 --cumulative -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
- cat <<EOF >expect_diff_dirstat
-    9.0% changed/
-    9.0% dst/copy/changed/
-@@ -491,6 +542,15 @@ test_expect_success '--dirstat-by-file' '
- 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
- '
- 
-+test_expect_success '--dirstat=files' '
-+	git diff --dirstat=files HEAD^..HEAD >actual_diff_dirstat &&
-+	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=files -M HEAD^..HEAD >actual_diff_dirstat_M &&
-+	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=files -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
-+	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
-+'
++cat <<EOF >expect_diff_dirstat
++   9.0% changed/
++   9.0% dst/copy/changed/
++   9.0% dst/copy/rearranged/
++   9.0% dst/copy/unchanged/
++   9.0% dst/move/changed/
++   9.0% dst/move/rearranged/
++   9.0% dst/move/unchanged/
++   9.0% rearranged/
++   9.0% src/move/changed/
++   9.0% src/move/rearranged/
++   9.0% src/move/unchanged/
++EOF
 +
- cat <<EOF >expect_diff_dirstat
-   27.2% dst/copy/
-   27.2% dst/move/
-@@ -525,6 +585,15 @@ test_expect_success '--dirstat-by-file=10' '
- 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
- '
- 
-+test_expect_success '--dirstat=files,10' '
-+	git diff --dirstat=files,10 HEAD^..HEAD >actual_diff_dirstat &&
-+	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=files,10 -M HEAD^..HEAD >actual_diff_dirstat_M &&
-+	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=files,10 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
-+	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
-+'
++cat <<EOF >expect_diff_dirstat_M
++  14.2% changed/
++  14.2% dst/copy/changed/
++  14.2% dst/copy/rearranged/
++  14.2% dst/copy/unchanged/
++  14.2% dst/move/changed/
++  14.2% dst/move/rearranged/
++  14.2% rearranged/
++EOF
 +
- cat <<EOF >expect_diff_dirstat
-    9.0% changed/
-    9.0% dst/copy/changed/
-@@ -577,4 +646,54 @@ test_expect_success '--dirstat-by-file --cumulative' '
- 	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
- '
- 
-+test_expect_success '--dirstat=files,cumulative' '
-+	git diff --dirstat=files,cumulative HEAD^..HEAD >actual_diff_dirstat &&
++cat <<EOF >expect_diff_dirstat_CC
++  16.6% changed/
++  16.6% dst/copy/changed/
++  16.6% dst/copy/rearranged/
++  16.6% dst/move/changed/
++  16.6% dst/move/rearranged/
++  16.6% rearranged/
++EOF
++
++test_expect_success '--dirstat-by-file' '
++	git diff --dirstat-by-file HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=files,cumulative -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff --dirstat-by-file -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=files,cumulative -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff --dirstat-by-file -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
 +cat <<EOF >expect_diff_dirstat
 +  27.2% dst/copy/
 +  27.2% dst/move/
++  27.2% src/move/
++EOF
++
++cat <<EOF >expect_diff_dirstat_M
++  14.2% changed/
++  14.2% dst/copy/changed/
++  14.2% dst/copy/rearranged/
++  14.2% dst/copy/unchanged/
++  14.2% dst/move/changed/
++  14.2% dst/move/rearranged/
++  14.2% rearranged/
++EOF
++
++cat <<EOF >expect_diff_dirstat_CC
++  16.6% changed/
++  16.6% dst/copy/changed/
++  16.6% dst/copy/rearranged/
++  16.6% dst/move/changed/
++  16.6% dst/move/rearranged/
++  16.6% rearranged/
++EOF
++
++test_expect_success '--dirstat-by-file=10' '
++	git diff --dirstat-by-file=10 HEAD^..HEAD >actual_diff_dirstat &&
++	test_cmp expect_diff_dirstat actual_diff_dirstat &&
++	git diff --dirstat-by-file=10 -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
++	git diff --dirstat-by-file=10 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
++'
++
++cat <<EOF >expect_diff_dirstat
++   9.0% changed/
++   9.0% dst/copy/changed/
++   9.0% dst/copy/rearranged/
++   9.0% dst/copy/unchanged/
++  27.2% dst/copy/
++   9.0% dst/move/changed/
++   9.0% dst/move/rearranged/
++   9.0% dst/move/unchanged/
++  27.2% dst/move/
 +  54.5% dst/
++   9.0% rearranged/
++   9.0% src/move/changed/
++   9.0% src/move/rearranged/
++   9.0% src/move/unchanged/
 +  27.2% src/move/
 +EOF
 +
@@ -377,15 +656,15 @@ index 6ff7f9f..0ede619 100755
 +  16.6% rearranged/
 +EOF
 +
-+test_expect_success '--dirstat=files,cumulative,10' '
-+	git diff --dirstat=files,cumulative,10 HEAD^..HEAD >actual_diff_dirstat &&
++test_expect_success '--dirstat-by-file --cumulative' '
++	git diff --dirstat-by-file --cumulative HEAD^..HEAD >actual_diff_dirstat &&
 +	test_cmp expect_diff_dirstat actual_diff_dirstat &&
-+	git diff --dirstat=files,cumulative,10 -M HEAD^..HEAD >actual_diff_dirstat_M &&
++	git diff --dirstat-by-file --cumulative -M HEAD^..HEAD >actual_diff_dirstat_M &&
 +	test_cmp expect_diff_dirstat_M actual_diff_dirstat_M &&
-+	git diff --dirstat=files,cumulative,10 -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
++	git diff --dirstat-by-file --cumulative -C -C HEAD^..HEAD >actual_diff_dirstat_CC &&
 +	test_cmp expect_diff_dirstat_CC actual_diff_dirstat_CC
 +'
 +
- test_done
++test_done
 -- 
 1.7.5.rc1.3.g4d7b
