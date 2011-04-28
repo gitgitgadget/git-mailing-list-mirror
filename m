@@ -1,70 +1,76 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Pekka Enberg <penberg@cs.helsinki.fi>
 Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 19:02:22 +0700
-Message-ID: <BANLkTikf2Q81otJxOWoAs+EFA5_4wf7fyQ@mail.gmail.com>
-References: <20110427225114.GA16765@elte.hu> <7voc3r5kzn.fsf@alter.siamese.dyndns.org>
- <20110428062717.GA952@elte.hu> <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
- <20110428093703.GB15349@elte.hu> <BANLkTim+Kk_ah_4+pQKCi8bXtA8thRVRjQ@mail.gmail.com>
- <20110428101902.GA17257@elte.hu>
+Date: Thu, 28 Apr 2011 15:12:13 +0300
+Message-ID: <4DB9599D.3010208@cs.helsinki.fi>
+References: <20110427225114.GA16765@elte.hu> <7voc3r5kzn.fsf@alter.siamese.dyndns.org> <20110428062717.GA952@elte.hu> <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com> <20110428093703.GB15349@elte.hu> <BANLkTim+Kk_ah_4+pQKCi8bXtA8thRVRjQ@mail.gmail.com> <4DB93D16.4000603@cs.helsinki.fi> <BANLkTimD7KZz4fS0QynPui7-JQS10AkLtg@mail.gmail.com> <4DB941CD.2050403@cs.helsinki.fi> <BANLkTik-uk-mpdHZxcz8Nem=nEzED_tuJg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ingo Molnar <mingo@elte.hu>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Peter Zijlstra <a.p.zijlstra@chello.nl>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?UTF-8?B?RnLDqWTDqXJpYyBXZWlzYmVja2Vy?= <fweisbec@gmail.com>,
-	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Apr 28 14:03:03 2011
+	"=?ISO-8859-1?Q?Fr=E9d=E9ric_Weisbecker?=" <fweisbec@gmail.com>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu Apr 28 14:12:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFPvz-0005oZ-Cm
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 14:03:03 +0200
+	id 1QFQ4z-0002wl-Cu
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 14:12:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570Ab1D1MC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 08:02:59 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64750 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753228Ab1D1MC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 08:02:58 -0400
-Received: by bwz15 with SMTP id 15so2222807bwz.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 05:02:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=Czi+J0u8lip59ECZPaDAOVV0Ew9GBtr0BwVKndxgZ8k=;
-        b=DKLWypsxi4eqCz2kgEmnwgqWhhv+AqgwZDj9dtxtmSyQ/aO/84ep0CP4bdYh2X8wWC
-         yT5mnsBdMl7/BMd8yFRd4EkfNWotBZzylrBrY5LkBj1PYDwQ2TbTSaJlGfzls0w7RPkQ
-         AK6KoMTiWLLgcv0qKraqgPupFt/N9+AAru4Po=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=eVnQJ1Ba0Sh5F6g2X2258Pl/wZKdHkOUZzBhGdQJ4XDeQYZYpaMOltko9xWye4REmJ
-         6bEJs0lw59DKmleeq7TXstTJ24Ppel+zVa/6melrRB278Sqmq1x+jzWGssOd9Y/QznA3
-         +At2BLXHXH9mLNhg1KrW/Brp15zvh07K/2xc8=
-Received: by 10.204.20.143 with SMTP id f15mr994021bkb.173.1303992176678; Thu,
- 28 Apr 2011 05:02:56 -0700 (PDT)
-Received: by 10.204.17.14 with HTTP; Thu, 28 Apr 2011 05:02:22 -0700 (PDT)
-In-Reply-To: <20110428101902.GA17257@elte.hu>
+	id S1753978Ab1D1MMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 08:12:15 -0400
+Received: from courier.cs.helsinki.fi ([128.214.9.1]:34145 "EHLO
+	mail.cs.helsinki.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751473Ab1D1MMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 08:12:14 -0400
+Received: from l227.local ([192.100.124.156])
+  (AUTH: PLAIN penberg, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
+  by mail.cs.helsinki.fi with esmtp; Thu, 28 Apr 2011 15:12:13 +0300
+  id 0008D33F.4DB9599D.00006933
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.15) Gecko/20110303 Thunderbird/3.1.9
+In-Reply-To: <BANLkTik-uk-mpdHZxcz8Nem=nEzED_tuJg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172356>
 
-2011/4/28 Ingo Molnar <mingo@elte.hu>:
-> If you'd like to see other things tested please suggest a testcase that you
-> think uses these hashes extensively, i don't really know what the slowest (and
-> affected) Git commands are - git gc is the one *i* notice as being pretty slow
-> (for good reasons).
+On 4/28/11 2:59 PM, Erik Faye-Lund wrote:
+> So my preference is still something like this. Call me conservative ;)
+>
+> diff --git a/cache.h b/cache.h
+> index c730c58..8bc03c6 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -681,13 +681,17 @@ extern char *sha1_pack_name(const unsigned char *sha1);
+>   extern char *sha1_pack_index_name(const unsigned char *sha1);
+>   extern const char *find_unique_abbrev(const unsigned char *sha1, int);
+>   extern const unsigned char null_sha1[20];
+> -static inline int is_null_sha1(const unsigned char *sha1)
+> +static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+>   {
+> -	return !memcmp(sha1, null_sha1, 20);
+> +	/* early out for fast mis-match */
+> +	if (*sha1 != *sha2)
+> +		return *sha1 - *sha2;
+> +
+> +	return memcmp(sha1 + 1, sha2 + 1, 19);
+>   }
+> -static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+> +static inline int is_null_sha1(const unsigned char *sha1)
+>   {
+> -	return memcmp(sha1, sha2, 20);
+> +	return !hashcmp(sha1, null_sha1);
+>   }
+>   static inline void hashcpy(unsigned char *sha_dst, const unsigned
+> char *sha_src)
+>   {
 
-git clone
--- 
-Duy
+Yup, might be the most reasonable thing to do if it still speeds things up.
+
+			Pekka
