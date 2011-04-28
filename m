@@ -1,85 +1,129 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 20:36:27 +0400
-Message-ID: <BANLkTinfc9J4vhWd9V+ZpXb5tumtZM1jZA@mail.gmail.com>
-References: <20110427225114.GA16765@elte.hu>
-	<7voc3r5kzn.fsf@alter.siamese.dyndns.org>
-	<20110428062717.GA952@elte.hu>
-	<BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
-	<20110428093703.GB15349@elte.hu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Respect definition of prefix from autotools in
+ ETC_GITCONFIG and ETC_GITATTRIBUTES
+Date: Thu, 28 Apr 2011 09:54:02 -0700
+Message-ID: <7v62py5nbp.fsf@alter.siamese.dyndns.org>
+References: <20110428022922.GC4833@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?ISO-8859-1?Q?Fr=E9d=E9ric_Weisbecker?= <fweisbec@gmail.com>,
-	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:36:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kacper Kornet <kornet@camk.edu.pl>
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:54:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFUCh-0004ff-AQ
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 18:36:35 +0200
+	id 1QFUTr-00073C-OK
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 18:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760702Ab1D1Qga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 12:36:30 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:36514 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760690Ab1D1Qg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 12:36:29 -0400
-Received: by qyk7 with SMTP id 7so2419182qyk.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 09:36:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=O17IxsQZMDXiDCKZJKJIJ1OaIJWPsBi/OwvOYLBFV3c=;
-        b=Pn1V+QaD+JIgHMgss1esXBCwqrXulzxRplgZHSDfFKF5zDzmgb7PmJ7sSXj+KqmvPp
-         +nST/6bmBy0iP5dX+1tc54xv/FnpqCWmvfOFimN3ge1CjTdb6fVTDgixEUpGqJq6xb6d
-         Grl/vos+RxLkucZnmxi0LY4zQ/kTAukugFLog=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=nmbUNaoyqEod1T7u4lE9C2/YECdnD3vpe8yGVV9IJahq2J03rHnIt/hIjexjt6/u24
-         c738BweIgQWDo334ieDMCO5ze+gG34wrfy+tVqikLRc2b77WMQrKo/jg9yK5EnDxOg1z
-         azBkpELwVpDS/bS/k2RjIR9zBHK+oqNzmBP5Q=
-Received: by 10.229.65.73 with SMTP id h9mr2911185qci.269.1304008587782; Thu,
- 28 Apr 2011 09:36:27 -0700 (PDT)
-Received: by 10.229.251.85 with HTTP; Thu, 28 Apr 2011 09:36:27 -0700 (PDT)
-In-Reply-To: <20110428093703.GB15349@elte.hu>
+	id S1757321Ab1D1QyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 12:54:15 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56427 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755427Ab1D1QyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 12:54:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C204F582B;
+	Thu, 28 Apr 2011 12:56:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=N0sE9QsgBHOTY+I5cR+rGbEWPAA=; b=nyUxGM
+	9gn3jJLf3a1An/k11V+1OFKubkiAonegLljgN418oCQRS/yRa4N2V1jstRxiIAi+
+	WVl4644WC1tnZBWUNnctV7tFPyijhgxBhkck5ectbbgU+8zXpJxUsC/dRPRpYW2O
+	fS5rKqb+kI5HOQgGeTzriC0eVtL+W0MSnEdyk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z7MBKEcOjDFIbSLxtaME1vOGqUlSPZVs
+	qlKvrnTyLpBKRdxtTRD3FRGas9YT3ORPZGcwewsl4Ativrgd8D1Vtrhi+kgTCERL
+	//pnOptrMtwbx5mAfKP9Hga7Qt0ObjpKT01yufwcBVdHHS1JNFGyMhJCk0R/fGUv
+	odK76CDw5h0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9E5945827;
+	Thu, 28 Apr 2011 12:56:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AC3E85826; Thu, 28 Apr 2011
+ 12:56:07 -0400 (EDT)
+In-Reply-To: <20110428022922.GC4833@camk.edu.pl> (Kacper Kornet's message of
+ "Thu, 28 Apr 2011 04:29:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6B172A6A-71B8-11E0-BEC4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172376>
 
-2011/4/28 Ingo Molnar <mingo@elte.hu>:
->
-> If unsigned char arrays are allocated unaligned then that's another bug i
-> suspect that should be fixed. Unaligned access on x86 is not free either -
-> there's cycle penalties.
+Kacper Kornet <kornet@camk.edu.pl> writes:
 
-Unsigned char arrays can be stored unaligned. Basically, it depends on
-the context in what they were declared. If a preceding field in some
-structure ended unaligned then the byte array will start unaligned.
-For example:
+> Definitions of ETC_GITCONFIG and ETC_GITATTRIBUTES depend on value of
+> prefix. As prefix can be changed in config.mak.autogen, all if blocks
+> with conditions based on prefix should be placed after the file is
+> included in Makefile.
 
-struct foo
-{
-   char ch;
-   unsigned char sha1[20];
-};
+This is _not_ just about autogen, is it?  The same issue exists if the
+user wants to manually tweak prefix in config.mak, no?
 
-The same on the stack, except the compiler may pack them as it wishes.
-So, you have no guarantee here. If you want to make sure all SHA-1 are
-aligned properly, sha1 should be declared as ui32: 'uint32_t sha1[5]'.
+If so, perhaps the patch needs to be retitled to avoid confusion,
+something like:
 
+    Subject: Honor $(prefix) set in config.mak* when defining ETC_GIT* variables
 
-Dmitry
+> diff --git a/Makefile b/Makefile
+> index cbc3fce..5b4ae40 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -291,15 +291,8 @@ sharedir = $(prefix)/share
+>  gitwebdir = $(sharedir)/gitweb
+>  template_dir = share/git-core/templates
+>  htmldir = share/doc/git-doc
+> -ifeq ($(prefix),/usr)
+> -sysconfdir = /etc
+>  ETC_GITCONFIG = $(sysconfdir)/gitconfig
+>  ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
+> -else
+> -sysconfdir = $(prefix)/etc
+> -ETC_GITCONFIG = etc/gitconfig
+> -ETC_GITATTRIBUTES = etc/gitattributes
+> -endif
+>  lib = lib
+>  # DESTDIR=
+>  pathsep = :
+> @@ -1192,6 +1185,12 @@ endif
+>  -include config.mak.autogen
+>  -include config.mak
+>  
+> +ifeq ($(prefix),/usr)
+> +sysconfdir = /etc
+> +else
+> +sysconfdir = etc
+> +endif
+
+It makes sense to change the definition of ETC_GIT* variables to a form
+that depends on a variable like your patch did, i.e.
+
+    ETC_GITCONFIG = $(some_etc_prefix)/gitconfig
+    ETC_GITATTRIBUTES = $(some_etc_prefix)/gitattributes
+
+and define that variable, whose definition depends on $(prefix), after we
+have read config.mak* files.  So I like the general direction of this
+patch.
+
+But this part in the Makefile outside the context of the patch bothers
+me.  It seems to imply that sysconfdir is _not_ that variable you want to
+define later.
+
+   # Among the variables below, these:
+   #   gitexecdir
+   #   template_dir
+   #   mandir
+   #   infodir
+   #   htmldir
+   #   ETC_GITCONFIG (but not sysconfdir)
+   #   ETC_GITATTRIBUTES
+   # can be specified as a relative path some/where/else;
+
+So I have a suspicion that your patch as is will break when prefix is set
+to something other than /usr directory.  I don't think anybody in-tree
+currently uses sysconfdir, but that does not mean nobody will ever do.
