@@ -1,125 +1,115 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 11:44:59 +0200
-Message-ID: <20110428094459.GA15952@elte.hu>
-References: <20110427225114.GA16765@elte.hu>
- <BANLkTim7bbFiSsj3PRr-_yM5gh1txYQR5w@mail.gmail.com>
- <20110428091110.GA14431@elte.hu>
- <BANLkTikWd8=1RbY78tPFMVhuV05eKVzjkg@mail.gmail.com>
+Date: Thu, 28 Apr 2011 11:55:57 +0200
+Message-ID: <BANLkTikU3evfo86WmQeVS_Z41s3xSK1DJw@mail.gmail.com>
+References: <20110427225114.GA16765@elte.hu> <7voc3r5kzn.fsf@alter.siamese.dyndns.org>
+ <20110428003541.GA18382@linux-mips.org> <20110428081817.GA29344@pcpool00.mathematik.uni-freiburg.de>
+ <4DB9367B.2050607@op5.se>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
+Cc: "Bernhard R. Link" 
+	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>,
+	Ralf Baechle <ralf@linux-mips.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Peter Zijlstra <a.p.zijlstra@chello.nl>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?iso-8859-1?Q?Fr=E9d=E9ric?= Weisbecker <fweisbec@gmail.com>,
+	=?ISO-8859-1?Q?Fr=E9d=E9ric_Weisbecker?= <fweisbec@gmail.com>,
 	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:45:34 2011
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Apr 28 11:56:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFNmr-0002rc-Nh
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:45:30 +0200
+	id 1QFNxP-0000U9-Te
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 11:56:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757544Ab1D1JpO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 05:45:14 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:46878 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753884Ab1D1JpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 05:45:12 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1QFNmP-00017m-6I
-	from <mingo@elte.hu>; Thu, 28 Apr 2011 11:45:06 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 29A393E236B; Thu, 28 Apr 2011 11:44:57 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <BANLkTikWd8=1RbY78tPFMVhuV05eKVzjkg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-08-17)
-Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1754697Ab1D1J4S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 05:56:18 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:59490 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751284Ab1D1J4R convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2011 05:56:17 -0400
+Received: by pvg12 with SMTP id 12so1709859pvg.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 02:56:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IAQkmE7Q4HOisnW9rhnOoEGFgVw+WyEkDusyE2xbIUw=;
+        b=GATdAguETz6i2Y6FRTQf972A5RyKrh0pz2NvrwHU7xsKSeRskCUHqTzEnpOgmQdtdc
+         HB7X4JJ4ACoU30pM9MBRIdoolaF1yK4YgRl+wmtFdTPBGmGvPWcNyYwwoILGUigr2SIW
+         0XJvvi5rj5aKd+ElooqjwkgeGVx8bRZkAnZGk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=rCG7o9LsP48wXTieqB+CaZf46eiICvrNup4jxyazxxLrENS6qqSp2I5XXnrCwTDmhT
+         Izow5Q1etkiefns4Q0yTd68NR+TDU6URxBC2KyVEt9Q2dlD/l014G02xrdfe2eceg/lP
+         Bb3vBqSPnp4HkqY0sRTMuOpM+42PlQcxDJJMI=
+Received: by 10.68.15.36 with SMTP id u4mr3527382pbc.20.1303984577077; Thu, 28
+ Apr 2011 02:56:17 -0700 (PDT)
+Received: by 10.68.46.5 with HTTP; Thu, 28 Apr 2011 02:55:57 -0700 (PDT)
+In-Reply-To: <4DB9367B.2050607@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172340>
 
+On Thu, Apr 28, 2011 at 11:42 AM, Andreas Ericsson <ae@op5.se> wrote:
+> On 04/28/2011 10:18 AM, Bernhard R. Link wrote:
+>> * Ralf Baechle<ralf@linux-mips.org> =A0[110428 02:35]:
+>>> On Wed, Apr 27, 2011 at 04:32:12PM -0700, Junio C Hamano wrote:
+>>>
+>>>>> +static inline int is_null_sha1(const unsigned char *sha1)
+>>>>> =A0 {
+>>>>> - =A0return memcmp(sha1, sha2, 20);
+>>>>> + =A0const unsigned long long *sha1_64 =3D (void *)sha1;
+>>>>> + =A0const unsigned int *sha1_32 =3D (void *)sha1;
+>>>>
+>>>> Can everybody do unaligned accesses just fine?
+>>>
+>>> Misaligned accesses cause exceptions on some architectures which th=
+en
+>>> are fixed up in software making these accesses _very_ slow. =A0You =
+can
+>>> use __attribute__((packed)) to work around that but that will on th=
+e
+>>> affected architectures make gcc generate code pessimistically that =
+is
+>>> slower than not using __attribute__((packed)) in case of proper
+>>> alignment. =A0And __attribute__((packed)) only works with GCC.
+>>
+>> Even __attribute__((packed)) usually does not allow arbitrary aligne=
+d
+>> data, but can intruct the code to generate code to access code
+>> misaligned in a special way. (I have already seen code where thus
+>> accessing a properly aligned long caused a SIGBUS, because it was
+>> aligned because being in a misaligned packed struct).
+>>
+>> In short: misaligning stuff works on x86, everywhere else it is disa=
+ster
+>> waiting to happen. (And people claiming compiler bugs or broken
+>> architectures, just because they do not know the basic rules of C).
+>>
+>
+> Given that the vast majority of user systems are x86 style ones, it's
+> probably worth using this patch on such systems and stick to a
+> partially unrolled byte-by-byte comparison that finishes early on
+> the rest of them.
 
-* Dmitry Potapov <dpotapov@gmail.com> wrote:
+I disagree. We have no guarantee that the SHA-1s are aligned on x86
+either, and unaligned accesses are slow on x86.
 
-> 2011/4/28 Ingo Molnar <mingo@elte.hu>:
-> >
-> > * Dmitry Potapov <dpotapov@gmail.com> wrote:
-> >
-> >> 2011/4/28 Ingo Molnar <mingo@elte.hu>:
-> >> > +static inline int hashcmp(const unsigned char *sha1, const unsi=
-gned char *sha2)
-> >> > =A0{
-> >> > - =A0 =A0 =A0 return !memcmp(sha1, null_sha1, 20);
-> >> > + =A0 =A0 =A0 int i;
-> >> > +
-> >> > + =A0 =A0 =A0 for (i =3D 0; i < 20; i++, sha1++, sha2++) {
-> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (*sha1 !=3D *sha2) {
-> >>
-> >> At the very least, you may want to put 'likely' in this 'if'
-> >> condition, otherwise the compiler may optimize this loop in
-> >> the same way as with memcmp. So, it may work well now, but
-> >> it may not work much slower with future versions or different
-> >> level of optimization. (AFAIK, -O3 is far more aggressive in
-> >> optimizing of loops).
-> >
-> > the main difference is between the string assembly instructions and=
- the loop.
-> > Modern CPUs will hardly notice this loop being emitted with slight =
-variations
-> > by the compiler. So i do not share this concern.
->=20
-> Here you make an assumption what kind of optimization the compiler
-> can do. [...]
-
-I make no assumption there because rule #1 is that the compiler can pre=
-tty well=20
-do what it wants and we have little control over that.
-
-> [...] As Jonathan noticed above, theoretically a smart compiler can t=
-urn this=20
-> loop into memcmp (or code very similar to memcmp).
-
-Yes, and in practice it does not, and in practice we can speed up git g=
-c=20
-measurably.
-
-> The reason why memcmp does not work well is that it is optimized
-> for the worst case scenario (where beginning of two strings is
-> the same), while _we_ know that with a hash it very unlikely,
-> and we want to conduct this knowledge to the compiler in some
-> way. Just re-writing memcmp as explicit loop does not conduct
-> this knowledge.
->=20
-> Therefore, I believe it makes sense to add 'likely'. I have not
-> tested this code, but in the past, I had a very similar code
-> which was compiled with -O3, and just putting likely turned out
-> to 40% speed-up for that comparison function.
-
-You guys can certainly add the 'likely()' if you want to (it likely won=
-t hurt)=20
-- but note that the compiler can *still* turn it into a memcpy() - see =
-rule #1=20
-above.
-
-Note that Git does not have a likely() facility at the moment and=20
-__builtin_expect() is a GNU extension. Should be a separate patch.
-
-Thanks,
-
-	Ingo
+I think it's much much cleaner to add an early-out on the first byte,
+and hope that memcmp is optimized properly. If it's not, those
+platforms can add an override to memcmp in git-compat-util and/or
+compat/*.
