@@ -1,101 +1,112 @@
-From: Kacper Kornet <kornet@camk.edu.pl>
-Subject: [PATCH 1/1] Honor $(prefix) set in config.mak* when defining
- ETC_GIT* and sysconfdir
-Date: Thu, 28 Apr 2011 21:27:51 +0200
-Message-ID: <20110428192751.GE4833@camk.edu.pl>
-References: <20110428022922.GC4833@camk.edu.pl>
- <7v62py5nbp.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2011, #07; Wed, 27)
+Date: Thu, 28 Apr 2011 12:39:02 -0700 (PDT)
+Message-ID: <m37haew4io.fsf@localhost.localdomain>
+References: <7v1v0n75rj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
+	Kevin Cernekee <cernekee@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 21:28:05 2011
+X-From: git-owner@vger.kernel.org Thu Apr 28 21:39:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFWse-0000oD-BI
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 21:28:04 +0200
+	id 1QFX3P-0007aO-Up
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 21:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756810Ab1D1T17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 15:27:59 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:39790 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756370Ab1D1T16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 15:27:58 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 8134F5F004A;
-	Thu, 28 Apr 2011 21:27:57 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id u+AlZbUPVgg1; Thu, 28 Apr 2011 21:27:52 +0200 (CEST)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 15F235F0047;
-	Thu, 28 Apr 2011 21:27:52 +0200 (CEST)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id 0588480A1F; Thu, 28 Apr 2011 21:27:51 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v62py5nbp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757188Ab1D1TjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 15:39:06 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:59233 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756370Ab1D1TjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 15:39:05 -0400
+Received: by fxm17 with SMTP id 17so2043809fxm.19
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 12:39:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=fvwdSJPncax89r2AiHJIKipypFAVYKQKtuVxmYUN9XY=;
+        b=cTEk1Rjzup4DfayqVmfAuDP2vpUFcQcp4iJaWbuE4S0uJwL+tzb6P6QhXHlrLGjtiG
+         uAatWBiCZ1GwafVfjXclU11BLVWqKBfvVkDIXGVpsQi3A36WF4hlMQRrT3meZvhgipr1
+         dIzjjowNA3OEiC//G8v5ojX+xJ36dT3pJ++gE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=JCsfccScmyY5Fcj4CBysApsNHkEDljG6yU8HewPtY0CdgyDcC/dCLKj4a/5LqzgXQB
+         ux1Xxqbb7DflxMmndWACVYp29oAVkiTu42xDiGKMu5tjf0PsoYSVhGbaaYYH9A6NN7xr
+         wUrWW0K6FRo4MTyVnE8XEPgz5uz47Mn5zUffw=
+Received: by 10.223.25.152 with SMTP id z24mr882540fab.123.1304019543211;
+        Thu, 28 Apr 2011 12:39:03 -0700 (PDT)
+Received: from localhost.localdomain (abrz25.neoplus.adsl.tpnet.pl [83.8.119.25])
+        by mx.google.com with ESMTPS id j18sm677590faa.42.2011.04.28.12.39.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 28 Apr 2011 12:39:02 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p3SJcOSZ012772;
+	Thu, 28 Apr 2011 21:38:35 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p3SJc8E3012768;
+	Thu, 28 Apr 2011 21:38:08 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v1v0n75rj.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172398>
 
-Definitions of ETC_GITCONFIG, ETC_GITATTRIBUTES and sysconfdir depend on
-value of prefix. As prefix can be changed in config.mak.autogen, all if
-blocks with conditions based on prefix should be placed after the file
-is included in Makefile.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
----
- Makefile |   19 ++++++++++---------
- 1 files changed, 10 insertions(+), 9 deletions(-)
+> What's cooking in git.git (Apr 2011, #07; Wed, 27)
 
-diff --git a/Makefile b/Makefile
-index cbc3fce..bf912b9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -291,15 +291,8 @@ sharedir = $(prefix)/share
- gitwebdir = $(sharedir)/gitweb
- template_dir = share/git-core/templates
- htmldir = share/doc/git-doc
--ifeq ($(prefix),/usr)
--sysconfdir = /etc
--ETC_GITCONFIG = $(sysconfdir)/gitconfig
--ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
--else
--sysconfdir = $(prefix)/etc
--ETC_GITCONFIG = etc/gitconfig
--ETC_GITATTRIBUTES = etc/gitattributes
--endif
-+ETC_GITCONFIG = $(git_etcdir)/gitconfig
-+ETC_GITATTRIBUTES = $(git_etcdir)/gitattributes
- lib = lib
- # DESTDIR=
- pathsep = :
-@@ -1192,6 +1185,14 @@ endif
- -include config.mak.autogen
- -include config.mak
+> --------------------------------------------------
+> [New Topics]
+
+> * ft/gitweb-tar-with-gzip-n (2011-04-26) 1 commit
+>   (merged to 'next' on 2011-04-26 at 8e59a0e)
+>  + gitweb: supply '-n' to gzip for identical output
+> 
+> Will merge to "master" by the end of week #2.
+
+Nice.
  
-+ifeq ($(prefix),/usr)
-+sysconfdir = /etc
-+git_etcdir = /etc
-+else
-+sysconfdir = $(prefix)/etc
-+git_etcdir = etc
-+endif
-+
- ifdef CHECK_HEADER_DEPENDENCIES
- COMPUTE_HEADER_DEPENDENCIES =
- USE_COMPUTED_HEADER_DEPENDENCIES =
--- 
-1.7.5
+> --------------------------------------------------
+> [Stalled]
+> 
+> * jn/gitweb-js (2011-04-15) 13 commits
+>  - gitweb: Make JavaScript ability to adjust timezones configurable
+>  - gitweb.js: Add UI for selecting common timezone to display dates
+>  - gitweb: JavaScript ability to adjust time based on timezone
+>  - gitweb: Unify the way long timestamp is displayed
+>  - gitweb: Refactor generating of long dates into format_timestamp_html
+>  - gitweb.js: Provide getElementsByClassName method (if it not exists)
+>  - gitweb.js: Introduce gitweb/static/js/lib/cookies.js
+>  - gitweb.js: Extract and improve datetime handling
+>  - gitweb.js: Provide default values for padding in padLeftStr and padLeft
+>  - gitweb.js: Update and improve comments in JavaScript files
+>  - gitweb: Split JavaScript for maintability, combining on build
+>  - Remove gitweb/gitweb.cgi and other legacy targets from main Makefile
+>  - git-instaweb: Simplify build dependency on gitweb
+> 
+> I do not recall seeing this series much reviewed. Is everybody happy with
+> this series?
 
+I have just resend this series in cleaned up form, containing all the
+fixes and extra patches; in fact nearly the same as 'jn/gitweb-js'
+branch.  It includes comparison to J.H. patch.
+
+I think it addresses all the issues Kevin and you found with previous
+versions; I haven't heard from J.H. yet.
 
 -- 
-  Kacper Kornet
+Jakub Narebski
+Poland
+ShadeHawk on #git
