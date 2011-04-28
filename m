@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 03/13] gitweb: Split JavaScript for maintability, combining on build
-Date: Thu, 28 Apr 2011 21:04:01 +0200
-Message-ID: <1304017451-12283-4-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 06/13] gitweb.js: Extract and improve datetime handling
+Date: Thu, 28 Apr 2011 21:04:04 +0200
+Message-ID: <1304017451-12283-7-git-send-email-jnareb@gmail.com>
 References: <1304017451-12283-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Kevin Cernekee <cernekee@gmail.com>,
@@ -13,309 +13,139 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFWWX-0003Nk-H1
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 21:05:14 +0200
+	id 1QFWWY-0003Nk-Uo
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 21:05:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933413Ab1D1TEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 15:04:48 -0400
+	id S933420Ab1D1TEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 15:04:52 -0400
 Received: from mail-wy0-f174.google.com ([74.125.82.174]:38748 "EHLO
 	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932917Ab1D1TEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 15:04:43 -0400
+	with ESMTP id S933414Ab1D1TEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 15:04:50 -0400
 Received: by mail-wy0-f174.google.com with SMTP id 21so2330897wya.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 12:04:42 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 28 Apr 2011 12:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=7Xj/CPTUAvXwZEuuBRQu8hHLwV08kB7K0lObZkbwZZU=;
-        b=axJuuwtCEcra4xa0WyC+tK5/WGuqeNDOvcJCo8jCPVGziRYi/2S2JTOeKQAuWc2Nx6
-         3Hk7/T2phYVJ4DAUFiWmm4mWAXHqGfC2EI6qcBdnu32ve9lnRBjvaykMCROToMRCjR7+
-         dWAJlF48Bu4Z9SWwsw90uklrqXBXl7pRBTOe8=
+        bh=jm2bhQQzNsX1hzcNcE9LV4OY40SUQlmXfRMc1RB2FXk=;
+        b=TA+WxCck3skPSTJAtiTiITB/CYAj5nrA16WWibZfw/VnjndQyhUVvkcmQbz7q1llWq
+         9ichn0qXTBaRuBWxCdajTfW60kBeKNAYwGGPREO+uh+4aHVRFORkI3rV3uwt/AHzH3YN
+         tPOPHXNuezbALOCunoMVf2pgjZ6CSqv4jGAQU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=pcX19qZUQdhVpeXQOfHjRyxPtlSh7OTWFdZ7FNZUy6wQ5hgHWePOfPdOV4oXMtoEU3
-         1GZVvNkyHWmSfudejGO4S5VfOPBUhG8zLrrr5kK/WNJA5kE1viz2bk44/ngap2Dpm8U7
-         xLuX1QtXEDnfkGTix6rbwlZqnWHk8Ja6xGWZw=
-Received: by 10.227.1.151 with SMTP id 23mr3881861wbf.175.1304017482465;
-        Thu, 28 Apr 2011 12:04:42 -0700 (PDT)
+        b=nZVwB8VjDjBJBPkYZJsMri2AzbfHzixZLqiMtHDzqpuu68vCbuC1FIYecy3ePARH3o
+         j08uxKWssDIR+zmm6nplV/Gx0hhG7G9WPhX/qqp7UY6pTgM6L7ypwE7H+I81evAPvwc1
+         1WI//W9KecK1ovOKhoGAvfZrs01+IfB0wcmak=
+Received: by 10.216.150.153 with SMTP id z25mr988665wej.89.1304017488519;
+        Thu, 28 Apr 2011 12:04:48 -0700 (PDT)
 Received: from localhost.localdomain (abrz25.neoplus.adsl.tpnet.pl [83.8.119.25])
-        by mx.google.com with ESMTPS id w25sm1266549wbd.56.2011.04.28.12.04.40
+        by mx.google.com with ESMTPS id w25sm1266549wbd.56.2011.04.28.12.04.46
         (version=SSLv3 cipher=OTHER);
-        Thu, 28 Apr 2011 12:04:41 -0700 (PDT)
+        Thu, 28 Apr 2011 12:04:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3
 In-Reply-To: <1304017451-12283-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172386>
 
-Split originally single gitweb.js file into smaller files, each
-dealing with single issue / area of responsibility.  This move should
-make gitweb's JavaScript code easier to maintain.
+Move formatDateISOLocal(epoch, timezone) function (and also helper
+timezoneOffset(timezoneInfo) function it requires) from common-lib.js to
+datetime.js
 
-For better webapp performance it is recommended[1][2][3] to combine
-JavaScript files.  Do it during build time (in gitweb/Makefile), by
-straight concatenation of files into gitweb.js file (which is now
-ignored as being generated).  This means that there are no changes to
-gitweb script itself - it still uses gitweb.js or gitweb.min.js, but
-now generated.
+Add new functions:
+* localTimezoneOffset - to get browser timezone offset in seconds
+* localTimezoneInfo   - to get browser timezone in '(+|-)HHMM' format
+* formatTimezoneInfo - turn offset in hours and minutes into '(+|-)HHMM'
+* parseRFC2822Date - to parse RFC-2822 dates that gitweb uses into epoch
+* formatDateRFC2882 - like formatDateISOLocal, only RFC-2822 format
 
-[1]: http://developer.yahoo.com/performance/rules.html
-     "Minimize HTTP Requests" section
-[2]: http://code.google.com/speed/articles/include-scripts-properly.html
-     "1. Combine external JavaScript files"
-[3]: http://javascript-reference.info/speed-up-your-javascript-load-time.htm
-     "Combine Your Files" section.
+All those functions are meant to be used in future commit
+'gitweb: javascript ability to adjust time based on timezone'
 
-See also new gitweb/static/js/README file.
+An alternative would be to use e.g. Datejs (http://www.datejs.com)
+library, or JavaScript framework that has date formatting (perhaps as
+a plugin).
 
-Inspired-by-patch-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
+
+While at it escape '-' in character class inside tzRe regexp, as
+recommended by JSLint (http://www.jslint.com).
+
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This patch is unchanged from first version of this series.
-
-Original J.H. patch had
-JH>
-JH> Enabling this will then add several javascript files to be loaded,
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-While I agree with J.H. that for maintenance reasons JavaScript files
-should be split, most web best practice pages recommend to combine
-JavaScript files for performance.  This patch allows both.
+This patch is unchanged from first version of the series.
 
 
-What is unfortunately not visible from diffstat below is that it is
-almost straightforward split of original gitweb/static/gitweb.js file,
-with only some header and footer comments added.
+The major difference to approach taken in J.H. patch is noticing that
+while in older browsers Date constructor (Date.parse class method)
+does not like ISO-8601 format (W3CDTF variant used in microformats),
+all browsers should be able to parse RFC-822 / RFC-2822 date... which
+is what gitweb generates.
 
-I hope that newly introduced gitweb/static/js/README would be of help
-to future developers.
+So instead of using deprecated (because of accessibility
+considerations) datetime-design-pattern microformat, or newer
+value-class-pattern (perhaps in value-title variant), simply parse
+RFC-2822 date that gitweb generated.
 
- .gitignore                                         |    1 +
- gitweb/Makefile                                    |   16 ++-
- gitweb/static/js/README                            |   20 ++
- .../static/{gitweb.js => js/blame_incremental.js}  |  208 +-------------------
- gitweb/static/js/javascript-detection.js           |   43 ++++
- gitweb/static/js/lib/common-lib.js                 |  187 ++++++++++++++++++
- 6 files changed, 269 insertions(+), 206 deletions(-)
- create mode 100644 gitweb/static/js/README
- rename gitweb/static/{gitweb.js => js/blame_incremental.js} (76%)
- create mode 100644 gitweb/static/js/javascript-detection.js
- create mode 100644 gitweb/static/js/lib/common-lib.js
 
-diff --git a/.gitignore b/.gitignore
-index 2cf3ca5..9e95005 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -158,6 +158,7 @@
- /gitk-git/gitk-wish
- /gitweb/GITWEB-BUILD-OPTIONS
- /gitweb/gitweb.cgi
-+/gitweb/static/gitweb.js
- /gitweb/static/gitweb.min.*
- /test-chmtime
- /test-ctype
+formatTimezoneInfo() from lib/datetime.js in this patch is roughly
+equivalent to formatTZ() function from date.js in original patch by J.H.
+The interface is a bit different, though; also formatTimezoneInfo uses
+Math.abs instead of Math.sqrt+Math.pow (?), and it uses padLeft
+function from lib/common-lib.js.  The algorithm in formatTimezoneInfo
+was manually checked that it works for negative fractional browser
+timezones.
+
+formatDateRFC2882() from lib/datetime.js in this patch is roughly
+equivalent to dateOutputTZ() function from date.js in original patch
+by J.H.  formatDateRFC2882() handles only +/-HHMM numerical timezones;
+knowledge about "utc" and "local" timezone settings is left out of
+this function (but see localTimezoneInfo() function in this patch).
+formatDateRFC2882() explicitly uses padding (via padLeft()), something
+that J.H. patch missed but was supposedly[*] fixed in Kevin Cernekee
+patch:
+
+  Re: [PATCH 1/1] gitweb: javascript ability to adjust time based on timezone
+  http://thread.gmane.org/gmane.comp.version-control.git/169384/focus=169891
+  http://cache.gmane.org//gmane/comp/version-control/git/169891-001.bin
+
+[*] "Supposedly" only because I haven't bothered to check patch sent
+    as base64-encoded application/octet-stream attachement.
+
+
+NOTE: tzRe was left as a global variable, as it was originally.  Some
+sources recommend avoiding global variables in JavaScript for
+additional reason of performance.
+
+ gitweb/Makefile                    |    1 +
+ gitweb/static/js/lib/common-lib.js |   51 -----------
+ gitweb/static/js/lib/datetime.js   |  161 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 162 insertions(+), 51 deletions(-)
+ create mode 100644 gitweb/static/js/lib/datetime.js
+
 diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 0a6ac00..0baa9df 100644
+index 0baa9df..403265a 100644
 --- a/gitweb/Makefile
 +++ b/gitweb/Makefile
-@@ -86,7 +86,7 @@ ifndef V
- endif
- endif
+@@ -117,6 +117,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
+ # js/lib/common-lib.js should be always first, then js/lib/*.js,
+ # then the rest of files; js/gitweb.js should be last (if it exists)
+ GITWEB_JSLIB_FILES += static/js/lib/common-lib.js
++GITWEB_JSLIB_FILES += static/js/lib/datetime.js
+ GITWEB_JSLIB_FILES += static/js/javascript-detection.js
+ GITWEB_JSLIB_FILES += static/js/blame_incremental.js
  
--all:: gitweb.cgi
-+all:: gitweb.cgi static/gitweb.js
- 
- GITWEB_PROGRAMS = gitweb.cgi
- 
-@@ -112,6 +112,15 @@ endif
- 
- GITWEB_FILES += static/git-logo.png static/git-favicon.png
- 
-+# JavaScript files that are composed (concatenated) to form gitweb.js
-+#
-+# js/lib/common-lib.js should be always first, then js/lib/*.js,
-+# then the rest of files; js/gitweb.js should be last (if it exists)
-+GITWEB_JSLIB_FILES += static/js/lib/common-lib.js
-+GITWEB_JSLIB_FILES += static/js/javascript-detection.js
-+GITWEB_JSLIB_FILES += static/js/blame_incremental.js
-+
-+
- GITWEB_REPLACE = \
- 	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
- 	-e 's|++GIT_BINDIR++|$(bindir)|g' \
-@@ -146,6 +155,11 @@ gitweb.cgi: gitweb.perl GITWEB-BUILD-OPTIONS
- 	chmod +x $@+ && \
- 	mv $@+ $@
- 
-+static/gitweb.js: $(GITWEB_JSLIB_FILES)
-+	$(QUIET_GEN)$(RM) $@ $@+ && \
-+	cat $^ >$@+ && \
-+	mv $@+ $@
-+
- ### Testing rules
- 
- test:
-diff --git a/gitweb/static/js/README b/gitweb/static/js/README
-new file mode 100644
-index 0000000..f8460ed
---- /dev/null
-+++ b/gitweb/static/js/README
-@@ -0,0 +1,20 @@
-+GIT web interface (gitweb) - JavaScript
-+=======================================
-+
-+This directory holds JavaScript code used by gitweb (GIT web interface).
-+Scripts from there would be concatenated together in the order specified
-+by gitweb/Makefile into gitweb/static/gitweb.js, during building of
-+gitweb/gitweb.cgi (during gitweb building).  The resulting file (or its
-+minification) would then be installed / deployed together with gitweb.
-+
-+Scripts in 'lib/' subdirectory compose generic JavaScript library,
-+providing features required by gitweb but in no way limited to gitweb
-+only.  In the future those scripts could be replaced by some JavaScript
-+library / framework, like e.g. jQuery, YUI, Prototype, MooTools, Dojo,
-+ExtJS, Script.aculo.us or SproutCore.
-+
-+All scripts that manipulate gitweb output should be put outside 'lib/',
-+directly in this directory ('gitweb/static/js/').  Those scripts would
-+have to be rewritten if gitweb moves to using some JavaScript library.
-+
-+See also comments in gitweb/Makefile.
-diff --git a/gitweb/static/gitweb.js b/gitweb/static/js/blame_incremental.js
-similarity index 76%
-rename from gitweb/static/gitweb.js
-rename to gitweb/static/js/blame_incremental.js
-index 40ec084..f63f78b 100644
---- a/gitweb/static/gitweb.js
-+++ b/gitweb/static/js/blame_incremental.js
-@@ -1,44 +1,12 @@
- // Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
- //               2007, Petr Baudis <pasky@suse.cz>
--//          2008-2009, Jakub Narebski <jnareb@gmail.com>
-+//          2008-2011, Jakub Narebski <jnareb@gmail.com>
- 
- /**
-- * @fileOverview JavaScript code for gitweb (git web interface).
-+ * @fileOverview JavaScript side of Ajax-y 'blame_incremental' view in gitweb
-  * @license GPLv2 or later
-  */
- 
--/* ============================================================ */
--/* functions for generic gitweb actions and views */
--
--/**
-- * used to check if link has 'js' query parameter already (at end),
-- * and other reasons to not add 'js=1' param at the end of link
-- * @constant
-- */
--var jsExceptionsRe = /[;?]js=[01]$/;
--
--/**
-- * Add '?js=1' or ';js=1' to the end of every link in the document
-- * that doesn't have 'js' query parameter set already.
-- *
-- * Links with 'js=1' lead to JavaScript version of given action, if it
-- * exists (currently there is only 'blame_incremental' for 'blame')
-- *
-- * @globals jsExceptionsRe
-- */
--function fixLinks() {
--	var allLinks = document.getElementsByTagName("a") || document.links;
--	for (var i = 0, len = allLinks.length; i < len; i++) {
--		var link = allLinks[i];
--		if (!jsExceptionsRe.test(link)) { // =~ /[;?]js=[01]$/;
--			link.href +=
--				(link.href.indexOf('?') === -1 ? '?' : ';') + 'js=1';
--		}
--	}
--}
--
--
--/* ============================================================ */
- 
- /*
-  * This code uses DOM methods instead of (nonstandard) innerHTML
-@@ -59,71 +27,6 @@ function fixLinks() {
+diff --git a/gitweb/static/js/lib/common-lib.js b/gitweb/static/js/lib/common-lib.js
+index c45454e..d6b0c0d 100644
+--- a/gitweb/static/js/lib/common-lib.js
++++ b/gitweb/static/js/lib/common-lib.js
+@@ -89,57 +89,6 @@ function createRequestObject() {
  
  
- /* ============================================================ */
--/* generic utility functions */
--
--
--/**
-- * pad number N with nonbreakable spaces on the left, to WIDTH characters
-- * example: padLeftStr(12, 3, '\u00A0') == '\u00A012'
-- *          ('\u00A0' is nonbreakable space)
-- *
-- * @param {Number|String} input: number to pad
-- * @param {Number} width: visible width of output
-- * @param {String} str: string to prefix to string, e.g. '\u00A0'
-- * @returns {String} INPUT prefixed with (WIDTH - INPUT.length) x STR
-- */
--function padLeftStr(input, width, str) {
--	var prefix = '';
--
--	width -= input.toString().length;
--	while (width > 0) {
--		prefix += str;
--		width--;
--	}
--	return prefix + input;
--}
--
--/**
-- * Pad INPUT on the left to SIZE width, using given padding character CH,
-- * for example padLeft('a', 3, '_') is '__a'.
-- *
-- * @param {String} input: input value converted to string.
-- * @param {Number} width: desired length of output.
-- * @param {String} ch: single character to prefix to string.
-- *
-- * @returns {String} Modified string, at least SIZE length.
-- */
--function padLeft(input, width, ch) {
--	var s = input + "";
--	while (s.length < width) {
--		s = ch + s;
--	}
--	return s;
--}
--
--/**
-- * Create XMLHttpRequest object in cross-browser way
-- * @returns XMLHttpRequest object, or null
-- */
--function createRequestObject() {
--	try {
--		return new XMLHttpRequest();
--	} catch (e) {}
--	try {
--		return window.createRequest();
--	} catch (e) {}
--	try {
--		return new ActiveXObject("Msxml2.XMLHTTP");
--	} catch (e) {}
--	try {
--		return new ActiveXObject("Microsoft.XMLHTTP");
--	} catch (e) {}
--
--	return null;
--}
--
--
--/* ============================================================ */
- /* utility/helper functions (and variables) */
- 
- var xhr;        // XMLHttpRequest object
-@@ -392,111 +295,6 @@ function fixColorsAndGroups() {
- 	}
- }
- 
--/* ............................................................ */
+ /* ............................................................ */
 -/* time and data */
 -
 -/**
@@ -365,212 +195,35 @@ index 40ec084..f63f78b 100644
 -	return localDateStr + ' ' + localTimeStr + ' ' + timezoneInfo;
 -}
 -
+-
 -/* ............................................................ */
--/* unquoting/unescaping filenames */
--
--/**#@+
-- * @constant
-- */
--var escCodeRe = /\\([^0-7]|[0-7]{1,3})/g;
--var octEscRe = /^[0-7]{1,3}$/;
--var maybeQuotedRe = /^\"(.*)\"$/;
--/**#@-*/
--
--/**
-- * unquote maybe git-quoted filename
-- * e.g. 'aa' -> 'aa', '"a\ta"' -> 'a	a'
-- *
-- * @param {String} str: git-quoted string
-- * @returns {String} Unquoted and unescaped string
-- *
-- * @globals escCodeRe, octEscRe, maybeQuotedRe
-- */
--function unquote(str) {
--	function unq(seq) {
--		var es = {
--			// character escape codes, aka escape sequences (from C)
--			// replacements are to some extent JavaScript specific
--			t: "\t",   // tab            (HT, TAB)
--			n: "\n",   // newline        (NL)
--			r: "\r",   // return         (CR)
--			f: "\f",   // form feed      (FF)
--			b: "\b",   // backspace      (BS)
--			a: "\x07", // alarm (bell)   (BEL)
--			e: "\x1B", // escape         (ESC)
--			v: "\v"    // vertical tab   (VT)
--		};
--
--		if (seq.search(octEscRe) !== -1) {
--			// octal char sequence
--			return String.fromCharCode(parseInt(seq, 8));
--		} else if (seq in es) {
--			// C escape sequence, aka character escape code
--			return es[seq];
--		}
--		// quoted ordinary character
--		return seq;
--	}
--
--	var match = str.match(maybeQuotedRe);
--	if (match) {
--		str = match[1];
--		// perhaps str = eval('"'+str+'"'); would be enough?
--		str = str.replace(escCodeRe,
--			function (substr, p1, offset, s) { return unq(p1); });
--	}
--	return str;
--}
+ /* unquoting/unescaping filenames */
  
- /* ============================================================ */
- /* main part: parsing response */
-@@ -886,4 +684,4 @@ function startBlame(blamedataUrl, bUrl) {
- 	pollTimer = setInterval(xhr.onreadystatechange, 1000);
- }
- 
--// end of gitweb.js
-+/* end of blame_incremental.js */
-diff --git a/gitweb/static/js/javascript-detection.js b/gitweb/static/js/javascript-detection.js
+ /**#@+
+diff --git a/gitweb/static/js/lib/datetime.js b/gitweb/static/js/lib/datetime.js
 new file mode 100644
-index 0000000..93dd2bd
+index 0000000..b3dcedb
 --- /dev/null
-+++ b/gitweb/static/js/javascript-detection.js
-@@ -0,0 +1,43 @@
++++ b/gitweb/static/js/lib/datetime.js
+@@ -0,0 +1,161 @@
 +// Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
 +//               2007, Petr Baudis <pasky@suse.cz>
 +//          2008-2011, Jakub Narebski <jnareb@gmail.com>
 +
 +/**
-+ * @fileOverview Detect if JavaScript is enabled, and pass it to server-side
++ * @fileOverview Datetime manipulation: parsing and formatting
 + * @license GPLv2 or later
 + */
 +
 +
-+/* ============================================================ */
-+/* Manipulating links */
-+
-+/**
-+ * used to check if link has 'js' query parameter already (at end),
-+ * and other reasons to not add 'js=1' param at the end of link
-+ * @constant
-+ */
-+var jsExceptionsRe = /[;?]js=[01]$/;
-+
-+/**
-+ * Add '?js=1' or ';js=1' to the end of every link in the document
-+ * that doesn't have 'js' query parameter set already.
-+ *
-+ * Links with 'js=1' lead to JavaScript version of given action, if it
-+ * exists (currently there is only 'blame_incremental' for 'blame')
-+ *
-+ * To be used as `window.onload` handler
-+ *
-+ * @globals jsExceptionsRe
-+ */
-+function fixLinks() {
-+	var allLinks = document.getElementsByTagName("a") || document.links;
-+	for (var i = 0, len = allLinks.length; i < len; i++) {
-+		var link = allLinks[i];
-+		if (!jsExceptionsRe.test(link)) { // =~ /[;?]js=[01]$/;
-+			link.href +=
-+				(link.href.indexOf('?') === -1 ? '?' : ';') + 'js=1';
-+		}
-+	}
-+}
-+
-+/* end of javascript-detection.js */
-diff --git a/gitweb/static/js/lib/common-lib.js b/gitweb/static/js/lib/common-lib.js
-new file mode 100644
-index 0000000..38f3b9e
---- /dev/null
-+++ b/gitweb/static/js/lib/common-lib.js
-@@ -0,0 +1,187 @@
-+// Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
-+//               2007, Petr Baudis <pasky@suse.cz>
-+//          2008-2011, Jakub Narebski <jnareb@gmail.com>
-+
-+/**
-+ * @fileOverview Generic JavaScript code (helper functions)
-+ * @license GPLv2 or later
-+ */
-+
-+
-+/* ============================================================ */
 +/* ............................................................ */
-+/* Padding */
-+
-+/**
-+ * pad number N with nonbreakable spaces on the left, to WIDTH characters
-+ * example: padLeftStr(12, 3, '\u00A0') == '\u00A012'
-+ *          ('\u00A0' is nonbreakable space)
-+ *
-+ * @param {Number|String} input: number to pad
-+ * @param {Number} width: visible width of output
-+ * @param {String} str: string to prefix to string, e.g. '\u00A0'
-+ * @returns {String} INPUT prefixed with (WIDTH - INPUT.length) x STR
-+ */
-+function padLeftStr(input, width, str) {
-+	var prefix = '';
-+
-+	width -= input.toString().length;
-+	while (width > 0) {
-+		prefix += str;
-+		width--;
-+	}
-+	return prefix + input;
-+}
-+
-+/**
-+ * Pad INPUT on the left to SIZE width, using given padding character CH,
-+ * for example padLeft('a', 3, '_') is '__a'.
-+ *
-+ * @param {String} input: input value converted to string.
-+ * @param {Number} width: desired length of output.
-+ * @param {String} ch: single character to prefix to string.
-+ *
-+ * @returns {String} Modified string, at least SIZE length.
-+ */
-+function padLeft(input, width, ch) {
-+	var s = input + "";
-+	while (s.length < width) {
-+		s = ch + s;
-+	}
-+	return s;
-+}
-+
-+
-+/* ............................................................ */
-+/* Ajax */
-+
-+/**
-+ * Create XMLHttpRequest object in cross-browser way
-+ * @returns XMLHttpRequest object, or null
-+ */
-+function createRequestObject() {
-+	try {
-+		return new XMLHttpRequest();
-+	} catch (e) {}
-+	try {
-+		return window.createRequest();
-+	} catch (e) {}
-+	try {
-+		return new ActiveXObject("Msxml2.XMLHTTP");
-+	} catch (e) {}
-+	try {
-+		return new ActiveXObject("Microsoft.XMLHTTP");
-+	} catch (e) {}
-+
-+	return null;
-+}
-+
-+
-+/* ............................................................ */
-+/* time and data */
++/* parsing and retrieving datetime related information */
 +
 +/**
 + * used to extract hours and minutes from timezone info, e.g '-0900'
 + * @constant
 + */
-+var tzRe = /^([+-])([0-9][0-9])([0-9][0-9])$/;
++var tzRe = /^([+\-])([0-9][0-9])([0-9][0-9])$/;
 +
 +/**
 + * convert numeric timezone +/-ZZZZ to offset from UTC in seconds
@@ -587,6 +240,76 @@ index 0000000..38f3b9e
 +	var tz_min  = parseInt(match[3],10);
 +
 +	return tz_sign*(((tz_hour*60) + tz_min)*60);
++}
++
++/**
++ * return local (browser) timezone as offset from UTC in seconds
++ *
++ * @returns {Number} offset from UTC in seconds for local timezone
++ */
++function localTimezoneOffset() {
++	// getTimezoneOffset returns the time-zone offset from UTC,
++	// in _minutes_, for the current locale
++	return ((new Date()).getTimezoneOffset() * -60);
++}
++
++/**
++ * return local (browser) timezone as numeric timezone '(+|-)HHMM'
++ *
++ * @returns {String} locat timezone as -/+ZZZZ
++ */
++function localTimezoneInfo() {
++	var tzOffsetMinutes = (new Date()).getTimezoneOffset() * -1;
++
++	return formatTimezoneInfo(0, tzOffsetMinutes);
++}
++
++
++/**
++ * Parse RFC-2822 date into a Unix timestamp (into epoch)
++ *
++ * @param {String} date: date in RFC-2822 format, e.g. 'Thu, 21 Dec 2000 16:01:07 +0200'
++ * @returns {Number} epoch i.e. seconds since '00:00:00 1970-01-01 UTC'
++ */
++function parseRFC2822Date(date) {
++	// Date.parse accepts the IETF standard (RFC 1123 Section 5.2.14 and elsewhere)
++	// date syntax, which is defined in RFC 2822 (obsoletes RFC 822)
++	// and returns number of _milli_seconds since January 1, 1970, 00:00:00 UTC
++	return Date.parse(date) / 1000;
++}
++
++
++/* ............................................................ */
++/* formatting date */
++
++/**
++ * format timezone offset as numerical timezone '(+|-)HHMM' or '(+|-)HH:MM'
++ *
++ * @param {Number} hours:    offset in hours, e.g. 2 for '+0200'
++ * @param {Number} [minutes] offset in minutes, e.g. 30 for '-4030';
++ *                           it is split into hours if not 0 <= minutes < 60,
++ *                           for example 1200 would give '+0100';
++ *                           defaults to 0
++ * @param {String} [sep] separator between hours and minutes part,
++ *                       default is '', might be ':' for W3CDTF (rfc-3339)
++ * @returns {String} timezone in '(+|-)HHMM' or '(+|-)HH:MM' format
++ */
++function formatTimezoneInfo(hours, minutes, sep) {
++	minutes = minutes || 0; // to be able to use formatTimezoneInfo(hh)
++	sep = sep || ''; // default format is +/-ZZZZ
++
++	if (minutes < 0 || minutes > 59) {
++		hours = minutes > 0 ? Math.floor(minutes / 60) : Math.ceil(minutes / 60);
++		minutes = Math.abs(minutes - 60*hours); // sign of minutes is sign of hours
++		// NOTE: this works correctly because there is no UTC-00:30 timezone
++	}
++
++	var tzSign = hours >= 0 ? '+' : '-';
++	if (hours < 0) {
++		hours = -hours; // sign is stored in tzSign
++	}
++
++	return tzSign + padLeft(hours, 2, '0') + sep + padLeft(minutes, 2, '0');
 +}
 +
 +/**
@@ -613,63 +336,36 @@ index 0000000..38f3b9e
 +	return localDateStr + ' ' + localTimeStr + ' ' + timezoneInfo;
 +}
 +
-+
-+/* ............................................................ */
-+/* unquoting/unescaping filenames */
-+
-+/**#@+
-+ * @constant
-+ */
-+var escCodeRe = /\\([^0-7]|[0-7]{1,3})/g;
-+var octEscRe = /^[0-7]{1,3}$/;
-+var maybeQuotedRe = /^\"(.*)\"$/;
-+/**#@-*/
-+
 +/**
-+ * unquote maybe git-quoted filename
-+ * e.g. 'aa' -> 'aa', '"a\ta"' -> 'a	a'
++ * return date in local time formatted in rfc-2822 format
++ * e.g. 'Thu, 21 Dec 2000 16:01:07 +0200'
 + *
-+ * @param {String} str: git-quoted string
-+ * @returns {String} Unquoted and unescaped string
-+ *
-+ * @globals escCodeRe, octEscRe, maybeQuotedRe
++ * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
++ * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
++ * @param {Boolean} [padDay] e.g. 'Sun, 07 Aug' if true, 'Sun, 7 Aug' otherwise
++ * @returns {String} date in local time in rfc-2822 format
 + */
-+function unquote(str) {
-+	function unq(seq) {
-+		var es = {
-+			// character escape codes, aka escape sequences (from C)
-+			// replacements are to some extent JavaScript specific
-+			t: "\t",   // tab            (HT, TAB)
-+			n: "\n",   // newline        (NL)
-+			r: "\r",   // return         (CR)
-+			f: "\f",   // form feed      (FF)
-+			b: "\b",   // backspace      (BS)
-+			a: "\x07", // alarm (bell)   (BEL)
-+			e: "\x1B", // escape         (ESC)
-+			v: "\v"    // vertical tab   (VT)
-+		};
++function formatDateRFC2882(epoch, timezoneInfo, padDay) {
++	// A short textual representation of a month, three letters
++	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
++	// A textual representation of a day, three letters
++	var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
++	// date corrected by timezone
++	var localDate = new Date(1000 * (epoch +
++		timezoneOffset(timezoneInfo)));
++	var localDateStr = // e.g. 'Sun, 7 Aug 2005' or 'Sun, 07 Aug 2005'
++		days[localDate.getUTCDay()] + ', ' +
++		(padDay ? padLeft(localDate.getUTCDate(),2,'0') : localDate.getUTCDate()) + ' ' +
++		months[localDate.getUTCMonth()] + ' ' +
++		localDate.getUTCFullYear();
++	var localTimeStr = // e.g. '21:49:46'
++		padLeft(localDate.getUTCHours(),   2, '0') + ':' +
++		padLeft(localDate.getUTCMinutes(), 2, '0') + ':' +
++		padLeft(localDate.getUTCSeconds(), 2, '0');
 +
-+		if (seq.search(octEscRe) !== -1) {
-+			// octal char sequence
-+			return String.fromCharCode(parseInt(seq, 8));
-+		} else if (seq in es) {
-+			// C escape sequence, aka character escape code
-+			return es[seq];
-+		}
-+		// quoted ordinary character
-+		return seq;
-+	}
-+
-+	var match = str.match(maybeQuotedRe);
-+	if (match) {
-+		str = match[1];
-+		// perhaps str = eval('"'+str+'"'); would be enough?
-+		str = str.replace(escCodeRe,
-+			function (substr, p1, offset, s) { return unq(p1); });
-+	}
-+	return str;
++	return localDateStr + ' ' + localTimeStr + ' ' + timezoneInfo;
 +}
 +
-+/* end of common-lib.js */
++/* end of datetime.js */
 -- 
 1.7.3
