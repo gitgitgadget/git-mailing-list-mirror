@@ -1,9 +1,9 @@
 From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 08:27:17 +0200
-Message-ID: <20110428062717.GA952@elte.hu>
+Date: Thu, 28 Apr 2011 08:36:25 +0200
+Message-ID: <20110428063625.GB952@elte.hu>
 References: <20110427225114.GA16765@elte.hu>
- <7voc3r5kzn.fsf@alter.siamese.dyndns.org>
+ <20110427231748.GA26632@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
@@ -12,30 +12,30 @@ Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	=?iso-8859-1?Q?Fr=E9d=E9ric?= Weisbecker <fweisbec@gmail.com>,
 	Pekka Enberg <penberg@cs.helsinki.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 08:31:01 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 08:36:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFKkY-0001D7-Fv
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 08:30:54 +0200
+	id 1QFKqH-00042f-RR
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 08:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753963Ab1D1Gat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 02:30:49 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:36029 "EHLO mx2.mail.elte.hu"
+	id S1753989Ab1D1Ggm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2011 02:36:42 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:35399 "EHLO mx2.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753876Ab1D1Gas (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 02:30:48 -0400
+	id S1753876Ab1D1Ggl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 02:36:41 -0400
 Received: from elvis.elte.hu ([157.181.1.14])
 	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1QFKh8-0003qa-5k
-	from <mingo@elte.hu>; Thu, 28 Apr 2011 08:27:24 +0200
+	id 1QFKpu-0005Sg-Ta
+	from <mingo@elte.hu>; Thu, 28 Apr 2011 08:36:30 +0200
 Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id EC8DD3E250F; Thu, 28 Apr 2011 08:27:13 +0200 (CEST)
+	id 5752C3E250F; Thu, 28 Apr 2011 08:36:22 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7voc3r5kzn.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20110427231748.GA26632@elie>
 User-Agent: Mutt/1.5.20 (2009-08-17)
 Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
 X-ELTE-SpamScore: -2.0
@@ -49,107 +49,88 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172319>
 
 
-* Junio C Hamano <gitster@pobox.com> wrote:
+* Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> Ingo Molnar <mingo@elte.hu> writes:
+> Ingo Molnar wrote:
 > 
+> > Most overhead is in hashcmp(), which uses memcmp(), which falls back to 
+> > assembly string operations.
+> >
+> > But we know that hashcmp() compares hashes, which if they do not match, the first byte
+> > will differ in 99% of the cases.
+> >
+> > So i tried the patch below: instead of relying on GCC putting in the string 
+> > ops, i used an open-coded loop for this relatively short comparison, which does 
+> > not go beyond the first byte in 99% of the cases.
+> [...]
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -675,14 +675,33 @@ extern char *sha1_pack_name(const unsigned char *sha1);
+> [...]
 > > +static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
 > >  {
-> > -	return !memcmp(sha1, null_sha1, 20);
+> > -	return memcmp(sha1, sha2, 20);
 > > +	int i;
 > > +
 > > +	for (i = 0; i < 20; i++, sha1++, sha2++) {
-> > +		if (*sha1 != *sha2) {
-> > +			if (*sha1 < *sha2)
-> > +				return -1;
-> > +			return +1;
-> > +		}
-> > +	}
-> > +
-> > +	return 0;
 > 
-> This is very unfortunate, as it is so trivially correct and we shouldn't
-> have to do it.  If the compiler does not use a good inlined memcmp(), this
-> patch may fly, but I fear it may hurt other compilers, no?
-
-Well, i used a very fresh GCC version:
-
-  gcc version 4.6.0 20110419 (Red Hat 4.6.0-5) (GCC)
-
-And used a relatively fresh CPU as well. So given how compiler and CPU versions 
-trickle down to users and how long they live there Git will live with this 
-combination for years to come.
-
-Secondly, the combined speedup of the cached case with my two patches appears 
-to be more than 30% on my testbox so it's a very nifty win from two relatively 
-simple changes.
-
-Should a compiler ever turn this into suboptimal code again we can revisit the 
-issue once more - it's not like we *can* keep the compiler from messing up the 
-assembly output! :-) ...
-
-> > +static inline int is_null_sha1(const unsigned char *sha1)
-> >  {
-> > -	return memcmp(sha1, sha2, 20);
-> > +	const unsigned long long *sha1_64 = (void *)sha1;
-> > +	const unsigned int *sha1_32 = (void *)sha1;
+> Hm.  This would be very sensitive to the compiler, since a too-smart 
+> optimizer could take this loop and rewrite it back to memcmp! So I wonder if 
+> it's possible to convey this to the compiler more precisely:
 > 
-> Can everybody do unaligned accesses just fine?
+> 	return memcmp_probably_differs_early(sha1, sha2, 20);
+> 
+> E.g., how would something like
+> 
+> 	const unsigned int *start1 = (const unsigned int *) sha1;
+> 	const unsigned int *start2 = (const unsigned int *) sha2;
+> 
+> 	if (likely(*start1 != *start2)) {
+> 		if (*start1 < *start2)
+> 			return -1;
+> 		return +1;
+> 	}
+> 	return memcmp(sha1 + 4, sha2 + 4, 16);
+>
+> perform?
 
-I have added some quick debug code and none of the sha1 pointers (in my 
-admittedly very limited) testing showed misaligned pointers on 64-bit systems.
+Note that this function wont work on like 99% of the systems out there due to 
+endianness assumptions in Git.
 
-On 32-bit systems the pointer might be 32-bit aligned only - the patch below 
-implements the function 32-bit comparisons.
+Also, your hypothetical smart compiler would recognize the above as equivalent 
+to memcmp(sha1, sha2, 20) and could rewrite it again - so we'd be back to 
+square 1.
 
-But is_null_sha1() is not called that often in the tests i've done so we could 
-keep it untouched as well.
+As i argued in my other mail in this thread, it's hard to keep a compiler from 
+messing up its assembly output if it really wants to mess up - we'll deal with 
+it when that happens. I used a very fresh compiler and a modern CPU for my 
+testing - so even if very, very new compilers improve this problem somehow it 
+will stay with us for a long, long time.
+
+Having said that, it would be nice if someone could test these two patches on a 
+modern AMD box, using the perf stat from here:
+
+  http://people.redhat.com/mingo/tip.git/README
+
+  cd tools/perf/
+  make -j install
+
+and do something like this to test git gc's performance:
+
+  $ perf stat --sync --repeat 10 ./git gc
+
+... to see whether these speedups are generic, or somehow Intel CPU specific.
+
+> I suspect we don't have to worry about endianness as long as hashcmp
+> yields a consistent ordering, but I haven't checked.
+
+Well i messed up endianness in an early version of this patch and 'git gc' was 
+eminently unhappy about it! I have not figured out which part of Git relies on 
+the comparison result though - most places seem to use the result as a boolean.
 
 Thanks,
 
 	Ingo
-
-diff --git a/cache.h b/cache.h
-index 2674f4c..427ad5a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -675,14 +675,32 @@ extern char *sha1_pack_name(const unsigned char *sha1);
- extern char *sha1_pack_index_name(const unsigned char *sha1);
- extern const char *find_unique_abbrev(const unsigned char *sha1, int);
- extern const unsigned char null_sha1[20];
--static inline int is_null_sha1(const unsigned char *sha1)
-+
-+static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
- {
--	return !memcmp(sha1, null_sha1, 20);
-+	int i;
-+
-+	for (i = 0; i < 20; i++, sha1++, sha2++) {
-+		if (*sha1 != *sha2) {
-+			if (*sha1 < *sha2)
-+				return -1;
-+			return +1;
-+		}
-+	}
-+
-+	return 0;
- }
--static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
-+
-+static inline int is_null_sha1(const unsigned char *sha1)
- {
--	return memcmp(sha1, sha2, 20);
-+	const unsigned int *sha1_32 = (void *)sha1;
-+
-+	if (sha1_32[0] || sha1_32[1] || sha1_32[2] || sha1_32[3] || sha1_32[4])
-+		return 0;
-+
-+	return 1;
- }
-+
- static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
- {
- 	memcpy(sha_dst, sha_src, 20);
