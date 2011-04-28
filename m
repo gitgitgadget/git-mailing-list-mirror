@@ -1,200 +1,101 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] git gc: Speed it up by 18% via faster hash comparisons
-Date: Thu, 28 Apr 2011 18:00:19 +0200
-Message-ID: <BANLkTim90XOLRBPtVCXFb1ptkmUvHGRqeg@mail.gmail.com>
-References: <20110428062717.GA952@elte.hu> <BANLkTik_2sHZ0OTgQeHpRnpmNsAmT=sAcA@mail.gmail.com>
- <20110428093703.GB15349@elte.hu> <BANLkTim+Kk_ah_4+pQKCi8bXtA8thRVRjQ@mail.gmail.com>
- <4DB93D16.4000603@cs.helsinki.fi> <BANLkTimD7KZz4fS0QynPui7-JQS10AkLtg@mail.gmail.com>
- <4DB941CD.2050403@cs.helsinki.fi> <BANLkTik-uk-mpdHZxcz8Nem=nEzED_tuJg@mail.gmail.com>
- <20110428123617.GA2062@elie> <20110428133708.GA31383@elte.hu> <20110428151409.GA32025@elte.hu>
-Reply-To: kusmabite@gmail.com
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [RFC/PATCH] completion: avoid "words" as variable name for zsh
+	portability
+Date: Thu, 28 Apr 2011 18:01:15 +0200
+Message-ID: <20110428160115.GA19003@goldbirke>
+References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
+	<20110427013534.GA14286@elie>
+	<7v62q0b8e0.fsf@alter.siamese.dyndns.org>
+	<20110427064033.GB4226@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Pekka Enberg <penberg@cs.helsinki.fi>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?ISO-8859-1?Q?Fr=E9d=E9ric_Weisbecker?= <fweisbec@gmail.com>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:00:51 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	<git@vger.kernel.org>, Stefan Haller <lists@haller-berlin.de>,
+	Mark Lodato <lodatom@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:01:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFTe2-0006TQ-NY
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 18:00:47 +0200
+	id 1QFTee-0006xN-HK
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Apr 2011 18:01:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760416Ab1D1QAl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 12:00:41 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:60970 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757715Ab1D1QAk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2011 12:00:40 -0400
-Received: by pxi2 with SMTP id 2so139288pxi.10
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 09:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HO2e2j+QjYIzgJFwqUWs56LCGbMlN8Zms8USUPUVHeo=;
-        b=mjtoREsJGPye7idaTtSnKg1DJldRx+ambZtEfY4qoclm1ebg7Lvm1a5OOhNaMS10A7
-         9+Mq1SI0RBMTzYMAezETgHhEsqHmOBxHo7xuTkxBDkPxYiSZ8fb3f7MuU70amCFQvy8J
-         Ue4O6a2GJmWkpBMU1h7AgkNV5exNanCPENUDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=U2KUstwKaesovY40NqnQRQXdMccgzoElcFBBsmnT3rw/zlbCzefmnb3qIWd+PN+gcT
-         1VW84AnCHveb0T8iipxowdd/FW7yQ2UHDdyeE5d111Iye44vHWYHv+BQdjwrSh0n73yc
-         6VSNZUF1pQm3TWLlHunUXSogRHek2mhS4ETfU=
-Received: by 10.68.51.98 with SMTP id j2mr3685139pbo.288.1304006439174; Thu,
- 28 Apr 2011 09:00:39 -0700 (PDT)
-Received: by 10.68.46.5 with HTTP; Thu, 28 Apr 2011 09:00:19 -0700 (PDT)
-In-Reply-To: <20110428151409.GA32025@elte.hu>
+	id S1760449Ab1D1QBT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2011 12:01:19 -0400
+Received: from ex-e-1.perimeter.fzi.de ([141.21.8.250]:21715 "EHLO
+	EX-E-1.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757732Ab1D1QBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2011 12:01:19 -0400
+Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by EX-E-1.perimeter.fzi.de
+ (141.21.8.250) with Microsoft SMTP Server (TLS) id 14.1.270.1; Thu, 28 Apr
+ 2011 18:01:12 +0200
+Received: from localhost6.localdomain6 (141.21.50.31) by ex-ca-ht-1.fzi.de
+ (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.270.1; Thu, 28 Apr
+ 2011 18:01:15 +0200
+Content-Disposition: inline
+In-Reply-To: <20110427064033.GB4226@elie>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172369>
 
-On Thu, Apr 28, 2011 at 5:14 PM, Ingo Molnar <mingo@elte.hu> wrote:
->
-> * Ingo Molnar <mingo@elte.hu> wrote:
->
->> * Jonathan Nieder <jrnieder@gmail.com> wrote:
->>
->> > Hi,
->> >
->> > A side note for amusement.
->> >
->> > Erik Faye-Lund wrote:
->> >
->> > > --- a/cache.h
->> > > +++ b/cache.h
->> > > @@ -681,13 +681,17 @@ extern char *sha1_pack_name(const unsigned=
- char *sha1);
->> > > =A0extern char *sha1_pack_index_name(const unsigned char *sha1);
->> > > =A0extern const char *find_unique_abbrev(const unsigned char *sh=
-a1, int);
->> > > =A0extern const unsigned char null_sha1[20];
->> > > -static inline int is_null_sha1(const unsigned char *sha1)
->> > > +static inline int hashcmp(const unsigned char *sha1, const unsi=
-gned char *sha2)
->> > > =A0{
->> > > - return !memcmp(sha1, null_sha1, 20);
->> > > + /* early out for fast mis-match */
->> > > + if (*sha1 !=3D *sha2)
->> > > + =A0 =A0 =A0 =A0 return *sha1 - *sha2;
->> > > +
->> > > + return memcmp(sha1 + 1, sha2 + 1, 19);
->> > > =A0}
->> >
->> > On the off-chance that sha1 and sha2 are nicely aligned, a more
->> > redundant
->> >
->> > =A0 =A0 if (*sha1 !=3D *sha2)
->> > =A0 =A0 =A0 =A0 =A0 =A0 return *sha1 - *sha2;
->> >
->> > =A0 =A0 return memcmp(sha1, sha2, 20);
->> >
->> > would take advantage of that (yes, this is just superstition, but =
-it
->> > somehow seems comforting anyway).
->>
->> Your variant also makes the code slightly more compact as the sha1+1=
- and sha2+1
->> addresses do not have to be computed. I'll re-test and resend this v=
-ariant.
->
-> Seems to perform measurably worse:
->
-> =A0#
-> =A0# Open-coded loop:
-> =A0#
-> =A0Performance counter stats for './git gc' (10 runs):
->
-> =A0 =A0 =A0 2358.560100 task-clock =A0 =A0 =A0 =A0 =A0 =A0 =A0 # =A0 =
-=A00.763 CPUs utilized =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.06% )
-> =A0 =A0 =A0 =A0 =A0 =A0 1,870 context-switches =A0 =A0 =A0 =A0 # =A0 =
-=A00.001 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A03.09% )
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 170 CPU-migrations =A0 =A0 =A0 =A0 =A0 # =
-=A0 =A00.000 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A03.54%=
- )
-> =A0 =A0 =A0 =A0 =A0 =A038,230 page-faults =A0 =A0 =A0 =A0 =A0 =A0 =A0=
-# =A0 =A00.016 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.0=
-3% )
-> =A0 =A0 7,513,529,543 cycles =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # =A0=
- =A03.186 GHz =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.06% =
-)
-> =A0 =A0 1,634,103,128 stalled-cycles =A0 =A0 =A0 =A0 =A0 # =A0 21.75%=
- of all cycles are idle =A0 ( +- =A00.28% )
-> =A0 =A011,068,971,207 instructions =A0 =A0 =A0 =A0 =A0 =A0 # =A0 =A01=
-=2E47 =A0insns per cycle
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0 =A0# =A0 =A00.15 =A0stalled cycles per insn =A0( +- =A00.0=
-4% )
-> =A0 =A0 2,487,656,519 branches =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # 1054=
-=2E735 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.03% )
-> =A0 =A0 =A0 =A059,233,604 branch-misses =A0 =A0 =A0 =A0 =A0 =A0# =A0 =
-=A02.38% of all branches =A0 =A0 =A0 =A0 =A0( +- =A00.09% )
->
-> =A0 =A0 =A0 =A03.092183093 =A0seconds time elapsed =A0( +- =A03.49% )
->
-> =A0#
-> =A0# Front test + memcmp:
-> =A0#
-> =A0Performance counter stats for './git gc' (10 runs):
->
-> =A0 =A0 =A0 2723.468639 task-clock =A0 =A0 =A0 =A0 =A0 =A0 =A0 # =A0 =
-=A00.833 CPUs utilized =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.22% )
-> =A0 =A0 =A0 =A0 =A0 =A0 1,751 context-switches =A0 =A0 =A0 =A0 # =A0 =
-=A00.001 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A02.02% )
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 167 CPU-migrations =A0 =A0 =A0 =A0 =A0 # =
-=A0 =A00.000 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A01.23%=
- )
-> =A0 =A0 =A0 =A0 =A0 =A038,230 page-faults =A0 =A0 =A0 =A0 =A0 =A0 =A0=
-# =A0 =A00.014 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.0=
-3% )
-> =A0 =A0 8,684,682,538 cycles =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # =A0=
- =A03.189 GHz =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.21% =
-)
-> =A0 =A0 2,062,906,208 stalled-cycles =A0 =A0 =A0 =A0 =A0 # =A0 23.75%=
- of all cycles are idle =A0 ( +- =A00.60% )
-> =A0 =A0 9,019,624,641 instructions =A0 =A0 =A0 =A0 =A0 =A0 # =A0 =A01=
-=2E04 =A0insns per cycle
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0 =A0# =A0 =A00.23 =A0stalled cycles per insn =A0( +- =A00.0=
-4% )
-> =A0 =A0 1,771,179,402 branches =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # =A06=
-50.340 M/sec =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +- =A00.04% )
-> =A0 =A0 =A0 =A075,026,810 branch-misses =A0 =A0 =A0 =A0 =A0 =A0# =A0 =
-=A04.24% of all branches =A0 =A0 =A0 =A0 =A0( +- =A00.04% )
->
-> =A0 =A0 =A0 =A03.271415104 =A0seconds time elapsed =A0( +- =A01.97% )
->
-> So i think the open-coded loop variant i posted is faster.
->
-> The key observation is that there's two cases that matter to performa=
-nce:
->
-> =A0- the hashes are different: in this case the front test catches 99=
-% of the cases
-> =A0- the hashes are *equal*: in this case the open-coded loop perform=
-s better than the memcmp
->
-> My patch addresses both cases.
->
+Hi,
 
-Thanks. I also timed on my end (on Windows), and I came to the same
-conclusion (but the improvements of your original was somewhat smaller
-in my end; could be due to the test-case). It seems like the early-out
-wasn't the only reason your original patch performed faster. It could
-be that memcmp (probably) didn't get inlined, and the extra function
-call outweighs the complexity. Or there's something else going on that
-both affects glibc and msvcrt.dll.
+
+On Wed, Apr 27, 2011 at 01:40:34AM -0500, Jonathan Nieder wrote:
+> The "_get_comp_words_by_ref -n :=3D words" command from the
+> bash_completion library reassembles a modified version of COMP_WORDS
+> with ':' and '=3D' no longer treated as word separators and stores it=
+ in
+> the ${words[@]} array.  Git's programmable tab completion script uses
+> this to abstract away the difference between bash v3's and bash v4's
+> definitions of COMP_WORDS (bash v3 used shell words, while bash v4
+> breaks at separator characters); see v1.7.4-rc0~11^2~2 (bash: get
+> --pretty=3Dm<tab> completion to work with bash v4, 2010-12-02).
+>=20
+> zsh has (or rather its completion functions have) another idea about
+> what ${words[@]} should contain: the array is prepopulated with the
+> words from the command it is completing.  For reasons that are not
+> well understood, when git-completion.bash reserves its own "words"
+> variable with "local words", the variable becomes empty and cannot be
+> changed from then on.  So the completion script neglects the argument=
+s
+> it has seen, and words complete like git subcommand names.  For
+> example, typing "git log origi<TAB>" gives no completions because
+> there are no "git origi..." commands.
+>=20
+> Work around this by using a different variable (comp_words) that is
+> not special to zsh.  So now commands that completed correctly before
+> v1.7.4-rc0~11^2~2 on zsh should be able to complete correctly again.
+
+Thanks for this explanation.  I tried to fix this some time ago, but
+got only as far as to indentify that something is amiss with returning
+$words from _get_comp_words_by_ref(), and during tracing I saw so much
+weird and (for me) unexplicable zsh behavior that I simply gave up.
+
+But this patch heavily conflicted with one of my long-forgotten
+cleanup patch series, and that series together with the above
+explanation gave me alternative ideas for fixing this issue with zsh.
+
+So, here it is.  The first two patches are independent cleanups, but
+they make the actual fix in the third patch so short.
+
+It works well as far as I tested it with both bash and zsh, but I
+would really appreciate a few extra sets of eyeballs for the cleanups
+and sanity-checking and testing of the bugfix.
+
+
+SZEDER G=E1bor (3):
+  bash: don't modify the $cur variable in completion functions
+  bash: remove unnecessary _get_comp_words_by_ref() invocations
+  bash: don't declare 'local words' to make zsh happy
+
+ contrib/completion/git-completion.bash |  225 +++++++++---------------=
+--------
+ 1 files changed, 64 insertions(+), 161 deletions(-)
