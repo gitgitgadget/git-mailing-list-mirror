@@ -1,97 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-cvsimport: normalize hostname for password lookup
-Date: Fri, 29 Apr 2011 09:33:38 -0700
-Message-ID: <7v4o5hxbj1.fsf@alter.siamese.dyndns.org>
-References: <ipckgd$krd$2@dough.gmane.org> <m2sjt1xpfj.fsf@igel.home>
- <m2oc3pxkyo.fsf_-_@igel.home>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] avoid set-but-not-used warning
+Date: Fri, 29 Apr 2011 13:34:25 -0300
+Message-ID: <BANLkTi=KZxTrAzoj3Bhwr3XTEPNnOvcvdQ@mail.gmail.com>
+References: <874o5hv1f2.fsf@rho.meyering.net>
+	<7vwridxbs9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marcin =?utf-8?Q?Wi=C5=9Bnicki?= <mwisnicki@gmail.com>,
-	git@vger.kernel.org, Guy Rouillier <guyr@burntmail.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Apr 29 18:34:00 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>,
+	Ingo Molnar <mingo@elte.hu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 18:34:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFqdj-00019e-M9
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 18:34:00 +0200
+	id 1QFqeF-0001UD-GG
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 18:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760062Ab1D2Qdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 12:33:54 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38925 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759837Ab1D2Qdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 12:33:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2E3D75216;
-	Fri, 29 Apr 2011 12:35:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=5jIq7y7UfJXoh8b6xMhzDKiPdLk=; b=MaBL1S6bchcG7yp3lUzo
-	M7ub7IL0W0BjCDHx7BEZ3GQdQCsj5jZEKtkh3KWeh79z9WQLD3l2xZvuWC8zP59C
-	NUCXb7AWcSen3RQv99LwBJQx7U7zZkMYprmULTYY7UzTBZY2BMaWF9TcPgmwx0q/
-	L3p1QbQlMs1TI23rTYTNZyw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=P2+ENPT/i+9uA1Q1mB1TRtQvMV4A1vO9AEd+Z8Xytcz5JW
-	ACOHGQcXX60Z+t0G3Db31gPIZi7Jq1ToLZt61JSCwyWeE2sNXWD48GFLPjHfXfEt
-	JqQC42P3+h9Lrc6cDn/QWiY4MYWQ5yDTec3oB80GURZY/1L7+eewnVaP7Mkec=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E0DA95212;
-	Fri, 29 Apr 2011 12:35:50 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 80379520B; Fri, 29 Apr 2011
- 12:35:45 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BE7BE85A-727E-11E0-9A02-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932197Ab1D2Qe1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 12:34:27 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46797 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932076Ab1D2Qe0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2011 12:34:26 -0400
+Received: by wya21 with SMTP id 21so2965165wya.19
+        for <git@vger.kernel.org>; Fri, 29 Apr 2011 09:34:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BI8YJBzxMlV5AimsI9X5phH+vhtmYMugbHieN7NB/Y0=;
+        b=m5D4QbXNI2qTw7k/do97DPD/kKk4LiNl+T3S0HwXsfCVHEgzyFSM1r60kbFFaMMTN0
+         2RYB4y4bHs/Z1jXeFOS48mH97Gi02KtfxVeyMCEjiY9A6W9/ZYR2MSlsFOMji87YVUgl
+         Vx1zKTQUU9/jENEMobmi9Wl5RhDiWXdV4QygA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JdAZMepfcDainlPqxZDXb43hjqu7elARnvzDBLD3mpr0BEHQRUeg/N5fIkq04aSJ23
+         FW7DaHqEPG0l/Js9JarKX9qXHLrbXGBa+ptEwtRjyg1PBBQPc2wKNDXgnyyYVqxy5dWf
+         e84Bo4R634LRYXM0OkNjtabykVPNVfgOwhwis=
+Received: by 10.216.143.74 with SMTP id k52mr5079189wej.0.1304094865288; Fri,
+ 29 Apr 2011 09:34:25 -0700 (PDT)
+Received: by 10.216.164.4 with HTTP; Fri, 29 Apr 2011 09:34:25 -0700 (PDT)
+In-Reply-To: <7vwridxbs9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172470>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Fri, Apr 29, 2011 at 1:28 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Thanks.
 
-> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-> index bbf327f..046fe32 100755
-> --- a/git-cvsimport.perl
-> +++ b/git-cvsimport.perl
-> @@ -249,6 +249,8 @@ sub conn {
->  
->  		# if username is not explicit in CVSROOT, then use current user, as cvs would
->  		$user=(getlogin() || $ENV{'LOGNAME'} || $ENV{'USER'} || "anonymous") unless $user;
-> +		# Normalize hostname for lookup in .cvspass
-> +		$serv = lc $serv;
->  		my $rr2 = "-";
->  		unless ($port) {
->  			$rr2 = ":pserver:$user\@$serv:$repo";
-> @@ -263,6 +265,8 @@ sub conn {
->  				# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
->  				while (<H>) {
->  					chomp;
-> +					# FIXME: entries without version prefix
-> +					# may need to be normalized
->  					s/^\/\d+\s+//;
->  					my ($w,$p) = split(/\s/,$_,2);
->  					if ($w eq $rr or $w eq $rr2) {
+Ingo Molnar has posted the same fix in "diffcore-rename: Remove unused
+variable 'num_src'".
 
-If I correctly recall what I found out from cvs's changelog while looking at
-http://thread.gmane.org/gmane.comp.version-control.git/163979/focus=167178 
-I think the versioned entries are already downcased, so the above,
-including the "FIXME", looks correct.
-
-As I wrote in another message in that thread, I think this codepath should
-be refactored a bit better so that it can handle subtle differences
-between versions and implementations of cvs itself, and also these
-versioned entries.  A good first step might be to separate out the body of
-the innermost loop we see here that process one entry from the cvspass
-file into a helper function.
-
-Can you give an eyeball on the update of 077aac1 (Look for password in
-both CVS and CVSNT password files., 2011-02-18) posted by Guy Rouillier
-today and help testing it, and put this fix on top that?
-
-Thanks.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
