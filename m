@@ -1,117 +1,62 @@
-From: Mathias Lafeldt <misfire@debugon.org>
-Subject: Re: [PATCH] t/test-lib.sh: minor readability improvements
-Date: Fri, 29 Apr 2011 12:00:35 +0200
-Message-ID: <4DBA8C43.4040804@debugon.org>
-References: <4DB810E1.3080102@debugon.org> <7vmxjb8uyu.fsf@alter.siamese.dyndns.org>
+From: Stefan Sperling <stsp@stsp.name>
+Subject: Re: [PATCH] remove noise and inaccuracies from git-svn docs
+Date: Fri, 29 Apr 2011 12:39:53 +0200
+Message-ID: <20110429103953.GA4315@ted.stsp.name>
+References: <1303138000-27807-1-git-send-email-stsp@stsp.name>
+ <vpqhb9vplu4.fsf@bauges.imag.fr>
+ <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
+ <20110419093108.GA7440@ted.stsp.name>
+ <20110428173416.GC15785@ted.stsp.name>
+ <4DB9AA88.8040505@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 12:02:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 12:40:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFkXD-0000OT-Ik
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 12:02:51 +0200
+	id 1QFl7S-0001bV-WC
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 12:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753627Ab1D2KCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 06:02:46 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:62928 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104Ab1D2KCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 06:02:45 -0400
-Received: from [192.168.2.102] (dslb-088-071-229-195.pools.arcor-ip.net [88.71.229.195])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0Lio0b-1PfZs00Iof-00dL2V; Fri, 29 Apr 2011 12:00:37 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.14) Gecko/20110223 Thunderbird/3.1.8
-In-Reply-To: <7vmxjb8uyu.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:IYvgwvuSiIv0X+KnHNitxzy8Nsbwix0vlFIKD732PL4
- xBWHTLso91cByk+5198tcSsRCLAbvHQF3KsoZpHppUq0dNs70s
- 8MgQgz5P6nMRmoYMEpYLqFlz4vD4xrZfgDEFyiOcSP96dZR4pH
- KN4o9hwz1KV6zvGlcQYq+crrgiKbfTarUrgLdSH/zZB8JX9Ccd
- KeuR49PXBSmHrUSzkjpgtjTzKU4oTqu6px6ELTsAp8=
+	id S1758101Ab1D2KkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 06:40:10 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:49054 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269Ab1D2KkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 06:40:08 -0400
+X-Envelope-From: stsp@stsp.name
+Received: from ted.stsp.name (ted.stsp.name [217.197.84.34])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p3TAdswX017663
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 29 Apr 2011 12:39:54 +0200
+Received: from ted.stsp.name (stsp@localhost [127.0.0.1])
+	by ted.stsp.name (8.14.3/8.14.3) with ESMTP id p3TAdsJi019247;
+	Fri, 29 Apr 2011 12:39:54 +0200 (CEST)
+Received: (from stsp@localhost)
+	by ted.stsp.name (8.14.3/8.14.3/Submit) id p3TAdruI000977;
+	Fri, 29 Apr 2011 12:39:53 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <4DB9AA88.8040505@elegosoft.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172446>
 
-On 04/27/2011 07:28 PM, Junio C Hamano wrote:
-> Mathias Lafeldt <misfire@debugon.org> writes:
+On Thu, Apr 28, 2011 at 07:57:28PM +0200, Michael Schubert wrote:
+> >> I've sent a signed-off version with git send-email. Thanks!
+> > 
+> > Ping.  Apparently this hasn't been committed yet.
 > 
->> Tweak/apply parameter expansion. Also use here document to save
->> test results instead of appending each line with ">>".
+> It's queued in next:
 > 
-> Thanks.  A few minor nits.
-> 
->> Signed-off-by: Mathias Lafeldt <misfire@debugon.org>
->> ---
->>  t/test-lib.sh |   18 ++++++++++--------
->>  1 files changed, 10 insertions(+), 8 deletions(-)
->>
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index abc47f3..b30725f 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -24,7 +24,7 @@ done,*)
->>  *' --tee '*|*' --va'*)
->>  	mkdir -p test-results
->>  	BASE=test-results/$(basename "$0" .sh)
->> -	(GIT_TEST_TEE_STARTED=done ${SHELL-sh} "$0" "$@" 2>&1;
->> +	(GIT_TEST_TEE_STARTED=done ${SHELL-"sh"} "$0" "$@" 2>&1;
-> 
-> Looks unnecessary.  Superstition?
+> http://article.gmane.org/gmane.comp.version-control.git/172274
 
-IMHO, ${SHELL-sh} is kind of hard to read, especially when you
-don't know about the ${parameter-word} format. In hindsight, I
-understand that the change isn't really necessary.
- 
->>  	 echo $? > $BASE.exit) | tee $BASE.out
->>  	test "$(cat $BASE.exit)" = 0
->>  	exit
->> @@ -575,7 +575,7 @@ test_external () {
->>  test_external_without_stderr () {
->>  	# The temporary file has no (and must have no) security
->>  	# implications.
->> -	tmp="$TMPDIR"; if [ -z "$tmp" ]; then tmp=/tmp; fi
->> +	tmp=${TMPDIR:-"/tmp"}
-
-I guess, you'd prefer ${TMPDIR:-/tmp} here too.
-
->>  	stderr="$tmp/git-external-stderr.$$.tmp"
->>  	test_external "$@" 4> "$stderr"
->>  	[ -f "$stderr" ] || error "Internal error: $stderr disappeared."
->> @@ -801,12 +801,14 @@ test_done () {
->>  		mkdir -p "$test_results_dir"
->>  		test_results_path="$test_results_dir/${0%.sh}-$$.counts"
->>  
->> -		echo "total $test_count" >> $test_results_path
->> -		echo "success $test_success" >> $test_results_path
->> -		echo "fixed $test_fixed" >> $test_results_path
->> -		echo "broken $test_broken" >> $test_results_path
->> -		echo "failed $test_failure" >> $test_results_path
->> -		echo "" >> $test_results_path
->> +		cat >> "$test_results_path" <<EOF
->> +total $test_count
->> +success $test_success
->> +fixed $test_fixed
->> +broken $test_broken
->> +failed $test_failure
->> +
->> +EOF
-> 
-> It may probably be even easier to read if you indented the whole thing,
-> using the dash before the here-doc marker, like so:
-> 
-> 	cat >>"$test_results_path" <<-EOF
-> 	total $test_count
->         success $test_success
->         ...
->         EOF
-
-OK, I'll be re-rolling the patch using "<<-EOF".
-
--Mathias
+Ah, nice :)  Thanks everyone!
