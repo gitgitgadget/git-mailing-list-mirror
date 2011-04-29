@@ -1,96 +1,134 @@
-From: Csaba Henk <csaba@lowlife.hu>
-Subject: Re: git symbolic-ref vs. reflog (vs. rebase)
-Date: Fri, 29 Apr 2011 22:51:31 +0530
-Message-ID: <BANLkTi=yDECQs=mVkEfrkrFfy0dgFf4U3Q@mail.gmail.com>
-References: <ipek0o$l0v$1@dough.gmane.org> <7vk4edyqqn.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0/6] gitweb: Improve ctags, introduce categories
+Date: Fri, 29 Apr 2011 19:51:55 +0200
+Message-ID: <1304099521-27617-1-git-send-email-jnareb@gmail.com>
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, Sebastien Cevey <seb@cine7.net>,
+	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 19:21:58 2011
+X-From: git-owner@vger.kernel.org Fri Apr 29 19:52:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFrOA-0007Ex-B6
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 19:21:58 +0200
+	id 1QFrrh-0001C5-82
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 19:52:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757894Ab1D2RVx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 13:21:53 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:44390 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753950Ab1D2RVw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2011 13:21:52 -0400
-Received: by wya21 with SMTP id 21so2992114wya.19
-        for <git@vger.kernel.org>; Fri, 29 Apr 2011 10:21:51 -0700 (PDT)
+	id S1760730Ab1D2RwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 13:52:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:35897 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757894Ab1D2RwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 13:52:23 -0400
+Received: by fxm17 with SMTP id 17so2635553fxm.19
+        for <git@vger.kernel.org>; Fri, 29 Apr 2011 10:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gFasWOQ2/10mRjY+5o0zF6yT6UCwO18HgFd7WbpBEhA=;
-        b=hKlc9kIBO3ympxmHKx+zgXSlMWoxgTy18mmW2QzIInkf+mljshYiId8lJv0o6VThvP
-         kj0ccv3BSy8OQFbTkzCX9TD2fZn0o4wrqxhwDUFHmTbBwDODFadunoF/qPuqsJePxQbG
-         kC8ZtBctSlOiAOzCSwWHbKRNlNsMBG3AOwr3Y=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=u3Oe/CZu6DUxjc9CD4mXpQUnAa/IBRyrzusZvhgcBPc=;
+        b=BAvW46ce1PxTBMk0FGT/gLG/86qqyoTVLHJtaU05hL60PHiRCVe8+L1ETcwXyY3B7N
+         0LHuWSKd2k5tB1w6Ra5Y6zOHlDTaH5n3LRFjEWZxRtfSgf22qx6RqP+O7caksbH+y8UV
+         htIHja1wQCBi91Ph4bjoEfwIlXvhoKY79V3Tg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=GApss4kiCVqhx4a2xMUuyF+Unv/EaO/8AT4iMtuO+hof0O5ldO8XPIphRx9QWFnfck
-         zP0KwzV/Jl3jdhKZt2mWDssebJRwFUfi639rQsdRPz2kCXqYKUlfr8uofnqrssMS+x97
-         DWIsE+UCF4Wggz2Ka5pE3CYYdGK/Nb3pATMC0=
-Received: by 10.216.255.73 with SMTP id i51mr895652wes.88.1304097711125; Fri,
- 29 Apr 2011 10:21:51 -0700 (PDT)
-Received: by 10.216.186.143 with HTTP; Fri, 29 Apr 2011 10:21:31 -0700 (PDT)
-In-Reply-To: <7vk4edyqqn.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: smYX2wZSCMO9-Ll2WhPRSvIsYtg
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Ri9iu3iGDER7m4lqCz/ev/HN+nKG0ChB7aaqCo/I7IqZvDZgRVIkk0Kd2IgvVZOo4i
+         xydxC0FkBSh4bsNGyRntvHOkmFjHwCGDI/SiIihAuUaSva2Jh50spLQU/syXHG4KSNdZ
+         Lg9lOLWYPUsxYo0x5qiK77fG+nVU/lpUagZqU=
+Received: by 10.223.1.16 with SMTP id 16mr2571601fad.88.1304099540541;
+        Fri, 29 Apr 2011 10:52:20 -0700 (PDT)
+Received: from localhost.localdomain (abvr62.neoplus.adsl.tpnet.pl [83.8.215.62])
+        by mx.google.com with ESMTPS id n26sm962346fam.37.2011.04.29.10.52.16
+        (version=SSLv3 cipher=OTHER);
+        Fri, 29 Apr 2011 10:52:18 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172477>
 
-On Fri, Apr 29, 2011 at 9:49 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Csaba Henk <csaba@lowlife.hu> writes:
->
->> "git symbolic-ref" is a dangerous command in the sense that it can
->> change your HEAD position without updating the reflog. Is it
->> intended behaviour?
->
-> Yes, it is. =A0But you can choose to do:
->
-> =A0 =A0 =A0 =A0$ git branch side
-> =A0 =A0 =A0 =A0$ git symoblic-ref -m "move to side" HEAD refs/heads/s=
-ide
-> =A0 =A0 =A0 =A0$ git log --oneline -g HEAD@{0}
-> =A0 =A0 =A0 =A005ddb9b HEAD@{0}: move to side
-> =A0 =A0 =A0 =A0e69de29 HEAD@{1}: commit (initial): first commit
->
-> if you wanted to.
+This series is composed of two independent parts: improvements to
+content tags (ctags) handling in patches 2-3, and introducing optional
+grouping of projects by categories in patches 4-6 (where 4-5 are
+preparatory).
 
-So do you think the following patch would be the correct fix for the
-rebase issue:
+Both of those series are based on 1st patch in series which
+restructures how projects list is being generated, to make those
+changes easy to introduce.  Because both of those depend on the same
+introductory patch they are put in single series... that and the fact
+that there was trivial conflict to be resolved in rebasing 'project
+category' part on top of 'ctags' part.
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index cbb0ea9..10c1727 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -284,7 +284,7 @@ do
-                head_name=3D"$(cat "$dotest"/head-name)" &&
-                case "$head_name" in
-                refs/*)
--                       git symbolic-ref HEAD $head_name ||
-+                       git symbolic-ref -m "rebase: aborting" HEAD
-$head_name ||
-                        die "Could not move back to $head_name"
-                        ;;
-                esac
+Table of contents:
+~~~~~~~~~~~~~~~~~~
+* [PATCH 1/6 (v2)] gitweb: Restructure projects list generation
 
+  This patch extracts filtering out "forks" and searching for projects
+  (i.e. limiting listed projects) into separate subroutines.  Also
+  filtering is done upfront and not while printing.  This makes for
+  more clear code and makes subsequent changes much easier.
 
-?
+  Filtering forks is now faster thanks to using trie; see comments in
+  code and in the patch itself.
 
-Csaba
+* [PATCH 2/6] gitweb: Change the way "content tags" ('ctags') are handled
+
+  Making ctags info parsing more robust sort of fixes bug noticed in
+
+    gitweb: cloud tags feature produces malformed XML for errors
+    http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/802865/focus=168266
+    http://bugs.debian.org/616005
+
+  caused by myshandling underdocumented then 'ctags' feature.  This
+  patch DOES NOT however resolve deeper fundamental problem with error
+  / exception handling in gitweb after some data was already sent to a
+  browser.
+
+  It also removes gitweb half of interface for adding content tags
+  (labels) to a project; it was quarter of feature at best (there
+  is/was no example implementation of server side half of adding
+  content tags, no way to delete or fix content tags).
+
+* [PATCH 3/6] gitweb: Mark matched 'ctag' / contents tag (?by_tag=foo)
+
+  This is simple improvement, done while working on 'ctags' feature.
+
+* [PATCH 4/6] gitweb: Split git_project_list_body in two functions
+  [PATCH 5/6] gitweb: Modularized git_get_project_description to be more generic
+
+  Those two patches are refactoring preparing way for project
+  categories (for the next patch).
+
+* [PATCH 6/6] gitweb: Optional grouping of projects by category
+
+  Port of Sebastien Cevey port of Sham Chukoury's patch for the XMMS2
+  gitweb to modern gitweb.
+
+Shortlog:
+~~~~~~~~~
+Jakub Narebski (3):
+  gitweb: Restructure projects list generation
+  gitweb: Change the way "content tags" ('ctags') are handled
+  gitweb: Mark matched 'ctag' / contents tag (?by_tag=foo)
+
+Sebastien Cevey (3):
+  gitweb: Split git_project_list_body in two functions
+  gitweb: Modularized git_get_project_description to be more generic
+  gitweb: Optional grouping of projects by category
+
+Diffstat:
+~~~~~~~~~
+ gitweb/README                             |   16 +
+ gitweb/gitweb.perl                        |  546 ++++++++++++++++++++---------
+ gitweb/static/gitweb.css                  |    7 +
+ t/t9500-gitweb-standalone-no-errors.sh    |   57 +++
+ t/t9502-gitweb-standalone-parse-output.sh |   74 ++++
+ 5 files changed, 542 insertions(+), 158 deletions(-)
+
+-- 
+1.7.3
