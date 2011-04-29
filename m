@@ -1,71 +1,70 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH RESEND] git-svn: don't confuse editors with an apostrophe
-Date: Fri, 29 Apr 2011 13:40:14 +0200
-Message-ID: <1304077214-1707-1-git-send-email-cmn@elego.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git sparse checkout exclusions not working?
+Date: Fri, 29 Apr 2011 19:10:26 +0700
+Message-ID: <BANLkTi=m4hcs7pVgn0rkQktmZaqK_ORxaA@mail.gmail.com>
+References: <BANLkTinPg_jaxiF8yFtnf4BrT4fx-BQ=+A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 13:40:25 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Fri Apr 29 14:11:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFm3c-0007Gl-3c
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 13:40:24 +0200
+	id 1QFmXH-0006yF-F0
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 14:11:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932489Ab1D2LkR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 07:40:17 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:53575 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932476Ab1D2LkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 07:40:16 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 505E846132;
-	Fri, 29 Apr 2011 13:39:57 +0200 (CEST)
-Received: (nullmailer pid 1742 invoked by uid 1000);
-	Fri, 29 Apr 2011 11:40:15 -0000
-X-Mailer: git-send-email 1.7.4.2.437.g4fc7e.dirty
+	id S1757472Ab1D2MK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 08:10:58 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:43111 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752418Ab1D2MK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 08:10:57 -0400
+Received: by bwz15 with SMTP id 15so3048049bwz.19
+        for <git@vger.kernel.org>; Fri, 29 Apr 2011 05:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=zMgFj/SXB6SQMi6oN3yCM+vWKoNKzwR2bW9QPsd9DU4=;
+        b=bymD91+pVIX8pGk1eTdpOLTVCI5RbG/5FYXiHBOKCvlUqTXxg9idNbJQHLw8iBxAuR
+         YAoB/AA0Dle8bp8UheAyHwxodNDGIQN1tRw5v0jAP9ipo5kHjwAKfqGO1G8JXvM0Xw7n
+         aD0gFSFAF5NCFR5PoD9kcH9j/n3OD0ceR+kAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=T5i2NPxVsWBUH5N3H/Mo9y5wFdOUqTN/V2kWsbtZWn8QEdVe+iCDW5Jeh6U5Uio+vL
+         LjFerGDIHLl3eEq+2yDHe6lOMt4bFh5nVHLJrHvtXPvHA2s+4bCL5LlN1VH2L+KGAv/d
+         cMSAvQORzVSM59FkZUgA2b48ltqkZd5iR9Cu4=
+Received: by 10.204.114.144 with SMTP id e16mr1913023bkq.119.1304079056170;
+ Fri, 29 Apr 2011 05:10:56 -0700 (PDT)
+Received: by 10.204.17.14 with HTTP; Fri, 29 Apr 2011 05:10:26 -0700 (PDT)
+In-Reply-To: <BANLkTinPg_jaxiF8yFtnf4BrT4fx-BQ=+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172449>
 
-The quotation mark serving as an apostrophe confuses editors and they
-think a large part of the rest of the file is a string. Change
-"you're" to "you are" to avoid this.
+On Wed, Apr 27, 2011 at 11:35 PM,  <skillzero@gmail.com> wrote:
+> It seems like ! patterns in the sparse-checkout file don't exclude
+> individual files in a directory. Here's what I did:
+>
+> ...
+>
+> The "test1" directory was included, but "test1/file2.txt" wasn't
+> excluded even though I added a ! pattern for it. The test2 directory
+> was correctly excluded so that makes me think sparse was working in
+> general, but just not respecting the ! pattern in this case.
+>
+> Is this a bug or am I doing something wrong?
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
-Acked-by: Eric Wong <normalperson@yhbt.net>
----
-
-I sent this on 31-03-2011 but apart from Eric's ack, there was no
-reaction and I don't see it in the patch queue.
-
-   cmn
-
- git-svn.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index bf0451b..bc5981d 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -348,7 +348,7 @@ Usage: git svn <command> [options] [arguments]\n
- 	}
- 	print $fd <<"";
- \nGIT_SVN_ID may be set in the environment or via the --id/-i switch t=
-o an
--arbitrary identifier if you're tracking multiple SVN branches/reposito=
-ries in
-+arbitrary identifier if you are tracking multiple SVN branches/reposit=
-ories in
- one git repository and want to keep them separate.  See git-svn(1) for=
- more
- information.
-=20
---=20
-1.7.4.2.437.g4fc7e.dirty
+I can reproduce it too. It looks like a regression from
+whole-directory matching. If a directory is matched, all files inside
+are considered "in". Let's see if I can come up with something this
+weekend.
+-- 
+Duy
