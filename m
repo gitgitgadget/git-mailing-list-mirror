@@ -1,70 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: git sparse checkout exclusions not working?
-Date: Fri, 29 Apr 2011 19:10:26 +0700
-Message-ID: <BANLkTi=m4hcs7pVgn0rkQktmZaqK_ORxaA@mail.gmail.com>
-References: <BANLkTinPg_jaxiF8yFtnf4BrT4fx-BQ=+A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Mathias Lafeldt <misfire@debugon.org>
+Subject: [PATCH v2] t/test-lib.sh: minor readability improvements
+Date: Fri, 29 Apr 2011 14:30:30 +0200
+Message-ID: <1304080230-11670-1-git-send-email-misfire@debugon.org>
+References: <4DBA8C43.4040804@debugon.org>
 Cc: Git Mailing List <git@vger.kernel.org>
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Fri Apr 29 14:11:05 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 14:32:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFmXH-0006yF-F0
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 14:11:03 +0200
+	id 1QFmrc-0002MA-5r
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 14:32:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757472Ab1D2MK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 08:10:58 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:43111 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418Ab1D2MK5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 08:10:57 -0400
-Received: by bwz15 with SMTP id 15so3048049bwz.19
-        for <git@vger.kernel.org>; Fri, 29 Apr 2011 05:10:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=zMgFj/SXB6SQMi6oN3yCM+vWKoNKzwR2bW9QPsd9DU4=;
-        b=bymD91+pVIX8pGk1eTdpOLTVCI5RbG/5FYXiHBOKCvlUqTXxg9idNbJQHLw8iBxAuR
-         YAoB/AA0Dle8bp8UheAyHwxodNDGIQN1tRw5v0jAP9ipo5kHjwAKfqGO1G8JXvM0Xw7n
-         aD0gFSFAF5NCFR5PoD9kcH9j/n3OD0ceR+kAo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=T5i2NPxVsWBUH5N3H/Mo9y5wFdOUqTN/V2kWsbtZWn8QEdVe+iCDW5Jeh6U5Uio+vL
-         LjFerGDIHLl3eEq+2yDHe6lOMt4bFh5nVHLJrHvtXPvHA2s+4bCL5LlN1VH2L+KGAv/d
-         cMSAvQORzVSM59FkZUgA2b48ltqkZd5iR9Cu4=
-Received: by 10.204.114.144 with SMTP id e16mr1913023bkq.119.1304079056170;
- Fri, 29 Apr 2011 05:10:56 -0700 (PDT)
-Received: by 10.204.17.14 with HTTP; Fri, 29 Apr 2011 05:10:26 -0700 (PDT)
-In-Reply-To: <BANLkTinPg_jaxiF8yFtnf4BrT4fx-BQ=+A@mail.gmail.com>
+	id S1751900Ab1D2Mb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 08:31:58 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:62072 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729Ab1D2Mb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 08:31:58 -0400
+Received: from localhost.localdomain (dslb-088-071-229-195.pools.arcor-ip.net [88.71.229.195])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0LavRV-1PVgOb1g4H-00kfb1; Fri, 29 Apr 2011 14:31:57 +0200
+X-Mailer: git-send-email 1.7.5
+In-Reply-To: <4DBA8C43.4040804@debugon.org>
+X-Provags-ID: V02:K0:Xl6h8PRxcCGxX4mekVlyYeHuDwo/ZAw5bgwF5wIiw+e
+ l1DTl1A76o93GuIT3swh7asRqbOv3ZktaxrhFK5UJ7ICkAo538
+ dq97LfMTViZ0ygeCeihGGqafV8DvAlbVEZ6Irb8GWFPZ9oEYJL
+ Lrur3TSuOL1MvvEQ9V4aIWfI7c6LfKbyaIYxQIEHlcCKX6joKt
+ 5PJssXvwq1bfxOmQZhUw7xachQGvyqzWUxKI6ofUhI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172450>
 
-On Wed, Apr 27, 2011 at 11:35 PM,  <skillzero@gmail.com> wrote:
-> It seems like ! patterns in the sparse-checkout file don't exclude
-> individual files in a directory. Here's what I did:
->
-> ...
->
-> The "test1" directory was included, but "test1/file2.txt" wasn't
-> excluded even though I added a ! pattern for it. The test2 directory
-> was correctly excluded so that makes me think sparse was working in
-> general, but just not respecting the ! pattern in this case.
->
-> Is this a bug or am I doing something wrong?
+Apply parameter expansion. Also use here document to save
+test results instead of appending each line with ">>".
 
-I can reproduce it too. It looks like a regression from
-whole-directory matching. If a directory is matched, all files inside
-are considered "in". Let's see if I can come up with something this
-weekend.
+Signed-off-by: Mathias Lafeldt <misfire@debugon.org>
+---
+ t/test-lib.sh |   16 +++++++++-------
+ 1 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index abc47f3..aca03d2 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -575,7 +575,7 @@ test_external () {
+ test_external_without_stderr () {
+ 	# The temporary file has no (and must have no) security
+ 	# implications.
+-	tmp="$TMPDIR"; if [ -z "$tmp" ]; then tmp=/tmp; fi
++	tmp=${TMPDIR:-/tmp}
+ 	stderr="$tmp/git-external-stderr.$$.tmp"
+ 	test_external "$@" 4> "$stderr"
+ 	[ -f "$stderr" ] || error "Internal error: $stderr disappeared."
+@@ -801,12 +801,14 @@ test_done () {
+ 		mkdir -p "$test_results_dir"
+ 		test_results_path="$test_results_dir/${0%.sh}-$$.counts"
+ 
+-		echo "total $test_count" >> $test_results_path
+-		echo "success $test_success" >> $test_results_path
+-		echo "fixed $test_fixed" >> $test_results_path
+-		echo "broken $test_broken" >> $test_results_path
+-		echo "failed $test_failure" >> $test_results_path
+-		echo "" >> $test_results_path
++		cat >>"$test_results_path" <<-EOF
++		total $test_count
++		success $test_success
++		fixed $test_fixed
++		broken $test_broken
++		failed $test_failure
++
++		EOF
+ 	fi
+ 
+ 	if test "$test_fixed" != 0
 -- 
-Duy
+1.7.5
