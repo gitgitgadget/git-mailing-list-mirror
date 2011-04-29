@@ -1,11 +1,8 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=202/6=5D=20gitweb=3A=20Change=20the=20way=20=22content=20tags=22=20=28=27ctags=27=29=20are=20handled?=
-Date: Fri, 29 Apr 2011 19:51:57 +0200
-Message-ID: <1304099521-27617-3-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 6/6] gitweb: Optional grouping of projects by category
+Date: Fri, 29 Apr 2011 19:52:01 +0200
+Message-ID: <1304099521-27617-7-git-send-email-jnareb@gmail.com>
 References: <1304099521-27617-1-git-send-email-jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
@@ -13,353 +10,260 @@ Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Petr Baudis <pasky@suse.cz>, Sebastien Cevey <seb@cine7.net>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 19:52:53 2011
+X-From: git-owner@vger.kernel.org Fri Apr 29 19:52:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFrs3-0001Q3-Ca
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 19:52:51 +0200
+	id 1QFrs5-0001Q3-Fr
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 19:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760760Ab1D2Rw3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 13:52:29 -0400
+	id S1760771Ab1D2Rwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 13:52:40 -0400
 Received: from mail-fx0-f46.google.com ([209.85.161.46]:38549 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757894Ab1D2Rw1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 13:52:27 -0400
-Received: by fxm17 with SMTP id 17so2635577fxm.19
-        for <git@vger.kernel.org>; Fri, 29 Apr 2011 10:52:26 -0700 (PDT)
+	with ESMTP id S1757894Ab1D2Rwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 13:52:35 -0400
+Received: by mail-fx0-f46.google.com with SMTP id 17so2635577fxm.19
+        for <git@vger.kernel.org>; Fri, 29 Apr 2011 10:52:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=24G3MkHRPQe+h0gi9aXLDf5Wfy8bLLqqIvuhYobUNR0=;
-        b=RRtz4XT3Vsrf7jtAqvPOKy5QNJGuj5CUMDPoDwjoduaeyaifBSBmQ6tezCCaKfnl/g
-         SHHibTufbwtWKf/RVXKWrqclAhwGZAhr2Er7ZR/yp7umimtoBAc1lTMpDTSf8V0RyJPV
-         f0wQVFPUQMxgz7+3vndBbhs5fwOEi3sbXUqwg=
+         :in-reply-to:references;
+        bh=HYXeq/edgsbZTHnK/4qaUbnYe4ZIcF6t76LLZEmT950=;
+        b=BbYV8PPpV3BuMOzOIOWuvUeim224wCy+KyUATNZdY5ZbowZdEKh+HSyrOi8vnkPC/t
+         4SEuSM26kOAeDtI6LywLa+oQYqhAWikuNksB/zzWcbbVcUq0wgrFS6+ehowr7cS85iWd
+         aUL0b2RYET9VpUeMky2Sk/D4k+mkQojnMqNxg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=CKPdTIO/jqKP8U6c2W3Lcj15IMRHA0Js3RC9RUis98mc/KBy3XPqhobrocQz9XV1E9
-         EXuVj5AkM25AfqK5qt+Xk/xcNhlqbmCm7BXTipXgGx84l9znhyyDFopCH9Luhuz2PGE2
-         vmiVBcHfqfXXVGYoRjTAG29BvH1EBHZUfWDeA=
-Received: by 10.223.17.68 with SMTP id r4mr337733faa.62.1304099546009;
-        Fri, 29 Apr 2011 10:52:26 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Vn4QJ+dYrTDNF5hm2VGAo1icGDo2biLMB/qqE02+u73U296B0tTSkb6pYCwAPaVxQv
+         orgN9FZ4u87AnUOAK7jDD6HhUJJY/xy4+IiJbch2o992E7bHB8esw9XVp550Gvr+ubcj
+         z9r90KiuwIBJsbkoP3FnnqJCZGhiUDKoRVpbQ=
+Received: by 10.223.27.18 with SMTP id g18mr1988336fac.52.1304099554919;
+        Fri, 29 Apr 2011 10:52:34 -0700 (PDT)
 Received: from localhost.localdomain (abvr62.neoplus.adsl.tpnet.pl [83.8.215.62])
-        by mx.google.com with ESMTPS id n26sm962346fam.37.2011.04.29.10.52.23
+        by mx.google.com with ESMTPS id n26sm962346fam.37.2011.04.29.10.52.32
         (version=SSLv3 cipher=OTHER);
-        Fri, 29 Apr 2011 10:52:24 -0700 (PDT)
+        Fri, 29 Apr 2011 10:52:33 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3
 In-Reply-To: <1304099521-27617-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172480>
 
-The major change is removing the ability to edit content tags (ctags)
-in a web browser.
+From: Sebastien Cevey <seb@cine7.net>
 
-The interface was created by gitweb, while actual editing of tags was
-to be done by external script; the API was not defined, and neither
-was provided example implementation.  Such split is also a bit fragile
-- interface and implementation have to be kept in sync.  Gitweb
-provided only ability to add tags; you could not edit tags nor delete
-them.
+This adds the $projects_list_group_categories option which, if enabled,
+will result in grouping projects by category on the project list page.
+The category is specified for each project by the $GIT_DIR/category file
+or the 'gitweb.category' variable in its configuration file. By default,
+projects are put in the $project_list_default_category category.
 
+Note:
+- Categories are always sorted alphabetically, with projects in
+  each category sorted according to the globally selected $order.
+- When displaying a subset of all the projects (page limiting), the
+  category headers are only displayed for projects present on the page.
 
-=46ormat of ctags is now described in the comment above git_get_project=
-_ctags
-subroutine.  Gitweb now is more robust with respect to original ctags
-format; it also accepts two new formats: $GIT_DIR/ctags file, with one
-content tag per line, and multi-value `gitweb.ctag' config variable.
+The feature is inspired from Sham Chukoury's patch for the XMMS2
+gitweb, but has been rewritten for the current gitweb code. The CSS
+for categories is inspired from Gustavo Sverzut Barbieri's patch to
+group projects by path.
 
-Gathering all ctags of all project is now put in git_gather_all_ctags
-subroutine, making git_project_list_body more clear.
+Thanks to Florian Ragwitz for Perl tips.
 
-git_populate_project_tagcloud subroutine now generates data used for
-tag cloud, including generation of ctag link, also in the case
-HTML::TagCloud module is unavailable.  Links are now generated using
-href() subroutine - this is more robust, as ctags might contain '?',
-';' and '=3D' special characters that need to be escaped in query param=
-=2E
-Shown tags are HTML-escaped.
+[jn: Updated to post restructuring projects list generation, fixed bugs,
+ added very basic test in t9500 that there are no warnings from Perl.]
 
-The generation of tag cloud in git_show_project_tagcloud in the case
-when HTML::TagCloud is not available is now changed slightly.
-
-The 'content tags' field on project summary page is made more in line
-with other fields in "projects_list" table.  Because one cannot now
-add new tags from web interface, this field is no longer displayed
-when there are no content tags for given project.
-
-Ctags-issue-Reported-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutr=
-onix.de>
-Ctags-issue-Reported-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Sebastien Cevey <seb@cine7.net>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This patch was originally sent to git mailing list in
+ gitweb/README                          |   16 ++++++++
+ gitweb/gitweb.perl                     |   62 ++++++++++++++++++++++++++++++--
+ gitweb/static/gitweb.css               |    7 ++++
+ t/t9500-gitweb-standalone-no-errors.sh |    8 ++++
+ 4 files changed, 90 insertions(+), 3 deletions(-)
 
-  [RFC/PATCH] gitweb: Change the way "content tags" ('ctags') are handl=
-ed
-  http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/802865/=
-focus=3D168599
-
-as part of
-
-  gitweb: cloud tags feature produces malformed XML for errors
-  http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/802865/=
-focus=3D168266
-
-thread, crossposted to git mailing list.
-
-
-Hardening parsing of ctags files, so that gitweb does not crash on
-malformed entries, but just ignores them, sort of fixes original issue
-reported in
-
-  Bug#616005: libhtml-tagcloud-perl breaks gitweb
-  http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/802865/
-  http://bugs.debian.org/616005
-
-by Uwe Kleine-K=C3=B6nig and crossposted to git mailing list by Jonatha=
-n
-Nieder.
-
-I say "sort of fixes" because this patch doesn't attempt to solve
-deeper fundamental problem with error / exception handling in gitweb
-after some data was already sent to a browser.
-
-Note also that the bug was caused by mishandling (incorrectly
-generating) underdocumented then 'ctags' feature.
-
- gitweb/gitweb.perl |  141 +++++++++++++++++++++++++++++++++++---------=
--------
- 1 files changed, 97 insertions(+), 44 deletions(-)
-
+diff --git a/gitweb/README b/gitweb/README
+index a92bde7..a3a697b 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -207,6 +207,15 @@ not include variables usually directly set during build):
+    full description is available as 'title' attribute (usually shown on
+    mouseover).  By default set to 25, which might be too small if you
+    use long project descriptions.
++ * $projects_list_group_categories
++   Enables the grouping of projects by category on the project list page.
++   The category of a project is determined by the $GIT_DIR/category
++   file or the 'gitweb.category' variable in its repository configuration.
++   Disabled by default.
++ * $project_list_default_category
++   Default category for projects for which none is specified.  If set
++   to the empty string, such projects will remain uncategorized and
++   listed at the top, above categorized projects.
+  * @git_base_url_list
+    List of git base URLs used for URL to where fetch project from, shown
+    in project summary page.  Full URL is "$git_base_url/$project".
+@@ -314,6 +323,13 @@ You can use the following files in repository:
+    from the template during repository creation. You can use the
+    gitweb.description repo configuration variable, but the file takes
+    precedence.
++ * category (or gitweb.category)
++   Singe line category of a project, used to group projects if
++   $projects_list_group_categories is enabled. By default (file and
++   configuration variable absent), uncategorized projects are put in
++   the $project_list_default_category category. You can use the
++   gitweb.category repo configuration variable, but the file takes
++   precedence.
+  * cloneurl (or multiple-valued gitweb.url)
+    File with repository URL (used for clone and fetch), one per line.
+    Displayed in the project summary page. You can use multiple-valued
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 014b33b..60cb772 100755
+index e8685ac..f78fdd7 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -412,20 +412,23 @@ our %feature =3D (
- 		'override' =3D> 0,
- 		'default' =3D> []},
-=20
--	# Allow gitweb scan project content tags described in ctags/
--	# of project repository, and display the popular Web 2.0-ish
--	# "tag cloud" near the project list. Note that this is something
--	# COMPLETELY different from the normal Git tags.
-+	# Allow gitweb scan project content tags of project repository,
-+	# and display the popular Web 2.0-ish "tag cloud" near the projects
-+	# list.  Note that this is something COMPLETELY different from the
-+	# normal Git tags.
-=20
- 	# gitweb by itself can show existing tags, but it does not handle
--	# tagging itself; you need an external application for that.
--	# For an example script, check Girocco's cgi/tagproj.cgi.
-+	# tagging itself; you need to do it externally, outside gitweb.
-+	# The format is described in git_get_project_ctags() subroutine.
- 	# You may want to install the HTML::TagCloud Perl module to get
- 	# a pretty tag cloud instead of just a list of tags.
-=20
- 	# To enable system wide have in $GITWEB_CONFIG
--	# $feature{'ctags'}{'default'} =3D ['path_to_tag_script'];
-+	# $feature{'ctags'}{'default'} =3D [1];
- 	# Project specific override is not supported.
+@@ -115,6 +115,14 @@ our $projects_list = "++GITWEB_LIST++";
+ # the width (in characters) of the projects list "Description" column
+ our $projects_list_description_width = 25;
+ 
++# group projects by category on the projects list
++# (enabled if this variable evaluates to true)
++our $projects_list_group_categories = 0;
 +
-+	# In the future whether ctags editing is enabled might depend
-+	# on the value, but using 1 should always mean no editing of ctags.
- 	'ctags' =3D> {
- 		'override' =3D> 0,
- 		'default' =3D> [0]},
-@@ -703,6 +706,7 @@ our @cgi_param_mapping =3D (
- 	snapshot_format =3D> "sf",
- 	extra_options =3D> "opt",
- 	search_use_regexp =3D> "sr",
-+	ctag =3D> "by_tag",
- 	# this must be last entry (for manipulation from JavaScript)
- 	javascript =3D> "js"
- );
-@@ -2572,23 +2576,66 @@ sub git_get_project_description {
- 	return $descr;
++# default category if none specified
++# (leave the empty string for no category)
++our $project_list_default_category = "";
++
+ # default order of projects list
+ # valid values are none, project, descr, owner, and age
+ our $default_projects_order = "project";
+@@ -2584,6 +2592,12 @@ sub git_get_project_description {
+ 	return git_get_file_or_project_config($path, 'description');
  }
-=20
-+# supported formats:
-+# * $GIT_DIR/ctags/<tagname> file (in 'ctags' subdirectory)
-+#   - if its contents is a number, use it as tag weight,
-+#   - otherwise add a tag with weight 1
-+# * $GIT_DIR/ctags file, each line is a tag (with weight 1)
-+#   the same value multiple times increases tag weight
-+# * `gitweb.ctag' multi-valued repo config variable
- sub git_get_project_ctags {
--	my $path =3D shift;
-+	my $project =3D shift;
- 	my $ctags =3D {};
-=20
--	$git_dir =3D "$projectroot/$path";
--	opendir my $dh, "$git_dir/ctags"
--		or return $ctags;
--	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
--		open my $ct, '<', $_ or next;
--		my $val =3D <$ct>;
--		chomp $val;
--		close $ct;
--		my $ctag =3D $_; $ctag =3D~ s#.*/##;
--		$ctags->{$ctag} =3D $val;
-+	$git_dir =3D "$projectroot/$project";
-+	if (opendir my $dh, "$git_dir/ctags") {
-+		my @files =3D grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh=
-);
-+		foreach my $tagfile (@files) {
-+			open my $ct, '<', $tagfile
-+				or next;
-+			my $val =3D <$ct>;
-+			chomp $val if $val;
-+			close $ct;
-+
-+			(my $ctag =3D $tagfile) =3D~ s#.*/##;
-+			if ($val =3D~ /\d+/) {
-+				$ctags->{$ctag} =3D $val;
-+			} else {
-+				$ctags->{$ctag} =3D 1;
-+			}
-+		}
-+		closedir $dh;
-+
-+	} elsif (open my $fh, '<', "$git_dir/ctags") {
-+		while (my $line =3D <$fh>) {
-+			chomp $line;
-+			$ctags->{$line}++ if $line;
-+		}
-+		close $fh;
-+
-+	} else {
-+		my $taglist =3D config_to_multi(git_get_project_config('ctag'));
-+		foreach my $tag (@$taglist) {
-+			$ctags->{$tag}++;
-+		}
- 	}
--	closedir $dh;
--	$ctags;
-+
-+	return $ctags;
+ 
++sub git_get_project_category {
++	my $path = shift;
++	return git_get_file_or_project_config($path, 'category');
 +}
 +
-+# return hash, where keys are content tags ('ctags'),
-+# and values are sum of weights of given tag in every project
-+sub git_gather_all_ctags {
-+	my $projects =3D shift;
-+	my $ctags =3D {};
 +
-+	foreach my $p (@$projects) {
-+		foreach my $ct (keys %{$p->{'ctags'}}) {
-+			$ctags->{$ct} +=3D $p->{'ctags'}->{$ct};
+ # supported formats:
+ # * $GIT_DIR/ctags/<tagname> file (in 'ctags' subdirectory)
+ #   - if its contents is a number, use it as tag weight,
+@@ -4877,8 +4891,9 @@ sub git_patchset_body {
+ 
+ # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+-# fills project list info (age, description, owner, forks) for each
+-# project in the list, removing invalid projects from returned list
++# fills project list info (age, description, owner, category, forks)
++# for each project in the list, removing invalid projects from
++# returned list
+ # NOTE: modifies $projlist, but does not remove entries from it
+ sub fill_project_list_info {
+ 	my $projlist = shift;
+@@ -4904,6 +4919,12 @@ sub fill_project_list_info {
+ 		if ($show_ctags) {
+ 			$pr->{'ctags'} = git_get_project_ctags($pr->{'path'});
+ 		}
++		if ($projects_list_group_categories && !defined $pr->{'category'}) {
++			my $cat = git_get_project_category($pr->{'path'}) ||
++			                                   $project_list_default_category;
++			$pr->{'category'} = to_utf8($cat);
 +		}
++
+ 		push @projects, $pr;
+ 	}
+ 
+@@ -4931,6 +4952,23 @@ sub sort_projects_list {
+ 	return @projects;
+ }
+ 
++# returns a hash of categories, containing the list of project
++# belonging to each category
++sub build_projlist_by_category {
++	my ($projlist, $from, $to) = @_;
++	my %categories;
++
++	$from = 0 unless defined $from;
++	$to = $#$projlist if (!defined $to || $#$projlist < $to);
++
++	for (my $i = $from; $i <= $to; $i++) {
++		my $pr = $projlist->[$i];
++		push @{$categories{ $pr->{'category'} }}, $pr;
 +	}
 +
-+	return $ctags;
- }
-=20
- sub git_populate_project_tagcloud {
-@@ -2608,31 +2655,41 @@ sub git_populate_project_tagcloud {
- 	my $cloud;
- 	if (eval { require HTML::TagCloud; 1; }) {
- 		$cloud =3D HTML::TagCloud->new;
--		foreach (sort keys %ctags_lc) {
-+		foreach my $ctag (sort keys %ctags_lc) {
- 			# Pad the title with spaces so that the cloud looks
- 			# less crammed.
--			my $title =3D $ctags_lc{$_}->{topname};
-+			my $title =3D esc_html($ctags_lc{$ctag}->{topname});
- 			$title =3D~ s/ /&nbsp;/g;
- 			$title =3D~ s/^/&nbsp;/g;
- 			$title =3D~ s/$/&nbsp;/g;
--			$cloud->add($title, $home_link."?by_tag=3D".$_, $ctags_lc{$_}->{cou=
-nt});
-+			$cloud->add($title, href(project=3D>undef, ctag=3D>$ctag),
-+			            $ctags_lc{$ctag}->{count});
- 		}
- 	} else {
--		$cloud =3D \%ctags_lc;
-+		$cloud =3D {};
-+		foreach my $ctag (keys %ctags_lc) {
-+			my $title =3D $ctags_lc{$ctag}->{topname};
-+			$cloud->{$ctag}{count} =3D $ctags_lc{$ctag}->{count};
-+			$cloud->{$ctag}{ctag} =3D
-+				$cgi->a({-href=3D>href(project=3D>undef, ctag=3D>$ctag)},
-+			          esc_html($title, -nbsp=3D>1));
++	return wantarray ? %categories : \%categories;
++}
++
+ # print 'sort by' <th> element, generating 'sort by $name' replay link
+ # if that order is not selected
+ sub print_sort_th {
+@@ -5059,7 +5097,25 @@ sub git_project_list_body {
+ 		      "</tr>\n";
+ 	}
+ 
+-	git_project_list_rows(\@projects, $from, $to, $check_forks);
++	if ($projects_list_group_categories) {
++		# only display categories with projects in the $from-$to window
++		@projects = sort {$a->{'category'} cmp $b->{'category'}} @projects[$from..$to];
++		my %categories = build_projlist_by_category(\@projects, $from, $to);
++		foreach my $cat (sort keys %categories) {
++			unless ($cat eq "") {
++				print "<tr>\n";
++				if ($check_forks) {
++					print "<td></td>\n";
++				}
++				print "<td class=\"category\" colspan=\"5\">".esc_html($cat)."</td>\n";
++				print "</tr>\n";
++			}
++
++			git_project_list_rows($categories{$cat}, undef, undef, $check_forks);
 +		}
- 	}
--	$cloud;
-+	return $cloud;
++	} else {
++		git_project_list_rows(\@projects, $from, $to, $check_forks);
++	}
+ 
+ 	if (defined $extra) {
+ 		print "<tr>\n";
+diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+index 79d7eeb..4df2d16 100644
+--- a/gitweb/static/gitweb.css
++++ b/gitweb/static/gitweb.css
+@@ -295,6 +295,13 @@ td.current_head {
+ 	text-decoration: underline;
  }
-=20
- sub git_show_project_tagcloud {
- 	my ($cloud, $count) =3D @_;
--	print STDERR ref($cloud)."..\n";
- 	if (ref $cloud eq 'HTML::TagCloud') {
- 		return $cloud->html_and_css($count);
- 	} else {
--		my @tags =3D sort { $cloud->{$a}->{count} <=3D> $cloud->{$b}->{count=
-} } keys %$cloud;
--		return '<p align=3D"center">' . join (', ', map {
--			$cgi->a({-href=3D>"$home_link?by_tag=3D$_"}, $cloud->{$_}->{topname=
-})
--		} splice(@tags, 0, $count)) . '</p>';
-+		my @tags =3D sort { $cloud->{$a}->{'count'} <=3D> $cloud->{$b}->{'co=
-unt'} } keys %$cloud;
-+		return
-+			'<div id=3D"htmltagcloud"'.($project ? '' : ' align=3D"center"').'>=
-' .
-+			join (', ', map {
-+				$cloud->{$_}->{'ctag'}
-+			} splice(@tags, 0, $count)) .
-+			'</div>';
- 	}
+ 
++td.category {
++	background-color: #d9d8d1;
++	border-top: 1px solid #000000;
++	border-left: 1px solid #000000;
++	font-weight: bold;
++}
++
+ table.diff_tree span.file_status.new {
+ 	color: #008000;
  }
-=20
-@@ -4920,13 +4977,8 @@ sub git_project_list_body {
- 	@projects =3D sort_projects_list(\@projects, $order);
-=20
- 	if ($show_ctags) {
--		my %ctags;
--		foreach my $p (@projects) {
--			foreach my $ct (keys %{$p->{'ctags'}}) {
--				$ctags{$ct} +=3D $p->{'ctags'}->{$ct};
--			}
--		}
--		my $cloud =3D git_populate_project_tagcloud(\%ctags);
-+		my $ctags =3D git_gather_all_ctags(\@projects);
-+		my $cloud =3D git_populate_project_tagcloud($ctags);
- 		print git_show_project_tagcloud($cloud, 64);
- 	}
-=20
-@@ -5521,13 +5573,14 @@ sub git_summary {
- 	my $show_ctags =3D gitweb_check_feature('ctags');
- 	if ($show_ctags) {
- 		my $ctags =3D git_get_project_ctags($project);
--		my $cloud =3D git_populate_project_tagcloud($ctags);
--		print "<tr id=3D\"metadata_ctags\"><td>Content tags:<br />";
--		print "</td>\n<td>" unless %$ctags;
--		print "<form action=3D\"$show_ctags\" method=3D\"post\"><input type=3D=
-\"hidden\" name=3D\"p\" value=3D\"$project\" />Add: <input type=3D\"tex=
-t\" name=3D\"t\" size=3D\"8\" /></form>";
--		print "</td>\n<td>" if %$ctags;
--		print git_show_project_tagcloud($cloud, 48);
--		print "</td></tr>";
-+		if (%$ctags) {
-+			# without ability to add tags, don't show if there are none
-+			my $cloud =3D git_populate_project_tagcloud($ctags);
-+			print "<tr id=3D\"metadata_ctags\">" .
-+			      "<td>content tags</td>" .
-+			      "<td>".git_show_project_tagcloud($cloud, 48)."</td>" .
-+			      "</tr>\n";
-+		}
- 	}
-=20
- 	print "</table>\n";
---=20
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 71ef0ac..f5648a6 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -644,4 +644,12 @@ test_expect_success \
+ 	'ctags: search projects by non existent tag' \
+ 	'gitweb_run "by_tag=non-existent"'
+ 
++# ----------------------------------------------------------------------
++# categories
++
++test_expect_success \
++	'categories: projects list, only default category' \
++	'echo "\$projects_list_group_categories = 1;" >>gitweb_config.perl &&
++	 gitweb_run'
++
+ test_done
+-- 
 1.7.3
