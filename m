@@ -1,138 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: cvsimport still not working with cvsnt
-Date: Fri, 29 Apr 2011 17:27:29 -0500
-Message-ID: <20110429222729.GB5916@elie>
-References: <7vy65bkw72.fsf@alter.siamese.dyndns.org>
- <4D61EA4B.3020708@burntmail.com>
- <7vtyfxgdz2.fsf@alter.siamese.dyndns.org>
- <7vipwbbrcc.fsf@alter.siamese.dyndns.org>
- <AANLkTinUtUNGO3NK=JPTqnwcTtPMYjmLw82wJZ5nC-32@mail.gmail.com>
- <4D644FEE.5030004@burntmail.com>
- <7vaahnbmu2.fsf@alter.siamese.dyndns.org>
- <4D69DF29.8030701@burntmail.com>
- <7vvd056fyk.fsf@alter.siamese.dyndns.org>
- <4DBA3E14.7090602@burntmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/largely untested/PATCH] sha1_name: interpret ~n as HEAD~n
+Date: Fri, 29 Apr 2011 18:34:33 -0400
+Message-ID: <20110429223433.GA3434@sigill.intra.peff.net>
+References: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin@laptop.org>,
-	Emil Medve <Emilian.Medve@freescale.com>,
-	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Guy Rouillier <guyr@burntmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 00:27:44 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat Apr 30 00:34:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFwA3-00055w-GT
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 00:27:43 +0200
+	id 1QFwGo-00005a-Dy
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 00:34:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932220Ab1D2W1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 18:27:38 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:39685 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932134Ab1D2W1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 18:27:37 -0400
-Received: by iyb14 with SMTP id 14so3400424iyb.19
-        for <git@vger.kernel.org>; Fri, 29 Apr 2011 15:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=fufJw0maymnMKNXLNT60qPqvLvIWbt+yEW6nWlTYb8g=;
-        b=smXu28n2zML1ujouS1eVpZZ3YicQXcUGxhIjaOomBU9FoAsAUuDsHT/r1VvuSVlPFt
-         VkJ2roPgZxfE3MXvCbMD4Sy+Tvyw3O88Sby+YIHPHgmyjI6NMYyZhBRi7KUAnpiT3Q1L
-         mUids4z4np0kkNqSaa7Q/f5urUGBQAhzQITs4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XHhWKTJXAbIleJwDTtlpUEnBoLeIJPOEqussIUVGXzYYLsABAMkXa1OL4I/GbQfzPn
-         siUwFHNNWIKZjpZlK5nurOcqDbANhec53uuoH+YFM7mzy/2ZvC8asGKWNrrAnDEXZRuO
-         mH0DQbrciNuZMX1PRTNhyZCcnhbc8vrC90AcQ=
-Received: by 10.42.139.136 with SMTP id g8mr1507116icu.141.1304116056357;
-        Fri, 29 Apr 2011 15:27:36 -0700 (PDT)
-Received: from elie ([69.209.62.211])
-        by mx.google.com with ESMTPS id xe5sm1156171icb.22.2011.04.29.15.27.32
-        (version=SSLv3 cipher=OTHER);
-        Fri, 29 Apr 2011 15:27:33 -0700 (PDT)
+	id S1753053Ab1D2Weh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 18:34:37 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52333
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751832Ab1D2Weh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 18:34:37 -0400
+Received: (qmail 16963 invoked by uid 107); 29 Apr 2011 22:36:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Apr 2011 18:36:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2011 18:34:33 -0400
 Content-Disposition: inline
-In-Reply-To: <4DBA3E14.7090602@burntmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172500>
 
-Guy Rouillier wrote:
+On Fri, Apr 29, 2011 at 05:53:15PM +0200, Michael J Gruber wrote:
 
-> Note that I've left this test in, although I still think it is a bad idea:
->
->    elsif (!$pass) {
->       $pass = "A";
->    }
-[...]
-> But that doesn't explain why it was put in there in the first
-> place.  I still say a better idea, if we don't want to allow an empty
-> password, is to error out rather than silently set a bogus password.
+> HEAD~n is often used for rebase invocations etc. Make it use the same
+> default we use in other places, i.e. ~n == HEAD~n.
 
-It might be a good idea after all to do something else in that case
-(as a separate patch :)), but it would require a little investigation.
-Isn't the convention in CVS for anonymous pserver access to accept an
-arbitrary password?
+Hmm. It certainly makes sense in that we often default emptiness to
+HEAD, but I don't think we can extend this syntax to other things. For
+example, seeing ~n makes me think that ^n or ^{tree} would work. But of
+course "^" at the beginning of a ref means something completely
+different. So it's not completely consistent.
 
-> The CVS password file separates tokens with a space character, while
-> the CVSNT password file separates tokens with an equal (=) character.
-> Add a sub find_password_entry that accepts the password file name
-> and a delimiter to eliminate code duplication.
-> ---
+Consistency-wise, I'm not sure if it makes things better or worse.
+Obviously we have "foo.." with an implicit HEAD. You could argue that
+".." is a different operator altogether, and that any operator that is a
+"ref modifier" like "~" or "^" needs to have a non-implicit ref. But
+that gets muddier with "@{4.hours.ago}", which also takes an implicit
+value, except that it isn't exactly HEAD. It's the branch pointed to by
+HEAD.
 
-Sounds sensible to my untrained ears.  Sign-off?
+So there really isn't a lot of consistency, I guess.  It also conflicts
+a little with the shell's "~user" syntax, though presumably you don't
+have users named "1" and "2".
 
-[...]
-> +++ b/git-cvsimport.perl
-> @@ -227,6 +227,30 @@ sub new {
->  	return $self;
->  }
-> 
-> +sub find_password_entry {
-> +	my ($cvspass, @cvsroot) = @_;
-> +	my ($file, $delim) = @$cvspass;
-> +	my $pass;
-> +	local ($_);
-> +
-> +	if (open(my $fh, $file)) {
-> +		# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
-> +		while (<$fh>) {
-> +			chomp;
-> +			s/^\/\d+\s+//;
-> +			my ($w, $p) = split($delim,$_,2);
-> +			for my $cvsroot (@cvsroot) {
-> +				if ($w eq $cvsroot) {
-> +					$pass = $p;
-> +					last;
-
-In the old code, this "last" applied to the while loop, while in the
-new code it applies to the for loop.  Intentional?
-
-[...]
-> +			if (1 < @loc) {
-> +				die("More than one cvs password files have ".
-> +				    "entries for CVSROOT $opt_d: @loc");
-
-Grammar nit: "More than one" is singular (weird, eh?).  It might
-be clearer to say:
-
-	"Multiple cvs password files have " .
-	"entries for CVSROOT $opt_d: @loc"
-
-(or "Both cvs password files").
-
-Thanks again, and hope that helps.
-
-Regards,
-Jonathan
+-Peff
