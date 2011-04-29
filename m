@@ -1,120 +1,74 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH RESEND] git-svn: don't confuse editors with an apostrophe
-Date: Fri, 29 Apr 2011 22:51:33 +0200
-Message-ID: <20110429205130.GA2727@bee.lab.cmartin.tk>
-References: <1304077214-1707-1-git-send-email-cmn@elego.de>
- <7viptxxbr7.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] gitweb: Improve ctags, introduce categories
+Date: Fri, 29 Apr 2011 14:31:23 -0700
+Message-ID: <7v8vuswxqs.fsf@alter.siamese.dyndns.org>
+References: <1304099521-27617-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="d6Gm4EdcadzBjdND"
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:51:42 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, Sebastien Cevey <seb@cine7.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 23:32:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFuf7-0002Mg-Ut
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 22:51:42 +0200
+	id 1QFvI9-0008No-RF
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 23:32:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756786Ab1D2Uvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 16:51:37 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:57382 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750740Ab1D2Uvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 16:51:36 -0400
-Received: from bee.lab.cmartin.tk (brln-4d0c2189.pool.mediaWays.net [77.12.33.137])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 4A2EF46132;
-	Fri, 29 Apr 2011 22:51:16 +0200 (CEST)
-Received: (nullmailer pid 3115 invoked by uid 1000);
-	Fri, 29 Apr 2011 20:51:33 -0000
-Content-Disposition: inline
-In-Reply-To: <7viptxxbr7.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933152Ab1D2Vbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 17:31:47 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42503 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932690Ab1D2Vbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 17:31:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9C2A5085;
+	Fri, 29 Apr 2011 17:33:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=syEMGiy9Mp/3gVUEYsPwN1UnJ3c=; b=Pqzjwm
+	wL9tZ8SMwvduxQ411P4rnmv1pCdYeyXO2geS0TmPmP75FIA5UXxOGLh8czKS610+
+	fAXGR0ZBPCLsh8Vs9ES1oPburFDAdQb9bjm0NSgMGEEUvQa5UWwvZJiENluOiguB
+	EUis64ONdG2O4Lg2i8ioyKquy/WzKqPyRhtcE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z3Vus0d8As2BYPeKQ2a+0l4j2QXgE5j/
+	CfBrG46dy5ak5YD810Iop7LYM8353PpBEMjc9w3e1+OtSp8lkOPrxss8niYAOGwl
+	toS0ugDK2wbvXdefphOZA981U8npKj0MoRriVc40MFJtUA4UmRZwPAIT4uaN2p42
+	eSM9MUur4kI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6D7B55083;
+	Fri, 29 Apr 2011 17:33:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5A6F9507F; Fri, 29 Apr 2011
+ 17:33:28 -0400 (EDT)
+In-Reply-To: <1304099521-27617-1-git-send-email-jnareb@gmail.com> (Jakub
+ Narebski's message of "Fri, 29 Apr 2011 19:51:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 585CC8C6-72A8-11E0-AFAC-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172495>
 
+A tangent. It is curious why [PATCH 2/6] alone ended up with an encoded
+"Subject" header, like this:
 
---d6Gm4EdcadzBjdND
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  Subject: =?UTF-8?q?=5BPATCH=202/6=5D=20gitweb=3A=20Change=20the=20
+   way=20=22content=20tags=22=20=28=27ctags=27=29=20are=20handled?=
 
-On Fri, Apr 29, 2011 at 09:28:44AM -0700, Junio C Hamano wrote:
-> Carlos Mart=EDn Nieto <cmn@elego.de> writes:
->=20
-> > The quotation mark serving as an apostrophe confuses editors and they
-> > think a large part of the rest of the file is a string. Change
-> > "you're" to "you are" to avoid this.
-> >
-> > Signed-off-by: Carlos Mart=EDn Nieto <cmn@elego.de>
-> > Acked-by: Eric Wong <normalperson@yhbt.net>
-> > ---
-> >
-> > I sent this on 31-03-2011 but apart from Eric's ack, there was no
-> > reaction and I don't see it in the patch queue.
->=20
-> It was on purpose that I did not apply it, as the usual mode of operation
-> has been for me to pull git-svn changes via Eric, and more importantly, I
-> did not think it was important.
+The message actually has the above as a long single line, as can be seen
+at http://article.gmane.org/gmane.comp.version-control.git/172479/raw
 
- From his reply (adding Ack) I inferred he expected you to apply it.
+Just being curious.
 
->=20
-> It did not look like a bugfix that needed to be handled quickly (even by
-> bypassing Eric if needed), and more importantly, I did not think your
-> justification of the patch was sound. So I (implicitly) made it up to
-> Eric either to discard it or to include it as part of his pull-request.
->=20
-> The explanation Eric gave (Avoiding contractions may make life easier for
-> folks less familiar with English overall) makes some sense to me, but
-> after re-reading your justification today, it still does not make sense.
->=20
-> For one thing, many editors would not even think "you" is not a string and
-> "re" and everything follows is a string, when "you're" is given to
-> them. Everything is a string in a text editor, isn't it?
->=20
-> I suspect that you are talking about syntax highlighting, and some syntax
-> highlighter may be stupid to be confused, but in that case, at least you
-> would need s/editors/some editors/.
-
-It confuses emacs and vim and I'd be surprised if any weren't, but
-I'll change the message a bit.
-
->=20
-> Most fundamentally, I do not see why output from "sub usage" that lists
-> available commands when "git svn -h" is asked for has anything to do with
-> an editor getting confused. Why do you have that output in your editor in
-> the first place?
-
-It's not the output of the tool, it's the perl script. It uses the cat
-<< EOF trick/method so there is a stray quotation mark and the editor
-thinks that's the start of a string, so half the file is green or red
-or whatever color your strings are.
-
-I'll mention this more explicitly in the commit log, as it looks like
-it's not clear enough.
-
-   cmn
-
---d6Gm4EdcadzBjdND
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJNuyTSAAoJEHKRP1jG7ZzTDvgH/RdJm6RAMkqMVaxzEQcq9dIs
-WqcX+9w7EdyPeGTZBpneRFDBKS6CN4jsNlU8Ieq4zzNLpRseyEg3YqnIuuqz2DUZ
-YeAKuwIeSkPNLtRimzEVsND36HA91jx1HqFtEs435HPRafw4D84wU13yxt1FcJzP
-uUe2YyyP6MJmUdaLlDhP/3sNjD0WJAV8CJSNvTK2gL9lOP30I5hP4/dnlAXpYemF
-IrWew9OL+cn5i1zhgBaguQbz2fbi2pAwj+yMuAFVigiVH3uvpDX5StDNCv+YlFL2
-br4jwJIxjv9r7oR+IuWrCAtClSgzTSyPtETKTswiTn51u/LmKnW712WjHWUxXBY=
-=uDi3
------END PGP SIGNATURE-----
-
---d6Gm4EdcadzBjdND--
+The headers suggest that sending MUA was git-send-email speaking to gmail
+SMTP.  Did we introduce bugs to send-email recently?
