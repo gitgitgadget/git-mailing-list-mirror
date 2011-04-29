@@ -1,67 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] add tests for merge-index / merge-one-file
-Date: Thu, 28 Apr 2011 23:25:29 -0700
-Message-ID: <7vbozp376u.fsf@alter.siamese.dyndns.org>
-References: <20110428223822.GA16004@sigill.intra.peff.net>
- <20110428223949.GA16027@sigill.intra.peff.net>
- <4DBA56DF.5070000@viscovery.net>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: [PATCH] diffcore-rename: Remove unused variable 'num_src'
+Date: Fri, 29 Apr 2011 08:35:06 +0200
+Message-ID: <20110429063506.GA13893@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Aman Gupta <themastermind1@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Apr 29 08:26:06 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 08:35:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFh9R-00013N-UH
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 08:26:06 +0200
+	id 1QFhIN-0005RR-7e
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 08:35:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753915Ab1D2GZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 02:25:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63601 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753466Ab1D2GZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 02:25:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3759B5F6E;
-	Fri, 29 Apr 2011 02:27:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BAz7udex6ZFGt0aoKtyZz5IfT1s=; b=qW3liW
-	0nTTvumT4Ymox4H0gILs8BM8G4288Zc4sdmqDaBftVdiwIpaDC2G2sDLk6viUNt2
-	POsNRKcgM1jCZH9pyeuXm+QWctemOpuGmVJPlxK+p0sgyOiBth5oI0LZWDLLeLT2
-	nwsYqmrVv5zHjjgymYexxu/6ZRix3XQeDFxBw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HsNKiOFQUhWP0VMDXaKz0uyHbUzd8Zpr
-	vTZc4hQErGwILuipd8bVEIZ8i+l7SGXEBdUb30wpH6SCuMiXejRIKV4ZLp+/XNjh
-	EYIH1D7dX9UmzEl2h+6VdpMwvwovwNTTNJaaGz+PgqvWkOPSjxfZmapGE0AdnrvD
-	eBS0JGRVxI4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EA8CA5F6C;
-	Fri, 29 Apr 2011 02:27:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9D5C75F6A; Fri, 29 Apr 2011
- 02:27:33 -0400 (EDT)
-In-Reply-To: <4DBA56DF.5070000@viscovery.net> (Johannes Sixt's message of
- "Fri, 29 Apr 2011 08:12:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C7944B62-7229-11E0-97B8-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754238Ab1D2GfM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 02:35:12 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:33434 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751842Ab1D2GfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 02:35:11 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1QFhIC-0001IU-9l
+	from <mingo@elte.hu>
+	for <git@vger.kernel.org>; Fri, 29 Apr 2011 08:35:10 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id A2BB63E2514; Fri, 29 Apr 2011 08:35:04 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-08-17)
+Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-SpamScore: -2.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
+	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172428>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> Am 4/29/2011 0:39, schrieb Jeff King:
->> +	sed s/2/two/ <file >tmp &&
->
-> You are not using -e; will all seds out there grok this?
+GCC 4.6 noticed an initialized but unused variable in diffcore_rename()=
+:
 
-That should be Ok, as long as the script is not ambiguous.
+  diffcore-rename.c: In function =E2=80=98diffcore_rename=E2=80=99:
+  diffcore-rename.c:501:18: warning: variable =E2=80=98num_src=E2=80=99=
+ set but not used [-Wunused-but-set-variable]
+
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+---
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index d0259be..f639601 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -498,7 +498,7 @@ void diffcore_rename(struct diff_options *options)
+ 	struct diff_queue_struct outq;
+ 	struct diff_score *mx;
+ 	int i, j, rename_count, skip_unmodified =3D 0;
+-	int num_create, num_src, dst_cnt;
++	int num_create, dst_cnt;
+ 	struct progress *progress =3D NULL;
+=20
+ 	if (!minimum_score)
+@@ -554,7 +554,6 @@ void diffcore_rename(struct diff_options *options)
+ 	 * files still remain as options for rename/copies!)
+ 	 */
+ 	num_create =3D (rename_dst_nr - rename_count);
+-	num_src =3D rename_src_nr;
+=20
+ 	/* All done? */
+ 	if (!num_create)
