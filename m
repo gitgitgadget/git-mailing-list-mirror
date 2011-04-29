@@ -1,66 +1,71 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: cvsimport does not work with passwords ?
-Date: Fri, 29 Apr 2011 13:33:20 +0200
-Message-ID: <m2sjt1xpfj.fsf@igel.home>
-References: <ipckgd$krd$2@dough.gmane.org>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH RESEND] git-svn: don't confuse editors with an apostrophe
+Date: Fri, 29 Apr 2011 13:40:14 +0200
+Message-ID: <1304077214-1707-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Marcin =?utf-8?Q?Wi=C5=9Bnicki?= <mwisnicki@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 13:33:31 2011
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 13:40:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFlwv-0003iM-NE
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 13:33:30 +0200
+	id 1QFm3c-0007Gl-3c
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 13:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932397Ab1D2LdY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 07:33:24 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:51052 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932252Ab1D2LdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 07:33:23 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 898E21C0064D;
-	Fri, 29 Apr 2011 13:33:21 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 851D21C000EE;
-	Fri, 29 Apr 2011 13:33:21 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id Ypf84Pg7Vi7l; Fri, 29 Apr 2011 13:33:21 +0200 (CEST)
-Received: from igel.home (ppp-93-104-140-6.dynamic.mnet-online.de [93.104.140.6])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Fri, 29 Apr 2011 13:33:21 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id ABFA5CA29C; Fri, 29 Apr 2011 13:33:20 +0200 (CEST)
-X-Yow: Well, I'm on the right planet---everyone looks like me!!!
-In-Reply-To: <ipckgd$krd$2@dough.gmane.org> ("Marcin =?utf-8?Q?Wi=C5=9Bnic?=
- =?utf-8?Q?ki=22's?= message of
-	"Thu, 28 Apr 2011 20:59:57 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S932489Ab1D2LkR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 07:40:17 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:53575 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932476Ab1D2LkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 07:40:16 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 505E846132;
+	Fri, 29 Apr 2011 13:39:57 +0200 (CEST)
+Received: (nullmailer pid 1742 invoked by uid 1000);
+	Fri, 29 Apr 2011 11:40:15 -0000
+X-Mailer: git-send-email 1.7.4.2.437.g4fc7e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172448>
 
-Marcin Wi=C5=9Bnicki <mwisnicki@gmail.com> writes:
+The quotation mark serving as an apostrophe confuses editors and they
+think a large part of the rest of the file is a string. Change
+"you're" to "you are" to avoid this.
 
->> export CVSROOT=3D:pserver:anoncvs@anoncvs.fr.FreeBSD.org:/home/ncvs
-> /1 :pserver:anoncvs@anoncvs.fr.freebsd.org:2401/home/ncvs Ay=3D0=3Dh<=
-Z
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+Acked-by: Eric Wong <normalperson@yhbt.net>
+---
 
-Note the different case.
+I sent this on 31-03-2011 but apart from Eric's ack, there was no
+reaction and I don't see it in the patch queue.
 
-Andreas.
+   cmn
 
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index bf0451b..bc5981d 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -348,7 +348,7 @@ Usage: git svn <command> [options] [arguments]\n
+ 	}
+ 	print $fd <<"";
+ \nGIT_SVN_ID may be set in the environment or via the --id/-i switch t=
+o an
+-arbitrary identifier if you're tracking multiple SVN branches/reposito=
+ries in
++arbitrary identifier if you are tracking multiple SVN branches/reposit=
+ories in
+ one git repository and want to keep them separate.  See git-svn(1) for=
+ more
+ information.
+=20
 --=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+1.7.4.2.437.g4fc7e.dirty
