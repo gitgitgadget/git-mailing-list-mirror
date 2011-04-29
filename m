@@ -1,181 +1,245 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 1/2] diff: introduce --stat-lines to limit the stat lines
-Date: Fri, 29 Apr 2011 16:57:45 +0200
-Message-ID: <5f16db0f3730be70ff522e63fbd491dc910c34d0.1304089050.git.git@drmicha.warpmail.net>
+From: Csaba Henk <csaba@lowlife.hu>
+Subject: git symbolic-ref vs. reflog (vs. rebase)
+Date: Fri, 29 Apr 2011 15:03:52 +0000 (UTC)
+Message-ID: <ipek0o$l0v$1@dough.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 16:58:01 2011
+X-From: git-owner@vger.kernel.org Fri Apr 29 17:10:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFp8o-0003yU-7X
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 16:57:58 +0200
+	id 1QFpKl-0003ls-JY
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 17:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213Ab1D2O5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 10:57:51 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51719 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751697Ab1D2O5u (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2011 10:57:50 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 761BA207A5
-	for <git@vger.kernel.org>; Fri, 29 Apr 2011 10:57:49 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute4.internal (MEProxy); Fri, 29 Apr 2011 10:57:49 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id; s=smtpout; bh=n+XUr8UIn816eYlGMoNeXcpc5vw=; b=Ucn5hpgmgag1wwvFEP8Z0mw80f2Mri4bG0kzSHy4Fjod1DfzM4M5lUvxfnBoy3HBedhULJTR1fvqeq8uQd/6lvOgVEAnR6RgaaUSYkmzqIuQ1rwBYPKlSZhDDSxf+KskffYxxNHH9UGQ8UBDNAaLRkv3nFh4zRALgXWewi+tKWQ=
-X-Sasl-enc: 9mZGHo6OmW8GE8Qv0P/+sgoXlyaXltRW6wYiXmpBF2Jt 1304089068
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C56BB40362A;
-	Fri, 29 Apr 2011 10:57:48 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.250.g4493b
+	id S1753429Ab1D2PKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 11:10:11 -0400
+Received: from lo.gmane.org ([80.91.229.12]:54975 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752897Ab1D2PKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 11:10:10 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QFpKZ-0003eY-Kc
+	for git@vger.kernel.org; Fri, 29 Apr 2011 17:10:07 +0200
+Received: from gluelinux.org ([195.56.45.29])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Apr 2011 17:10:07 +0200
+Received: from csaba by gluelinux.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Apr 2011 17:10:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: gluelinux.org
+User-Agent: slrn/0.9.9p1 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172456>
 
-Often one is interested in the full --stat output only for commits which
-change a few files, but not others, because larger restructuring gives a
---stat which fills a few screens.
+"git symbolic-ref" is a dangerous command in the sense that it can
+change your HEAD position without updating the reflog. Is it
+intended behaviour?
 
-Introduce a new option --stat-lines=<lines> which limits the --stat output
-to the first and last <lines> lines, separated by a "..." line. It can
-also be given as the third parameter in
---stat=<width>,<name-width>,<lines>.
+I found now a case where this feature causes strange behavior.
+It seems to me that either behaviour of git symbolic-ref, or the way
+it is used should be changed, but I'm not sure which of these
+would be the right solution.
 
-Also, the unstuck form is supported analogous to the other two stat
-parameters.
+If I'm at a detached HEAD and I do a rebase onto it, from which then
+I step back with "git rebase --abort", then I seem to lose references
+to the HEAD before rebase, as git reflog won't show it anymore.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-I would even consider a default of 10 (i.e. show a 20 line stat in full,
-abbreviate larger ones) to be sensible but have refrained from such a
-behaviour change.
+This is because of two factors:
 
-We have hardcoded defaults for width (80) and name-width (50), so having
-one for lines should be okay also. Can I has tis wiz default? ;)
----
- Documentation/diff-options.txt |    5 ++++-
- diff.c                         |   25 +++++++++++++++++++++++--
- diff.h                         |    1 +
- 3 files changed, 28 insertions(+), 3 deletions(-)
+- unlike a rebase onto a branch-referred head, we don't get an
+  additional reflog entry for moving to the starting position
+  of the rebase (ie. we don't actually changes HEAD, nevertheless
+  in the branchy case a dummy reflog entry is made for HEAD);
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 34f0145..e0429b3 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -48,11 +48,14 @@ endif::git-format-patch[]
- --patience::
- 	Generate a diff using the "patience diff" algorithm.
- 
----stat[=<width>[,<name-width>]]::
-+--stat[=<width>[,<name-width>[,<lines>]]]::
- 	Generate a diffstat.  You can override the default
- 	output width for 80-column terminal by `--stat=<width>`.
- 	The width of the filename part can be controlled by
- 	giving another width to it separated by a comma.
-+	By giving a third parameter `<lines>`, you can limit the
-+	output to the first and last `<lines>` lines, separated by
-+	`...`.
- 
- --numstat::
- 	Similar to `\--stat`, but shows number of added and
-diff --git a/diff.c b/diff.c
-index feced34..9ccba1e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1244,7 +1244,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	int i, len, add, del, adds = 0, dels = 0;
- 	uintmax_t max_change = 0, max_len = 0;
- 	int total_files = data->nr;
--	int width, name_width;
-+	int width, name_width, lines;
- 	const char *reset, *add_c, *del_c;
- 	const char *line_prefix = "";
- 	struct strbuf *msg = NULL;
-@@ -1259,6 +1259,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 
- 	width = options->stat_width ? options->stat_width : 80;
- 	name_width = options->stat_name_width ? options->stat_name_width : 50;
-+	lines = options->stat_lines;
- 
- 	/* Sanity: give at least 5 columns to the graph,
- 	 * but leave at least 10 columns for the name.
-@@ -1303,6 +1304,12 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 		width = max_change;
- 
- 	for (i = 0; i < data->nr; i++) {
-+		if (lines && i >= lines && i < data->nr-lines) {
-+			fprintf(options->file, "%s ...\n", line_prefix);
-+			i = data->nr-lines-1;
-+			lines = 0; /* no need to recheck */
-+			continue;
-+		}
- 		const char *prefix = "";
- 		char *name = data->files[i]->print_name;
- 		uintmax_t added = data->files[i]->added;
-@@ -3105,6 +3112,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 	char *end;
- 	int width = options->stat_width;
- 	int name_width = options->stat_name_width;
-+	int lines = options->stat_lines;
- 	int argcount = 1;
- 
- 	arg += strlen("--stat");
-@@ -3132,12 +3140,24 @@ static int stat_opt(struct diff_options *options, const char **av)
- 				name_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
- 			}
-+		} else if (!prefixcmp(arg, "-lines")) {
-+			arg += strlen("-lines");
-+			if (*arg == '=')
-+				lines = strtoul(arg + 1, &end, 10);
-+			else if (!*arg && !av[1])
-+				die("Option '--stat-lines' requires a value");
-+			else if (!*arg) {
-+				lines = strtoul(av[1], &end, 10);
-+				argcount = 2;
-+			}
- 		}
- 		break;
- 	case '=':
- 		width = strtoul(arg+1, &end, 10);
- 		if (*end == ',')
- 			name_width = strtoul(end+1, &end, 10);
-+		if (*end == ',')
-+			lines = strtoul(end+1, &end, 10);
- 	}
- 
- 	/* Important! This checks all the error cases! */
-@@ -3146,6 +3166,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 	options->output_format |= DIFF_FORMAT_DIFFSTAT;
- 	options->stat_name_width = name_width;
- 	options->stat_width = width;
-+	options->stat_lines = lines;
- 	return argcount;
- }
- 
-@@ -3191,7 +3212,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if (!strcmp(arg, "-s"))
- 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
- 	else if (!prefixcmp(arg, "--stat"))
--		/* --stat, --stat-width, or --stat-name-width */
-+		/* --stat, --stat-width, --stat-name-width, or --stat-lines */
- 		return stat_opt(options, av);
- 
- 	/* renames options */
-diff --git a/diff.h b/diff.h
-index d83e53e..98e9aed 100644
---- a/diff.h
-+++ b/diff.h
-@@ -124,6 +124,7 @@ struct diff_options {
- 
- 	int stat_width;
- 	int stat_name_width;
-+	int stat_lines;
- 	const char *word_regex;
- 	enum diff_words_type word_diff;
- 
--- 
-1.7.5.250.g4493b
+- upon aborting the rebase, a call is done to "git symbolic-ref"
+  in the aforementioned unsafe way, ie. it changes HEAD but
+  does not update reflog.
+
+The phenomenon is illustrated by the script below. Usage:
+
+- fist arg is the dir where the script will run (should
+  not exist at invocation, script creates it).
+
+- optional second arg is a branchname, if you give it, you'll
+  see the branchy case, else you get the rebase-onto-detached
+  case
+
+Observe the following: 
+
+- in both of branchy and detached cases, one reflog entry for
+  the starting HEAD disappears from reflog output, but in the
+  branchy case there are two of them before "rebase --abort"
+  so you don't lose the reference;
+
+- "rebase --abort" does not change the reflog file, but
+  the reflog command's output changes, as it shows the actual HEAD
+  as HEAD{0}, regardless of the last log entry.
+
+Csaba
+
+ * * *
+
+bash> cat gtr.sh
+#!/bin/bash -e
+
+GIT=${GIT:-git}
+
+if !([ $# -eq 1 ] || [ $# -eq 2 ]) || [ "$1" = -h ]; then
+    echo usage: `basename $0` scratchdir [branchname]
+fi
+
+if ! [ -z $2 ]; then
+    branch=$2
+    bropt=-b
+fi
+
+mkdir "$1"
+cd "$1"
+
+{
+$GIT init
+
+echo master > file
+$GIT add file
+$GIT commit -m Master.
+
+$GIT checkout -b topic
+echo topic > file
+$GIT commit -am Topic.
+
+$GIT checkout $bropt $branch master~0
+echo detached > file
+$GIT commit -am 'Rebase base'.
+} &>/dev/null
+
+echo
+$GIT log --all --graph --decorate --pretty=oneline
+echo
+
+set -x
+
+$GIT hash-object .git/logs/HEAD
+$GIT rebase HEAD topic || :
+$GIT hash-object .git/logs/HEAD
+$GIT reflog
+# ruby is used to compactify the logfile,
+# if you don't have ruby, comment out
+# the filtering part.
+cat .git/logs/HEAD | ruby -ane 'puts $F.map{|x| x[0..(x =~ /:$/ ? -1 : 7)] }.join(" ")'
+$GIT rebase --abort
+$GIT hash-object .git/logs/HEAD
+$GIT reflog
+
+bash> ./gtr.sh testdir
+
+* 27a1300e35857be6357adaf6759eb8ce0818d37b (topic) Topic.
+| * 5d4be82c08bf6effc906a37419220ca428834844 (HEAD) Rebase base.
+|/
+* 6fa006d134be4d986e1a680cac4eddd61494164a (master) Master.
+
++ git hash-object .git/logs/HEAD
+cd15f363cf16ea3e03f5177b502de8ce3543ff21
++ git rebase HEAD topic
+First, rewinding head to replay your work on top of it...
+Applying: Topic.
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging file
+CONFLICT (content): Merge conflict in file
+Failed to merge in the changes.
+Patch failed at 0001 Topic.
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
++ :
++ git hash-object .git/logs/HEAD
+cd15f363cf16ea3e03f5177b502de8ce3543ff21
++ git reflog
+5d4be82 HEAD@{0}: commit: Rebase base.
+6fa006d HEAD@{1}: checkout: moving from topic to master~0
+27a1300 HEAD@{2}: commit: Topic.
+6fa006d HEAD@{3}: checkout: moving from master to topic
+6fa006d HEAD@{4}: commit (initial): Master.
++ cat .git/logs/HEAD
++ ruby -ane 'puts $F.map{|x| x[0..(x =~ /:$/ ? -1 : 7)] }.join(" ")'
+00000000 6fa006d1 Csaba Henk <csaba@l 13040883 +0530 commit (initial): Master.
+6fa006d1 6fa006d1 Csaba Henk <csaba@l 13040883 +0530 checkout: moving from master to topic
+6fa006d1 27a1300e Csaba Henk <csaba@l 13040883 +0530 commit: Topic.
+27a1300e 6fa006d1 Csaba Henk <csaba@l 13040883 +0530 checkout: moving from topic to master~0
+6fa006d1 5d4be82c Csaba Henk <csaba@l 13040883 +0530 commit: Rebase base.
++ git rebase --abort
+HEAD is now at 27a1300 Topic.
++ git hash-object .git/logs/HEAD
+cd15f363cf16ea3e03f5177b502de8ce3543ff21
++ git reflog
+27a1300 HEAD@{0}: commit: Rebase base.
+6fa006d HEAD@{1}: checkout: moving from topic to master~0
+27a1300 HEAD@{2}: commit: Topic.
+6fa006d HEAD@{3}: checkout: moving from master to topic
+6fa006d HEAD@{4}: commit (initial): Master.
+bash> rm -rf testdir
+bash> ./gtr.sh testdir foobr
+
+* fa0c2b339d1f048281ed7098d8d7d55a12b35154 (HEAD, foobr) Rebase base.
+| * a87b990fcd5c7a109611694dcc9523d4f00ae8fe (topic) Topic.
+|/
+* 1e2d1c12f46105c9329479535780ec230afe7fa0 (master) Master.
+
++ git hash-object .git/logs/HEAD
+734ae3b60eee21ee2b8b51450040389004d56e5d
++ git rebase HEAD topic
+First, rewinding head to replay your work on top of it...
+Applying: Topic.
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging file
+CONFLICT (content): Merge conflict in file
+Failed to merge in the changes.
+Patch failed at 0001 Topic.
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
++ :
++ git hash-object .git/logs/HEAD
+5acf3d5f543333f549b3f9d295ed2ba91074b43d
++ git reflog
+fa0c2b3 HEAD@{0}: checkout: moving from foobr to fa0c2b339d1f048281ed7098d8d7d55a12b35154^0
+fa0c2b3 HEAD@{1}: commit: Rebase base.
+1e2d1c1 HEAD@{2}: checkout: moving from topic to foobr
+a87b990 HEAD@{3}: commit: Topic.
+1e2d1c1 HEAD@{4}: checkout: moving from master to topic
+1e2d1c1 HEAD@{5}: commit (initial): Master.
++ cat .git/logs/HEAD
++ ruby -ane 'puts $F.map{|x| x[0..(x =~ /:$/ ? -1 : 7)] }.join(" ")'
+00000000 1e2d1c12 Csaba Henk <csaba@l 13040887 +0530 commit (initial): Master.
+1e2d1c12 1e2d1c12 Csaba Henk <csaba@l 13040887 +0530 checkout: moving from master to topic
+1e2d1c12 a87b990f Csaba Henk <csaba@l 13040887 +0530 commit: Topic.
+a87b990f 1e2d1c12 Csaba Henk <csaba@l 13040887 +0530 checkout: moving from topic to foobr
+1e2d1c12 fa0c2b33 Csaba Henk <csaba@l 13040887 +0530 commit: Rebase base.
+fa0c2b33 fa0c2b33 Csaba Henk <csaba@l 13040887 +0530 checkout: moving from foobr to fa0c2b33
++ git rebase --abort
+HEAD is now at a87b990 Topic.
++ git hash-object .git/logs/HEAD
+5acf3d5f543333f549b3f9d295ed2ba91074b43d
++ git reflog
+a87b990 HEAD@{0}: checkout: moving from foobr to fa0c2b339d1f048281ed7098d8d7d55a12b35154^0
+fa0c2b3 HEAD@{1}: commit: Rebase base.
+1e2d1c1 HEAD@{2}: checkout: moving from topic to foobr
+a87b990 HEAD@{3}: commit: Topic.
+1e2d1c1 HEAD@{4}: checkout: moving from master to topic
+1e2d1c1 HEAD@{5}: commit (initial): Master.
