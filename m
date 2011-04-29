@@ -1,178 +1,127 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 1/2] add tests for merge-index / merge-one-file
-Date: Fri, 29 Apr 2011 18:23:54 -0400
-Message-ID: <20110429222354.GA3347@sigill.intra.peff.net>
+Subject: [PATCHv2 2/2] merge-one-file: fix broken merges with alternate work
+ trees
+Date: Fri, 29 Apr 2011 18:24:32 -0400
+Message-ID: <20110429222432.GB3347@sigill.intra.peff.net>
 References: <20110429185228.GA27268@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Aman Gupta <themastermind1@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 00:24:09 2011
+X-From: git-owner@vger.kernel.org Sat Apr 30 00:24:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFw6W-0003ND-Ax
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 00:24:04 +0200
+	id 1QFw76-0003ev-CD
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 00:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932451Ab1D2WX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 18:23:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48441
+	id S933983Ab1D2WYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 18:24:35 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48445
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932485Ab1D2WX5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 18:23:57 -0400
-Received: (qmail 16820 invoked by uid 107); 29 Apr 2011 22:25:39 -0000
+	id S932485Ab1D2WYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 18:24:34 -0400
+Received: (qmail 16851 invoked by uid 107); 29 Apr 2011 22:26:16 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Apr 2011 18:25:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2011 18:23:54 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Apr 2011 18:26:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2011 18:24:32 -0400
 Content-Disposition: inline
 In-Reply-To: <20110429185228.GA27268@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172498>
 
-There were no tests for either, except a brief use in
-t1200-tutorial.
+The merge-one-file tool predates the invention of
+GIT_WORK_TREE. By the time GIT_WORK_TREE was invented, most
+people were using the merge-recursive strategy, which
+handles resolving internally. Therefore these features have
+had very little testing together.
 
-These tools are not used much these days, as most people
-use the merge-recursive strategy, which handles everything
-internally. However, they are used by the "octopus" and
-"resolve" strategies, as well as any custom strategies
-or merge scripts people have built around them.
+For the most part, merge-one-file just works with
+GIT_WORK_TREE; most of its heavy lifting is done by plumbing
+commands which do respect GIT_WORK_TREE properly. The one
+exception is a shell redirection which touches the worktree
+directly, writing results to the wrong place in the presence
+of a GIT_WORK_TREE variable.
 
-For example, together with read-tree, they are the simplest
-way to do a basic content-level merge without checking out
-the entire repository contents beforehand.
+This means that merges won't even fail; they will silently
+produce incorrect results, throwing out the entire "theirs"
+side of files which need content-level merging!
 
-This script adds a basic test of the tools to perform one
-content-level merge. It also shows a failure of the tools to
-work properly in the face of GIT_WORK_TREE or core.worktree.
+This patch makes merge-one-file chdir to the toplevel of the
+working tree (and exit if we don't have one). This most
+closely matches the assumption made by the original script
+(before separate work trees were invented), and matches what
+happens when the script is called as part of a merge
+strategy.
+
+While we're at it, we'll also error-check the call to cat.
+Merging a file in a subdirectory could in fact fail, as the
+redirection relies on the "checkout-index" call just prior
+to create leading directories. But we never noticed, since
+we ignored the error return from running cat.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Two new tests in this version:
+This one takes a totally different strategy than v1, but I think it
+makes more sense (and it fixes the core.worktree bug).
 
-  - make sure we properly fail when there is no work tree; we do
-    already, although it is not entirely graceful. But mainly I wanted
-    to make sure I didn't regress on that behavior with the fix in 2/2.
+ git-merge-one-file.sh  |    7 ++++++-
+ t/t6060-merge-index.sh |    4 ++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-  - check both GIT_WORK_TREE and core.worktree; the latter was still
-    broken in the original series
-
- t/t6060-merge-index.sh |  100 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 100 insertions(+), 0 deletions(-)
- create mode 100755 t/t6060-merge-index.sh
-
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index b86402a..7aeb969 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -22,6 +22,11 @@ LONG_USAGE="Usage: git merge-one-file $USAGE
+ 
+ Blob ids and modes should be empty for missing files."
+ 
++SUBDIRECTORY_OK=Yes
++. git-sh-setup
++cd_to_toplevel
++require_work_tree
++
+ if ! test "$#" -eq 7
+ then
+ 	echo "$LONG_USAGE"
+@@ -132,7 +137,7 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 
+ 	# Create the working tree file, using "our tree" version from the
+ 	# index, and then store the result of the merge.
+-	git checkout-index -f --stage=2 -- "$4" && cat "$src1" >"$4"
++	git checkout-index -f --stage=2 -- "$4" && cat "$src1" >"$4" || exit 1
+ 	rm -f -- "$orig" "$src1" "$src2"
+ 
+ 	if [ "$6" != "$7" ]; then
 diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-new file mode 100755
-index 0000000..895f079
---- /dev/null
+index 895f079..debadbd 100755
+--- a/t/t6060-merge-index.sh
 +++ b/t/t6060-merge-index.sh
-@@ -0,0 +1,100 @@
-+#!/bin/sh
-+
-+test_description='basic git merge-index / git-merge-one-file tests'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup diverging branches' '
-+	for i in 1 2 3 4 5 6 7 8 9 10; do
-+		echo $i
-+	done >file &&
-+	git add file &&
-+	git commit -m base &&
-+	git tag base &&
-+	sed s/2/two/ <file >tmp &&
-+	mv tmp file &&
-+	git commit -a -m two &&
-+	git tag two &&
-+	git checkout -b other HEAD^ &&
-+	sed s/10/ten/ <file >tmp &&
-+	mv tmp file &&
-+	git commit -a -m ten &&
-+	git tag ten
-+'
-+
-+cat >expect-merged <<'EOF'
-+1
-+two
-+3
-+4
-+5
-+6
-+7
-+8
-+9
-+ten
-+EOF
-+
-+test_expect_success 'read-tree does not resolve content merge' '
-+	git read-tree -i -m base ten two &&
-+	echo file >expect &&
-+	git diff-files --name-only --diff-filter=U >unmerged &&
-+	test_cmp expect unmerged
-+'
-+
-+test_expect_success 'git merge-index git-merge-one-file resolves' '
-+	git merge-index git-merge-one-file -a &&
-+	git diff-files --name-only --diff-filter=U >unmerged &&
-+	>expect &&
-+	test_cmp expect unmerged &&
-+	test_cmp expect-merged file &&
-+	git cat-file blob :file >file-index &&
-+	test_cmp expect-merged file-index
-+'
-+
-+test_expect_success 'setup bare merge' '
-+	git clone --bare . bare.git &&
-+	(cd bare.git &&
-+	 GIT_INDEX_FILE=$PWD/merge.index &&
-+	 export GIT_INDEX_FILE &&
-+	 git read-tree -i -m base ten two
-+	)
-+'
-+
-+test_expect_success 'merge-one-file fails without a work tree' '
-+	(cd bare.git &&
-+	 GIT_INDEX_FILE=$PWD/merge.index &&
-+	 export GIT_INDEX_FILE &&
-+	 test_must_fail git merge-index git-merge-one-file -a
-+	)
-+'
-+
-+test_expect_failure 'merge-one-file respects GIT_WORK_TREE' '
-+	(cd bare.git &&
-+	 mkdir work &&
-+	 GIT_WORK_TREE=$PWD/work &&
-+	 export GIT_WORK_TREE &&
-+	 GIT_INDEX_FILE=$PWD/merge.index &&
-+	 export GIT_INDEX_FILE &&
-+	 git merge-index git-merge-one-file -a &&
-+	 git cat-file blob :file >work/file-index
-+	) &&
-+	test_cmp expect-merged bare.git/work/file &&
-+	test_cmp expect-merged bare.git/work/file-index
-+'
-+
-+test_expect_failure 'merge-one-file respects core.worktree' '
-+	mkdir subdir &&
-+	git clone . subdir/child &&
-+	(cd subdir &&
-+	 GIT_DIR=$PWD/child/.git &&
-+	 export GIT_DIR &&
-+	 git config core.worktree "$PWD/child" &&
-+	 git read-tree -i -m base ten two &&
-+	 git merge-index git-merge-one-file -a &&
-+	 git cat-file blob :file >file-index
-+	) &&
-+	test_cmp expect-merged subdir/child/file &&
-+	test_cmp expect-merged subdir/file-index
-+'
-+
-+test_done
+@@ -68,7 +68,7 @@ test_expect_success 'merge-one-file fails without a work tree' '
+ 	)
+ '
+ 
+-test_expect_failure 'merge-one-file respects GIT_WORK_TREE' '
++test_expect_success 'merge-one-file respects GIT_WORK_TREE' '
+ 	(cd bare.git &&
+ 	 mkdir work &&
+ 	 GIT_WORK_TREE=$PWD/work &&
+@@ -82,7 +82,7 @@ test_expect_failure 'merge-one-file respects GIT_WORK_TREE' '
+ 	test_cmp expect-merged bare.git/work/file-index
+ '
+ 
+-test_expect_failure 'merge-one-file respects core.worktree' '
++test_expect_success 'merge-one-file respects core.worktree' '
+ 	mkdir subdir &&
+ 	git clone . subdir/child &&
+ 	(cd subdir &&
 -- 
 1.7.4.3.28.g10631
