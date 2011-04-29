@@ -1,74 +1,77 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] avoid set-but-not-used warning
-Date: Fri, 29 Apr 2011 11:42:41 +0200
-Message-ID: <874o5hv1f2.fsf@rho.meyering.net>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [PATCH] lookup_object(): Speed up 'git gc' by 12%, by reducing
+ hash chain length
+Date: Fri, 29 Apr 2011 11:50:45 +0200
+Message-ID: <20110429095045.GA22919@elte.hu>
+References: <20110427213502.GA13647@elte.hu>
+ <7vtydh1r3q.fsf@alter.siamese.dyndns.org>
+ <20110429072604.GA16371@elte.hu>
+ <20110429073825.GA16941@elte.hu>
+ <BANLkTinGn0WFNm805PeWuTp+71yby1ySNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 29 11:42:56 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 11:50:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFkDw-0007DK-AU
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 11:42:56 +0200
+	id 1QFkLj-0002pJ-8B
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 11:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756185Ab1D2Jmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 05:42:51 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:40242 "EHLO smtp1-g21.free.fr"
+	id S1758158Ab1D2Jux convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 05:50:53 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:34394 "EHLO mx2.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751972Ab1D2Jmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 05:42:50 -0400
-Received: from mx.meyering.net (unknown [82.230.74.64])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 3AFDD9401F5
-	for <git@vger.kernel.org>; Fri, 29 Apr 2011 11:42:43 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id A8AE660110; Fri, 29 Apr 2011 11:42:41 +0200 (CEST)
+	id S1757972Ab1D2Juw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 05:50:52 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1QFkLY-0004Tm-1c
+	from <mingo@elte.hu>; Fri, 29 Apr 2011 11:50:49 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 11EBC3E2516; Fri, 29 Apr 2011 11:50:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <BANLkTinGn0WFNm805PeWuTp+71yby1ySNw@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-08-17)
+Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-SpamScore: -2.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
+	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172444>
 
-I noticed this on master (also applies to next), compiling with gcc-4.6:
 
-    diffcore-rename.c: In function 'diffcore_rename':
-    diffcore-rename.c:501:18: warning: variable 'num_src' set but not used \
-      [-Wunused-but-set-variable]
+* Sverre Rabbelier <srabbelier@gmail.com> wrote:
 
-Here's the fix:
+> Heya,
+>=20
+> On Fri, Apr 29, 2011 at 09:38, Ingo Molnar <mingo@elte.hu> wrote:
+> > =A0 16: =A0 =A0 =A09,402,077,866 cycles:u =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 # =A0 =A02.987 GHz =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0( +-=
+ =A00.20% )
+> >
+> > They are utterly unconvincing - there seems to be no improvement, i=
+t's all
+> > within noise.
+>=20
+> Is this in a different repository from the one you ran the numbers on
+> initially, or did something else change to negate that 12.2% decrease=
+?
 
--- >8 --
-Subject: [PATCH] avoid set-but-not-used warning
+Yes, a newer Git repository with more objects in it.
 
-* diffcore-rename.c (diffcore_rename): Remove declaration and set.
+Thanks,
 
-Signed-off-by: Jim Meyering <meyering@redhat.com>
----
- diffcore-rename.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index f62587e..3d65bb3 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -498,7 +498,7 @@ void diffcore_rename(struct diff_options *options)
- 	struct diff_queue_struct outq;
- 	struct diff_score *mx;
- 	int i, j, rename_count, skip_unmodified = 0;
--	int num_create, num_src, dst_cnt;
-+	int num_create, dst_cnt;
- 	struct progress *progress = NULL;
-
- 	if (!minimum_score)
-@@ -554,7 +554,6 @@ void diffcore_rename(struct diff_options *options)
- 	 * files still remain as options for rename/copies!)
- 	 */
- 	num_create = (rename_dst_nr - rename_count);
--	num_src = rename_src_nr;
-
- 	/* All done? */
- 	if (!num_create)
---
-1.7.5.452.gcf2d0
+	Ingo
