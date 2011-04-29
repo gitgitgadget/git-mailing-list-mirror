@@ -1,127 +1,138 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 2/2] merge-one-file: fix broken merges with alternate work
- trees
-Date: Fri, 29 Apr 2011 18:24:32 -0400
-Message-ID: <20110429222432.GB3347@sigill.intra.peff.net>
-References: <20110429185228.GA27268@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: cvsimport still not working with cvsnt
+Date: Fri, 29 Apr 2011 17:27:29 -0500
+Message-ID: <20110429222729.GB5916@elie>
+References: <7vy65bkw72.fsf@alter.siamese.dyndns.org>
+ <4D61EA4B.3020708@burntmail.com>
+ <7vtyfxgdz2.fsf@alter.siamese.dyndns.org>
+ <7vipwbbrcc.fsf@alter.siamese.dyndns.org>
+ <AANLkTinUtUNGO3NK=JPTqnwcTtPMYjmLw82wJZ5nC-32@mail.gmail.com>
+ <4D644FEE.5030004@burntmail.com>
+ <7vaahnbmu2.fsf@alter.siamese.dyndns.org>
+ <4D69DF29.8030701@burntmail.com>
+ <7vvd056fyk.fsf@alter.siamese.dyndns.org>
+ <4DBA3E14.7090602@burntmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Aman Gupta <themastermind1@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 00:24:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin@laptop.org>,
+	Emil Medve <Emilian.Medve@freescale.com>,
+	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Guy Rouillier <guyr@burntmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 30 00:27:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFw76-0003ev-CD
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 00:24:40 +0200
+	id 1QFwA3-00055w-GT
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 00:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933983Ab1D2WYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 18:24:35 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48445
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932485Ab1D2WYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 18:24:34 -0400
-Received: (qmail 16851 invoked by uid 107); 29 Apr 2011 22:26:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Apr 2011 18:26:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2011 18:24:32 -0400
+	id S932220Ab1D2W1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 18:27:38 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39685 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932134Ab1D2W1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 18:27:37 -0400
+Received: by iyb14 with SMTP id 14so3400424iyb.19
+        for <git@vger.kernel.org>; Fri, 29 Apr 2011 15:27:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=fufJw0maymnMKNXLNT60qPqvLvIWbt+yEW6nWlTYb8g=;
+        b=smXu28n2zML1ujouS1eVpZZ3YicQXcUGxhIjaOomBU9FoAsAUuDsHT/r1VvuSVlPFt
+         VkJ2roPgZxfE3MXvCbMD4Sy+Tvyw3O88Sby+YIHPHgmyjI6NMYyZhBRi7KUAnpiT3Q1L
+         mUids4z4np0kkNqSaa7Q/f5urUGBQAhzQITs4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XHhWKTJXAbIleJwDTtlpUEnBoLeIJPOEqussIUVGXzYYLsABAMkXa1OL4I/GbQfzPn
+         siUwFHNNWIKZjpZlK5nurOcqDbANhec53uuoH+YFM7mzy/2ZvC8asGKWNrrAnDEXZRuO
+         mH0DQbrciNuZMX1PRTNhyZCcnhbc8vrC90AcQ=
+Received: by 10.42.139.136 with SMTP id g8mr1507116icu.141.1304116056357;
+        Fri, 29 Apr 2011 15:27:36 -0700 (PDT)
+Received: from elie ([69.209.62.211])
+        by mx.google.com with ESMTPS id xe5sm1156171icb.22.2011.04.29.15.27.32
+        (version=SSLv3 cipher=OTHER);
+        Fri, 29 Apr 2011 15:27:33 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110429185228.GA27268@sigill.intra.peff.net>
+In-Reply-To: <4DBA3E14.7090602@burntmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172499>
 
-The merge-one-file tool predates the invention of
-GIT_WORK_TREE. By the time GIT_WORK_TREE was invented, most
-people were using the merge-recursive strategy, which
-handles resolving internally. Therefore these features have
-had very little testing together.
+Guy Rouillier wrote:
 
-For the most part, merge-one-file just works with
-GIT_WORK_TREE; most of its heavy lifting is done by plumbing
-commands which do respect GIT_WORK_TREE properly. The one
-exception is a shell redirection which touches the worktree
-directly, writing results to the wrong place in the presence
-of a GIT_WORK_TREE variable.
+> Note that I've left this test in, although I still think it is a bad idea:
+>
+>    elsif (!$pass) {
+>       $pass = "A";
+>    }
+[...]
+> But that doesn't explain why it was put in there in the first
+> place.  I still say a better idea, if we don't want to allow an empty
+> password, is to error out rather than silently set a bogus password.
 
-This means that merges won't even fail; they will silently
-produce incorrect results, throwing out the entire "theirs"
-side of files which need content-level merging!
+It might be a good idea after all to do something else in that case
+(as a separate patch :)), but it would require a little investigation.
+Isn't the convention in CVS for anonymous pserver access to accept an
+arbitrary password?
 
-This patch makes merge-one-file chdir to the toplevel of the
-working tree (and exit if we don't have one). This most
-closely matches the assumption made by the original script
-(before separate work trees were invented), and matches what
-happens when the script is called as part of a merge
-strategy.
+> The CVS password file separates tokens with a space character, while
+> the CVSNT password file separates tokens with an equal (=) character.
+> Add a sub find_password_entry that accepts the password file name
+> and a delimiter to eliminate code duplication.
+> ---
 
-While we're at it, we'll also error-check the call to cat.
-Merging a file in a subdirectory could in fact fail, as the
-redirection relies on the "checkout-index" call just prior
-to create leading directories. But we never noticed, since
-we ignored the error return from running cat.
+Sounds sensible to my untrained ears.  Sign-off?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This one takes a totally different strategy than v1, but I think it
-makes more sense (and it fixes the core.worktree bug).
+[...]
+> +++ b/git-cvsimport.perl
+> @@ -227,6 +227,30 @@ sub new {
+>  	return $self;
+>  }
+> 
+> +sub find_password_entry {
+> +	my ($cvspass, @cvsroot) = @_;
+> +	my ($file, $delim) = @$cvspass;
+> +	my $pass;
+> +	local ($_);
+> +
+> +	if (open(my $fh, $file)) {
+> +		# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
+> +		while (<$fh>) {
+> +			chomp;
+> +			s/^\/\d+\s+//;
+> +			my ($w, $p) = split($delim,$_,2);
+> +			for my $cvsroot (@cvsroot) {
+> +				if ($w eq $cvsroot) {
+> +					$pass = $p;
+> +					last;
 
- git-merge-one-file.sh  |    7 ++++++-
- t/t6060-merge-index.sh |    4 ++--
- 2 files changed, 8 insertions(+), 3 deletions(-)
+In the old code, this "last" applied to the while loop, while in the
+new code it applies to the for loop.  Intentional?
 
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-index b86402a..7aeb969 100755
---- a/git-merge-one-file.sh
-+++ b/git-merge-one-file.sh
-@@ -22,6 +22,11 @@ LONG_USAGE="Usage: git merge-one-file $USAGE
- 
- Blob ids and modes should be empty for missing files."
- 
-+SUBDIRECTORY_OK=Yes
-+. git-sh-setup
-+cd_to_toplevel
-+require_work_tree
-+
- if ! test "$#" -eq 7
- then
- 	echo "$LONG_USAGE"
-@@ -132,7 +137,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- 
- 	# Create the working tree file, using "our tree" version from the
- 	# index, and then store the result of the merge.
--	git checkout-index -f --stage=2 -- "$4" && cat "$src1" >"$4"
-+	git checkout-index -f --stage=2 -- "$4" && cat "$src1" >"$4" || exit 1
- 	rm -f -- "$orig" "$src1" "$src2"
- 
- 	if [ "$6" != "$7" ]; then
-diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-index 895f079..debadbd 100755
---- a/t/t6060-merge-index.sh
-+++ b/t/t6060-merge-index.sh
-@@ -68,7 +68,7 @@ test_expect_success 'merge-one-file fails without a work tree' '
- 	)
- '
- 
--test_expect_failure 'merge-one-file respects GIT_WORK_TREE' '
-+test_expect_success 'merge-one-file respects GIT_WORK_TREE' '
- 	(cd bare.git &&
- 	 mkdir work &&
- 	 GIT_WORK_TREE=$PWD/work &&
-@@ -82,7 +82,7 @@ test_expect_failure 'merge-one-file respects GIT_WORK_TREE' '
- 	test_cmp expect-merged bare.git/work/file-index
- '
- 
--test_expect_failure 'merge-one-file respects core.worktree' '
-+test_expect_success 'merge-one-file respects core.worktree' '
- 	mkdir subdir &&
- 	git clone . subdir/child &&
- 	(cd subdir &&
--- 
-1.7.4.3.28.g10631
+[...]
+> +			if (1 < @loc) {
+> +				die("More than one cvs password files have ".
+> +				    "entries for CVSROOT $opt_d: @loc");
+
+Grammar nit: "More than one" is singular (weird, eh?).  It might
+be clearer to say:
+
+	"Multiple cvs password files have " .
+	"entries for CVSROOT $opt_d: @loc"
+
+(or "Both cvs password files").
+
+Thanks again, and hope that helps.
+
+Regards,
+Jonathan
