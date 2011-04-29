@@ -1,69 +1,113 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Fri, 29 Apr 2011 13:35:07 +1000
-Message-ID: <BANLkTikhqx2+JCey_ivP+Q+8X2VYT3hPKw@mail.gmail.com>
-References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com>
-	<4DB80747.8080401@op5.se>
-	<BANLkTimUHrHqS-Ssj+mK=0T8QHKg34pkaw@mail.gmail.com>
-	<4DB82D90.6060200@op5.se>
-	<BANLkTi=XcR9FTPC8oe100fMneNf1nca4_Q@mail.gmail.com>
-	<BANLkTikGZgEb-4jzHt+t2k__s7BMgbU9gg@mail.gmail.com>
-	<4DB84D65.6070906@gmail.com>
-	<BANLkTimyFmujc+Lsd7DMWfJgUzZME+Sveg@mail.gmail.com>
-	<alpine.DEB.2.00.1104280915230.7120@asgard.lang.hm>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv5 7/7] Improve error handling when parsing dirstat
+ parameters
+Date: Thu, 28 Apr 2011 21:06:33 -0700
+Message-ID: <7vfwp13dme.fsf@alter.siamese.dyndns.org>
+References: <1303892653-3958-1-git-send-email-johan@herland.net>
+ <1303953442-26536-8-git-send-email-johan@herland.net>
+ <7vhb9i43sl.fsf@alter.siamese.dyndns.org>
+ <201104290113.26481.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "gitzilla@gmail.com" <gitzilla@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "david@lang.hm" <david@lang.hm>
-X-From: git-owner@vger.kernel.org Fri Apr 29 05:35:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Apr 29 06:07:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFeU9-0001l7-O7
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 05:35:18 +0200
+	id 1QFeyu-0004xR-Iq
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 06:07:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435Ab1D2DfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2011 23:35:10 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:60769 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175Ab1D2DfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2011 23:35:09 -0400
-Received: by eyx24 with SMTP id 24so1023231eyx.19
-        for <git@vger.kernel.org>; Thu, 28 Apr 2011 20:35:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=w7BxOQIJ+JuDJ1J1QsjHIzHwPJtgMo8iM+dIUAteD0U=;
-        b=Maf8J5DaqYtU3m16uZUe/N3jUQxC8AsnCd2ppzwuVbn+oYDGYavaYQJMQyOqxbF1ei
-         nma+pt1y0rH+Xux7EmrnY8TKhgixuAtHXBQ1XCyojV79eWXdL6qDVai3EMOnT6vZr2hN
-         0uVfBXMnu161vspZLZ9WhubWtv/mgSQdr1e+0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=olMpZOoFBz9/7uQ9VPb3dip76KkqwhvV80CSBVSlGNU6fdfjaOuRy4gVlwDZ7+fdsC
-         1bdR2HWyt8t5Og9/afqWOIBImSO3PN4e+NS1wvyBTh1AB9JoKmMNWARN7kW82VQV9MZR
-         EYPXOMSlHZ+hv4Xvb3Io6+uogohQwyDBGbr5w=
-Received: by 10.14.16.136 with SMTP id h8mr287041eeh.53.1304048107900; Thu, 28
- Apr 2011 20:35:07 -0700 (PDT)
-Received: by 10.14.22.68 with HTTP; Thu, 28 Apr 2011 20:35:07 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1104280915230.7120@asgard.lang.hm>
+	id S1750734Ab1D2EGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 00:06:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33133 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750696Ab1D2EGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 00:06:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 49A2A579D;
+	Fri, 29 Apr 2011 00:08:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O4xLJn4By9sXLRTbl/fIDnNskno=; b=xUjsW3
+	Kw33V0fna0GjGPSKaLyZDC+BY5Yglvy1OBkT+gZv/O0C7EJ8Utiuk4jdVfAbq77q
+	jP8XW/iMvqz7p9SdDnujYNVKIn5m03jjAr4PSQWmmlLJed7dJitapJgd/JaTg8XH
+	RJL18i22txbVeZ9eTRsUEcDz+Rd2xZGSzDijI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WKxO8Jlh+RaTjBk6lXnIIiCijXmk3egH
+	wnIwbRjgYejGgCMQl7tYbt7xE2n8A01HnecHgbHAzfSIdygpmROPf/nMRO2IRBmy
+	Mrn1BD49+C1+gj+8KJPJQw4t4taVP0Xwlh+RCA07AnNb2apC7tf8oCMcuTZeQAio
+	8X+bQDsJCjE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0CF46579C;
+	Fri, 29 Apr 2011 00:08:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9F952579B; Fri, 29 Apr 2011
+ 00:08:37 -0400 (EDT)
+In-Reply-To: <201104290113.26481.johan@herland.net> (Johan Herland's message
+ of "Fri, 29 Apr 2011 01:13:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5E63F0BA-7216-11E0-8EF8-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172423>
 
-<david@lang.hm> wrote:
-> On Thu, 28 Apr 2011, Jon Seymour
-> start with documenting (and therefor formalizing) how plugins can work today. Then propose your change to how they work, what the benifits of your change are, and the code needed to implement your change.
->
+Johan Herland <johan@herland.net> writes:
 
+> Not sure what you mean here. You want the caller to supply a
+> string_list, to which parse_dirstat_params() appends error messages, and
+> then the caller determines how to display those error messages to the
+> user after parse_dirstat_params() has returned?
 
-Good suggestion, thank you,
+A rough outline of what I had in mind was:
 
-jon
+	struct dirstat_param_error {
+        	enum {
+                	ERR_DIRSTAT_PERCENT = 1,
+                        ERR_DIRSTAT_UNKNOWN
+		} kind;
+                strbuf msg;
+	};
+
+	static int parse_dirstat_params(struct diff_options *options,
+		        	const char *params,
+				struct dirstat_param_error *errinfo)
+	{
+		while (...) {
+                        ...
+                        else if (isdigit(*p)) {
+                                ...
+                                if (end - p == p_len)
+                                        options->dirstat_permille = permille;
+                                else {
+                                        errinfo->kind = ERR_DIRSTAT_PERCENT;
+                                        strbuf_add(&errinfo->msg, p, p_len);
+                                        ret = -1;
+                                }
+                        } else {
+                                errinfo->kind = ERR_DIRSTAT_UNKNOWN;
+                                strbuf_add(&errinfo->sb, p, p_len);
+                                ret = -1;
+                        }
+                        p += p_len;
+                        if (*p)
+                                p++;
+                }
+                return ret;
+	}
+
+and then the caller can extract the information to format.
+
+But you produce more than one one error messages, so a single errinfo
+approach would not work.  Instead, we should be able to pass in the
+pointer to a single strbuf errmsg, and accumulate the errors in it by
+calling strbuf_addf() for the same effect.  The format string given to
+strbuf_addf() may probably need to be marked with _().
+
+The caller can then check errmsg->len to see if there was an error.
