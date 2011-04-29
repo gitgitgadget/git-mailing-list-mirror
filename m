@@ -1,118 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 3/6] gitweb: Mark matched 'ctag' / contents tag (?by_tag=foo)
-Date: Fri, 29 Apr 2011 19:51:58 +0200
-Message-ID: <1304099521-27617-4-git-send-email-jnareb@gmail.com>
-References: <1304099521-27617-1-git-send-email-jnareb@gmail.com>
-Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Petr Baudis <pasky@suse.cz>, Sebastien Cevey <seb@cine7.net>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 19:52:54 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame: Improve parsing for emails with spaces
+Date: Fri, 29 Apr 2011 10:59:43 -0700
+Message-ID: <7vvcxxvsz4.fsf@alter.siamese.dyndns.org>
+References: <1303423656-32002-1-git-send-email-jistone@redhat.com>
+ <20110429131103.GB4540@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Josh Stone <jistone@redhat.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 29 20:00:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFrs3-0001Q3-TM
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 19:52:52 +0200
+	id 1QFrzN-0005sE-Vg
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 20:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760764Ab1D2Rwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2011 13:52:32 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35897 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760753Ab1D2Rw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2011 13:52:28 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 17so2635553fxm.19
-        for <git@vger.kernel.org>; Fri, 29 Apr 2011 10:52:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=9yxTzaI2La6X3SyIitbU8f0+XtTzwDWBK2aWAwlk/SE=;
-        b=hXvUKJxJAt6GHbXPrjdlFc2v0LTzrxu6TKPdMBghF8n6XD45682qrzg1MYd1auLGWB
-         9YsDTmD8vV0FIMFiE7s+WUAyjnqmwm0cuxGviiiL66b50Ui8Ukgwrxy/wwO8LZQHLbYK
-         647cI9S6gmhFXGbPkpSCL/Kxw1fdrSyEOAjcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=q4i8JYOXCgVErKpLY1HMlbnp2aYbFDbAmpxHLmOiyq6nJM4g7s4ORIVOzQYXHyaHtI
-         rldvFrk6juRWtfqvqOZQyW344Hj+o0zM9OSGvgIEOjz90W8njhSSNZtO1iBt75W+52+5
-         Mzx2bDCeDt+BFyyG8wZC70iekWvKnku5yph6U=
-Received: by 10.223.77.92 with SMTP id f28mr2823954fak.37.1304099548096;
-        Fri, 29 Apr 2011 10:52:28 -0700 (PDT)
-Received: from localhost.localdomain (abvr62.neoplus.adsl.tpnet.pl [83.8.215.62])
-        by mx.google.com with ESMTPS id n26sm962346fam.37.2011.04.29.10.52.26
-        (version=SSLv3 cipher=OTHER);
-        Fri, 29 Apr 2011 10:52:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3
-In-Reply-To: <1304099521-27617-1-git-send-email-jnareb@gmail.com>
+	id S1760734Ab1D2R77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 13:59:59 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51033 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760720Ab1D2R76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 13:59:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 453945BC4;
+	Fri, 29 Apr 2011 14:01:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zgH4XCua4VZGvf6SrVVI3rEkud8=; b=gFC24W
+	RpMnOxr5EyS9/y8XSI/CfA2xvRv7edMimAdujCzy6FWyL1971v66x9pJWDm+ocqf
+	8DoJ14+DTxBElcPer320WDdZKCFknBWZ3Pxlp+qYmkIKA4F8oIlWqhbf/jLo/SD5
+	dUOjFIY0dXLIh/VcPrRRQF9aw0RVtZv7eWVzs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d5xeEmAXXAEtXTUjrDfp6ProkaVwbFaE
+	eOEXFcVtbCJPkBC0EZalNqyF+ug5yrkCIlLPyCApCiUqjl97g4uKxMCkkJDltcDR
+	O7Yt0cRCrD7y6tA7Q6it17ETox0JB4hDZpuoqpVKiBThj+fKiAn1/70e+YVh0EbX
+	NNgMOyBENys=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1264D5BC2;
+	Fri, 29 Apr 2011 14:01:52 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D6B535BBA; Fri, 29 Apr 2011
+ 14:01:47 -0400 (EDT)
+In-Reply-To: <20110429131103.GB4540@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 29 Apr 2011 09:11:03 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C2C4ED92-728A-11E0-9612-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172484>
 
-It might have been hard to discover that current view is limited to
-projects with given content tag (ctag), as it was distinquished only
-in gitweb URL.  Mark matched contents tag in the tag cloud using
-"match" class, for easier discovery.
+Jeff King <peff@peff.net> writes:
 
-This commit introduces a bit of further code duplication in
-git_populate_project_tagcloud().
+> On Thu, Apr 21, 2011 at 03:07:36PM -0700, Josh Stone wrote:
+>
+>> One of my git repositories has some old commits where the authors
+>> obfuscated their email address as <author at example dot com>.  To
+>> handle this, blame needs to look for the leading '<' when scanning
+>> to split the "name <email>", rather then only a space delimiter.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-Acked-by: Petr Baudis <pasky@suse.cz>
----
-This patch was originally sent to git mailing list as
+Given that we enclose the e-mail inside "<>" pair and excise "<" from
+author names in fmt_ident(), I think it makes sense to look for " <" like
+this patch does.
 
-  [PATCH 2/1] gitweb: Mark matched 'ctag' / contents tag (?by_tag=foo)
-  http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/802865/focus=168731
+> Hmm. That address seems bogus, and I wonder if we should be rejecting it
+> at commit time. Still, it is something we may run across in existing
+> repositories, so handling it more gracefully makes sense.
 
-(yes, it was crossposted).
+Perhaps but within reason.  
 
- gitweb/gitweb.perl |   12 +++++++++---
- 1 files changed, 9 insertions(+), 3 deletions(-)
+What new types of breakages are we proposing to tolerate, what breakages
+are we declaring not worth fixing, and what is the price of not loosening
+this?  Without this patch, such a broken commit will result in the author
+email shown somewhat broken, but the original is already broken to begin
+with, and also the entry for the blamed line will come with its commit
+object name anyway, so I do not think it is such a big deal.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 60cb772..e81c27d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2653,6 +2653,7 @@ sub git_populate_project_tagcloud {
- 	}
- 
- 	my $cloud;
-+	my $matched = $cgi->param('by_tag');
- 	if (eval { require HTML::TagCloud; 1; }) {
- 		$cloud = HTML::TagCloud->new;
- 		foreach my $ctag (sort keys %ctags_lc) {
-@@ -2662,17 +2663,22 @@ sub git_populate_project_tagcloud {
- 			$title =~ s/ /&nbsp;/g;
- 			$title =~ s/^/&nbsp;/g;
- 			$title =~ s/$/&nbsp;/g;
-+			if (defined $matched && $matched eq $ctag) {
-+				$title = qq(<span class="match">$title</span>);
-+			}
- 			$cloud->add($title, href(project=>undef, ctag=>$ctag),
- 			            $ctags_lc{$ctag}->{count});
- 		}
- 	} else {
- 		$cloud = {};
- 		foreach my $ctag (keys %ctags_lc) {
--			my $title = $ctags_lc{$ctag}->{topname};
-+			my $title = esc_html($ctags_lc{$ctag}->{topname}, -nbsp=>1);
-+			if (defined $matched && $matched eq $ctag) {
-+				$title = qq(<span class="match">$title</span>);
-+			}
- 			$cloud->{$ctag}{count} = $ctags_lc{$ctag}->{count};
- 			$cloud->{$ctag}{ctag} =
--				$cgi->a({-href=>href(project=>undef, ctag=>$ctag)},
--			          esc_html($title, -nbsp=>1));
-+				$cgi->a({-href=>href(project=>undef, ctag=>$ctag)}, $title);
- 		}
- 	}
- 	return $cloud;
--- 
-1.7.3
+It would be an entirely different issue if the command barfed and refused
+to blame the file.
+
+> Looking over the other places we parse author info, I don't think the
+> same problem exists elsewhere. Most other places parse from left to
+> right, and just go to the closing ">".
+
+Because fmt_ident() removes "<" or ">" from given email address, I think
+it is sufficient.
+
+It would be nice to have an abstraction around the parsing in a way
+similar to fmt_ident() is an abstraction around the formatting, but that
+would be a separate topic.
