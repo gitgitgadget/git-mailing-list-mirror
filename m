@@ -1,85 +1,178 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RESEND] git-svn: don't confuse editors with an apostrophe
-Date: Fri, 29 Apr 2011 14:47:03 -0700
-Message-ID: <7v4o5gwx0o.fsf@alter.siamese.dyndns.org>
-References: <1304077214-1707-1-git-send-email-cmn@elego.de>
- <7viptxxbr7.fsf@alter.siamese.dyndns.org>
- <20110429205130.GA2727@bee.lab.cmartin.tk>
+From: Jeff King <peff@peff.net>
+Subject: [PATCHv2 1/2] add tests for merge-index / merge-one-file
+Date: Fri, 29 Apr 2011 18:23:54 -0400
+Message-ID: <20110429222354.GA3347@sigill.intra.peff.net>
+References: <20110429185228.GA27268@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Fri Apr 29 23:47:22 2011
+Cc: git@vger.kernel.org, Aman Gupta <themastermind1@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 30 00:24:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QFvWy-0000WM-HB
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Apr 2011 23:47:20 +0200
+	id 1QFw6W-0003ND-Ax
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 00:24:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758088Ab1D2VrP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2011 17:47:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56473 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755983Ab1D2VrO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2011 17:47:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2E20E5170;
-	Fri, 29 Apr 2011 17:49:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Kf3oQ6RhdjnN
-	ewCT2+QEeDynjVQ=; b=hxOQPbmXLEY+82szwp8B+bJd+xam79a6dT1QOa052viH
-	JSj1TXXrHm8hGZ5YqDySLlZDYS+sZ1e//E8LxiKEsWrINecB3wZZCbccOAaYhkID
-	LAf3nkEMAbE1eyI147nnQlc/pWpgyTN7NSX+kjdaE6u4GixlWCeqJQxY6OGjJbU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QAN0y9
-	S21j48NHboMIJi93PV47mCBEkayBvRdeb44WGnxSg52ZfuuLHOxqRNQgSk+eJTOn
-	W7buAFE5XKll675O2bKKrFXindhR1WWmCiq38rn/oxZvV+6tktKYwgKiK9PIf54Q
-	g1eyb/UOfxJtLNUJk/9BWIAT3Nf86Vc3riHek=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EFBA8516F;
-	Fri, 29 Apr 2011 17:49:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E14A6516E; Fri, 29 Apr 2011
- 17:49:07 -0400 (EDT)
-In-Reply-To: <20110429205130.GA2727@bee.lab.cmartin.tk> ("Carlos
- =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Fri, 29 Apr 2011 22:51:33
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 84CBF8E4-72AA-11E0-92A4-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S932451Ab1D2WX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2011 18:23:58 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48441
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932485Ab1D2WX5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2011 18:23:57 -0400
+Received: (qmail 16820 invoked by uid 107); 29 Apr 2011 22:25:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Apr 2011 18:25:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2011 18:23:54 -0400
+Content-Disposition: inline
+In-Reply-To: <20110429185228.GA27268@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172497>
 
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+There were no tests for either, except a brief use in
+t1200-tutorial.
 
-> It's not the output of the tool, it's the perl script. It uses the ca=
-t
-> << EOF trick/method so ...
+These tools are not used much these days, as most people
+use the merge-recursive strategy, which handles everything
+internally. However, they are used by the "octopus" and
+"resolve" strategies, as well as any custom strategies
+or merge scripts people have built around them.
 
-Ahhhhh (a lightbulb dimly lits, and then explodes).
+For example, together with read-tree, they are the simplest
+way to do a basic content-level merge without checking out
+the entire repository contents beforehand.
 
-As it is generally a bad practice to cater to those who edit this file =
-by
-changing the output that is served to the end user, _unless_ the update=
-d
-output clearly gives a better experience to the end user [*1*], it neve=
-r
-occurred to me that that is what you are doing in this patch.
+This script adds a basic test of the tools to perform one
+content-level merge. It also shows a failure of the tools to
+work properly in the face of GIT_WORK_TREE or core.worktree.
 
-Yes, the message should be made clearer.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Two new tests in this version:
 
-Thanks for an explanation.
+  - make sure we properly fail when there is no work tree; we do
+    already, although it is not entirely graceful. But mainly I wanted
+    to make sure I didn't regress on that behavior with the fix in 2/2.
 
-[Footnote]
+  - check both GIT_WORK_TREE and core.worktree; the latter was still
+    broken in the original series
 
-*1* In other words, updating the output to help users is fine.  And if
-such a change unconfuses your editor, that would be a nice side effect.
-Doing things the other way around is simply the tail wagging the dog.
+ t/t6060-merge-index.sh |  100 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 100 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6060-merge-index.sh
+
+diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
+new file mode 100755
+index 0000000..895f079
+--- /dev/null
++++ b/t/t6060-merge-index.sh
+@@ -0,0 +1,100 @@
++#!/bin/sh
++
++test_description='basic git merge-index / git-merge-one-file tests'
++. ./test-lib.sh
++
++test_expect_success 'setup diverging branches' '
++	for i in 1 2 3 4 5 6 7 8 9 10; do
++		echo $i
++	done >file &&
++	git add file &&
++	git commit -m base &&
++	git tag base &&
++	sed s/2/two/ <file >tmp &&
++	mv tmp file &&
++	git commit -a -m two &&
++	git tag two &&
++	git checkout -b other HEAD^ &&
++	sed s/10/ten/ <file >tmp &&
++	mv tmp file &&
++	git commit -a -m ten &&
++	git tag ten
++'
++
++cat >expect-merged <<'EOF'
++1
++two
++3
++4
++5
++6
++7
++8
++9
++ten
++EOF
++
++test_expect_success 'read-tree does not resolve content merge' '
++	git read-tree -i -m base ten two &&
++	echo file >expect &&
++	git diff-files --name-only --diff-filter=U >unmerged &&
++	test_cmp expect unmerged
++'
++
++test_expect_success 'git merge-index git-merge-one-file resolves' '
++	git merge-index git-merge-one-file -a &&
++	git diff-files --name-only --diff-filter=U >unmerged &&
++	>expect &&
++	test_cmp expect unmerged &&
++	test_cmp expect-merged file &&
++	git cat-file blob :file >file-index &&
++	test_cmp expect-merged file-index
++'
++
++test_expect_success 'setup bare merge' '
++	git clone --bare . bare.git &&
++	(cd bare.git &&
++	 GIT_INDEX_FILE=$PWD/merge.index &&
++	 export GIT_INDEX_FILE &&
++	 git read-tree -i -m base ten two
++	)
++'
++
++test_expect_success 'merge-one-file fails without a work tree' '
++	(cd bare.git &&
++	 GIT_INDEX_FILE=$PWD/merge.index &&
++	 export GIT_INDEX_FILE &&
++	 test_must_fail git merge-index git-merge-one-file -a
++	)
++'
++
++test_expect_failure 'merge-one-file respects GIT_WORK_TREE' '
++	(cd bare.git &&
++	 mkdir work &&
++	 GIT_WORK_TREE=$PWD/work &&
++	 export GIT_WORK_TREE &&
++	 GIT_INDEX_FILE=$PWD/merge.index &&
++	 export GIT_INDEX_FILE &&
++	 git merge-index git-merge-one-file -a &&
++	 git cat-file blob :file >work/file-index
++	) &&
++	test_cmp expect-merged bare.git/work/file &&
++	test_cmp expect-merged bare.git/work/file-index
++'
++
++test_expect_failure 'merge-one-file respects core.worktree' '
++	mkdir subdir &&
++	git clone . subdir/child &&
++	(cd subdir &&
++	 GIT_DIR=$PWD/child/.git &&
++	 export GIT_DIR &&
++	 git config core.worktree "$PWD/child" &&
++	 git read-tree -i -m base ten two &&
++	 git merge-index git-merge-one-file -a &&
++	 git cat-file blob :file >file-index
++	) &&
++	test_cmp expect-merged subdir/child/file &&
++	test_cmp expect-merged subdir/file-index
++'
++
++test_done
+-- 
+1.7.4.3.28.g10631
