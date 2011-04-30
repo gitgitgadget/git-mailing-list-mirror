@@ -1,66 +1,73 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 Subject: Re: [RFC/PATCH] t0081-*.sh: Fix failure of the 'long read' tests
-Date: Sat, 30 Apr 2011 18:12:48 +0100
-Message-ID: <4DBC4310.4000105@ramsay1.demon.co.uk>
-References: <4DB70972.20308@ramsay1.demon.co.uk> <20110426193539.GA2616@elie>
+Date: Sat, 30 Apr 2011 18:25:13 +0100
+Message-ID: <4DBC45F9.7090804@ramsay1.demon.co.uk>
+References: <4DB70972.20308@ramsay1.demon.co.uk> <20110426234850.GC32491@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 19:28:04 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 30 19:29:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGDxX-0008Nn-VK
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 19:28:00 +0200
+	id 1QGDzM-0000t0-0u
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 19:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757681Ab1D3R1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Apr 2011 13:27:45 -0400
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:47423 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751383Ab1D3R1o (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2011 13:27:44 -0400
+	id S1758004Ab1D3R3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Apr 2011 13:29:47 -0400
+Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:57841 "EHLO
+	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751334Ab1D3R3q (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2011 13:29:46 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1QGDxH-0004Xf-oF; Sat, 30 Apr 2011 17:27:44 +0000
+	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1QGDxL-00010q-lG; Sat, 30 Apr 2011 17:27:48 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <20110426193539.GA2616@elie>
+In-Reply-To: <20110426234850.GC32491@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172524>
 
-Jonathan Nieder wrote:
-> Ramsay Jones wrote:
+Jeff King wrote:
+> Yeah, that syntax is handled just fine by my bash and dash:
 > 
->> --- a/t/t0081-line-buffer.sh
->> +++ b/t/t0081-line-buffer.sh
->> @@ -25,8 +25,7 @@ generate_tens_of_lines () {
->>  		do
->>  			echo "$line"
->>  		done &&
->> -		: $((i = $i + 1)) ||
->> -		return
->> +		i=$(($i + 1))
->>  	done
+>   $ cat >foo.sh <<'EOF'
+>   i=1
+>   : $((i = $i + 1))
+>   echo $i
+>   EOF
 > 
-> This test is a mess.  Could you try the patch from the tip of
+>   $ bash foo.sh
+>   2
+>   $ bash --version | head -n 1
+>   GNU bash, version 4.1.5(1)-release (x86_64-pc-linux-gnu)
 > 
-> 	git://repo.or.cz/git/jrn.git svn-fe
-> 
-> which just gets rid of it instead?
+>   $ dash foo.sh
+>   2
 
-Ah, so I didn't imagine the discussion to remove this test!
+Er, ... yeah, it works for my bash and (up-to-date) dash too!
+[not the installed dash, of course, for which it is a syntax error]
 
-Yes, this works great for me. So, I will keep skipping the test
-until this patch makes it into git.git.
+Ahem ... *blush*
 
-Thanks!
+> But I think your i=$(($i + 1)) is the right solution.
+
+Yes, this fixes the problem and does not introduce a regression.
+
+So, the patch is correct, but (apart from the last sentence) the
+commit message is *absolute rubbish*. I won't bore you with the
+details of my lunacy! :-P
+
+However, I much prefer Jonathan's patch which removes this test
+completely!
 
 ATB,
 Ramsay Jones
