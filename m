@@ -1,69 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/largely untested/PATCH] sha1_name: interpret ~n as HEAD~n
-Date: Fri, 29 Apr 2011 22:33:55 -0700
-Message-ID: <7vfwp0uwu4.fsf@alter.siamese.dyndns.org>
-References: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net> <20110429223433.GA3434@sigill.intra.peff.net> <m2k4ecy6rv.fsf@igel.home>
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: Re: [PATCH] git-send-email: fix missing space in error message
+Date: Sat, 30 Apr 2011 09:52:39 +0200
+Message-ID: <1304149959.1850.4.camel@kheops>
+References: <1304101404-4571-1-git-send-email-sylvain@abstraction.fr>
+	 <7vmxj8x5yj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sat Apr 30 07:34:26 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-D7uMId4VZLH4lm9jpJND"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 30 09:53:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QG2ow-0000Mb-OV
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 07:34:23 +0200
+	id 1QG4zG-0007lo-A0
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 09:53:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754850Ab1D3FeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Apr 2011 01:34:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43836 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754504Ab1D3FeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2011 01:34:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D83F54E6D;
-	Sat, 30 Apr 2011 01:36:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vTmvjEi9BArY5P4nPEup83CFSOs=; b=RBCvMT
-	Lo6RPCbkVEqgwlMbJxk7kei2qDhtBdtfYFixcEBuqbSJ4MWk5tLWRYT+Nx7TzKB9
-	PMQeahVZ8b7Ikem8nTbrF8ySQNO9PAls1IfJT/al55mgb77U7mAZfJ1tcRw7j9Cv
-	jOS+WWUVqSyFQcdmQDjr4R6nZKyY7Tszwqy9U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i4u2+IDaRMirdQkSs4UqgkZPx+6t/SwC
-	mPvZycxMUvtqk+2fCfXQ1jN/+2S2R9saTvEyAY7qt6gQ6qm824ZAsWKeQK1SMGk3
-	HHEPNsfmsEV9YZB2nHTmw4ahuPg/qS4QmyhyjDzS6atIxq1gwnQQRFkQJI1nkXmI
-	An2MVlb3w+c=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 94EFA4E6A;
-	Sat, 30 Apr 2011 01:36:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4D96F4E67; Sat, 30 Apr 2011
- 01:36:01 -0400 (EDT)
-In-Reply-To: <m2k4ecy6rv.fsf@igel.home> (Andreas Schwab's message of "Sat, 30
- Apr 2011 01:31:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BED02510-72EB-11E0-A5DE-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751743Ab1D3Hwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Apr 2011 03:52:51 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:39859 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740Ab1D3Hwu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2011 03:52:50 -0400
+Received: by wwa36 with SMTP id 36so4898080wwa.1
+        for <git@vger.kernel.org>; Sat, 30 Apr 2011 00:52:49 -0700 (PDT)
+Received: by 10.227.54.6 with SMTP id o6mr847001wbg.61.1304149969034;
+        Sat, 30 Apr 2011 00:52:49 -0700 (PDT)
+Received: from [192.168.0.7] ([85.69.155.32])
+        by mx.google.com with ESMTPS id x1sm2125545wbh.53.2011.04.30.00.52.47
+        (version=SSLv3 cipher=OTHER);
+        Sat, 30 Apr 2011 00:52:47 -0700 (PDT)
+In-Reply-To: <7vmxj8x5yj.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.32.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172518>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
 
-> Jeff King <peff@peff.net> writes:
->
->> It also conflicts a little with the shell's "~user" syntax, though
->> presumably you don't have users named "1" and "2".
->
-> Well, you sorta do if you did use pushd.
+--=-D7uMId4VZLH4lm9jpJND
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I was also worried about that.  Or some arcane system
-misinterpreting "~0" as the home directory of root ;-)
+Sorry about that. Was thinking this was not worth an entry in
+the release note.
+
+On Fri, 2011-04-29 at 11:33 -0700, Junio C Hamano wrote:
+> Sylvain Rabot <sylvain@abstraction.fr> writes:
+>=20
+> > Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+>=20
+> Please keep in mind that these individual commits will eventually need an
+> entry added to Documentation/Relnotes/1.7.5.1.txt where I describe what
+> bug was fixed in a single paragraph, and it almost always talks about how
+> a bug would have been triggered so that the readers can tell if the fix
+> would benefit them.
+>=20
+> It would have been perfect if you wrote under what condition the user
+> would see this error message in the body of the commit.
+>=20
+> > ---
+> >  git-send-email.perl |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index 76565de..98ab33a 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -1091,7 +1091,7 @@ X-Mailer: git-send-email $gitversion
+> >  			    "VALUES: server=3D$smtp_server ",
+> >  			    "encryption=3D$smtp_encryption ",
+> >  			    "hello=3D$smtp_domain",
+> > -			    defined $smtp_server_port ? "port=3D$smtp_server_port" : "";
+> > +			    defined $smtp_server_port ? " port=3D$smtp_server_port" : "";
+>=20
+> If I were writing this from scratch, I probably would have written it
+> by having leading SP for all options, perhaps like this:
+>=20
+> 	"VALUES:",
+>         " option=3Dvalue",
+>         " option=3Dvalue",
+>         (showoption) ? " option=3Dvalue" : "",
+>         (showoption) ? " option=3Dvalue" : "",
+>         ...
+>=20
+> Thanks.
+
+
+--=-D7uMId4VZLH4lm9jpJND
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJNu7/AAAoJECLlHVUnhaoWlMYH/iABhvNwfjIkXpXv/2mY/IVw
+63g87YcePQECitAlu6KMS7x//gifpQSVfrRopCi3KBu7GkKGHbGxGKRdkNADiLS+
+6fZVca4FEX+6mEetqpy9K9p3WuPLt4jtTwZ4XBqpK/UzE+RODT1VB3IUhI6gwvAN
+0heSezvW22AKWSNfaGmW40c0PkiAnctQNVKheeSOBnQ2/+o49TKzgeDFNlcGSxeU
+ii5EIF4lkRksP4o7WuUoZEnSegKxb/C6xvR0G8eoCluGJamfE3DsE48cbDS7yXei
+wy1vWbAR7cI2AbdBvgcdtnO07iLijjync9hP7fkNStQH+00zNFTQcgj/WYgll4Y=
+=iVFI
+-----END PGP SIGNATURE-----
+
+--=-D7uMId4VZLH4lm9jpJND--
