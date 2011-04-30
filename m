@@ -1,67 +1,66 @@
-From: Valentin Haenel <valentin.haenel@gmx.de>
-Subject: [PATCH] config.txt: interactive.singlekey is used by...
-Date: Sat, 30 Apr 2011 16:54:01 +0200
-Message-ID: <1304175241-30550-1-git-send-email-valentin.haenel@gmx.de>
-Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Valentin Haenel <valentin.haenel@gmx.de>
-To: Git-List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 30 16:54:54 2011
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [RFC/PATCH] t0081-*.sh: Fix failure of the 'long read' tests
+Date: Sat, 30 Apr 2011 18:12:48 +0100
+Message-ID: <4DBC4310.4000105@ramsay1.demon.co.uk>
+References: <4DB70972.20308@ramsay1.demon.co.uk> <20110426193539.GA2616@elie>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 30 19:28:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGBZL-0005EN-0r
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 16:54:51 +0200
+	id 1QGDxX-0008Nn-VK
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Apr 2011 19:28:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339Ab1D3Oyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Apr 2011 10:54:44 -0400
-Received: from kudu.in-berlin.de ([192.109.42.123]:32816 "EHLO
-	kudu.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752258Ab1D3Oyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2011 10:54:43 -0400
-Received: from kudu.in-berlin.de (localhost [127.0.0.1])
-	by kudu.in-berlin.de (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p3UEsRGi030587;
-	Sat, 30 Apr 2011 16:54:27 +0200
-Received: (from esc@localhost)
-	by kudu.in-berlin.de (8.14.3/8.14.3/Submit) id p3UEsQpq030586;
-	Sat, 30 Apr 2011 16:54:26 +0200
-X-Mailer: git-send-email 1.7.2.3
+	id S1757681Ab1D3R1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Apr 2011 13:27:45 -0400
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:47423 "EHLO
+	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751383Ab1D3R1o (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2011 13:27:44 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1QGDxH-0004Xf-oF; Sat, 30 Apr 2011 17:27:44 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <20110426193539.GA2616@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172523>
 
-The config variable 'interactive.singlekey' influences also '--patch' mode of
-git-stash and git-reset.
+Jonathan Nieder wrote:
+> Ramsay Jones wrote:
+> 
+>> --- a/t/t0081-line-buffer.sh
+>> +++ b/t/t0081-line-buffer.sh
+>> @@ -25,8 +25,7 @@ generate_tens_of_lines () {
+>>  		do
+>>  			echo "$line"
+>>  		done &&
+>> -		: $((i = $i + 1)) ||
+>> -		return
+>> +		i=$(($i + 1))
+>>  	done
+> 
+> This test is a mess.  Could you try the patch from the tip of
+> 
+> 	git://repo.or.cz/git/jrn.git svn-fe
+> 
+> which just gets rid of it instead?
 
-Signed-off-by: Valentin Haenel <valentin.haenel@gmx.de>
----
+Ah, so I didn't imagine the discussion to remove this test!
 
-Perhaps this incredibly useful setting should also be mentioned in manpages of
-git-{add,reset.stash}?
+Yes, this works great for me. So, I will keep skipping the test
+until this patch makes it into git.git.
 
-Are git-{add,reset.stash} the only commands that the setting influences?
+Thanks!
 
----
- Documentation/config.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 480dd0a..7dd9b01 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1297,7 +1297,8 @@ interactive.singlekey::
- 	In interactive commands, allow the user to provide one-letter
- 	input with a single key (i.e., without hitting enter).
- 	Currently this is used only by the `\--patch` mode of
--	linkgit:git-add[1].  Note that this setting is silently
-+	linkgit:git-add[1], linkgit:git-reset[1] and linkgit:git-stash[1].
-+	Note that this setting is silently
- 	ignored if portable keystroke input is not available.
- 
- log.date::
--- 
-1.7.1
+ATB,
+Ramsay Jones
