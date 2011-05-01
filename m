@@ -1,79 +1,133 @@
-From: Dima Sharov <git.avalakvista@gmail.com>
-Subject: [PATCH] shell: add missing initialization of argv0_path
-Date: Sun, 1 May 2011 09:06:36 +0300
-Message-ID: <8F1D5462-15DC-4F01-9F6A-5C0E477B12F6@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH] Add --info-path and --man-path options to git.
+Date: Sun,  1 May 2011 18:16:25 +1000
+Message-ID: <1304237785-56101-1-git-send-email-jon.seymour@gmail.com>
+Cc: jrnieder@gmail.com, gitster@pobox.com,
+	Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 08:06:58 2011
+X-From: git-owner@vger.kernel.org Sun May 01 10:19:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGPo1-0001SI-LL
-	for gcvg-git-2@lo.gmane.org; Sun, 01 May 2011 08:06:58 +0200
+	id 1QGRrm-0000Vj-CB
+	for gcvg-git-2@lo.gmane.org; Sun, 01 May 2011 10:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752062Ab1EAGGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 May 2011 02:06:39 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:49782 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935Ab1EAGGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2011 02:06:39 -0400
-Received: by bwz15 with SMTP id 15so3948841bwz.19
-        for <git@vger.kernel.org>; Sat, 30 Apr 2011 23:06:38 -0700 (PDT)
+	id S1752580Ab1EAISh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2011 04:18:37 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:63579 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752390Ab1EAISd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2011 04:18:33 -0400
+Received: by pzk9 with SMTP id 9so2685004pzk.19
+        for <git@vger.kernel.org>; Sun, 01 May 2011 01:18:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:content-type:content-transfer-encoding
-         :date:subject:to:message-id:mime-version:x-mailer;
-        bh=evVBHVD7VY4zYdDgINpVPq7hfB//JoEi06XrCMONPIA=;
-        b=TnVhj9gfFUpEUfztt1FkU2Z8LGiuldk7Hnr32c5TyUwWTDghyFo0h/10tvFXnMlS6G
-         KMKcGuVzEoGZhNAW3L1jzadSXPxoQ4YqQZ5DteYDxWWs1v2lxP8noL5qJ/308rH5E9xO
-         SFzvxkReaDTTvAeUms+/PdryNErYKXvKyuR+4=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=/S6jTwkicPoWKWVYrHGKiq382f/+14mxkEyeTqUtTNc=;
+        b=C47IH0EO2NMZbiW6X27kQT12OE5z1P9xiggXOdEUbLxRHnhjBPQH1Bmfj6QOZIIY7f
+         WSSsQR85vx0yxI0vFHa75epFPe/qaOnPuTV5HARXSPui2zwkDMfX2jgMxsl4Vk3OzD+b
+         SLPtTLIQhLAxH2OBLr8wCLTl809cnc872I5V4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:content-type:content-transfer-encoding:date:subject:to
-         :message-id:mime-version:x-mailer;
-        b=R+UM1En7CTq2fQUS4HFYQ+AqpE16IjOKgdtNxf19qFlF0+K3T7LUC4o4DduWOq5WcN
-         TMmsaTW8voPU3dfGuUEE6e5iYrm+4dKW1WL1ryol8NM1sUWK+asQCRH/Ywy4qUflgfQQ
-         6j5U6J9sBkyuBiesYDbhLQVSsOxCscPHVlVzM=
-Received: by 10.205.36.65 with SMTP id sz1mr2881071bkb.74.1304229997888;
-        Sat, 30 Apr 2011 23:06:37 -0700 (PDT)
-Received: from [192.168.1.101] (spearhead.flap.volia.net [93.74.24.105])
-        by mx.google.com with ESMTPS id y22sm2510433bku.20.2011.04.30.23.06.37
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ok6f3ESyCaF8VZJUHzOdDnBUNht2tCwDx1B51//0HT9nLST0aBXjgwvkPQetJmuT6f
+         KekC7AAlhgbioVQvuIW/iiMakoH4clbhpcdL2DiRzdvsbnb7cNOMshFywRGkrJfLGS2w
+         Duyjc/ijdDnzwG1+z0/BlHsFunMTWvXSll0q0=
+Received: by 10.68.17.65 with SMTP id m1mr7250412pbd.70.1304237913283;
+        Sun, 01 May 2011 01:18:33 -0700 (PDT)
+Received: from localhost.localdomain (124-149-125-183.dyn.iinet.net.au [124.149.125.183])
+        by mx.google.com with ESMTPS id k7sm3048294pbe.32.2011.05.01.01.18.30
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 30 Apr 2011 23:06:37 -0700 (PDT)
-X-Mailer: Apple Mail (2.1084)
+        Sun, 01 May 2011 01:18:32 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.rc3.46.g7f712.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172531>
 
-According to c6dfb39 (remote-curl: add missing initialization of
-argv0_path, 2009-10-13), stand-alone programs (non-builtins)
-must call git_extract_argv0_path(argv[0]) in order to help builds
-that derive the installation prefix at runtime. Without this call,
-the program segfaults (or raises an assertion failure).
+To better support git extensions provided by 3rd parties
+which would like to install their own man pages and Info files
+in the same place as git's own man pages and Info files
+add support for --man-path and --info-path options.
 
-Signed-off-by: Dima Sharov <git.avalakvista@gmail.com>
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- shell.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ Documentation/git.txt |   10 +++++++++-
+ Makefile              |    4 +++-
+ git.c                 |    8 +++++++-
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/shell.c b/shell.c
-index dea4cfd..abb8622 100644
---- a/shell.c
-+++ b/shell.c
-@@ -137,6 +137,8 @@ int main(int argc, char **argv)
- 	int devnull_fd;
- 	int count;
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index e4d43a9..c495322 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -9,7 +9,7 @@ git - the stupid content tracker
+ SYNOPSIS
+ --------
+ [verse]
+-'git' [--version] [--exec-path[=<path>]] [--html-path]
++'git' [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+     [-p|--paginate|--no-pager] [--no-replace-objects]
+     [--bare] [--git-dir=<path>] [--work-tree=<path>]
+     [-c <name>=<value>]
+@@ -285,6 +285,14 @@ help ...`.
+ 	Print the path to wherever your git HTML documentation is installed
+ 	and exit.
  
-+	git_extract_argv0_path(argv[0]);
++--man-path::
++	Print the path to wherever your git man pages are installed
++	and exit.
 +
- 	/*
- 	 * Always open file descriptors 0/1/2 to avoid clobbering files
- 	 * in die().  It also avoids not messing up when the pipes are
++--info-path::
++	Print the path to wherever your git Info files are installed
++	and exit.
++
+ -p::
+ --paginate::
+ 	Pipe all output into 'less' (or if set, $PAGER) if standard
+diff --git a/Makefile b/Makefile
+index f5308fe..9119aaa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1684,7 +1684,9 @@ strip: $(PROGRAMS) git$X
+ 
+ git.o: common-cmds.h
+ git.s git.o: EXTRA_CPPFLAGS = -DGIT_VERSION='"$(GIT_VERSION)"' \
+-	'-DGIT_HTML_PATH="$(htmldir_SQ)"'
++	'-DGIT_HTML_PATH="$(htmldir_SQ)"' \
++	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
++	'-DGIT_INFO_PATH="$(infodir_SQ)"'
+ 
+ git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
+diff --git a/git.c b/git.c
+index ef598c3..60a9403 100644
+--- a/git.c
++++ b/git.c
+@@ -6,7 +6,7 @@
+ #include "run-command.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--exec-path[=<path>]] [--html-path]\n"
++	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
+ 	"           [-p|--paginate|--no-pager] [--no-replace-objects]\n"
+ 	"           [--bare] [--git-dir=<path>] [--work-tree=<path>]\n"
+ 	"           [-c name=value] [--help]\n"
+@@ -95,6 +95,12 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 		} else if (!strcmp(cmd, "--html-path")) {
+ 			puts(system_path(GIT_HTML_PATH));
+ 			exit(0);
++		} else if (!strcmp(cmd, "--man-path")) {
++			puts(system_path(GIT_MAN_PATH));
++			exit(0);
++		} else if (!strcmp(cmd, "--info-path")) {
++			puts(system_path(GIT_INFO_PATH));
++			exit(0);
+ 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+ 			use_pager = 1;
+ 		} else if (!strcmp(cmd, "--no-pager")) {
 -- 
-1.7.2.3
+1.7.5.rc3.46.g7f712.dirty
