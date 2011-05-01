@@ -1,125 +1,68 @@
-From: Ciaran <ciaranj@gmail.com>
-Subject: Re: [RFC PATCH] Pass empty file to p4merge where no base is suitable.
-Date: Sun, 1 May 2011 21:47:22 +0100
-Message-ID: <BANLkTimf1q8JM46J-X1BCwQ+GaeWAgv75Q@mail.gmail.com>
-References: <BANLkTimXBayYAScPfk2j9spxcYrmtMJKxg@mail.gmail.com>
-	<7vwriq3p0t.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/largely untested/PATCH] sha1_name: interpret ~n as HEAD~n
+Date: Sun, 01 May 2011 23:21:43 +0200
+Message-ID: <vpqsjsy15i0.fsf@bauges.imag.fr>
+References: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net>
+	<7vfwp1yqnq.fsf@alter.siamese.dyndns.org>
+	<1304238652.9638.1446946253@webmail.messagingengine.com>
+	<7vfwoys20u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+Content-Type: text/plain
+Cc: "Michael J Gruber" <git@drmicha.warpmail.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 01 22:47:43 2011
+X-From: git-owner@vger.kernel.org Sun May 01 23:25:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGdYM-000801-KZ
-	for gcvg-git-2@lo.gmane.org; Sun, 01 May 2011 22:47:43 +0200
+	id 1QGe8q-0001aF-68
+	for gcvg-git-2@lo.gmane.org; Sun, 01 May 2011 23:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755062Ab1EAUrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 May 2011 16:47:24 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:48509 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752848Ab1EAUrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2011 16:47:23 -0400
-Received: by pvg12 with SMTP id 12so2941870pvg.19
-        for <git@vger.kernel.org>; Sun, 01 May 2011 13:47:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=zMSYrf5d3pO8vAPmfZqkDnP9bz0oDRxeBJC6OfGvQ80=;
-        b=u8+wBQPqp6mTJyByUmVhDxDkUPoQoOCfmF236DFDgB8A+PWL0Mz5E9o99iPBDauGrl
-         IzJkgFR84XB3Z2dw0cseA4gWmK7YKttPKqXWXTUvxbsEvDDDHF/ANVk3buM+xaS4mpoK
-         TVZkipJRgUSl8fpEKHs6LXYZbYnLF5NnXscqc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=hFwYK47PS/BLIONMqFznNvZnN4EaX6244M0mJ+hh1spogzpgSYv5i7Iiv9WbFxNaRt
-         REjh+LaQA0ZCUGCBRyp1zNig2zTnXGKehNSE09CqkAohS1CJzNAI+HJPWZnxcrOc6Vwk
-         dfhlAl7M1aRASh2kp9ryC4m2e1Ulwme+ILq1Q=
-Received: by 10.68.38.33 with SMTP id d1mr6290168pbk.389.1304282842601; Sun,
- 01 May 2011 13:47:22 -0700 (PDT)
-Received: by 10.68.62.6 with HTTP; Sun, 1 May 2011 13:47:22 -0700 (PDT)
-In-Reply-To: <7vwriq3p0t.fsf@alter.siamese.dyndns.org>
+	id S1751995Ab1EAVZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2011 17:25:18 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64145 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751747Ab1EAVZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2011 17:25:17 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p41LLiYN011012
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 1 May 2011 23:21:44 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QGe5I-0004qz-2O; Sun, 01 May 2011 23:21:44 +0200
+In-Reply-To: <7vfwoys20u.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 01 May 2011 11:34:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 01 May 2011 23:21:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172546>
 
-Modify the p4merge client command to pass a reference to an empty file
-instead of the local file when no base revision available.
+Junio C Hamano <gitster@pobox.com> writes:
 
-In the situation where a merge tries to add a file from one branch
-into a branch that already contains that file (by name), p4merge
-currently seems to have successfully automatically resolved the
-'conflict' when it is opened (correctly if the files differed by
-just whitespace for example) but leaves the save button disabled. This
-means the user of the p4merge client cannot commit the resolved
-changes back to disk and merely exits, leaving the original
-(merge-conflicted) file in-tact on the disk.
-
-Provide an empty base file to p4merge so that it leaves the save
-button enabled.  This will allow saving of the auto-resolution to
-disk.
-
-Please note that the empty file is temporarily stored in the location
-specified as GIT_DIR/.no_base
-
-Signed-off-by: Ciaran Jessup <ciaranj@gmail.com>
----
-
-Continuation of the thread begun in:
-http://marc.info/?l=git&m=130190735601527&w=2
-
-> The calling script "git-mergetool.sh" seems to take pains to construct
-> these filenames to have the same .ext, presumably so that the tool can
-> take advantage of it to determine the type of contents and do something
-> intelligent about it (e.g. syntax highlighting).
+> "Michael J Gruber" <git@drmicha.warpmail.net> writes:
 >
-> Does the use of .no_base interfere with that effort?
-It doesn't appear to (remember this patch just affects the p4merge
-tool, and no others.)
+>> I meant "rebase -i", sorry. And in fact I mostly mean those cases where
+>> I want to "amend" a commit which is not the top most one.
+>
+> I also see myself getting tempted to say "rebase -i -2" every once in a
+> while; it seems to go well with "log -2" especially when the history is
+> linear.
 
->
-> I suspect that you may be able to simply use "$BASE" for that, no?  It
-> will be cleaned up when cleanup_temp_files() is run anyway (warning: I do
-> not use mergetool, and I am writing this only from my cursory looking of
-> the script, so take this with a large grain of salt).
-I don't think so, the BASE file isn't created at-all in this scenario afaict.
+I like that. As easy to type (or more, depending on the keyboard) as ~2,
+but no nasty interaction with the shell. OTOH, that would be a
+special-case for rebase only (i.e. doesn't make "git show HEAD~2" easier
+to type), but that's the most common case.
 
->
-> Also, the command to use when you want to get an empty file is not "touch".
-> It is not likely that you would have an existing file there, but the whole
-> point of the updated codepath is to have an empty file, and not a file
-> with recent timestamp, it would be far more sensible to say
->
->        : >"$BASE"
->
-> i.e. redirect into the path, with a no-op command.
-Ok, my apologies perl isn't a language I'm overly familiar with :)
-I've adapted the previous patch to take this on board.  Thank you :)
---
- git-mergetool--lib.sh |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index fb3f52b..7b2008f 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -262,7 +262,9 @@ run_merge_tool () {
- 			if $base_present; then
- 				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
- 			else
--				"$merge_tool_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
-+				: > "$GIT_DIR/.no_base"
-+				"$merge_tool_path" "$GIT_DIR/.no_base" "$LOCAL" "$REMOTE" "$MERGED"
-+				rm "$GIT_DIR/.no_base"
- 			fi
- 			check_unchanged
- 		else
 -- 
-1.7.4.1
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
