@@ -1,103 +1,125 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Possible bug with --word-diff=porcelain
-Date: Sun, 1 May 2011 16:00:20 -0400
-Message-ID: <19901.48084.941695.439684@winooski.ccs.neu.edu>
+From: Ciaran <ciaranj@gmail.com>
+Subject: Re: [RFC PATCH] Pass empty file to p4merge where no base is suitable.
+Date: Sun, 1 May 2011 21:47:22 +0100
+Message-ID: <BANLkTimf1q8JM46J-X1BCwQ+GaeWAgv75Q@mail.gmail.com>
+References: <BANLkTimXBayYAScPfk2j9spxcYrmtMJKxg@mail.gmail.com>
+	<7vwriq3p0t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 22:09:49 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 01 22:47:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGcxf-0005t8-6W
-	for gcvg-git-2@lo.gmane.org; Sun, 01 May 2011 22:09:47 +0200
+	id 1QGdYM-000801-KZ
+	for gcvg-git-2@lo.gmane.org; Sun, 01 May 2011 22:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761373Ab1EAUJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 May 2011 16:09:44 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:36910 "EHLO
-	winooski.ccs.neu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761356Ab1EAUJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2011 16:09:42 -0400
-X-Greylist: delayed 559 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 May 2011 16:09:42 EDT
-Received: from winooski.ccs.neu.edu (localhost.localdomain [127.0.0.1])
-	by winooski.ccs.neu.edu (8.14.4/8.14.4) with ESMTP id p41K0LDH016378
-	for <git@vger.kernel.org>; Sun, 1 May 2011 16:00:21 -0400
-Received: (from eli@localhost)
-	by winooski.ccs.neu.edu (8.14.4/8.14.4/Submit) id p41K0Lum016375;
-	Sun, 1 May 2011 16:00:21 -0400
-X-Mailer: VM 8.1.93a under 23.2.1 (x86_64-redhat-linux-gnu)
+	id S1755062Ab1EAUrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2011 16:47:24 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:48509 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848Ab1EAUrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2011 16:47:23 -0400
+Received: by pvg12 with SMTP id 12so2941870pvg.19
+        for <git@vger.kernel.org>; Sun, 01 May 2011 13:47:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=zMSYrf5d3pO8vAPmfZqkDnP9bz0oDRxeBJC6OfGvQ80=;
+        b=u8+wBQPqp6mTJyByUmVhDxDkUPoQoOCfmF236DFDgB8A+PWL0Mz5E9o99iPBDauGrl
+         IzJkgFR84XB3Z2dw0cseA4gWmK7YKttPKqXWXTUvxbsEvDDDHF/ANVk3buM+xaS4mpoK
+         TVZkipJRgUSl8fpEKHs6LXYZbYnLF5NnXscqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hFwYK47PS/BLIONMqFznNvZnN4EaX6244M0mJ+hh1spogzpgSYv5i7Iiv9WbFxNaRt
+         REjh+LaQA0ZCUGCBRyp1zNig2zTnXGKehNSE09CqkAohS1CJzNAI+HJPWZnxcrOc6Vwk
+         dfhlAl7M1aRASh2kp9ryC4m2e1Ulwme+ILq1Q=
+Received: by 10.68.38.33 with SMTP id d1mr6290168pbk.389.1304282842601; Sun,
+ 01 May 2011 13:47:22 -0700 (PDT)
+Received: by 10.68.62.6 with HTTP; Sun, 1 May 2011 13:47:22 -0700 (PDT)
+In-Reply-To: <7vwriq3p0t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172545>
 
-It looks like there are cases where a newline is omitted in the output
-of --word-diff=porcelain:
+Modify the p4merge client command to pass a reference to an empty file
+instead of the local file when no base revision available.
 
-  $ cat A
-  A foo B
-  zzzzzzzz
-  C
-  $ cat B
-  A bar B
-  C
-  $ git diff --word-diff=porcelain A B
-  diff --git a/A b/B
-  index dfadf3e..3e2f1ba 100644
-  --- a/A
-  +++ b/B
-  @@ -1,3 +1,2 @@
-   A 
-  -foo
-  +bar
-    B                        /// right
-  -zzzzzzzz                  \\\ here
-  ~
-   C
-  ~
+In the situation where a merge tries to add a file from one branch
+into a branch that already contains that file (by name), p4merge
+currently seems to have successfully automatically resolved the
+'conflict' when it is opened (correctly if the files differed by
+just whitespace for example) but leaves the save button disabled. This
+means the user of the p4merge client cannot commit the resolved
+changes back to disk and merely exits, leaving the original
+(merge-conflicted) file in-tact on the disk.
 
-I'd expect the output to be
+Provide an empty base file to p4merge so that it leaves the save
+button enabled.  This will allow saving of the auto-resolution to
+disk.
 
-  --- a/A
-  +++ b/B
-  @@ -1,3 +1,2 @@
-   A 
-  -foo
-  +bar
-    B
-  ~
-  -zzzzzzzz
-  ~
-   C
-  ~
+Please note that the empty file is temporarily stored in the location
+specified as GIT_DIR/.no_base
 
-Actually it looks like the problem is not just in the porcelain
-output: I see it with other formats too, like the plain one:
+Signed-off-by: Ciaran Jessup <ciaranj@gmail.com>
+---
 
-  diff --git a/A b/B
-  index dfadf3e..3e2f1ba 100644
-  --- a/A
-  +++ b/B
-  @@ -1,3 +1,2 @@
-  A [-foo-]{+bar+} B[-zzzzzzzz-]
-  C
+Continuation of the thread begun in:
+http://marc.info/?l=git&m=130190735601527&w=2
 
-and with --word-diff=color:
+> The calling script "git-mergetool.sh" seems to take pains to construct
+> these filenames to have the same .ext, presumably so that the tool can
+> take advantage of it to determine the type of contents and do something
+> intelligent about it (e.g. syntax highlighting).
+>
+> Does the use of .no_base interfere with that effort?
+It doesn't appear to (remember this patch just affects the p4merge
+tool, and no others.)
 
-   diff --git a/A b/B
-   index dfadf3e..3e2f1ba 100644
-   --- a/A
-   +++ b/B
-   @@ -1,3 +1,2 @@
-   A foobar Bzzzzzzzz
-   C
+>
+> I suspect that you may be able to simply use "$BASE" for that, no?  It
+> will be cleaned up when cleanup_temp_files() is run anyway (warning: I do
+> not use mergetool, and I am writing this only from my cursory looking of
+> the script, so take this with a large grain of salt).
+I don't think so, the BASE file isn't created at-all in this scenario afaict.
 
-(where the colors are correct, but the newline is missing)
+>
+> Also, the command to use when you want to get an empty file is not "touch".
+> It is not likely that you would have an existing file there, but the whole
+> point of the updated codepath is to have an empty file, and not a file
+> with recent timestamp, it would be far more sensible to say
+>
+>        : >"$BASE"
+>
+> i.e. redirect into the path, with a no-op command.
+Ok, my apologies perl isn't a language I'm overly familiar with :)
+I've adapted the previous patch to take this on board.  Thank you :)
+--
+ git-mergetool--lib.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index fb3f52b..7b2008f 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -262,7 +262,9 @@ run_merge_tool () {
+ 			if $base_present; then
+ 				"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+ 			else
+-				"$merge_tool_path" "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
++				: > "$GIT_DIR/.no_base"
++				"$merge_tool_path" "$GIT_DIR/.no_base" "$LOCAL" "$REMOTE" "$MERGED"
++				rm "$GIT_DIR/.no_base"
+ 			fi
+ 			check_unchanged
+ 		else
 -- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+1.7.4.1
