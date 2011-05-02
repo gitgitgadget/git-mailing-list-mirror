@@ -1,75 +1,70 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] t3700: note a .gitignore matching fault
-Date: Mon, 2 May 2011 22:52:37 +0700
-Message-ID: <BANLkTik=GYXUOeo3hA5yyXfOuBydT40koA@mail.gmail.com>
-References: <1304340464-14829-1-git-send-email-pclouds@gmail.com>
- <1304340923-15927-1-git-send-email-pclouds@gmail.com> <4DBEC766.8020008@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 0/4] grep: support to match by line number
+Date: Mon, 02 May 2011 09:38:55 -0700
+Message-ID: <7vfwoxoy5c.fsf@alter.siamese.dyndns.org>
+References: <cover.1304318972.git.bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon May 02 17:53:15 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 18:39:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGvQw-0000Nx-Gc
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 17:53:14 +0200
+	id 1QGw9S-0003Lp-5V
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 18:39:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756326Ab1EBPxK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2011 11:53:10 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59991 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753546Ab1EBPxI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 11:53:08 -0400
-Received: by fxm17 with SMTP id 17so3715588fxm.19
-        for <git@vger.kernel.org>; Mon, 02 May 2011 08:53:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=ImShkzlN5Thc0tMJBGMirj8WhNd3j7LXLGYln7ABhcQ=;
-        b=FpC5lCKwwIpU6bufsACJ/WKLpxVYlLrzvfzMTtCN1sFtqlduSYWoxvvRYJYKsdW5iL
-         zlKDAz331GSRHxsxiBMpSGQEK9T7k1Dg8LiXArnqytt1EpaT99HCWngQyq7y22FboPCJ
-         aS0CzKs1rzPHPP5eHAoEQjSb7erQJyVxlniXo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CGg7yPrr1dr8wJTYkhgKg8L091IntXYPU+XybRVrHS+yRERqWFG5HfYHoVvcDEADHp
-         woBzfrkzUK2dV68gTIh1vO4Gjj6jMekA7ihgIfkRqlGXA4zGy7ZhsXLGL9cr+cdj/QXg
-         qQ09XTtEF9edw1eZQeNXcRIelahE8wFIQzbiE=
-Received: by 10.223.98.141 with SMTP id q13mr46022fan.96.1304351587081; Mon,
- 02 May 2011 08:53:07 -0700 (PDT)
-Received: by 10.223.118.5 with HTTP; Mon, 2 May 2011 08:52:37 -0700 (PDT)
-In-Reply-To: <4DBEC766.8020008@viscovery.net>
+	id S1753502Ab1EBQjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 12:39:07 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56559 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753314Ab1EBQjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 12:39:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B93314DB6;
+	Mon,  2 May 2011 12:41:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WngtENHNfT2fUWxQ3v5ygMVEkBc=; b=kUqz97
+	OWlln1ypPf8UdjzgUD4s00BijJiq4ZD9NuWLShW0KBX0/jZuL6QqeM1KU7l+dWFd
+	rO4MNqrlCKDOu+SSeGYdB4qS6Lq+05+iGjwotQInwDieXlenmvOWEh1PMUe8l8I4
+	BNbmRW8niCoAn2ZfURYDr7A+vYbzkAWQhWmgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=klAHaE3ZhsZatZreivEwee9XxpyhAE+M
+	5OCCMm8whYa20JibQfiG6BWEXtXtylBYVAKi0fi4A6UQDHQQ3psa3gXjv00FWVlH
+	tUtPEndpJ0uRWSoEIcbbkqSUOYxbwBvawXHdwzaj7/07A8ViDgdd55hTwg09X46G
+	63RjiaM122M=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 85FF84DB5;
+	Mon,  2 May 2011 12:41:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 90F9A4DB2; Mon,  2 May 2011
+ 12:41:00 -0400 (EDT)
+In-Reply-To: <cover.1304318972.git.bert.wesarg@googlemail.com> (Bert Wesarg's
+ message of "Mon, 2 May 2011 13:39:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F8106BB4-74DA-11E0-95A9-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172599>
 
-2011/5/2 Johannes Sixt <j.sixt@viscovery.net>:
-> Am 5/2/2011 14:55, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
->> excluded_from_list() fails to handle this case. It too eagerly decid=
-es
->> the fate of the whole directory without looking further in.
->
-> This has been debated just recently, and I don't think the current
-> behavior is broken. See
->
-> http://thread.gmane.org/gmane.comp.version-control.git/169913
-> http://thread.gmane.org/gmane.comp.version-control.git/157190/focus=3D=
-157196
+I am personally not thrilled by what this series attempts to do, but first
+a few questions:
 
-Because it's expensive to do does not make it right not to do it. I
-agree that traversing all the way down just to make the final decision
-is expensive. But we could at least state that we only support looking
-for .gitignore down to some level (0 as in current git), or based on
-=2Egitignore paths in index, then stop. The point is make it
-configurable with sane default. It's up to users to decide how they
-want to pay.
---=20
-Duy
+ - Are there existing non-git "grep" implementations that do this?
+
+ - If yes:
+   - what command option letter do they use to specify line number?
+   - do they not support a range notation (e.g. -@ 25-30,32-40)?
+   - what do they do when given more than one file?
+
+ - If no:
+   - why not?  Is it a sign that this is ill-thought out misfeature?
+   - perhaps people use something like "sed -n -e 25,30p file" and be
+     happy?
