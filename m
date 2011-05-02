@@ -1,66 +1,109 @@
-From: Jon Seymour <jon.seymour@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] Add --info-path and --man-path options to git.
-Date: Mon, 2 May 2011 10:12:51 +1000
-Message-ID: <BANLkTin7ozKg8E40N3Nas_TSROt4awfEAw@mail.gmail.com>
+Date: Sun, 1 May 2011 19:25:35 -0500
+Message-ID: <20110502002535.GE11550@elie>
 References: <1304237785-56101-1-git-send-email-jon.seymour@gmail.com>
-	<7vbozmthhy.fsf@alter.siamese.dyndns.org>
-	<20110501234833.GC11550@elie>
-	<7v62puq8a5.fsf@alter.siamese.dyndns.org>
-	<BANLkTik-8WVsw-_P7=-pEiXFLeoQQRAVeg@mail.gmail.com>
+ <7vbozmthhy.fsf@alter.siamese.dyndns.org>
+ <20110501234833.GC11550@elie>
+ <7v62puq8a5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 02:13:12 2011
+X-From: git-owner@vger.kernel.org Mon May 02 02:25:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGglE-00085H-54
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 02:13:12 +0200
+	id 1QGgxP-0005IO-DS
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 02:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753993Ab1EBAMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 May 2011 20:12:53 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:34380 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753573Ab1EBAMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2011 20:12:52 -0400
-Received: by vws1 with SMTP id 1so3910908vws.19
-        for <git@vger.kernel.org>; Sun, 01 May 2011 17:12:51 -0700 (PDT)
+	id S1752034Ab1EBAZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2011 20:25:42 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61288 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992Ab1EBAZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2011 20:25:41 -0400
+Received: by iwn34 with SMTP id 34so4308282iwn.19
+        for <git@vger.kernel.org>; Sun, 01 May 2011 17:25:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=U5o8EoU4ojEOL3vbI8uIZGJ+NIXUGt6VHrwM/5drjAs=;
-        b=kxV0xQRTdeSi1HyBEMOAUrVrQsNpsAHqQSukT5qEUvnBUflmjKkdbsh49XCGiBRfAS
-         R2jij6hSKWI7nygHW/u9MZWCI6cGmsz1O3zAuR9CGpvPejEZzMrZeOmYGCu/v7PSFtoQ
-         JTf0N0rr7DyeUP8QY9hnSKOJxghUfoABiAmuY=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=zKdw0RXR72oPaM/T7WzK8j6XyDW8CK/wtlTd4Q5M1Hw=;
+        b=I3KbjBfE65Ub/Df9JVM1q7lcE1IBMwxM8J6Sr3xKlIFRLNjRJFKUx0rZqtVse/w4ko
+         ciGM/Yi6jDFo8rXQAo1sp02by+cb7rK7AZkpbnKbfWdwAkbZ1B2jEQC4+gjd6p3bovxz
+         kRt1SpA7bGSqiBRW0faYEP98qky9GGSI+YRIE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=wnDFapk9uGPxvc7sCY1D5Sx46A1fvy/wC0aMt3T2dW/680X57UftCiv/PdoQvuXhea
-         WdZsmpYbpxfgayLoF8yPo2ZtLGIh0rbwGJz4lVfl4ieJYw+xcZgkhg3+yXiqnthbb8b/
-         rtTF+AolnGp7RsEeyyxa1NvdkO8V2XhiGRPCU=
-Received: by 10.52.180.164 with SMTP id dp4mr3279055vdc.119.1304295171368;
- Sun, 01 May 2011 17:12:51 -0700 (PDT)
-Received: by 10.52.160.66 with HTTP; Sun, 1 May 2011 17:12:51 -0700 (PDT)
-In-Reply-To: <BANLkTik-8WVsw-_P7=-pEiXFLeoQQRAVeg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=thk3PmPalORx2IzY97Sd+EJ8JCkAfsVc9kBAark+AsW1NB1k7uGKJLrRG2BH8qrHsX
+         rFOwGj2cIJbX17+gqtkuly6RisxTiuxAIkcO3GQclHdz3nhwW7UsHV+W/FUEwB442Mqq
+         IX3VVEXvaluSHYU0wkZ7cUFpRo4NFMbmzj7e0=
+Received: by 10.42.150.132 with SMTP id a4mr10075004icw.199.1304295939815;
+        Sun, 01 May 2011 17:25:39 -0700 (PDT)
+Received: from elie (adsl-69-209-62-211.dsl.chcgil.sbcglobal.net [69.209.62.211])
+        by mx.google.com with ESMTPS id f7sm2134239ibn.24.2011.05.01.17.25.37
+        (version=SSLv3 cipher=OTHER);
+        Sun, 01 May 2011 17:25:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v62puq8a5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172559>
 
-On Mon, May 2, 2011 at 10:06 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
-> On Mon, May 2, 2011 at 10:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+
+>> The usual
+>> interface to git's documentation through a man browser is not
+>>
+>> 	man /usr/share/man/man1/git-add.1.gz
+>>
+>> but
+>>
+>> 	man git-add;	# or "man git add" if your man viewer supports it
 >
+> I think you are forgetting the case where the git-man-path the user uses
+> to install git may be outside /usr/share/man (e.g. $HOME/share/man).  In
+> such an installation, by setting $PATH to include your installed git
+> binary (e.g. $HOME/bin), you should be able to say "git help -m git" to
+> tell help.c to internally prepend $HOME/share/man to the $MANPATH before
+> it kicks "man".
 
-BTW: should it be --man-path and --info-path or --man-dir and --info-dir.
+I was not forgetting it, but you are right that we have an opportunity
+to be more helpful in that case.  (My own MANPATH already includes
+~/share/man, but I can see that it is easy to forget to add.)
 
-I chose --man-path to be consistent with the other options, but in
-reality, I think all these options specify directories rather than
-paths (e.g. lists of directories).
+I am still not very happy about it.  The man browser is in a much
+better position to help: the default MANPATH (at least under Debian;
+see manpath(5)[1]) is generated by mapping $PATH entries on the fly, and
+it seems like only an oversight that it deals with directories under
+/usr but not /home.  And it does not thrill me that we would be
+training people that
 
-jon.
+	git help git
+
+will cover for the installer's mistakes, while the more conventional
+
+	man git
+
+mechanism (which is also used for other programs installed to $HOME)
+will not.
+
+> Isn't that what this patch is solving?
+
+I find the "use the right version of help when multiple copies of git"
+use case compelling enough already.  Please don't mind my complaints
+too much.
+
+Thanks for clarifying.
+Jonathan
+
+[1] http://man.he.net/man5/manpath
