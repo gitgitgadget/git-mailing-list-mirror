@@ -1,105 +1,77 @@
-From: Csaba Henk <csaba@lowlife.hu>
-Subject: Re: git symbolic-ref vs. reflog (vs. rebase)
-Date: Mon, 2 May 2011 14:16:02 +0530
-Message-ID: <BANLkTinyKQJQUHa8tn43=cCJMsVbgaZXjA@mail.gmail.com>
-References: <ipek0o$l0v$1@dough.gmane.org> <7vk4edyqqn.fsf@alter.siamese.dyndns.org>
- <BANLkTi=yDECQs=mVkEfrkrFfy0dgFf4U3Q@mail.gmail.com> <20110430041312.GA5287@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/largely untested/PATCH] sha1_name: interpret ~n as HEAD~n
+Date: Mon, 02 May 2011 13:04:56 +0200
+Message-ID: <4DBE8FD8.90303@drmicha.warpmail.net>
+References: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net> <20110429223433.GA3434@sigill.intra.peff.net> <m2k4ecy6rv.fsf@igel.home> <7vfwp0uwu4.fsf@alter.siamese.dyndns.org> <m21v0kw1es.fsf@igel.home> <4DBE6E77.3030703@drmicha.warpmail.net> <BANLkTinxszGhtYobuvci5Yi8eTHW+pi2wA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 02 10:46:34 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 02 13:05:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGolx-0003gP-Ag
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 10:46:30 +0200
+	id 1QGqw6-0007kH-5Q
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 13:05:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756845Ab1EBIqY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2011 04:46:24 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:62997 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751873Ab1EBIqX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 04:46:23 -0400
-Received: by wwk4 with SMTP id 4so2124991wwk.1
-        for <git@vger.kernel.org>; Mon, 02 May 2011 01:46:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=eAoSP6IJFs0g9fm1SSCJrOLWDOtq5oY2cvnvmVFHbb8=;
-        b=GNHVtTB6mccr9Ln5hDbSTa993runuFr6sPsvKU5KUHUjJiJnlm4nh2aKzw7Kp6nC5c
-         G3EpHwW15AklG3+Oieg8y2HFxiX0PeNsgeZOB7AAHKqeYStIwE/qp6mKp/1FcU0I/28q
-         OhPamtKq/bCUatX08/7K7FcLAlJIq8cgshULk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=Tw5JkZQD2dIpwFQFCMAEcA3Gl4gqgmKomuafdAlWDe+tSziQErqimOD+UB5TxcmJvS
-         G8g3XPe8XNDuSXRiNX/nLhQRcg6SrUAUysOZqWuaAe2hGM2hXdaPM/UKGNQ0yOy7eNYM
-         WjF2oEKvYhk9YgzEIifQoyHEupc17+tPUpyyE=
-Received: by 10.216.255.73 with SMTP id i51mr2205881wes.88.1304325982131; Mon,
- 02 May 2011 01:46:22 -0700 (PDT)
-Received: by 10.216.186.143 with HTTP; Mon, 2 May 2011 01:46:02 -0700 (PDT)
-In-Reply-To: <20110430041312.GA5287@sigill.intra.peff.net>
-X-Google-Sender-Auth: vTzD-lP-FJm8uU3pI3qacVgp2UQ
+	id S1753582Ab1EBLE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 07:04:59 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:34083 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752731Ab1EBLE6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 07:04:58 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0347C20303;
+	Mon,  2 May 2011 07:04:58 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 02 May 2011 07:04:58 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=jvUQQHBURvEzffA8AQuYBw+9xrY=; b=RaZsuYpUD9FucgYKPX3Hqh2sjGjh+0IgCWfn42WWh05UEBG8BMFHv+Pnct/58dlMk/jgrSzA2/L8A5MiDdsU4F1BIkVY6mSQFN9HsWu1ZZjblR/x2xf/cNWmcbQewKAHyWJw2HvZVOZ1F3OXyasGehaTxkWRplqSc8cjVHBxNQE=
+X-Sasl-enc: pnvENarRcjIxRzgy7FzYGZbhKO0GbQ5ef73SMKQkTwMQ 1304334297
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 28120403CC9;
+	Mon,  2 May 2011 07:04:57 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <BANLkTinxszGhtYobuvci5Yi8eTHW+pi2wA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172568>
 
-On Sat, Apr 30, 2011 at 9:43 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Apr 29, 2011 at 10:51:31PM +0530, Csaba Henk wrote:
->
->> > Yes, it is. =A0But you can choose to do:
->> >
->> > =A0 =A0 =A0 =A0$ git branch side
->> > =A0 =A0 =A0 =A0$ git symoblic-ref -m "move to side" HEAD refs/head=
-s/side
->> > =A0 =A0 =A0 =A0$ git log --oneline -g HEAD@{0}
->> > =A0 =A0 =A0 =A005ddb9b HEAD@{0}: move to side
->> > =A0 =A0 =A0 =A0e69de29 HEAD@{1}: commit (initial): first commit
->> >
->> > if you wanted to.
->>
->> So do you think the following patch would be the correct fix for the
->> rebase issue:
->>
->> diff --git a/git-rebase.sh b/git-rebase.sh
->> index cbb0ea9..10c1727 100755
->> --- a/git-rebase.sh
->> +++ b/git-rebase.sh
->> @@ -284,7 +284,7 @@ do
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 head_name=3D"$(cat "$dotest"/head-na=
-me)" &&
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 case "$head_name" in
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 refs/*)
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 git symbolic-ref HEAD =
-$head_name ||
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 git symbolic-ref -m "r=
-ebase: aborting" HEAD
->> $head_name ||
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die "Could not move =
-back to $head_name"
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 esac
->
-> I count 2 uses of symbolic-ref without reflogs in git-rebase, one mor=
-e
-> in git-rebase--interactive, and one in git-cvsexportcommit. Should al=
-l
-> be fixed to write a reflog entry?
+Junio C Hamano venit, vidit, dixit 02.05.2011 12:25:
+> 
+> On May 2, 2011 1:42 AM, "Michael J Gruber" <git@drmicha.warpmail.net
+> <mailto:git@drmicha.warpmail.net>> wrote:
+> 
+>> Regarding rebase -i -<n>:
+>> git-rebase (-i) does not have a log/rev-list like interface at all (just
+>> like git-cherry does not), and introducing an argument which looks like
+>> it did would just increase the user confusion, I'm afraid.
+> 
+> That cuts both ways. Some people can already be confused by it not being
+> in line with the log family. Just like format-patch that was born
+> without the log family interface later learned it, it is not impossible
+> to teach rebase the same, no?
+> 
 
-Yeah, that's why I didn't set the above patch as PATCH -- I lack the in=
-sight
-to rebase / plumbing in general to be able to propose a change with the=
- right
-impact.
+Just because we went in a wrong direction then, is it good to go in the
+same direction now?
 
-Csaba
+I'm not saying it necessarily was a wrong direction, I just don't
+consider that an argument.
+
+You can consider my "log --cherry" being part of a long time plan to git
+rid of "kinda-loggish but not log-like" command interfaces (in that case
+git-cherry).
+
+Introducing a shortcut ~n for HEAD~n does not introduce new
+inconsistencies (it's a shortcut for a commit, for every command which
+takes a commit) - and does not contradict introducing -n at all, btw.
+But introducing -n means introducing a range like revision argument to a
+command which does not grok ranges at all, so that is a much deeper
+decision.
+
+Michael
