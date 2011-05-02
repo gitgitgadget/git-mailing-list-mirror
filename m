@@ -1,151 +1,178 @@
-From: Seth Jennings <spartacus06@gmail.com>
-Subject: Re: [PATCH] git-daemon: fix segfaulting in child_handler() in AIX
-Date: Mon, 2 May 2011 12:51:08 -0500
-Message-ID: <BANLkTinOkE-w3qdASuje72a3G6bpEoxWxA@mail.gmail.com>
-References: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
-	<BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
-	<BANLkTimtfXgy9UcdQ8b-8dLrO-qgXFgQnw@mail.gmail.com>
+From: Michael Grubb <devel@dailyvoid.com>
+Subject: [PATCH] Add default merge options for all branches
+Date: Mon, 02 May 2011 11:19:42 -0500
+Message-ID: <4DBED99E.3050709@dailyvoid.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 02 19:51:20 2011
+Content-Transfer-Encoding: 7bit
+Cc: vmiklos@frugalware.org, deskinm@umich.edu, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 20:03:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGxHA-0007Cj-OA
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 19:51:17 +0200
+	id 1QGxTL-00060c-9q
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 20:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754250Ab1EBRvM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2011 13:51:12 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:37985 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753344Ab1EBRvK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 13:51:10 -0400
-Received: by wya21 with SMTP id 21so4380066wya.19
-        for <git@vger.kernel.org>; Mon, 02 May 2011 10:51:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ntvFntx3DVa9ifpj6jyvB8pzVxMRrPK3igs20aCxBj8=;
-        b=c0q6j515sze6qk7KmckzF9t/4ZW3BpnBHTJXpsiLHEpcKW+blJfAbhbdlpG5HbZv8A
-         o/qjko+BBkqM19KneZNS1j5vlvNPGMQAkMdk1+m9zt7pQzhigmaDKPN9lomQAaOf6ZrW
-         4o4o4DwL0ZmD11oowdPAXqK4TTwnM7+HRUWyo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wnvGPXQz382qKDpSke7tGgwU+NEUibK4iMcY6drbWJdUOt8YS4zruPpdnCtlHklnG6
-         c/hSftwoxqvADnLp/ZtxyYw7Xf+KCXe692Y6Pmn1u4UyV//aFoMCZR1gmpWE4lU/nvG2
-         7ovuqjLg/DBJSFWGpmFU+H15qGbMwGa5h8OaM=
-Received: by 10.216.235.95 with SMTP id t73mr5571644weq.10.1304358668803; Mon,
- 02 May 2011 10:51:08 -0700 (PDT)
-Received: by 10.216.187.6 with HTTP; Mon, 2 May 2011 10:51:08 -0700 (PDT)
-In-Reply-To: <BANLkTimtfXgy9UcdQ8b-8dLrO-qgXFgQnw@mail.gmail.com>
+	id S1755536Ab1EBSDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 14:03:39 -0400
+Received: from 75.98.162.166.static.a2webhosting.com ([75.98.162.166]:36265
+	"EHLO dailyvoid.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1754344Ab1EBSDi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 14:03:38 -0400
+X-Greylist: delayed 6231 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 May 2011 14:03:38 EDT
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=dailyvoid.com;
+	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:Content-Type:Content-Transfer-Encoding:X-Source:X-Source-Args:X-Source-Dir;
+	b=nlrRmlWMQiHlsXAdqde3GqvaJTQZecSU4QLr6o5t8mUyvDR7ZPRiuG0hLqkKz83W3cHY/bodaOFZBkO4bIGwXihQTGLRlBcmasoLRzND0D5T6bnaNJ2d3QKw/my0N1iK;
+Received: from adsl-99-59-251-170.dsl.ltrkar.sbcglobal.net ([99.59.251.170] helo=macbook.local)
+	by a2s24.a2hosting.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <devel@dailyvoid.com>)
+	id 1QGvqZ-0003zi-A8; Mon, 02 May 2011 12:19:43 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - a2s24.a2hosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - dailyvoid.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172610>
 
-Thanks Christian,
+Introduce a new configuration variable, merge.mergeoptions.
+The semantics of this new variable are the same as the branch specific
+branch.<branch>.mergeoptions.  However, if a branch specific setting is
+found, this option will not override it.
 
-Sorry for the dup for you Christian.  The email sent in HTML instead
-of plaintext and got bounced by the mailing list.
+The need for this arises from the fact that there is currently not an
+easy way to set merge options for all branches. Instead of having to
+specify merge options for each individual branch there should be a way
+to set defaults for all branches and then override a specific branch's
+options.
 
-I tried reverting just the part the sets the SIGCHLD handler to the
-default as you suggested, but the problem still exists.
+The approach taken is to make note of whether a branch specific
+mergeoptions key has been seen and only apply the global value if it
+hasn't. An alternative method would be to keep the
+branch.<branch>.mergeoptions semantics, but assign a special value for
+<branch> to be the global default.
 
-It is true that the AIX libc signal() function basically wraps the a
-call to sigaction().
+Signed-off-by: Michael Grubb <devel@dailyvoid.com>
+---
+ Documentation/merge-config.txt |    7 +++++++
+ builtin/merge.c                |   27 ++++++++++++++++++++++-----
+ t/t7600-merge.sh               |   27 +++++++++++++++++++++++++++
+ 3 files changed, 56 insertions(+), 5 deletions(-)
 
-I'll investigate more and update this thread when I have something.
-
-Seth
-
-On Wed, Apr 20, 2011 at 7:53 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi,
->
-> I have no idea what the problem could be, but maybe I will be lucky
-> with my suggestions.
->
-> On Fri, Apr 15, 2011 at 6:54 PM, Seth Jennings <spartacus06@gmail.com=
-> wrote:
-> > There is a git-daemon segfault issue that seems to be specific to A=
-IX.
-> >
-> > Whenever a remote user pulls or clones, the operation succeeds but
-> > git-daemon crashes immediately afterward.
-> >
-> > $ gdb git-daemon core
-> > ...
-> > Core was generated by `git-daemon'.
-> > Program terminated with signal 11, Segmentation fault.
-> > #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_=
-xpg5.o)
-> > (gdb) where
-> > #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_=
-xpg5.o)
-> > #1 =A00xd04f1874 in _p_sigaction () from /usr/lib/libpthreads.a(shr=
-_xpg5.o)
-> > #2 =A00xd013ae34 in sigaction () from /usr/lib/libc.a(shr.o)
-> > #3 =A00xd0217cd8 in signal () from /usr/lib/libc.a(shr.o)
->
-> signal() is calling sigaction() so sigaction() must be called with
-> different parameters in your patch and when it crashes.
-> Could you have a look at the difference between parameters?
->
-> > #4 =A00x10000b90 in child_handler (signo=3D0) at daemon.c:718
-> > #5 =A0<signal handler called>
-> >
-> > Through experimentation, I found that using sigaction() instead of
-> > signal() resolves the issue. =A0I'm not entirely sure why this is.
-> >
-> > Any feedback about the issue or the patch is welcome. =A0There migh=
-t be
-> > a better solution.
-> >
-> > On Fri, Apr 15, 2011 at 11:51 AM, Seth Jennings <spartacus06@gmail.=
-com> wrote:
-> >> This issue seems to be specific to git-daemon on AIX built with xl=
-c.
-> >> After commit 695605b5080e1957bd9dab1fed35a7fee9814297 (from Aug 20=
-08),
-> >> git-daemon segfaults in child_handler() inside the signal() syscal=
-l
-> >> immediately after any remote clone/pull operation.
->
-> Could you try some variants that revert or change parts of this commi=
-t?
->
-> For example you could revert only this hunk:
->
-> @@ -1036,11 +1032,6 @@ int main(int argc, char **argv)
-> =A0 =A0 =A0 =A0gid_t gid =3D 0;
-> =A0 =A0 =A0 =A0int i;
->
-> - =A0 =A0 =A0 /* Without this we cannot rely on waitpid() to tell
-> - =A0 =A0 =A0 =A0* what happened to our children.
-> - =A0 =A0 =A0 =A0*/
-> - =A0 =A0 =A0 signal(SIGCHLD, SIG_DFL);
-> -
-> =A0 =A0 =A0 =A0for (i =3D 1; i < argc; i++) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0char *arg =3D argv[i];
->
->
-> >>=A0While it is not
-> >> fully understood why this happens, changing signal() to sigaction(=
-)
-> >> resolves the issue.
->
-> Yeah but it would be nice to understand.
->
-> Thanks in advance,
-> Christian.
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index 8920258..0fc7511 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -57,6 +57,13 @@ merge.verbosity::
+ 	above outputs debugging information.  The default is level 2.
+ 	Can be overridden by the 'GIT_MERGE_VERBOSITY' environment variable.
+ +merge.mergeoptions::
++	Sets default options for merging any branch. This value is only
++	used if there is not a branch.<name>.mergeoptions value set.
++	The syntax and supported options are the same as those of 'git
++	merge', but option values containing whitespace characters are
++	currently not supported.
++
+ merge.<driver>.name::
+ 	Defines a human-readable name for a custom low-level
+ 	merge driver.  See linkgit:gitattributes[5] for details.
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 0bdd19a..1d4f852 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -505,9 +505,18 @@ cleanup:
+  static int git_merge_config(const char *k, const char *v, void *cb)
+ {
+-	if (branch && !prefixcmp(k, "branch.") &&
+-		!prefixcmp(k + 7, branch) &&
+-		!strcmp(k + 7 + strlen(branch), ".mergeoptions")) {
++	static int branch_merge_options_set = 0;
++	int merge_option_mode = 0;
++
++	if ( !strcmp(k, "merge.mergeoptions") )
++		merge_option_mode = 1;
++	else if ( branch && !prefixcmp(k, "branch.") &&
++			 !prefixcmp(k + 7, branch) &&
++			 !strcmp(k + 7 + strlen(branch), ".mergeoptions"))
++		merge_option_mode = 2;
++
++	if ( (merge_option_mode == 1 && !branch_merge_options_set) ||
++		  merge_option_mode == 2) {
+ 		const char **argv;
+ 		int argc;
+ 		char *buf;
+@@ -515,14 +524,22 @@ static int git_merge_config(const char *k, const
+char *v, void *cb)
+ 		buf = xstrdup(v);
+ 		argc = split_cmdline(buf, &argv);
+ 		if (argc < 0)
+-			die(_("Bad branch.%s.mergeoptions string: %s"), branch,
+-			    split_cmdline_strerror(argc));
++		{
++			if ( merge_option_mode == 1 )
++				die(_("Bad merge.mergeoptions string: %s"), +				
+split_cmdline_strerror(argc));
++			else
++				die(_("Bad branch.%s.mergeoptions string: %s"), branch,
++					split_cmdline_strerror(argc));
++		}
+ 		argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
+ 		memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
+ 		argc++;
+ 		parse_options(argc, argv, NULL, builtin_merge_options,
+ 			      builtin_merge_usage, 0);
+ 		free(buf);
++		if ( merge_option_mode == 2 )
++			branch_merge_options_set = 1;
+ 	}
+  	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 87d5d78..15e9418 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -415,6 +415,33 @@ test_expect_success 'merge c0 with c1 (no-ff)' '
+  test_debug 'git log --graph --decorate --oneline --all'
+ +test_expect_success 'merge c0 with c1 (global no-ff)' '
++	git reset --hard c0 &&
++	git config --unset branch.master.mergeoptions &&
++	git config merge.mergeoptions "--no-ff" &&
++	test_tick &&
++	git merge c1 &&
++	git config --remove-section merge &&
++	verify_merge file result.1 &&
++	verify_parents $c0 $c1
++'
++
++test_debug 'git log --graph --decorate --oneline --all'
++
++test_expect_success 'combine merge.mergeoptions with
+branch.x.mergeoptions' '
++	git reset --hard c0 &&
++	git config --remove-section branch.master &&
++	git config merge.mergeoptions "--no-ff" &&
++	git config branch.master.mergeoptions "--ff" &&
++	test_tick &&
++	git merge c1 &&
++	git config --remove-section merge &&
++	verify_merge file result.1 &&
++	verify_parents "$c0"
++'
++
++test_debug 'git log --graph --decorate --oneline --all'
++
+ test_expect_success 'combining --squash and --no-ff is refused' '
+ 	test_must_fail git merge --squash --no-ff c1 &&
+ 	test_must_fail git merge --no-ff --squash c1
+-- 
+1.7.5
