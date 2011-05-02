@@ -1,94 +1,87 @@
-From: Csaba Henk <csaba@lowlife.hu>
-Subject: Re: git symbolic-ref vs. reflog (vs. rebase)
-Date: Mon, 2 May 2011 14:08:28 +0530
-Message-ID: <BANLkTimMCsXuP45WFDG-1FvkicLm5idKEQ@mail.gmail.com>
-References: <ipek0o$l0v$1@dough.gmane.org> <7vk4edyqqn.fsf@alter.siamese.dyndns.org>
- <20110429224829.GC3434@sigill.intra.peff.net> <7vk4ecvf2c.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/largely untested/PATCH] sha1_name: interpret ~n as HEAD~n
+Date: Mon, 02 May 2011 10:42:31 +0200
+Message-ID: <4DBE6E77.3030703@drmicha.warpmail.net>
+References: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net>	<20110429223433.GA3434@sigill.intra.peff.net>	<m2k4ecy6rv.fsf@igel.home> <7vfwp0uwu4.fsf@alter.siamese.dyndns.org> <m21v0kw1es.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 10:38:56 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Mon May 02 10:42:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGoed-0008Hy-GU
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 10:38:55 +0200
+	id 1QGoiH-0001im-EA
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 10:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756782Ab1EBIiu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2011 04:38:50 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:36840 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753920Ab1EBIit convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 04:38:49 -0400
-Received: by wwa36 with SMTP id 36so6117679wwa.1
-        for <git@vger.kernel.org>; Mon, 02 May 2011 01:38:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dptLNi/YD6hgB/OWhbjQX+0HYh6rQ+DAYKVXYJYZj3w=;
-        b=Lp1CKdOZQ7h7zynIevcKTO3VI44wgIcnzz78vspKyW26x/D3YNy+BYlZ35Kq4byzWH
-         5D8sDJqXkz0DhoIbOloisoRcE5DWVW4TC7+IoE2moNbv7mpcqnwd6REny6lAP8NtyqhJ
-         ylM9nUNEc5E0Q/0fxAdrOO5cbmt4GfTAqaelM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=xbksaX/zeu+WfPLLhGSNIwosLduSuUPyRhfAxxHE9v/UqMZUTFiLWjL7388nniCise
-         bPjQ3gM44hbtkYhyA7v6GmSxFK4p8/Jv33lUMKW08C1hVykyPaCpkqid3UsIKfIIxz09
-         zUGkQgagqJ0yyNM9zidwHnDBS2f2tY9CeL1Bk=
-Received: by 10.216.24.73 with SMTP id w51mr7649655wew.72.1304325528103; Mon,
- 02 May 2011 01:38:48 -0700 (PDT)
-Received: by 10.216.186.143 with HTTP; Mon, 2 May 2011 01:38:28 -0700 (PDT)
-In-Reply-To: <7vk4ecvf2c.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: fyJ1kycYLm48uRanLDFDJP2PYzo
+	id S1756332Ab1EBImf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 04:42:35 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:54278 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753404Ab1EBImf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 04:42:35 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 2847C205B6;
+	Mon,  2 May 2011 04:42:34 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute5.internal (MEProxy); Mon, 02 May 2011 04:42:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=p2aeNQBSCgCk0JcY70pDwiReOG8=; b=rNlQ/G8KSeXhQvzTh6iCZwO7p+HT8BNSyLLVSHUDMtyvbdkjHis+pP4MtBURW5oL/CBOijmwHJPkxnYU5Mw1y7trmZClLIQejmGatXJkn/YqQ91BHQDDmYtVwXr+lxtgu1mf2EUGasnvwelJgPP4MKvtCj+q4FV5Zccjb+X1sV0=
+X-Sasl-enc: JLr/DfR2OV6YRY9iq9Sg969k24g7yxH07CF5aLTBCB0N 1304325753
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6C2BE4458F5;
+	Mon,  2 May 2011 04:42:33 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <m21v0kw1es.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172566>
 
-On Sat, Apr 30, 2011 at 4:30 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jeff King <peff@peff.net> writes:
->
->> I think every caller should be using "-m" these days. =A0I know we c=
-an't
->> _require_ it for historical reasons. But shouldn't symbolic-ref alwa=
-ys
->> write a reflog entry? Even something like "we changed and I can't te=
-ll
->> you why" to cover older scripts that call symbolic-ref?
->
-> I think the particular instance Csaba saw in rebase may want to pass =
-the
-> reason why it flipped the HEAD.
->
-> Flipping HEAD temporarily to another ref to do something, only to fli=
-p it
-> back before giving the control back to the user, might be something a
-> script may want to have a choice of not logging, so I am mildly negat=
-ive
-> on changing the command to unconditionally log empty entry without be=
-ing
-> told.
->
-> "update-ref" seems to write an empty entry even when not given an "-m=
-"
-> option, and we can view it as robbing a similar choice from the scrip=
-ts.
-> We might want to fix it. =A0I dunno.
+Andreas Schwab venit, vidit, dixit 30.04.2011 11:09:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Andreas Schwab <schwab@linux-m68k.org> writes:
+>>
+>>> Jeff King <peff@peff.net> writes:
+>>>
+>>>> It also conflicts a little with the shell's "~user" syntax, though
+>>>> presumably you don't have users named "1" and "2".
+>>>
+>>> Well, you sorta do if you did use pushd.
+>>
+>> Yeah, I was also worried about that.  Or some arcane system
+>> misinterpreting "~0" as the home directory of root ;-)
+> 
+> On non-arcane systems ~0 is expanded to the current directory.
+> 
+> Andreas.
+> 
+[cumulative reply :)]
 
-What if symbolic-ref and/or update-ref were changed so that the default
-invocation would add a reflog entry with a default (empty?) note, howev=
-er,
-also provide an option with which suppressing the reflog can be request=
-ed?
+While we could use a short-hand for HEAD also I don't think ~0 really is
+a concern.
 
-Csaba
+Regarding consistency:
+We try to have reasonable defaults and try to dwim (which are different
+things) even if that breaks consistency/systematics, because
+useful/reasonable and "what I mean" depend on the context.
+
+"^" resp. ".." and "..." are ambiguous and cannot be resolved easily
+because for most commands they can mean two things resp. require two
+arguments. (".." and "..." could maybe default do "@{u}..HEAD" etc.)
+
+"~<n>" can only take a revision argument to its left, and also it needs
+an argument to its left (as opposed to "^"). Therefore we can default it
+unambiguously and without braking any current usage (that I know of).
+
+Regarding rebase -i -<n>:
+git-rebase (-i) does not have a log/rev-list like interface at all (just
+like git-cherry does not), and introducing an argument which looks like
+it did would just increase the user confusion, I'm afraid.
+
+Michael
