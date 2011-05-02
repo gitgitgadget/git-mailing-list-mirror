@@ -1,148 +1,60 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH/RFC 3/4] grep: introduce pattern which matches at line number
-Date: Mon, 2 May 2011 10:33:04 -0300
-Message-ID: <BANLkTinUWbhCKyfpimUuvCsxnCmRi3E=dg@mail.gmail.com>
-References: <cover.1304318972.git.bert.wesarg@googlemail.com>
-	<f768ea6e107cdd229a18df0bac3bf583eb1f9fc5.1304321122.git.bert.wesarg@googlemail.com>
-	<cover.1304321122.git.bert.wesarg@googlemail.com>
-	<2681b60988c7c4d059f83df368395eca0520012c.1304321122.git.bert.wesarg@googlemail.com>
-	<f85d783d43bfe7f9e9f23a10e72e8a2a83033cac.1304321122.git.bert.wesarg@googlemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon May 02 15:33:14 2011
+From: Valentin Haenel <valentin.haenel@gmx.de>
+Subject: [PATCH v2 4/5] git-stash.txt: document 'interactive.singlekey'
+Date: Mon,  2 May 2011 15:44:31 +0200
+Message-ID: <1304343872-1654-5-git-send-email-valentin.haenel@gmx.de>
+References: <20110501045140.GA13387@sigill.intra.peff.net>
+Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Valentin Haenel <valentin.haenel@gmx.de>
+To: Git-List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 02 15:46:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGtFQ-0008N5-Gr
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 15:33:13 +0200
+	id 1QGtRt-0007Ih-N3
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 15:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758816Ab1EBNdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2011 09:33:08 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47363 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757079Ab1EBNdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2011 09:33:05 -0400
-Received: by iyb14 with SMTP id 14so4622124iyb.19
-        for <git@vger.kernel.org>; Mon, 02 May 2011 06:33:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MRdPSKI3uJgwvr3Xdq8N5TPOFb/XA3+bBxVc+YfldEc=;
-        b=udoTW4eiubt/rhwBgN3SBsIgG5Y+CEa1mkVPRQ6VRPH/YIrxgPxDSNLiT9hVau1hdG
-         Dki9gAv+RKFJCKY6SKAStAyy0Kuxtp+kp2OByAqX+epZ753329jcBuvZZlyc3Uwnsf+z
-         Q2+o3A9qIWuiDVdLJi7XuwL+d01xSf0we6LCA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QxJME59m8eXdLMCGqP41g8or1VZdeEWdRzW8seNYU27GHu6cgldw4gLJ1rzERcYWYG
-         jV8ERA1hSbaRan9X8x2kOnwnQ8oR3rxT9cABX6nS8DOeMFwAEcw6HEOJjKARpmbR5dA3
-         3825vFz2V+2OfBcP9FnMZHNkQV7mbYhP3LqR0=
-Received: by 10.43.59.140 with SMTP id wo12mr9327946icb.408.1304343184857;
- Mon, 02 May 2011 06:33:04 -0700 (PDT)
-Received: by 10.42.219.8 with HTTP; Mon, 2 May 2011 06:33:04 -0700 (PDT)
-In-Reply-To: <f85d783d43bfe7f9e9f23a10e72e8a2a83033cac.1304321122.git.bert.wesarg@googlemail.com>
+	id S1757506Ab1EBNp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 09:45:58 -0400
+Received: from kudu.in-berlin.de ([192.109.42.123]:38710 "EHLO
+	kudu.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754561Ab1EBNp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 09:45:57 -0400
+Received: from kudu.in-berlin.de (localhost [127.0.0.1])
+	by kudu.in-berlin.de (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p42DjjLp002119;
+	Mon, 2 May 2011 15:45:45 +0200
+Received: (from esc@localhost)
+	by kudu.in-berlin.de (8.14.3/8.14.3/Submit) id p42DjjpR002118;
+	Mon, 2 May 2011 15:45:45 +0200
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <20110501045140.GA13387@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172586>
 
-T24gTW9uLCBNYXkgMiwgMjAxMSBhdCA4OjM5IEFNLCBCZXJ0IFdlc2FyZyA8YmVydC53ZXNhcmdA
-Z29vZ2xlbWFpbC5jb20+IHdyb3RlOgo+IFNpZ25lZC1vZmYtYnk6IEJlcnQgV2VzYXJnIDxiZXJ0
-Lndlc2FyZ0Bnb29nbGVtYWlsLmNvbT4KPiAtLS0KPiDCoGdyZXAuYyB8IMKgIDMzICsrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKwo+IMKgZ3JlcC5oIHwgwqAgwqA3ICsrKysrLS0KPiDC
-oDIgZmlsZXMgY2hhbmdlZCwgMzggaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKPgo+IGRp
-ZmYgLS1naXQgYS9ncmVwLmMgYi9ncmVwLmMKPiBpbmRleCBmMjFiMDIyLi5jYmIzNzU3IDEwMDY0
-NAo+IC0tLSBhL2dyZXAuYwo+ICsrKyBiL2dyZXAuYwo+IEBAIC04Nyw2ICs4NywxNSBAQCBzdGF0
-aWMgdm9pZCBjb21waWxlX3JlZ2V4cChzdHJ1Y3QgZ3JlcF9wYXQgKnAsIHN0cnVjdCBncmVwX29w
-dCAqb3B0KQo+IMKgIMKgIMKgIMKgfQo+IMKgfQo+Cj4gK3N0YXRpYyB2b2lkIHBhcnNlX2xubyhz
-dHJ1Y3QgZ3JlcF9wYXQgKnAsIHN0cnVjdCBncmVwX29wdCAqb3B0KQpNYXliZSBwYXJzZV9saW5l
-X251bWJlcj8KCj4gK3sKPiArIMKgIMKgIMKgIGNoYXIgKmVvbjsKPiArCj4gKyDCoCDCoCDCoCBw
-LT51LmxubyA9IHN0cnRvdWwocC0+cGF0dGVybiwgJmVvbiwgMTApOwo+ICsgwqAgwqAgwqAgaWYg
-KCplb24gfHwgcC0+dS5sbm8gPT0gMCkKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGRpZSgiJyVz
-JzogSW52YWxpZCBudW1iZXIgZm9yIGxpbmUgbWF0Y2giLCBwLT5wYXR0ZXJuKTsKPiArfQo+ICsK
-PiDCoHN0YXRpYyBzdHJ1Y3QgZ3JlcF9leHByICpjb21waWxlX3BhdHRlcm5fb3Ioc3RydWN0IGdy
-ZXBfcGF0ICoqKTsKPiDCoHN0YXRpYyBzdHJ1Y3QgZ3JlcF9leHByICpjb21waWxlX3BhdHRlcm5f
-YXRvbShzdHJ1Y3QgZ3JlcF9wYXQgKipsaXN0KQo+IMKgewo+IEBAIC0xMDAsNiArMTA5LDcgQEAg
-c3RhdGljIHN0cnVjdCBncmVwX2V4cHIgKmNvbXBpbGVfcGF0dGVybl9hdG9tKHN0cnVjdCBncmVw
-X3BhdCAqKmxpc3QpCj4gwqAgwqAgwqAgwqBjYXNlIEdSRVBfUEFUVEVSTjogLyogYXRvbSAqLwo+
-IMKgIMKgIMKgIMKgY2FzZSBHUkVQX1BBVFRFUk5fSEVBRDoKPiDCoCDCoCDCoCDCoGNhc2UgR1JF
-UF9QQVRURVJOX0JPRFk6Cj4gKyDCoCDCoCDCoCBjYXNlIEdSRVBfTE5POgo+IMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgeCA9IHhjYWxsb2MoMSwgc2l6ZW9mIChzdHJ1Y3QgZ3JlcF9leHByKSk7Cj4g
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB4LT5ub2RlID0gR1JFUF9OT0RFX0FUT007Cj4gwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqB4LT51LmF0b20gPSBwOwo+IEBAIC0yNjQsNiArMjc0LDkgQEAgdm9p
-ZCBjb21waWxlX2dyZXBfcGF0dGVybnMoc3RydWN0IGdyZXBfb3B0ICpvcHQpCj4gwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqBjYXNlIEdSRVBfUEFUVEVSTl9CT0RZOgo+IMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgY29tcGlsZV9yZWdleHAocCwgb3B0KTsKPiDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoGJyZWFrOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY2Fz
-ZSBHUkVQX0xOTzoKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHBhcnNlX2xu
-byhwLCBvcHQpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYnJlYWs7Cj4g
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBkZWZhdWx0Ogo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgb3B0LT5leHRlbmRlZCA9IDE7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqBicmVhazsKPiBAQCAtMjk3LDYgKzMxMCw3IEBAIHN0YXRpYyB2b2lkIGZyZWVf
-cGF0dGVybl9leHByKHN0cnVjdCBncmVwX2V4cHIgKngpCj4gwqAgwqAgwqAgwqBzd2l0Y2ggKHgt
-Pm5vZGUpIHsKPiDCoCDCoCDCoCDCoGNhc2UgR1JFUF9OT0RFX1RSVUU6Cj4gwqAgwqAgwqAgwqBj
-YXNlIEdSRVBfTk9ERV9BVE9NOgo+ICsgwqAgwqAgwqAgY2FzZSBHUkVQX05PREVfTE5POgo+IMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgYnJlYWs7Cj4gwqAgwqAgwqAgwqBjYXNlIEdSRVBfTk9ERV9O
-T1Q6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBmcmVlX3BhdHRlcm5fZXhwcih4LT51LnVuYXJ5
-KTsKPiBAQCAtNDM2LDYgKzQ1MCwyMSBAQCBzdGF0aWMgc3RydWN0IHsKPiDCoCDCoCDCoCDCoHsg
-ImNvbW1pdHRlciAiLCAxMCB9LAo+IMKgfTsKPgo+ICtzdGF0aWMgaW50IG1hdGNoX2xubyhzdHJ1
-Y3QgZ3JlcF9wYXQgKnAsIGNoYXIgKmJvbCwgY2hhciAqZW9sLCB1bnNpZ25lZCBsbm8sCj4gKyDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHJlZ21hdGNoX3QgKnBtYXRjaCkKPiArewo+ICsg
-wqAgwqAgwqAgaWYgKHAtPnUubG5vID09IGxubykgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-LyoKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBiZWNhdXNlIGNvbG9yaW5nIHdpbGwgc3Rv
-cCBhdCBzbyA9PSBlbywgbWF0Y2ggYXQgdGhlIGVuZAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAqIG9mIGxpbmUsIHNvIHRoYXQgdGhlIHdob2xlIGxpbmUgY2FuIGJlIGNvbG9yZWQKPiArIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgKi8KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHBtYXRjaC0+
-cm1fc28gPSBlb2wgLSBib2w7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBwbWF0Y2gtPnJtX2Vv
-ID0gZW9sIC0gYm9sOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIDE7Cj4gKyDCoCDC
-oCDCoCB9Cj4gKyDCoCDCoCDCoCByZXR1cm4gMDsKPiArfQo+ICsKPiDCoHN0YXRpYyBpbnQgbWF0
-Y2hfb25lX3BhdHRlcm4oc3RydWN0IGdyZXBfcGF0ICpwLCBjaGFyICpib2wsIGNoYXIgKmVvbCwK
-PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1bnNpZ25lZCBsbm8s
-IGVudW0gZ3JlcF9jb250ZXh0IGN0eCwKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCByZWdtYXRjaF90ICpwbWF0Y2gsIGludCBlZmxhZ3MpCj4gQEAgLTQ0NCw2ICs0
-NzMsOSBAQCBzdGF0aWMgaW50IG1hdGNoX29uZV9wYXR0ZXJuKHN0cnVjdCBncmVwX3BhdCAqcCwg
-Y2hhciAqYm9sLCBjaGFyICplb2wsCj4gwqAgwqAgwqAgwqBpbnQgc2F2ZWRfY2ggPSAwOwo+IMKg
-IMKgIMKgIMKgY29uc3QgY2hhciAqc3RhcnQgPSBib2w7Cj4KPiArIMKgIMKgIMKgIGlmIChwLT50
-b2tlbiA9PSBHUkVQX0xOTykKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJldHVybiBtYXRjaF9s
-bm8ocCwgYm9sLCBlb2wsIGxubywgcG1hdGNoKTsKPiArCj4gwqAgwqAgwqAgwqBpZiAoKHAtPnRv
-a2VuICE9IEdSRVBfUEFUVEVSTikgJiYKPiDCoCDCoCDCoCDCoCDCoCDCoCgocC0+dG9rZW4gPT0g
-R1JFUF9QQVRURVJOX0hFQUQpICE9IChjdHggPT0gR1JFUF9DT05URVhUX0hFQUQpKSkKPiDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoHJldHVybiAwOwo+IEBAIC02MTQsNiArNjQ2LDcgQEAgc3RhdGlj
-IGludCBuZXh0X21hdGNoKHN0cnVjdCBncmVwX29wdCAqb3B0LCBjaGFyICpib2wsIGNoYXIgKmVv
-bCwgdW5zaWduZWQgbG5vLAo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2Fz
-ZSBHUkVQX1BBVFRFUk46IC8qIGF0b20gKi8KPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoGNhc2UgR1JFUF9QQVRURVJOX0hFQUQ6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqBjYXNlIEdSRVBfUEFUVEVSTl9CT0RZOgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgY2FzZSBHUkVQX0xOTzoKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoGhpdCB8PSBtYXRjaF9uZXh0X3BhdHRlcm4ocCwgYm9sLCBl
-b2wsIGxubywgY3R4LAo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcG1hdGNoLCBlZmxh
-Z3MpOwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgYnJl
-YWs7Cj4gZGlmZiAtLWdpdCBhL2dyZXAuaCBiL2dyZXAuaAo+IGluZGV4IDk5MTJjMTEuLjQxODIx
-ZjMgMTAwNjQ0Cj4gLS0tIGEvZ3JlcC5oCj4gKysrIGIvZ3JlcC5oCj4gQEAgLTEwLDcgKzEwLDgg
-QEAgZW51bSBncmVwX3BhdF90b2tlbiB7Cj4gwqAgwqAgwqAgwqBHUkVQX09QRU5fUEFSRU4sCj4g
-wqAgwqAgwqAgwqBHUkVQX0NMT1NFX1BBUkVOLAo+IMKgIMKgIMKgIMKgR1JFUF9OT1QsCj4gLSDC
-oCDCoCDCoCBHUkVQX09SCj4gKyDCoCDCoCDCoCBHUkVQX09SLAo+ICsgwqAgwqAgwqAgR1JFUF9M
-Tk8KCk1heWJlIEdSRVBfTElORV9OUj8KCgo+IMKgfTsKPgo+IMKgZW51bSBncmVwX2NvbnRleHQg
-ewo+IEBAIC0zNCw2ICszNSw3IEBAIHN0cnVjdCBncmVwX3BhdCB7Cj4gwqAgwqAgwqAgwqBlbnVt
-IGdyZXBfaGVhZGVyX2ZpZWxkIGZpZWxkOwo+IMKgIMKgIMKgIMKgdW5pb24gewo+IMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgcmVnZXhfdCByZWdleHA7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1
-bnNpZ25lZCBsbm87Cj4gwqAgwqAgwqAgwqB9IHU7Cj4gwqAgwqAgwqAgwqB1bnNpZ25lZCBmaXhl
-ZDoxOwo+IMKgIMKgIMKgIMKgdW5zaWduZWQgaWdub3JlX2Nhc2U6MTsKPiBAQCAtNDUsNyArNDcs
-OCBAQCBlbnVtIGdyZXBfZXhwcl9ub2RlIHsKPiDCoCDCoCDCoCDCoEdSRVBfTk9ERV9OT1QsCj4g
-wqAgwqAgwqAgwqBHUkVQX05PREVfQU5ELAo+IMKgIMKgIMKgIMKgR1JFUF9OT0RFX1RSVUUsCj4g
-LSDCoCDCoCDCoCBHUkVQX05PREVfT1IKPiArIMKgIMKgIMKgIEdSRVBfTk9ERV9PUiwKPiArIMKg
-IMKgIMKgIEdSRVBfTk9ERV9MTk8KPiDCoH07Cj4KPiDCoHN0cnVjdCBncmVwX2V4cHIgewo+IC0t
-Cj4gMS43LjUuMzQ5LmdmZWIxYQo+Cj4gLS0KPiBUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlz
-dDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbgo+IHRoZSBib2R5IG9mIGEgbWVz
-c2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCj4gTW9yZSBtYWpvcmRvbW8gaW5mbyBh
-dCDCoGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo+Cg==
+Signed-off-by: Valentin Haenel <valentin.haenel@gmx.de>
+Helped-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-stash.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 79abc38..c8a349e 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -63,6 +63,9 @@ from your worktree.
+ +
+ The `--patch` option implies `--keep-index`.  You can use
+ `--no-keep-index` to override this.
+++
++The configuration `interactive.singlekey` allows the user to provide
++one-letter input with a single key when using `--patch` (i.e., without hitting enter).
+ 
+ list [<options>]::
+ 
+-- 
+1.7.1
