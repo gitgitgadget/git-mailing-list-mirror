@@ -1,61 +1,151 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/largely untested/PATCH] sha1_name: interpret ~n as HEAD~n
-Date: Mon, 02 May 2011 19:49:30 +0200
-Message-ID: <4DBEEEAA.3000004@drmicha.warpmail.net>
-References: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net> <20110429223433.GA3434@sigill.intra.peff.net> <m2k4ecy6rv.fsf@igel.home> <7vfwp0uwu4.fsf@alter.siamese.dyndns.org> <m21v0kw1es.fsf@igel.home> <4DBE6E77.3030703@drmicha.warpmail.net> <BANLkTinxszGhtYobuvci5Yi8eTHW+pi2wA@mail.gmail.com> <4DBE8FD8.90303@drmicha.warpmail.net> <7v7ha9ngsf.fsf@alter.siamese.dyndns.org>
+From: Seth Jennings <spartacus06@gmail.com>
+Subject: Re: [PATCH] git-daemon: fix segfaulting in child_handler() in AIX
+Date: Mon, 2 May 2011 12:51:08 -0500
+Message-ID: <BANLkTinOkE-w3qdASuje72a3G6bpEoxWxA@mail.gmail.com>
+References: <1302886260-25860-1-git-send-email-spartacus06@gmail.com>
+	<BANLkTi=6UVWpa2aPPebVUG9ZyL_h7OcwUQ@mail.gmail.com>
+	<BANLkTimtfXgy9UcdQ8b-8dLrO-qgXFgQnw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 19:49:40 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 19:51:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGxFb-0006De-2b
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 19:49:39 +0200
+	id 1QGxHA-0007Cj-OA
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 19:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab1EBRtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2011 13:49:33 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:33231 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753091Ab1EBRtc (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 13:49:32 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 4EBCA208BC;
-	Mon,  2 May 2011 13:49:32 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 02 May 2011 13:49:32 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=lgz4H/IHkvXvNnYhvsO9GQpsB+M=; b=ZEkyA4aHYlHW7R2farwyDM1lNe0CQEYl0Ulq+jiu1hnA1NFuUbWN3WrgOXOfbvXnUEIHGlT+y9RWFHPRVEojydj6t7JUBJ5jyexayMNEmugY9Egrd5NhkFW13FnKN/n13T3QZS05h2IunZZ+c5/tPWMykimlDkVD2td7ZUtsufk=
-X-Sasl-enc: xQ5VJ1l1I2ryc80SnK4vfzUqB5kT04Dx6hNZRLKoXHvf 1304358571
-Received: from localhost.localdomain (p548592F4.dip0.t-ipconnect.de [84.133.146.244])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A403C443C9A;
-	Mon,  2 May 2011 13:49:31 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <7v7ha9ngsf.fsf@alter.siamese.dyndns.org>
+	id S1754250Ab1EBRvM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2011 13:51:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:37985 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753344Ab1EBRvK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 13:51:10 -0400
+Received: by wya21 with SMTP id 21so4380066wya.19
+        for <git@vger.kernel.org>; Mon, 02 May 2011 10:51:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ntvFntx3DVa9ifpj6jyvB8pzVxMRrPK3igs20aCxBj8=;
+        b=c0q6j515sze6qk7KmckzF9t/4ZW3BpnBHTJXpsiLHEpcKW+blJfAbhbdlpG5HbZv8A
+         o/qjko+BBkqM19KneZNS1j5vlvNPGMQAkMdk1+m9zt7pQzhigmaDKPN9lomQAaOf6ZrW
+         4o4o4DwL0ZmD11oowdPAXqK4TTwnM7+HRUWyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wnvGPXQz382qKDpSke7tGgwU+NEUibK4iMcY6drbWJdUOt8YS4zruPpdnCtlHklnG6
+         c/hSftwoxqvADnLp/ZtxyYw7Xf+KCXe692Y6Pmn1u4UyV//aFoMCZR1gmpWE4lU/nvG2
+         7ovuqjLg/DBJSFWGpmFU+H15qGbMwGa5h8OaM=
+Received: by 10.216.235.95 with SMTP id t73mr5571644weq.10.1304358668803; Mon,
+ 02 May 2011 10:51:08 -0700 (PDT)
+Received: by 10.216.187.6 with HTTP; Mon, 2 May 2011 10:51:08 -0700 (PDT)
+In-Reply-To: <BANLkTimtfXgy9UcdQ8b-8dLrO-qgXFgQnw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172609>
 
-Junio C Hamano venit, vidit, dixit 02.05.2011 18:33:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Introducing a shortcut ~n for HEAD~n does not introduce new
->> inconsistencies (it's a shortcut for a commit, for every command which
->> takes a commit) - and does not contradict introducing -n at all, btw.
-> 
-> I thought we already ruled out ~n because many shells think ~n is a path.
+Thanks Christian,
 
-You have, apparently ;)
+Sorry for the dup for you Christian.  The email sent in HTML instead
+of plaintext and got bounced by the mailing list.
 
-unquoted ~0 conflicts, but unquoted ~n conflicts only when you use pushd
-(and the stack has n entries; or n+-1, I can't count either...). Even
-\~2 is shorter than HEAD~2, btw., although I don't consider that viable.
+I tried reverting just the part the sets the SIGCHLD handler to the
+default as you suggested, but the problem still exists.
 
-But I understand that I'll have to leave ~n for my private edition.
+It is true that the AIX libc signal() function basically wraps the a
+call to sigaction().
 
-Michael
+I'll investigate more and update this thread when I have something.
+
+Seth
+
+On Wed, Apr 20, 2011 at 7:53 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> Hi,
+>
+> I have no idea what the problem could be, but maybe I will be lucky
+> with my suggestions.
+>
+> On Fri, Apr 15, 2011 at 6:54 PM, Seth Jennings <spartacus06@gmail.com=
+> wrote:
+> > There is a git-daemon segfault issue that seems to be specific to A=
+IX.
+> >
+> > Whenever a remote user pulls or clones, the operation succeeds but
+> > git-daemon crashes immediately afterward.
+> >
+> > $ gdb git-daemon core
+> > ...
+> > Core was generated by `git-daemon'.
+> > Program terminated with signal 11, Segmentation fault.
+> > #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_=
+xpg5.o)
+> > (gdb) where
+> > #0 =A00xd04f0c50 in _sigsetmask () from /usr/lib/libpthreads.a(shr_=
+xpg5.o)
+> > #1 =A00xd04f1874 in _p_sigaction () from /usr/lib/libpthreads.a(shr=
+_xpg5.o)
+> > #2 =A00xd013ae34 in sigaction () from /usr/lib/libc.a(shr.o)
+> > #3 =A00xd0217cd8 in signal () from /usr/lib/libc.a(shr.o)
+>
+> signal() is calling sigaction() so sigaction() must be called with
+> different parameters in your patch and when it crashes.
+> Could you have a look at the difference between parameters?
+>
+> > #4 =A00x10000b90 in child_handler (signo=3D0) at daemon.c:718
+> > #5 =A0<signal handler called>
+> >
+> > Through experimentation, I found that using sigaction() instead of
+> > signal() resolves the issue. =A0I'm not entirely sure why this is.
+> >
+> > Any feedback about the issue or the patch is welcome. =A0There migh=
+t be
+> > a better solution.
+> >
+> > On Fri, Apr 15, 2011 at 11:51 AM, Seth Jennings <spartacus06@gmail.=
+com> wrote:
+> >> This issue seems to be specific to git-daemon on AIX built with xl=
+c.
+> >> After commit 695605b5080e1957bd9dab1fed35a7fee9814297 (from Aug 20=
+08),
+> >> git-daemon segfaults in child_handler() inside the signal() syscal=
+l
+> >> immediately after any remote clone/pull operation.
+>
+> Could you try some variants that revert or change parts of this commi=
+t?
+>
+> For example you could revert only this hunk:
+>
+> @@ -1036,11 +1032,6 @@ int main(int argc, char **argv)
+> =A0 =A0 =A0 =A0gid_t gid =3D 0;
+> =A0 =A0 =A0 =A0int i;
+>
+> - =A0 =A0 =A0 /* Without this we cannot rely on waitpid() to tell
+> - =A0 =A0 =A0 =A0* what happened to our children.
+> - =A0 =A0 =A0 =A0*/
+> - =A0 =A0 =A0 signal(SIGCHLD, SIG_DFL);
+> -
+> =A0 =A0 =A0 =A0for (i =3D 1; i < argc; i++) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0char *arg =3D argv[i];
+>
+>
+> >>=A0While it is not
+> >> fully understood why this happens, changing signal() to sigaction(=
+)
+> >> resolves the issue.
+>
+> Yeah but it would be nice to understand.
+>
+> Thanks in advance,
+> Christian.
