@@ -1,65 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/3] t3700: note a .gitignore matching fault
-Date: Mon, 02 May 2011 17:01:58 +0200
-Message-ID: <4DBEC766.8020008@viscovery.net>
-References: <1304340464-14829-1-git-send-email-pclouds@gmail.com> <1304340923-15927-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2011, #01; Sun, 1)
+Date: Mon, 02 May 2011 08:48:23 -0700
+Message-ID: <7vvcxtp0hk.fsf@alter.siamese.dyndns.org>
+References: <7vd3k2q8lt.fsf@alter.siamese.dyndns.org>
+ <BANLkTimXGChZ+3UAHqqgOGcDt_wGH9XLHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 02 17:02:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 17:48:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGudZ-0002iC-On
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 17:02:14 +0200
+	id 1QGvMV-0005sR-Ai
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 17:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932087Ab1EBPCH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2011 11:02:07 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:36852 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1759775Ab1EBPCF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 11:02:05 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QGudL-0006OD-Mq; Mon, 02 May 2011 17:02:00 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 65FCD1660F;
-	Mon,  2 May 2011 17:01:59 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <1304340923-15927-1-git-send-email-pclouds@gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1752757Ab1EBPse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 11:48:34 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45414 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751233Ab1EBPsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 11:48:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 495EE46F5;
+	Mon,  2 May 2011 11:50:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=S9T7Bj9t3ICMoaYvRifRaEl8I5c=; b=BLvdRM
+	Qs6/y3eNG3nQZCZPnj94qW67veXLMfNsnIjMc38z0GXv+pktU2Xw7UjdXppv1+pS
+	M6/K5mNACkOETTxbXsDpyMXO/U/JqjwLdkQjo7hEGG+0T8zjTFRcs8NI2ZdKbaxN
+	OwFoIGelRA6Jez9XC+VrC/qoTl4cYYuVre2BE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SZXIhLagyMwXTUXSQgmkPhsNWyjU3unW
+	xbK9MCBN3QkUDOnFeYlpu9XnLHAL8Gf9UEY9GmVc6ZvhNKRXhSKutr8pabZnEGd3
+	TD0fq0HEXmoaT2naO29JmuDVfJuZjfNlIXzmPgGtlGXDRsiE6QpMcETSCHza7/Xo
+	dcu0m7bjOco=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 244B946F4;
+	Mon,  2 May 2011 11:50:32 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 46BD546F3; Mon,  2 May 2011
+ 11:50:29 -0400 (EDT)
+In-Reply-To: <BANLkTimXGChZ+3UAHqqgOGcDt_wGH9XLHA@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Mon, 2 May 2011 12:28:26 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E935EE9A-74D3-11E0-B8DB-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172597>
 
-Am 5/2/2011 14:55, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
-> .gitignore support both positive and negative patterns. One may negat=
-e
-> the other. Current code works well if both patterns target files in
-> the same directory.
->=20
-> When a pattern targets a directory and an opposite pattern targets
-> some files/directories within that directory, we need to descend in
-> the directory until we're clear which ones are matched and which are
-> not.
->=20
-> excluded_from_list() fails to handle this case. It too eagerly decide=
-s
-> the fate of the whole directory without looking further in.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-This has been debated just recently, and I don't think the current
-behavior is broken. See
+> On Mon, May 2, 2011 at 6:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * jc/magic-pathspec (2011-04-06) 3 commits
+>
+> This needs some tests. I'm going to add some unless somebody does it first.
 
-http://thread.gmane.org/gmane.comp.version-control.git/169913
-http://thread.gmane.org/gmane.comp.version-control.git/157190/focus=3D1=
-57196
-
--- Hannes
+Thanks.
