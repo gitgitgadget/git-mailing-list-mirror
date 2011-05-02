@@ -1,72 +1,114 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (May 2011, #01; Sun, 1)
-Date: Mon, 2 May 2011 12:28:26 +0700
-Message-ID: <BANLkTimXGChZ+3UAHqqgOGcDt_wGH9XLHA@mail.gmail.com>
-References: <7vd3k2q8lt.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] Documentation: clarify meaning of --html-path, --man-path,
+ and --info-path
+Date: Mon, 2 May 2011 01:07:45 -0500
+Message-ID: <20110502060745.GC14547@elie>
+References: <1304237785-56101-1-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 07:29:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 08:07:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGlh9-000690-6L
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 07:29:19 +0200
+	id 1QGmIY-0005hv-84
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 08:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409Ab1EBF26 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2011 01:28:58 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60769 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750968Ab1EBF25 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2011 01:28:57 -0400
-Received: by bwz15 with SMTP id 15so4344104bwz.19
-        for <git@vger.kernel.org>; Sun, 01 May 2011 22:28:56 -0700 (PDT)
+	id S1753585Ab1EBGHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 02:07:52 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52242 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751409Ab1EBGHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 02:07:51 -0400
+Received: by iyb14 with SMTP id 14so4421637iyb.19
+        for <git@vger.kernel.org>; Sun, 01 May 2011 23:07:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=f3GWkhvovodbQmuk790Y/7TLbPqNKVMSKYkcVajf0C8=;
-        b=p04TupRVf3MWIOPP258nvIGNdGiTjnEm1sUVErK6RvmyCNxLaDk/zwitkmo8wJFELF
-         KnhSYABS3RS6c+DDWKAxb3F1dkIciuTj+HUP6dAKs7q1n0nOGxAmR6u7deq0/KKuo44m
-         XW1Q36AtSiAbt9wrx04tPnjoF314GptBGmcfI=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mxikdcd8SOEu9ef8dbEsc6SZI9T0YudC3mH6TvEjwrU=;
+        b=xG8ws5xeV2/p0R7u2hD6UQ0S6RGWUCnb+SXNlz2NGtt0useEzAOq/P4DvrVNgRzrhz
+         0P91vg7N+kSvOBXonUFIzNZBnk/x0csqDNt5gnwz6vI3q7cFyDyS057B+YrRgtrMC9QC
+         HCnqpIxfjThz56meKRdzW0gvxJYDOb9ziWTy4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=I93EWbzR7v/jOlyeuRjJvnsU5o0ZSKTcWnZrMdjHgNW/QB9o8QWCK/+a0LQx4RaAcB
-         JTOhwgL+hNwzke2CYKNmKpqH8ifgqe98UjI0/BiH8N7F1LFMQSSNR7NZ+ONx2rsR8BMY
-         tQCp5HkfXxxv1z9+EDl23Hmd3hhCAx8idlANs=
-Received: by 10.205.83.199 with SMTP id ah7mr994832bkc.146.1304314136118; Sun,
- 01 May 2011 22:28:56 -0700 (PDT)
-Received: by 10.204.17.14 with HTTP; Sun, 1 May 2011 22:28:26 -0700 (PDT)
-In-Reply-To: <7vd3k2q8lt.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KPbUCzh+gxNeD1pDa1162J+C/p3/a4qT4rDXsJZ6F2Xliuvtuq/unfnn6DXuP/6I5h
+         /L/g1PgHBd/WuG40rRxANcWAifzL/KSw+/ExNd8PH531Va0gpfJZUhgHQP5tCaDK9Q5e
+         zspwnQSkjGe54wgiOBFWa654kjjZLYCmX6gzc=
+Received: by 10.42.147.137 with SMTP id n9mr9256019icv.383.1304316471037;
+        Sun, 01 May 2011 23:07:51 -0700 (PDT)
+Received: from elie (adsl-69-209-62-211.dsl.chcgil.sbcglobal.net [69.209.62.211])
+        by mx.google.com with ESMTPS id 19sm2233593ibx.52.2011.05.01.23.07.49
+        (version=SSLv3 cipher=OTHER);
+        Sun, 01 May 2011 23:07:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1304237785-56101-1-git-send-email-jon.seymour@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172563>
 
-On Mon, May 2, 2011 at 6:55 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> * jc/magic-pathspec (2011-04-06) 3 commits
-> =C2=A0(merged to 'next' on 2011-04-25 at 788cd46)
-> =C2=A0+ magic pathspec: add ":(icase)path" to match case insensitivel=
-y
-> =C2=A0+ magic pathspec: futureproof shorthand form
-> =C2=A0+ magic pathspec: add tentative ":/path/from/top/level" pathspe=
-c support
->
-> Thanks to Peff, Duy, and Michael for helping to whip the syntax and t=
-he
-> basic semantics into a not-so-horrible shape.
->
-> Will merge to "master" by the end of week #2.
+These options tell UI programs where git put its documentation, so
+"Help" actions can show the documentation for *this* version of git
+without regard to how MANPATH and INFOPATH are set up.  Details:
 
-This needs some tests. I'm going to add some unless somebody does it fi=
-rst.
---=20
-Duy
+. Each variable tells where documentation is expected to be.  They do
+  not indicate whether documentation was actually installed.
+
+. The output of "git --html-path" is an absolute path and can be used
+  in "file://$(git --html-path)/git-add.html" to name the HTML file
+  documenting a particular command.
+
+. --man-path names a manual page hierarchy (e.g.,
+  /home/user/share/man).  Its output can be passed to "man -M" or put
+  at the beginning of $MANPATH.
+
+. --info-path names a directory with info files (e.g.,
+  /home/user/share/info).  Its output is suitable as an argument to
+  "info -d" or for inclusion in $INFOPATH.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Sorry for the long tangent.  Maybe a summary can be useful.
+
+ Documentation/git.txt |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 7e9b521..5295315 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -287,16 +287,16 @@ help ...`.
+ 	the current setting and then exit.
+ 
+ --html-path::
+-	Print the path to wherever your git HTML documentation is installed
+-	and exit.
++	Print the path, without trailing slash, where git's HTML
++	documentation is installed and exit.
+ 
+ --man-path::
+-	Print the path to wherever your git man pages are installed
+-	and exit.
++	Print the manpath (see `man(1)`) for the man pages for
++	this version of git and exit.
+ 
+ --info-path::
+-	Print the path to wherever your git Info files are installed
+-	and exit.
++	Print the path where the Info files documenting this
++	version of git are installed and exit.
+ 
+ -p::
+ --paginate::
+-- 
+1.7.5
