@@ -1,207 +1,87 @@
-From: Michael Grubb <devel@dailyvoid.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Add default merge options for all branches
-Date: Mon, 02 May 2011 13:22:29 -0500
-Message-ID: <4DBEF665.20309@dailyvoid.com>
-References: <4DBED99E.3050709@dailyvoid.com> <BANLkTikgcwL6KRNAvxyAiHxLPzG7jeU6Vg@mail.gmail.com>
+Date: Mon, 02 May 2011 11:23:07 -0700
+Message-ID: <7vhb9dm06s.fsf@alter.siamese.dyndns.org>
+References: <4DBED99E.3050709@dailyvoid.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, vmiklos@frugalware.org, deskinm@umich.edu,
 	gitster@pobox.com
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 02 20:22:42 2011
+To: Michael Grubb <devel@dailyvoid.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:23:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGxlZ-0000lH-1b
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 20:22:41 +0200
+	id 1QGxmJ-0001CW-7D
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 20:23:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756374Ab1EBSWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2011 14:22:35 -0400
-Received: from 75.98.162.166.static.a2webhosting.com ([75.98.162.166]:37751
-	"EHLO dailyvoid.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1753747Ab1EBSWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2011 14:22:35 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=dailyvoid.com;
-	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Source:X-Source-Args:X-Source-Dir;
-	b=rUCb9tLq9JWfhNj6XaLi7cl7MgUn/OQJHB8R8zXC4+VdPkXfZ+YCXTuLe+PQMRFHdUCAqES2039lrzprJzpeDV5DNplP5bhhk4gAENEQVFxmNfWZjImhjvtjDUIVWLFa;
-Received: from adsl-99-59-251-170.dsl.ltrkar.sbcglobal.net ([99.59.251.170] helo=macbook.local)
-	by a2s24.a2hosting.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <devel@dailyvoid.com>)
-	id 1QGxlO-00053G-II; Mon, 02 May 2011 14:22:30 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <BANLkTikgcwL6KRNAvxyAiHxLPzG7jeU6Vg@mail.gmail.com>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - a2s24.a2hosting.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - dailyvoid.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1756882Ab1EBSXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 14:23:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56015 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754823Ab1EBSXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 14:23:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 261EE5BF5;
+	Mon,  2 May 2011 14:25:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AoQ1elGmV+yQSs4zM9qHbQ/MOVc=; b=e29VCi
+	qdn4faOPvm6fg/nATl3RXwoh8/hKpGk9jSTViZvfq4D0EHKwBk7tkqYIDBoiDXOa
+	1p5DTA4gH1aWQ3H9d3aCy/YvLR8HJyZ3/m0XKhat24K7m3cAKFJqLlrNv6xzmzng
+	0TfK3dVEsmALpq65SblYrZj8rBragd3VgZhZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sXlbHDRwcMg0AmIYsqFJrKnKpxtjEAgm
+	8KN6i366OlPCoECtGUaCWkWq3Xr+6iLPbPfq3uyEOJSgUrAHmeu4YXUOW9T0LBLJ
+	8aJSeqFBcr3gfnyujWq1LaozIrwZMTrcBZfDoYIq0b/7Ed63Sc/J3D95rAhi1A3U
+	YoRNrqg5hOU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D994E5BF2;
+	Mon,  2 May 2011 14:25:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 262B75BEF; Mon,  2 May 2011
+ 14:25:12 -0400 (EDT)
+In-Reply-To: <4DBED99E.3050709@dailyvoid.com> (Michael Grubb's message of
+ "Mon, 02 May 2011 11:19:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8922190A-74E9-11E0-B644-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172613>
 
-Sorry for that, it's my own habit I'm afraid, however I did go back and
-fix it up so that it is consistent with the rest of the file.  Should I
-resubmit the patch in reply to this thread?
+Michael Grubb <devel@dailyvoid.com> writes:
 
-On 5/2/11 1:12 PM, Thiago Farina wrote:
-> On Mon, May 2, 2011 at 1:19 PM, Michael Grubb <devel@dailyvoid.com> wrote:
->> Introduce a new configuration variable, merge.mergeoptions.
->> The semantics of this new variable are the same as the branch specific
->> branch.<branch>.mergeoptions.  However, if a branch specific setting is
->> found, this option will not override it.
->>
->> The need for this arises from the fact that there is currently not an
->> easy way to set merge options for all branches. Instead of having to
->> specify merge options for each individual branch there should be a way
->> to set defaults for all branches and then override a specific branch's
->> options.
->>
->> The approach taken is to make note of whether a branch specific
->> mergeoptions key has been seen and only apply the global value if it
->> hasn't. An alternative method would be to keep the
->> branch.<branch>.mergeoptions semantics, but assign a special value for
->> <branch> to be the global default.
->>
->> Signed-off-by: Michael Grubb <devel@dailyvoid.com>
->> ---
->>  Documentation/merge-config.txt |    7 +++++++
->>  builtin/merge.c                |   27 ++++++++++++++++++++++-----
->>  t/t7600-merge.sh               |   27 +++++++++++++++++++++++++++
->>  3 files changed, 56 insertions(+), 5 deletions(-)
->>
->> diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
->> index 8920258..0fc7511 100644
->> --- a/Documentation/merge-config.txt
->> +++ b/Documentation/merge-config.txt
->> @@ -57,6 +57,13 @@ merge.verbosity::
->>        above outputs debugging information.  The default is level 2.
->>        Can be overridden by the 'GIT_MERGE_VERBOSITY' environment variable.
->>  +merge.mergeoptions::
->> +       Sets default options for merging any branch. This value is only
->> +       used if there is not a branch.<name>.mergeoptions value set.
->> +       The syntax and supported options are the same as those of 'git
->> +       merge', but option values containing whitespace characters are
->> +       currently not supported.
->> +
->>  merge.<driver>.name::
->>        Defines a human-readable name for a custom low-level
->>        merge driver.  See linkgit:gitattributes[5] for details.
->> diff --git a/builtin/merge.c b/builtin/merge.c
->> index 0bdd19a..1d4f852 100644
->> --- a/builtin/merge.c
->> +++ b/builtin/merge.c
->> @@ -505,9 +505,18 @@ cleanup:
->>  static int git_merge_config(const char *k, const char *v, void *cb)
->>  {
->> -       if (branch && !prefixcmp(k, "branch.") &&
->> -               !prefixcmp(k + 7, branch) &&
->> -               !strcmp(k + 7 + strlen(branch), ".mergeoptions")) {
->> +       static int branch_merge_options_set = 0;
->> +       int merge_option_mode = 0;
->> +
->> +       if ( !strcmp(k, "merge.mergeoptions") )
-> 
-> please, no need of spaces between if ( ... )
-> 
-> There are more cases in this change below.
-> 
-> I don't know if Junio is strong about this and if you need to resend.
-> But at least that is not consistent with the rest of the file.
-> 
-> Just my 0.02 cents.
-> 
->> +               merge_option_mode = 1;
->> +       else if ( branch && !prefixcmp(k, "branch.") &&
->> +                        !prefixcmp(k + 7, branch) &&
->> +                        !strcmp(k + 7 + strlen(branch), ".mergeoptions"))
->> +               merge_option_mode = 2;
->> +
->> +       if ( (merge_option_mode == 1 && !branch_merge_options_set) ||
->> +                 merge_option_mode == 2) {
->>                const char **argv;
->>                int argc;
->>                char *buf;
->> @@ -515,14 +524,22 @@ static int git_merge_config(const char *k, const
->> char *v, void *cb)
->>                buf = xstrdup(v);
->>                argc = split_cmdline(buf, &argv);
->>                if (argc < 0)
->> -                       die(_("Bad branch.%s.mergeoptions string: %s"), branch,
->> -                           split_cmdline_strerror(argc));
->> +               {
->> +                       if ( merge_option_mode == 1 )
->> +                               die(_("Bad merge.mergeoptions string: %s"), +
->> split_cmdline_strerror(argc));
->> +                       else
->> +                               die(_("Bad branch.%s.mergeoptions string: %s"), branch,
->> +                                       split_cmdline_strerror(argc));
->> +               }
->>                argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
->>                memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
->>                argc++;
->>                parse_options(argc, argv, NULL, builtin_merge_options,
->>                              builtin_merge_usage, 0);
->>                free(buf);
->> +               if ( merge_option_mode == 2 )
->> +                       branch_merge_options_set = 1;
->>        }
->>        if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
->> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
->> index 87d5d78..15e9418 100755
->> --- a/t/t7600-merge.sh
->> +++ b/t/t7600-merge.sh
->> @@ -415,6 +415,33 @@ test_expect_success 'merge c0 with c1 (no-ff)' '
->>  test_debug 'git log --graph --decorate --oneline --all'
->>  +test_expect_success 'merge c0 with c1 (global no-ff)' '
->> +       git reset --hard c0 &&
->> +       git config --unset branch.master.mergeoptions &&
->> +       git config merge.mergeoptions "--no-ff" &&
->> +       test_tick &&
->> +       git merge c1 &&
->> +       git config --remove-section merge &&
->> +       verify_merge file result.1 &&
->> +       verify_parents $c0 $c1
->> +'
->> +
->> +test_debug 'git log --graph --decorate --oneline --all'
->> +
->> +test_expect_success 'combine merge.mergeoptions with
->> branch.x.mergeoptions' '
->> +       git reset --hard c0 &&
->> +       git config --remove-section branch.master &&
->> +       git config merge.mergeoptions "--no-ff" &&
->> +       git config branch.master.mergeoptions "--ff" &&
->> +       test_tick &&
->> +       git merge c1 &&
->> +       git config --remove-section merge &&
->> +       verify_merge file result.1 &&
->> +       verify_parents "$c0"
->> +'
->> +
->> +test_debug 'git log --graph --decorate --oneline --all'
->> +
->>  test_expect_success 'combining --squash and --no-ff is refused' '
->>        test_must_fail git merge --squash --no-ff c1 &&
->>        test_must_fail git merge --no-ff --squash c1
->> --
->> 1.7.5
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+> The approach taken is to make note of whether a branch specific
+> mergeoptions key has been seen and only apply the global value if it
+> hasn't. An alternative method would be to keep the
+> branch.<branch>.mergeoptions semantics, but assign a special value for
+> <branch> to be the global default.
+
+Both my gut feeling and design taste tell me that "branch.*.mergeoptions"
+(using literal '*' for match-all for now) would be a lot more appropriate
+here.  We could extend the '*' part later to take globs.
+
+The resulting part of the configuration file would look like this:
+
+	[branch "*"]
+        	mergeoptions = ...
+
+and later we would end up supporting other kinds of defaults, like:
+
+	[branch "ko/*"]
+        	remote = korg
+	[branch "github/*"]
+        	remote = github
+                mergeoptions = ...
+
+I didn't read the patch carefully but there seems to be many instances of
+the same "excess whitespace" pattern you should be able to avoid easily to
+match the style by looking at the surrounding code.
+
+Thanks.
