@@ -1,109 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Add --info-path and --man-path options to git.
-Date: Sun, 1 May 2011 19:25:35 -0500
-Message-ID: <20110502002535.GE11550@elie>
+Date: Sun, 01 May 2011 20:47:26 -0700
+Message-ID: <7vzkn5pxv5.fsf@alter.siamese.dyndns.org>
 References: <1304237785-56101-1-git-send-email-jon.seymour@gmail.com>
- <7vbozmthhy.fsf@alter.siamese.dyndns.org>
- <20110501234833.GC11550@elie>
- <7v62puq8a5.fsf@alter.siamese.dyndns.org>
+ <7vbozmthhy.fsf@alter.siamese.dyndns.org> <20110501234833.GC11550@elie>
+ <7v62puq8a5.fsf@alter.siamese.dyndns.org> <20110502002535.GE11550@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 02:25:50 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 05:47:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGgxP-0005IO-DS
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 02:25:47 +0200
+	id 1QGk6r-0007oT-RN
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 05:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752034Ab1EBAZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 May 2011 20:25:42 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61288 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992Ab1EBAZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2011 20:25:41 -0400
-Received: by iwn34 with SMTP id 34so4308282iwn.19
-        for <git@vger.kernel.org>; Sun, 01 May 2011 17:25:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=zKdw0RXR72oPaM/T7WzK8j6XyDW8CK/wtlTd4Q5M1Hw=;
-        b=I3KbjBfE65Ub/Df9JVM1q7lcE1IBMwxM8J6Sr3xKlIFRLNjRJFKUx0rZqtVse/w4ko
-         ciGM/Yi6jDFo8rXQAo1sp02by+cb7rK7AZkpbnKbfWdwAkbZ1B2jEQC4+gjd6p3bovxz
-         kRt1SpA7bGSqiBRW0faYEP98qky9GGSI+YRIE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=thk3PmPalORx2IzY97Sd+EJ8JCkAfsVc9kBAark+AsW1NB1k7uGKJLrRG2BH8qrHsX
-         rFOwGj2cIJbX17+gqtkuly6RisxTiuxAIkcO3GQclHdz3nhwW7UsHV+W/FUEwB442Mqq
-         IX3VVEXvaluSHYU0wkZ7cUFpRo4NFMbmzj7e0=
-Received: by 10.42.150.132 with SMTP id a4mr10075004icw.199.1304295939815;
-        Sun, 01 May 2011 17:25:39 -0700 (PDT)
-Received: from elie (adsl-69-209-62-211.dsl.chcgil.sbcglobal.net [69.209.62.211])
-        by mx.google.com with ESMTPS id f7sm2134239ibn.24.2011.05.01.17.25.37
-        (version=SSLv3 cipher=OTHER);
-        Sun, 01 May 2011 17:25:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v62puq8a5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754702Ab1EBDrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2011 23:47:40 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44949 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751966Ab1EBDrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2011 23:47:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 07EDF58EB;
+	Sun,  1 May 2011 23:49:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LP3xiUHxJIvR/NNWru6e2PJ8FqU=; b=JrMyZL
+	bljLI3hJsYYx7RWK1dGIGBnFdfCIejfXJRT2oTN4ecJojfMq96FW03XeCP9mwa1+
+	A88OgS6LqSeD4EeSBn5QSvR5gBe2ysHd9s7WpeGi9iwSuxK663e2nnVU+DzsCLuU
+	3rxzjt8A0YwRYeyGu+MjiEgcNXRgWTnWiY7KQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OjgTOpGNN97/Q5z/vXxq60/xMlBjkGlo
+	WSHwkdHBjzjksapWEEvxWFApFsTgrnAb8DsNKuZPZM3suMBziczijS+JQwXWoHML
+	LECDdlhdIbr42dansXWGUY3aEbTMS6EIIbohNQM3jhNR5nHDKQ/zUDXjrBt6WHqt
+	3dZ5Y2U37qw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C8F5458E6;
+	Sun,  1 May 2011 23:49:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6490858E2; Sun,  1 May 2011
+ 23:49:31 -0400 (EDT)
+In-Reply-To: <20110502002535.GE11550@elie> (Jonathan Nieder's message of
+ "Sun, 1 May 2011 19:25:35 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 326D4AD2-746F-11E0-9EF8-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172560>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> The usual
->> interface to git's documentation through a man browser is not
->>
->> 	man /usr/share/man/man1/git-add.1.gz
->>
->> but
->>
->> 	man git-add;	# or "man git add" if your man viewer supports it
+> I am still not very happy about it.  The man browser is in a much
+> better position to help: the default MANPATH (at least under Debian;
+> see manpath(5)[1]) is generated by mapping $PATH entries on the fly, and
+> it seems like only an oversight that it deals with directories under
+> /usr but not /home.  And it does not thrill me that we would be
+> training people that
 >
-> I think you are forgetting the case where the git-man-path the user uses
-> to install git may be outside /usr/share/man (e.g. $HOME/share/man).  In
-> such an installation, by setting $PATH to include your installed git
-> binary (e.g. $HOME/bin), you should be able to say "git help -m git" to
-> tell help.c to internally prepend $HOME/share/man to the $MANPATH before
-> it kicks "man".
+> 	git help git
+>
+> will cover for the installer's mistakes, while the more conventional
+>
+> 	man git
+>
+> mechanism (which is also used for other programs installed to $HOME)
+> will not.
 
-I was not forgetting it, but you are right that we have an opportunity
-to be more helpful in that case.  (My own MANPATH already includes
-~/share/man, but I can see that it is easy to forget to add.)
+Well, is there anything I can do to help your unhappiness about that?
 
-I am still not very happy about it.  The man browser is in a much
-better position to help: the default MANPATH (at least under Debian;
-see manpath(5)[1]) is generated by mapping $PATH entries on the fly, and
-it seems like only an oversight that it deals with directories under
-/usr but not /home.  And it does not thrill me that we would be
-training people that
+Where is your unhappiness coming from?  Is this your argument?
 
-	git help git
+	'git help' allows distros' oversight with its -m and -i options;
+	it discourages distros to get their act together.
 
-will cover for the installer's mistakes, while the more conventional
-
-	man git
-
-mechanism (which is also used for other programs installed to $HOME)
-will not.
-
-> Isn't that what this patch is solving?
-
-I find the "use the right version of help when multiple copies of git"
-use case compelling enough already.  Please don't mind my complaints
-too much.
-
-Thanks for clarifying.
-Jonathan
-
-[1] http://man.he.net/man5/manpath
+I personally do not think punishing users of distros by not helping would
+be an effective way to encourage distros to help their users, so even
+though I kind of agree with that statement, I wouldn't conclude that with
+"therefore, git shouldn't try to be helpful with 'help [-m|-i]'".
