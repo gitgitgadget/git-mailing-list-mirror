@@ -1,95 +1,87 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH] grep: add known breakage of coloring when using extended patterns
-Date: Mon,  2 May 2011 13:35:40 +0200
-Message-ID: <328649cbd9fe7f2ee5f43d1e860d712f4204bdc5.1304333975.git.bert.wesarg@googlemail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>,
-	Thiago dos Santos Alvest <hiago.salves@gmail.com>,
-	git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-To: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon May 02 13:35:53 2011
+Subject: [PATCH/RFC 0/4] grep: support to match by line number
+Date: Mon,  2 May 2011 13:39:09 +0200
+Message-ID: <cover.1304318972.git.bert.wesarg@googlemail.com>
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 13:39:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGrPs-0007Fw-KK
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 13:35:52 +0200
+	id 1QGrTF-0000e9-Ve
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 13:39:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758185Ab1EBLfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2011 07:35:47 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60651 "EHLO
+	id S1757985Ab1EBLjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 07:39:17 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33090 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753579Ab1EBLfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2011 07:35:46 -0400
-Received: by bwz15 with SMTP id 15so4518687bwz.19
-        for <git@vger.kernel.org>; Mon, 02 May 2011 04:35:44 -0700 (PDT)
+	with ESMTP id S1754093Ab1EBLjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 07:39:16 -0400
+Received: by bwz15 with SMTP id 15so4521802bwz.19
+        for <git@vger.kernel.org>; Mon, 02 May 2011 04:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=E2zGjOSSYVVUYLF1ZscZ142wJVrZdcWNC3b+aQp3lbg=;
-        b=FvpAzMbNLS3NIwl1ksnI27qg7Hp5aXLzM665Jdxr3kT2Jh3x0vubLsISHqKSGxl6M3
-         ECm+KT7nTSawbJGmCZfQSooKcg1EJF/LkyVeMyRT6nqW8RV9xYyNkKc/mEB29Mc6+XHZ
-         Q2KxVOtN8UAgsj8FT4i1ubhUuAGw/siKu/YOE=
+        bh=zDwIK6YBvMHhOgBfNk0uTxqIXuRQ9wnthBvZTDZqoKc=;
+        b=cKxlcls/VYvrZXwal3cA5V+sJEJat/rX0Dle89PoMhcslQ4jpyHEuQ/sev8s3qkFcy
+         R3DfnIltQ8kPjL56gqwrYndt/9pxXXqhBSTsiHQ5V2RrXfUhsG78wCzYIk3b4j5jvkmE
+         ZG3zWMFPlUxBtWUZys8jlRzce1Pp1hQKzNSKQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=xfx/1DIfxt9Wz8xi1V/wJawajnIVGItouMnTvOgyw7Q+WJ6A0m/sW7/kHiTL+UFyP1
-         lVWII+1Hh/0ya8wpIKWZWrfQzMB7MpZ/CFxIhyp5NeYruDW5Jvt72NgQWJ7Z8oMILgHY
-         39iTW1NN++TX4NG/wGG5QBiJiHzVA97jM9ovE=
-Received: by 10.204.15.139 with SMTP id k11mr2916275bka.49.1304336143872;
-        Mon, 02 May 2011 04:35:43 -0700 (PDT)
+        b=uQkXEEvdp3RI0lhFdOuslZzpWNnUwj0lHXbT/OqCnK4lm9pg3A6JJfsMFtVRLLtSx1
+         7FWNpsxp0y21EbYfpptyLhUVbcUdHRVlT/5zwgv334gefB3Xf2F/pjNBYDtqXodifIC6
+         gZiUxRnB22rlK7YDooqjinR6ThGoagmK/brX8=
+Received: by 10.204.73.206 with SMTP id r14mr3015147bkj.181.1304336355268;
+        Mon, 02 May 2011 04:39:15 -0700 (PDT)
 Received: from localhost (m111.zih.tu-dresden.de [141.30.68.111])
-        by mx.google.com with ESMTPS id q18sm3239258bka.3.2011.05.02.04.35.41
+        by mx.google.com with ESMTPS id q24sm2371093bks.9.2011.05.02.04.39.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 02 May 2011 04:35:42 -0700 (PDT)
+        Mon, 02 May 2011 04:39:14 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.349.gfeb1a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172570>
 
-The coloring code does not respect the extended pattern format, expose
-this with an known breakage test.
+This series will teach git grep to match at specified line numbers. This is
+particular usefull, if you want to see the lines which emits warnings or errors
+from a build run (where you only get the line number) and present it nicely to
+the user with function and context lines.
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- t/t7812-grep-color.sh |   25 +++++++++++++++++++++++++
- 1 files changed, 25 insertions(+), 0 deletions(-)
- create mode 100755 t/t7812-grep-color.sh
+The implementation is split-up into preperation patches which are only noise:
 
-diff --git a/t/t7812-grep-color.sh b/t/t7812-grep-color.sh
-new file mode 100755
-index 0000000..2cffff3
---- /dev/null
-+++ b/t/t7812-grep-color.sh
-@@ -0,0 +1,25 @@
-+#!/bin/sh
-+
-+test_description='git grep --color
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit initial input "foo bar baz
-+bar baz
-+"
-+'
-+
-+cat >expected <<EOF
-+input<CYAN>:<RESET><BOLD;RED>foo<RESET> bar baz
-+EOF
-+
-+
-+test_expect_failure 'grep coloring does not honor boolean algebra' '
-+	git grep --color -e foo --or \( -e bar --and --not -e baz \) |
-+		test_decode_color >actual
-+    test_cmp expected actual
-+'
-+
-+test_done
+Bert Wesarg (4):
+  grep: prepare for re-using the space of the regexp member in struct
+    grep_pat
+
+    This one moves the regexp member into an union, so that we can later re-use
+    the space for the line number information.
+
+  grep: pass current line number down to match_one_pattern
+
+    To actually match at the line number, the function match_one_pattern needs
+    to know the current line number, do it with this patch.
+
+  grep: introduce pattern which matches at line number
+
+    This implements the line number matching in the low level grep machinery.
+
+  grep: provide option to match line number
+
+    And lastly, this exposes the new feature by a new -@ option to git grep.
+
+Patch 5 will than support comma separated line ranges as argument to -@, but
+this work has not yet started.
+
+ Documentation/git-grep.txt |    6 +++-
+ builtin/grep.c             |   10 +++++
+ grep.c                     |   87 ++++++++++++++++++++++++++++++--------------
+ grep.h                     |   11 ++++--
+ 4 files changed, 83 insertions(+), 31 deletions(-)
+
 -- 
 1.7.5.349.gfeb1a
