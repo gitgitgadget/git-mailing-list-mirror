@@ -1,99 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 0/4] grep: support to match by line number
-Date: Mon, 02 May 2011 12:30:33 -0700
-Message-ID: <7vmxj4lx2e.fsf@alter.siamese.dyndns.org>
-References: <cover.1304318972.git.bert.wesarg@googlemail.com>
- <BANLkTi=NOaWN56qBACoTE2WQWFM3rHXfWA@mail.gmail.com>
- <BANLkTikvYLKKj_Wd0EOxZh+vANxju4CV6Q@mail.gmail.com>
- <7v7ha9oxss.fsf@alter.siamese.dyndns.org>
- <BANLkTi=jABd5+_R-5SjhR163WV=TF1wbmQ@mail.gmail.com>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Mon, 2 May 2011 21:26:35 +0200
+Message-ID: <BANLkTinqxy6jCJLNVPKmMW3CErbfN7Hm=g@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org>
+	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
+	<20110120203840.GA11468@sigill.intra.peff.net>
+	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
+	<20110120215456.GB11468@sigill.intra.peff.net>
+	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
+	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
+	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+	<BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
+	<BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+	<BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com>
+	<BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
+	<BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com>
+	<BANLkTimLnggco_+mQZ2_T_myAHsDD-=g1w@mail.gmail.com>
+	<BANLkTikxS-_9h4rBdbbJ2e-RkjMWyiC1Mg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon May 02 21:30:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Mon May 02 21:33:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGypY-0007MN-9F
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 21:30:52 +0200
+	id 1QGyrh-0000Iz-1r
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 21:33:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754166Ab1EBTaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2011 15:30:46 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53509 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753653Ab1EBTap (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2011 15:30:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 31C8F447D;
-	Mon,  2 May 2011 15:32:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vfiwru0/xK7yF48V4eu1NVWjd5M=; b=yHMBHO
-	4JIH3ItjH8OdIf2sZP/busiAe4ckhbqS9ugs+MUmuyOlHiYguoDTN/POGGq4MfjL
-	rcqsyJWeDkXJSxX4gwgaD31MFzxKDTrdZmdHW54otyrex926MilsCAjqYnH8ZzPo
-	27m2pxVMbaYCKPq7iT+kNbfB+DxCZXXq1P8LQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IoySeJSVgygkI04CSYwz/TDevAqLzUiX
-	PUaMv1PgdexJ6kU6Yp3asmBzJ6YNqKWTASFR6HzCvRfM8IlGNr4NgVRN7ZdykCiH
-	tnBRSk7AHobNs03gBYYecrwyfD+N2LrJT5R4lecBcRBho/MhkH7O86gJdz9OEb0M
-	hGW/YyRb9lw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0082E447B;
-	Mon,  2 May 2011 15:32:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 553CC4479; Mon,  2 May 2011
- 15:32:38 -0400 (EDT)
-In-Reply-To: <BANLkTi=jABd5+_R-5SjhR163WV=TF1wbmQ@mail.gmail.com> (Bert
- Wesarg's message of "Mon, 2 May 2011 21:14:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F304F258-74F2-11E0-84F9-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753456Ab1EBTc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 15:32:59 -0400
+Received: from mail-bw0-f52.google.com ([209.85.214.52]:44952 "EHLO
+	mail-bw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750805Ab1EBTc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 15:32:58 -0400
+X-Greylist: delayed 382 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 May 2011 15:32:58 EDT
+Received: by bwj24 with SMTP id 24so8020976bwj.11
+        for <git@vger.kernel.org>; Mon, 02 May 2011 12:32:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=LixKUoopwy4Z99VHm4Ywu6CNIude9AxbjakMGiZ4SO8=;
+        b=W/qctXmE/X7LoD5Gbtq9SZVKaqPw+57H2hges6TRiPP4rQQYsCNMeEu+v5UQWJlFIZ
+         5eTNpgYoK4M1BD/mEQ1p8zcJFAP8knpi1T/v4UUP0DgT/c5IftRmAllddIvpLW/faQLD
+         gKTItsAnZZC+ankIqI58WcR2QQiLjI41MvX7E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=YLEPNu9ELzmfO4i2HWedH54ZGNLzTs0XU+75Dv0Sj51a5bXfoML/YakEzVWSbgz8d8
+         18Mb4q39iYewo2XDQm8vPjPPXP963ZiSBVb4E/TN5lzJ5ahx0Dna8s0COuSUjIX3Nmin
+         OholnzLx3Xf0SkiGlHHzye9WHxZhjmIp3XR0M=
+Received: by 10.204.1.134 with SMTP id 6mr442027bkf.39.1304364395227; Mon, 02
+ May 2011 12:26:35 -0700 (PDT)
+Received: by 10.204.120.195 with HTTP; Mon, 2 May 2011 12:26:35 -0700 (PDT)
+In-Reply-To: <BANLkTikxS-_9h4rBdbbJ2e-RkjMWyiC1Mg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172623>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+On Wed, Apr 27, 2011 at 2:49 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> On Wed, Apr 27, 2011 at 2:21 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>> On Wed, Apr 27, 2011 at 1:29 PM, Stephen Kelly <steveire@gmail.com> wrote:
+>>> On Wed, Apr 27, 2011 at 11:48 AM, Felipe Contreras
+>>> <felipe.contreras@gmail.com> wrote:
+>>>> No problems here:
+>>>
+>>> I had another go.
+>>>
+>>> mkdir remote
+>>> cd remote/
+>>> git init --bare
+>>> cd ../
+>>> git clone remote/ alice
+>>> cd alice/
+>>> echo test >> file
+>>> git add file
+>>> git commit -am w
+>>> git push origin master
+>>> echo test >> file
+>>> git commit -am w
+>>> git branch HEAD
+>>
+>> I'll stop you here. You reproduce the issue a lot simpler:
+>>
+>> git init foo &&
+>> cd foo &&
+>> echo "foo" > bar &&
+>> git add bar &&
+>> git commit -m. &&
+>> git branch HEAD &&
+>> gitk
+>>
+>> No need to involve remote branches. While remote branches makes the
+>> issue worse, because you can get in a situation where gitk doesn't
+>> when someone else made a nasty branch, and you fetched it.
+>>
+>> The real problem is that "git rev-parse HEAD" outputs "warning:
+>> refname 'HEAD' is ambiguous." to stderr (even if stderr is a non-tty),
+>> and gitk does not like that.
+>>
+>> This can be fixed by either doing "git -c core.warnambiguousrefs=0
+>> rev-parse HEAD", which strikes me as ugly, or by making sure that we
+>> don't issue this warning when not attached to a tty:
+>
+> Of course, a third (and probably even better) option is to make gitk
+> warn about the ambiguous refname (like other commands will), but not
+> treat it as a fatal problem. But I'm not motivated enough to give that
+> solution a stab myself.
+>
+> Not outputting that warning might be a regression for other users of
+> rev-parse (and/or the underlying mechanics).
+>
 
-> A build run will probably produce many warnings or errors (think of
-> -j) for many files, so you need to handle more than one file. After
-> the build run, you get a list of files which have warnings/errors,
-> selecting one of the files will give you the original messages
-> including the grep -@ output, from there you can select which message
-> you want to consider opening in the editor, so grep -@ helps you in
-> your decision what to open in your editor.
+Ok, if you can't see in the code why a branch called HEAD might
+corrupt the remote and I can't demonstrate it with a testcase, maybe
+it's not an issue anymore, I don't know.
 
-Now I got you talking ;-).
+Hopefully the relevant people saw the side issues brought up such as
+this ambiguous ref issue. After all, there's no other way to track
+those issues.
 
-Wouldn't that workflow suggest that each invocation of -@ must be strongly
-paired with each path?  After all, your hello.c having an error at line 100
-does not have much to do with which lines in your goodbye.c are buggy.
+Thanks for the investigation and help,
 
-Which has larger implications by opening a big can of worms.  Just a few
-examples:
-
- - Should "git grep -@1 -@3 foo bar" show line 1 of foo and line 3 of bar,
-   or should both lines 1 and 3 from both files be shown?  Why would
-   anybody want to see line 3 of foo or line 1 of bar in such a case?
-
- - Later part of command line arguments on standard git command set are
-   pathspecs, not necessarily individual paths.  You could for example say
-   "git grep -@1 -@3 directory/". What should happen?  Should the first
-   line of the first file in directory and the third line of the second
-   file in directory be shown?  What would happen to the remaining files
-   in the directory/?  You could replace "directory/" with "'*.c'".
-
-   Perhaps use of -@ need to tighten the command line parsing to make sure
-   that the user specified exact number of concrete filenames, not globs
-   nor leading path prefixes, and otherwise error out?
-
-I like "this range from this file, that range from that file" as a
-concept.  It has far wider application than just in the context of "grep",
-and I want to see us do it right from the beginning if we _were_ to design
-it.  That is why I am poking this discussion to make sure I can solicit
-deep enough thinking from people in the design phase.
+Steve.
