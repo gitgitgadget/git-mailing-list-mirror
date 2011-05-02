@@ -1,126 +1,81 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Creating remote branch called HEAD corrupts remote clones
-Date: Mon, 2 May 2011 21:43:05 +0200
-Message-ID: <BANLkTinJvt=Nnt8YG-D1wpWKbBei+m+4XA@mail.gmail.com>
-References: <ih1449$ul6$1@dough.gmane.org> <7v62tjs66r.fsf@alter.siamese.dyndns.org>
- <20110120203840.GA11468@sigill.intra.peff.net> <7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
- <20110120215456.GB11468@sigill.intra.peff.net> <AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
- <7vk4hyp38i.fsf@alter.siamese.dyndns.org> <AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
- <AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
- <BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com> <BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
- <BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com> <BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
- <BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com> <BANLkTimLnggco_+mQZ2_T_myAHsDD-=g1w@mail.gmail.com>
- <BANLkTikxS-_9h4rBdbbJ2e-RkjMWyiC1Mg@mail.gmail.com> <BANLkTinqxy6jCJLNVPKmMW3CErbfN7Hm=g@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/largely untested/PATCH] sha1_name: interpret ~n as HEAD~n
+Date: Mon, 02 May 2011 22:14:56 +0200
+Message-ID: <vpq62pssvun.fsf@bauges.imag.fr>
+References: <6c53916752bf79178113157291fd675ead0804c9.1304092338.git.git@drmicha.warpmail.net>
+	<20110429223433.GA3434@sigill.intra.peff.net>
+	<m2k4ecy6rv.fsf@igel.home> <7vfwp0uwu4.fsf@alter.siamese.dyndns.org>
+	<m21v0kw1es.fsf@igel.home> <4DBE6E77.3030703@drmicha.warpmail.net>
+	<BANLkTinxszGhtYobuvci5Yi8eTHW+pi2wA@mail.gmail.com>
+	<4DBE8FD8.90303@drmicha.warpmail.net>
+	<7v7ha9ngsf.fsf@alter.siamese.dyndns.org>
+	<4DBEEEAA.3000004@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Stephen Kelly <steveire@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 02 21:43:31 2011
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 02 22:15:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QGz1n-0006lX-6B
-	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 21:43:31 +0200
+	id 1QGzWa-00024w-Ux
+	for gcvg-git-2@lo.gmane.org; Mon, 02 May 2011 22:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753616Ab1EBTn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2011 15:43:26 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:61967 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753241Ab1EBTnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2011 15:43:25 -0400
-Received: by pvg12 with SMTP id 12so3315785pvg.19
-        for <git@vger.kernel.org>; Mon, 02 May 2011 12:43:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=49NojdwJ0wXY0zjy+0KCGLKnvpBPKQtihISDd9vrr0k=;
-        b=gbDjLmhPvpYvrOUKdSic15nerYJRfTlIYgSAuR35JAl0nwLVp78KfxTuTd+INFpzUg
-         q1z285JLJaf62M8k5PjSXyI+5MB1cHDJ+gXbJZJqNigOZqnTZMwKC5W4FORRAub5blTE
-         iWlTtMwddExy1f4LELOpw72jsBOgifqo4kBPI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=eF1mXCZarDsya6FfbgNfLax97qSgFywS9C5sYN3iG1Ghp2MufvVs73lNtJOXe71PtD
-         DnfU6rHPMzTwWJ50cVjY0DzetBIF6i1twQkDdART6yvdJ898ur92KDRTjO868vF/PWXA
-         J6kNbtdw9dtx8Hn8cHowPPQmErCrSXZQjRfOE=
-Received: by 10.68.65.110 with SMTP id w14mr1462548pbs.382.1304365405031; Mon,
- 02 May 2011 12:43:25 -0700 (PDT)
-Received: by 10.68.66.98 with HTTP; Mon, 2 May 2011 12:43:05 -0700 (PDT)
-In-Reply-To: <BANLkTinqxy6jCJLNVPKmMW3CErbfN7Hm=g@mail.gmail.com>
+	id S1753344Ab1EBUPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2011 16:15:09 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47519 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752965Ab1EBUPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2011 16:15:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p42KErUg026723
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 2 May 2011 22:14:53 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QGzWC-0000T4-Ci; Mon, 02 May 2011 22:14:56 +0200
+In-Reply-To: <4DBEEEAA.3000004@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Mon, 02 May 2011 19:49:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 02 May 2011 22:14:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p42KErUg026723
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1304972097.90972@2h2KG5ym8JiXjv9vcWy3Yg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172628>
 
-On Mon, May 2, 2011 at 9:26 PM, Stephen Kelly <steveire@gmail.com> wrote:
-> On Wed, Apr 27, 2011 at 2:49 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->> On Wed, Apr 27, 2011 at 2:21 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->>> On Wed, Apr 27, 2011 at 1:29 PM, Stephen Kelly <steveire@gmail.com> wrote:
->>>> On Wed, Apr 27, 2011 at 11:48 AM, Felipe Contreras
->>>> <felipe.contreras@gmail.com> wrote:
->>>>> No problems here:
->>>>
->>>> I had another go.
->>>>
->>>> mkdir remote
->>>> cd remote/
->>>> git init --bare
->>>> cd ../
->>>> git clone remote/ alice
->>>> cd alice/
->>>> echo test >> file
->>>> git add file
->>>> git commit -am w
->>>> git push origin master
->>>> echo test >> file
->>>> git commit -am w
->>>> git branch HEAD
->>>
->>> I'll stop you here. You reproduce the issue a lot simpler:
->>>
->>> git init foo &&
->>> cd foo &&
->>> echo "foo" > bar &&
->>> git add bar &&
->>> git commit -m. &&
->>> git branch HEAD &&
->>> gitk
->>>
->>> No need to involve remote branches. While remote branches makes the
->>> issue worse, because you can get in a situation where gitk doesn't
->>> when someone else made a nasty branch, and you fetched it.
->>>
->>> The real problem is that "git rev-parse HEAD" outputs "warning:
->>> refname 'HEAD' is ambiguous." to stderr (even if stderr is a non-tty),
->>> and gitk does not like that.
->>>
->>> This can be fixed by either doing "git -c core.warnambiguousrefs=0
->>> rev-parse HEAD", which strikes me as ugly, or by making sure that we
->>> don't issue this warning when not attached to a tty:
->>
->> Of course, a third (and probably even better) option is to make gitk
->> warn about the ambiguous refname (like other commands will), but not
->> treat it as a fatal problem. But I'm not motivated enough to give that
->> solution a stab myself.
->>
->> Not outputting that warning might be a regression for other users of
->> rev-parse (and/or the underlying mechanics).
->>
->
-> Ok, if you can't see in the code why a branch called HEAD might
-> corrupt the remote and I can't demonstrate it with a testcase, maybe
-> it's not an issue anymore, I don't know.
->
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-No, it's still an issue, and I believe I pin-pointed it in my first
-mail. You can try out the patch I sent, and see if that helps in your
-case. If it does, I think it'd make sense to do something (preferably
-a bit more robust) with it.
+>> I thought we already ruled out ~n because many shells think ~n is a path.
+>
+> You have, apparently ;)
+>
+> unquoted ~0 conflicts, but unquoted ~n conflicts only when you use pushd
+> (and the stack has n entries; or n+-1, I can't count either...).
+
+The problem is that it makes the behavior rather unpredictible for
+non-expert:
+
+git log ~2 # great
+pushd
+git log ~2 # still great
+pushd
+git log ~2 # WTF ?
+
+so we can't teach new users the ~N syntax without quoting if we don't
+want them to get bad surprises later. \~N is not terribly bad, but I
+don't think it has a big added value compared to HEAD~N.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
