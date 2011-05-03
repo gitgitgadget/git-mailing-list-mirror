@@ -1,143 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v4] Add default merge options for all branches
-Date: Tue, 03 May 2011 15:03:16 -0700
-Message-ID: <7vwri7h26z.fsf@alter.siamese.dyndns.org>
+Date: Tue, 03 May 2011 15:51:00 -0700
+Message-ID: <7vsjsvgzzf.fsf@alter.siamese.dyndns.org>
 References: <20110503090351.GA27862@elie> <4DC0608F.9040208@dailyvoid.com>
+ <20110503204442.GI1019@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Michael Grubb <devel@dailyvoid.com>, git@vger.kernel.org,
 	vmiklos@frugalware.org
-To: Michael Grubb <devel@dailyvoid.com>
-X-From: git-owner@vger.kernel.org Wed May 04 00:03:43 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 00:51:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHNgz-0006jS-TE
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 00:03:42 +0200
+	id 1QHOR6-0003tc-2O
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 00:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752689Ab1ECWDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 18:03:37 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56640 "EHLO
+	id S1753207Ab1ECWvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 18:51:14 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34737 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750936Ab1ECWDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 18:03:36 -0400
+	with ESMTP id S1752011Ab1ECWvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 18:51:14 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 140CB576C;
-	Tue,  3 May 2011 18:05:36 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9D71C5C71;
+	Tue,  3 May 2011 18:53:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ciw5BoUAIBf2+cfL83pd90HDRgQ=; b=RDPQ9J
-	ErkAUrP8SPqwBNFHxW+ssPTzx1AsiXJtuGxBMG6BTtEv0kAnSWwIkDuQ30uDgjT0
-	c+UlMtj4zLx1XOn+weMk9bglTS8PEhmnDyNo2DojG+Pgk2BIw0XLBYdbbPYg7WOh
-	/2Vz2TwSTU/GudzLXaixDLfgCPc+1umYZqrf8=
+	:content-type; s=sasl; bh=iTSciePulp95cvI6FgoN6GnYqks=; b=Fogpmw
+	QCANwnDwC4p48c3LAjS2zzPJ8BSggVEP2Wqd7tmOfR+U4wsp+/Rczt9VxKHFUM9H
+	4eIeaiJjtqAwb8ZDfS7YSBrvB6SoRDIlTxlbnmOnS1Quk1bjy3aysrFgaIRY4XYK
+	54GYXrVPx6Eama3HBZnq2koLwConI6YbQVLqs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BCz97bC77ATItMn0jNCK8jngMXq3Olm9
-	5554hEGEY8n9Hsy0RpIFYEBjkadqtuc8zLwtkXyaSfy0PY1S95niaV44YWxbYmOb
-	F78KOZQ+QbjDlURFiYf51WRUfxvOo7mAc8aBogG6bL+uLZwv45YWB2kQqbG1USr0
-	fsfzEB/snQI=
+	:content-type; q=dns; s=sasl; b=TGRYVNE8nx+2Q+9w+6kNQ6M6tH/ogUiZ
+	fF1fsUzP4V8s7PiV2FXB9oTJ1MfabXhAuAXMTRdgpxLMWqjd8TuBRXIbUaNj30JJ
+	VLKPPMNrNkaAP3UdVougm4tYdFJDVwmp+ndKK6Gj4UGPyDUgSg6jHTPgQBDUu4cH
+	DoWmcw0U+zQ=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C4295576A;
-	Tue,  3 May 2011 18:05:30 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D5155C63;
+	Tue,  3 May 2011 18:53:12 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7D9865769; Tue,  3 May 2011
- 18:05:20 -0400 (EDT)
-In-Reply-To: <4DC0608F.9040208@dailyvoid.com> (Michael Grubb's message of
- "Tue, 03 May 2011 15:07:43 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BAEDA5C5A; Tue,  3 May 2011
+ 18:53:06 -0400 (EDT)
+In-Reply-To: <20110503204442.GI1019@elie> (Jonathan Nieder's message of "Tue,
+ 3 May 2011 15:44:42 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 75DE1B9E-75D1-11E0-8973-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 1F68A174-75D8-11E0-AECE-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172699>
 
-Michael Grubb <devel@dailyvoid.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-/*
- * Our Multi-line comments begin with a line with
- * slash asterisk then newline.
- */
+> In what sense are they overridden?  For example, if I write
+>
+> 	[branch "*"]
+> 		mergeoptions = --no-ff
+>
+> 	[branch "master"]
+> 		mergeoptions = --log=5
+>
+> and merge another branch into master, will the effect be as though I
+> wrote --no-ff --log=5 or just --log=5?
 
-> +/* This is for branch.<foo>. blocks
-> + * the vote member holds a value between
-> + * 0.0 and 1.0 which measures how closely
-> + * a branch name matches the key member.
-> + * where branch.*.mergeoptions would be 0.1 and
-> + * branch.<name>.mergeoptions would be 1.0
-> + * Also it is called vote because I couldn't come
-> + * up with a better name.
-> + */
+I think the latter is overriding, and the former is cumulative.
 
-How about simply dropping that "vote" thing?  I do not want to see
-unnecessary float creeping into our codebase.
+> I'm starting to suspect it might be simpler to add a new "[merge] no-ff"
+> configuration item, like the existing "[merge] log".
 
-The k and v parameters are volatile from the point of view of this
-function.  You need to xstrdup() them to keep a copy.
+Surely
 
-There is no need to store "branch." part in cb->key, as it is common
-across the variables.
+	[merge]
+        	log = false
+                ff = false
 
-The logic would probably look like this:
+would be a lot simpler and probably far easier to explain.
 
-	if (prefixcmp(k, "branch."))
-		return;
-	k += 7; /* past "branch." part */
-	eon = strrchr(k, '.'); /* end-of-name 8/
-        if (!eon || strcmp(eon, ".mergeoptions"))
-        	return;
+Does
 
-	/* k thru eon is the name or wildcard */
-	spec = xmemdupz(k, eon - k);
-        /*
-         * NEEDSWORK: for now we say "*" matches; we would need
-         * to turn the following into something like:
-         *	if (has_wildcard(spec) 
-	 *		? !glob_matches(spec, branch)
-	 *		: strcmp(spec, branch)) {
-         *		free(spec);
-         *		return;
-         *	}
-         */
-	if (strcmp(spec, "*") && strcmp(spec, branch)) {
-        	free(spec);
-                return;
-	}
+	[merge]
+		log = false
+	[branch "master"]
+        	mergeoptions = --log=5
 
-        if (!merge_options->option ||
-             cmp_specificity(merge_options->spec, spec) < 0) {
-		/* use this one */
-                free(merge_options->spec);
-                free(merge_options->option);
-                merge_options->option = xstrdup(v);
-                merge_options->spec = spec;
-		return;
-	}
-        free(spec);
-
-And then cmp_specificity() would say something like:
-
-	static int cmp_specificity(const char *a, const char *b)
-        {
-        	switch ((!strcmp(a, "*") ? 2 : 0) |
-                	(!strcmp(b, "*") ? 1 : 0)) {
-		case 3:
-                        /*
-                         * NEEDSWORK: when we start truly globbing,
-                         * we need to decide "foo/*" is more specific than
-                         * "*" and the like. But for now we do not have to
-                         * worry about that case.
-                         */
-		case 0:
-                        return -1; /* later one wins if they are the same */
-		case 1:
-			return 1;
-		case 2:
-			return -1;
-		}
-	}
-
-meaning, the ones with wildcard are weaker than the ones without.
+do the right thing with the current codebase?
