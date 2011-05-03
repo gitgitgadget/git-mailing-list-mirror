@@ -1,11 +1,8 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv2 1/2 (RFC?)] gitweb: Prepare for splitting gitweb
-Date: Tue,  3 May 2011 16:04:09 +0200
-Message-ID: <1304431450-23901-2-git-send-email-jnareb@gmail.com>
+Subject: [PATCHv2 2/2 (PoC)] gitweb: Create Gitweb::Util module
+Date: Tue,  3 May 2011 16:04:10 +0200
+Message-ID: <1304431450-23901-3-git-send-email-jnareb@gmail.com>
 References: <1304431450-23901-1-git-send-email-jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Petr Baudis <pasky@suse.cz>,
@@ -13,272 +10,479 @@ Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	"Alejandro R. Sedeno" <asedeno@mit.edu>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 16:04:51 2011
+X-From: git-owner@vger.kernel.org Tue May 03 16:04:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHGDa-000530-Uh
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 16:04:51 +0200
+	id 1QHGDb-000530-NV
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 16:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752778Ab1ECOEk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2011 10:04:40 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:39533 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751903Ab1ECOEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 10:04:39 -0400
-Received: by wwa36 with SMTP id 36so115819wwa.1
-        for <git@vger.kernel.org>; Tue, 03 May 2011 07:04:37 -0700 (PDT)
+	id S1752805Ab1ECOEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 10:04:44 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:57473 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752779Ab1ECOEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 10:04:41 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 21so83361wya.19
+        for <git@vger.kernel.org>; Tue, 03 May 2011 07:04:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=aUUtZkz2c2J42jYDZW4W1KfPZiS5HfCQk8Ck+Z5df6U=;
-        b=GbO+gn5E3u7PLGl9WVVWN29E56OoNebKBcIzKbXXLyt8cabONgCM13+Qln6IbjgYei
-         dkDWGvwgoKmNgJ5wCjtcwUBSiViGn5V4Pa85r5S1TUVqPoiI1SxDWxPXAhJspKJtuDBJ
-         CNiebZdbPnbAtCZZjSU2kdc1GM+gu8USZxnNY=
+         :in-reply-to:references;
+        bh=LEPTpi3a6Db4+8yyxcteQtGXpkw++L8Q2VQKZYgxH8Q=;
+        b=lKaS3casQzJ7A28eavSGC15rXuKOwAJZkosv8KkChpew8IFRhhhsiWxSNFqX+rmMa9
+         U0k/+CdiUI5Jm62nE7PShYLwkTdQsLtm/QwqF5qSIBMSGXSySCYe2m3SVln9HYXhENBR
+         4iC6mKH6wTo4utnL1WXoMf3wtOvd/Q0JOlwqs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=l0IpHSxatrhG5kjc1HaEIkHfPNFzci4GJlZvi8grxOCrOfQOXsOBaGAaJcW2et4d1q
-         oUR1g7csCOChXvtfbjDgfm5AhJajRLaF0exdlqXA1jTDn6W6ueZd3ALIwUxDI4DuyCHL
-         btRraumMqKIbCgQ3UnoSQe5rbb65U/IiudoUc=
-Received: by 10.216.240.3 with SMTP id d3mr3768035wer.51.1304431477728;
-        Tue, 03 May 2011 07:04:37 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=I+Cs/iTb+LgG+8UxMxecdiTNH+Fq5PXkiW/4o34KYDPahSzSLHyIxVfbhnN6mf1q+v
+         t/B1KBMaEdeEmoOdwZomxjjG9qdH9sIMV4fWaYNc06EIq76g9x+ffUDNb8xAtYQsscrO
+         ZTllJYxF80h/8r6Tr/jFrmi2yZ6oGzC8sbgzc=
+Received: by 10.227.201.148 with SMTP id fa20mr196830wbb.39.1304431480491;
+        Tue, 03 May 2011 07:04:40 -0700 (PDT)
 Received: from roke.localdomain (abvt77.neoplus.adsl.tpnet.pl [83.8.217.77])
-        by mx.google.com with ESMTPS id ed10sm78669wbb.32.2011.05.03.07.04.34
+        by mx.google.com with ESMTPS id ed10sm78669wbb.32.2011.05.03.07.04.37
         (version=SSLv3 cipher=OTHER);
-        Tue, 03 May 2011 07:04:36 -0700 (PDT)
+        Tue, 03 May 2011 07:04:39 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5
 In-Reply-To: <1304431450-23901-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172661>
 
-Prepare gitweb for being split into modules that would be installed in
-$(gitweblibdir), by default alongside gitweb in 'lib/' subdirectory.
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 
-Gitweb would search first in 'lib/' subdirectory from where gitweb.cgi
-is installed, via
+Create a Gitweb::Util module, which is meant to contain internal
+utilities used by gitweb.  Currently it includes all the
+quoting/unquoting and escaping subroutines that are used by the
+gitweb.
 
-  use lib __DIR__.'/lib';
+Update gitweb/Makefile to install Gitweb::Util module alongside gitweb
 
-(This allow for tests to work with source version of gitweb without
-changes.)  Then it searches in $(gitweblibdir) directory (set during
-build time), by default "$(gitwebdir)/lib", via
+This was sort of part of [unfinished] Google Summer of Code 2010
+project "Splitting gitweb and developing write functionalities
+(Integrated web client for git)" by Pavan Kumar Sunkara, mentored by
+Christian Couder and co-mentored by Petr Baudis.
 
-  use lib "++GITWEBLIBDIR++";
-
-which is set to requested dir during building of gitweb.cgi.  Note
-that 'use lib' assures no trailing duplicate entries in @INC.
-
-
-This preparatory work allows to add new module to gitweb by simply
-adding
-
-  GITWEB_MODULES +=3D <module>
-
-to gitweb/Makefile (assuming that the module is in 'gitweb/lib/'
-directory).
-
-While at it pass GITWEBLIBDIR in addition to GITWEB_TEST_INSTALLED to
-allow testing installed version of gitweb and installed version of
-modules (for future tests which would check individual (sub)modules).
-
-
-At Pavan Kumar Sankara suggestion gitweb/Makefile uses
-
-  install [OPTION]... SOURCE... DIRECTORY
-
-format (2nd format) with single SOURCE rather than
-
-  install [OPTION]... SOURCE DEST
-
-format (1st format) because of security reasons (race conditions).
-Modern GNU install has `-T' / `--no-target-directory' option, but we
-cannot rely that the $(INSTALL) we are using supports this option.
-
-The install-modules target in gitweb/Makefile uses shell 'for' loop,
-instead of make's $(foreach) function, to avoid possible problem with
-generating a command line that exceeded the maximum argument list
-length.
-
-Helped-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Helped-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
-Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This patch is closest to
+This patch is unchanged from previous version:
 
-  [PATCH (version C) 1/2] gitweb: Prepare for splitting gitweb
-  http://thread.gmane.org/gmane.comp.version-control.git/165824/focus=3D=
-165826
-
-from previous (v1) version of this series.
-
-  Advantages:
-  - can run source version of gitweb (gitweb/gitweb.perl) as a script s=
-imply
-  - supports relocating gitweb modules (to gitweblibdir)
-  - allow users to simply install extra modules by hand alongside gitwe=
-b
-
-  Disadvantages:
-  - most complicated code of all cases
-
-In this version modules from __DIR__."/lib", i.e. installed alongside
-gitweb.cgi take preference over common modules installed in
-"++GITWEBLIBDIR++", as suggested / requested by Alejandro:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/165824/focus=3D=
-165926 =20
+  [PATCH (proof of concept) 2/2] gitweb: Create Gitweb::Util module
+  http://thread.gmane.org/gmane.comp.version-control.git/165824/focus=165828
 
 
-This patch is marked as possible RFC because I am not sure if
-"$(gitwebdir)/lib" directory to install modules alongside gitweb.cgi
-should be created unconditionally; it might be empty if
-$(gitweblibdir) is changed from its default version.
+This patch serves two purposes.  First, it serves as test that earlier
+"gitweb: Prepare for splitting gitweb" patch actually work correctly.
+This can be checked by running "make -C gitweb test-installed" after
+installing gitweb ("make install-gitweb" or "make -C gitweb install").
 
-This version also include update to gitweb/INSTALL.
+Second, it might be good starting point to splitting gitweb.
+Refactoring well defined parts into separate modules (Perl packages)
+could be a better, easier way than trying to come with good separation
+(split) into modules upfront.  Such leisure approach to splitting
+gitweb has more chance to be accepted.  Perhaps if such approach were
+proposed on GSoC 2010, maybe "gitweb write" project wouldn't fail
+midterm evaluations...
 
 
-Side-note: I have thought about adding sanity check for empty
-"++GITWEBLIBDIR++" in the form of
+This module was taken out of unfinished GSoC 2010 project with
+Pavan Kumar Sunkara as a student
 
-  use if "++GITWEBLIBDIR++", lib =3D> "++GITWEBLIBDIR++";
+  git://repo.or.cz/git/gsoc2010-gitweb.git
 
-or
+The module was renamed from Gitweb::Escape to Gitweb::Util.  Currently
+the contents is the same, but it might change.
 
-  use lib "++GITWEBLIBDIR++" || '.';
+Code was updated to more modern codebase; since then esc_path_info and
+esc_attr were added to gitweb - both of those are now in Gitweb::Util.
 
-But because default value of "++GITWEBLIBDIR++" is never empty, I
-don't think it is worth complicating code protecting against unlikely
-user error; Perl would give the following warning:
+There were also required some changes and conflicts resolved due to
+the fact that creating Gitweb::Util (formerly Gitweb::Escape) is no
+longer in the middle of larger patch series.  In particular lack of
+Gitweb::Config means that $fallback_encoding needed to be added to
+Gitweb::Util module.
 
-  Empty compile time value given to use lib
+While at it do not export quot_cec and quot_upr helper subroutines by
+default, but mark them exportable nevertheless.
 
- gitweb/INSTALL     |    7 +++++++
- gitweb/Makefile    |   20 ++++++++++++++++++--
- gitweb/gitweb.perl |   11 +++++++++++
- 3 files changed, 36 insertions(+), 2 deletions(-)
+ gitweb/Makefile           |    3 +
+ gitweb/gitweb.perl        |  140 +-----------------------------------
+ gitweb/lib/Gitweb/Util.pm |  177 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 183 insertions(+), 137 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/Util.pm
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 4964a67..7af343a 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -243,6 +243,13 @@ The following optional Perl modules are required f=
-or extra features
-  - HTML::TagCloud - for fancy tag cloud in project list view
-  - HTTP::Date or Time::ParseDate - to support If-Modified-Since for fe=
-eds
-=20
-+Those modules can be installed, in order of search, alongside
-+gitweb.cgi in 'lib/' subdirectory, in '$(gitweblibdir)' directory
-+(given during build), or in one of directories in which Perl looks for
-+library files (PERL5LIB, PERLLIB, standard places, current directory,
-+etc.).  Note that the first two places are by default the same
-+directory; "$(gitweblibdir)" is "$(gitwebdir)/lib".
-+
-=20
- Example web server configuration
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 0a6ac00..b353d15 100644
+index b353d15..1b35808 100644
 --- a/gitweb/Makefile
 +++ b/gitweb/Makefile
-@@ -13,6 +13,7 @@ all::
- prefix ?=3D $(HOME)
- bindir ?=3D $(prefix)/bin
- gitwebdir ?=3D /var/www/cgi-bin
-+gitweblibdir ?=3D $(gitwebdir)/lib
-=20
- RM ?=3D rm -f
- INSTALL ?=3D install
-@@ -57,6 +58,7 @@ PERL_PATH  ?=3D /usr/bin/perl
- bindir_SQ =3D $(subst ','\'',$(bindir))#'
- gitwebdir_SQ =3D $(subst ','\'',$(gitwebdir))#'
- gitwebstaticdir_SQ =3D $(subst ','\'',$(gitwebdir)/static)#'
-+gitweblibdir_SQ =3D $(subst ','\'',$(gitweblibdir))#'
- SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))#'
- PERL_PATH_SQ  =3D $(subst ','\'',$(PERL_PATH))#'
- DESTDIR_SQ    =3D $(subst ','\'',$(DESTDIR))#'
-@@ -115,6 +117,7 @@ GITWEB_FILES +=3D static/git-logo.png static/git-fa=
-vicon.png
- GITWEB_REPLACE =3D \
+@@ -114,6 +114,9 @@ endif
+ 
+ GITWEB_FILES += static/git-logo.png static/git-favicon.png
+ 
++# Modules: Gitweb::*
++GITWEB_MODULES += Gitweb/Util.pm
++
+ GITWEB_REPLACE = \
  	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
  	-e 's|++GIT_BINDIR++|$(bindir)|g' \
-+	-e 's|++GITWEBLIBDIR++|$(gitweblibdir)|g' \
- 	-e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
- 	-e 's|++GITWEB_CONFIG_SYSTEM++|$(GITWEB_CONFIG_SYSTEM)|g' \
- 	-e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
-@@ -153,20 +156,33 @@ test:
-=20
- test-installed:
- 	GITWEB_TEST_INSTALLED=3D'$(DESTDIR_SQ)$(gitwebdir_SQ)' \
-+	GITWEBLIBDIR=3D'$(DESTDIR_SQ)$(gitweblibdir_SQ)' \
- 		$(MAKE) -C ../t gitweb-test
-=20
- ### Installation rules
-=20
--install: all
-+install: all install-modules
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
- 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
- 	$(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)=
-'
-=20
-+install-modules:
-+	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)/li=
-b'
-+	install_dirs=3D"$(sort $(dir $(GITWEB_MODULES)))" && \
-+	for dir in $$install_dirs; do \
-+		test -d '$(DESTDIR_SQ)$(gitweblibdir_SQ)'/"$$dir" || \
-+		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitweblibdir_SQ)'/"$$dir"; \
-+	done
-+	gitweb_modules=3D"$(GITWEB_MODULES)" && \
-+	for mod in $$gitweb_modules; do \
-+		$(INSTALL) -m 644 "lib/$$mod" '$(DESTDIR_SQ)$(gitweblibdir_SQ)'/"$$(=
-dirname $$mod)"; \
-+	done
-+
- ### Cleaning rules
-=20
- clean:
- 	$(RM) gitweb.cgi static/gitweb.min.js static/gitweb.min.css GITWEB-BU=
-ILD-OPTIONS
-=20
--.PHONY: all clean install test test-installed .FORCE-GIT-VERSION-FILE =
-=46ORCE
-+.PHONY: all clean install install-modules test test-installed .FORCE-G=
-IT-VERSION-FILE FORCE
-=20
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ee69ea6..f094471 100755
+index f094471..967ad64 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -10,6 +10,17 @@
- use 5.008;
- use strict;
- use warnings;
-+
-+use File::Spec;
-+
-+# __DIR__ is excerpt from Dir::Self
-+sub __DIR__ () {
-+	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1])=
-;
-+}
-+use lib "++GITWEBLIBDIR++";
-+use lib __DIR__ . '/lib';
-+
-+
+@@ -24,11 +24,13 @@ use lib __DIR__ . '/lib';
  use CGI qw(:standard :escapeHTML -nosticky);
  use CGI::Util qw(unescape);
  use CGI::Carp qw(fatalsToBrowser set_message);
---=20
+-use Encode;
+ use Fcntl ':mode';
+ use File::Find qw();
+ use File::Basename qw(basename);
+ use Time::HiRes qw(gettimeofday tv_interval);
++
++use Gitweb::Util;
++
+ binmode STDOUT, ':utf8';
+ 
+ our $t0 = [ gettimeofday() ];
+@@ -1391,128 +1393,6 @@ sub validate_refname {
+ 	return $input;
+ }
+ 
+-# decode sequences of octets in utf8 into Perl's internal form,
+-# which is utf-8 with utf8 flag set if needed.  gitweb writes out
+-# in utf-8 thanks to "binmode STDOUT, ':utf8'" at beginning
+-sub to_utf8 {
+-	my $str = shift;
+-	return undef unless defined $str;
+-	if (utf8::valid($str)) {
+-		utf8::decode($str);
+-		return $str;
+-	} else {
+-		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+-	}
+-}
+-
+-# quote unsafe chars, but keep the slash, even when it's not
+-# correct, but quoted slashes look too horrible in bookmarks
+-sub esc_param {
+-	my $str = shift;
+-	return undef unless defined $str;
+-	$str =~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
+-	$str =~ s/ /\+/g;
+-	return $str;
+-}
+-
+-# the quoting rules for path_info fragment are slightly different
+-sub esc_path_info {
+-	my $str = shift;
+-	return undef unless defined $str;
+-
+-	# path_info doesn't treat '+' as space (specially), but '?' must be escaped
+-	$str =~ s/([^A-Za-z0-9\-_.~();\/;:@&= +]+)/CGI::escape($1)/eg;
+-
+-	return $str;
+-}
+-
+-# quote unsafe chars in whole URL, so some characters cannot be quoted
+-sub esc_url {
+-	my $str = shift;
+-	return undef unless defined $str;
+-	$str =~ s/([^A-Za-z0-9\-_.~();\/;?:@&= ]+)/CGI::escape($1)/eg;
+-	$str =~ s/ /\+/g;
+-	return $str;
+-}
+-
+-# quote unsafe characters in HTML attributes
+-sub esc_attr {
+-
+-	# for XHTML conformance escaping '"' to '&quot;' is not enough
+-	return esc_html(@_);
+-}
+-
+-# replace invalid utf8 character with SUBSTITUTION sequence
+-sub esc_html {
+-	my $str = shift;
+-	my %opts = @_;
+-
+-	return undef unless defined $str;
+-
+-	$str = to_utf8($str);
+-	$str = $cgi->escapeHTML($str);
+-	if ($opts{'-nbsp'}) {
+-		$str =~ s/ /&nbsp;/g;
+-	}
+-	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
+-	return $str;
+-}
+-
+-# quote control characters and escape filename to HTML
+-sub esc_path {
+-	my $str = shift;
+-	my %opts = @_;
+-
+-	return undef unless defined $str;
+-
+-	$str = to_utf8($str);
+-	$str = $cgi->escapeHTML($str);
+-	if ($opts{'-nbsp'}) {
+-		$str =~ s/ /&nbsp;/g;
+-	}
+-	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
+-	return $str;
+-}
+-
+-# Make control characters "printable", using character escape codes (CEC)
+-sub quot_cec {
+-	my $cntrl = shift;
+-	my %opts = @_;
+-	my %es = ( # character escape codes, aka escape sequences
+-		"\t" => '\t',   # tab            (HT)
+-		"\n" => '\n',   # line feed      (LF)
+-		"\r" => '\r',   # carrige return (CR)
+-		"\f" => '\f',   # form feed      (FF)
+-		"\b" => '\b',   # backspace      (BS)
+-		"\a" => '\a',   # alarm (bell)   (BEL)
+-		"\e" => '\e',   # escape         (ESC)
+-		"\013" => '\v', # vertical tab   (VT)
+-		"\000" => '\0', # nul character  (NUL)
+-	);
+-	my $chr = ( (exists $es{$cntrl})
+-		    ? $es{$cntrl}
+-		    : sprintf('\%2x', ord($cntrl)) );
+-	if ($opts{-nohtml}) {
+-		return $chr;
+-	} else {
+-		return "<span class=\"cntrl\">$chr</span>";
+-	}
+-}
+-
+-# Alternatively use unicode control pictures codepoints,
+-# Unicode "printable representation" (PR)
+-sub quot_upr {
+-	my $cntrl = shift;
+-	my %opts = @_;
+-
+-	my $chr = sprintf('&#%04d;', 0x2400+ord($cntrl));
+-	if ($opts{-nohtml}) {
+-		return $chr;
+-	} else {
+-		return "<span class=\"cntrl\">$chr</span>";
+-	}
+-}
+-
+ # git may return quoted and escaped filenames
+ sub unquote {
+ 	my $str = shift;
+@@ -1549,20 +1429,6 @@ sub unquote {
+ 	return $str;
+ }
+ 
+-# escape tabs (convert tabs to spaces)
+-sub untabify {
+-	my $line = shift;
+-
+-	while ((my $pos = index($line, "\t")) != -1) {
+-		if (my $count = (8 - ($pos % 8))) {
+-			my $spaces = ' ' x $count;
+-			$line =~ s/\t/$spaces/;
+-		}
+-	}
+-
+-	return $line;
+-}
+-
+ sub project_in_list {
+ 	my $project = shift;
+ 	my @list = git_get_projects_list();
+diff --git a/gitweb/lib/Gitweb/Util.pm b/gitweb/lib/Gitweb/Util.pm
+new file mode 100644
+index 0000000..a213d3f
+--- /dev/null
++++ b/gitweb/lib/Gitweb/Util.pm
+@@ -0,0 +1,177 @@
++# Gitweb::Util -- Internal utilities used by gitweb (git web interface)
++#
++# This module is licensed under the GPLv2
++
++package Gitweb::Util;
++
++use strict;
++use warnings;
++use Exporter qw(import);
++
++our @EXPORT = qw(to_utf8
++                 esc_param esc_path_info esc_url
++                 esc_html esc_path esc_attr
++                 untabify
++                 $fallback_encoding);
++our @EXPORT_OK = qw(quot_cec quot_upr);
++
++use Encode;
++use CGI;
++
++# ......................................................................
++# Perl encoding (utf-8)
++
++# decode sequences of octets in utf8 into Perl's internal form,
++# which is utf-8 with utf8 flag set if needed.  gitweb writes out
++# in utf-8 thanks to "binmode STDOUT, ':utf8'" at beginning of gitweb.perl
++our $fallback_encoding = 'latin1';
++sub to_utf8 {
++	my $str = shift;
++	return undef unless defined $str;
++	if (utf8::valid($str)) {
++		utf8::decode($str);
++		return $str;
++	} else {
++		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
++	}
++}
++
++# ......................................................................
++# CGI encoding
++
++# quote unsafe chars, but keep the slash, even when it's not
++# correct, but quoted slashes look too horrible in bookmarks
++sub esc_param {
++	my $str = shift;
++	return undef unless defined $str;
++
++	$str =~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
++	$str =~ s/ /\+/g;
++
++	return $str;
++}
++
++# the quoting rules for path_info fragment are slightly different
++sub esc_path_info {
++	my $str = shift;
++	return undef unless defined $str;
++
++	# path_info doesn't treat '+' as space (specially), but '?' must be escaped
++	$str =~ s/([^A-Za-z0-9\-_.~();\/;:@&= +]+)/CGI::escape($1)/eg;
++
++	return $str;
++}
++
++# quote unsafe chars in whole URL, so some characters cannot be quoted
++sub esc_url {
++	my $str = shift;
++	return undef unless defined $str;
++
++	$str =~ s/([^A-Za-z0-9\-_.~();\/;?:@&= ]+)/CGI::escape($1)/eg;
++	$str =~ s/ /\+/g;
++
++	return $str;
++}
++
++# ......................................................................
++# (X)HTML escaping
++
++# replace invalid utf8 character with SUBSTITUTION sequence
++sub esc_html {
++	my $str = shift;
++	my %opts = @_;
++
++	return undef unless defined $str;
++
++	$str = to_utf8($str);
++	$str = CGI::escapeHTML($str);
++	if ($opts{'-nbsp'}) {
++		$str =~ s/ /&nbsp;/g;
++	}
++	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
++	return $str;
++}
++
++# quote unsafe characters in HTML attributes
++sub esc_attr {
++
++	# for XHTML conformance escaping '"' to '&quot;' is not enough
++	return esc_html(@_);
++}
++
++# quote control characters and escape filename to HTML
++sub esc_path {
++	my $str = shift;
++	my %opts = @_;
++
++	return undef unless defined $str;
++
++	$str = to_utf8($str);
++	$str = CGI::escapeHTML($str);
++	if ($opts{'-nbsp'}) {
++		$str =~ s/ /&nbsp;/g;
++	}
++	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
++	return $str;
++}
++
++# ......................................................................
++# Other
++
++# escape tabs (convert tabs to spaces)
++sub untabify {
++	my $line = shift;
++
++	while ((my $pos = index($line, "\t")) != -1) {
++		if (my $count = (8 - ($pos % 8))) {
++			my $spaces = ' ' x $count;
++			$line =~ s/\t/$spaces/;
++		}
++	}
++
++	return $line;
++}
++
++# ----------------------------------------------------------------------
++# Showing "unprintable" characters (utility functions)
++
++# Make control characters "printable", using character escape codes (CEC)
++sub quot_cec {
++	my $cntrl = shift;
++	my %opts = @_;
++	my %es = ( # character escape codes, aka escape sequences
++		"\t" => '\t',   # tab            (HT)
++		"\n" => '\n',   # line feed      (LF)
++		"\r" => '\r',   # carrige return (CR)
++		"\f" => '\f',   # form feed      (FF)
++		"\b" => '\b',   # backspace      (BS)
++		"\a" => '\a',   # alarm (bell)   (BEL)
++		"\e" => '\e',   # escape         (ESC)
++		"\013" => '\v', # vertical tab   (VT)
++		"\000" => '\0', # nul character  (NUL)
++	);
++	my $chr = ( (exists $es{$cntrl})
++		    ? $es{$cntrl}
++		    : sprintf('\%2x', ord($cntrl)) );
++	if ($opts{-nohtml}) {
++		return $chr;
++	} else {
++		return "<span class=\"cntrl\">$chr</span>";
++	}
++}
++
++# Alternatively use unicode control pictures codepoints,
++# Unicode "printable representation" (PR)
++sub quot_upr {
++	my $cntrl = shift;
++	my %opts = @_;
++
++	my $chr = sprintf('&#%04d;', 0x2400+ord($cntrl));
++	if ($opts{-nohtml}) {
++		return $chr;
++	} else {
++		return "<span class=\"cntrl\">$chr</span>";
++	}
++}
++
++1;
+-- 
 1.7.3
