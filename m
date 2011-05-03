@@ -1,106 +1,90 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] sparse checkout: do not eagerly decide the fate for
- whole directory
-Date: Tue, 3 May 2011 11:43:35 +0700
-Message-ID: <BANLkTimDO7yRyiBt7xS5Hy7-iT5SUDwJtA@mail.gmail.com>
-References: <1304340464-14829-1-git-send-email-pclouds@gmail.com>
- <1304340464-14829-3-git-send-email-pclouds@gmail.com> <BANLkTikgNR1G5_TO3rmMZy3fN2PNF2Pqjg@mail.gmail.com>
+From: Michael Grubb <devel@dailyvoid.com>
+Subject: Re: [PATCH 2] Add default merge options for all branches
+Date: Tue, 03 May 2011 00:35:34 -0500
+Message-ID: <4DBF9426.4090402@dailyvoid.com>
+References: <4DBF04C5.1080608@dailyvoid.com> <7voc3kk748.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	skillzero@gmail.com
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 03 06:44:16 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, vmiklos@frugalware.org, deskinm@umich.edu
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 03 07:35:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QH7T5-0004uC-LM
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 06:44:16 +0200
+	id 1QH8Gu-0003H5-8o
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 07:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751219Ab1ECEoJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2011 00:44:09 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:34417 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751109Ab1ECEoH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2011 00:44:07 -0400
-Received: by bwz15 with SMTP id 15so5217159bwz.19
-        for <git@vger.kernel.org>; Mon, 02 May 2011 21:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=A2fMeMjjlb74RWxzD5h/iWeyPA2+NJF8v/LtGi84xPo=;
-        b=YrnwBdcEN4ZIHKOD47HKzRHin3Mj97vIWnQNql1kL/9x/HIbPvMJX6cWSzBW5aUXLU
-         utFJ0IPhBc5SnRZ9ljlvHtTBO40vrMKLER4MP5udX+mThHrOFg40QH3yeKf01Wcb7dvq
-         umJukEvx9YTJyHyXg/HHSVOmtXJImywp2/sQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=aZ75XXvrjKxNd/BecCEtLFcRvB3y0qLhQHUvhNlJLOoSOf3qxNKyre1TtWhuuRFZ9f
-         44BdArOtf0pUL26X1hbUP9n32rDxwnaFfZmX5ZJTW1KY2FF/T2Bhqe78NLzINGTQFUPj
-         0K2BVoQXqEMQXJ9Bzb1IahaJAQStij5tKuIws=
-Received: by 10.204.32.9 with SMTP id a9mr4129478bkd.182.1304397845351; Mon,
- 02 May 2011 21:44:05 -0700 (PDT)
-Received: by 10.204.53.13 with HTTP; Mon, 2 May 2011 21:43:35 -0700 (PDT)
-In-Reply-To: <BANLkTikgNR1G5_TO3rmMZy3fN2PNF2Pqjg@mail.gmail.com>
+	id S1752019Ab1ECFfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 01:35:39 -0400
+Received: from 75.98.162.166.static.a2webhosting.com ([75.98.162.166]:56475
+	"EHLO dailyvoid.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419Ab1ECFfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 01:35:38 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=dailyvoid.com;
+	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Source:X-Source-Args:X-Source-Dir;
+	b=rXFCeytaSodZaOb7m9d4CnCLZ7B+owBGpIKhplCfj/cPx1AcUi8koi5Lv4Ohe5fp9MKc/LqV95xhGV323h6IbpqZEvf6ZW2HVcIr0gkAttPskm/l/HGWBEOQzSblItbi;
+Received: from adsl-99-59-251-170.dsl.ltrkar.sbcglobal.net ([99.59.251.170] helo=macbook.local)
+	by a2s24.a2hosting.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <devel@dailyvoid.com>)
+	id 1QH8Gl-00060R-Gt; Tue, 03 May 2011 01:35:35 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <7voc3kk748.fsf@alter.siamese.dyndns.org>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - a2s24.a2hosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - dailyvoid.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172643>
 
-2011/5/3 Thiago Farina <tfransosi@gmail.com>:
->> This generally works as long as there are no patterns to exclude par=
-ts
->> of the directory. In case of sparse checkout code, the following pat=
-terns
->>
->> =C2=A0t
->> =C2=A0!t/t0000-basic.sh
->>
->> will produce a worktree with full directory "t" even if t0000-basic.=
-sh
->> is requested to stay out.
->> ...
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0prefix[prefix_len++] =3D '/';
->>
->> - =C2=A0 =C2=A0 =C2=A0 /* included, no clearing for any entries unde=
-r this directory */
->> - =C2=A0 =C2=A0 =C2=A0 if (!ret) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (; cache !=3D=
- cache_end; cache++) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 struct cache_entry *ce =3D *cache;
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 if (strncmp(ce->name, prefix, prefix_len))
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return nr - (cach=
-e_end - cache);
->> - =C2=A0 =C2=A0 =C2=A0 }
->> + =C2=A0 =C2=A0 =C2=A0 /* If undecided, use parent directory's decis=
-ion in defval */
-> What means "use parent directory's decision"? Could you make this
-> comment more clearer?
 
-Take the example patterns in commit message, we know that we match
-directory "t" (pattern 1). When we check t/0001-init.sh, no patterns
-match it. But because it's under "t", so we consider it matched. On
-the other hand, t/t0000-basic.sh will match pattern 2 and override
-parent directory's decision.
+On 5/2/11 6:36 PM, Junio C Hamano wrote:
+> Michael Grubb <devel@dailyvoid.com> writes:
+> 
+>> diff --git a/builtin/merge.c b/builtin/merge.c
+>> index 0bdd19a..9e5b6bd 100644
+>> --- a/builtin/merge.c
+>> +++ b/builtin/merge.c
+>> @@ -505,9 +505,18 @@ cleanup:
+>>  
+>>  static int git_merge_config(const char *k, const char *v, void *cb)
+>>  {
+>> -	if (branch && !prefixcmp(k, "branch.") &&
+>> -		!prefixcmp(k + 7, branch) &&
+>> -		!strcmp(k + 7 + strlen(branch), ".mergeoptions")) {
+>> +	static int branch_merge_options_set = 0;
+> 
+> I prefer to avoid "static int" that you cannot easily clear here.  It
+> would make it impossible to call the function twice.
+>
+> I think it is easily doable by using the callback parameter (cb).
+>
+Too right.  I've reworked that bit to use the cb parameter.  With an eye
+to the future I've created a new struct for this for future's sake, so
+that this one feature doesn't monopolize the cb parameter in the future.
+ 
+> I am also wondering how this will scale, both in the direction of "later
+> it is likely that we would want to support a glob not just '*' here", and
+> also "later it is likely that we would want to support other per-branch
+> variables, not just "mergeoptions" here".
+It seems that the easiest way would be to move this particular feature out into
+it's own function at some point to pave the way for doing more complex things with
+the branch configurations.
 
->> + =C2=A0 =C2=A0 =C2=A0 if (ret < 0)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D defval;
->>
->> - =C2=A0 =C2=A0 =C2=A0 /* excluded, clear all selected entries under=
- this directory. */
-> Start with capital letter?
+New patch forthcoming.
 
-It's a line removal, what can I do about it?
---=20
-Duy
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
