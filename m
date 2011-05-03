@@ -1,89 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/5] git-add.txt: document 'interactive.singlekey'
-Date: Tue, 03 May 2011 11:51:42 -0700
-Message-ID: <7vbozjipmp.fsf@alter.siamese.dyndns.org>
-References: <20110501045140.GA13387@sigill.intra.peff.net>
- <1304343872-1654-3-git-send-email-valentin.haenel@gmx.de>
- <7v1v0hngs9.fsf@alter.siamese.dyndns.org>
- <20110503153857.GC2211@kudu.in-berlin.de>
+Subject: Re: [Annoyance] "git log .." thinks ".." is ambiguous
+Date: Tue, 03 May 2011 12:00:30 -0700
+Message-ID: <7v7ha7ip81.fsf@alter.siamese.dyndns.org>
+References: <7vr58glxro.fsf@alter.siamese.dyndns.org>
+ <FB837238-9953-4FD8-BC52-5C0AB061C291@gmail.com>
+ <4DBFA1A2.6050409@drmicha.warpmail.net>
+ <86404CD9-6040-4083-912F-23F4C11F4ED2@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git-List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Valentin Haenel <valentin.haenel@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 03 20:52:04 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Joshua Juran <jjuran@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 03 21:00:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHKhW-0006bR-Tw
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 20:52:03 +0200
+	id 1QHKq3-0003gz-Pp
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 21:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754510Ab1ECSv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 14:51:57 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42458 "EHLO
+	id S1754553Ab1ECTAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 15:00:44 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51036 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754258Ab1ECSv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 14:51:56 -0400
+	with ESMTP id S1754258Ab1ECTAn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 15:00:43 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BEEA53D40;
-	Tue,  3 May 2011 14:53:57 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 317253ECB;
+	Tue,  3 May 2011 15:02:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B8LBDV5bI6CIHrZDCBUXu6lZGUg=; b=dl/xUz
-	xriPR5ql9fCs8MmNu5r4Bt7v/CFSRsRxxxbcIdO/8Wrum7qfYQ45SBu+nCDrm7i1
-	Efvk+k/HLc4MXFzgeCyHvV5BrfSZIM/I+JeVr0AVDkdnGcXHfDEkDjAeaQ3iw/CC
-	//xoKAMjZlHichLVCi9+g8G4VMaGWztZmmSTk=
+	:content-type; s=sasl; bh=gfF6f+PP8wNfa2ykExFQPx30Lsg=; b=KTHhGg
+	TsBCkKOXMa24tXaZKhC1CwmdhnjjEWM8j4EdlLCrD9XjAhzNySTi2+Gi98qBTYSP
+	l7wsftt2VWTvNnu9Nm9UK4+GcBI77xpYW78EQjkXX2mYQLeN0Z9XGXV11VuBBL4T
+	k016THpU3RRKQPCFoGZislKeyqgqTj/1wKU8w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T96Oj/DVAKuNYLjwa9Z4LMrRH/JBr7F/
-	+okWOyGYUwxCbPxDEex2sYjB/CKnWnMTHY2Fs8YbyD+Z4DvWyfTm+d5Nwr1uC3Mv
-	CDIXjq4qPtZeJJBYeaSVxHDD3ORxbGgmgGaSQCL5aSWuyql3reLVNyA52mbVpLej
-	p9iyxGaXYe8=
+	:content-type; q=dns; s=sasl; b=ykFkFuo67vN6N9wgmK/A4dr3o8fKLbc0
+	iMsMZjl1wFk/b3efVG7yuzXpQrsX58Z1aNig2keXwF3Uf8i9FXDrmGPAJlmTrwml
+	vUZdi2fMON1u2VsGkSFSPitdaxSP0L2mazxCvPG3VUvYAyA+fjtIeV/aC259PGtN
+	ADm2NnW1MPY=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7CCB53D35;
-	Tue,  3 May 2011 14:53:52 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F2A3F3EC8;
+	Tue,  3 May 2011 15:02:39 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BFC2E3D33; Tue,  3 May 2011
- 14:53:46 -0400 (EDT)
-In-Reply-To: <20110503153857.GC2211@kudu.in-berlin.de> (Valentin Haenel's
- message of "Tue, 3 May 2011 17:38:57 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9EEED3EBF; Tue,  3 May 2011
+ 15:02:35 -0400 (EDT)
+In-Reply-To: <86404CD9-6040-4083-912F-23F4C11F4ED2@gmail.com> (Joshua Juran's
+ message of "Tue, 3 May 2011 01:17:17 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B059A84E-75B6-11E0-8760-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: EAC06A26-75B7-11E0-9277-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172684>
 
-Valentin Haenel <valentin.haenel@gmx.de> writes:
+Joshua Juran <jjuran@gmail.com> writes:
 
->>  	If some files could not be added because of errors indexing
->>  	them, do not abort the operation, but continue adding the
->>  	others. The command shall still exit with non-zero status.
->> +	The configuration variable `add.ignoreErrors` can be set to
->> +	true to make this the default behaviour.
->
-> Its unrelated to 'interactive.singlekey', can i 'stuff' it into the
-> series too, or better make a seperate one?
+> My recollection is that Metrowerks C will statically allocate read-
+> write storage (duplicating the read-only copy of the string) and copy
+> the string into it at runtime.  It only copies the string once, which
+> is ensured by checking an internally generated flag (also statically
+> allocated) every time the scope containing the declaration is
+> executed.  This is the pessimization I speak of.
 
-Yes, this is totally unrelated; I just wanted to write it down so somebody
-remembers.  Please make it a separate patch that comes before anything
-else.
+That's a stupid compiler, isn't it?  Doesn't it pay attention to the fact
+that the static char string in the function scope also says "const"?
 
->> @@ -189,7 +191,8 @@ interactive command loop.
->>  The command loop shows the list of subcommands available, and
->>  gives a prompt "What now> ".  In general, when the prompt ends
->>  with a single '>', you can pick only one of the choices given
->> -and type return, like this:
->> +and type return (the configuration variable `interactive.singlekey`
->> +can be set to true to omit hitting return, by the way), like this:
->
-> If what i wrote above is correct, this should go into the section about
-> the patch mode, rather than here?
+A sane compiler would store { 'H' 'E' 'A' 'D' '\0' } five bytes in a data
+segment (preferrably ro), give it a label and turn its assignment to and
+comparison with "next" and "this" to a reference to that label address,
+and all can be resolved by the linker.  Your suggestion will give a
+compiler an excuse to allocate an extra pointer variable to hold that
+address in addition to that, espcially if you do not say const twice.
 
-Yes, please move find a more appropriate home for that description.
-
-Thanks.
+Of course the extra pointer could be optimized away if you follow the data
+and if the compiler does so we would get the same code.
