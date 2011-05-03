@@ -1,84 +1,100 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH v2] specifying ranges: we did not mean to make ".." an
- empty set
-Date: Tue, 03 May 2011 08:39:26 +0200
-Message-ID: <4DBFA31E.40207@drmicha.warpmail.net>
-References: <7vr58glxro.fsf@alter.siamese.dyndns.org> <20110502193321.GB10487@sigill.intra.peff.net> <7vhb9clu0n.fsf@alter.siamese.dyndns.org> <7v62pslt2k.fsf_-_@alter.siamese.dyndns.org> <20110502210141.GA15753@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/1] Honor $(prefix) set in config.mak* when defining
+ ETC_GIT* and sysconfdir
+Date: Tue, 03 May 2011 08:42:14 +0200
+Message-ID: <4DBFA3C6.8060209@viscovery.net>
+References: <20110428022922.GC4833@camk.edu.pl> <7v62py5nbp.fsf@alter.siamese.dyndns.org> <20110428192751.GE4833@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-2
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 03 08:39:34 2011
+To: Kacper Kornet <kornet@camk.edu.pl>
+X-From: git-owner@vger.kernel.org Tue May 03 08:42:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QH9Gg-0008WQ-3z
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 08:39:34 +0200
+	id 1QH9JR-0001lI-TJ
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 08:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752515Ab1ECGj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 02:39:29 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:55990 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752334Ab1ECGj2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2011 02:39:28 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0C71320580;
-	Tue,  3 May 2011 02:39:28 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 03 May 2011 02:39:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=J33rAPjD4rZSBCdgLDiabkP/1Yg=; b=ivPw0ZJAe8hp9yS6j1FzSlhVVWbqNyTD7fvCMRNXSDbwirDHVX4Fdjz1hQ6mvCyK10aLmx9Y9MbTTVLzD66dqCwBldqNnHBJyuzSFBipmbDjcG8UCVp2dMZ9njwLgC/5EfF7VgOG0FDrISBFfdLY82HUGz4q1/KtHdHLUdVIGMU=
-X-Sasl-enc: ZzWv236wh7GzZGY+fJhmYecZTcLi3d4TXIsKQbCEaotf 1304404767
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 691D2443710;
-	Tue,  3 May 2011 02:39:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <20110502210141.GA15753@sigill.intra.peff.net>
+	id S1752473Ab1ECGmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 02:42:20 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:62007 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752019Ab1ECGmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 02:42:20 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QH9JH-0007ri-Cd; Tue, 03 May 2011 08:42:15 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1FBA71660F;
+	Tue,  3 May 2011 08:42:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <20110428192751.GE4833@camk.edu.pl>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172647>
 
-Jeff King venit, vidit, dixit 02.05.2011 23:01:
-> On Mon, May 02, 2011 at 01:56:51PM -0700, Junio C Hamano wrote:
+Please do not set Mail-Followup-To!! It makes communication on this list
+extremely inconvenient.
+
+Am 4/28/2011 21:27, schrieb Kacper Kornet:
+> Definitions of ETC_GITCONFIG, ETC_GITATTRIBUTES and sysconfdir depend on
+> value of prefix. As prefix can be changed in config.mak.autogen, all if
+> blocks with conditions based on prefix should be placed after the file
+> is included in Makefile.
 > 
->> Either end of revision range operator can be omitted to default to HEAD,
->> as in "origin.." (what did I do since I forked) or "..origin" (what did
->> they do since I forked).  But the current parser interprets ".."  as an
->> empty range "HEAD..HEAD", and worse yet, because ".." does exist on the
->> filesystem, we get this annoying output:
->>
->>   $ cd Documentation/howto
->>   $ git log .. ;# give me recent commits that touch Documentation/ area.
->>   fatal: ambiguous argument '..': both revision and filename
->>   Use '--' to separate filenames from revisions
->>
->> Surely we could say "git log ../" or even "git log -- .." to disambiguate,
->> but we shouldn't have to.
->>
->> Helped-by: Jeff King <peff@peff.net>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+> ---
+>  Makefile |   19 ++++++++++---------
+>  1 files changed, 10 insertions(+), 9 deletions(-)
 > 
-> Looks good to me.
+> diff --git a/Makefile b/Makefile
+> index cbc3fce..bf912b9 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -291,15 +291,8 @@ sharedir = $(prefix)/share
+>  gitwebdir = $(sharedir)/gitweb
+>  template_dir = share/git-core/templates
+>  htmldir = share/doc/git-doc
+> -ifeq ($(prefix),/usr)
+> -sysconfdir = /etc
+> -ETC_GITCONFIG = $(sysconfdir)/gitconfig
+> -ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
+> -else
+> -sysconfdir = $(prefix)/etc
+> -ETC_GITCONFIG = etc/gitconfig
+> -ETC_GITATTRIBUTES = etc/gitattributes
+> -endif
+> +ETC_GITCONFIG = $(git_etcdir)/gitconfig
+> +ETC_GITATTRIBUTES = $(git_etcdir)/gitattributes
+>  lib = lib
+>  # DESTDIR=
+>  pathsep = :
+> @@ -1192,6 +1185,14 @@ endif
+>  -include config.mak.autogen
+>  -include config.mak
+>  
+> +ifeq ($(prefix),/usr)
+> +sysconfdir = /etc
+> +git_etcdir = /etc
+> +else
+> +sysconfdir = $(prefix)/etc
+> +git_etcdir = etc
+> +endif
+> +
+>  ifdef CHECK_HEADER_DEPENDENCIES
+>  COMPUTE_HEADER_DEPENDENCIES =
+>  USE_COMPUTED_HEADER_DEPENDENCIES =
 
-I'm sorry but I don't like this at all, because:
+Does this patch do anything useful? After the patch is applied, sysconfdir
+is set-but-not-used. Therefore, you can remove the assignments. But then
+you lose the reference to $(prefix) that the commit message claims is so
+important. Puzzled...
 
-> Doing "..." is still allowed, but will never produce any useful results.
-> I don't know if it is worth disallowing it to catch errors. I am tempted
-> to say it should be magic for "@{u}...HEAD", but I think just "..." is
-> getting unreadably magical. "@{u}...HEAD" is already pretty concise and
-> is much more readable.
-
-We need to disambiguate any pathspec with "--" which could be a revision
-parameter. Therefore I find it very unnatural to disambiguate ".." to a
-pathspec automatically (and have "..." error out). "../" is really
-simple enough to type.
-
-For "..", we should either catch the error or, better, have ".." default
-to "@{u}..HEAD" and do the same for "...". Those are used much more
-often, and this goes with "try to parse as a rev first, then pathspec".
-
-Michael
+-- Hannes
