@@ -1,159 +1,134 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-send-email and non 7bit clean message (was: [PATCH 0/6] gitweb: Improve ctags, introduce categories)
-Date: Tue, 3 May 2011 16:02:28 +0200
-Message-ID: <201105031602.30874.jnareb@gmail.com>
-References: <1304099521-27617-1-git-send-email-jnareb@gmail.com> <7v8vuswxqs.fsf@alter.siamese.dyndns.org> <BANLkTi=cckKr3baDZAktAjz8F=JXjQJWiA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Petr Baudis <pasky@suse.cz>, Sebastien Cevey <seb@cine7.net>,
-	Greg Kroah-Hartman <greg@kroah.com>,
-	Ryan Anderson <ryan@michonline.com>
-To: =?utf-8?q?=C3=98yvind_A=2E_Holm?= <sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Tue May 03 16:02:49 2011
+Subject: [PATCHv2 0/2] gitweb: Beginnings of splitting gitweb into modules
+Date: Tue,  3 May 2011 16:04:08 +0200
+Message-ID: <1304431450-23901-1-git-send-email-jnareb@gmail.com>
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	"Alejandro R. Sedeno" <asedeno@mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 16:04:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHGBZ-0003Zy-My
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 16:02:46 +0200
+	id 1QHGDR-0004v8-6x
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 16:04:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752803Ab1ECOCl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2011 10:02:41 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:51583 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752778Ab1ECOCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 10:02:38 -0400
-Received: by bwz15 with SMTP id 15so139176bwz.19
-        for <git@vger.kernel.org>; Tue, 03 May 2011 07:02:37 -0700 (PDT)
+	id S1752724Ab1ECOEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 10:04:36 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:57473 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751903Ab1ECOEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 10:04:35 -0400
+Received: by wya21 with SMTP id 21so83361wya.19
+        for <git@vger.kernel.org>; Tue, 03 May 2011 07:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=TJ5R4lsT4EFTZRxA+3RHmDUbj7uBH2M+8Y8/r/ua0mQ=;
-        b=IuHZxKNsrbqdK96EjFgRv+SZiDvM0R4P1UzvMsAVVLn8fxze8Uy8UeqQ4B3uf1miqH
-         kreD9O2a8E8il22MVqOb9aGvyo4p98U+YhCQCbK+rS7vF4BFKVfSkL0cSHeIi7ngaOt2
-         eoBjCWYJgXmsUIxCsQZNzw9np5h+2wvgTXLKM=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=dYcyjYN8hM8co1zTBZ3j81ev2OEbzmLfvxrNQ7hfpzg=;
+        b=v3xCVjNqZdqFBtGgvrX6dGxBXMpvnUkjCjZO6XfO7f2kCGCMFQUXe4d92BK4iSxIGt
+         xb53QT3R26e6816PZ1Dq+kceuwAP52xayfpV0cEZaCAgb37ClBbwhABU9tUfInOG58dA
+         zdTc8KVkomxspdLpbZxkn9Infc1qMsijI9UXM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=qB9vm8LMjrwltY1+UUw/YOD/QEtDpBcZL0kdHa2n29GCY9Gs0vqoPjioYwspnR7mZf
-         dLZQ9CQMA5R9MtC/TudYH1W+5zdTCSuw/nZ4w0TFZc6BzDggx/VX9AhpnSe4XZhwpbDq
-         g0aMnKSCVnvMvyj6ADi+5sPk6vSBw7M+9jZlo=
-Received: by 10.204.191.145 with SMTP id dm17mr2406716bkb.185.1304431357296;
-        Tue, 03 May 2011 07:02:37 -0700 (PDT)
-Received: from [192.168.1.13] (abvt77.neoplus.adsl.tpnet.pl [83.8.217.77])
-        by mx.google.com with ESMTPS id q18sm79785bka.15.2011.05.03.07.02.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 03 May 2011 07:02:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <BANLkTi=cckKr3baDZAktAjz8F=JXjQJWiA@mail.gmail.com>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=sFM2Z3XhrHwJUYs87nILG4MwH7HQ3V8IRnW/rz5L0b74TOaUNj+AlBlD3LBn+HuCtB
+         PPQHAukGHgin775YsRX/sFpJ69wf9RqCi50H59j2d9ehRZcAYgw0mB9ElS2dJeBy5M+z
+         bnSbJ+kdXGmwa3kzfkDW6g3gGaAysF5hyPFqU=
+Received: by 10.227.159.141 with SMTP id j13mr3916488wbx.108.1304431474383;
+        Tue, 03 May 2011 07:04:34 -0700 (PDT)
+Received: from roke.localdomain (abvt77.neoplus.adsl.tpnet.pl [83.8.217.77])
+        by mx.google.com with ESMTPS id ed10sm78669wbb.32.2011.05.03.07.04.31
+        (version=SSLv3 cipher=OTHER);
+        Tue, 03 May 2011 07:04:33 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172659>
 
-On Sat, 30 Apr 2011, =C3=98yvind A. Holm wrote:
-> On 29 April 2011 23:31, Junio C Hamano <gitster@pobox.com> wrote:
-> > A tangent. It is curious why [PATCH 2/6] alone ended up with an enc=
-oded
-> > "Subject" header, like this:
-> >
-> > =C2=A0Subject: =3D?UTF-8?q?=3D5BPATCH=3D202/6=3D5D=3D20gitweb=3D3A=3D=
-20Change=3D20the=3D20
-> > =C2=A0 way=3D20=3D22content=3D20tags=3D22=3D20=3D28=3D27ctags=3D27=3D=
-29=3D20are=3D20handled?=3D
-> >
-> > The message actually has the above as a long single line, as can be=
- seen at
-> > http://article.gmane.org/gmane.comp.version-control.git/172479/raw
-> >
-> > Just being curious.
->=20
-> This seems as the same thing that I reported on 2010-04-25 23:35:49Z,
-> <http://thread.gmane.org/gmane.comp.version-control.git/145774>. If t=
-here's a
-> character above U+007F in the log message below line #2, the Subject:=
- line is
-> garbled. In this case it is, it's the "=C3=B6" in Uwe's name that lea=
-ds to this
-> error.
->=20
-> A test to reproduce this is at <https://gist.github.com/378785>, but =
-it seems
-> as this was fixed between v1.7.4.1-292-ge2a57aa and v1.7.4.1-343-ga91=
-df69 ,
-> probably happened in dc7f96f (Merge branch 'jk/format-patch-multiline=
--header').
-> The patch at <http://article.gmane.org/gmane.comp.version-control.git=
-/172479/raw>
-> was generated with git-1.7.3, so it would trigger the error in this c=
-ase.
+Gitweb is currently next to largest file (after gitk) in git sources,
+more than 225KB with more than 7,000 lines.  Therefore adding any
+large feature that would require large amount of code added, like
+gitweb caching by J.H. and my rewrite of it, or "gitweb admin/write"
+[failed] GSoC 2010 project by Pavan Kumar Sunkara, would require for
+new code to be added as a separate module.  Otherwise gitweb would
+fast become unmaintainable.
 
-I have just upgraded git to 1.7.5, and unfortunately it still has the
-same bug (note that UTF-8 character was introduced while editing patch,
-so git-format-patch doesn't see it):
+Note that there is already patch series sent which as one of side
+effects splits the JavaScript side of gitweb into many smaller
+self-contained files:
 
-  5369:[gitweb/web@git]# git send-email [...] --dry-run mdir.1/*.txt
-  The following files are 8bit, but do not declare a Content-Transfer-E=
-ncoding.
-      mdir.1/0001-gitweb-Prepare-for-splitting-gitweb.txt
-  Which 8bit encoding should I declare [UTF-8]? <ENTER>
-  Dry-Sent [PATCHv2 0/2] gitweb: Beginnings of splitting gitweb into mo=
-dules
-  Dry-Sent =3D?UTF-8?q?=3D5BPATCHv2=3D201/2=3D20=3D28RFC=3D3F=3D29=3D5D=
-=3D20gitweb=3D3A=3D20Prepare=3D20for=3D20splitting=3D20gitweb?=3D
-  Dry-Sent [PATCHv2 2/2 (PoC)] gitweb: Create Gitweb::Util module
+  [PATCH 03/13] gitweb: Split JavaScript for maintability, combining on build
+  http://thread.gmane.org/gmane.comp.version-control.git/172384/focus=172385
 
-Note that having
-
-  MIME-Version: 1.0
-  Content-Type: text/plain; charset=3Dutf-8
-
-is not enough[1].  However the patch send is understood correctly by em=
-ail
-programs: see [PATCH 2/6] in this thread.
-
-I have added=20
-
-  Content-Transfer-Encoding: 8bit
-
-to mdir.1/0001-gitweb-Prepare-for-splitting-gitweb.txt, and now it work=
-s
-all right.
-
-  5370:[gitweb/web@git]# git send-email [...] mdir.1/*.txt
-  Dry-Sent [PATCHv2 0/2] gitweb: Beginnings of splitting gitweb into mo=
-dules
-  Dry-Sent [PATCHv2 1/2 (RFC?)] gitweb: Prepare for splitting gitweb
-  Dry-Sent [PATCHv2 2/2 (PoC)] gitweb: Create Gitweb::Util module
+Not in all cases splitting gitweb upfront would be required.  At least
+in the case of gitweb caching it doesn't.  What must be done however
+is preparing the infrastructure for modular gitweb sources; to
+properly test such infrastructure we need at least one split gitweb
+module.  With patch series preparing for splitting or true splitting of
+gitweb sent upfront the future patch series that implements
+code-extensive feature (like e.g. output caching) would be smaller and
+easier to review.
 
 
-=46ootnotes:
-^^^^^^^^^^
-[1]: Note that git-send-email does something strange: first, the proble=
-m
-is with Content-Transfer-Encoding, and git-send-email asks for 8bit
-encoding, suggesting UTF-8, instead of asking for transfer encoding,
-sugesting e.g. 8bit.
+This series is intended to bring such infrastructure to gitweb, to
+prepare way for adding output caching to gitweb. Alternatively it can
+be thought as beginning of splitting gitweb into smaller submodules,
+for better maintainability.
 
-Second, from email headers I have added git-send-email should _know_ th=
-at
-message uses UTF-8 encoding (though this is side issue, and probably re=
-sult
-of above).
+This patch series was sent to git mailing list as
 
---=20
-Jakub Narebski
-Poland
+  [PATCH 0/2] gitweb: Begin splitting gitweb
+  http://thread.gmane.org/gmane.comp.version-control.git/165824
+
+In the above mentioned first version of this series, the first patch
+that prepared the way for splitting gitweb was in three versions: A, B
+and C.  In this second version of this series the first patch in
+series most closely resembles version C in v1 series.
+
+In this version gitweb uses _both_ 'use lib __DIR__."/lib";' and
+'use lib "++GITWEBLIBDIR++";', in correct order (as compared to
+version C of v1 series), so that __DIR__."/lib" is checked first,
+i.e. modules installed alongside gitweb.cgi win.
+
+Pull request:
+~~~~~~~~~~~~~
+This series is available in the git repository at:
+  git://repo.or.cz/git/jnareb-git.git gitweb/split
+  git://github.com/jnareb/git.git gitweb/split
+
+Well, those patches has a few minor cosmetic fixups...
+
+Table of contents:
+~~~~~~~~~~~~~~~~~~
+* [PATCHv2 1/2] gitweb: Prepare for splitting gitweb
+  [PATCHv2 2/2] gitweb: Create Gitweb::Util module
+
+  First patch implements infrastructure, second proof of concept patch uses
+  this infrastructure, testing it ("make -C gitweb test-installed").
+
+Shortlog:
+~~~~~~~~~
+Jakub Narebski (1):
+  gitweb: Prepare for splitting gitweb
+
+Pavan Kumar Sunkara (1):
+  gitweb: Create Gitweb::Util module
+
+Diffstat:
+~~~~~~~~~
+ gitweb/INSTALL            |    7 ++
+ gitweb/Makefile           |   23 ++++++-
+ gitweb/gitweb.perl        |  151 ++++-----------------------------------
+ gitweb/lib/Gitweb/Util.pm |  177 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 219 insertions(+), 139 deletions(-)
+ create mode 100755 gitweb/lib/Gitweb/Util.pm
+
+-- 
+1.7.3
