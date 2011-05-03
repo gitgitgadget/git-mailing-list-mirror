@@ -1,94 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] specifying ranges: we did not mean to make ".." an
- empty set
-Date: Tue, 03 May 2011 10:38:48 -0700
-Message-ID: <7vvcxrit07.fsf@alter.siamese.dyndns.org>
-References: <7vr58glxro.fsf@alter.siamese.dyndns.org>
- <20110502193321.GB10487@sigill.intra.peff.net>
- <7vhb9clu0n.fsf@alter.siamese.dyndns.org>
- <7v62pslt2k.fsf_-_@alter.siamese.dyndns.org>
- <20110502210141.GA15753@sigill.intra.peff.net>
- <4DBFA31E.40207@drmicha.warpmail.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [RFC/PATCH] userdiff.c: Avoid old glibc regex bug causing t4034-*.sh
+ test failures
+Date: Tue, 03 May 2011 18:49:21 +0100
+Message-ID: <4DC04021.1040606@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 03 19:39:09 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, trast@student.ethz.ch,
+	Junio C Hamano <gitster@pobox.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 03 19:52:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHJYy-0004hM-91
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 19:39:08 +0200
+	id 1QHJmG-0004nZ-2Q
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 19:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753942Ab1ECRjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 13:39:03 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56279 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753640Ab1ECRjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 13:39:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 72A60330F;
-	Tue,  3 May 2011 13:41:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AMZplhqz8b5DD/Eh8jGJLrwieyc=; b=sdB2fd
-	WlyPMG3LIGq47FnopiblUG2qHGnedyTRVVeelYauf7exhkyo+YqTqhZrBnnsASy7
-	E/V7zIS5OxCdHuAdjv/kEeXEwjcw8PiYxAEhHwFQAH3vAkz/uqZPblkcQUZNjciz
-	jDu77C55Ez5haX3/pNIK/EwCyLQtAEbe2czLc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CoBXNz3y3pl+caV51wE2097w2ELEH2XV
-	BJl0yaeNcPGxKn9pULzEQTMXpwVThb5EBeWo2oD7FKJj9jy+IXPU2x31xXjQeW4X
-	SQ59wuqA8NMQzkGzXLkNfW/iIcSfA8xUKgjneHneFLJx/NwCDE5BQHuAyXJ30xnq
-	BJ9a9ac4ecc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 35D84330E;
-	Tue,  3 May 2011 13:40:58 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B6BC3330D; Tue,  3 May 2011
- 13:40:53 -0400 (EDT)
-In-Reply-To: <4DBFA31E.40207@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Tue, 03 May 2011 08:39:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8110D134-75AC-11E0-9DD7-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1753849Ab1ECRwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 13:52:47 -0400
+Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:53582 "EHLO
+	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753798Ab1ECRwq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2011 13:52:46 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1QHJkI-0003N1-kT; Tue, 03 May 2011 17:50:51 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172676>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
 
->>> Helped-by: Jeff King <peff@peff.net>
->>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> 
->> Looks good to me.
->
-> I'm sorry but I don't like this at all, because:
->
->> Doing "..." is still allowed, but will never produce any useful results.
->> I don't know if it is worth disallowing it to catch errors. I am tempted
->> to say it should be magic for "@{u}...HEAD", but I think just "..." is
->> getting unreadably magical. "@{u}...HEAD" is already pretty concise and
->> is much more readable.
->
-> We need to disambiguate any pathspec with "--" which could be a revision
-> parameter. Therefore I find it very unnatural to disambiguate ".." to a
-> pathspec automatically (and have "..." error out). "../" is really
-> simple enough to type.
+In particular, this bug affects the word-diff regex for 'bibtex' and
+'html', leading to the test failures in t4034-diff-words.sh. The bug
+is described here:
 
-If you are comfortable typing "../", why do you even care?  It would be a
-different story if the patch made ".." error out and forbade to be used as
-an empty range even when you disambiguated, i.e. "git log .. --", but that
-is not what we are doing.
+    http://sourceware.org/bugzilla/show_bug.cgi?id=3957
 
-And we do not even special case "...".  Between the two potential requests
-of asking for an empty revision range and asking for a pathspec "...", both
-are just as unlikely.
+and was fixed on 12-07-2007. In summary, when the REG_NEWLINE flag is
+passed to regcomp(), a non-matching list ([^...]) not containing a
+newline should not match a newline. However, in some old versions of
+the glibc regex library, the newline character was indeed matched.
 
-Contrast that with ".." and realize that is very different.  It is
-infinitely more likely that the user meant the immediate parent directory
-than an empty revision range.
+In order to fix the problem, we add an explicit '\n' to the list in
+the non-matching list expression.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Junio,
+    I recently mentioned that a couple of tests in t4034-*.sh were
+failing for me on Linux. I have now looked into it, and the problem
+turned out to be an old bug in the glibc regex routines. :-(
+
+This is an RFC because:
+    - A simple fix would be for me to put NO_REGEX=1 in my config.mak,
+      since the compat/regex routines don't suffer this problem.
+    - I suspect this bug is old enough that it will not affect many users.
+    - I have not audited the other non-matching list expressions in
+      userdiff.c
+    - blame, grep and pickaxe all call regcomp() with the REG_NEWLINE
+      flag, but get the regex from the user (eg from command line).
+
+ATB,
+Ramsay Jones
+
+ userdiff.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/userdiff.c b/userdiff.c
+index 1ff4797..2f9ba37 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -28,7 +28,7 @@ IPATTERN("fortran",
+ 	 "|[-+]?[0-9.]+([AaIiDdEeFfLlTtXx][Ss]?[-+]?[0-9.]*)?(_[a-zA-Z0-9][a-zA-Z0-9_]*)?"
+ 	 "|//|\\*\\*|::|[/<>=]="),
+ PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
+-	 "[^<>= \t]+"),
++	 "[^<>= \t\n]+"),
+ PATTERNS("java",
+ 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+ 	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
+@@ -94,7 +94,7 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
+ 	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
+ PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+-	 "[={}\"]|[^={}\" \t]+"),
++	 "[={}\"]|[^={}\" \t\n]+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
+ PATTERNS("cpp",
+-- 
+1.7.5
