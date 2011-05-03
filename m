@@ -1,93 +1,152 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: Creating remote branch called HEAD corrupts remote clones
-Date: Tue, 3 May 2011 20:08:49 +0200
-Message-ID: <BANLkTimHfH-o6Fyoo61xVFxAhELNmD=4xg@mail.gmail.com>
-References: <ih1449$ul6$1@dough.gmane.org>
-	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
-	<20110120203840.GA11468@sigill.intra.peff.net>
-	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
-	<20110120215456.GB11468@sigill.intra.peff.net>
-	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
-	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
-	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
-	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
-	<BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
-	<BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
-	<BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com>
-	<BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
-	<BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com>
-	<BANLkTimLnggco_+mQZ2_T_myAHsDD-=g1w@mail.gmail.com>
-	<BANLkTikxS-_9h4rBdbbJ2e-RkjMWyiC1Mg@mail.gmail.com>
-	<BANLkTinqxy6jCJLNVPKmMW3CErbfN7Hm=g@mail.gmail.com>
-	<BANLkTinJvt=Nnt8YG-D1wpWKbBei+m+4XA@mail.gmail.com>
-	<BANLkTinCSotWC-kbPDJc57NZM29hizYKpA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Add default merge options for all branches
+Date: Tue, 03 May 2011 11:16:12 -0700
+Message-ID: <7vk4e7ir9v.fsf@alter.siamese.dyndns.org>
+References: <4DBF04C5.1080608@dailyvoid.com> <4DBF94E9.2010502@dailyvoid.com>
+ <20110503090351.GA27862@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: kusmabite@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 03 20:08:57 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Grubb <devel@dailyvoid.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, vmiklos@frugalware.org,
+	deskinm@umich.edu
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 03 20:16:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHK1p-0006J8-G1
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 20:08:57 +0200
+	id 1QHK9E-0002D2-8c
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 20:16:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197Ab1ECSIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 14:08:52 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:52448 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753800Ab1ECSIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 14:08:52 -0400
-Received: by bwz15 with SMTP id 15so338859bwz.19
-        for <git@vger.kernel.org>; Tue, 03 May 2011 11:08:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=EdS8jbpazgoUPAum2LIowupgzhEEZclMnnVpn8xPDZ0=;
-        b=Pt7QK/OAZ28vjkVoOCj7gTzckoicRu5hsLxeQIGrdmoHsv8ly7ItCtE1fgNmudMJyt
-         TTsARBXDqYEJPgs2c6hcNOQrkXVc2vZYAjqDTrYpMTz1TrB4CMyZFFpkax/JP/NOIhZ6
-         OSmCY1tBZFNrC5Z2Vw6zk+wybOL9zaTEMDEp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=TiM5CB9e535vvAvrgTjnSsqv55hmx4Zhx+i+fhfBo2y5mPXFoQggCHgsiS9gAvO9Vw
-         NDsScNGjnzkltrGSxbnCZi0pwk4rw5MxWY0e9MNzrampQ6P8xB17gb4DdOnEOD2JF92z
-         kdFVk2pBdqSdtL4RbB7KZxSyyOoDW0FbfyYdU=
-Received: by 10.204.129.210 with SMTP id p18mr133937bks.66.1304446130637; Tue,
- 03 May 2011 11:08:50 -0700 (PDT)
-Received: by 10.204.120.195 with HTTP; Tue, 3 May 2011 11:08:49 -0700 (PDT)
-In-Reply-To: <BANLkTinCSotWC-kbPDJc57NZM29hizYKpA@mail.gmail.com>
+	id S1754128Ab1ECSQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 14:16:31 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34644 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753160Ab1ECSQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 14:16:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4E83C3867;
+	Tue,  3 May 2011 14:18:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yRkFiaVFOGYrtFRKiUey++rFIfM=; b=KVqfF4
+	ViN7LucXI04Wkv9i5rtVWDTLaCyjY5eGgfZ0MIUifjBeZr78DUwfLT0suvr7S5bm
+	kvfYkLM7JGzEjiV8B5XOEq0oyVCHcwi7ftQDZ5MX1t9u8YqTGgWd6kr6GMs0RaYN
+	I26ol8/V0pBDGf4qArCiUa83ErNdZcxVSB3Rs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h/hhqxjvOKBW3OWkjaI3xOVOGYU2IlUA
+	waoKPIflKChte9+l1oreYFLRKHmqY2pfkHo4O1/MsUFZrh6OxI9/CUeFZ/Aq9o54
+	ZvU4+7S6j4fI+GBY602gB+oL0IJZOAtjPhtpWBk/qYeO5AD7byh+qKGKiAJEuoi+
+	61j7MMrfFUc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F0A6B3866;
+	Tue,  3 May 2011 14:18:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 21097383E; Tue,  3 May 2011
+ 14:18:16 -0400 (EDT)
+In-Reply-To: <20110503090351.GA27862@elie> (Jonathan Nieder's message of
+ "Tue, 3 May 2011 04:03:52 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BCD61792-75B1-11E0-BD16-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172681>
 
-On Tue, May 3, 2011 at 7:54 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Mon, May 2, 2011 at 10:43 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->> No, it's still an issue, and I believe I pin-pointed it in my first
->> mail. You can try out the patch I sent, and see if that helps in your
->> case. If it does, I think it'd make sense to do something (preferably
->> a bit more robust) with it.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I don't have a build of git at the moment to test it as I'm using
-distro packages again. The only test case I have is the alice and bob
-stuff already posted, so if your patch fixes that for you that's good
-enough from my POV.
-
+> So in the future one might be able to do things like
 >
-> Yes, I think your patch should be applied regardless, as that solves
-> _one_ issue.
+> 	[branch "git-gui/*"]
+> 		mergeoptions = -s subtree
 >
-> But there are other issues.
+> Interesting.
 >
+>> The need for this arises from the fact that there is currently not an
+>> easy way to set merge options for all branches.
+>
+> I'm curious: what merge options/workflows does this tend to be useful
+> for?
 
-All the best,
+I actually am curious myself, too.  I want to see a real-life example.
 
-Steve.
+The "git-gui/*" example you gave is unfortunately not it. It specifies the
+branch at the wrong end. Whether I am merging into "master" or "next", I
+would want "-s subtree" when I am merging "git-gui/*" project, but all my
+merges to "master" or "next" do not necessarily want to use "-s subtree".
+
+It might turn out to be that "branch.<name>.mergeoptions" is a
+ill-conceived idea to begin with.
+
+>> The approach taken is to make note of whether a branch specific
+>> mergeoptions key has been seen and only apply the global value if it
+>> hasn't.
+>
+> What happens if the global value is seen first?
+
+If implemented correctly, it should use the specific one and fall back to
+the wildcard one.  Another issue is if the values should be cumulative or
+overriding, but in the remainder I'd assume we want overriding.
+
+>> @@ -505,24 +512,42 @@ cleanup:
+>>  
+>>  static int git_merge_config(const char *k, const char *v, void *cb)
+>>  {
+>> +	int merge_option_mode = 0;
+>> +	struct merge_options_cb *merge_options =
+>> +		(struct merge_options_cb *)cb;
+>
+> This cast should not needed, I'd think.
+
+Correct.  That is the whole point of using (void *) as a parameter, so
+that it can be assigned to the real expected type easily without cast.
+
+>> +	if (!strcmp(k, "branch.*.mergeoptions"))
+>> +		merge_option_mode = MERGEOPTIONS_DEFAULT;
+>> +	else if (branch && !prefixcmp(k, "branch.") &&
+>> +			 !prefixcmp(k + 7, branch) &&
+>> +			 !strcmp(k + 7 + strlen(branch), ".mergeoptions"))
+>> +		merge_option_mode = MERGEOPTIONS_BRANCH;
+>> +
+>> +	if ((merge_option_mode == MERGEOPTIONS_DEFAULT &&
+>> +		!merge_options->override_default) ||
+>> +		merge_option_mode == MERGEOPTIONS_BRANCH) {
+>>  		const char **argv;
+>
+> It is hard to see at a glance where the "if" condition ends and
+> the body begins.  Why not
+> ...
+> or even
+> ...
+> ?
+
+Why not have two string pointers in merge_options_cb structure that are
+initialized to NULL and holds the matched config key and the value?
+
+When we are looking at a (k, v) pair in this function, if there is no
+previous key in cb, we store (k, v) in cb and return.  If there already is
+a previous key, we see if k is more specific than that key, and replace
+(k, v) in cb with what we currently have.  Otherwise we do not do
+anything.
+
+When git_config() returns, the caller will find the final value in cb.
+
+>> +	git config "branch.*.mergeoptions" "--no-ff" &&
+>> +	test_tick &&
+>> +	git merge c1 &&
+>> +	git config --remove-section "branch.*" &&
+>> +	verify_merge file result.1 &&
+>> +	verify_parents $c0 $c1
+>> +'
+>> +
+>> +test_debug 'git log --graph --decorate --oneline --all'
+>
+> Yuck.  Did anything come of the idea of a --between-tests option to
+> use an arbitrary command here automatically?  (Not your fault.)  
+
+I actually think test_debug should go inside the previous test.  Why not
+have it immediately after "git merge c1" above?
