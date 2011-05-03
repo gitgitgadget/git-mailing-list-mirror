@@ -1,152 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Add default merge options for all branches
-Date: Tue, 03 May 2011 11:16:12 -0700
-Message-ID: <7vk4e7ir9v.fsf@alter.siamese.dyndns.org>
-References: <4DBF04C5.1080608@dailyvoid.com> <4DBF94E9.2010502@dailyvoid.com>
- <20110503090351.GA27862@elie>
+Subject: Re: [PATCHv2 1/2] diff: introduce --stat-lines to limit the stat
+ lines
+Date: Tue, 03 May 2011 11:47:33 -0700
+Message-ID: <7vfwoviptm.fsf@alter.siamese.dyndns.org>
+References: <7vmxj6s22r.fsf@alter.siamese.dyndns.org>
+ <102e117f7a9f7fd6e652f23d5630db973e8e52b8.1304419588.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Grubb <devel@dailyvoid.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, vmiklos@frugalware.org,
-	deskinm@umich.edu
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 03 20:16:37 2011
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue May 03 20:47:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHK9E-0002D2-8c
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 20:16:36 +0200
+	id 1QHKdQ-00049d-DA
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 20:47:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754128Ab1ECSQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 14:16:31 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34644 "EHLO
+	id S1754467Ab1ECSrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 14:47:43 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39278 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753160Ab1ECSQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 14:16:30 -0400
+	with ESMTP id S1753904Ab1ECSrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 14:47:42 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4E83C3867;
-	Tue,  3 May 2011 14:18:32 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6C07E3C9F;
+	Tue,  3 May 2011 14:49:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yRkFiaVFOGYrtFRKiUey++rFIfM=; b=KVqfF4
-	ViN7LucXI04Wkv9i5rtVWDTLaCyjY5eGgfZ0MIUifjBeZr78DUwfLT0suvr7S5bm
-	kvfYkLM7JGzEjiV8B5XOEq0oyVCHcwi7ftQDZ5MX1t9u8YqTGgWd6kr6GMs0RaYN
-	I26ol8/V0pBDGf4qArCiUa83ErNdZcxVSB3Rs=
+	:content-type; s=sasl; bh=T3cDA9W5mF2/xmv5yl/DAr6lR7E=; b=mrce5D
+	/jI4gGkxMdurNCtl5UleOTTM6HhXu1BarsTuFbwEQHT+El7kKFdst2OdY9ObscQA
+	NakDbWZ3RUhpR8W3k1HaVfHthCs0bNWeR/daGh37IMnB9nAd0Oz3PHym7vP4gb+p
+	Yb8J1Hh4I3+CKghKCa448YuvhgzyNQLRmQ33A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h/hhqxjvOKBW3OWkjaI3xOVOGYU2IlUA
-	waoKPIflKChte9+l1oreYFLRKHmqY2pfkHo4O1/MsUFZrh6OxI9/CUeFZ/Aq9o54
-	ZvU4+7S6j4fI+GBY602gB+oL0IJZOAtjPhtpWBk/qYeO5AD7byh+qKGKiAJEuoi+
-	61j7MMrfFUc=
+	:content-type; q=dns; s=sasl; b=PHnP0G8j5bvg/tlkhfeB+fU6p5mHDAkY
+	XOUFjI7A575mOrFknn0asFvRrA5U/ZzJ+9rLrQLs3Dey3iEKXF9aWh1+eHbqmj32
+	z6SvunjqF3Yy+sKwJBl3vLtX+w9XT9mmAR3X/HJViE+toUKASE8Q7oDtLkisv+Nf
+	hTduBChCjwI=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F0A6B3866;
-	Tue,  3 May 2011 14:18:25 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A1F43C9D;
+	Tue,  3 May 2011 14:49:41 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 21097383E; Tue,  3 May 2011
- 14:18:16 -0400 (EDT)
-In-Reply-To: <20110503090351.GA27862@elie> (Jonathan Nieder's message of
- "Tue, 3 May 2011 04:03:52 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2B6103C9C; Tue,  3 May 2011
+ 14:49:37 -0400 (EDT)
+In-Reply-To: <102e117f7a9f7fd6e652f23d5630db973e8e52b8.1304419588.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue, 3 May 2011 12:46:38 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BCD61792-75B1-11E0-BD16-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 1A9E3FF4-75B6-11E0-BB73-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172682>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> So in the future one might be able to do things like
->
-> 	[branch "git-gui/*"]
-> 		mergeoptions = -s subtree
->
-> Interesting.
->
->> The need for this arises from the fact that there is currently not an
->> easy way to set merge options for all branches.
->
-> I'm curious: what merge options/workflows does this tend to be useful
-> for?
+> In the case with <count>+1 items one may argue whether it makes more sense to
+> ignore the user wish and output all <count>+1 lines, or <count> lines (as
+> requested) plus the "..." line.
 
-I actually am curious myself, too.  I want to see a real-life example.
+I think that is a must if we care about consistency. fmt-merge-msg should
+already do this (I remember being careful about this particular case when
+I wrote its first version, but I do not know it has regressed as I do not
+remember writing tests for this boundary case---my bad ;-).
 
-The "git-gui/*" example you gave is unfortunately not it. It specifies the
-branch at the wrong end. Whether I am merging into "master" or "next", I
-would want "-s subtree" when I am merging "git-gui/*" project, but all my
-merges to "master" or "next" do not necessarily want to use "-s subtree".
+> (I saw the suggestion about N-2...2 just now. Would work also, but I guess
+> we would do this in more cases then, as Junio indicated.)
 
-It might turn out to be that "branch.<name>.mergeoptions" is a
-ill-conceived idea to begin with.
+It is not clear what you mean by N-2...2 but if you are referring to my
+"first N-1 entries, dots and the last one, to make the total N+1 lines
+that show N entries", then yes I think it would make sense to do that also
+in fmt-merge-msg.c::shortlog() as well as here.  But that would be a
+separate topic.
 
->> The approach taken is to make note of whether a branch specific
->> mergeoptions key has been seen and only apply the global value if it
->> hasn't.
->
-> What happens if the global value is seen first?
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 34f0145..000eae0 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -48,11 +48,14 @@ endif::git-format-patch[]
+>  --patience::
+>  	Generate a diff using the "patience diff" algorithm.
+>  
+> ---stat[=<width>[,<name-width>]]::
+> +--stat[=<width>[,<name-width>[,<count>]]]::
+>  	Generate a diffstat.  You can override the default
+>  	output width for 80-column terminal by `--stat=<width>`.
+>  	The width of the filename part can be controlled by
+>  	giving another width to it separated by a comma.
+> +	By giving a third parameter `<count>`, you can limit the
+> +	output to the first `<count>` lines, followed by
+> +	`...` if there are more.
 
-If implemented correctly, it should use the specific one and fall back to
-the wildcard one.  Another issue is if the values should be cumulative or
-overriding, but in the remainder I'd assume we want overriding.
+Does an empty-string <count> mean "use default" (currently "no limit")?
+This matters when we teach a new parameter to --stat and make the above:
 
->> @@ -505,24 +512,42 @@ cleanup:
->>  
->>  static int git_merge_config(const char *k, const char *v, void *cb)
->>  {
->> +	int merge_option_mode = 0;
->> +	struct merge_options_cb *merge_options =
->> +		(struct merge_options_cb *)cb;
->
-> This cast should not needed, I'd think.
+	--stat=[=<width>[,<name-width>[,<count>[,<nitfol>]]]]
 
-Correct.  That is the whole point of using (void *) as a parameter, so
-that it can be assigned to the real expected type easily without cast.
+> +	for (i = count; i < data->nr; i++) {
+> +		uintmax_t added = data->files[i]->added;
+> +		uintmax_t deleted = data->files[i]->deleted;
+> +		if (!data->files[i]->is_renamed &&
+> +			 (added + deleted == 0)) {
+> +			total_files--;
+> +			continue;
+> +		}
+> +		adds += added;
+> +		dels += deleted;
+> +	}
+>  	fprintf(options->file, "%s", line_prefix);
+>  	fprintf(options->file,
+>  	       " %d files changed, %d insertions(+), %d deletions(-)\n",
 
->> +	if (!strcmp(k, "branch.*.mergeoptions"))
->> +		merge_option_mode = MERGEOPTIONS_DEFAULT;
->> +	else if (branch && !prefixcmp(k, "branch.") &&
->> +			 !prefixcmp(k + 7, branch) &&
->> +			 !strcmp(k + 7 + strlen(branch), ".mergeoptions"))
->> +		merge_option_mode = MERGEOPTIONS_BRANCH;
->> +
->> +	if ((merge_option_mode == MERGEOPTIONS_DEFAULT &&
->> +		!merge_options->override_default) ||
->> +		merge_option_mode == MERGEOPTIONS_BRANCH) {
->>  		const char **argv;
->
-> It is hard to see at a glance where the "if" condition ends and
-> the body begins.  Why not
-> ...
-> or even
-> ...
-> ?
+This is culling the output of what is in struct diffstat that we have
+already spent cycles to possibly fill thousands of entries.  I first
+thought it may make sense to also tweak the loop in diff_flush() that runs
+diff_flush_stat() to all filepairs to run it only on the first <count>
+(and later the first <count-1> and the last) filepairs, but we have to
+show the short-stat summary at the end, so this cannot be avoided.
 
-Why not have two string pointers in merge_options_cb structure that are
-initialized to NULL and holds the matched config key and the value?
+What happens when I say "diff --numstat --stat-count=4"?
 
-When we are looking at a (k, v) pair in this function, if there is no
-previous key in cb, we store (k, v) in cb and return.  If there already is
-a previous key, we see if k is more specific than that key, and replace
-(k, v) in cb with what we currently have.  Otherwise we do not do
-anything.
-
-When git_config() returns, the caller will find the final value in cb.
-
->> +	git config "branch.*.mergeoptions" "--no-ff" &&
->> +	test_tick &&
->> +	git merge c1 &&
->> +	git config --remove-section "branch.*" &&
->> +	verify_merge file result.1 &&
->> +	verify_parents $c0 $c1
->> +'
->> +
->> +test_debug 'git log --graph --decorate --oneline --all'
->
-> Yuck.  Did anything come of the idea of a --between-tests option to
-> use an arbitrary command here automatically?  (Not your fault.)  
-
-I actually think test_debug should go inside the previous test.  Why not
-have it immediately after "git merge c1" above?
+Should it error out upon seeing a limit that is not infinite, or should it
+also elide the lines in its output?
