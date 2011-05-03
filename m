@@ -1,107 +1,190 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC] require-work-tree wants more than what its name says
-Date: Tue, 03 May 2011 16:33:41 -0700
-Message-ID: <7vhb9bgy0a.fsf@alter.siamese.dyndns.org>
+From: Richard Peterson <richard@rcpeterson.com>
+Subject: [Tagging Commits] feedback / discussion request
+Date: Tue, 3 May 2011 19:36:51 -0400
+Message-ID: <BANLkTik5-Ygh0YwN=j+ibLhP6==ots_MXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 01:34:09 2011
+X-From: git-owner@vger.kernel.org Wed May 04 01:37:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHP6W-0005W1-Hk
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 01:34:08 +0200
+	id 1QHP9I-0006hr-6F
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 01:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab1ECXdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 19:33:50 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37851 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752883Ab1ECXdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 19:33:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C08F44043;
-	Tue,  3 May 2011 19:35:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=z
-	+ksC+/R16UyeabpVfRLiy3vzcw=; b=VmZvMb9hsqsjSpT4AJM4PmxcNb9XEVOrB
-	nCTik64W79+7AmtOVKVw5mbbwPDA0ltnCYDYHxkc5Zcv8rAFUm/p+13NY1X8BQ4R
-	kQRe3ngit5+iAdwTMfB/7d8jCgGoYIZ7bDhnuUOLvGFHqkXMyithaXlJC/+iUTkt
-	519AVnzJnc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=WRR
-	rX9+GeO50RStS+X72vwz8DEawlqkiJ4iRHOpLMfxRKcEIVHDGuNE/0Y0F9js+yrG
-	B0ilGKk5wdhVsk0idnMqWFqXTyHuEyyYFwP6zZietSp7bzPMtl6rJWgRSEIeBiaB
-	M1M3N2ldGKdzvmxANaYz7PrMIZzzOF0fr2FD/7vE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ACBF74042;
-	Tue,  3 May 2011 19:35:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E700B4041; Tue,  3 May 2011
- 19:35:47 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 13C8C442-75DE-11E0-B2DC-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754093Ab1ECXgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 19:36:55 -0400
+Received: from edgy.cirtexhosting.com ([75.126.140.58]:38200 "EHLO
+	edgy.cirtexhosting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753976Ab1ECXgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 19:36:54 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:51031)
+	by edgy.cirtexhosting.com with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.69)
+	(envelope-from <richard@rcpeterson.com>)
+	id 1QHP9S-0007sL-PP
+	for git@vger.kernel.org; Tue, 03 May 2011 19:37:10 -0400
+Received: by ywj3 with SMTP id 3so232697ywj.19
+        for <git@vger.kernel.org>; Tue, 03 May 2011 16:36:51 -0700 (PDT)
+Received: by 10.147.1.11 with SMTP id d11mr412994yai.14.1304465811953; Tue, 03
+ May 2011 16:36:51 -0700 (PDT)
+Received: by 10.147.98.11 with HTTP; Tue, 3 May 2011 16:36:51 -0700 (PDT)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - edgy.cirtexhosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - rcpeterson.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172703>
 
-Somebody tried "git pull" from a random place completely outside the work
-tree, while exporting GIT_DIR and GIT_WORK_TREE that are set to correct
-places, e.g.
+This is a different idea from that discussed in
+http://marc.info/?t=123879411100002&r=1&w=2.
 
-	GIT_WORK_TREE=$HOME/git.git
-        GIT_DIR=$GIT_WORK_TREE/.git
-        export GIT_WORK_TREE GIT_DIR
-        cd /tmp
-        git pull
+I'm going to present some use cases for signing commits (instead of just
+tags). Then I'll present an idea for implementation. I hope to implement
+this as described, along with Eric Ritz. We would appreciate any insight you
+may have - we want to help, not waste our time or anybody else's.
 
-At the beginning of git-pull, we check "require-work-tree" and then
-"cd-to-toplevel".  I _think_ the original intention when I wrote the
-command was "we MUST have a work tree, our $(cwd) might not be at the
-top-level directory of it", and no stronger than that.  That check is a
-very sensible thing to do before doing cd-to-toplevel.  We check that the
-place we would want to go exists, and then go there.
+First, Linus has argued against signing commits in this thread:
+http://marc.info/?t=123879411100002&r=1&w=2.  He claims it is pointless to
+sign individual commits, as opposed to signing just the tip of the tree
+(tags). For many use cases, that's true. But read on.
 
-But the implementation of require_work_tree we have today is quite
-different.  I don't have energy to dig the history, but currently it says:
 
- 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
- 	die "fatal: $0 cannot be used without a working tree."
+Here are some possible semantics you could assign to signing a commit hash:
 
-Which is completely bogus.  Even though we may happen to be just outside
-of it right now, we may have a working tree that we can cd_to_toplevel
-back to.
+* Making a verifiable claim of authorship of a commit
+* Making a verifiable claim to have reviewed a commit or set of commits
+* Making a verifiable claim to have approved a commit or set of commits for
+some purpose
+* Making some other verifiable claim about a commit TBD by your workflow
+* Making a verifiable claim to have reviewed or approved the entire tree
+under the commit
 
-I recall there was a discussion sometime last year about this topic, and
-vaguely recall somebody proposed to swap the order of cd-to-toplevel and
-require-work-tree.  While I agree that would sweep the issue under the rug,
-I think the right solution would be to apply the attached patch; and then
-audit all the callers that call "require_work_tree" to see if any of them
-meant "No, it is not Ok just to have working tree somewhere! I want you to
-be IN that working tree when you call me", and convert them to call the
-new require_to_be_in_work_tree instead.
+Claiming to have reviewed or approved the entire tree is useful in many
+cases. It's great for something like the Linux kernel.  If you've got a tip
+signed by Linus, you've got the kernel. You don't need to care what's merged
+in under that, as long as it's signed at the top. It's like an MD5 checksum
+on a download. You don't care what mirror you download an ISO from, as long
+as the computed hash matches the authoritative hash.
 
-Thoughts?
+Semantically, someone who signs a tree takes responsibility for everything
+included in that tree, to whatever degree that applies in their project.
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index aa16b83..0b25f12 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -141,6 +141,13 @@ cd_to_toplevel () {
- }
- 
- require_work_tree () {
-+	if test "z$(git rev-parse --is-bare-repository)" != zfalse
-+	then
-+		die "fatal: $0 cannot be used without a working tree."
-+	fi
-+}
-+
-+require_to_be_in_work_tree () {
- 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
- 	die "fatal: $0 cannot be used without a working tree."
- }
+Now *technically* signing the tree may be equivalent to signing an
+individual commit, but don't get wrapped up in that. Stick to the semantics
+with me.
+
+Imagine the following scenario to help justify the other use cases above.
+
+There are 200 developers working on a financial trading system, and each of
+them has the opportunity to slip malicious code into the project. When the
+final release is prepared, the project lead signs the tip commit, thus
+signing the whole tree. Now it is discovered that someone did slip some
+malicious code in.  How do you audit the system? Could higher levels of
+individual accountability have discouraged this scenario?
+
+I've seen it argued that a proper SSH setup and user management are the key.
+These are good for security and access control, but not for some durable
+form of accountability.
+
+If each commit is individually signed, the authorship claims have teeth. In
+our scenario above, a single signature at the tip of the tree did no good in
+terms of accountability. You can blame the guy on top, but is it really
+reasonable that he review every line? However, if each commit were signed,
+tracing the malicious code would be simple. If a reviewer had been required
+to sign every commit, or maybe every range of commits (signing
+186fa861..8645b061, for instance), then there could be a double layer of
+accountability. This kind of "hard" accountability can be valuable in
+sensitive projects. I work on such projects.
+
+Some people might not see the use of this kind of auditability. I'll tell
+you though - I work in a large organization that uses SVN because of some
+kind of perceived auditability. They shy away from Git because it's
+"distributed" and therefore not auditable.  Of course that's a
+phony-baloney, ignorant argument, but the point is that the need for
+auditability is there.
+
+
+So how do these semantics line up with Git?
+
+It seems that creating a signed tag is the same as signing a commit.  There
+are a few problems, though.  Tags don't provide a secure means of asserting
+the type of signature being applied to the commit hash. That is - is the
+hash signed because someone is claiming authorship? Because they are
+asserting the integrity of the entire tree? Because they have reviewed the
+code? Because they reviewed a certain subset of the tree? Of course there's
+also the issue that tags live in a cluttered namespace. Signing a commit is
+essentially a different thing from providing a name for a commit. Using tags
+just to sign commits requires a glut of tag names.
+
+I propose expanding the concept of tags, or alternately creating a new
+concept which subsumes the existing tag concept. I'll call this new concept
+a "sig" for the purposes of this discussion. The concept of a sig cross-cuts
+the concept of a tag.
+
+A tag signs the commit hash. A sig signs a SHA1-based absolute commit
+reference with a (possibly null) string concatenated to it. For instance, a
+sig might sign the following string:
+
+"0b9deecf625677cf44058a42c2abd7add5167e81^0 author"
+which would mean that the signor is claiming authorship of that individual
+commit. (Suggestions for notating a single commit are welcome. "^0" seemed
+natural.)
+
+or
+
+"5ae6f5ca2f70bd7d5ca88c20f2be62bf3844af73..0b9deecf625677cf44058a42c2abd7add5167e81
+reviewer"
+which means the signor has reviewed that particular chain of commits.
+
+Signing the string
+"0b9deecf625677cf44058a42c2abd7add5167e81"
+would be the same as signing the entire tree for that hash, which is what
+happens in a tag.
+
+A signed tag would essentially be a name associated with a sig - not too far
+off from how it works now. A lightweight tag would be a name not associated
+with a sig - again, about how it is now.
+
+
+This strategy has several benefits:
+
+* It is separable from the commit tree.  Linus argued against including
+commit signatures within commits. This solution doesn't do that. If someone
+wants to ditch all signatures and publish the tree, they can.
+
+* It is extensible. Standard strings like "author" and "reviewer" might get
+built-in support, but there is nothing preventing adding custom signature
+types to meet your workflow needs.  Someone could even add something like a
+datestamp, if the need arose. In addition, there would be no limit to the
+number of "author" or "reviewer" sigs that could point to a single commit.
+Great for pair programming, group code reviews, or other workflows.
+
+* It can probably be implemented cleanly without breaking the existing tags.
+
+I see a few potential issues:
+
+* What on earth does it mean to tag a range of commits? With commit ranges
+being siggable, and tags containing sigs, what does it mean to tag a range
+of 10 commits, for instance? Is that desirable? Does it make any sense
+whatsoever? Does it hurt anything if it happens?
+
+* Performance? I think it would be extremely quick to verify a bunch of
+sigs, but I don't know. Maybe I'm not thinking clearly about it.
+Fortunately, sigs can be ignored entirely and need not affect things.
+
+* Any others issues?
+
+Thank you, and please give feedback. I'm no git pro - just a guy with an
+idea. Based on your feedback, Eric and I will steer our implementation.
+
+Richard Peterson
