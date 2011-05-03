@@ -1,39 +1,39 @@
 From: Michael Grubb <devel@dailyvoid.com>
-Subject: [PATCH v4] Add default merge options for all branches
-Date: Tue, 03 May 2011 15:07:43 -0500
-Message-ID: <4DC0608F.9040208@dailyvoid.com>
-References: <20110503090351.GA27862@elie>
+Subject: Re: [PATCH v3] Add default merge options for all branches
+Date: Tue, 03 May 2011 15:22:53 -0500
+Message-ID: <4DC0641D.5070403@dailyvoid.com>
+References: <4DBF04C5.1080608@dailyvoid.com> <4DBF94E9.2010502@dailyvoid.com> <20110503090351.GA27862@elie> <7vk4e7ir9v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, vmiklos@frugalware.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 22:07:59 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	vmiklos@frugalware.org, deskinm@umich.edu
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 03 22:23:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHLsx-0000ja-2k
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 22:07:55 +0200
+	id 1QHM7c-0001oa-UQ
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 22:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754876Ab1ECUHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 16:07:49 -0400
-Received: from 75.98.162.166.static.a2webhosting.com ([75.98.162.166]:60597
+	id S1755107Ab1ECUW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 16:22:59 -0400
+Received: from 75.98.162.166.static.a2webhosting.com ([75.98.162.166]:33513
 	"EHLO dailyvoid.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1754781Ab1ECUHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 16:07:48 -0400
+	with ESMTP id S1754668Ab1ECUW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 16:22:58 -0400
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=dailyvoid.com;
 	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Source:X-Source-Args:X-Source-Dir;
-	b=MAQK6lFXKg8ps8WDvof1rZSO3chdhRtf9N2eOdNHYy1pT9ybgGT+5ugUHoB6KVxbomlmKRlRFyWEeNCw/B+nbFws6dZThIBQnOgbdJnFyr/Cs89bZ7aFR7RkOeYMoDBw;
+	b=CDhrIqhHSreY9FEmVQ+x1RzonzxkNpJJkZhC0tHuA4z5l4M/6xfGgLLBS/AJrksA6yfeKrzXkV14jAEnk+JROQzcyb4kOsJa3GtiABusHc5vN0JQsVEGnogWlT60N3rU;
 Received: from adsl-99-59-251-170.dsl.ltrkar.sbcglobal.net ([99.59.251.170] helo=macbook.local)
 	by a2s24.a2hosting.com with esmtpsa (TLSv1:AES256-SHA:256)
 	(Exim 4.69)
 	(envelope-from <devel@dailyvoid.com>)
-	id 1QHLsl-0002y1-WD; Tue, 03 May 2011 16:07:44 -0400
+	id 1QHM7S-0006Pq-Hs; Tue, 03 May 2011 16:22:54 -0400
 User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <20110503090351.GA27862@elie>
+In-Reply-To: <7vk4e7ir9v.fsf@alter.siamese.dyndns.org>
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - a2s24.a2hosting.com
 X-AntiAbuse: Original Domain - vger.kernel.org
@@ -46,222 +46,130 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172688>
 
-Add support for branch.*.mergeoptions for setting default options for
-all branches.  This new value shares semantics with the existing
-branch.<name>.mergeoptions variable. If a branch specific value is
-found, that value will be used.
 
-The need for this arises from the fact that there is currently not an
-easy way to set merge options for all branches. Instead of having to
-specify merge options for each individual branch there should be a way
-to set defaults for all branches and then override a specific branch's
-options.
 
-In order to facilitate future features centered around this new
-"globlike" syntax a new struct has been created to keep track of the
-branch.*.* options.  Currently it only supports branch.*.mergeoptions,
-but can be easily modified in the future to support other branch
-specific options as well. The mechanism will "vote" on specific-"ness"
-of the configuration key and ultimately only use the most specific
-options.  This is not cumulative but overriding.
+On 5/3/11 1:16 PM, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+>> So in the future one might be able to do things like
+>>
+>> 	[branch "git-gui/*"]
+>> 		mergeoptions = -s subtree
+>>
+>> Interesting.
+>>
+>>> The need for this arises from the fact that there is currently not an
+>>> easy way to set merge options for all branches.
+>>
+>> I'm curious: what merge options/workflows does this tend to be useful
+>> for?
+> 
+> I actually am curious myself, too.  I want to see a real-life example.
+> 
+In my reply to Jonathan I gave the example of turning off fast forward merges
+globally for all branches (and then perhaps turning them back on for specific branches).
+The same could be done with --log or any other option that might make since to turn on
+for all branches without having to specifically name each branch in the config file.
 
-Signed-off-by: Michael Grubb <devel@dailyvoid.com>
----
- Documentation/git-merge.txt |    3 +
- builtin/merge.c             |   90 +++++++++++++++++++++++++++++++++---------
- t/t7600-merge.sh            |   39 ++++++++++++++++++
- 3 files changed, 112 insertions(+), 20 deletions(-)
+Also as previously cited in my earlier reply to Jonathan, a good real life example can be
+found in Vincent Driessen's branching model where he creates ephemeral feature/topic branches
+for development then deletes them when they get merged back into the mainline development tree.
+However, he wants to keep the history that there was a merge from a branch instead of it just looking
+like a straight line.  The link to his work is here: http://nvie.com/posts/a-successful-git-branching-model/
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index e2e6aba..eaab3e4 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -307,6 +307,9 @@ branch.<name>.mergeoptions::
- 	Sets default options for merging into branch <name>. The syntax and
- 	supported options are the same as those of 'git merge', but option
- 	values containing whitespace characters are currently not supported.
-+	The special value '*' for <name> may be used to configure default
-+	options for all branches.  Values for specific branch names will
-+	override the this default.
- 
- SEE ALSO
- --------
-diff --git a/builtin/merge.c b/builtin/merge.c
-index d171c63..d6ce85e 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -32,6 +32,21 @@
- #define NO_FAST_FORWARD (1<<2)
- #define NO_TRIVIAL      (1<<3)
- 
-+/* This is for branch.<foo>. blocks
-+ * the vote member holds a value between
-+ * 0.0 and 1.0 which measures how closely
-+ * a branch name matches the key member.
-+ * where branch.*.mergeoptions would be 0.1 and
-+ * branch.<name>.mergeoptions would be 1.0
-+ * Also it is called vote because I couldn't come
-+ * up with a better name.
-+ */
-+struct merge_options_cb {
-+	char *key;
-+	char *value;
-+	float vote;
-+};
-+
- struct strategy {
- 	const char *name;
- 	unsigned attr;
-@@ -503,28 +518,60 @@ cleanup:
- 	strbuf_release(&bname);
- }
- 
--static int git_merge_config(const char *k, const char *v, void *cb)
-+static void parse_git_merge_options(const char *k, const char *v,
-+			void *cb)
- {
--	if (branch && !prefixcmp(k, "branch.") &&
--		!prefixcmp(k + 7, branch) &&
--		!strcmp(k + 7 + strlen(branch), ".mergeoptions")) {
--		const char **argv;
--		int argc;
--		char *buf;
--
--		buf = xstrdup(v);
--		argc = split_cmdline(buf, &argv);
--		if (argc < 0)
--			die(_("Bad branch.%s.mergeoptions string: %s"), branch,
--			    split_cmdline_strerror(argc));
--		argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
--		memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
--		argc++;
--		parse_options(argc, argv, NULL, builtin_merge_options,
--			      builtin_merge_usage, 0);
--		free(buf);
-+	struct merge_options_cb *merge_options = cb;
-+	int changed = 0;
-+
-+	/* We only handle mergeoptions for now */
-+	if (suffixcmp(k, ".mergeoptions"))
-+		return;
-+
-+	if (!prefixcmp(k, "branch.*") && merge_options->vote <= 0.1 ) {
-+		merge_options->vote = 0.1;
-+		changed = 1;
-+	} else if (branch && !prefixcmp(k, "branch.") &&
-+				!prefixcmp(k + 7, branch) &&
-+				merge_options->vote < 1.0) {
-+		merge_options->vote = 1.0;
-+		changed = 1;
- 	}
- 
-+	if (changed) {
-+		merge_options->key = (char *)k;
-+		merge_options->value = (char *)v;
-+	}
-+}
-+
-+static void apply_merge_options(struct merge_options_cb *opts)
-+{
-+	const char **argv;
-+	int argc;
-+	char *buf;
-+
-+	if ( opts == NULL )
-+		return;
-+
-+	buf = xstrdup(opts->value);
-+	argc = split_cmdline(buf, &argv);
-+	if (argc < 0)
-+		die(_("Bad %s string: %s"), 
-+			opts->key, split_cmdline_strerror(argc));
-+
-+	argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
-+	memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
-+	argc++;
-+	parse_options(argc, argv, NULL, builtin_merge_options,
-+			  builtin_merge_usage, 0);
-+	free(buf);
-+}
-+
-+static int git_merge_config(const char *k, const char *v, void *cb)
-+{
-+	if (cb != NULL && branch && !prefixcmp(k, "branch."))
-+		parse_git_merge_options(k, v, cb);
-+
- 	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
- 		show_diffstat = git_config_bool(k, v);
- 	else if (!strcmp(k, "pull.twohead"))
-@@ -987,6 +1034,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	const char *head_arg;
- 	int flag, head_invalid = 0, i;
- 	int best_cnt = -1, merge_was_ok = 0, automerge_was_ok = 0;
-+	struct merge_options_cb merge_options = {NULL, NULL, 0.0};
- 	struct commit_list *common = NULL;
- 	const char *best_strategy = NULL, *wt_strategy = NULL;
- 	struct commit_list **remotes = &remoteheads;
-@@ -1004,7 +1052,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	if (is_null_sha1(head))
- 		head_invalid = 1;
- 
--	git_config(git_merge_config, NULL);
-+	git_config(git_merge_config, &merge_options);
-+	if (merge_options.key != NULL && merge_options.value != NULL)
-+		apply_merge_options(&merge_options);
- 
- 	/* for color.ui */
- 	if (diff_use_color_default == -1)
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index e84e822..5b1f8e1 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -415,6 +415,45 @@ test_expect_success 'merge c0 with c1 (no-ff)' '
- 
- test_debug 'git log --graph --decorate --oneline --all'
- 
-+test_expect_success 'merge c0 with c1 (default no-ff)' '
-+	git reset --hard c0 &&
-+	test_might_fail git config --unset branch.master.mergeoptions &&
-+	git config "branch.*.mergeoptions" "--no-ff" &&
-+	test_tick &&
-+	git merge c1 &&
-+	git config --remove-section "branch.*" &&
-+	verify_merge file result.1 &&
-+	verify_parents $c0 $c1
-+'
-+
-+test_debug 'git log --graph --decorate --oneline --all'
-+
-+test_expect_success 'combine branch.*.mergeoptions with branch.x.mergeoptions' '
-+	git reset --hard c0 &&
-+	test_might_fail git config --remove-section branch.master &&
-+	git config "branch.*.mergeoptions" "--no-ff" &&
-+	git config branch.master.mergeoptions "--ff" &&
-+	test_tick &&
-+	git merge c1 &&
-+	git config --remove-section "branch.*" &&
-+	verify_merge file result.1 &&
-+	verify_parents "$c0"
-+'
-+
-+test_expect_success 'reverse branch.x.mergeoptions with branch.*.mergeoptions' '
-+	git reset --hard c0 &&
-+	test_might_fail git config --remove-section branch.master &&
-+	git config branch.master.mergeoptions "--ff" &&
-+	git config "branch.*.mergeoptions" "--no-ff" &&
-+	test_tick &&
-+	git merge c1 &&
-+	git config --remove-section "branch.*" &&
-+	verify_merge file result.1 &&
-+	verify_parents "$c0"
-+'
-+
-+test_debug 'git log --graph --decorate --oneline --all'
-+
- test_expect_success 'combining --squash and --no-ff is refused' '
- 	test_must_fail git merge --squash --no-ff c1 &&
- 	test_must_fail git merge --no-ff --squash c1
--- 
-1.7.5
+
+> The "git-gui/*" example you gave is unfortunately not it. It specifies the
+> branch at the wrong end. Whether I am merging into "master" or "next", I
+> would want "-s subtree" when I am merging "git-gui/*" project, but all my
+> merges to "master" or "next" do not necessarily want to use "-s subtree".
+> 
+> It might turn out to be that "branch.<name>.mergeoptions" is a
+> ill-conceived idea to begin with.
+> 
+>>> The approach taken is to make note of whether a branch specific
+>>> mergeoptions key has been seen and only apply the global value if it
+>>> hasn't.
+>>
+>> What happens if the global value is seen first?
+> 
+> If implemented correctly, it should use the specific one and fall back to
+> the wildcard one.  Another issue is if the values should be cumulative or
+> overriding, but in the remainder I'd assume we want overriding.
+> 
+There is now a unit test for this scenario.
+
+>>> @@ -505,24 +512,42 @@ cleanup:
+>>>  
+>>>  static int git_merge_config(const char *k, const char *v, void *cb)
+>>>  {
+>>> +	int merge_option_mode = 0;
+>>> +	struct merge_options_cb *merge_options =
+>>> +		(struct merge_options_cb *)cb;
+>>
+>> This cast should not needed, I'd think.
+> 
+> Correct.  That is the whole point of using (void *) as a parameter, so
+> that it can be assigned to the real expected type easily without cast.
+> 
+This has been corrected in the latest version of the patch.
+
+>>> +	if (!strcmp(k, "branch.*.mergeoptions"))
+>>> +		merge_option_mode = MERGEOPTIONS_DEFAULT;
+>>> +	else if (branch && !prefixcmp(k, "branch.") &&
+>>> +			 !prefixcmp(k + 7, branch) &&
+>>> +			 !strcmp(k + 7 + strlen(branch), ".mergeoptions"))
+>>> +		merge_option_mode = MERGEOPTIONS_BRANCH;
+>>> +
+>>> +	if ((merge_option_mode == MERGEOPTIONS_DEFAULT &&
+>>> +		!merge_options->override_default) ||
+>>> +		merge_option_mode == MERGEOPTIONS_BRANCH) {
+>>>  		const char **argv;
+>>
+>> It is hard to see at a glance where the "if" condition ends and
+>> the body begins.  Why not
+>> ...
+>> or even
+>> ...
+>> ?
+> 
+> Why not have two string pointers in merge_options_cb structure that are
+> initialized to NULL and holds the matched config key and the value?
+> 
+That was a great idea.  I've reworked things around this and also moved
+to a voting type method for determining priority of the keys.  So no more
+defines needed.  I think keeping all that state in the struct is much better
+and scales better as well.
+
+> When we are looking at a (k, v) pair in this function, if there is no
+> previous key in cb, we store (k, v) in cb and return.  If there already is
+> a previous key, we see if k is more specific than that key, and replace
+> (k, v) in cb with what we currently have.  Otherwise we do not do
+> anything.
+> 
+> When git_config() returns, the caller will find the final value in cb.
+> 
+>>> +	git config "branch.*.mergeoptions" "--no-ff" &&
+>>> +	test_tick &&
+>>> +	git merge c1 &&
+>>> +	git config --remove-section "branch.*" &&
+>>> +	verify_merge file result.1 &&
+>>> +	verify_parents $c0 $c1
+>>> +'
+>>> +
+>>> +test_debug 'git log --graph --decorate --oneline --all'
+>>
+>> Yuck.  Did anything come of the idea of a --between-tests option to
+>> use an arbitrary command here automatically?  (Not your fault.)  
+> 
+> I actually think test_debug should go inside the previous test.  Why not
+> have it immediately after "git merge c1" above?
+
+Again I followed the existing pattern here. I didn't want to be the odd man out.
+Do you want me to make that change?
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
