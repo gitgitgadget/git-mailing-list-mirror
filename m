@@ -1,172 +1,89 @@
-From: Ciaran <ciaranj@gmail.com>
-Subject: Re: [PATCH RFC] Test for apparent regression of merging renamed files
-Date: Tue, 3 May 2011 20:15:33 +0100
-Message-ID: <BANLkTin6u8e4-x99JgN-D7FFJbO7pXVp-Q@mail.gmail.com>
-References: <BANLkTimcRbuYzSp+MM-vsvxoWhAS8Jvo8Q@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Tue, 3 May 2011 22:20:32 +0300
+Message-ID: <BANLkTik18oTdNa1A99QAXJ9vz105jC3gLA@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org>
+	<7v62tjs66r.fsf@alter.siamese.dyndns.org>
+	<20110120203840.GA11468@sigill.intra.peff.net>
+	<7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
+	<20110120215456.GB11468@sigill.intra.peff.net>
+	<AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
+	<7vk4hyp38i.fsf@alter.siamese.dyndns.org>
+	<AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+	<AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+	<BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com>
+	<BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+	<BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com>
+	<BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
+	<BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com>
+	<BANLkTimLnggco_+mQZ2_T_myAHsDD-=g1w@mail.gmail.com>
+	<BANLkTikxS-_9h4rBdbbJ2e-RkjMWyiC1Mg@mail.gmail.com>
+	<BANLkTinqxy6jCJLNVPKmMW3CErbfN7Hm=g@mail.gmail.com>
+	<BANLkTinJvt=Nnt8YG-D1wpWKbBei+m+4XA@mail.gmail.com>
+	<BANLkTinCSotWC-kbPDJc57NZM29hizYKpA@mail.gmail.com>
+	<BANLkTimHfH-o6Fyoo61xVFxAhELNmD=4xg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, newren@gmail.com,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 03 21:15:42 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: kusmabite@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 03 21:20:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHL4P-0003sw-LH
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 21:15:41 +0200
+	id 1QHL9D-0006nQ-F3
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 21:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754637Ab1ECTPf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2011 15:15:35 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:39187 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754325Ab1ECTPd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2011 15:15:33 -0400
-Received: by pwi15 with SMTP id 15so188021pwi.19
-        for <git@vger.kernel.org>; Tue, 03 May 2011 12:15:33 -0700 (PDT)
+	id S1754558Ab1ECTUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 15:20:34 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55372 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754508Ab1ECTUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 15:20:33 -0400
+Received: by fxm17 with SMTP id 17so330875fxm.19
+        for <git@vger.kernel.org>; Tue, 03 May 2011 12:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=ENClDDPR+pDzovOVBl6QccjgLJDJNULydVg0alqqj1A=;
-        b=Va5YMRWBV7orruqMEwDXf5JLCGRIBuhzZn6B+feDbz47YKIOBk38SJ/OmNdvun2ZGu
-         G4o7+iReeXjV8P/keqc9BAYFslSxJePGV/mR6fXjpNpUkYoIXXSgqoKGCwGhl5Ka054C
-         u3Nos1da5vKrrNVZy4E6eLeygYMM+XHWvJG0k=
+         :message-id:subject:from:to:cc:content-type;
+        bh=9MYoyOf0L44IxM7WQmm3N1Byq6VqaZqNTu8KdhaUs68=;
+        b=bN5CLiNmtG7U0ElrmT0xFEvVT7wov9iFB0O8t+2y+bd3ZUk/SSvCtyvLUxlSgC57hJ
+         dwMyTJUblOhSqgMXIIE2MvBFLzsVoQmOXNziFf/BCwJQYOLM6RP1Ki/0Irg3VQo8dsK/
+         uFldIhgyiaw1sPZkleraKByVrUvkTMV+gX0m8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=vhf007TZGe4F/n5hmnrICPw6IbB9iAYzswamMBke+aaBZO/ry3/qnEsn7TBwcFTgFL
-         0NvG/4r1nTF4V0Hjk5FGkPaRdsbUJWL2lm6gQRuIphZTFBTm3SU50Fl0WIKm3W2Q4MiN
-         JWu5n7ygRhdWBhs0kxFrrJ4MScLwsGUW9wWME=
-Received: by 10.68.0.7 with SMTP id 7mr295860pba.188.1304450133147; Tue, 03
- May 2011 12:15:33 -0700 (PDT)
-Received: by 10.68.62.6 with HTTP; Tue, 3 May 2011 12:15:33 -0700 (PDT)
-In-Reply-To: <BANLkTimcRbuYzSp+MM-vsvxoWhAS8Jvo8Q@mail.gmail.com>
+         :cc:content-type;
+        b=nvRzlMYO8nvpOY0gaBycgxGXGsTTFdy3HbOa7p3mlRNKMDgxA+ORXHdHw346frlcwO
+         kRb3o8kn9LLVRgIitEDHjAkIO/mRpWx2W7o0m55Bu4bOgrOj8Xb0EzardiOmbbPAGfBm
+         dCwTcIX5grmHkJXKXYtua36UbtU4KtanBN2AM=
+Received: by 10.223.24.134 with SMTP id v6mr206507fab.146.1304450432401; Tue,
+ 03 May 2011 12:20:32 -0700 (PDT)
+Received: by 10.223.74.130 with HTTP; Tue, 3 May 2011 12:20:32 -0700 (PDT)
+In-Reply-To: <BANLkTimHfH-o6Fyoo61xVFxAhELNmD=4xg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172686>
 
-On Mon, May 2, 2011 at 8:04 PM, Ciaran <ciaranj@gmail.com> wrote:
-> Provides a test to cover a case that appears to have been regressed o=
-ut by:
+On Tue, May 3, 2011 at 9:08 PM, Stephen Kelly <steveire@gmail.com> wrote:
+> On Tue, May 3, 2011 at 7:54 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Mon, May 2, 2011 at 10:43 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>>> No, it's still an issue, and I believe I pin-pointed it in my first
+>>> mail. You can try out the patch I sent, and see if that helps in your
+>>> case. If it does, I think it'd make sense to do something (preferably
+>>> a bit more robust) with it.
 >
-> =A0b2c8c0a762745768e8fb249949801c1aed8f7c1d
->
-> At this point no tags contain the above commit, but 'master' does. =A0=
-I'm unsure
-> what is causing the issue, but can see discussion about this fix here=
-:
->
-> http://git.661346.n2.nabble.com/BUG-merge-recursive-triggered-quot-BU=
-G-quot-td6179353.html
->
-> Providing a patch to demonstrate the issue and spark discussion.
+> I don't have a build of git at the moment to test it as I'm using
+> distro packages again. The only test case I have is the alice and bob
+> stuff already posted, so if your patch fixes that for you that's good
+> enough from my POV.
 
-Hmm I think with hindsight I should've been clearer ;)   The current
-master branch appears to contain a break in it, seemingly introduced
-by commit b2c8c0a . The rename & merge situation given in the
-associated test results in output from git status such as :
+As I said, 'gitk --all' works fine, the patch would fix 'gitk'.
 
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	deleted:    formatting.txt
-#
-# Unmerged paths:
-#   (use "git reset HEAD <file>..." to unstage)
-#   (use "git add/rm <file>..." as appropriate to mark resolution)
-#
-#	both modified:      formatting_renamed.txt
-#
-
-Whereas prior to b2c8c0a762745768e8fb249949801c1aed8f7c1d (for example
-@ d98a509ec3e9ff22bb642f778900691d0c715ba9 ) the status was:
-
-# On branch master
-nothing to commit (working directory clean)
-
-And git log --oneline -1 says :
-
-e03ad75 Merge branch 'rename_branch'
-
-The original behaviour (successful merge) seems 'better' than the
-current behaviour 'failed merge, 'erroneous' both modified flag' ...
-am I mis-reading this, is this a new non-supported edge case ?
-
-Cheers!
- -cJ.
-
-
-
-> ---
-> Whilst working up a patch for my 'whitespace ignorant rename
-> detection' ( http://git.661346.n2.nabble.com/PATCH-RFC-Rename-detecti=
-on-and-whitespace-td6288524.html
-> ) I was unable to get my tests working, turns out that something that
-> used to work for me, no longer does in master's HEAD.
->
-> I don't really understand the fault so I'm throwing it to the list in
-> the hope that someone brighter than me can take it on (I've
-> CC'd the signoff-s to that end! :) Sorry!
->
-> =A0t/t9801-merge-rename.sh | =A0 41 +++++++++++++++++++++++++++++++++=
-++++++++
-> =A01 files changed, 41 insertions(+), 0 deletions(-)
-> =A0create mode 100755 t/t9801-merge-rename.sh
->
-> diff --git a/t/t9801-merge-rename.sh b/t/t9801-merge-rename.sh
-> new file mode 100755
-> index 0000000..363911f
-> --- /dev/null
-> +++ b/t/t9801-merge-rename.sh
-> @@ -0,0 +1,41 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'Test for rename merge regression'
-> +
-> +. ./test-lib.sh
-> +
-> +write_out_files() {
-> +cat > noformatting.txt << EOF
-> +if(true){
-> +// Meaningless
-> +}
-> +EOF
-> +
-> +cat > formatting.txt << EOF
-> + =A0 =A0 =A0 if ( true ) {
-> + =A0 =A0 =A0 =A0 // Meaningless
-> + =A0 =A0 =A0 }
-> +EOF
-> +}
-> +
-> +# Test the case where a rename happens in one branch and
-> +# a whitespace change occurs in a different branch. =A0The rename
-> +# change should apply to the whitespace modified file
-> +test_expect_success setup '
-> + =A0 =A0 =A0 write_out_files &&
-> + =A0 =A0 =A0 git add formatting.txt &&
-> +
-> + =A0 =A0 =A0 test_tick &&
-> + =A0 =A0 =A0 git commit -m Initial &&
-> + =A0 =A0 =A0 git checkout -b rename_branch &&
-> + =A0 =A0 =A0 git mv formatting.txt formatting_renamed.txt &&
-> + =A0 =A0 =A0 git commit -m Rename &&
-> + =A0 =A0 =A0 git checkout master &&
-> + =A0 =A0 =A0 rm formatting.txt &&
-> + =A0 =A0 =A0 mv noformatting.txt formatting.txt &&
-> + =A0 =A0 =A0 git commit -a -m Reformat
-> +'
-> +test_expect_success 'merge' '
-> + =A0 =A0 =A0 git merge rename_branch
-> +'
-> +test_done
-> --
-> 1.7.4.1
->
+-- 
+Felipe Contreras
