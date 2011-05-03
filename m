@@ -1,78 +1,80 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3] Add default merge options for all branches
-Date: Tue, 3 May 2011 15:50:45 -0500
-Message-ID: <20110503205045.GK1019@elie>
-References: <4DBF04C5.1080608@dailyvoid.com>
- <4DBF94E9.2010502@dailyvoid.com>
- <20110503090351.GA27862@elie>
- <7vk4e7ir9v.fsf@alter.siamese.dyndns.org>
- <4DC0641D.5070403@dailyvoid.com>
+Subject: Re: [RFC/PATCH] userdiff.c: Avoid old glibc regex bug causing
+ t4034-*.sh test failures
+Date: Tue, 3 May 2011 16:07:16 -0500
+Message-ID: <20110503210716.GL1019@elie>
+References: <4DC04021.1040606@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	vmiklos@frugalware.org, deskinm@umich.edu
-To: Michael Grubb <devel@dailyvoid.com>
-X-From: git-owner@vger.kernel.org Tue May 03 22:50:58 2011
+Cc: GIT Mailing-list <git@vger.kernel.org>, trast@student.ethz.ch,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue May 03 23:07:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHMYb-0000Pa-OM
-	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 22:50:58 +0200
+	id 1QHMoa-0001hn-5e
+	for gcvg-git-2@lo.gmane.org; Tue, 03 May 2011 23:07:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755125Ab1ECUux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2011 16:50:53 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:64805 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754124Ab1ECUuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2011 16:50:52 -0400
-Received: by yxs7 with SMTP id 7so187900yxs.19
-        for <git@vger.kernel.org>; Tue, 03 May 2011 13:50:51 -0700 (PDT)
+	id S1755160Ab1ECVHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2011 17:07:23 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:60479 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755150Ab1ECVHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2011 17:07:22 -0400
+Received: by yia27 with SMTP id 27so192545yia.19
+        for <git@vger.kernel.org>; Tue, 03 May 2011 14:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=byanAJmFMesWN7GQaghTSgHJG5uoVzMIefr451R16Oo=;
-        b=o0eodnIsQTXTwaCrskb10poe5tnN0rbc9PWf46td14ybG73GUyipXMckIohR4ZSKee
-         ERjjMsvrspSyWqs5wjUAN/IfIu0fUd6CvygXScKb2xDpX8pa6C5A1tkGhZZfdCow9WSr
-         sSL0fcEmYGKAXWKM8ISINWDd3GAJ/1d7+WCM0=
+        bh=xc6HHYRhEWxfw/N9qzpm6KkSxNKA4v9EQiIufcViHBo=;
+        b=ZEVjXthPOf0oTOb7FZS7QC6PRtRJ2dZ7f4ourrog5y2lnxnX7oZL1UiJzB/NNKvbB2
+         6G2wU8w+SaUn9E/6eBsamV78eltcPtxNOkkK838H7zDVNJlplAzFAbby2R/NKHXnAO0g
+         mRyGhxO/+xyhLfft5Xp02H9ULTN6iil/Bl7HY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=TL07SbfI94DSIspbNWJZIFikL+1vWv9p8vqFXMsONZ+Gl8vuUCPZhsaDJIhs2DVh9J
-         +i28/lIU3vqZ21GpSNbzGbPt5ysNLoBw+xKCUIdnlzKRB/Xt4JCxA0vhGBP1sfm/ow6T
-         0B4lAWpa3p9PjaqCzR1n3i9tkxfHtCwwhlHkc=
-Received: by 10.236.143.195 with SMTP id l43mr394753yhj.140.1304455851723;
-        Tue, 03 May 2011 13:50:51 -0700 (PDT)
+        b=aDUsORXRSaHRBl0d0bsj56oBFSZ+ZHuh/qduRKesaZskTZl49JEY5qU6bfULbOKIQd
+         9PF3TiziP4hR6yuUaXXQQPibvZcgjbl+8lWvhIHURhuFNulVkoVubOJN3p6w6doMeucK
+         cPwB7EQr9HOlG8KvGLOYR+rz7Zbj4dsRrEVqU=
+Received: by 10.236.67.41 with SMTP id i29mr414806yhd.279.1304456841411;
+        Tue, 03 May 2011 14:07:21 -0700 (PDT)
 Received: from elie (adsl-69-209-62-211.dsl.chcgil.sbcglobal.net [69.209.62.211])
-        by mx.google.com with ESMTPS id 74sm218498yhl.59.2011.05.03.13.50.49
+        by mx.google.com with ESMTPS id u7sm222174yhn.92.2011.05.03.14.07.19
         (version=SSLv3 cipher=OTHER);
-        Tue, 03 May 2011 13:50:50 -0700 (PDT)
+        Tue, 03 May 2011 14:07:20 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4DC0641D.5070403@dailyvoid.com>
+In-Reply-To: <4DC04021.1040606@ramsay1.demon.co.uk>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172694>
 
-Michael Grubb wrote:
-> On 5/3/11 1:16 PM, Junio C Hamano wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
->>> Yuck.  Did anything come of the idea of a --between-tests option to
->>> use an arbitrary command here automatically?  (Not your fault.)  
->>
->> I actually think test_debug should go inside the previous test.  Why not
->> have it immediately after "git merge c1" above?
->
-> Again I followed the existing pattern here. I didn't want to be the odd man out.
-> Do you want me to make that change?
+Ramsay Jones wrote:
 
-No, I was just reminding the list at large about how annoying it is.
+> This is an RFC because:
+>     - A simple fix would be for me to put NO_REGEX=1 in my config.mak,
+>       since the compat/regex routines don't suffer this problem.
+>     - I suspect this bug is old enough that it will not affect many users.
+>     - I have not audited the other non-matching list expressions in
+>       userdiff.c
+>     - blame, grep and pickaxe all call regcomp() with the REG_NEWLINE
+>       flag, but get the regex from the user (eg from command line).
 
-You did right to mimic the style of surrounding tests.  Thank you.
+I think excluding \n along with ' ' and \t in similar places makes
+sense, but that meanwhile we should add tests to the testsuite for
+blame/grep/pickaxe to catch such implementations failing when
+NO_REGEX=1 is not set.
+
+Does that make sense?  Thanks for tracking this down.
+
+Jonathan
