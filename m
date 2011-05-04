@@ -1,130 +1,105 @@
-From: Michael Grubb <devel@dailyvoid.com>
-Subject: [PATCH v5] Add default merge options for all branches
-Date: Wed, 04 May 2011 17:07:18 -0500
-Message-ID: <4DC1CE16.5030808@dailyvoid.com>
-References: <20110503090351.GA27862@elie>
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH V2 0/5] Add PCRE support to git-grep
+Date: Thu,  5 May 2011 00:00:16 +0200
+Message-ID: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 05 00:07:34 2011
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 05 00:10:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHkEH-0005gQ-LU
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 00:07:34 +0200
+	id 1QHkH7-00072i-1R
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 00:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755250Ab1EDWH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2011 18:07:28 -0400
-Received: from 75.98.162.166.static.a2webhosting.com ([75.98.162.166]:57031
-	"EHLO dailyvoid.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1753579Ab1EDWH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2011 18:07:27 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=dailyvoid.com;
-	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Source:X-Source-Args:X-Source-Dir;
-	b=nZ37mmgBdyhI7nByQ7Lid4vIcJDLo7fG8WN5ApUpkXPQsjPGw86JIoTlp/i/hO8ViaUD7yJPKHDhcuHpcny+Nj41G7r+xnNH9zb+4KhoJqNWn2A4dc8sxiAfcWwjOTVd;
-Received: from adsl-99-59-251-170.dsl.ltrkar.sbcglobal.net ([99.59.251.170] helo=macbook.local)
-	by a2s24.a2hosting.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <devel@dailyvoid.com>)
-	id 1QHkEA-0006pR-FI; Wed, 04 May 2011 18:07:26 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <20110503090351.GA27862@elie>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - a2s24.a2hosting.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - dailyvoid.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1755842Ab1EDWKY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2011 18:10:24 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:32900 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753579Ab1EDWKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2011 18:10:23 -0400
+Received: by wwa36 with SMTP id 36so1713118wwa.1
+        for <git@vger.kernel.org>; Wed, 04 May 2011 15:10:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=FAwvn7Jc+Z8z+0QQ+ia2XNPq+AT0DsAS6YQTWWXsf40=;
+        b=Lc76qu/FyPIWFogwhtSzA25IUOESj7+OKveMM27P4YUsjjtDNP+X0a7IBxIrlo4fYr
+         a5eSDTIWdfkxVZk7wSJEuvCpm8gQwtNQ1fl00RhXki1burxfXDIjSyX1Fol0dv0OCK7i
+         n6tz8M8w/Tvp6P5K0VI+9EOlGq17YRDh+Zpd0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=fLqZhqalfD0KGoTyffWMO2JobILK0MVeImbdtZ7S3j2XnXIK0C7UzlHHbhuMQR/xFA
+         ydhwSUfnO3b4kTsV0wncOSdeeclMRg0SHxs3qj3Q9Zjrzq8+D/4ygh1ZwTASeeIxzYKW
+         w/KL4ZQIrPJ7LBLVBOm1yGq/tGPQc+xYniHQg=
+Received: by 10.216.235.33 with SMTP id t33mr890194weq.6.1304546451005;
+        Wed, 04 May 2011 15:00:51 -0700 (PDT)
+Received: from localhost (85-177-78-94.net.stream.pl [94.78.177.85])
+        by mx.google.com with ESMTPS id c43sm799361weo.18.2011.05.04.15.00.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 04 May 2011 15:00:50 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172779>
 
-Add merge.ff flag to support turning off fast-forward merges by default.
-This flag is overridden if any branch.x.mergeoptions turn it back on.
+This patch series attempts to add PCRE support to git-grep.
 
- Documentation/merge-config.txt |    6 ++++++
- builtin/merge.c                |    3 +++
- 2 files changed, 9 insertions(+), 0 deletions(-)
+Changes from previous version:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Reported-by: Michael Grubb <devel@dailyvoid.com>
----
- Documentation/merge-config.txt |    6 ++++++
- builtin/merge.c                |    3 +++
- t/t7600-merge.sh               |   23 +++++++++++++++++++++++
- 3 files changed, 32 insertions(+), 0 deletions(-)
+* Now this series start from two patches which add the --line-number
+  option to SYNOPSIS and bash completion; they can be treated
+  separatedly from this series
 
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 8920258..2aa4408 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -16,6 +16,12 @@ merge.defaultToUpstream::
- 	to their corresponding remote tracking branches, and the tips of
- 	these tracking branches are merged.
- 
-+merge.ff::
-+	Do not generate a merge commit if the merge resolved as a
-+	fast-forward; only update the branch pointer instead.  Setting
-+	this to `false` would be equivalent to giving `--no-ff` from
-+	the command line.
-+
- merge.log::
- 	In addition to branch names, populate the log message with at
- 	most the specified number of one-line descriptions from the
-diff --git a/builtin/merge.c b/builtin/merge.c
-index d171c63..5194f04 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -541,6 +541,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 		if (is_bool && shortlog_len)
- 			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 		return 0;
-+	} else if (!strcmp(k, "merge.ff")) {
-+		allow_fast_forward = git_config_bool(k, v);
-+		return 0;
- 	} else if (!strcmp(k, "merge.defaulttoupstream")) {
- 		default_to_upstream = git_config_bool(k, v);
- 		return 0;
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index e84e822..21c25d4 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -415,6 +415,29 @@ test_expect_success 'merge c0 with c1 (no-ff)' '
- 
- test_debug 'git log --graph --decorate --oneline --all'
- 
-+test_expect_success 'merge c0 with c1 (merge.ff=false)' '
-+	git reset --hard c0 &&
-+	git config merge.ff false &&
-+	test_tick &&
-+	git merge c1 &&
-+	git config --remove-section merge &&
-+	verify_merge file result.1 &&
-+	verify_parents $c0 $c1
-+'
-+test_debug 'git log --graph --decorate --oneline --all'
-+
-+test_expect_success 'combine branch.master.mergeoptions with merge.ff' '
-+	git reset --hard c0 &&
-+	git config branch.master.mergeoptions --ff
-+	git config merge.ff false
-+	test_tick &&
-+	git merge c1 &&
-+	git config --remove-section "branch.master" &&
-+	git config --remove-section "merge" &&
-+	verify_merge file result.1 &&
-+	verify_parents "$c0"
-+'
-+
- test_expect_success 'combining --squash and --no-ff is refused' '
- 	test_must_fail git merge --squash --no-ff c1 &&
- 	test_must_fail git merge --no-ff --squash c1
+* All patches have improved descriptions
+
+* All patches have Signed-off-by
+
+* libpcre specific code has been moved to a separate subsection to
+  reduce number of #ifdefs; this addresses comments from Junio
+
+* I noticed that even though I call pcre_study(), I didn't use its
+  result in pcre_exec(); now this is fixed; this should improve
+  git-grep --perl-regexp performance
+
+* --perl-regexp has been added to bash-completion
+
+* Added last patch which adds checks for libpcre to configure
+
+* I repeated `make test` with and without pcre few more times and I
+  cannot reproduce results from previous runs; possibly they were
+  altered by current system load or cold cache. Now the difference
+  is just few seconds. However, I'm still not convinced to link
+  libgit.a with libpcre.
+
+Micha=C5=82 Kiedrowicz (5):
+  Documentation: Add --line-number to git-grep synopsis
+  contrib/completion: --line-number to git grep
+  grep: Put calls to fixmatch() and regmatch() into patmatch()
+  git-grep: Learn PCRE
+  configure: Check for libpcre
+
+ Documentation/git-grep.txt             |    8 ++-
+ Makefile                               |   16 +++++
+ builtin/grep.c                         |    2 +
+ config.mak.in                          |    1 +
+ configure.ac                           |   26 ++++++++
+ contrib/completion/git-completion.bash |    3 +-
+ grep.c                                 |  100 ++++++++++++++++++++++++=
++++++---
+ grep.h                                 |    9 +++
+ 8 files changed, 154 insertions(+), 11 deletions(-)
+
+--=20
+1.7.3.4
