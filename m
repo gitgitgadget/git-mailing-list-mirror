@@ -1,98 +1,91 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] t3700: note a .gitignore matching fault
-Date: Wed, 4 May 2011 13:22:41 +0700
-Message-ID: <BANLkTik1w65vms3GFfjnaJJx3y6v8FT5UQ@mail.gmail.com>
-References: <1304340464-14829-1-git-send-email-pclouds@gmail.com>
- <1304340923-15927-1-git-send-email-pclouds@gmail.com> <4DBEC766.8020008@viscovery.net>
- <BANLkTik=GYXUOeo3hA5yyXfOuBydT40koA@mail.gmail.com> <7voc3jis61.fsf@alter.siamese.dyndns.org>
- <BANLkTi=ZL5aPnPMXai==gyjYRT_LHovisA@mail.gmail.com> <7vd3jzgww8.fsf@alter.siamese.dyndns.org>
- <BANLkTinSx=MAkF5mt8gReNd1qEaeFTEBpA@mail.gmail.com> <BANLkTi=TNjUaD4EP8sYXDqJ-tmBEzz4t4w@mail.gmail.com>
- <4DC0ECED.2020409@viscovery.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v2] specifying ranges: we did not mean to make ".." an
+ empty set
+Date: Wed, 04 May 2011 08:55:01 +0200
+Message-ID: <4DC0F845.2080903@drmicha.warpmail.net>
+References: <7vr58glxro.fsf@alter.siamese.dyndns.org> <20110502193321.GB10487@sigill.intra.peff.net> <7vhb9clu0n.fsf@alter.siamese.dyndns.org> <7v62pslt2k.fsf_-_@alter.siamese.dyndns.org> <20110502210141.GA15753@sigill.intra.peff.net> <4DBFA31E.40207@drmicha.warpmail.net> <7vvcxrit07.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 04 08:23:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 04 08:55:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHVUT-0002f7-W4
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 08:23:18 +0200
+	id 1QHVzi-0002BS-5e
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 08:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584Ab1EDGXN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2011 02:23:13 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:37473 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752195Ab1EDGXM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 May 2011 02:23:12 -0400
-Received: by bwz15 with SMTP id 15so707994bwz.19
-        for <git@vger.kernel.org>; Tue, 03 May 2011 23:23:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=7NrhEph3l8qsPeWgzwNu5W63FfFwA+5SgIbY1QTupz0=;
-        b=uv+idriVK5kSqvMWYCTs5A5rTMp3uh2ykMeQn8X9NFIon5Vag+UMwTKeUDrQKg1+j6
-         mGbQfKVegZwjD2P19KAoqdnZbxEWQEaQ3pHCr9TTZgcAw2kw1yA8vTpK3LZY5rkxG8lu
-         4wvvRkADf9tQVcXF2387ZFh/xjak0gFY0WYhs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ApwFsWGP51IhCOa3YAoZEaQ7t9SIVbPnNAJAex5+p/0v+NCrrR86TCAT2McQLHrdyS
-         6nz+NXxDdtrnUfKCv/f3fAoapuuuqoqI2xpcV8M06XYM63HiZlNCTkc32gz09cqUcKey
-         mtiuZCXCO1ZfIc40s8dPmVJ2Xkun2Re7+NNLQ=
-Received: by 10.204.20.142 with SMTP id f14mr676227bkb.155.1304490191583; Tue,
- 03 May 2011 23:23:11 -0700 (PDT)
-Received: by 10.204.53.13 with HTTP; Tue, 3 May 2011 23:22:41 -0700 (PDT)
-In-Reply-To: <4DC0ECED.2020409@viscovery.net>
+	id S1752254Ab1EDGzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2011 02:55:05 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50222 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751047Ab1EDGzE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 May 2011 02:55:04 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5EFBF208A3;
+	Wed,  4 May 2011 02:55:03 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 04 May 2011 02:55:03 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=u5MLTIjNyylg2SV2TOnNiWLEQvo=; b=UsG7pO7jPrT22gNAqW1G5cFl30ZLYhyAgggPlX3jWzfUc2NzwJICZotRVjUeUTzA9oJfWsaOjUA/985mMEaW4adUynuX5ErcnlP78NnqAlcW10ueTt5wN8W87V4YbiuDf6wZlf94fGLTOROgbkvabJUMYSZ2zTxcPTo2HpcaoeU=
+X-Sasl-enc: gZkrJxSb2VrM1lq7SI2MsHFu+0wTGJO62YLgveCvU3WP 1304492103
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id BCE294003EC;
+	Wed,  4 May 2011 02:55:02 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <7vvcxrit07.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172720>
 
-On Wed, May 4, 2011 at 1:06 PM, Johannes Sixt <j.sixt@viscovery.net> wr=
-ote:
-> Am 5/4/2011 3:05, schrieb Nguyen Thai Ngoc Duy:
->> Maybe something like this instead of a implemantation fix?
->
-> Yes, but...
->
->> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.t=
-xt
->> index 8416f34..81e9d43 100644
->> --- a/Documentation/gitignore.txt
->> +++ b/Documentation/gitignore.txt
->> @@ -71,6 +71,8 @@ PATTERN FORMAT
->> =C2=A0 =C2=A0 matching file excluded by a previous pattern will beco=
-me
->> =C2=A0 =C2=A0 included again. =C2=A0If a negated pattern matches, th=
-is will
->> =C2=A0 =C2=A0 override lower precedence patterns sources.
->> + =C2=A0 If a directory is excluded by earlier patterns, negated
->> + =C2=A0 patterns that touch files inside the directory will be igno=
-red.
+Junio C Hamano venit, vidit, dixit 03.05.2011 19:38:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>>>> Helped-by: Jeff King <peff@peff.net>
+>>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>>
+>>> Looks good to me.
 >>
->> =C2=A0 - If the pattern ends with a slash, it is removed for the
->> =C2=A0 =C2=A0 purpose of the following description, but it would onl=
-y find
+>> I'm sorry but I don't like this at all, because:
 >>
->
-> ... as I already said here:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/170907/focus=3D=
-170916
->
-> I think that this is not quite the right place to mention this
-> restriction. See my proposal in the same post.
+>>> Doing "..." is still allowed, but will never produce any useful results.
+>>> I don't know if it is worth disallowing it to catch errors. I am tempted
+>>> to say it should be magic for "@{u}...HEAD", but I think just "..." is
+>>> getting unreadably magical. "@{u}...HEAD" is already pretty concise and
+>>> is much more readable.
+>>
+>> We need to disambiguate any pathspec with "--" which could be a revision
+>> parameter. Therefore I find it very unnatural to disambiguate ".." to a
+>> pathspec automatically (and have "..." error out). "../" is really
+>> simple enough to type.
+> 
+> If you are comfortable typing "../", why do you even care?  It would be a
 
-Thanks. I missed that post. NOTES is fine although I prefer BUGS (or
-LIMITATIONS). We may decide not to look for more .gitignore inside,
-but we should respect all patterns we have got. Can you please submit
-your changes in a patch?
---=20
-Duy
+I care about:
+
+- sane defaults
+- sane arguments
+
+> different story if the patch made ".." error out and forbade to be used as
+> an empty range even when you disambiguated, i.e. "git log .. --", but that
+> is not what we are doing.
+> 
+> And we do not even special case "...".  Between the two potential requests
+> of asking for an empty revision range and asking for a pathspec "...", both
+> are just as unlikely.
+> 
+> Contrast that with ".." and realize that is very different.  It is
+> infinitely more likely that the user meant the immediate parent directory
+> than an empty revision range.
+
+and that is a straw man argument. I suggested "@{u}..HEAD" for "..",
+because I consider that much more useful. "Infinitely more likely" is
+obviously true and obviously pointless when you compare with something
+of zero likelihood (and nonsense otherwise). I have no problem accepting
+a majority vote or sane arguments, but not something like this, sorry.
+
+Michael
