@@ -1,96 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v4 1/4] t5541-http-push: add test for chunked
-Date: Wed, 04 May 2011 04:51:22 -0700 (PDT)
-Message-ID: <m3wri6vg5h.fsf@localhost.localdomain>
-References: <1304437649-7052-1-git-send-email-rctay89@gmail.com>
-	<1304503896-5988-1-git-send-email-rctay89@gmail.com>
-	<1304503896-5988-2-git-send-email-rctay89@gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Wed, 4 May 2011 14:35:30 +0200
+Message-ID: <BANLkTinLCirA4XP9AOb9piGo9ucMsmrmkQ@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org> <7v62tjs66r.fsf@alter.siamese.dyndns.org>
+ <20110120203840.GA11468@sigill.intra.peff.net> <7vbp3bqmiy.fsf@alter.siamese.dyndns.org>
+ <20110120215456.GB11468@sigill.intra.peff.net> <AANLkTikBbSt5_WdbuE8a96w1pWBCYLNjMCUCBThjdLdG@mail.gmail.com>
+ <7vk4hyp38i.fsf@alter.siamese.dyndns.org> <AANLkTikmbWkpjioARZrmySpLM8t7kqCX0v1+NKibk_ar@mail.gmail.com>
+ <AANLkTinRcmevXz3zV0wtxd7+Q3F4zcH2AZOQk1XVxYXa@mail.gmail.com>
+ <BANLkTim1gW_L-9DKo9p_VFQFUBUGWAPxoA@mail.gmail.com> <BANLkTinKDHM-RU2wqZECFcjQEoRWADnTGQ@mail.gmail.com>
+ <BANLkTimFas5YLt37RLuCppkQ4ZGhmj56Cg@mail.gmail.com> <BANLkTinkR+jEKkno30fiHBZ-PMVvvv7FxQ@mail.gmail.com>
+ <BANLkTi=DgXrWZ0ObBYi2mgk-+8w8iXM7VQ@mail.gmail.com> <BANLkTimLnggco_+mQZ2_T_myAHsDD-=g1w@mail.gmail.com>
+ <BANLkTikxS-_9h4rBdbbJ2e-RkjMWyiC1Mg@mail.gmail.com> <BANLkTinqxy6jCJLNVPKmMW3CErbfN7Hm=g@mail.gmail.com>
+ <BANLkTinJvt=Nnt8YG-D1wpWKbBei+m+4XA@mail.gmail.com> <BANLkTinCSotWC-kbPDJc57NZM29hizYKpA@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Dan McGee <dpmcgee@gmail.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 13:51:31 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stephen Kelly <steveire@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 14:36:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHac6-00089J-4v
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 13:51:30 +0200
+	id 1QHbJ9-0003Sm-Hq
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 14:35:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996Ab1EDLvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2011 07:51:25 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40111 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753837Ab1EDLvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2011 07:51:24 -0400
-Received: by fxm17 with SMTP id 17so753497fxm.19
-        for <git@vger.kernel.org>; Wed, 04 May 2011 04:51:23 -0700 (PDT)
+	id S1753151Ab1EDMfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2011 08:35:51 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:35972 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752355Ab1EDMfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2011 08:35:50 -0400
+Received: by pxi16 with SMTP id 16so914534pxi.4
+        for <git@vger.kernel.org>; Wed, 04 May 2011 05:35:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=86bjI1Mxf9lTSD9YPd3KfGmust20zwrIdMWWYysH7Yw=;
-        b=L9Okq30b7ErJ3nzcO6yyBBrTwAbxHp+K8bPKhbNsPLt80EQXu0rUeuZDRi/+XxLgn9
-         EZvKTWf1vCtsnvfdbAae/eznBc0Ju3YP2HFhgm6MH2qOaUkJgwn5/BF/iXA0myXPHiNY
-         /VvPp7S46Zv//O7FM+wslfnfI2cCKcqpCRO3c=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=83l6eKEw5VyfdcC0JHADNINT2QZvsQpx8SBVLVEViBk=;
+        b=DRhUe89Zbjj96KlSlA0wwNn9c3TZgwvNi4w9JQV72wyaD8dx2XC32WyZSt3Vxl7h18
+         hRsDX+EhSIFZrzMiq9+inwUgwz6e54viD0FAirS6vRbjkstNGor51i9PMCh6F11avUoQ
+         L1qsD6WtHsv9a7wp0t94NpOXTo7nvb2BmQbAc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=S7/JZIq8RxfWp4hbxFKqN4h2yVW7w0qTzelyAkqoe8pNcFg9CzDaHlxfh4D/Uwv6iF
-         BcTnd+337J8QzM7uWtSh4NSWedXRDsf2nc2iFodGjKg04y1O1hBMidyeTO7xOQiL1jhS
-         VzfSBYcHERqa+D4Kxak9Mcen7s/kvXT7wloak=
-Received: by 10.223.24.213 with SMTP id w21mr1156864fab.113.1304509883559;
-        Wed, 04 May 2011 04:51:23 -0700 (PDT)
-Received: from localhost.localdomain (abvb15.neoplus.adsl.tpnet.pl [83.8.199.15])
-        by mx.google.com with ESMTPS id o17sm365018fal.1.2011.05.04.04.51.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 04 May 2011 04:51:22 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p44BofRp008961;
-	Wed, 4 May 2011 13:50:51 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p44BoISN008957;
-	Wed, 4 May 2011 13:50:18 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1304503896-5988-2-git-send-email-rctay89@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=NTst5+MnOQO3VZM+9Bpb2b/4oBrldge36AmeJWdQkLmCTgHw22rM7YDpcOvaArJWPt
+         /nMA2JGN5Q5ZNRvAXi83/aCv+5zEnsXv1FFI+6cr0E0pFhK9z2Uw6b+gp+bdak0e2gLz
+         7LGbGL4XD2q2DoxT1OyGO41RGFhYHwrBwZgR4=
+Received: by 10.68.46.165 with SMTP id w5mr460509pbm.516.1304512550144; Wed,
+ 04 May 2011 05:35:50 -0700 (PDT)
+Received: by 10.68.66.98 with HTTP; Wed, 4 May 2011 05:35:30 -0700 (PDT)
+In-Reply-To: <BANLkTinCSotWC-kbPDJc57NZM29hizYKpA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172740>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+On Tue, May 3, 2011 at 7:54 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Mon, May 2, 2011 at 10:43 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>> On Mon, May 2, 2011 at 9:26 PM, Stephen Kelly <steveire@gmail.com> wrote:
+>>> Ok, if you can't see in the code why a branch called HEAD might
+>>> corrupt the remote and I can't demonstrate it with a testcase, maybe
+>>> it's not an issue anymore, I don't know.
+>>
+>> No, it's still an issue, and I believe I pin-pointed it in my first
+>> mail. You can try out the patch I sent, and see if that helps in your
+>> case. If it does, I think it'd make sense to do something (preferably
+>> a bit more robust) with it.
+>
+> Yes, I think your patch should be applied regardless, as that solves
+> _one_ issue.
 
-> +test_expect_success 'push (chunked)' '
-> +	git checkout master &&
-> +	test_commit commit path3 &&
-> +	HEAD=$(git rev-parse --verify HEAD) &&
-> +	git config http.postbuffer 4 &&
-> +	git push -v -v origin $BRANCH 2>err &&
-> +	grep "POST git-receive-pack (chunked)" err &&
-> +	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git &&
-> +	 test $HEAD = $(git rev-parse --verify HEAD)) &&
-> +	git config --unset http.postbuffer
-> +'
+OK, I'll send out an RFC with some discussion on the alternatives a bit later.
 
-It is a very minor issue, a nitpick really; but wouldn't it be better
-to use
+> But there are other issues.
 
-  +	git config http.postbuffer 4 &&
-  +	test_when_finished "git config --unset http.postbuffer" &&  
-
-This way you would have `http.postBuffer` unset even if any of
-intermediate commands fail, preparing clean state for next test.
-Though in this case that doesn't matter, as it is the very last test.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I guess the root of the problem(s) is that there's no way to
+disambiguate 'HEAD'. One solution could be to say that 'HEAD' never is
+ambiguous, but it feels a little inconsistent... Thoughts, anyone?
