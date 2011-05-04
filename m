@@ -1,73 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] require-work-tree wants more than what its name says
-Date: Wed, 4 May 2011 03:38:50 -0400
-Message-ID: <20110504073850.GA8512@sigill.intra.peff.net>
-References: <7vhb9bgy0a.fsf@alter.siamese.dyndns.org>
+From: Gergely Buday <gbuday@gmail.com>
+Subject: removing a commit from a branch
+Date: Wed, 4 May 2011 10:35:08 +0200
+Message-ID: <BANLkTimtpvVRU=1iCbrteyHixaWGuVKDjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 04 09:38:59 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 10:35:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHWfj-0007S6-3l
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 09:38:59 +0200
+	id 1QHXYF-0002Qa-Rq
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 10:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156Ab1EDHiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2011 03:38:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33599
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751008Ab1EDHix (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2011 03:38:53 -0400
-Received: (qmail 15875 invoked by uid 107); 4 May 2011 07:40:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 May 2011 03:40:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 May 2011 03:38:50 -0400
-Content-Disposition: inline
-In-Reply-To: <7vhb9bgy0a.fsf@alter.siamese.dyndns.org>
+	id S1751934Ab1EDIfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2011 04:35:12 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41497 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751746Ab1EDIfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2011 04:35:09 -0400
+Received: by pwi15 with SMTP id 15so419979pwi.19
+        for <git@vger.kernel.org>; Wed, 04 May 2011 01:35:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=yXpTECUBeaN72+/RhmKvy2L3A59EEzdbK1p+aYJcmQw=;
+        b=nmXh07a2jSaa6U0YFezTuNSXErqvuslDkuKnh4KCjW40W+0G0bChSeeYsR1uXGB/Y+
+         VeaWnop7Gtdu7ZRjP8MOOpNIOPO8uUe/d0lacejsfewwVweCGOAZp0gBvxJ5FMpk+zZp
+         8p3cctqdG9f6svT5heUjNay50DRd/pn1P7tgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=fhI9G4/bX3zHA1QX1w3eeGwzbQ5G3tT+8VIsYCUoqEbBGtCdhQPBsRbPReImbE4EgS
+         Q54KLDw4Ng5TOwLyhybemwFatxCrfwim2YjPo7dBu1tk2U+FHri7CVNE94CWroTMUO3S
+         EeqCXbnTvFerR8uMP7FBzoXezTxad8F4PB5mQ=
+Received: by 10.142.214.16 with SMTP id m16mr456862wfg.218.1304498108988; Wed,
+ 04 May 2011 01:35:08 -0700 (PDT)
+Received: by 10.142.128.16 with HTTP; Wed, 4 May 2011 01:35:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172723>
 
-On Tue, May 03, 2011 at 04:33:41PM -0700, Junio C Hamano wrote:
+Hi there,
 
-> But the implementation of require_work_tree we have today is quite
-> different.  I don't have energy to dig the history, but currently it says:
-> 
->  	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
->  	die "fatal: $0 cannot be used without a working tree."
-> 
-> Which is completely bogus.  Even though we may happen to be just outside
-> of it right now, we may have a working tree that we can cd_to_toplevel
-> back to.
+I have a problematic commit in a series of commits on a branch. It
+contains adding a large binary file, which I would like to avoid to
+push to our main repository. How can I remove that from the series of
+commits? A command-line solution, please, if possible.
 
-Yeah, I ran into this just recently when converting merge-one-file to
-use git-sh-setup. I was surprised that require_work_tree also required
-one to be inside it. My solution was to call cd_to_toplevel first, as
-you noted.
+Cheers
 
-> I think the right solution would be to apply the attached patch; and then
-> audit all the callers that call "require_work_tree" to see if any of them
-> meant "No, it is not Ok just to have working tree somewhere! I want you to
-> be IN that working tree when you call me", and convert them to call the
-> new require_to_be_in_work_tree instead.
-
-Your proposed semantics for require_work_tree make much more sense to
-me, but I worry about compatibility. We can audit our in-tree scripts,
-but git-sh-setup is part of the recommended API for external scripts,
-no? This change might break those scripts, so we would need to do the
-usual deprecation thing. I'm also concerned that the breakage might be
-pretty severe. As in, not just "script doesn't work" but "script
-silently produces incorrect results" or "script deletes data".
-
-For example, the merge-one-file bug I fixed recently was silently
-producing bogus merges because of a confusion over whether it was in the
-workdir. Something like "git clean" would be even worse.
-
--Peff
+- Gergely
