@@ -1,68 +1,66 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [Tagging Commits] feedback / discussion request
-Date: Wed, 04 May 2011 11:21:19 +0200
-Message-ID: <4DC11A8F.5020408@drmicha.warpmail.net>
-References: <BANLkTik5-Ygh0YwN=j+ibLhP6==ots_MXQ@mail.gmail.com> <BANLkTimTmkufMnY5dJtDD6BWxs=vsDTygA@mail.gmail.com>
+From: richard parkins <p1rpp@yahoo.co.uk>
+Subject: cannot pread pack
+Date: Wed, 4 May 2011 10:31:25 +0100 (BST)
+Message-ID: <60260.35977.qm@web27605.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Richard Peterson <richard@rcpeterson.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 11:21:50 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 11:38:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHYGu-0001zE-Sd
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 11:21:29 +0200
+	id 1QHYXN-0002Wq-FN
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 11:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752223Ab1EDJVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2011 05:21:23 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:42126 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751699Ab1EDJVW (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 May 2011 05:21:22 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 4AD04205B7;
-	Wed,  4 May 2011 05:21:22 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Wed, 04 May 2011 05:21:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=lV1o9E5+/RTQo2Kir0KzGWjGPJ0=; b=pDwaoABGbxidkRHIL65yWeryciCjqWsWetHVAQZAQA2TEggUJsvwwzH6UbeFf9AhQx6QkB3aL7OeBS1vU5vSZegEZOnrR3OeNqgRTCZysDBvvJ3xCaNFVkGOMBv4m+Ko5RwXAtDLDmzsalSYNdcfIE5sL8s6a+qNAFPbzsFGwiQ=
-X-Sasl-enc: nEmYp7JtLpIqnuZwbyy3r/65FXLbezM1M4BTe619Loh/ 1304500882
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A9D53407F0C;
-	Wed,  4 May 2011 05:21:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <BANLkTimTmkufMnY5dJtDD6BWxs=vsDTygA@mail.gmail.com>
+	id S1751967Ab1EDJiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2011 05:38:24 -0400
+Received: from nm7-vm0.bullet.mail.ukl.yahoo.com ([217.146.183.236]:34148 "HELO
+	nm7-vm0.bullet.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751597Ab1EDJiX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 May 2011 05:38:23 -0400
+X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 May 2011 05:38:22 EDT
+Received: from [217.146.183.184] by nm7.bullet.mail.ukl.yahoo.com with NNFMP; 04 May 2011 09:31:26 -0000
+Received: from [217.146.183.63] by tm15.bullet.mail.ukl.yahoo.com with NNFMP; 04 May 2011 09:31:26 -0000
+Received: from [127.0.0.1] by omp1032.mail.ukl.yahoo.com with NNFMP; 04 May 2011 09:31:26 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 239753.30543.bm@omp1032.mail.ukl.yahoo.com
+Received: (qmail 36255 invoked by uid 60001); 4 May 2011 09:31:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s1024; t=1304501486; bh=7HMvxoium/3NBoPvG8ju8fsDidxm2Grg+gFZrjDmN9g=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=qiZMdR0CJmnT4RQmLtnAKA0Jng37h29UfUFnIyXFI1gdrd78wXrj2GeKOveMUefi2if/iTsKQhF61yfdDYnGe34UuvTg4JqUInj6IOVkB4S2tVeIbD0zvc6MF3HEL477j/6MfX4xwHVZd/zFeIzbKVTfl9ic2nXxTz1QGVYRSfQ=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.co.uk;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=23ODPH/aZ8RgjgqhBn9zaQdqOTT4Ji+tD8U95sTxsnQraOF/zyeluHekzfJd5tEA4dBPRqpOpwHdlmGWZfrihOQFIZ/uzbt+P+Z4dGCErePnjig6zo9ScS3byb8KE8smsda38VKTfn/rqoEFdFomnMp/vJ7EEbatc/P2DPGNFTE=;
+X-YMail-OSG: sfNYpCgVM1mOTCSVirGlsKpeGIZDpaodBZGDKAw5SWIWn8M
+ 97jaWT5BxECqk7cYN7X3FGfKS3oIGoek7XsBXiAhyed5BJ0IdqwqR1vYz67z
+ LD1WgwtPzJ1VwyaRoBzX7hx1oRkmTTfxGW_ebrvHplmnDBXVZrJD7CyX.bxQ
+ jVnfxPQ9XWnXU87RGZgXJR_i7.agrmBHjhaW5KZlxb_VS4w67sk207J1Al.M
+ huAedmg7ZKAes7pDGJJcgQHJPUyPqf9ybtkaXv3kTBPbzGR1pFZzqoLm700C
+ Nec79Er.U8gkHah1xP9v2IUpvM.L4dRV9.m6FzN4InufayD9TgGEZWx6I_SW
+ aPCgivvnnMsXIhDVwLBUOc2vB6ZtLig--
+Received: from [87.194.171.89] by web27605.mail.ukl.yahoo.com via HTTP; Wed, 04 May 2011 10:31:25 BST
+X-Mailer: YahooMailClassic/12.0.2 YahooMailWebService/0.8.110.299900
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172731>
 
-Sverre Rabbelier venit, vidit, dixit 04.05.2011 01:49:
-> Heya,
-> 
-> On Wed, May 4, 2011 at 01:36, Richard Peterson <richard@rcpeterson.com> wrote:
->> Thank you, and please give feedback. I'm no git pro - just a guy with an
->> idea. Based on your feedback, Eric and I will steer our implementation.
-> 
-> Have you looked at git notes? They seem relevant. You could use them
-> to sign commits after the fact, and by multiple people, etc.
-> 
+I'm trying to do a git pull (with no arguments) from the remote repository from which my local repository was originally cloned. I get
 
-Exactly. Sign and store sig in refs/notes/sigs:
+remote: Counting objects: 1272, done.
+remote: Compressing objects: 100% (897/897), done.
+remote: Total 1127 (delta 588), reused 404 (delta 218)
+Receiving objects: 100% (1127/1127), 1.18 MiB | 45 KiB/s, done.
+fatal: cannot pread pack file: No such file or directory
+fatal: index-pack failed
 
-git rev-parse <commit> | gpg -sa | git notes --ref=sigs append -F- <commit>
+Does anyone know what causes this and how to recover from it if that is possible? Deleting my local repository and re-cloning makes the problem go away for a few months and several pulls and commits, but eventually it reappears and once reappeared is reproducible. Other users of the same remote repository don't see this problem.
 
-Verify:
+I'm running under SUSE 11.1 Linux 2.6.27.39-0.2-default #1 SMP 2009-11-23 12:57:38 +0100 x86_64 x86_64 x86_64 GNU/Linux using git version 1.6.0.2, which is the latest built release for SUSE 11.1.
 
-git notes --ref=sigs show <commit> | gpg
+I have a copy of the local repository, but the remote repository  will probably have changed by the time anyone responds to this.
 
-You can sign any object (blob, tree...) that way, of course.
-
-Everything else (meaning of this sig, just like the meaning of a signed
-tag or a s-o-b line) is a matter of project policy.
-
-Michael
+Richard Parkins
