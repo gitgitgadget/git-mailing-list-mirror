@@ -1,123 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Add default merge options for all branches
-Date: Wed, 04 May 2011 14:35:35 -0700
-Message-ID: <7vei4edu8o.fsf@alter.siamese.dyndns.org>
-References: <20110503090351.GA27862@elie> <4DC0608F.9040208@dailyvoid.com>
- <20110503204442.GI1019@elie> <7vsjsvgzzf.fsf@alter.siamese.dyndns.org>
- <7vzkn3f5wo.fsf@alter.siamese.dyndns.org> <4DC0D605.20204@dailyvoid.com>
- <20110504045802.GF8187@elie> <4DC1A1BC.5010601@dailyvoid.com>
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH V2 1/5] Documentation: Add --line-number to git-grep synopsis
+Date: Thu,  5 May 2011 00:00:17 +0200
+Message-ID: <1304546421-25439-2-git-send-email-michal.kiedrowicz@gmail.com>
+References: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	vmiklos@frugalware.org
-To: Michael Grubb <devel@dailyvoid.com>
-X-From: git-owner@vger.kernel.org Wed May 04 23:35:58 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 05 00:01:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHjjg-0006qi-3V
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 23:35:56 +0200
+	id 1QHk88-0002Rp-8f
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 00:01:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753458Ab1EDVfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2011 17:35:51 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33177 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753169Ab1EDVfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2011 17:35:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 07B48483B;
-	Wed,  4 May 2011 17:37:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ecVN3h10/FlbG1HkP2jq76+nr2A=; b=vfeYMG
-	DiwW3PK7oWlGyS+yVBdMQnKILrrHBYpr3GhTZxNqIKA7Hin4HyFb7bW61WjOYom6
-	ZWDM+w1eBb5nvw/es563LK74Dv0qJQTWW9iI81rmDuN1UZg5iO4UtdkYPljPoWCe
-	UJEjjC0+pbVQEPoOUgCehGzz4V26X401KqQd4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tD9oQon8EsvXedqzik2tmjfk2uQMuAWv
-	8RbjmG45naCHbfo3+4tKhKoRGliR8Pgdx5NBVGgXG6j4YAQ5Yq2vB6PvMaFRb5++
-	iAktPxncNVmcWNt831zG3ATG7M66HqoRw3V8U0N1KZwUD7UGiwS5F9ivb40buk0I
-	QrGAq+yLvgc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B97914836;
-	Wed,  4 May 2011 17:37:46 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4FB064822; Wed,  4 May 2011
- 17:37:41 -0400 (EDT)
-In-Reply-To: <4DC1A1BC.5010601@dailyvoid.com> (Michael Grubb's message of
- "Wed, 04 May 2011 13:58:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C06F4B04-7696-11E0-B322-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1754150Ab1EDWBH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2011 18:01:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33565 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752876Ab1EDWBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2011 18:01:05 -0400
+Received: by wwa36 with SMTP id 36so1707354wwa.1
+        for <git@vger.kernel.org>; Wed, 04 May 2011 15:01:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=GNLTwVriVEoBfxBvekMTaj2jsarQVk4P1xoF3g2VJPA=;
+        b=CpLmL/Oewn0PY0faaXQtH6/5XfvgmTA80zr0GQ6UveBUEYvxd9upiqOZTbamvT/B9V
+         0toCWpDvhGq2hrHi8Q73SajAbYQIpx7f/RaRRk13HOrOHkmtwHuZkXd9wJInOatioIfX
+         Wk8CHcxW9yS4C0c4O4tsGd0SdjeqW9lni3SlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=jddPblNTVvNlAjTgQHqTTiQOuOOnBko3LeopM/Ks6xJUOXTV4NGYip1C+MGjvJGpfY
+         ZVIIgztNmUwM8NiPXuhvrADbd9hjFRZMKdzI3mSSjU0GHtYsrWDv8AJL/Le8Gm8LnYV0
+         4jRixLK9Aj7/wxNbC52O67Hw5I6EvN30XBSqs=
+Received: by 10.216.237.138 with SMTP id y10mr6027343weq.30.1304546463997;
+        Wed, 04 May 2011 15:01:03 -0700 (PDT)
+Received: from localhost (85-177-78-94.net.stream.pl [94.78.177.85])
+        by mx.google.com with ESMTPS id x13sm490345wby.42.2011.05.04.15.01.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 04 May 2011 15:01:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172773>
 
-Michael Grubb <devel@dailyvoid.com> writes:
+Commit 7d6cb10b ("grep: Add the option '--line-number'", 2011-03-28)
+introduced the --line-number option and added its description to OPTION=
+S
+section, but forgot to update SYNOPSIS.
 
-> Well, it certainly serves *my* immediate needs and addresses the
-> specific use case that I was originally working on.  Though I think that
-> what we've come up with would benefit the codebase in general if for no
-> other reason than it lays some ground work for future features...
+Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+---
+ Documentation/git-grep.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-The discussion was fruitful, I think, and it may have laid the groundwork
-at the _conceptual level_.  I however do not think that the approach the
-patch takes is generic enough, even if we add globbing of the branch name,
-to build on other things that can come out of the future directions the
-discussion suggested.
-
-For example, why does "merge.c" hold the parser for "branch.*.*", when
-there are a lot more configuration variables that apply per branch that
-are totally unrelated to merge?  Don't these branch.*.* variables benefit
-from having a wildcard support as well?  If we wanted to add such support,
-which configuration parser should be called by many pgorams that deal with
-branches (e.g. "checkout -b", "branch", "fetch", ...), and where that
-parser should be defined in?  I suspect the answer might be "branch.c",
-but I do not htink we explored the uses widely enough to make that
-decision yet.
-
-Even if I limit the discussion to "mergeoptions" [*1*], why can I specify
-the merge options based on what branch I am currently on, but not based on
-what branch I am merging to my current branch?  When on master branch,
-should branch.*.mo augument what I have in branch.master.mo, or should it
-overwrite it?  I may want to say "all my merges should use --log" and
-"when on master I want --no-ff". Should branch.master.mo repeat "--log",
-or should the values on the two variables automatically combine? If so in
-what order? Am I allowed to say "Use 5 lines of --log" for generic one,
-and then "Use 10 more lines of --log than generic" for branch.master.mo,
-so that later I can easily change my mind and update branch.*.mo to use 10
-lines, and I get automatically 20 lines for the master branch?  If not why
-not?
-
-etc.etc.etc....
-
-I am not saying some of these issues are unsolvable, nor we should solve
-all these problems right now, but I do not think these issues are
-something you are trying to solve with this patch, nor the approach this
-patch happens to use was designed with these problems in mind (I certainly
-didn't, when I made many suggestions I see in this round of your patch) to
-become a foundation to solve them in the future.
-
-The suggestion by Jonathan does not have such a design issue that requires
-us to open a huge can of worms right now and potentially result in a
-solution that is overengineered to address a wrong problem [*2*].
-
-If it solves the original issue without such downsides, that would be more
-preferrable, I think; no?
-
-[Footnote]
-
-*1* I personally think "branch.<name>.mergeoptions" was a mistake.  If it
-were separate "branch.<name>.merge-ff", "branch.<name>.merge-log", ... it
-might have been more clear what the combining semantics should be.  But
-that is not going to change, so I'd rather not to extend the support for
-it, until we come up with something more sensible.
-
-*2* For example, globbing to match the current branch name could become an
-overengineered solution to a wrong problem, if it turns out that it is not
-useful to decide things based solely on the current branch name.
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index d7523b3..4a58378 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git grep' [-a | --text] [-I] [-i | --ignore-case] [-w | --word-regexp=
+]
+ 	   [-v | --invert-match] [-h|-H] [--full-name]
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+-	   [-F | --fixed-strings] [-n]
++	   [-F | --fixed-strings] [-n | --line-number]
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+--=20
+1.7.3.4
