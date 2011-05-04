@@ -1,82 +1,65 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH RFC] Test for apparent regression of merging renamed files
-Date: Tue, 3 May 2011 20:18:40 -0600
-Message-ID: <BANLkTi=HR7CG0agR=cVMP3m6T-Y8dHP+4A@mail.gmail.com>
-References: <BANLkTimcRbuYzSp+MM-vsvxoWhAS8Jvo8Q@mail.gmail.com>
-	<BANLkTin6u8e4-x99JgN-D7FFJbO7pXVp-Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/4] t5541-http-push: add test for chunked
+Date: Tue, 03 May 2011 21:07:38 -0700
+Message-ID: <7v8vunglbp.fsf@alter.siamese.dyndns.org>
+References: <1304437649-7052-1-git-send-email-rctay89@gmail.com>
+ <1304437649-7052-2-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ciaran <ciaranj@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 04:18:53 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Dan McGee <dpmcgee@gmail.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 06:08:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHRfv-0003jr-P9
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 04:18:52 +0200
+	id 1QHTNi-0004Qa-TX
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 06:08:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754638Ab1EDCSq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2011 22:18:46 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60984 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754593Ab1EDCSl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2011 22:18:41 -0400
-Received: by fxm17 with SMTP id 17so513406fxm.19
-        for <git@vger.kernel.org>; Tue, 03 May 2011 19:18:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xW+euBfvXG+VcQuw5DPGRvqQiXtgJa/KfQlsOg2eihs=;
-        b=gLEl9Rl7sWQf9a2SS8/rW4TQF1ejMcvmyCBT4cI/Sceycgm7+z16skPhryz96j86vB
-         oEfKJ9TSNOFUffqEa0Do8SiCXeYCrhxAkr0giG/7nafA3HxIGVHQTq19a05FF8EYaXbD
-         /KMQpZg5wUb8lAtfWq/p/KSGTODb60y4o9Hds=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=g/gDq8ROavNUZJyOt0fOM4pr5ny/9/EFUawCRliB+4Xj2j6mU52WUuashEditTs0aZ
-         hxkRcMxENxcCmGLg2JoXUzR//ym98OFu8h/cMIvRMlSAhQxtiEKgSQhZDd7zBAde2LAm
-         MylSpo2EBE+ik/MYTEirpaDpoLMOoXkpzTN04=
-Received: by 10.223.1.84 with SMTP id 20mr610227fae.55.1304475520700; Tue, 03
- May 2011 19:18:40 -0700 (PDT)
-Received: by 10.223.26.11 with HTTP; Tue, 3 May 2011 19:18:40 -0700 (PDT)
-In-Reply-To: <BANLkTin6u8e4-x99JgN-D7FFJbO7pXVp-Q@mail.gmail.com>
+	id S1750788Ab1EDEHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2011 00:07:52 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63599 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774Ab1EDEHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2011 00:07:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 80AB55B0F;
+	Wed,  4 May 2011 00:09:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JsImccXtA5kFvYBdH3akPKnifgM=; b=cqgsDj
+	kwCdUOXcl3Cx2j34wxfQmwrRTVQFAiOMK6EGjYHxe9M9yy2j3ghorNsjQvdfdRqf
+	DB+1UJfWNQrW2TJO/xlPU0hxhFpc0fat1q9Tilr+EmU95zsE6MxSDBWu8kAWQkXx
+	s4ZjPYxWNaP9HlrS1ckjTDgWiici+nhewy6FE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oMgsWR2LY/lHJYm363nq1oi3fRaduB4y
+	LUPupCMcsgR7jshTGDTna5NtCJy9zz40MGzqHTirCSh4nA9hlk1w1sgcklwEsvut
+	BXSM37+7G6lHPlOvoRPL1wmcqcpJxcgVDUM2o8O5iyHiQq8g0WpYrNElfKwK99O+
+	vj9nXmk0X0s=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 396F25B0E;
+	Wed,  4 May 2011 00:09:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E4A1B5B0D; Wed,  4 May 2011
+ 00:09:43 -0400 (EDT)
+In-Reply-To: <1304437649-7052-2-git-send-email-rctay89@gmail.com> (Tay Ray
+ Chuan's message of "Tue, 3 May 2011 23:47:26 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5A801F54-7604-11E0-8A21-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172710>
 
-Hi,
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-On Tue, May 3, 2011 at 1:15 PM, Ciaran <ciaranj@gmail.com> wrote:
-> On Mon, May 2, 2011 at 8:04 PM, Ciaran <ciaranj@gmail.com> wrote:
->> Provides a test to cover a case that appears to have been regressed =
-out by:
->>
->> =C2=A0b2c8c0a762745768e8fb249949801c1aed8f7c1d
->>
->> At this point no tags contain the above commit, but 'master' does. =C2=
-=A0I'm unsure
->> what is causing the issue, but can see discussion about this fix her=
-e:
->>
->> http://git.661346.n2.nabble.com/BUG-merge-recursive-triggered-quot-B=
-UG-quot-td6179353.html
->>
->> Providing a patch to demonstrate the issue and spark discussion.
-=2E...
-> The original behaviour (successful merge) seems 'better' than the
-> current behaviour 'failed merge, 'erroneous' both modified flag' ...
-> am I mis-reading this, is this a new non-supported edge case ?
+> +	GIT_REPO=$TEST_DIRECTORY/../.git &&
+> +	test -d $GIT_REPO &&
 
-Thanks for the testcase.  This is clearly a bug; and a rather easy one
-to trigger at that.  I'll have to take a look, though I suspect it's
-time to fix the deeper issues Junio pointed out previously...
-
-Elijah
+Shouldn't a test be runnable without failing in a tarball extract?
