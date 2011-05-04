@@ -1,121 +1,90 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: How to fork a file (git cp ?)
-Date: Wed, 4 May 2011 22:36:39 +0200
-Message-ID: <BANLkTinEb5BmR_Ls8YtGxyqGSVVBcnG32A@mail.gmail.com>
-References: <4DC1934D.6070608@aldan.algebra.com>
-	<4DC19955.7040503@kdbg.org>
-	<4DC1A64C.4090508@aldan.algebra.com>
+Date: Wed, 04 May 2011 14:02:44 -0700
+Message-ID: <7viptqdvrf.fsf@alter.siamese.dyndns.org>
+References: <4DC1934D.6070608@aldan.algebra.com> <4DC19955.7040503@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: "Mikhail T." <mi+thun@aldan.algebra.com>
-X-From: git-owner@vger.kernel.org Wed May 04 22:36:45 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "Mikhail T." <mi+thun@aldan.algebra.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed May 04 23:03:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHioP-0000Nh-9Z
-	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 22:36:45 +0200
+	id 1QHjDs-0006Y7-6a
+	for gcvg-git-2@lo.gmane.org; Wed, 04 May 2011 23:03:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753142Ab1EDUgk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2011 16:36:40 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:60481 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752719Ab1EDUgj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 May 2011 16:36:39 -0400
-Received: by pzk9 with SMTP id 9so662367pzk.19
-        for <git@vger.kernel.org>; Wed, 04 May 2011 13:36:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dmdnPkdCd1q8IdRp+P0BeCGLOZFaPe2sJXeY1vAhIeA=;
-        b=XX0jGRjnJqO6QSWMF1T5geZB50++ztRHoxK9nSurRuUCnIM7TSSyJcOpzrxPSsLY4x
-         +EJ7bZcivAVa5DC1+2YklYEk2DbQm+Y1qyY+CJkE6nw1iyOj6ROTTD920srA6M5wpgpo
-         cjU09fHbIXGrvlABFQK+yCPcWxzBb+dByjoO0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=H0PC8Ba50QGKpddz+0LY83Akk14ooq31fVlPcESqaJnXd1VUlICTmjeL4OMsiVFn/k
-         jzRxI/J+oySeSojqYb9AT96ae4I8kA/TlCQr/wKzOYW1mmafyJNSPf+HzxKYXCL7wr7Z
-         gn/IcuhQTSxoe07N+UCqqSqWuDztXK/ssAzk4=
-Received: by 10.142.1.17 with SMTP id 17mr818579wfa.88.1304541399215; Wed, 04
- May 2011 13:36:39 -0700 (PDT)
-Received: by 10.142.192.8 with HTTP; Wed, 4 May 2011 13:36:39 -0700 (PDT)
-In-Reply-To: <4DC1A64C.4090508@aldan.algebra.com>
-X-Google-Sender-Auth: lS9MV9s5R3Un63mZrN95RZjuPGw
+	id S1755839Ab1EDVC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2011 17:02:58 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35563 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753905Ab1EDVC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2011 17:02:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5579643F0;
+	Wed,  4 May 2011 17:04:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bjkwCqHYIhH0GP0F/FasY7qL9ME=; b=bxBmud
+	SOQTVbURXg/EQwikTED0dGb7bjC15Qkhj+fJrvg56umzD2iJ8wmKrkRyu/wgjdTq
+	K+cK5Y4KqadfQhftk1qsoYpNsNp7VVFnmUdy18xYcHI1e/FJtlnbSPOpyAaIJO6i
+	HXDgV8+zscEt8OOEPLLNlZeic5ln9ebgJHnz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=imsv8PSwOSTeU5y1qER/MzomDB37Nr0h
+	7FGBzyxl1nCMIeazq6EbU96KVBqWB2+cZu7uQlYv6Rx8Or+t/Q2xXtAf/FP9WCym
+	ANN7tgnLA8Pe635el7btB1/J+/cFY8cjiKVvEIRLgZCKBLYruOaVHABc9u92QtOZ
+	bJ5bXglLmVE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 236D043EF;
+	Wed,  4 May 2011 17:04:55 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EF93343EE; Wed,  4 May 2011
+ 17:04:50 -0400 (EDT)
+In-Reply-To: <4DC19955.7040503@kdbg.org> (Johannes Sixt's message of "Wed, 04
+ May 2011 20:22:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2942B45E-7692-11E0-95B1-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172768>
 
-On 4 May 2011 21:17, Mikhail T. <mi+thun@aldan.algebra.com> wrote:
-> On 04.05.2011 14:22, Johannes Sixt wrote:
-> >
-> > You just cp the file and git add it. But you will not be able to
-> > follow a history of the file.
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> Am 04.05.2011 19:56, schrieb Mikhail T.:
+>> I need to add a new thing to our project. The thing will be similar to
+>> what already exists. I'd like to "derive" the new files from the
+>> existing ones -- without altering them and by preserving the
+>> change-history.
 >
-> Thank you for the information...
->
-> So, is this something worth adding to the wishlist, or was it omitted
-> on purpose (and which purpose was that, then)?
+> You cannot. Git does not have such a thing as "copy-with-preserved-history".
 
-Oh yes, that was intentional. This is easily one of the most debated
-"features" of Git, especially in the early days of Git when almost all
-SCM systems did it "the CVS way", by tracking the history of single
-files. Instead, Git tracks snapshots of the whole tree and focuses on
-the whole content instead of single files. Renames are tracked by
-detecting removal/adding of files, which can be detected later, for
-example using "git log --follow". The reason for this is mostly speed
-issues, and most of the time the history of a single file is not
-interesting in a project, but changes in the file tree as a whole.
+Well, if you come from the mindset that a "file" has an identity (hence
+there is a distinction between "This file used to be called A and at one
+point was renamed to B which is the name we see today" and "Some time ago
+somebody created a file B with the same contents as A and then removed A
+at the same time"), "copy" would not make much sense.  What identity does
+a new file B gets when you create it by copying from A?
 
-=46rom the FAQ at <https://git.wiki.kernel.org/index.php/GitFaq>:
+The same identity, or a different one?  What happens when you later
+refactor the redundant part from these two files to create a common third
+file C?  What identity does C have?
 
-  Git has to interoperate with a lot of different workflows, for exampl=
-e
-  some changes can come from patches, where rename information may not
-  be available. Relying on explicit rename tracking makes it impossible
-  to merge two trees that have done exactly the same thing, except one
-  did it as a patch (create/delete) and one did it using some other
-  heuristic.
+> You just cp the file and git add it. But you will not be able to follow
+> a history of the file.
 
-  On a second note, tracking renames is really just a special case of
-  tracking how content moves in the tree. In some cases, you may instea=
-d
-  be interested in querying when a function was added or moved to a
-  different file. By only relying on the ability to recreate this
-  information when needed, Git aims to provide a more flexible way to
-  track how your tree is changing.
+Correct.  You cannot follow a history of _the file_, as there is no such
+thing.
 
-  However, this does not mean that Git has no support for renames. The
-  diff machinery in Git has support for automatically detecting renames=
-,
-  this is turned on by the '-M' switch to the git-diff-* family of
-  commands. The rename detection machinery is used by git-log(1) and
-  git-whatchanged(1), so for example, 'git log -M' will give the commit
-  history with rename information. Git also supports a limited form of
-  merging across renames. The two tools for assigning blame,
-  git-blame(1) and git-annotate(1) both use the automatic rename
-  detection code to track renames.
+You can still follow the history of contents, though.  If you did a
+refactor like the one in the above example, "blame -L <range>" would
+follow the contents just fine.  The command is a 80% satisfactory
+implementation of Linus's grand vision expressed in one of the most
+important message in the git mailing list archive:
 
-  As a very special case, 'git log' version 1.5.3 and later has
-  '--follow' option that allows you to follow renames when given a
-  single path.
-
-  Git has a rename command git mv, but that is just for convenience. Th=
-e
-  effect is indistinguishable from removing the file and adding another
-  with different name and the same content.
-
-This mail from Linus explains the issue in more detail and colour:
-<http://permalink.gmane.org/gmane.comp.version-control.git/217>.
-
-Regards,
-=C3=98yvind
+    http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
