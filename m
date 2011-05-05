@@ -1,140 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: t5541: Bad file descriptor
-Date: Thu, 5 May 2011 02:18:45 -0400
-Message-ID: <20110505061845.GC29033@sigill.intra.peff.net>
-References: <3340686A-18D8-4279-87F0-580262DD4DFA@gernhardtsoftware.com>
- <7voc3hbtgu.fsf@alter.siamese.dyndns.org>
- <20110505054611.GA29033@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH V2 4/5] git-grep: Learn PCRE
+Date: Thu, 05 May 2011 08:19:58 +0200
+Message-ID: <4DC2418E.4070006@viscovery.net>
+References: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com> <1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 08:18:54 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+To: =?UTF-8?B?TWljaGHFgiBLaWVkcm93aWN6?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 08:20:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHrtl-0000pE-HA
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 08:18:53 +0200
+	id 1QHruy-0001GW-7e
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 08:20:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751623Ab1EEGSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 02:18:48 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47658
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751550Ab1EEGSr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 02:18:47 -0400
-Received: (qmail 27702 invoked by uid 107); 5 May 2011 06:20:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 02:20:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 02:18:45 -0400
-Content-Disposition: inline
-In-Reply-To: <20110505054611.GA29033@sigill.intra.peff.net>
+	id S1751613Ab1EEGUA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 02:20:00 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:50491 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751384Ab1EEGUA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 02:20:00 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QHrup-00018u-5N; Thu, 05 May 2011 08:19:59 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id DDB2C1660F;
+	Thu,  5 May 2011 08:19:58 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172803>
 
-[argh, resend, I meant to cc Johannes Sixt]
+Am 5/5/2011 0:00, schrieb Micha=C5=82 Kiedrowicz:
+> +# Define NO_LIBPCRE if you do not have libpcre installed.  git-grep =
+cannot use
+> +# Perl-compatible regexes.
 
-On Thu, May 05, 2011 at 01:46:11AM -0400, Jeff King wrote:
+=46or what purpose are you adding Perl-regex when git-grep cannot use t=
+hem?
 
-> On Wed, May 04, 2011 at 10:35:13PM -0700, Junio C Hamano wrote:
-> 
-> > Brian Gernhardt <brian@gernhardtsoftware.com> writes:
-> > 
-> > > I haven't had a lot of time to track down it down until today, but I've
-> > > been getting failures in t5541-http-push-.sh.  Several tests fail with
-> > > the error "fatal: write error: Bad file descriptor".
-> > 
-> > A wild guess.
-> > 
-> > Does it help if you cherry-picked 1e41827 (http: clear POSTFIELDS when
-> > initializing a slot, 2011-04-26) on top of the faulty commit?
-> 
-> I think that 09c9957 (send-pack: avoid deadlock when pack-object dies
-> early, 2011-04-25) is totally broken.
-> 
-> Looking back at my tests, I only tested the case where pack-objects
-> fails. And it seems we totally broke the case where the push is supposed
-> to succeed.
-> 
-> Still investigating...
+=2E..
 
-OK, embarrassing. 09c9957 completely breaks smart http pushing. My
-testing of Johannes' patch was completely focused on the error case, and
-I didn't have a single test for the non-error case. And on top of that,
-we _have_ nice tests in the test suite to catch this, but obviously
-neither I, nor Johannes, nor Junio were running them (because they need
-apache installed and GIT_TEST_HTTPD set).
+Oh! You mean to say "..., but git-grep cannot use Perl-compatible regex=
+es
+_in this case_".
 
-Ugh.
+;)
 
-This patch on top of 09c9957 should fix it.
+This repeats in patch 5/5.
 
--- >8 --
-Subject: [PATCH] send-pack: unbreak push over stateless rpc
+> +#ifdef NO_LIBPCRE
+> +static void compile_pcre_regexp(struct grep_pat *p, struct grep_opt =
+*opt)
+> +{
+> +	die("cannot use Perl-compatible regexes when libpcre is not compile=
+d in");
 
-Commit 09c9957 (send-pack: avoid deadlock when pack-object
-dies early, 2011-04-25) attempted to fix a hang in the
-stateless rpc case by closing a file descriptor early, but
-we still need that descriptor.
+This is such a terminus technicus. Wouldn't it be much easier to read f=
+or
+Joe User if this were merely:
 
-Basically the deadlock can happen when pack-objects fails,
-and the descriptor to upstream is left open. We never send
-the pack, so the upstream is left waiting for us to say
-something, and we are left waiting for upstream to close the
-connection.
+	die("Perl-compatible regexes not supported");
 
-In the non-rpc case, our descriptor points straight to the
-upstream. We hand it off to run-command, which takes
-ownership and closes the descriptor after pack-objects
-finishes (whether it succeeds or not).
+Also, wouldn't it be nicer to die already when the --perl-regexp option=
+ is
+detected? Then you could make these functions dummies that behave as if
+nothing was matched.
 
-Commit 09c9957 tried to emulate that in the rpc case. That
-isn't right, though. We actually have a descriptor going
-back to the remote-helper, and we need to keep using it
-after pack-objects is finished. Closing it early completely
-breaks pushing via smart-http.
+> +}
+> +
+> +static int pcrematch(struct grep_pat *p, char *line, char *eol,
+> +		regmatch_t *match, int eflags)
+> +{
+> +	die("cannot use Perl-compatible regexes when libpcre is not compile=
+d in");
+> +}
+> +
+> +static void free_pcre_regexp(struct grep_pat *p)
+> +{
+> +	die("cannot use Perl-compatible regexes when libpcre is not compile=
+d in");
+> +}
 
-We still need to do something on error to signal the
-remote-helper that we won't be sending any pack data
-(otherwise we get the deadlock).  In an ideal world, we
-would send a special packet back that says "Sorry, there was
-an error". But the remote-helper doesn't understand any such
-packet, so the best we can do is close the descriptor and
-let it report that we hung up unexpectedly.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-send-pack.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 6516288..3e70795 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -97,7 +97,6 @@ static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *ext
- 		free(buf);
- 		close(po.out);
- 		po.out = -1;
--		close(fd);
- 	}
- 
- 	if (finish_command(&po))
-@@ -519,6 +518,8 @@ int send_pack(struct send_pack_args *args,
- 		if (pack_objects(out, remote_refs, extra_have, args) < 0) {
- 			for (ref = remote_refs; ref; ref = ref->next)
- 				ref->status = REF_STATUS_NONE;
-+			if (args->stateless_rpc)
-+				close(out);
- 			if (use_sideband)
- 				finish_async(&demux);
- 			return -1;
--- 
-1.7.5.406.gfbb2
-
+-- Hannes
