@@ -1,69 +1,72 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [Tagging Commits] feedback / discussion request
-Date: Thu, 5 May 2011 20:49:39 +0200
-Message-ID: <BANLkTinKLnsVp50+d_7U_vSUiaMNtZ-NCA@mail.gmail.com>
-References: <BANLkTik5-Ygh0YwN=j+ibLhP6==ots_MXQ@mail.gmail.com>
- <20110504084212.GB8512@sigill.intra.peff.net> <BANLkTinCxzXCmmtxXSM7=+yeve2hhLSYNQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to fork a file (git cp ?)
+Date: Thu, 05 May 2011 11:50:57 -0700
+Message-ID: <7vk4e56kxa.fsf@alter.siamese.dyndns.org>
+References: <4DC1934D.6070608@aldan.algebra.com> <4DC19955.7040503@kdbg.org>
+ <7viptqdvrf.fsf@alter.siamese.dyndns.org>
+ <4DC20461.4090703@aldan.algebra.com>
+ <7v1v0ddhbz.fsf@alter.siamese.dyndns.org>
+ <BANLkTimD7byL=rgy79BWFT3vqKpzv9aNOQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Richard Peterson <richard@rcpeterson.com>
-X-From: git-owner@vger.kernel.org Thu May 05 20:50:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "Mikhail T." <mi+thun@aldan.algebra.com>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 20:51:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI3dB-000676-Hc
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:50:33 +0200
+	id 1QI3dv-0006cj-SN
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932158Ab1EESuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 14:50:24 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:62005 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932072Ab1EESuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 14:50:20 -0400
-Received: by qwk3 with SMTP id 3so1679315qwk.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 11:50:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=NQMyU+c2u36SIsedDEzz+nJPfCUuf3K0S367w8S1Ct0=;
-        b=ZjD1joF8DKhZAPvxcuZ5SzsyyCiWfaWP7SUliKMiUZ3bmoEzgjEwTKNqFZ3z6U5W9h
-         mlXt5K1h+Ep8U2OP1u34oGFgCzsRimgLJAaBsR1Bo6fWft7RgA3rWRPs04Yu+qkvl4Xt
-         Hvd2edZDvpvswT5qa9sVaQhfxL1LFeRybTzVw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=ptPVrBk8SXSPtoFF7IBuik7JTWwlKhDsYAFx+pc91W7AZDVAH12p2Zw3+bYJQHtMtG
-         EwOpV5WPXJz4qfdDZzkqlbdQrv5LVX+juVo9Ow5MjodIfrsE+ol+oZmCUJW5Urvd4Nyk
-         JHZmZC2f6W4dA4UhkeTeJXym80FkiRQNZC+kk=
-Received: by 10.229.17.130 with SMTP id s2mr1840756qca.22.1304621419162; Thu,
- 05 May 2011 11:50:19 -0700 (PDT)
-Received: by 10.229.75.70 with HTTP; Thu, 5 May 2011 11:49:39 -0700 (PDT)
-In-Reply-To: <BANLkTinCxzXCmmtxXSM7=+yeve2hhLSYNQ@mail.gmail.com>
+	id S932159Ab1EESvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 14:51:15 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55920 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932072Ab1EESvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 14:51:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 33DEE43ED;
+	Thu,  5 May 2011 14:53:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9fZwMEciJ3OP4JZm+8k3yqil7u8=; b=eszp0o
+	iHKiyt2D2CzYkGppp0iIOkMWxRvrNRi1jDO5lApWNa+1WM0+D8RxwlmjN1nD7FoA
+	wLW3gIH7FOTagFddD2uc62FSe8rB6ql9rJFZrygawvqfAV85LOPUvm1Xv0GGTT8J
+	sY+jk6/Fv0hvK2fpk9JlPk6mYrp3Yv3Cmqemg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G4CBAXyYLv5IxXi5H1abS3+DCxyxjz0D
+	yHOsvZYwAqkn7VsuitBNc7ui0e2GPXbD+P/7dzJtSB4VC4OPfShfXsJmR3RgkBlk
+	YjuKTza17PIsLHx1ZDDNhvnIcknxUhbE0m9no5YhVWnkL5jvW6tLCbujZGCKC+y2
+	UVjqEHZ9h8g=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E6B2C43E7;
+	Thu,  5 May 2011 14:53:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4740E43E5; Thu,  5 May 2011
+ 14:53:03 -0400 (EDT)
+In-Reply-To: <BANLkTimD7byL=rgy79BWFT3vqKpzv9aNOQ@mail.gmail.com> (Piotr
+ Krukowiecki's message of "Thu, 5 May 2011 20:02:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ECFF853C-7748-11E0-82B5-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172875>
 
-Heya,
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
 
-On Thu, May 5, 2011 at 17:39, Richard Peterson <richard@rcpeterson.com> wrote:
-> Now my big question to ponder: what do do when the CA expires a cert? Hmm...
+> Maybe Mikhail wanted to say that if there's a git-mv as a shortcut for
+>   "cp old new ; rm old; add new"
+> then there should be a git-cp as a shortcut for
+>   "cp old new; add new"
 
-You could re-sign the commits with the new cert, notes are mutable,
-and they keep history too. So you could just create a commit on the
-notes history ref "re-sign commits for expired cert", optionally
-removing the old signature. The hook verifying that no-one is
-tampering with the notes might get complex if you do that kind of
-stuff though (might be easier to just append the new signature and
-keep the old one in place).
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Copying and then futzing with a copy is a bad discipline to begin with.
+git already has a reputation of having too many commands.  I am not
+thrilled about the idea of making things worse by adding an unnecessary
+command, and especially one that encourages a bad workflow.
