@@ -1,87 +1,110 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH for maint branch] git-completion: fix zsh support
-Date: Thu,  5 May 2011 17:24:18 +0300
-Message-ID: <1304605458-1483-1-git-send-email-felipe.contreras@gmail.com>
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 05 16:24:33 2011
+From: Kacper Kornet <kornet@camk.edu.pl>
+Subject: Re: [PATCH 1/1] Honor $(prefix) set in config.mak* when defining
+ ETC_GIT* and sysconfdir
+Date: Thu, 5 May 2011 16:29:10 +0200
+Message-ID: <20110505142910.GA31229@camk.edu.pl>
+References: <20110428022922.GC4833@camk.edu.pl>
+ <7v62py5nbp.fsf@alter.siamese.dyndns.org>
+ <20110428192751.GE4833@camk.edu.pl>
+ <4DBFA3C6.8060209@viscovery.net>
+ <7vzkn3itb5.fsf@alter.siamese.dyndns.org>
+ <4DC0E99E.6090402@viscovery.net>
+ <20110504135827.GC18585@camk.edu.pl>
+ <4DC1653A.7000000@viscovery.net>
+ <7v4o5afht7.fsf@alter.siamese.dyndns.org>
+ <7vwri5c27e.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 16:29:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHzTi-0004wX-Ty
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 16:24:31 +0200
+	id 1QHzYQ-0007vq-U4
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 16:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754759Ab1EEOYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 10:24:25 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:58032 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754623Ab1EEOYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 10:24:25 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 4so686476ewy.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 07:24:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=q+DqzyfMUMcdmwyEzN062cH06W4kY4QML3htnuRGZt4=;
-        b=fa/guYEJSxwZrWV/iI+R1dKyk2hsAPKcXhxJaoVRMpP0UHbgc3riEbyrjWRTAgLcY5
-         43MAGe6Y/cVHFt733JoSexihTCb156icGUdTSId4835n8sLL7kj/2dnquV6xCVdyOvGU
-         EWE4h9Sg+FfFOf7AbCcN7sTZYj7O2ehxY0cg0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Enao1tfBOVhm1CRHRrsSfYCFiJh/mWCXNjxYi0n6e+LRNeSjxojppZ9g8Skv2RXCoU
-         hrq0rV0oedNfJ06xH3bJJFEOIXzL71f6896I0EUleHFvguSeNry+xQdcRWwcHMLqLCp2
-         wrcnyyNovhRtWqq51n1RvjQ4Bzo+pNh9G0vzA=
-Received: by 10.14.121.9 with SMTP id q9mr1247628eeh.102.1304605464469;
-        Thu, 05 May 2011 07:24:24 -0700 (PDT)
-Received: from localhost (gw3.cosmicparrot.net [217.152.255.6])
-        by mx.google.com with ESMTPS id l35sm534137eea.1.2011.05.05.07.24.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 May 2011 07:24:23 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1.1.g638e6
+	id S1754691Ab1EEO3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 10:29:17 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:39991 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750889Ab1EEO3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 10:29:16 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 587A35F004B;
+	Thu,  5 May 2011 16:29:15 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id tiU+eb5xvQzm; Thu,  5 May 2011 16:29:10 +0200 (CEST)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 9308D5F0046;
+	Thu,  5 May 2011 16:29:10 +0200 (CEST)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 8622B80AF5; Thu,  5 May 2011 16:29:10 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vwri5c27e.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172834>
 
-It turns out 'words' is a special variable used by zsh completion.
+On Wed, May 04, 2011 at 07:26:29PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 
-There's probably a bug in zsh's bashcompinit:
-http://article.gmane.org/gmane.comp.shells.zsh.devel/22546
+> > So I think it would probably be a less-impact and useful solution to keep
+> > sysconfdir and add "sysconfdir = @sysconfdir@" to config.mak.in as well.
 
-But in the meantime we can workaround it this way.
+> > Is Kacper's latest patch with an obvious one-liner to config.mak.in
+> > sufficient to achieve that?
 
-Currently zsh is completely broken after commit da48616 (bash: get
---pretty=m<tab> completion to work with bash v4), which introduced
-_get_comp_words_by_ref() that comes from debian's bash_completion
-scripts, and relies on the 'words' variable to behave like any normal
-variable.
+> >   From: Kacper Kornet <kornet@camk.edu.pl>
+> >   Subject: Re: [PATCH 1/1] Honor $(prefix) set in config.mak* when defin...
+> >   Date: Wed, 4 May 2011 16:29:21 +0200
+> >   Message-ID: <20110504142921.GE18585@camk.edu.pl>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> In other words, this one on top of the above (which defaults sysconfdir
+> to /etc when $(prefix) is /usr and then sets git_etcdir to $(sysconfdir)).
 
-This patch is meant for the maintenance branch, so Szeder's patches are not
-needed.
+There is one more problem with this. If you call:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 840ae38..8d5eae7 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2710,6 +2710,9 @@ _git ()
- 	if [[ -n ${ZSH_VERSION-} ]]; then
- 		emulate -L bash
- 		setopt KSH_TYPESET
-+
-+		# 'words' has special meaning in zsh; override that
-+		typeset -h words
- 	fi
- 
- 	local cur words cword
+ ./configure --prefix=/usr --sysconfdir=/<dir>
+
+sysconfdir and git_etcdir are set to /etc not /<dir>. I admit that it is
+a rather unusual set of options ./configure, but maybe it should be
+supported. So maybe I will first describe how it should all work in my
+opinion and I will wait for comments before I will try to implement it.
+
+1. ./configure --prefix=dir1  and dir1 != /usr
+
+    git_etcdir = etc
+
+2. ./configure --prefix=/usr
+
+    git_etcdir = /etc
+
+3. ./configure --prefix=dir1 --syscondir=dir2 (here dir2 has to be an
+absolute path)
+
+    git_etcdir =  dir2
+
+4. make prefix=dir1 and dir1 != /usr
+
+    git_etcdir = etc
+
+5. make prefix=/usr
+
+    git_etcdir = /etc
+
+6. make prefix=dir1 sysconfdir=dir2 (here dir2 can be an absolute or
+a relative path)
+
+    git_etcdir = dir2
+
+
 -- 
-1.7.5.1.1.g638e6
+  Kacper Kornet
