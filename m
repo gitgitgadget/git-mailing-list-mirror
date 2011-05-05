@@ -1,78 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] require-work-tree wants more than what its name says
-Date: Thu, 05 May 2011 10:31:08 -0700
-Message-ID: <7v39kt9hr7.fsf@alter.siamese.dyndns.org>
-References: <7vhb9bgy0a.fsf@alter.siamese.dyndns.org>
- <20110504073850.GA8512@sigill.intra.peff.net>
- <7vliymfp4t.fsf@alter.siamese.dyndns.org>
- <20110504212848.GA27779@sigill.intra.peff.net>
- <7v62ppdhh5.fsf@alter.siamese.dyndns.org>
- <BANLkTinaoopUxOHC0XaUxMLXj4pCXND+UA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] merge: merge with the default upstream with no
+ argument
+Date: Thu, 05 May 2011 10:33:12 -0700
+Message-ID: <7vy62l833b.fsf@alter.siamese.dyndns.org>
+References: <7v62r9csqr.fsf@alter.siamese.dyndns.org>
+ <7vpqphasbr.fsf@alter.siamese.dyndns.org>
+ <7vd3lharwf.fsf_-_@alter.siamese.dyndns.org>
+ <BANLkTimXFt-RFSPOfv8Ge+boPS_e3NLXkA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 19:31:29 2011
+Cc: git@vger.kernel.org, Jared Hance <jaredhance@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 19:33:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI2Oe-00026n-CC
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 19:31:28 +0200
+	id 1QI2Qa-0003IV-3i
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 19:33:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755136Ab1EERbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 13:31:23 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55548 "EHLO
+	id S1755243Ab1EERdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 13:33:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58535 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754435Ab1EERbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 13:31:22 -0400
+	with ESMTP id S1754435Ab1EERdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 13:33:23 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CD3285A62;
-	Thu,  5 May 2011 13:33:24 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D715E5A90;
+	Thu,  5 May 2011 13:35:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xaRP0awPF2CWJGOl/Rwsc0a7cOQ=; b=hwHBB2
-	fPSVInFOboflNXnhOKcDmrsdE696mTFwS9NNVWuqgytDvcLWB0sc+9yZ3L+a0fZP
-	SuqmWdMX2YPk65fPAFRL5n4aHItPskm3jytagZoWHoD+GjfgMsZNv8RgJjtwZYIR
-	3kGjjYWZX46fMlrhmNi6mpcvS8N1/9jFkYJr4=
+	:content-type; s=sasl; bh=MqkO1Qr0MnQkrLQ3Bce6OKlLxGM=; b=a3XLlE
+	bhPrFkQI+Dv7y8m58n6w7Uf6T8bt1CLt7E6E3fMwO8FHGOy/1o+VUcpcO3beUKkb
+	jfgHiXJSt/1YjUXjEM+O/PZZ/eNEyicCOqBc/WmvQWl8OelJKDclLvlet7imfzse
+	qMD1PLafJRRlJTJMvJ/eTroQ6fYYEOaDNqYs8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hMrvXZhJvd0CV6OVL/RbFn2rynkSK/rm
-	zCKd2f4OjgGuA28sYzWHIjQOa+CXXIWdVMqZvXNMxzKVDc9+KcQAO/fQdwPOesfG
-	1aKnfYlSCrTGXf5NzrUIdBhiVERwZaSRY/kB9w6l/m6QP0ERErrHqnhHH/QBfagU
-	MHpSc7moxSs=
+	:content-type; q=dns; s=sasl; b=pK5Q+B9dFBi7kqPtv5qnXadVt8qN4UT/
+	jAMEyClsyAuJTW19iJ+oCInQXWTOeuqj8ssrd8Iux116BM6qtZvnId8dMx0jw1sB
+	vNnjYeRiCYxMbDkIqzRS2uTS+ddnVX2/hQU0tDWQwevmLl+bVhrqURDlvpidVbqR
+	ikqdrMLljN0=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 89BED5A5E;
-	Thu,  5 May 2011 13:33:19 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A309F5A8F;
+	Thu,  5 May 2011 13:35:22 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 410155A57; Thu,  5 May 2011
- 13:33:13 -0400 (EDT)
-In-Reply-To: <BANLkTinaoopUxOHC0XaUxMLXj4pCXND+UA@mail.gmail.com> (Sverre
- Rabbelier's message of "Thu, 5 May 2011 13:15:29 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 856BD5A8E; Thu,  5 May 2011
+ 13:35:18 -0400 (EDT)
+In-Reply-To: <BANLkTimXFt-RFSPOfv8Ge+boPS_e3NLXkA@mail.gmail.com> (Felipe
+ Contreras's message of "Thu, 5 May 2011 17:05:30 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C484EBDE-773D-11E0-9FBC-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 0DE39F0A-773E-11E0-A855-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172856>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> So do we need more tests for git-submodule to find out, or is this a
-> hint to the submodule people to chime in? If so, should they be cc-ed?
+> On Thu, Mar 24, 2011 at 9:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> "git merge" without specifying any commit is a no-op by default.
+>>
+>> A new option merge.defaultupstream can be set to true to cause such an
+>> invocation of the command to merge the upstream branches configured for
+>> the current branch by using their last observed values stored in their
+>> remote tracking branches.
+>
+> FTR. It's actually merge.defaultotupstream, not merge.defaultupstream.
 
-I could queue a version without any conversion of in-tree users, so that
-stakeholders can verify and convert their use of require-work-tree to the
-new saner alternative one by one.  Actually I tend to like that better.
-
-I am not convinced myself if it is a sane use case to run "git pull" from
-a totally random place and let fetch and merge magically happen somewhere
-completely unrelated to your current working directory only because you
-have GIT_DIR and GIT_WORK_TREE set to begin with.  After getting into a
-habit of relying on these environment variables so much that you do not
-even think about their existence, you will reach a point where you have no
-idea where to go offhand when a merge conflict actually happens and you
-have to go there to fix things up.
+True but that milk was spilled long time ago.  The doc and code at least
+have it spelled correctly, no?
