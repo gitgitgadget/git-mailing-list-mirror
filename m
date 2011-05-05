@@ -1,42 +1,45 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: t5541: Bad file descriptor
-Date: Thu, 5 May 2011 02:16:34 -0400
-Message-ID: <20110505061634.GB29033@sigill.intra.peff.net>
+Date: Thu, 5 May 2011 02:18:45 -0400
+Message-ID: <20110505061845.GC29033@sigill.intra.peff.net>
 References: <3340686A-18D8-4279-87F0-580262DD4DFA@gernhardtsoftware.com>
  <7voc3hbtgu.fsf@alter.siamese.dyndns.org>
  <20110505054611.GA29033@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
 	"git@vger.kernel.org List" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 08:16:56 2011
+X-From: git-owner@vger.kernel.org Thu May 05 08:18:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHrrp-00006X-7D
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 08:16:53 +0200
+	id 1QHrtl-0000pE-HA
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 08:18:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517Ab1EEGQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 02:16:37 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45417
+	id S1751623Ab1EEGSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 02:18:48 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47658
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751338Ab1EEGQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 02:16:37 -0400
-Received: (qmail 27590 invoked by uid 107); 5 May 2011 06:18:30 -0000
+	id S1751550Ab1EEGSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 02:18:47 -0400
+Received: (qmail 27702 invoked by uid 107); 5 May 2011 06:20:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 02:18:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 02:16:34 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 02:20:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 02:18:45 -0400
 Content-Disposition: inline
 In-Reply-To: <20110505054611.GA29033@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172802>
+
+[argh, resend, I meant to cc Johannes Sixt]
 
 On Thu, May 05, 2011 at 01:46:11AM -0400, Jeff King wrote:
 
@@ -134,3 +137,4 @@ index 6516288..3e70795 100644
  			return -1;
 -- 
 1.7.5.406.gfbb2
+
