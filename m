@@ -1,95 +1,51 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH V2 4/5] git-grep: Learn PCRE
-Date: Thu, 5 May 2011 09:43:50 +0200
-Message-ID: <BANLkTinXoDFyb9U0RJVb8eH269zj+XvBdQ@mail.gmail.com>
-References: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com> <1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>
+Date: Thu, 05 May 2011 09:49:14 +0200
+Message-ID: <4DC2567A.1060502@viscovery.net>
+References: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com>	<1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>	<4DC2418E.4070006@viscovery.net> <20110505094147.22e3d158@mkiedrowicz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Martin Langhoff <martin.langhoff@gmail.com>
-To: =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 09:44:17 2011
+To: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 09:49:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHtEO-00038I-Qy
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 09:44:17 +0200
+	id 1QHtJN-0005UX-LY
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 09:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395Ab1EEHoM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 03:44:12 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46730 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751512Ab1EEHoM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 03:44:12 -0400
-Received: by bwz15 with SMTP id 15so1609034bwz.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 00:44:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=fW6Gdmfv+nzhYPEoZ0m1euQKq6XTQsNqOXgwe4G1M5s=;
-        b=rZPTjRoWgz/s1IbgnwGrlfMvjtPqH8OfaiSubi7fJIA/2f/6bG1yFJ4GcbWXFy9Ycp
-         eGxQ9vsuHNWZJW98l8SuNqokqhxrenJcgzAisN8C8wWCHjhBexrw5UX7DAe+kEosFwOd
-         xjCef65nqw14JmBQOlUKrnamB7Yxy3XSRpaK8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=EY3frwYqry1RfuRlN3F54BpH5a68KMZMbSjn+kapT6cOOz+8+qVWwtuaCk/hbKqOGK
-         HOYocr4elcEefLzp+ZXKz7JSyscLfRwAvYiY5bIEaAt/7UjUKnCxWvfTh3vTwruIvhUu
-         IWLYg8ucVTAcc6IOGNkLU/PuevDvTvHOJUck0=
-Received: by 10.204.152.5 with SMTP id e5mr1960891bkw.138.1304581450690; Thu,
- 05 May 2011 00:44:10 -0700 (PDT)
-Received: by 10.204.29.2 with HTTP; Thu, 5 May 2011 00:43:50 -0700 (PDT)
-In-Reply-To: <1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>
+	id S1752849Ab1EEHtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 03:49:20 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:30658 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752633Ab1EEHtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 03:49:19 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QHtJD-000512-Bq; Thu, 05 May 2011 09:49:15 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1B3C01660F;
+	Thu,  5 May 2011 09:49:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <20110505094147.22e3d158@mkiedrowicz>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172815>
 
-2011/5/5 Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>:
-> +#ifdef NO_LIBPCRE
-> +static void compile_pcre_regexp(struct grep_pat *p, struct grep_opt =
-*opt)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 die("cannot use Perl-compatible regexes when l=
-ibpcre is not compiled in");
-> +}
+Am 5/5/2011 9:41, schrieb Michal Kiedrowicz:
+> But I can abstract these calls to die_pcre_not_supported() to not
+> repeat die() message.
 
-Looks like these two functions below can be just left empty, because yo=
-u will
-exit when calling compile_pcre_regexp in compile_regexp.
+Gah! Don't over-engineer. The compiler will un-duplicate the message texts
+for you if you carefully copy-and-paste them.
 
-> +static int pcrematch(struct grep_pat *p, char *line, char *eol,
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 regmatch_t *match,=
- int eflags)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 die("cannot use Perl-compatible regexes when l=
-ibpcre is not compiled in");
-> +}
-> +
-> +static void free_pcre_regexp(struct grep_pat *p)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 die("cannot use Perl-compatible regexes when l=
-ibpcre is not compiled in");
-> +}
-> +
-
-These will be never called, because...
-
-> @@ -70,6 +135,11 @@ static void compile_regexp(struct grep_pat *p, st=
-ruct grep_opt *opt)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (p->fixed)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;
->
-> + =C2=A0 =C2=A0 =C2=A0 if (opt->pcre) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 compile_pcre_regex=
-p(p, opt);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
-> + =C2=A0 =C2=A0 =C2=A0 }
-
-=2E.. you die here, if PCRE not available.
+-- Hannes
