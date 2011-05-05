@@ -1,82 +1,97 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: Re: [PATCH] Fix test t3701-add-interactive.sh
-Date: Thu, 5 May 2011 20:53:56 +0200
-Message-ID: <20110505185355.GG31229@camk.edu.pl>
-References: <20110505165029.GD31229@camk.edu.pl>
- <7vzkn16m0q.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH for maint branch] git-completion: fix zsh support
+Date: Thu, 5 May 2011 20:59:07 +0200
+Message-ID: <20110505185907.GD1377@goldbirke>
+References: <1304605458-1483-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 20:54:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 20:59:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI3gg-0008PY-9x
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:54:10 +0200
+	id 1QI3le-0003Ac-Tl
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932128Ab1EESyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 14:54:04 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:37826 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932115Ab1EESyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 14:54:03 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 9DEE05F0049;
-	Thu,  5 May 2011 20:54:01 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id uy-3oXurFd3u; Thu,  5 May 2011 20:53:56 +0200 (CEST)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 26CC65F0046;
-	Thu,  5 May 2011 20:53:56 +0200 (CEST)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id 1677280AC5; Thu,  5 May 2011 20:53:56 +0200 (CEST)
+	id S1751564Ab1EES7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 14:59:13 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:55529 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751392Ab1EES7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 14:59:12 -0400
+Received: from localhost6.localdomain6 (p5B130B4D.dip0.t-ipconnect.de [91.19.11.77])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0M6P87-1PXMzX1qXL-00xlad; Thu, 05 May 2011 20:59:08 +0200
 Content-Disposition: inline
-In-Reply-To: <7vzkn16m0q.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1304605458-1483-1-git-send-email-felipe.contreras@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:U7TOKChZHOlFZRsfaPilN41j5rcqVXthC0ylJ728RUB
+ uhPrJ/ys9hIiKiy3c0Cl95FVCoLS8/nZKL+9/RR3mzaL6+ofZq
+ 5LMn3zsE9eQ7JR1/RhpBP3CczFoNtWkkoj1+T49+B//pnkIYTX
+ +LQlSnwBviya2b3wvJaqCRSpOFTt5zJMapHF2RZMUdEL8hr/si
+ 3eVwW0RNVnpOHe2bA4VJQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172879>
 
-On Thu, May 05, 2011 at 11:27:17AM -0700, Junio C Hamano wrote:
-> Kacper Kornet <draenog@pld-linux.org> writes:
+Hi,
 
-> > One of the tests used to fail due to EOF not in the first column and not
-> > continued &&.
+On Thu, May 05, 2011 at 05:24:18PM +0300, Felipe Contreras wrote:
+> It turns out 'words' is a special variable used by zsh completion.
+> 
+> There's probably a bug in zsh's bashcompinit:
+> http://article.gmane.org/gmane.comp.shells.zsh.devel/22546
+> 
+> But in the meantime we can workaround it this way.
 
-> > Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
-> > ---
-> >  t/t3701-add-interactive.sh |    4 ++--
-> >  1 files changed, 2 insertions(+), 2 deletions(-)
+I would prefer some details about this "workaround it this way" in the
+commit message (i.e. that you used "typedef -h", what it does in zsh,
+and why it fixes the issue; my zsh-fu is, well, not particularly
+large, so I have no idea), so when someone later runs 'git log --
+contrib/completion' then he will easier understand what's going on
+without the need to look at the patch.
 
-> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> > index d6327e7..018f5d9 100755
-> > --- a/t/t3701-add-interactive.sh
-> > +++ b/t/t3701-add-interactive.sh
-> > @@ -83,9 +83,9 @@ EOF
+> Currently zsh is completely broken after commit da48616 (bash: get
+> --pretty=m<tab> completion to work with bash v4), which introduced
+> _get_comp_words_by_ref() that comes from debian's bash_completion
+> scripts, and relies on the 'words' variable to behave like any normal
+> variable.
+> 
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+> 
+> This patch is meant for the maintenance branch, so Szeder's patches are not
+> needed.
 
-> >  test_expect_success PERL 'setup fake editor' '
-> >  	cat >fake_editor.sh <<EOF
-> > -	EOF
-> > +EOF
-> >  	chmod a+x fake_editor.sh &&
-> > -	test_set_editor "$(pwd)/fake_editor.sh" &&
-> > +	test_set_editor "$(pwd)/fake_editor.sh"
-> >  '
+My first two patches are cleanups, they definitely worth
+keeping, even when this patch alone would fix the zsh issues.
 
-> Very curious. I never saw the breakage.  We are getting:
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 840ae38..8d5eae7 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2710,6 +2710,9 @@ _git ()
+>  	if [[ -n ${ZSH_VERSION-} ]]; then
+>  		emulate -L bash
+>  		setopt KSH_TYPESET
+> +
+> +		# 'words' has special meaning in zsh; override that
+> +		typeset -h words
 
-It is probably we are using a different shell as /bin/sh.
+You have to do the same in _gitk(), too.  Although _gitk() itself
+doesn't use $words, it invokes __git_has_doubledash(), which does,
+hence it's still broken.
 
-> Well spotted.  Thanks.
-
-By the way. The credit shoud probably go to qboosh@pld-linux.org. I have
-just rediscovered it in my private build.
--- 
-  Kacper Kornet
+>  	fi
+>  
+>  	local cur words cword
+> -- 
+> 1.7.5.1.1.g638e6
+> 
