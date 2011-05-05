@@ -1,77 +1,118 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: Sorry, completely off-topic. I've a mailer problem
-Date: Thu, 05 May 2011 20:59:28 +0200
-Message-ID: <4DC2F390.2040401@dirk.my1.cc>
-References: <BANLkTimtpvVRU=1iCbrteyHixaWGuVKDjQ@mail.gmail.com> <alpine.DEB.2.00.1105041014480.16939@ds9.cixit.se> <4DC192A0.6010808@dirk.my1.cc> <4DC1A519.3070907@dirk.my1.cc> <4DC1B103.90007@cisco.com>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: [PATCH] builtin/checkout.c: show usage with options on missing
+ argument 'branch'
+Date: Thu, 5 May 2011 21:02:47 +0200
+Message-ID: <BANLkTikMu3fjbALTAwaaknskBw0H7LbZ-g@mail.gmail.com>
+References: <1304614690-12493-1-git-send-email-ralf.thielow@googlemail.com>
+	<7vsjst6l5o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Phil Hord <hordp@cisco.com>,
-	=?ISO-8859-1?Q?=22=D8yvind_A=2E_Holm?= =?ISO-8859-1?Q?=22?= 
-	<sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Thu May 05 20:59:38 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:02:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI3lx-0003KV-Ol
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:59:38 +0200
+	id 1QI3p8-0005Cr-Dq
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:02:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838Ab1EES7c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 14:59:32 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.104]:53442 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751644Ab1EES7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 14:59:32 -0400
-Received: from [217.87.105.207] (helo=[192.168.2.100])
-	by smtprelay06.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1QI3lp-0002eR-7a; Thu, 05 May 2011 20:59:29 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <4DC1B103.90007@cisco.com>
-X-Df-Sender: 757646
+	id S1753248Ab1EETCt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 15:02:49 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:43984 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489Ab1EETCs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 15:02:48 -0400
+Received: by yia27 with SMTP id 27so878838yia.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 12:02:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=j1WI1eHYdXKBL+sOIQ6Xodmqn3dUliWtYUGRh4Zs7c8=;
+        b=r8THRL505dTwwmChOSIe+5cL9Oa4jnyQG/4rEbmAqbRMQhR5f1FiwlpscFVQz1EzvV
+         ePUQpPCRisjepoPDhtI5vcW5yA67M9PLlTUfVaH/mZwpoxsn6J0qjbIz8CKiQfy9HFJ1
+         UQJ8HA1d1BAoayt1NYgAZ7i6ht469N87HLr8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Y01xH/Xsu+EwoRqdsIWzsDe5jq4UYP3hRtyeAp5/KP1TWYXrqNvsmmOHBeJ7RbmMry
+         qd0iqcqOhmiCTbXOnmQrJg3qiEGLosGOP52ysgF2cqH+rnITmZupvWOrWBi1h/XfD+ji
+         EOSRBLlRiXSObB9If00BPbX6H/JWSEr9Igkwo=
+Received: by 10.236.109.18 with SMTP id r18mr3341068yhg.189.1304622167457;
+ Thu, 05 May 2011 12:02:47 -0700 (PDT)
+Received: by 10.147.39.7 with HTTP; Thu, 5 May 2011 12:02:47 -0700 (PDT)
+In-Reply-To: <7vsjst6l5o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172881>
 
-Am 04.05.2011 22:03 schrieb Phil Hord:
-> On 05/04/2011 03:12 PM, Dirk S=FCsserott wrote:
->> Sorry, I know, this is no Thunderbird board, but I guess other peopl=
-e
->> use this client as well.
+Simple "git checkout" or "git checkout " don't tell me that i've done a=
+ mistake
+on usage. It does nothing. This can be different when using parameters,=
+ but in
+the end i think it should tell me the usage in this case.
+
+2011/5/5 Junio C Hamano <gitster@pobox.com>:
+> Ralf Thielow <ralf.thielow@googlemail.com> writes:
+>
+>> Show the usage with options for 'checkout' command on missing argume=
+nt 'branch'.
+>
+> Please describe what exact command line you typed, what output and si=
+de
+> effect you got from the command, what you _think_ should have happene=
+d
+> instead, and what the differences between two are.
+>
+> In other words, what problem you are trying to solve?
+>
+>> Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
+>> ---
+>> =C2=A0builtin/checkout.c | =C2=A0 =C2=A05 +++++
+>> =C2=A01 files changed, 5 insertions(+), 0 deletions(-)
 >>
->> When I write a message, it wraps at col 72 (or so). When I see my po=
-st
->> in the list, it isn't wrapped at all. Only one long line per
->> paragraph. That's inconvenient for the list and I'd like to avoid
->> that. How do YOU do that?
->=20
->=20
-> Options > Format > Plain text only
->=20
-> However, your emails are being sent wrapped as you see them originall=
-y.
->   But in your email headers is this line:
->=20
-> Content-Type: text/plain; charset=3DISO-8859-1; format=3Dflowed
->=20
-> The "format=3Dflowed" is convincing Thunderbird to unwrap your lines =
-when
-> you view them in Thunderbird. The raw text of your emails look fine.
-> (In Thunderbird, examine the raw email with Ctrl-U.)
->=20
-> More on f=3Df: http://joeclark.org/ffaq.html
->=20
-> Phil
->=20
-
-Thank you, Phil and =D8yvind,
-
-I now configured my Thunderbird to do it right (I hope). My next post
-will tell ...
-
-Dirk
+>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>> index 38632fc..4aa613a 100644
+>> --- a/builtin/checkout.c
+>> +++ b/builtin/checkout.c
+>> @@ -1086,5 +1086,10 @@ int cmd_checkout(int argc, const char **argv,=
+ const char *prefix)
+>> =C2=A0 =C2=A0 =C2=A0 if (opts.writeout_stage)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die(_("--ours/--the=
+irs is incompatible with switching branches."));
+>>
+>> + =C2=A0 =C2=A0 if (new.name =3D=3D NULL) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usage_with_options(check=
+out_usage, options);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
+>> + =C2=A0 =C2=A0 }
+>>
+>> =C2=A0 =C2=A0 =C2=A0 return switch_branches(&opts, &new);
+>> =C2=A0}
+>
+> What value are you returning from a function whose return type is int=
+?
+>
+> If you read the function switch_branches(), you would notice that it =
+is
+> prepared to handle the case where new.name is NULL (by the way, check
+> against NULL is typically spelled as "if (!new.name)" as you can see
+> there), and then would realize that your change by itself cannot be a
+> correct fix for whatever problem you are trying to solve.
+>
+> Have you run "make test" at all?
+>
+> If you are changing this command:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git checkout -b frotz
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Switched to a new branch 'junk'
+>
+> to error out with a message, then that is a regression.
+>
