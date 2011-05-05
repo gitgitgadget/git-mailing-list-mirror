@@ -1,141 +1,64 @@
-From: Jerome Martin <tramjoe.merin@gmail.com>
-Subject: Re: Private/public branches/repos workflow
-Date: Fri, 6 May 2011 00:05:56 +0200
-Message-ID: <BANLkTinwuGTbX0qeOZHAhGKgZzPBTTaHCw@mail.gmail.com>
-References: <BANLkTi=TLeePH0JDvnE0XPiCzXFxid9BWQ@mail.gmail.com>
-	<201105051535.p45FZQDY019419@no.baka.org>
-	<BANLkTikFdV=nGW-L+3NVzP58uPiS5ui-9A@mail.gmail.com>
-	<201105052110.p45LAViP010495@no.baka.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 1/1] status: display "doing what" information in git status
+Date: Fri, 6 May 2011 01:06:45 +0200
+Message-ID: <BANLkTi=teRP8cMJeDC+khUtYD61SmeSdLA@mail.gmail.com>
+References: <1304632126-16733-1-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Seth Robertson <in-gitvger@baka.org>
-X-From: git-owner@vger.kernel.org Fri May 06 00:06:03 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri May 06 01:07:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI6gL-0004Gr-Ub
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 00:06:02 +0200
+	id 1QI7dr-000458-5B
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 01:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344Ab1EEWF5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 18:05:57 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:41016 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752727Ab1EEWF5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 18:05:57 -0400
-Received: by gxk21 with SMTP id 21so975869gxk.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 15:05:56 -0700 (PDT)
+	id S1753948Ab1EEXH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 19:07:26 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:60597 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750733Ab1EEXHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 19:07:25 -0400
+Received: by qwk3 with SMTP id 3so1859588qwk.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 16:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LpvZAiO6dusfRLltQO4rX33hImrtHgPYQGVswwti738=;
-        b=AT5Rw24mweQV0cTz+t+yy2AnZxRPmI6E4WsdIfZmW0fM4PrZK2p19MK+HYZ/IL7/JJ
-         kPqlfs4UIoEp/e8Qo+PL5dcpt8AkEZtU/xQCGoSu24w25eRUWIWSZwRPh5qfbKXaE+9V
-         9eAew+DzOei9wC0HlR8ASs5QFwGKGI/gRcUpM=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=GwQZSwok/gUJ4y1bYRbYIHQxp2QLEzCNPPvzsVGS3bY=;
+        b=OlotXbH6JCMie9THJt8H9CA3FEBDoCpWXewIGQUF9/xhCkBuCB9rALOBoIuf2ge/Ky
+         u6MYmDioFqqtLGKWDkulOsfgKcOG9EZ7dwcvAjNQFSj5tSsz9f9VeFHwZ1ccRSK8rj1k
+         q1242zmY3zHG62EECRFIpZJ+h1/HEanYx1lzg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cEUQwDu1ryvJFpMW0hU4SD+9gQsA8duDihOKmFJ8cd/QLt7HJwocPy1oIXqHmJ9STo
-         06zl3H2EIuLgwGmDXl5jP3FGZF+kMJkB+Ikq6nFgp5ABGcpCV7w7WVcq6ZdVTb5w4V+G
-         CXKc7xTsAQ8jkmP4MS45OP4GMp0AaGjFpthgY=
-Received: by 10.151.5.14 with SMTP id h14mr2707324ybi.182.1304633156216; Thu,
- 05 May 2011 15:05:56 -0700 (PDT)
-Received: by 10.147.167.8 with HTTP; Thu, 5 May 2011 15:05:56 -0700 (PDT)
-In-Reply-To: <201105052110.p45LAViP010495@no.baka.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=XCqgkPlVxXeGeom/e96v0L7mLYOiv6nOA89aIJv9j4yMtECstjc6CyR+o48KJQClOU
+         rDbaRTBOqcr09vosSQX2O8mIkIzytWVL9Vpjh1AhHIhUDTV5VBfn1X5qsJ4NysJlxbrp
+         oKdshgj/rG277Sg2+RJuIYS38Fdcf35vfDqwc=
+Received: by 10.224.33.132 with SMTP id h4mr3019092qad.284.1304636845148; Thu,
+ 05 May 2011 16:07:25 -0700 (PDT)
+Received: by 10.229.75.70 with HTTP; Thu, 5 May 2011 16:06:45 -0700 (PDT)
+In-Reply-To: <1304632126-16733-1-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172922>
 
-Thanks for the additional clarification on detached vs orphan.
+Heya,
 
-I want to thank you guys again for being so patient and helpful. It
-helps a lot, as for some reason, only reading the docs doesn't seem to
-sink in as fast as I would like ;-)
+On Thu, May 5, 2011 at 23:48, Pierre Habouzit <madcoder@debian.org> wrote:
+> This provides the same information as the git bash prompt about the
+> current operation that is going on: rebase, merge, am, cherry-pick or
+> bisect.
 
-Regarding the usage of an orphan branch, a coworker of mine suggested
-an alternate way, which seems similar to me regarding the result, but
-if you could take a look at it and tell me what you think, that would
-be very helpful:
+Can you show how this will look like?
 
-1) On the public server, init a blank repo, and commit there an export
-of the public tree as initial import.
-2) On the devel machines, use git-remote to track that repo's master
-as a local 'public' branch. That public branch now has no history
-other than the initial import, and is in the same repo as both my
-private branch and my public-branch-with-full-history (not to be used
-for future work).
-3) From there, use this 'public' branch as if it was created using
---orphan from my local public-branch-with-full-history.
+-- 
+Cheers,
 
-Are there any essential properties that set apart a 'public' branch
-created this way from one creating using your suggested --orphan
-method ?
-
-On Thu, May 5, 2011 at 11:10 PM, Seth Robertson <in-gitvger@baka.org> w=
-rote:
->
-> In message <BANLkTikFdV=3DnGW-L+3NVzP58uPiS5ui-9A@mail.gmail.com>, Je=
-rome Martin
-> writes:
->
-> =A0 =A0One thing I do not understand clearly is why with a detached (=
-I guess this
-> =A0 =A0is synonym to orphan ? At least when creating it ?) branch can=
-not be then
-> =A0 =A0merged with the branch that was initially copied to create it =
-and just get
-> =A0 =A0the additional commits. Instead, it gets the whole history. Be=
-ing used to
-> =A0 =A0using merge between my public/private branches, I am afraid th=
-at using that
-> =A0 =A0orphan branch might lead to disaster eventually.
->
-> Junio appears to have answered much of these followup questions so I
-> will focus on a slight misunderstand you exhibit here.
->
-> An orphan branch is very different from a detached head. =A0A detache=
-d
-> head is not on any branch. =A0Commits on detached heads cannot typica=
-lly
-> be referenced by any symbolic name and will eventually go away throug=
-h
-> garbage collection. =A0In general you want to avoid detached heads fo=
-r
-> any read/write activity.
->
-> An orphan branch, on the other hand, is one which simply doesn't have
-> a parent. =A0The first commit you make in a new repository is also
-> orphan, though it is not talked about as such. =A0The point of this
-> orphan branch is that since it does not have a parental link from you=
-r
-> private branch, if you publish the orphan it will not bring along any
-> of the private commits.
->
-> As Junio stated/suggested, as long as you are careful to never merge
-> from private into public, and instead either cherry-pick or do
-> development from public and merge that into private, you should be
-> safe. =A0However, a good safety test might be to have an intermediate
-> repository be part of your public push process, and have a
-> post-receive (or other process) script run which looks for magic
-> cookies in that intermediate repo showing that private data has leake=
-d
-> before proceeding to push that validated repo to a publicly accessibl=
-e
-> repo.
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0-Seth Robertson
->
-
-
-
---=20
-J=E9r=F4me Martin
+Sverre Rabbelier
