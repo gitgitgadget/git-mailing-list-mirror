@@ -1,101 +1,255 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH for maint] git-completion: fix zsh support
-Date: Thu, 5 May 2011 18:25:03 -0500
-Message-ID: <20110505232503.GA7507@elie>
-References: <20110505185907.GD1377@goldbirke>
- <1304625144-5206-1-git-send-email-felipe.contreras@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 1/1] status: display "doing what" information in git
+ status
+Date: Fri, 6 May 2011 01:26:51 +0200
+Message-ID: <20110505232650.GD636@madism.org>
+References: <1304632126-16733-1-git-send-email-madcoder@debian.org>
+ <BANLkTi=teRP8cMJeDC+khUtYD61SmeSdLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 01:25:38 2011
+Content-Type: multipart/mixed; boundary="UlVJffcvxoiEqYs2"
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 06 01:27:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI7vN-0002cJ-1r
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 01:25:37 +0200
+	id 1QI7wh-0002z0-16
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 01:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193Ab1EEXZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 19:25:14 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64458 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076Ab1EEXZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 19:25:13 -0400
-Received: by iwn34 with SMTP id 34so2241441iwn.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 16:25:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=HM9OBmbrNLc6gAycLdE9pU7xo4Fk/U2+daKKCfg2sQM=;
-        b=aSQpqX1UIt6wyOmAWezU6GdhDfpz6rvc+H3Z4JDJWCIB712ZnrNE7KIPbqSKbJRDic
-         30Kc/Mi6w1hdTB/N40hVNHqObYSI8ytsNuR1ujeniliEAH/W6mLcn+2SMLUjY1WTItBY
-         cM2LNrVYdoNeGyKZFIsS+HxFT4IKF/Z9q6JHA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=iDILl6CyicUvdhYudz4f1WxngpUxOeNA5kSM73MoqGIhswFbnF9/NR/FRI8vg5eT7t
-         lX4q+49xl+MbLfHrTR9bgEa0K1/R8XYS+IGE0FC6A6aGYyhoKTdejXpbY1YOeDZkP2yy
-         opigr89sAkA+MIkmdlV8ucpXOcfaAAxB2yj+4=
-Received: by 10.43.55.141 with SMTP id vy13mr1566842icb.477.1304637912163;
-        Thu, 05 May 2011 16:25:12 -0700 (PDT)
-Received: from elie (adsl-76-206-232-100.dsl.chcgil.sbcglobal.net [76.206.232.100])
-        by mx.google.com with ESMTPS id 4sm1076662ibc.15.2011.05.05.16.25.09
-        (version=SSLv3 cipher=OTHER);
-        Thu, 05 May 2011 16:25:10 -0700 (PDT)
+	id S1754197Ab1EEX0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 19:26:54 -0400
+Received: from pan.madism.org ([88.191.52.104]:57937 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751076Ab1EEX0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 19:26:53 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 25FC451AC4;
+	Fri,  6 May 2011 01:26:52 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 21F1113EC; Fri,  6 May 2011 01:26:51 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1304625144-5206-1-git-send-email-felipe.contreras@gmail.com>
+In-Reply-To: <BANLkTi=teRP8cMJeDC+khUtYD61SmeSdLA@mail.gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172924>
 
-Hi,
 
-Felipe Contreras wrote:
+--UlVJffcvxoiEqYs2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-> It turns out 'words' is a special variable used by zsh completion.
->
-> There's probably a bug in zsh's bashcompinit:
-> http://article.gmane.org/gmane.comp.shells.zsh.devel/22546
->
-> But in the meantime we can workaround it by using 'typedef -h', which
-> gets rid of any special meaning.
+On Fri, May 06, 2011 at 01:06:45AM +0200, Sverre Rabbelier wrote:
+> Heya,
+> 
+> On Thu, May 5, 2011 at 23:48, Pierre Habouzit <madcoder@debian.org> wrote:
+> > This provides the same information as the git bash prompt about the
+> > current operation that is going on: rebase, merge, am, cherry-pick or
+> > bisect.
+> 
+> Can you show how this will look like?
 
-As I mentioned before (sorry to come in late; I assume you forgot to
-cc the previous participants in the discussion?), I do not think this
-is a good fix.
+Sure, it adds a line on the top with the same color as "not on any
+branch" iff there is an ongoing operation.
 
-The point here is that 'words' is a special variable used by zsh
-completion, and we are using facilities from zsh completion.  So
-if you set 'typeset -h', then the zsh completion functions will
-use _our_ copy of "words".
+Of course in this setup it makes no sense since my shell shows it
+already, but I'm frustrated when I use git on a remote machine where I
+don't have zsh installed or configured, and at work many people would
+like to know where they left stuff before they grabbed coffee and talked
+for 1h instead of taking 5 minutes ;)
+-- 
+·O·  Pierre Habouzit
+··O                                                madcoder@debian.org
+OOO                                                http://www.madism.org
 
-Now in practice our copy of words matches zsh's anyway, so nothing
-goes wrong.  But that could easily change in the future.
+--UlVJffcvxoiEqYs2
+Content-Type: image/png
+Content-Disposition: attachment; filename="scr.png"
+Content-Transfer-Encoding: base64
 
-> Currently zsh is completely broken after commit da48616 (bash: get
-> --pretty=m<tab> completion to work with bash v4), which introduced
-> _get_comp_words_by_ref() that comes from debian's bash_completion
-> scripts
+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
 
-The bash_completion project does not originate in Debian fwiw; it
-was originally from Ian Macdonald iirc and available from
-
-  http://www.caliban.org/bash/index.shtml
-
-and then it was abandoned.  The bash-completion project on alioth is
-not Debian-specific, either.
-
-Maybe simplest would be to use Szeder's fix + make the zsh version of
-_get_comp_words_by_ref not overwrite "words" at all?
-
-Hope that helps,
-Jonathan
+--UlVJffcvxoiEqYs2--
