@@ -1,71 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: error with $ git push origin HEAD:newbranch
-Date: Thu, 5 May 2011 06:59:14 -0400
-Message-ID: <20110505105914.GA464@sigill.intra.peff.net>
-References: <loom.20110505T103708-225@post.gmane.org>
- <20110505093752.GB29595@sigill.intra.peff.net>
- <loom.20110505T114511-660@post.gmane.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.5.1
+Date: Thu, 5 May 2011 13:13:01 +0200
+Message-ID: <BANLkTikV0-efkU+V90i=hPkMLYXi2Puw4w@mail.gmail.com>
+References: <7vfwouc4jx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: chris <jugg@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 12:59:30 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 13:13:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHwHJ-0003kY-1N
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 12:59:29 +0200
+	id 1QHwV9-0002sv-5P
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 13:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753664Ab1EEK7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 06:59:17 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53586
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753623Ab1EEK7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 06:59:17 -0400
-Received: (qmail 30408 invoked by uid 107); 5 May 2011 11:01:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 07:01:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 06:59:14 -0400
-Content-Disposition: inline
-In-Reply-To: <loom.20110505T114511-660@post.gmane.org>
+	id S1753840Ab1EELNm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 07:13:42 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:47097 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753752Ab1EELNl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 07:13:41 -0400
+Received: by qyg14 with SMTP id 14so1485827qyg.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 04:13:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=TP623oPUoVPkISmoEVZxMBgBK7be64xVBb7U+gB+DG4=;
+        b=K15Wfit6SXeUHhipDRmTxL+e1UKn7MIJnSzpKuJow3ZSCzprfMAbo1TcZ97E9uxORc
+         NSLLNID5DlxvVIBIxhg2njFp7MOSTuhq4W9Z0CuA4L54Ia/EXUt8Tp9iVqEjGwfgeyQm
+         mEg4XyKRfOnxlCW+L0j3G4HfCgx0FjQzV2J5g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=B7gtJfceeWqhUi3G+gjHMf2C3MMgYm067ZBS6NonIgJ7036RNaCHHiTlvJRD2Oz08m
+         9qCTCpzv5FivHho9dGKNNRC2etCvfASaOWAb84u6+3vReLITujYfKJkuvok7R2/dcGxj
+         NTz9rGLK+UwzYRljNdB3yD6qHGohYmDdhlnVw=
+Received: by 10.224.207.196 with SMTP id fz4mr2152268qab.184.1304594021090;
+ Thu, 05 May 2011 04:13:41 -0700 (PDT)
+Received: by 10.229.75.70 with HTTP; Thu, 5 May 2011 04:13:01 -0700 (PDT)
+In-Reply-To: <7vfwouc4jx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172827>
 
-On Thu, May 05, 2011 at 10:06:21AM +0000, chris wrote:
+Heya,
 
-> Yes, indeed.  I suppose it must be the situation that I've never done that
-> before then.  While I certainly I have pushed a detached head before, it must 
-> have always been to an existing branch.
-> 
-> Thanks for clarifying this.
-> 
-> It is slightly surprising that git-push doesn't default to assuming one means 
-> refs/heads/newbranch in this case.  I don't see a reason not to?
+On Thu, May 5, 2011 at 03:35, Junio C Hamano <gitster@pobox.com> wrote:
+> =C2=A0* "git stash apply" used to refuse to work if there was any cha=
+nge in
+> =C2=A0 the working tree, even when the change did not overlap with th=
+e change
+> =C2=A0 the stash recorded.
 
-Consider something like:
+Does this mean that I won't get the "you have unstaged changes, please
+add them" message anymore for the non-overlapping case? If so, nice!
 
-  $ git checkout v1.5
-  $ git push origin HEAD:foo
+--=20
+Cheers,
 
-Would you want "foo" to be a branch or a tag? I can see arguments for
-either.
-
-Rather than trying to guess, it's fairly easy to disambiguate. For a
-branch, either:
-
-  $ git push origin HEAD:refs/heads/foo
-
-or
-
-  $ git branch foo
-  $ git push origin HEAD
-
-would work, depending on whether or not you want a local branch.
-
--Peff
+Sverre Rabbelier
