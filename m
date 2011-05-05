@@ -1,57 +1,99 @@
-From: "Mikhail T." <mi+thun@aldan.algebra.com>
-Subject: Re: How to fork a file (git cp ?)
-Date: Thu, 05 May 2011 15:31:22 -0400
-Message-ID: <4DC2FB0A.2090100@aldan.algebra.com>
-References: <4DC1934D.6070608@aldan.algebra.com> <4DC19955.7040503@kdbg.org> <7viptqdvrf.fsf@alter.siamese.dyndns.org> <4DC20461.4090703@aldan.algebra.com> <7v1v0ddhbz.fsf@alter.siamese.dyndns.org>
+From: Valentin Haenel <valentin.haenel@gmx.de>
+Subject: Re: [PATCH v3 3/5] git-reset.txt: better docs for '--patch'
+Date: Thu, 5 May 2011 21:41:24 +0200
+Message-ID: <20110505194124.GA18107@kudu.in-berlin.de>
+References: <1304621271-17107-1-git-send-email-valentin.haenel@gmx.de> <1304621328-17184-3-git-send-email-valentin.haenel@gmx.de> <7v7ha56jh4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Git-List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:31:35 2011
+X-From: git-owner@vger.kernel.org Thu May 05 21:42:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI4Gs-0004Rm-Pt
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:31:35 +0200
+	id 1QI4R5-0001zF-NR
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668Ab1EETba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 15:31:30 -0400
-Received: from smtp11.lnh.mail.rcn.net ([207.172.157.101]:61942 "EHLO
-	smtp01.lnh.mail.rcn.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752586Ab1EETb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 15:31:29 -0400
-Received: from mr16.lnh.mail.rcn.net ([207.172.157.36])
-  by smtp02.lnh.mail.rcn.net with ESMTP; 05 May 2011 15:31:24 -0400
-Received: from smtp04.lnh.mail.rcn.net (smtp04.lnh.mail.rcn.net [207.172.157.104])
-	by mr16.lnh.mail.rcn.net (MOS 4.2.3-GA)
-	with ESMTP id BBH34737;
-	Thu, 5 May 2011 15:31:23 -0400
-X-Auth-ID: anat
-Received: from 209-6-61-133.c3-0.sbo-ubr1.sbo.ma.cable.rcn.com (HELO [192.168.1.8]) ([209.6.61.133])
-  by smtp04.lnh.mail.rcn.net with ESMTP; 05 May 2011 15:31:23 -0400
-User-Agent: Mozilla/5.0 (X11; U; FreeBSD amd64; uk-UA; rv:1.9.2.12) Gecko/20101114 Thunderbird/3.1.6
-In-Reply-To: <7v1v0ddhbz.fsf@alter.siamese.dyndns.org>
+	id S1751248Ab1EETlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 15:41:53 -0400
+Received: from kudu.in-berlin.de ([192.109.42.123]:54820 "EHLO
+	kudu.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002Ab1EETlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 15:41:52 -0400
+Received: from kudu.in-berlin.de (localhost [127.0.0.1])
+	by kudu.in-berlin.de (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p45JfONu022095;
+	Thu, 5 May 2011 21:41:25 +0200
+Received: (from esc@localhost)
+	by kudu.in-berlin.de (8.14.3/8.14.3/Submit) id p45JfOhA022094;
+	Thu, 5 May 2011 21:41:24 +0200
+X-Authentication-Warning: kudu.in-berlin.de: esc set sender to valentin.haenel@gmx.de using -f
+Content-Disposition: inline
+In-Reply-To: <7v7ha56jh4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172891>
 
-On 04.05.2011 22:14, Junio C Hamano wrote:
-> I think that is what exactly "blame -C -C" gives you.
-For that to be useful, one has to suspect, the file was derived by 
-copying something else... Simple "git log" will not suggest that -- 
-unless the commit message, that adds the new copy of a file points to it...
+* Junio C Hamano <gitster@pobox.com> [110505]:
+> Valentin Haenel <valentin.haenel@gmx.de> writes:
+> 
+> > * Include '-p' in the synopsis.
+> > * Include a better wording for what 'git reset -p' does.
+> >   (interactively unstage hunks)
+> > * Include a link to the git-add manpage for a description of the patch-mode.
+> 
+> Yuck (just a style).
 
-On 05.05.2011 14:02, Piotr Krukowiecki wrote:
-> Maybe Mikhail wanted to say that if there's a git-mv as a shortcut for
->    "cp old new ; rm old; add new"
-git-mv preserves the old's change-history in new, so it is more than the 
-above, is not it?
-> then there should be a git-cp as a shortcut for
-Yes...
+Don't like the bullets? Full sentences are preferable, eh? :)
 
-    -mi
+> 
+> > Signed-off-by: Valentin Haenel <valentin.haenel@gmx.de>
+> > Helped-by: Jeff King <peff@peff.net>
+> > Mentored-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> >  Documentation/git-reset.txt |    7 ++++---
+> >  1 files changed, 4 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+> > index 8481f9d..b6ed0c7 100644
+> > --- a/Documentation/git-reset.txt
+> > +++ b/Documentation/git-reset.txt
+> > @@ -9,7 +9,7 @@ SYNOPSIS
+> >  --------
+> >  [verse]
+> >  'git reset' [-q] [<commit>] [--] <paths>...
+> > -'git reset' --patch [<commit>] [--] [<paths>...]
+> > +'git reset' --patch|-p [<commit>] [--] [<paths>...]
+> 
+> We don't say [--quiet|-q], so I am not sure if we care.  If we do, these
+> alternative spellings of the same thing should be marked as alternatives.
+
+I see, git-add and git-stash have them, git-checkout and git-reset
+don't...
+
+> > @@ -39,8 +39,9 @@ working tree in one go.
+> >  	and <commit> (defaults to HEAD).  The chosen hunks are applied
+> >  	in reverse to the index.
+> >  +
+> > -This means that `git reset -p` is the opposite of `git add -p` (see
+> > -linkgit:git-add[1]).
+> > +This means that `git reset -p` is the opposite of `git add -p`, i.e.
+> > +you can use it to selectively unstage hunks. See the ``Interactive Mode''
+> > +section of linkgit:git-add[1] to learn how to operate the `\--patch` mode.
+> 
+> I would rather say "selectively reset hunks".  The reader should not have
+> to learn an alternative terminology to understand what it does, and in
+> this particular sentence, "reset a hunk" is just as understandable and
+> correct.  After all, you are resetting some hunks but not others to the
+> original state specified by the <commit>.  If <commit> happens to be HEAD,
+> that may be equivalent to "unstage", but otherwise it is not even a
+> correct description.
+
+Will fix and resend.
+
+V-
