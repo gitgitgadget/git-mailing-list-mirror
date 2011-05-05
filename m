@@ -1,122 +1,102 @@
-From: "Kibler, Bill" <bill.kibler@hp.com>
-Subject: RE: git failure on HP-UX
-Date: Thu, 5 May 2011 20:51:52 +0000
-Message-ID: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF26B@GVW1362EXC.americas.hpqcorp.net>
-References: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF12C@GVW1362EXC.americas.hpqcorp.net>
- <7vfwot6k7a.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Intermittent Failures in t1450-fsck (Bisected)
+Date: Thu, 5 May 2011 17:07:54 -0400
+Message-ID: <1A288BE9-F001-4CAD-8A89-4B4D6F0F246B@silverinsanity.com>
+References: <115C364B-E910-4A9C-949E-3B10E5E6116C@silverinsanity.com> <2838BCC7-FB14-401B-9498-D0FB78C98D91@silverinsanity.com> <20110505093226.GA29595@sigill.intra.peff.net> <60194977-A4A9-4E18-9878-C1CDE77B75C2@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Richard Lloyd <richard.lloyd@connectinternetsolutions.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 23:04:04 2011
+Cc: Jeff King <peff@peff.net>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Thu May 05 23:08:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI5iN-0006Wq-3U
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 23:04:03 +0200
+	id 1QI5mo-0000Uw-9n
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 23:08:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947Ab1EEVD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 17:03:58 -0400
-Received: from g4t0014.houston.hp.com ([15.201.24.17]:45115 "EHLO
-	g4t0014.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550Ab1EEVD5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 17:03:57 -0400
-X-Greylist: delayed 617 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 May 2011 17:03:57 EDT
-Received: from G2W1953G.americas.hpqcorp.net (gvt0525.austin.hp.com [16.238.8.185])
+	id S1751947Ab1EEVId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 17:08:33 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:38668 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751284Ab1EEVIc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 17:08:32 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id EE9791FFC134; Thu,  5 May 2011 21:08:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.0 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by g4t0014.houston.hp.com (Postfix) with ESMTPS id 8E47D2424D;
-	Thu,  5 May 2011 20:53:39 +0000 (UTC)
-Received: from G5W0326.americas.hpqcorp.net (16.228.8.70) by
- G2W1953G.americas.hpqcorp.net (16.238.8.185) with Microsoft SMTP Server (TLS)
- id 14.1.270.1; Thu, 5 May 2011 20:51:55 +0000
-Received: from GVW1362EXC.americas.hpqcorp.net ([16.230.34.143]) by
- G5W0326.americas.hpqcorp.net ([16.228.8.70]) with mapi; Thu, 5 May 2011
- 20:51:55 +0000
-Thread-Topic: git failure on HP-UX
-Thread-Index: AcwLV5LX8gfa/uHdSi27g4QBxZpblQACxelQ
-In-Reply-To: <7vfwot6k7a.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	by silverinsanity.com (Postfix) with ESMTPSA id E57EC1FFC0F6;
+	Thu,  5 May 2011 21:07:56 +0000 (UTC)
+In-Reply-To: <60194977-A4A9-4E18-9878-C1CDE77B75C2@silverinsanity.com>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172915>
 
-Let me say first off that my change seems to work, but clearly I feel it
-was more a lucky guess on my part than hunting down the actual cause since
-I feel it is a combination of git actions and HP-UX libraries. I can't really
-debug all of HP-UX libc, so I have to make an educated guess as to what might
-be happening. For me, I felt that some mechanism inside of git should be
-possible to set on the client side to limit transfer buffer sizes without
-a recompile.
 
-Now having said that and had a chance to consider my explanation as stated,
-it might be more accurate to say that what I think is happening is closer to
-this - as I understand the SIGBUS and other messages around the action,
-I think the library call is setting up the pipe buffer as 8k of memory,
-while git is assuming(?) a 64K space and returns a pointer to the libc
-function that is well beyond - 48K beyond - the size of the buffer.
-As I take what is happing, one of these processes is returning a pointer
-that points outside approved space and causing the system to fault.
-The debug steps all showed the values from git as being reasonable or
-what I thought them to be, yet HP-UX faulted when entering the called
-function. 
+On May 5, 2011, at 4:04 PM, Brian Gernhardt wrote:
 
-Since I was unable to date to clearly understand all the coding associated with
-the fetch-pack process, just running out of time on the project, I was hoping
-to get more data from the git email group, that might highlight something I missed
-debugging the problem. I clearly was unable to find enough text to explain both
-sides of the side-band handshake and how sideband values are used - maybe if
-I had more time to understand the code fully, but I don't.
+> On May 5, 2011, at 5:32 AM, Jeff King wrote:
+> 
+>> Given that the problem seems racy and intermittent, have you tried
+>> running under valgrind?
+> 
+> This is on my OS X laptop and last I knew valgrind was very buggy on OS X, so I've never tried it.  I'll install it now and see if I can get anything useful out of it.
 
-Bill. 
+I will note the test _reliably_ fails when run in parallel with other tests.
 
------Original Message-----
-From: Junio C Hamano [mailto:gitster@pobox.com] 
-Sent: Thursday, May 05, 2011 12:07 PM
-To: Kibler, Bill
-Cc: git@vger.kernel.org; Richard Lloyd
-Subject: Re: git failure on HP-UX
+Under valgrind I get the following error.  I will note that attempting to run the full test suite with valgrind gives lots of similar errors in many tests.  (All conditional jump in deflate, allocated in write_loose_object.)
 
-"Kibler, Bill" <bill.kibler@hp.com> writes:
-
-> In looking at the code, "sideband.h" defines "LARGE_PACKET_MAX 65520"
-> and is related to the passed flag "side-band-64k" as discussed in git
-> document pack-protocol.txt. The current default usage seems to be 64K
-> transfers, yet if we check the "include/limits.h" of HP-UX we see a
-> "PIPE_BUF" set to 8192. Along with the tusc indication of 8K pipe size,
-> I suspect that HP-UX is coring due to git trying to use a 64K pipe when
-> 8K is max.
->
-> I solved the probem for now, by changing the file sideband.h to use
-> "LARGE_PACKET_MAX 8208".
-
-This does not make any sense.  We may make write(2) and read(2) system
-calls with 64k (or maybe bit more) chunk, but that does not mean the
-implementation of these system calls must take that as a whole.  Your
-write(2) is allowed to write only whatever fits your pipe buffer, and tell
-the caller "I wrote only 8192 bytes", and the code is supposed to loop,
-advancing the write pointer by 8k and calling write(2) again, until you
-write everything to whoever is reading the other end of the pipe.  The
-same thing for the read(2).
-
-If you can find a place where we make write(2)/read(2) and blindly assumes
-that a non-negative return means everything was written/read successfully,
-then you have found a bug.
-
-If the symptom _were_ a deadlock where the writer of one pipe expected to
-be able to send 64k to the other end of the pipe and then hear back from
-the other side with a separate read, I would understand that could happen
-(actually we know a local pipe transfer without ssh has that kind of
-potential deadlock but I think the size we assume that can fit in the pipe
-buffer is far smaller than 8k).  But I do not understand where a SIGBUS
-can come from.
+==14187== Conditional jump or move depends on uninitialised value(s)
+==14187==    at 0x100209B3B: deflateEnd (in /usr/lib/libz.1.2.3.dylib)
+==14187==    by 0x10020ABF6: deflateSetDictionary (in /usr/lib/libz.1.2.3.dylib)
+==14187==    by 0x10020B914: deflate (in /usr/lib/libz.1.2.3.dylib)
+==14187==    by 0x1000FA631: write_loose_object (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000FA8C8: write_sha1_file (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000FACFB: index_mem (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000FAE95: index_fd (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x100038258: hash_fd (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000386AA: cmd_hash_object (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000016BC: run_builtin (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x10000186E: handle_internal_command (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x10000195F: run_argv (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==  Uninitialised value was created by a heap allocation
+==14187==    at 0x1001F5345: malloc (vg_replace_malloc.c:236)
+==14187==    by 0x10020A0FB: deflateInit2_ (in /usr/lib/libz.1.2.3.dylib)
+==14187==    by 0x10020A264: deflateInit_ (in /usr/lib/libz.1.2.3.dylib)
+==14187==    by 0x1000FA588: write_loose_object (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000FA8C8: write_sha1_file (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000FACFB: index_mem (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000FAE95: index_fd (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x100038258: hash_fd (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000386AA: cmd_hash_object (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x1000016BC: run_builtin (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x10000186E: handle_internal_command (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187==    by 0x10000195F: run_argv (in /Users/brian/dev/git/t/valgrind/../../git)
+==14187== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:deflateEnd
+   fun:deflateSetDictionary
+   fun:deflate
+   fun:write_loose_object
+   fun:write_sha1_file
+   fun:index_mem
+   fun:index_fd
+   fun:hash_fd
+   fun:cmd_hash_object
+   fun:run_builtin
+   fun:handle_internal_command
+   fun:run_argv
+}
