@@ -1,84 +1,93 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: t5541: Bad file descriptor
-Date: Thu, 5 May 2011 13:59:36 -0400
-Message-ID: <BANLkTi=y+34s+yO9LVuiUxB5Xz3v7Pc2Mw@mail.gmail.com>
-References: <3340686A-18D8-4279-87F0-580262DD4DFA@gernhardtsoftware.com>
- <7voc3hbtgu.fsf@alter.siamese.dyndns.org> <20110505054611.GA29033@sigill.intra.peff.net>
- <20110505061634.GB29033@sigill.intra.peff.net> <BANLkTin8YUwoMmxXLske=5nuvW+idBOuig@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: How to fork a file (git cp ?)
+Date: Thu, 5 May 2011 20:02:42 +0200
+Message-ID: <BANLkTimD7byL=rgy79BWFT3vqKpzv9aNOQ@mail.gmail.com>
+References: <4DC1934D.6070608@aldan.algebra.com>
+	<4DC19955.7040503@kdbg.org>
+	<7viptqdvrf.fsf@alter.siamese.dyndns.org>
+	<4DC20461.4090703@aldan.algebra.com>
+	<7v1v0ddhbz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 20:00:03 2011
+Cc: "Mikhail T." <mi+thun@aldan.algebra.com>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 20:02:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI2qI-0000cD-Lt
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:00:03 +0200
+	id 1QI2sy-000287-HU
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755483Ab1EER75 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 13:59:57 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:61202 "EHLO
+	id S1755499Ab1EESCo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 14:02:44 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:49843 "EHLO
 	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755258Ab1EER74 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 13:59:56 -0400
-Received: by qyg14 with SMTP id 14so1833725qyg.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 10:59:56 -0700 (PDT)
+	with ESMTP id S1752882Ab1EESCn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 14:02:43 -0400
+Received: by qyg14 with SMTP id 14so1836432qyg.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 11:02:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=fJQNhUTS0tkKRWbmX6JVG70PaPfJ2eTWOu/bkx80rd8=;
-        b=vEk3OBHLNrAFsN1SSByBLCNb0roxxdE5ZhFIpU8xQO8nSGWFjjEkr/qKfI5HRsHLY2
-         jSHBa56Ck2XJ30OK0G6Jx40vgTwd6oe2p1V3Uyq7O5Hg9i46n/OqvnL74S0aFGPLbPxG
-         JYo4hPy2zxZYE+0Sl3saVoF0S32HdvxHC8BXw=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wmyS2Oehn0XWB/50zQOAzerL54949rPfWzn+pCTlpWc=;
+        b=C2MHI+yD+BwMmyFxZAdm+09Cawg9S62Gvw+dkcGMuhzfCHIkq6SmgsOVYLcSYsvtc/
+         Xb5jBlZJxkH7Ui+K1p6PiUgE79EPmJCe77NnfBZVlI/KNaZotglJ42Lt0wqrUrAQbLfX
+         G3LK1YDQder5q8rLakK/rn3cDv8a2tPjDcIBs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=FfbSS7l1mrQS7VynTMi1AWFRy5A3D+JaSBCWM4agIfLJt84C3/nd6wBN45KTU9ZgSL
-         tDtjP5skKZEdSQc+99eZ3ba/Z/rJK2gtSJ8buAYhXItBJN5ICGovO5dBUvRzj35iML89
-         2m5TKT/VeOX3O7+Jk0vT63OB32fHSlM6WLxsk=
-Received: by 10.229.77.12 with SMTP id e12mr1790061qck.147.1304618396132; Thu,
- 05 May 2011 10:59:56 -0700 (PDT)
-Received: by 10.229.188.141 with HTTP; Thu, 5 May 2011 10:59:36 -0700 (PDT)
-In-Reply-To: <BANLkTin8YUwoMmxXLske=5nuvW+idBOuig@mail.gmail.com>
+        b=slTrIMc0FqTrl91FEyfSrUP4VApmodrK2Ef8BMiyT33X8UGszUDodN4UKg4Pyw8iB1
+         DuuClr+zsDykfewQ4enV0dQ6wEFLGjObEk8YNA8BwCnWybs/EE7fyvd5aDsuBvlsTcuh
+         yW68WAKm6huga6w1ZmdQfDLf5hb5u5+QAAIBM=
+Received: by 10.52.111.136 with SMTP id ii8mr3331086vdb.72.1304618562496; Thu,
+ 05 May 2011 11:02:42 -0700 (PDT)
+Received: by 10.220.201.135 with HTTP; Thu, 5 May 2011 11:02:42 -0700 (PDT)
+In-Reply-To: <7v1v0ddhbz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172862>
 
-On Thu, May 5, 2011 at 7:18 AM, Sverre Rabbelier <srabbelier@gmail.com>=
- wrote:
-> On Thu, May 5, 2011 at 08:16, Jeff King <peff@peff.net> wrote:
->> OK, embarrassing. 09c9957 completely breaks smart http pushing. My
->> testing of Johannes' patch was completely focused on the error case,=
- and
->> I didn't have a single test for the non-error case. And on top of th=
-at,
->> we _have_ nice tests in the test suite to catch this, but obviously
->> neither I, nor Johannes, nor Junio were running them (because they n=
-eed
->> apache installed and GIT_TEST_HTTPD set).
+On Thu, May 5, 2011 at 4:14 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> "Mikhail T." <mi+thun@aldan.algebra.com> writes:
 >
-> Wasn't someone, I _think_ =C6var, or maybe Avery, (I could be totally
-> wrong) running a buildbot of git.git on various platforms? If so,
-> maybe they can turn on these tests since they aren't often run?
+>> On 04.05.2011 17:02, Junio C Hamano wrote:
+>>> Well, if you come from the mindset that a "file" has an identity (h=
+ence
+>>> there is a distinction between "This file used to be called A and a=
+t one
+>>> point was renamed to B which is the name we see today" and "Some ti=
+me ago
+>>> somebody created a file B with the same contents as A and then remo=
+ved A
+>>> at the same time"), "copy" would not make much sense. =A0What ident=
+ity does
+>>> a new file B gets when you create it by copying from A?
+>> What I want is to signify something like: "This code was obtained fr=
+om
+>> that in file A."
+>
+> I think that is what exactly "blame -C -C" gives you.
 
-I was running one, didn't think anybody cared about it though.  Please
-point me at the necessary docs for this test and I can set up a new
-one in my copious spare time (tm).  I can't promise to monitor it
-though, so that might be more of a problem :)  gitbuilder does produce
-rss feeds that are easy to track.
+Maybe Mikhail wanted to say that if there's a git-mv as a shortcut for
+  "cp old new ; rm old; add new"
+then there should be a git-cp as a shortcut for
+  "cp old new; add new"
 
-Have fun,
+Just for convenience (and symmetry with git-mv).
 
-Avery
+He did write:
+> "copy" -- of an individual file -- makes just as much sense as "move"=
+ (rename).
+
+--=20
+Piotr Krukowiecki
