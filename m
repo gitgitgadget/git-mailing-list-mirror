@@ -1,69 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to efficiently find where a patch applies?
-Date: Thu, 5 May 2011 16:17:18 -0400
-Message-ID: <20110505201718.GA2533@sigill.intra.peff.net>
-References: <20110505181741.GA27251@nwp-laptop>
- <20110505195556.GA1770@sigill.intra.peff.net>
- <20110505201204.GA31572@nwp-laptop>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git-svn and a new svn remote helper
+Date: Thu, 5 May 2011 22:25:06 +0200
+Message-ID: <BANLkTikAtgunYTax5d4oEDAot83wOROmhw@mail.gmail.com>
+References: <1303138000-27807-1-git-send-email-stsp@stsp.name>
+ <vpqhb9vplu4.fsf@bauges.imag.fr> <7v39lfa1h5.fsf@alter.siamese.dyndns.org>
+ <20110419093108.GA7440@ted.stsp.name> <4DAD6FC4.6060004@drmicha.warpmail.net>
+ <20110419120031.GE4134@ted.stsp.name> <4DAD7EFB.2050507@drmicha.warpmail.net>
+ <BANLkTimJa5EDxXerwgZP7viLFPQRc=39uQ@mail.gmail.com> <loom.20110505T211005-593@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: "Nathan W. Panike" <nathan.panike@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 22:17:54 2011
+To: Matthew L Daniel <mdaniel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 22:26:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI4zg-0006Z7-7m
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 22:17:52 +0200
+	id 1QI57Q-0002tN-IY
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 22:25:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753894Ab1EEURZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 16:17:25 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44106
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753327Ab1EEURW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 16:17:22 -0400
-Received: (qmail 2956 invoked by uid 107); 5 May 2011 20:19:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 16:19:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 16:17:18 -0400
-Content-Disposition: inline
-In-Reply-To: <20110505201204.GA31572@nwp-laptop>
+	id S1753415Ab1EEUZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 16:25:47 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:62364 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753130Ab1EEUZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 16:25:46 -0400
+Received: by qwk3 with SMTP id 3so1760071qwk.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 13:25:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=P0NoSL0jjdGVspaQRN9hvOD03YXqkAlOYVd7CE9cS90=;
+        b=q2xir45ac4hz+McFWpQUQtBKm4tSqQEAOeiRhAxeh3GTbz7hiudsBPn38LzGNblcTn
+         VPNTodF3h//EDOpJLULXsBh7dCgd7tyUIiuik8YGObMqHhtL7oEis+ikZ7LCcQPFYWp4
+         3r8iEkLJ6VOE3DJIcP7i0tUTUN6seAxEjCXUg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=fmv/jtQLOy9NhfP3LC2pZaztFAk8OtjJPhJE0ByFsBlWB+0GH9OsrbB5wwAtsrb0vS
+         7IxGbi1q+ZjRHojSPCeHnDfxsoTS282fBtpC8m7JieWGc4HXf3MYHOia0UoIHy2BouXC
+         J9WBbLdRCxcdsvU/0kAflAratciBfc/rkHbLc=
+Received: by 10.229.42.142 with SMTP id s14mr1990535qce.174.1304627146191;
+ Thu, 05 May 2011 13:25:46 -0700 (PDT)
+Received: by 10.229.75.70 with HTTP; Thu, 5 May 2011 13:25:06 -0700 (PDT)
+In-Reply-To: <loom.20110505T211005-593@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172905>
 
-On Thu, May 05, 2011 at 03:12:05PM -0500, Nathan W. Panike wrote:
+Heya,
 
-> The patches were emailed as raw diffs, not as format-patch messages, so I
-> thought git-am was not applicable. Also, I was applying the patches to the git
-> repository on behalf of local colleagues when they ran into problems using
-> 'git-apply'.
+On Thu, May 5, 2011 at 21:13, Matthew L Daniel <mdaniel@gmail.com> wrote:
+> Is there, in fact, a new svn remote helper under development?
 
-Git-am is basically just a wrapper around git-apply that will split an
-email message into a raw diff and a commit message. If you have raw
-diffs in an email, it may handle them OK, or it may be simple enough to
-massage them into the right form.
+Yes, Dmitry Ivankov is working on this as part of his GSoC project [0].
 
-As far as I know, there isn't a convenient way to get "git apply" to do
-the same merge magic for a raw diff that "git am -3" does. It should be
-possible, as the only relevant input is the raw diff; I just don't think
-anybody has bothered to do it.
+[0] http://www.google-melange.com/gsoc/project/google/gsoc2011/divanorama/17001
 
-> I did not want to deal with merge conflicts---my colleagues can
-> handle the conflicts themselves. So a clean merge was optimal from my
-> perspective.
+-- 
+Cheers,
 
-Ah, that makes more sense. I have been in a similar "helping people with
-git" situation myself.
-
-> > Wow, dynamically generating awk using perl. That's a new one for me. :)
-> You might say it is awk-ward.
-
-Ouch. :)
-
--Peff
+Sverre Rabbelier
