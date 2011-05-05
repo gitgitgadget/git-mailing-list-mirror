@@ -1,80 +1,95 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH V2 4/5] git-grep: Learn PCRE
-Date: Thu, 5 May 2011 07:47:43 +0200
-Message-ID: <BANLkTik6pcz696xJyoOju8a3ToResLF+3w@mail.gmail.com>
-References: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>
-	<7vk4e6c5rh.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/1] Honor $(prefix) set in config.mak* when defining
+ ETC_GIT* and sysconfdir
+Date: Thu, 05 May 2011 07:58:24 +0200
+Message-ID: <4DC23C80.6020401@viscovery.net>
+References: <20110428022922.GC4833@camk.edu.pl> <7v62py5nbp.fsf@alter.siamese.dyndns.org> <20110428192751.GE4833@camk.edu.pl> <4DBFA3C6.8060209@viscovery.net> <7vzkn3itb5.fsf@alter.siamese.dyndns.org> <4DC0E99E.6090402@viscovery.net> <20110504135827.GC18585@camk.edu.pl> <4DC1653A.7000000@viscovery.net> <7v4o5afht7.fsf@alter.siamese.dyndns.org> <7vwri5c27e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>
-To: =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 07:47:50 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kacper Kornet <kornet@camk.edu.pl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 07:58:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHrPh-0006fr-3B
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 07:47:49 +0200
+	id 1QHra7-00025B-3I
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 07:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425Ab1EEFrp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 01:47:45 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35160 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248Ab1EEFro convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 01:47:44 -0400
-Received: by fxm17 with SMTP id 17so1300384fxm.19
-        for <git@vger.kernel.org>; Wed, 04 May 2011 22:47:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hH4KSsd08OXNAdeCz31z/72tEslwWOEgh3Jt3tUWmeQ=;
-        b=Egg+nclRasz9XKXVTf1W4jKZps1O7stQeBs/geAN6xWc6XhUyFavLwvbFqEh+1h0Z/
-         CTyUg+TxQSGaJRaDCWQTqNEwBh8lhcWxOxwMpNSFl3dq1inP7gAcjzUyV5HYiwFxc51o
-         eVmkUK06iHeZ0uMSplu7BDSpa5WyPzZFxaBCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pUo6wHcn07k2aDj5lZ8fyrmEK1OFJjxN2q9tfWmBpn4DZUmxjP9QMRS/KrRV+CkGBK
-         N6O2pWvolxF1I0lmvfNgEgNEh2blGzmvormQuATcQx56yqHNCas4rMLG9W2M0xJztDsz
-         7i6Mu0Ydw9ZPLVNTYKBDOKloyoAZUMxx+TzUk=
-Received: by 10.223.59.81 with SMTP id k17mr2231709fah.94.1304574463361; Wed,
- 04 May 2011 22:47:43 -0700 (PDT)
-Received: by 10.223.71.205 with HTTP; Wed, 4 May 2011 22:47:43 -0700 (PDT)
-In-Reply-To: <7vk4e6c5rh.fsf@alter.siamese.dyndns.org>
+	id S1751473Ab1EEF6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 01:58:30 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:28312 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751436Ab1EEF6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 01:58:30 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QHrZw-0006g8-UZ; Thu, 05 May 2011 07:58:25 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A2FDB1660F;
+	Thu,  5 May 2011 07:58:24 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <7vwri5c27e.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: 0.5 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172800>
 
-2011/5/5 Junio C Hamano <gitster@pobox.com>:
-> Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
->
->> @@ -33,6 +39,8 @@ struct grep_pat {
->> =C2=A0 =C2=A0 =C2=A0 size_t patternlen;
->> =C2=A0 =C2=A0 =C2=A0 enum grep_header_field field;
->> =C2=A0 =C2=A0 =C2=A0 regex_t regexp;
->> + =C2=A0 =C2=A0 pcre *pcre_regexp;
->> + =C2=A0 =C2=A0 pcre_extra *extra;
->
-> I don't think pcre will forever stay the _only_ thing that wants to h=
-ook
-> an extra information to this structure. =C2=A0That is why I included =
-"pcre_" in
-> the field name in my earlier "how about doing it this way" suggestion=
-=2E
+Am 5/5/2011 4:26, schrieb Junio C Hamano:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> So I think it would probably be a less-impact and useful solution to keep
+>> sysconfdir and add "sysconfdir = @sysconfdir@" to config.mak.in as well.
+>>
+>> Is Kacper's latest patch with an obvious one-liner to config.mak.in
+>> sufficient to achieve that?
+>>
+>>   From: Kacper Kornet <kornet@camk.edu.pl>
+>>   Subject: Re: [PATCH 1/1] Honor $(prefix) set in config.mak* when defin...
+>>   Date: Wed, 4 May 2011 16:29:21 +0200
+>>   Message-ID: <20110504142921.GE18585@camk.edu.pl>
+> 
+> In other words, this one on top of the above (which defaults sysconfdir
+> to /etc when $(prefix) is /usr and then sets git_etcdir to $(sysconfdir)).
+> 
+> -- >8 --
+> Subject: [PATCH] config.mak.in: allow "configure --sysconfdir=/else/where"
+> 
+> We do allow vanilla Makefile users to say make sysconfdir=/else/where
+> and config.mak can also be tweaked manually for the same effect. Give
+> the same configurablity to ./configure users as well.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  config.mak.in |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/config.mak.in b/config.mak.in
+> index 9614973..dd8f274 100644
+> --- a/config.mak.in
+> +++ b/config.mak.in
+> @@ -18,6 +18,7 @@ bindir = @bindir@
+>  gitexecdir = @libexecdir@/git-core
+>  datarootdir = @datarootdir@
+>  template_dir = @datadir@/git-core/templates
+> +sysconfdir = @sysconfdir@
+>  
+>  mandir=@mandir@
+>  
 
-I would also suggest to share the space between regex_t and the
-(pcre*,pcre_extra*) tuple, like i did in my patch titled 'prepare for
-re-using the space...' from May 2. Sacrificing one bit to indicate
-that this is a pcre compiled pattern should not hurt, because there
-are bits left.
+No, that's not sufficient. Notice that $(sysconfdir) is used for ETC_GIT*
+variables *only* if $(prefix) == /usr (both before and after Kacper's
+patch). Therefore, you won't gain a lot of configurability via sysconfdir;
+you have to change ETC_GIT* variables directly.
 
-Bert
+I'm not opposed to keep sysconfdir at all if it gains a useful purpose
+like with the oneliner above. But extra work is needed in Makefile; if
+this doesn't materialize, I suggest you back out Kacper's patch from 'next'.
+
+-- Hannes
