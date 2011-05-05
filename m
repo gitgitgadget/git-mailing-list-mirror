@@ -1,110 +1,87 @@
-From: "Nathan W. Panike" <nathan.panike@gmail.com>
-Subject: How to efficiently find where a patch applies?
-Date: Thu, 5 May 2011 13:17:41 -0500
-Message-ID: <20110505181741.GA27251@nwp-laptop>
-Reply-To: nathan.panike@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix test t3701-add-interactive.sh
+Date: Thu, 05 May 2011 11:27:17 -0700
+Message-ID: <7vzkn16m0q.fsf@alter.siamese.dyndns.org>
+References: <20110505165029.GD31229@camk.edu.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 05 20:17:41 2011
+Cc: git@vger.kernel.org
+To: Kacper Kornet <draenog@pld-linux.org>
+X-From: git-owner@vger.kernel.org Thu May 05 20:27:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI37M-00030X-PW
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:17:41 +0200
+	id 1QI3H5-0000gA-GG
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 20:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755707Ab1EESRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 14:17:35 -0400
-Received: from mail-iw0-f194.google.com ([209.85.214.194]:37190 "EHLO
-	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755626Ab1EESRf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 14:17:35 -0400
-Received: by iwc10 with SMTP id 10so493092iwc.1
-        for <git@vger.kernel.org>; Thu, 05 May 2011 11:17:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:subject:message-id:reply-to
-         :mime-version:content-type:content-disposition:user-agent;
-        bh=Ie8iyMoZECeMDgwDpyw9CvhSMwfGO9NqwEYwC07vo/c=;
-        b=sB7VZtpS3FIWCMe58O/HKUVaVD2DxnHgudtFSH0JI4zoTagS8K3KEto8M1TgJfqD54
-         4OkdDDHB2twHpuIUIU6/vOq0YOw+iGYvGPmRcaDWlVAjmTyaRwcaK0mAZVZcgvvZDTlv
-         W0H5onjowIBipKR5PQGd1DgCAc/mWA69GfeJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:reply-to:mime-version:content-type
-         :content-disposition:user-agent;
-        b=ndNfmoUWA2jozn+oXHhtxvUnVnWgsFYv4niFwuK4KRNmgluFxo7dsCaU5ePY9eA7+8
-         LqpItkcw2A2MLXV8lNBF0LubJKUbEvfhJ08wHsK3w0hUYOvWDXTwQKZx/K9sWW2/CkPv
-         k/J/4YrmoANT6sQKsepUrxdghL4DJfCGmKg6s=
-Received: by 10.42.224.195 with SMTP id ip3mr1410806icb.183.1304619454573;
-        Thu, 05 May 2011 11:17:34 -0700 (PDT)
-Received: from localhost ([128.104.153.131])
-        by mx.google.com with ESMTPS id c1sm990351ibe.17.2011.05.05.11.17.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 May 2011 11:17:34 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755704Ab1EES10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 14:27:26 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58474 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755217Ab1EES1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 14:27:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1833B40C7;
+	Thu,  5 May 2011 14:29:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mtvLBewQvn8OjjgFKB5IMOdziYE=; b=s1Ulfa
+	pGRTq1IkHK3FEwqVKzIvazPxuqKKEspp+4qkkPGWFm/ynQxadCWvD0qzE962QLac
+	mPM+b1Q/c8hrFQdzW6eDR6B2plgcdSnM/FU1Kn+n2+cpprj7v27QBd1ekabH6HqT
+	DbGtrLEx7oxghLzv69ivWhN82AwVGAWVl8kbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PhVl7ZWgTQiNP9kqD+oXsPecpiyYOnjJ
+	m3CcbtqnrL/jC9YgQvyAllfLEpzhBIwxLxOcnRY9qYukzDcBvL3iB7U6ID5OFK7x
+	Do+oRLUKDcxeQksOh7HXy8BNEdWM3amCxFZhZilMBnDMq2X3LXtel7MwAh/D1KIq
+	uWG7P4QkANg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E950E40C6;
+	Thu,  5 May 2011 14:29:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C8CD440C3; Thu,  5 May 2011
+ 14:29:23 -0400 (EDT)
+In-Reply-To: <20110505165029.GD31229@camk.edu.pl> (Kacper Kornet's message of
+ "Thu, 5 May 2011 18:50:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9B9B7942-7745-11E0-BAE3-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172866>
 
-In the past couple weeks, I have had several occasions where a collaborator has
-sent a patch, which does not have information about where the patch forked from
-master.  I wrote the following scripts to try to discover where the patch
-should be applied.  Is there a better way?
+Kacper Kornet <draenog@pld-linux.org> writes:
 
-create_awk.pl:
------------------------>8------------------------------------------
-#! /usr/bin/env perl
-print <<HEADER;
-BEGIN {
-	i = 0
-}
-HEADER
+> One of the tests used to fail due to EOF not in the first column and not
+> continued &&.
+>
+> Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+> ---
+>  t/t3701-add-interactive.sh |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index d6327e7..018f5d9 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -83,9 +83,9 @@ EOF
+>  
+>  test_expect_success PERL 'setup fake editor' '
+>  	cat >fake_editor.sh <<EOF
+> -	EOF
+> +EOF
+>  	chmod a+x fake_editor.sh &&
+> -	test_set_editor "$(pwd)/fake_editor.sh" &&
+> +	test_set_editor "$(pwd)/fake_editor.sh"
+>  '
 
-print "/";
+Very curious. I never saw the breakage.  We are getting:
 
-my $numseen=0;
-my $nummatches = 0;
-while(<STDIN>){
-	if(/^index ([0-9a-f]+)\.\..+$/){
-		$hash = $1;
-	} else {
-		next;
-	}
-	if($hash =~ /^0*$/) {
-		next;
-	}
-	print "|" if($numseen > 0);
-	$numseen = 1;
-	++$nummatches;
-	print "$hash";	
-}
-print "/{ i += 1; print \$0}\n";
+./test-lib.sh: line 450: warning: here-document at line 447 delimited by
+end-of-file (wanted `EOF')
 
-print <<FOOTER;
-END {
-	if( i == $nummatches) {
-		print "FOUND IT";
-		exit 1;
-	}
-	print "i =",i;
-	exit 0;
-}
-FOOTER
------------------------>8------------------------------------------
-
-To find the place where the patch applies, I then would run something like
-
-git rev-list --all | \
-while read commit; do \
-	git ls-tree -r $commit | \
-	awk "$(perl ~/programs/git-hacks/create_awk.pl < <patch file>)" > /dev/null || \
-	echo $commit; \
-done
-
-Nathan Panike
+Well spotted.  Thanks.
