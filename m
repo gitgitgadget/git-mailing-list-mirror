@@ -1,84 +1,62 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.5.1
-Date: Thu, 5 May 2011 19:40:40 +0200
-Message-ID: <BANLkTi=7=gnirqkV=ygf_FOytdAT3L0iNA@mail.gmail.com>
-References: <7vfwouc4jx.fsf@alter.siamese.dyndns.org>
-	<BANLkTikV0-efkU+V90i=hPkMLYXi2Puw4w@mail.gmail.com>
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: [PATCH] bash: Disable __git_ps1() if NO_GIT_PS1 is set
+Date: Thu, 5 May 2011 19:48:40 +0200
+Message-ID: <1k0t770.1lqbn2d43agaoM%lists@haller-berlin.de>
+References: <20110504221153.GB15161@linode>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 19:41:05 2011
+To: sunny@sunbase.org (=?ISO-8859-1?Q?=D8yvind_A=2E_Holm?=),
+	git@vger.kernel.org, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu May 05 19:48:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI2Xw-00071B-HD
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 19:41:04 +0200
+	id 1QI2fU-0002yt-3A
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 19:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536Ab1EERkp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 13:40:45 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:51861 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755422Ab1EERkl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 13:40:41 -0400
-Received: by vxi39 with SMTP id 39so2503839vxi.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 10:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZN0b38B7awGN73u8w9fQFQiHMe9FLRmZFyyqg9taw1s=;
-        b=DxBq/mPSrCrY8YiqQab9ANTWIBTo561UXOQ4RRU3Mul0H5GHRxajRYGnLHKB3FCbyG
-         LrroFZiYmSxNJ9f9IxZ2cTpai9fHtWYBAeqMbMPlUDGtjq6CAZ8FnOLI0dtQDXlk6fP8
-         g8yTHhJferWcsKt3zNwMDvufk0uz5GQl9UlcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sPhvZAxGn6pR3eRg3JQycBZmKfUOMatw42Y0Q0fVDuA/NAD1AAJQRadCAzl2JUVi5a
-         NLHY3ROFTZHIAPp8Tx6msx9qeeGdIqIzeNBcVMw+6RTaataoO/DPZ5iLI2tE5d3L2KQn
-         02PAJ2eN4cEE789VewnKxViUQiBDSszrmyOEY=
-Received: by 10.220.20.81 with SMTP id e17mr649570vcb.85.1304617240217; Thu,
- 05 May 2011 10:40:40 -0700 (PDT)
-Received: by 10.220.201.135 with HTTP; Thu, 5 May 2011 10:40:40 -0700 (PDT)
-In-Reply-To: <BANLkTikV0-efkU+V90i=hPkMLYXi2Puw4w@mail.gmail.com>
+	id S1755566Ab1EERso convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 13:48:44 -0400
+Received: from mail.ableton.net ([62.96.12.117]:49405 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755463Ab1EERsn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 13:48:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date:From:Subject:In-Reply-To:To; bh=1J1F5g1zEC0v4+999GRiUeSiDKt/GrV2pUdUq/VAgOg=;
+	b=NtcZfqW9IcmIDCMvfOpIh8lvC5Bf6EjvehsvzKiER1xNheFfsj9d8b1X/TObAc7yc7J8fuHwF8gkzlvLtiyvKxJBtEVZko9AQ2UL2myp/nsh4nbevGaZCRRuVg1umGJAAz21Jo4pPmGHjPwHxVW3msWsvudBadkExEOlk2RnYl8=;
+Received: from [10.1.15.242]
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1QI2fJ-0005mA-2S; Thu, 05 May 2011 19:48:41 +0200
+In-Reply-To: <20110504221153.GB15161@linode>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.7 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172859>
 
-On Thu, May 5, 2011 at 1:13 PM, Sverre Rabbelier <srabbelier@gmail.com>=
- wrote:
-> Heya,
->
-> On Thu, May 5, 2011 at 03:35, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->> =A0* "git stash apply" used to refuse to work if there was any chang=
-e in
->> =A0 the working tree, even when the change did not overlap with the =
-change
->> =A0 the stash recorded.
->
-> Does this mean that I won't get the "you have unstaged changes, pleas=
+=D8yvind A. Holm <sunny@sunbase.org> wrote:
+
+> If the user works in a big repository on a slow USB disk or network
+> drive, __git_ps1() can result in a significant delay before the promp=
+t
+> reappears. By setting the environment variable NO_GIT_PS1 to a nonemp=
+ty
+> value, the use of __git_ps1() is temporarily disabled.
+
+As far as I can tell, the only thing that makes the prompt slow in larg=
 e
-> add them" message anymore for the non-overlapping case? If so, nice!
+repositories is determining the dirty state; so instead of disabling th=
+e
+prompt entirely, you may want to just unset GIT_PS1_SHOWDIRTYSTATE.
+That way you still see which branch you are on, for example.
 
-I think this also partially fixes problem with git-svn and concurrency =
-described
-here: http://article.gmane.org/gmane.comp.version-control.git/171481
-
-git-svn now works correctly if during dcommit someone else made a chang=
-e to
-svn repository but the change did not touch dcommited file.
-
-It still stops and looses history if change was in the same file.
-
-Thanks,
 
 --=20
-Piotr Krukowiecki
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
