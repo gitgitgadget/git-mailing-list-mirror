@@ -1,62 +1,95 @@
-From: Arjen Laarhoven <arjen@yaph.org>
-Subject: Re: [PATCH] t/annotate-tests: Use echo & cat instead of sed
-Date: Thu, 5 May 2011 09:43:43 +0200
-Message-ID: <20110505074343.GA17328@regex.yaph.org>
-References: <1304570617-17603-1-git-send-email-brian@gernhardtsoftware.com> <7vk4e5bt90.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH V2 4/5] git-grep: Learn PCRE
+Date: Thu, 5 May 2011 09:43:50 +0200
+Message-ID: <BANLkTinXoDFyb9U0RJVb8eH269zj+XvBdQ@mail.gmail.com>
+References: <1304546421-25439-1-git-send-email-michal.kiedrowicz@gmail.com> <1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 09:43:51 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+To: =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 09:44:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHtDx-0002vj-VJ
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 09:43:50 +0200
+	id 1QHtEO-00038I-Qy
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 09:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548Ab1EEHnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 03:43:45 -0400
-Received: from regex.yaph.org ([94.142.240.24]:38111 "EHLO regex.yaph.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751744Ab1EEHnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 03:43:45 -0400
-Received: by regex.yaph.org (Postfix, from userid 1000)
-	id 0998F5B7D7; Thu,  5 May 2011 09:43:44 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vk4e5bt90.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
+	id S1752395Ab1EEHoM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 03:44:12 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46730 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512Ab1EEHoM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 03:44:12 -0400
+Received: by bwz15 with SMTP id 15so1609034bwz.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 00:44:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=fW6Gdmfv+nzhYPEoZ0m1euQKq6XTQsNqOXgwe4G1M5s=;
+        b=rZPTjRoWgz/s1IbgnwGrlfMvjtPqH8OfaiSubi7fJIA/2f/6bG1yFJ4GcbWXFy9Ycp
+         eGxQ9vsuHNWZJW98l8SuNqokqhxrenJcgzAisN8C8wWCHjhBexrw5UX7DAe+kEosFwOd
+         xjCef65nqw14JmBQOlUKrnamB7Yxy3XSRpaK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=EY3frwYqry1RfuRlN3F54BpH5a68KMZMbSjn+kapT6cOOz+8+qVWwtuaCk/hbKqOGK
+         HOYocr4elcEefLzp+ZXKz7JSyscLfRwAvYiY5bIEaAt/7UjUKnCxWvfTh3vTwruIvhUu
+         IWLYg8ucVTAcc6IOGNkLU/PuevDvTvHOJUck0=
+Received: by 10.204.152.5 with SMTP id e5mr1960891bkw.138.1304581450690; Thu,
+ 05 May 2011 00:44:10 -0700 (PDT)
+Received: by 10.204.29.2 with HTTP; Thu, 5 May 2011 00:43:50 -0700 (PDT)
+In-Reply-To: <1304546421-25439-5-git-send-email-michal.kiedrowicz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172814>
 
-On Wed, May 04, 2011 at 10:39:55PM -0700, Junio C Hamano wrote:
-> An earlier patch from Arjen Laarhoven
-> 
->   From: Arjen Laarhoven <arjen@yaph.org>
->   Subject: [PATCH] annotate.sh: Fix failing test on OS X
->   Date: Wed,  4 May 2011 15:36:21 +0200
->   Message-ID: <1304516181-92364-1-git-send-email-arjen@yaph.org>
-> 
-> seems to attempt to address the same issue but with a twist to deal with
-> an incomplete line at the end of file.
-> 
-> Arjen, does Brian's patch look good to you, too?  It is much less tricky
-> and should look obviously correct even to people who sees the code in
-> question for the first time.
+2011/5/5 Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>:
+> +#ifdef NO_LIBPCRE
+> +static void compile_pcre_regexp(struct grep_pat *p, struct grep_opt =
+*opt)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 die("cannot use Perl-compatible regexes when l=
+ibpcre is not compiled in");
+> +}
 
-Yup, this looks much better than my fix.  At least I learned something
-about the sed incompatibilities ;-)
+Looks like these two functions below can be just left empty, because yo=
+u will
+exit when calling compile_pcre_regexp in compile_regexp.
 
-Arjen
+> +static int pcrematch(struct grep_pat *p, char *line, char *eol,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 regmatch_t *match,=
+ int eflags)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 die("cannot use Perl-compatible regexes when l=
+ibpcre is not compiled in");
+> +}
+> +
+> +static void free_pcre_regexp(struct grep_pat *p)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 die("cannot use Perl-compatible regexes when l=
+ibpcre is not compiled in");
+> +}
+> +
 
--- 
-Arjen Laarhoven
+These will be never called, because...
 
-The presence of those seeking the truth is infinitely to be preferred to 
-those who think they've found it.
-                                -- Terry Pratchett, "Monstrous Regiment"
+> @@ -70,6 +135,11 @@ static void compile_regexp(struct grep_pat *p, st=
+ruct grep_opt *opt)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (p->fixed)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;
+>
+> + =C2=A0 =C2=A0 =C2=A0 if (opt->pcre) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 compile_pcre_regex=
+p(p, opt);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
+> + =C2=A0 =C2=A0 =C2=A0 }
+
+=2E.. you die here, if PCRE not available.
