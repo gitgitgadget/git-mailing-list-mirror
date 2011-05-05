@@ -1,90 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git failure on HP-UX
-Date: Thu, 05 May 2011 12:06:33 -0700
-Message-ID: <7vfwot6k7a.fsf@alter.siamese.dyndns.org>
-References: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF12C@GVW1362EXC.americas.hpqcorp.net>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCH] t1507: change quoting in test_did_you_mean to a more
+ general one
+Date: Thu, 5 May 2011 21:10:28 +0200
+Message-ID: <20110505191027.GA3242@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Richard Lloyd <richard.lloyd@connectinternetsolutions.com>
-To: "Kibler\, Bill" <bill.kibler@hp.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:06:52 2011
+Content-Type: text/plain; charset=iso-8859-2
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 05 21:10:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI3sv-0007YG-Kn
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:06:49 +0200
+	id 1QI3wf-0001E3-GX
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339Ab1EETGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 15:06:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40412 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753163Ab1EETGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 15:06:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0FA1245E5;
-	Thu,  5 May 2011 15:08:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WSGvYZJ2m21ktyZWSKBYIDNCU74=; b=CzMSGk
-	UyM8T2wddXNQvkVtoCguUDiMC3oYBfAEfs/zoJanqJgZFLCM4QOw/1gfESpFyHbw
-	gTEIVLYhJckQ+b5/Ne5hfrl/vYk3YSIl9K1DfwlozycLEwT2YfgW9xDNKoYZvpT3
-	F94hbyYZtijlaGG4JLP6rIPEriZoFMNNN/Tcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XtWN9RjbdTM2a8GITwa6IEj4IBb2cOGx
-	Lrlxj6MQHlA8kDocVuxPAEvZm/YqvoriQQRR4LmqrI3gnDpHHqPfTw7cD73CQM+/
-	QYkAQd9Mchh2CXZdJM6K/B2CEbB8fpRev+l5x/hzLgIz0RtRG5W/B8ssgWY33Tnj
-	t8bfXygb26Y=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D0C1E45E4;
-	Thu,  5 May 2011 15:08:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3186945E3; Thu,  5 May 2011
- 15:08:38 -0400 (EDT)
-In-Reply-To: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF12C@GVW1362EXC.americas.hpqcorp.net>
- (Bill Kibler's message of "Thu, 5 May 2011 18:04:38 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1875D93A-774B-11E0-849C-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1753320Ab1EETKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 15:10:35 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:34788 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752976Ab1EETKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 15:10:34 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 8D92B5F0049
+	for <git@vger.kernel.org>; Thu,  5 May 2011 21:10:33 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id uA6ISQ-S2YkW for <git@vger.kernel.org>;
+	Thu,  5 May 2011 21:10:28 +0200 (CEST)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 383995F0046
+	for <git@vger.kernel.org>; Thu,  5 May 2011 21:10:28 +0200 (CEST)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 249E580AC5; Thu,  5 May 2011 21:10:28 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172883>
 
-"Kibler, Bill" <bill.kibler@hp.com> writes:
+In bash and some other shells the script:
 
-> In looking at the code, "sideband.h" defines "LARGE_PACKET_MAX 65520"
-> and is related to the passed flag "side-band-64k" as discussed in git
-> document pack-protocol.txt. The current default usage seems to be 64K
-> transfers, yet if we check the "include/limits.h" of HP-UX we see a
-> "PIPE_BUF" set to 8192. Along with the tusc indication of 8K pipe size,
-> I suspect that HP-UX is coring due to git trying to use a 64K pipe when
-> 8K is max.
->
-> I solved the probem for now, by changing the file sideband.h to use
-> "LARGE_PACKET_MAX 8208".
+x=2; unset a; echo "${a:-'$x'}"
 
-This does not make any sense.  We may make write(2) and read(2) system
-calls with 64k (or maybe bit more) chunk, but that does not mean the
-implementation of these system calls must take that as a whole.  Your
-write(2) is allowed to write only whatever fits your pipe buffer, and tell
-the caller "I wrote only 8192 bytes", and the code is supposed to loop,
-advancing the write pointer by 8k and calling write(2) again, until you
-write everything to whoever is reading the other end of the pipe.  The
-same thing for the read(2).
+prints '2'. However ksh shell prints $x. The quoting is added to
+reproduce bash behaviour.
 
-If you can find a place where we make write(2)/read(2) and blindly assumes
-that a non-negative return means everything was written/read successfully,
-then you have found a bug.
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
+ t/t1506-rev-parse-diagnosis.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-If the symptom _were_ a deadlock where the writer of one pipe expected to
-be able to send 64k to the other end of the pipe and then hear back from
-the other side with a separate read, I would understand that could happen
-(actually we know a local pipe transfer without ssh has that kind of
-potential deadlock but I think the size we assume that can fit in the pipe
-buffer is far smaller than 8k).  But I do not understand where a SIGBUS
-can come from.
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+index 4a6396f..bad09f9 100755
+--- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -8,8 +8,8 @@ exec </dev/null
+ 
+ test_did_you_mean ()
+ {
+-	printf "fatal: Path '$2$3' $4, but not ${5:-'$3'}.\n" >expected &&
+-	printf "Did you mean '$1:$2$3'${2:+ aka '$1:./$3'}?\n" >>expected &&
++	printf "fatal: Path '$2$3' $4, but not ${5:-\'$3\'}.\n" >expected &&
++	printf "Did you mean '$1:$2$3'${2:+ aka \'$1:./$3\'}?\n" >>expected &&
+ 	test_cmp expected error
+ }
+ 
+-- 
+1.7.5
+
+-- 
+  Kacper Kornet
