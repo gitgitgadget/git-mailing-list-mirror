@@ -1,96 +1,86 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Intermittent Failures in t1450-fsck (Bisected)
-Date: Thu, 5 May 2011 16:04:33 -0400
-Message-ID: <60194977-A4A9-4E18-9878-C1CDE77B75C2@silverinsanity.com>
-References: <115C364B-E910-4A9C-949E-3B10E5E6116C@silverinsanity.com> <2838BCC7-FB14-401B-9498-D0FB78C98D91@silverinsanity.com> <20110505093226.GA29595@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 05 22:05:01 2011
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: How to fork a file (git cp ?)
+Date: Thu, 5 May 2011 22:06:44 +0200
+Message-ID: <BANLkTimn9uKXfRDFnmOhbs6=93xASQ42-g@mail.gmail.com>
+References: <4DC1934D.6070608@aldan.algebra.com>
+	<4DC19955.7040503@kdbg.org>
+	<7viptqdvrf.fsf@alter.siamese.dyndns.org>
+	<4DC20461.4090703@aldan.algebra.com>
+	<7v1v0ddhbz.fsf@alter.siamese.dyndns.org>
+	<4DC2FB0A.2090100@aldan.algebra.com>
+	<BANLkTikE8aMh6RUDzrh=SuOxvKxuPShQhQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org
+To: "Mikhail T." <mi+thun@aldan.algebra.com>
+X-From: git-owner@vger.kernel.org Thu May 05 22:06:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI4nC-0006yU-Ph
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 22:04:59 +0200
+	id 1QI4p1-0008CA-Nf
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 22:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753136Ab1EEUEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 16:04:53 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:42962 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751297Ab1EEUEx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 16:04:53 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 272CD1FFC134; Thu,  5 May 2011 20:04:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 126F31FFC0F6;
-	Thu,  5 May 2011 20:04:32 +0000 (UTC)
-In-Reply-To: <20110505093226.GA29595@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1084)
+	id S1753152Ab1EEUGr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 16:06:47 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:53579 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751297Ab1EEUGq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 16:06:46 -0400
+Received: by vxi39 with SMTP id 39so2628811vxi.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 13:06:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mI9M3qjcWA//imxooQYXhmMFzKIQAGBXKeB/+Vg64aQ=;
+        b=QRuJaEXJZYVRoTXRkm3+lyVT1aN/yPOZez4VbL15MNuVeCwtxYlOyELNHC7+UEIolJ
+         bT6Xq0oV37dUYK786dSDHoOgsc9Fbok7Hel8FUp8vKpOHUqvU7mjMoTjxLkoUGTGj2Hs
+         gFlR9T+TohDYoTBs847xyyiXtYX7TKjsqZ/eA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tL+/hqjhNUTrXn6SISGd2t1sl6vvYNu0+I87h4Zhe2VWvO1zBE1NkRNoSz7bMIl5L8
+         Vcw0RjX/BTPqkhFad7AV3j2BYENcw7hrK4Nsll8321W8PxMddOYi9wy/rIejrKLh9UFG
+         aRIWCt//PJWQw+LTCMPu+aWy3xwlkD9KUz2JM=
+Received: by 10.220.20.81 with SMTP id e17mr687615vcb.85.1304626004786; Thu,
+ 05 May 2011 13:06:44 -0700 (PDT)
+Received: by 10.220.201.135 with HTTP; Thu, 5 May 2011 13:06:44 -0700 (PDT)
+In-Reply-To: <BANLkTikE8aMh6RUDzrh=SuOxvKxuPShQhQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172901>
+
+On Thu, May 5, 2011 at 10:01 PM, Piotr Krukowiecki
+<piotr.krukowiecki@gmail.com> wrote:
+> BTW, I don't understand why 'status' shows renames but not copies:
+>
+> $ cp f fcp && git add fcp && git status
+> # Changes to be committed:
+> # =A0 =A0 =A0 new file: =A0 fcp
+>
+> $ mv f fmv && git add fmv && git rm f && git status
+> # Changes to be committed:
+> # =A0 =A0 =A0 renamed: =A0 =A0f -> fmv
+>
+> I would expect sth like "copied: f -> fcp".
+> Not sure what about one file copied to multiple files, but I suppose
+> renames have the same problem.
+
+I mean similar problem - you can delete one or more identical files and=
+ add one
+or more new files with the same content.
 
 
-On May 5, 2011, at 5:32 AM, Jeff King wrote:
+> It should not be a problem performance-wise...
 
-> On Thu, May 05, 2011 at 02:46:52AM -0400, Brian Gernhardt wrote:
->>> t1450-fsck fails in test 10 "tag pointing to something else than its type", but only if I run it as part of the full test suite (with either `make test` or `make prove`).  If I run the test separately, it passes.
->>> 
->>> The output from running with GIT_TEST_OPTS="-v" is:
->>> 
->>> expecting success: 
->>> 	sha=$(echo blob | git hash-object -w --stdin) &&
->>> 	test_when_finished "remove_object $sha" &&
->>> 	cat >wrong-tag <<-EOF &&
->>> 	object $sha
->>> 	type commit
->>> 	tag wrong
->>> 	tagger T A Gger <tagger@example.com> 1234567890 -0000
->>> 
->>> 	This is an invalid tag.
->>> 	EOF
->>> 
->>> 	tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
->>> 	test_when_finished "remove_object $tag" &&
->>> 	echo $tag >.git/refs/tags/wrong &&
->>> 	test_when_finished "git update-ref -d refs/tags/wrong" &&
->>> 	test_must_fail git fsck --tags 2>out &&
->>> 	cat out &&
->>> 	grep "error in tag.*broken links" out
->>> 
->>> tagged commit 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 (wrong) in 66f6581d549f70e05ca586bc2df5c15a95662c36
->>> missing commit 63499e4ea8e096b831515ceb1d5a7593e4d87ae5
->>> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, not a blob
->>> error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or missing
->>> not ok - 10 tag pointing to something else than its type
-> 
-> So how did you bisect down to it? You said reverting e96c19c fixes it,
-> which does seem like strong evidence, but what I am wondering is if a
-> _different_ test in t1450 fails at e96c19c. That would point to
-> something else funny going on.
 
-I actually bisected the test failure to "c5a5f12e: Merge branch 'ef/maint-strbuf-init'", and then rebased e96c19c on top of 2a2dbd2 to see what actually caused the error.  I re-ran it like this again today and got the exact same error.
-
-> Double weird is that my output for t1450.10 is totally different from
-> that.  Which commit are you testing on?
-
-The original e-mail was from next at that point.  The output from the rebased version and current next (76e37e2) is identical.
-
-> Given that the problem seems racy and intermittent, have you tried
-> running under valgrind?
-
-This is on my OS X laptop and last I knew valgrind was very buggy on OS X, so I've never tried it.  I'll install it now and see if I can get anything useful out of it.
-
-~~ Brian
+--=20
+Piotr Krukowiecki
