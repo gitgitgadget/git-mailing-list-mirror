@@ -1,86 +1,93 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
-Subject: [GSoC 11] libgit2: Acceptance
-Date: Thu, 5 May 2011 11:23:29 +0200
-Message-ID: <20110505092329.GA21534@bee.lab.cmartin.tk>
+From: Jeff King <peff@peff.net>
+Subject: Re: Intermittent Failures in t1450-fsck (Bisected)
+Date: Thu, 5 May 2011 05:32:26 -0400
+Message-ID: <20110505093226.GA29595@sigill.intra.peff.net>
+References: <115C364B-E910-4A9C-949E-3B10E5E6116C@silverinsanity.com>
+ <2838BCC7-FB14-401B-9498-D0FB78C98D91@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ikeVEW9yuYc//A+q"
-To: git@vger.kernel.org, libgit2@librelist.com
-X-From: git-owner@vger.kernel.org Thu May 05 11:23:37 2011
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Thu May 05 11:32:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHumX-0000I3-7o
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 11:23:37 +0200
+	id 1QHuvH-0004AV-AH
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 11:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560Ab1EEJXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 05:23:32 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:41055 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750993Ab1EEJXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 05:23:31 -0400
-Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 7756F46142;
-	Thu,  5 May 2011 11:23:10 +0200 (CEST)
-Received: (nullmailer pid 25886 invoked by uid 1000);
-	Thu, 05 May 2011 09:23:29 -0000
+	id S1752939Ab1EEJcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 05:32:33 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57010
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751744Ab1EEJcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 05:32:32 -0400
+Received: (qmail 29456 invoked by uid 107); 5 May 2011 09:34:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 05:34:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 05:32:26 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <2838BCC7-FB14-401B-9498-D0FB78C98D91@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172823>
 
+On Thu, May 05, 2011 at 02:46:52AM -0400, Brian Gernhardt wrote:
 
---ikeVEW9yuYc//A+q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> I finally managed to pin down what triggers the bug and bisect it to
+> its beginning.
+> 
+> I see this failure only when the test suite is run in parallel.  (make
+> -j or -j in GIT_PROVE_OPTS)
+> 
+> The bug starts happening in "e96c19c: config: support values longer than 1023 bytes".
 
-Hello all,
+I'm slightly confused. Commit e96c19c predates the test that you
+reported as failing here:
 
-I've been accepted as a Summer of Code student so I'd like to
-introduce myself: I study Informatics (Computer Science, if you will)
-in Berlin, Germany working towards my Bachelor's Degree. I've been
-using git for quite some time and for the last two months or so I've
-been getting familiar with the git and libgit2 codebase.
+> > t1450-fsck fails in test 10 "tag pointing to something else than its type", but only if I run it as part of the full test suite (with either `make test` or `make prove`).  If I run the test separately, it passes.
+> > 
+> > The output from running with GIT_TEST_OPTS="-v" is:
+> > 
+> > expecting success: 
+> > 	sha=$(echo blob | git hash-object -w --stdin) &&
+> > 	test_when_finished "remove_object $sha" &&
+> > 	cat >wrong-tag <<-EOF &&
+> > 	object $sha
+> > 	type commit
+> > 	tag wrong
+> > 	tagger T A Gger <tagger@example.com> 1234567890 -0000
+> > 
+> > 	This is an invalid tag.
+> > 	EOF
+> > 
+> > 	tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
+> > 	test_when_finished "remove_object $tag" &&
+> > 	echo $tag >.git/refs/tags/wrong &&
+> > 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+> > 	test_must_fail git fsck --tags 2>out &&
+> > 	cat out &&
+> > 	grep "error in tag.*broken links" out
+> > 
+> > tagged commit 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 (wrong) in 66f6581d549f70e05ca586bc2df5c15a95662c36
+> > missing commit 63499e4ea8e096b831515ceb1d5a7593e4d87ae5
+> > error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, not a blob
+> > error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or missing
+> > not ok - 10 tag pointing to something else than its type
 
-I'd like to thank git.git for "donating" one of the slots to libgit2,
-as the mainline git doesn't get a direct benefit from it (though I
-hope we can consolidate the codebases in the future).
+So how did you bisect down to it? You said reverting e96c19c fixes it,
+which does seem like strong evidence, but what I am wondering is if a
+_different_ test in t1450 fails at e96c19c. That would point to
+something else funny going on.
 
-Due to the difference between European and US semesters, I'm going to
-have to start actual coding work a bit early, to make up for not being
-able to dedicate 100% of my time to the project until the midterm.
+Double weird is that my output for t1450.10 is totally different from
+that.  Which commit are you testing on?
 
-Once the coding season officially starts, I'll publish weekly or
-almost-weekly status reports, which I'll send to the git and libgit2
-mailing lists and mirror on my blog[0].
+Given that the problem seems racy and intermittent, have you tried
+running under valgrind?
 
-The actual project is adding the network stack to libgit2 so that it's
-possible to clone and push using libgit2.
-
-Cheers,
-
-   cmn
-[0] http://cmartin.tk/blog/
-
---ikeVEW9yuYc//A+q
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJNwmyRAAoJEHKRP1jG7ZzTT0cH/jNdGi936FMNr5lVE5D4RtCl
-L5ssD3u+WAOumqhWV6QkH2/c3svnSDpoUMZYIktqKGS7sj8eizpQ05VRY9icaazF
-d0U34Ly5bWbc+PG4h+ofLeOszalkM/DBJJdXziMmTUMyxgE/m/yyatKfLolXChb7
-TY4uAb9QYy1xs7faeJegxC3hVlvnbeITKkWiFcI8wn8kDzgYUL5NCYh4lqNEUOqG
-DHcEBMfyEkDeFebb20tRIce2Df+YD19oUD8RhXOzF2vrl+Qf5w8apVaIV7gZsxN/
-DFu1kLIYyprSY2rvM5o49PKeoAi1nDVwGJqjhF0rJmgr3GwEl051LIPdsyT/av0=
-=XVfi
------END PGP SIGNATURE-----
-
---ikeVEW9yuYc//A+q--
+-Peff
