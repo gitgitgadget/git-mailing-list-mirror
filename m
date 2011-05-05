@@ -1,71 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/annotate-tests: Use echo & cat instead of sed
-Date: Wed, 04 May 2011 22:39:55 -0700
-Message-ID: <7vk4e5bt90.fsf@alter.siamese.dyndns.org>
-References: <1304570617-17603-1-git-send-email-brian@gernhardtsoftware.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: t5541: Bad file descriptor
+Date: Thu, 5 May 2011 01:46:11 -0400
+Message-ID: <20110505054611.GA29033@sigill.intra.peff.net>
+References: <3340686A-18D8-4279-87F0-580262DD4DFA@gernhardtsoftware.com>
+ <7voc3hbtgu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Arjen Laarhoven <arjen@yaph.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Thu May 05 07:40:16 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 07:46:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHrIO-0003f2-4u
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 07:40:16 +0200
+	id 1QHrOE-0006Ae-Gk
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 07:46:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358Ab1EEFkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 01:40:10 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58528 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240Ab1EEFkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 01:40:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78F3F3656;
-	Thu,  5 May 2011 01:42:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iN98m9hZcRiixtfOqdzUO72jbU4=; b=oyweGJ
-	e4ymYa2oSpgbMpLNSdAA2nUko6w4zIip9ZjINAiFty6MgA/tBvXXkd0H6cvrcWVt
-	WV5oMizsEntMeM7oPOmTIgJG1Jg0XS7BDbhKOe4YqFJ/nsIuE4GOWlqYlgcUAa68
-	hp5CqVJPGdmL6Qp6fdUVAFLlLOz3lsg5v8GQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y+kgnbFiziogPIpP1CaVstMqC9uBOcRc
-	8bNU+smszc6TGtmS/S9jsKs5ExJo7+FnJ2yov3PivyNw2iAKv+nMJnqVDgGu5ccU
-	FABfA8K+XVYXtad2UKO70Vj558FEQHePi/3iHaro8C5o2U6eSUa6ythfhxZHCsvz
-	zM3jDnk4lII=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 489A9363A;
-	Thu,  5 May 2011 01:42:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1CD193639; Thu,  5 May 2011
- 01:42:00 -0400 (EDT)
-In-Reply-To: <1304570617-17603-1-git-send-email-brian@gernhardtsoftware.com>
- (Brian Gernhardt's message of "Thu, 5 May 2011 00:43:37 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 68ABABDA-76DA-11E0-A8A8-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1751392Ab1EEFqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 01:46:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49609
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751248Ab1EEFqN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 01:46:13 -0400
+Received: (qmail 27370 invoked by uid 107); 5 May 2011 05:48:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 01:48:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 01:46:11 -0400
+Content-Disposition: inline
+In-Reply-To: <7voc3hbtgu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172798>
 
-An earlier patch from Arjen Laarhoven
+On Wed, May 04, 2011 at 10:35:13PM -0700, Junio C Hamano wrote:
 
-  From: Arjen Laarhoven <arjen@yaph.org>
-  Subject: [PATCH] annotate.sh: Fix failing test on OS X
-  Date: Wed,  4 May 2011 15:36:21 +0200
-  Message-ID: <1304516181-92364-1-git-send-email-arjen@yaph.org>
+> Brian Gernhardt <brian@gernhardtsoftware.com> writes:
+> 
+> > I haven't had a lot of time to track down it down until today, but I've
+> > been getting failures in t5541-http-push-.sh.  Several tests fail with
+> > the error "fatal: write error: Bad file descriptor".
+> 
+> A wild guess.
+> 
+> Does it help if you cherry-picked 1e41827 (http: clear POSTFIELDS when
+> initializing a slot, 2011-04-26) on top of the faulty commit?
 
-seems to attempt to address the same issue but with a twist to deal with
-an incomplete line at the end of file.
+I think that 09c9957 (send-pack: avoid deadlock when pack-object dies
+early, 2011-04-25) is totally broken.
 
-Arjen, does Brian's patch look good to you, too?  It is much less tricky
-and should look obviously correct even to people who sees the code in
-question for the first time.
+Looking back at my tests, I only tested the case where pack-objects
+fails. And it seems we totally broke the case where the push is supposed
+to succeed.
 
-Thanks, both.
+Still investigating...
+
+-Peff
