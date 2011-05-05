@@ -1,99 +1,85 @@
-From: Valentin Haenel <valentin.haenel@gmx.de>
-Subject: Re: [PATCH v3 3/5] git-reset.txt: better docs for '--patch'
-Date: Thu, 5 May 2011 21:41:24 +0200
-Message-ID: <20110505194124.GA18107@kudu.in-berlin.de>
-References: <1304621271-17107-1-git-send-email-valentin.haenel@gmx.de> <1304621328-17184-3-git-send-email-valentin.haenel@gmx.de> <7v7ha56jh4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin/checkout.c: show usage with options on missing
+ argument 'branch'
+Date: Thu, 05 May 2011 12:49:08 -0700
+Message-ID: <7vwri553nv.fsf@alter.siamese.dyndns.org>
+References: <1304614690-12493-1-git-send-email-ralf.thielow@googlemail.com>
+ <7vsjst6l5o.fsf@alter.siamese.dyndns.org>
+ <BANLkTikMu3fjbALTAwaaknskBw0H7LbZ-g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git-List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:42:09 2011
+Cc: git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:49:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI4R5-0001zF-NR
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:42:08 +0200
+	id 1QI4Y5-0006PB-AI
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248Ab1EETlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 15:41:53 -0400
-Received: from kudu.in-berlin.de ([192.109.42.123]:54820 "EHLO
-	kudu.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002Ab1EETlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 15:41:52 -0400
-Received: from kudu.in-berlin.de (localhost [127.0.0.1])
-	by kudu.in-berlin.de (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p45JfONu022095;
-	Thu, 5 May 2011 21:41:25 +0200
-Received: (from esc@localhost)
-	by kudu.in-berlin.de (8.14.3/8.14.3/Submit) id p45JfOhA022094;
-	Thu, 5 May 2011 21:41:24 +0200
-X-Authentication-Warning: kudu.in-berlin.de: esc set sender to valentin.haenel@gmx.de using -f
-Content-Disposition: inline
-In-Reply-To: <7v7ha56jh4.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751735Ab1EETtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 15:49:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34483 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751028Ab1EETtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 15:49:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E2CC14A06;
+	Thu,  5 May 2011 15:51:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YFMqpu0AkXbGIhfA1NgDAYORzCQ=; b=Mu8f1V
+	u6VoRd+agyeYkDcNStcQZHObXeUx4Sd4LpeoyHGklZeuwWo6UY46QcCMpfIvBq4j
+	6xVkpSrKiaCmlQ2Okocp9FIXpQHc8Z9+PZ6qMa9yFuXVGod/A2zZL3tJoWwA+oa8
+	GIyoztJj0bKamC1bBSZ1Zsv9XCW4gARF7X/Ks=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VxdqvYxKjpkleFKlTqSxb/ycyx+hbfrz
+	eEL9az4GZljG4JFvmVSOYeWW0H/9l6TDVGlftOqaKBAjn/mgO73zXdM1Fy0lZnaX
+	Pw5sRg0Pj+0QneW3t10ouf7dvZr3I1ZqxXtTJmX7SQMn0lpy18PD9UUmhxR8+hl7
+	7OWXGGF3i74=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BCA434A05;
+	Thu,  5 May 2011 15:51:16 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DB5E84A04; Thu,  5 May 2011
+ 15:51:13 -0400 (EDT)
+In-Reply-To: <BANLkTikMu3fjbALTAwaaknskBw0H7LbZ-g@mail.gmail.com> (Ralf
+ Thielow's message of "Thu, 5 May 2011 21:02:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A1D94F8-7751-11E0-8785-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172892>
 
-* Junio C Hamano <gitster@pobox.com> [110505]:
-> Valentin Haenel <valentin.haenel@gmx.de> writes:
-> 
-> > * Include '-p' in the synopsis.
-> > * Include a better wording for what 'git reset -p' does.
-> >   (interactively unstage hunks)
-> > * Include a link to the git-add manpage for a description of the patch-mode.
-> 
-> Yuck (just a style).
+Ralf Thielow <ralf.thielow@googlemail.com> writes:
 
-Don't like the bullets? Full sentences are preferable, eh? :)
+> Simple "git checkout" or "git checkout " don't tell me that i've done a mistake
+> on usage. It does nothing.
 
-> 
-> > Signed-off-by: Valentin Haenel <valentin.haenel@gmx.de>
-> > Helped-by: Jeff King <peff@peff.net>
-> > Mentored-by: Junio C Hamano <gitster@pobox.com>
-> > ---
-> >  Documentation/git-reset.txt |    7 ++++---
-> >  1 files changed, 4 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-> > index 8481f9d..b6ed0c7 100644
-> > --- a/Documentation/git-reset.txt
-> > +++ b/Documentation/git-reset.txt
-> > @@ -9,7 +9,7 @@ SYNOPSIS
-> >  --------
-> >  [verse]
-> >  'git reset' [-q] [<commit>] [--] <paths>...
-> > -'git reset' --patch [<commit>] [--] [<paths>...]
-> > +'git reset' --patch|-p [<commit>] [--] [<paths>...]
-> 
-> We don't say [--quiet|-q], so I am not sure if we care.  If we do, these
-> alternative spellings of the same thing should be marked as alternatives.
+That is a designed behaviour.  You did nothing wrong.
 
-I see, git-add and git-stash have them, git-checkout and git-reset
-don't...
+Besides, that is a way people who use "checkout -t -b" to create topic
+branches check their branch status.  Pay attention to what the last
+command does in the following transcript.
 
-> > @@ -39,8 +39,9 @@ working tree in one go.
-> >  	and <commit> (defaults to HEAD).  The chosen hunks are applied
-> >  	in reverse to the index.
-> >  +
-> > -This means that `git reset -p` is the opposite of `git add -p` (see
-> > -linkgit:git-add[1]).
-> > +This means that `git reset -p` is the opposite of `git add -p`, i.e.
-> > +you can use it to selectively unstage hunks. See the ``Interactive Mode''
-> > +section of linkgit:git-add[1] to learn how to operate the `\--patch` mode.
-> 
-> I would rather say "selectively reset hunks".  The reader should not have
-> to learn an alternative terminology to understand what it does, and in
-> this particular sentence, "reset a hunk" is just as understandable and
-> correct.  After all, you are resetting some hunks but not others to the
-> original state specified by the <commit>.  If <commit> happens to be HEAD,
-> that may be equivalent to "unstage", but otherwise it is not even a
-> correct description.
+    $ git checkout master
+    $ git checkout -t -b side
+    Branch side set up to track local branch master.
+    Switched to a new branch 'side'
+    $ git checkout master
+    Switched to branch 'master'
+    $ edit ; git commit ;# on 'master'
+    $ git checkout side
+    Switched to branch 'side'
+    Your branch is behind 'master' by 1 commit, ...
+    ... time passes ...
+    $ git checkout
+    Your branch is behind 'master' by 1 commit, ...
 
-Will fix and resend.
-
-V-
+   
