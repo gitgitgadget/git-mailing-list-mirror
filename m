@@ -1,80 +1,92 @@
-From: Dima Sharov <git.avalakvista@gmail.com>
-Subject: [PATCH] shell: add missing initialization of argv0_path
-Date: Thu, 5 May 2011 09:40:17 +0300
-Message-ID: <62D8CA91-5C11-458E-AADB-D8EC8EB99F09@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 08:40:29 2011
+From: Luke Diamand <luke@diamand.org>
+Subject: [PATCH v3] git-p4: add option to preserve user names
+Date: Thu,  5 May 2011 07:43:38 +0100
+Message-ID: <1304577819-703-1-git-send-email-luke@diamand.org>
+Cc: Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Thu May 05 08:44:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHsEe-0000fn-P4
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 08:40:29 +0200
+	id 1QHsIE-0002E6-UH
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 08:44:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745Ab1EEGkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 02:40:22 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55935 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751062Ab1EEGkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 02:40:20 -0400
-Received: by fxm17 with SMTP id 17so1318311fxm.19
-        for <git@vger.kernel.org>; Wed, 04 May 2011 23:40:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:content-type:content-transfer-encoding
-         :subject:date:message-id:cc:to:mime-version:x-mailer;
-        bh=7CjTZFHj/cn/Q7gjsgWEnZtCwslVgz6vj//8UMHrjBI=;
-        b=w4Mvi04yqEaKp0AZCvo6NSz+AENMKUnmmTmcFsbPlvaeWbyW/DQPD0lQZwOurVF9Tu
-         qIPENh+NfvX3m4ZXQHoExosauXxaHvN3HdH02Y/gupbF+4eESOEkvWS7uq+dlCmTcdW4
-         z9wsvuNu/jqxUkwTSe5U6QrYk0hW9Q4duakSQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :cc:to:mime-version:x-mailer;
-        b=L33n2WTSIVo3tNoX583EscLsBz8FBTEMGnqs1jHBANE8hoerjM0suWw1Po9+fcLZJP
-         wGgfHk8ZOy0351UwKy4D1PwNLy87lJNhbMVywnsdmY/89iD7ERmCvwssXyvPb5mohNUF
-         2K1yS7TizK2fepqykJj9ScYQmDg9AFoew+xeU=
-Received: by 10.223.60.81 with SMTP id o17mr888065fah.48.1304577619655;
-        Wed, 04 May 2011 23:40:19 -0700 (PDT)
-Received: from [192.168.1.100] (spearhead.flap.volia.net [93.74.24.105])
-        by mx.google.com with ESMTPS id j11sm625792faa.20.2011.05.04.23.40.18
+	id S1751331Ab1EEGoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 02:44:05 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45743 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751159Ab1EEGoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 02:44:04 -0400
+Received: by wya21 with SMTP id 21so1363470wya.19
+        for <git@vger.kernel.org>; Wed, 04 May 2011 23:44:03 -0700 (PDT)
+Received: by 10.216.237.136 with SMTP id y8mr5808890weq.76.1304577843432;
+        Wed, 04 May 2011 23:44:03 -0700 (PDT)
+Received: from localhost.localdomain (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
+        by mx.google.com with ESMTPS id o23sm1144293wbc.10.2011.05.04.23.43.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 04 May 2011 23:40:19 -0700 (PDT)
-X-Mailer: Apple Mail (2.1084)
+        Wed, 04 May 2011 23:44:02 -0700 (PDT)
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.7.1
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172806>
 
-According to c6dfb39 (remote-curl: add missing initialization of
-argv0_path, 2009-10-13), stand-alone programs (non-builtins)
-must call git_extract_argv0_path(argv[0]) in order to help builds
-that derive the installation prefix at runtime. Without this call,
-the program segfaults (or raises an assertion failure).
+This is version 3 of my patch. It's almost the same as
+the previous one, except that:
 
-Signed-off-by: Dima Sharov <git.avalakvista@gmail.com>
+ - it skips changing the user if the user field is already
+   correct
+
+ - it puts a comment into the submit template saying what
+   the user will be changed to (so you know it hasn't
+   forgotten).
+
+ - fixes a bug in actually forming the changespec (I think
+   it was relying on the way python orders dictionaries).
 ---
-shell.c |    2 ++
-1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/shell.c b/shell.c
-index dea4cfd..abb8622 100644
---- a/shell.c
-+++ b/shell.c
-@@ -137,6 +137,8 @@ int main(int argc, char **argv)
-	int devnull_fd;
-	int count;
+Patches from git passed into p4 end up with the committer
+being identified as the person who ran git-p4.
 
-+	git_extract_argv0_path(argv[0]);
-+
-	/*
-	 * Always open file descriptors 0/1/2 to avoid clobbering files
-	 * in die().  It also avoids not messing up when the pipes are
--- 
-1.7.2.3
+This patch adds an option --preserve-user. When enabled, git-p4
+will modify the changelist after it has been submitted ("p4 change -f")
+and set the username to the one matching the git author.
+
+If the person running git-p4 does not have sufficient permissions,
+git-p4 will refuse to run (detected using "p4 protects").
+It's possible that complicated permissions setups might confuse
+git-p4 - it just looks to see if the user has admin or super on
+the repo. In theory they might have permissions in some parts
+and not in others.
+
+If there are commits with authors who do not have p4 accounts, then
+git-p4 will refuse to run unless git-p4.allowMissingP4Users is true,
+in which case it falls back to the standard behaviour for those
+commits.
+
+The code has to get the p4 changelist number. The way it
+does this is by simply doing 'p4 changes -c <client>', which
+means if someone else is using the same clientspec at the
+same time, there is a potential race hazard. The alternative
+is to rewrite the submit logic to submit a properly marshalled
+template, which felt a bit too intrusive.
+
+I've hoisted the p4 user name cache to a separate class, since it
+gets used in a couple of different places now.
+
+I've added an option git-p4.skipSubmitModTimeCheck so that I can
+write a test case without having to jump through hoops with the
+editor.
+
+
+Luke Diamand (1):
+  git-p4: add option to preserve user names
+
+ contrib/fast-import/git-p4     |  188 ++++++++++++++++++++++++++++++++--------
+ contrib/fast-import/git-p4.txt |   29 ++++++
+ t/t9800-git-p4.sh              |   84 ++++++++++++++++++
+ 3 files changed, 263 insertions(+), 38 deletions(-)
