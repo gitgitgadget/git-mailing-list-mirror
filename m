@@ -1,118 +1,90 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [PATCH] builtin/checkout.c: show usage with options on missing
- argument 'branch'
-Date: Thu, 5 May 2011 21:02:47 +0200
-Message-ID: <BANLkTikMu3fjbALTAwaaknskBw0H7LbZ-g@mail.gmail.com>
-References: <1304614690-12493-1-git-send-email-ralf.thielow@googlemail.com>
-	<7vsjst6l5o.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git failure on HP-UX
+Date: Thu, 05 May 2011 12:06:33 -0700
+Message-ID: <7vfwot6k7a.fsf@alter.siamese.dyndns.org>
+References: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF12C@GVW1362EXC.americas.hpqcorp.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:02:55 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Richard Lloyd <richard.lloyd@connectinternetsolutions.com>
+To: "Kibler\, Bill" <bill.kibler@hp.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:06:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI3p8-0005Cr-Dq
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:02:54 +0200
+	id 1QI3sv-0007YG-Kn
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248Ab1EETCt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 15:02:49 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:43984 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751489Ab1EETCs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 15:02:48 -0400
-Received: by yia27 with SMTP id 27so878838yia.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 12:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=j1WI1eHYdXKBL+sOIQ6Xodmqn3dUliWtYUGRh4Zs7c8=;
-        b=r8THRL505dTwwmChOSIe+5cL9Oa4jnyQG/4rEbmAqbRMQhR5f1FiwlpscFVQz1EzvV
-         ePUQpPCRisjepoPDhtI5vcW5yA67M9PLlTUfVaH/mZwpoxsn6J0qjbIz8CKiQfy9HFJ1
-         UQJ8HA1d1BAoayt1NYgAZ7i6ht469N87HLr8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Y01xH/Xsu+EwoRqdsIWzsDe5jq4UYP3hRtyeAp5/KP1TWYXrqNvsmmOHBeJ7RbmMry
-         qd0iqcqOhmiCTbXOnmQrJg3qiEGLosGOP52ysgF2cqH+rnITmZupvWOrWBi1h/XfD+ji
-         EOSRBLlRiXSObB9If00BPbX6H/JWSEr9Igkwo=
-Received: by 10.236.109.18 with SMTP id r18mr3341068yhg.189.1304622167457;
- Thu, 05 May 2011 12:02:47 -0700 (PDT)
-Received: by 10.147.39.7 with HTTP; Thu, 5 May 2011 12:02:47 -0700 (PDT)
-In-Reply-To: <7vsjst6l5o.fsf@alter.siamese.dyndns.org>
+	id S1753339Ab1EETGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 15:06:45 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40412 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753163Ab1EETGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 15:06:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0FA1245E5;
+	Thu,  5 May 2011 15:08:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WSGvYZJ2m21ktyZWSKBYIDNCU74=; b=CzMSGk
+	UyM8T2wddXNQvkVtoCguUDiMC3oYBfAEfs/zoJanqJgZFLCM4QOw/1gfESpFyHbw
+	gTEIVLYhJckQ+b5/Ne5hfrl/vYk3YSIl9K1DfwlozycLEwT2YfgW9xDNKoYZvpT3
+	F94hbyYZtijlaGG4JLP6rIPEriZoFMNNN/Tcs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XtWN9RjbdTM2a8GITwa6IEj4IBb2cOGx
+	Lrlxj6MQHlA8kDocVuxPAEvZm/YqvoriQQRR4LmqrI3gnDpHHqPfTw7cD73CQM+/
+	QYkAQd9Mchh2CXZdJM6K/B2CEbB8fpRev+l5x/hzLgIz0RtRG5W/B8ssgWY33Tnj
+	t8bfXygb26Y=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D0C1E45E4;
+	Thu,  5 May 2011 15:08:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3186945E3; Thu,  5 May 2011
+ 15:08:38 -0400 (EDT)
+In-Reply-To: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF12C@GVW1362EXC.americas.hpqcorp.net>
+ (Bill Kibler's message of "Thu, 5 May 2011 18:04:38 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1875D93A-774B-11E0-849C-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172882>
 
-Simple "git checkout" or "git checkout " don't tell me that i've done a=
- mistake
-on usage. It does nothing. This can be different when using parameters,=
- but in
-the end i think it should tell me the usage in this case.
+"Kibler, Bill" <bill.kibler@hp.com> writes:
 
-2011/5/5 Junio C Hamano <gitster@pobox.com>:
-> Ralf Thielow <ralf.thielow@googlemail.com> writes:
+> In looking at the code, "sideband.h" defines "LARGE_PACKET_MAX 65520"
+> and is related to the passed flag "side-band-64k" as discussed in git
+> document pack-protocol.txt. The current default usage seems to be 64K
+> transfers, yet if we check the "include/limits.h" of HP-UX we see a
+> "PIPE_BUF" set to 8192. Along with the tusc indication of 8K pipe size,
+> I suspect that HP-UX is coring due to git trying to use a 64K pipe when
+> 8K is max.
 >
->> Show the usage with options for 'checkout' command on missing argume=
-nt 'branch'.
->
-> Please describe what exact command line you typed, what output and si=
-de
-> effect you got from the command, what you _think_ should have happene=
-d
-> instead, and what the differences between two are.
->
-> In other words, what problem you are trying to solve?
->
->> Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
->> ---
->> =C2=A0builtin/checkout.c | =C2=A0 =C2=A05 +++++
->> =C2=A01 files changed, 5 insertions(+), 0 deletions(-)
->>
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index 38632fc..4aa613a 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -1086,5 +1086,10 @@ int cmd_checkout(int argc, const char **argv,=
- const char *prefix)
->> =C2=A0 =C2=A0 =C2=A0 if (opts.writeout_stage)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die(_("--ours/--the=
-irs is incompatible with switching branches."));
->>
->> + =C2=A0 =C2=A0 if (new.name =3D=3D NULL) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usage_with_options(check=
-out_usage, options);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
->> + =C2=A0 =C2=A0 }
->>
->> =C2=A0 =C2=A0 =C2=A0 return switch_branches(&opts, &new);
->> =C2=A0}
->
-> What value are you returning from a function whose return type is int=
-?
->
-> If you read the function switch_branches(), you would notice that it =
-is
-> prepared to handle the case where new.name is NULL (by the way, check
-> against NULL is typically spelled as "if (!new.name)" as you can see
-> there), and then would realize that your change by itself cannot be a
-> correct fix for whatever problem you are trying to solve.
->
-> Have you run "make test" at all?
->
-> If you are changing this command:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git checkout -b frotz
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Switched to a new branch 'junk'
->
-> to error out with a message, then that is a regression.
->
+> I solved the probem for now, by changing the file sideband.h to use
+> "LARGE_PACKET_MAX 8208".
+
+This does not make any sense.  We may make write(2) and read(2) system
+calls with 64k (or maybe bit more) chunk, but that does not mean the
+implementation of these system calls must take that as a whole.  Your
+write(2) is allowed to write only whatever fits your pipe buffer, and tell
+the caller "I wrote only 8192 bytes", and the code is supposed to loop,
+advancing the write pointer by 8k and calling write(2) again, until you
+write everything to whoever is reading the other end of the pipe.  The
+same thing for the read(2).
+
+If you can find a place where we make write(2)/read(2) and blindly assumes
+that a non-negative return means everything was written/read successfully,
+then you have found a bug.
+
+If the symptom _were_ a deadlock where the writer of one pipe expected to
+be able to send 64k to the other end of the pipe and then hear back from
+the other side with a separate read, I would understand that could happen
+(actually we know a local pipe transfer without ssh has that kind of
+potential deadlock but I think the size we assume that can fit in the pipe
+buffer is far smaller than 8k).  But I do not understand where a SIGBUS
+can come from.
