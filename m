@@ -1,86 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ignored file can be deleted silently
-Date: Thu, 05 May 2011 09:49:23 -0700
-Message-ID: <7viptp9jos.fsf@alter.siamese.dyndns.org>
-References: <BANLkTinEupQKfBofhH-qKD6gLGWyWRbGvw@mail.gmail.com>
- <BANLkTi=C4pO83mT3pO0B_AMaK3RMOC4V8g@mail.gmail.com>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCH] Fix test t3701-add-interactive.sh
+Date: Thu, 5 May 2011 18:50:29 +0200
+Message-ID: <20110505165029.GD31229@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniele Segato <daniele.bilug@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 18:49:42 2011
+Content-Type: text/plain; charset=iso-8859-2
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 05 18:51:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI1kD-0002Zr-OQ
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 18:49:42 +0200
+	id 1QI1lR-0003UE-Mj
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 18:50:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755458Ab1EEQtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 12:49:36 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37592 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755364Ab1EEQtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 12:49:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 921B7560B;
-	Thu,  5 May 2011 12:51:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sJ1MuHqPxRdqJU6/ZiYxMGlN104=; b=iWPc49
-	DnXXVCmT1EeWjRpc5yVSJL3wbMaghO+bS9U9ARZ5Xp424Nl9OpEIaF0Edrg5SzAI
-	9SXqzvYwg6Jbz6f3Qqb9VswLeNLNFQc0YFNTEBUBXSMCXn069lE/bDOLYedFG5+U
-	lxuQSqjyPSrx05eAXqRpfTh28GD6M7YXqz8Yw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lOOyyO+5roTilXDE5NUCgBChQalDMSez
-	OXkRc3VFkLqsUXuzpXVBGOAtj8dHVM0i2ZxTDOQkWvVXXPhCKdWawCbUMw4a6qY4
-	9ABo1mTxOCWbqkf2M3v8IdeIZPqmFJ1iO44NpgQ/Wi3FH/7YgkhqlM0P8N2KkcVq
-	NaaCBnDfrB0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5CE28560A;
-	Thu,  5 May 2011 12:51:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 369115609; Thu,  5 May 2011
- 12:51:28 -0400 (EDT)
-In-Reply-To: <BANLkTi=C4pO83mT3pO0B_AMaK3RMOC4V8g@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Thu, 5 May 2011 21:18:15 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EEB6E098-7737-11E0-A075-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
+	id S1755688Ab1EEQug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 12:50:36 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:59404 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755670Ab1EEQuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 12:50:35 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 1636F5F0049
+	for <git@vger.kernel.org>; Thu,  5 May 2011 18:50:34 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id XkOXijpSHZRz for <git@vger.kernel.org>;
+	Thu,  5 May 2011 18:50:29 +0200 (CEST)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 945F75F0046
+	for <git@vger.kernel.org>; Thu,  5 May 2011 18:50:29 +0200 (CEST)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 8455180AF5; Thu,  5 May 2011 18:50:29 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172847>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+One of the tests used to fail due to EOF not in the first column and not
+continued &&.
 
-> This is on purpose. Commit f8a9d42 (read-tree: further loosen "working
-> file will be lost" check. - 2006-12-04) allowed ignored files to be
-> overwritten. Perhaps we can have a config to tighten the check again?
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
+ t/t3701-add-interactive.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-No.  The real issue is that we have only two classes of paths.  Either
-ignored or unignored.
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index d6327e7..018f5d9 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -83,9 +83,9 @@ EOF
+ 
+ test_expect_success PERL 'setup fake editor' '
+ 	cat >fake_editor.sh <<EOF
+-	EOF
++EOF
+ 	chmod a+x fake_editor.sh &&
+-	test_set_editor "$(pwd)/fake_editor.sh" &&
++	test_set_editor "$(pwd)/fake_editor.sh"
+ '
+ 
+ test_expect_success PERL 'dummy edit works' '
+-- 
+1.7.5
 
-If we see an unignored path not yet tracked, we notice and suggest "that
-file might be something valuable and you may forgot to add" in "status"
-output.  In that sense, "unignored" is a synonym of "worth keeping".
-
-Most of the time, "ignored" is also the same as "can be safely discarded"
-(think: *.o files that can be recreated).  If you do not allow them to be
-discarded, switching from a branch that has "builtin/hello.c" and leaves
-an ignored compilation artifact "builtin/hello.o" to another branch that
-did not have "builtin/" directory (probably it is "builtin-hello.c" on
-that branch), or even worse, a plain text file "builtin", would stop and
-get you into a horrible habit of constantly saying "checkout -f".  Even
-though there may be cases where there are some files that are not tracked,
-that you may not want to add, but you may still want to keep, because we
-have only two ignored/unignored classes, that is how we have done things.
-
-If you really want to fix this to everybody's satisfaction, you need to
-introduce the third class, ignored-but-precious (IIRC, tla had such a
-concept), and treat them as "not worth nagging about potentially forgotten
-as an add target" but still "not automatically nukeable".
+-- 
+  Kacper Kornet
