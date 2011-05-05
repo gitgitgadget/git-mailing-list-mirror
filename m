@@ -1,61 +1,46 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Rowan Lewis <me@rowanlewis.com>
 Subject: Re: Filemode is a nuisance
-Date: Wed, 04 May 2011 20:20:35 -0700
-Message-ID: <86k4e5al4s.fsf@red.stonehenge.com>
+Date: Thu, 5 May 2011 13:41:28 +1000
+Message-ID: <54F344CF18124A8D8D1D3DE5E4484736@rowanlewis.com>
 References: <5B76586FBEB246BDA2F097E21C78E881@rowanlewis.com>
+ <86k4e5al4s.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rowan Lewis <me@rowanlewis.com>
-X-From: git-owner@vger.kernel.org Thu May 05 05:20:59 2011
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 05 05:41:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHp7a-0002Fe-7e
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 05:20:58 +0200
+	id 1QHpRd-0000Ym-4U
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 05:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848Ab1EEDUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2011 23:20:39 -0400
-Received: from lax-gw02.mailroute.net ([199.89.0.102]:46595 "EHLO
-	mail.mroute.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752755Ab1EEDUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2011 23:20:39 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by lax-gw02.mroute.net (Postfix) with ESMTP id D1E571DEE0A;
-	Thu,  5 May 2011 03:20:36 +0000 (GMT)
-X-Virus-Scanned: by MailRoute
-Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
-	by lax-gw02.mroute.net (Postfix) with ESMTP id 377F11DEDD1;
-	Thu,  5 May 2011 03:20:36 +0000 (GMT)
-Received: by red.stonehenge.com (Postfix, from userid 1001)
-	id 28E7E5869; Wed,  4 May 2011 20:20:36 -0700 (PDT)
-x-mayan-date: Long count = 12.19.18.6.3; tzolkin = 5 Akbal; haab = 11 Uo
-In-Reply-To: <5B76586FBEB246BDA2F097E21C78E881@rowanlewis.com> (Rowan Lewis's
-	message of "Thu, 5 May 2011 09:38:03 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
+	id S1752633Ab1EEDlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2011 23:41:36 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:40845 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752596Ab1EEDlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2011 23:41:35 -0400
+Received: by pzk9 with SMTP id 9so787922pzk.19
+        for <git@vger.kernel.org>; Wed, 04 May 2011 20:41:33 -0700 (PDT)
+Received: by 10.68.40.164 with SMTP id y4mr2615963pbk.291.1304566892971;
+        Wed, 04 May 2011 20:41:32 -0700 (PDT)
+Received: from rowan.sites.randb.com.au ([203.144.8.51])
+        by mx.google.com with ESMTPS id a1sm1144881pbo.91.2011.05.04.20.41.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 04 May 2011 20:41:32 -0700 (PDT)
+In-Reply-To: <86k4e5al4s.fsf@red.stonehenge.com>
+X-Mailer: sparrow 1.1.2 (build 688.7)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172790>
-
->>>>> "Rowan" == Rowan Lewis <me@rowanlewis.com> writes:
-
-Rowan> However, one problem still remains. Our projects are often cloned
-Rowan> onto a large variety of computer environments, from Linux servers
-Rowan> to OSX and Windows desktops.
-
-And then installed, how?
-
-git-clone is *not* meant as a deployment tool.  It is meant to create
-work dirs for editing and committing.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172791>
 
 If you want to deploy, write the proper deploy tool that sets the permissions.
+It would be nice to; but unfortunately I cannot, and it would only solve the case where we deploy to the production server.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-See http://methodsandmessages.posterous.com/ for Smalltalk discussion
+Not being able to disable filemode will still be a nuisance a lot of the 
