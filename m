@@ -1,107 +1,93 @@
-From: Jerome Martin <tramjoe.merin@gmail.com>
-Subject: Re: Private/public branches/repos workflow
-Date: Thu, 5 May 2011 17:53:40 +0200
-Message-ID: <BANLkTinL6UYAKeBtLnU5+rvwmd+N0dYErw@mail.gmail.com>
-References: <BANLkTi=TLeePH0JDvnE0XPiCzXFxid9BWQ@mail.gmail.com>
-	<201105051535.p45FZQDY019419@no.baka.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2011, #02; Wed, 4)
+Date: Thu, 05 May 2011 08:59:53 -0700
+Message-ID: <7v39ktb0jq.fsf@alter.siamese.dyndns.org>
+References: <7vsjstc1pp.fsf@alter.siamese.dyndns.org>
+ <m3sjstv7kz.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu May 05 17:53:47 2011
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 18:00:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI0s6-0002jr-LT
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 17:53:47 +0200
+	id 1QI0yK-0006J0-VT
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 18:00:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242Ab1EEPxl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 11:53:41 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:43829 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751913Ab1EEPxl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2011 11:53:41 -0400
-Received: by yia27 with SMTP id 27so800917yia.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 08:53:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:cc:content-type:content-transfer-encoding;
-        bh=B46XAnHqqCHp5FVAzEX7KyoCwevvt7GNJqa3gueISPs=;
-        b=Ih552MaGsWBlyzo7VbLU5aJDn9t6kneYAl2f2AcivB6/73qpNZxiL4L4xtgO9IVgPE
-         Ko0v4KEJpbbaKyTXyJDRA6fK8CfDg7abU7eVDInWQBRDDEJzp5Dr1LMydpl+QZIJ6aut
-         GA2PUNMsMqmAg8ekVSIVzPkeXBqVBSF/i3WQY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:cc
-         :content-type:content-transfer-encoding;
-        b=ngCp7qDEE5VssqDFWApqQgasZgzJg3vFTtUwMVPYKhtBGTPwOErcBuQ12v9dqfhzKd
-         Vm1nwqE9gddEfzCFLdHVruW62a+m0KjrBhibK8ilPmNigZh3P51fL8iyZZppFmAMax+H
-         4ESJ4sfyB1rysUiQuBS94IzsMLNDnrLdcKiuE=
-Received: by 10.146.164.11 with SMTP id m11mr2267455yae.20.1304610820617; Thu,
- 05 May 2011 08:53:40 -0700 (PDT)
-Received: by 10.147.167.8 with HTTP; Thu, 5 May 2011 08:53:40 -0700 (PDT)
-In-Reply-To: <201105051535.p45FZQDY019419@no.baka.org>
+	id S1755360Ab1EEQAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 12:00:04 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40163 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753363Ab1EEQAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 12:00:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B07BF50AE;
+	Thu,  5 May 2011 12:02:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lQjPiPgLKSmiaxBeuSyLYhRmVYE=; b=jpCHKr
+	l5wb43LBP8aUrOHOY/O3hwB7v1llFKFWJt6TuFdSGKkq16V5drGDgd/md5Od3BnN
+	K3+BOGEZ1lkn7lw9yq0ZGLohbOruswsxkCHHbmbo6sbiE/3PMDoMFcpfKY/z26Ql
+	TVZTv3T04l8RBz90lS5GRUzWMauCJOdWFHelo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nrqU0TYhxcgYSfiA9e6/5LiuSPkKg+Ke
+	T82EaUGrugCfRBKB8hAmpbk7bYDIs6gQYevVt+l5X0psMOKUB16OfrPbzX89kq9D
+	7enpPI+W60zkT5/2nsdS0LuQxweRXGjwPtGOg1MeFKzyqeuLPM6PIWoFkUV+yMGd
+	cgxAJFYz0bo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8EDF550AC;
+	Thu,  5 May 2011 12:02:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8ED0750AB; Thu,  5 May 2011
+ 12:01:59 -0400 (EDT)
+In-Reply-To: <m3sjstv7kz.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Thu, 05 May 2011 02:08:32 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 03FBBB10-7731-11E0-89EF-E8AB60295C12-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172842>
 
-Thanks for your quick answer!
-It seems to be a solution a bit alike one I tested before sending my
-initial question, using :
-git symbolic-ref HEAD refs/heads/cleanmaster
-But I am unsure of the result I am getting.
-Are you suggesting that I should entirely replace my current 'public'
-branch (there is no important history in there to keep apart from what
-is already in the other, private, branch) by cleanmaster or that I
-should keep using three branches and push from that third one
-(cleanmaster) to the published repo ?
-One thing I do not understand clearly is why with a detached (I guess
-this is synonym to orphan ? At least when creating it ?) branch cannot
-be then merged with the branch that was initially copied to create it
-and just get the additional commits. Instead, it gets the whole
-history. Being used to using merge between my public/private branches,
-I am afraid that using that orphan branch might lead to disaster
-eventually.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Thu, May 5, 2011 at 5:35 PM, Seth Robertson <in-gitvger@baka.org> wr=
-ote:
+>> Rerolled.  Waiting for comments.
 >
-> In message <BANLkTi=3DTLeePH0JDvnE0XPiCzXFxid9BWQ@mail.gmail.com>, Je=
-rome Martin
-> writes:
+> Should I extract first two commits i.e.
 >
-> =A0 =A0Is there any recommended workflow to achieve the result I am l=
-ooking
-> =A0 =A0for ? How are other people doing it ?
+>    - Remove gitweb/gitweb.cgi and other legacy targets from main Makefile
+>    - git-instaweb: Simplify build dependency on gitweb
 >
-> Create an orphan branch. =A0Commit what you want onto it. =A0Push bra=
-nch
-> to a new repo as master.
->
-> git checkout <basesha>
-> git checkout --orphan cleanmaster
-> git add -A
-> git commit -m "base of public release"
-> (mkdir ../newrepo; cd ../newrepo; git init --bare)
-> git remote add cleanremote ../newrepo
-> git push cleanremote cleanmaster:master
->
-> You can then cherry pick/rebase from previous branches onto
-> cleanmaster any subsequent commits that you want to keep history for.
->
-> Another approach might be to finesse a shallow clone to do what you
-> want.
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0-Seth Robertson
+> into a separate patch series?  Even though their existence was
+> ...
+> I think this cleanup is worthy on its own.
 
+Sounds like a good idea.  Thanks.
 
+>> * jn/ctags (2011-04-29) 6 commits
+>>  - gitweb: Optional grouping of projects by category
+>>  - gitweb: Modularized git_get_project_description to be more generic
+>>  - gitweb: Split git_project_list_body in two functions
+>>  - gitweb: Mark matched 'ctag' / contents tag (?by_tag=foo)
+>>  - gitweb: Change the way "content tags" ('ctags') are handled
+>>  - gitweb: Restructure projects list generation
+>> 
+>> Waiting for comments.
+>
+> Should I do and post benchmarks for
+>
+>    - gitweb: Restructure projects list generation
+>
+> change (when 'forks' feature is used)?
+>
+> Note that "gitweb: Mark matched 'ctag' / contents tag (?by_tag=foo)"
+> has ACK from Petr Baudis ('pasky').
 
---
-J=E9r=F4me Martin
+... meaning the first three in the series?  I missed that.  Thanks for a
+reminder.
