@@ -1,111 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH for maint] git-completion: fix zsh support
-Date: Thu,  5 May 2011 22:52:24 +0300
-Message-ID: <1304625144-5206-1-git-send-email-felipe.contreras@gmail.com>
-References: <20110505185907.GD1377@goldbirke>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to efficiently find where a patch applies?
+Date: Thu, 5 May 2011 15:55:56 -0400
+Message-ID: <20110505195556.GA1770@sigill.intra.peff.net>
+References: <20110505181741.GA27251@nwp-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 05 21:52:44 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Nathan W. Panike" <nathan.panike@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:56:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QI4bL-0008Re-Jg
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:52:43 +0200
+	id 1QI4ea-000200-Au
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 21:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751773Ab1EETwj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2011 15:52:39 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:60927 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751297Ab1EETwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 15:52:38 -0400
-Received: by eyx24 with SMTP id 24so775838eyx.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 12:52:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Qm8Ruv6bX2C/KfGqIGW7Fz35GjnVr1ofG4s/biItphA=;
-        b=jKLE+6ck/3rdv8V87nIBL8T3edibVnmQdTd9Agb0tIYFrYpZAfLn3/NV7C1fWfJQsL
-         w634loNxG888z2tFsBh8C0ocYIz9FkftXx6luUU3dT0NSj/yZTu5v02ShsrvG4eLc4RZ
-         cR8VISSsHsMNLXSljSoZxdY+QIkckbVZ7R0CM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=TvViOsGkc0V4VBPgoUjj4hKvYx4AP8iWTVEO3YiwnHHcTKXVg7id9lfZTR/WYh4/42
-         iJBffd5hfGwEekAxN7wO6kzZ92lg586J83dbIUb6QiIqIECnltRzkNIDcDx1Yrl/UZ/i
-         3SE+DogJBNYtEv0jUFvlYT9zLJAfyON4AYGmk=
-Received: by 10.213.27.23 with SMTP id g23mr484784ebc.110.1304625157235;
-        Thu, 05 May 2011 12:52:37 -0700 (PDT)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id 46sm733136ees.25.2011.05.05.12.52.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 May 2011 12:52:36 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1.1.g638e6
-In-Reply-To: <20110505185907.GD1377@goldbirke>
+	id S1752717Ab1EETz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 15:55:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35544
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751401Ab1EETz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 15:55:58 -0400
+Received: (qmail 2435 invoked by uid 107); 5 May 2011 19:57:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 May 2011 15:57:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2011 15:55:56 -0400
+Content-Disposition: inline
+In-Reply-To: <20110505181741.GA27251@nwp-laptop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172894>
 
-It turns out 'words' is a special variable used by zsh completion.
+On Thu, May 05, 2011 at 01:17:41PM -0500, Nathan W. Panike wrote:
 
-There's probably a bug in zsh's bashcompinit:
-http://article.gmane.org/gmane.comp.shells.zsh.devel/22546
+> In the past couple weeks, I have had several occasions where a collaborator has
+> sent a patch, which does not have information about where the patch forked from
+> master.  I wrote the following scripts to try to discover where the patch
+> should be applied.  Is there a better way?
 
-But in the meantime we can workaround it by using 'typedef -h', which
-gets rid of any special meaning.
+What you have is more or less the best way. As you probably realized,
+there could be any number of commits that match the preimage of the diff
+exactly. So you are not necessarily finding the fork point, but rather
+an appropriate place to apply the patch.
 
-Currently zsh is completely broken after commit da48616 (bash: get
---pretty=3Dm<tab> completion to work with bash v4), which introduced
-_get_comp_words_by_ref() that comes from debian's bash_completion
-scripts, and relies on the 'words' variable to behave like any normal
-variable.
+I have to wonder, though, whether it is worth the trouble. If you apply
+the patch to your tip, especially using "git am -3", then one of two
+things will happen:
 
-Comments-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+  1. The patch will apply cleanly. Either because your tip matched the
+     preimage exactly, or because it was close enough and git was able
+     to apply anyway.
 
-This patch is meant for the maintenance branch, so Szeder's patches are=
- not
-required as dependency (althought they are good by themselves).
+  2. There are conflicts between what you did and what the patch does.
+     In this case, though, what you are doing by searching for the fork
+     point will recreate the history locally that your collaborator has.
+     But when you go to merge their history, you will end up getting the
+     exact same conflicts that you would if you applied to your tip now.
 
-v2: fix _gitk() too as Szeder suggested.
+So what is the value in applying their patch to the original fork point?
+It better represents the history of what happened. But if you care about
+that, I wonder if you should just be pulling from them directly via git
+(or if that isn't convenient for some reason, passing around bundles).
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 840ae38..74c0b4d 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2710,6 +2710,9 @@ _git ()
- 	if [[ -n ${ZSH_VERSION-} ]]; then
- 		emulate -L bash
- 		setopt KSH_TYPESET
-+
-+		# 'words' has special meaning in zsh; override that
-+		typeset -h words
- 	fi
-=20
- 	local cur words cword
-@@ -2761,6 +2764,9 @@ _gitk ()
- 	if [[ -n ${ZSH_VERSION-} ]]; then
- 		emulate -L bash
- 		setopt KSH_TYPESET
-+
-+		# 'words' has special meaning in zsh; override that
-+		typeset -h words
- 	fi
-=20
- 	__git_has_doubledash && return
---=20
-1.7.5.1.1.g638e6
+> To find the place where the patch applies, I then would run something like
+> 
+> git rev-list --all | \
+> while read commit; do \
+> 	git ls-tree -r $commit | \
+> 	awk "$(perl ~/programs/git-hacks/create_awk.pl < <patch file>)" > /dev/null || \
+> 	echo $commit; \
+> done
+
+Wow, dynamically generating awk using perl. That's a new one for me. :)
+
+-Peff
