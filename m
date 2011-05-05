@@ -1,64 +1,87 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: ignored file can be deleted silently
-Date: Thu, 5 May 2011 21:18:15 +0700
-Message-ID: <BANLkTi=C4pO83mT3pO0B_AMaK3RMOC4V8g@mail.gmail.com>
-References: <BANLkTinEupQKfBofhH-qKD6gLGWyWRbGvw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 16:22:06 2011
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH for maint branch] git-completion: fix zsh support
+Date: Thu,  5 May 2011 17:24:18 +0300
+Message-ID: <1304605458-1483-1-git-send-email-felipe.contreras@gmail.com>
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 05 16:24:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QHzRM-000361-Lp
-	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 16:22:05 +0200
+	id 1QHzTi-0004wX-Ty
+	for gcvg-git-2@lo.gmane.org; Thu, 05 May 2011 16:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754647Ab1EEOV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2011 10:21:58 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44945 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754342Ab1EEOV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2011 10:21:57 -0400
-Received: by bwz15 with SMTP id 15so1872489bwz.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 07:21:56 -0700 (PDT)
+	id S1754759Ab1EEOYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2011 10:24:25 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:58032 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754623Ab1EEOYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2011 10:24:25 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 4so686476ewy.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 07:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=VOADY66VTa9V+8l+yoweiobz/Z4O02ODe3P9YuoEdEs=;
-        b=kSa30M3+Lk8IvZY8UCTLBGXegkgHkTzyhUhI5Qq3FQT5FmDgKTBqlKT/fgw/1ia3O+
-         wYuK1/NxIwWytbbD/i+enj7YeqtmykkVlpYW035oF2rJ2jlll7NnO8GOK3Mp4SZV9LIp
-         da9Rag5gJQlutJnUZrltvfrjGSYDlalDiVmSE=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=q+DqzyfMUMcdmwyEzN062cH06W4kY4QML3htnuRGZt4=;
+        b=fa/guYEJSxwZrWV/iI+R1dKyk2hsAPKcXhxJaoVRMpP0UHbgc3riEbyrjWRTAgLcY5
+         43MAGe6Y/cVHFt733JoSexihTCb156icGUdTSId4835n8sLL7kj/2dnquV6xCVdyOvGU
+         EWE4h9Sg+FfFOf7AbCcN7sTZYj7O2ehxY0cg0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=evx4WKSN1aQYjgS3aDM7xzL03FIXD8dd9TNM7cLZDHUdyf0Jxn0wGMkVHgRLBjXNqi
-         6nHOaJONRqFib6FtuMFGOWok6utkGMQ4joj6h7DuTlcS/BTbGFWe9BvkQqV1rxRP4DTT
-         A/US8rdBC3YEe9aRXBYsA9vVMmZpLIaciUZnY=
-Received: by 10.204.7.213 with SMTP id e21mr1341615bke.209.1304605125163; Thu,
- 05 May 2011 07:18:45 -0700 (PDT)
-Received: by 10.204.53.13 with HTTP; Thu, 5 May 2011 07:18:15 -0700 (PDT)
-In-Reply-To: <BANLkTinEupQKfBofhH-qKD6gLGWyWRbGvw@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Enao1tfBOVhm1CRHRrsSfYCFiJh/mWCXNjxYi0n6e+LRNeSjxojppZ9g8Skv2RXCoU
+         hrq0rV0oedNfJ06xH3bJJFEOIXzL71f6896I0EUleHFvguSeNry+xQdcRWwcHMLqLCp2
+         wrcnyyNovhRtWqq51n1RvjQ4Bzo+pNh9G0vzA=
+Received: by 10.14.121.9 with SMTP id q9mr1247628eeh.102.1304605464469;
+        Thu, 05 May 2011 07:24:24 -0700 (PDT)
+Received: from localhost (gw3.cosmicparrot.net [217.152.255.6])
+        by mx.google.com with ESMTPS id l35sm534137eea.1.2011.05.05.07.24.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 May 2011 07:24:23 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1.1.g638e6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172833>
 
-On Thu, May 5, 2011 at 3:40 PM, Daniele Segato <daniele.bilug@gmail.com> wrote:
-> I noticed that when i put a file in the git ignore If i switch to a
-> branch where the file is present and versioned git delete my local
-> ignored file replacing it with the content of the branch I switched
-> this is done silently and the file is gone forever if I don't have a
-> copy somewhere
+It turns out 'words' is a special variable used by zsh completion.
 
-This is on purpose. Commit f8a9d42 (read-tree: further loosen "working
-file will be lost" check. - 2006-12-04) allowed ignored files to be
-overwritten. Perhaps we can have a config to tighten the check again?
+There's probably a bug in zsh's bashcompinit:
+http://article.gmane.org/gmane.comp.shells.zsh.devel/22546
+
+But in the meantime we can workaround it this way.
+
+Currently zsh is completely broken after commit da48616 (bash: get
+--pretty=m<tab> completion to work with bash v4), which introduced
+_get_comp_words_by_ref() that comes from debian's bash_completion
+scripts, and relies on the 'words' variable to behave like any normal
+variable.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.bash |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+This patch is meant for the maintenance branch, so Szeder's patches are not
+needed.
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 840ae38..8d5eae7 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2710,6 +2710,9 @@ _git ()
+ 	if [[ -n ${ZSH_VERSION-} ]]; then
+ 		emulate -L bash
+ 		setopt KSH_TYPESET
++
++		# 'words' has special meaning in zsh; override that
++		typeset -h words
+ 	fi
+ 
+ 	local cur words cword
 -- 
-Duy
+1.7.5.1.1.g638e6
