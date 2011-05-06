@@ -1,89 +1,152 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/2] tests: teach verify_parents to check for extra parents
-Date: Fri, 6 May 2011 16:00:21 -0500
-Message-ID: <20110506210021.GC20182@elie>
+Subject: Re: [PATCH v5] Add default merge options for all branches
+Date: Fri, 6 May 2011 16:32:57 -0500
+Message-ID: <20110506213257.GD20182@elie>
 References: <20110503090351.GA27862@elie>
  <4DC1CE16.5030808@dailyvoid.com>
  <7vsjsuc704.fsf@alter.siamese.dyndns.org>
- <20110506205441.GA20182@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Michael Grubb <devel@dailyvoid.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 23:00:32 2011
+X-From: git-owner@vger.kernel.org Fri May 06 23:33:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIS8V-0002kB-Oy
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 23:00:32 +0200
+	id 1QISe7-0000pb-Av
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 23:33:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756247Ab1EFVA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 17:00:27 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52133 "EHLO
+	id S932848Ab1EFVdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 17:33:06 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:35054 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779Ab1EFVA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 17:00:27 -0400
-Received: by iwn34 with SMTP id 34so2984465iwn.19
-        for <git@vger.kernel.org>; Fri, 06 May 2011 14:00:26 -0700 (PDT)
+	with ESMTP id S932792Ab1EFVdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 17:33:03 -0400
+Received: by iwn34 with SMTP id 34so3002215iwn.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 14:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=szlDrWSZZOeg72/NAleP3jl1kNN0vR6gxOw8p6rfwRk=;
-        b=RDxzYgBQbsgM3SywyQAi9lUmPXkJAP8+CJJCiC/f8BC0Z468qe/8Qrv/5Ymbxxq/XL
-         rBY6Ir6NSkVNyiJhBP2Gjfps+GRnn0WXoD0wxDt9nh2qHHXtfmYWys1yrBRwJljsb5jX
-         JXQXXxHf52a71qG/fq7eHxDoGaanH8tdoeN+Q=
+        bh=gQX+CXBmgY88k+y40O2l9YRiqMYkWE7EqutzC5T7xpI=;
+        b=D2aGxliMxN1dF+UlWyqIun4cudYSwfX6O/fDTyBfaD+AKb1ZG/tRqQZJWnjIXO1+A2
+         xruA0XeBo2AfFAo82REWhuqFH/xcqGJsQ1hVNwAahjEncz+OMaa3yEi/lkS1/NmITm2x
+         lcDE8I9meys480YJKwZ1z3I2svBePy5mNmVP4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=rSpih6K+5DPy+XC4Y8c6lYL9B0xDfsOmBXWRPZx8XfyN6Epliw8i9kpZXOtx5m7KAu
-         Un2MSsO21NkqCRsLdJkkoLDD+oef7VOJCvyOoltqY2AXrD7lhMVep4bUTOg6RG2ocUNO
-         +FpUY4XXREU+1QOYXv0/CvPec6tNZ+g3+Igzc=
-Received: by 10.42.162.193 with SMTP id z1mr3267058icx.515.1304715626447;
-        Fri, 06 May 2011 14:00:26 -0700 (PDT)
+        b=GCtnqhrz46AKn5dynG3otxyruvvIxuQsNPROzGGIa48+1bCYE1CAxngxWHYtIsIW4y
+         eha0p4XxSAVkG6q7jRQUNqrb70Wx46abW+O6zMQoowXQaYVco0uTsfg8G9QtJrjrrQL5
+         mo2xI5ejfYB/yOHVUuB2fg48DzZLuxR/TRut0=
+Received: by 10.231.117.7 with SMTP id o7mr2660927ibq.46.1304717583315;
+        Fri, 06 May 2011 14:33:03 -0700 (PDT)
 Received: from elie ([76.206.232.100])
-        by mx.google.com with ESMTPS id 14sm1473219ibc.59.2011.05.06.14.00.24
+        by mx.google.com with ESMTPS id c1sm1485069ibe.17.2011.05.06.14.33.00
         (version=SSLv3 cipher=OTHER);
-        Fri, 06 May 2011 14:00:25 -0700 (PDT)
+        Fri, 06 May 2011 14:33:01 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110506205441.GA20182@elie>
+In-Reply-To: <7vsjsuc704.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173011>
 
-Currently verify_parents only makes sure that the earlier parents of
-HEAD match the commits given, and does not care if there are more
-parents.  This makes it harder than one would like to check that, for
-example, parent reduction works correctly when making an octopus.
+Junio C Hamano wrote:
 
-Fix it by checking that HEAD^(n+1) is not a valid commit name.
-Noticed while working on a new test that was supposed to create a
-fast-forward one commit ahead but actually created a merge.
+> Subject: [PATCH] merge: fix branch.<name>.mergeoptions
 
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t7600-merge.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+To be more precise, if I understand correctly:
 
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index c665acd..9af748a 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -89,6 +89,7 @@ verify_parents () {
- 		i=$(expr $i + 1) ||
- 		return 1
- 	done &&
-+	test_must_fail git rev-parse --verify HEAD^$(($# + 1)) &&
- 	test_cmp parents.expected parents.actual
- }
- 
--- 
-1.7.5.1
+	merge: allow branch.<name>.mergeoptions to override merge.*
+
+> This patch should fix it, even though I now strongly suspect that
+> branch.<name>.mergeoptions that gives a single command line that
+> needs to be parsed was likely to be an ill-conceived idea to begin
+> with.  Sigh...
+
+Yes, and introducing branch.<name>.ff and branch.<name>.log might
+still be a good idea.
+
+The patch looks mostly good.  I see only one actual problem, marked
+with [*] below.
+
+> --- a/builtin-merge.c
+> +++ b/builtin-merge.c
+> @@ -54,6 +54,7 @@ static size_t use_strategies_nr, use_strategies_alloc;
+>  static const char **xopts;
+>  static size_t xopts_nr, xopts_alloc;
+>  static const char *branch;
+> +static char *branch_mergeoptions;
+>  static int verbosity;
+>  static int allow_rerere_auto;
+>  
+> @@ -474,25 +475,33 @@ cleanup:
+>  	strbuf_release(&bname);
+>  }
+>  
+> +static void parse_branch_merge_options(char *bmo)
+> +{
+> +	const char **argv;
+> +	int argc;
+> +	char *buf;
+> +
+> +	if (!bmo)
+> +		return;
+> +	argc = split_cmdline(bmo, &argv);
+> +	if (argc < 0)
+> +		die("Bad branch.%s.mergeoptions string", branch);
+> +	argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
+> +	memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
+
+This is not new code, but it might make sense to do
+
+	argv[0] = "merge.*.options";
+
+for a saner error message when someone tries
+
+	[branch "master"]
+		mergeoptions = --nonsense
+
+> +	argc++;
+> +	parse_options(argc, argv, NULL, builtin_merge_options,
+> +		      builtin_merge_usage, 0);
+> +	free(buf);
+
+[*]
+This buf seems to be left over.  (I don't think the intent is to
+call free on an uninitialized pointer. ;-))
+
+[...]
+> -		free(buf);
+> +		free(branch_mergeoptions);
+> +		branch_mergeoptions = xstrdup(v);
+
+It is tempting to do
+
+	size_t len;
+
+	len = strlen(v);
+	branch_mergeoptions = xrealloc(branch_mergeoptions, len + 1);
+	memcpy(branch_mergeoptions, v, len + 1);
+
+but free + xstrdup is simpler and clearer.  Makes sense.
+
+> +test_expect_success 'merge c1 with c2 (log in config gets overridden)' '
+> +	(
+> +		git config --remove-section branch.master
+> +		git config --remove-section merge
+> +	)
+
+Since this patch is meant to apply to a very old git, we cannot use
+test_might_fail.  Makes sense: it can be fixed up later to use
+&&-friendly syntax as part of a series introducing checks to make
+sure we don't regress in that.
+
+Thanks and hope that helps,
+Jonathan
