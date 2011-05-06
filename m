@@ -1,114 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Fri, 6 May 2011 13:23:34 -0400
-Message-ID: <20110506172334.GB16576@sigill.intra.peff.net>
-References: <BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com>
- <BANLkTinQny-M0rL+Vs9L_cQhtVLyv6rqMw@mail.gmail.com>
- <4DB9329E.7000703@op5.se>
- <88795B20-6994-46A5-9710-2ADC84E04695@gmail.com>
- <7vhb986chl.fsf@alter.siamese.dyndns.org>
- <BANLkTi=+emhzqfiGxGbnJ=bm3oL7SvjhBw@mail.gmail.com>
- <7vbozg4eqw.fsf@alter.siamese.dyndns.org>
- <BANLkTi=zrWR0GAm6n1Gs9XDCR6kXtjDW0A@mail.gmail.com>
- <20110506065601.GB13351@elie>
- <BANLkTimVjZgOJk1ik7fbhQvW21Fo9eZoXg@mail.gmail.com>
+From: Michael Horowitz <michael.horowitz@ieee.org>
+Subject: git-p4 and keyword substitution
+Date: Fri, 6 May 2011 13:26:18 -0400
+Message-ID: <BANLkTinLW3Ty4n1ODKU-N000q7qQUoSDTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	"david@lang.hm" <david@lang.hm>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 19:23:44 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 06 19:26:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIOki-0003RH-Cy
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 19:23:44 +0200
+	id 1QIOnI-0004nN-Ug
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 19:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752760Ab1EFRXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 13:23:38 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53953
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751096Ab1EFRXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 13:23:38 -0400
-Received: (qmail 12054 invoked by uid 107); 6 May 2011 17:25:32 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 06 May 2011 13:25:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 May 2011 13:23:34 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTimVjZgOJk1ik7fbhQvW21Fo9eZoXg@mail.gmail.com>
+	id S1752712Ab1EFR0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 13:26:20 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:56729 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751131Ab1EFR0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 13:26:19 -0400
+Received: by gwaa18 with SMTP id a18so1250470gwa.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 10:26:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
+         :message-id:subject:from:to:content-type;
+        bh=5yev/oDlz0vQlFPkmGR8R91umZoBxWWhzNGpF6RP7Ls=;
+        b=P0WvGJNnveAEb1fTzYMyIhyNyggSy15MlzUlwO4F0J4L2IMFi8DdGdGIwRZk6+3KKk
+         U9ghFaec9eJST4+OL/QSmEwhtnbgvRVBESDEU6GLSD+ZiT8sJvGOmtJw1G0HaxdAgY05
+         ljdm4yR32uZ/mLjcGSrGRsPeUrJZv7uM1GOQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=QiY3yPWYcwz0m0RWnjqwKyc8ZFXwKqXbspRVQeAqJbYdhXbrQ4cqKlLTinY9qpszXU
+         2MFcUOJzhfc95V7kV3YpZifSNNyELE8KW9Mw43d4lklJdcipZPh14cPKyyIOUiuj9I8o
+         b8BKSZIxFh5AkkHzG0jCWmFk9vPFFZPAx6BJM=
+Received: by 10.236.148.65 with SMTP id u41mr5170094yhj.225.1304702778883;
+ Fri, 06 May 2011 10:26:18 -0700 (PDT)
+Received: by 10.236.105.233 with HTTP; Fri, 6 May 2011 10:26:18 -0700 (PDT)
+X-Google-Sender-Auth: hCAjrtkxOeI0bt-l4YU4wxQ7ZoI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172992>
 
-On Sat, May 07, 2011 at 12:07:14AM +1000, Jon Seymour wrote:
+All,
 
-> I think the problem we are trying to solve is this: how to make it as
-> easy as possible to install, and get operational, an extension to git.
-> 
-> If git supported the concept of a standard place to put extensions,
-> then it could be as simple as:
-> 
->     unzip -d $(git --plugins-dir) plugin.zip
-> 
-> with no need to configure or choose a prefix and no need to edit the
-> an .profile or .bashrc to permanently add a directory to the PATH.
+I was wondering if there is a way to deal with this issue...
 
-This seems slightly backwards to me. You are asking git "where should
-plugins go?" and then putting them there. But that leaves no room for
-plugins going in _multiple_ places. IOW, the usual hierarchy of:
+It seems that git removes the keyword substitutions from Perforce.
+This is fine, except for the fact that it does not remove them from
+the p4 client shadow.  So, this causes git-p4 submit to fail whenever
+it either deletes a file with keywords (since the file it is deleting
+has the keywords and doesn't match) or lines close to the keywords
+change, such that applying the patch doesn't work.
 
-  1. distribution-packaged extensions (in /usr/share/git/plugins)
+A Google search turned up a thread from a few years ago where someone
+submitted a patch to make removing the keyword substitutions optional,
+but I guess that patch never got accepted, at least not that I can
+see.
 
-  2. local system-wide extensions (in /usr/local/share/git/plugins)
+Is there any other way of dealing with this?
 
-  3. per-user extensions (in $HOME/.gitplugins)
+Thanks,
 
-It seems like we should not be asking git, but _telling_ git about where
-our plugins are. I understand that you don't want the user to have to do
-any additional steps, and I think that is a reasonable goal. But can't
-that be easily accomplished by:
-
-  1. The git wrapper learns to look in a set of plugin paths, something
-     like:
-
-       foreach path in (list of plugin paths)
-         foreach plugin in "path/*"
-           add plugin/bin to PATH
-           add plugin/man to MANPATH
-
-  2. At compile time, we give some stock system directories like
-     /usr/share/git/plugins and /usr/local/share/git/plugins.
-     Distribution packages of git override as appropriate for the target
-     system.
-
-  3. We always check $HOME/.gitplugins by default.
-
-  4. Users can set GIT_PLUGIN_PATH in the environment if they want to do
-     something fancy (they can also always just set PATH and MANPATH
-     manually if they want, too).
-
-This is how many systems already work. For example, look at how vim
-handles plugins.
-
-Distro-packaged extensions obviously know where to go (the packager
-knows their distro's rules). People with personal extensions don't have
-to know anything special; their packages go in $HOME/.gitplugins.
-
-In general I would expect /usr/local/share/git/plugins to be pretty
-standard, and not needing of being repeated for admins who want to
-install something system-wide. But if you want to be really thorough,
-then your "git --plugins-dir" should probably report the "system-wide
-but not distro" directory for that (but I would call it something like
-"git --system-plugins-dir" or something to make it more clear).
-
--Peff
+Mike
