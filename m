@@ -1,78 +1,63 @@
-From: =?UTF-8?q?Jo=C3=A3o=20Britto?= <jabcalves@gmail.com>
-Subject: [PATCH] Remove duplicated "is a"
-Date: Fri,  6 May 2011 01:16:17 -0300
-Message-ID: <1304655377-57638-1-git-send-email-jabcalves@gmail.com>
-References: <1304614634-46181-1-git-send-email-jabcalves@gmail.com>
+From: Srinidhi K V <srinidhikv@yahoo.co.in>
+Subject: Unable to push remote branches
+Date: Fri, 6 May 2011 10:17:37 +0530
+Message-ID: <BANLkTimd887k0D=OL9rSuq6Z3FkhNAFAbQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Jo=C3=A3o=20Britto?= <jabcalves@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 06:17:31 2011
+X-From: git-owner@vger.kernel.org Fri May 06 06:47:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QICTq-0004Nv-A7
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 06:17:30 +0200
+	id 1QICxH-0004iq-VL
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 06:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751750Ab1EFERZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 00:17:25 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:39178 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751516Ab1EFERY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 00:17:24 -0400
-Received: by gyd10 with SMTP id 10so1022913gyd.19
-        for <git@vger.kernel.org>; Thu, 05 May 2011 21:17:23 -0700 (PDT)
+	id S1751570Ab1EFEri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 00:47:38 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:60627 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303Ab1EFEri (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 00:47:38 -0400
+Received: by pxi16 with SMTP id 16so2060157pxi.4
+        for <git@vger.kernel.org>; Thu, 05 May 2011 21:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=lVii/HJncvyiqveRvIbj17aqD63xuRtm3iF9WyeZ7iM=;
-        b=U1ateKZCP3rLAZPizImwLukg9wv0W0/+VCi8ckHGsXjsqSu0c2GqCfhJUrQ6903PFK
-         xFhAmglinejBBuv/FKaeYDncskTRqNxYHR6DRgTx6sfteKWqGCDwqMmqixE5OTqSIxiP
-         lJ/OwaFyfOl1ythEwRXL7wMUVeClAUcYdoi4o=
+        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
+         :message-id:subject:from:to:content-type;
+        bh=JoVq1BpZLty1LmSWkHWqi2uNNE1jAIPLdREHGIMRnXQ=;
+        b=lS2DSSvslATPSdL4cZW40htW+Y74NBcr3QMobPDJADXX51a4V3/MhY4N433BHv/XFi
+         2yvcmdP7/PN3/HcemtwXyIkL/AUNgPDHoej8xBOJIg5nF0LzDgyeeONVTrp80cP2VtAF
+         pcmupEZdece6bbsszLobefp+p6QXUS1lNyE6c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=AySCVRa2YG2tTMRuBryM3ZhceVifBfu8R/q/S1vJhT/Mvr/R9Sk851K5U8m1N/zKNj
-         kU31pE6D+u99hOgKkR1IHizmuVQj/oE8j4mwKMxYqFhX2k7HJLdtLv+wWGlDl0knNxfi
-         QeRnZVCXyrBWA9XRAlW3uLTVJWp2/hIcu7nEg=
-Received: by 10.236.191.229 with SMTP id g65mr4044066yhn.335.1304655443469;
-        Thu, 05 May 2011 21:17:23 -0700 (PDT)
-Received: from localhost.localdomain ([189.121.226.214])
-        by mx.google.com with ESMTPS id 44sm1328187yhl.53.2011.05.05.21.17.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 May 2011 21:17:22 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1
-In-Reply-To: <1304614634-46181-1-git-send-email-jabcalves@gmail.com>
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=cdB1t9hvXLAxjc1XAiht+nbalo/W521TslsLuP0wbtQksQyBP65kosX1/LnAkdIn5q
+         WUq+oYNLkxaNIvroY/k5+s+5DA4eP3rK9J1KeI00W5zAnH5W09eHuLXJhmZQ+Mvel9vO
+         p6ZFnUyd8yokwvFgZqU2KO29MEkdWgjcD/Ojw=
+Received: by 10.143.39.17 with SMTP id r17mr1644734wfj.113.1304657257855; Thu,
+ 05 May 2011 21:47:37 -0700 (PDT)
+Received: by 10.143.167.9 with HTTP; Thu, 5 May 2011 21:47:37 -0700 (PDT)
+X-Google-Sender-Auth: QwPYjAvL1YEhahxQKzRM5RO5PYc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172936>
 
-Signed-off-by: Jo=C3=A3o Britto <jabcalves@gmail.com>
----
- Documentation/diff-options.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Hi All,
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-index 34f0145..23b605f 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -243,7 +243,7 @@ ifdef::git-log[]
- 	For following files across renames while traversing history, see
- 	`--follow`.
- endif::git-log[]
--	If `n` is specified, it is a is a threshold on the similarity
-+	If `n` is specified, it is a threshold on the similarity
- 	index (i.e. amount of addition/deletions compared to the
- 	file's size). For example, `-M90%` means git should consider a
- 	delete/add pair to be a rename if more than 90% of the file
---=20
-1.7.5.1
+I have a GIT repository in which there are lot of remote branches, I
+have created a bare git repository in my server. When I push my local
+repository to the bare repository in server using "git push --all"
+only local branches get pushed.
+However when I use "git branch -r" I get remote branches which tracks
+to local branch.
+I need push all the existing remote branches from my local repo to
+bare repository in my server. How do i do that? Any pointer would be
+of great help.
+
+Thanks in Advance
+Srinidhi KV
