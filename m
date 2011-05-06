@@ -1,120 +1,171 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] t1507: change quoting in test_did_you_mean to a more
- general one
-Date: Fri, 06 May 2011 11:14:19 +0200
-Message-ID: <4DC3BBEB.1050502@drmicha.warpmail.net>
-References: <20110505191027.GA3242@camk.edu.pl> <7vsjss6hmf.fsf@alter.siamese.dyndns.org> <4DC3A685.4080300@drmicha.warpmail.net> <20110506085107.GB3719@camk.edu.pl>
+From: Jerome Martin <tramjoe.merin@gmail.com>
+Subject: Re: Private/public branches/repos workflow
+Date: Fri, 6 May 2011 11:27:11 +0200
+Message-ID: <BANLkTikC23_hi4TppxdfMjCZDJWNd9ZF7g@mail.gmail.com>
+References: <BANLkTi=TLeePH0JDvnE0XPiCzXFxid9BWQ@mail.gmail.com>
+	<7v4o598164.fsf@alter.siamese.dyndns.org>
+	<BANLkTimggn-E+JsXp78_a2P3eWku3oTSbQ@mail.gmail.com>
+	<7vk4e44gfo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kacper Kornet <draenog@pld-linux.org>
-X-From: git-owner@vger.kernel.org Fri May 06 11:14:29 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 11:27:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIH7E-0002xE-OM
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 11:14:29 +0200
+	id 1QIHJo-00018T-Sp
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 11:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755360Ab1EFJOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 05:14:23 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:45229 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755344Ab1EFJOW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 05:14:22 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 244FE208C1;
-	Fri,  6 May 2011 05:14:21 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute4.internal (MEProxy); Fri, 06 May 2011 05:14:21 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=f/HwBqS3I/jpOwJC0fxb4RDLqOw=; b=f2Gv3xZrpC8OqHeX5I+nHmKZhsn2hQ9V85H7kF+IMIJsid6PnwiNwvm2qaX4OgAujA4ngthwEM2DTgUy33KEbO6OhNhpupE50UIfB2kgHS7dlvPPDLpMiaaIqpNjxHYjmqDhtryDLKUN+ldkS5GzqFqioa/V+y7gjS2CUvfLBAU=
-X-Sasl-enc: zJQNFKS0mY6Qc4wEep9BjegIgbcpeZKiLK05FVULAHWX 1304673260
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8274B40C0A2;
-	Fri,  6 May 2011 05:14:20 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <20110506085107.GB3719@camk.edu.pl>
+	id S1755601Ab1EFJ1N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 05:27:13 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:61350 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755364Ab1EFJ1L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 05:27:11 -0400
+Received: by gwaa18 with SMTP id a18so1082889gwa.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 02:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GD1pzqzV79jnBHHqnOEqjOaVfXnVbmaunT++5pWnZcs=;
+        b=qpppV5U4/0eMdDdV1FMzpyqZaIBJLd60IiOoENEwYM7iKb5opV56WIbg7T9sFMyK5z
+         TwSJPPjB/2dRAiuMnXboiu5WEZmUujBc6IVd4heTpzRNKxAjVB2LE5qyGMn6AKaSwa0P
+         cYIM1FDKYia33iM5L/ssabM8jqoMdYdsVA/0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=feR0Dj2Mwm4IrbPcAEv7Hiicyzkp6/eQR9rfK0pDFkZ2nanFaTH45X2JAeMtQ/58Xn
+         eYROrixp5xSKxaJJIUtRFTjzoEKVv09q6yYAPfhSW+LGq2qk/fA/VSH/yhxwMh0tsvch
+         49wFTyGViI+6Lj2J/quix/Z/LldD05mCSeaSQ=
+Received: by 10.236.66.75 with SMTP id g51mr3869223yhd.524.1304674031143; Fri,
+ 06 May 2011 02:27:11 -0700 (PDT)
+Received: by 10.147.167.8 with HTTP; Fri, 6 May 2011 02:27:11 -0700 (PDT)
+In-Reply-To: <7vk4e44gfo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172962>
 
-Kacper Kornet venit, vidit, dixit 06.05.2011 10:51:
-> On Fri, May 06, 2011 at 09:43:01AM +0200, Michael J Gruber wrote:
->> Junio C Hamano venit, vidit, dixit 05.05.2011 22:02:
->>> Kacper Kornet <draenog@pld-linux.org> writes:
->>>> Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
->>>> ---
->>>>  t/t1506-rev-parse-diagnosis.sh |    4 ++--
->>>>  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
->>>> diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
->>>> index 4a6396f..bad09f9 100755
->>>> --- a/t/t1506-rev-parse-diagnosis.sh
->>>> +++ b/t/t1506-rev-parse-diagnosis.sh
->>>> @@ -8,8 +8,8 @@ exec </dev/null
-> 
->>>>  test_did_you_mean ()
->>>>  {
->>>> -	printf "fatal: Path '$2$3' $4, but not ${5:-'$3'}.\n" >expected &&
->>>> -	printf "Did you mean '$1:$2$3'${2:+ aka '$1:./$3'}?\n" >>expected &&
->>>> +	printf "fatal: Path '$2$3' $4, but not ${5:-\'$3\'}.\n" >expected &&
->>>> +	printf "Did you mean '$1:$2$3'${2:+ aka \'$1:./$3\'}?\n" >>expected &&
->>>>  	test_cmp expected error
->>>>  }
-> 
->>>> -- 
->>>> 1.7.5
-> 
->>> [Reference]
-> 
->>> *1* http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02
-> 
->> Other than that, I have no objections if this patch makes more shells
->> happy and no happy ones unhappy.
-> 
->> Is your ksh OK with all other tests?
-> 
-> Yes. The only other patch which is applied during our building process
-> is: 
-> 
-> diff -ur git-1.7.0.3.orig/t/t1304-default-acl.sh
-> git-1.7.0.3/t/t1304-default-acl
-> .sh
-> --- git-1.7.0.3.orig/t/t1304-default-acl.sh     2010-03-22
-> 01:35:03.000000000 +0
-> 000
-> +++ git-1.7.0.3/t/t1304-default-acl.sh  2010-03-23 19:53:49.069813289
-> +0000
-> @@ -9,6 +9,8 @@
->  # => this must come before . ./test-lib.sh
->  umask 077
-> 
-> +LOGNAME=$(whoami)
-> +
->  . ./test-lib.sh
-> 
->  # We need an arbitrary other user give permission to using ACLs. root
-> 
-> 
-> But it is specific to our build environment.
-> 
+Again, thanks for the help :-)
 
-Thanks for the info (and for responding despite my botched to/cc).
+On Fri, May 6, 2011 at 6:10 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Jerome Martin <tramjoe.merin@gmail.com> writes:
+>
+>> Could you tell me how you would see usage of rebasing inside the
+>> workflow you describe ? I am thinking about features (mistakenly)
+>> implemented on top of the private branch that need later to be relea=
+se
+>> in the public branch. Can this be the shortcut to avoid lengthy
+>> cherry-picks ?
+>
+> Mistakes and changes of plans can happen, but it's not a big deal.
+>
+> In the git project itself, even the "master" branch that corresponds =
+to
+> your "private" branch is managed with topic branch workflow, so it is
+> entirely possible that a topic that was originally meant only for the=
+ next
+> release turns out to be better backported to the maintenance track.
+>
+> If you have a private "feature-A" topic with many commits:
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 O =A0 public
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\
+> =A0...---x---x---x---X---S =A0private
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a---b---...---z =A0fe=
+ature-A
+>
+> and later it turns out that it is better to release them also to the
+> public, instead of cherry-picking the commits to the public, you coul=
+d at
+> that point do something like this:
+>
+> =A0 =A0$ git checkout -b public-feature-A feature-A
+> =A0 =A0$ git rebase --onto public private
+>
+> which will first create a new branch "public-feature-A" that points a=
+t the
+> same tip of "feature-A", and then rebases the commits on that branch =
+that
+> were made since the topic was forked from "private" on top of the tip=
+ of
+> the "public" branch, resulting in:
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a'--b'--...--z' public-fe=
+ature-A
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 O =A0 public
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\
+> =A0...---x---x---x---X---S =A0private
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a---b---...---z =A0fe=
+ature-A
+>
+> and then you may choose when to merge that to the "public" branch.
+> By the time you do this, perhaps the original "feature-A" may have al=
+ready
+> been merged to "private" after fully tested and audited, like this:
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a'--b'--...--z' public-fe=
+ature-A
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 O =A0 public
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\
+> =A0...---x---x---x---X---S---x---x---x-----* =A0private
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =
+=A0 =A0 /
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a---b---...---z =A0fe=
+ature-A
+>
+> and then after you merged "public-feature-A" to "public":
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a'--b'--...--z' public-fe=
+ature-A
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/ =A0 =A0 =A0 =A0 =A0 =A0 =
+=A0\
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 O---o---...---o--* =A0 public
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\
+> =A0...---x---x---x---X---S---x---...---x---* =A0private
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =
+=A0 =A0 /
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a---b---...---z =A0fe=
+ature-A
+>
+> merging "public" back to "private" hopefully may have too many confli=
+cts
+> between the feature-A and public-feature-A branches, as they are supp=
+osed
+> to be patch equivalent, to produce this:
+>
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a'--b'--...--z' public-fe=
+ature-A
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/ =A0 =A0 =A0 =A0 =A0 =A0 =
+=A0\
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 O---o---...---o--*---. =A0 pu=
+blic
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =A0 =
+=A0 =A0 =A0 =A0 \
+> =A0...---x---x---x---X---S---x---...---x---*---* =A0 private
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =
+=A0 =A0 /
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 a---b---...---z =A0fe=
+ature-A
+>
+> After this you could even garbage collect the two topic branches ;-).
+>
 
-In a different context I noticed that systems don't agree wrt. the
-presence of USER/USERNAME/LOGNAME in the environment. We use LOGNAME in
-t1304 only (and never USER nor USERNAME), but still we might want to do
-something like
 
-LOGNAME=${LOGNAME:-$USERNAME}
-LOGNAME=${LOGNAME:-$USER}
-LOGNAME=${LOGNAME:-$(whoami)}
 
-there, or simpler with ${LOGNAME:=...}, although I don't know what to
-take for granted.
-
-Michael
+--=20
+J=E9r=F4me Martin
