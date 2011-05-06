@@ -1,134 +1,116 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH for maint] git-completion: fix zsh support
-Date: Fri, 6 May 2011 12:34:59 +0300
-Message-ID: <BANLkTim8=D3ivFoOsbAvDBSRbAu+0us-2g@mail.gmail.com>
+Date: Fri, 6 May 2011 04:59:20 -0500
+Message-ID: <20110506095920.GA1635@elie>
 References: <20110505185907.GD1377@goldbirke>
-	<1304625144-5206-1-git-send-email-felipe.contreras@gmail.com>
-	<20110505232503.GA7507@elie>
-	<7v7ha44ej8.fsf@alter.siamese.dyndns.org>
-	<20110506052744.GA15132@elie>
+ <1304625144-5206-1-git-send-email-felipe.contreras@gmail.com>
+ <20110505232503.GA7507@elie>
+ <BANLkTikk1wfaC4Aic4iyJZXbZ5kkuEDxaA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 11:35:09 2011
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 06 11:59:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIHRF-0004UF-Aa
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 11:35:09 +0200
+	id 1QIHor-0007FE-W4
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 11:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755403Ab1EFJfB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 05:35:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41980 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755347Ab1EFJfA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 05:35:00 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 17so2122491fxm.19
-        for <git@vger.kernel.org>; Fri, 06 May 2011 02:35:00 -0700 (PDT)
+	id S1756009Ab1EFJ72 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 05:59:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:48560 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753995Ab1EFJ71 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 05:59:27 -0400
+Received: by iwn34 with SMTP id 34so2537356iwn.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 02:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0Bg3hvGZbHKCdaGZLt2FHgT46wO8Cn4bpUbn4ajiF6I=;
-        b=irfS1t2CV6mi1DqIEcj59k9iEVx93ntoWg2uJenemzo+15n0gjjuLXIn+RGArfR/DP
-         z8wlqzNQBYSHtuLGJAZRwBFzYHNfKRoWiA67i/MYl0dzropNLJkPGK3dvLactRohn9gL
-         t5H3Qi4Nphn9iQn3lRknNpnl/qC/ZNlDiCqMQ=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=SesdEkYrp3d9cDaStrV7SbKb4s4qCIfiPm81ozqPQvE=;
+        b=a12ndFxCwghfJK0/RCukOtITGQWRA5qFS/LfVkjgGJh8O+SfJZ9phBZHjnw9fnO7BM
+         2Nmjggpy1BPu58vXZ6nNwZ6wpMGWFa29UVhVu8jb7Na1Gtuh9vH9gGuVULPINZFUMPiw
+         J5gjh8BZyNXb3btl04wEDxhyR7+w6WXcdfzRQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=p9X7jdTFB8KHEr/QeBVXabGqgs8ccGvV7UBRAHQWAN/uiCI1pH+6ECLyP0+ekVP0jF
-         SWWALgf+2kCEnZjOEzJzv+Jk/xxYlPty06PxdFBz4C+uAAtWJpn2MkMGT3VyRaOKRGam
-         4Lz36Hi84gGoV0o13CfaJKENuwTmfAfTtRljs=
-Received: by 10.223.87.215 with SMTP id x23mr2729403fal.32.1304674500000; Fri,
- 06 May 2011 02:35:00 -0700 (PDT)
-Received: by 10.223.74.130 with HTTP; Fri, 6 May 2011 02:34:59 -0700 (PDT)
-In-Reply-To: <20110506052744.GA15132@elie>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=X+43WbyDVjNgoUsYa/JeJB5AJ1EpzZMLYUroTdWNa6Hdpc9itcPe6cqL5X2PHcmPp/
+         CHF4HhqeR63og8XAUyUvnTXzycU/IcSt0ZKaDvnZc7wee9lfrRxvJZRFiN/6ftSSWAcv
+         WYbsOCdfE/ZkVGKye2R8qZlU34Ug6pby1Rhec=
+Received: by 10.42.142.3 with SMTP id q3mr2425387icu.243.1304675965839;
+        Fri, 06 May 2011 02:59:25 -0700 (PDT)
+Received: from elie ([76.206.232.100])
+        by mx.google.com with ESMTPS id gx2sm1285511ibb.60.2011.05.06.02.59.23
+        (version=SSLv3 cipher=OTHER);
+        Fri, 06 May 2011 02:59:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTikk1wfaC4Aic4iyJZXbZ5kkuEDxaA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172965>
 
-On Fri, May 6, 2011 at 8:27 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Junio C Hamano wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->>> Maybe simplest would be to use Szeder's fix + make the zsh version =
-of
->>> _get_comp_words_by_ref not overwrite "words" at all?
->>
->> I do not use zsh myself, but it appears to me that these three-patch
->> series can graduate and if real zsh users find problems after using =
-it
->> they can be fixed independenty in-tree.
->>
->> Would that risk too many patch ping-pong among zsh users on 'master'=
+=46elipe Contreras wrote:
+
+> No, the scope remains local.
+
+Is this local in the sense of typeset used in ksh functions declared
+as "function f" or local in the sense of typeset used in ksh functions
+declared as "f ()"?  If the latter, I think you misunderstood me --- I
+never meant to suggest otherwise.
+
+> In fact, if you follow the link I posted, that's precisely the fix th=
+e
+> zsh guys were pushing for. And the it is already merged:
+> http://zsh.git.sourceforge.net/git/gitweb.cgi?p=3Dzsh/zsh;a=3Dcommitd=
+iff;h=3De880604f029088f32fb1ecc39213d720ae526aaa
+
+Now this changes things (since it amounts to a guarantee that the
+bash completion emulation has already extracted all it needs from
+$words before calling a completion function).  What happens if someone
+calls "compgen -F" after words is hidden?
+
+> Well, it's hosted on debian.org, and I haven't seen it used anywhere
+> else. I just don't know how else to identify that project.
+
+Here you go: http://pkgs.fedoraproject.org/gitweb/?p=3Dbash-completion.=
+git;a=3Dtree
+
+It's called bash-completion or bash_completion.  It really has
+basically nothing to do with Debian; they just are using Debian
+infrastructure.  But hey, call it what you want.  I don't like
+arguing.
+
+> I think the simplest fix is the one I'm proposing
+
+I'm happy with it as long as the zsh people are committed to making
+sure it continues to work (which it sounds like they are, luckily).
+I suppose it is intended to obsolete the third patch from G=C3=A1bor's
+series?  Could you provide an explanation for the commit log,
+something to the effect that
+
+ - the words array has special meaning
+ - that produces such-and-such puzzling symptoms
+ - zsh 4.3.12 (?) will fix it by using "typeset -h" to hide it when
+   running completion functions designed for bash
+ - we can make the same fix to work correctly with earlier versions of
+   zsh, and that's what this patch does
+
 ?
->> The "don't declare 'local words' in zsh" patch seems to be the right
->> work-around for the peculiar semantics of "words" array, at least to=
- me.
->
-> G=C3=A1bor's patches already work. =C2=A0I don't think they will caus=
-e breakage
-> or patch ping-pong.
->
-> I was trying to imagine Felipe's objection and all I could think of
-> was that it is not so appealing that _get_comp_words_by_ref is not
-> actually writing to "words". =C2=A0For example, the following on top =
-of
-> sg/completion-updates (=3D 3bee6a4) will print a greeting and the wor=
-ds
-> being completed when you press tab, rather than <foo> <bar> <baz>:
 
-[...]
+Sorry I have been so dense --- hopefully I understand it roughly
+now.
 
-> In practice it works great since "words" already has the right
-> content, but maybe the "typeset -h" suggestion was motivated by a
-> desire to have something easier to explain.
->
-> I don't think that's a very strong reason to prevent the fix from
-> graduating, though I suppose I would be happy to see something like
-> the following on top at some point.
->
-> -- 8< --
-> Subject: completion: do not pretend to assign to special variable $wo=
-rds on zsh
->
-> The special variable $words already has essentially the same meaning
-> as bash's COMP_WORDS on zsh. =C2=A0While assigning one to the other a=
-ppears
-> to work okay, as a no-op, that is actually an illusion --- the value
-> of $words can be changed in the _get_comp_words_by_ref function where
-> it is assigned, but after that function returns, $words is back to
-> normal.
->
-> Guard against future breakage by adding a comment mentioning this and
-> removing the redundant assignment.
-
-I don't really object to G=C3=A1bor's patches. The third one actually f=
-ixes
-the issue.
-
-The thing is that it's a *workaround*, and I prefer to keep
-workarounds to the minimal. So I prefer my patch that introduces only
-2 new lines and doesn't change the semantics of the rest of the code.
-Moreover, it's already fixed in zsh's master, so at some point we
-might want to remove it, and it's easier to remove 2 non-intrusive
-lines.
-
-But anyway, my end goal is to get this into the 'maint' branch. It's
-up to Junio how to get the fix there (if at all), but I think it's
-easier to just apply my patch there.
-
-Cheers.
-
---=20
-=46elipe Contreras
+Regards,
+Jonathan
