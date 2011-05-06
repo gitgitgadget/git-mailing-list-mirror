@@ -1,109 +1,171 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Fri, 6 May 2011 09:50:37 -0500
-Message-ID: <20110506145036.GB2991@elie>
-References: <4DB9329E.7000703@op5.se>
- <88795B20-6994-46A5-9710-2ADC84E04695@gmail.com>
- <7vhb986chl.fsf@alter.siamese.dyndns.org>
- <BANLkTi=+emhzqfiGxGbnJ=bm3oL7SvjhBw@mail.gmail.com>
- <7vbozg4eqw.fsf@alter.siamese.dyndns.org>
- <BANLkTi=zrWR0GAm6n1Gs9XDCR6kXtjDW0A@mail.gmail.com>
- <20110506065601.GB13351@elie>
- <BANLkTimVjZgOJk1ik7fbhQvW21Fo9eZoXg@mail.gmail.com>
- <20110506141719.GA2991@elie>
- <BANLkTikW2u2W=Hpw2G4VJf_h88x4_7x_=Q@mail.gmail.com>
+From: Grant Grundler <grundler@chromium.org>
+Subject: Re: [PATCH] staging: brcm80211: SDIO/MMC cleanups
+Date: Fri, 6 May 2011 08:21:45 -0700
+Message-ID: <BANLkTimQ8A9bfRE=Uu59QDWhBgxvVRJW7g@mail.gmail.com>
+References: <20110504165947.40EED208186@grundler.mtv.corp.google.com>
+	<4DC3B086.90802@broadcom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	"david@lang.hm" <david@lang.hm>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 16:50:56 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Greg Kroah-Hartman <greg@kroah.com>,
+	"devel@linuxdriverproject.org" <devel@linuxdriverproject.org>,
+	Dowan Kim <dowan@broadcom.com>,
+	Henry Ptasinski <henryp@broadcom.com>,
+	Venkat Rao <vrao@broadcom.com>, git@vger.kernel.org
+To: Arend van Spriel <arend@broadcom.com>
+X-From: git-owner@vger.kernel.org Fri May 06 17:21:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIMMo-0004pP-Kx
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 16:50:54 +0200
+	id 1QIMqq-000857-Rz
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 17:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755024Ab1EFOup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 10:50:45 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38568 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754736Ab1EFOun (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 10:50:43 -0400
-Received: by iwn34 with SMTP id 34so2728941iwn.19
-        for <git@vger.kernel.org>; Fri, 06 May 2011 07:50:42 -0700 (PDT)
+	id S1756415Ab1EFPVv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 11:21:51 -0400
+Received: from smtp-out.google.com ([74.125.121.67]:62891 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756247Ab1EFPVu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 11:21:50 -0400
+Received: from hpaq7.eem.corp.google.com (hpaq7.eem.corp.google.com [172.25.149.7])
+	by smtp-out.google.com with ESMTP id p46FLmec020325
+	for <git@vger.kernel.org>; Fri, 6 May 2011 08:21:48 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1304695309; bh=klqZFbygVR5UfPzpfek+pssKIjU=;
+	h=MIME-Version:Sender:In-Reply-To:References:Date:Message-ID:
+	 Subject:From:To:Cc:Content-Type:Content-Transfer-Encoding;
+	b=aOk6hMIowNEEix3ZqhmJ/lCy+3adsSVWUfYLAlcdknmDnaKUU59hqHGJvEMOjz8WE
+	 RNnDPDLAjmKtNE7x9rdNw==
+Received: from gyg4 (gyg4.prod.google.com [10.243.50.132])
+	by hpaq7.eem.corp.google.com with ESMTP id p46FLkns011968
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 6 May 2011 08:21:47 -0700
+Received: by gyg4 with SMTP id 4so1424245gyg.4
+        for <git@vger.kernel.org>; Fri, 06 May 2011 08:21:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=YGLXT2yt4pWl+yBfZFbfagiXXW0TdExIb0qC/3+lqBM=;
-        b=tyDmry2h/sOCoPlmF35YkV7A9Nw8I/JXoQwAXmO2NSxh86V1DHVIp6s1GQFb4Z4EQA
-         TMde4xsQz4jLo0RCZNpZXJkTcRGJMNPRB/dMZTEPe58Do/LSfJtEuSlI0gQGa+mtGNww
-         UIMyNCVjacNUzy+XD4yqR2gPQfOIOLI8BIpbM=
+        d=google.com; s=beta;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IWvckPup+gevGo9K/hW3rxcEp6IqE+CI6EKZwm+R/TA=;
+        b=anBcQMo5UPp4gEmeVl9ftb7xfZma/OvIiUbhq59V7tzR2Tff19Eovm/yRxTUoKgBnr
+         IMgB5UvESdTYdJJe/Urw==
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=dDO3pAXvSjWW7esTnrGl36RC1xcZdKrEnKXP1XYPZJCpaHjpt7g7crNf/iNXzYGgj1
-         P6ZOg7l24aLfX+lZRGeNQriCjZldtlGQIQEH55JS45V+Js12st2m8qjeLIec55sF95z5
-         1cWQHDIK4wCmPDMSc0mjn4zYlVIrX9x/orYsY=
-Received: by 10.42.169.67 with SMTP id a3mr1189908icz.160.1304693442495;
-        Fri, 06 May 2011 07:50:42 -0700 (PDT)
-Received: from elie (adsl-76-206-232-100.dsl.chcgil.sbcglobal.net [76.206.232.100])
-        by mx.google.com with ESMTPS id a8sm1369703ibg.48.2011.05.06.07.50.39
-        (version=SSLv3 cipher=OTHER);
-        Fri, 06 May 2011 07:50:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTikW2u2W=Hpw2G4VJf_h88x4_7x_=Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=google.com; s=beta;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=cftLN6HpEbylUM+57iDDYyia2+xH8CSN6Vvgq+K5EXH/92DX2EsbeP4Dv8r0EPJN9d
+         fTBtgsIPkmPwPvKw8j1w==
+Received: by 10.91.219.6 with SMTP id w6mr3404472agq.154.1304695305775; Fri,
+ 06 May 2011 08:21:45 -0700 (PDT)
+Received: by 10.90.114.12 with HTTP; Fri, 6 May 2011 08:21:45 -0700 (PDT)
+In-Reply-To: <4DC3B086.90802@broadcom.com>
+X-Google-Sender-Auth: h7BNZLAdg8kBtc1IuVVxld8walI
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172980>
 
-Jon Seymour wrote:
+On Fri, May 6, 2011 at 1:25 AM, Arend van Spriel <arend@broadcom.com> w=
+rote:
+=2E..
+>> Signed-off-by: Grant Grundler<grundler@chromium.org>
+>>
+>> diff --git a/drivers/staging/brcm80211/brcmfmac/dhd_sdio.c
+>> b/drivers/staging/brcm80211/brcmfmac/dhd_sdio.c
+>> index 0c248aa..4bfd8d8 100644
+>
+> I am having difficulties applying a patch and want to turn it into a
+> learning experience for me. I tried to apply this patch using the fol=
+lowing
+> steps:
+> 1. save the email to grundler.eml
+> 2. checkout staging-next branch (HEAD 7cc8243)
+> 3. run 'git am grundler.eml'
+> Applying: staging: brcm80211: SDIO/MMC cleanups
+> error: patch failed: drivers/staging/brcm80211/brcmfmac/dhd_sdio.c:13=
+5
+> error: drivers/staging/brcm80211/brcmfmac/dhd_sdio.c: patch does not =
+apply
+> Patch failed at 0001 staging: brcm80211: SDIO/MMC cleanups
 
-> Partly because that is second guessing &/or reverse engineering the
-> distribution's decisions and
+In case it matters, that patch was generated with simple "git diff"
+and then hand edited to prepend the commit log, S-o-B, and comments.
+I'm still too chicken to use git-mail.
 
-Well, no --- that's what /usr/local is _for_:
-http://www.pathname.com/fhs/pub/fhs-2.3.html#USRLOCALLOCALHIERARCHY
+I haven't touched that tree since making the diff. Any information
+that might help explain the state is available. Here are some basics:
+grundler <2083>git config -l
+user.name=3DGrant Grundler
+user.email=3Dgrundler@google.com
+color.ui=3Dauto
+core.repositoryformatversion=3D0
+core.filemode=3Dtrue
+core.bare=3Dfalse
+core.logallrefupdates=3Dtrue
+remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin/*
+remote.origin.url=3Dgit://git.kernel.org/pub/scm/linux/kernel/git/gregk=
+h/staging-2.6.git
 
-> it won't work for a Windows install where there is no /usr/local
+grundler <2084>git status
+# Not currently on any branch.
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+#
+#       modified:   drivers/staging/brcm80211/brcmfmac/bcmsdh_sdmmc.c
+#       modified:   drivers/staging/brcm80211/brcmfmac/dhd_sdio.c
+#
+no changes added to commit (use "git add" and/or "git commit -a")
 
-That's true.  I believe command-line users on Windows who install by
-unzipping to a directory are used to having to set a PATH for
-themselves.  Perhaps it would be convenient for git to learn to add a
-specific standard directory to its private PATH as a Windows-specific
-extension, though.
+grundler <2054>cat .git/ORIG_HEAD
+3d51406d08649d166b3f3d552da2bdfbcf46fcde
+grundler <2055>cat .git/FETCH_HEAD
+5933f2ae353a93b1d3b501bc63c925531849bbc7        not-for-merge   branch
+'master' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/stagin=
+g-2.6
+6c7ed917a237a0605ebe3ea2237a8d1744b0bad5        not-for-merge   branch
+'ralink' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/stagin=
+g-2.6
+b27b8ea853c4c1c1d5d95448cf69b3f10a9558d4        not-for-merge   branch
+'staging-linus' of
+git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging-2.6
+7cc82439baf3faa45cbb9f05a6a8b6b55891621a        not-for-merge   branch
+'staging-next' of
+git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging-2.6
+grundler <2056>cat .git/HEAD
+7cc82439baf3faa45cbb9f05a6a8b6b55891621a
 
-If your goal is to make installing new commands for git easier than
-installing native apps --- why?  It seems backwards.  Consider that
-the end result ought to be easy not only for the app developer but for
-the end user, and if every program with the ability to call other
-programs sets up its own better replacement for standard operating
-system facilities, that will make for a complicated system to
-administer indeed.  So with that in mind, it might be simpler to take
-advantage of existing project that simplifies installation of native
-apps, like <http://zero-install.sourceforge.net/>.
 
-The development environment for git on Windows (mysgit) does provide a
-directory hierarchy complete with /usr et al, so people using that
-very well might want to install to /usr/local.  Likewise with Cygwin.
+> The git documentation on the git am command is not very elaborate. I
+> investigated the issue and checked following:
+> 1. line 135 in dhd_sdio.c in the patch does match line 135 in my chec=
+ked out
+> branch.
 
-> Not that I currently, have a need, but Junio did mention the case
-> where someone wants to enhance an existing git command with a wrapper
-> of some kind.
+Just for grins, can you apply the patch by hand?
+    patch -p1 < grundler.eml
 
-For reasons you've hinted at before, Git deliberately does not allow
-that (similarly, it does not allow git aliases to override existing
-commands).  $GIT_EXEC_PATH comes first on the PATH that git uses
-internally.  That's a feature, not a bug, imho.
+This would just confirm it's not a problem with the "diff" portion of
+the patch. It's possible something else in the file is
+confusing/annoying git-am command.
+
+> 2. did 'git hash-object'
+> =C2=A0 =C2=A0$ git hash-object drivers/staging/brcm80211/brcmfmac/dhd=
+_sdio.c
+> =C2=A0 =C2=A00c248aa43a37cfd1701f97988ec7cf4ff76a2789
+
+grundler <2086>git hash-object drivers/staging/brcm80211/brcmfmac/bcmsd=
+h_sdmmc.c
+25fbd9c54bb0039f1a4d17e6fc9c12c4d83e0e20
+grundler <2087>git hash-object drivers/staging/brcm80211/brcmfmac/dhd_s=
+dio.c
+4bfd8d867d29c0afd6e6b6fb4330871481e1c8bc
+
+hth,
+grant
