@@ -1,134 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Private/public branches/repos workflow
-Date: Thu, 05 May 2011 21:10:51 -0700
-Message-ID: <7vk4e44gfo.fsf@alter.siamese.dyndns.org>
-References: <BANLkTi=TLeePH0JDvnE0XPiCzXFxid9BWQ@mail.gmail.com>
- <7v4o598164.fsf@alter.siamese.dyndns.org>
- <BANLkTimggn-E+JsXp78_a2P3eWku3oTSbQ@mail.gmail.com>
+From: =?UTF-8?q?Jo=C3=A3o=20Britto?= <jabcalves@gmail.com>
+Subject: [PATCH] Remove duplicated "is a"
+Date: Fri,  6 May 2011 01:16:17 -0300
+Message-ID: <1304655377-57638-1-git-send-email-jabcalves@gmail.com>
+References: <1304614634-46181-1-git-send-email-jabcalves@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jerome Martin <tramjoe.merin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 06:11:07 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Jo=C3=A3o=20Britto?= <jabcalves@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 06:17:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QICNf-0002WB-0u
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 06:11:07 +0200
+	id 1QICTq-0004Nv-A7
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 06:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356Ab1EFELA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 00:11:00 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58230 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751267Ab1EFEK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 00:10:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 132495B86;
-	Fri,  6 May 2011 00:13:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=K/0CM66piOGLY0RaIl+2FMTAK7E=; b=RQG1dL94m9eKW667Mows
-	R3qs43trU1rlUJj5Kba5zAsjxaHqqI1ynIGGDCyI60FBM1Zq+bh68OuE2nsac04z
-	b6uvN0z/kwnxlyilktJduvNcUTvm9Iqm33mzE2Y0FKy6GmFDdI6DPsBp565nSewQ
-	rDV2uLAJrzEZsU9O8mpcTEY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=bYSjNM+yKkGWHLEkPAC6AwpvOZorFTn5xfbCQNnq0Ly9zb
-	Jnp8K87So3KE34xvCi9vz9sqpWd3m0Z6kTSu7giEsUHkFQj6xI8aFef/z8uzczp0
-	IWPrKXNzqMVk2QxQepTaebsg9WFYlxBtDNAps73pI5OTQtN2Cy3v9B3UM6M9o=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DB7A35B85;
-	Fri,  6 May 2011 00:12:59 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C2D345B84; Fri,  6 May 2011
- 00:12:56 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 20FA8E42-7797-11E0-BE12-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1751750Ab1EFERZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 00:17:25 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39178 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751516Ab1EFERY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 00:17:24 -0400
+Received: by gyd10 with SMTP id 10so1022913gyd.19
+        for <git@vger.kernel.org>; Thu, 05 May 2011 21:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=lVii/HJncvyiqveRvIbj17aqD63xuRtm3iF9WyeZ7iM=;
+        b=U1ateKZCP3rLAZPizImwLukg9wv0W0/+VCi8ckHGsXjsqSu0c2GqCfhJUrQ6903PFK
+         xFhAmglinejBBuv/FKaeYDncskTRqNxYHR6DRgTx6sfteKWqGCDwqMmqixE5OTqSIxiP
+         lJ/OwaFyfOl1ythEwRXL7wMUVeClAUcYdoi4o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=AySCVRa2YG2tTMRuBryM3ZhceVifBfu8R/q/S1vJhT/Mvr/R9Sk851K5U8m1N/zKNj
+         kU31pE6D+u99hOgKkR1IHizmuVQj/oE8j4mwKMxYqFhX2k7HJLdtLv+wWGlDl0knNxfi
+         QeRnZVCXyrBWA9XRAlW3uLTVJWp2/hIcu7nEg=
+Received: by 10.236.191.229 with SMTP id g65mr4044066yhn.335.1304655443469;
+        Thu, 05 May 2011 21:17:23 -0700 (PDT)
+Received: from localhost.localdomain ([189.121.226.214])
+        by mx.google.com with ESMTPS id 44sm1328187yhl.53.2011.05.05.21.17.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 May 2011 21:17:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1
+In-Reply-To: <1304614634-46181-1-git-send-email-jabcalves@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172935>
 
-Jerome Martin <tramjoe.merin@gmail.com> writes:
+Signed-off-by: Jo=C3=A3o Britto <jabcalves@gmail.com>
+---
+ Documentation/diff-options.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Could you tell me how you would see usage of rebasing inside the
-> workflow you describe ? I am thinking about features (mistakenly)
-> implemented on top of the private branch that need later to be release
-> in the public branch. Can this be the shortcut to avoid lengthy
-> cherry-picks ?
-
-Mistakes and changes of plans can happen, but it's not a big deal.
-
-In the git project itself, even the "master" branch that corresponds to
-your "private" branch is managed with topic branch workflow, so it is
-entirely possible that a topic that was originally meant only for the next
-release turns out to be better backported to the maintenance track.
-
-If you have a private "feature-A" topic with many commits:
-
-                     O   public
-                      \
- ...---x---x---x---X---S  private
-                        \
-                         a---b---...---z  feature-A
-
-and later it turns out that it is better to release them also to the
-public, instead of cherry-picking the commits to the public, you could at
-that point do something like this:
-
-    $ git checkout -b public-feature-A feature-A
-    $ git rebase --onto public private
-
-which will first create a new branch "public-feature-A" that points at the
-same tip of "feature-A", and then rebases the commits on that branch that
-were made since the topic was forked from "private" on top of the tip of
-the "public" branch, resulting in:
-
-                       a'--b'--...--z' public-feature-A
-                      /
-                     O   public
-                      \
- ...---x---x---x---X---S  private
-                        \
-                         a---b---...---z  feature-A
-
-and then you may choose when to merge that to the "public" branch.
-By the time you do this, perhaps the original "feature-A" may have already
-been merged to "private" after fully tested and audited, like this:
-
-                       a'--b'--...--z' public-feature-A
-                      /
-                     O   public
-                      \
- ...---x---x---x---X---S---x---x---x-----*  private
-                        \               / 
-                         a---b---...---z  feature-A
-
-and then after you merged "public-feature-A" to "public":
-
-                       a'--b'--...--z' public-feature-A
-                      /              \  
-                     O---o---...---o--*   public
-                      \
- ...---x---x---x---X---S---x---...---x---*  private
-                        \               / 
-                         a---b---...---z  feature-A
-
-merging "public" back to "private" hopefully may have too many conflicts
-between the feature-A and public-feature-A branches, as they are supposed
-to be patch equivalent, to produce this:
-
-
-                       a'--b'--...--z' public-feature-A
-                      /              \  
-                     O---o---...---o--*---.   public
-                      \                     \
- ...---x---x---x---X---S---x---...---x---*---*   private
-                        \               / 
-                         a---b---...---z  feature-A
-
-After this you could even garbage collect the two topic branches ;-).
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
+s.txt
+index 34f0145..23b605f 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -243,7 +243,7 @@ ifdef::git-log[]
+ 	For following files across renames while traversing history, see
+ 	`--follow`.
+ endif::git-log[]
+-	If `n` is specified, it is a is a threshold on the similarity
++	If `n` is specified, it is a threshold on the similarity
+ 	index (i.e. amount of addition/deletions compared to the
+ 	file's size). For example, `-M90%` means git should consider a
+ 	delete/add pair to be a rename if more than 90% of the file
+--=20
+1.7.5.1
