@@ -1,124 +1,80 @@
-From: "Kibler, Bill" <bill.kibler@hp.com>
-Subject: RE: git failure on HP-UX - more data
-Date: Fri, 6 May 2011 19:02:50 +0000
-Message-ID: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF67E@GVW1362EXC.americas.hpqcorp.net>
-References: <88C5107F36BD7E4BBFDFDB140E3D81077FA78CF12C@GVW1362EXC.americas.hpqcorp.net>
- <7vfwot6k7a.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] status: display "doing what" information in git status
+Date: Fri, 06 May 2011 21:15:26 +0200
+Message-ID: <vpqei4bvdwx.fsf@bauges.imag.fr>
+References: <7vr58c4sip.fsf@alter.siamese.dyndns.org>
+	<1304667535-4787-1-git-send-email-madcoder@debian.org>
+	<vpqei4bwu4b.fsf@bauges.imag.fr> <20110506184403.GC2872@madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Richard Lloyd <richard.lloyd@connectinternetsolutions.com>,
-	"kibler@psyber.com" <kibler@psyber.com>,
-	"Kibler, Bill" <bill.kibler@hp.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 21:04:06 2011
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri May 06 21:18:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIQJp-0000sr-1D
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 21:04:05 +0200
+	id 1QIQY7-0000RX-RC
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 21:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756602Ab1EFTD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 15:03:59 -0400
-Received: from g4t0017.houston.hp.com ([15.201.24.20]:3987 "EHLO
-	g4t0017.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754622Ab1EFTD5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 15:03:57 -0400
-Received: from G1W0401.americas.hpqcorp.net (g1w0401.americas.hpqcorp.net [16.236.31.6])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by g4t0017.houston.hp.com (Postfix) with ESMTPS id B5340388D8;
-	Fri,  6 May 2011 19:03:56 +0000 (UTC)
-Received: from G6W0644.americas.hpqcorp.net (16.230.34.80) by
- G1W0401.americas.hpqcorp.net (16.236.31.6) with Microsoft SMTP Server (TLS)
- id 8.2.176.0; Fri, 6 May 2011 19:02:53 +0000
-Received: from GVW1362EXC.americas.hpqcorp.net ([16.230.34.143]) by
- G6W0644.americas.hpqcorp.net ([16.230.34.80]) with mapi; Fri, 6 May 2011
- 19:02:53 +0000
-Thread-Topic: git failure on HP-UX - more data
-Thread-Index: AcwLV5LX8gfa/uHdSi27g4QBxZpblQAoAUyw
-In-Reply-To: <7vfwot6k7a.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S932505Ab1EFTSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 15:18:45 -0400
+Received: from imag.imag.fr ([129.88.30.1]:60263 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932202Ab1EFTSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 15:18:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p46JFQ0e006075
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 6 May 2011 21:15:26 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QIQUo-0004UL-Ng; Fri, 06 May 2011 21:15:26 +0200
+In-Reply-To: <20110506184403.GC2872@madism.org> (Pierre Habouzit's message of
+	"Fri, 6 May 2011 20:44:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 06 May 2011 21:15:26 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173001>
 
-I spent some time thinking about this problem and realized that guessing the
-pipe size was the issue probably was wrong, when it is likely something more 
-generic in nature. I did some more testing, and remembered a similar problem
-when trying to do a git clone of the arm kernel for my $99 netbook article
-(see www.kiblerelectronics./corner/ccii.shtml), where it failed much
-the same as on HP-UX. My thinking is that this is a variable that is controlled
-by the OS/Libc settings and not something that can be selected as a
-good enough value. My real problem and reason for putting in a bug report,
-is wanting to know how this value was intended to be used.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-I just ran several tests on hp-UX using various values for the
-"LARGE_PACKET_MAX", all trying to see what the actual failure value is.
-I thought it might be related to ssize_t, which in HP-UX is 32K, but
-values around 32K all worked fine. 65000 failed, while 48000 worked.
-I went through the normal trial and error process and found the value
-to vary over a number of tests - in short - not fixed. That suggested
-it is partly controlled by some amount of free space(?).
-
-I will test out my arm netbook and see if changing this value helps git
-on my system, but for now I feel this value was selected somewhat
-arbitrarily when it should be selected as the smallest value that can
-work for your OS of choice. I thought of using 32K on HP-UX, but decided
-that if I don't really know what the mechanism is controlling this value
-then the smallest working value is the safest to use (8208).
-
-Can anyone in this group explain what is going on for me? Why was 64K
-selected in the first place?
-Thanks.
-Bill. 
-
------Original Message-----
-From: Junio C Hamano [mailto:gitster@pobox.com] 
-Sent: Thursday, May 05, 2011 12:07 PM
-To: Kibler, Bill
-Cc: git@vger.kernel.org; Richard Lloyd
-Subject: Re: git failure on HP-UX
-
-"Kibler, Bill" <bill.kibler@hp.com> writes:
-
-> In looking at the code, "sideband.h" defines "LARGE_PACKET_MAX 65520"
-> and is related to the passed flag "side-band-64k" as discussed in git
-> document pack-protocol.txt. The current default usage seems to be 64K
-> transfers, yet if we check the "include/limits.h" of HP-UX we see a
-> "PIPE_BUF" set to 8192. Along with the tusc indication of 8K pipe size,
-> I suspect that HP-UX is coring due to git trying to use a 64K pipe when
-> 8K is max.
+> On Fri, May 06, 2011 at 08:40:04PM +0200, Matthieu Moy wrote:
+>> Pierre Habouzit <madcoder@debian.org> writes:
+>> 
+>> > +	const char * const merge_advice =
+>> > +		_("use \"git reset --hard\" to abort, or resolve conflicts and commit");
+>> 
+>> I think that should be "git reset --merge" (which preserves files not
+>> touched by the merge, and makes sure "git merge; git reset" doesn't
+>> permanently loose data).
 >
-> I solved the probem for now, by changing the file sideband.h to use
-> "LARGE_PACKET_MAX 8208".
+> Wow, I didn't know about that one, so /maybe/ the hint isn't that
+> useless after all :)
 
-This does not make any sense.  We may make write(2) and read(2) system
-calls with 64k (or maybe bit more) chunk, but that does not mean the
-implementation of these system calls must take that as a whole.  Your
-write(2) is allowed to write only whatever fits your pipe buffer, and tell
-the caller "I wrote only 8192 bytes", and the code is supposed to loop,
-advancing the write pointer by 8k and calling write(2) again, until you
-write everything to whoever is reading the other end of the pipe.  The
-same thing for the read(2).
+Actually, there's very few reason to run "git reset --hard" these days,
+and we should really consider it as a very dangerous command that should
+not be advertized to beginners. There's almost always a safer
+alternative:
 
-If you can find a place where we make write(2)/read(2) and blindly assumes
-that a non-negative return means everything was written/read successfully,
-then you have found a bug.
+* You want to cancel a merge => git reset --merge
+  (doesn't touch files not impacted by merges)
 
-If the symptom _were_ a deadlock where the writer of one pipe expected to
-be able to send 64k to the other end of the pipe and then hear back from
-the other side with a separate read, I would understand that could happen
-(actually we know a local pipe transfer without ssh has that kind of
-potential deadlock but I think the size we assume that can fit in the pipe
-buffer is far smaller than 8k).  But I do not understand where a SIGBUS
-can come from.
+* You want to change the commit your HEAD points to => git reset --keep
+  (in case you have local changes, they won't be overridden)
+
+* You want to discard local changes => git stash
+  (you may not think these changes are important, but you may be wrong)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
