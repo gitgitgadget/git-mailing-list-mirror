@@ -1,80 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] status: display "doing what" information in git status
-Date: Fri, 06 May 2011 21:15:26 +0200
-Message-ID: <vpqei4bvdwx.fsf@bauges.imag.fr>
-References: <7vr58c4sip.fsf@alter.siamese.dyndns.org>
-	<1304667535-4787-1-git-send-email-madcoder@debian.org>
-	<vpqei4bwu4b.fsf@bauges.imag.fr> <20110506184403.GC2872@madism.org>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: git-p4 and keyword substitution
+Date: Fri, 06 May 2011 20:29:55 +0100
+Message-ID: <4DC44C33.7060903@diamand.org>
+References: <BANLkTinLW3Ty4n1ODKU-N000q7qQUoSDTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri May 06 21:18:52 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Michael Horowitz <michael.horowitz@ieee.org>
+X-From: git-owner@vger.kernel.org Fri May 06 21:30:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIQY7-0000RX-RC
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 21:18:52 +0200
+	id 1QIQj3-00064b-3Z
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 21:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932505Ab1EFTSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 15:18:45 -0400
-Received: from imag.imag.fr ([129.88.30.1]:60263 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932202Ab1EFTSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 15:18:44 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p46JFQ0e006075
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 6 May 2011 21:15:26 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QIQUo-0004UL-Ng; Fri, 06 May 2011 21:15:26 +0200
-In-Reply-To: <20110506184403.GC2872@madism.org> (Pierre Habouzit's message of
-	"Fri, 6 May 2011 20:44:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 06 May 2011 21:15:26 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1752950Ab1EFTaC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 15:30:02 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:42921 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779Ab1EFTaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 15:30:00 -0400
+Received: by wya21 with SMTP id 21so2642307wya.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 12:29:59 -0700 (PDT)
+Received: by 10.216.79.5 with SMTP id h5mr3994137wee.110.1304710199341;
+        Fri, 06 May 2011 12:29:59 -0700 (PDT)
+Received: from [86.30.143.167] (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
+        by mx.google.com with ESMTPS id m84sm963797weq.12.2011.05.06.12.29.56
+        (version=SSLv3 cipher=OTHER);
+        Fri, 06 May 2011 12:29:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110402 Icedove/3.1.9
+In-Reply-To: <BANLkTinLW3Ty4n1ODKU-N000q7qQUoSDTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173002>
 
-Pierre Habouzit <madcoder@debian.org> writes:
-
-> On Fri, May 06, 2011 at 08:40:04PM +0200, Matthieu Moy wrote:
->> Pierre Habouzit <madcoder@debian.org> writes:
->> 
->> > +	const char * const merge_advice =
->> > +		_("use \"git reset --hard\" to abort, or resolve conflicts and commit");
->> 
->> I think that should be "git reset --merge" (which preserves files not
->> touched by the merge, and makes sure "git merge; git reset" doesn't
->> permanently loose data).
+On 06/05/11 18:26, Michael Horowitz wrote:
+> All,
 >
-> Wow, I didn't know about that one, so /maybe/ the hint isn't that
-> useless after all :)
+> I was wondering if there is a way to deal with this issue...
+>
+> It seems that git removes the keyword substitutions from Perforce.
+> This is fine, except for the fact that it does not remove them from
+> the p4 client shadow.  So, this causes git-p4 submit to fail whenever
+> it either deletes a file with keywords (since the file it is deleting
+> has the keywords and doesn't match) or lines close to the keywords
+> change, such that applying the patch doesn't work.
+>
+> A Google search turned up a thread from a few years ago where someone
+> submitted a patch to make removing the keyword substitutions optional,
+> but I guess that patch never got accepted, at least not that I can
+> see.
+>
+> Is there any other way of dealing with this?
 
-Actually, there's very few reason to run "git reset --hard" these days,
-and we should really consider it as a very dangerous command that should
-not be advertized to beginners. There's almost always a safer
-alternative:
+I had exactly the same problem only yesterday, and found exactly the 
+same thread!
 
-* You want to cancel a merge => git reset --merge
-  (doesn't touch files not impacted by merges)
+I made a patch to git-p4 which zaps the RCS keywords in the perforce 
+checkout if a conflict occurs.
 
-* You want to change the commit your HEAD points to => git reset --keep
-  (in case you have local changes, they won't be overridden)
+I got as far as something which works if you just delete a line, but 
+fails if you delete the entire file. And is a bit ugly.
 
-* You want to discard local changes => git stash
-  (you may not think these changes are important, but you may be wrong)
+I was going to ask the exact question you've asked though, to see if 
+there's a better way.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Luke
