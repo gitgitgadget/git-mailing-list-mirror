@@ -1,164 +1,114 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: error with $ git push origin HEAD:newbranch
-Date: Fri, 6 May 2011 13:02:04 -0400
-Message-ID: <20110506170204.GA16576@sigill.intra.peff.net>
-References: <loom.20110505T103708-225@post.gmane.org>
- <20110505093752.GB29595@sigill.intra.peff.net>
- <loom.20110505T114511-660@post.gmane.org>
- <20110505105914.GA464@sigill.intra.peff.net>
- <loom.20110506T034552-210@post.gmane.org>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Fri, 6 May 2011 13:23:34 -0400
+Message-ID: <20110506172334.GB16576@sigill.intra.peff.net>
+References: <BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com>
+ <BANLkTinQny-M0rL+Vs9L_cQhtVLyv6rqMw@mail.gmail.com>
+ <4DB9329E.7000703@op5.se>
+ <88795B20-6994-46A5-9710-2ADC84E04695@gmail.com>
+ <7vhb986chl.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=+emhzqfiGxGbnJ=bm3oL7SvjhBw@mail.gmail.com>
+ <7vbozg4eqw.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=zrWR0GAm6n1Gs9XDCR6kXtjDW0A@mail.gmail.com>
+ <20110506065601.GB13351@elie>
+ <BANLkTimVjZgOJk1ik7fbhQvW21Fo9eZoXg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: chris <jugg@hotmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 19:02:16 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"david@lang.hm" <david@lang.hm>,
+	Pau Garcia i Quiles <pgquiles@elpauer.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 06 19:23:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIOPv-00086L-KQ
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 19:02:15 +0200
+	id 1QIOki-0003RH-Cy
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 19:23:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756704Ab1EFRCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 13:02:09 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33036
+	id S1752760Ab1EFRXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 13:23:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53953
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754263Ab1EFRCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 13:02:08 -0400
-Received: (qmail 11973 invoked by uid 107); 6 May 2011 17:04:02 -0000
+	id S1751096Ab1EFRXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 13:23:38 -0400
+Received: (qmail 12054 invoked by uid 107); 6 May 2011 17:25:32 -0000
 Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 06 May 2011 13:04:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 May 2011 13:02:04 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 06 May 2011 13:25:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 May 2011 13:23:34 -0400
 Content-Disposition: inline
-In-Reply-To: <loom.20110506T034552-210@post.gmane.org>
+In-Reply-To: <BANLkTimVjZgOJk1ik7fbhQvW21Fo9eZoXg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172991>
 
-On Fri, May 06, 2011 at 02:16:03AM +0000, chris wrote:
+On Sat, May 07, 2011 at 12:07:14AM +1000, Jon Seymour wrote:
 
-> Jeff King <peff <at> peff.net> writes:
-> > 
-> > On Thu, May 05, 2011 at 10:06:21AM +0000, chris wrote:
-> > 
-> > > It is slightly surprising that git-push doesn't default to assuming 
-> > > one means refs/heads/newbranch in this case.  I don't see a reason 
-> > > not to?
-> > 
-> > Consider something like:
-> > 
-> >   $ git checkout v1.5
-> >   $ git push origin HEAD:foo
-> > 
-> > Would you want "foo" to be a branch or a tag? I can see arguments for
-> > either.
+> I think the problem we are trying to solve is this: how to make it as
+> easy as possible to install, and get operational, an extension to git.
 > 
-> If the above command wanted to produce a tag, just provide 'v1.5' as the source 
-> ref.  It seems to me that first checking out the tag then pushing from HEAD is 
-> extra steps in order to push a branch ref without having to be explicit about 
-> it.  $ git push origin v1.5:foo would have been simpler if intending to push a 
-> tag ref.
-
-Sure, but that was just a small example. It could just as easily have
-been:
-
-  $ git checkout v1.5
-  ... look look look ...
-  ... hmm, this one doesn't have the bug or feature I'm looking for ...
-  $ git checkout v1.5.1
-  ... look look look ...
-  ... nor this one ...
-  $ git checkout v1.5.2
-  ... look look look ...
-  ... oh, this one has it, let's push it upstream to communicate to
-      somebody ...
-  $ git push origin HEAD:foo
-
-Sure, I _could_ say "git push origin v1.5.2:foo" in the final step. But
-my mental model is "I have found the thing I am looking for, now push
-it", which means HEAD is more natural.  This is more obvious to see when
-you start leaving refs, like:
-
-  $ git checkout HEAD^
-  ... look look look; nope ...
-  $ git checkout HEAD^
-  ... look look look; nope ...
-  $ git checkout HEAD^
-  ... yep, found it ...
-  $ git push origin HEAD:foo
-
-So in both of those cases, what should be pushed? A tag or a branch? My
-argument is that git would have to guess. Rather than guess, we come
-back to the user and say "please be more specific".
-
-> Given that git-push has specific syntax for pushing a tag, and git-push makes 
-> other assumptions that give the perception it is generally used for branches 
-> unless told otherwise also makes me expect that "foo" to be a branch.
-
-That tag syntax is antique and predates most of the nice DWIM behavior
-of refspecs. Nowadays you can just say "git push <remote> v1.5" and it
-will do the same thing without the "tag" modifier. So I doubt anyone
-uses it.
-
-I wonder if we should more clearly mark it as useless in the
-documentation.
-
-> The following is provided for specifically calling out a tag:
+> If git supported the concept of a standard place to put extensions,
+> then it could be as simple as:
 > 
->   $ git push origin tag <refspec>
+>     unzip -d $(git --plugins-dir) plugin.zip
 > 
-> However, that syntax as far as I can tell is pretty worthless anyway, as the 
-> following will not work:
-> 
->   $ git push origin tag HEAD:newtag
->   error: src refspec refs/tags/HEAD does not match any.
-> 
->   $ git push origin tag 183c65e:newtag
->   error: src refspec refs/tags/183c65e does not match any.
+> with no need to configure or choose a prefix and no need to edit the
+> an .profile or .bashrc to permanently add a directory to the PATH.
 
-Right. It's literally about expanding "tag foo" into
-"refs/tags/foo:refs/tags/foo". So it only works for a tag ref.
+This seems slightly backwards to me. You are asking git "where should
+plugins go?" and then putting them there. But that leaves no room for
+plugins going in _multiple_ places. IOW, the usual hierarchy of:
 
-For both of those, you would need:
+  1. distribution-packaged extensions (in /usr/share/git/plugins)
 
-  git push origin HEAD:refs/tags/newtag
+  2. local system-wide extensions (in /usr/local/share/git/plugins)
 
-  git push origin 183c65e:refs/tags/newtag
+  3. per-user extensions (in $HOME/.gitplugins)
 
-> But both the following are successful, which makes me ask why the 'tag' option 
-> exists if the above doesn't work.
-> 
->   $ git push tag existingtag:newtag1
-> 
->   $ git push existingtag:newtag2
-> 
-> So I see little purpose in the $ git push tag <refspec> syntax, as the source 
-> must already be a tag anyway.
+It seems like we should not be asking git, but _telling_ git about where
+our plugins are. I understand that you don't want the user to have to do
+any additional steps, and I think that is a reasonable goal. But can't
+that be easily accomplished by:
 
-Right. Once upon a time, that didn't Just Work. These days we see that
-the LHS of the refspec is a tag, and infer that the RHS should be, as
-well (in the absence of anything more specific).
+  1. The git wrapper learns to look in a set of plugin paths, something
+     like:
 
-> Personally, I would prefer that git-push work on branches by default[1], 
-> providing shortcuts for pushing tag[2] refs and remote branch[3] refs, while all 
-> other ref types must be called out explicitly.  Creating new refs isn't 
-> destructive, so it seems these could be supported without concern.
-> 
-> 1. $ git push origin SHA1:branch1
->   => $ git push origin SHA1:refs/heads/branch1
-> 
-> 2. $ git push origin tag SHA1:tagname
->   => $ git push origin SHA1:refs/tags/tagname
-> 
-> 3. $ git push origin SHA1:upstream/branch2
->   => $ git push origin SHA1:refs/remotes/upstream/branch2
+       foreach path in (list of plugin paths)
+         foreach plugin in "path/*"
+           add plugin/bin to PATH
+           add plugin/man to MANPATH
 
-In (3), how do you differentiate between the branch
-"refs/heads/upstream/branch2" and the remote tracking branch
-"refs/remotes/upstream/branches"?
+  2. At compile time, we give some stock system directories like
+     /usr/share/git/plugins and /usr/local/share/git/plugins.
+     Distribution packages of git override as appropriate for the target
+     system.
+
+  3. We always check $HOME/.gitplugins by default.
+
+  4. Users can set GIT_PLUGIN_PATH in the environment if they want to do
+     something fancy (they can also always just set PATH and MANPATH
+     manually if they want, too).
+
+This is how many systems already work. For example, look at how vim
+handles plugins.
+
+Distro-packaged extensions obviously know where to go (the packager
+knows their distro's rules). People with personal extensions don't have
+to know anything special; their packages go in $HOME/.gitplugins.
+
+In general I would expect /usr/local/share/git/plugins to be pretty
+standard, and not needing of being repeated for admins who want to
+install something system-wide. But if you want to be really thorough,
+then your "git --plugins-dir" should probably report the "system-wide
+but not distro" directory for that (but I would call it something like
+"git --system-plugins-dir" or something to make it more clear).
 
 -Peff
