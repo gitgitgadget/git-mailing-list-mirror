@@ -1,59 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove duplicated "is a"
-Date: Thu, 05 May 2011 22:14:26 -0700
-Message-ID: <7vtyd82yx9.fsf@alter.siamese.dyndns.org>
-References: <1304614634-46181-1-git-send-email-jabcalves@gmail.com>
- <1304655377-57638-1-git-send-email-jabcalves@gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v3] git-p4: add option to preserve user names
+Date: Fri, 06 May 2011 06:25:43 +0100
+Message-ID: <4DC38657.7020703@diamand.org>
+References: <1304577819-703-1-git-send-email-luke@diamand.org> <7vy62k2z8j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Jo=C3=A3o?= Britto <jabcalves@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 07:14:40 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 07:26:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIDN9-0003gx-Us
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 07:14:40 +0200
+	id 1QIDYE-0007wj-Jx
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 07:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165Ab1EFFOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 01:14:35 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43022 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751938Ab1EFFOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 01:14:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 939852083;
-	Fri,  6 May 2011 01:16:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+eWgJyyk3PEXsDGMvgMtgcUUCAk=; b=UnIJsA
-	/rvj+G1J9x/oLACnvRagz4NqUcjIpFgMJupqJ86Yr1ZbzDtq3AEq/WcgRJT1AaeF
-	aFASGgRDCaI82C541VljAZitBfVHW9wvNQwE9WcIRbBwtYzY6/uIVh05JwzBAdsn
-	rP+GtP/uxGZWF4nf+BT40dQentNyMSu0Er8Aw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yERQvhAi64e9sTWBHkHgyzFeYGyqKDHi
-	F7XS6b/LtvGQgARNnZhO+EkhDQGq7Y45EJkuPPmGwaInjjTaWgc37Sr3DwbJgDCD
-	nKGqngaxZ1dwelAE0N+90SD6xKTDEDfJIYbC4L+k+F347MQAIW8DUCoY4wKqtdch
-	oi4BPF8+5Zw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 70736207F;
-	Fri,  6 May 2011 01:16:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 90ABD207E; Fri,  6 May 2011
- 01:16:31 -0400 (EDT)
-In-Reply-To: <1304655377-57638-1-git-send-email-jabcalves@gmail.com>
- (=?utf-8?Q?=22Jo=C3=A3o?= Britto"'s message of "Fri, 6 May 2011 01:16:17
- -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 02A142DE-77A0-11E0-9931-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1751901Ab1EFFZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 01:25:47 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:55036 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751400Ab1EFFZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 01:25:47 -0400
+Received: by wwa36 with SMTP id 36so3126173wwa.1
+        for <git@vger.kernel.org>; Thu, 05 May 2011 22:25:46 -0700 (PDT)
+Received: by 10.227.198.133 with SMTP id eo5mr3421399wbb.38.1304659546005;
+        Thu, 05 May 2011 22:25:46 -0700 (PDT)
+Received: from [86.30.143.167] (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
+        by mx.google.com with ESMTPS id b20sm1756407wbb.33.2011.05.05.22.25.44
+        (version=SSLv3 cipher=OTHER);
+        Thu, 05 May 2011 22:25:44 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110402 Icedove/3.1.9
+In-Reply-To: <7vy62k2z8j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172942>
+
+On 06/05/11 06:07, Junio C Hamano wrote:
+> Luke Diamand<luke@diamand.org>  writes:
+>
+>> This is version 3 of my patch.
+>
+> The previous one from Apr 21st is already on "next" with Ack from Pete.
+
+Ah, sorry.
+
+Should I submit a patch against that then?
 
 Thanks!
+Luke
