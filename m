@@ -1,96 +1,95 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 1/1] status: display "doing what" information in git
- status
-Date: Fri, 6 May 2011 10:04:46 +0200
-Message-ID: <20110506080446.GA26842@madism.org>
-References: <1304632126-16733-1-git-send-email-madcoder@debian.org>
- <BANLkTi=teRP8cMJeDC+khUtYD61SmeSdLA@mail.gmail.com>
- <20110505232650.GD636@madism.org>
- <4DC3A7E4.30204@drmicha.warpmail.net>
+From: "Arend van Spriel" <arend@broadcom.com>
+Subject: Re: [PATCH] staging: brcm80211: SDIO/MMC cleanups
+Date: Fri, 6 May 2011 10:25:42 +0200
+Message-ID: <4DC3B086.90802@broadcom.com>
+References: <20110504165947.40EED208186@grundler.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git ML <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri May 06 10:05:00 2011
+Content-Type: text/plain;
+ charset=iso-8859-1;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Grant Grundler" <grundler@chromium.org>,
+	"Greg Kroah-Hartman" <greg@kroah.com>,
+	"devel@linuxdriverproject.org" <devel@linuxdriverproject.org>,
+	"Dowan Kim" <dowan@broadcom.com>,
+	"Henry Ptasinski" <henryp@broadcom.com>,
+	"Venkat Rao" <vrao@broadcom.com>, git@vger.kernel.org
+To: "Grant@google.com" <Grant@google.com>,
+	"\"Grundler <grundler\"@chromium.org <Grundler" 
+	<grundler@chromium.org>
+X-From: git-owner@vger.kernel.org Fri May 06 10:26:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIG1y-0003yj-Df
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 10:04:58 +0200
+	id 1QIGMU-0005uH-0l
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 10:26:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832Ab1EFIEw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 04:04:52 -0400
-Received: from pan.madism.org ([88.191.52.104]:47042 "EHLO hermes.madism.org"
+	id S1754216Ab1EFI0C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 04:26:02 -0400
+Received: from mms1.broadcom.com ([216.31.210.17]:2573 "EHLO mms1.broadcom.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754327Ab1EFIEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 04:04:49 -0400
-Received: from madism.org (unknown [94.228.180.170])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 7F5084F443;
-	Fri,  6 May 2011 10:04:47 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id AFBE81A87; Fri,  6 May 2011 10:04:46 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <4DC3A7E4.30204@drmicha.warpmail.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754198Ab1EFIZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 04:25:57 -0400
+Received: from [10.9.200.131] by mms1.broadcom.com with ESMTP (Broadcom
+ SMTP Relay (Email Firewall v6.3.2)); Fri, 06 May 2011 01:29:29 -0700
+X-Server-Uuid: 02CED230-5797-4B57-9875-D5D2FEE4708A
+Received: from mail-irva-13.broadcom.com (10.11.16.103) by
+ IRVEXCHHUB01.corp.ad.broadcom.com (10.9.200.131) with Microsoft SMTP
+ Server id 8.2.247.2; Fri, 6 May 2011 01:25:45 -0700
+Received: from mail-sj1-12.sj.broadcom.com (mail-sj1-12.sj.broadcom.com
+ [10.17.16.106]) by mail-irva-13.broadcom.com (Postfix) with ESMTP id
+ 0E55C74D03; Fri, 6 May 2011 01:25:46 -0700 (PDT)
+Received: from [10.176.68.140] (unknown [10.176.68.140]) by
+ mail-sj1-12.sj.broadcom.com (Postfix) with ESMTP id 2F21E20501; Fri, 6
+ May 2011 01:25:43 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17)
+ Gecko/20110424 Thunderbird/3.1.10
+In-Reply-To: <20110504165947.40EED208186@grundler.mtv.corp.google.com>
+X-WSS-ID: 61DD6EE31IC1479574-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172956>
 
-On Fri, May 06, 2011 at 09:48:52AM +0200, Michael J Gruber wrote:
-> Pierre Habouzit venit, vidit, dixit 06.05.2011 01:26:
-> > On Fri, May 06, 2011 at 01:06:45AM +0200, Sverre Rabbelier wrote:
-> >> Heya,
-> >>
-> >> On Thu, May 5, 2011 at 23:48, Pierre Habouzit <madcoder@debian.org=
-> wrote:
-> >>> This provides the same information as the git bash prompt about t=
-he
-> >>> current operation that is going on: rebase, merge, am, cherry-pic=
-k or
-> >>> bisect.
-> >>
-> >> Can you show how this will look like?
-> >=20
-> > Sure, it adds a line on the top with the same color as "not on any
-> > branch" iff there is an ongoing operation.
-> >=20
-> > Of course in this setup it makes no sense since my shell shows it
-> > already, but I'm frustrated when I use git on a remote machine wher=
-e I
-> > don't have zsh installed or configured, and at work many people wou=
-ld
-> > like to know where they left stuff before they grabbed coffee and t=
-alked
-> > for 1h instead of taking 5 minutes ;)
->=20
-> I think this is useful and nice in the compactified version suggested=
- by
-> Junio. Be prepared for someone requesting it with "status -s -b" :)
+On 05/04/2011 06:59 PM, Grant Grundler wrote:
+> misc coding style cleanups to dhd_sdio/sdmmc
+>
+> o replace PKTFREE2 macro with static dhdsdio_pktfree2()
+> o drop "delta" local var
+> o drop GSPI_PR55150_BAILOUT
+> o reformat some of the comments (white space changes)
+> o drop dhd_bcmsdh_recv_buf wrapper and directly call bcmsdh_recv_buf
+>
+> Signed-off-by: Grant Grundler<grundler@chromium.org>
+>
+> ---
+>
+> diff --git a/drivers/staging/brcm80211/brcmfmac/dhd_sdio.c b/drivers/staging/brcm80211/brcmfmac/dhd_sdio.c
+> index 0c248aa..4bfd8d8 100644
 
-Well, I've written the logic, it's easy to use :P
+I am having difficulties applying a patch and want to turn it into a 
+learning experience for me. I tried to apply this patch using the 
+following steps:
+1. save the email to grundler.eml
+2. checkout staging-next branch (HEAD 7cc8243)
+3. run 'git am grundler.eml'
+Applying: staging: brcm80211: SDIO/MMC cleanups
+error: patch failed: drivers/staging/brcm80211/brcmfmac/dhd_sdio.c:135
+error: drivers/staging/brcm80211/brcmfmac/dhd_sdio.c: patch does not apply
+Patch failed at 0001 staging: brcm80211: SDIO/MMC cleanups
+When you have resolved this problem run "git am --resolved".
+If you would prefer to skip this patch, instead run "git am --skip".
+To restore the original branch and stop patching run "git am --abort".
 
-> What became of the colouring of the git-prompt, btw? I see you're usi=
-ng
-> some, and I remember a stalled effort to have this in our shipped
-> completion. Do have something shareable in that respect?
+The git documentation on the git am command is not very elaborate. I 
+investigated the issue and checked following:
+1. line 135 in dhd_sdio.c in the patch does match line 135 in my checked 
+out branch.
+2. did 'git hash-object'
+     $ git hash-object drivers/staging/brcm80211/brcmfmac/dhd_sdio.c
+     0c248aa43a37cfd1701f97988ec7cf4ff76a2789
 
-My git prompt predates the bash one, it's here
-http://madism.org/~madcoder/dotfiles/config/zsh/60_prompt you're
-free to do what you want with that.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+What could be the problem?
