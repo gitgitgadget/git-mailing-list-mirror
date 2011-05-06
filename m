@@ -1,87 +1,67 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Question about PERL_PATH
-Date: Fri, 06 May 2011 17:56:45 +0200
-Message-ID: <4DC41A3D.10104@drmicha.warpmail.net>
-References: <4DC3F804.3080205@mev.co.uk>
+Subject: Re: [PATCH] staging: brcm80211: SDIO/MMC cleanups
+Date: Fri, 06 May 2011 18:00:06 +0200
+Message-ID: <4DC41B06.5040500@drmicha.warpmail.net>
+References: <20110504165947.40EED208186@grundler.mtv.corp.google.com> <4DC3B086.90802@broadcom.com> <7viptn3neo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ian Abbott <abbotti@mev.co.uk>
-X-From: git-owner@vger.kernel.org Fri May 06 17:56:54 2011
+Cc: Arend van Spriel <arend@broadcom.com>,
+	"Grant@google.com" <Grant@google.com>,
+	"\"Grundler <grundler\"@chromium.org <Grundler" 
+	<grundler@chromium.org>, Greg Kroah-Hartman <greg@kroah.com>,
+	"devel@linuxdriverproject.org" <devel@linuxdriverproject.org>,
+	Dowan Kim <dowan@broadcom.com>,
+	Henry Ptasinski <henryp@broadcom.com>,
+	Venkat Rao <vrao@broadcom.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 18:00:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QINOf-0004X7-O3
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 17:56:54 +0200
+	id 1QINRz-0006TV-D1
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 18:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756579Ab1EFP4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 11:56:48 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:42002 "EHLO
+	id S1756567Ab1EFQAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 12:00:11 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53114 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754367Ab1EFP4r (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 11:56:47 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 5BE122056D;
-	Fri,  6 May 2011 11:56:47 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute4.internal (MEProxy); Fri, 06 May 2011 11:56:47 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=f5Q05pZJ91ewjyImYDrOKKQj4yE=; b=IlH72OQlqdrpgtNd6LmVjejhvPr7uIuhoQsZH4S+7r+uI9qOj/HUMxmpa96ltyYBQ3O2QTxbXq7tqHOHGh/GneRTleDyuAXiAxBN2aIBJt3ym119Qk9OpOpj9A9eKDNM8fyJwzXE0SyVymQ8FoiNZP85njUB1bYfdEtNqazNAxM=
-X-Sasl-enc: HKFgUOiQQs+vwWJ1XiwjCuPasrZup74iYOSNM06kZfJ2 1304697407
+	by vger.kernel.org with ESMTP id S1756198Ab1EFQAK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 12:00:10 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id DA5C1209FC;
+	Fri,  6 May 2011 12:00:09 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 06 May 2011 12:00:09 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=AMBEZNz3kpaBzsWfWxa7t7fj710=; b=NCcjfGzYmswVbHn+DO5boDVaIg+akyUr+trMADrwd33m8I539t48xabqsKLFYB8c7TulpHxPNsNWLDK28HuwKgA02v+Z67UfkqosZX7yNNpL463iuRk9kPvU2CDn9d4TlA/4ylRK8lfZpCbGowHkvOEKmRjST+1eRgQGceDgNjo=
+X-Sasl-enc: qn3tYsC+hG8BZixWDfS0hCTfX4/7p9gtK1bc3cAwPgF1 1304697609
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D48EB440FBD;
-	Fri,  6 May 2011 11:56:46 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 54AF4405167;
+	Fri,  6 May 2011 12:00:08 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <4DC3F804.3080205@mev.co.uk>
+Newsgroups: gmane.linux.drivers.driver-project.devel
+In-Reply-To: <7viptn3neo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172983>
 
-Ian Abbott venit, vidit, dixit 06.05.2011 15:30:
-> The Gentoo ebuilds for git have started invoking 'make' with the option
-> 'PERL_PATH=/usr/bin/env perl'.  This doesn't seem to cause any problems
-> except when running git instaweb, which outputs an error similar to the
-> following:
+Junio C Hamano venit, vidit, dixit 06.05.2011 16:37:
+> "Arend van Spriel" <arend@broadcom.com> writes:
+> 
+>> The git documentation on the git am command is not very elaborate. I
+>> investigated the issue and checked following:
+>> 1. line 135 in dhd_sdio.c in the patch does match line 135 in my
+>> checked out branch.
+> 
+> Does it exactly match, or does it merely visually match if you ignore tabs
+> and spaces munged by somebody between the state of the file submitter
+> committed and grunder.eml file you stored?
 
-Well, it means that all our perl scripts are run with the perl which is
-the first in PATH at run time (for the user running it), which may or
-may not be the one which is first in PATH at build or test time (for the
-user running that).
-
-Of course there's no problem when they are the same.
-
-> /usr/libexec/git-core/git-instaweb: line 135: /usr/bin/env perl: No such
-> file or directory
-> 
-> There is an easy workaround, which is to modify the invocation of perl
-> in the httpd_is_ready() function in the git-instaweb shell script.  It
-> currently invokes perl as "$PERL" (with the quotes).  Removing the
-> quotes makes it work.
-> 
-> My question is, should git support Gentoo's unusual setting of PERL_PATH
-> as a multi-word command, or should Gentoo patch around the problem they
-> have created with git-instaweb themselves?
-> 
-> There is one other place where $PERL is used in git-instaweb and that is
-> in the mongoose_conf() function.  It has a heredoc that puts the
-> following line in the httpd.conf file (subject to shell variable expansion):
-> 
-> cgi_interp	$PERL
-> 
-> For Gentoo, that would get expanded to the following:
-> 
-> cgi_interp	/usr/bin/env perl
-> 
-> I don't know if Mongoose would choke on this or not.
-
-For a system wide installed package, it just seems like a crazy idea to
-package it in a way which makes it depend on the contents of users'
-$HOME/bin and such. What kind of packaging is that? I mean, package git
-depends on package perl, but then leave the meaning of "perl" at the
-users' discretion and mercy...
+Junio, he reported the hashes to match! Puzzling. Or a MUA doing things
+to the .eml.
 
 Michael
