@@ -1,105 +1,76 @@
-From: Patrick =?iso-8859-1?q?H=E4cker?= 
-	<patrick.haecker@lss.uni-stuttgart.de>
-Subject: Improvement of git add interface
-Date: Fri, 6 May 2011 14:03:28 +0200
-Organization: LSS
-Message-ID: <201105061403.28674.patrick.haecker@lss.uni-stuttgart.de>
+From: Ian Abbott <abbotti@mev.co.uk>
+Subject: Question about PERL_PATH
+Date: Fri, 6 May 2011 14:30:44 +0100
+Message-ID: <4DC3F804.3080205@mev.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart6099022.cmT5hgCqHl";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 14:13:31 2011
+X-From: git-owner@vger.kernel.org Fri May 06 15:38:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIJuU-0005XN-0C
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 14:13:30 +0200
+	id 1QILES-00027U-Vj
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 15:38:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753130Ab1EFMNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 08:13:25 -0400
-Received: from charybdis.rus.uni-stuttgart.de ([129.69.1.58]:38857 "EHLO
-	charybdis.rus.uni-stuttgart.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752206Ab1EFMNY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 08:13:24 -0400
+	id S1756465Ab1EFNiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 09:38:06 -0400
+Received: from mail.mev.co.uk ([62.49.15.74]:41234 "EHLO mail.mev.co.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756421Ab1EFNiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 09:38:05 -0400
+X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 May 2011 09:38:05 EDT
 Received: from localhost (localhost [127.0.0.1])
-	by charybdis.rus.uni-stuttgart.de (Postfix) with ESMTP id 82AE5DB9CD
-	for <git@vger.kernel.org>; Fri,  6 May 2011 14:03:30 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at charybdis.rus.uni-stuttgart.de
-Received: from charybdis.rus.uni-stuttgart.de ([127.0.0.1])
-	by localhost (charybdis.rus.uni-stuttgart.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id ib+08iOSLaXs for <git@vger.kernel.org>;
-	Fri,  6 May 2011 14:03:29 +0200 (CEST)
-Received: from uni-stuttgart.de (mbox.uni-stuttgart.de [129.69.1.9])
-	by charybdis.rus.uni-stuttgart.de (Postfix) with ESMTP id D9801DB9BD
-	for <git@vger.kernel.org>; Fri,  6 May 2011 14:03:29 +0200 (CEST)
-X-Virus-Scanned: by mbox.uni-stuttgart.de
-Received: from [129.69.32.117] (account insm113@isb.uni-stuttgart.de HELO pc117.localnet)
-  by uni-stuttgart.de (CommuniGate Pro SMTP 5.3.7)
-  with ESMTPSA id 145034208 for git@vger.kernel.org; Fri, 06 May 2011 14:03:29 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-686; KDE/4.4.5; i686; ; )
+	by mail.mev.co.uk (Postfix) with ESMTP id A1BD52901E
+	for <git@vger.kernel.org>; Fri,  6 May 2011 14:30:47 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at mail.mev.co.uk
+Received: from mail.mev.co.uk ([127.0.0.1])
+	by localhost (mantis.mev.local [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id wCXjmh0on0-z for <git@vger.kernel.org>;
+	Fri,  6 May 2011 14:30:45 +0100 (BST)
+Received: from remote.mev.co.uk (mev2008.mev.local [10.0.0.1])
+	by mail.mev.co.uk (Postfix) with ESMTPS id 74C2529001
+	for <git@vger.kernel.org>; Fri,  6 May 2011 14:30:45 +0100 (BST)
+Received: from [10.0.0.210] (10.0.0.254) by remote.mev.co.uk (10.0.0.1) with
+ Microsoft SMTP Server (TLS) id 8.1.436.0; Fri, 6 May 2011 14:30:44 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110503 Lightning/1.0b3pre Thunderbird/3.1.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172973>
 
---nextPart6099022.cmT5hgCqHl
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+The Gentoo ebuilds for git have started invoking 'make' with the option
+'PERL_PATH=/usr/bin/env perl'.  This doesn't seem to cause any problems
+except when running git instaweb, which outputs an error similar to the
+following:
 
-Hello,
+/usr/libexec/git-core/git-instaweb: line 135: /usr/bin/env perl: No such
+file or directory
 
-I introduce git to students and thus see, where they have a harder time tha=
-n=20
-necessary to understand git.
+There is an easy workaround, which is to modify the invocation of perl
+in the httpd_is_ready() function in the git-instaweb shell script.  It
+currently invokes perl as "$PERL" (with the quotes).  Removing the
+quotes makes it work.
 
-Thus, I was thinking about a CLI improvement regarding "git add". It follow=
-s=20
-from the observation, that the students can learn consistent interfaces=20
-faster.
+My question is, should git support Gentoo's unusual setting of PERL_PATH
+as a multi-word command, or should Gentoo patch around the problem they
+have created with git-instaweb themselves?
 
-Similar to "ls -a" =3D "ls --all" there is a "git commit -a" =3D "git commi=
-t --
-all", which means the same thing: use all files (with the known exceptions=
-=20
-in git). There is a "git add -A" =3D "git add --all", too, which is basical=
-ly=20
-the same. This leads to the following consistency question: Why is there no=
-=20
-"git add -a"? I suggest adding "git add -a" as an alias to "git add -add".=
-=20
-Maybe "git add -A" could then be deprecated in the long run, to not waste=20
-option name space, but this can be discussed later.
+There is one other place where $PERL is used in git-instaweb and that is
+in the mongoose_conf() function.  It has a heredoc that puts the
+following line in the httpd.conf file (subject to shell variable expansion):
 
-Kind regards
-Patrick
+cgi_interp	$PERL
 
-P.S. Please CC, as I am not subscribed
+For Gentoo, that would get expanded to the following:
 
-=2D-=20
-Patrick H=E4cker
-Universit=E4t Stuttgart=20
-Lehrstuhl f=FCr Systemtheorie und Signalverarbeitung=20
-Tel: +49 711 685 67362
-E-Mail: patrick.haecker@lss.uni-stuttgart.de
-URL: http://www.lss.uni-stuttgart.de
+cgi_interp	/usr/bin/env perl
 
---nextPart6099022.cmT5hgCqHl
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+I don't know if Mongoose would choke on this or not.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEABECAAYFAk3D45AACgkQRDNqD/jh8GJxewCfSt+SVu2ilEgQXwwqed909yq9
-tagAn1JpyvhFRSbAwFge6ofOLodv76cd
-=VyKV
------END PGP SIGNATURE-----
-
---nextPart6099022.cmT5hgCqHl--
+-- 
+-=( Ian Abbott @ MEV Ltd.    E-mail: <abbotti@mev.co.uk>        )=-
+-=( Tel: +44 (0)161 477 1898   FAX: +44 (0)161 718 3587         )=-
