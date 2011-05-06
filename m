@@ -1,168 +1,134 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH for maint] git-completion: fix zsh support
-Date: Fri, 6 May 2011 12:27:45 +0300
-Message-ID: <BANLkTikk1wfaC4Aic4iyJZXbZ5kkuEDxaA@mail.gmail.com>
+Date: Fri, 6 May 2011 12:34:59 +0300
+Message-ID: <BANLkTim8=D3ivFoOsbAvDBSRbAu+0us-2g@mail.gmail.com>
 References: <20110505185907.GD1377@goldbirke>
 	<1304625144-5206-1-git-send-email-felipe.contreras@gmail.com>
 	<20110505232503.GA7507@elie>
+	<7v7ha44ej8.fsf@alter.siamese.dyndns.org>
+	<20110506052744.GA15132@elie>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0015174733ae39fa8a04a2981aeb
-Cc: git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 11:27:57 2011
+X-From: git-owner@vger.kernel.org Fri May 06 11:35:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIHKF-0001SH-M5
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 11:27:56 +0200
+	id 1QIHRF-0004UF-Aa
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 11:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755892Ab1EFJ1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 05:27:49 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53427 "EHLO
+	id S1755403Ab1EFJfB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 05:35:01 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:41980 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755215Ab1EFJ1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 05:27:47 -0400
-Received: by fxm17 with SMTP id 17so2116581fxm.19
-        for <git@vger.kernel.org>; Fri, 06 May 2011 02:27:45 -0700 (PDT)
+	with ESMTP id S1755347Ab1EFJfA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 05:35:00 -0400
+Received: by mail-fx0-f46.google.com with SMTP id 17so2122491fxm.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 02:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=eP7/xzDVGO+isA8GKwj5zilI41i7sQXk7+G6tusPfhc=;
-        b=YMABFXX8edXj1M08m98cwMUgfoXpG7UIz7eFQxpMEdzl7UUTX7mCvbAIofuxwNzJBs
-         +oukGOY61fvECQPlBoTNOMx8Z2Ec1l1q7Wt+++gDPVNLH5hy5iwC48CLsc5v7Wzf2YLm
-         U3N3/dbUzHmOi1NrZ6QI38gZDOYGJKG8GPSCQ=
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0Bg3hvGZbHKCdaGZLt2FHgT46wO8Cn4bpUbn4ajiF6I=;
+        b=irfS1t2CV6mi1DqIEcj59k9iEVx93ntoWg2uJenemzo+15n0gjjuLXIn+RGArfR/DP
+         z8wlqzNQBYSHtuLGJAZRwBFzYHNfKRoWiA67i/MYl0dzropNLJkPGK3dvLactRohn9gL
+         t5H3Qi4Nphn9iQn3lRknNpnl/qC/ZNlDiCqMQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=A//xEtCbnEbCyoO2+nvWz7aEqEIMepMVcnUyOxAyMfvqWKmDI8eQ4+eZrrszR5tV+U
-         HgJGohd2RkbXGXgE44ySSy+XZTJl09TFoEdsH+TTfTXU0ouuGMHiiNW/32e/pCtP5DSu
-         tvvVhTLEUhg1Xf859CetRJMcWiBpla+ZOtR9U=
-Received: by 10.223.100.86 with SMTP id x22mr1845600fan.108.1304674065578;
- Fri, 06 May 2011 02:27:45 -0700 (PDT)
-Received: by 10.223.74.130 with HTTP; Fri, 6 May 2011 02:27:45 -0700 (PDT)
-In-Reply-To: <20110505232503.GA7507@elie>
+         :cc:content-type:content-transfer-encoding;
+        b=p9X7jdTFB8KHEr/QeBVXabGqgs8ccGvV7UBRAHQWAN/uiCI1pH+6ECLyP0+ekVP0jF
+         SWWALgf+2kCEnZjOEzJzv+Jk/xxYlPty06PxdFBz4C+uAAtWJpn2MkMGT3VyRaOKRGam
+         4Lz36Hi84gGoV0o13CfaJKENuwTmfAfTtRljs=
+Received: by 10.223.87.215 with SMTP id x23mr2729403fal.32.1304674500000; Fri,
+ 06 May 2011 02:35:00 -0700 (PDT)
+Received: by 10.223.74.130 with HTTP; Fri, 6 May 2011 02:34:59 -0700 (PDT)
+In-Reply-To: <20110506052744.GA15132@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172964>
 
---0015174733ae39fa8a04a2981aeb
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, May 6, 2011 at 2:25 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Felipe Contreras wrote:
->> It turns out 'words' is a special variable used by zsh completion.
+On Fri, May 6, 2011 at 8:27 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>>> Maybe simplest would be to use Szeder's fix + make the zsh version =
+of
+>>> _get_comp_words_by_ref not overwrite "words" at all?
 >>
->> There's probably a bug in zsh's bashcompinit:
->> http://article.gmane.org/gmane.comp.shells.zsh.devel/22546
+>> I do not use zsh myself, but it appears to me that these three-patch
+>> series can graduate and if real zsh users find problems after using =
+it
+>> they can be fixed independenty in-tree.
 >>
->> But in the meantime we can workaround it by using 'typedef -h', which
->> gets rid of any special meaning.
+>> Would that risk too many patch ping-pong among zsh users on 'master'=
+?
+>> The "don't declare 'local words' in zsh" patch seems to be the right
+>> work-around for the peculiar semantics of "words" array, at least to=
+ me.
 >
-> As I mentioned before (sorry to come in late; I assume you forgot to
-> cc the previous participants in the discussion?), I do not think this
-> is a good fix.
+> G=C3=A1bor's patches already work. =C2=A0I don't think they will caus=
+e breakage
+> or patch ping-pong.
 >
-> The point here is that 'words' is a special variable used by zsh
-> completion, and we are using facilities from zsh completion. =C2=A0So
-> if you set 'typeset -h', then the zsh completion functions will
-> use _our_ copy of "words".
+> I was trying to imagine Felipe's objection and all I could think of
+> was that it is not so appealing that _get_comp_words_by_ref is not
+> actually writing to "words". =C2=A0For example, the following on top =
+of
+> sg/completion-updates (=3D 3bee6a4) will print a greeting and the wor=
+ds
+> being completed when you press tab, rather than <foo> <bar> <baz>:
 
-No, the scope remains local.
+[...]
 
->From the manual:
----
-Hide: only useful for special parameters (those marked `<S>' in the
-table in zshparam(1)), and for local parameters with the same name as
-a special parameter, though harmless for others. A special parameter
-with this attribute will not retain its special effect when made
-local. Thus after `typeset -h PATH', a function containing `typeset
-PATH' will create an ordinary local parameter without the usual
-behaviour of PATH. Alterna=E2=80=90 tively, the local parameter may itself =
-be
-given this attribute; hence inside a function `typeset -h PATH'
-creates an ordinary local parameter and the special PATH parameter is
-not altered in any way. It is also possible to create a local
-parameter using `typeset +h special', where the local copy of special
-will retain its special properties regardless of having the -h
-attribute. Global special parameters loaded from shell modules (cur=E2=80=
-=90
-rently those in zsh/mapfile and zsh/parameter) are automatically given
-the -h attribute to avoid name clashes.
----
-
-> Now in practice our copy of words matches zsh's anyway, so nothing
-> goes wrong. =C2=A0But that could easily change in the future.
-
-It doesn't matter if we change the value of 'words'. See the attached
-test. The result is:
-
- complete: words=3Dfoo  (before)
- foo: cur=3Dfoo words=3Dblah cwords=3D1
- foo bar: cur=3Dfoo words=3Dblah cwords=3D1
- complete: words=3Dfoo  (after)
-
-See? No change.
-
-In fact, if you follow the link I posted, that's precisely the fix the
-zsh guys were pushing for. And the it is already merged:
-http://zsh.git.sourceforge.net/git/gitweb.cgi?p=3Dzsh/zsh;a=3Dcommitdiff;h=
-=3De880604f029088f32fb1ecc39213d720ae526aaa
-
-I also discussed the workaround with zsh guys:
-http://article.gmane.org/gmane.comp.shells.zsh.devel/22557
-
->> Currently zsh is completely broken after commit da48616 (bash: get
->> --pretty=3Dm<tab> completion to work with bash v4), which introduced
->> _get_comp_words_by_ref() that comes from debian's bash_completion
->> scripts
+> In practice it works great since "words" already has the right
+> content, but maybe the "typeset -h" suggestion was motivated by a
+> desire to have something easier to explain.
 >
-> The bash_completion project does not originate in Debian fwiw; it
-> was originally from Ian Macdonald iirc and available from
+> I don't think that's a very strong reason to prevent the fix from
+> graduating, though I suppose I would be happy to see something like
+> the following on top at some point.
 >
-> =C2=A0http://www.caliban.org/bash/index.shtml
+> -- 8< --
+> Subject: completion: do not pretend to assign to special variable $wo=
+rds on zsh
 >
-> and then it was abandoned. =C2=A0The bash-completion project on alioth is
-> not Debian-specific, either.
+> The special variable $words already has essentially the same meaning
+> as bash's COMP_WORDS on zsh. =C2=A0While assigning one to the other a=
+ppears
+> to work okay, as a no-op, that is actually an illusion --- the value
+> of $words can be changed in the _get_comp_words_by_ref function where
+> it is assigned, but after that function returns, $words is back to
+> normal.
+>
+> Guard against future breakage by adding a comment mentioning this and
+> removing the redundant assignment.
 
-Well, it's hosted on debian.org, and I haven't seen it used anywhere
-else. I just don't know how else to identify that project.
+I don't really object to G=C3=A1bor's patches. The third one actually f=
+ixes
+the issue.
 
-> Maybe simplest would be to use Szeder's fix + make the zsh version of
-> _get_comp_words_by_ref not overwrite "words" at all?
+The thing is that it's a *workaround*, and I prefer to keep
+workarounds to the minimal. So I prefer my patch that introduces only
+2 new lines and doesn't change the semantics of the rest of the code.
+Moreover, it's already fixed in zsh's master, so at some point we
+might want to remove it, and it's easier to remove 2 non-intrusive
+lines.
 
-I think the simplest fix is the one I'm proposing, which zsh guys agree wit=
-h.
+But anyway, my end goal is to get this into the 'maint' branch. It's
+up to Junio how to get the fix there (if at all), but I think it's
+easier to just apply my patch there.
 
 Cheers.
 
 --=20
-Felipe Contreras
-
---0015174733ae39fa8a04a2981aeb
-Content-Type: application/octet-stream; name=zsh_words_2
-Content-Disposition: attachment; filename=zsh_words_2
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gncx6pke0
-
-IyF6c2gKCnNldF92YXJzICgpCnsKCWN1cj0ke0NPTVBfV09SRFNbQ09NUF9DV09SRF19CgkjIHdv
-cmRzPSgiJHtDT01QX1dPUkRTW0BdfSIpCgl3b3Jkcz0iYmxhaCIKCWN3b3Jkcz0kQ09NUF9DV09S
-RAp9CgpfZm9vX2JhciAoKQp7Cglsb2NhbCBjdXIgd29yZHMgY3dvcmRzCglzZXRfdmFycwoKCWVj
-aG8gImZvbyBiYXI6IGN1cj0ke2N1cn0gd29yZHM9JHt3b3Jkc30gY3dvcmRzPSR7Y3dvcmRzfSIg
-Pj4gL3RtcC9jb21wX3Rlc3QudHh0Cn0KCl9mb28gKCkKewoJdHlwZXNldCAtaCB3b3JkcwoKCWxv
-Y2FsIGN1ciB3b3JkcyBjd29yZHMKCXNldF92YXJzCgoJZWNobyAiZm9vOiBjdXI9JHtjdXJ9IHdv
-cmRzPSR7d29yZHN9IGN3b3Jkcz0ke2N3b3Jkc30iID4+IC90bXAvY29tcF90ZXN0LnR4dAoKCV9m
-b29fYmFyCn0KCmJhc2hfY29tcGxldGUgKCkKewoJKCggQ09NUF9DV09SRCA9IENVUlJFTlQgLSAx
-KSkKCUNPTVBfV09SRFM9KCAkd29yZHMgKQoJQ09NUFJFUExZPSgpCgoJZWNobyAiY29tcGxldGU6
-IHdvcmRzPSR7d29yZHN9IChiZWZvcmUpIiA+PiAvdG1wL2NvbXBfdGVzdC50eHQKCV9mb28gIiR7
-d29yZHNbMF19IiAiJHt3b3Jkc1tDVVJSRU5ULTFdfSIgIiR7d29yZHNbQ1VSUkVOVC0yXX0iCgll
-Y2hvICJjb21wbGV0ZTogd29yZHM9JHt3b3Jkc30gKGFmdGVyKSIgPj4gL3RtcC9jb21wX3Rlc3Qu
-dHh0Cn0KCmNvbXBkZWYgYmFzaF9jb21wbGV0ZSBmb28K
---0015174733ae39fa8a04a2981aeb--
+=46elipe Contreras
