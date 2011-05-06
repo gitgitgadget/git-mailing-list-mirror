@@ -1,93 +1,77 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] completion: move private shopt shim for zsh to __git_ namespace
-Date: Fri, 6 May 2011 11:35:50 +0300
-Message-ID: <BANLkTimrjra=vz7MHTDWMq8Bk_2jv-D-Ng@mail.gmail.com>
-References: <1303867612-15975-1-git-send-email-felipe.contreras@gmail.com>
-	<20110427013534.GA14286@elie>
-	<7v62q0b8e0.fsf@alter.siamese.dyndns.org>
-	<20110427064033.GB4226@elie>
-	<BANLkTinA5hfddqpGwOBjk+2oFDpwqORrSg@mail.gmail.com>
-	<20110427091140.GB14849@elie>
-	<BANLkTi=3T2B=Gtyk7V_3DB3V+GkbXAaqPw@mail.gmail.com>
-	<BANLkTikN7iMa_z7wRN8pUS07SMatpyoDPQ@mail.gmail.com>
-	<20110427212704.GB18596@elie>
-	<20110506054604.GA13351@elie>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: Re: [PATCH] t1507: change quoting in test_did_you_mean to a more
+ general one
+Date: Fri, 6 May 2011 10:39:37 +0200
+Message-ID: <20110506083937.GA3719@camk.edu.pl>
+References: <20110505191027.GA3242@camk.edu.pl>
+ <7vsjss6hmf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 10:36:02 2011
+Content-Type: text/plain; charset=iso-8859-2
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 10:39:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIGW1-0001jr-Dg
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 10:36:01 +0200
+	id 1QIGZi-0003Su-S3
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 10:39:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753952Ab1EFIfx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 04:35:53 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51637 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753783Ab1EFIfv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 04:35:51 -0400
-Received: by fxm17 with SMTP id 17so2069848fxm.19
-        for <git@vger.kernel.org>; Fri, 06 May 2011 01:35:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AeXhRPC1l3+696maAiEiCp5VEjlPqM1SV5tP8dE+wJU=;
-        b=V0+IQSEjh8B93FFqUneriuCW4Rhf/SSNIV+OC6Iztlp+mUpf+I9RUQOPJ1J0yeB18b
-         g/mJ9fWegeap4gIhOSWkA3WRBtgx5ST++OmszqeVsWz7Z4b9y+6ZRL4WIs2TTUSFBqef
-         X3Xy6KZTnuqzVCWc1gFhL4CrhZRHxJZmE3B1U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=I6g6ER12u0qW7OHEqNbmPfFeKTpf23qF9gRw1tZ9sZzqMhWnfcDYgo2/tCqfTmyu1E
-         bPGEeOSNxvY9OGLOpjNV+YdutycjJ9BxGKdlLk4+K9/T3dIormntKyBDpwtWdvPsJRkI
-         Nab2pqoBw7eODGS75AQUzY/ZYjNtmkgPxguUY=
-Received: by 10.223.24.134 with SMTP id v6mr717306fab.146.1304670950221; Fri,
- 06 May 2011 01:35:50 -0700 (PDT)
-Received: by 10.223.74.130 with HTTP; Fri, 6 May 2011 01:35:50 -0700 (PDT)
-In-Reply-To: <20110506054604.GA13351@elie>
+	id S1754427Ab1EFIjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 04:39:45 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:54786 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754346Ab1EFIjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 04:39:44 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 08BD75F0049;
+	Fri,  6 May 2011 10:39:43 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id gzKuQ-oFc98N; Fri,  6 May 2011 10:39:37 +0200 (CEST)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 7AD6A5F0046;
+	Fri,  6 May 2011 10:39:37 +0200 (CEST)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 63C5880AF5; Fri,  6 May 2011 10:39:37 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vsjss6hmf.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172959>
 
-On Fri, May 6, 2011 at 8:46 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> (culling cc list of quiet people :))
-> Jonathan Nieder wrote:
->
->> Most zsh users probably probably do not expect a custom shopt functi=
-on
->> to enter their environment just because they ran "source
->> ~/.git-completion.sh".
->>
->> Such namespace pollution makes development of other scripts confusin=
-g
->> (because it makes the bash-specific shopt utility seem to be availab=
-le
->> in zsh) and makes git's tab completion script brittle (since any oth=
-er
->> shell snippet implementing some other subset of shopt will break it)=
-=2E
->> Rename the shopt shim to the more innocuous __git_shopt to be a good
->> citizen (with two underscores to avoid confusion with completion rul=
-es
->> for a hypothetical "git shopt" command).
->
-> By the way, I meant the above[1] as a genuine patch submission.
-> Thoughts? =C2=A0Bugs? =C2=A0Improvements?
+On Thu, May 05, 2011 at 01:02:16PM -0700, Junio C Hamano wrote:
+> Kacper Kornet <draenog@pld-linux.org> writes:
 
-Looks fine to me.
+> > In bash and some other shells the script:
 
---=20
-=46elipe Contreras
+> >   x=2; unset a; echo "${a:-'$x'}"
+
+> > prints '2'. However ksh shell prints $x. The quoting is added to
+> > reproduce bash behaviour.
+
+> What I happen to have in /usr/bin/ksh
+
+>     $ /usr/bin/ksh --version
+>       version         sh (AT&T Research) 93t+ 2009-05-01
+
+> does not seem to have this issue.
+
+> Whose ksh is this
+
+It is pdksh 5.2.14 from http://www.cs.mun.ca/~michael/pdksh/
+
+> It is broken.
+
+You are right. It is corrected in mksh, which claims to be a successor
+to pdksh. Unfortunately pdksh is used by default as /bin/sh in PLD Linux
+Distribution which are use. Probably the time to think about the change
+of this default.
+
+-- 
+  Kacper Kornet
